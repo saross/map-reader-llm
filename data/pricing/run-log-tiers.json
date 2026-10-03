@@ -1,15 +1,17 @@
 {
- "_README": "Service tiers named by run logs, per directory. The detection runner prints 'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py logs, run on sapphire (which holds logs the workstation clone does not). A directory whose logs name more than one tier is a conflict the reader must not resolve by walking further up. explicit_cache records that the run created an explicit context cache (--use-cache): the runner's cached call path omits service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a real-time request on it is billed at standard whatever the launch line says. covers_verifier records that a log mentions a verifier stage; a run-level log without it does not pin the verifier legs beneath it. Tier words other than standard, flex and batch are kept as unknown_tier_words, never as tiers. Read by scripts/lib_pass_cost.py; never edit by hand.",
- "schema": "run-log-tiers/3",
+ "_README": "Service tiers named by run logs, per directory. The detection runner prints 'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py logs, run on sapphire (which holds logs the workstation clone does not). A directory whose logs name more than one tier is a conflict the reader must not resolve by walking further up. explicit_cache records that the run created an explicit context cache (--use-cache): the runner's cached call path omits service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a real-time request on it is billed at standard whatever the launch line says. verifier_tiers are the tiers a log records FOR a verifier stage: a Service tier line after the log's first verifier line, or --service-tier on a run_pv.py verify or cleanup command; only these pin a verifier leg beneath a run-level log. Tier words other than standard, flex and batch are kept as unknown_tier_words, never as tiers. Read by scripts/lib_pass_cost.py; never edit by hand.",
+ "schema": "run-log-tiers/4",
  "logs_scanned": 152,
- "logs_with_tier_lines": 63,
+ "logs_with_tier_lines": 64,
  "directories": {
   "outputs/55maps-image-generalisation": {
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [
+    "flex"
+   ],
    "explicit_cache": true,
-   "covers_verifier": true,
    "logs": [
     {
      "path": "outputs/55maps-image-generalisation/run.log",
@@ -20,7 +22,9 @@
      ],
      "tier_lines": 7,
      "explicit_cache_lines": 7,
-     "covers_verifier": true
+     "verifier_tiers": [
+      "flex"
+     ]
     }
    ]
   },
@@ -28,8 +32,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log",
@@ -40,7 +44,7 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -48,8 +52,10 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [
+    "flex"
+   ],
    "explicit_cache": false,
-   "covers_verifier": true,
    "logs": [
     {
      "path": "outputs/55maps-text-high-t0.3-generalisation/run.log",
@@ -60,7 +66,9 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": true
+     "verifier_tiers": [
+      "flex"
+     ]
     }
    ]
   },
@@ -68,8 +76,10 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [
+    "flex"
+   ],
    "explicit_cache": false,
-   "covers_verifier": true,
    "logs": [
     {
      "path": "outputs/55maps-text-min-generalisation/recovery-phase1.log",
@@ -80,7 +90,7 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/55maps-text-min-generalisation/run.log",
@@ -91,7 +101,9 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": true
+     "verifier_tiers": [
+      "flex"
+     ]
     }
    ]
   },
@@ -99,8 +111,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": true,
    "logs": [
     {
      "path": "outputs/55maps-text-min-n10-uplift/uplift-full.log",
@@ -111,7 +123,7 @@
      ],
      "tier_lines": 6,
      "explicit_cache_lines": 0,
-     "covers_verifier": true
+     "verifier_tiers": []
     }
    ]
   },
@@ -119,8 +131,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/drift-probe-2026-09-16/probe.log",
@@ -131,7 +143,27 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
+    }
+   ]
+  },
+  "outputs/era1-pv-stage-d": {
+   "tiers": [],
+   "verifier_tiers": [
+    "flex"
+   ],
+   "explicit_cache": false,
+   "logs": [
+    {
+     "path": "outputs/era1-pv-stage-d/full-run.log",
+     "sha256": "6c3091304f39166c4094b83e7cbc81a9848c33948be1a219315aa07fbb9b8912",
+     "tracked": true,
+     "tiers": [],
+     "tier_lines": 0,
+     "explicit_cache_lines": 0,
+     "verifier_tiers": [
+      "flex"
+     ]
     }
    ]
   },
@@ -139,8 +171,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": true,
    "logs": [
     {
      "path": "outputs/flash35-pv-2x2/tranche-full.log",
@@ -151,7 +183,7 @@
      ],
      "tier_lines": 28,
      "explicit_cache_lines": 0,
-     "covers_verifier": true
+     "verifier_tiers": []
     }
    ]
   },
@@ -159,8 +191,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass1.log",
@@ -171,7 +203,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass2.log",
@@ -182,7 +214,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass3.log",
@@ -193,7 +225,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass4.log",
@@ -204,7 +236,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass5.log",
@@ -215,7 +247,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover2_3.log",
@@ -226,7 +258,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover2_5.log",
@@ -237,7 +269,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_1.log",
@@ -248,7 +280,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_2.log",
@@ -259,7 +291,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_3.log",
@@ -270,7 +302,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_4.log",
@@ -281,7 +313,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_5.log",
@@ -292,7 +324,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -301,8 +333,8 @@
     "flex",
     "standard"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini37-55map-2026-08-29/driver-k5.log",
@@ -313,7 +345,7 @@
      ],
      "tier_lines": 7,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log",
@@ -324,7 +356,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini37-55map-2026-08-29/run3-recovery-flex.log",
@@ -335,7 +367,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -343,8 +375,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini37-image-55map-2026-09-13/driver.log",
@@ -355,7 +387,7 @@
      ],
      "tier_lines": 6,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -363,8 +395,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini37-image-gs-2026-09-01/driver-k5.log",
@@ -375,7 +407,7 @@
      ],
      "tier_lines": 9,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     },
     {
      "path": "outputs/gemini37-image-gs-2026-09-01/recovery-driver.log",
@@ -386,7 +418,7 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -394,8 +426,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini37-screen-2026-08-28/escalation-passes6-10.log",
@@ -406,7 +438,7 @@
      ],
      "tier_lines": 5,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -414,8 +446,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": false,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/gemini38-screen-2026-09-04/probe-gate-1.log",
@@ -426,7 +458,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 0,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -434,8 +466,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_1/launch.log",
@@ -446,7 +478,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -454,8 +486,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_2/launch.log",
@@ -466,7 +498,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -474,8 +506,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_3/launch.log",
@@ -486,7 +518,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -494,8 +526,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_4/launch.log",
@@ -506,7 +538,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -514,8 +546,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_5/launch.log",
@@ -526,7 +558,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -534,8 +566,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_1/launch.log",
@@ -546,7 +578,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -554,8 +586,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_2/launch.log",
@@ -566,7 +598,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -574,8 +606,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_3/launch.log",
@@ -586,7 +618,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -594,8 +626,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_4/launch.log",
@@ -606,7 +638,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -614,8 +646,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_5/launch.log",
@@ -626,7 +658,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -634,8 +666,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_1/launch.log",
@@ -646,7 +678,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -654,8 +686,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_2/launch.log",
@@ -666,7 +698,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -674,8 +706,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_3/launch.log",
@@ -686,7 +718,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -694,8 +726,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_4/launch.log",
@@ -706,7 +738,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -714,8 +746,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_5/launch.log",
@@ -726,7 +758,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -734,8 +766,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_1/launch.log",
@@ -746,7 +778,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -754,8 +786,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_2/launch.log",
@@ -766,7 +798,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -774,8 +806,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_3/launch.log",
@@ -786,7 +818,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -794,8 +826,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_4/launch.log",
@@ -806,7 +838,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -814,8 +846,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_5/launch.log",
@@ -826,7 +858,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -834,8 +866,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_1/launch.log",
@@ -846,7 +878,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -854,8 +886,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_2/launch.log",
@@ -866,7 +898,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -874,8 +906,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_3/launch.log",
@@ -886,7 +918,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -894,8 +926,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_4/launch.log",
@@ -906,7 +938,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -914,8 +946,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_5/launch.log",
@@ -926,7 +958,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -934,8 +966,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_1/launch.log",
@@ -946,7 +978,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -954,8 +986,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_2/launch.log",
@@ -966,7 +998,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -974,8 +1006,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_3/launch.log",
@@ -986,7 +1018,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -994,8 +1026,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_4/launch.log",
@@ -1006,7 +1038,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1014,8 +1046,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_5/launch.log",
@@ -1026,7 +1058,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1034,8 +1066,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_1/launch.log",
@@ -1046,7 +1078,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1054,8 +1086,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_2/launch.log",
@@ -1066,7 +1098,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1074,8 +1106,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_3/launch.log",
@@ -1086,7 +1118,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1094,8 +1126,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_4/launch.log",
@@ -1106,7 +1138,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   },
@@ -1114,8 +1146,8 @@
    "tiers": [
     "flex"
    ],
+   "verifier_tiers": [],
    "explicit_cache": true,
-   "covers_verifier": false,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_5/launch.log",
@@ -1126,7 +1158,7 @@
      ],
      "tier_lines": 1,
      "explicit_cache_lines": 1,
-     "covers_verifier": false
+     "verifier_tiers": []
     }
    ]
   }

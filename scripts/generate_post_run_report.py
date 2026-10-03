@@ -369,6 +369,31 @@ def _coster() -> PassCoster:
     return PassCoster()
 
 
+def _sibling_metas(primary: dict, others: list[Path]) -> list[Path]:
+    """Further whole metas in ``run_N`` that are separate executions of the pass.
+
+    A chunk meta is never a sibling (its merged meta is the pass). A meta that
+    shares the primary's ``run_id`` is a rewrite of the same execution, whose
+    usage may already include the primary's, so it is not priced again; only a
+    meta with its own ``run_id`` is a distinct, billed execution
+    (``flash35-pv-2x2`` run 3: a full re-run with run_id ``942a413c...``).
+
+    Args:
+        primary: The pass's primary meta, parsed.
+        others: The other ``*.meta.json`` paths in ``run_N``, sorted.
+
+    Returns:
+        The sibling paths to price and cite.
+    """
+    out = []
+    for path in others:
+        if "_chunk" in path.name:
+            continue
+        if _load_json(path).get("run_id") not in (None, primary.get("run_id")):
+            out.append(path)
+    return out
+
+
 def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
     """The model a recovery fragment is priced at.
 
@@ -589,13 +614,11 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 model_used = model_of_record
                 model_requested = model_of_record
             # The pass's spend is its primary meta, every further whole meta in
-            # run_N (a second session of the same pass: flash35-pv-2x2 run 3
-            # holds two, the second billed 734,478 input tokens the register
-            # once missed; audit lens A, 2026-10-03), and every recovery
-            # fragment: the same metas its provenance cites and its tile count
-            # unions. Chunk metas are never siblings (their merged meta is the
-            # pass). Each is priced at its own tier and date by the coster.
-            siblings = [m for m in meta_files[1:] if "_chunk" not in m.name]
+            # run_N that is a separate execution (flash35-pv-2x2 run 3 holds a
+            # full re-run whose 734,478 input tokens the register once missed;
+            # audit lens A, 2026-10-03), and every recovery fragment: the metas
+            # its provenance cites. Each is priced at its own tier and date.
+            siblings = _sibling_metas(meta, meta_files[1:])
             fragments = ([(meta, meta_path)] + [(_load_json(m), m) for m in siblings]
                          + [(_load_json(m), m) for m in recovery_metas])
             prov_sources = [_repo_rel(meta_path)]

@@ -33,7 +33,13 @@ from scripts.derive_tier_evidence import (
     sku_model,
     sku_tier,
 )
-from scripts.lib_pass_cost import PassCoster, fragment_usage, is_continuous, pacific_days
+from scripts.lib_pass_cost import (
+    PassCoster,
+    fragment_usage,
+    is_continuous,
+    pacific_days,
+    verifier_coverage,
+)
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -216,7 +222,7 @@ def test_own_run_log_pins_and_inherited_log_yields_to_a_batch_marker(evidence, t
     run = tmp_path / "run"
     leg = run / "verifier" / "v1"
     coster = evidence(logs={_rel(run): {"tiers": ["flex"], "explicit_cache": False,
-                                        "covers_verifier": True,
+                                        "verifier_tiers": ["flex"],
                                         "logs": [{"path": "x/pass1.log"}]}})
     meta = _meta(leg / "run.meta.json")
     (leg / "batch_jobs.json").write_text("{}")
@@ -509,7 +515,7 @@ def test_recovery_merged_meta_is_priced_from_per_item_sums():
 # Audit round 1 (lenses A and B, 2026-10-03): one test per surviving mutation.
 # ---------------------------------------------------------------------------
 
-LOG_ENTRY = {"explicit_cache": False, "covers_verifier": False,
+LOG_ENTRY = {"explicit_cache": False, "verifier_tiers": [],
              "logs": [{"path": "x/launch.log"}]}
 
 
@@ -614,11 +620,13 @@ def test_launch_manifest_pins_and_an_inherited_one_ranks_lowest(evidence, tmp_pa
 
 
 @pytest.mark.tier1
-@pytest.mark.parametrize(("covers", "tier"), [(False, None), (True, "flex")])
-def test_an_inherited_log_pins_a_verifier_only_if_it_covers_one(evidence, tmp_path, covers,
-                                                                 tier):
+@pytest.mark.parametrize(("verifier_tiers", "tier"), [([], None), (["flex"], "flex")])
+def test_an_inherited_log_pins_a_verifier_only_with_a_verifier_tier(evidence, tmp_path,
+                                                                    verifier_tiers, tier):
+    # The proposer's launch line ("tiers") never pins a verifier leg beneath a
+    # run-level log; only a tier recorded FOR a verifier stage does.
     run = tmp_path / "run"
-    logs = {_rel(run): {**LOG_ENTRY, "tiers": ["flex"], "covers_verifier": covers}}
+    logs = {_rel(run): {**LOG_ENTRY, "tiers": ["flex"], "verifier_tiers": verifier_tiers}}
     frag = _cost(evidence(logs=logs), [_meta(run / "verifier" / "v" / "run.meta.json")], run,
                  stage="verifier")["cost_source"]["fragments"][0]
     assert frag["tier"] == tier
@@ -719,13 +727,18 @@ def test_an_unrecorded_fragment_makes_the_pass_a_floor(evidence, tmp_path):
 
 
 @pytest.mark.tier1
-def test_an_unrecorded_fragment_beside_an_unresolved_one_has_no_bound(evidence, tmp_path):
+def test_an_unrecorded_fragment_beside_an_unresolved_one_is_a_floor_at_the_lowest(evidence,
+                                                                                  tmp_path):
+    # The sum of each priced fragment's LOWEST candidate is a valid floor
+    # whatever the unresolved tier was (re-audit L4: null threw it away).
     run = tmp_path / "run"
     metas = [_meta(run / "p" / "run_1" / "a.meta.json"),
              _meta(run / "p" / "run_1_recovery" / "b.meta.json", usage={k: 0 for k in USAGE})]
     out = _cost(evidence(), metas, run)
-    assert (out["cost_usd"], out["cost_basis"]) == (None, "unpriceable")
-    assert "neither" in out["cost_source"]["note"]
+    assert (out["cost_basis"], out["cost_usd"]) == ("audited-lower-bound",
+                                                   pytest.approx(FLEX_USD))
+    assert out["cost_source"]["note"] == ("LOWER bound: a fragment of this pass recorded "
+                                          "no usage")
 
 
 @pytest.mark.tier1
@@ -857,3 +870,160 @@ def test_committed_register_is_current_for_sampled_runs(run_id):
     for pid, r in fresh.items():
         for key in ("cost_usd", "cost_basis", "cost_source", "tokens"):
             assert r[key] == committed[pid][key], (pid, key)
+
+
+# ---------------------------------------------------------------------------
+# Audit round 2 (re-audit, 2026-10-03): the surviving mutations and new rules.
+# ---------------------------------------------------------------------------
+
+
+def _c3(row: dict) -> dict:
+    from scripts.rederive_manifest_fields import rederive_pass
+    return {f["field"]: f for f in rederive_pass(row)["fields"]}
+
+
+def _first_row_with(basis: str) -> dict:
+    rows = json.loads((REPO / "results/passes-manifest.json").read_text())["passes"]
+    return next(r for r in rows if r["cost_basis"] == basis)
+
+
+@pytest.mark.tier1
+def test_c3_refuses_a_model_that_is_neither_the_row_nor_the_meta_own():
+    row = _committed_pass("h8-v2", "canonical", 1)
+    frags = [{**f, "model_recorded": "gemini-3.7-flash"} for f in row["cost_source"]["fragments"]]
+    bad = {**row, "cost_source": {**row["cost_source"], "fragments": frags}}
+    assert _c3(bad)["cost_source.fragments.stamps"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_c3_refuses_a_published_row_the_overrides_do_not_list():
+    row = {**_committed_pass("h8-v2", "canonical", 1), "cost_basis": "published",
+           "cost_usd": 1.0, "cost_source": {"published": "x", "rate_card": {}}}
+    assert _c3(row)["cost_usd"]["verdict"] == "MISMATCH"
+    good = _first_row_with("published")
+    assert _c3(good)["cost_usd"]["verdict"] == "MATCH"
+
+
+@pytest.mark.tier1
+def test_c3_refuses_a_priceable_pass_published_as_unpriceable():
+    row = {**_committed_pass("h8-v2", "canonical", 1), "cost_basis": "unpriceable",
+           "cost_usd": None}
+    assert _c3(row)["cost_usd"]["verdict"] == "MISMATCH"
+    unknown = {**row, "model_used": "gemini-9-imaginary"}
+    assert _c3(unknown)["cost_usd"]["verdict"] == "MATCH"
+
+
+@pytest.mark.tier1
+def test_c3_checks_the_high_bound_and_the_lower_bound_label():
+    row = _first_row_with("audited-upper-bound")
+    bounds = {**row["cost_source"]["bounds_usd"], "high": 999.0}
+    bad = {**row, "cost_source": {**row["cost_source"], "bounds_usd": bounds}}
+    assert _c3(bad)["cost_source.bounds_usd.high"]["verdict"] == "MISMATCH"
+    whole = {**_committed_pass("h8-v2", "canonical", 1), "cost_basis": "audited-lower-bound"}
+    assert _c3(whole)["cost_basis"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_batch_path_wording_also_rules_out_the_cached_path(evidence, tmp_path):
+    pdir = tmp_path / "run" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"],
+                                         "explicit_cache": True}})
+    meta = _meta(pdir / "a.meta.json",
+                 cost_estimate={"pricing_used": {"discount_reason": BATCH_WORDING}})
+    frag = _cost(coster, [meta], tmp_path / "run")["cost_source"]["fragments"][0]
+    assert frag["tier"] == "batch"
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_a_batch_api_source_with_a_non_batch_tier_is_not_a_record(evidence, tmp_path):
+    frag = _cost(evidence(), [_meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                                    **_cost2("flex", "Batch API path"))],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert not any("runner-record" in e for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_two_run_level_records_that_disagree_are_a_conflict(evidence, tmp_path):
+    run = tmp_path / "run"
+    (run / "p" / "run_1").mkdir(parents=True)
+    (run / "launch_manifest.json").write_text(json.dumps({"service_tier": "standard"}))
+    logs = {_rel(run): {**LOG_ENTRY, "tiers": ["flex"]}}
+    frag = _cost(evidence(logs=logs), [_meta(run / "p" / "run_1" / "a.meta.json")], run)[
+        "cost_source"]["fragments"][0]
+    # The run log is the closer record of execution and ranks first; the
+    # disagreement between two run-level records is not "overruled by own".
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log-inherited")
+    assert any("pins disagree" in c for c in frag["conflicts"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("stage", "tier"), [("verifier", "standard"), ("proposer", "flex")])
+def test_a_launch_manifest_gives_each_stage_its_own_tier(evidence, tmp_path, stage, tier):
+    run = tmp_path / "run"
+    leg = run / ("v" if stage == "verifier" else "p/run_1")
+    leg.mkdir(parents=True)
+    (run / "launch_manifest.json").write_text(json.dumps({
+        "service_tier": "flex",
+        "resolved_config": {"proposer": {}, "verify": {"service_tier": "standard"}}}))
+    frag = _cost(evidence(), [_meta(leg / "a.meta.json")], run, stage=stage)[
+        "cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == (tier, "launch-manifest-inherited")
+
+
+@pytest.mark.tier1
+def test_sibling_metas_exclude_chunks_and_rewrites_of_the_same_run(tmp_path):
+    from scripts.generate_post_run_report import _sibling_metas
+    def write(name, run_id):
+        path = tmp_path / name
+        path.write_text(json.dumps({"run_id": run_id}))
+        return path
+    others = [write("a_chunk0.meta.json", "X"), write("b.meta.json", "P"),
+              write("c.meta.json", "X")]
+    assert _sibling_metas({"run_id": "P"}, others) == [others[2]]
+
+
+@pytest.mark.tier1
+def test_the_sibling_meta_is_cited_and_certified():
+    row = _committed_pass("flash35-pv-2x2", "flash35-min-text-1of10", 3)
+    assert sum("/run_3/" in s for s in row["provenance"]["source_files"]) == 2
+    verdicts = _c3(row)
+    assert verdicts["cost_source.fragments"]["verdict"] == "MATCH"
+    assert verdicts["cost_usd"]["verdict"] == "MATCH"
+
+
+@pytest.mark.tier1
+def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
+    from scripts.derive_tier_evidence import parse_log
+    proposer_only = "Service tier: flex\n... 9,910 candidates to verify later\n"
+    assert parse_log(proposer_only) == {"tiers": ["flex"], "unknown": [], "tier_lines": 1,
+                                        "explicit_cache_lines": 0, "verifier_tiers": []}
+    staged = "Service tier: flex\n=== Stage V: verifier ===\nService tier: standard\n"
+    assert parse_log(staged)["verifier_tiers"] == ["standard"]
+    command = "python3 scripts/run_pv.py verify --crops-dir c --service-tier flex\n"
+    assert parse_log(command)["verifier_tiers"] == ["flex"]
+    assert parse_log("Service tier: priority\n")["unknown"] == ["priority"]
+    assert parse_log("Context cache created: x\nService tier: flex\n")[
+        "explicit_cache_lines"] == 1
+
+
+@pytest.mark.tier1
+def test_run_report_counts_the_bases():
+    from scripts.generate_run_reports import _basis_counts
+    passes = [{"cost_basis": "audited"}] * 3 + [{"cost_basis": "unrecorded"}, {}]
+    assert _basis_counts(passes) == "audited 3, none recorded 1, unrecorded 1"
+
+
+@pytest.mark.tier1
+def test_an_overwritten_verifier_meta_is_detected_as_a_floor():
+    # Re-audit M3: verified-f3vf's meta is the 1-request cleanup leg; its
+    # probabilities.json holds 1,132 results. T03's verifier meta (10,539
+    # requests against 9,910 results) is whole and stays audited.
+    f3vf = _committed_pass("flash35-pv-2x2", "verified-f3vf", 1)
+    assert f3vf["cost_basis"] == "audited-lower-bound"
+    assert "1,132 results" in f3vf["cost_source"]["note"]
+    t03 = _committed_pass("55maps-text-high-t0-3-generalisation", "verified", 1)
+    assert t03["cost_basis"] == "audited"
+    meta_path = REPO / t03["cost_source"]["fragments"][0]["meta"]
+    accounted, results = verifier_coverage(json.loads(meta_path.read_text()), meta_path)
+    assert results == 9_910 and accounted >= results

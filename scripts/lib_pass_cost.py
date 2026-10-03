@@ -42,8 +42,8 @@ things that sentence needs and the metas do not record:
    ``run-log-inherited``     a launch line in an ENCLOSING directory: it
                              describes the run's launch, which a verifier leg
                              or a later batch rung beneath it need not share,
-                             so it pins a verifier leg only when the log
-                             covers a verifier stage
+                             so for a verifier leg only the tiers the log
+                             records FOR a verifier stage count
    ``launch-manifest-``      a launch manifest in an enclosing directory, at the
    ``inherited``             same rank
    ``billing-day``           the tiers the invoice billed for the model on the
@@ -91,10 +91,13 @@ standard-tier window. A log directory recording an explicit cache therefore
 pins standard for a real-time fragment beneath it, outranking the launch
 line it sits beside.
 
-A pass whose meta a cleanup leg overwrote is listed in
-``data/pricing/cost-overrides.json``: with a published figure it carries
-that figure (``published``, D13); without one, its remaining tokens are
-priced and labelled ``audited-lower-bound``.
+A pass whose meta a cleanup leg overwrote carries its report's figure where
+``data/pricing/cost-overrides.json`` publishes one (``published``, D13).
+Otherwise it is a PARTIAL pass, as is a verifier leg whose meta accounts for
+fewer requests than its ``probabilities.json`` has results (the overwrite
+signature, detected), and a pass with a fragment that recorded no usage. A
+partial pass publishes a floor: the sum of each priced fragment's lowest
+candidate, labelled ``audited-lower-bound``.
 
 When the evidence leaves more than one tier possible, the pass is priced at
 every candidate and published at the HIGHEST, with ``cost_basis:
@@ -169,6 +172,10 @@ REQUEST_RECORDS = ("runner-record", "run-log", "run-log-inherited", "launch-mani
 
 #: Kinds that describe a whole run rather than the fragment's own launch.
 INHERITED_KINDS = ("run-log-inherited", "launch-manifest-inherited")
+
+#: A verifier meta that accounts for fewer requests than this share of its
+#: leg's ``probabilities.json`` results was overwritten by a later leg.
+COVERAGE_FLOOR = 0.9
 
 #: Where the cached call path drops ``service_tier`` (cited in evidence).
 CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig "
@@ -333,6 +340,36 @@ def is_continuous(start: str | None, end: str | None, duration_s: float | None) 
     return span <= CONTINUOUS_MAX_S
 
 
+def verifier_coverage(meta: dict[str, Any], meta_path: Path) -> tuple[int, int] | None:
+    """How many requests a verifier meta accounts for, against its leg's results.
+
+    Args:
+        meta: The verifier leg's meta.
+        meta_path: Where it lives (``probabilities.json`` sits beside it).
+
+    Returns:
+        ``(accounted, results)``, or None when the leg has no probabilities
+        file. ``accounted`` is the largest of the meta's completed items, its
+        processed items, its request count and its responses with usage, so a
+        meta era that records only one of them is read fairly (T03's records
+        10,539 requests and no completed items, against 9,910 results).
+    """
+    prob = meta_path.parent / "probabilities.json"
+    if not prob.exists():
+        return None
+    results = len((_read_json(prob) or {}).get("results") or {})
+    if not results:
+        return None
+    es = meta.get("execution_stats") or {}
+    usage = meta.get("usage_stats") or {}
+    accounted = max(len(set(es.get("completed_items") or [])),
+                    int(es.get("items_processed") or 0),
+                    int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
+                        "request_count") or 0),
+                    int(usage.get("n_responses_with_usage") or 0))
+    return accounted, results
+
+
 class PassCoster:
     """Prices register passes on the audited basis from committed evidence.
 
@@ -394,12 +431,21 @@ class PassCoster:
         cur = own
         while True:
             entry = self.log_dirs.get(_rel(cur))
-            if entry and stage != "proposer" and cur != own and not entry.get("covers_verifier"):
-                entry = None  # a proposer-only log; keep looking upward
+            tiers: list[str] = []
             if entry:
+                if cur == own:
+                    # The fragment's own directory: its logs are its launch.
+                    tiers = entry.get("tiers") or entry.get("verifier_tiers") or []
+                elif stage == "proposer":
+                    tiers = entry.get("tiers") or []
+                else:
+                    # A verifier leg takes from a run-level log only the tiers
+                    # it records FOR a verifier stage (re-audit, 2026-10-03).
+                    tiers = entry.get("verifier_tiers") or []
+            if tiers:
                 logs = ", ".join(lg["path"].rsplit("/", 1)[-1] for lg in entry["logs"])
                 kind = "run-log" if cur == own else "run-log-inherited"
-                found = [Evidence(kind, tuple(entry["tiers"]), f"{_rel(cur)}/{{{logs}}}")]
+                found = [Evidence(kind, tuple(tiers), f"{_rel(cur)}/{{{logs}}}")]
                 if entry.get("explicit_cache"):
                     found.append(Evidence("cached-path", ("standard",),
                                           f"{_rel(cur)} logs record an explicit context "
@@ -410,18 +456,23 @@ class PassCoster:
             cur = cur.parent
 
     @staticmethod
-    def _launch_manifest(directory: Path, run_dir: Path) -> Evidence | None:
+    def _launch_manifest(directory: Path, run_dir: Path,
+                         stage: str = "proposer") -> Evidence | None:
         """``service_tier`` from the nearest ``launch_manifest.json`` up to the run.
 
-        One found above the fragment's own directory describes the run's
-        launch and ranks as inherited evidence.
+        The stage's own tier where the manifest resolves one
+        (``resolved_config.proposer`` or ``.verify``), else the run's. One found
+        above the fragment's own directory ranks as inherited evidence.
         """
         own, stop = directory.resolve(), run_dir.resolve()
         cur = own
         while True:
             lm = cur / "launch_manifest.json"
             if lm.exists():
-                tier = _read_json(lm).get("service_tier")
+                doc = _read_json(lm)
+                section = "proposer" if stage == "proposer" else "verify"
+                tier = ((doc.get("resolved_config") or {}).get(section) or {}).get(
+                    "service_tier") or doc.get("service_tier")
                 if tier in TIERS:
                     kind = "launch-manifest" if cur == own else "launch-manifest-inherited"
                     return Evidence(kind, (tier,), _rel(lm))
@@ -485,7 +536,7 @@ class PassCoster:
             # is not on that path.
             logs = [e for e in logs if e.kind != "cached-path"]
         out.extend(logs)
-        lm = self._launch_manifest(here, run_dir)
+        lm = self._launch_manifest(here, run_dir, stage)
         if lm:
             out.append(lm)
         return out
@@ -642,7 +693,7 @@ class PassCoster:
                 if chosen.kind == "cached-path" and e.kind in REQUEST_RECORDS:
                     notes.append(f"{e.describe()} is the tier REQUESTED; the cached path "
                                  "dropped it")
-                elif e.kind in INHERITED_KINDS:
+                elif e.kind in INHERITED_KINDS and chosen.kind not in INHERITED_KINDS:
                     notes.append(f"{e.describe()} overruled by the fragment's own {chosen.kind}")
                 else:
                     conflicts.append(f"pins disagree: {chosen.describe()} vs {e.describe()}")
@@ -757,28 +808,35 @@ class PassCoster:
                                      run_dir=run_dir, model=fm, stage=stage)
                   for (m, p), fm in zip(fragments, models, strict=True)]
         bases = {f["_basis"] for f in priced}
-        partial = "unrecorded" in bases and bases != {"unrecorded"}
-        mixed_note = None
+        # Why the cited metas may cover only part of the pass's spend.
+        partial_why = []
+        if override.get("basis") == "audited-lower-bound":
+            partial_why.append(override["source"])
+        if "unrecorded" in bases and bases != {"unrecorded"}:
+            partial_why.append("a fragment of this pass recorded no usage")
+        if stage != "proposer" and fragments:
+            cover = verifier_coverage(*fragments[0])
+            if cover and cover[0] < COVERAGE_FLOOR * cover[1]:
+                partial_why.append(
+                    f"the meta accounts for {cover[0]:,} request(s) against {cover[1]:,} "
+                    "results in probabilities.json: a later leg (a cleanup) overwrote it")
+        costed = [f for f in priced if f["_cost"] is not None]
         if bases == {"unrecorded"}:
-            basis = "unrecorded"
+            basis, cost = "unrecorded", None
         elif "unpriceable" in bases:
-            basis = "unpriceable"  # part of the pass cannot be priced: no figure
-        elif partial and "audited-upper-bound" in bases:
-            # One fragment recorded nothing (the sum is a floor) and another is
-            # priced at its highest tier (a ceiling): neither bound holds.
-            basis = "unpriceable"
-            mixed_note = ("mixed: a fragment recorded no usage and another's tier is "
-                          "unresolved, so the sum is neither a lower nor an upper bound")
-        elif partial:
+            basis, cost = "unpriceable", None  # part of the pass cannot be priced
+        elif partial_why:
+            # A floor: each priced fragment at its LOWEST candidate tier (a
+            # pinned fragment has one price). Valid whatever the unresolved
+            # tiers were, which a sum of highest candidates would not be.
             basis = "audited-lower-bound"
-            mixed_note = "LOWER bound: a fragment of this pass recorded no usage"
+            cost = round(sum(f["_low"] for f in costed), 6)
         elif "audited-upper-bound" in bases:
             basis = "audited-upper-bound"
+            cost = round(sum(f["_cost"] for f in costed), 6)
         else:
             basis = "audited"
-        costed = [f for f in priced if f["_cost"] is not None]
-        cost = (None if basis in ("unrecorded", "unpriceable")
-                else round(sum(f["_cost"] for f in costed), 6))
+            cost = round(sum(f["_cost"] for f in costed), 6)
         source: dict[str, Any] = {"rate_card": self.card_identity,
                                   "fragments": [{k: v for k, v in f.items()
                                                  if not k.startswith("_")} for f in priced]}
@@ -787,15 +845,11 @@ class PassCoster:
                                     "high": round(sum(f["_high"] for f in costed), 6)}
         if basis == "unrecorded":
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
-        if mixed_note:
-            source["note"] = mixed_note
-        if override.get("basis") == "audited-lower-bound" and cost is not None:
-            # The cited metas price correctly but cover only part of the pass:
-            # the figure is a floor, and is labelled so rather than "audited".
-            basis = "audited-lower-bound"
-            source["note"] = "LOWER bound: " + override["source"]
+        if basis == "audited-lower-bound":
+            source["note"] = "LOWER bound: " + "; ".join(partial_why)
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "BATCH_KINDS", "Evidence", "INHERITED_KINDS", "PIN_PRIORITY", "PassCoster",
-           "REQUEST_RECORDS", "TierFinding", "fragment_usage", "is_continuous", "pacific_days"]
+__all__ = ["BASES", "BATCH_KINDS", "COVERAGE_FLOOR", "Evidence", "INHERITED_KINDS",
+           "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding", "fragment_usage",
+           "is_continuous", "pacific_days", "verifier_coverage"]

@@ -43,7 +43,13 @@ sys.path.insert(0, str(REPO_ROOT))
 # generator's extraction logic: the claim under test is that the register
 # applied this function to the cited tokens, so the function is the contract
 # and the generator's tier inference is what it must not borrow.
-from scripts.lib_cost import price_usage  # noqa: E402
+from scripts.lib_cost import (  # noqa: E402
+    RateCardError,
+    UnknownModelError,
+    is_unrecorded,
+    price_usage,
+    resolve_model,
+)
 DEFAULT_OUT = (
     REPO_ROOT / "reports" / "verification" / "c3-rederivation"
     / "rederivation-report.json"
@@ -208,6 +214,59 @@ def _billed_usage(meta: dict) -> dict:
     return out
 
 
+def _unpriceable_reason(row: dict, metas: list[dict]) -> str | None:
+    """Why a row's cited metas cannot be priced, re-derived; None if they can."""
+    for meta in metas:
+        usage = meta.get("usage_stats")
+        if not usage or is_unrecorded(usage):
+            continue
+        stamp = meta.get("timestamp") or {}
+        if not (stamp.get("end") or stamp.get("start")):
+            return "a cited meta with usage has no timestamp"
+        own = next((i.get("model_used") for i in (meta.get("per_item_metadata") or [])
+                    if i.get("model_used")), None)
+        for model in {row.get("model_used"), own} - {None}:
+            try:
+                resolve_model(model)
+            except UnknownModelError:
+                return f"no rate card entry for {model!r}"
+    return None
+
+
+def _partial_reasons(row: dict, metas: list[dict], sources: list[str]) -> list[str]:
+    """Why the cited metas cover only part of a pass, re-derived independently.
+
+    An override listing the pass as a lower bound; a cited meta that recorded
+    no usage beside one that did; or a verifier meta accounting for fewer than
+    90 % of its leg's probabilities.json results (the cleanup-overwrite
+    signature).
+    """
+    why = []
+    if _overrides().get(row.get("pass_id"), {}).get("basis") == "audited-lower-bound":
+        why.append("override")
+    used = [bool(m.get("usage_stats")) and not is_unrecorded(m["usage_stats"])
+            for m in metas if "usage_stats" in m]
+    if used and any(used) and not all(used):
+        why.append("unrecorded fragment")
+    first = next((s for s in sources if s.endswith((".meta.json", ".meta.json.gz"))), None)
+    if first and row.get("n_tiles_processed") is None:  # a verifier row (E72)
+        prob = REPO_ROOT / first
+        prob = prob.parent / "probabilities.json"
+        if prob.exists():
+            results = len(load(prob).get("results") or {})
+            meta = metas[0]
+            es = meta.get("execution_stats") or {}
+            usage = meta.get("usage_stats") or {}
+            accounted = max(len(set(es.get("completed_items") or [])),
+                            int(es.get("items_processed") or 0),
+                            int(((usage.get("by_provider") or {}).get("google_gemini") or {})
+                                .get("request_count") or 0),
+                            int(usage.get("n_responses_with_usage") or 0))
+            if results and accounted < 0.9 * results:
+                why.append("verifier coverage")
+    return why
+
+
 def _overrides() -> dict:
     """The committed cost overrides (data, not generator code), keyed by pass_id."""
     path = REPO_ROOT / "data" / "pricing" / "cost-overrides.json"
@@ -267,14 +326,21 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
     out: list[dict] = []
     if basis == "published":
         # The figure is a report's, not the metas'; what C3 can certify is that
-        # the register carries the figure the overrides file records.
+        # the register carries the figure the overrides file records, and a
+        # published row the file does not list is a MISMATCH, never silence.
         entry = _overrides().get(row.get("pass_id"), {})
-        out.append({**verdict_row("cost_usd", claim, entry.get("cost_usd")),
+        ok = entry.get("basis") == "published" and close(claim, entry.get("cost_usd"))
+        out.append({"field": "cost_usd", "verdict": "MATCH" if ok else "MISMATCH",
+                    "manifest": claim, "derived": entry.get("cost_usd"),
                     "note": f"published: {source.get('published')}"})
     elif basis == "unpriceable":
-        out.append({"field": "cost_usd", "verdict": "MATCH" if claim is None else "MISMATCH",
+        # Certified only if a cited meta really cannot be priced: no date, or a
+        # model the card does not know. A priceable pass wrongly nulled fails.
+        why = _unpriceable_reason(row, metas)
+        out.append({"field": "cost_usd",
+                    "verdict": "MATCH" if (claim is None and why) else "MISMATCH",
                     "manifest": claim, "derived": None,
-                    "note": "unpriceable: null (no rate card row, no date, or mixed bounds)"})
+                    "note": f"unpriceable: {why or 'no cited meta is unpriceable'}"})
     elif basis == "unrecorded":
         silent = all(not any(v for v in (mm.get("usage_stats") or {}).values()
                              if isinstance(v, (int, float))) for mm in metas)
@@ -309,9 +375,14 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
             tiers = _fragment_tiers(frag)
             if not tiers:
                 continue  # an unrecorded fragment of a priced pass contributes nothing
-            prices = [price_usage(usage, frag["model_recorded"], t,
-                                  at=when)["total_cost_usd"] or 0.0
-                      for t in tiers]
+            try:
+                prices = [price_usage(usage, frag["model_recorded"], t,
+                                      at=when)["total_cost_usd"] or 0.0
+                          for t in tiers]
+            except (RateCardError, UnknownModelError) as exc:
+                # A claim this ledger cannot price is a finding, never a crash.
+                stamp_errors.append(f"{frag['meta']}: cannot price as claimed ({exc})")
+                continue
             total += max(prices)
             # Only an unresolved fragment spans a range. A pinned or
             # tier-indifferent one has one cost (its highest candidate, which
@@ -321,9 +392,16 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
         out.append({"field": "cost_source.fragments.stamps",
                     "verdict": "MISMATCH" if stamp_errors else "MATCH",
                     "manifest": len(frags), "derived": stamp_errors or None})
-        out.append(verdict_row("cost_usd", claim, round(total, 6)))
-        if basis == "audited-lower-bound":
-            out[-1]["note"] = "lower bound: the cited metas cover part of the pass (cost-overrides)"
+        partial = _partial_reasons(row, metas, sources)
+        # A partial pass publishes its floor (each fragment's lowest candidate);
+        # a whole one its total. The label must follow the re-derived facts.
+        out.append(verdict_row("cost_usd", claim, round(low if partial else total, 6)))
+        expect = "audited-lower-bound" if partial else basis
+        out.append({"field": "cost_basis",
+                    "verdict": "MATCH" if (basis == expect and (basis == "audited-lower-bound")
+                                           == bool(partial)) else "MISMATCH",
+                    "manifest": basis, "derived": partial or None,
+                    "note": "lower bound iff the cited metas cover part of the pass"})
         if basis == "audited-upper-bound":
             bounds = source.get("bounds_usd") or {}
             out.append(verdict_row("cost_source.bounds_usd.low", bounds.get("low"),

@@ -134,11 +134,15 @@ TIER_LINE = re.compile(r"service tier:\s*([a-z]+)", re.IGNORECASE)
 #: its own request config without ``service_tier`` (see lib_pass_cost).
 CACHE_LINE = re.compile(r"^Context cache created: ", re.MULTILINE)
 
-#: Signs that a log covers a VERIFIER stage (the verifier scripts, their
-#: probabilities output, or a stage the driver names as a verifier). A run-root
-#: log without any is a proposer launch record and must not pin a verifier
-#: leg beneath it (lib_pass_cost; audit lens A, 2026-10-03).
+#: The first line of a log that belongs to a VERIFIER stage (the verifier
+#: scripts, their probabilities output, or a stage the driver names as a
+#: verifier). A "Service tier:" line before it is the proposer's launch line.
 VERIFIER_LINE = re.compile(r"verif|run_pv|5_verify_crops|probabilities\.json", re.IGNORECASE)
+
+#: A verifier command line, whose own ``--service-tier`` switch is the
+#: verifier stage's requested tier (``run_pv.py verify ... --service-tier flex``).
+VERIFIER_CMD = re.compile(r"run_pv\.py\s+(?:verify|cleanup)|5_verify_crops")
+SWITCH = re.compile(r"--service-tier[= ]([a-z]+)")
 
 #: The service tiers a tier line may name; anything else is recorded as unknown
 #: rather than passed on as a tier.
@@ -446,6 +450,50 @@ def _git_tracked(paths: list[Path]) -> set[str]:
     return {s for s in out.stdout.decode().split("\0") if s}
 
 
+def parse_log(text: str) -> dict[str, Any]:
+    r"""Read one log's tier evidence: the launch tiers, and the verifier stage's own.
+
+    ``verifier_tiers`` are the tiers a log records FOR a verifier stage: a
+    ``Service tier:`` line that comes after the log's first verifier line, or
+    the ``--service-tier`` switch on a verifier command line. A log that only
+    mentions a verifier after its proposer launch lines records none (the
+    re-audit of 2026-10-03 found every such tier line preceded the verifier).
+
+    Args:
+        text: The log's text.
+
+    Returns:
+        ``tiers`` (known tier words on ``Service tier:`` lines), ``unknown``,
+        ``tier_lines``, ``explicit_cache_lines`` and ``verifier_tiers``.
+
+    Examples:
+        >>> log = "Service tier: flex\nproposer done\n=== verifier ===\nService tier: standard\n"
+        >>> parse_log(log)["verifier_tiers"]
+        ['standard']
+        >>> parse_log("Service tier: flex\nnow verifying\n")["verifier_tiers"]
+        []
+        >>> parse_log("python3 scripts/run_pv.py verify --x y --service-tier flex\n")["verifier_tiers"]
+        ['flex']
+    """
+    lines = text.splitlines()
+    first_verifier = next((i for i, ln in enumerate(lines) if VERIFIER_LINE.search(ln)), None)
+    words: list[str] = []
+    verifier: set[str] = set()
+    for i, ln in enumerate(lines):
+        for m in TIER_LINE.finditer(ln):
+            word = m.group(1).lower()
+            words.append(word)
+            if first_verifier is not None and i > first_verifier and word in KNOWN_TIERS:
+                verifier.add(word)
+        if VERIFIER_CMD.search(ln):
+            verifier.update(w for w in SWITCH.findall(ln) if w in KNOWN_TIERS)
+    return {"tiers": sorted({w for w in words if w in KNOWN_TIERS}),
+            "unknown": sorted({w for w in words if w not in KNOWN_TIERS}),
+            "tier_lines": len(words),
+            "explicit_cache_lines": len(CACHE_LINE.findall(text)),
+            "verifier_tiers": sorted(verifier)}
+
+
 def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
     """Sweep run logs for the runner's ``Service tier:`` launch line.
 
@@ -458,36 +506,37 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
         logs cited.
     """
     logs = sorted(outputs_dir.rglob("*.log"))
-    hits: list[tuple[Path, list[str], int, bool]] = []
+    hits: list[tuple[Path, dict[str, Any]]] = []
     for path in logs:
         try:
-            text = path.read_text(errors="ignore")
+            parsed = parse_log(path.read_text(errors="ignore"))
         except OSError:
             continue
-        tiers = [m.group(1).lower() for m in TIER_LINE.finditer(text)]
-        if tiers:
-            hits.append((path, tiers, len(CACHE_LINE.findall(text)),
-                         bool(VERIFIER_LINE.search(text))))
-    tracked = _git_tracked([p for p, _, _, _ in hits])
+        if parsed["tier_lines"] or parsed["verifier_tiers"]:
+            hits.append((path, parsed))
+    tracked = _git_tracked([p for p, _ in hits])
     dirs: dict[str, dict[str, Any]] = {}
-    for path, tiers, caches, verifier in hits:
+    for path, parsed in hits:
         rel_dir = path.parent.relative_to(PROJECT_ROOT).as_posix()
         rel = path.relative_to(PROJECT_ROOT).as_posix()
-        entry = dirs.setdefault(rel_dir, {"tiers": [], "explicit_cache": False,
-                                          "covers_verifier": False, "logs": []})
-        known = sorted({t for t in tiers if t in KNOWN_TIERS})
-        unknown = sorted({t for t in tiers if t not in KNOWN_TIERS})
+        entry = dirs.setdefault(rel_dir, {"tiers": [], "verifier_tiers": [],
+                                          "explicit_cache": False, "logs": []})
         record = {"path": rel, "sha256": _sha256(path), "tracked": rel in tracked,
-                  "tiers": known, "tier_lines": len(tiers),
-                  "explicit_cache_lines": caches, "covers_verifier": verifier}
-        if unknown:
-            record["unknown_tier_words"] = unknown
+                  "tiers": parsed["tiers"], "tier_lines": parsed["tier_lines"],
+                  "explicit_cache_lines": parsed["explicit_cache_lines"],
+                  "verifier_tiers": parsed["verifier_tiers"]}
+        if parsed["unknown"]:
+            record["unknown_tier_words"] = parsed["unknown"]
         entry["logs"].append(record)
-        entry["tiers"] = sorted(set(entry["tiers"]) | set(known))
-        entry["explicit_cache"] = entry["explicit_cache"] or caches > 0
-        entry["covers_verifier"] = entry["covers_verifier"] or verifier
-    # A directory whose tier lines all named unknown words carries no tier.
-    dirs = {d: e for d, e in dirs.items() if e["tiers"]}
+        entry["tiers"] = sorted(set(entry["tiers"]) | set(parsed["tiers"]))
+        # Per log, never OR-ed across logs: a proposer log's launch tier does
+        # not become verifier evidence because a neighbouring log mentions a
+        # verifier (re-audit, 2026-10-03).
+        entry["verifier_tiers"] = sorted(set(entry["verifier_tiers"])
+                                         | set(parsed["verifier_tiers"]))
+        entry["explicit_cache"] = entry["explicit_cache"] or parsed["explicit_cache_lines"] > 0
+    # A directory with no known tier for either stage carries no evidence.
+    dirs = {d: e for d, e in dirs.items() if e["tiers"] or e["verifier_tiers"]}
     return {
         "_README": (
             "Service tiers named by run logs, per directory. The detection runner prints "
@@ -499,11 +548,13 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
             "explicit context cache (--use-cache): the runner's cached call path omits "
             "service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a "
             "real-time request on it is billed at standard whatever the launch line says. "
-            "covers_verifier records that a log mentions a verifier stage; a run-level log "
-            "without it does not pin the verifier legs beneath it. Tier words other than "
-            "standard, flex and batch are kept as unknown_tier_words, never as tiers. "
-            "Read by scripts/lib_pass_cost.py; never edit by hand."),
-        "schema": "run-log-tiers/3",
+            "verifier_tiers are the tiers a log records FOR a verifier stage: a Service tier "
+            "line after the log's first verifier line, or --service-tier on a run_pv.py "
+            "verify or cleanup command; only these pin a verifier leg beneath a run-level "
+            "log. Tier words other than standard, flex and batch are kept as "
+            "unknown_tier_words, never as tiers. Read by scripts/lib_pass_cost.py; never "
+            "edit by hand."),
+        "schema": "run-log-tiers/4",
         "logs_scanned": len(logs),
         "logs_with_tier_lines": len(hits),
         "directories": dict(sorted(dirs.items())),
