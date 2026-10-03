@@ -1712,6 +1712,9 @@ def test_a_single_tier_header_against_a_request_record_is_a_note(evidence, tmp_p
     ("0" * 40, True),          # a commit this clone does not hold: the rule stays
     (None, True),              # no commit recorded: the rule stays
     ("unknown", True),         # what the tracker writes when git is unavailable
+    ("HEAD", True),            # a ref asks about today's checkout, not the run's
+    ("wp3-cost-basis", True),
+    (AFTER_FIX_FULL + "-dirty", True),
 ])
 def test_the_cached_path_rule_follows_the_code_a_run_executed(evidence, tmp_path, commit,
                                                               subject):
@@ -1929,6 +1932,8 @@ def test_the_docstring_examples_run(module):
 @pytest.mark.parametrize(("pattern", "reason"), [
     ("*/run.meta.json", "too broad"),
     ("outputs/*/run.meta.json", "too broad"),
+    ("outputs/x*/run.meta.json", "too broad"),      # a wildcard inside the 2nd name
+    ("outputs/run.meta*.json", "too broad"),
     ("x.json", "matches no file"),
     (str(REPO / "data/pricing/tier-attestations.json"), "repository-relative"),
 ])
@@ -2068,12 +2073,19 @@ def test_a_partial_header_the_evidence_allows_is_no_conflict(evidence, tmp_path)
 
 
 @pytest.mark.tier1
-def test_a_partial_header_against_a_batch_marker_is_a_conflict(evidence, tmp_path):
-    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
-                 usage=_counted({"flex": 2, "unreported": 1}, 3), batch_api={"job": "x"})
-    frag = _cost(evidence(), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
-    assert any(c.startswith("applied-header-partial served flex but batch-marker")
-               for c in frag["conflicts"])
+def test_a_partial_header_beside_a_batch_marker_is_no_conflict(evidence, tmp_path):
+    # A batch leg with a real-time cleanup merged into it: the cleanup's
+    # responses carry the header, the batch responses do not. The marker
+    # describes the unreported part, so nothing contradicts the API; the
+    # served tier still widens the candidates (round-8 audit, lens A).
+    leg = tmp_path / "r" / "verified"
+    _write(leg / "batch_jobs.json", {"jobs": []})
+    meta = _meta(leg / "run.meta.json", usage=_counted({"flex": 2, "unreported": 8}, 10))
+    frag = _cost(evidence(), [meta], tmp_path / "r",
+                 stage="verifier")["cost_source"]["fragments"][0]
+    assert "conflicts" not in frag
+    # Widened to flex|batch, which price alike for this model: audited.
+    assert frag["tier_method"] == "tier-indifferent: flex|batch"
 
 
 @pytest.mark.tier1
@@ -2096,3 +2108,35 @@ def test_c3_certifies_a_foreign_served_tier_as_unpriceable(evidence, tmp_path, m
     verdicts = {f["field"]: f for f in c3.rederive_pass(row)["fields"]}
     assert verdicts["cost_usd"]["verdict"] == "MATCH"
     assert "priority" in verdicts["cost_usd"]["note"]
+
+
+@pytest.mark.tier1
+def test_a_merge_keeps_every_commit_that_ran():
+    from scripts.lib_llm_metadata import merge_meta
+
+    def part(commit):
+        return {"environment": {"git_commit": commit, "script": "4_detect_mounds_batch.py"},
+                "execution_stats": {}, "usage_stats": {}, "timestamp": {}}
+
+    merged = merge_meta(part(AFTER_FIX_FULL), part(BEFORE_FIX))
+    assert merged["environment"]["git_commit"] == AFTER_FIX_FULL  # readers expect one
+    assert merged["environment"]["git_commits"] == [AFTER_FIX_FULL, BEFORE_FIX]
+    again = merge_meta(merged, part("c0ffee123"))
+    assert again["environment"]["git_commits"] == [AFTER_FIX_FULL, BEFORE_FIX, "c0ffee123"]
+    assert "git_commits" not in merge_meta(part(AFTER_FIX), part(AFTER_FIX))["environment"]
+
+
+@pytest.mark.tier1
+def test_a_merge_with_a_pre_fix_part_stays_on_the_cached_path(evidence, tmp_path):
+    # A post-fix original with a pre-fix recovery merged into it: part of the
+    # fragment dropped its tier, so the rule applies to the whole.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "explicit_cache": True}}
+    env = {"git_commit": AFTER_FIX, "git_commits": [AFTER_FIX, BEFORE_FIX]}
+    meta = _meta(pdir / "a.meta.json", environment=env)
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    only_post = _meta(pdir / "b.meta.json",
+                      environment={"git_commit": AFTER_FIX, "git_commits": [AFTER_FIX, FIX_COMMIT]})
+    frag = _cost(evidence(logs=logs), [only_post], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert frag["tier_method"] == "run-log"

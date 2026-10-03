@@ -459,10 +459,12 @@ def _preserved_main_legs(primary: dict, primary_path: Path,
     and is priced with it (re-audit round 2). Two kinds of file beside it are
     NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's ``run_id``
     (cumulative), and ``run.meta.pre-rerun-*`` is the predecessor batch mode
-    keeps when it rebuilds a leg's meta from the whole results file, so its
+    keeps when it rebuilds a leg's meta. After a ``batch-recover`` its
     results are already inside the primary (the Gemini 3 row's two such
     sidecars were first booked as superseded spend, a US$27.85 double count
-    withdrawn before merge; ``data/pricing/superseded-executions.json``).
+    withdrawn before merge); after a fresh batch pass, which re-sends the
+    whole manifest, it is separate superseded spend for the ledger
+    (``data/pricing/superseded-executions.json``). Neither is this leg's cost.
 
     Args:
         primary: The leg's ``run.meta.json``, parsed.

@@ -1506,6 +1506,21 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
     """
     merged = dict(original)  # shallow copy at top level
 
+    # ---- environment: the original's, plus EVERY commit that ran ----
+    # ``git_commit`` stays the original's (readers expect one value); the
+    # list names each commit whose code contributed. The cost coster lifts
+    # the cached-path rule only when every one of them has the fix, so a
+    # merge must not hide a recovery run on other code (round-8 audit).
+    commits: list[str] = []
+    for part in (original, recovery):
+        env = part.get("environment") or {}
+        for commit in env.get("git_commits") or [env.get("git_commit")]:
+            if commit and commit not in commits:
+                commits.append(commit)
+    if len(commits) > 1:
+        merged["environment"] = {**(original.get("environment") or {}),
+                                 "git_commits": commits}
+
     # ---- timestamp: start from original, end from recovery, durations sum ----
     o_ts = original.get("timestamp", {})
     r_ts = recovery.get("timestamp", {})

@@ -150,6 +150,7 @@ from __future__ import annotations
 
 import fnmatch
 import json
+import re
 import subprocess
 from dataclasses import dataclass, field
 from functools import lru_cache
@@ -214,6 +215,9 @@ CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateConten
 #: The commit that fixed the cached path. A fragment whose recorded code
 #: descends from it sent its tier on the cached call too.
 CACHED_PATH_FIX_COMMIT = "2df65047ed913f93ff8b7319bc89e478676194d9"
+
+#: A recorded commit, abbreviated or full; anything else keeps the cached-path rule.
+_COMMIT_HASH = re.compile(r"[0-9a-f]{7,40}")
 
 #: The ``served_tier_counts`` key for a response that carried no tier header.
 UNREPORTED = "unreported"
@@ -415,6 +419,16 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     return accounted, results
 
 
+def _every_commit_has_fix(environment: dict[str, Any]) -> bool:
+    """Whether every commit a meta records running has the cached-path fix.
+
+    A merged meta lists each contributing commit in ``git_commits``
+    (``merge_meta``, 2026-10-03); a single run records ``git_commit``.
+    """
+    commits = environment.get("git_commits") or [environment.get("git_commit")]
+    return bool(commits) and all(has_cached_path_fix(c) for c in commits)
+
+
 def has_cached_path_fix(commit: Any) -> bool:
     """Whether a run's recorded code commit contains the cached-path fix.
 
@@ -432,7 +446,10 @@ def has_cached_path_fix(commit: Any) -> bool:
     Returns:
         True only when git confirms the ancestry.
     """
-    if not commit or not isinstance(commit, str):
+    if not isinstance(commit, str) or not _COMMIT_HASH.fullmatch(commit):
+        # Only a hash counts: a ref such as "HEAD" or a branch name would ask
+        # git about TODAY's checkout, not the run's ("unknown", "-dirty"
+        # suffixes and empty values keep the rule too).
         return False
     return _descends_from_fix(commit)
 
@@ -478,7 +495,7 @@ def attestation_glob_problem(pattern: Any) -> str | None:
     literal = pattern
     for ch in "*?[":
         literal = literal.split(ch, 1)[0]
-    if literal != pattern and "/" not in literal.strip("/"):
+    if literal != pattern and "/" not in literal.rsplit("/", 1)[0].strip("/"):
         # Fewer than two directories before the first wildcard would walk the
         # whole repository, or its parent (``outputs/*/...`` took 17.6 s).
         return ("names fewer than two directories before its first wildcard (too broad "
@@ -727,7 +744,7 @@ class PassCoster:
         logs = self._log_evidence(here, run_dir, stage)
         if any(e.kind == "cached-path" for e in logs) and (
                 stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
-                or has_cached_path_fix((meta.get("environment") or {}).get("git_commit"))):
+                or _every_commit_has_fix(meta.get("environment") or {})):
             # The cached-path rule is about the detection runner's REAL-TIME
             # call on code WITHOUT the fix: a verifier leg, a batch leg, a
             # fragment whose recorded commit descends from 2df65047e, or one
@@ -899,13 +916,14 @@ class PassCoster:
         for e in partial:
             # Some responses reported the tier that served them, the rest did
             # not: the fragment ran at least partly at each reported tier, so
-            # every one of them is a candidate, whatever the records pin. A
-            # record of what was REQUESTED yields; anything else that rules a
-            # served tier out (the invoice, a batch marker) contradicts the
-            # API and is reported as a conflict (re-audit A, L3).
+            # every one of them is a candidate, whatever the records pin. Only
+            # the invoice speaks for EVERY response of the day, so only a
+            # billing day that rules a served tier out contradicts the API; a
+            # pin may describe the unreported part (a batch leg with a
+            # real-time cleanup merged into it), so it is no conflict
+            # (re-audits A, rounds 7 and 8).
             for other in finding.evidence:
-                if other.kind.startswith("applied-header") or other.kind in REQUEST_RECORDS \
-                        or other.kind == "cached-path":
+                if other.kind != "billing-day":
                     continue
                 outside = [t for t in e.tiers if t not in other.tiers]
                 if outside:
