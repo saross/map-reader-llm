@@ -31,12 +31,19 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+# The ONE cost function (PI ruling D18). Importing it is not importing the
+# generator's extraction logic: the claim under test is that the register
+# applied this function to the cited tokens, so the function is the contract
+# and the generator's tier inference is what it must not borrow.
+from scripts.lib_cost import price_usage  # noqa: E402
 DEFAULT_OUT = (
     REPO_ROOT / "reports" / "verification" / "c3-rederivation"
     / "rederivation-report.json"
@@ -166,6 +173,108 @@ def is_verifier_pass(row: dict, decomposition: dict) -> bool:
     """
     fam = decomposition.get(row.get("run_id"), {}) or {}
     return row.get("proposer_pool") in (fam.get("verifier_passes") or {})
+
+
+def _load_meta(rel: str) -> dict:
+    """A cited meta, plain or gzipped."""
+    path = REPO_ROOT / rel
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8") as fh:
+            return json.load(fh)
+    return load(path)
+
+
+def _fragment_tiers(frag: dict) -> list[str]:
+    """The tiers a ``cost_source`` fragment says it was priced at.
+
+    A pinned fragment names one tier; an upper-bound fragment lists its
+    candidates (published at the highest); a tier-indifferent fragment names
+    its candidates in its method (they price alike to half a cent).
+    """
+    if frag.get("tier"):
+        return [frag["tier"]]
+    if frag.get("candidates"):
+        return list(frag["candidates"])
+    method = str(frag.get("tier_method") or "")
+    if method.startswith("tier-indifferent:"):
+        return method.split(":", 1)[1].strip().split("|")
+    return []
+
+
+def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict]:
+    """Re-derive ``cost_usd`` on the audited basis (WP3; PI ruling D11).
+
+    The claim certified is: ``cost_usd`` equals :func:`scripts.lib_cost.price_usage`
+    applied to each cited meta's own ``usage_stats``, at the tier its
+    ``cost_source`` fragment records (the HIGHEST candidate when the basis is
+    ``audited-upper-bound``), on the fragment's pricing date, summed. The
+    fragments priced must be exactly the metas the row cites. Which tier the
+    evidence supports is the generator's inference and is not re-derived here;
+    it is cited in ``cost_source`` for a reader to check.
+
+    Before WP3 this claim was "equals the meta's cost_estimate", which
+    certified the runner's estimate as correct because the register had
+    copied it (plan § 1.4). The meta's own block is still compared, as a
+    REPORTED field: a disagreement over US$0.01 is listed, never certified.
+
+    Args:
+        row: The passes-manifest row.
+        sources: Its ``provenance.source_files``.
+        metas: Those files, parsed (same order).
+
+    Returns:
+        Field verdicts for ``cost_usd``, ``cost_source.fragments`` and
+        ``cost_usd.meta_block``.
+    """
+    claim, basis = row.get("cost_usd"), row.get("cost_basis")
+    source = row.get("cost_source") or {}
+    meta_costs = [dig(mm, "cost_estimate.total_cost_usd", "cost_estimate.total_usd")
+                  for mm in metas]
+    meta_costs = [c for c in meta_costs if c is not None]
+    meta_sum = round(sum(meta_costs), 6) if meta_costs else None
+    if basis is None:  # a row written before generator 0.8.0: the old claim
+        return [verdict_row("cost_usd", claim, meta_sum)]
+    out: list[dict] = []
+    if basis in ("published", "unpriceable"):
+        out.append({"field": "cost_usd", "verdict": "STRUCTURAL", "manifest": claim,
+                    "derived": None,
+                    "note": f"cost_basis {basis}: "
+                            f"{source.get('published') or 'no rate card row for the usage'}"})
+    elif basis == "unrecorded":
+        silent = all(not any(v for v in (mm.get("usage_stats") or {}).values()
+                             if isinstance(v, (int, float))) for mm in metas)
+        out.append({"field": "cost_usd", "verdict": "MATCH" if (claim is None and silent)
+                    else "MISMATCH", "manifest": claim, "derived": None,
+                    "note": "unrecorded: null over usage blocks that record nothing (D12)"})
+    else:
+        frags = source.get("fragments") or []
+        cited = sorted(s for s in sources if s.endswith((".meta.json", ".meta.json.gz")))
+        priced = sorted(f.get("meta") for f in frags)
+        out.append({"field": "cost_source.fragments",
+                    "verdict": "MATCH" if priced == cited else "MISMATCH",
+                    "manifest": priced, "derived": cited})
+        total = low = 0.0
+        for frag in frags:
+            usage = _load_meta(frag["meta"]).get("usage_stats") or {}
+            tiers = _fragment_tiers(frag)
+            if not tiers:
+                continue  # an unrecorded fragment of a priced pass contributes nothing
+            prices = [price_usage(usage, frag["model_recorded"], t,
+                                  at=frag.get("priced_at"))["total_cost_usd"] or 0.0
+                      for t in tiers]
+            total += max(prices)
+            low += min(prices)
+        out.append(verdict_row("cost_usd", claim, round(total, 6)))
+        if basis == "audited-upper-bound":
+            bounds = source.get("bounds_usd") or {}
+            out.append(verdict_row("cost_source.bounds_usd.low", bounds.get("low"),
+                                   round(low, 6)))
+    note = "runner estimate in the cited metas; reported, never certified (D11)"
+    if meta_sum is not None and claim is not None and abs(meta_sum - claim) > 0.01:
+        note += f"; differs from the audited figure by US${meta_sum - claim:+.4f}"
+    out.append({"field": "cost_usd.meta_block", "verdict": "STRUCTURAL",
+                "manifest": claim, "derived": meta_sum, "note": note})
+    return out
 
 
 def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
@@ -344,12 +453,7 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
         else:
             fields.append(verdict_row(f"tokens.{mf}", man_val, derived))
 
-    costs = [dig(mm, "cost_estimate.total_cost_usd",
-                 "cost_estimate.total_usd", "cost_usd") for mm in metas]
-    costs = [c for c in costs if c is not None]
-    fields.append(verdict_row(
-        "cost_usd", row.get("cost_usd"),
-        round(sum(costs), 6) if costs else None))
+    fields.extend(rederive_cost(row, sources, metas))
     durs = [dig(mm, "timestamp.duration_seconds", "wall_clock_s")
             for mm in metas]
     durs = [x for x in durs if x is not None]
