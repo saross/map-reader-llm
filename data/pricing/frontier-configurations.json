@@ -1,0 +1,568 @@
+{
+ "_README": "Which passes-register rows price each frontier configuration at the uniform discounted tier (PI ruling D19, amended 2026-10-04: every configuration's own tokens at one tier, flex, which equals batch on the rate card). Read by scripts/lib_frontier_cost.py (FrontierCoster.configuration_cost); design in planning/wp4b-frontier-cost-design-2026-10-04.md. Each entry: 'proposer', a list of {run_id, pool, passes}, costed as passes x the pool's mean pass (all passes when 'passes' is absent); 'verifier', either {'leg': {run_id, pool}} for a full run's own verifier leg, or {'unit_from': {run_id, pool}, 'candidates': N, 'candidates_source': {file, keys}} for a rung whose union of N candidates is costed at that leg's per-candidate unit (the convention of scripts/stride55_ladder.py), the count copied from the committed ladder named in candidates_source. A leg that is a floor in the register (a cleanup overwrote its main record) needs 'comparables': audited legs with an identical verifier configuration, nominated here so they can be reviewed; the library refuses a nominee that is itself a floor or differs in configuration. Nominations: stride A's union leg from stride B's (same campaign, corpus and day); FOURTH's 3.7 leg from ARM2's (the 3.7 verifier on the same 55-map corpus, same campaign); TM and IM from the four complete legs of the 55-map generalisation campaign they belong to.",
+ "schema": "frontier-configurations/1",
+ "uniform_tier": "flex",
+ "board_families": {
+  "A-N1": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map-union-k10-verify"
+    },
+    "comparables": [
+     {
+      "run_id": "stride-55map-2026-08-25",
+      "pool": "g384_ov192_55map-union-k10-verify"
+     }
+    ],
+    "candidates": 18631,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov128_55map",
+      "N",
+      "1",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "B-N1": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify"
+    },
+    "candidates": 25586,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov192_55map",
+      "N",
+      "1",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "FOURTH-N1": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify37"
+    },
+    "comparables": [
+     {
+      "run_id": "gemini37-55map-2026-08-29",
+      "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+     }
+    ],
+    "candidates": 25586,
+    "candidates_source": {
+     "file": "results/gemini37-fourth-cell/55map/g384_ov192_55map/ladder.json",
+     "keys": [
+      "N",
+      "1",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "A-N3": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map-union-k10-verify"
+    },
+    "comparables": [
+     {
+      "run_id": "stride-55map-2026-08-25",
+      "pool": "g384_ov192_55map-union-k10-verify"
+     }
+    ],
+    "candidates": 26245,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov128_55map",
+      "N",
+      "3",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "B-N3": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify"
+    },
+    "candidates": 36757,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov192_55map",
+      "N",
+      "3",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "FOURTH-N3": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify37"
+    },
+    "comparables": [
+     {
+      "run_id": "gemini37-55map-2026-08-29",
+      "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+     }
+    ],
+    "candidates": 36757,
+    "candidates_source": {
+     "file": "results/gemini37-fourth-cell/55map/g384_ov192_55map/ladder.json",
+     "keys": [
+      "N",
+      "3",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "A-N5": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map-union-k10-verify"
+    },
+    "comparables": [
+     {
+      "run_id": "stride-55map-2026-08-25",
+      "pool": "g384_ov192_55map-union-k10-verify"
+     }
+    ],
+    "candidates": 30713,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov128_55map",
+      "N",
+      "5",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "B-N5": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify"
+    },
+    "candidates": 43909,
+    "candidates_source": {
+     "file": "results/stride55-2026-08-27/ladder.json",
+     "keys": [
+      "runs",
+      "g384_ov192_55map",
+      "N",
+      "5",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "FOURTH-N5": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify37"
+    },
+    "comparables": [
+     {
+      "run_id": "gemini37-55map-2026-08-29",
+      "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+     }
+    ],
+    "candidates": 43909,
+    "candidates_source": {
+     "file": "results/gemini37-fourth-cell/55map/g384_ov192_55map/ladder.json",
+     "keys": [
+      "N",
+      "5",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "A-N10": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map",
+     "passes": 10
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov128_55map-union-k10-verify"
+    },
+    "comparables": [
+     {
+      "run_id": "stride-55map-2026-08-25",
+      "pool": "g384_ov192_55map-union-k10-verify"
+     }
+    ]
+   }
+  },
+  "B-N10": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 10
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify"
+    }
+   }
+  },
+  "FOURTH-N10": {
+   "proposer": [
+    {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map",
+     "passes": 10
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-55map-2026-08-25",
+     "pool": "g384_ov192_55map-union-k10-verify37"
+    },
+    "comparables": [
+     {
+      "run_id": "gemini37-55map-2026-08-29",
+      "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+     }
+    ]
+   }
+  },
+  "ARM1-N1": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm1"
+    },
+    "candidates": 8426,
+    "candidates_source": {
+     "file": "results/gemini37-55map-2026-08-31/ladder/ladder.json",
+     "keys": [
+      "arms",
+      "arm1",
+      "1",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "ARM1-N3": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm1"
+    },
+    "candidates": 11079,
+    "candidates_source": {
+     "file": "results/gemini37-55map-2026-08-31/ladder/ladder.json",
+     "keys": [
+      "arms",
+      "arm1",
+      "3",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "ARM1-N5": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm1"
+    }
+   }
+  },
+  "ARM2-N1": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+    },
+    "candidates": 8426,
+    "candidates_source": {
+     "file": "results/gemini37-55map-2026-08-31/ladder/ladder.json",
+     "keys": [
+      "arms",
+      "arm2",
+      "1",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "ARM2-N3": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "unit_from": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+    },
+    "candidates": 11079,
+    "candidates_source": {
+     "file": "results/gemini37-55map-2026-08-31/ladder/ladder.json",
+     "keys": [
+      "arms",
+      "arm2",
+      "3",
+      "union_n"
+     ]
+    }
+   }
+  },
+  "ARM2-N5": {
+   "proposer": [
+    {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "gemini37-55map-2026-08-29",
+     "pool": "g384_ov192_55map_g37-union-k5-verify-arm2"
+    }
+   }
+  },
+  "TH7": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "verified"
+    }
+   }
+  },
+  "T03": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "verified"
+    }
+   }
+  },
+  "TM": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "verified"
+    },
+    "comparables": [
+     {
+      "run_id": "55maps-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-min-n10-uplift",
+      "pool": "verified-3of10"
+     }
+    ]
+   }
+  },
+  "IM": {
+   "proposer": [
+    {
+     "run_id": "55maps-image-generalisation",
+     "pool": "library_plus-hp"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-image-generalisation",
+     "pool": "verified"
+    },
+    "comparables": [
+     {
+      "run_id": "55maps-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-min-n10-uplift",
+      "pool": "verified-3of10"
+     }
+    ]
+   }
+  },
+  "UPL": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "detect_brief-text"
+    },
+    {
+     "run_id": "55maps-text-min-n10-uplift",
+     "pool": "detect_brief-text-min-n10"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-min-n10-uplift",
+     "pool": "verified-3of10"
+    }
+   }
+  }
+ }
+}
