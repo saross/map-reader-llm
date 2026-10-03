@@ -225,11 +225,15 @@ def _unpriceable_reason(row: dict, metas: list[dict]) -> str | None:
             return "a cited meta with usage has no timestamp"
         own = next((i.get("model_used") for i in (meta.get("per_item_metadata") or [])
                     if i.get("model_used")), None)
-        for model in {row.get("model_used"), own} - {None}:
+        when = (stamp.get("end") or stamp.get("start"))[:10]
+        for model in sorted({row.get("model_used"), own} - {None}):
             try:
                 resolve_model(model)
+                price_usage(usage, model, "standard", at=when)
             except UnknownModelError:
                 return f"no rate card entry for {model!r}"
+            except RateCardError:
+                return f"no rate card row for {model!r} on {when}"
     return None
 
 
@@ -253,15 +257,20 @@ def _partial_reasons(row: dict, metas: list[dict], sources: list[str]) -> list[s
         prob = REPO_ROOT / first
         prob = prob.parent / "probabilities.json"
         if prob.exists():
-            results = len(load(prob).get("results") or {})
-            meta = metas[0]
-            es = meta.get("execution_stats") or {}
-            usage = meta.get("usage_stats") or {}
-            accounted = max(len(set(es.get("completed_items") or [])),
-                            int(es.get("items_processed") or 0),
-                            int(((usage.get("by_provider") or {}).get("google_gemini") or {})
+            doc = load(prob)
+            results = len(doc.get("results") or {})
+            rounds = max(int(doc.get("iterations") or 1), 1)
+            accounted = 0
+            for meta in metas:
+                if "usage_stats" not in meta:
+                    continue  # results/run-conditions.json and the like
+                es = meta.get("execution_stats") or {}
+                usage = meta.get("usage_stats") or {}
+                done = len(set(es.get("completed_items") or []))
+                calls = max(int(((usage.get("by_provider") or {}).get("google_gemini") or {})
                                 .get("request_count") or 0),
                             int(usage.get("n_responses_with_usage") or 0))
+                accounted += done or int(es.get("items_processed") or 0) or calls // rounds
             if results and accounted < 0.9 * results:
                 why.append("verifier coverage")
     return why
@@ -355,6 +364,7 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                     "verdict": "MATCH" if priced == cited else "MISMATCH",
                     "manifest": priced, "derived": cited})
         total = low = high = 0.0
+        spread = False  # does any fragment's price depend on an unresolved tier?
         stamp_errors = []
         for frag in frags:
             meta = _load_meta(frag["meta"])
@@ -374,7 +384,10 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                                     f"{row.get('model_used')}/{own}")
             tiers = _fragment_tiers(frag)
             if not tiers:
-                continue  # an unrecorded fragment of a priced pass contributes nothing
+                # A fragment priced at nothing must really have recorded nothing.
+                if usage and not is_unrecorded(usage) and not frag.get("unpriceable"):
+                    stamp_errors.append(f"{frag['meta']}: claims no usage, meta records usage")
+                continue
             try:
                 prices = [price_usage(usage, frag["model_recorded"], t,
                                       at=when)["total_cost_usd"] or 0.0
@@ -384,6 +397,7 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                 stamp_errors.append(f"{frag['meta']}: cannot price as claimed ({exc})")
                 continue
             total += max(prices)
+            spread = spread or (max(prices) - min(prices) >= 0.005)
             # Only an unresolved fragment spans a range. A pinned or
             # tier-indifferent one has one cost (its highest candidate, which
             # the half-cent rule makes equal to the rest), counted in both bounds.
@@ -396,12 +410,15 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
         # A partial pass publishes its floor (each fragment's lowest candidate);
         # a whole one its total. The label must follow the re-derived facts.
         out.append(verdict_row("cost_usd", claim, round(low if partial else total, 6)))
-        expect = "audited-lower-bound" if partial else basis
-        out.append({"field": "cost_basis",
-                    "verdict": "MATCH" if (basis == expect and (basis == "audited-lower-bound")
-                                           == bool(partial)) else "MISMATCH",
-                    "manifest": basis, "derived": partial or None,
-                    "note": "lower bound iff the cited metas cover part of the pass"})
+        # The whole label, re-derived: a floor iff the metas cover part of the
+        # pass; else an upper bound iff some fragment's price depends on an
+        # unresolved tier; else audited (re-audit round 2: only the lower-bound
+        # case was checked, so an upper bound relabelled audited certified).
+        expect = ("audited-lower-bound" if partial
+                  else "audited-upper-bound" if spread else "audited")
+        out.append({"field": "cost_basis", "verdict": "MATCH" if basis == expect else "MISMATCH",
+                    "manifest": basis, "derived": expect,
+                    "note": f"partial: {', '.join(partial)}" if partial else None})
         if basis == "audited-upper-bound":
             bounds = source.get("bounds_usd") or {}
             out.append(verdict_row("cost_source.bounds_usd.low", bounds.get("low"),

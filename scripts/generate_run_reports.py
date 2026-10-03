@@ -543,10 +543,8 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             ("Thinking tokens", f"{totals['thinking']:,}"),
             ("Total tokens", f"{totals['total']:,}"),
             ("Passes with no token record", str(missing_tokens)),
-            ("Sum of `cost_usd` (audited basis)",
-             f"US${sum(costs):,.4f} over {len(costs)} of {len(passes)} pass(es)"
-             if costs else NOT_SUPPLIED),
-            ("`cost_basis` of the passes", _basis_counts(passes)),
+            ("`cost_usd` by basis", _basis_sums(passes) if costs else NOT_SUPPLIED),
+            ("Run total (range)", _total_range(passes) if costs else NOT_SUPPLIED),
             ("Passes with no `cost_usd`", str(len(passes) - len(costs))),
             ("Summed wall clock",
              f"{sum(walls) / 3600:,.2f} h over {len(walls)} pass(es)"
@@ -585,8 +583,8 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             "rate card lacks), and its `cost_source` cites the "
             "evidence. It is no longer the pass meta's own `cost_estimate`, which "
             "priced at standard rates and omitted thinking tokens "
-            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum over "
-            "upper or lower bounds is itself a bound, not a total to cite as exact.",
+            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing "
+            "upper and lower bounds is neither, so the run total is given as a range.",
             ""]
 
     cited = [rel for rel, text in corpus.audit_text.items()
@@ -960,13 +958,50 @@ def _section_provenance(run_id: str, corpus: Corpus, head: str) -> list[str]:
 # --------------------------------------------------------------------------- #
 
 
-def _basis_counts(passes: list[dict]) -> str:
-    """``audited 5, unrecorded 1`` — how many passes carry each ``cost_basis``."""
-    counts: dict[str, int] = {}
+def _basis_sums(passes: list[dict]) -> str:
+    """``audited US$1.2345 (5); audited-upper-bound US$0.5000 (2); …`` per basis.
+
+    Never one sum across bases: an upper bound, a floor and an exact figure
+    added together are none of the three (re-audit round 2).
+    """
+    sums: dict[str, list] = {}
     for p in passes:
         key = p.get("cost_basis") or "none recorded"
-        counts[key] = counts.get(key, 0) + 1
-    return ", ".join(f"{k} {v}" for k, v in sorted(counts.items()))
+        cell = sums.setdefault(key, [0.0, 0])
+        cell[0] += p.get("cost_usd") or 0.0
+        cell[1] += 1
+    return "; ".join(f"{k} US${v[0]:,.4f} ({v[1]})" for k, v in sorted(sums.items()))
+
+
+def _total_range(passes: list[dict]) -> str:
+    """The run's cost as a defensible range over its passes.
+
+    The floor takes every pass at its lowest defensible figure: an exact or
+    published figure as it is, an upper-bound pass at its low bound, a floor as
+    it is. The ceiling takes upper-bound passes at their high bound, and exists
+    only if no pass is a floor (a floor has no ceiling) and none is unrecorded
+    or unpriceable.
+    """
+    low = high = 0.0
+    open_top = []
+    for p in passes:
+        basis, cost = p.get("cost_basis"), p.get("cost_usd") or 0.0
+        if basis == "audited-upper-bound":
+            bounds = (p.get("cost_source") or {}).get("bounds_usd") or {}
+            low += bounds.get("low", cost)
+            high += bounds.get("high", cost)
+        else:
+            low += cost
+            high += cost
+            if basis in ("audited-lower-bound", "unrecorded", "unpriceable", None):
+                open_top.append(basis or "none recorded")
+    if open_top:
+        counts = {b: open_top.count(b) for b in sorted(set(open_top))}
+        why = ", ".join(f"{n} {b}" for b, n in counts.items())
+        return f"at least US${low:,.4f}; no ceiling ({why} pass(es))"
+    if abs(high - low) < 5e-5:
+        return f"US${low:,.4f}"
+    return f"US${low:,.4f} to US${high:,.4f}"
 
 
 def render_report(run_id: str, corpus: Corpus, head: str) -> str:

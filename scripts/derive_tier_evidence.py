@@ -134,15 +134,16 @@ TIER_LINE = re.compile(r"service tier:\s*([a-z]+)", re.IGNORECASE)
 #: its own request config without ``service_tier`` (see lib_pass_cost).
 CACHE_LINE = re.compile(r"^Context cache created: ", re.MULTILINE)
 
-#: The first line of a log that belongs to a VERIFIER stage (the verifier
-#: scripts, their probabilities output, or a stage the driver names as a
-#: verifier). A "Service tier:" line before it is the proposer's launch line.
-VERIFIER_LINE = re.compile(r"verif|run_pv|5_verify_crops|probabilities\.json", re.IGNORECASE)
-
-#: A verifier command line, whose own ``--service-tier`` switch is the
-#: verifier stage's requested tier (``run_pv.py verify ... --service-tier flex``).
-VERIFIER_CMD = re.compile(r"run_pv\.py\s+(?:verify|cleanup)|5_verify_crops")
+#: A verifier COMMAND (``run_pv.py verify|cleanup`` or ``5_verify_crops``):
+#: the line where a verifier stage starts, and whose own ``--service-tier``
+#: switch is that stage's requested tier. Only a command marks the stage: a
+#: looser pattern ("verif") is tripped by an output path such as
+#: ``outputs/verifier-t-pilot/`` or by the word "unverified" (re-audit round 2).
+VERIFIER_CMD = re.compile(r"run_pv\.py\s+(?:verify|cleanup)\b|5_verify_crops")
 SWITCH = re.compile(r"--service-tier[= ]([a-z]+)")
+
+#: Where one command ends on a combined command line.
+COMMAND_END = re.compile(r"&&|\|\||;|\|")
 
 #: The service tiers a tier line may name; anything else is recorded as unknown
 #: rather than passed on as a tier.
@@ -454,10 +455,11 @@ def parse_log(text: str) -> dict[str, Any]:
     r"""Read one log's tier evidence: the launch tiers, and the verifier stage's own.
 
     ``verifier_tiers`` are the tiers a log records FOR a verifier stage: a
-    ``Service tier:`` line that comes after the log's first verifier line, or
-    the ``--service-tier`` switch on a verifier command line. A log that only
-    mentions a verifier after its proposer launch lines records none (the
-    re-audit of 2026-10-03 found every such tier line preceded the verifier).
+    ``Service tier:`` line after the log's first verifier command, or the
+    ``--service-tier`` switch within a verifier command itself (only its own
+    segment of a combined command line, so a proposer's switch on the same
+    line is not read as the verifier's). A log that only mentions a verifier
+    records none.
 
     Args:
         text: The log's text.
@@ -467,16 +469,20 @@ def parse_log(text: str) -> dict[str, Any]:
         ``tier_lines``, ``explicit_cache_lines`` and ``verifier_tiers``.
 
     Examples:
-        >>> log = "Service tier: flex\nproposer done\n=== verifier ===\nService tier: standard\n"
+        >>> log = "Service tier: flex\nrun_pv.py verify --x y\nService tier: standard\n"
         >>> parse_log(log)["verifier_tiers"]
         ['standard']
-        >>> parse_log("Service tier: flex\nnow verifying\n")["verifier_tiers"]
+        >>> parse_log("Service tier: flex\noutputs/verifier-t-pilot\nService tier: flex\n")[
+        ...     "verifier_tiers"]
         []
+        >>> combined = "4_detect --service-tier standard && run_pv.py verify --service-tier flex"
+        >>> parse_log(combined)["verifier_tiers"]
+        ['flex']
         >>> parse_log("python3 scripts/run_pv.py verify --x y --service-tier flex\n")["verifier_tiers"]
         ['flex']
     """
     lines = text.splitlines()
-    first_verifier = next((i for i, ln in enumerate(lines) if VERIFIER_LINE.search(ln)), None)
+    first_verifier = next((i for i, ln in enumerate(lines) if VERIFIER_CMD.search(ln)), None)
     words: list[str] = []
     verifier: set[str] = set()
     for i, ln in enumerate(lines):
@@ -485,8 +491,9 @@ def parse_log(text: str) -> dict[str, Any]:
             words.append(word)
             if first_verifier is not None and i > first_verifier and word in KNOWN_TIERS:
                 verifier.add(word)
-        if VERIFIER_CMD.search(ln):
-            verifier.update(w for w in SWITCH.findall(ln) if w in KNOWN_TIERS)
+        for cmd in VERIFIER_CMD.finditer(ln):
+            segment = COMMAND_END.split(ln[cmd.start():], maxsplit=1)[0]
+            verifier.update(w for w in SWITCH.findall(segment) if w in KNOWN_TIERS)
     return {"tiers": sorted({w for w in words if w in KNOWN_TIERS}),
             "unknown": sorted({w for w in words if w not in KNOWN_TIERS}),
             "tier_lines": len(words),

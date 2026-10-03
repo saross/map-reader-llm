@@ -340,33 +340,41 @@ def is_continuous(start: str | None, end: str | None, duration_s: float | None) 
     return span <= CONTINUOUS_MAX_S
 
 
-def verifier_coverage(meta: dict[str, Any], meta_path: Path) -> tuple[int, int] | None:
-    """How many requests a verifier meta accounts for, against its leg's results.
+def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, int] | None:
+    """How many candidates a verifier leg's metas account for, against its results.
 
     Args:
-        meta: The verifier leg's meta.
-        meta_path: Where it lives (``probabilities.json`` sits beside it).
+        metas: ``(meta, path)`` for every priced meta of the leg (the primary
+            first; a preserved main leg after it); ``probabilities.json`` sits
+            beside the primary.
 
     Returns:
         ``(accounted, results)``, or None when the leg has no probabilities
-        file. ``accounted`` is the largest of the meta's completed items, its
-        processed items, its request count and its responses with usage, so a
-        meta era that records only one of them is read fairly (T03's records
-        10,539 requests and no completed items, against 9,910 results).
+        file. Per meta, the best count it records: unique completed items, else
+        processed items, else requests or responses with usage divided by the
+        leg's iterations (requests include retries and every iteration, so an
+        unscaled count would let a partial meta pass; re-audit round 2). T03's
+        meta records 10,539 requests and no completed items against 9,910
+        results; the Gemini 3 batch legs record only processed items.
     """
-    prob = meta_path.parent / "probabilities.json"
+    prob = metas[0][1].parent / "probabilities.json"
     if not prob.exists():
         return None
-    results = len((_read_json(prob) or {}).get("results") or {})
+    doc = _read_json(prob) or {}
+    results = len(doc.get("results") or {})
     if not results:
         return None
-    es = meta.get("execution_stats") or {}
-    usage = meta.get("usage_stats") or {}
-    accounted = max(len(set(es.get("completed_items") or [])),
-                    int(es.get("items_processed") or 0),
-                    int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
-                        "request_count") or 0),
-                    int(usage.get("n_responses_with_usage") or 0))
+    iterations = max(int(doc.get("iterations") or 1), 1)
+    accounted = 0
+    for meta, _ in metas:
+        es = meta.get("execution_stats") or {}
+        usage = meta.get("usage_stats") or {}
+        requests = max(int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
+                           "request_count") or 0),
+                       int(usage.get("n_responses_with_usage") or 0))
+        accounted += (len(set(es.get("completed_items") or []))
+                      or int(es.get("items_processed") or 0)
+                      or requests // iterations)
     return accounted, results
 
 
@@ -421,29 +429,27 @@ class PassCoster:
         and including the run directory) whose logs carry a tier line. A
         directory naming two tiers yields set-valued evidence; the walk does
         NOT continue upward past it, because a parent's logs describe the run
-        as a whole and the child is where the disagreement lives. For a
-        verifier leg, an enclosing directory's logs count only if they cover a
-        verifier stage (``covers_verifier``): the Gemini 3 image row's
-        ``pass1.log`` to ``pass5.log`` describe proposer passes and say nothing
-        of the verifier legs beneath them (audit lens A, 2026-10-03).
+        as a whole and the child is where the disagreement lives. Each stage
+        reads its own record: a proposer the launch lines (``tiers``), a
+        verifier the tiers a log records FOR a verifier stage
+        (``verifier_tiers``), in its own directory as in an enclosing one
+        (audit rounds 1 and 2, 2026-10-03). Only the logs that supplied the
+        tiers used are cited.
         """
         own, stop = directory.resolve(), run_dir.resolve()
         cur = own
         while True:
             entry = self.log_dirs.get(_rel(cur))
-            tiers: list[str] = []
-            if entry:
-                if cur == own:
-                    # The fragment's own directory: its logs are its launch.
-                    tiers = entry.get("tiers") or entry.get("verifier_tiers") or []
-                elif stage == "proposer":
-                    tiers = entry.get("tiers") or []
-                else:
-                    # A verifier leg takes from a run-level log only the tiers
-                    # it records FOR a verifier stage (re-audit, 2026-10-03).
-                    tiers = entry.get("verifier_tiers") or []
+            key = "tiers" if stage == "proposer" else "verifier_tiers"
+            tiers: list[str] = (entry or {}).get(key) or []
+            if not tiers and entry and stage != "proposer" and cur == own:
+                # A verifier leg's OWN directory log is that verifier's launch:
+                # its tier lines count when no verifier-stage tier is recorded.
+                key = "tiers"
+                tiers = entry.get("tiers") or []
             if tiers:
-                logs = ", ".join(lg["path"].rsplit("/", 1)[-1] for lg in entry["logs"])
+                logs = ", ".join(lg["path"].rsplit("/", 1)[-1] for lg in entry["logs"]
+                                 if lg.get(key))
                 kind = "run-log" if cur == own else "run-log-inherited"
                 found = [Evidence(kind, tuple(tiers), f"{_rel(cur)}/{{{logs}}}")]
                 if entry.get("explicit_cache"):
@@ -472,7 +478,11 @@ class PassCoster:
                 doc = _read_json(lm)
                 section = "proposer" if stage == "proposer" else "verify"
                 tier = ((doc.get("resolved_config") or {}).get(section) or {}).get(
-                    "service_tier") or doc.get("service_tier")
+                    "service_tier")
+                if tier is None and stage == "proposer":
+                    # The run-level tier describes the proposer launch; it is
+                    # never a verifier's (re-audit round 2).
+                    tier = doc.get("service_tier")
                 if tier in TIERS:
                     kind = "launch-manifest" if cur == own else "launch-manifest-inherited"
                     return Evidence(kind, (tier,), _rel(lm))
@@ -815,7 +825,7 @@ class PassCoster:
         if "unrecorded" in bases and bases != {"unrecorded"}:
             partial_why.append("a fragment of this pass recorded no usage")
         if stage != "proposer" and fragments:
-            cover = verifier_coverage(*fragments[0])
+            cover = verifier_coverage(fragments)
             if cover and cover[0] < COVERAGE_FLOOR * cover[1]:
                 partial_why.append(
                     f"the meta accounts for {cover[0]:,} request(s) against {cover[1]:,} "

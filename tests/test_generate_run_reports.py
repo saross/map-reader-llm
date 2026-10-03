@@ -137,8 +137,8 @@ def test_cost_is_labelled_with_its_basis(corpus):
     text = grr.render_report("h13", corpus, "abc1234")
     assert "The cost above is on the audited basis, labelled per pass." in text
     assert "lifted verbatim" not in text
-    assert "Sum of `cost_usd` (audited basis)" in text
-    assert "`cost_basis` of the passes" in text
+    assert "`cost_usd` by basis" in text
+    assert "Run total (range)" in text
 
 
 @pytest.mark.tier1
@@ -230,3 +230,23 @@ def test_verifier_passes_separated_from_proposer_passes(corpus):
     assert "### 3.2 Verifier passes" in text
     assert "Verifier rows report no tile count by design" in text
     assert "Candidates verified" in text
+
+
+@pytest.mark.tier1
+def test_run_total_is_a_range_never_a_sum_of_mixed_bounds():
+    """Re-audit round 2: a total adding ceilings, floors and exact figures is none.
+
+    The floor takes each pass at its lowest defensible figure; the ceiling
+    exists only if no pass is a floor or unrecorded.
+    """
+    exact = {"cost_basis": "audited", "cost_usd": 1.0}
+    upper = {"cost_basis": "audited-upper-bound", "cost_usd": 2.0,
+             "cost_source": {"bounds_usd": {"low": 1.0, "high": 2.0}}}
+    floor = {"cost_basis": "audited-lower-bound", "cost_usd": 0.5}
+    assert grr._total_range([exact, upper]) == "US$2.0000 to US$3.0000"
+    assert grr._total_range([exact, upper, floor]) == (
+        "at least US$2.5000; no ceiling (1 audited-lower-bound pass(es))")
+    assert grr._total_range([exact]) == "US$1.0000"
+    assert grr._basis_sums([exact, upper, floor]) == (
+        "audited US$1.0000 (1); audited-lower-bound US$0.5000 (1); "
+        "audited-upper-bound US$2.0000 (1)")

@@ -386,12 +386,43 @@ def _sibling_metas(primary: dict, others: list[Path]) -> list[Path]:
         The sibling paths to price and cite.
     """
     out = []
+    seen = {primary.get("run_id")}
     for path in others:
         if "_chunk" in path.name:
             continue
-        if _load_json(path).get("run_id") not in (None, primary.get("run_id")):
+        run_id = _load_json(path).get("run_id")
+        # A meta with no run_id cannot be shown to be a separate execution, so
+        # it is not priced (no live case); a run_id already priced is a rewrite.
+        if run_id is not None and run_id not in seen:
+            seen.add(run_id)
             out.append(path)
     return out
+
+
+def _preserved_main_legs(primary: dict, primary_path: Path) -> list[Path]:
+    """A verifier leg's preserved main meta(s), when a cleanup overwrote ``run.meta.json``.
+
+    The verifier drivers keep the overwritten main leg as
+    ``run.meta.main-<date>.json`` (tracked; ``gemini37-screen-2026-08-28``'s
+    swap38 leg: 790 candidates, 1,593 requests, beside a 1-request cleanup
+    meta). Such a meta with its own ``run_id`` is a separate, billed execution
+    of the leg and is priced with it (re-audit round 2). Two kinds of file
+    beside it are NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's
+    ``run_id`` (cumulative), and ``run.meta.pre-rerun-*`` are superseded
+    executions whose results were discarded, which are project spend but not
+    the cost of producing this leg's result. ``*.backup`` files are gitignored
+    and absent from a clean clone, so they are never read.
+
+    Args:
+        primary: The leg's ``run.meta.json``, parsed.
+        primary_path: Its path.
+
+    Returns:
+        The preserved main metas to price and cite, sorted.
+    """
+    if primary_path.name != "run.meta.json":
+        return []
+    return _sibling_metas(primary, sorted(primary_path.parent.glob("run.meta.main-*.json")))
 
 
 def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
@@ -725,7 +756,12 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # with a SURVIVING detection, which is not "tiles processed" and would
         # be a different quantity wearing the same name.
         v_es = meta.get("execution_stats", {}) or {}
-        v_completed = v_es.get("completed_items")
+        # A cleanup that overwrote run.meta.json leaves the main leg preserved
+        # beside it; both are this leg's executions (priced, cited, counted).
+        main_legs = _preserved_main_legs(meta, meta_path)
+        v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
+        v_completed = [c for m, _ in v_fragments
+                       for c in ((m.get("execution_stats") or {}).get("completed_items") or [])]
         if v_completed:
             n_candidates = len(set(v_completed))
         elif v_es.get("items_processed"):
@@ -737,7 +773,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.
-        v_prov_sources = [_repo_rel(meta_path)]
+        v_prov_sources = [_repo_rel(meta_path)] + [_repo_rel(m) for m in main_legs]
         if cfg.get("temperature_effective") is not None:
             log_path = meta_path.parent / "run.log"
             if log_path.exists():
@@ -762,9 +798,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # per_item_metadata on a verifier pass records candidate API items,
             # not tiles dispatched — so this tile-scale field is null too.
             "n_tiles_dispatched": None,
-            "tokens": _tokens_from_usage(fragment_usage(meta)[0]),
+            "tokens": _sum_tokens([_tokens_from_usage(fragment_usage(m)[0])
+                                   for m, _ in v_fragments]),
             **_coster().cost_pass(
-                pass_id=f"{run_id}::{vdir}::run1", fragments=[(meta, meta_path)],
+                pass_id=f"{run_id}::{vdir}::run1", fragments=v_fragments,
                 run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
                 stage="verifier"),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),

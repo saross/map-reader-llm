@@ -979,7 +979,8 @@ def test_sibling_metas_exclude_chunks_and_rewrites_of_the_same_run(tmp_path):
         path.write_text(json.dumps({"run_id": run_id}))
         return path
     others = [write("a_chunk0.meta.json", "X"), write("b.meta.json", "P"),
-              write("c.meta.json", "X")]
+              write("c.meta.json", "X"), write("d.meta.json", None), write("e.meta.json", "X")]
+    # chunk, same run as the primary, no run_id, and a second rewrite of X: none priced
     assert _sibling_metas({"run_id": "P"}, others) == [others[2]]
 
 
@@ -998,8 +999,10 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
     proposer_only = "Service tier: flex\n... 9,910 candidates to verify later\n"
     assert parse_log(proposer_only) == {"tiers": ["flex"], "unknown": [], "tier_lines": 1,
                                         "explicit_cache_lines": 0, "verifier_tiers": []}
-    staged = "Service tier: flex\n=== Stage V: verifier ===\nService tier: standard\n"
+    staged = "Service tier: flex\nrun_pv.py verify --c d\nService tier: standard\n"
     assert parse_log(staged)["verifier_tiers"] == ["standard"]
+    banner = "Service tier: flex\n=== Stage V: verifier ===\nService tier: standard\n"
+    assert parse_log(banner)["verifier_tiers"] == []  # a banner is not a verifier command
     command = "python3 scripts/run_pv.py verify --crops-dir c --service-tier flex\n"
     assert parse_log(command)["verifier_tiers"] == ["flex"]
     assert parse_log("Service tier: priority\n")["unknown"] == ["priority"]
@@ -1008,10 +1011,12 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
 
 
 @pytest.mark.tier1
-def test_run_report_counts_the_bases():
-    from scripts.generate_run_reports import _basis_counts
-    passes = [{"cost_basis": "audited"}] * 3 + [{"cost_basis": "unrecorded"}, {}]
-    assert _basis_counts(passes) == "audited 3, none recorded 1, unrecorded 1"
+def test_run_report_sums_each_basis_apart():
+    from scripts.generate_run_reports import _basis_sums
+    passes = ([{"cost_basis": "audited", "cost_usd": 1.0}] * 3
+              + [{"cost_basis": "unrecorded", "cost_usd": None}, {}])
+    assert _basis_sums(passes) == ("audited US$3.0000 (3); none recorded US$0.0000 (1); "
+                                   "unrecorded US$0.0000 (1)")
 
 
 @pytest.mark.tier1
@@ -1025,5 +1030,162 @@ def test_an_overwritten_verifier_meta_is_detected_as_a_floor():
     t03 = _committed_pass("55maps-text-high-t0-3-generalisation", "verified", 1)
     assert t03["cost_basis"] == "audited"
     meta_path = REPO / t03["cost_source"]["fragments"][0]["meta"]
-    accounted, results = verifier_coverage(json.loads(meta_path.read_text()), meta_path)
+    accounted, results = verifier_coverage([(json.loads(meta_path.read_text()), meta_path)])
     assert results == 9_910 and accounted >= results
+
+
+# ---------------------------------------------------------------------------
+# Audit round 3 (second re-audit, 2026-10-03).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("log", "verifier_tiers"), [
+    ("python 4_detect_mounds_batch.py --service-tier standard\n", []),
+    ("Service tier: flex\nwriting outputs/verifier-t-pilot/x\nService tier: flex\n", []),
+    ("Service tier: flex\n12 unverified tiles\nService tier: standard\n", []),
+    ("4_detect --service-tier standard && run_pv.py verify --service-tier flex\n", ["flex"]),
+    ("Service tier: flex\nrun_pv.py verify --c d\nService tier: standard\n", ["standard"]),
+])
+def test_verifier_tiers_need_a_verifier_command(log, verifier_tiers):
+    from scripts.derive_tier_evidence import parse_log
+    assert parse_log(log)["verifier_tiers"] == verifier_tiers
+
+
+def _leg(tmp_path: Path, results: int, **meta_extra) -> tuple[dict, Path]:
+    leg = tmp_path / "run" / "v"
+    meta = _meta(leg / "run.meta.json", **meta_extra)
+    (leg / "probabilities.json").write_text(json.dumps(
+        {"results": {f"c{i}": 0.5 for i in range(results)}, "iterations": 1}))
+    return meta
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("done", "partial"), [(89, True), (91, False)])
+def test_coverage_floor_is_ninety_percent(evidence, tmp_path, done, partial):
+    meta = _leg(tmp_path, 100, execution_stats={"completed_items": [f"c{i}" for i in range(done)]})
+    out = _cost(evidence(), [meta], tmp_path / "run", stage="verifier")
+    assert (out["cost_basis"] == "audited-lower-bound") is partial
+
+
+@pytest.mark.tier1
+def test_coverage_reads_processed_items_and_scales_requests_by_iterations(tmp_path):
+    meta, path = _leg(tmp_path, 100, execution_stats={"items_processed": 100})
+    assert verifier_coverage([(meta, path)]) == (100, 100)
+    (path.parent / "probabilities.json").write_text(json.dumps(
+        {"results": {f"c{i}": 0.5 for i in range(100)}, "iterations": 3}))
+    calls = {**meta, "execution_stats": {},
+             "usage_stats": {**USAGE, "by_provider": {"google_gemini": {"request_count": 150}}}}
+    assert verifier_coverage([(calls, path)]) == (50, 100)  # 150 calls over 3 rounds
+
+
+@pytest.mark.tier1
+def test_gemini3_batch_verifier_legs_are_whole():
+    # They record only processed items; dropping that count would make all
+    # three floors (re-audit round 2, surviving mutation 2).
+    from scripts.generate_post_run_report import extract_passes, extraction_context
+    rows = [r for r in extract_passes(extraction_context("gemini3-image-55map-2026-09-16"))
+            if "verify" in r["proposer_pool"] and "arm2" in r["proposer_pool"]]
+    assert rows and all(r["cost_basis"] == "audited" for r in rows)
+
+
+@pytest.mark.tier1
+def test_own_directory_reads_the_stage_own_record(evidence, tmp_path):
+    run = tmp_path / "run"
+    leg = run / "v"
+    logs = {_rel(leg): {**LOG_ENTRY, "tiers": ["flex"], "verifier_tiers": ["standard"]}}
+    v = _cost(evidence(logs=logs), [_meta(leg / "run.meta.json")], run, stage="verifier")
+    assert v["cost_source"]["fragments"][0]["tier"] == "standard"
+    pdir = run / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": [], "verifier_tiers": ["standard"]}}
+    p = _cost(evidence(logs=logs), [_meta(pdir / "a.meta.json")], run)
+    assert p["cost_source"]["fragments"][0]["tier"] is None  # not the verifier's tier
+
+
+@pytest.mark.tier1
+def test_a_verifier_never_takes_the_run_level_manifest_tier(evidence, tmp_path):
+    run = tmp_path / "run"
+    (run / "v").mkdir(parents=True)
+    (run / "launch_manifest.json").write_text(json.dumps({"service_tier": "flex"}))
+    frag = _cost(evidence(), [_meta(run / "v" / "run.meta.json")], run, stage="verifier")[
+        "cost_source"]["fragments"][0]
+    assert frag["tier"] is None
+
+
+@pytest.mark.tier1
+def test_a_floor_note_keeps_every_reason(evidence, tmp_path):
+    run = tmp_path / "run"
+    coster = evidence(published={"r::p::run1": {"basis": "audited-lower-bound",
+                                                "source": "cleanup overwrote it"}})
+    metas = [_meta(run / "p" / "run_1" / "a.meta.json"),
+             _meta(run / "p" / "run_1_recovery" / "b.meta.json", usage={k: 0 for k in USAGE})]
+    note = _cost(coster, metas, run)["cost_source"]["note"]
+    assert "cleanup overwrote it" in note and "recorded no usage" in note
+
+
+@pytest.mark.tier1
+def test_a_preserved_main_leg_is_priced_with_its_cleanup():
+    # Re-audit round 2, M6: swap38's run.meta.json is a 1-request cleanup; the
+    # tracked run.meta.main-2026-09-04.json holds the 790-candidate main leg.
+    row = _committed_pass("gemini37-screen-2026-08-28", "g384_ov192_g37-union-k5-verify-swap38",
+                          1)
+    metas = [f["meta"] for f in row["cost_source"]["fragments"]]
+    assert any(m.endswith("run.meta.main-2026-09-04.json") for m in metas)
+    assert row["cost_basis"] != "audited-lower-bound" and row["cost_usd"] > 0.8
+    assert row["n_candidates_verified"] >= 790
+
+
+@pytest.mark.tier1
+def test_c3_refuses_an_upper_bound_relabelled_audited():
+    row = _first_row_with("audited-upper-bound")
+    src = {k: v for k, v in row["cost_source"].items() if k != "bounds_usd"}
+    assert _c3({**row, "cost_basis": "audited", "cost_source": src})["cost_basis"][
+        "verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_c3_refuses_a_fragment_falsely_claiming_no_usage():
+    row = _committed_pass("flash35-pv-2x2", "flash35-min-text-1of10", 3)
+    frags = [dict(f) for f in row["cost_source"]["fragments"]]
+    frags[1].update(tier=None, tier_method="not-needed: no usage recorded")
+    frags[1].pop("candidates", None)
+    bad = {**row, "cost_usd": round(row["cost_usd"] - frags[1]["cost_usd"], 6),
+           "cost_source": {**row["cost_source"], "fragments": frags}}
+    assert _c3(bad)["cost_source.fragments.stamps"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_c3_refuses_an_overwritten_leg_labelled_audited():
+    row = _committed_pass("flash35-pv-2x2", "verified-f3vf", 1)
+    assert _c3(row)["cost_basis"]["verdict"] == "MATCH"
+    assert _c3({**row, "cost_basis": "audited"})["cost_basis"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_c3_derives_a_partial_pass_at_its_floor(monkeypatch):
+    import scripts.rederive_manifest_fields as c3
+    row = _first_row_with("audited-upper-bound")
+    low = row["cost_source"]["bounds_usd"]["low"]
+    monkeypatch.setattr(c3, "_overrides", lambda: {row["pass_id"]: {
+        "basis": "audited-lower-bound", "source": "test"}})
+    floor = {**row, "cost_basis": "audited-lower-bound", "cost_usd": low}
+    assert _c3(floor)["cost_usd"]["verdict"] == "MATCH"
+    assert _c3(floor)["cost_basis"]["verdict"] == "MATCH"
+    assert _c3({**floor, "cost_usd": row["cost_usd"]})["cost_usd"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_c3_partial_and_unpriceable_reasons_are_derived_from_the_metas():
+    from scripts.rederive_manifest_fields import _partial_reasons, _unpriceable_reason
+    used = {"usage_stats": USAGE, "timestamp": {"end": "2026-05-20T00:00:00+00:00"}}
+    empty = {"usage_stats": {k: 0 for k in USAGE}}
+    row = {"pass_id": "x::y::run1", "model_used": "gemini-3-flash-preview",
+           "n_tiles_processed": 5}
+    assert _partial_reasons(row, [used, empty], []) == ["unrecorded fragment"]
+    assert _partial_reasons(row, [used], []) == []
+    assert _unpriceable_reason(row, [used]) is None
+    assert "no timestamp" in _unpriceable_reason(row, [{"usage_stats": USAGE}])
+    own = {**used, "per_item_metadata": [{"model_used": "gemini-9-imaginary"}]}
+    assert "gemini-9-imaginary" in _unpriceable_reason(row, [own])
+    early = {"usage_stats": USAGE, "timestamp": {"end": "2025-01-01T00:00:00+00:00"}}
+    assert "no rate card row" in _unpriceable_reason(row, [early])
