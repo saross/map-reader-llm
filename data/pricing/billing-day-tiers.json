@@ -291,6 +291,25 @@
     }
    }
   },
+  "2026-04-14": {
+   "project_filter": "unverified",
+   "export_sha256": "e396dbeef72337938d50b5c56e6a429560cbd6fa462486c76210a4bbfae34bd6",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 18663108,
+       "input": 31321432
+      }
+     },
+     "tier_silent": {
+      "input": 132719490,
+      "other": 16994
+     }
+    }
+   }
+  },
   "2026-04-15": {
    "project_filter": "unverified",
    "export_sha256": "b1db0f51b2f2dbc81f3050d76b46303bee2dc01c42503120853e3557c653f795",
@@ -415,6 +434,47 @@
       "flex": {
        "output": 905,
        "input": 1792
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-02": {
+   "project_filter": "unverified",
+   "export_sha256": "0ed92bfad91b6f65adeb2a25e30a9ac2ded5daedc80347f3d0dcefc755c48cb4",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 180240,
+       "output": 20246
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.1-pro-preview": {
+     "tiers": {
+      "standard": {
+       "input": 2162280,
+       "output": 169599
+      },
+      "flex": {
+       "input": 2928900,
+       "output": 151745
+      }
+     },
+     "tier_silent": {
+      "input": 28341452,
+      "other": 21228
+     }
+    },
+    "gemini-3.5-flash": {
+     "tiers": {
+      "flex": {
+       "input": 1713075,
+       "output": 16580
       }
      },
      "tier_silent": {}

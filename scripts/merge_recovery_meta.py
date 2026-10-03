@@ -80,6 +80,41 @@ if str(_PROJECT_ROOT) not in sys.path:
 from scripts.lib_llm_metadata import merge_meta  # noqa: E402
 
 
+#: A recovery meta sharing more than this share of the original's completed
+#: items is cumulative, not a recovery.
+CUMULATIVE_OVERLAP = 0.5
+
+
+def refuse_cumulative(original: dict, recovery: dict) -> None:
+    """Refuse a "recovery" meta that already contains the original run.
+
+    Since ``1ce1a982d`` (2026-04-27) a resume merges its usage into the
+    existing meta automatically, so the meta a resume leaves behind is
+    CUMULATIVE. Merging it into the pre-recovery backup again adds the
+    original run twice: the 2026-05-02 recovery merge did exactly that and
+    doubled every token class in the TH7 and IM metas
+    (``reports/token-load-audit-2026-06-12.md`` §§ 3.2, 3.4). A genuine
+    recovery-only meta holds just the re-sent tiles, so it shares almost no
+    completed items with the original.
+
+    Args:
+        original: The pre-recovery meta.
+        recovery: The meta to merge in.
+
+    Raises:
+        SystemExit: When the recovery meta repeats most of the original's
+            completed items.
+    """
+    done = set((original.get("execution_stats") or {}).get("completed_items") or [])
+    again = set((recovery.get("execution_stats") or {}).get("completed_items") or [])
+    if done and len(done & again) > CUMULATIVE_OVERLAP * len(done):
+        raise SystemExit(
+            f"merge_recovery_meta: the recovery meta already holds {len(done & again):,} of "
+            f"the original's {len(done):,} completed items, so it is cumulative (resume has "
+            "merged automatically since 1ce1a982d). Merging it would count the original "
+            "run twice; there is nothing to merge.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -103,6 +138,7 @@ def main() -> None:
     with open(args.recovery) as f:
         recovery = json.load(f)
 
+    refuse_cumulative(original, recovery)
     merged = merge_meta(original, recovery)
 
     # Atomic write
