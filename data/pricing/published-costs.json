@@ -1,0 +1,5 @@
+{
+ "_README": "Passes whose own metas can no longer be priced (a cleanup leg overwrote the main meta, so the tokens of the leg it cleaned up are gone) and which therefore carry the figure their post-run report published, with cost_basis 'published' (PI ruling D13, planning/pi-decisions-2026-09-20.md). Keyed by the register pass_id; each entry gives cost_usd and source (the report and section cited). Populated in WP4 of planning/cost-accounting-fix-plan-2026-09-21.md; read by scripts/lib_pass_cost.py.",
+ "schema": "published-costs/1",
+ "entries": {}
+}

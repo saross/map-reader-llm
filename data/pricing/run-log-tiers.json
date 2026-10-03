@@ -1,0 +1,912 @@
+{
+ "_README": "Service tiers named by run logs, per directory. The detection runner prints 'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py logs, run on sapphire (which holds logs the workstation clone does not). A directory whose logs name more than one tier is a conflict the reader must not resolve by walking further up. Read by scripts/lib_tier_evidence.py; never edit by hand.",
+ "schema": "run-log-tiers/1",
+ "logs_scanned": 152,
+ "logs_with_tier_lines": 63,
+ "directories": {
+  "outputs/55maps-image-generalisation": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/55maps-image-generalisation/run.log",
+     "sha256": "49ae52a7aa1f28e064a70020fda1feb146e500f4834b9f716c8574234fa6f33b",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 7
+    }
+   ]
+  },
+  "outputs/55maps-text-high-generalisation/recovery-logs": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log",
+     "sha256": "4c887a5b9a2459d0e009634971830df6388e831cffbfd794348df14260d3acf9",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    }
+   ]
+  },
+  "outputs/55maps-text-high-t0.3-generalisation": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/55maps-text-high-t0.3-generalisation/run.log",
+     "sha256": "13e82ace48b0b9c01c51031500f57e1bb37a14a53ec64920035948e208c8920f",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    }
+   ]
+  },
+  "outputs/55maps-text-min-generalisation": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/55maps-text-min-generalisation/recovery-phase1.log",
+     "sha256": "0bf298d778665de5f7f6ca7ba257b7057d2c23a686124fa652fbf198e8e14739",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    },
+    {
+     "path": "outputs/55maps-text-min-generalisation/run.log",
+     "sha256": "bcbe252cfcbb10bc7d9042228560ff5784c563a5c16755e97a2d012919138135",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    }
+   ]
+  },
+  "outputs/55maps-text-min-n10-uplift": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/55maps-text-min-n10-uplift/uplift-full.log",
+     "sha256": "9e465e34c46d1d0956e142fd3279dee82d76814aff101b8779ff8a329ceb7580",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 6
+    }
+   ]
+  },
+  "outputs/drift-probe-2026-09-16": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/drift-probe-2026-09-16/probe.log",
+     "sha256": "d4bfc73620ffb2ea9d6d50340aa9701f093d3e99a47377006787eeca49fdca28",
+     "tracked": false,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/flash35-pv-2x2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/flash35-pv-2x2/tranche-full.log",
+     "sha256": "cd5ca21ee50c2ef105be78e5811b33cb55570bcdbae5d6d93ac2a54337a15ecc",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 28
+    }
+   ]
+  },
+  "outputs/gemini3-image-55map-2026-09-16": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/pass1.log",
+     "sha256": "c38bf4f50e6580944bbe92fbfe6afd63fe2250494983f1d4a66cb6030b132310",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/pass2.log",
+     "sha256": "985b8daa59f9a42467fcfaa61c87a3fcf41205bc6811561d9ced7bda6ec690c3",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/pass3.log",
+     "sha256": "668dc6cf14f1d52ddf4cab67e6bbbe5be655251d9dcff214fb0a70de1eab7fa4",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/pass4.log",
+     "sha256": "6745fdbf40cfbc63b7922dc31bdcca5c2b302285b5aa741f5c6df6f40c2aee5d",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/pass5.log",
+     "sha256": "f1e56041478f1316891d82ea772793f883802cf303142f433b0402a6f2155e16",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover2_3.log",
+     "sha256": "a7bb0ff26520f4d1adc3779a82277defa7440279d05c412de8325bcb549ce5ce",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover2_5.log",
+     "sha256": "5d1ccf038e3ec71412258037fea107dc0ab5da950edf189a2c23db59d16d248d",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover_1.log",
+     "sha256": "dbef806e8b83d8e956c6d79c831c1d0161fa9622c0a8b18cd8f3178b9d9e7c59",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover_2.log",
+     "sha256": "0322e6b149acdcfcf463c206360511abb25797b2013cf6b0cf626c13cf910a3c",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover_3.log",
+     "sha256": "33cf1f170766643dfeed737899bd118fec19861b3020de06221ffc47808e5b74",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover_4.log",
+     "sha256": "00aecd748807a2ac85a6739b5385ddd84d36ea056ccdc6031958ab20ceec2fa6",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini3-image-55map-2026-09-16/recover_5.log",
+     "sha256": "9e2200bf3836894f8fc9053dea7e4877cac1ff829c45f7e28958769084312f42",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/gemini37-55map-2026-08-29": {
+   "tiers": [
+    "flex",
+    "standard"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini37-55map-2026-08-29/driver-k5.log",
+     "sha256": "139c7064f19561ccfe2b59b70742bc21864f122ef560d24a74559afc1872bfc1",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 7
+    },
+    {
+     "path": "outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log",
+     "sha256": "39056d0baf9b8551142aea70e0269ddae7c45cd4a0decea0bddea5f30e14c225",
+     "tracked": true,
+     "tiers": [
+      "standard"
+     ],
+     "tier_lines": 1
+    },
+    {
+     "path": "outputs/gemini37-55map-2026-08-29/run3-recovery-flex.log",
+     "sha256": "05219711bd7f7c6c8e02cab5aa0d2273ec9ea1509f03446e5c3b3982af13f6b6",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/gemini37-image-55map-2026-09-13": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini37-image-55map-2026-09-13/driver.log",
+     "sha256": "33b2453f904bfec4f0a64c0e1f6f4cd63874f7545badf7690006b8c8cdb0d94e",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 6
+    }
+   ]
+  },
+  "outputs/gemini37-image-gs-2026-09-01": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini37-image-gs-2026-09-01/driver-k5.log",
+     "sha256": "ca12c0cfd5a3c80bf645d6f2efacb6dd9e3936e077ab999a1f370b40c82d14c6",
+     "tracked": false,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 9
+    },
+    {
+     "path": "outputs/gemini37-image-gs-2026-09-01/recovery-driver.log",
+     "sha256": "3d691fc9f4c2df4aed4ba56640717ad77b0a7bbb18c8d55cb620703d8c1073d7",
+     "tracked": false,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    }
+   ]
+  },
+  "outputs/gemini37-screen-2026-08-28": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini37-screen-2026-08-28/escalation-passes6-10.log",
+     "sha256": "f10b2702c47cb4141cf082f2a936f639751fbca168755b9b88a05328ca74c475",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 5
+    }
+   ]
+  },
+  "outputs/gemini38-screen-2026-09-04": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/gemini38-screen-2026-09-04/probe-gate-1.log",
+     "sha256": "5f9b8a6702e183c39af1940dd6f2f4b0a2af0c16ca70aa25a55beb21c0809688",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/canonical/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/canonical/run_1/launch.log",
+     "sha256": "9dbfde5f1d6cc42c712f9040f55bee919f0725383eb8364d41d7e3a47c97a0c3",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/canonical/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/canonical/run_2/launch.log",
+     "sha256": "a0ea81a6a0f3569ab115f4fe30e8a67dd7491b8c6788fab04a7ef7252affe33f",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/canonical/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/canonical/run_3/launch.log",
+     "sha256": "bfed9aa9adbaadc547039ba791335b297c73d2ba2f3bfb29ae761db819126029",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/canonical/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/canonical/run_4/launch.log",
+     "sha256": "3dc65fd273bd9b3882a630b10a43773e38165bce51524192bba9d69a2a6d9f3d",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/canonical/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/canonical/run_5/launch.log",
+     "sha256": "a63dd9bf23461923f78db7c0de8e3caccc1df9a6c8e653b8448b39f2c4c49b98",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/plus-hp/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/plus-hp/run_1/launch.log",
+     "sha256": "9bf9d7982cecb0e3bce4ef9fa8968dd84d778c577506b74bf43ad5b1154b60f2",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/plus-hp/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/plus-hp/run_2/launch.log",
+     "sha256": "948b0f7160b4bc6ad4a62763b7439dae1e7b4e7c736ce4bb4c42c6dadaed8e0b",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/plus-hp/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/plus-hp/run_3/launch.log",
+     "sha256": "d2849b9711106dbac34233c528b9f60301a2ee7a0a2b7d1a9a1c7fc5173eceaa",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/plus-hp/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/plus-hp/run_4/launch.log",
+     "sha256": "f3f0f3286c331744e803cb67d5920eea751b729fd2c9923554abec03a14c4860",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/plus-hp/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/plus-hp/run_5/launch.log",
+     "sha256": "0fa6a5aaf284a92a1672b25713d084d3643d74a689cb255d05ad117ea3d5e4d0",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/pure-positive-canon/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/pure-positive-canon/run_1/launch.log",
+     "sha256": "1fc42fa176853307a826cfd2e14492fad485dde4919e7d32af395bdc1a5d5d13",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/pure-positive-canon/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/pure-positive-canon/run_2/launch.log",
+     "sha256": "5da71c914e8643cd1d838db0abdcbe9e4add28626e2288be63dfffceab6fbec2",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/pure-positive-canon/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/pure-positive-canon/run_3/launch.log",
+     "sha256": "5c3b318249f6383f16eec043b1185a455cd52f0039aaa671cd070901f543b05e",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/pure-positive-canon/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/pure-positive-canon/run_4/launch.log",
+     "sha256": "b82ba4dde0a78ba236a6911f3ec4e19fc46394d555999bc278e1cb7c565bcf47",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/pure-positive-canon/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/pure-positive-canon/run_5/launch.log",
+     "sha256": "1ffcc4dbefff90366c7e8823fd4ddc04bbc660f925f32605c775a59a0c42b29c",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-16/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-16/run_1/launch.log",
+     "sha256": "0d6250c3b720d71d7f398c407d001e0db244f6f39f1e4171401033c99dfa81a7",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-16/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-16/run_2/launch.log",
+     "sha256": "52061f8515a0fdb3a899a7ccc11dbfa514bc3328cf6df0427bf1630dab7135f7",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-16/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-16/run_3/launch.log",
+     "sha256": "9afb89a69c7db956433e86581e71ab886db4866265a17fb0c3cf864442a0d7e7",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-16/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-16/run_4/launch.log",
+     "sha256": "f883792e42482113995ff81cf34be3d4c5dfce1fc5f6388cac2ee30e7a1210ac",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-16/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-16/run_5/launch.log",
+     "sha256": "58be838d3d96f7cc3065de2beb3060bec103f83e35ec372516b7ef3594745cfa",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-32/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-32/run_1/launch.log",
+     "sha256": "d10847be58185295dd1e67adb1489b941d014a45a06600efb4898e8058b3a8e6",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-32/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-32/run_2/launch.log",
+     "sha256": "dafe032a3e0e790b4610c8b17e05dfab9b8e73a48e1b7608f07dd7b6ff28d382",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-32/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-32/run_3/launch.log",
+     "sha256": "32a6e83394003f4be62d5e2fe809b385b375bb10ff7307d893eaf958963a8256",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-32/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-32/run_4/launch.log",
+     "sha256": "ed2d576386603fac78ac630de379dafb8fb373da8dac276a3b9d063ede2e72d1",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-32/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-32/run_5/launch.log",
+     "sha256": "38883153a13a2c50dcbed604b9973e40a58ede63b70da2a8dd90ebf84654c652",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-4/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-4/run_1/launch.log",
+     "sha256": "83c87ca3b4b9dc47af53e4f8cecec6670b8c9c1000c81b398b0187e90729ccc7",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-4/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-4/run_2/launch.log",
+     "sha256": "c332dbbacd9181769a917d26fbd5b2693037cc5dffd9b248cec2ef5e6ee0d08f",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-4/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-4/run_3/launch.log",
+     "sha256": "d6e550487b6450f156b046ec0671f1478d7aa6e792e29e9a45eba6bc648e0b44",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-4/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-4/run_4/launch.log",
+     "sha256": "0594d9bcc4c6bf36de9f0821f2c598a82248d30f99f646c04933fceeaf4a3006",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-4/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-4/run_5/launch.log",
+     "sha256": "b3f190dcd9e299b9910054bd03e0b7a5a4cae923d4a376d7a0f7212275e411ae",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-8/run_1": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-8/run_1/launch.log",
+     "sha256": "de03dd80364dfa9aeaea14f9543137ca3e82731f77acba4f2272ea039a3a2064",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-8/run_2": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-8/run_2/launch.log",
+     "sha256": "a2de8b4a3f6e92c36be4db77f1ccb83f5c0396e796b14f64fc3e3b6bbbb5b1f5",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-8/run_3": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-8/run_3/launch.log",
+     "sha256": "32cd0ddc40cae06dd262e0d33da9c49bba69c84988c9190a36a475ebd676f213",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-8/run_4": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-8/run_4/launch.log",
+     "sha256": "bbe5b7ee0e0a929a978ca2cbccfe93dda694e181729fa1da85ca8178812b73e6",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  },
+  "outputs/h8-v2/scale-8/run_5": {
+   "tiers": [
+    "flex"
+   ],
+   "logs": [
+    {
+     "path": "outputs/h8-v2/scale-8/run_5/launch.log",
+     "sha256": "bb111d6bb3af1d777fda4392aa10fb21edcd0296c57598f3598b11ba7810a6da",
+     "tracked": true,
+     "tiers": [
+      "flex"
+     ],
+     "tier_lines": 1
+    }
+   ]
+  }
+ }
+}

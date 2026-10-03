@@ -56,6 +56,13 @@ import jsonschema
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+# The register prices its own tokens (PI ruling D11; WP3 of
+# planning/cost-accounting-fix-plan-2026-09-21.md). The coster resolves each
+# fragment's service tier from committed evidence and prices it through the
+# one cost function, scripts/lib_cost.price_usage.
+from scripts.lib_pass_cost import PassCoster  # noqa: E402
+
 # --------------------------------------------------------------------------- #
 # Constants
 # --------------------------------------------------------------------------- #
@@ -101,7 +108,14 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: failed tile was recovered by a dated fragment reads its cumulative
 #: coverage (ok/487) identically on every host; status uses the effective
 #: shortfall (dispatched minus completed-union).
-GENERATOR_VERSION: str = "0.7.1"
+#:
+#: 0.8.0 (2026-10-03, WP3): the cost columns are AUDITED. ``cost_usd`` is the
+#: pass's own tokens priced by ``scripts/lib_cost.price_usage`` at the tier the
+#: evidence supports, never the meta's ``cost_estimate`` copied; ``cost_basis``
+#: and ``cost_source`` say how. ``tokens`` and ``cost_usd`` now include the
+#: pass's ``run_N_recovery*`` fragments, which the tile count already unioned
+#: (118 M tokens on 57 passes were missing from the cost before).
+GENERATOR_VERSION: str = "0.8.0"
 
 #: Why a verifier pass's ``n_tiles_processed`` is null. Written verbatim into
 #: every verifier row so the manifest explains itself without a reader having
@@ -334,6 +348,39 @@ def _tokens_from_usage(usage: dict) -> dict | None:
     }
 
 
+def _sum_tokens(blocks: list[dict | None]) -> dict | None:
+    """Sum ``pass.tokens`` blocks key by key (a pass and its recovery fragments).
+
+    Returns None when no fragment carried a usage block, so a pass that never
+    recorded usage keeps the column's established null.
+    """
+    present = [b for b in blocks if b]
+    if not present:
+        return None
+    return {key: sum(b.get(key) or 0 for b in present) for key in present[0]}
+
+
+@functools.lru_cache(maxsize=1)
+def _coster() -> PassCoster:
+    """The pass coster, built once per process from the committed evidence files."""
+    return PassCoster()
+
+
+def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
+    """The model a recovery fragment is priced at.
+
+    The row's authoritative model unless the fragment's own per-item record
+    names a different one (a recovery run on another model must be priced
+    at that model's card); a sidecar ``model_of_record`` overrides both, as
+    it does for the row (E57).
+    """
+    if model_of_record:
+        return model_of_record
+    pim = meta.get("per_item_metadata") or []
+    own = next((it.get("model_used") for it in pim if it.get("model_used")), None)
+    return own or row_model
+
+
 def _timestamps(meta: dict) -> dict | None:
     """Extract ``{start, end}`` from a meta.json ``timestamp`` block, if present."""
     ts = meta.get("timestamp")
@@ -538,6 +585,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             if model_of_record:
                 model_used = model_of_record
                 model_requested = model_of_record
+            # The pass's spend is its primary meta plus every recovery fragment
+            # (the same metas its provenance cites and its tile count unions);
+            # each is priced at its own tier and date by the coster.
+            fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in recovery_metas]
             prov_sources = [_repo_rel(meta_path)]
             prov_sources.extend(_repo_rel(m) for m in recovery_metas)
             if model_of_record:
@@ -566,8 +617,14 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "n_tiles_null_reason": None,  # proposer rows carry a real count
                 "n_candidates_verified": None,  # no candidate stage
                 "n_tiles_dispatched": n_dispatched,
-                "tokens": _tokens_from_usage(meta.get("usage_stats", {})),
-                "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
+                "tokens": _sum_tokens([_tokens_from_usage(m.get("usage_stats", {}))
+                                       for m, _ in fragments]),
+                **_coster().cost_pass(
+                    pass_id=f"{run_id}::{pool}::run{pass_n}", fragments=fragments,
+                    run_id=run_id, pool=pool, run_dir=run_dir, model=model_used,
+                    fragment_models=[model_used] + [
+                        _fragment_model(m, model_used, model_of_record)
+                        for m, _ in fragments[1:]]),
                 "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
                 "timestamps": _timestamps(meta),
                 "retries": es.get("retries_total", 0),
@@ -671,7 +728,9 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # not tiles dispatched — so this tile-scale field is null too.
             "n_tiles_dispatched": None,
             "tokens": _tokens_from_usage(usage),
-            "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
+            **_coster().cost_pass(
+                pass_id=f"{run_id}::{vdir}::run1", fragments=[(meta, meta_path)],
+                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
             "timestamps": _timestamps(meta),
             "retries": v_es.get("retries_total", 0),
