@@ -602,39 +602,51 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
       separate explicit from implicit caching (the adjacent runs without
       an explicit cache got constant implicit hits of 12,187 tokens).
       The 2026-04-14 export pins `h10` at standard already.
-15. **Round 7 of the audit (2026-10-03, `429dfac1f`)** refined item 14:
+15. **Audit rounds 7 to 9 (2026-10-03)** refined item 14. Final state:
     - **The served tier survives every runner.** `run_pv.py verify`
-      finalises without per-item records, so a header recorded only per
-      item was lost for every verifier leg. The tracker now also counts
+      finalises without per-item records, so the tracker also counts
       responses per served tier at run level
       (`usage_stats.served_tier_counts`, `"unreported"` for none), and
       `merge_meta` sums the counts with the tokens they describe.
-    - **The header is believed only where it covers every response.** One
-      tier across all of them pins, above everything; several tiers price
-      the fragment across exactly those tiers. Where only some responses
-      reported one (a meta that merged a pre-header leg, or an
-      unrecognised value), the reported tiers WIDEN the candidates the
-      other evidence gives, because the rest may have run elsewhere and
-      narrowing would understate. A request record the header overrules
-      is a note, not a conflict.
-    - **The cached-path rule ends at its fix**: it applies only to a
-      fragment that started before `2df65047e` (12:02:23 UTC), and not to
-      one whose every response reported its tier.
+    - **The header is believed only where it covers every response.**
+      - One tier across all of them pins, above everything; a request
+        record it overrules is a note.
+      - Several tiers price the fragment across exactly those tiers.
+      - Where only some responses reported one, the reported tiers WIDEN
+        the candidates the other evidence gives, because the rest may have
+        run elsewhere and narrowing would understate. The invoice's day
+        set (without the whole-fragment volume rule) and the PI's
+        attestation of the meta are set against them as conflicts; a batch
+        marker beside them is a note (a real-time cleanup or retry ran
+        too).
+      - A response served at a tier the rate card does not price makes the
+        fragment unpriceable; C3 re-derives that reason independently.
+    - **The cached-path rule follows the code a run executed, not the
+      clock.** It is lifted only when every commit the meta records
+      (`environment.git_commit`, or a merge's `git_commits`, where a part
+      with no commit counts as `"unknown"`) is a plain hash descending from
+      `2df65047e`, or the header covers every response. The fix reaches
+      `main` only when this branch merges, and a run launched from `main`
+      meanwhile still drops its tier. The tracker now reads the commit
+      once per process, at import, in its own directory: before, it read
+      `HEAD` at finalise time in the working directory, so a pull during a
+      long run could have named a commit with the fix for code without it.
     - Also: `merge_recovery_meta.py` refuses a shared `run_id` and a
-      verifier meta; named and globbed preserved main legs are
-      deduplicated together, and a named one that would not be priced is
-      an error; an attestation glob that matches no file is refused; the
-      runner refuses `tools` beside a cache instead of dropping them.
+      verifier meta (by script or item prefix); named and globbed preserved
+      main legs are deduplicated together, and a named one that would not
+      be priced, or does not sit beside its primary, is an error; an
+      attestation glob that could never apply says why; the runner refuses
+      `tools` beside a cache instead of dropping them.
     - **Corrected before merge**:
       - The superseded ledger's fd-storm entry read "no meta", but the four
         attempts have metas: US$0.11 over the three with usage.
       - **The ledger's two `pre-rerun` entries (US$27.85) were a double
         count**, found by the round-7 re-audit. Batch mode keeps a leg's
         predecessor meta as `run.meta.pre-rerun-N.json` when it rebuilds the
-        meta from the whole results file. The Gemini 3 row's K = 1 and
-        K = 5 arm 2 sidecars hold 18,785 of 22,785 and 16,000 of 45,786
-        results of the SAME jobs the live metas price; no request was
-        billed twice. They are withdrawn (kept, with the reason) and the
+        meta. After a `batch-recover` its results are inside the live meta:
+        the Gemini 3 row's K = 1 and K = 5 arm 2 sidecars hold 18,785 of
+        22,785 and 16,000 of 45,786 results of the SAME jobs, and no request
+        was billed twice. They are withdrawn (kept, with the reason); the
         ledger's priced total is US$0.11. The entries had also named the
         wrong model (`gemini-3-flash-preview`; the metas say
         `gemini-3.7-flash`). D22 was put to the PI with those two entries
@@ -643,31 +655,32 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
         code live at swap38's launch: `scripts/run_pv.py` was last changed
         by `2ce4536ea` and `scripts/lib_verifier.py` by `4bb33b7e2`, both
         unchanged at `21a34339f`.
-    - The re-audit also moved the cached-path rule from the clock to the
-      code: it is lifted when the meta's `environment.git_commit` descends
-      from `2df65047e`, because the fix reaches `main` only when this branch
-      merges, and a run launched from `main` meanwhile still drops its tier.
-      A response served at a tier the rate card does not price now makes
-      its fragment unpriceable.
-    - No figure moved: the register is US$3,094.05 on the audited basis,
-      US$2,859.81 at the tier lower bound. Full tier-1 on sapphire: 3,477
-      passed. Every round-7 rule has a mutation that turns a test red.
+    - **Verification.** Each round ran two fresh-context lenses
+      (implementation, test adequacy); rounds 8 and 9 found no critical
+      defect. Every fix carries a mutation that turns a test red (round 7:
+      28; lens-B survivors: 13; lens-A fixes: 8; round 8: 10; round 9: 13, one
+      of which survived until its test moved to a fresh interpreter).
+      **The round-9 fixes were mutation-tested but not re-audited by fresh
+      lenses**: they change conflict labels and when the commit is read,
+      never a price, and the rounds had converged. No register figure
+      moved in rounds 7 to 9: US$3,094.05 on the audited basis, US$2,859.81
+      at the tier lower bound; every C3 cost verdict MATCH.
 
 ---
 
 ## Changelog
 
-### 2026-10-03 (round 7) — the served tier at run level; ledger corrected (Session 158)
+### 2026-10-03 (rounds 7 to 9) — the served tier; ledger corrected (Session 158)
 
-§ 8.15 added. What changed: the tracker's run-level served-tier count,
-the coverage rule for the header, the cached-path rule's end at its
-fix (by the run's recorded commit), and three corrections made before
-merge (the fd-storm ledger entry; the two `pre-rerun` entries withdrawn
-as a US$27.85 double count, ledger now US$0.11; the swap38 citation). What did NOT change: every register figure
-(US$3,094.05; tier lower bound US$2,859.81; 312 audited, 188 upper
+§ 8.15 added; § 8.8 corrected. What changed: the tracker's run-level
+served-tier count and its commit read at import; the coverage rule for the
+header; the cached-path rule decided by the run's recorded commits; and
+three corrections made before merge (the fd-storm ledger entry; the two
+`pre-rerun` entries withdrawn as a US$27.85 double count, so the ledger is
+now US$0.11; the swap38 citation). What did NOT change: every register
+figure (US$3,094.05; tier lower bound US$2,859.81; 312 audited, 188 upper
 bound, 27 lower bound, 2 published, 810 unrecorded) and every C3 cost
-verdict (MATCH). Commits `429dfac1f` and `6c8444884` (code),
-`1da842f1d` (register), and the re-audit fixes after them.
+verdict (MATCH). Commits `429dfac1f` to `fb3767404`.
 
 ### 2026-10-03 (later) — four audit rounds; § 8 figures refreshed (Session 158)
 

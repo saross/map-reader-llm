@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-10-03T07:57:28Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `429dfac1f`.
+> Generated 2026-10-03T07:57:28Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `fb3767404`.
 >
 > **Coverage**: 658 condition(s) across the decomposed runs (sub-step 3b in progress).
 
