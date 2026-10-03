@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-55map-2026-08-29
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `8ad6e2fb8`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-55map-2026-08-29` · **Registry status**: active · **Purpose**: Does the 3.7 GS gain transfer to 55-map deployment, and in which seat? One K=5 3.7 proposer pool, two verifier arms (carried Gemini-3; all-3.7), both carried points committed before deployment scoring. With the fourth cell (registered under stride-55map-2026-08-25) this completes the proposer x verifier 2x2. Predictions D1-D7, card planning/gemini37-55map-2026-08-29.md.
 
@@ -61,13 +61,13 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 7 |
-| Input tokens (billed) | 206,305,588 |
+| Input tokens (billed) | 230,035,686 |
 | Input tokens (cached) | 0 |
-| Output tokens | 9,361,724 |
-| Thinking tokens | 30,579,369 |
-| Total tokens | 246,246,681 |
+| Output tokens | 10,311,376 |
+| Thinking tokens | 34,943,537 |
+| Total tokens | 275,290,599 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$82.6183 over 7 of 7 pass(es) |
+| Sum of recorded `cost_usd` | US$167.6193 over 7 of 7 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 48.92 h over 7 pass(es) |
 
@@ -257,9 +257,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `8ad6e2fb8` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

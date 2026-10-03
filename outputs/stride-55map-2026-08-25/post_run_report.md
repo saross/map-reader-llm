@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — stride-55map-2026-08-25
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `8ad6e2fb8`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/stride-55map-2026-08-25` · **Registry status**: active · **Purpose**: 55-map deployment portfolio (card planning/55map-portfolio-2026-08-25.md, predictions P1-P8 registered by commit): Runs A (384/33.3%, stride 256) and B (384/50%, stride 192) at K=10 with the carry-forward verifier over the full unions — the calibrate-on-GS-then-deploy transfer measurement.
 
@@ -77,13 +77,13 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 23 |
-| Input tokens (billed) | 684,559,250 |
+| Input tokens (billed) | 684,727,474 |
 | Input tokens (cached) | 0 |
-| Output tokens | 52,354,427 |
+| Output tokens | 52,368,285 |
 | Thinking tokens | 4,406 |
-| Total tokens | 736,918,083 |
+| Total tokens | 737,100,165 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$288.8720 over 23 of 23 pass(es) |
+| Sum of recorded `cost_usd` | US$249.7505 over 23 of 23 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 35.05 h over 23 pass(es) |
 
@@ -347,9 +347,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `8ad6e2fb8` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

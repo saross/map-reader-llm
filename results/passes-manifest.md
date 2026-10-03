@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-10-03T07:57:28Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `a481b858b`.
+> Generated 2026-10-03T08:05:21Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `9530542bc`.
 >
 > **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
@@ -15,17 +15,17 @@
 | 55maps-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 4 | — | 0.027212 | audited |
 | 55maps-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10154 | 6.214278 | audited |
 | 55maps-generalisation::verified-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3 | 0.002161 | audited |
-| 55maps-image-generalisation::library_plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 143.878339 | audited |
-| 55maps-image-generalisation::library_plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 144.671988 | audited |
-| 55maps-image-generalisation::library_plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 143.575904 | audited |
-| 55maps-image-generalisation::library_plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 142.729596 | audited |
-| 55maps-image-generalisation::library_plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 144.599193 | audited |
+| 55maps-image-generalisation::library_plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 71.935963 | audited |
+| 55maps-image-generalisation::library_plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 72.327028 | audited |
+| 55maps-image-generalisation::library_plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 71.745488 | audited |
+| 55maps-image-generalisation::library_plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 71.354825 | audited |
+| 55maps-image-generalisation::library_plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 72.283486 | audited |
 | 55maps-image-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000727 | audited-lower-bound |
-| 55maps-text-high-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.005214 | audited |
-| 55maps-text-high-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.396531 | audited |
-| 55maps-text-high-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.732059 | audited |
-| 55maps-text-high-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 81.013417 | audited |
-| 55maps-text-high-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.581259 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 39.922698 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 40.07094 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 40.286796 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 40.452649 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 40.198413 | audited |
 | 55maps-text-high-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 74 | 0.05084 | audited-lower-bound |
 | 55maps-text-high-t0-3-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 49.977922 | audited |
 | 55maps-text-high-t0-3-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 51.27583 | audited |
@@ -39,11 +39,11 @@
 | 55maps-text-min-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.666149 | audited |
 | 55maps-text-min-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.676219 | audited |
 | 55maps-text-min-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 39 | 0.026423 | audited-lower-bound |
-| gold-standard-v2::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.700896 | audited |
-| gold-standard-v2::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.465804 | audited |
-| gold-standard-v2::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.610472 | audited |
+| gold-standard-v2::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.338753 | audited |
+| gold-standard-v2::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.222474 | audited |
+| gold-standard-v2::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.308766 | audited |
 | gold-standard-v2::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.339605 | audited |
-| gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.724539 | audited |
+| gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.354597 | audited |
 | gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 11 | 0.00781 | audited |
 | h10::pool_020_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.47992 | audited-upper-bound |
 | h10::pool_020_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.588784 | audited-upper-bound |

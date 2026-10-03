@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — verifier-t-pilot
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/verifier-t-pilot` · **Registry status**: active · **Purpose**: Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.
 
@@ -57,7 +57,7 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Thinking tokens | 0 |
 | Total tokens | 2,381,830 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$1.7068 over 2 of 2 pass(es) |
+| Sum of recorded `cost_usd` | US$0.8534 over 2 of 2 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 0.17 h over 2 pass(es) |
 
@@ -167,9 +167,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

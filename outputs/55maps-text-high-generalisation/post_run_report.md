@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH
 
@@ -60,13 +60,13 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 6 |
-| Input tokens (billed) | 128,658,748 |
+| Input tokens (billed) | 64,275,518 |
 | Input tokens (cached) | 0 |
-| Output tokens | 16,579,028 |
-| Thinking tokens | 230,497,393 |
-| Total tokens | 375,735,169 |
+| Output tokens | 8,250,512 |
+| Thinking tokens | 115,025,126 |
+| Total tokens | 187,551,156 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$114.0665 over 6 of 6 pass(es) |
+| Sum of recorded `cost_usd` | US$200.9823 over 6 of 6 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 5.36 h over 6 pass(es) |
 
@@ -196,9 +196,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

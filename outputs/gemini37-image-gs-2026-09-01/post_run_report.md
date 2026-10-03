@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-image-gs-2026-09-01
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-image-gs-2026-09-01` · **Registry status**: active · **Purpose**: Image variant of the 3.7 GS screen under matched everything, for the difference-in-differences against the Gemini-3 modality contrast (image-b-gs-2026-08-28). Predictions I1-I5 committed at PI go (card planning/gemini37-image-gs-2026-08-30.md). The escalation trigger was not met; no 55-map image extension followed.
 
@@ -61,13 +61,13 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 7 |
-| Input tokens (billed) | 56,504,252 |
-| Input tokens (cached) | 42,722,394 |
-| Output tokens | 413,830 |
-| Thinking tokens | 520,085 |
-| Total tokens | 57,438,167 |
+| Input tokens (billed) | 142,341,436 |
+| Input tokens (cached) | 111,214,884 |
+| Output tokens | 757,504 |
+| Thinking tokens | 1,320,868 |
+| Total tokens | 144,419,808 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$15.6508 over 7 of 7 pass(es) |
+| Sum of recorded `cost_usd` | US$19.5450 over 7 of 7 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 8.37 h over 7 pass(es) |
 
@@ -175,9 +175,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

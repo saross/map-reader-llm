@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -70,13 +70,13 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 16 |
-| Input tokens (billed) | 26,524,280 |
+| Input tokens (billed) | 26,563,332 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,595,873 |
-| Thinking tokens | 3,891,436 |
-| Total tokens | 32,011,589 |
+| Output tokens | 1,599,559 |
+| Thinking tokens | 3,900,431 |
+| Total tokens | 32,063,322 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$11.2103 over 16 of 16 pass(es) |
+| Sum of recorded `cost_usd` | US$19.3812 over 16 of 16 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 9.74 h over 16 pass(es) |
 
@@ -223,9 +223,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

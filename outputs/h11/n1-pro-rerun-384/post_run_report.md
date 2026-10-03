@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — n1-pro-rerun-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9530542bc`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/n1-pro-rerun-384` · **Registry status**: active · **Purpose**: Genuine-Pro re-run (E57): re-dispatch of the four anti-diagonal Pro corners as genuine gemini-3.1-pro-preview after the n1-outstanding originals were found to have billed as Flash. Supplies the four Pro anti-diagonal cells of the n1-baseline-matrix-384 leaderboard.
 
@@ -65,7 +65,7 @@
 | Thinking tokens | 94,939 |
 | Total tokens | 50,672,656 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$105.4882 over 12 of 12 pass(es) |
+| Sum of recorded `cost_usd` | US$30.1055 over 12 of 12 pass(es) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 0.26 h over 12 pass(es) |
 
@@ -157,9 +157,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `9530542bc` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 
