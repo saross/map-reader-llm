@@ -6,7 +6,7 @@
   "n_simple_rows": 157,
   "passes_verdicts": {
    "STRUCTURAL": 8034,
-   "MATCH": 20432,
+   "MATCH": 20959,
    "SOURCE_SILENT": 6047,
    "MISMATCH": 540
   },
@@ -158,6 +158,13 @@
      "verdict": "MATCH",
      "manifest": 0.004913,
      "derived": 0.004913
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -330,6 +337,13 @@
      "verdict": "MATCH",
      "manifest": 0.053288,
      "derived": 0.053288
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -667,6 +681,13 @@
      "derived": 0.019636
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.019636,
@@ -837,6 +858,13 @@
      "verdict": "MATCH",
      "manifest": 0.027212,
      "derived": 0.027212
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -1012,6 +1040,13 @@
      "verdict": "MATCH",
      "manifest": 6.214278,
      "derived": 6.214278
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -1194,6 +1229,15 @@
      "derived": 0.002161
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.002161,
@@ -1364,6 +1408,13 @@
      "verdict": "MATCH",
      "manifest": 71.935963,
      "derived": 71.935963
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -1538,6 +1589,13 @@
      "derived": 72.327028
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 72.327028,
@@ -1708,6 +1766,13 @@
      "verdict": "MATCH",
      "manifest": 71.745488,
      "derived": 71.745488
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -1882,6 +1947,13 @@
      "derived": 71.354825
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 71.354825,
@@ -2052,6 +2124,13 @@
      "verdict": "MATCH",
      "manifest": 72.283486,
      "derived": 72.283486
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -2226,8 +2305,17 @@
      "field": "cost_usd",
      "verdict": "MATCH",
      "manifest": 0.000727,
-     "derived": 0.000727,
-     "note": "lower bound: the cited metas cover part of the pass (cost-overrides)"
+     "derived": 0.000727
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "override",
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -2402,6 +2490,13 @@
      "derived": 39.922698
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 39.922698,
@@ -2572,6 +2667,13 @@
      "verdict": "MATCH",
      "manifest": 40.07094,
      "derived": 40.07094
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -2746,6 +2848,13 @@
      "derived": 40.286796
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 40.286796,
@@ -2916,6 +3025,13 @@
      "verdict": "MATCH",
      "manifest": 40.452649,
      "derived": 40.452649
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -3090,6 +3206,13 @@
      "derived": 40.198413
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 40.198413,
@@ -3262,8 +3385,17 @@
      "field": "cost_usd",
      "verdict": "MATCH",
      "manifest": 0.05084,
-     "derived": 0.05084,
-     "note": "lower bound: the cited metas cover part of the pass (cost-overrides)"
+     "derived": 0.05084
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "override",
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -3438,6 +3570,13 @@
      "derived": 49.977922
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 49.977922,
@@ -3608,6 +3747,13 @@
      "verdict": "MATCH",
      "manifest": 51.27583,
      "derived": 51.27583
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -3782,6 +3928,13 @@
      "derived": 50.73153
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 50.73153,
@@ -3954,6 +4107,13 @@
      "derived": 51.676869
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 51.676869,
@@ -4124,6 +4284,13 @@
      "verdict": "MATCH",
      "manifest": 50.586512,
      "derived": 50.586512
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -4301,6 +4468,13 @@
      "derived": 6.900372
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 6.900372,
@@ -4471,6 +4645,13 @@
      "verdict": "MATCH",
      "manifest": 4.667722,
      "derived": 4.667722
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -4645,6 +4826,13 @@
      "derived": 4.673805
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 4.673805,
@@ -4815,6 +5003,13 @@
      "verdict": "MATCH",
      "manifest": 4.677764,
      "derived": 4.677764
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -4989,6 +5184,13 @@
      "derived": 4.666149
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 4.666149,
@@ -5159,6 +5361,13 @@
      "verdict": "MATCH",
      "manifest": 4.676219,
      "derived": 4.676219
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -5333,8 +5542,17 @@
      "field": "cost_usd",
      "verdict": "MATCH",
      "manifest": 0.026423,
-     "derived": 0.026423,
-     "note": "lower bound: the cited metas cover part of the pass (cost-overrides)"
+     "derived": 0.026423
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "override",
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -5509,6 +5727,13 @@
      "derived": 2.338753
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.338753,
@@ -5679,6 +5904,13 @@
      "verdict": "MATCH",
      "manifest": 2.222474,
      "derived": 2.222474
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -5853,6 +6085,13 @@
      "derived": 2.308766
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.308766,
@@ -6025,6 +6264,13 @@
      "derived": 2.339605
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.339605,
@@ -6195,6 +6441,13 @@
      "verdict": "MATCH",
      "manifest": 2.354597,
      "derived": 2.354597
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -6372,6 +6625,15 @@
      "derived": 0.00781
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.00781,
@@ -6542,6 +6804,13 @@
      "verdict": "MATCH",
      "manifest": 2.47992,
      "derived": 2.47992
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -6728,6 +6997,13 @@
      "derived": 2.588784
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.448973,
@@ -6910,6 +7186,13 @@
      "verdict": "MATCH",
      "manifest": 2.653701,
      "derived": 2.653701
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -7096,6 +7379,13 @@
      "derived": 2.542587
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.425875,
@@ -7278,6 +7568,13 @@
      "verdict": "MATCH",
      "manifest": 2.503602,
      "derived": 2.503602
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -7464,6 +7761,13 @@
      "derived": 2.615925
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.46247,
@@ -7646,6 +7950,13 @@
      "verdict": "MATCH",
      "manifest": 2.599416,
      "derived": 2.599416
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -7832,6 +8143,13 @@
      "derived": 2.527104
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.41806,
@@ -8014,6 +8332,13 @@
      "verdict": "MATCH",
      "manifest": 2.63274,
      "derived": 2.63274
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -8200,6 +8525,13 @@
      "derived": 2.652333
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.480674,
@@ -8382,6 +8714,13 @@
      "verdict": "MATCH",
      "manifest": 2.489244,
      "derived": 2.489244
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -8568,6 +8907,13 @@
      "derived": 2.607246
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.458204,
@@ -8750,6 +9096,13 @@
      "verdict": "MATCH",
      "manifest": 2.654709,
      "derived": 2.654709
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -8936,6 +9289,13 @@
      "derived": 2.725437
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.5173,
@@ -9118,6 +9478,13 @@
      "verdict": "MATCH",
      "manifest": 2.724249,
      "derived": 2.724249
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -9304,6 +9671,13 @@
      "derived": 2.403543
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.356353,
@@ -9486,6 +9860,13 @@
      "verdict": "MATCH",
      "manifest": 2.359848,
      "derived": 2.359848
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -9672,6 +10053,13 @@
      "derived": 2.450874
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.380018,
@@ -9856,6 +10244,13 @@
      "derived": 2.573634
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.441398,
@@ -10038,6 +10433,13 @@
      "verdict": "MATCH",
      "manifest": 2.375484,
      "derived": 2.375484
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -10227,6 +10629,13 @@
      "derived": 2.445043
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.222522,
@@ -10412,6 +10821,13 @@
      "verdict": "MATCH",
      "manifest": 2.029003,
      "derived": 2.029003
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -15977,6 +16393,13 @@
      "derived": 4.915872
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.457936,
@@ -16159,6 +16582,13 @@
      "verdict": "MATCH",
      "manifest": 5.036243,
      "derived": 5.036243
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -16353,6 +16783,13 @@
      "derived": 2.835267
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.835267,
@@ -16533,6 +16970,15 @@
      "derived": 0.038928
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.038928,
@@ -16708,6 +17154,13 @@
      "derived": 1.636178
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.636178,
@@ -16878,6 +17331,13 @@
      "verdict": "MATCH",
      "manifest": 0.576124,
      "derived": 0.576124
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -17052,6 +17512,13 @@
      "derived": 0.57241
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.57241,
@@ -17222,6 +17689,13 @@
      "verdict": "MATCH",
      "manifest": 0.579769,
      "derived": 0.579769
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -17396,6 +17870,13 @@
      "derived": 0.779785
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.779785,
@@ -17566,6 +18047,13 @@
      "verdict": "MATCH",
      "manifest": 0.780118,
      "derived": 0.780118
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -17740,6 +18228,13 @@
      "derived": 0.779968
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.779968,
@@ -17910,6 +18405,13 @@
      "verdict": "MATCH",
      "manifest": 0.780985,
      "derived": 0.780985
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -18084,6 +18586,13 @@
      "derived": 0.780562
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.780562,
@@ -18256,6 +18765,13 @@
      "derived": 0.779956
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.779956,
@@ -18426,6 +18942,13 @@
      "verdict": "MATCH",
      "manifest": 4.521619,
      "derived": 4.521619
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -18612,6 +19135,13 @@
      "derived": 4.499986
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.427127,
@@ -18794,6 +19324,13 @@
      "verdict": "MATCH",
      "manifest": 4.453381,
      "derived": 4.453381
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -18980,6 +19517,13 @@
      "derived": 6.635743
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 3.317872,
@@ -19162,6 +19706,13 @@
      "verdict": "MATCH",
      "manifest": 6.616897,
      "derived": 6.616897
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -19348,6 +19899,13 @@
      "derived": 6.596517
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 3.298259,
@@ -19532,6 +20090,13 @@
      "derived": 3.733786
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.733786,
@@ -19702,6 +20267,13 @@
      "verdict": "MATCH",
      "manifest": 4.826035,
      "derived": 4.826035
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -19877,6 +20449,13 @@
      "verdict": "MATCH",
      "manifest": 0.969774,
      "derived": 0.969774
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -20063,6 +20642,13 @@
      "derived": 1.850932
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.925466,
@@ -20245,6 +20831,13 @@
      "verdict": "MATCH",
      "manifest": 1.849756,
      "derived": 1.849756
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -20431,6 +21024,13 @@
      "derived": 1.8592
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.9296,
@@ -20613,6 +21213,13 @@
      "verdict": "MATCH",
      "manifest": 2.111092,
      "derived": 2.111092
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -20799,6 +21406,13 @@
      "derived": 2.02546
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.01273,
@@ -20981,6 +21595,13 @@
      "verdict": "MATCH",
      "manifest": 2.011108,
      "derived": 2.011108
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -21167,6 +21788,13 @@
      "derived": 2.980193
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.198633,
@@ -21349,6 +21977,13 @@
      "verdict": "MATCH",
      "manifest": 2.984933,
      "derived": 2.984933
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -21535,6 +22170,13 @@
      "derived": 2.983421
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.200247,
@@ -21717,6 +22359,13 @@
      "verdict": "MATCH",
      "manifest": 3.079493,
      "derived": 3.079493
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -21903,6 +22552,13 @@
      "derived": 3.181253
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.299163,
@@ -22085,6 +22741,13 @@
      "verdict": "MATCH",
      "manifest": 3.188693,
      "derived": 3.188693
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -22278,6 +22941,13 @@
      "derived": 0.798575
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.399288,
@@ -22467,6 +23137,13 @@
      "verdict": "MATCH",
      "manifest": 3.594436,
      "derived": 3.594436
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -22660,6 +23337,13 @@
      "derived": 0.560165
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.280083,
@@ -22849,6 +23533,13 @@
      "verdict": "MATCH",
      "manifest": 3.380692,
      "derived": 3.380692
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -23042,6 +23733,13 @@
      "derived": 0.809328
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.404664,
@@ -23231,6 +23929,13 @@
      "verdict": "MATCH",
      "manifest": 3.634298,
      "derived": 3.634298
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -23424,6 +24129,13 @@
      "derived": 0.384629
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.192314,
@@ -23613,6 +24325,13 @@
      "verdict": "MATCH",
      "manifest": 2.060302,
      "derived": 2.060302
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -23806,6 +24525,13 @@
      "derived": 0.198296
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.099148,
@@ -23988,6 +24714,13 @@
      "verdict": "MATCH",
      "manifest": 0.644706,
      "derived": 0.644706
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -24174,6 +24907,13 @@
      "derived": 5.453974
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.904121,
@@ -24356,6 +25096,13 @@
      "verdict": "MATCH",
      "manifest": 5.450383,
      "derived": 5.450383
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -24542,6 +25289,13 @@
      "derived": 4.38016
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.367214,
@@ -24724,6 +25478,13 @@
      "verdict": "MATCH",
      "manifest": 4.348543,
      "derived": 4.348543
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -24910,6 +25671,13 @@
      "derived": 4.231846
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.293057,
@@ -25092,6 +25860,13 @@
      "verdict": "MATCH",
      "manifest": 4.187992,
      "derived": 4.187992
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -25278,6 +26053,13 @@
      "derived": 4.195237
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.274753,
@@ -25460,6 +26242,13 @@
      "verdict": "MATCH",
      "manifest": 4.256761,
      "derived": 4.256761
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -25646,6 +26435,13 @@
      "derived": 4.408711
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.38149,
@@ -25828,6 +26624,13 @@
      "verdict": "MATCH",
      "manifest": 4.442959,
      "derived": 4.442959
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -26014,6 +26817,13 @@
      "derived": 4.200091
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.27718,
@@ -26196,6 +27006,13 @@
      "verdict": "MATCH",
      "manifest": 4.41007,
      "derived": 4.41007
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -28012,6 +28829,13 @@
      "derived": 3.56707
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.960669,
@@ -28194,6 +29018,13 @@
      "verdict": "MATCH",
      "manifest": 3.618967,
      "derived": 3.618967
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -28380,6 +29211,13 @@
      "derived": 3.556855
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.955562,
@@ -28562,6 +29400,13 @@
      "verdict": "MATCH",
      "manifest": 3.5245,
      "derived": 3.5245
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -28748,6 +29593,13 @@
      "derived": 3.521029
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.937649,
@@ -28930,6 +29782,13 @@
      "verdict": "MATCH",
      "manifest": 3.75874,
      "derived": 3.75874
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -29116,6 +29975,13 @@
      "derived": 3.544705
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.949487,
@@ -29298,6 +30164,13 @@
      "verdict": "MATCH",
      "manifest": 3.556462,
      "derived": 3.556462
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -29484,6 +30357,13 @@
      "derived": 3.671188
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.012728,
@@ -29666,6 +30546,13 @@
      "verdict": "MATCH",
      "manifest": 3.703357,
      "derived": 3.703357
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -29852,6 +30739,13 @@
      "derived": 6.421917
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 3.210958,
@@ -30034,6 +30928,13 @@
      "verdict": "MATCH",
      "manifest": 6.376929,
      "derived": 6.376929
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -30220,6 +31121,13 @@
      "derived": 6.49177
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 3.245885,
@@ -30402,6 +31310,13 @@
      "verdict": "MATCH",
      "manifest": 5.261281,
      "derived": 5.261281
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -30588,6 +31503,13 @@
      "derived": 5.492392
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.746196,
@@ -30770,6 +31692,13 @@
      "verdict": "MATCH",
      "manifest": 5.319988,
      "derived": 5.319988
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -30956,6 +31885,13 @@
      "derived": 5.475703
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.737852,
@@ -31138,6 +32074,13 @@
      "verdict": "MATCH",
      "manifest": 5.358076,
      "derived": 5.358076
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -31324,6 +32267,13 @@
      "derived": 5.245987
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.622994,
@@ -31506,6 +32456,13 @@
      "verdict": "MATCH",
      "manifest": 5.062288,
      "derived": 5.062288
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -31692,6 +32649,13 @@
      "derived": 5.413834
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.706917,
@@ -31876,6 +32840,13 @@
      "derived": 5.114074
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.557037,
@@ -32058,6 +33029,13 @@
      "verdict": "MATCH",
      "manifest": 5.130712,
      "derived": 5.130712
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -37134,6 +38112,13 @@
      "derived": 4.256695
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.128347,
@@ -37316,6 +38301,13 @@
      "verdict": "MATCH",
      "manifest": 4.254859,
      "derived": 4.254859
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -37502,6 +38494,13 @@
      "derived": 4.367098
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.183549,
@@ -37684,6 +38683,13 @@
      "verdict": "MATCH",
      "manifest": 4.265638,
      "derived": 4.265638
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -37870,6 +38876,13 @@
      "derived": 4.372315
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.186158,
@@ -38052,6 +39065,13 @@
      "verdict": "MATCH",
      "manifest": 4.367626,
      "derived": 4.367626
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -38238,6 +39258,13 @@
      "derived": 4.235446
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.117723,
@@ -38420,6 +39447,13 @@
      "verdict": "MATCH",
      "manifest": 4.298935,
      "derived": 4.298935
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -38606,6 +39640,13 @@
      "derived": 4.365601
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.1828,
@@ -38788,6 +39829,13 @@
      "verdict": "MATCH",
      "manifest": 4.174858,
      "derived": 4.174858
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -38974,6 +40022,13 @@
      "derived": 0.565162
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.282581,
@@ -39156,6 +40211,13 @@
      "verdict": "MATCH",
      "manifest": 0.570748,
      "derived": 0.570748
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -39342,6 +40404,13 @@
      "derived": 0.562825
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.281413,
@@ -39524,6 +40593,13 @@
      "verdict": "MATCH",
      "manifest": 0.564913,
      "derived": 0.564913
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -39710,6 +40786,13 @@
      "derived": 0.567301
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.28365,
@@ -39892,6 +40975,13 @@
      "verdict": "MATCH",
      "manifest": 0.572506,
      "derived": 0.572506
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -40078,6 +41168,13 @@
      "derived": 0.573544
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.286772,
@@ -40260,6 +41357,13 @@
      "verdict": "MATCH",
      "manifest": 0.572206,
      "derived": 0.572206
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -40446,6 +41550,13 @@
      "derived": 0.570703
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.285351,
@@ -40628,6 +41739,13 @@
      "verdict": "MATCH",
      "manifest": 0.566584,
      "derived": 0.566584
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -40814,6 +41932,13 @@
      "derived": 0.566221
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.28311,
@@ -40998,6 +42123,13 @@
      "derived": 0.573964
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.286982,
@@ -41180,6 +42312,13 @@
      "verdict": "MATCH",
      "manifest": 0.564361,
      "derived": 0.564361
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -46256,6 +47395,13 @@
      "derived": 0.577204
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.288602,
@@ -46438,6 +47584,13 @@
      "verdict": "MATCH",
      "manifest": 0.584041,
      "derived": 0.584041
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -46624,6 +47777,13 @@
      "derived": 0.582955
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.291478,
@@ -46806,6 +47966,13 @@
      "verdict": "MATCH",
      "manifest": 0.577369,
      "derived": 0.577369
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -46992,6 +48159,13 @@
      "derived": 0.58642
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.29321,
@@ -47174,6 +48348,13 @@
      "verdict": "MATCH",
      "manifest": 0.575215,
      "derived": 0.575215
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -47360,6 +48541,13 @@
      "derived": 0.576508
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.288254,
@@ -47542,6 +48730,13 @@
      "verdict": "MATCH",
      "manifest": 0.575128,
      "derived": 0.575128
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -47728,6 +48923,13 @@
      "derived": 0.575794
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.287897,
@@ -47910,6 +49112,13 @@
      "verdict": "MATCH",
      "manifest": 0.574969,
      "derived": 0.574969
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -48259,6 +49468,13 @@
      "derived": 0.789913
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.572091,
@@ -48441,6 +49657,13 @@
      "verdict": "MATCH",
      "manifest": 0.791389,
      "derived": 0.791389
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -48627,6 +49850,13 @@
      "derived": 0.790609
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.572439,
@@ -48809,6 +50039,13 @@
      "verdict": "MATCH",
      "manifest": 0.791923,
      "derived": 0.791923
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -48995,6 +50232,13 @@
      "derived": 0.793855
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.574062,
@@ -49177,6 +50421,13 @@
      "verdict": "MATCH",
      "manifest": 0.791122,
      "derived": 0.791122
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -49363,6 +50614,13 @@
      "derived": 0.790201
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.572235,
@@ -49545,6 +50803,13 @@
      "verdict": "MATCH",
      "manifest": 0.794023,
      "derived": 0.794023
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -49731,6 +50996,13 @@
      "derived": 0.792409
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.573339,
@@ -49913,6 +51185,13 @@
      "verdict": "MATCH",
      "manifest": 0.791698,
      "derived": 0.791698
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -51729,6 +53008,13 @@
      "derived": 0.799003
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.576636,
@@ -51911,6 +53197,13 @@
      "verdict": "MATCH",
      "manifest": 0.796921,
      "derived": 0.796921
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -52097,6 +53390,13 @@
      "derived": 0.794401
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.574335,
@@ -52279,6 +53579,13 @@
      "verdict": "MATCH",
      "manifest": 0.790378,
      "derived": 0.790378
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -52465,6 +53772,13 @@
      "derived": 0.791773
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.573021,
@@ -52647,6 +53961,13 @@
      "verdict": "MATCH",
      "manifest": 0.794332,
      "derived": 0.794332
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -52833,6 +54154,13 @@
      "derived": 0.794497
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.574383,
@@ -53015,6 +54343,13 @@
      "verdict": "MATCH",
      "manifest": 0.792352,
      "derived": 0.792352
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -53201,6 +54536,13 @@
      "derived": 0.795664
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.574966,
@@ -53383,6 +54725,13 @@
      "verdict": "MATCH",
      "manifest": 0.797836,
      "derived": 0.797836
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -56014,6 +57363,13 @@
      "derived": 0.135529
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.135529,
@@ -56184,6 +57540,13 @@
      "verdict": "MATCH",
      "manifest": 3.004517,
      "derived": 3.004517
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -56370,6 +57733,13 @@
      "derived": 3.003041
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.210057,
@@ -56554,6 +57924,13 @@
      "derived": 0.046666
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.046666,
@@ -56724,6 +58101,13 @@
      "verdict": "MATCH",
      "manifest": 1.905592,
      "derived": 1.905592
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -56910,6 +58294,13 @@
      "derived": 1.906288
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.953144,
@@ -57092,6 +58483,13 @@
      "verdict": "MATCH",
      "manifest": 3.515335,
      "derived": 3.515335
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -57278,6 +58676,13 @@
      "derived": 3.377983
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.866126,
@@ -57460,6 +58865,13 @@
      "verdict": "MATCH",
      "manifest": 3.379432,
      "derived": 3.379432
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -57646,6 +59058,13 @@
      "derived": 3.543226
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.948747,
@@ -57828,6 +59247,13 @@
      "verdict": "MATCH",
      "manifest": 3.436768,
      "derived": 3.436768
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -58014,6 +59440,13 @@
      "derived": 3.444694
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.899481,
@@ -58196,6 +59629,13 @@
      "verdict": "MATCH",
      "manifest": 3.508591,
      "derived": 3.508591
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -58382,6 +59822,13 @@
      "derived": 3.535054
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.944661,
@@ -58566,6 +60013,13 @@
      "derived": 3.438196
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.896232,
@@ -58748,6 +60202,13 @@
      "verdict": "MATCH",
      "manifest": 3.529924,
      "derived": 3.529924
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -60898,6 +62359,15 @@
      "derived": 0.324565
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.324565,
@@ -61071,6 +62541,13 @@
      "verdict": "MATCH",
      "manifest": 4.704863,
      "derived": 4.704863
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -61265,6 +62742,15 @@
      "derived": 0.007808
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.007808,
@@ -61438,6 +62924,13 @@
      "verdict": "MATCH",
      "manifest": 4.654437,
      "derived": 4.654437
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -61620,6 +63113,15 @@
      "derived": 0.018197
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.018197,
@@ -61793,6 +63295,13 @@
      "verdict": "MATCH",
      "manifest": 4.281651,
      "derived": 4.281651
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -61975,6 +63484,15 @@
      "derived": 0.009377
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.009377,
@@ -62153,6 +63671,15 @@
      "verdict": "MATCH",
      "manifest": 0.002339,
      "derived": 0.002339
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -62335,6 +63862,15 @@
      "derived": 0.013528
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.013528,
@@ -62510,6 +64046,13 @@
      "derived": 4.879742
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 4.879742,
@@ -62683,6 +64226,13 @@
      "verdict": "MATCH",
      "manifest": 4.443749,
      "derived": 4.443749
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -62877,6 +64427,15 @@
      "derived": 0.000751
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.000751,
@@ -63050,6 +64609,13 @@
      "verdict": "MATCH",
      "manifest": 6.398247,
      "derived": 6.398247
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -63244,6 +64810,15 @@
      "derived": 0.000685
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.000685,
@@ -63417,6 +64992,13 @@
      "verdict": "MATCH",
      "manifest": 1.735432,
      "derived": 1.735432
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -63606,6 +65188,13 @@
      "derived": 5.904586
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.952293,
@@ -63791,6 +65380,13 @@
      "verdict": "MATCH",
      "manifest": 4.050166,
      "derived": 4.050166
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -63980,6 +65576,13 @@
      "derived": 8.56514
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 8.56514,
@@ -64160,6 +65763,15 @@
      "derived": 0.027978
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.027978,
@@ -64333,6 +65945,13 @@
      "verdict": "MATCH",
      "manifest": 7.909851,
      "derived": 7.909851
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -64515,6 +66134,15 @@
      "derived": 0.013451
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.013451,
@@ -64688,6 +66316,13 @@
      "verdict": "MATCH",
      "manifest": 8.745862,
      "derived": 8.745862
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -64870,6 +66505,15 @@
      "derived": 0.014995
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.014995,
@@ -65045,6 +66689,13 @@
      "derived": 9.032384
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 9.032384,
@@ -65218,6 +66869,13 @@
      "verdict": "MATCH",
      "manifest": 8.021783,
      "derived": 8.021783
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -65407,6 +67065,13 @@
      "derived": 5.117726
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.558863,
@@ -65592,6 +67257,13 @@
      "verdict": "MATCH",
      "manifest": 8.097848,
      "derived": 8.097848
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -65781,6 +67453,13 @@
      "derived": 5.156186
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 2.578093,
@@ -65966,6 +67645,13 @@
      "verdict": "MATCH",
      "manifest": 1.504319,
      "derived": 1.504319
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -66155,6 +67841,13 @@
      "derived": 2.171592
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.085796,
@@ -66340,6 +68033,13 @@
      "verdict": "MATCH",
      "manifest": 1.916503,
      "derived": 1.916503
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -66529,6 +68229,13 @@
      "derived": 2.687157
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.343579,
@@ -66714,6 +68421,13 @@
      "verdict": "MATCH",
      "manifest": 2.194248,
      "derived": 2.194248
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -66903,6 +68617,13 @@
      "derived": 3.395064
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.697532,
@@ -67088,6 +68809,13 @@
      "verdict": "MATCH",
      "manifest": 2.653605,
      "derived": 2.653605
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -67277,6 +69005,13 @@
      "derived": 1.553633
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.776817,
@@ -67462,6 +69197,13 @@
      "verdict": "MATCH",
      "manifest": 1.377597,
      "derived": 1.377597
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -67651,6 +69393,13 @@
      "derived": 2.029988
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.014994,
@@ -67836,6 +69585,13 @@
      "verdict": "MATCH",
      "manifest": 1.57265,
      "derived": 1.57265
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -68025,6 +69781,13 @@
      "derived": 2.739647
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.369824,
@@ -68210,6 +69973,13 @@
      "verdict": "MATCH",
      "manifest": 2.006568,
      "derived": 2.006568
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -68404,6 +70174,15 @@
      "derived": 0.000742
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.000742,
@@ -68577,6 +70356,13 @@
      "verdict": "MATCH",
      "manifest": 3.05986,
      "derived": 3.05986
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -69426,6 +71212,13 @@
      "derived": 15.504299
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 15.504299,
@@ -69604,6 +71397,15 @@
      "verdict": "MATCH",
      "manifest": 0.003579,
      "derived": 0.003579
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -71766,6 +73568,15 @@
      "derived": 0.077452
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.077452,
@@ -72106,6 +73917,13 @@
      "derived": 0.719019
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.719019,
@@ -72279,6 +74097,13 @@
      "verdict": "MATCH",
      "manifest": 5.243736,
      "derived": 5.243736
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -72789,6 +74614,15 @@
      "verdict": "MATCH",
      "manifest": 0.10208,
      "derived": 0.10208
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -75941,6 +77775,15 @@
      "derived": 0.213324
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.213324,
@@ -76119,6 +77962,13 @@
      "verdict": "MATCH",
      "manifest": 0.62031,
      "derived": 0.62031
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -76301,6 +78151,13 @@
      "derived": 0.909899
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.909899,
@@ -76479,6 +78336,13 @@
      "verdict": "MATCH",
      "manifest": 0.64988,
      "derived": 0.64988
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -76661,6 +78525,13 @@
      "derived": 0.857254
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.857254,
@@ -76839,6 +78710,13 @@
      "verdict": "MATCH",
      "manifest": 0.699879,
      "derived": 0.699879
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -77021,6 +78899,13 @@
      "derived": 0.932224
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.932224,
@@ -77199,6 +79084,13 @@
      "verdict": "MATCH",
      "manifest": 0.707118,
      "derived": 0.707118
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -77381,6 +79273,13 @@
      "derived": 1.092068
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.092068,
@@ -77559,6 +79458,13 @@
      "verdict": "MATCH",
      "manifest": 0.915098,
      "derived": 0.915098
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -77741,6 +79647,13 @@
      "derived": 1.50964
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.50964,
@@ -77919,6 +79832,13 @@
      "verdict": "MATCH",
      "manifest": 0.945209,
      "derived": 0.945209
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -78101,6 +80021,13 @@
      "derived": 1.886776
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.886776,
@@ -78279,6 +80206,13 @@
      "verdict": "MATCH",
      "manifest": 1.030074,
      "derived": 1.030074
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -78461,6 +80395,13 @@
      "derived": 1.950358
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.950358,
@@ -78639,6 +80580,13 @@
      "verdict": "MATCH",
      "manifest": 0.50942,
      "derived": 0.50942
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -78821,6 +80769,13 @@
      "derived": 0.617455
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.617455,
@@ -78999,6 +80954,13 @@
      "verdict": "MATCH",
      "manifest": 0.487575,
      "derived": 0.487575
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -79181,6 +81143,13 @@
      "derived": 0.663871
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.663871,
@@ -79359,6 +81328,13 @@
      "verdict": "MATCH",
      "manifest": 0.552932,
      "derived": 0.552932
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -79541,6 +81517,13 @@
      "derived": 0.815674
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.815674,
@@ -79719,6 +81702,13 @@
      "verdict": "MATCH",
      "manifest": 0.609428,
      "derived": 0.609428
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -79901,6 +81891,13 @@
      "derived": 1.12265
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.12265,
@@ -80079,6 +82076,13 @@
      "verdict": "MATCH",
      "manifest": 0.539538,
      "derived": 0.539538
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -80261,6 +82265,13 @@
      "derived": 1.057393
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.057393,
@@ -80439,6 +82450,13 @@
      "verdict": "MATCH",
      "manifest": 0.68377,
      "derived": 0.68377
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -80621,6 +82639,13 @@
      "derived": 1.305678
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.305678,
@@ -80799,6 +82824,13 @@
      "verdict": "MATCH",
      "manifest": 0.579013,
      "derived": 0.579013
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -80981,6 +83013,13 @@
      "derived": 1.10147
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.10147,
@@ -81151,6 +83190,13 @@
      "verdict": "MATCH",
      "manifest": 2.529891,
      "derived": 2.529891
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -81325,6 +83371,13 @@
      "derived": 2.505117
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.505117,
@@ -81495,6 +83548,13 @@
      "verdict": "MATCH",
      "manifest": 2.577582,
      "derived": 2.577582
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -81669,6 +83729,13 @@
      "derived": 2.424726
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.424726,
@@ -81839,6 +83906,13 @@
      "verdict": "MATCH",
      "manifest": 2.495124,
      "derived": 2.495124
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -82013,6 +84087,13 @@
      "derived": 2.488434
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.488434,
@@ -82183,6 +84264,13 @@
      "verdict": "MATCH",
      "manifest": 2.259033,
      "derived": 2.259033
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -82369,6 +84457,13 @@
      "derived": 2.449428
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.379295,
@@ -82551,6 +84646,13 @@
      "verdict": "MATCH",
      "manifest": 2.291316,
      "derived": 2.291316
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -82737,6 +84839,13 @@
      "derived": 2.359134
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.334148,
@@ -82921,6 +85030,13 @@
      "derived": 2.414577
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.414577,
@@ -83091,6 +85207,13 @@
      "verdict": "MATCH",
      "manifest": 2.376492,
      "derived": 2.376492
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -83265,6 +85388,13 @@
      "derived": 2.369736
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.369736,
@@ -83435,6 +85565,13 @@
      "verdict": "MATCH",
      "manifest": 2.322207,
      "derived": 2.322207
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -83609,6 +85746,13 @@
      "derived": 2.365839
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.365839,
@@ -83779,6 +85923,13 @@
      "verdict": "MATCH",
      "manifest": 2.337981,
      "derived": 2.337981
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -83953,6 +86104,13 @@
      "derived": 2.296188
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.296188,
@@ -84123,6 +86281,13 @@
      "verdict": "MATCH",
      "manifest": 2.319108,
      "derived": 2.319108
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -84297,6 +86462,13 @@
      "derived": 2.339949
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.339949,
@@ -84467,6 +86639,13 @@
      "verdict": "MATCH",
      "manifest": 2.40696,
      "derived": 2.40696
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -84641,6 +86820,13 @@
      "derived": 2.303211
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.303211,
@@ -84811,6 +86997,13 @@
      "verdict": "MATCH",
      "manifest": 2.295726,
      "derived": 2.295726
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -84985,6 +87178,13 @@
      "derived": 2.25168
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.25168,
@@ -85155,6 +87355,13 @@
      "verdict": "MATCH",
      "manifest": 2.247396,
      "derived": 2.247396
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -85329,6 +87536,13 @@
      "derived": 2.167311
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.167311,
@@ -85499,6 +87713,13 @@
      "verdict": "MATCH",
      "manifest": 2.419323,
      "derived": 2.419323
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -85673,6 +87894,13 @@
      "derived": 2.433111
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.433111,
@@ -85843,6 +88071,13 @@
      "verdict": "MATCH",
      "manifest": 2.28279,
      "derived": 2.28279
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -86017,6 +88252,13 @@
      "derived": 2.298612
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.298612,
@@ -86187,6 +88429,13 @@
      "verdict": "MATCH",
      "manifest": 2.269671,
      "derived": 2.269671
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -86361,6 +88610,13 @@
      "derived": 2.365731
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.365731,
@@ -86531,6 +88787,13 @@
      "verdict": "MATCH",
      "manifest": 2.393769,
      "derived": 2.393769
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -86705,6 +88968,13 @@
      "derived": 2.454051
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.454051,
@@ -86875,6 +89145,13 @@
      "verdict": "MATCH",
      "manifest": 2.413242,
      "derived": 2.413242
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -87049,6 +89326,13 @@
      "derived": 2.429481
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.429481,
@@ -87219,6 +89503,13 @@
      "verdict": "MATCH",
      "manifest": 2.590455,
      "derived": 2.590455
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -87393,6 +89684,13 @@
      "derived": 2.605878
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.605878,
@@ -87563,6 +89861,13 @@
      "verdict": "MATCH",
      "manifest": 2.558487,
      "derived": 2.558487
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -87737,6 +90042,13 @@
      "derived": 2.678061
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.678061,
@@ -87907,6 +90219,13 @@
      "verdict": "MATCH",
      "manifest": 2.496411,
      "derived": 2.496411
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -88081,6 +90400,13 @@
      "derived": 2.865813
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.865813,
@@ -88251,6 +90577,13 @@
      "verdict": "MATCH",
      "manifest": 2.897583,
      "derived": 2.897583
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -88425,6 +90758,13 @@
      "derived": 2.968557
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.968557,
@@ -88597,6 +90937,13 @@
      "derived": 3.014316
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.014316,
@@ -88767,6 +91114,13 @@
      "verdict": "MATCH",
      "manifest": 2.95731,
      "derived": 2.95731
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -88942,6 +91296,13 @@
      "verdict": "MATCH",
      "manifest": 2.160168,
      "derived": 2.160168
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -89136,6 +91497,15 @@
      "derived": 0.010877
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.010877,
@@ -89309,6 +91679,13 @@
      "verdict": "MATCH",
      "manifest": 1.3917,
      "derived": 1.3917
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -192351,6 +194728,13 @@
      "derived": 0.425916
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.425916,
@@ -192526,6 +194910,13 @@
      "derived": 0.42747
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.42747,
@@ -192696,6 +195087,13 @@
      "verdict": "MATCH",
      "manifest": 0.810824,
      "derived": 0.810824
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -192870,6 +195268,13 @@
      "derived": 0.810474
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.810474,
@@ -193040,6 +195445,13 @@
      "verdict": "MATCH",
      "manifest": 0.812556,
      "derived": 0.812556
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -193216,6 +195628,13 @@
      "derived": 1.622993
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.622993,
@@ -193386,6 +195805,13 @@
      "verdict": "MATCH",
      "manifest": 0.8155,
      "derived": 0.8155
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -193560,6 +195986,13 @@
      "derived": 0.811109
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.811109,
@@ -193730,6 +196163,13 @@
      "verdict": "MATCH",
      "manifest": 0.813682,
      "derived": 0.813682
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -193904,6 +196344,13 @@
      "derived": 0.813924
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.813924,
@@ -194076,6 +196523,13 @@
      "derived": 0.815295
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.815295,
@@ -194246,6 +196700,13 @@
      "verdict": "MATCH",
      "manifest": 0.825315,
      "derived": 0.825315
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -194428,6 +196889,15 @@
      "derived": 0.000695
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.000695,
@@ -194606,6 +197076,13 @@
      "verdict": "MATCH",
      "manifest": 2.258247,
      "derived": 2.258247
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -194788,6 +197265,13 @@
      "derived": 3.858892
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.858892,
@@ -194958,6 +197442,13 @@
      "verdict": "MATCH",
      "manifest": 4.638943,
      "derived": 4.638943
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -195132,6 +197623,13 @@
      "derived": 4.659306
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 4.659306,
@@ -195302,6 +197800,13 @@
      "verdict": "MATCH",
      "manifest": 4.669232,
      "derived": 4.669232
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -195476,6 +197981,13 @@
      "derived": 4.638843
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 4.638843,
@@ -195646,6 +198158,13 @@
      "verdict": "MATCH",
      "manifest": 4.659639,
      "derived": 4.659639
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -195828,6 +198347,13 @@
      "derived": 11.266205
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 11.266205,
@@ -196006,6 +198532,13 @@
      "verdict": "MATCH",
      "manifest": 0.967828,
      "derived": 0.967828
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -196188,6 +198721,13 @@
      "derived": 1.777202
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.777202,
@@ -196366,6 +198906,13 @@
      "verdict": "MATCH",
      "manifest": 1.255212,
      "derived": 1.255212
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -196548,6 +199095,13 @@
      "derived": 2.271158
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.271158,
@@ -196726,6 +199280,15 @@
      "verdict": "MATCH",
      "manifest": 0.002379,
      "derived": 0.002379
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -196908,6 +199471,13 @@
      "derived": 1.253106
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.253106,
@@ -197086,6 +199656,13 @@
      "verdict": "MATCH",
      "manifest": 1.698945,
      "derived": 1.698945
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -197268,6 +199845,13 @@
      "derived": 2.007497
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.007497,
@@ -197442,6 +200026,13 @@
      "derived": 0.290709
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.290709,
@@ -197612,6 +200203,13 @@
      "verdict": "MATCH",
      "manifest": 0.290527,
      "derived": 0.290527
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -197786,6 +200384,13 @@
      "derived": 0.292343
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.292343,
@@ -197956,6 +200561,13 @@
      "verdict": "MATCH",
      "manifest": 0.660653,
      "derived": 0.660653
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -198130,6 +200742,13 @@
      "derived": 0.669084
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.669084,
@@ -198300,6 +200919,13 @@
      "verdict": "MATCH",
      "manifest": 0.668548,
      "derived": 0.668548
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -198474,6 +201100,13 @@
      "derived": 0.319217
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.319217,
@@ -198644,6 +201277,13 @@
      "verdict": "MATCH",
      "manifest": 0.320647,
      "derived": 0.320647
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -198818,6 +201458,13 @@
      "derived": 0.315817
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.315817,
@@ -198990,6 +201637,13 @@
      "derived": 0.319098
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.319098,
@@ -199160,6 +201814,13 @@
      "verdict": "MATCH",
      "manifest": 0.320835,
      "derived": 0.320835
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -199336,6 +201997,13 @@
      "derived": 0.318134
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.318134,
@@ -199506,6 +202174,13 @@
      "verdict": "MATCH",
      "manifest": 0.32003,
      "derived": 0.32003
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -199680,6 +202355,13 @@
      "derived": 0.321004
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.321004,
@@ -199850,6 +202532,13 @@
      "verdict": "MATCH",
      "manifest": 0.318809,
      "derived": 0.318809
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -200024,6 +202713,13 @@
      "derived": 0.318998
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.318998,
@@ -200194,6 +202890,13 @@
      "verdict": "MATCH",
      "manifest": 0.492777,
      "derived": 0.492777
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -200368,6 +203071,13 @@
      "derived": 0.490796
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.490796,
@@ -200538,6 +203248,13 @@
      "verdict": "MATCH",
      "manifest": 0.48815,
      "derived": 0.48815
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -200712,6 +203429,13 @@
      "derived": 0.489453
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.489453,
@@ -200882,6 +203606,13 @@
      "verdict": "MATCH",
      "manifest": 0.490202,
      "derived": 0.490202
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -201056,6 +203787,13 @@
      "derived": 0.490817
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.490817,
@@ -201226,6 +203964,13 @@
      "verdict": "MATCH",
      "manifest": 0.492961,
      "derived": 0.492961
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -201400,6 +204145,13 @@
      "derived": 0.492407
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.492407,
@@ -201570,6 +204322,13 @@
      "verdict": "MATCH",
      "manifest": 0.487594,
      "derived": 0.487594
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -201744,6 +204503,13 @@
      "derived": 0.49274
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.49274,
@@ -201914,6 +204680,13 @@
      "verdict": "MATCH",
      "manifest": 0.789346,
      "derived": 0.789346
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -202088,6 +204861,13 @@
      "derived": 0.786836
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.786836,
@@ -202258,6 +205038,13 @@
      "verdict": "MATCH",
      "manifest": 0.792691,
      "derived": 0.792691
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -202432,6 +205219,13 @@
      "derived": 0.789818
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.789818,
@@ -202602,6 +205396,13 @@
      "verdict": "MATCH",
      "manifest": 0.788543,
      "derived": 0.788543
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -202776,6 +205577,13 @@
      "derived": 0.790218
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.790218,
@@ -202946,6 +205754,13 @@
      "verdict": "MATCH",
      "manifest": 0.784556,
      "derived": 0.784556
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -203120,6 +205935,13 @@
      "derived": 0.784036
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.784036,
@@ -203290,6 +206112,13 @@
      "verdict": "MATCH",
      "manifest": 0.790927,
      "derived": 0.790927
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -203464,6 +206293,13 @@
      "derived": 0.788162
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.788162,
@@ -203634,6 +206470,13 @@
      "verdict": "MATCH",
      "manifest": 0.902916,
      "derived": 0.902916
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -203810,6 +206653,13 @@
      "derived": 0.905267
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.905267,
@@ -203980,6 +206830,13 @@
      "verdict": "MATCH",
      "manifest": 0.908556,
      "derived": 0.908556
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -204154,6 +207011,13 @@
      "derived": 0.907442
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.907442,
@@ -204326,6 +207190,13 @@
      "derived": 0.915614
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.915614,
@@ -204496,6 +207367,13 @@
      "verdict": "MATCH",
      "manifest": 0.897723,
      "derived": 0.897723
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -204672,6 +207550,13 @@
      "derived": 0.907351
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.907351,
@@ -204842,6 +207727,13 @@
      "verdict": "MATCH",
      "manifest": 0.905991,
      "derived": 0.905991
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -205016,6 +207908,13 @@
      "derived": 0.906245
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.906245,
@@ -205186,6 +208085,13 @@
      "verdict": "MATCH",
      "manifest": 0.906455,
      "derived": 0.906455
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -205368,6 +208274,13 @@
      "derived": 1.360448
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.360448,
@@ -205546,6 +208459,13 @@
      "verdict": "MATCH",
      "manifest": 1.636624,
      "derived": 1.636624
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -205728,6 +208648,13 @@
      "derived": 2.441212
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 2.441212,
@@ -205906,6 +208833,13 @@
      "verdict": "MATCH",
      "manifest": 2.590458,
      "derived": 2.590458
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -206088,6 +209022,13 @@
      "derived": 0.886572
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.886572,
@@ -206266,6 +209207,13 @@
      "verdict": "MATCH",
      "manifest": 1.168778,
      "derived": 1.168778
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -206448,6 +209396,13 @@
      "derived": 1.351625
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.351625,
@@ -206622,6 +209577,13 @@
      "derived": 1.490722
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.490722,
@@ -206792,6 +209754,13 @@
      "verdict": "MATCH",
      "manifest": 1.486229,
      "derived": 1.486229
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -206966,6 +209935,13 @@
      "derived": 1.480767
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.480767,
@@ -207136,6 +210112,13 @@
      "verdict": "MATCH",
      "manifest": 1.497961,
      "derived": 1.497961
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -207310,6 +210293,13 @@
      "derived": 1.489984
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.489984,
@@ -207480,6 +210470,13 @@
      "verdict": "MATCH",
      "manifest": 1.484684,
      "derived": 1.484684
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -207654,6 +210651,13 @@
      "derived": 1.492131
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.492131,
@@ -207824,6 +210828,13 @@
      "verdict": "MATCH",
      "manifest": 1.48582,
      "derived": 1.48582
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -207998,6 +211009,13 @@
      "derived": 1.492055
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.492055,
@@ -208168,6 +211186,13 @@
      "verdict": "MATCH",
      "manifest": 1.491483,
      "derived": 1.491483
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -208350,6 +211375,13 @@
      "derived": 3.572326
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.572326,
@@ -208522,6 +211554,13 @@
      "verdict": "MATCH",
      "manifest": 7.709816,
      "derived": 7.709816
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -208698,6 +211737,13 @@
      "derived": 7.70823
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 7.70823,
@@ -208870,6 +211916,13 @@
      "verdict": "MATCH",
      "manifest": 7.711741,
      "derived": 7.711741
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -209046,6 +212099,13 @@
      "derived": 7.711552
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 7.711552,
@@ -209218,6 +212278,13 @@
      "verdict": "MATCH",
      "manifest": 7.694158,
      "derived": 7.694158
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -209394,6 +212461,13 @@
      "derived": 7.695582
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 7.695582,
@@ -209564,6 +212638,13 @@
      "verdict": "MATCH",
      "manifest": 7.699071,
      "derived": 7.699071
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -209740,6 +212821,13 @@
      "derived": 7.694394
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 7.694394,
@@ -209912,6 +213000,13 @@
      "verdict": "MATCH",
      "manifest": 7.700196,
      "derived": 7.700196
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -210088,6 +213183,13 @@
      "derived": 7.713749
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 7.713749,
@@ -210260,6 +213362,13 @@
      "verdict": "MATCH",
      "manifest": 13.344956,
      "derived": 13.344956
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -210436,6 +213545,13 @@
      "derived": 13.373067
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 13.373067,
@@ -210608,6 +213724,13 @@
      "verdict": "MATCH",
      "manifest": 13.324021,
      "derived": 13.324021
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -210784,6 +213907,13 @@
      "derived": 13.360073
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 13.360073,
@@ -210956,6 +214086,13 @@
      "verdict": "MATCH",
      "manifest": 13.304358,
      "derived": 13.304358
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -211132,6 +214269,13 @@
      "derived": 13.347319
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 13.347319,
@@ -211304,6 +214448,13 @@
      "verdict": "MATCH",
      "manifest": 13.337448,
      "derived": 13.337448
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -211480,6 +214631,13 @@
      "derived": 13.348038
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 13.348038,
@@ -211654,6 +214812,13 @@
      "derived": 13.403153
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 13.403153,
@@ -211824,6 +214989,13 @@
      "verdict": "MATCH",
      "manifest": 13.35283,
      "derived": 13.35283
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -212003,8 +215175,17 @@
      "field": "cost_usd",
      "verdict": "MATCH",
      "manifest": 0.004072,
-     "derived": 0.004072,
-     "note": "lower bound: the cited metas cover part of the pass (cost-overrides)"
+     "derived": 0.004072
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "override",
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -212187,6 +215368,13 @@
      "derived": 39.177723
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 39.177723,
@@ -212364,8 +215552,17 @@
      "field": "cost_usd",
      "verdict": "MATCH",
      "manifest": 0.034947,
-     "derived": 0.034947,
-     "note": "lower bound: the cited metas cover part of the pass (cost-overrides)"
+     "derived": 0.034947
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "override",
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -212540,6 +215737,13 @@
      "verdict": "MATCH",
      "manifest": 2.599705,
      "derived": 2.599705
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -212726,6 +215930,13 @@
      "derived": 2.600261
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.961,
@@ -212908,6 +216119,13 @@
      "verdict": "MATCH",
      "manifest": 2.589575,
      "derived": 2.589575
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -213096,6 +216314,13 @@
      "derived": 2.587486
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.956067,
@@ -213280,6 +216505,13 @@
      "derived": 2.590394
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.956067,
@@ -213462,6 +216694,13 @@
      "verdict": "MATCH",
      "manifest": 2.59769,
      "derived": 2.59769
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -213650,6 +216889,13 @@
      "derived": 2.60953
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.967088,
@@ -213832,6 +217078,13 @@
      "verdict": "MATCH",
      "manifest": 2.596367,
      "derived": 2.596367
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -214020,6 +217273,13 @@
      "derived": 2.59648
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 1.960566,
@@ -214204,6 +217464,13 @@
      "verdict": "MATCH",
      "manifest": 2.603717,
      "derived": 2.603717
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -214392,6 +217659,13 @@
      "derived": 10.449723
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 10.439052,
@@ -214576,6 +217850,13 @@
      "derived": 10.520747
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 10.520747,
@@ -214748,6 +218029,13 @@
      "verdict": "MATCH",
      "manifest": 10.595197,
      "derived": 10.595197
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -214934,6 +218222,13 @@
      "derived": 10.497611
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 10.497611,
@@ -215104,6 +218399,13 @@
      "verdict": "MATCH",
      "manifest": 10.447367,
      "derived": 10.447367
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -215278,6 +218580,13 @@
      "verdict": "MATCH",
      "manifest": 10.170717,
      "derived": 10.170717
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -215464,6 +218773,13 @@
      "derived": 10.474679
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 10.474679,
@@ -215636,6 +218952,13 @@
      "verdict": "MATCH",
      "manifest": 10.687891,
      "derived": 10.687891
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -215824,6 +219147,13 @@
      "derived": 10.46728
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 10.46728,
@@ -215994,6 +219324,13 @@
      "verdict": "MATCH",
      "manifest": 10.52969,
      "derived": 10.52969
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -216174,6 +219511,13 @@
      "verdict": "MATCH",
      "manifest": 5.593209,
      "derived": 5.593209
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -216368,6 +219712,13 @@
      "derived": 12.628593
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 6.314297,
@@ -216550,6 +219901,13 @@
      "verdict": "MATCH",
      "manifest": 0.455887,
      "derived": 0.455887
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -216736,6 +220094,13 @@
      "derived": 0.454222
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.227111,
@@ -216918,6 +220283,13 @@
      "verdict": "MATCH",
      "manifest": 0.460276,
      "derived": 0.460276
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -217104,6 +220476,13 @@
      "derived": 0.452374
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.226187,
@@ -217288,6 +220667,13 @@
      "derived": 0.463267
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 0.231633,
@@ -217470,6 +220856,13 @@
      "verdict": "MATCH",
      "manifest": 0.458392,
      "derived": 0.458392
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -217658,6 +221051,13 @@
      "derived": 1.722851
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.722851,
@@ -217830,6 +221230,13 @@
      "verdict": "MATCH",
      "manifest": 1.722982,
      "derived": 1.722982
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -218006,6 +221413,13 @@
      "derived": 1.691233
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.691233,
@@ -218178,6 +221592,13 @@
      "verdict": "MATCH",
      "manifest": 1.696892,
      "derived": 1.696892
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -218354,6 +221775,13 @@
      "derived": 1.713715
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.713715,
@@ -218524,6 +221952,13 @@
      "verdict": "MATCH",
      "manifest": 1.729442,
      "derived": 1.729442
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -218700,6 +222135,13 @@
      "derived": 1.733185
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.733185,
@@ -218870,6 +222312,13 @@
      "verdict": "MATCH",
      "manifest": 1.736685,
      "derived": 1.736685
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -219044,6 +222493,13 @@
      "derived": 1.729373
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 1.729373,
@@ -219214,6 +222670,13 @@
      "verdict": "MATCH",
      "manifest": 1.719902,
      "derived": 1.719902
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -219396,6 +222859,13 @@
      "derived": 0.555459
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.555459,
@@ -219574,6 +223044,13 @@
      "verdict": "MATCH",
      "manifest": 0.640389,
      "derived": 0.640389
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -219756,6 +223233,15 @@
      "derived": 0.00213
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.00213,
@@ -219934,6 +223420,15 @@
      "verdict": "MATCH",
      "manifest": 0.003871,
      "derived": 0.003871
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-lower-bound",
+     "derived": [
+      "verifier coverage"
+     ],
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -220116,6 +223611,13 @@
      "derived": 0.452092
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.452092,
@@ -220296,6 +223798,13 @@
      "derived": 0.532933
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.532933,
@@ -220470,6 +223979,13 @@
      "derived": 28.688984
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 28.688984,
@@ -220642,6 +224158,13 @@
      "verdict": "MATCH",
      "manifest": 28.895105,
      "derived": 28.895105
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -220832,6 +224355,13 @@
      "derived": 28.869864
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_source.bounds_usd.low",
      "verdict": "MATCH",
      "manifest": 28.856245,
@@ -221016,6 +224546,13 @@
      "verdict": "MATCH",
      "manifest": 28.925518,
      "derived": 28.925518
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited-upper-bound",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_source.bounds_usd.low",
@@ -221204,6 +224741,13 @@
      "derived": 29.044043
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 29.044043,
@@ -221382,6 +224926,13 @@
      "verdict": "MATCH",
      "manifest": 8.890222,
      "derived": 8.890222
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -221564,6 +225115,13 @@
      "derived": 14.305547
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 14.305547,
@@ -221736,6 +225294,13 @@
      "verdict": "MATCH",
      "manifest": 3.727074,
      "derived": 3.727074
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -221912,6 +225477,13 @@
      "derived": 3.686861
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.686861,
@@ -222084,6 +225656,13 @@
      "verdict": "MATCH",
      "manifest": 3.588804,
      "derived": 3.588804
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -222260,6 +225839,13 @@
      "derived": 3.676044
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 3.676044,
@@ -222432,6 +226018,13 @@
      "verdict": "MATCH",
      "manifest": 3.651062,
      "derived": 3.651062
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -222614,6 +226207,13 @@
      "derived": 0.478101
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.478101,
@@ -222794,6 +226394,13 @@
      "derived": 0.737004
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 0.737004,
@@ -222966,6 +226573,13 @@
      "verdict": "MATCH",
      "manifest": 67.036055,
      "derived": 67.036055
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -223142,6 +226756,13 @@
      "derived": 66.927085
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 66.927085,
@@ -223314,6 +226935,13 @@
      "verdict": "MATCH",
      "manifest": 66.884675,
      "derived": 66.884675
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -223489,6 +227117,13 @@
      "derived": 44.448865
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 44.448865,
@@ -223660,6 +227295,13 @@
      "verdict": "MATCH",
      "manifest": 44.529553,
      "derived": 44.529553
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -223840,6 +227482,13 @@
      "verdict": "MATCH",
      "manifest": 4.962592,
      "derived": 4.962592
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -224187,6 +227836,13 @@
      "derived": 5.905819
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 5.905819,
@@ -224532,6 +228188,13 @@
      "derived": 6.48959
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 6.48959,
@@ -224712,6 +228375,13 @@
      "derived": 10.178819
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 10.178819,
@@ -224886,6 +228556,13 @@
      "derived": 46.703326
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 46.703326,
@@ -225058,6 +228735,13 @@
      "verdict": "MATCH",
      "manifest": 46.692701,
      "derived": 46.692701
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -225236,6 +228920,13 @@
      "derived": 46.719564
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 46.719564,
@@ -225408,6 +229099,13 @@
      "verdict": "MATCH",
      "manifest": 46.730708,
      "derived": 46.730708
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -225584,6 +229282,13 @@
      "verdict": "MATCH",
      "manifest": 46.783185,
      "derived": 46.783185
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -225766,6 +229471,13 @@
      "derived": 15.755937
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 15.755937,
@@ -225944,6 +229656,13 @@
      "verdict": "MATCH",
      "manifest": 25.102049,
      "derived": 25.102049
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -226126,6 +229845,13 @@
      "derived": 31.542175
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 31.542175,
@@ -226304,6 +230030,13 @@
      "verdict": "MATCH",
      "manifest": 25.397835,
      "derived": 25.397835
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",
@@ -226486,6 +230219,13 @@
      "derived": 40.581277
     },
     {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
+    },
+    {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
      "manifest": 40.581277,
@@ -226664,6 +230404,13 @@
      "verdict": "MATCH",
      "manifest": 51.092455,
      "derived": 51.092455
+    },
+    {
+     "field": "cost_basis",
+     "verdict": "MATCH",
+     "manifest": "audited",
+     "derived": null,
+     "note": "lower bound iff the cited metas cover part of the pass"
     },
     {
      "field": "cost_usd.meta_block",

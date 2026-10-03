@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-256
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9b3c4cef7`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `992e82963`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-256` · **Registry status**: active · **Purpose**: 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT): the small-tile anchor for the tile-size comparison, where F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). Unregistered exploratory extension of the registered H11 two-level design (E62); populated 2026-07-30 per the PI ruling at reports/verification/phase2-rulings-2026-07-30.md S 1b.
 
@@ -39,7 +39,7 @@
 
 No pass rows in `results/passes-manifest.json` for this run. A run is decomposed into passes only where its proposer/verifier metas were materialised as resolvable pass files; where they were not, the decomposition records pools and conditions without passes. See § 5 for the registered conditions and § 1 for the registry note.
 
-## 4. Token load and recorded cost
+## 4. Token load and audited cost
 
 No pass rows, so no recorded token load. not supplied: this run's spend is not reconstructable from the passes manifest.
 
@@ -120,7 +120,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `9b3c4cef7` |
+| Source commit | `992e82963` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

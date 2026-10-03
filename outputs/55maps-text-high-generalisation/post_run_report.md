@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `9b3c4cef7`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `992e82963`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH
 
@@ -55,7 +55,7 @@
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
-## 4. Token load and recorded cost
+## 4. Token load and audited cost
 
 | Field | Value |
 |---|---|
@@ -73,7 +73,7 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 > **Audited token load.** `reports/token-load-audit-2026-06-12.md` § 3.2 recomputed this run's load from `per_item_metadata` and found its metas' `usage_stats` **2.0× inflated (factors 2.003–2.016 across axes)**; its `cost_manifest.json` is **2.0× inflated**. Since generator 0.8.0 (2026-10-03) the register reads the per-item sums of any meta the 2026-05-02 recovery merge double-counted, so the figures above are de-duplicated; the trustworthy source is `per_item_metadata`. Audited clean figures, quoted from § 3.2: 5 passes; clean flex cost US$40.19/pass (range US$39.92–40.45), of which thinking is ~US$34.51; clean per pass input 12,828,582, output mean 1,647,744, thinking mean 23,005,025 (2,693/tile). No run total is derived here: the audit's pass count and this manifest's need not agree, so multiplying would manufacture a figure no file carries.
 >
-> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (a meta was overwritten), `published`, or `unrecorded`, and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum over upper or lower bounds is itself a bound, not a total to cite as exact.
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum over upper or lower bounds is itself a bound, not a total to cite as exact.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
 
@@ -197,7 +197,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `9b3c4cef7` |
+| Source commit | `992e82963` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

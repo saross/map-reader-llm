@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-03T08:36:47Z",
+  "generated_at": "2026-10-03T09:02:47Z",
   "generator_version": "0.8.0",
   "passes": [
     {
@@ -398,7 +398,7 @@
         "total": 6163
       },
       "cost_usd": 0.002161,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -419,7 +419,8 @@
             ],
             "cost_usd": 0.002161
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 3 request(s) against 8,942 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 4.479926,
       "timestamps": {
@@ -431,7 +432,7 @@
         "source_files": [
           "outputs/55maps-generalisation/verified-v2/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -835,7 +836,7 @@
             "cost_usd": 0.000727
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.001 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.001 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 1 request(s) against 7,878 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 6.251105,
       "timestamps": {
@@ -847,7 +848,7 @@
         "source_files": [
           "outputs/55maps-image-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T08:36:47Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -1220,7 +1221,7 @@
             "cost_usd": 0.05084
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TH7 (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$6.42 (9,205 calls, from the .pre-recovery backup meta) at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TH7 (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$6.42 (9,205 calls, from the .pre-recovery backup meta) at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 74 request(s) against 9,205 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 14.640159,
       "timestamps": {
@@ -1232,7 +1233,7 @@
         "source_files": [
           "outputs/55maps-text-high-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T08:36:47Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -1991,7 +1992,7 @@
             "cost_usd": 0.026423
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.03 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.03 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 39 request(s) against 10,170 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 7.14809,
       "timestamps": {
@@ -2003,7 +2004,7 @@
         "source_files": [
           "outputs/55maps-text-min-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T08:36:47Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2347,7 +2348,7 @@
         "total": 21633
       },
       "cost_usd": 0.00781,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -2368,7 +2369,8 @@
             ],
             "cost_usd": 0.00781
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 11 request(s) against 608 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 8.626864,
       "timestamps": {
@@ -2380,7 +2382,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/verified-v1/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -6071,7 +6073,7 @@
         "total": 111072
       },
       "cost_usd": 0.038928,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -6091,7 +6093,8 @@
             ],
             "cost_usd": 0.038928
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 57 request(s) against 4,358 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 21.100274,
       "timestamps": {
@@ -6103,7 +6106,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22465,7 +22468,7 @@
         "total": 903310
       },
       "cost_usd": 0.324565,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22486,7 +22489,8 @@
             ],
             "cost_usd": 0.324565
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 460 request(s) against 802 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 224.184638,
       "timestamps": {
@@ -22498,7 +22502,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22599,7 +22603,7 @@
         "total": 21632
       },
       "cost_usd": 0.007808,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22620,7 +22624,8 @@
             ],
             "cost_usd": 0.007808
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 11 request(s) against 2,190 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 18.987465,
       "timestamps": {
@@ -22632,7 +22637,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22725,7 +22730,7 @@
         "total": 50958
       },
       "cost_usd": 0.018197,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22746,7 +22751,8 @@
             ],
             "cost_usd": 0.018197
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 26 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 9.66775,
       "timestamps": {
@@ -22758,7 +22764,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22851,7 +22857,7 @@
         "total": 31062
       },
       "cost_usd": 0.009377,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22872,7 +22878,8 @@
             ],
             "cost_usd": 0.009377
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 19 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 9.031089,
       "timestamps": {
@@ -22884,7 +22891,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22914,7 +22921,7 @@
         "total": 8603
       },
       "cost_usd": 0.002339,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22935,7 +22942,8 @@
             ],
             "cost_usd": 0.002339
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 7.323665,
       "timestamps": {
@@ -22947,7 +22955,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22977,7 +22985,7 @@
         "total": 39640
       },
       "cost_usd": 0.013528,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -22998,7 +23006,8 @@
             ],
             "cost_usd": 0.013528
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 19 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 6.303492,
       "timestamps": {
@@ -23010,7 +23019,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23174,7 +23183,7 @@
         "total": 1994
       },
       "cost_usd": 0.000751,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -23195,7 +23204,8 @@
             ],
             "cost_usd": 0.000751
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 3.540989,
       "timestamps": {
@@ -23207,7 +23217,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23308,7 +23318,7 @@
         "total": 1950
       },
       "cost_usd": 0.000685,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -23329,7 +23339,8 @@
             ],
             "cost_usd": 0.000685
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,840 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 4.743909,
       "timestamps": {
@@ -23341,7 +23352,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23647,7 +23658,7 @@
         "total": 79879
       },
       "cost_usd": 0.027978,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -23668,7 +23679,8 @@
             ],
             "cost_usd": 0.027978
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 41 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 15.421488,
       "timestamps": {
@@ -23680,7 +23692,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23773,7 +23785,7 @@
         "total": 44225
       },
       "cost_usd": 0.013451,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -23794,7 +23806,8 @@
             ],
             "cost_usd": 0.013451
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 27 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 7.8537,
       "timestamps": {
@@ -23806,7 +23819,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23899,7 +23912,7 @@
         "total": 43842
       },
       "cost_usd": 0.014995,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -23920,7 +23933,8 @@
             ],
             "cost_usd": 0.014995
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 21 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 12.915017,
       "timestamps": {
@@ -23932,7 +23946,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -25232,7 +25246,7 @@
         "total": 1988
       },
       "cost_usd": 0.000742,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -25253,7 +25267,8 @@
             ],
             "cost_usd": 0.000742
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,601 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 4.377842,
       "timestamps": {
@@ -25265,7 +25280,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -25661,7 +25676,7 @@
         "total": 3879
       },
       "cost_usd": 0.003579,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -25682,7 +25697,8 @@
             ],
             "cost_usd": 0.003579
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 15.512789,
       "timestamps": {
@@ -25694,7 +25710,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -26420,7 +26436,7 @@
         "total": 18401
       },
       "cost_usd": 0.077452,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -26441,7 +26457,8 @@
             ],
             "cost_usd": 0.077452
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 8 request(s) against 841 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 13.396195,
       "timestamps": {
@@ -26453,7 +26470,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -26783,7 +26800,7 @@
         "total": 23440
       },
       "cost_usd": 0.10208,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -26804,7 +26821,8 @@
             ],
             "cost_usd": 0.10208
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 10 request(s) against 519 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 11.373166,
       "timestamps": {
@@ -26816,7 +26834,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -27890,7 +27908,7 @@
         "total": 49137
       },
       "cost_usd": 0.213324,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -27911,7 +27929,8 @@
             ],
             "cost_usd": 0.213324
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 21 request(s) against 1,047 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 22.748682,
       "timestamps": {
@@ -27923,7 +27942,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -32785,7 +32804,7 @@
         "total": 29651
       },
       "cost_usd": 0.010877,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -32806,7 +32825,8 @@
             ],
             "cost_usd": 0.010877
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 15 request(s) against 1,114 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 8.202044,
       "timestamps": {
@@ -32818,7 +32838,7 @@
         "source_files": [
           "outputs/h8-v2/wbf/scale-4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -70289,7 +70309,7 @@
         "total": 1957
       },
       "cost_usd": 0.000695,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -70303,15 +70323,15 @@
             "priced_at": "2026-06-10",
             "model": "gemini-3-flash-preview",
             "tier": "flex",
-            "tier_method": "run-log-inherited",
+            "tier_method": "billing-day+verifier-mode",
             "evidence": [
               "verifier-mode: outputs/flash35-pv-2x2/verified-f3vf/probabilities.json mode=realtime -> flex|standard",
-              "run-log-inherited: outputs/flash35-pv-2x2/{tranche-full.log} -> flex",
               "billing-day: gemini-3-flash-preview: 2026-06-10 flex [day export (unverified)] -> flex"
             ],
             "cost_usd": 0.000695
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 1,132 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 34.152397,
       "timestamps": {
@@ -70323,7 +70343,7 @@
         "source_files": [
           "outputs/flash35-pv-2x2/verified-f3vf/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -70367,10 +70387,9 @@
             "priced_at": "2026-06-10",
             "model": "gemini-3.5-flash",
             "tier": "flex",
-            "tier_method": "run-log-inherited",
+            "tier_method": "billing-day+verifier-mode",
             "evidence": [
               "verifier-mode: outputs/flash35-pv-2x2/verified-f35vf/probabilities.json mode=realtime -> flex|standard",
-              "run-log-inherited: outputs/flash35-pv-2x2/{tranche-full.log} -> flex",
               "billing-day: gemini-3.5-flash: 2026-06-10 flex [day export (unverified)] -> flex"
             ],
             "cost_usd": 2.258247
@@ -70387,7 +70406,7 @@
         "source_files": [
           "outputs/flash35-pv-2x2/verified-f35vf/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -70431,10 +70450,9 @@
             "priced_at": "2026-06-10",
             "model": "gemini-3.5-flash",
             "tier": "flex",
-            "tier_method": "run-log-inherited",
+            "tier_method": "billing-day+verifier-mode",
             "evidence": [
               "verifier-mode: outputs/flash35-pv-2x2/min-f3-verified-f35vf/probabilities.json mode=realtime -> flex|standard",
-              "run-log-inherited: outputs/flash35-pv-2x2/{tranche-full.log} -> flex",
               "billing-day: gemini-3.5-flash: 2026-06-10 flex [day export (unverified)] -> flex"
             ],
             "cost_usd": 3.858892
@@ -70451,7 +70469,7 @@
         "source_files": [
           "outputs/flash35-pv-2x2/min-f3-verified-f35vf/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -70810,10 +70828,9 @@
             "priced_at": "2026-06-11",
             "model": "gemini-3-flash-preview",
             "tier": "flex",
-            "tier_method": "run-log-inherited",
+            "tier_method": "billing-day+verifier-mode",
             "evidence": [
               "verifier-mode: outputs/55maps-text-min-n10-uplift/verified-3of10/probabilities.json mode=realtime -> flex|standard",
-              "run-log-inherited: outputs/55maps-text-min-n10-uplift/{uplift-full.log} -> flex",
               "billing-day: gemini-3-flash-preview: 2026-06-11 flex [day export (unverified)] -> flex"
             ],
             "cost_usd": 11.266205
@@ -70830,7 +70847,7 @@
         "source_files": [
           "outputs/55maps-text-min-n10-uplift/verified-3of10/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -71112,7 +71129,7 @@
         "total": 2068
       },
       "cost_usd": 0.002379,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -71133,7 +71150,8 @@
             ],
             "cost_usd": 0.002379
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,319 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 2.227227,
       "timestamps": {
@@ -71145,7 +71163,7 @@
         "source_files": [
           "outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -76901,7 +76919,7 @@
             "cost_usd": 0.004072
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.A-N1 (auditor_complete false)"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.A-N1 (auditor_complete false); the meta accounts for 6 request(s) against 38,713 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 10.287255,
       "timestamps": {
@@ -76913,7 +76931,7 @@
         "source_files": [
           "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -77028,7 +77046,7 @@
             "cost_usd": 0.034947
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false)"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false); the meta accounts for 79 request(s) against 57,482 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 592.18232,
       "timestamps": {
@@ -77040,7 +77058,7 @@
         "source_files": [
           "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -79954,7 +79972,7 @@
         "total": 4003
       },
       "cost_usd": 0.00213,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -79975,7 +79993,8 @@
             ],
             "cost_usd": 0.00213
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 16 request(s) against 791 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 1608.336636,
       "timestamps": {
@@ -79987,7 +80006,7 @@
         "source_files": [
           "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T08:36:47Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -80017,7 +80036,7 @@
         "total": 2466
       },
       "cost_usd": 0.003871,
-      "cost_basis": "audited",
+      "cost_basis": "audited-lower-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -80038,7 +80057,8 @@
             ],
             "cost_usd": 0.003871
           }
-        ]
+        ],
+        "note": "LOWER bound: the meta accounts for 1 request(s) against 791 results in probabilities.json: a later leg (a cleanup) overwrote it"
       },
       "wall_clock_s": 8.576354,
       "timestamps": {
@@ -80050,7 +80070,7 @@
         "source_files": [
           "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T08:36:47Z",
+        "last_extracted_at": "2026-10-03T09:02:47Z",
         "extractor_version": "0.8.0"
       }
     },
