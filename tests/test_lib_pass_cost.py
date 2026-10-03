@@ -21,6 +21,7 @@ the committed evidence and outputs.
 from __future__ import annotations
 
 import json
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -32,7 +33,7 @@ from scripts.derive_tier_evidence import (
     sku_model,
     sku_tier,
 )
-from scripts.lib_pass_cost import PassCoster, is_continuous, pacific_days
+from scripts.lib_pass_cost import PassCoster, fragment_usage, is_continuous, pacific_days
 
 REPO = Path(__file__).resolve().parents[1]
 
@@ -215,6 +216,7 @@ def test_own_run_log_pins_and_inherited_log_yields_to_a_batch_marker(evidence, t
     run = tmp_path / "run"
     leg = run / "verifier" / "v1"
     coster = evidence(logs={_rel(run): {"tiers": ["flex"], "explicit_cache": False,
+                                        "covers_verifier": True,
                                         "logs": [{"path": "x/pass1.log"}]}})
     meta = _meta(leg / "run.meta.json")
     (leg / "batch_jobs.json").write_text("{}")
@@ -405,12 +407,6 @@ def test_recovery_fragment_is_priced_at_its_own_tier_and_summed(evidence, tmp_pa
 # ---------------------------------------------------------------------------
 
 
-@pytest.fixture(scope="module")
-def committed():
-    """A coster over the committed evidence files."""
-    return PassCoster()
-
-
 def _committed_pass(run_id: str, pool: str, n: int) -> dict:
     from scripts.generate_post_run_report import extract_passes, extraction_context
     rows = extract_passes(extraction_context(run_id))
@@ -507,3 +503,357 @@ def test_recovery_merged_meta_is_priced_from_per_item_sums():
     assert 39.9 < th7["cost_usd"] < 40.5
     im = _committed_pass("55maps-image-generalisation", "library_plus-hp", 1)
     assert im["tokens"]["input_cached"] < 130_000_000  # clean ~124 M, not ~248 M
+
+
+# ---------------------------------------------------------------------------
+# Audit round 1 (lenses A and B, 2026-10-03): one test per surviving mutation.
+# ---------------------------------------------------------------------------
+
+LOG_ENTRY = {"explicit_cache": False, "covers_verifier": False,
+             "logs": [{"path": "x/launch.log"}]}
+
+
+def _cost2(tier: str, source: str) -> dict:
+    return {"cost_estimate": {"schema": "cost/2",
+                              "pricing_used": {"tier": tier, "tier_source": source}}}
+
+
+@pytest.mark.tier1
+def test_continuous_fragment_intersects_interval_only_days(evidence, tmp_path):
+    # SENTINEL for `allowed &= tiers`: with no day exports, the invoice line
+    # windows allow flex|standard on 05-20 and flex only on 05-21; a fragment
+    # running across both in one sitting can only have been flex.
+    billing = {"months_covered": ["2026-05"], "intervals": {"gemini-3-flash-preview": {
+        "flex": [["2026-05-01", "2026-05-31"]], "standard": [["2026-05-20", "2026-05-20"]]}}}
+    meta = _meta(tmp_path / "run" / "p" / "run_1" / "a.meta.json",
+                 start="2026-05-20T20:00:00+00:00", end="2026-05-21T20:00:00+00:00",
+                 duration=86400)
+    frag = _cost(evidence(billing=billing), [meta], tmp_path / "run")[
+        "cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "billing-day")
+
+
+@pytest.mark.tier1
+def test_cli_runner_record_is_a_request_the_cached_path_overrules(evidence, tmp_path):
+    # SENTINEL (lenses A and B): a WP2 cost/2 block records the CLI switch even
+    # when the cached call dropped it, so it must rank below the cached path.
+    pdir = tmp_path / "run" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"],
+                                         "explicit_cache": True}})
+    out = _cost(coster, [_meta(pdir / "a.meta.json", **_cost2("flex", "cli --service-tier"))],
+                tmp_path / "run")
+    frag = out["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    assert "conflicts" not in frag
+    assert any(n.startswith("runner-record") and "REQUESTED" in n for n in frag["notes"])
+    assert out["cost_usd"] == pytest.approx(STANDARD_USD)
+
+
+@pytest.mark.tier1
+def test_batch_runner_record_is_structural_and_rules_out_the_cached_path(evidence, tmp_path):
+    pdir = tmp_path / "run" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"],
+                                         "explicit_cache": True}})
+    frag = _cost(coster, [_meta(pdir / "a.meta.json", **_cost2("batch", "Batch API path"))],
+                 tmp_path / "run")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("batch", "runner-record-batch")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_a_cost2_tier_from_an_inference_is_not_a_record(evidence, tmp_path):
+    frag = _cost(evidence(), [_meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                                    **_cost2("flex", "inferred from side evidence"))],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert frag["tier"] is None and not any("runner-record" in e for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("marker", ["probabilities", "batch_api"])
+def test_batch_markers_pin_batch(evidence, tmp_path, marker):
+    leg = tmp_path / "run" / "v"
+    extra = {"batch_api": {"job": "x"}} if marker == "batch_api" else {}
+    meta = _meta(leg / "run.meta.json", **extra)
+    if marker == "probabilities":
+        (leg / "probabilities.json").write_text(json.dumps({"mode": "batch"}))
+    frag = _cost(evidence(), [meta], tmp_path / "run", stage="verifier")[
+        "cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("batch", "batch-marker")
+
+
+@pytest.mark.tier1
+def test_realtime_verifier_mode_rules_out_batch(evidence, tmp_path):
+    leg = tmp_path / "run" / "v"
+    meta = _meta(leg / "run.meta.json")
+    (leg / "probabilities.json").write_text(json.dumps({"mode": "realtime"}))
+    day = {"2026-05-20": {"project_filter": "unverified", "models": {
+        "gemini-3-flash-preview": {"tiers": {"flex": {"output": 9e9},
+                                             "batch": {"output": 9e9}}}}}}
+    frag = _cost(evidence(billing={"days": day}), [meta], tmp_path / "run",
+                 stage="verifier")["cost_source"]["fragments"][0]
+    assert frag["tier"] == "flex" and "verifier-mode" in frag["tier_method"]
+
+
+@pytest.mark.tier1
+def test_launch_manifest_pins_and_an_inherited_one_ranks_lowest(evidence, tmp_path):
+    run = tmp_path / "run"
+    pdir = run / "p" / "run_1"
+    pdir.mkdir(parents=True)
+    (pdir / "launch_manifest.json").write_text(json.dumps({"service_tier": "flex"}))
+    own = _cost(evidence(), [_meta(pdir / "a.meta.json")], run)["cost_source"]["fragments"][0]
+    assert (own["tier"], own["tier_method"]) == ("flex", "launch-manifest")
+    run2 = tmp_path / "run2"
+    pdir2 = run2 / "p" / "run_1"
+    pdir2.mkdir(parents=True)
+    (run2 / "launch_manifest.json").write_text(json.dumps({"service_tier": "flex"}))
+    logs = {_rel(pdir2): {**LOG_ENTRY, "tiers": ["standard"]}}
+    frag = _cost(evidence(logs=logs), [_meta(pdir2 / "a.meta.json")], run2)[
+        "cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "run-log")
+    assert "conflicts" not in frag and any("overruled" in n for n in frag["notes"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("covers", "tier"), [(False, None), (True, "flex")])
+def test_an_inherited_log_pins_a_verifier_only_if_it_covers_one(evidence, tmp_path, covers,
+                                                                 tier):
+    run = tmp_path / "run"
+    logs = {_rel(run): {**LOG_ENTRY, "tiers": ["flex"], "covers_verifier": covers}}
+    frag = _cost(evidence(logs=logs), [_meta(run / "verifier" / "v" / "run.meta.json")], run,
+                 stage="verifier")["cost_source"]["fragments"][0]
+    assert frag["tier"] == tier
+
+
+@pytest.mark.tier1
+def test_resumed_fragment_with_an_uninformative_end_day_stays_open(evidence, tmp_path):
+    # SENTINEL (lens A): one informative end day must not narrow a resumed
+    # fragment whose other session fell on a month not yet invoiced.
+    billing = {"months_covered": ["2026-04"], "intervals": {"gemini-3-flash-preview": {
+        "flex": [["2026-04-08", "2026-04-30"]]}}}
+    meta = _meta(tmp_path / "run" / "p" / "run_1" / "a.meta.json",
+                 start="2026-04-09T20:00:00+00:00", end="2026-10-20T20:00:00+00:00",
+                 duration=20000)
+    out = _cost(evidence(billing=billing), [meta], tmp_path / "run")
+    frag = out["cost_source"]["fragments"][0]
+    assert frag["tier"] is None and set(frag["candidates"]) == {"standard", "flex", "batch"}
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("input_tokens", "basis"), [(16_000, "audited"),
+                                                     (24_000, "audited-upper-bound")])
+def test_tier_indifference_threshold_is_half_a_cent(evidence, tmp_path, input_tokens, basis):
+    # Standard minus flex on fresh input is 0.25 US$/M: 16 k tokens differ by
+    # US$0.004 (one cost), 24 k by US$0.006 (a range).
+    usage = {**{k: 0 for k in USAGE}, "total_input_tokens": input_tokens,
+             "total_tokens": input_tokens, "n_responses_with_usage": 1}
+    out = _cost(evidence(), [_meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                                   usage=usage)], tmp_path / "r")
+    assert out["cost_basis"] == basis
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("output", "excluded"), [(1_000_500, False), (1_002_000, True)])
+def test_volume_rule_slack_is_a_tenth_of_a_percent(evidence, tmp_path, output, excluded):
+    day = {"2026-05-20": {"project_filter": "unverified", "models": {
+        "gemini-3-flash-preview": {"tiers": {"flex": {"output": 1_000_000},
+                                             "standard": {"output": 9e9}}}}}}
+    usage = {**USAGE, "total_output_tokens": output, "total_thoughts_tokens": 0}
+    frag = _cost(evidence(billing={"days": day}),
+                 [_meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json", usage=usage)],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert any("not flex" in e for e in frag["evidence"]) is excluded
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("gap_h", "continuous"), [(5, True), (7, False)])
+def test_resume_gap_is_six_hours(gap_h, continuous):
+    start, run_s = "2026-05-20T00:00:00+00:00", 3600
+    end = (datetime.fromisoformat(start) + timedelta(seconds=run_s + gap_h * 3600)).isoformat()
+    assert is_continuous(start, end, run_s) is continuous
+
+
+@pytest.mark.tier1
+def test_continuity_without_a_run_time_uses_a_36_hour_span():
+    assert is_continuous("2026-05-20T00:00:00+00:00", "2026-05-21T11:00:00+00:00", None)
+    assert not is_continuous("2026-05-20T00:00:00+00:00", "2026-05-21T13:00:00+00:00", None)
+
+
+@pytest.mark.tier1
+def test_merge_intervals_keeps_a_span_that_contains_the_next():
+    assert merge_intervals([("2026-04-01", "2026-04-30"), ("2026-04-05", "2026-04-10")]) == [
+        ["2026-04-01", "2026-04-30"]]
+
+
+@pytest.mark.tier1
+def test_a_clean_meta_with_recovery_history_is_not_rebuilt():
+    # NEGATIVE: T03's metas carry recovery_history but were not double-counted
+    # (items_processed equals completed), so their usage_stats stand.
+    meta = json.loads((REPO / "outputs/55maps-text-high-t0.3-generalisation/proposer/"
+                       "detect_brief-text/run_1/detections-detect_brief-text-3-flash-"
+                       "2026-04-26.meta.json").read_text())
+    assert meta.get("recovery_history")
+    usage, note = fragment_usage(meta)
+    assert note is None and usage is meta["usage_stats"]
+
+
+@pytest.mark.tier1
+def test_part_unpriceable_pass_publishes_no_figure(evidence, tmp_path):
+    run = tmp_path / "run"
+    metas = [_meta(run / "p" / "run_1" / "a.meta.json"),
+             _meta(run / "p" / "run_1_recovery" / "b.meta.json")]
+    out = evidence().cost_pass(pass_id="r::p::run1", fragments=metas, run_id="r", pool="p",
+                               run_dir=run, model="gemini-3-flash-preview",
+                               fragment_models=["gemini-3-flash-preview", "gemini-9-unknown"])
+    assert (out["cost_usd"], out["cost_basis"]) == (None, "unpriceable")
+
+
+@pytest.mark.tier1
+def test_an_unrecorded_fragment_makes_the_pass_a_floor(evidence, tmp_path):
+    run = tmp_path / "run"
+    logs = {_rel(run / "p" / "run_1"): {**LOG_ENTRY, "tiers": ["flex"]}}
+    metas = [_meta(run / "p" / "run_1" / "a.meta.json"),
+             _meta(run / "p" / "run_1_recovery" / "b.meta.json", usage={k: 0 for k in USAGE})]
+    out = _cost(evidence(logs=logs), metas, run)
+    assert (out["cost_basis"], out["cost_usd"]) == ("audited-lower-bound",
+                                                   pytest.approx(FLEX_USD))
+
+
+@pytest.mark.tier1
+def test_an_unrecorded_fragment_beside_an_unresolved_one_has_no_bound(evidence, tmp_path):
+    run = tmp_path / "run"
+    metas = [_meta(run / "p" / "run_1" / "a.meta.json"),
+             _meta(run / "p" / "run_1_recovery" / "b.meta.json", usage={k: 0 for k in USAGE})]
+    out = _cost(evidence(), metas, run)
+    assert (out["cost_usd"], out["cost_basis"]) == (None, "unpriceable")
+    assert "neither" in out["cost_source"]["note"]
+
+
+@pytest.mark.tier1
+def test_an_undated_fragment_is_not_priced_at_today(evidence, tmp_path):
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json", start=None, end=None)
+    out = _cost(evidence(), [meta], tmp_path / "r")
+    assert (out["cost_usd"], out["cost_basis"]) == (None, "unpriceable")
+
+
+@pytest.mark.tier1
+def test_fragment_model_prefers_the_fragment_own_record_then_model_of_record():
+    from scripts.generate_post_run_report import _fragment_model
+    meta = {"per_item_metadata": [{"model_used": "gemini-3.7-flash"}]}
+    assert _fragment_model(meta, "gemini-3-flash-preview", None) == "gemini-3.7-flash"
+    assert _fragment_model({}, "gemini-3-flash-preview", None) == "gemini-3-flash-preview"
+    assert _fragment_model(meta, "x", "gemini-3.1-pro-preview") == "gemini-3.1-pro-preview"
+
+
+@pytest.mark.tier1
+def test_attestation_matches_on_pool_glob_and_billing_days(evidence, tmp_path):
+    att = [{"id": "A1", "run_id": "r", "pool": "flash-*", "pacific_days": ["2026-05-20"],
+            "tier": "flex", "attested_by": "PI", "attested_on": "2026-10-03", "evidence": "x"}]
+    coster = evidence(attestations=att)
+    days = ["2026-05-20"]
+    assert coster.attestation("r", "flash-high", days) is not None
+    assert coster.attestation("r", "pro-high", days) is None          # pool glob
+    assert coster.attestation("r", "flash-high", ["2026-05-21"]) is None  # day filter
+    assert coster.attestation("other", "flash-high", days) is None
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("bad", [{"basis": "audited-lower-bound"},
+                                 {"basis": "guessed", "source": "x"}])
+def test_override_file_refuses_an_entry_without_source_or_known_basis(evidence, bad):
+    with pytest.raises(ValueError):
+        evidence(published={"r::p::run1": bad})
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("sku", "model"), [
+    ("Generate content input token count gemini 3.5 flash text flex", "gemini-3.5-flash"),
+    ("Generate content input token count gemini 3.6 flash text", "gemini-3.6-flash"),
+    ("Generate content output token count gemini 3.8 flash text flex", "gemini-3.8-flash"),
+])
+def test_sku_table_reads_the_later_flash_models(sku, model):
+    assert sku_model(sku) == model
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("tamper", ["basis", "fragment"])
+def test_schema_refuses_an_unknown_basis_or_a_fragment_without_its_keys(tamper):
+    from scripts.generate_post_run_report import load_schema_registry, validate_row
+    reg, _ = load_schema_registry()
+    row = _committed_pass("h8-v2", "canonical", 1)
+    assert validate_row("passes", row, reg) == []
+    if tamper == "basis":
+        bad = {**row, "cost_basis": "guessed"}
+    else:
+        frags = [{k: v for k, v in f.items() if k != "tier"}
+                 for f in row["cost_source"]["fragments"]]
+        bad = {**row, "cost_source": {**row["cost_source"], "fragments": frags}}
+    assert validate_row("passes", bad, reg) != []
+
+
+# -- integration: wiring the lenses found untested ---------------------------
+
+
+@pytest.mark.tier1
+def test_c3_certifies_new_style_rows_through_rederive_pass():
+    # Through the real entry point, on a cached-path row and a recovery-merged
+    # row: cost, fragment stamps and the token claims all certify.
+    from scripts.rederive_manifest_fields import rederive_pass
+    for run_id, pool in (("h8-v2", "canonical"),
+                         ("55maps-text-high-generalisation", "detect_brief-text")):
+        result = rederive_pass(_committed_pass(run_id, pool, 1))
+        verdicts = {f["field"]: f["verdict"] for f in result["fields"]}
+        assert verdicts["cost_usd"] == "MATCH", (run_id, verdicts)
+        assert verdicts["cost_source.fragments.stamps"] == "MATCH", run_id
+        assert verdicts["tokens.input_billed"] == "MATCH", run_id
+
+
+@pytest.mark.tier1
+def test_c3_refuses_a_pricing_date_that_is_not_the_meta_own():
+    from scripts.rederive_manifest_fields import rederive_pass
+    row = _committed_pass("h8-v2", "canonical", 1)
+    frags = [{**f, "priced_at": "2027-01-02"} for f in row["cost_source"]["fragments"]]
+    bad = {**row, "cost_source": {**row["cost_source"], "fragments": frags}}
+    verdicts = {f["field"]: f["verdict"] for f in rederive_pass(bad)["fields"]}
+    assert verdicts["cost_source.fragments.stamps"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_verifier_legs_are_wired_as_verifiers():
+    # IM's run log records an explicit cache, but its verifier leg is not on
+    # the detection runner's cached path; and the Gemini 3 image row's proposer
+    # pass logs say nothing of its verifier legs, so they do not pin them.
+    im = _committed_pass("55maps-image-generalisation", "verified", 1)
+    assert im["cost_source"]["fragments"][0]["tier_method"] != "cached-path"
+    from scripts.generate_post_run_report import extract_passes, extraction_context
+    rows = extract_passes(extraction_context("gemini3-image-55map-2026-09-16"))
+    for r in rows:
+        for f in r["cost_source"].get("fragments", []):
+            if "verify" in r["proposer_pool"]:
+                assert f["tier_method"] != "run-log-inherited", r["pass_id"]
+
+
+@pytest.mark.tier1
+def test_a_second_whole_meta_in_run_n_is_priced():
+    # Lens A: flash35-pv-2x2 run 3 holds two dated metas; the second billed
+    # 734,478 input tokens the register once missed.
+    row = _committed_pass("flash35-pv-2x2", "flash35-min-text-1of10", 3)
+    metas = [f["meta"] for f in row["cost_source"]["fragments"]]
+    assert sum("/run_3/" in m for m in metas) == 2
+    assert row["tokens"]["input_billed"] > 1_400_000
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("run_id", ["h8-v2", "flash35-pv-2x2", "55maps-text-high-generalisation",
+                                    "gemini37-55map-2026-08-29"])
+def test_committed_register_is_current_for_sampled_runs(run_id):
+    # Lens B M5: a rule change must not leave the committed register stale and
+    # C3 certifying whatever was regenerated. Re-extract and compare.
+    from scripts.generate_post_run_report import extract_passes, extraction_context
+    committed = {r["pass_id"]: r for r in json.loads(
+        (REPO / "results/passes-manifest.json").read_text())["passes"]
+        if r["run_id"] == run_id}
+    fresh = {r["pass_id"]: r for r in extract_passes(extraction_context(run_id))}
+    assert set(fresh) == set(committed)
+    for pid, r in fresh.items():
+        for key in ("cost_usd", "cost_basis", "cost_source", "tokens"):
+            assert r[key] == committed[pid][key], (pid, key)

@@ -114,7 +114,8 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: evidence supports, never the meta's ``cost_estimate`` copied; ``cost_basis``
 #: and ``cost_source`` say how. ``tokens`` and ``cost_usd`` now include the
 #: pass's ``run_N_recovery*`` fragments, which the tile count already unioned
-#: (118 M tokens on 57 passes were missing from the cost before). A meta the
+#: (118 M tokens on 57 passes were missing from the cost before), and any second
+#: whole meta in run_N (one pass had one). A meta the
 #: 2026-05-02 recovery merge double-counted (14 passes: IM, TH7, gold-standard-v2)
 #: reads its per-item sums for both, as the June token-load audit did.
 GENERATOR_VERSION: str = "0.8.0"
@@ -587,11 +588,18 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             if model_of_record:
                 model_used = model_of_record
                 model_requested = model_of_record
-            # The pass's spend is its primary meta plus every recovery fragment
-            # (the same metas its provenance cites and its tile count unions);
-            # each is priced at its own tier and date by the coster.
-            fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in recovery_metas]
+            # The pass's spend is its primary meta, every further whole meta in
+            # run_N (a second session of the same pass: flash35-pv-2x2 run 3
+            # holds two, the second billed 734,478 input tokens the register
+            # once missed; audit lens A, 2026-10-03), and every recovery
+            # fragment: the same metas its provenance cites and its tile count
+            # unions. Chunk metas are never siblings (their merged meta is the
+            # pass). Each is priced at its own tier and date by the coster.
+            siblings = [m for m in meta_files[1:] if "_chunk" not in m.name]
+            fragments = ([(meta, meta_path)] + [(_load_json(m), m) for m in siblings]
+                         + [(_load_json(m), m) for m in recovery_metas])
             prov_sources = [_repo_rel(meta_path)]
+            prov_sources.extend(_repo_rel(m) for m in siblings)
             prov_sources.extend(_repo_rel(m) for m in recovery_metas)
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")

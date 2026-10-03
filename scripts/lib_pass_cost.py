@@ -23,14 +23,16 @@ things that sentence needs and the metas do not record:
    ========================  ==================================================
    ``batch-marker``          ``batch_api`` block in the meta, ``batch_jobs.json``
                              beside it, or ``probabilities.json`` ``mode: batch``
-   ``runner-record``         a ``cost/2`` block (WP2 onwards) whose tier came
-                             from the CLI or the Batch API path
+   ``runner-record-batch``   a ``cost/2`` block (WP2 onwards) priced on the Batch
+                             API path: structural, like a batch marker
    ``batch-path-pricing``    a ``discount_reason`` naming the Batch API (only
                              the batch path writes it)
    ``cached-path``           the run used an EXPLICIT context cache on the
                              real-time path, whose request config omits
                              ``service_tier``: billed at standard, whatever the
                              launch line asked for (see below)
+   ``runner-record``         a ``cost/2`` block whose tier came from the CLI: the
+                             tier REQUESTED, which the cached path can drop
    ``run-log``               the runner's ``Service tier: <tier>`` launch line in
                              the fragment's OWN directory
                              (``data/pricing/run-log-tiers.json``)
@@ -39,7 +41,11 @@ things that sentence needs and the metas do not record:
                              (``data/pricing/tier-attestations.json``)
    ``run-log-inherited``     a launch line in an ENCLOSING directory: it
                              describes the run's launch, which a verifier leg
-                             or a later batch rung beneath it need not share
+                             or a later batch rung beneath it need not share,
+                             so it pins a verifier leg only when the log
+                             covers a verifier stage
+   ``launch-manifest-``      a launch manifest in an enclosing directory, at the
+   ``inherited``             same rank
    ``billing-day``           the tiers the invoice billed for the model on the
                              pass's Pacific-time billing days
                              (``data/pricing/billing-day-tiers.json``)
@@ -101,8 +107,8 @@ Usage::
 
     from scripts.lib_pass_cost import PassCoster
     coster = PassCoster()
-    result = coster.cost_pass(fragments=[(meta, meta_path)], run_id=..., pool=...,
-                              run_dir=..., model=row_model)
+    result = coster.cost_pass(pass_id="run::pool::run1", fragments=[(meta, meta_path)],
+                              run_id="run", pool="pool", run_dir=run_dir, model=row_model)
     row.update(result)          # cost_usd, cost_basis, cost_source
 
 Created: 2026-10-03 (WP3 of the cost accounting plan)
@@ -145,12 +151,24 @@ PACIFIC = ZoneInfo("America/Los_Angeles")
 #: batch marker is a structural fact of the path that ran; the PI's
 #: attestation is recollection, so the machine record outranks it, and the
 #: disagreement is reported either way.
-PIN_PRIORITY = ("batch-marker", "runner-record", "batch-path-pricing", "cached-path",
-                "run-log", "launch-manifest", "attestation", "run-log-inherited")
+PIN_PRIORITY = ("batch-marker", "runner-record-batch", "batch-path-pricing", "cached-path",
+                "runner-record", "run-log", "launch-manifest", "attestation",
+                "run-log-inherited", "launch-manifest-inherited")
+
+#: Evidence that the path which ran was the Batch API. Any of it rules the
+#: cached-path rule out, because that rule is about the real-time call.
+BATCH_KINDS = ("batch-marker", "runner-record-batch", "batch-path-pricing")
 
 #: Evidence that records the tier a run ASKED for, not the one it was billed
 #: at; the cached-path rule overrules these without calling it a conflict.
-REQUEST_RECORDS = ("run-log", "run-log-inherited", "launch-manifest")
+#: The WP2 runner's CLI-sourced ``cost/2`` tier is one of them: the cached
+#: request that dropped ``service_tier`` still records the switch it was given
+#: (audit lenses A and B, 2026-10-03).
+REQUEST_RECORDS = ("runner-record", "run-log", "run-log-inherited", "launch-manifest",
+                   "launch-manifest-inherited")
+
+#: Kinds that describe a whole run rather than the fragment's own launch.
+INHERITED_KINDS = ("run-log-inherited", "launch-manifest-inherited")
 
 #: Where the cached call path drops ``service_tier`` (cited in evidence).
 CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig "
@@ -358,19 +376,26 @@ class PassCoster:
                 raise ValueError(f"tier attestation id {att['id']!r} is duplicated")
             ids.add(att["id"])
 
-    def _log_evidence(self, directory: Path, run_dir: Path) -> list[Evidence]:
+    def _log_evidence(self, directory: Path, run_dir: Path,
+                      stage: str = "proposer") -> list[Evidence]:
         """Tiers named by the nearest enclosing directory's own logs.
 
         The walk stops at the first directory (from the fragment's own, up to
         and including the run directory) whose logs carry a tier line. A
         directory naming two tiers yields set-valued evidence; the walk does
         NOT continue upward past it, because a parent's logs describe the run
-        as a whole and the child is where the disagreement lives.
+        as a whole and the child is where the disagreement lives. For a
+        verifier leg, an enclosing directory's logs count only if they cover a
+        verifier stage (``covers_verifier``): the Gemini 3 image row's
+        ``pass1.log`` to ``pass5.log`` describe proposer passes and say nothing
+        of the verifier legs beneath them (audit lens A, 2026-10-03).
         """
         own, stop = directory.resolve(), run_dir.resolve()
         cur = own
         while True:
             entry = self.log_dirs.get(_rel(cur))
+            if entry and stage != "proposer" and cur != own and not entry.get("covers_verifier"):
+                entry = None  # a proposer-only log; keep looking upward
             if entry:
                 logs = ", ".join(lg["path"].rsplit("/", 1)[-1] for lg in entry["logs"])
                 kind = "run-log" if cur == own else "run-log-inherited"
@@ -386,14 +411,20 @@ class PassCoster:
 
     @staticmethod
     def _launch_manifest(directory: Path, run_dir: Path) -> Evidence | None:
-        """``service_tier`` from the nearest ``launch_manifest.json`` up to the run."""
-        cur, stop = directory.resolve(), run_dir.resolve()
+        """``service_tier`` from the nearest ``launch_manifest.json`` up to the run.
+
+        One found above the fragment's own directory describes the run's
+        launch and ranks as inherited evidence.
+        """
+        own, stop = directory.resolve(), run_dir.resolve()
+        cur = own
         while True:
             lm = cur / "launch_manifest.json"
             if lm.exists():
                 tier = _read_json(lm).get("service_tier")
                 if tier in TIERS:
-                    return Evidence("launch-manifest", (tier,), _rel(lm))
+                    kind = "launch-manifest" if cur == own else "launch-manifest-inherited"
+                    return Evidence(kind, (tier,), _rel(lm))
                 return None
             if cur == stop or cur == cur.parent or stop not in cur.parents:
                 return None
@@ -431,11 +462,14 @@ class PassCoster:
         pricing = block.get("pricing_used") or {}
         if block.get("schema") == "cost/2" and pricing.get("tier") in TIERS:
             source = str(pricing.get("tier_source") or "")
-            # A WP2 writer records where its tier came from; only a CLI switch
-            # or the Batch API path is a record of what ran.
-            if source.startswith(("cli", "Batch API", "no --service-tier")):
-                out.append(Evidence("runner-record", (pricing["tier"],),
-                                    f"{_rel(meta_path)} cost/2 tier_source={source!r}"))
+            ref = f"{_rel(meta_path)} cost/2 tier_source={source!r}"
+            # A WP2 writer records where its tier came from. The Batch API path
+            # is structural; a CLI switch is only what the run ASKED for (the
+            # cached path drops it); any other source is an inference, not a record.
+            if source.startswith("Batch API") and pricing["tier"] == "batch":
+                out.append(Evidence("runner-record-batch", ("batch",), ref))
+            elif source.startswith(("cli", "no --service-tier")):
+                out.append(Evidence("runner-record", (pricing["tier"],), ref))
         # Only the batch path's own wording counts. The real-time CONSTANT reads
         # "Gemini real-time flex (50 % of list, as per Batch API)", so a
         # substring test for "batch api" would read every real-time pass of
@@ -444,8 +478,8 @@ class PassCoster:
         if reason.startswith("google async batch api"):
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
-        logs = self._log_evidence(here, run_dir)
-        if stage != "proposer" or any(e.kind == "batch-marker" for e in out):
+        logs = self._log_evidence(here, run_dir, stage)
+        if stage != "proposer" or any(e.kind in BATCH_KINDS for e in out):
             # The cached-path rule is about the detection runner's REAL-TIME
             # call; a verifier leg, or a batch leg, beneath a cached run's log
             # is not on that path.
@@ -522,9 +556,14 @@ class PassCoster:
             used = []
             for day in ends:
                 tiers, how = self._allowed(model, day)
-                if tiers:
-                    allowed |= tiers
-                    used.append(f"{day} {'|'.join(sorted(tiers))} [{how}]")
+                if not tiers:
+                    # A session on a day the invoice says nothing about could
+                    # have run at any tier, so the union is every tier: one
+                    # informative end day must not narrow it alone (audit
+                    # lens A, 2026-10-03).
+                    return None
+                allowed |= tiers
+                used.append(f"{day} {'|'.join(sorted(tiers))} [{how}]")
             if not used:
                 return None
             return Evidence("billing-day", tuple(t for t in TIERS if t in allowed),
@@ -603,7 +642,7 @@ class PassCoster:
                 if chosen.kind == "cached-path" and e.kind in REQUEST_RECORDS:
                     notes.append(f"{e.describe()} is the tier REQUESTED; the cached path "
                                  "dropped it")
-                elif e.kind == "run-log-inherited":
+                elif e.kind in INHERITED_KINDS:
                     notes.append(f"{e.describe()} overruled by the fragment's own {chosen.kind}")
                 else:
                     conflicts.append(f"pins disagree: {chosen.describe()} vs {e.describe()}")
@@ -645,6 +684,12 @@ class PassCoster:
         if not usage or is_unrecorded(usage):
             entry.update(tier=None, tier_method="not-needed: no usage recorded")
             return {**entry, "_basis": "unrecorded", "_cost": None, "_low": None, "_high": None}
+        if not entry["priced_at"]:
+            # price_usage(at=None) means "today", so an undated fragment would
+            # re-price whenever the register is regenerated. Refuse instead.
+            entry.update(tier=None, tier_method="not-needed",
+                         unpriceable="no timestamp: the rate card row cannot be chosen")
+            return {**entry, "_basis": "unpriceable", "_cost": None, "_low": None, "_high": None}
         try:
             canonical = resolve_model(model)
         except UnknownModelError as exc:
@@ -712,10 +757,21 @@ class PassCoster:
                                      run_dir=run_dir, model=fm, stage=stage)
                   for (m, p), fm in zip(fragments, models, strict=True)]
         bases = {f["_basis"] for f in priced}
+        partial = "unrecorded" in bases and bases != {"unrecorded"}
+        mixed_note = None
         if bases == {"unrecorded"}:
             basis = "unrecorded"
         elif "unpriceable" in bases:
+            basis = "unpriceable"  # part of the pass cannot be priced: no figure
+        elif partial and "audited-upper-bound" in bases:
+            # One fragment recorded nothing (the sum is a floor) and another is
+            # priced at its highest tier (a ceiling): neither bound holds.
             basis = "unpriceable"
+            mixed_note = ("mixed: a fragment recorded no usage and another's tier is "
+                          "unresolved, so the sum is neither a lower nor an upper bound")
+        elif partial:
+            basis = "audited-lower-bound"
+            mixed_note = "LOWER bound: a fragment of this pass recorded no usage"
         elif "audited-upper-bound" in bases:
             basis = "audited-upper-bound"
         else:
@@ -731,6 +787,8 @@ class PassCoster:
                                     "high": round(sum(f["_high"] for f in costed), 6)}
         if basis == "unrecorded":
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
+        if mixed_note:
+            source["note"] = mixed_note
         if override.get("basis") == "audited-lower-bound" and cost is not None:
             # The cited metas price correctly but cover only part of the pass:
             # the figure is a floor, and is labelled so rather than "audited".
@@ -739,5 +797,5 @@ class PassCoster:
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "Evidence", "PassCoster", "TierFinding", "fragment_usage",
-           "is_continuous", "pacific_days"]
+__all__ = ["BASES", "BATCH_KINDS", "Evidence", "INHERITED_KINDS", "PIN_PRIORITY", "PassCoster",
+           "REQUEST_RECORDS", "TierFinding", "fragment_usage", "is_continuous", "pacific_days"]

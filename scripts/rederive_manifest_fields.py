@@ -208,6 +208,12 @@ def _billed_usage(meta: dict) -> dict:
     return out
 
 
+def _overrides() -> dict:
+    """The committed cost overrides (data, not generator code), keyed by pass_id."""
+    path = REPO_ROOT / "data" / "pricing" / "cost-overrides.json"
+    return load(path).get("entries", {}) if path.exists() else {}
+
+
 def _fragment_tiers(frag: dict) -> list[str]:
     """The tiers a ``cost_source`` fragment says it was priced at.
 
@@ -259,11 +265,16 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
     if basis is None:  # a row written before generator 0.8.0: the old claim
         return [verdict_row("cost_usd", claim, meta_sum)]
     out: list[dict] = []
-    if basis in ("published", "unpriceable"):
-        out.append({"field": "cost_usd", "verdict": "STRUCTURAL", "manifest": claim,
-                    "derived": None,
-                    "note": f"cost_basis {basis}: "
-                            f"{source.get('published') or 'no rate card row for the usage'}"})
+    if basis == "published":
+        # The figure is a report's, not the metas'; what C3 can certify is that
+        # the register carries the figure the overrides file records.
+        entry = _overrides().get(row.get("pass_id"), {})
+        out.append({**verdict_row("cost_usd", claim, entry.get("cost_usd")),
+                    "note": f"published: {source.get('published')}"})
+    elif basis == "unpriceable":
+        out.append({"field": "cost_usd", "verdict": "MATCH" if claim is None else "MISMATCH",
+                    "manifest": claim, "derived": None,
+                    "note": "unpriceable: null (no rate card row, no date, or mixed bounds)"})
     elif basis == "unrecorded":
         silent = all(not any(v for v in (mm.get("usage_stats") or {}).values()
                              if isinstance(v, (int, float))) for mm in metas)
@@ -277,20 +288,39 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
         out.append({"field": "cost_source.fragments",
                     "verdict": "MATCH" if priced == cited else "MISMATCH",
                     "manifest": priced, "derived": cited})
-        total = low = 0.0
+        total = low = high = 0.0
+        stamp_errors = []
         for frag in frags:
-            usage = _billed_usage(_load_meta(frag["meta"]))
+            meta = _load_meta(frag["meta"])
+            usage = _billed_usage(meta)
+            # The model and the date are re-derived from the sources, not taken
+            # from the claim under test: the date is the meta's own end (else
+            # start) timestamp, the model the row's, or the fragment's own
+            # per-item record where a recovery ran on another model.
+            stamp = meta.get("timestamp") or {}
+            when = ((stamp.get("end") or stamp.get("start") or "")[:10]) or None
+            own = next((i.get("model_used") for i in (meta.get("per_item_metadata") or [])
+                        if i.get("model_used")), None)
+            if frag.get("priced_at") != when:
+                stamp_errors.append(f"{frag['meta']}: priced_at {frag.get('priced_at')} vs {when}")
+            if frag.get("model_recorded") not in {row.get("model_used"), own}:
+                stamp_errors.append(f"{frag['meta']}: model {frag.get('model_recorded')} vs "
+                                    f"{row.get('model_used')}/{own}")
             tiers = _fragment_tiers(frag)
             if not tiers:
                 continue  # an unrecorded fragment of a priced pass contributes nothing
             prices = [price_usage(usage, frag["model_recorded"], t,
-                                  at=frag.get("priced_at"))["total_cost_usd"] or 0.0
+                                  at=when)["total_cost_usd"] or 0.0
                       for t in tiers]
             total += max(prices)
             # Only an unresolved fragment spans a range. A pinned or
             # tier-indifferent one has one cost (its highest candidate, which
             # the half-cent rule makes equal to the rest), counted in both bounds.
             low += min(prices) if frag.get("candidates") else max(prices)
+            high += max(prices)
+        out.append({"field": "cost_source.fragments.stamps",
+                    "verdict": "MISMATCH" if stamp_errors else "MATCH",
+                    "manifest": len(frags), "derived": stamp_errors or None})
         out.append(verdict_row("cost_usd", claim, round(total, 6)))
         if basis == "audited-lower-bound":
             out[-1]["note"] = "lower bound: the cited metas cover part of the pass (cost-overrides)"
@@ -298,6 +328,8 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
             bounds = source.get("bounds_usd") or {}
             out.append(verdict_row("cost_source.bounds_usd.low", bounds.get("low"),
                                    round(low, 6)))
+            out.append(verdict_row("cost_source.bounds_usd.high", bounds.get("high"),
+                                   round(high, 6)))
     note = "runner estimate in the cited metas; reported, never certified (D11)"
     if meta_sum is not None and claim is not None and abs(meta_sum - claim) > 0.01:
         note += f"; differs from the audited figure by US${meta_sum - claim:+.4f}"

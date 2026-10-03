@@ -94,7 +94,7 @@
         },
         "tokens": {
           "type": ["object", "null"],
-          "description": "Token accounting from usage_stats, summed over the pass's primary meta and every run_N_recovery* fragment it cites in provenance (generator 0.8.0, 2026-10-03; before that, the primary meta only, which dropped 118 M recovery tokens on 57 passes). input_billed INCLUDES input_cached (the API's prompt count does); the fresh input billed at the input rate is input_billed minus input_cached.",
+          "description": "Token accounting from usage_stats, summed over the pass's primary meta and every run_N_recovery* fragment it cites in provenance (generator 0.8.0, 2026-10-03; before that, the primary meta only, which dropped 118 M recovery tokens on 57 passes). input_billed INCLUDES input_cached (the API's prompt count does); the fresh input billed at the input rate is input_billed minus input_cached. A meta the 2026-05-02 recovery merge double-counted contributes its per-item sums instead (cost_source.fragments[].usage_source says so). On a published or audited-lower-bound row these are the tokens of the cited metas only, which a cleanup overwrote, so they do NOT correspond to cost_usd; never divide one by the other there.",
           "properties": {
             "input_billed": { "type": "integer", "minimum": 0 },
             "input_cached": { "type": "integer", "minimum": 0 },
@@ -116,7 +116,7 @@
         },
         "cost_source": {
           "type": ["object", "null"],
-          "description": "How cost_usd was reached, so the figure re-derives without the generator: the rate card's path, version and sha256; per fragment, the meta priced, the model, the pricing date, the tier and the method that decided it (batch-marker, runner-record, batch-path-pricing, run-log, launch-manifest, attestation, billing-day, verifier-mode, or unresolved), the evidence cited, any conflicts between evidence items, and, where unresolved, the price at each candidate tier. bounds_usd is present when cost_basis is audited-upper-bound; published names the report when cost_basis is published.",
+          "description": "How cost_usd was reached, so the figure re-derives without the generator: the rate card's path, version and sha256; per fragment, the meta priced, the model, the pricing date, the tier and the method that decided it (batch-marker, runner-record-batch, batch-path-pricing, cached-path, runner-record, run-log, launch-manifest, attestation, run-log-inherited, launch-manifest-inherited, billing-day, verifier-mode, a '+'-joined combination of the narrowing kinds, tier-indifferent: <tiers>, or unresolved), the evidence cited, any conflicts between evidence items, and, where unresolved, the price at each candidate tier. bounds_usd is present when cost_basis is audited-upper-bound; published names the report when cost_basis is published.",
           "properties": {
             "rate_card": {
               "type": "object",
@@ -128,7 +128,14 @@
               "required": ["path", "version", "sha256"],
               "additionalProperties": false
             },
-            "fragments": { "type": "array", "items": { "type": "object" } },
+            "fragments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "description": "One priced meta. The keys C3 re-derives from are required; the evidence, conflicts, notes, candidates and usage_source keys are optional.",
+                "required": ["meta", "model_recorded", "priced_at", "tier", "tier_method"]
+              }
+            },
             "bounds_usd": {
               "type": "object",
               "properties": {

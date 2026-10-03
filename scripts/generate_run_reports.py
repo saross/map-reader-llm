@@ -544,9 +544,10 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             ("Thinking tokens", f"{totals['thinking']:,}"),
             ("Total tokens", f"{totals['total']:,}"),
             ("Passes with no token record", str(missing_tokens)),
-            ("Sum of recorded `cost_usd`",
+            ("Sum of `cost_usd` (audited basis)",
              f"US${sum(costs):,.4f} over {len(costs)} of {len(passes)} pass(es)"
              if costs else NOT_SUPPLIED),
+            ("`cost_basis` of the passes", _basis_counts(passes)),
             ("Passes with no `cost_usd`", str(len(passes) - len(costs))),
             ("Summed wall clock",
              f"{sum(walls) / 3600:,.2f} h over {len(walls)} pass(es)"
@@ -557,32 +558,35 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             section, manifest_v, metas_v, source, clean = audit
             out += [
                 "",
-                f"> **Audited: the token figures above are inflated by a measured "
-                f"factor.** `reports/token-load-audit-2026-06-12.md` {section} "
-                f"recomputed this run's load from `per_item_metadata` and found its "
-                f"`usage_stats` block — which is exactly where the manifest takes a "
-                f"pass's `tokens` from (`_tokens_from_usage`) — **{metas_v}**; its "
-                f"`cost_manifest.json` is **{manifest_v}**. The trustworthy source is "
-                f"{source}. Audited clean figures, quoted from {section}: {clean}. No "
-                f"run total is derived here: the audit's pass count and this "
-                f"manifest's need not agree, so multiplying would manufacture a "
-                f"figure no file carries.",
+                f"> **Audited token load.** `reports/token-load-audit-2026-06-12.md` "
+                f"{section} recomputed this run's load from `per_item_metadata` and "
+                f"found its metas' `usage_stats` **{metas_v}**; its "
+                f"`cost_manifest.json` is **{manifest_v}**. Since generator 0.8.0 "
+                f"(2026-10-03) the register reads the per-item sums of any meta the "
+                f"2026-05-02 recovery merge double-counted, so the figures above are "
+                f"de-duplicated; the trustworthy source is {source}. Audited clean "
+                f"figures, quoted from {section}: {clean}. No run total is derived "
+                f"here: the audit's pass count and this manifest's need not agree, "
+                f"so multiplying would manufacture a figure no file carries.",
             ]
         # A bare blank line between two blockquotes splits them and trips MD028; a
         # ">" line keeps the audit verdict and the pricing caveat as two paragraphs
         # of ONE quote, which is also how they should read.
         out += [
             ">" if audit else "",
-            "> **The recorded cost is NOT this run's cost.** Each `cost_usd` above is "
-            "the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by "
-            "`scripts/generate_post_run_report.py`. The token-load audit of "
-            "2026-06-12 established that those self-reported estimates price at "
-            "STANDARD rates although the audited runs executed at "
-            "`--service-tier flex` (half price) and omit thinking tokens although "
-            "Gemini bills thinking at the output rate "
-            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). The sum is "
-            "reproduced here as the recorded figure and as an input to a "
-            "reconciliation, not as a total to cite.", ""]
+            "> **The cost above is on the audited basis, labelled per pass.** Since "
+            "generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the "
+            "pass's own tokens, recovery fragments included, priced by "
+            "`scripts/lib_cost.price_usage` at the service tier the evidence "
+            "supports; the pass's `cost_basis` says whether that is `audited`, an "
+            "`audited-upper-bound` (tier unresolved, priced at the highest "
+            "candidate), an `audited-lower-bound` (a meta was overwritten), "
+            "`published`, or `unrecorded`, and its `cost_source` cites the "
+            "evidence. It is no longer the pass meta's own `cost_estimate`, which "
+            "priced at standard rates and omitted thinking tokens "
+            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum over "
+            "upper or lower bounds is itself a bound, not a total to cite as exact.",
+            ""]
 
     cited = [rel for rel, text in corpus.audit_text.items()
              if run_id in text or corpus.registry[run_id]["directory_path"] in text]
@@ -953,6 +957,15 @@ def _section_provenance(run_id: str, corpus: Corpus, head: str) -> list[str]:
 # --------------------------------------------------------------------------- #
 # Report assembly
 # --------------------------------------------------------------------------- #
+
+
+def _basis_counts(passes: list[dict]) -> str:
+    """``audited 5, unrecorded 1`` — how many passes carry each ``cost_basis``."""
+    counts: dict[str, int] = {}
+    for p in passes:
+        key = p.get("cost_basis") or "none recorded"
+        counts[key] = counts.get(key, 0) + 1
+    return ", ".join(f"{k} {v}" for k, v in sorted(counts.items()))
 
 
 def render_report(run_id: str, corpus: Corpus, head: str) -> str:
