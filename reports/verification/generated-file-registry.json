@@ -1,12 +1,12 @@
 {
  "_meta": {
-  "generated_at": "2026-10-03T10:36:18.188031+00:00",
+  "generated_at": "2026-10-03T12:10:39.687889+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "996d29340",
+  "git_head": "6bce772c4",
   "counts": {
-   "total": 4010,
-   "generated": 3684,
+   "total": 4015,
+   "generated": 3689,
    "generated_unattributed": 0,
    "hand_written": 326,
    "by_directory": {
@@ -21,8 +21,8 @@
      "hand_written": 98
     },
     "outputs/": {
-     "total": 675,
-     "generated": 630,
+     "total": 680,
+     "generated": 635,
      "hand_written": 45
     },
     "docs/": {
@@ -42,7 +42,7 @@
     "check_mode": 70,
     "tier1_check_test": 70,
     "compliant": 51,
-    "neither_regime": 3633
+    "neither_regime": 3638
    }
   }
  },
@@ -11739,6 +11739,91 @@
    ],
    "tier1_check_test": true,
    "regime2_compliant": true
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/aborted-run_A-before-header-capture/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_A_flex_cache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_B_flex_nocache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
   },
   {
    "path": "outputs/verifier-robustness/experiment_intent.md",

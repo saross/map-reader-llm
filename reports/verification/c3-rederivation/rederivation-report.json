@@ -6,7 +6,7 @@
   "n_simple_rows": 157,
   "passes_verdicts": {
    "STRUCTURAL": 8034,
-   "MATCH": 21087,
+   "MATCH": 21041,
    "SOURCE_SILENT": 6047,
    "MISMATCH": 414
   },
@@ -3333,8 +3333,8 @@
     {
      "field": "tokens.input_billed",
      "verdict": "MATCH",
-     "manifest": 132608,
-     "derived": 132608
+     "manifest": 16495360,
+     "derived": 16495360
     },
     {
      "field": "tokens.input_cached",
@@ -3345,8 +3345,8 @@
     {
      "field": "tokens.output",
      "verdict": "MATCH",
-     "manifest": 11792,
-     "derived": 11792
+     "manifest": 1530872,
+     "derived": 1530872
     },
     {
      "field": "tokens.thinking",
@@ -3357,56 +3357,58 @@
     {
      "field": "tokens.total",
      "verdict": "MATCH",
-     "manifest": 144400,
-     "derived": 144400
+     "manifest": 18026232,
+     "derived": 18026232
     },
     {
      "field": "cost_source.fragments",
      "verdict": "MATCH",
      "manifest": [
-      "outputs/55maps-text-high-generalisation/verified/run.meta.json"
+      "outputs/55maps-text-high-generalisation/verified/run.meta.json",
+      "outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup"
      ],
      "derived": [
-      "outputs/55maps-text-high-generalisation/verified/run.meta.json"
+      "outputs/55maps-text-high-generalisation/verified/run.meta.json",
+      "outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup"
      ]
     },
     {
      "field": "cost_source.fragments.stamps",
      "verdict": "MATCH",
-     "manifest": 1,
+     "manifest": 2,
      "derived": null
     },
     {
      "field": "cost_usd",
      "verdict": "MATCH",
-     "manifest": 0.05084,
-     "derived": 0.05084
+     "manifest": 6.420148,
+     "derived": 6.420148
     },
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-lower-bound",
-     "derived": "audited-lower-bound",
-     "note": "partial: override, verifier coverage"
+     "manifest": "audited",
+     "derived": "audited",
+     "note": null
     },
     {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
-     "manifest": 0.05084,
-     "derived": 0.10168,
-     "note": "runner estimate in the cited metas; reported, never certified (D11); differs from the audited figure by US$+0.0508"
+     "manifest": 6.420148,
+     "derived": 12.840296,
+     "note": "runner estimate in the cited metas; reported, never certified (D11); differs from the audited figure by US$+6.4201"
     },
     {
      "field": "wall_clock_s",
      "verdict": "MATCH",
-     "manifest": 14.640159,
-     "derived": 14.640159
+     "manifest": 1397.518583,
+     "derived": 1397.518583
     },
     {
      "field": "timestamps.start",
      "verdict": "MATCH",
-     "manifest": "2026-05-02T23:46:11.794955+00:00",
-     "derived": "2026-05-02T23:46:11.794955+00:00"
+     "manifest": "2026-04-18T17:20:24.916808+00:00",
+     "derived": "2026-04-18T17:20:24.916808+00:00"
     },
     {
      "field": "timestamps.end",
@@ -6795,21 +6797,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.394541,
-     "derived": 1.394541
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.47992,
-     "derived": 2.47992
     },
     {
      "field": "cost_usd.meta_block",
@@ -6986,21 +6976,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.448973,
-     "derived": 1.448973
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.588784,
-     "derived": 2.588784
     },
     {
      "field": "cost_usd.meta_block",
@@ -7177,21 +7155,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.481432,
-     "derived": 1.481432
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.653701,
-     "derived": 2.653701
     },
     {
      "field": "cost_usd.meta_block",
@@ -7368,21 +7334,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.425875,
-     "derived": 1.425875
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.542587,
-     "derived": 2.542587
     },
     {
      "field": "cost_usd.meta_block",
@@ -7559,21 +7513,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.406382,
-     "derived": 1.406382
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.503602,
-     "derived": 2.503602
     },
     {
      "field": "cost_usd.meta_block",
@@ -7750,21 +7692,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.46247,
-     "derived": 1.46247
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.615925,
-     "derived": 2.615925
     },
     {
      "field": "cost_usd.meta_block",
@@ -7941,21 +7871,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.454215,
-     "derived": 1.454215
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.599416,
-     "derived": 2.599416
     },
     {
      "field": "cost_usd.meta_block",
@@ -8132,21 +8050,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.41806,
-     "derived": 1.41806
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.527104,
-     "derived": 2.527104
     },
     {
      "field": "cost_usd.meta_block",
@@ -8323,21 +8229,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.470878,
-     "derived": 1.470878
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.63274,
-     "derived": 2.63274
     },
     {
      "field": "cost_usd.meta_block",
@@ -8514,21 +8408,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.480674,
-     "derived": 1.480674
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.652333,
-     "derived": 2.652333
     },
     {
      "field": "cost_usd.meta_block",
@@ -8705,21 +8587,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.399203,
-     "derived": 1.399203
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.489244,
-     "derived": 2.489244
     },
     {
      "field": "cost_usd.meta_block",
@@ -8896,21 +8766,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.458204,
-     "derived": 1.458204
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.607246,
-     "derived": 2.607246
     },
     {
      "field": "cost_usd.meta_block",
@@ -9087,21 +8945,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.481936,
-     "derived": 1.481936
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.654709,
-     "derived": 2.654709
     },
     {
      "field": "cost_usd.meta_block",
@@ -9278,21 +9124,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.5173,
-     "derived": 1.5173
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.725437,
-     "derived": 2.725437
     },
     {
      "field": "cost_usd.meta_block",
@@ -9469,21 +9303,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.516706,
-     "derived": 1.516706
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.724249,
-     "derived": 2.724249
     },
     {
      "field": "cost_usd.meta_block",
@@ -9660,21 +9482,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.356353,
-     "derived": 1.356353
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.403543,
-     "derived": 2.403543
     },
     {
      "field": "cost_usd.meta_block",
@@ -9851,21 +9661,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.334505,
-     "derived": 1.334505
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.359848,
-     "derived": 2.359848
     },
     {
      "field": "cost_usd.meta_block",
@@ -10042,21 +9840,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.380018,
-     "derived": 1.380018
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.450874,
-     "derived": 2.450874
     },
     {
      "field": "cost_usd.meta_block",
@@ -10233,21 +10019,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.441398,
-     "derived": 1.441398
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.573634,
-     "derived": 2.573634
     },
     {
      "field": "cost_usd.meta_block",
@@ -10424,21 +10198,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.342323,
-     "derived": 1.342323
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.375484,
-     "derived": 2.375484
     },
     {
      "field": "cost_usd.meta_block",
@@ -10618,21 +10380,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.222522,
-     "derived": 1.222522
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.445043,
-     "derived": 2.445043
     },
     {
      "field": "cost_usd.meta_block",
@@ -10812,21 +10562,9 @@
     {
      "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
+     "manifest": "audited",
+     "derived": "audited",
      "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
-     "manifest": 1.014501,
-     "derived": 1.014501
-    },
-    {
-     "field": "cost_source.bounds_usd.high",
-     "verdict": "MATCH",
-     "manifest": 2.029003,
-     "derived": 2.029003
     },
     {
      "field": "cost_usd.meta_block",
@@ -223359,34 +223097,22 @@
     {
      "field": "cost_usd",
      "verdict": "MATCH",
-     "manifest": 1.69385,
-     "derived": 1.69385
-    },
-    {
-     "field": "cost_basis",
-     "verdict": "MATCH",
-     "manifest": "audited-upper-bound",
-     "derived": "audited-upper-bound",
-     "note": null
-    },
-    {
-     "field": "cost_source.bounds_usd.low",
-     "verdict": "MATCH",
      "manifest": 0.84886,
      "derived": 0.84886
     },
     {
-     "field": "cost_source.bounds_usd.high",
+     "field": "cost_basis",
      "verdict": "MATCH",
-     "manifest": 1.69385,
-     "derived": 1.69385
+     "manifest": "audited",
+     "derived": "audited",
+     "note": null
     },
     {
      "field": "cost_usd.meta_block",
      "verdict": "STRUCTURAL",
-     "manifest": 1.69385,
+     "manifest": 0.84886,
      "derived": 1.69385,
-     "note": "runner estimate in the cited metas; reported, never certified (D11)"
+     "note": "runner estimate in the cited metas; reported, never certified (D11); differs from the audited figure by US$+0.8450"
     },
     {
      "field": "wall_clock_s",
