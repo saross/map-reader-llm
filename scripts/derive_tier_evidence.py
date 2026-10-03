@@ -143,7 +143,7 @@ VERIFIER_CMD = re.compile(r"run_pv\.py\s+(?:verify|cleanup)\b|5_verify_crops")
 SWITCH = re.compile(r"--service-tier[= ]([a-z]+)")
 
 #: Where one command ends on a combined command line.
-COMMAND_END = re.compile(r"&&|\|\||;|\|")
+COMMAND_END = re.compile(r"&&|\|\||;|\||&")
 
 #: The service tiers a tier line may name; anything else is recorded as unknown
 #: rather than passed on as a tier.
@@ -556,7 +556,7 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
             "service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a "
             "real-time request on it is billed at standard whatever the launch line says. "
             "verifier_tiers are the tiers a log records FOR a verifier stage: a Service tier "
-            "line after the log's first verifier line, or --service-tier on a run_pv.py "
+            "line after the log's first verifier command, or --service-tier on a run_pv.py "
             "verify or cleanup command; only these pin a verifier leg beneath a run-level "
             "log. Tier words other than standard, flex and batch are kept as "
             "unknown_tier_words, never as tiers. Read by scripts/lib_pass_cost.py; never "

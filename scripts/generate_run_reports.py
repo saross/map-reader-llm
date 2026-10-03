@@ -967,10 +967,13 @@ def _basis_sums(passes: list[dict]) -> str:
     sums: dict[str, list] = {}
     for p in passes:
         key = p.get("cost_basis") or "none recorded"
-        cell = sums.setdefault(key, [0.0, 0])
-        cell[0] += p.get("cost_usd") or 0.0
+        cell = sums.setdefault(key, [None, 0])
+        if isinstance(p.get("cost_usd"), (int, float)):
+            cell[0] = (cell[0] or 0.0) + p["cost_usd"]
         cell[1] += 1
-    return "; ".join(f"{k} US${v[0]:,.4f} ({v[1]})" for k, v in sorted(sums.items()))
+    # A basis with no priced pass has no sum: "null, not zero" (PI ruling D12).
+    return "; ".join(f"{k} {'US$' + format(v[0], ',.4f') if v[0] is not None else 'no figure'}"
+                     f" ({v[1]})" for k, v in sorted(sums.items()))
 
 
 def _total_range(passes: list[dict]) -> str:

@@ -878,8 +878,11 @@ def test_committed_register_is_current_for_sampled_runs(run_id):
 
 
 def _c3(row: dict) -> dict:
+    """C3's verdicts for a row, with the decomposition production C3 passes."""
     from scripts.rederive_manifest_fields import rederive_pass
-    return {f["field"]: f for f in rederive_pass(row)["fields"]}
+    decomposition = json.loads((REPO / "results/run-conditions.json").read_text())
+    decomposition = decomposition.get("decomposition", decomposition)
+    return {f["field"]: f for f in rederive_pass(row, decomposition)["fields"]}
 
 
 def _first_row_with(basis: str) -> dict:
@@ -1015,8 +1018,9 @@ def test_run_report_sums_each_basis_apart():
     from scripts.generate_run_reports import _basis_sums
     passes = ([{"cost_basis": "audited", "cost_usd": 1.0}] * 3
               + [{"cost_basis": "unrecorded", "cost_usd": None}, {}])
-    assert _basis_sums(passes) == ("audited US$3.0000 (3); none recorded US$0.0000 (1); "
-                                   "unrecorded US$0.0000 (1)")
+    # A basis with no priced pass has no sum: null, not zero (D12).
+    assert _basis_sums(passes) == ("audited US$3.0000 (3); none recorded no figure (1); "
+                                   "unrecorded no figure (1)")
 
 
 @pytest.mark.tier1
@@ -1189,3 +1193,104 @@ def test_c3_partial_and_unpriceable_reasons_are_derived_from_the_metas():
     assert "gemini-9-imaginary" in _unpriceable_reason(row, [own])
     early = {"usage_stats": USAGE, "timestamp": {"end": "2025-01-01T00:00:00+00:00"}}
     assert "no rate card row" in _unpriceable_reason(row, [early])
+
+
+# ---------------------------------------------------------------------------
+# Audit round 4 (third re-audit, 2026-10-03).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("log", "verifier_tiers"), [
+    ("run_pv.py verify --x y --service-tier flex && 4_detect --service-tier standard\n", ["flex"]),
+    ("run_pv.py verify --x y --service-tier flex & 4_detect --service-tier standard\n", ["flex"]),
+    ("python scripts/run_pv.py extract --service-tier flex\n", []),
+])
+def test_a_verifier_switch_is_read_from_its_own_command_only(log, verifier_tiers):
+    from scripts.derive_tier_evidence import parse_log
+    assert parse_log(log)["verifier_tiers"] == verifier_tiers
+
+
+@pytest.mark.tier1
+def test_preserved_main_legs_are_main_files_with_a_new_run_id(tmp_path):
+    from scripts.generate_post_run_report import _preserved_main_legs
+    leg = tmp_path / "v"
+    leg.mkdir()
+    primary = {"run_id": "C"}
+    for name, run_id in (("run.meta.json", "C"), ("run.meta.main-2026-09-04.json", "M"),
+                         ("run.meta.main-2026-09-05.json", "M"),
+                         ("run.meta.main-2026-09-06.json", "C"),
+                         ("run.meta.pre-rerun-1.json", "R"), ("run.meta.pre-cleanup-1.json", "C")):
+        (leg / name).write_text(json.dumps({"run_id": run_id}))
+    got = _preserved_main_legs(primary, leg / "run.meta.json")
+    assert [g.name for g in got] == ["run.meta.main-2026-09-04.json"]
+    assert _preserved_main_legs(primary, leg / "verified-x.meta.json") == []
+
+
+@pytest.mark.tier1
+def test_superseded_reruns_are_not_priced():
+    from scripts.generate_post_run_report import extract_passes, extraction_context
+    rows = extract_passes(extraction_context("gemini3-image-55map-2026-09-16"))
+    for r in rows:
+        assert not any("pre-rerun" in f["meta"] for f in r["cost_source"].get("fragments", []))
+
+
+@pytest.mark.tier1
+def test_the_swap38_leg_with_its_main_meta_certifies_in_every_field():
+    # Re-audit round 3, M1-M3: fragments, status, wall clock, start time and
+    # retries all derive across the main leg and its cleanup.
+    row = _committed_pass("gemini37-screen-2026-08-28",
+                          "g384_ov192_g37-union-k5-verify-swap38", 1)
+    assert any("run.meta.main-" in s for s in row["provenance"]["source_files"])
+    assert row["tokens"]["total"] > 1_500_000 and row["n_candidates_verified"] == 791
+    verdicts = {k: v["verdict"] for k, v in _c3(row).items()}
+    for field in ("cost_source.fragments", "cost_usd", "cost_basis", "status", "wall_clock_s",
+                  "timestamps.start", "timestamps.end", "retries", "n_candidates_verified",
+                  "tokens.total"):
+        assert verdicts[field] == "MATCH", (field, verdicts[field])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("done", "expected"), [((50, 45), (95, 100)), ((10,), (10, 100))])
+def test_coverage_sums_the_leg_and_counts_completions_first(tmp_path, done, expected):
+    leg = tmp_path / "v"
+    leg.mkdir()
+    (leg / "probabilities.json").write_text(json.dumps(
+        {"results": {f"c{i}": 0.5 for i in range(100)}, "iterations": 1}))
+    metas = []
+    for n, k in enumerate(done):
+        usage = {**USAGE, "by_provider": {"google_gemini": {"request_count": 300}}}
+        metas.append(({"execution_stats": {"completed_items": [f"m{n}-{i}" for i in range(k)]},
+                       "usage_stats": usage}, leg / f"run.meta{n}.json"))
+    assert verifier_coverage(metas) == expected
+
+
+@pytest.mark.tier1
+def test_c3_reads_the_spread_of_every_fragment():
+    # An upper bound decided by an EARLIER fragment must still certify.
+    rows = json.loads((REPO / "results/passes-manifest.json").read_text())["passes"]
+    cases = [r for r in rows if r["cost_basis"] == "audited-upper-bound"
+             and len(r["cost_source"]["fragments"]) > 1
+             and "candidates" not in r["cost_source"]["fragments"][-1]]
+    assert cases, "no committed upper bound whose last fragment is pinned"
+    assert _c3(cases[0])["cost_basis"]["verdict"] == "MATCH"
+
+
+@pytest.mark.tier1
+def test_an_unrecorded_pass_leaves_the_run_total_without_a_ceiling():
+    from scripts.generate_run_reports import _total_range
+    passes = [{"cost_basis": "audited", "cost_usd": 1.0},
+              {"cost_basis": "unrecorded", "cost_usd": None}]
+    assert _total_range(passes) == "at least US$1.0000; no ceiling (1 unrecorded pass(es))"
+
+
+@pytest.mark.tier1
+def test_log_evidence_cites_only_the_logs_that_supplied_the_tier(evidence, tmp_path):
+    pdir = tmp_path / "run" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "logs": [
+        {"path": "x/launch.log", "tiers": ["flex"], "verifier_tiers": []},
+        {"path": "x/notes.log", "tiers": [], "verifier_tiers": ["standard"]}]}}
+    frag = _cost(evidence(logs=logs), [_meta(pdir / "a.meta.json")], tmp_path / "run")[
+        "cost_source"]["fragments"][0]
+    ref = next(e for e in frag["evidence"] if e.startswith("run-log"))
+    assert "launch.log" in ref and "notes.log" not in ref

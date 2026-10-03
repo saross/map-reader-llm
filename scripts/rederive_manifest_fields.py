@@ -181,6 +181,18 @@ def is_verifier_pass(row: dict, decomposition: dict) -> bool:
     return row.get("proposer_pool") in (fam.get("verifier_passes") or {})
 
 
+def _is_meta(rel: str) -> bool:
+    """A cited pass meta: ``*.meta.json(.gz)`` or a preserved ``run.meta.*.json``.
+
+    ``run.meta.main-2026-09-04.json`` (a verifier leg's preserved main leg)
+    does not end in ``.meta.json``; a suffix test alone missed it (re-audit
+    round 3).
+    """
+    name = rel.rsplit("/", 1)[-1]
+    return (name.endswith((".meta.json", ".meta.json.gz"))
+            or (name.startswith("run.meta.") and name.endswith(".json")))
+
+
 def _load_meta(rel: str) -> dict:
     """A cited meta, plain or gzipped."""
     path = REPO_ROOT / rel
@@ -252,7 +264,7 @@ def _partial_reasons(row: dict, metas: list[dict], sources: list[str]) -> list[s
             for m in metas if "usage_stats" in m]
     if used and any(used) and not all(used):
         why.append("unrecorded fragment")
-    first = next((s for s in sources if s.endswith((".meta.json", ".meta.json.gz"))), None)
+    first = next((s for s in sources if _is_meta(s)), None)
     if first and row.get("n_tiles_processed") is None:  # a verifier row (E72)
         prob = REPO_ROOT / first
         prob = prob.parent / "probabilities.json"
@@ -358,7 +370,7 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                     "note": "unrecorded: null over usage blocks that record nothing (D12)"})
     else:
         frags = source.get("fragments") or []
-        cited = sorted(s for s in sources if s.endswith((".meta.json", ".meta.json.gz")))
+        cited = sorted(s for s in sources if _is_meta(s))
         priced = sorted(f.get("meta") for f in frags)
         out.append({"field": "cost_source.fragments",
                     "verdict": "MATCH" if priced == cited else "MISMATCH",
@@ -458,7 +470,7 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
         # and a gzipped meta must be read as such. Parsing every source as
         # plain JSON crashed this script on both (found 2026-10-03; the last
         # complete run was 2026-07-29, before either kind was cited).
-        if s.endswith((".meta.json", ".meta.json.gz")):
+        if _is_meta(s):
             metas.append(_load_meta(s))
         elif s.endswith(".json"):
             metas.append(load(p))
@@ -526,7 +538,9 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
             for item in fi:
                 if isinstance(item, dict):
                     # failed_items entries may be {item/filename: ..., error: ...}
-                    name = (item.get("item") or item.get("filename")
+                    # run_pv writes item_id (re-audit round 3: without it a
+                    # failure the cleanup recovered never matched).
+                    name = (item.get("item") or item.get("item_id") or item.get("filename")
                             or item.get("tile") or json.dumps(item, sort_keys=True))
                     failed_items.add(str(name))
                 else:

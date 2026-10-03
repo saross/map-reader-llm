@@ -399,13 +399,27 @@ def _sibling_metas(primary: dict, others: list[Path]) -> list[Path]:
     return out
 
 
+def _sum_or_none(values: list) -> float | None:
+    """Sum the recorded values; None when none was recorded."""
+    present = [v for v in values if isinstance(v, (int, float))]
+    return sum(present) if present else None
+
+
+def _span(stamps: list[dict | None]) -> dict | None:
+    """Earliest start and latest end over several ``{start, end}`` blocks."""
+    present = [t for t in stamps if t]
+    if not present:
+        return None
+    return {"start": min(t["start"] for t in present), "end": max(t["end"] for t in present)}
+
+
 def _preserved_main_legs(primary: dict, primary_path: Path) -> list[Path]:
     """A verifier leg's preserved main meta(s), when a cleanup overwrote ``run.meta.json``.
 
-    The verifier drivers keep the overwritten main leg as
-    ``run.meta.main-<date>.json`` (tracked; ``gemini37-screen-2026-08-28``'s
-    swap38 leg: 790 candidates, 1,593 requests, beside a 1-request cleanup
-    meta). Such a meta with its own ``run_id`` is a separate, billed execution
+    An operator may keep the overwritten main leg as ``run.meta.main-<date>.json``
+    before a cleanup (no script writes it; ``planning/gemini38-screen-2026-09-04.md``
+    records the copy for ``gemini37-screen-2026-08-28``'s swap38 leg: 790
+    candidates, 1,593 requests, beside a 1-request cleanup meta). Such a meta with its own ``run_id`` is a separate, billed execution
     of the leg and is priced with it (re-audit round 2). Two kinds of file
     beside it are NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's
     ``run_id`` (cumulative), and ``run.meta.pre-rerun-*`` are superseded
@@ -755,7 +769,6 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # the verified GeoJSON's ``source_tile`` values: that would count tiles
         # with a SURVIVING detection, which is not "tiles processed" and would
         # be a different quantity wearing the same name.
-        v_es = meta.get("execution_stats", {}) or {}
         # A cleanup that overwrote run.meta.json leaves the main leg preserved
         # beside it; both are this leg's executions (priced, cited, counted).
         main_legs = _preserved_main_legs(meta, meta_path)
@@ -764,8 +777,9 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                        for c in ((m.get("execution_stats") or {}).get("completed_items") or [])]
         if v_completed:
             n_candidates = len(set(v_completed))
-        elif v_es.get("items_processed"):
-            n_candidates = v_es["items_processed"]
+        elif any((m.get("execution_stats") or {}).get("items_processed") for m, _ in v_fragments):
+            n_candidates = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
+                               for m, _ in v_fragments)
         else:
             n_candidates = (
                 usage.get("by_provider", {}).get("google_gemini", {}) or {}
@@ -804,9 +818,13 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 pass_id=f"{run_id}::{vdir}::run1", fragments=v_fragments,
                 run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
                 stage="verifier"),
-            "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
-            "timestamps": _timestamps(meta),
-            "retries": v_es.get("retries_total", 0),
+            # A leg with a preserved main meta ran twice (main, then cleanup):
+            # its time, span and retries are both executions', as C3 derives them.
+            "wall_clock_s": _sum_or_none([(m.get("timestamp") or {}).get("duration_seconds")
+                                          for m, _ in v_fragments]),
+            "timestamps": _span([_timestamps(m) for m, _ in v_fragments]),
+            "retries": sum(int((m.get("execution_stats") or {}).get("retries_total") or 0)
+                           for m, _ in v_fragments),
             "provenance": build_provenance(v_prov_sources, at),
         })
 

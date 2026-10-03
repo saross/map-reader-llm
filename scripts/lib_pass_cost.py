@@ -828,8 +828,9 @@ class PassCoster:
             cover = verifier_coverage(fragments)
             if cover and cover[0] < COVERAGE_FLOOR * cover[1]:
                 partial_why.append(
-                    f"the meta accounts for {cover[0]:,} request(s) against {cover[1]:,} "
-                    "results in probabilities.json: a later leg (a cleanup) overwrote it")
+                    f"the leg's metas account for {cover[0]:,} candidate(s) against "
+                    f"{cover[1]:,} results in probabilities.json: a later leg (a cleanup) "
+                    "overwrote the main meta")
         costed = [f for f in priced if f["_cost"] is not None]
         if bases == {"unrecorded"}:
             basis, cost = "unrecorded", None
