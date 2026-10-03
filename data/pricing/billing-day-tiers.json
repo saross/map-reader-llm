@@ -1,6 +1,6 @@
 {
- "_README": "Which service tiers billed which Gemini model on which Pacific-time billing day, for project map-reader-llm, reduced from the Google Cloud billing console exports in docs/costs/ (gitignored; they carry account identifiers) by scripts/derive_tier_evidence.py billing. 'intervals' is the union of each monthly Cost-table line's own usage window per model and tier (a superset of the days the tier actually billed); 'days' is exact per-day evidence from single-day Reports exports, each classed by project filter (documented / unverified / contaminated; an unfiltered export can only add tiers, never remove one). Tier-silent cache SKUs carry no tier signal and are counted apart. Read by scripts/lib_tier_evidence.py; never edit by hand.",
- "schema": "billing-day-tiers/1",
+ "_README": "Which service tiers billed which Gemini model on which Pacific-time billing day, for project map-reader-llm, reduced from the Google Cloud billing console exports in docs/costs/ (gitignored; they carry account identifiers) by scripts/derive_tier_evidence.py billing. 'intervals' is the union of each monthly Cost-table line's own usage window per model and tier (a superset of the days the tier actually billed); 'days' is exact per-day evidence from single-day Reports exports, each classed by project filter (documented / unverified / contaminated; an unfiltered export can only add tiers, never remove one), with the tokens billed per tier and token class (input, output, other = cache storage token-hours), so a pass whose output exceeds a tier's whole day can be ruled out of that tier. Tier-silent cache SKUs carry no tier signal and are counted apart. Read by scripts/lib_tier_evidence.py; never edit by hand.",
+ "schema": "billing-day-tiers/2",
  "project": "map-reader-llm",
  "timezone": "America/Los_Angeles",
  "months_covered": [
@@ -213,16 +213,25 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 41215019,
-      "batch": 14883139
+      "standard": {
+       "input": 40213580,
+       "output": 1001439
+      },
+      "batch": {
+       "output": 5049545,
+       "input": 9833594
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.1-flash-lite-preview": {
      "tiers": {
-      "standard": 1314938
+      "standard": {
+       "output": 939438,
+       "input": 375500
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -233,11 +242,20 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "batch": 58194421,
-      "standard": 4354861,
-      "flex": 17042523
+      "batch": {
+       "output": 39705737,
+       "input": 18488684
+      },
+      "standard": {
+       "output": 3037047,
+       "input": 1317814
+      },
+      "flex": {
+       "output": 4992808,
+       "input": 12049715
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -248,9 +266,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 272940614
+      "flex": {
+       "output": 156839216,
+       "input": 116101398
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -261,9 +282,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 502930
+      "standard": {
+       "input": 452102,
+       "output": 50828
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -274,10 +298,19 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 48623885,
-      "flex": 7145294
+      "standard": {
+       "output": 31932815,
+       "input": 16691070
+      },
+      "flex": {
+       "input": 6544384,
+       "output": 600910
+      }
      },
-     "tier_silent_amount": 295513430
+     "tier_silent": {
+      "input": 295389413,
+      "other": 124017
+     }
     }
    }
   },
@@ -288,10 +321,19 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 86245648,
-      "flex": 84566652
+      "standard": {
+       "output": 55186619,
+       "input": 31059029
+      },
+      "flex": {
+       "output": 21091528,
+       "input": 63475124
+      }
      },
-     "tier_silent_amount": 406987446
+     "tier_silent": {
+      "input": 406906432,
+      "other": 81014
+     }
     }
    }
   },
@@ -302,10 +344,19 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 174695461,
-      "flex": 168197724
+      "standard": {
+       "output": 123314671,
+       "input": 51380790
+      },
+      "flex": {
+       "output": 49383810,
+       "input": 118813914
+      }
      },
-     "tier_silent_amount": 673510661
+     "tier_silent": {
+      "input": 673458661,
+      "other": 52000
+     }
     }
    }
   },
@@ -316,9 +367,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 324326014
+      "flex": {
+       "output": 156839454,
+       "input": 167486560
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -329,9 +383,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 322802783
+      "flex": {
+       "output": 226581995,
+       "input": 96220788
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -342,16 +399,25 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 1192020
+      "flex": {
+       "input": 1086255,
+       "output": 105765
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.1-pro-preview": {
      "tiers": {
-      "standard": 90978,
-      "flex": 2697
+      "standard": {
+       "output": 21090,
+       "input": 69888
+      },
+      "flex": {
+       "output": 905,
+       "input": 1792
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -362,22 +428,37 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 99013
+      "flex": {
+       "input": 90120,
+       "output": 8893
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.1-pro-preview": {
      "tiers": {
-      "standard": 2397866,
-      "flex": 3135629
+      "standard": {
+       "input": 2193360,
+       "output": 204506
+      },
+      "flex": {
+       "input": 2967952,
+       "output": 167677
+      }
      },
-     "tier_silent_amount": 28757437
+     "tier_silent": {
+      "input": 28748824,
+      "other": 8613
+     }
     },
     "gemini-3.5-flash": {
      "tiers": {
-      "flex": 3987371
+      "flex": {
+       "input": 3949633,
+       "output": 37738
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -388,9 +469,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 101937511
+      "flex": {
+       "output": 15133031,
+       "input": 86804480
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -401,15 +485,21 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 26252757
+      "flex": {
+       "input": 24301048,
+       "output": 1951709
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.5-flash": {
      "tiers": {
-      "flex": 14677189
+      "flex": {
+       "input": 13590000,
+       "output": 1087189
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -420,9 +510,12 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 85986688
+      "flex": {
+       "input": 79631950,
+       "output": 6354738
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -433,10 +526,19 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "standard": 63298301,
-      "flex": 21593146
+      "standard": {
+       "output": 31934141,
+       "input": 31364160
+      },
+      "flex": {
+       "input": 19692091,
+       "output": 1901055
+      }
      },
-     "tier_silent_amount": 534481572
+     "tier_silent": {
+      "input": 534439170,
+      "other": 42402
+     }
     }
    }
   },
@@ -447,16 +549,25 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 11573083,
-      "standard": 1766655
+      "flex": {
+       "input": 10610937,
+       "output": 962146
+      },
+      "standard": {
+       "input": 1636096,
+       "output": 130559
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.7-flash": {
      "tiers": {
-      "flex": 40087003
+      "flex": {
+       "output": 7550679,
+       "input": 32536324
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -467,15 +578,21 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 100509
+      "flex": {
+       "input": 90120,
+       "output": 10389
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.7-flash": {
      "tiers": {
-      "flex": 77071163
+      "flex": {
+       "output": 13464883,
+       "input": 63606280
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -486,16 +603,25 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 24914548
+      "flex": {
+       "input": 22785280,
+       "output": 2129268
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.7-flash": {
      "tiers": {
-      "flex": 177825431,
-      "standard": 215219
+      "flex": {
+       "output": 29217899,
+       "input": 148607532
+      },
+      "standard": {
+       "output": 46705,
+       "input": 168514
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -506,9 +632,12 @@
    "models": {
     "gemini-3.7-flash": {
      "tiers": {
-      "flex": 132719870
+      "flex": {
+       "input": 120522816,
+       "output": 12197054
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   },
@@ -519,15 +648,21 @@
    "models": {
     "gemini-3-flash-preview": {
      "tiers": {
-      "flex": 1325241
+      "flex": {
+       "input": 1207808,
+       "output": 117433
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     },
     "gemini-3.7-flash": {
      "tiers": {
-      "flex": 117356494
+      "flex": {
+       "input": 115710768,
+       "output": 1645726
+      }
      },
-     "tier_silent_amount": 0
+     "tier_silent": {}
     }
    }
   }

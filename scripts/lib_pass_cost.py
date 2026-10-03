@@ -27,11 +27,19 @@ things that sentence needs and the metas do not record:
                              from the CLI or the Batch API path
    ``batch-path-pricing``    a ``discount_reason`` naming the Batch API (only
                              the batch path writes it)
-   ``run-log``               the runner's ``Service tier: <tier>`` launch line
+   ``cached-path``           the run used an EXPLICIT context cache on the
+                             real-time path, whose request config omits
+                             ``service_tier``: billed at standard, whatever the
+                             launch line asked for (see below)
+   ``run-log``               the runner's ``Service tier: <tier>`` launch line in
+                             the fragment's OWN directory
                              (``data/pricing/run-log-tiers.json``)
    ``launch-manifest``       ``service_tier`` in a ``launch_manifest.json``
    ``attestation``           the PI's dated attestation
                              (``data/pricing/tier-attestations.json``)
+   ``run-log-inherited``     a launch line in an ENCLOSING directory: it
+                             describes the run's launch, which a verifier leg
+                             or a later batch rung beneath it need not share
    ``billing-day``           the tiers the invoice billed for the model on the
                              pass's Pacific-time billing days
                              (``data/pricing/billing-day-tiers.json``)
@@ -42,7 +50,19 @@ things that sentence needs and the metas do not record:
    Single-tier evidence PINS the tier; set-valued evidence (billing days,
    real-time mode, a log directory naming two tiers) NARROWS it. Pins that
    disagree, or a pin the billing excludes, are reported as conflicts, never
-   silently resolved.
+   silently resolved; an inherited log overruled by the fragment's own
+   evidence is recorded as a note, because a run-level launch line and a
+   leg-level batch marker describe different launches.
+
+   Billing days are read two ways. A CONTINUOUS fragment (its span is its
+   own run time, within six hours) billed on every Pacific day it touched,
+   so the tiers are intersected across those days, and a tier whose whole
+   day's billed output (from single-day exports) is smaller than the
+   fragment's own output is ruled out: the fragment cannot have run there.
+   A RESUMED fragment (a meta whose start and end are sessions apart, up to
+   four months on this corpus) is held only to its first and last days, and
+   their tiers are UNITED, because its sessions may have run at different
+   tiers.
 
 2. **The pass's whole spend.** A pass is its primary meta plus every
    ``run_N_recovery*`` fragment beside it (the register's tile count already
@@ -50,6 +70,20 @@ things that sentence needs and the metas do not record:
    measured 2026-10-03). Each fragment is priced at ITS OWN tier and date,
    because a recovery can run at a different tier from its pass (the
    ``gemini37-55map-2026-08-29`` run-2 recovery ran at standard).
+
+**The cached-path defect.** ``scripts/4_detect_mounds_batch.py`` builds a
+fresh ``GenerateContentConfig`` for requests that use an explicit context
+cache (``--use-cache``) and does not copy ``service_tier`` into it (the
+block dates from ``76a2cc719``, 2026-03-28; flex arrived on the main path
+only, ``2a2cd81c7``, 2026-04-09). Such a run prints ``Service tier: flex``
+at launch and is billed at standard. Found 2026-10-03 when the volume rule
+showed ``h8-v2`` (35 passes, 23.25 M output tokens on 2026-04-15 Pacific,
+every launch log reading flex) against 0.60 M flex output billed for the
+whole day; the two runs whose logs record an explicit cache (``h8-v2`` and
+``55maps-image-generalisation``) are the two that fall in the April
+standard-tier window. A log directory recording an explicit cache therefore
+pins standard for a real-time fragment beneath it, outranking the launch
+line it sits beside.
 
 When the evidence leaves more than one tier possible, the pass is priced at
 every candidate and published at the HIGHEST, with ``cost_basis:
@@ -106,8 +140,26 @@ PACIFIC = ZoneInfo("America/Los_Angeles")
 #: batch marker is a structural fact of the path that ran; the PI's
 #: attestation is recollection, so the machine record outranks it, and the
 #: disagreement is reported either way.
-PIN_PRIORITY = ("batch-marker", "runner-record", "batch-path-pricing", "run-log",
-                "launch-manifest", "attestation")
+PIN_PRIORITY = ("batch-marker", "runner-record", "batch-path-pricing", "cached-path",
+                "run-log", "launch-manifest", "attestation", "run-log-inherited")
+
+#: Evidence that records the tier a run ASKED for, not the one it was billed
+#: at; the cached-path rule overrules these without calling it a conflict.
+REQUEST_RECORDS = ("run-log", "run-log-inherited", "launch-manifest")
+
+#: Where the cached call path drops ``service_tier`` (cited in evidence).
+CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig "
+                    "omits service_tier (since 76a2cc719)")
+
+#: A fragment whose span exceeds its own recorded run time by more than this
+#: was resumed in a later session, and is not held to every day in between.
+RESUME_GAP_S = 6 * 3600
+
+#: With no recorded run time, a span longer than this is treated as resumed.
+CONTINUOUS_MAX_S = 36 * 3600
+
+#: Slack on the volume rule, for rounding in the console's token counts.
+VOLUME_SLACK = 1.001
 
 #: Candidate tiers whose prices differ by less than this are one cost.
 INDIFFERENT_USD = 0.005
@@ -143,6 +195,7 @@ class TierFinding:
     candidates: tuple[str, ...]
     evidence: list[Evidence] = field(default_factory=list)
     conflicts: list[str] = field(default_factory=list)
+    notes: list[str] = field(default_factory=list)
 
 
 def _rel(path: Path) -> str:
@@ -185,6 +238,25 @@ def pacific_days(start: str | None, end: str | None) -> list[str]:
     return out
 
 
+def is_continuous(start: str | None, end: str | None, duration_s: float | None) -> bool:
+    """Whether a fragment ran in one sitting rather than across resumed sessions.
+
+    Examples:
+        >>> is_continuous("2026-04-16T01:00:00+00:00", "2026-04-16T05:00:00+00:00", 14000)
+        True
+        >>> is_continuous("2026-03-26T01:00:00+00:00", "2026-07-30T05:00:00+00:00", 20000)
+        False
+        >>> is_continuous("2026-04-16T01:00:00+00:00", "2026-04-18T05:00:00+00:00", None)
+        False
+    """
+    if not start or not end:
+        return True
+    span = (datetime.fromisoformat(end) - datetime.fromisoformat(start)).total_seconds()
+    if duration_s is not None:
+        return span - float(duration_s) <= RESUME_GAP_S
+    return span <= CONTINUOUS_MAX_S
+
+
 class PassCoster:
     """Prices register passes on the audited basis from committed evidence.
 
@@ -223,7 +295,7 @@ class PassCoster:
                 raise ValueError(f"tier attestation id {att['id']!r} is duplicated")
             ids.add(att["id"])
 
-    def _log_evidence(self, directory: Path, run_dir: Path) -> Evidence | None:
+    def _log_evidence(self, directory: Path, run_dir: Path) -> list[Evidence]:
         """Tiers named by the nearest enclosing directory's own logs.
 
         The walk stops at the first directory (from the fragment's own, up to
@@ -232,14 +304,21 @@ class PassCoster:
         NOT continue upward past it, because a parent's logs describe the run
         as a whole and the child is where the disagreement lives.
         """
-        cur, stop = directory.resolve(), run_dir.resolve()
+        own, stop = directory.resolve(), run_dir.resolve()
+        cur = own
         while True:
             entry = self.log_dirs.get(_rel(cur))
             if entry:
                 logs = ", ".join(lg["path"].rsplit("/", 1)[-1] for lg in entry["logs"])
-                return Evidence("run-log", tuple(entry["tiers"]), f"{_rel(cur)}/{{{logs}}}")
+                kind = "run-log" if cur == own else "run-log-inherited"
+                found = [Evidence(kind, tuple(entry["tiers"]), f"{_rel(cur)}/{{{logs}}}")]
+                if entry.get("explicit_cache"):
+                    found.append(Evidence("cached-path", ("standard",),
+                                          f"{_rel(cur)} logs record an explicit context "
+                                          f"cache; {CACHED_PATH_CITE}"))
+                return found
             if cur == stop or cur == cur.parent or stop not in cur.parents:
-                return None
+                return []
             cur = cur.parent
 
     @staticmethod
@@ -257,14 +336,16 @@ class PassCoster:
                 return None
             cur = cur.parent
 
-    def direct_evidence(self, meta: dict[str, Any], meta_path: Path,
-                        run_dir: Path) -> list[Evidence]:
+    def direct_evidence(self, meta: dict[str, Any], meta_path: Path, run_dir: Path,
+                        stage: str = "proposer") -> list[Evidence]:
         """Evidence a fragment carries in or beside its own meta.
 
         Args:
             meta: The parsed meta.
             meta_path: Where it lives.
             run_dir: The run's directory (the upward walks stop there).
+            stage: ``proposer`` or ``verifier``. The cached-path rule is about
+                the detection runner, which only proposer passes go through.
 
         Returns:
             Evidence items, possibly empty.
@@ -300,9 +381,13 @@ class PassCoster:
         if reason.startswith("google async batch api"):
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
-        log = self._log_evidence(here, run_dir)
-        if log:
-            out.append(log)
+        logs = self._log_evidence(here, run_dir)
+        if stage != "proposer" or any(e.kind == "batch-marker" for e in out):
+            # The cached-path rule is about the detection runner's REAL-TIME
+            # call; a verifier leg, or a batch leg, beneath a cached run's log
+            # is not on that path.
+            logs = [e for e in logs if e.kind != "cached-path"]
+        out.extend(logs)
         lm = self._launch_manifest(here, run_dir)
         if lm:
             out.append(lm)
@@ -348,13 +433,40 @@ class PassCoster:
         tiers = {t for t, spans in ivs.items() if any(a <= day <= b for a, b in spans)}
         return (tiers or None), "invoice line windows"
 
-    def billing_evidence(self, model: str, days: list[str]) -> Evidence | None:
+    def _day_output(self, model: str, day: str, tier: str) -> int | None:
+        """Output tokens billed for *model* at *tier* on a day, from a day export only."""
+        cell = self.billing["days"].get(day, {}).get("models", {}).get(model)
+        if not cell:
+            return None
+        return int((cell["tiers"].get(tier) or {}).get("output", 0))
+
+    def billing_evidence(self, model: str, days: list[str], *, continuous: bool = True,
+                         output_tokens: int = 0) -> Evidence | None:
         """What the invoice allows over the fragment's billing days.
 
-        Days on which the model shows no tiered usage carry no information
-        (the fragment's tokens may have been billed on a neighbouring day)
-        and are skipped; the rest are intersected.
+        Args:
+            model: The card's canonical model id.
+            days: The Pacific days the fragment touched.
+            continuous: Whether it ran in one sitting (see the module notes).
+            output_tokens: Its output plus thinking tokens, for the volume rule.
+
+        Returns:
+            Set-valued evidence, or None when no day carries information.
         """
+        if not continuous:
+            ends = sorted({days[0], days[-1]}) if days else []
+            allowed: set[str] = set()
+            used = []
+            for day in ends:
+                tiers, how = self._allowed(model, day)
+                if tiers:
+                    allowed |= tiers
+                    used.append(f"{day} {'|'.join(sorted(tiers))} [{how}]")
+            if not used:
+                return None
+            return Evidence("billing-day", tuple(t for t in TIERS if t in allowed),
+                            f"{model}: resumed over {days[0]}..{days[-1]}, first and last "
+                            "days united: " + "; ".join(used))
         allowed = set(TIERS)
         used = []
         for day in days:
@@ -365,12 +477,26 @@ class PassCoster:
             used.append(f"{day} {'|'.join(sorted(tiers))} [{how}]")
         if not used:
             return None
-        return Evidence("billing-day", tuple(sorted(allowed)), f"{model}: " + "; ".join(used))
+        # Volume rule: only where every touched day has a day export, so the
+        # day's whole billed output at the tier is known.
+        if output_tokens and all(d in self.billing["days"] for d in days):
+            for tier in sorted(allowed):
+                vols = [self._day_output(model, d, tier) for d in days]
+                if None in vols:
+                    continue
+                if output_tokens > sum(vols) * VOLUME_SLACK:
+                    allowed.discard(tier)
+                    used.append(f"not {tier}: fragment output {output_tokens:,} exceeds the "
+                                f"{sum(vols):,} {tier} output billed on {','.join(days)}")
+        return Evidence("billing-day", tuple(t for t in TIERS if t in allowed),
+                        f"{model}: " + "; ".join(used))
 
     # -- resolution ----------------------------------------------------------
 
     def resolve(self, *, meta: dict[str, Any], meta_path: Path, run_id: str, pool: str,
-                run_dir: Path, model: str, start: str | None, end: str | None) -> TierFinding:
+                run_dir: Path, model: str, start: str | None, end: str | None,
+                duration_s: float | None = None, output_tokens: int = 0,
+                stage: str = "proposer") -> TierFinding:
         """The tier one fragment ran at, from all the evidence there is.
 
         Args:
@@ -382,32 +508,46 @@ class PassCoster:
             model: The card's canonical model id for the fragment.
             start: Fragment start timestamp (ISO, with offset).
             end: Fragment end timestamp.
+            duration_s: Its recorded run time, which tells a continuous
+                fragment from a resumed one.
+            output_tokens: Its output plus thinking tokens (the volume rule).
+            stage: ``proposer`` or ``verifier``.
 
         Returns:
             The finding: a tier when one is pinned or the evidence narrows to
             one, else ``None`` with the candidate tiers.
         """
         days = pacific_days(start, end)
-        evidence = self.direct_evidence(meta, meta_path, run_dir)
+        evidence = self.direct_evidence(meta, meta_path, run_dir, stage)
         att = self.attestation(run_id, pool, days)
         if att:
             evidence.append(att)
-        bill = self.billing_evidence(model, days)
+        bill = self.billing_evidence(model, days,
+                                     continuous=is_continuous(start, end, duration_s),
+                                     output_tokens=output_tokens)
         if bill:
             evidence.append(bill)
         conflicts: list[str] = []
+        notes: list[str] = []
         pins = [e for e in evidence if e.pins and e.kind in PIN_PRIORITY]
         narrows = [e for e in evidence if e not in pins]
-        pinned = sorted({e.tiers[0] for e in pins})
-        if pinned:
+        if pins:
             chosen = min(pins, key=lambda e: PIN_PRIORITY.index(e.kind))
             tier = chosen.tiers[0]
-            if len(pinned) > 1:
-                conflicts.append("pins disagree: " + "; ".join(e.describe() for e in pins))
+            for e in pins:
+                if e.tiers[0] == tier:
+                    continue
+                if chosen.kind == "cached-path" and e.kind in REQUEST_RECORDS:
+                    notes.append(f"{e.describe()} is the tier REQUESTED; the cached path "
+                                 "dropped it")
+                elif e.kind == "run-log-inherited":
+                    notes.append(f"{e.describe()} overruled by the fragment's own {chosen.kind}")
+                else:
+                    conflicts.append(f"pins disagree: {chosen.describe()} vs {e.describe()}")
             for e in narrows:
                 if tier not in e.tiers:
                     conflicts.append(f"{chosen.kind} pins {tier} but {e.describe()}")
-            return TierFinding(tier, chosen.kind, (tier,), evidence, conflicts)
+            return TierFinding(tier, chosen.kind, (tier,), evidence, conflicts, notes)
         candidates = set(TIERS)
         for e in narrows:
             candidates &= set(e.tiers)
@@ -418,13 +558,14 @@ class PassCoster:
         ordered = tuple(t for t in TIERS if t in candidates)
         if len(ordered) == 1:
             method = "+".join(sorted({e.kind for e in narrows if len(e.tiers) < len(TIERS)}))
-            return TierFinding(ordered[0], method or "billing-day", ordered, evidence, conflicts)
-        return TierFinding(None, "unresolved", ordered, evidence, conflicts)
+            return TierFinding(ordered[0], method or "billing-day", ordered, evidence,
+                               conflicts, notes)
+        return TierFinding(None, "unresolved", ordered, evidence, conflicts, notes)
 
     # -- pricing -------------------------------------------------------------
 
     def cost_fragment(self, *, meta: dict[str, Any], meta_path: Path, run_id: str, pool: str,
-                      run_dir: Path, model: str) -> dict[str, Any]:
+                      run_dir: Path, model: str, stage: str = "proposer") -> dict[str, Any]:
         """Price one fragment (a primary meta or a recovery meta).
 
         Returns:
@@ -445,8 +586,11 @@ class PassCoster:
             entry.update(tier=None, tier_method="not-needed", unpriceable=str(exc))
             return {**entry, "_basis": "unpriceable", "_cost": None, "_low": None, "_high": None}
         entry["model"] = canonical
-        finding = self.resolve(meta=meta, meta_path=meta_path, run_id=run_id, pool=pool,
-                               run_dir=run_dir, model=canonical, start=start, end=end)
+        finding = self.resolve(
+            meta=meta, meta_path=meta_path, run_id=run_id, pool=pool, run_dir=run_dir,
+            model=canonical, start=start, end=end, duration_s=ts.get("duration_seconds"),
+            output_tokens=int(usage.get("total_output_tokens") or 0)
+            + int(usage.get("total_thoughts_tokens") or 0), stage=stage)
         prices: dict[str, float] = {}
         try:
             for tier in finding.candidates:
@@ -461,6 +605,8 @@ class PassCoster:
                      evidence=[e.describe() for e in finding.evidence])
         if finding.conflicts:
             entry["conflicts"] = finding.conflicts
+        if finding.notes:
+            entry["notes"] = finding.notes
         if finding.tier is not None or high - low < INDIFFERENT_USD:
             if finding.tier is None:
                 entry["tier_method"] = "tier-indifferent: " + "|".join(finding.candidates)
@@ -472,7 +618,8 @@ class PassCoster:
 
     def cost_pass(self, *, pass_id: str, fragments: list[tuple[dict[str, Any], Path]],
                   run_id: str, pool: str, run_dir: Path, model: str,
-                  fragment_models: list[str] | None = None) -> dict[str, Any]:
+                  fragment_models: list[str] | None = None,
+                  stage: str = "proposer") -> dict[str, Any]:
         """The register's ``cost_usd``, ``cost_basis`` and ``cost_source`` for a pass.
 
         Args:
@@ -485,6 +632,7 @@ class PassCoster:
             model: The row's authoritative ``model_used``.
             fragment_models: Per-fragment model overrides (a recovery that
                 recorded its own model); defaults to ``model`` for each.
+            stage: ``proposer`` or ``verifier``.
 
         Returns:
             The three register fields.
@@ -496,7 +644,7 @@ class PassCoster:
                                     "rate_card": self.card_identity}}
         models = fragment_models or [model] * len(fragments)
         priced = [self.cost_fragment(meta=m, meta_path=p, run_id=run_id, pool=pool,
-                                     run_dir=run_dir, model=fm)
+                                     run_dir=run_dir, model=fm, stage=stage)
                   for (m, p), fm in zip(fragments, models, strict=True)]
         bases = {f["_basis"] for f in priced}
         if bases == {"unrecorded"}:
@@ -521,4 +669,5 @@ class PassCoster:
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "Evidence", "PassCoster", "TierFinding", "pacific_days"]
+__all__ = ["BASES", "Evidence", "PassCoster", "TierFinding", "is_continuous",
+           "pacific_days"]

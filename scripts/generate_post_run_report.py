@@ -730,7 +730,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "tokens": _tokens_from_usage(usage),
             **_coster().cost_pass(
                 pass_id=f"{run_id}::{vdir}::run1", fragments=[(meta, meta_path)],
-                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used),
+                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
+                stage="verifier"),
             "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
             "timestamps": _timestamps(meta),
             "retries": v_es.get("retries_total", 0),

@@ -129,6 +129,11 @@ FILTER_RANK = {"documented": 0, "unverified": 1, "contaminated": 2}
 #: ``2a2cd81c7``): ``Service tier: flex``.
 TIER_LINE = re.compile(r"service tier:\s*([a-z]+)", re.IGNORECASE)
 
+#: The runner's line when it creates an EXPLICIT context cache
+#: (``--use-cache``). It matters for the tier: the cached call path builds
+#: its own request config without ``service_tier`` (see lib_pass_cost).
+CACHE_LINE = re.compile(r"^Context cache created: ", re.MULTILINE)
+
 REPORTS_NAME = re.compile(
     r"Reports, (\d{4}-\d{2}-\d{2}) [—-] (\d{4}-\d{2}-\d{2})(?: \((\d+)\))?\.csv$")
 COST_TABLE_NAME = re.compile(r"Cost table, (\d{4}-\d{2})-\d{2} [—-] ")
@@ -190,6 +195,29 @@ def sku_tier(sku: str) -> str | None:
     if "cached" in s or "storage" in s:
         return None
     return "standard"
+
+
+def sku_class(sku: str) -> str:
+    """Which billed token class a SKU counts: ``input``, ``output`` or ``other``.
+
+    ``other`` is cache storage (token-hours), which is not a token count.
+
+    Examples:
+        >>> sku_class("Generate content output token count gemini 3 flash text flex")
+        'output'
+        >>> sku_class("Generate_content cached image input token count for gemini 3 flash")
+        'input'
+        >>> sku_class("Generate_content cached text storage token hours for gemini 3 flash")
+        'other'
+    """
+    s = normalise_sku(sku)
+    if "storage" in s:
+        return "other"
+    if "output" in s:
+        return "output"
+    if "input" in s:
+        return "input"
+    return "other"
 
 
 def _amount(text: str) -> float:
@@ -358,11 +386,11 @@ def build_billing_evidence(costs_dir: Path) -> dict[str, Any]:
         for ln in entry["lines"]:
             if ln["model"] is None or ln["amount"] <= 0:
                 continue
-            cell = by_model.setdefault(ln["model"], {"tiers": {}, "tier_silent_amount": 0})
-            if ln["tier"] is None:
-                cell["tier_silent_amount"] += int(ln["amount"])
-            else:
-                cell["tiers"][ln["tier"]] = cell["tiers"].get(ln["tier"], 0) + int(ln["amount"])
+            cell = by_model.setdefault(ln["model"], {"tiers": {}, "tier_silent": {}})
+            cls = sku_class(ln["sku"])
+            bucket = (cell["tier_silent"] if ln["tier"] is None
+                      else cell["tiers"].setdefault(ln["tier"], {}))
+            bucket[cls] = bucket.get(cls, 0) + int(ln["amount"])
         days[day] = {"project_filter": entry["project_filter"],
                      "export_sha256": entry["sha256"],
                      "other_exports_for_day": entry["alternatives"],
@@ -376,10 +404,13 @@ def build_billing_evidence(costs_dir: Path) -> dict[str, Any]:
             "monthly Cost-table line's own usage window per model and tier (a superset of the "
             "days the tier actually billed); 'days' is exact per-day evidence from single-day "
             "Reports exports, each classed by project filter (documented / unverified / "
-            "contaminated; an unfiltered export can only add tiers, never remove one). "
-            "Tier-silent cache SKUs carry no tier signal and are counted apart. Read by "
+            "contaminated; an unfiltered export can only add tiers, never remove one), "
+            "with the tokens billed per tier and token class (input, output, other = cache "
+            "storage token-hours), so a pass whose output exceeds a tier's whole day can be "
+            "ruled out of that tier. Tier-silent cache SKUs carry no tier signal and are "
+            "counted apart. Read by "
             "scripts/lib_tier_evidence.py; never edit by hand."),
-        "schema": "billing-day-tiers/1",
+        "schema": "billing-day-tiers/2",
         "project": PROJECT,
         "timezone": BILLING_TIMEZONE,
         "months_covered": sorted(skus_by_month),
@@ -425,17 +456,19 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
             continue
         tiers = [m.group(1).lower() for m in TIER_LINE.finditer(text)]
         if tiers:
-            hits.append((path, tiers))
-    tracked = _git_tracked([p for p, _ in hits])
+            hits.append((path, tiers, len(CACHE_LINE.findall(text))))
+    tracked = _git_tracked([p for p, _, _ in hits])
     dirs: dict[str, dict[str, Any]] = {}
-    for path, tiers in hits:
+    for path, tiers, caches in hits:
         rel_dir = path.parent.relative_to(PROJECT_ROOT).as_posix()
         rel = path.relative_to(PROJECT_ROOT).as_posix()
-        entry = dirs.setdefault(rel_dir, {"tiers": [], "logs": []})
+        entry = dirs.setdefault(rel_dir, {"tiers": [], "explicit_cache": False, "logs": []})
         entry["logs"].append({"path": rel, "sha256": _sha256(path),
                               "tracked": rel in tracked,
-                              "tiers": sorted(set(tiers)), "tier_lines": len(tiers)})
+                              "tiers": sorted(set(tiers)), "tier_lines": len(tiers),
+                              "explicit_cache_lines": caches})
         entry["tiers"] = sorted(set(entry["tiers"]) | set(tiers))
+        entry["explicit_cache"] = entry["explicit_cache"] or caches > 0
     return {
         "_README": (
             "Service tiers named by run logs, per directory. The detection runner prints "
@@ -443,9 +476,12 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
             "is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py "
             "logs, run on sapphire (which holds logs the workstation clone does not). A "
             "directory whose logs name more than one tier is a conflict the reader must not "
-            "resolve by walking further up. Read by scripts/lib_tier_evidence.py; never edit "
-            "by hand."),
-        "schema": "run-log-tiers/1",
+            "resolve by walking further up. explicit_cache records that the run created an "
+            "explicit context cache (--use-cache): the runner's cached call path omits "
+            "service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a "
+            "real-time request on it is billed at standard whatever the launch line says. "
+            "Read by scripts/lib_pass_cost.py; never edit by hand."),
+        "schema": "run-log-tiers/2",
         "logs_scanned": len(logs),
         "logs_with_tier_lines": len(hits),
         "directories": dict(sorted(dirs.items())),

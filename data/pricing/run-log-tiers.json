@@ -1,6 +1,6 @@
 {
- "_README": "Service tiers named by run logs, per directory. The detection runner prints 'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py logs, run on sapphire (which holds logs the workstation clone does not). A directory whose logs name more than one tier is a conflict the reader must not resolve by walking further up. Read by scripts/lib_tier_evidence.py; never edit by hand.",
- "schema": "run-log-tiers/1",
+ "_README": "Service tiers named by run logs, per directory. The detection runner prints 'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py logs, run on sapphire (which holds logs the workstation clone does not). A directory whose logs name more than one tier is a conflict the reader must not resolve by walking further up. explicit_cache records that the run created an explicit context cache (--use-cache): the runner's cached call path omits service_tier (scripts/4_detect_mounds_batch.py, since 76a2cc719), so a real-time request on it is billed at standard whatever the launch line says. Read by scripts/lib_pass_cost.py; never edit by hand.",
+ "schema": "run-log-tiers/2",
  "logs_scanned": 152,
  "logs_with_tier_lines": 63,
  "directories": {
@@ -8,6 +8,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/55maps-image-generalisation/run.log",
@@ -16,7 +17,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 7
+     "tier_lines": 7,
+     "explicit_cache_lines": 7
     }
    ]
   },
@@ -24,6 +26,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/55maps-text-high-generalisation/recovery-logs/stage2-20260502T154407.log",
@@ -32,7 +35,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -40,6 +44,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/55maps-text-high-t0.3-generalisation/run.log",
@@ -48,7 +53,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -56,6 +62,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/55maps-text-min-generalisation/recovery-phase1.log",
@@ -64,7 +71,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/55maps-text-min-generalisation/run.log",
@@ -73,7 +81,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -81,6 +90,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/55maps-text-min-n10-uplift/uplift-full.log",
@@ -89,7 +99,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 6
+     "tier_lines": 6,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -97,6 +108,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/drift-probe-2026-09-16/probe.log",
@@ -105,7 +117,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -113,6 +126,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/flash35-pv-2x2/tranche-full.log",
@@ -121,7 +135,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 28
+     "tier_lines": 28,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -129,6 +144,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass1.log",
@@ -137,7 +153,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass2.log",
@@ -146,7 +163,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass3.log",
@@ -155,7 +173,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass4.log",
@@ -164,7 +183,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/pass5.log",
@@ -173,7 +193,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover2_3.log",
@@ -182,7 +203,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover2_5.log",
@@ -191,7 +213,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_1.log",
@@ -200,7 +223,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_2.log",
@@ -209,7 +233,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_3.log",
@@ -218,7 +243,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_4.log",
@@ -227,7 +253,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini3-image-55map-2026-09-16/recover_5.log",
@@ -236,7 +263,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -245,6 +273,7 @@
     "flex",
     "standard"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini37-55map-2026-08-29/driver-k5.log",
@@ -253,7 +282,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 7
+     "tier_lines": 7,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log",
@@ -262,7 +292,8 @@
      "tiers": [
       "standard"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini37-55map-2026-08-29/run3-recovery-flex.log",
@@ -271,7 +302,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -279,6 +311,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini37-image-55map-2026-09-13/driver.log",
@@ -287,7 +320,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 6
+     "tier_lines": 6,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -295,6 +329,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini37-image-gs-2026-09-01/driver-k5.log",
@@ -303,7 +338,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 9
+     "tier_lines": 9,
+     "explicit_cache_lines": 0
     },
     {
      "path": "outputs/gemini37-image-gs-2026-09-01/recovery-driver.log",
@@ -312,7 +348,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -320,6 +357,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini37-screen-2026-08-28/escalation-passes6-10.log",
@@ -328,7 +366,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 5
+     "tier_lines": 5,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -336,6 +375,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": false,
    "logs": [
     {
      "path": "outputs/gemini38-screen-2026-09-04/probe-gate-1.log",
@@ -344,7 +384,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 0
     }
    ]
   },
@@ -352,6 +393,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_1/launch.log",
@@ -360,7 +402,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -368,6 +411,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_2/launch.log",
@@ -376,7 +420,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -384,6 +429,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_3/launch.log",
@@ -392,7 +438,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -400,6 +447,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_4/launch.log",
@@ -408,7 +456,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -416,6 +465,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/canonical/run_5/launch.log",
@@ -424,7 +474,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -432,6 +483,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_1/launch.log",
@@ -440,7 +492,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -448,6 +501,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_2/launch.log",
@@ -456,7 +510,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -464,6 +519,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_3/launch.log",
@@ -472,7 +528,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -480,6 +537,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_4/launch.log",
@@ -488,7 +546,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -496,6 +555,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/plus-hp/run_5/launch.log",
@@ -504,7 +564,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -512,6 +573,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_1/launch.log",
@@ -520,7 +582,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -528,6 +591,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_2/launch.log",
@@ -536,7 +600,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -544,6 +609,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_3/launch.log",
@@ -552,7 +618,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -560,6 +627,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_4/launch.log",
@@ -568,7 +636,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -576,6 +645,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/pure-positive-canon/run_5/launch.log",
@@ -584,7 +654,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -592,6 +663,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_1/launch.log",
@@ -600,7 +672,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -608,6 +681,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_2/launch.log",
@@ -616,7 +690,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -624,6 +699,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_3/launch.log",
@@ -632,7 +708,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -640,6 +717,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_4/launch.log",
@@ -648,7 +726,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -656,6 +735,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-16/run_5/launch.log",
@@ -664,7 +744,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -672,6 +753,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_1/launch.log",
@@ -680,7 +762,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -688,6 +771,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_2/launch.log",
@@ -696,7 +780,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -704,6 +789,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_3/launch.log",
@@ -712,7 +798,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -720,6 +807,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_4/launch.log",
@@ -728,7 +816,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -736,6 +825,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-32/run_5/launch.log",
@@ -744,7 +834,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -752,6 +843,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_1/launch.log",
@@ -760,7 +852,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -768,6 +861,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_2/launch.log",
@@ -776,7 +870,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -784,6 +879,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_3/launch.log",
@@ -792,7 +888,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -800,6 +897,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_4/launch.log",
@@ -808,7 +906,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -816,6 +915,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-4/run_5/launch.log",
@@ -824,7 +924,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -832,6 +933,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_1/launch.log",
@@ -840,7 +942,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -848,6 +951,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_2/launch.log",
@@ -856,7 +960,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -864,6 +969,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_3/launch.log",
@@ -872,7 +978,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -880,6 +987,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_4/launch.log",
@@ -888,7 +996,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   },
@@ -896,6 +1005,7 @@
    "tiers": [
     "flex"
    ],
+   "explicit_cache": true,
    "logs": [
     {
      "path": "outputs/h8-v2/scale-8/run_5/launch.log",
@@ -904,7 +1014,8 @@
      "tiers": [
       "flex"
      ],
-     "tier_lines": 1
+     "tier_lines": 1,
+     "explicit_cache_lines": 1
     }
    ]
   }
