@@ -487,20 +487,32 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
    Fixed: such metas read their per-item sums.
 5. **Recovery fragments were missing from the cost**: 118 M tokens on 57
    passes. Each fragment is now priced at its own tier and date.
-6. **Eight verifier legs cannot be priced from their metas** (a cleanup
-   overwrote them): two carry their post-run report's figure (`published`),
-   six have none and are `audited-lower-bound` — four of them under
-   frontier incumbents (`data/pricing/cost-overrides.json`).
+6. **Thirty verifier legs cannot be fully priced from their metas** (a
+   cleanup overwrote the main meta). Two carry their post-run report's figure
+   (`published`, `data/pricing/cost-overrides.json`). One (`gemini37-screen`
+   swap38) kept its main leg as a tracked `run.meta.main-*.json` and is priced
+   from both. The other **28 are floors** (`audited-lower-bound`, US$1.01 in
+   all): five listed in the overrides file, the rest detected because the
+   meta accounts for under 90 % of its leg's `probabilities.json` results.
+   Their real spend is NOT in the register's total. Four sit under frontier
+   incumbents (IM, TH7, TM; T03's was wrongly listed and is audited: its meta
+   records the whole 9,910-call leg).
 7. **C3 had not completed since 2026-07-29**: it parsed every cited source
-   as JSON and crashed on a cited `run.log` and a gzipped meta. Re-run: every
-   cost field certifies (1,337 MATCH, 2 published); 538 non-cost MISMATCH
-   verdicts predate this work and are queued.
-8. **The register on the audited basis**: US$3,086.02 published (311
-   audited, 210 upper bound, 6 lower bound, 2 published, 810 unrecorded),
-   with the tier uncertainty bracketing it down to US$2,827.06; it was
+   as JSON and crashed on a cited `run.log` and a gzipped meta. Rebuilt and
+   re-run: every cost field certifies (`cost_usd` 1,339 MATCH; fragments,
+   stamps and basis label 527; bounds 211 + 211). Reading run_pv's `item_id`
+   cleared 131 `status` false alarms; the **414** non-cost MISMATCH verdicts
+   that remain (wall clock and end time on recovery passes, tile counts,
+   `model_requested`, retries) predate this work and are queued for a look,
+   since some may be the same kind of parsing gap.
+8. **The register on the audited basis**: **US$3,088.53** published (288
+   audited, 211 upper bound, 28 lower bound, 2 published, 810 unrecorded),
+   with the tier uncertainty bracketing it down to **US$2,828.71**; it was
    US$4,674.00 on the runner estimate. The invoices total **USD 5,554.83**
-   over December to September; the difference is the 810 unrecorded passes
-   and unregistered traffic (layer 3: top-down, by work units).
+   over December to September; the difference is the 810 unrecorded passes,
+   the 28 floors' missing spend, superseded executions (the Gemini 3 row's
+   two `pre-rerun` verifier legs, about 62 M input tokens), and unregistered
+   traffic (layer 3: top-down, by work units).
 9. **Two downloads were missing** because billing days are Pacific:
    2026-04-14 (`h10`, 14.3 M output) and 2026-06-02 (`n1-pro-rerun-384`). The
    2026-08-28 and 08-31 re-exports of 2026-10-03 lack the project filter
@@ -514,10 +526,51 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
     USD 0.075/M at FX 1.3904); the card's `gemini-3-flash-preview` note
     "billed US$402.08 against US$419.64" repeats the AUD-for-USD comparison
     corrected on 2026-09-11.
+11. **Four audit rounds** (`/audit`: two fresh-context lenses, then three
+    re-audits of the fixes, each on the Opus tier). Each round found real
+    defects in the previous round's fixes, none critical after round 1:
+    a CLI `cost/2` tier outranking the cached path; a resumed fragment
+    narrowing on one informative end day; run-level proposer logs pinning
+    verifier legs (and then a looser "mentions a verifier" test doing the
+    same); C3 certifying by default in four places; the run reports adding
+    ceilings and floors into one sum; a cleanup-overwritten verifier class
+    the overrides file missed. 123 test cases (91 functions) now pin the rules; each round's
+    fresh mutations turned the suite red. Full tier-1 on sapphire: 3,409
+    passed.
+12. **Decisions for the PI** (none blocks the merge):
+    - The TH7 verifier's main leg survives only as a gitignored
+      `run.meta.json.pre-recovery-*.backup` (9,131 calls; with the live 74,
+      the June audit's whole leg at US$6.42). Force-adding that one 6 KB
+      file would let the register price a frontier incumbent's verifier
+      instead of a US$0.05 floor.
+    - swap38's main leg is recorded under `--service-tier flex` in
+      `planning/gemini38-screen-2026-09-04.md`; a tier attestation would
+      take it from an upper bound (US$1.69) to audited (US$0.85).
+    - Superseded executions (`pre-rerun` metas) are excluded from the pass
+      cost; confirm they belong only in the honest total.
+    - The `pv-diag-384` Pro baseline legs carry batch markers, yet no Gemini
+      3 Pro batch SKU was ever invoiced (US$0.96; a probable mislabel).
+    - The live cached-path defect (§ 8.3): approve a one-request probe
+      before the runner fix, or a guard refusing `--use-cache` with flex.
 
 ---
 
 ## Changelog
+
+### 2026-10-03 (later) — four audit rounds; § 8 figures refreshed (Session 158)
+
+| | WP3 build | after four audit rounds |
+|---|---|---|
+| register total | US$3,086.02 | US$3,088.53 (swap38's main leg priced) |
+| tier lower bound | US$2,827.06 | US$2,828.71 |
+| lower-bound legs | 6 (overrides) | 28 (5 overrides + detected by coverage) |
+| C3 non-cost MISMATCH | 538 | 414 (131 `status` false alarms cleared) |
+| tests in `tests/test_lib_pass_cost.py` | 39 cases | 123 cases (91 functions) |
+
+What did NOT change: no proposer pass's cost moved in rounds 2 to 4; the
+frontier incumbents' figures are as in WP4b; the register-equals-auditor
+figure (US$233.6295) holds. § 8.11 records the rounds, § 8.12 the five
+decisions they surfaced for the PI.
 
 ### 2026-10-03 — WP3 built; § 8 findings; frontier cost axis promoted to WP4b (Session 158)
 

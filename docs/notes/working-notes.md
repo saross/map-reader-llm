@@ -36853,9 +36853,10 @@ starkest.
 **For the paper.** The honest cost report has three numbers, and they should
 not be conflated: what the project spent on Gemini (**USD 5,554.83**,
 December 2025 to September 2026, from the invoices); what its registered,
-recorded passes cost on the audited basis (**US$3,086.02**, of which
-US$697.67 is an upper bound on an unresolved tier, so US$2,827.06 to
-US$3,086.02); and what the tier choices cost (**USD 791.36** forgone, more
+recorded passes cost on the audited basis (**US$3,088.53**, of which
+US$699.36 is an upper bound on an unresolved tier, so US$2,828.71 to
+US$3,088.53, plus the unknown spend of 28 verifier legs whose main metas a
+cleanup overwrote and which carry only a floor); and what the tier choices cost (**USD 791.36** forgone, more
 than half of it after the discount was known). The methodological lesson for
 others running large VLM campaigns: a discount tier is a property of each
 request, not of a project or a launch flag, and it can be verified only on
