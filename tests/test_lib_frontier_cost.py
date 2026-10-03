@@ -68,7 +68,11 @@ class Repo:
                 "cost_usd": billed,
                 "cost_source": {"fragments": [{
                     "meta": meta, "model_recorded": "gemini-3-flash-preview",
-                    "model": "gemini-3-flash-preview", "priced_at": "2026-05-20"}]}})
+                    "model": "gemini-3-flash-preview", "priced_at": "2026-05-20",
+                    # The BILLED tier, as the register records it: the
+                    # frontier must ignore it (D19).
+                    "tier": "standard", "tier_method": "run-log",
+                    "cost_usd": billed}]}})
 
     def leg(self, run: str, pool: str, *, results: int, iterations: int = 1,
             usage: dict | None = USAGE, basis: str = "audited", config: dict | None = None,
@@ -81,7 +85,9 @@ class Repo:
                      "results": {f"candidate_{i:05d}": [0.9] for i in range(results)}})
         self.rows.append({
             "pass_id": f"{run}::{pool}::run1", "run_id": run, "proposer_pool": pool,
-            "pass_n": 1, "n_candidates_verified": results, "cost_basis": basis,
+            # The register's count (a request-count fallback on 85 rows) is
+            # NOT the leg's verifications; the results file is.
+            "pass_n": 1, "n_candidates_verified": results + 7, "cost_basis": basis,
             "cost_usd": FLEX_USD,
             "cost_source": {"fragments": [{
                 "meta": meta, "model_recorded": "gemini-3-flash-preview",
@@ -187,6 +193,7 @@ def test_a_floor_without_nominees_is_refused(repo):
     ({"model": "gemini-3.7-flash"}, "has configuration"),
     ({"temperature_effective": 0.5}, "has configuration"),  # E55: the run's real temperature
     ({"system_instruction_hash": "other"}, "has configuration"),
+    ({"version": "verify_other"}, "has configuration"),
 ])
 def test_a_nominee_with_another_configuration_is_refused(repo, change, reason):
     _floor_and_comparable(repo, comparable_config={**G3, **change})
@@ -218,13 +225,12 @@ def test_an_upper_bound_leg_is_complete(repo):
 @pytest.mark.tier1
 def test_nominees_pool_cost_over_verifications(repo):
     repo.leg("r", "floor", results=100, usage=None, basis="audited-lower-bound")
-    repo.leg("c", "a", results=1000)                                    # 0.70 / 1,000
-    repo.leg("c", "b", results=3000, usage={**USAGE, "total_input_tokens": 3_000_000,
-                                            "total_output_tokens": 300_000,
-                                            "total_thoughts_tokens": 600_000})  # 2.10 / 3,000
+    repo.leg("c", "a", results=1000)   # 0.70 / 1,000 = 0.000700
+    repo.leg("c", "b", results=3000)   # 0.70 / 3,000 = 0.000233
     unit = repo.coster().candidate_unit("r", "floor", [{"run_id": "c", "pool": "a"},
                                                        {"run_id": "c", "pool": "b"}])
-    assert unit.usd == pytest.approx((0.70 + 2.10) / 4000)  # pooled, not a mean of units
+    assert unit.usd == pytest.approx(1.40 / 4000)  # pooled: 0.000350
+    assert unit.usd != pytest.approx((0.70 / 1000 + 0.70 / 3000) / 2)  # not a mean of units
 
 
 # ---------------------------------------------------------------------------
@@ -387,3 +393,74 @@ def test_each_phase2_family_is_priced_at_its_own_passes_where_recorded():
     mid, anchor = units["flash-high-image-n5-image-t0.7"]
     lo, hi = sorted(units[f"flash-high-image-n5-image-t{t}"][0].usd for t in ("0.3", "1.0"))
     assert anchor == "t07-interpolated" and lo < mid.usd < hi
+
+
+
+# ---------------------------------------------------------------------------
+# WP4b audit, lens B (2026-10-04): units, provenance, exact pools.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_a_floor_with_an_incomplete_configuration_is_refused(repo):
+    _floor_and_comparable(repo)
+    floor_meta = repo.root / "outputs/r/floor/run.meta.json"
+    doc = json.loads(floor_meta.read_text())
+    doc["configuration"] = {k: v for k, v in G3.items() if k != "system_instruction_hash"}
+    floor_meta.write_text(json.dumps(doc))
+    with pytest.raises(FrontierCostError, match="incomplete verifier configuration"):
+        repo.coster().leg_cost("r", "floor", [{"run_id": "c", "pool": "whole"}])
+
+
+@pytest.mark.tier1
+def test_a_mean_pass_unit_spans_every_listed_pool(repo):
+    repo.proposer("r", "p", 2)
+    repo.proposer("s", "q", 3, usage={**USAGE, "total_input_tokens": 2_000_000})  # 0.95
+    unit = repo.coster().unit({"kind": "mean_pass", "pools": [{"run_id": "r", "pool": "p"},
+                                                               {"run_id": "s", "pool": "q"}]})
+    assert unit.usd == pytest.approx((2 * 0.70 + 3 * 0.95) / 5)  # per pass, not per pool
+    assert len(unit.sources) == 5
+
+
+@pytest.mark.tier1
+def test_a_pooled_unit_refuses_floors_and_mixed_configurations(repo):
+    repo.leg("c", "a", results=1000)
+    repo.leg("c", "low", results=1000, config={**G3, "thinking_level": "low"})
+    repo.leg("c", "floor", results=500, usage=None, basis="audited-lower-bound")
+    coster = repo.coster()
+    pooled = coster.unit({"kind": "pooled_candidate", "legs": [{"run_id": "c", "pool": "a"}]})
+    assert pooled.usd == pytest.approx(FLEX_USD / 1000)
+    with pytest.raises(FrontierCostError, match="different configurations"):
+        coster.unit({"kind": "pooled_candidate", "legs": [{"run_id": "c", "pool": "a"},
+                                                          {"run_id": "c", "pool": "low"}]})
+    with pytest.raises(FrontierCostError, match="over floors"):
+        coster.unit({"kind": "pooled_candidate", "legs": [{"run_id": "c", "pool": "a"},
+                                                          {"run_id": "c", "pool": "floor"}]})
+    with pytest.raises(FrontierCostError, match="unknown unit kind"):
+        coster.unit({"kind": "median"})
+
+
+@pytest.mark.tier1
+def test_a_configurations_sources_include_its_proposer_and_verifier_rows(repo):
+    repo.proposer("r", "p", 2)
+    repo.leg("r", "v", results=1000)
+    cost = repo.coster().configuration_cost({
+        "proposer": [{"run_id": "r", "pool": "p"}],
+        "verifier": {"leg": {"run_id": "r", "pool": "v"}}})
+    assert cost.sources == ("r::p::run1", "r::p::run2", "r::v::run1")
+
+
+@pytest.mark.tier1
+def test_each_phase2_family_names_exactly_its_own_pools():
+    # Exact pool names, not substrings: "image-n5-image-t0.3" is a substring
+    # of "flash-high-image-n5-image-t0.3".
+    from scripts.lib_frontier_cost import gs_units, phase2_pass_units
+    units, named = phase2_pass_units(), gs_units()
+    for family, (unit, anchor) in units.items():
+        pools = {src.split("::")[1] for src in unit.sources}
+        if anchor == "own-gs-measured":
+            assert pools == {family}, family
+        elif anchor == "t07-interpolated":
+            stem = family.rsplit("-t", 1)[0]
+            assert pools == {f"{stem}-t0.3", f"{stem}-t1.0"}, family
+    assert units["flash-high-text-n5-text-t0.7"] == (named["high_pass"], "t07-55map-measured")

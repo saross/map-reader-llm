@@ -157,7 +157,9 @@ def main(argv: list[str] | None = None) -> int:
     board["cost_axis"] = fbb.COST_AXIS
     json_path.write_text(json.dumps(board, indent=2) + "\n", encoding="utf-8")
     md_path.write_text(md, encoding="utf-8")
-    print(f"\nwrote {json_path.relative_to(PROJECT_ROOT)} and {md_path.relative_to(PROJECT_ROOT)}")
+    shown = [str(p.relative_to(PROJECT_ROOT)) if p.is_relative_to(PROJECT_ROOT) else str(p)
+             for p in (json_path, md_path)]
+    print(f"\nwrote {shown[0]} and {shown[1]}")
     return 0
 
 

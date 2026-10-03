@@ -415,7 +415,7 @@ def build() -> dict[str, Any]:
                             if candidates
                             else None
                         ),
-                        "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+                        "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
                         "opmax": opmax_point,
                         "carried": {
                             "k-equals-K": carried_point,
@@ -473,7 +473,7 @@ def build() -> dict[str, Any]:
                         if candidates
                         else None
                     ),
-                    "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+                    "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
                     "verifier_stage": member["stage_id"],
                     "condition_id": member["condition_id"],
                     "opmax": (
