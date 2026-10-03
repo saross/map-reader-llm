@@ -1,0 +1,82 @@
+{
+ "probe": "explicit cache x service tier",
+ "model": "gemini-3-flash-preview",
+ "run_at": "2026-10-03T12:03:23.687665+00:00",
+ "cache_tokens": 3488,
+ "results": [
+  {
+   "tier_requested": "flex",
+   "explicit_cache": true,
+   "config_service_tier": "ServiceTier.FLEX",
+   "config_cached_content": true,
+   "ok": true,
+   "traffic_type": "None",
+   "prompt_tokens": 3503,
+   "cached_tokens": 3488,
+   "output_tokens": 2,
+   "thinking_tokens": null,
+   "tier_headers": {
+    "x-gemini-service-tier": "flex"
+   },
+   "model_version": "gemini-3-flash-preview"
+  },
+  {
+   "tier_requested": "flex",
+   "explicit_cache": false,
+   "config_service_tier": "ServiceTier.FLEX",
+   "config_cached_content": false,
+   "ok": true,
+   "traffic_type": "None",
+   "prompt_tokens": 3503,
+   "cached_tokens": null,
+   "output_tokens": 2,
+   "thinking_tokens": null,
+   "tier_headers": {
+    "x-gemini-service-tier": "flex"
+   },
+   "model_version": "gemini-3-flash-preview"
+  },
+  {
+   "tier_requested": "standard",
+   "explicit_cache": true,
+   "config_service_tier": "ServiceTier.STANDARD",
+   "config_cached_content": true,
+   "ok": true,
+   "traffic_type": "None",
+   "prompt_tokens": 3503,
+   "cached_tokens": 3488,
+   "output_tokens": 2,
+   "thinking_tokens": null,
+   "tier_headers": {
+    "x-gemini-service-tier": "standard"
+   },
+   "model_version": "gemini-3-flash-preview"
+  },
+  {
+   "tier_requested": "standard",
+   "explicit_cache": false,
+   "config_service_tier": "ServiceTier.STANDARD",
+   "config_cached_content": false,
+   "ok": true,
+   "traffic_type": "None",
+   "prompt_tokens": 3503,
+   "cached_tokens": null,
+   "output_tokens": 2,
+   "thinking_tokens": null,
+   "tier_headers": {
+    "x-gemini-service-tier": "standard"
+   },
+   "model_version": "gemini-3-flash-preview"
+  },
+  {
+   "tier_requested": "flex",
+   "explicit_cache": true,
+   "config": "pre-2026-10-03 cached rebuild (no service_tier)",
+   "ok": true,
+   "tier_headers": {
+    "x-gemini-service-tier": "standard"
+   },
+   "cached_tokens": 3488
+  }
+ ]
+}

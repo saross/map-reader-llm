@@ -49,7 +49,11 @@ This script merges the recovery meta into the original (pre-recovery) meta:
   per-item entries; original failed items remain in original metadata).
   Duplicates by ``item_id`` are resolved to the recovery entry (latest).
 
-- Other top-level fields (run_id, environment, configuration, results_summary,
+- ``environment``: kept from original, plus ``git_commits`` listing every
+  commit that contributed when the parts differ (a part that recorded none
+  adds ``"unknown"``), so a reader can tell which code ran.
+
+- Other top-level fields (run_id, configuration, results_summary,
   tpm_governor): kept from original. A ``recovery_history`` field is appended
   to track the merge (initial_failed, recovered, still_failing IDs, recovery
   cost, recovery timestamp).
@@ -80,6 +84,79 @@ if str(_PROJECT_ROOT) not in sys.path:
 from scripts.lib_llm_metadata import merge_meta  # noqa: E402
 
 
+#: A recovery meta sharing more than this share of the original's completed
+#: items is cumulative, not a recovery.
+CUMULATIVE_OVERLAP = 0.5
+
+#: Verifier metas name their items ``candidate_NNNNN`` (``run_pv.py``) or
+#: ``cand_NNNN`` (``5_verify_crops.py``); proposer metas name tiles.
+VERIFIER_ITEM_PREFIX = ("candidate_", "cand_")
+
+#: Scripts whose metas are a verifier leg's (``environment.script``). Every
+#: tracked verifier meta records one, including the 98 that list no items.
+VERIFIER_SCRIPTS = ("run_pv.py", "5_verify_crops.py")
+
+
+def _item_ids(meta: dict) -> list[str]:
+    """Completed and failed item ids; a failed item is a dict with ``item_id``."""
+    es = meta.get("execution_stats") or {}
+    ids = [str(i) for i in es.get("completed_items") or []]
+    for item in es.get("failed_items") or []:
+        ids.append(str(item.get("item_id") if isinstance(item, dict) else item))
+    return ids
+
+
+def refuse_cumulative(original: dict, recovery: dict) -> None:
+    """Refuse a "recovery" meta that already contains the original run.
+
+    Since ``1ce1a982d`` (2026-04-27) a resume merges its usage into the
+    existing meta automatically, so the meta a resume leaves behind is
+    CUMULATIVE. Merging it into the pre-recovery backup again adds the
+    original run twice: the 2026-05-02 recovery merge did exactly that and
+    doubled every token class in the TH7 and IM metas
+    (``reports/token-load-audit-2026-06-12.md`` §§ 3.2, 3.4). A genuine
+    recovery-only meta holds just the re-sent tiles, so it shares almost no
+    completed items with the original, and it carries its own ``run_id``
+    (the automatic resume merge keeps the original's, so a shared ``run_id``
+    means the meta already holds the original run).
+
+    The script is for PROPOSER metas only. A verifier leg's cleanup merges
+    itself (``run_pv.py cleanup`` through ``merge_cleanup_meta``), and its
+    items are candidates, not tiles, so a verifier meta is refused.
+
+    Args:
+        original: The pre-recovery meta.
+        recovery: The meta to merge in.
+
+    Raises:
+        SystemExit: When either meta is a verifier's, when the two share a
+            ``run_id``, or when the recovery meta repeats more than half of
+            the original's completed items.
+    """
+    done = set((original.get("execution_stats") or {}).get("completed_items") or [])
+    again = set((recovery.get("execution_stats") or {}).get("completed_items") or [])
+    for meta in (original, recovery):
+        script = (meta.get("environment") or {}).get("script")
+        if script in VERIFIER_SCRIPTS or any(
+                i.startswith(VERIFIER_ITEM_PREFIX) for i in _item_ids(meta)):
+            raise SystemExit(
+                "merge_recovery_meta: these are verifier metas (candidate items). The script "
+                "merges proposer recoveries only; a verifier cleanup merges itself "
+                "(run_pv.py cleanup).")
+    run_id = original.get("run_id")
+    if run_id and recovery.get("run_id") == run_id:
+        raise SystemExit(
+            f"merge_recovery_meta: the recovery meta carries the original's run_id ({run_id}), "
+            "so it is cumulative (resume has merged automatically since 1ce1a982d). Merging "
+            "it would count the original run twice; there is nothing to merge.")
+    if done and len(done & again) > CUMULATIVE_OVERLAP * len(done):
+        raise SystemExit(
+            f"merge_recovery_meta: the recovery meta already holds {len(done & again):,} of "
+            f"the original's {len(done):,} completed items, so it is cumulative (resume has "
+            "merged automatically since 1ce1a982d). Merging it would count the original "
+            "run twice; there is nothing to merge.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -103,6 +180,7 @@ def main() -> None:
     with open(args.recovery) as f:
         recovery = json.load(f)
 
+    refuse_cumulative(original, recovery)
     merged = merge_meta(original, recovery)
 
     # Atomic write

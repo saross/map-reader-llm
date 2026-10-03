@@ -88,6 +88,45 @@ MAX_BACKOFF_SECONDS = 300
 CONSECUTIVE_FAILURE_THRESHOLDS = (5, 10, 20, 30)
 
 
+def cached_call_config(gen_config: "types.GenerateContentConfig",
+                       cache_name: str) -> "types.GenerateContentConfig":
+    """The per-request config for a call that reads an explicit context cache.
+
+    A COPY of the run's config with the cache attached and the system
+    instruction removed (it lives in the cache, and the API refuses both).
+    Every other field travels unchanged, so the cache and the service tier
+    are independent levers that combine in any way.
+
+    Until 2026-10-03 this config was rebuilt field by field, and the list
+    predated flex (block from ``76a2cc719``, 2026-03-28; ``service_tier``
+    arrived on the main config in ``2a2cd81c7``, 2026-04-09). Every
+    ``--use-cache --service-tier flex`` run therefore logged its flex launch
+    line and was billed at standard: ``h8-v2`` on 2026-04-15 produced 23.25 M
+    output tokens against 0.60 M flex billed that day
+    (``planning/cost-accounting-fix-plan-2026-09-21.md`` § 8.3).
+
+    The API also refuses ``tools`` and ``tool_config`` beside a cache (they
+    must live in it). This runner's cache holds none and the runner sets
+    none, so a config carrying either is refused here rather than cleared:
+    clearing would drop a lever silently, the defect this helper replaced.
+
+    Args:
+        gen_config: The run's full request config (service tier included).
+        cache_name: The ``cachedContents/...`` resource to read.
+
+    Returns:
+        The config for this call.
+
+    Raises:
+        ValueError: When the config carries ``tools`` or ``tool_config``.
+    """
+    if gen_config.tools or gen_config.tool_config:
+        raise ValueError("cached_call_config: tools and tool_config must live in the context "
+                         "cache, and this runner's cache holds none; refusing to drop them")
+    return gen_config.model_copy(update={"cached_content": cache_name,
+                                         "system_instruction": None})
+
+
 def _save_geojson(
     features: list,
     output_file: Path,
@@ -379,19 +418,10 @@ def process_single_tile(
                 governor.acquire()
 
             try:
-                # When using context cache, pass cache_name in config
-                # and omit system_instruction (it's in the cache).
-                if cache_name:
-                    call_config = types.GenerateContentConfig(
-                        cached_content=cache_name,
-                        temperature=gen_config.temperature,
-                        max_output_tokens=gen_config.max_output_tokens,
-                        response_mime_type=gen_config.response_mime_type,
-                        thinking_config=gen_config.thinking_config,
-                        safety_settings=gen_config.safety_settings,
-                    )
-                else:
-                    call_config = gen_config
+                # The cache and the service tier are independent levers:
+                # see cached_call_config for why the request is a copy.
+                call_config = (cached_call_config(gen_config, cache_name)
+                               if cache_name else gen_config)
 
                 response = client.models.generate_content(
                     model=model_name_cfg,
@@ -982,6 +1012,9 @@ def detect_mounds_versioned(
     # by ~50-90% depending on example count.
     cache_name = None
     if use_cache:
+        # Refuse, before any request, a config the cached call cannot carry
+        # (outside the try below, whose fallback would hide it).
+        cached_call_config(gen_config, "cachedContents/preflight")
         cache_parts = [
             types.Part.from_text(
                 text="Here are the Reference Symbols you must find:"

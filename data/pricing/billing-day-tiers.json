@@ -1,0 +1,850 @@
+{
+ "_README": "Which service tiers billed which Gemini model on which Pacific-time billing day, for project map-reader-llm, reduced from the Google Cloud billing console exports in docs/costs/ (gitignored; they carry account identifiers) by scripts/derive_tier_evidence.py billing. 'intervals' is the union of each monthly Cost-table line's own usage window per model and tier (a superset of the days the tier actually billed); 'days' is exact per-day evidence from single-day Reports exports, each classed by project filter (documented / unverified / contaminated; an unfiltered export can only add tiers, never remove one), with the tokens billed per tier and token class (input, output, other = cache storage token-hours), so a pass whose output exceeds a tier's whole day can be ruled out of that tier. Tier-silent cache SKUs carry no tier signal and are counted apart. Read by scripts/lib_pass_cost.py; never edit by hand.",
+ "schema": "billing-day-tiers/2",
+ "project": "map-reader-llm",
+ "timezone": "America/Los_Angeles",
+ "months_covered": [
+  "2025-12",
+  "2026-01",
+  "2026-02",
+  "2026-03",
+  "2026-04",
+  "2026-05",
+  "2026-06",
+  "2026-07",
+  "2026-08",
+  "2026-09"
+ ],
+ "intervals": {
+  "gemini-2.0-flash": {
+   "standard": [
+    [
+     "2025-12-20",
+     "2025-12-20"
+    ],
+    [
+     "2026-02-12",
+     "2026-02-12"
+    ]
+   ]
+  },
+  "gemini-2.5-flash": {
+   "standard": [
+    [
+     "2025-12-17",
+     "2025-12-22"
+    ]
+   ]
+  },
+  "gemini-3-flash-preview": {
+   "batch": [
+    [
+     "2026-02-14",
+     "2026-02-15"
+    ],
+    [
+     "2026-03-07",
+     "2026-03-25"
+    ],
+    [
+     "2026-04-08",
+     "2026-04-08"
+    ],
+    [
+     "2026-09-19",
+     "2026-09-19"
+    ]
+   ],
+   "flex": [
+    [
+     "2026-04-08",
+     "2026-04-30"
+    ],
+    [
+     "2026-05-02",
+     "2026-05-06"
+    ],
+    [
+     "2026-06-02",
+     "2026-06-13"
+    ],
+    [
+     "2026-07-26",
+     "2026-08-30"
+    ],
+    [
+     "2026-09-01",
+     "2026-09-20"
+    ]
+   ],
+   "standard": [
+    [
+     "2025-12-17",
+     "2025-12-22"
+    ],
+    [
+     "2026-01-06",
+     "2026-01-31"
+    ],
+    [
+     "2026-02-04",
+     "2026-02-14"
+    ],
+    [
+     "2026-03-06",
+     "2026-03-27"
+    ],
+    [
+     "2026-04-07",
+     "2026-04-17"
+    ],
+    [
+     "2026-08-27",
+     "2026-08-28"
+    ],
+    [
+     "2026-09-16",
+     "2026-09-16"
+    ]
+   ]
+  },
+  "gemini-3-pro-image": {
+   "standard": [
+    [
+     "2026-01-16",
+     "2026-01-16"
+    ]
+   ]
+  },
+  "gemini-3.1-flash-lite-preview": {
+   "standard": [
+    [
+     "2026-03-14",
+     "2026-03-14"
+    ]
+   ]
+  },
+  "gemini-3.1-pro-preview": {
+   "flex": [
+    [
+     "2026-05-03",
+     "2026-05-06"
+    ],
+    [
+     "2026-06-02",
+     "2026-06-03"
+    ]
+   ],
+   "standard": [
+    [
+     "2025-12-11",
+     "2025-12-21"
+    ],
+    [
+     "2026-01-16",
+     "2026-01-16"
+    ],
+    [
+     "2026-03-23",
+     "2026-03-25"
+    ],
+    [
+     "2026-05-06",
+     "2026-05-06"
+    ],
+    [
+     "2026-06-02",
+     "2026-06-03"
+    ]
+   ]
+  },
+  "gemini-3.5-flash": {
+   "flex": [
+    [
+     "2026-06-10",
+     "2026-06-10"
+    ]
+   ]
+  },
+  "gemini-3.7-flash": {
+   "batch": [
+    [
+     "2026-09-16",
+     "2026-09-19"
+    ]
+   ],
+   "flex": [
+    [
+     "2026-08-28",
+     "2026-09-18"
+    ]
+   ],
+   "standard": [
+    [
+     "2026-08-30",
+     "2026-08-30"
+    ],
+    [
+     "2026-09-16",
+     "2026-09-17"
+    ]
+   ]
+  },
+  "gemini-3.8-flash": {
+   "flex": [
+    [
+     "2026-09-03",
+     "2026-09-03"
+    ]
+   ],
+   "standard": [
+    [
+     "2026-09-03",
+     "2026-09-03"
+    ]
+   ]
+  }
+ },
+ "days": {
+  "2026-03-14": {
+   "project_filter": "unverified",
+   "export_sha256": "5a835441399a809f816161f191273f69e7c0cdf8287309a4231b7eed8b4e4146",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "input": 40213580,
+       "output": 1001439
+      },
+      "batch": {
+       "output": 5049545,
+       "input": 9833594
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.1-flash-lite-preview": {
+     "tiers": {
+      "standard": {
+       "output": 939438,
+       "input": 375500
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-04-08": {
+   "project_filter": "unverified",
+   "export_sha256": "ac0402edb9eb00b812a60afa4dffa02d3c773a6cc51166ef6cd2bfa4d7f7a203",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "batch": {
+       "output": 39705737,
+       "input": 18488684
+      },
+      "standard": {
+       "output": 3037047,
+       "input": 1317814
+      },
+      "flex": {
+       "output": 4992808,
+       "input": 12049715
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-04-09": {
+   "project_filter": "unverified",
+   "export_sha256": "adf2ded0cdb33e7ebc25752663c73a186df0a18e8996f55f6992a8bf01078219",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "output": 156839216,
+       "input": 116101398
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-04-10": {
+   "project_filter": "unverified",
+   "export_sha256": "b4ab7872ee68d5ff0512ce65f034d5eb99e34b1a497c4ec3036bb7921804caae",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "input": 452102,
+       "output": 50828
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-04-14": {
+   "project_filter": "unverified",
+   "export_sha256": "e396dbeef72337938d50b5c56e6a429560cbd6fa462486c76210a4bbfae34bd6",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 18663108,
+       "input": 31321432
+      }
+     },
+     "tier_silent": {
+      "input": 132719490,
+      "other": 16994
+     }
+    }
+   }
+  },
+  "2026-04-15": {
+   "project_filter": "unverified",
+   "export_sha256": "b1db0f51b2f2dbc81f3050d76b46303bee2dc01c42503120853e3557c653f795",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 31932815,
+       "input": 16691070
+      },
+      "flex": {
+       "input": 6544384,
+       "output": 600910
+      }
+     },
+     "tier_silent": {
+      "input": 295389413,
+      "other": 124017
+     }
+    }
+   }
+  },
+  "2026-04-16": {
+   "project_filter": "unverified",
+   "export_sha256": "77c77d8ea11cca242d94d15a02236ad776c4cc62dbb367cbdb7ee714da4b8909",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 55186619,
+       "input": 31059029
+      },
+      "flex": {
+       "output": 21091528,
+       "input": 63475124
+      }
+     },
+     "tier_silent": {
+      "input": 406906432,
+      "other": 81014
+     }
+    }
+   }
+  },
+  "2026-04-17": {
+   "project_filter": "unverified",
+   "export_sha256": "2246d55a92d2d56db14e98a81609b843ba92b38cacb9c04c85f3efd4506b0843",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 123314671,
+       "input": 51380790
+      },
+      "flex": {
+       "output": 49383810,
+       "input": 118813914
+      }
+     },
+     "tier_silent": {
+      "input": 673458661,
+      "other": 52000
+     }
+    }
+   }
+  },
+  "2026-04-18": {
+   "project_filter": "unverified",
+   "export_sha256": "3e5d5b6c4080a38e1a9a136e189e14925b4ec3f8764048de93e7ba76b9964503",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "output": 156839454,
+       "input": 167486560
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-04-26": {
+   "project_filter": "unverified",
+   "export_sha256": "552a2e70d85c5cda0ee88f454ce3e32c53774e807c168e7d1b9c0925d4895194",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "output": 226581995,
+       "input": 96220788
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-05-06": {
+   "project_filter": "unverified",
+   "export_sha256": "7411d48c52f30649671d489b0dd9c8d8b7b29a872727334ea6b1456077c2da67",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 1086255,
+       "output": 105765
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.1-pro-preview": {
+     "tiers": {
+      "standard": {
+       "output": 21090,
+       "input": 69888
+      },
+      "flex": {
+       "output": 905,
+       "input": 1792
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-02": {
+   "project_filter": "unverified",
+   "export_sha256": "0ed92bfad91b6f65adeb2a25e30a9ac2ded5daedc80347f3d0dcefc755c48cb4",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 180240,
+       "output": 20246
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.1-pro-preview": {
+     "tiers": {
+      "standard": {
+       "input": 2162280,
+       "output": 169599
+      },
+      "flex": {
+       "input": 2928900,
+       "output": 151745
+      }
+     },
+     "tier_silent": {
+      "input": 28341452,
+      "other": 21228
+     }
+    },
+    "gemini-3.5-flash": {
+     "tiers": {
+      "flex": {
+       "input": 1713075,
+       "output": 16580
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-03": {
+   "project_filter": "unverified",
+   "export_sha256": "7e84b2e269dfc81940f468cdcc17a1d8f1a0a436a6d1205a02aa2b9116c27298",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 90120,
+       "output": 8893
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.1-pro-preview": {
+     "tiers": {
+      "standard": {
+       "input": 2193360,
+       "output": 204506
+      },
+      "flex": {
+       "input": 2967952,
+       "output": 167677
+      }
+     },
+     "tier_silent": {
+      "input": 28748824,
+      "other": 8613
+     }
+    },
+    "gemini-3.5-flash": {
+     "tiers": {
+      "flex": {
+       "input": 3949633,
+       "output": 37738
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-09": {
+   "project_filter": "unverified",
+   "export_sha256": "5169f4e70524f9d166300456f209882dfe2317ebea2b8b131b407a8f14e50826",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "output": 15133031,
+       "input": 86804480
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-10": {
+   "project_filter": "unverified",
+   "export_sha256": "ffd827831cce77cf235e03a4db76c045335ec1b4467fc4d509289b004fbbca1c",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 24301048,
+       "output": 1951709
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.5-flash": {
+     "tiers": {
+      "flex": {
+       "input": 13590000,
+       "output": 1087189
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-06-11": {
+   "project_filter": "unverified",
+   "export_sha256": "2fa58d2f8fde1d47f18b6b41f76d77b75f8069029398d0f5b6f83ca2b04a4ea1",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 79631950,
+       "output": 6354738
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-08-27": {
+   "project_filter": "unverified",
+   "export_sha256": "f8e756822b0810181739fd5bb2ace30ff9a85ec96d3552383ff9151ce42bee26",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "standard": {
+       "output": 31934141,
+       "input": 31364160
+      },
+      "flex": {
+       "input": 19692091,
+       "output": 1901055
+      }
+     },
+     "tier_silent": {
+      "input": 534439170,
+      "other": 42402
+     }
+    }
+   }
+  },
+  "2026-08-28": {
+   "project_filter": "documented",
+   "export_sha256": "956fc8c40108076d496a6aef7b022f93676776dcc324c1d83235032d8e4f5b29",
+   "other_exports_for_day": 1,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 10610937,
+       "output": 962146
+      },
+      "standard": {
+       "input": 1636096,
+       "output": 130559
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.7-flash": {
+     "tiers": {
+      "flex": {
+       "output": 7550679,
+       "input": 32536324
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-08-29": {
+   "project_filter": "documented",
+   "export_sha256": "098d6351158f651d8dadab8c529b07c477e8c4aae1d8fda265b17c4f0515cbcc",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 90120,
+       "output": 10389
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.7-flash": {
+     "tiers": {
+      "flex": {
+       "output": 13464883,
+       "input": 63606280
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-08-30": {
+   "project_filter": "documented",
+   "export_sha256": "91def07b83981442e24a2ae115942967ef0602d3aa87fcd2fe412ca1b644bc13",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 22785280,
+       "output": 2129268
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.7-flash": {
+     "tiers": {
+      "flex": {
+       "output": 29217899,
+       "input": 148607532
+      },
+      "standard": {
+       "output": 46705,
+       "input": 168514
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-08-31": {
+   "project_filter": "documented",
+   "export_sha256": "02bf738ef58161018b702680d1e7057e8ca836e98423cd5bbacc207ff0f0c2e8",
+   "other_exports_for_day": 1,
+   "models": {
+    "gemini-3.7-flash": {
+     "tiers": {
+      "flex": {
+       "input": 120522816,
+       "output": 12197054
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  },
+  "2026-09-01": {
+   "project_filter": "documented",
+   "export_sha256": "3968d1e5a92a38ecf0ca540cc785885e1b8d1027dd53218439cf35be76e0d623",
+   "other_exports_for_day": 0,
+   "models": {
+    "gemini-3-flash-preview": {
+     "tiers": {
+      "flex": {
+       "input": 1207808,
+       "output": 117433
+      }
+     },
+     "tier_silent": {}
+    },
+    "gemini-3.7-flash": {
+     "tiers": {
+      "flex": {
+       "input": 115710768,
+       "output": 1645726
+      }
+     },
+     "tier_silent": {}
+    }
+   }
+  }
+ },
+ "monthly_aud_by_model_and_tier": {
+  "2025-12": {
+   "gemini-2.0-flash": {
+    "standard": 0.147166
+   },
+   "gemini-2.5-flash": {
+    "standard": 1.821887,
+    "tier-silent": 0.010589
+   },
+   "gemini-3-flash-preview": {
+    "standard": 26.233223,
+    "tier-silent": 6.923781
+   },
+   "gemini-3.1-pro-preview": {
+    "tier-silent": 5.939039,
+    "standard": 16.12934
+   }
+  },
+  "2026-01": {
+   "gemini-3-flash-preview": {
+    "standard": 16.476885
+   },
+   "gemini-3-pro-image": {
+    "standard": 2.208877
+   },
+   "gemini-3.1-pro-preview": {
+    "standard": 0.280506,
+    "tier-silent": 0.002772
+   }
+  },
+  "2026-02": {
+   "gemini-2.0-flash": {
+    "standard": 9e-06
+   },
+   "gemini-3-flash-preview": {
+    "batch": 41.45652,
+    "standard": 190.165234,
+    "tier-silent": 8.204605
+   }
+  },
+  "2026-03": {
+   "gemini-3-flash-preview": {
+    "tier-silent": 48.35813,
+    "batch": 1049.954096,
+    "standard": 704.962636
+   },
+   "gemini-3.1-flash-lite-preview": {
+    "standard": 2.118217
+   },
+   "gemini-3.1-pro-preview": {
+    "standard": 11.276511
+   }
+  },
+  "2026-04": {
+   "gemini-3-flash-preview": {
+    "tier-silent": 110.803981,
+    "flex": 1908.493614,
+    "batch": 93.116666,
+    "standard": 1121.511575
+   }
+  },
+  "2026-05": {
+   "gemini-3-flash-preview": {
+    "flex": 5.980198,
+    "tier-silent": 0.008502
+   },
+   "gemini-3.1-pro-preview": {
+    "standard": 0.547974,
+    "flex": 0.282433
+   }
+  },
+  "2026-06": {
+   "gemini-3-flash-preview": {
+    "flex": 146.013785
+   },
+   "gemini-3.1-pro-preview": {
+    "tier-silent": 16.186551,
+    "standard": 18.495926,
+    "flex": 10.947709
+   },
+   "gemini-3.5-flash": {
+    "flex": 21.136102
+   }
+  },
+  "2026-07": {
+   "gemini-3-flash-preview": {
+    "tier-silent": 0.359277,
+    "flex": 16.145318
+   }
+  },
+  "2026-08": {
+   "gemini-3-flash-preview": {
+    "standard": 162.161336,
+    "tier-silent": 38.512553,
+    "flex": 550.5064
+   },
+   "gemini-3.7-flash": {
+    "flex": 355.555608,
+    "standard": 0.433878
+   }
+  },
+  "2026-09": {
+   "gemini-3-flash-preview": {
+    "batch": 9.025317,
+    "tier-silent": 138.873527,
+    "standard": 0.000121,
+    "flex": 373.5674
+   },
+   "gemini-3.7-flash": {
+    "batch": 264.773814,
+    "tier-silent": 98.088675,
+    "standard": 0.044449,
+    "flex": 339.90141
+   },
+   "gemini-3.8-flash": {
+    "flex": 1.183874,
+    "standard": 0.005382
+   }
+  }
+ }
+}

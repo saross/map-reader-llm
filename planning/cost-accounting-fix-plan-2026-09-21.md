@@ -3,6 +3,10 @@
 **Status**: RULED 2026-09-21 (S157): D11–D18 all as recommended, D17 to
 be verified, D18 amended (published-rate check with a flag to the PI);
 see `planning/pi-decisions-2026-09-20.md`. Work packages proceed in order.
+**Update 2026-10-03 (Session 158)**: WP3 built on branch `wp3-cost-basis`
+(register regenerated, overrides seeded, C3 re-run); the frontier cost axis
+PROMOTED out of WP5 to a new WP4b on the PI's instruction. What building WP3
+found is in § 8; it changes three of this plan's premises.
 **Trigger**: the S157 coverage check found the passes register booking the
 3.7 image campaign at US$1,061 against an audited US$415, and the PI asked
 why the live feedback during runs is accurate to cents while the recorded
@@ -376,9 +380,10 @@ the report cited in `cost_source`.
 | 0 | This plan ruled; decisions D11–D18 below recorded in `planning/pi-decisions-2026-09-20.md`; **the BigQuery billing export enabled by the PI in the billing console the same day** (it is not retroactive; every day unenabled is a day lost to hand exports) | — | console | — |
 | 1 | `price_usage()` with the rate card as dated data (`data/pricing/gemini-rate-card.json`), alias table, tier handling, null-vs-zero; auditors refactored to call it; the S156 figures that carry no cached tokens reproduce byte for byte (US$10.2033, US$6.4909, US$189.47, US$233.63) and the cache-heavy 3.7 figures move by the documented amount (§ 1.1), recorded in the affected post-run reports' changelogs | tier-1 unit tests; a red sentinel per defect class (cache rate by tier, unknown model, thinking, merge, validity date) | local | branch + PR (touches `lib_llm_metadata.py`, ~200 lines) |
 | 2 | All writers call WP1 on summed tokens; merges re-price; `cmd_all` uses the audited basis or refuses | tests per writer; a merge-consistency test (`input + cache + output = total`) | local | same PR as WP1 |
-| 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics | schema round-trip; register-vs-auditor test; C3 claim test | local | branch + PR (schema change) |
-| 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; register regenerated on sapphire; `published` set for the twelve legs; hypothesis table and run reports re-projected | drift checks green; ALL VALID | sapphire | PR from WP3 |
-| 5 | Mislabels corrected (ten sites in § 2); `FAMILY_COST` re-derived from the manifests with per-figure provenance; `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
+| 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics. **Built 2026-10-03** (§ 8): tier evidence ladder (`scripts/lib_pass_cost.py`) over committed evidence (`data/pricing/billing-day-tiers.json`, `run-log-tiers.json`, `tier-attestations.json`, `cost-overrides.json`, derived by `scripts/derive_tier_evidence.py`); recovery fragments summed; recovery-merged metas read per-item sums; register regenerated; C3 re-run | schema round-trip; register-vs-auditor test; C3 claim test — **39 tests, three mutations red** | local + sapphire | branch `wp3-cost-basis` + PR |
+| 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; hypothesis table re-projected; the tile-presence `verifier-costs.json` re-run; the September row of `reports/billing/gemini-spend-by-sku.csv` re-derived from the invoice (FX 1.3904, not the August 1.4389 placeholder). The register regeneration, the run-report projection and the `published` legs moved INTO WP3's PR (the drift tests needed them) | drift checks green; ALL VALID | sapphire | PR from WP3 |
+| 4b | **Frontier cost axis — PROMOTED 2026-10-03; basis ruled D19: each configuration priced at the tier it was MEANT to run at, never penalised for an API usage error; superseded executions excluded (D22); floors completed from comparable legs. (PI: costs are how the Pareto frontier is computed, and the frontier is a paper result).** Replace `FAMILY_COST` (`scripts/final_board_build.py:153`: 13 hand-entered figures on a stated mixed basis, nine 3.7-campaign families `None` and dropped from the efficiency table) with figures derived from the register per family — proposer passes x N/K plus the verifier legs the family's cells use — each carrying its basis, so the frontier plots an interval where a tier or a leg is unresolved. Settle the six lower-bound verifier legs (IM, TH7, T03, TM, stride A, FOURTH) from the June backup metas or carry them as bounds. Known movement: **IM proposer US$195.40 -> US$359.65** (its explicit-cache passes billed standard, § 8.3); TH7, T03, TM and the uplift reproduce the June audit within cents per pass | a builder test that every family figure traces to register rows; the frontier membership before and after, reported to the PI | sapphire | branch + PR |
+| 5 | Mislabels corrected (ten sites in § 2; `FAMILY_COST` moved to WP4b); `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
 | 6 | `reconcile_invoice.py` reading the console exports in `docs/costs/` (D17 revised: no BigQuery), the August/September fixtures, and a `docs/methodology` note giving the monthly export routine — which console page, which filters, where the file goes — so it takes minutes | fixture test at the 2 percent gap the reconciliation found | local | main |
 | 7 | Signed rows re-read: `h6-a09-cost-gate` re-derived on the audited basis with a dated signature note (D9 pattern) if the ratios move; every analysis outcome quoting dollars checked against the new register | — | — | main, with the PI |
 
@@ -442,7 +447,272 @@ audit and a re-audit, as today's work did.
 
 ---
 
+## 8. What building WP3 found (2026-10-03, Session 158)
+
+Every figure below was re-read at source in the session; the console
+exports in `docs/costs/` (gitignored) are reduced to committed evidence by
+`scripts/derive_tier_evidence.py`.
+
+1. **No meta records its tier, and the one label that looks like a record is
+   a constant.** From 2026-08-18 (`d0a709059`) the real-time writer stamped
+   `discount_reason: "Gemini real-time flex (50 % of list, as per Batch API)"`
+   whatever tier ran. The register's tier is therefore inferred from
+   evidence (batch markers, run logs, launch manifests, `cost/2` records, PI
+   attestations, and the invoice's Pacific-time billing days, which are
+   US Pacific per `reports/billing-reconciliation-2026-09-11.md` § 3.1), each
+   item cited in `cost_source`.
+2. **"All campaign spend is flex" (S157 carry-forward, notation key § 8) was
+   false.** The pipeline gained `--service-tier` on 2026-04-09 (`2a2cd81c7`);
+   no flex SKU was billed before 2026-04-08. Gemini standard-tier spend over
+   December to September: **USD 1,582.72**, so **USD 791.36** of discount
+   forgone, USD 341.53 of it before flex existed in the pipeline and
+   **USD 449.83 after** (per-month invoice FX; Obs 495).
+3. **A live defect: the explicit-cache path drops the tier.**
+   `scripts/4_detect_mounds_batch.py` builds a fresh `GenerateContentConfig`
+   for a request with a context cache (`--use-cache`) and omits
+   `service_tier` (block from `76a2cc719`, 2026-03-28; flex reached only the
+   main path). Such a run logs `Service tier: flex` and bills standard. Found
+   by the volume rule: `h8-v2`'s 37 passes produced 23.25 M output tokens on
+   2026-04-15 Pacific, when the invoice billed **0.60 M** flex output all
+   day. The two runs whose logs record an explicit cache (`h8-v2`,
+   `55maps-image-generalisation`) are the two in April's standard window.
+   **Not fixed**: the fix (copy `service_tier` into the cached config) needs
+   a one-request probe that the API accepts flex with an explicit cache,
+   which is an API call for the PI to approve; meanwhile a guard refusing
+   `--use-cache` with `--service-tier flex` would prevent a recurrence.
+4. **The register's `tokens` column double-counted 14 passes.** The
+   2026-05-02 recovery merge summed the original run's usage into the
+   cumulative usage (`IM` x5, `TH7` x5, `gold-standard-v2` x4); the June
+   token-load audit found it (§§ 3.2, 3.4), the register never took it up.
+   Fixed: such metas read their per-item sums.
+5. **Recovery fragments were missing from the cost**: 118 M tokens on 57
+   passes. Each fragment is now priced at its own tier and date.
+6. **Thirty verifier legs cannot be fully priced from their metas** (a
+   cleanup overwrote the main meta). Two carry their post-run report's figure
+   (`published`, `data/pricing/cost-overrides.json`). One (`gemini37-screen`
+   swap38) kept its main leg as a tracked `run.meta.main-*.json` and is priced
+   from both. The other **28 are floors** (`audited-lower-bound`, US$1.01 in
+   all): five listed in the overrides file, the rest detected because the
+   meta accounts for under 90 % of its leg's `probabilities.json` results.
+   Their real spend is NOT in the register's total. Four sit under frontier
+   incumbents (IM, TH7, TM; T03's was wrongly listed and is audited: its meta
+   records the whole 9,910-call leg).
+7. **C3 had not completed since 2026-07-29**: it parsed every cited source
+   as JSON and crashed on a cited `run.log` and a gzipped meta. Rebuilt and
+   re-run: every cost field certifies (`cost_usd` 1,339 MATCH; fragments,
+   stamps and basis label 527; bounds 211 + 211). Reading run_pv's `item_id`
+   cleared 126 `status` false alarms (540 to 414 between committed C3
+   reports); the **414** non-cost MISMATCH verdicts
+   that remain (wall clock and end time on recovery passes, tile counts,
+   `model_requested`, retries) predate this work and are queued for a look,
+   since some may be the same kind of parsing gap.
+8. **The register on the audited basis**: **US$3,088.53** published (288
+   audited, 211 upper bound, 28 lower bound, 2 published, 810 unrecorded),
+   with the tier uncertainty bracketing it down to **US$2,828.71**; it was
+   US$4,674.00 on the runner estimate. The invoices total **USD 5,554.83**
+   over December to September; the difference is the 810 unrecorded passes,
+   the 28 floors' missing spend, superseded executions, and unregistered
+   traffic (layer 3: top-down, by work units). (Corrected 2026-10-03 before
+   merge: this item first counted the Gemini 3 row's two `pre-rerun`
+   verifier legs, about 62 M input tokens, as superseded spend. They are
+   snapshots of the same Batch API jobs their legs' live metas price; see
+   item 15.)
+9. **Two downloads were missing** because billing days are Pacific:
+   2026-04-14 (`h10`, 14.3 M output) and 2026-06-02 (`n1-pro-rerun-384`). The
+   2026-08-28 and 08-31 re-exports of 2026-10-03 lack the project filter
+   (they carry another project's Gemini 3.5 traffic); the documented
+   filtered exports of 2026-09-11 are used instead.
+10. **For WP6**: per-day volumes bound the residue jointly where single
+    passes cannot be pinned (2026-04-16: unresolved register output 36.45 M
+    against 21.09 M flex billed, so at least 15.4 M was standard); September
+    bills Gemini 3.6 Flash with no registered pass; the 3.7 cache read on the
+    September batch legs bills at the standard cache rate (AUD 0.10428/M =
+    USD 0.075/M at FX 1.3904); the card's `gemini-3-flash-preview` note
+    "billed US$402.08 against US$419.64" repeats the AUD-for-USD comparison
+    corrected on 2026-09-11.
+11. **Five audit rounds** (`/audit`: two fresh-context lenses, then four
+    re-audits of the fixes, each on the Opus tier). Each round found real
+    defects in the previous round's fixes, none critical after round 1:
+    a CLI `cost/2` tier outranking the cached path; a resumed fragment
+    narrowing on one informative end day; run-level proposer logs pinning
+    verifier legs (and then a looser "mentions a verifier" test doing the
+    same); C3 certifying by default in four places; the run reports adding
+    ceilings and floors into one sum; a cleanup-overwritten verifier class
+    the overrides file missed. 142 test cases (99 functions) now pin the rules; each round's
+    fresh mutations turned the suite red. Full tier-1 on sapphire: 3,424
+    passed.
+12. **Decisions for the PI** — RULED 2026-10-03 as D19-D23
+    (`planning/pi-decisions-2026-09-20.md`); the list below is kept as asked:
+    - The TH7 verifier's main leg survives only as a gitignored
+      `run.meta.json.pre-recovery-*.backup` (9,131 calls; with the live 74,
+      the June audit's whole leg at US$6.42). Force-adding that one 6 KB
+      file would let the register price a frontier incumbent's verifier
+      instead of a US$0.05 floor.
+    - swap38's main leg is recorded under `--service-tier flex` in
+      `planning/gemini38-screen-2026-09-04.md`; a tier attestation would
+      take it from an upper bound (US$1.69) to audited (US$0.85).
+    - Superseded executions (`pre-rerun` metas) are excluded from the pass
+      cost; confirm they belong only in the honest total.
+    - The `pv-diag-384` Pro baseline legs carry batch markers, yet no Gemini
+      3 Pro batch SKU was ever invoiced (US$0.96; a probable mislabel).
+    - The live cached-path defect (§ 8.3): approve a one-request probe
+      before the runner fix, or a guard refusing `--use-cache` with flex.
+13. **Queued, not fixed in WP3** (the fifth audit round, 2026-10-03, found no
+    critical or medium defect in WP3's code; these predate it or are latent):
+    - `n_candidates_verified` falls back to request counts on 85 verifier rows
+      (`generate_post_run_report._verifier_candidates`): 37 record nothing
+      and should be null, not 0; 20 count errored requests as completions
+      (2,657 over); 4 read a cleanup-overwritten meta. Count
+      `finish_reason_counts["success"]` and return null when nothing is
+      recorded. The coverage detector shares the request fallback, so the
+      same fix tightens it: an errored request can make a partial leg look
+      whole. A non-cost field on 85 rows: its own small PR and audit.
+    - The 414 non-cost C3 MISMATCH verdicts (§ 8.7).
+    - Latent, no committed case: the command splitter is not quote-aware
+      (`'a;b'` cuts a following switch) and does not split `N&cmd`; the
+      instant comparisons raise on a naive timestamp (every cited stamp is
+      offset-aware UTC).
+14. **Settled after the PI's rulings of 2026-10-03** (D19-D23):
+    - **The runner defect is fixed and tested live.** `cached_call_config`
+      copies the full request config (`2df65047e`). The live probe
+      (`outputs/tier-cache-probe-2026-10-03/direct.json`) reproduced the
+      defect (the pre-fix cached config on a flex launch was served
+      `standard`) and the fix (served `flex`); four adjacent runs of the fixed
+      runner served every request at its requested tier, flex or standard,
+      cached or not. The tracker now records the served tier per request
+      from the `x-gemini-service-tier` header, and the coster believes it
+      above everything else (`applied-header`).
+    - **Cleanups no longer overwrite main records**: the verifier cleanup
+      merges since `94bc5c7d9` (2026-09-14, tested); proposer resumes merge
+      since `1ce1a982d` (2026-04-27); `merge_recovery_meta.py`, the tool that
+      double-counted TH7 and IM, now refuses a cumulative input.
+    - TH7's verifier is audited from its force-added backup (D20); swap38 is
+      attested per its notes (D21); superseded executions have a ledger
+      (D22); the frontier will rank configurations at their intended tier
+      (D19, WP4b).
+    - **Pinning the unresolved tiers (follow-up, not frontier-critical):
+      launch-command archaeology.** The session transcripts in
+      `~/cc-archives/` hold the executed launch commands with their flags;
+      `h10`, `h12-v2` and the 2026-04-16 `library_plus-hp` launches show
+      `--use-cache` with `--service-tier flex`, so they ran on the cached
+      path and billed standard. A script that matches each executed launch
+      to its run directory by output path and records `--use-cache` and
+      `--service-tier` per run, as committed and cited evidence, would pin
+      most of the April residue. A cached-token fingerprint does NOT
+      separate explicit from implicit caching (the adjacent runs without
+      an explicit cache got constant implicit hits of 12,187 tokens).
+      The 2026-04-14 export pins `h10` at standard already.
+15. **Audit rounds 7 to 9 (2026-10-03)** refined item 14. Final state:
+    - **The served tier survives every runner.** `run_pv.py verify`
+      finalises without per-item records, so the tracker also counts
+      responses per served tier at run level
+      (`usage_stats.served_tier_counts`, `"unreported"` for none), and
+      `merge_meta` sums the counts with the tokens they describe.
+    - **The header is believed only where it covers every response.**
+      - One tier across all of them pins, above everything; a request
+        record it overrules is a note.
+      - Several tiers price the fragment across exactly those tiers.
+      - Where only some responses reported one, the reported tiers WIDEN
+        the candidates the other evidence gives, because the rest may have
+        run elsewhere and narrowing would understate. The invoice's day
+        set (without the whole-fragment volume rule) and the PI's
+        attestation of the meta are set against them as conflicts; a batch
+        marker beside them is a note (a real-time cleanup or retry ran
+        too).
+      - A response served at a tier the rate card does not price makes the
+        fragment unpriceable; C3 re-derives that reason independently.
+    - **The cached-path rule follows the code a run executed, not the
+      clock.** It is lifted only when every commit the meta records
+      (`environment.git_commit`, or a merge's `git_commits`, where a part
+      with no commit counts as `"unknown"`) is a plain hash descending from
+      `2df65047e`, or the header covers every response. The fix reaches
+      `main` only when this branch merges, and a run launched from `main`
+      meanwhile still drops its tier. The tracker now reads the commit
+      once per process, at import, in its own directory: before, it read
+      `HEAD` at finalise time in the working directory, so a pull during a
+      long run could have named a commit with the fix for code without it.
+    - Also: `merge_recovery_meta.py` refuses a shared `run_id` and a
+      verifier meta (by script or item prefix); named and globbed preserved
+      main legs are deduplicated together, and a named one that would not
+      be priced, or does not sit beside its primary, is an error; an
+      attestation glob that could never apply says why; the runner refuses
+      `tools` beside a cache instead of dropping them.
+    - **Corrected before merge**:
+      - The superseded ledger's fd-storm entry read "no meta", but the four
+        attempts have metas: US$0.11 over the three with usage.
+      - **The ledger's two `pre-rerun` entries (US$27.85) were a double
+        count**, found by the round-7 re-audit. Batch mode keeps a leg's
+        predecessor meta as `run.meta.pre-rerun-N.json` when it rebuilds the
+        meta. After a `batch-recover` its results are inside the live meta:
+        the Gemini 3 row's K = 1 and K = 5 arm 2 sidecars hold 18,785 of
+        22,785 and 16,000 of 45,786 results of the SAME jobs, and no request
+        was billed twice. They are withdrawn (kept, with the reason); the
+        ledger's priced total is US$0.11. The entries had also named the
+        wrong model (`gemini-3-flash-preview`; the metas say
+        `gemini-3.7-flash`). D22 was put to the PI with those two entries
+        as its example; its principle stands.
+      - A1 and D21 cited a later documentation commit (`69a081b2c`) for the
+        code live at swap38's launch: `scripts/run_pv.py` was last changed
+        by `2ce4536ea` and `scripts/lib_verifier.py` by `4bb33b7e2`, both
+        unchanged at `21a34339f`.
+    - **Verification.** Each round ran two fresh-context lenses
+      (implementation, test adequacy); rounds 8 and 9 found no critical
+      defect. Every fix carries a mutation that turns a test red (round 7:
+      28; lens-B survivors: 13; lens-A fixes: 8; round 8: 10; round 9: 13, one
+      of which survived until its test moved to a fresh interpreter).
+      **The round-9 fixes were mutation-tested but not re-audited by fresh
+      lenses**: they change conflict labels and when the commit is read,
+      never a price, and the rounds had converged. No register figure
+      moved in rounds 7 to 9: US$3,094.05 on the audited basis, US$2,859.81
+      at the tier lower bound; every C3 cost verdict MATCH.
+
+---
+
 ## Changelog
+
+### 2026-10-03 (rounds 7 to 9) — the served tier; ledger corrected (Session 158)
+
+§ 8.15 added; § 8.8 corrected. What changed: the tracker's run-level
+served-tier count and its commit read at import; the coverage rule for the
+header; the cached-path rule decided by the run's recorded commits; and
+three corrections made before merge (the fd-storm ledger entry; the two
+`pre-rerun` entries withdrawn as a US$27.85 double count, so the ledger is
+now US$0.11; the swap38 citation). What did NOT change: every register
+figure (US$3,094.05; tier lower bound US$2,859.81; 312 audited, 188 upper
+bound, 27 lower bound, 2 published, 810 unrecorded) and every C3 cost
+verdict (MATCH). Commits `429dfac1f` to `fb3767404`.
+
+### 2026-10-03 (later) — four audit rounds; § 8 figures refreshed (Session 158)
+
+| | WP3 build | after four audit rounds |
+|---|---|---|
+| register total | US$3,086.02 | US$3,088.53 (swap38's main leg priced) |
+| tier lower bound | US$2,827.06 | US$2,828.71 |
+| lower-bound legs | 6 (overrides) | 28 (5 overrides + detected by coverage) |
+| C3 non-cost MISMATCH | 538 | 414 (126 `status` false alarms cleared; the round-4 commit message's "545 to 414, 131" counted an uncommitted build) |
+| tests in `tests/test_lib_pass_cost.py` | 39 cases | 142 cases (99 functions) |
+
+What did NOT change: no proposer pass's cost moved in rounds 2 to 4; the
+frontier incumbents' figures are as in WP4b; the register-equals-auditor
+figure (US$233.6295) holds. § 8.11 records the rounds, § 8.12 the five
+decisions they surfaced for the PI.
+
+### 2026-10-03 — WP3 built; § 8 findings; frontier cost axis promoted to WP4b (Session 158)
+
+WP3 on branch `wp3-cost-basis`. Three premises of this plan moved:
+
+| | before | after |
+|---|---|---|
+| campaign tier | "all campaign spend is flex" | flex only from 2026-04-08, and not on the explicit-cache path (§ 8.2, 8.3) |
+| the register's tokens | the primary meta's `usage_stats` | primary plus recovery fragments; per-item sums where the recovery merge doubled the count (§ 8.4, 8.5) |
+| the twelve overwritten legs | `published` from their reports | eight register passes: two `published`, six `audited-lower-bound` (no report publishes them) |
+| register total | US$4,674.00 (runner estimate) | US$3,086.02 audited (US$2,827.06 at the tier lower bound) |
+
+The PI's instruction of 2026-10-03 (items 1–4 approved) on the unresolved tier: price at the highest
+candidate as a labelled upper bound, with a dated attestation file to pin
+tiers as evidence arrives. `FAMILY_COST` moved from WP5 to a new WP4b,
+promoted. WP4 narrowed: the register regeneration, the run-report
+projection and the overridden legs went into WP3's PR.
 
 ### 2026-09-21 (evening) — PR #20 ready for merge after three audit rounds
 

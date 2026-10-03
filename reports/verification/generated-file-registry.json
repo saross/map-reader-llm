@@ -1,12 +1,12 @@
 {
  "_meta": {
-  "generated_at": "2026-09-21T02:52:13.803757+00:00",
+  "generated_at": "2026-10-03T13:47:28.104359+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "de85cd0cb",
+  "git_head": "fb3767404",
   "counts": {
-   "total": 4010,
-   "generated": 3684,
+   "total": 4015,
+   "generated": 3689,
    "generated_unattributed": 0,
    "hand_written": 326,
    "by_directory": {
@@ -21,8 +21,8 @@
      "hand_written": 98
     },
     "outputs/": {
-     "total": 675,
-     "generated": 630,
+     "total": 680,
+     "generated": 635,
      "hand_written": 45
     },
     "docs/": {
@@ -42,7 +42,7 @@
     "check_mode": 70,
     "tier1_check_test": 70,
     "compliant": 51,
-    "neither_regime": 3633
+    "neither_regime": 3638
    }
   }
  },
@@ -11741,6 +11741,91 @@
    "regime2_compliant": true
   },
   {
+   "path": "outputs/tier-cache-probe-2026-10-03/aborted-run_A-before-header-capture/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_A_flex_cache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_B_flex_nocache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/experiment_intent.md",
+   "stratum": "generated",
+   "rule_id": "gen-outputs-experiment-intent-batch",
+   "generator": "scripts/lib_experiment_intent.py",
+   "source_rule": "launch-time run config (written before the first API call; no committed sidecar)",
+   "sources": [],
+   "marker": null,
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
    "path": "outputs/verifier-robustness/experiment_intent.md",
    "stratum": "hand-written",
    "rule_id": "hw-outputs-experiment-intent",
@@ -16045,7 +16130,7 @@
    "sources": [
     "results/analyses-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/analyses-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
@@ -16288,7 +16373,7 @@
    "sources": [
     "results/conditions-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
@@ -40223,7 +40308,7 @@
    "sources": [
     "results/passes-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
@@ -64160,7 +64245,7 @@
    "sources": [
     "results/run-registry.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/run-registry.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
@@ -64183,7 +64268,7 @@
    "sources": [
     "results/runs-manifest.json"
    ],
-   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
+   "marker": "<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/runs-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,

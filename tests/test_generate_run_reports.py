@@ -126,23 +126,24 @@ def test_absent_metric_is_not_supplied_not_zero(corpus):
 
 
 @pytest.mark.tier1
-def test_cost_is_labelled_recorded_not_audited(corpus):
-    """The recorded cost must never be presented as the run's cost.
+def test_cost_is_labelled_with_its_basis(corpus):
+    """The report states the basis of the cost it sums, and never the old claim.
 
-    ``cost_usd`` is each pass meta's own estimate, and the token-load audit showed
-    those estimates price at standard rates on flex-tier runs and omit thinking
-    tokens. A report that summed them without that caveat would publish a figure
-    wrong in a known direction.
+    Since generator 0.8.0 ``cost_usd`` is the audited figure with a per-pass
+    ``cost_basis``. The 1.x caveat ("lifted verbatim" from the meta's estimate)
+    became false the day the register changed, and was caught only by audit
+    (lens B, 2026-10-03), so its absence is pinned as well as the new text.
     """
     text = grr.render_report("h13", corpus, "abc1234")
-    assert "The recorded cost is NOT this run's cost." in text
-    assert "reports/token-load-audit-2026-06-12.md" in text
-    assert "Sum of recorded `cost_usd`" in text
+    assert "The cost above is on the audited basis, labelled per pass." in text
+    assert "lifted verbatim" not in text
+    assert "`cost_usd` by basis" in text
+    assert "Run total (range)" in text
 
 
 @pytest.mark.tier1
 def test_double_counted_token_totals_are_disclosed(corpus):
-    """The manifest's token totals are 2×/3× inflated on three of the 55-map runs.
+    """The audit's verdict on the 55-map runs' metas is disclosed beside the totals.
 
     A pass's ``tokens`` come from the meta's ``usage_stats``
     (``generate_post_run_report.py`` → ``_tokens_from_usage``), and the token-load
@@ -153,10 +154,12 @@ def test_double_counted_token_totals_are_disclosed(corpus):
     clean per-pass figures.
     """
     text = grr.render_report("55maps-text-high-generalisation", corpus, "abc1234")
-    assert "Audited: the token figures above are inflated by a measured factor." in text
+    assert "Audited token load." in text
+    assert "the figures above are de-duplicated" in text
+    assert "inflated by a measured factor" not in text
     assert "2.0× inflated (factors 2.003–2.016 across axes)" in text
     assert "US$40.19/pass" in text
-    assert "The trustworthy source is `per_item_metadata`" in text
+    assert "the trustworthy source is `per_item_metadata`" in text
     # and no derived run total is manufactured from a per-pass figure
     assert "No run total is derived here" in text
     # a clean run states that it is clean rather than staying silent
@@ -227,3 +230,23 @@ def test_verifier_passes_separated_from_proposer_passes(corpus):
     assert "### 3.2 Verifier passes" in text
     assert "Verifier rows report no tile count by design" in text
     assert "Candidates verified" in text
+
+
+@pytest.mark.tier1
+def test_run_total_is_a_range_never_a_sum_of_mixed_bounds():
+    """Re-audit round 2: a total adding ceilings, floors and exact figures is none.
+
+    The floor takes each pass at its lowest defensible figure; the ceiling
+    exists only if no pass is a floor or unrecorded.
+    """
+    exact = {"cost_basis": "audited", "cost_usd": 1.0}
+    upper = {"cost_basis": "audited-upper-bound", "cost_usd": 2.0,
+             "cost_source": {"bounds_usd": {"low": 1.0, "high": 2.0}}}
+    floor = {"cost_basis": "audited-lower-bound", "cost_usd": 0.5}
+    assert grr._total_range([exact, upper]) == "US$2.0000 to US$3.0000"
+    assert grr._total_range([exact, upper, floor]) == (
+        "at least US$2.5000; no ceiling (1 audited-lower-bound pass(es))")
+    assert grr._total_range([exact]) == "US$1.0000"
+    assert grr._basis_sums([exact, upper, floor]) == (
+        "audited US$1.0000 (1); audited-lower-bound US$0.5000 (1); "
+        "audited-upper-bound US$2.0000 (1)")

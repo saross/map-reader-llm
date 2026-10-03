@@ -1,0 +1,30 @@
+Loaded Version: library_plus-hp
+Model: gemini-3-flash
+Workers: 1
+Tile size: 384 (overriding config default 512)
+Limit: 4 tiles
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: standard
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/detections-library_plus-hp-3-flash-2026-10-03.geojson
+Metadata: outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/detections-library_plus-hp-3-flash-2026-10-03.meta.json
+Using Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Manifest loaded. Found 487 of 487 tiles (487 remaining to process).
+Applying --limit: 4
+Processing 4 new tiles...
+  0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:09<00:29,  9.79s/it] 50%|█████     | 2/4 [00:15<00:14,  7.13s/it] 75%|███████▌  | 3/4 [00:20<00:06,  6.43s/it]100%|██████████| 4/4 [00:26<00:00,  6.21s/it]100%|██████████| 4/4 [00:26<00:00,  6.63s/it]
+
+Finished. Saved to outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/detections-library_plus-hp-3-flash-2026-10-03.geojson
+Tile manifest: outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/detections-library_plus-hp-3-flash-2026-10-03.tiles.json
+Metadata saved to outputs/tier-cache-probe-2026-10-03/run_D_standard_nocache/detections-library_plus-hp-3-flash-2026-10-03.meta.json
+Tiles processed: 4
+Tiles failed: 0
+Total detections: 5
+Tokens used: 62,994
+Estimated cost: $0.0105

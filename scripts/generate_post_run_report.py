@@ -56,6 +56,13 @@ import jsonschema
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+# The register prices its own tokens (PI ruling D11; WP3 of
+# planning/cost-accounting-fix-plan-2026-09-21.md). The coster resolves each
+# fragment's service tier from committed evidence and prices it through the
+# one cost function, scripts/lib_cost.price_usage.
+from scripts.lib_pass_cost import PassCoster, fragment_usage  # noqa: E402
+
 # --------------------------------------------------------------------------- #
 # Constants
 # --------------------------------------------------------------------------- #
@@ -101,7 +108,17 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: failed tile was recovered by a dated fragment reads its cumulative
 #: coverage (ok/487) identically on every host; status uses the effective
 #: shortfall (dispatched minus completed-union).
-GENERATOR_VERSION: str = "0.7.1"
+#:
+#: 0.8.0 (2026-10-03, WP3): the cost columns are AUDITED. ``cost_usd`` is the
+#: pass's own tokens priced by ``scripts/lib_cost.price_usage`` at the tier the
+#: evidence supports, never the meta's ``cost_estimate`` copied; ``cost_basis``
+#: and ``cost_source`` say how. ``tokens`` and ``cost_usd`` now include the
+#: pass's ``run_N_recovery*`` fragments, which the tile count already unioned
+#: (118 M tokens on 57 passes were missing from the cost before), and any second
+#: whole meta in run_N (one pass had one). A meta the
+#: 2026-05-02 recovery merge double-counted (14 passes: IM, TH7, gold-standard-v2)
+#: reads its per-item sums for both, as the June token-load audit did.
+GENERATOR_VERSION: str = "0.8.0"
 
 #: Why a verifier pass's ``n_tiles_processed`` is null. Written verbatim into
 #: every verifier row so the manifest explains itself without a reader having
@@ -334,6 +351,179 @@ def _tokens_from_usage(usage: dict) -> dict | None:
     }
 
 
+def _sum_tokens(blocks: list[dict | None]) -> dict | None:
+    """Sum ``pass.tokens`` blocks key by key (a pass and its recovery fragments).
+
+    Returns None when no fragment carried a usage block, so a pass that never
+    recorded usage keeps the column's established null.
+    """
+    present = [b for b in blocks if b]
+    if not present:
+        return None
+    return {key: sum(b.get(key) or 0 for b in present) for key in present[0]}
+
+
+@functools.lru_cache(maxsize=1)
+def _coster() -> PassCoster:
+    """The pass coster, built once per process from the committed evidence files."""
+    return PassCoster()
+
+
+def _sibling_metas(primary: dict, others: list[Path]) -> list[Path]:
+    """Further whole metas in ``run_N`` that are separate executions of the pass.
+
+    A chunk meta is never a sibling (its merged meta is the pass). A meta that
+    shares the primary's ``run_id`` is a rewrite of the same execution, whose
+    usage may already include the primary's, so it is not priced again; only a
+    meta with its own ``run_id`` is a distinct, billed execution
+    (``flash35-pv-2x2`` run 3: a full re-run with run_id ``942a413c...``).
+
+    Args:
+        primary: The pass's primary meta, parsed.
+        others: The other ``*.meta.json`` paths in ``run_N``, sorted.
+
+    Returns:
+        The sibling paths to price and cite.
+    """
+    out = []
+    seen = {primary.get("run_id")}
+    for path in others:
+        if "_chunk" in path.name:
+            continue
+        run_id = _load_json(path).get("run_id")
+        # A meta with no run_id cannot be shown to be a separate execution, so
+        # it is not priced (no live case); a run_id already priced is a rewrite.
+        if run_id is not None and run_id not in seen:
+            seen.add(run_id)
+            out.append(path)
+    return out
+
+
+def _sum_or_none(values: list) -> float | None:
+    """Sum the recorded values; None when none was recorded."""
+    present = [v for v in values if isinstance(v, (int, float))]
+    return sum(present) if present else None
+
+
+def _span(stamps: list[dict | None]) -> dict | None:
+    """Earliest start and latest end over several ``{start, end}`` blocks.
+
+    Compared as instants, not strings: ``14:39+10:00`` is earlier than
+    ``04:40+00:00`` (re-audit round 4).
+    """
+    present = [t for t in stamps if t and t.get("start") and t.get("end")]
+    if not present:
+        return None
+    instant = datetime.fromisoformat
+    return {"start": min((t["start"] for t in present), key=instant),
+            "end": max((t["end"] for t in present), key=instant)}
+
+
+def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
+    """Candidate crops a verifier leg completed, over all its metas.
+
+    The union of ``completed_items``; else the sum of ``items_processed``;
+    else the sum of the request counts (eras that left ``execution_stats``
+    empty, where requests equal completions when nothing was retried).
+    """
+    completed = {c for m, _ in fragments
+                 for c in ((m.get("execution_stats") or {}).get("completed_items") or [])}
+    if completed:
+        return len(completed)
+    processed = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
+                    for m, _ in fragments)
+    if processed:
+        return processed
+    return sum(int((((m.get("usage_stats") or {}).get("by_provider") or {})
+                    .get("google_gemini") or {}).get("request_count") or 0)
+               for m, _ in fragments)
+
+
+def _preserved_main_legs(primary: dict, primary_path: Path,
+                         listed: list[str] | tuple[str, ...] = ()) -> list[Path]:
+    """A verifier leg's preserved main meta(s), when a cleanup overwrote ``run.meta.json``.
+
+    Two sources, deduplicated together by path and by ``run_id``:
+
+    - **Globbed**: an operator may keep the overwritten main leg as
+      ``run.meta.main-<date>.json`` before a cleanup (no script writes it;
+      ``planning/gemini38-screen-2026-09-04.md`` records the copy for
+      ``gemini37-screen-2026-08-28``'s swap38 leg: 790 candidates, 1,593
+      requests, beside a 1-request cleanup meta).
+    - **Named**: ``preserved_main_legs`` in ``data/pricing/cost-overrides.json``
+      lists a file the PI force-added, such as TH7's
+      ``run.meta.json.pre-recovery-*.backup``. Other ``*.backup`` files are
+      gitignored and absent from a clean clone, so they are never globbed.
+
+    A meta with its own ``run_id`` is a separate, billed execution of the leg
+    and is priced with it (re-audit round 2). Two kinds of file beside it are
+    NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's ``run_id``
+    (cumulative), and ``run.meta.pre-rerun-*`` is the predecessor batch mode
+    keeps when it rebuilds a leg's meta. After a ``batch-recover`` its
+    results are already inside the primary (the Gemini 3 row's two such
+    sidecars were first booked as superseded spend, a US$27.85 double count
+    withdrawn before merge); after a fresh batch pass, which re-sends the
+    whole manifest, it is separate superseded spend for the ledger
+    (``data/pricing/superseded-executions.json``). Neither is this leg's cost.
+
+    Args:
+        primary: The leg's ``run.meta.json``, parsed.
+        primary_path: Its path.
+        listed: Repository-relative paths the overrides file names for the pass.
+
+    Returns:
+        The preserved main metas to price and cite: globbed ones sorted, then
+        named ones in their listed order.
+
+    Raises:
+        ValueError: When a named file is missing, does not sit beside the
+            primary (a mis-keyed entry would price another leg's spend into
+            this one), or would not be priced (no ``run_id``, the primary's,
+            or one already priced): the PI named it, so dropping it silently
+            would hide the spend it was named for.
+    """
+    mains = (sorted(primary_path.parent.glob("run.meta.main-*.json"))
+             if primary_path.name == "run.meta.json" else [])
+    named = {m: REPO_ROOT / m for m in listed}
+    missing = [m for m, path in named.items() if not path.exists()]
+    if missing:
+        raise ValueError(f"cost-overrides.json preserved_main_legs names missing files: "
+                         f"{missing}")
+    elsewhere = [m for m, path in named.items()
+                 if path.resolve().parent != primary_path.resolve().parent]
+    if elsewhere:
+        raise ValueError(f"cost-overrides.json preserved_main_legs names {elsewhere} for the "
+                         f"leg in {primary_path.parent.name}/, but they do not sit beside its "
+                         f"{primary_path.name}")
+    resolved = {path.resolve() for path in mains}
+    kept = _sibling_metas(primary, mains + [path for path in named.values()
+                                            if path.resolve() not in resolved])
+    kept_resolved = {path.resolve() for path in kept}
+    dropped = [m for m, path in named.items() if path.resolve() not in kept_resolved]
+    if dropped:
+        raise ValueError(
+            f"cost-overrides.json preserved_main_legs names {dropped} beside "
+            f"{primary_path.name} in {primary_path.parent.name}/, but it would not be priced: "
+            "no run_id, the primary's run_id (a cumulative rewrite), or a run_id already "
+            "priced")
+    return kept
+
+
+def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
+    """The model a recovery fragment is priced at.
+
+    The row's authoritative model unless the fragment's own per-item record
+    names a different one (a recovery run on another model must be priced
+    at that model's card); a sidecar ``model_of_record`` overrides both, as
+    it does for the row (E57).
+    """
+    if model_of_record:
+        return model_of_record
+    pim = meta.get("per_item_metadata") or []
+    own = next((it.get("model_used") for it in pim if it.get("model_used")), None)
+    return own or row_model
+
+
 def _timestamps(meta: dict) -> dict | None:
     """Extract ``{start, end}`` from a meta.json ``timestamp`` block, if present."""
     ts = meta.get("timestamp")
@@ -538,7 +728,16 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             if model_of_record:
                 model_used = model_of_record
                 model_requested = model_of_record
+            # The pass's spend is its primary meta, every further whole meta in
+            # run_N that is a separate execution (flash35-pv-2x2 run 3 holds a
+            # full re-run whose 734,478 input tokens the register once missed;
+            # audit lens A, 2026-10-03), and every recovery fragment: the metas
+            # its provenance cites. Each is priced at its own tier and date.
+            siblings = _sibling_metas(meta, meta_files[1:])
+            fragments = ([(meta, meta_path)] + [(_load_json(m), m) for m in siblings]
+                         + [(_load_json(m), m) for m in recovery_metas])
             prov_sources = [_repo_rel(meta_path)]
+            prov_sources.extend(_repo_rel(m) for m in siblings)
             prov_sources.extend(_repo_rel(m) for m in recovery_metas)
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")
@@ -566,8 +765,16 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "n_tiles_null_reason": None,  # proposer rows carry a real count
                 "n_candidates_verified": None,  # no candidate stage
                 "n_tiles_dispatched": n_dispatched,
-                "tokens": _tokens_from_usage(meta.get("usage_stats", {})),
-                "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
+                # The same usage the cost is priced from: a meta the 2026-05-02
+                # recovery merge double-counted reads its per-item sums (WP3).
+                "tokens": _sum_tokens([_tokens_from_usage(fragment_usage(m)[0])
+                                       for m, _ in fragments]),
+                **_coster().cost_pass(
+                    pass_id=f"{run_id}::{pool}::run{pass_n}", fragments=fragments,
+                    run_id=run_id, pool=pool, run_dir=run_dir, model=model_used,
+                    fragment_models=[model_used] + [
+                        _fragment_model(m, model_used, model_of_record)
+                        for m, _ in fragments[1:]]),
                 "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
                 "timestamps": _timestamps(meta),
                 "retries": es.get("retries_total", 0),
@@ -595,7 +802,6 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
-        usage = meta.get("usage_stats", {})
         # Model-of-record (E57 / feedback_model_version_consistency): when the meta
         # carries per-item identity, it is authoritative over configuration.model
         # (which is a template default on some runs — gemini-3-flash where the API
@@ -632,20 +838,18 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # the verified GeoJSON's ``source_tile`` values: that would count tiles
         # with a SURVIVING detection, which is not "tiles processed" and would
         # be a different quantity wearing the same name.
-        v_es = meta.get("execution_stats", {}) or {}
-        v_completed = v_es.get("completed_items")
-        if v_completed:
-            n_candidates = len(set(v_completed))
-        elif v_es.get("items_processed"):
-            n_candidates = v_es["items_processed"]
-        else:
-            n_candidates = (
-                usage.get("by_provider", {}).get("google_gemini", {}) or {}
-            ).get("request_count", 0)
+        # A cleanup that overwrote run.meta.json leaves the main leg preserved
+        # beside it; both are this leg's executions (priced, cited, counted).
+        # With any the overrides file names for this pass (a gitignored backup
+        # the PI force-added; named there, never globbed), deduplicated together.
+        listed = _coster().main_legs.get(f"{run_id}::{vdir}::run1", {}).get("metas", [])
+        main_legs = _preserved_main_legs(meta, meta_path, listed)
+        v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
+        n_candidates = _verifier_candidates(v_fragments)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.
-        v_prov_sources = [_repo_rel(meta_path)]
+        v_prov_sources = [_repo_rel(meta_path)] + [_repo_rel(m) for m in main_legs]
         if cfg.get("temperature_effective") is not None:
             log_path = meta_path.parent / "run.log"
             if log_path.exists():
@@ -670,11 +874,19 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # per_item_metadata on a verifier pass records candidate API items,
             # not tiles dispatched — so this tile-scale field is null too.
             "n_tiles_dispatched": None,
-            "tokens": _tokens_from_usage(usage),
-            "cost_usd": (meta.get("cost_estimate") or {}).get("total_cost_usd"),
-            "wall_clock_s": (meta.get("timestamp") or {}).get("duration_seconds"),
-            "timestamps": _timestamps(meta),
-            "retries": v_es.get("retries_total", 0),
+            "tokens": _sum_tokens([_tokens_from_usage(fragment_usage(m)[0])
+                                   for m, _ in v_fragments]),
+            **_coster().cost_pass(
+                pass_id=f"{run_id}::{vdir}::run1", fragments=v_fragments,
+                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
+                stage="verifier"),
+            # A leg with a preserved main meta ran twice (main, then cleanup):
+            # its time, span and retries are both executions', as C3 derives them.
+            "wall_clock_s": _sum_or_none([(m.get("timestamp") or {}).get("duration_seconds")
+                                          for m, _ in v_fragments]),
+            "timestamps": _span([_timestamps(m) for m, _ in v_fragments]),
+            "retries": sum(int((m.get("execution_stats") or {}).get("retries_total") or 0)
+                           for m, _ in v_fragments),
             "provenance": build_provenance(v_prov_sources, at),
         })
 
@@ -1661,7 +1873,12 @@ def _coverage_note(manifest: str, n_rows: int) -> str:
     return {
         "runs": f"all {n_rows} runs (run-level facts; conditions/passes added as 3b batches land)",
         "conditions": f"{n_rows} condition(s) across the decomposed runs (sub-step 3b in progress)",
-        "passes": f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress)",
+        "passes": (f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress). "
+                   "`cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, "
+                   "recovery fragments included, priced by `scripts/lib_cost.price_usage` at the "
+                   "tier the evidence supports; `basis` says which kind of figure it is "
+                   "(`audited-upper-bound` = tier unresolved, priced at the highest candidate; "
+                   "the row's `cost_source` gives both bounds and the evidence)"),
         "analyses": f"{n_rows} analysis(es) over conditions (sub-step 3c; hybrid human-authored)",
         "run-registry": f"all {n_rows} runs (hand-verified input)",
     }.get(manifest, f"{n_rows} row(s)")
@@ -1743,10 +1960,10 @@ def render_manifest(manifest: str, obj: dict, json_rel: str,
         # row is not silently empty. ``_md_table`` renders None as "—".
         table = _md_table(
             ["pass_id", "model", "modality", "think", "T", "status", "tiles",
-             "cands", "cost_usd"],
+             "cands", "cost_usd", "basis"],
             [[r["pass_id"], r["model_used"], r["modality"], r["thinking_level"], r["temperature"],
               r["status"], r["n_tiles_processed"], r.get("n_candidates_verified"),
-              r["cost_usd"]] for r in rows])
+              r["cost_usd"], r.get("cost_basis")] for r in rows])
     elif manifest == "analyses":
         table = _md_table(
             ["analysis_id", "type", "#conditions", "preregistered", "paper_section", "outcome"],

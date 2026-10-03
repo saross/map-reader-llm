@@ -98,16 +98,15 @@ AUDIT_REPORTS: tuple[str, ...] = (
 #: Per-run verdicts from ``reports/token-load-audit-2026-06-12.md``, transcribed
 #: verbatim with the section each figure comes from.
 #:
-#: This table is load-bearing for honesty, not decoration. The passes manifest
-#: takes a pass's ``tokens`` from the meta's ``usage_stats`` block
-#: (``generate_post_run_report.py:567,671`` → ``_tokens_from_usage``), and the audit
-#: established by per-item recomputation that ``usage_stats`` is DOUBLE-COUNTED on
-#: three of these runs — a 2026-05-02/03 recovery merge summed the original run's
-#: usage into the post-recovery cumulative total, and on the image run the manifest
-#: generator then added the pre-recovery backups on top again. So for those runs the
-#: token figures § 4 reports from the manifest are themselves inflated by the stated
-#: factor, and a report that printed them without saying so would publish numbers
-#: wrong by 2× or 3× in a known direction.
+#: This table is load-bearing for honesty, not decoration. The audit established by
+#: per-item recomputation that ``usage_stats`` is DOUBLE-COUNTED in three of these
+#: runs' metas — a 2026-05-02/03 recovery merge summed the original run's usage into
+#: the post-recovery cumulative total. Until generator 0.8.0 the passes manifest took
+#: a pass's ``tokens`` from that block, so § 4 printed figures wrong by 2x; since
+#: 2026-10-03 the manifest reads such a meta's per-item sums
+#: (``lib_pass_cost.fragment_usage``), and this table now records the audit's verdict
+#: on the metas beside the de-duplicated figures, so a reader of the raw metas knows
+#: which to distrust.
 #:
 #: Fields: ``(audit section, manifest-vs-clean, live-metas-vs-clean,
 #: trustworthy source, clean per-pass figures)``. Deliberately NO derived run
@@ -516,7 +515,7 @@ def _section_execution(run_id: str, corpus: Corpus) -> list[str]:
 def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
     """§ 4 — the recorded token load and cost, with the audit caveat."""
     passes = corpus.passes.get(run_id, [])
-    out = ["## 4. Token load and recorded cost", ""]
+    out = ["## 4. Token load and audited cost", ""]
     if not passes:
         out += [f"No pass rows, so no recorded token load. {NOT_SUPPLIED}: this run's "
                 f"spend is not reconstructable from the passes manifest.", ""]
@@ -544,9 +543,8 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             ("Thinking tokens", f"{totals['thinking']:,}"),
             ("Total tokens", f"{totals['total']:,}"),
             ("Passes with no token record", str(missing_tokens)),
-            ("Sum of recorded `cost_usd`",
-             f"US${sum(costs):,.4f} over {len(costs)} of {len(passes)} pass(es)"
-             if costs else NOT_SUPPLIED),
+            ("`cost_usd` by basis", _basis_sums(passes) if costs else NOT_SUPPLIED),
+            ("Run total (range)", _total_range(passes) if costs else NOT_SUPPLIED),
             ("Passes with no `cost_usd`", str(len(passes) - len(costs))),
             ("Summed wall clock",
              f"{sum(walls) / 3600:,.2f} h over {len(walls)} pass(es)"
@@ -557,32 +555,37 @@ def _section_cost(run_id: str, corpus: Corpus) -> list[str]:
             section, manifest_v, metas_v, source, clean = audit
             out += [
                 "",
-                f"> **Audited: the token figures above are inflated by a measured "
-                f"factor.** `reports/token-load-audit-2026-06-12.md` {section} "
-                f"recomputed this run's load from `per_item_metadata` and found its "
-                f"`usage_stats` block — which is exactly where the manifest takes a "
-                f"pass's `tokens` from (`_tokens_from_usage`) — **{metas_v}**; its "
-                f"`cost_manifest.json` is **{manifest_v}**. The trustworthy source is "
-                f"{source}. Audited clean figures, quoted from {section}: {clean}. No "
-                f"run total is derived here: the audit's pass count and this "
-                f"manifest's need not agree, so multiplying would manufacture a "
-                f"figure no file carries.",
+                f"> **Audited token load.** `reports/token-load-audit-2026-06-12.md` "
+                f"{section} recomputed this run's load from `per_item_metadata` and "
+                f"found its metas' `usage_stats` **{metas_v}**; its "
+                f"`cost_manifest.json` is **{manifest_v}**. Since generator 0.8.0 "
+                f"(2026-10-03) the register reads the per-item sums of any meta the "
+                f"2026-05-02 recovery merge double-counted, so the figures above are "
+                f"de-duplicated; the trustworthy source is {source}. Audited clean "
+                f"figures, quoted from {section}: {clean}. No run total is derived "
+                f"here: the audit's pass count and this manifest's need not agree, "
+                f"so multiplying would manufacture a figure no file carries.",
             ]
         # A bare blank line between two blockquotes splits them and trips MD028; a
         # ">" line keeps the audit verdict and the pricing caveat as two paragraphs
         # of ONE quote, which is also how they should read.
         out += [
             ">" if audit else "",
-            "> **The recorded cost is NOT this run's cost.** Each `cost_usd` above is "
-            "the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by "
-            "`scripts/generate_post_run_report.py`. The token-load audit of "
-            "2026-06-12 established that those self-reported estimates price at "
-            "STANDARD rates although the audited runs executed at "
-            "`--service-tier flex` (half price) and omit thinking tokens although "
-            "Gemini bills thinking at the output rate "
-            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). The sum is "
-            "reproduced here as the recorded figure and as an input to a "
-            "reconciliation, not as a total to cite.", ""]
+            "> **The cost above is on the audited basis, labelled per pass.** Since "
+            "generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the "
+            "pass's own tokens, recovery fragments included, priced by "
+            "`scripts/lib_cost.price_usage` at the service tier the evidence "
+            "supports; the pass's `cost_basis` says whether that is `audited`, an "
+            "`audited-upper-bound` (tier unresolved, priced at the highest "
+            "candidate), an `audited-lower-bound` (part of the pass is not in its "
+            "metas: a cleanup overwrote one, or a fragment recorded nothing), "
+            "`published`, `unrecorded`, or `unpriceable` (no date, or a model the "
+            "rate card lacks), and its `cost_source` cites the "
+            "evidence. It is no longer the pass meta's own `cost_estimate`, which "
+            "priced at standard rates and omitted thinking tokens "
+            "(`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing "
+            "upper and lower bounds is neither, so the run total is given as a range.",
+            ""]
 
     cited = [rel for rel, text in corpus.audit_text.items()
              if run_id in text or corpus.registry[run_id]["directory_path"] in text]
@@ -953,6 +956,55 @@ def _section_provenance(run_id: str, corpus: Corpus, head: str) -> list[str]:
 # --------------------------------------------------------------------------- #
 # Report assembly
 # --------------------------------------------------------------------------- #
+
+
+def _basis_sums(passes: list[dict]) -> str:
+    """``audited US$1.2345 (5); audited-upper-bound US$0.5000 (2); …`` per basis.
+
+    Never one sum across bases: an upper bound, a floor and an exact figure
+    added together are none of the three (re-audit round 2).
+    """
+    sums: dict[str, list] = {}
+    for p in passes:
+        key = p.get("cost_basis") or "none recorded"
+        cell = sums.setdefault(key, [None, 0])
+        if isinstance(p.get("cost_usd"), (int, float)):
+            cell[0] = (cell[0] or 0.0) + p["cost_usd"]
+        cell[1] += 1
+    # A basis with no priced pass has no sum: "null, not zero" (PI ruling D12).
+    return "; ".join(f"{k} {'US$' + format(v[0], ',.4f') if v[0] is not None else 'no figure'}"
+                     f" ({v[1]})" for k, v in sorted(sums.items()))
+
+
+def _total_range(passes: list[dict]) -> str:
+    """The run's cost as a defensible range over its passes.
+
+    The floor takes every pass at its lowest defensible figure: an exact or
+    published figure as it is, an upper-bound pass at its low bound, a floor as
+    it is. The ceiling takes upper-bound passes at their high bound, and exists
+    only if no pass is a floor (a floor has no ceiling) and none is unrecorded
+    or unpriceable.
+    """
+    low = high = 0.0
+    open_top = []
+    for p in passes:
+        basis, cost = p.get("cost_basis"), p.get("cost_usd") or 0.0
+        if basis == "audited-upper-bound":
+            bounds = (p.get("cost_source") or {}).get("bounds_usd") or {}
+            low += bounds.get("low", cost)
+            high += bounds.get("high", cost)
+        else:
+            low += cost
+            high += cost
+            if basis in ("audited-lower-bound", "unrecorded", "unpriceable", None):
+                open_top.append(basis or "none recorded")
+    if open_top:
+        counts = {b: open_top.count(b) for b in sorted(set(open_top))}
+        why = ", ".join(f"{n} {b}" for b, n in counts.items())
+        return f"at least US${low:,.4f}; no ceiling ({why} pass(es))"
+    if abs(high - low) < 5e-5:
+        return f"US${low:,.4f}"
+    return f"US${low:,.4f} to US${high:,.4f}"
 
 
 def render_report(run_id: str, corpus: Corpus, head: str) -> str:

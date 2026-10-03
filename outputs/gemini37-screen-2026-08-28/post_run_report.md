@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `fb3767404`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -61,26 +61,27 @@
 | `g384_ov192_g37-union-k3-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 757 | 0 |
 | `g384_ov192_g37-union-k5-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 791 | 0 |
 | `g384_ov192_g37-union-k5-verify-swap37` | 1 | gemini-3.7-flash | text | low | 0.0 | ok | 2 | 14 |
-| `g384_ov192_g37-union-k5-verify-swap38` | 1 | gemini-3.8-flash | text | low | 0.0 | ok | 1 | 0 |
+| `g384_ov192_g37-union-k5-verify-swap38` | 1 | gemini-3.8-flash | text | low | 0.0 | ok | 791 | 803 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
-## 4. Token load and recorded cost
+## 4. Token load and audited cost
 
 | Field | Value |
 |---|---|
 | Passes on file | 16 |
-| Input tokens (billed) | 26,524,280 |
+| Input tokens (billed) | 27,979,012 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,595,873 |
-| Thinking tokens | 3,891,436 |
-| Total tokens | 32,011,589 |
+| Output tokens | 1,706,650 |
+| Thinking tokens | 3,960,865 |
+| Total tokens | 33,646,527 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$11.2103 over 16 of 16 pass(es) |
+| `cost_usd` by basis | audited US$20.2260 (15); audited-lower-bound US$0.0021 (1) |
+| Run total (range) | at least US$20.2281; no ceiling (1 audited-lower-bound pass(es)) |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 9.74 h over 16 pass(es) |
+| Summed wall clock | 10.39 h over 16 pass(es) |
 
-> **The recorded cost is NOT this run's cost.** Each `cost_usd` above is the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by `scripts/generate_post_run_report.py`. The token-load audit of 2026-06-12 established that those self-reported estimates price at STANDARD rates although the audited runs executed at `--service-tier flex` (half price) and omit thinking tokens although Gemini bills thinking at the output rate (`reports/token-load-audit-2026-06-12.md` § 1, § 2). The sum is reproduced here as the recorded figure and as an input to a reconciliation, not as a total to cite.
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
 
@@ -223,9 +224,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `fb3767404` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

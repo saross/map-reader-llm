@@ -1,7 +1,7 @@
 # Notation and abbreviation key (canonical)
 
-> **Last revised**: 2026-09-14 (§ 7 gains the register's modality-field
-> convention, erratum E88). Created 2026-08-29 (PI-commissioned
+> **Last revised**: 2026-10-03 (§ 8 binds the register's cost to the audited
+> basis and retires "all campaign spends are flex"). Created 2026-08-29 (PI-commissioned
 > — "codify it a little more strongly than a terminology note").
 > This is the SINGLE canonical key for symbols, abbreviations, labels,
 > and dataset column names across the paper, supplements, findings
@@ -241,13 +241,38 @@ condition label within its run; it never changes what the configuration IS.
 
 | Term | Meaning |
 |---|---|
-| list vs flex | Google list price vs the 50 % real-time flex/batch tier (all campaign spends are flex) |
-| audited (basis) | Recomputed from meta token counts at the token-load-audit rates (cached input discounted) — the citable figure; the runner's live estimator over-records cached-heavy runs |
+| standard / flex / batch (tier) | Google's list price (standard) vs the real-time flex and asynchronous Batch Application Programming Interface (API) tiers, each 50 % of list on fresh input and output; the cache read is priced per model (`data/pricing/gemini-rate-card.json`). **Not all campaign spend was flex**: no flex SKU was billed before 2026-04-08; the detection runner's explicit-cache path (`--use-cache`) dropped the requested tier and billed standard; and standard SKUs appear on later days too. A figure's tier is whatever its `cost_source` evidence shows |
+| audited (basis) | A pass's own tokens — fresh input (prompt minus cached), cached input, and output plus thinking — priced by `scripts/lib_cost.price_usage` from the dated rate card at the tier the evidence supports, on the pass's own date. **`passes-manifest.cost_usd` is on this basis** (PI ruling D11, from generator 0.8.0) and is the citable figure |
+| audited upper bound | `cost_basis: audited-upper-bound`: the evidence could not pin the tier of at least one fragment, so it is priced at the HIGHEST candidate tier; `cost_source.bounds_usd` gives the low and high. Cite as an upper bound, or cite the bounds |
+| published (basis) | `cost_basis: published`: a pass whose metas can no longer be priced (a cleanup leg overwrote them) carries its post-run report's figure, cited in `cost_source` (D13) |
+| unrecorded | `cost_basis: unrecorded`: no usage was recorded; `cost_usd` is null, never 0 (D12) |
+| runner estimate | The `cost_estimate` block a run wrote into its own meta. Never cited: before 2026-09-21 it had no cache rate and, on the verifier path, no tier, and its "Gemini real-time flex" label was a constant, not a record |
+| `input_cost_usd` (in a `cost/2` block) | **Fresh** input only (prompt minus cached). Cached input has its own key, `cached_input_cost_usd`; the two do not overlap |
+| tier evidence | What decided a fragment's tier, cited in `cost_source`: the tier the API reported serving each response (`x-gemini-service-tier`, recorded from 2026-10-03; it pins only when every response reported one), a batch marker, the runner's own `cost/2` record, the Batch API path's wording, the cached path (fragments started before its fix, `2df65047e`), a run log's launch line (own directory, or inherited from an enclosing one), a launch manifest, the PI's attestation (`data/pricing/tier-attestations.json`), or the Pacific-time billing days (`data/pricing/billing-day-tiers.json`) |
 | full (cost) | proposer × N/K + verification of the ENTIRE vote ≥ 1 union (buys sweep/oracle/ladder analyses) |
 | lean-deploy (cost) | proposer × N/K + verification of only the carried vote-shell — what deployment actually needs |
 | $/mound | Run cost per true-positive detection at the operating point (the per-mound economics) |
 
 ## Changelog
+
+### 2026-10-03 — § 8 binds the register's cost to the audited basis
+
+**Trigger**: WP3 of `planning/cost-accounting-fix-plan-2026-09-21.md` (PI
+rulings D11 to D13). The register's `cost_usd` had copied each run's own
+estimate; from generator 0.8.0 it prices the pass's tokens itself, and § 8 has
+to say what that figure is. Building it also showed that § 8's "all campaign
+spends are flex" was false.
+
+| | before | after |
+|---|---|---|
+| "audited" means | re-priced at the token-load-audit rates | priced by `lib_cost.price_usage` at the evidenced tier, on the pass's date; the register's `cost_usd` is on this basis |
+| tier statement | "all campaign spends are flex" | not all: no flex before 2026-04-08; the explicit-cache path billed standard; standard SKUs on later days; the tier is per-fragment evidence |
+| new terms | — | audited upper bound, published, unrecorded, runner estimate, `input_cost_usd` is fresh input, tier evidence |
+
+**What did NOT change**: full and lean-deploy cost and $/mound keep their
+meanings; they now compose from audited pass costs.
+
+Commit: this entry's commit.
 
 ### 2026-09-14 — § 7 gains the register's modality-field convention (erratum E88)
 

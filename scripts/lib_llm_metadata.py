@@ -34,6 +34,7 @@ Licence: Apache 2.0
 """
 
 import copy
+import functools
 import hashlib
 import json
 import logging
@@ -172,6 +173,11 @@ class LLMResponseMetadata:
 
     # Traffic type (Gemini: ON_DEMAND vs PROVISIONED_THROUGHPUT)
     traffic_type: str | None = None
+    # The tier that SERVED the request, from the x-gemini-service-tier response
+    # header (2026-10-03). The tier a run asked for is not evidence of the
+    # tier it was billed at: the runner's cached path once dropped the
+    # request's tier (plan § 8.3), and only this header says what happened.
+    service_tier_applied: str | None = None
 
     # Completion status
     finish_reason: str = "unknown"        # Normalised: success, max_tokens, safety, etc.
@@ -229,6 +235,12 @@ class AggregatedUsage:
 
     # Per-provider breakdown (if mixed providers used)
     by_provider: dict[str, dict[str, int]] = field(default_factory=dict)
+
+    # Responses per SERVED service tier, from the x-gemini-service-tier header
+    # ("unreported" when a response carried none). Kept at run level because
+    # some runners finalise without per-item records (run_pv verify), and
+    # summed by merge_meta like every other usage count (2026-10-03).
+    served_tier_counts: dict[str, int] = field(default_factory=dict)
 
 
 @dataclass
@@ -350,6 +362,14 @@ class LLMMetadataTracker:
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
+        # The commit of the code that RUNS: read once, when this module was
+        # first imported, which is when the process loaded its code. Read at
+        # finalise (before 2026-10-03), a pull during a long run recorded a
+        # later commit than the one loaded; read per tracker, a tracker built
+        # after a batch wait or per cleanup attempt could too. The cost coster
+        # decides whether a run had the cached-path fix from this field
+        # (round-8 and round-9 audits).
+        self.git_commit_at_launch = _code_commit()
         self.cli_overrides = {
             key: value
             for key, value in (cli_overrides or {}).items()
@@ -531,6 +551,11 @@ class LLMMetadataTracker:
             self.usage.by_provider[provider]["total_tokens"] += metadata.tokens.total_tokens
             self.usage.by_provider[provider]["request_count"] += 1
 
+            # The tier that served this response, counted at run level.
+            served = metadata.service_tier_applied or "unreported"
+            self.usage.served_tier_counts[served] = (
+                self.usage.served_tier_counts.get(served, 0) + 1)
+
             # Finish reason distribution
             reason = metadata.finish_reason
             self.stats.finish_reason_counts[reason] = (
@@ -650,11 +675,17 @@ class LLMMetadataTracker:
 
     @staticmethod
     def get_git_revision() -> str:
-        """Get the current git commit hash."""
+        """The commit checked out where this module lives (``unknown`` if none).
+
+        Read in the module's own directory, not the process's working
+        directory, so a run launched from elsewhere (or from a worktree)
+        records the checkout whose code it loaded.
+        """
         try:
             return subprocess.check_output(
                 ['git', 'rev-parse', 'HEAD'],
                 stderr=subprocess.DEVNULL,
+                cwd=Path(__file__).resolve().parent,
             ).decode('ascii').strip()
         except Exception:
             return "unknown"
@@ -686,7 +717,7 @@ class LLMMetadataTracker:
                     "duration_seconds": duration,
                 },
                 "environment": {
-                    "git_commit": self.get_git_revision(),
+                    "git_commit": self.git_commit_at_launch,
                     "script": self.script_name,
                     "script_version": self.script_version,
                 },
@@ -753,6 +784,38 @@ class LLMMetadataTracker:
 # Provider-Specific Metadata Extraction Functions
 # =============================================================================
 
+def applied_service_tier(response: Any) -> str | None:
+    """The service tier that served a Gemini response, from its headers.
+
+    Gemini reports it in the ``x-gemini-service-tier`` response header
+    (``standard``, ``flex``); ``usage_metadata.traffic_type`` stays empty
+    for these calls. Verified 2026-10-03 against the live API by
+    ``scripts/probe_cache_tier.py``: the header read ``flex`` for a flex
+    request with an explicit cache, and ``standard`` for the pre-fix cached
+    config on a flex launch.
+
+    Args:
+        response: A ``GenerateContentResponse``.
+
+    Returns:
+        The tier, lower-cased, or None when the response carries no header.
+
+    Examples:
+        >>> H = type("H", (), {"headers": {"x-gemini-service-tier": "Flex"}})
+        >>> class R: sdk_http_response = H()
+        >>> applied_service_tier(R())
+        'flex'
+        >>> applied_service_tier(object()) is None
+        True
+    """
+    http = getattr(response, "sdk_http_response", None)
+    headers = getattr(http, "headers", None) or {}
+    for key, value in dict(headers).items():
+        if key.lower() == "x-gemini-service-tier" and value:
+            return str(value).strip().lower()
+    return None
+
+
 def extract_gemini_metadata(
     response: Any,
     request_start: datetime,
@@ -785,6 +848,7 @@ def extract_gemini_metadata(
         latency_ms=latency_ms,
         attempt_number=attempt,
     )
+    metadata.service_tier_applied = applied_service_tier(response)
 
     # Token usage
     if hasattr(response, 'usage_metadata') and response.usage_metadata:
@@ -1419,6 +1483,12 @@ def merge_cost_blocks(
     return _merge([original, fresh], merged_usage)
 
 
+@functools.lru_cache(maxsize=1)
+def _code_commit() -> str:
+    """The checkout's commit as this process loaded it (first call, at import)."""
+    return LLMMetadataTracker.get_git_revision()
+
+
 def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:
     """Merge a recovery meta.json into an original meta.json.
 
@@ -1445,6 +1515,24 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         Merged meta dict.
     """
     merged = dict(original)  # shallow copy at top level
+
+    # ---- environment: the original's, plus EVERY commit that ran ----
+    # ``git_commit`` stays the original's (readers expect one value); the
+    # list names each commit whose code contributed. The cost coster lifts
+    # the cached-path rule only when every one of them has the fix, so a
+    # merge must not hide a recovery run on other code (round-8 audit).
+    commits: list[str] = []
+    for part in (original, recovery):
+        env = part.get("environment") or {}
+        for commit in env.get("git_commits") or [env.get("git_commit")]:
+            # A part that recorded no commit is UNKNOWN code, never skipped:
+            # skipping it would let the other part's commit speak for both.
+            commit = commit or "unknown"
+            if commit not in commits:
+                commits.append(commit)
+    if len(commits) > 1:
+        merged["environment"] = {**(original.get("environment") or {}),
+                                 "git_commits": commits}
 
     # ---- timestamp: start from original, end from recovery, durations sum ----
     o_ts = original.get("timestamp", {})
@@ -2107,3 +2195,7 @@ def compare_gate_fields(
             "this_pass": candidate_value,
         }
     return differences
+
+
+# Read the code's commit NOW, at import: the moment this process loaded it.
+_code_commit()

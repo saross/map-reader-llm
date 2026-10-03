@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `f307c1932`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `fb3767404`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH
 
@@ -51,28 +51,29 @@
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
-| `verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 74 | 0 |
+| `verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 9205 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
-## 4. Token load and recorded cost
+## 4. Token load and audited cost
 
 | Field | Value |
 |---|---|
 | Passes on file | 6 |
-| Input tokens (billed) | 128,658,748 |
+| Input tokens (billed) | 80,638,270 |
 | Input tokens (cached) | 0 |
-| Output tokens | 16,579,028 |
-| Thinking tokens | 230,497,393 |
-| Total tokens | 375,735,169 |
+| Output tokens | 9,769,592 |
+| Thinking tokens | 115,025,126 |
+| Total tokens | 205,432,988 |
 | Passes with no token record | 0 |
-| Sum of recorded `cost_usd` | US$114.0665 over 6 of 6 pass(es) |
+| `cost_usd` by basis | audited US$207.3516 (6) |
+| Run total (range) | US$207.3516 |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 5.36 h over 6 pass(es) |
+| Summed wall clock | 5.75 h over 6 pass(es) |
 
-> **Audited: the token figures above are inflated by a measured factor.** `reports/token-load-audit-2026-06-12.md` § 3.2 recomputed this run's load from `per_item_metadata` and found its `usage_stats` block — which is exactly where the manifest takes a pass's `tokens` from (`_tokens_from_usage`) — **2.0× inflated (factors 2.003–2.016 across axes)**; its `cost_manifest.json` is **2.0× inflated**. The trustworthy source is `per_item_metadata`. Audited clean figures, quoted from § 3.2: 5 passes; clean flex cost US$40.19/pass (range US$39.92–40.45), of which thinking is ~US$34.51; clean per pass input 12,828,582, output mean 1,647,744, thinking mean 23,005,025 (2,693/tile). No run total is derived here: the audit's pass count and this manifest's need not agree, so multiplying would manufacture a figure no file carries.
+> **Audited token load.** `reports/token-load-audit-2026-06-12.md` § 3.2 recomputed this run's load from `per_item_metadata` and found its metas' `usage_stats` **2.0× inflated (factors 2.003–2.016 across axes)**; its `cost_manifest.json` is **2.0× inflated**. Since generator 0.8.0 (2026-10-03) the register reads the per-item sums of any meta the 2026-05-02 recovery merge double-counted, so the figures above are de-duplicated; the trustworthy source is `per_item_metadata`. Audited clean figures, quoted from § 3.2: 5 passes; clean flex cost US$40.19/pass (range US$39.92–40.45), of which thinking is ~US$34.51; clean per pass input 12,828,582, output mean 1,647,744, thinking mean 23,005,025 (2,693/tile). No run total is derived here: the audit's pass count and this manifest's need not agree, so multiplying would manufacture a figure no file carries.
 >
-> **The recorded cost is NOT this run's cost.** Each `cost_usd` above is the pass meta's own `cost_estimate.total_cost_usd`, lifted verbatim by `scripts/generate_post_run_report.py`. The token-load audit of 2026-06-12 established that those self-reported estimates price at STANDARD rates although the audited runs executed at `--service-tier flex` (half price) and omit thinking tokens although Gemini bills thinking at the output rate (`reports/token-load-audit-2026-06-12.md` § 1, § 2). The sum is reproduced here as the recorded figure and as an input to a reconciliation, not as a total to cite.
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
 
@@ -196,9 +197,9 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `f307c1932` |
-| Manifest extractor | `0.7.1` |
-| Run row last extracted | `2026-09-13T09:02:37Z` |
+| Source commit | `fb3767404` |
+| Manifest extractor | `0.8.0` |
+| Run row last extracted | `2026-10-03T07:57:28Z` |
 
 Inputs:
 

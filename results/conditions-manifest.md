@@ -1,8 +1,8 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/conditions-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Conditions manifest
 
-> Generated 2026-09-21T02:51:54Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `fa3385628`.
+> Generated 2026-10-03T07:57:28Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `fb3767404`.
 >
 > **Coverage**: 658 condition(s) across the decomposed runs (sub-step 3b in progress).
 
