@@ -1404,3 +1404,47 @@ def test_c3_compares_timestamps_as_instants(tmp_path, monkeypatch):
     verdicts = {f["field"]: f["verdict"] for f in c3.rederive_pass(row)["fields"]}
     assert verdicts["timestamps.start"] == "MATCH"
     assert verdicts["timestamps.end"] == "MATCH"
+
+
+# ---------------------------------------------------------------------------
+# The applied-tier header (2026-10-03): the API's own record of the billed tier.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_an_applied_header_outranks_every_request_record(evidence, tmp_path):
+    pdir = tmp_path / "run" / "p" / "run_1"
+    # A launch line and an explicit cache both say otherwise; the API said flex.
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["standard"], "explicit_cache": True}}
+    meta = _meta(pdir / "a.meta.json",
+                 per_item_metadata=[{"service_tier_applied": "flex"}] * 3)
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "run")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "applied-header")
+
+
+@pytest.mark.tier1
+def test_mixed_applied_tiers_narrow_rather_than_pin(evidence, tmp_path):
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 per_item_metadata=[{"service_tier_applied": "flex"},
+                                    {"service_tier_applied": "standard"}])
+    out = _cost(evidence(), [meta], tmp_path / "r")
+    assert out["cost_basis"] == "audited-upper-bound"
+    assert set(out["cost_source"]["fragments"][0]["candidates"]) == {"flex", "standard"}
+
+
+@pytest.mark.tier1
+def test_the_tracker_records_the_applied_tier_from_the_header():
+    from datetime import datetime, timezone
+
+    from scripts.lib_llm_metadata import applied_service_tier, extract_gemini_metadata
+
+    class Headers:
+        headers = {"X-Gemini-Service-Tier": "flex"}
+
+    class Response:
+        sdk_http_response = Headers()
+        usage_metadata = None
+
+    assert applied_service_tier(Response()) == "flex"
+    record = extract_gemini_metadata(Response(), datetime.now(timezone.utc)).to_dict()
+    assert record["service_tier_applied"] == "flex"

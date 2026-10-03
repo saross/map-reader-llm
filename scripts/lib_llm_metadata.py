@@ -172,6 +172,11 @@ class LLMResponseMetadata:
 
     # Traffic type (Gemini: ON_DEMAND vs PROVISIONED_THROUGHPUT)
     traffic_type: str | None = None
+    # The tier that SERVED the request, from the x-gemini-service-tier response
+    # header (2026-10-03). The tier a run asked for is not evidence of the
+    # tier it was billed at: the runner's cached path once dropped the
+    # request's tier (plan § 8.3), and only this header says what happened.
+    service_tier_applied: str | None = None
 
     # Completion status
     finish_reason: str = "unknown"        # Normalised: success, max_tokens, safety, etc.
@@ -753,6 +758,37 @@ class LLMMetadataTracker:
 # Provider-Specific Metadata Extraction Functions
 # =============================================================================
 
+def applied_service_tier(response: Any) -> str | None:
+    """The service tier that served a Gemini response, from its headers.
+
+    Gemini reports it in the ``x-gemini-service-tier`` response header
+    (``standard``, ``flex``); ``usage_metadata.traffic_type`` stays empty
+    for these calls. Verified 2026-10-03 against the live API by
+    ``scripts/probe_cache_tier.py``: the header read ``flex`` for a flex
+    request with an explicit cache, and ``standard`` for the pre-fix cached
+    config on a flex launch.
+
+    Args:
+        response: A ``GenerateContentResponse``.
+
+    Returns:
+        The tier, lower-cased, or None when the response carries no header.
+
+    Examples:
+        >>> class R: sdk_http_response = type("H", (), {"headers": {"x-gemini-service-tier": "Flex"}})()
+        >>> applied_service_tier(R())
+        'flex'
+        >>> applied_service_tier(object()) is None
+        True
+    """
+    http = getattr(response, "sdk_http_response", None)
+    headers = getattr(http, "headers", None) or {}
+    for key, value in dict(headers).items():
+        if key.lower() == "x-gemini-service-tier" and value:
+            return str(value).strip().lower()
+    return None
+
+
 def extract_gemini_metadata(
     response: Any,
     request_start: datetime,
@@ -785,6 +821,7 @@ def extract_gemini_metadata(
         latency_ms=latency_ms,
         attempt_number=attempt,
     )
+    metadata.service_tier_applied = applied_service_tier(response)
 
     # Token usage
     if hasattr(response, 'usage_metadata') and response.usage_metadata:

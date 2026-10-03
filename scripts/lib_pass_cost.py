@@ -21,6 +21,9 @@ things that sentence needs and the metas do not record:
    first, and the evidence is cited per pass:
 
    ========================  ==================================================
+   ``applied-header``        the tier that SERVED each request, recorded per item
+                             from the ``x-gemini-service-tier`` response header
+                             (``service_tier_applied``; runs from 2026-10-03)
    ``batch-marker``          ``batch_api`` block in the meta, ``batch_jobs.json``
                              beside it, or ``probabilities.json`` ``mode: batch``
    ``runner-record-batch``   a ``cost/2`` block (WP2 onwards) priced on the Batch
@@ -154,7 +157,8 @@ PACIFIC = ZoneInfo("America/Los_Angeles")
 #: batch marker is a structural fact of the path that ran; the PI's
 #: attestation is recollection, so the machine record outranks it, and the
 #: disagreement is reported either way.
-PIN_PRIORITY = ("batch-marker", "runner-record-batch", "batch-path-pricing", "cached-path",
+PIN_PRIORITY = ("applied-header", "batch-marker", "runner-record-batch", "batch-path-pricing",
+                "cached-path",
                 "runner-record", "run-log", "launch-manifest", "attestation",
                 "run-log-inherited", "launch-manifest-inherited")
 
@@ -507,6 +511,15 @@ class PassCoster:
         """
         out: list[Evidence] = []
         here = meta_path.parent
+        # The API's own statement of the tier that served each request: the
+        # strongest evidence there is, where the run recorded it.
+        applied = {str(it.get("service_tier_applied")).lower()
+                   for it in (meta.get("per_item_metadata") or [])
+                   if it.get("service_tier_applied")}
+        applied &= set(TIERS)
+        if applied:
+            out.append(Evidence("applied-header", tuple(t for t in TIERS if t in applied),
+                                f"{_rel(meta_path)} per-item service_tier_applied"))
         if meta.get("batch_api"):
             out.append(Evidence("batch-marker", ("batch",), f"{_rel(meta_path)} batch_api block"))
         if (here / "batch_jobs.json").exists():
