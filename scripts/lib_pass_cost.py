@@ -92,8 +92,10 @@ statement of what it served outranks what was asked for. Where only some
 responses reported a tier (a meta that merged a pre-header leg), the
 reported tiers WIDEN the candidates instead of narrowing them: the
 unreported responses may have run elsewhere, and narrowing would
-understate; evidence other than a request record that rules a served tier
-out is a conflict. A response served at a tier the rate card does not
+understate. The invoice's tiers for the day (without the volume rule, which
+tests the whole fragment) and the PI's attestation of the meta are set
+against the served tiers as conflicts; a batch marker beside them is a note
+(a real-time cleanup or retry ran too); a request record yields. A response served at a tier the rate card does not
 price makes the fragment unpriceable, because any card tier could
 understate it.
 
@@ -110,9 +112,10 @@ whole day; the two runs whose logs record an explicit cache (``h8-v2`` and
 ``55maps-image-generalisation``) are the two that fall in the April
 standard-tier window. A log directory recording an explicit cache therefore
 pins standard for a real-time fragment beneath it, outranking the launch
-line it sits beside, unless the fragment's own code had the fix: its
-``environment.git_commit`` descends from ``2df65047e``, or every response
-reported its served tier. The test is the code a run executed, not the
+line it sits beside, unless the fragment's own code had the fix: every
+commit its meta records (``environment.git_commit``, or ``git_commits`` for
+a merged meta) descends from ``2df65047e``, or every response reported its
+served tier. The test is the code a run executed, not the
 date it ran: a run launched after the fix from a checkout without it (the
 fix reached ``main`` only when this branch merged) still dropped its tier.
 A meta whose commit cannot be resolved stays subject to the rule, which
@@ -436,9 +439,11 @@ def has_cached_path_fix(commit: Any) -> bool:
     *commit*. A missing commit, one this clone does not hold, or no git at
     all answers False, which keeps the cached-path rule: the conservative
     answer, because the rule can only price a fragment at the dearer tier.
-    Metas written before 2026-10-03 recorded the commit at FINALISE time,
-    so a pull during a run could name a later commit than the code loaded;
-    no such meta has a commit descending from the fix.
+    Metas written before the round-8 fix (2026-10-03) recorded the commit at
+    FINALISE time, so a pull during a run could name a later commit than the
+    code loaded. Of those, only the four probe runs of 2026-10-03 record a
+    commit with the fix (``651a2eb90``), and they ran on it: each lasted
+    under a minute, after the fix was committed.
 
     Args:
         commit: ``environment.git_commit`` from a meta (full or abbreviated).
@@ -747,7 +752,8 @@ class PassCoster:
                 or _every_commit_has_fix(meta.get("environment") or {})):
             # The cached-path rule is about the detection runner's REAL-TIME
             # call on code WITHOUT the fix: a verifier leg, a batch leg, a
-            # fragment whose recorded commit descends from 2df65047e, or one
+            # fragment whose every recorded commit (git_commit, or a merge's
+            # git_commits) descends from 2df65047e, or one
             # whose every response reported the tier that served it, is not
             # subject to it.
             logs = [e for e in logs if e.kind != "cached-path"]
@@ -913,22 +919,32 @@ class PassCoster:
             return self._served_mixed(mixed[0], evidence, notes)
         finding = self._resolve_records(
             [e for e in evidence if e.kind != "applied-header-partial"], conflicts, notes)
+        # The invoice's tiers for the day WITHOUT the volume rule: the volume
+        # rule tests the whole fragment's output, and a partial header speaks
+        # for only part of it (re-audit A, round 9).
+        day_set = self.billing_evidence(model, days,
+                                        continuous=is_continuous(start, end, duration_s))
         for e in partial:
             # Some responses reported the tier that served them, the rest did
             # not: the fragment ran at least partly at each reported tier, so
-            # every one of them is a candidate, whatever the records pin. Only
-            # the invoice speaks for EVERY response of the day, so only a
-            # billing day that rules a served tier out contradicts the API; a
-            # pin may describe the unreported part (a batch leg with a
-            # real-time cleanup merged into it), so it is no conflict
-            # (re-audits A, rounds 7 and 8).
-            for other in finding.evidence:
-                if other.kind != "billing-day":
-                    continue
-                outside = [t for t in e.tiers if t not in other.tiers]
+            # every one of them is a candidate, whatever the records pin.
+            # Contradictions (re-audits A, rounds 7 to 9):
+            # - the invoice's day set, which speaks for every response of the
+            #   day, and the PI's attestation, which names this one meta,
+            #   ruling a served tier out are conflicts;
+            # - a batch marker beside served-tier headers means a real-time
+            #   part (a cleanup or retry) ran too, which is a mix, not a
+            #   contradiction: a note, so a scan still finds it;
+            # - a record of the tier REQUESTED yields silently.
+            for other in [day_set] + [x for x in finding.evidence if x.kind == "attestation"]:
+                outside = [t for t in e.tiers if other and t not in other.tiers]
                 if outside:
                     finding.conflicts.append(f"applied-header-partial served "
                                              f"{'|'.join(outside)} but {other.describe()}")
+            if any(x.kind in BATCH_KINDS for x in finding.evidence) and \
+                    any(t != "batch" for t in e.tiers):
+                finding.notes.append(f"{e.describe()} beside a batch marker: a real-time part "
+                                     "(a cleanup or a retry) ran too")
             extra = [t for t in e.tiers if t not in finding.candidates]
             if not extra:
                 continue

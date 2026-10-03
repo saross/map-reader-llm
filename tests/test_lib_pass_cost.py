@@ -2036,10 +2036,13 @@ def test_an_unhashable_or_odd_commit_keeps_the_rule(commit):
 def test_the_tracker_records_the_commit_it_launched_with(monkeypatch):
     # A pull during a long run must not change the recorded commit: the code
     # that ran is the code loaded at launch.
-    from scripts.lib_llm_metadata import LLMMetadataTracker
-    monkeypatch.setattr(LLMMetadataTracker, "get_git_revision", staticmethod(lambda: "launch"))
-    tracker = LLMMetadataTracker({"model": "gemini-3-flash-preview"}, "x")
-    monkeypatch.setattr(LLMMetadataTracker, "get_git_revision", staticmethod(lambda: "later"))
+    import scripts.lib_llm_metadata as lm
+    # Read once, at import: the cache is already filled before any tracker.
+    assert lm._code_commit.cache_info().currsize == 1
+    monkeypatch.setattr(lm, "_code_commit", lambda: "launch")
+    tracker = lm.LLMMetadataTracker({"model": "gemini-3-flash-preview"}, "x")
+    monkeypatch.setattr(lm, "_code_commit", lambda: "later")
+    monkeypatch.setattr(lm.LLMMetadataTracker, "get_git_revision", staticmethod(lambda: "later"))
     assert tracker.finalise()["environment"]["git_commit"] == "launch"
 
 
@@ -2084,6 +2087,7 @@ def test_a_partial_header_beside_a_batch_marker_is_no_conflict(evidence, tmp_pat
     frag = _cost(evidence(), [meta], tmp_path / "r",
                  stage="verifier")["cost_source"]["fragments"][0]
     assert "conflicts" not in frag
+    assert any("beside a batch marker" in n for n in frag["notes"])  # still findable
     # Widened to flex|batch, which price alike for this model: audited.
     assert frag["tier_method"] == "tier-indifferent: flex|batch"
 
@@ -2205,17 +2209,35 @@ def test_a_merge_with_a_part_that_recorded_no_commit_names_it_unknown(evidence, 
 
 
 @pytest.mark.tier1
-def test_a_partial_header_against_an_attestation_is_no_conflict(evidence, tmp_path):
-    # Like a batch marker, an attestation may describe the unreported part,
-    # so only the invoice can contradict a partial header (round-8 ruling).
+def test_a_partial_header_against_an_attestation_is_a_conflict(evidence, tmp_path):
+    # The PI attested this one meta at flex; one response says standard. An
+    # attestation names the fragment, not a part of it: a contradiction
+    # (round 9), and the price still widens.
     leg = tmp_path / "r" / "v"
     meta = _meta(leg / "run.meta.json", usage=_counted({"standard": 1, "unreported": 4}, 5))
     att = [{"id": "A1", "run_id": "r", "pool": "*", "tier": "flex", "attested_by": "PI",
             "attested_on": "2026-10-03", "evidence": "x"}]
     frag = _cost(evidence(attestations=att), [meta], tmp_path / "r",
                  stage="verifier")["cost_source"]["fragments"][0]
-    assert "conflicts" not in frag
+    assert any(c.startswith("applied-header-partial served standard but attestation")
+               for c in frag["conflicts"])
     assert set(frag["candidates"]) == {"standard", "flex"}
+
+
+@pytest.mark.tier1
+def test_the_volume_rule_does_not_set_a_partial_header_against_the_invoice(evidence, tmp_path):
+    # One response of ten said flex; the day billed 75 k flex output, under
+    # the fragment's 300 k total but over a tenth of it. The day set allows
+    # flex, so nothing contradicts the API (round 9).
+    day = {"2026-05-20": {"project_filter": "unverified", "models": {
+        "gemini-3-flash-preview": {"tiers": {"flex": {"output": 75_000},
+                                             "standard": {"output": 9_000_000}}}}}}
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 usage=_counted({"flex": 1, "unreported": 9}, 10))
+    frag = _cost(evidence(billing={"days": day}), [meta],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert any("not flex" in e for e in frag["evidence"])  # the volume rule did fire
+    assert "conflicts" not in frag
 
 
 @pytest.mark.tier1

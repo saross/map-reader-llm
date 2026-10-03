@@ -34,6 +34,7 @@ Licence: Apache 2.0
 """
 
 import copy
+import functools
 import hashlib
 import json
 import logging
@@ -361,11 +362,14 @@ class LLMMetadataTracker:
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
-        # The commit of the code that RUNS, read at launch. Read at finalise
-        # (before 2026-10-03), a pull during a long run recorded a later
-        # commit than the one loaded, and the cost coster decides whether a
-        # run had the cached-path fix from this field (round-8 audit).
-        self.git_commit_at_launch = self.get_git_revision()
+        # The commit of the code that RUNS: read once, when this module was
+        # first imported, which is when the process loaded its code. Read at
+        # finalise (before 2026-10-03), a pull during a long run recorded a
+        # later commit than the one loaded; read per tracker, a tracker built
+        # after a batch wait or per cleanup attempt could too. The cost coster
+        # decides whether a run had the cached-path fix from this field
+        # (round-8 and round-9 audits).
+        self.git_commit_at_launch = _code_commit()
         self.cli_overrides = {
             key: value
             for key, value in (cli_overrides or {}).items()
@@ -1479,6 +1483,12 @@ def merge_cost_blocks(
     return _merge([original, fresh], merged_usage)
 
 
+@functools.lru_cache(maxsize=1)
+def _code_commit() -> str:
+    """The checkout's commit as this process loaded it (first call, at import)."""
+    return LLMMetadataTracker.get_git_revision()
+
+
 def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, Any]:
     """Merge a recovery meta.json into an original meta.json.
 
@@ -2185,3 +2195,7 @@ def compare_gate_fields(
             "this_pass": candidate_value,
         }
     return differences
+
+
+# Read the code's commit NOW, at import: the moment this process loaded it.
+_code_commit()
