@@ -798,6 +798,11 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # A cleanup that overwrote run.meta.json leaves the main leg preserved
         # beside it; both are this leg's executions (priced, cited, counted).
         main_legs = _preserved_main_legs(meta, meta_path)
+        # And any the overrides file names for this pass (a gitignored backup
+        # the PI force-added; named there, never globbed).
+        listed = _coster().main_legs.get(f"{run_id}::{vdir}::run1", {}).get("metas", [])
+        main_legs += _sibling_metas(meta, [REPO_ROOT / m for m in listed
+                                           if REPO_ROOT / m not in main_legs])
         v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
         n_candidates = _verifier_candidates(v_fragments)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from

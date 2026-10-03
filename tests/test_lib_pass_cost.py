@@ -1448,3 +1448,62 @@ def test_the_tracker_records_the_applied_tier_from_the_header():
     assert applied_service_tier(Response()) == "flex"
     record = extract_gemini_metadata(Response(), datetime.now(timezone.utc)).to_dict()
     assert record["service_tier_applied"] == "flex"
+
+
+# ---------------------------------------------------------------------------
+# PI rulings D20-D22 (2026-10-03).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_an_attestation_can_pin_one_fragment_of_a_pass(evidence, tmp_path):
+    run = tmp_path / "run"
+    leg = run / "v"
+    att = [{"id": "A1", "run_id": "r", "pool": "*", "meta": _rel(leg / "run.meta.main-x.json"),
+            "tier": "flex", "attested_by": "PI", "attested_on": "2026-10-03", "evidence": "x"}]
+    coster = evidence(attestations=att)
+    main = _meta(leg / "run.meta.main-x.json")
+    cleanup = _meta(leg / "run.meta.json")
+    frags = _cost(coster, [cleanup, main], run, stage="verifier")["cost_source"]["fragments"]
+    by_name = {f["meta"].rsplit("/", 1)[-1]: f for f in frags}
+    assert by_name["run.meta.main-x.json"]["tier_method"] == "attestation"
+    assert by_name["run.meta.json"]["tier_method"] != "attestation"
+
+
+@pytest.mark.tier1
+def test_th7_verifier_is_priced_from_its_force_added_backup():
+    # D20: the gitignored main leg, committed and named in cost-overrides.
+    row = _committed_pass("55maps-text-high-generalisation", "verified", 1)
+    names = [f["meta"].rsplit("/", 1)[-1] for f in row["cost_source"]["fragments"]]
+    assert "run.meta.json.pre-recovery-20260502T235106.backup" in names
+    assert row["cost_basis"] == "audited" and row["cost_usd"] == pytest.approx(6.420148)
+    assert row["n_candidates_verified"] == 9_205
+    assert _c3(row)["cost_source.fragments"]["verdict"] == "MATCH"
+
+
+@pytest.mark.tier1
+def test_swap38_is_attested_per_its_notes():
+    # D21: main leg flex, cleanup standard (planning/gemini38-screen-2026-09-04.md).
+    row = _committed_pass("gemini37-screen-2026-08-28",
+                          "g384_ov192_g37-union-k5-verify-swap38", 1)
+    tiers = {f["meta"].rsplit("/", 1)[-1]: (f["tier"], f["tier_method"])
+             for f in row["cost_source"]["fragments"]}
+    assert tiers["run.meta.main-2026-09-04.json"] == ("flex", "attestation")
+    assert tiers["run.meta.json"] == ("standard", "attestation")
+    assert row["cost_basis"] == "audited"
+
+
+@pytest.mark.tier1
+def test_the_superseded_ledger_is_consistent_and_never_priced_in_the_register():
+    # D22: superseded spend is in the project total, never in a pass's cost.
+    import subprocess
+    doc = json.loads((REPO / "data/pricing/superseded-executions.json").read_text())
+    priced = [e for e in doc["executions"] if e["cost_usd"] is not None]
+    assert doc["priced_total_usd"] == pytest.approx(sum(e["cost_usd"] for e in priced))
+    rows = json.loads((REPO / "results/passes-manifest.json").read_text())["passes"]
+    cited = {s for r in rows for s in r["provenance"]["source_files"]}
+    for e in priced:
+        assert (REPO / e["meta"]).exists()
+        assert subprocess.run(["git", "ls-files", "--error-unmatch", e["meta"]], cwd=REPO,
+                              capture_output=True).returncode == 0
+        assert e["meta"] not in cited

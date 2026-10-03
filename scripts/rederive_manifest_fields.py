@@ -183,15 +183,16 @@ def is_verifier_pass(row: dict, decomposition: dict) -> bool:
 
 
 def _is_meta(rel: str) -> bool:
-    """A cited pass meta: ``*.meta.json(.gz)`` or a preserved ``run.meta.*.json``.
+    """A cited pass meta: ``*.meta.json(.gz)`` or a preserved ``run.meta.*`` file.
 
     ``run.meta.main-2026-09-04.json`` (a verifier leg's preserved main leg)
-    does not end in ``.meta.json``; a suffix test alone missed it (re-audit
-    round 3).
+    does not end in ``.meta.json``, nor does the force-added
+    ``run.meta.json.pre-recovery-*.backup``; a suffix test alone missed them
+    (re-audit round 3).
     """
     name = rel.rsplit("/", 1)[-1]
     return (name.endswith((".meta.json", ".meta.json.gz"))
-            or (name.startswith("run.meta.") and name.endswith(".json")))
+            or name.startswith("run.meta."))
 
 
 def _load_meta(rel: str) -> dict:

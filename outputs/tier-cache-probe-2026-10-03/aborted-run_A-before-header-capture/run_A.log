@@ -1,0 +1,22 @@
+Loaded Version: library_plus-hp
+Model: gemini-3-flash
+Workers: 1
+Tile size: 384 (overriding config default 512)
+Limit: 1 tiles
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: flex
+Context cache created: cachedContents/nyee7m1plvp8lzzradwqhwyoifzeh8wgqhlwoz5j (14549 tokens, TTL=600s)
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/tier-cache-probe-2026-10-03/run_A_flex_cache/detections-library_plus-hp-3-flash-2026-10-03.geojson
+Metadata: outputs/tier-cache-probe-2026-10-03/run_A_flex_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json
+Using Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Manifest loaded. Found 487 of 487 tiles (487 remaining to process).
+Applying --limit: 1
+Processing 1 new tiles...
+  0%|          | 0/1 [00:00<?, ?it/s]

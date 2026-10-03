@@ -399,7 +399,11 @@ class PassCoster:
         self.billing = _read_json(billing_path)
         self.log_dirs: dict[str, dict[str, Any]] = _read_json(logs_path)["directories"]
         self.attestations: list[dict[str, Any]] = _read_json(attestations_path)["attestations"]
-        self.overrides: dict[str, dict[str, Any]] = _read_json(overrides_path)["entries"]
+        overrides_doc = _read_json(overrides_path)
+        self.overrides: dict[str, dict[str, Any]] = overrides_doc["entries"]
+        #: Tracked metas holding a leg's overwritten main execution, by pass_id.
+        self.main_legs: dict[str, dict[str, Any]] = overrides_doc.get(
+            "preserved_main_legs", {})
         for pid, entry in self.overrides.items():
             if entry.get("basis") not in ("published", "audited-lower-bound") or not entry.get(
                     "source") or (entry["basis"] == "published" and entry.get("cost_usd") is None):
@@ -564,17 +568,23 @@ class PassCoster:
             out.append(lm)
         return out
 
-    def attestation(self, run_id: str, pool: str, days: list[str]) -> Evidence | None:
+    def attestation(self, run_id: str, pool: str, days: list[str],
+                    meta_path: Path | None = None) -> Evidence | None:
         """The PI's attestation covering this fragment, if any.
 
         An attestation matches on ``run_id``, a glob over ``pool``, and, when
         it lists ``pacific_days``, only a fragment whose every billing day is
-        listed. Two matching attestations naming different tiers are an
-        error in the file, not a conflict to report.
+        listed; when it names ``meta`` (a glob over the repository-relative
+        meta path), only that fragment of the pass (a leg's main run and its
+        cleanup can run at different tiers). Two matching attestations naming
+        different tiers are an error in the file, not a conflict to report.
         """
         hits = []
         for att in self.attestations:
             if att["run_id"] != run_id or not fnmatch.fnmatchcase(pool, att["pool"]):
+                continue
+            if att.get("meta") and not (meta_path is not None and fnmatch.fnmatchcase(
+                    _rel(meta_path), att["meta"])):
                 continue
             listed = att.get("pacific_days")
             if listed and not (days and set(days) <= set(listed)):
@@ -695,7 +705,7 @@ class PassCoster:
         """
         days = pacific_days(start, end)
         evidence = self.direct_evidence(meta, meta_path, run_dir, stage)
-        att = self.attestation(run_id, pool, days)
+        att = self.attestation(run_id, pool, days, meta_path)
         if att:
             evidence.append(att)
         bill = self.billing_evidence(model, days,

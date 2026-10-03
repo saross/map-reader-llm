@@ -1,5 +1,26 @@
 {
- "_README": "Dated attestations of the service tier a pass ran at, for passes the committed evidence cannot pin (no batch marker, no run-log tier line, no launch manifest, and billing days that show more than one tier). Read by scripts/lib_pass_cost.py, which prices a pass with no pinning evidence at the HIGHEST candidate tier as an upper bound (cost_basis 'audited-upper-bound') until an entry here pins it. Each entry: id (unique, never reused), run_id (exact), pool (glob over the register's proposer_pool, '*' for every pool), pacific_days (optional list of Pacific-time billing days; when present the entry applies only to a fragment whose every billing day is listed), tier (standard | flex | batch), attested_by ('PI' for the PI's own recollection or records; anything else must name the derivation), attested_on (ISO date), evidence (what the attestation rests on, with citations). Machine evidence outranks an attestation: a run log, batch marker or launch manifest that disagrees wins, and the disagreement is reported in cost_source.conflicts. Append; never edit or delete an entry - supersede it with a new id and say so in its evidence.",
+ "_README": "Dated attestations of the service tier a pass ran at, for passes the committed evidence cannot pin (no batch marker, no run-log tier line, no launch manifest, and billing days that show more than one tier). Read by scripts/lib_pass_cost.py, which prices a pass with no pinning evidence at the HIGHEST candidate tier as an upper bound (cost_basis 'audited-upper-bound') until an entry here pins it. Each entry: id (unique, never reused), run_id (exact), pool (glob over the register's proposer_pool, '*' for every pool), pacific_days (optional list of Pacific-time billing days; when present the entry applies only to a fragment whose every billing day is listed), meta (optional glob over the repository-relative meta path, to pin one fragment of a pass), tier (standard | flex | batch), attested_by ('PI' for the PI's own recollection or records; anything else must name the derivation), attested_on (ISO date), evidence (what the attestation rests on, with citations). Machine evidence outranks an attestation: a run log, batch marker or launch manifest that disagrees wins, and the disagreement is reported in cost_source.conflicts. Append; never edit or delete an entry - supersede it with a new id and say so in its evidence.",
  "schema": "tier-attestations/1",
- "attestations": []
+ "attestations": [
+  {
+   "id": "A1",
+   "run_id": "gemini37-screen-2026-08-28",
+   "pool": "g384_ov192_g37-union-k5-verify-swap38",
+   "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.main-2026-09-04.json",
+   "tier": "flex",
+   "attested_by": "PI",
+   "attested_on": "2026-10-03",
+   "evidence": "planning/gemini38-screen-2026-09-04.md (Arm V): the main run, 790 of 791 candidates, was launched under --service-tier flex (about US$0.85 flex token basis); the verifier code live on 2026-09-04 (69a081b2c, scripts/lib_verifier.py lines 291-292) forwarded the tier on every request and had no cached path, so no known defect could have switched it. The PI ruled 2026-10-03: flex, per the notes, absent evidence of a deviation."
+  },
+  {
+   "id": "A2",
+   "run_id": "gemini37-screen-2026-08-28",
+   "pool": "g384_ov192_g37-union-k5-verify-swap38",
+   "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.json",
+   "tier": "standard",
+   "attested_by": "PI",
+   "attested_on": "2026-10-03",
+   "evidence": "planning/gemini38-screen-2026-09-04.md (Arm V): the one 503-failed candidate was 'recovered by run_pv.py cleanup at standard tier'. The PI's ruling of 2026-10-03 (tier per the notes) applies."
+  }
+ ]
 }

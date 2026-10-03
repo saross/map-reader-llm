@@ -1,0 +1,43 @@
+{
+ "_README": "Executions whose results were superseded or that were aborted: real, billed project spend that belongs to NO configuration's cost (PI ruling D22, 2026-10-03: excluded from per-run and per-configuration costs, counted in the project total). The register never prices these; the project-total reconciliation (plan WP6) adds them. Figures are on the audited basis (scripts/lib_cost.price_usage over the meta's own usage); null where the execution left no meta. Append as more are found; never delete an entry.",
+ "schema": "superseded-executions/1",
+ "executions": [
+  {
+   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.pre-rerun-1.json",
+   "superseded_by": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1",
+   "kind": "superseded execution (the leg was re-run; its results replaced these)",
+   "model": "gemini-3-flash-preview",
+   "tier": "flex or batch (equal rates for this model)",
+   "cost_usd": 15.082752,
+   "evidence": "33,662,720 input / 2,375,784 output tokens, 2026-09-19 00:37-04:09 UTC; the meta records no tier and no batch marker of its own; Gemini 3 Flash billed only flex on that Pacific day. outputs/gemini3-image-55map-2026-09-16/post_run_report.md § 3.2 (the auditor correctly does not add it to the leg)."
+  },
+  {
+   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/run.meta.pre-rerun-1.json",
+   "superseded_by": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1",
+   "kind": "superseded execution (the leg was re-run; its results replaced these)",
+   "model": "gemini-3-flash-preview",
+   "tier": "flex or batch (equal rates for this model)",
+   "cost_usd": 12.768106,
+   "evidence": "28,672,000 input / 2,013,808 output tokens, 2026-09-19 14:00-18:01 UTC; Gemini 3 Flash billed flex and batch that Pacific day, at equal rates. post_run_report.md § 3.2."
+  },
+  {
+   "meta": null,
+   "path": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/archive-run{2,3,4,5}-fd-storm-attempt1/",
+   "kind": "aborted attempts (a 503 storm), detections kept, no meta",
+   "model": "gemini-3.7-flash",
+   "tier": null,
+   "cost_usd": null,
+   "evidence": "the attempts left detections and an experiment_intent.md but no usage record"
+  },
+  {
+   "meta": null,
+   "path": "outputs/tier-cache-probe-2026-10-03/aborted-run_A-before-header-capture/",
+   "kind": "aborted probe (stopped to add applied-tier capture)",
+   "model": "gemini-3-flash-preview",
+   "tier": "flex",
+   "cost_usd": null,
+   "evidence": "killed within its first request on 2026-10-03; under US$0.01"
+  }
+ ],
+ "priced_total_usd": 27.850858
+}

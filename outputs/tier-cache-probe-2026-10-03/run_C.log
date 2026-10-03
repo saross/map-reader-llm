@@ -1,0 +1,32 @@
+Loaded Version: library_plus-hp
+Model: gemini-3-flash
+Workers: 1
+Tile size: 384 (overriding config default 512)
+Limit: 3 tiles
+  Model 'gemini-3-flash' not found; resolved to 'gemini-3-flash-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: minimal
+Service tier: standard
+Context cache created: cachedContents/vxli9kw9nuqc9drp617rhydbjfl0eo417v6tnbh1 (14549 tokens, TTL=600s)
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.geojson
+Metadata: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json
+Using Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Manifest loaded. Found 487 of 487 tiles (487 remaining to process).
+Applying --limit: 3
+Processing 3 new tiles...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:04<00:08,  4.07s/it] 67%|██████▋   | 2/3 [00:08<00:04,  4.02s/it]100%|██████████| 3/3 [00:12<00:00,  4.03s/it]100%|██████████| 3/3 [00:12<00:00,  4.03s/it]
+Context cache deleted: cachedContents/vxli9kw9nuqc9drp617rhydbjfl0eo417v6tnbh1
+
+Finished. Saved to outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.geojson
+Tile manifest: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.tiles.json
+Metadata saved to outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json
+Tiles processed: 3
+Tiles failed: 0
+Total detections: 3
+Tokens used: 47,202
+Estimated cost: $0.0045

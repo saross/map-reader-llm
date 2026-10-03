@@ -382,7 +382,7 @@ the report cited in `cost_source`.
 | 2 | All writers call WP1 on summed tokens; merges re-price; `cmd_all` uses the audited basis or refuses | tests per writer; a merge-consistency test (`input + cache + output = total`) | local | same PR as WP1 |
 | 3 | Passes schema `cost_basis`, `cost_source`; generator prices from tokens; `_README`; markdown column; C3 ledger semantics. **Built 2026-10-03** (§ 8): tier evidence ladder (`scripts/lib_pass_cost.py`) over committed evidence (`data/pricing/billing-day-tiers.json`, `run-log-tiers.json`, `tier-attestations.json`, `cost-overrides.json`, derived by `scripts/derive_tier_evidence.py`); recovery fragments summed; recovery-merged metas read per-item sums; register regenerated; C3 re-run | schema round-trip; register-vs-auditor test; C3 claim test — **39 tests, three mutations red** | local + sapphire | branch `wp3-cost-basis` + PR |
 | 4 | Back-fill: `cost_audit.json` sidecars for every meta with usage; hypothesis table re-projected; the tile-presence `verifier-costs.json` re-run; the September row of `reports/billing/gemini-spend-by-sku.csv` re-derived from the invoice (FX 1.3904, not the August 1.4389 placeholder). The register regeneration, the run-report projection and the `published` legs moved INTO WP3's PR (the drift tests needed them) | drift checks green; ALL VALID | sapphire | PR from WP3 |
-| 4b | **Frontier cost axis — PROMOTED 2026-10-03 (PI: costs are how the Pareto frontier is computed, and the frontier is a paper result).** Replace `FAMILY_COST` (`scripts/final_board_build.py:153`: 13 hand-entered figures on a stated mixed basis, nine 3.7-campaign families `None` and dropped from the efficiency table) with figures derived from the register per family — proposer passes x N/K plus the verifier legs the family's cells use — each carrying its basis, so the frontier plots an interval where a tier or a leg is unresolved. Settle the six lower-bound verifier legs (IM, TH7, T03, TM, stride A, FOURTH) from the June backup metas or carry them as bounds. Known movement: **IM proposer US$195.40 -> US$359.65** (its explicit-cache passes billed standard, § 8.3); TH7, T03, TM and the uplift reproduce the June audit within cents per pass | a builder test that every family figure traces to register rows; the frontier membership before and after, reported to the PI | sapphire | branch + PR |
+| 4b | **Frontier cost axis — PROMOTED 2026-10-03; basis ruled D19: each configuration priced at the tier it was MEANT to run at, never penalised for an API usage error; superseded executions excluded (D22); floors completed from comparable legs. (PI: costs are how the Pareto frontier is computed, and the frontier is a paper result).** Replace `FAMILY_COST` (`scripts/final_board_build.py:153`: 13 hand-entered figures on a stated mixed basis, nine 3.7-campaign families `None` and dropped from the efficiency table) with figures derived from the register per family — proposer passes x N/K plus the verifier legs the family's cells use — each carrying its basis, so the frontier plots an interval where a tier or a leg is unresolved. Settle the six lower-bound verifier legs (IM, TH7, T03, TM, stride A, FOURTH) from the June backup metas or carry them as bounds. Known movement: **IM proposer US$195.40 -> US$359.65** (its explicit-cache passes billed standard, § 8.3); TH7, T03, TM and the uplift reproduce the June audit within cents per pass | a builder test that every family figure traces to register rows; the frontier membership before and after, reported to the PI | sapphire | branch + PR |
 | 5 | Mislabels corrected (ten sites in § 2; `FAMILY_COST` moved to WP4b); `cost_retrospective.json` gains a basis; the hand-written post-run report gains the caveat; K-ladder drivers take the model from the config | one test per script that its "audited" function calls WP1 | local | small PRs, one per artefact family |
 | 6 | `reconcile_invoice.py` reading the console exports in `docs/costs/` (D17 revised: no BigQuery), the August/September fixtures, and a `docs/methodology` note giving the monthly export routine — which console page, which filters, where the file goes — so it takes minutes | fixture test at the 2 percent gap the reconciliation found | local | main |
 | 7 | Signed rows re-read: `h6-a09-cost-gate` re-derived on the audited basis with a dated signature note (D9 pattern) if the ratios move; every analysis outcome quoting dollars checked against the new register | — | — | main, with the PI |
@@ -538,7 +538,8 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
     the overrides file missed. 142 test cases (99 functions) now pin the rules; each round's
     fresh mutations turned the suite red. Full tier-1 on sapphire: 3,424
     passed.
-12. **Decisions for the PI** (none blocks the merge):
+12. **Decisions for the PI** — RULED 2026-10-03 as D19-D23
+    (`planning/pi-decisions-2026-09-20.md`); the list below is kept as asked:
     - The TH7 verifier's main leg survives only as a gitignored
       `run.meta.json.pre-recovery-*.backup` (9,131 calls; with the live 74,
       the June audit's whole leg at US$6.42). Force-adding that one 6 KB
@@ -568,6 +569,36 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
       (`'a;b'` cuts a following switch) and does not split `N&cmd`; the
       instant comparisons raise on a naive timestamp (every cited stamp is
       offset-aware UTC).
+14. **Settled after the PI's rulings of 2026-10-03** (D19-D23):
+    - **The runner defect is fixed and tested live.** `cached_call_config`
+      copies the full request config (`2df65047e`). The live probe
+      (`outputs/tier-cache-probe-2026-10-03/direct.json`) reproduced the
+      defect (the pre-fix cached config on a flex launch was served
+      `standard`) and the fix (served `flex`); four adjacent runs of the fixed
+      runner served every request at its requested tier, flex or standard,
+      cached or not. The tracker now records the served tier per request
+      from the `x-gemini-service-tier` header, and the coster believes it
+      above everything else (`applied-header`).
+    - **Cleanups no longer overwrite main records**: the verifier cleanup
+      merges since `94bc5c7d9` (2026-09-14, tested); proposer resumes merge
+      since `1ce1a982d` (2026-04-27); `merge_recovery_meta.py`, the tool that
+      double-counted TH7 and IM, now refuses a cumulative input.
+    - TH7's verifier is audited from its force-added backup (D20); swap38 is
+      attested per its notes (D21); superseded executions have a ledger
+      (D22); the frontier will rank configurations at their intended tier
+      (D19, WP4b).
+    - **Pinning the unresolved tiers (follow-up, not frontier-critical):
+      launch-command archaeology.** The session transcripts in
+      `~/cc-archives/` hold the executed launch commands with their flags;
+      `h10`, `h12-v2` and the 2026-04-16 `library_plus-hp` launches show
+      `--use-cache` with `--service-tier flex`, so they ran on the cached
+      path and billed standard. A script that matches each executed launch
+      to its run directory by output path and records `--use-cache` and
+      `--service-tier` per run, as committed and cited evidence, would pin
+      most of the April residue. A cached-token fingerprint does NOT
+      separate explicit from implicit caching (the adjacent runs without
+      an explicit cache got constant implicit hits of 12,187 tokens).
+      The 2026-04-14 export pins `h10` at standard already.
 
 ---
 
