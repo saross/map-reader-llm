@@ -44,6 +44,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import functools
 import json
 import logging
 import sys
@@ -57,6 +58,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
+from scripts.lib_frontier_cost import Priced, default_coster  # noqa: E402
 from scripts.build_55map_leaderboard import (  # noqa: E402
     BOUNDS,
     board_home,
@@ -145,47 +147,171 @@ COINCIDENT = {
                   "evaluation.json",
 }
 
-# Run cost, est. all-in flex, FULL basis (proposer x N/10 + full-union
-# verification for A/B, from the stride55 findings Pareto; audited
-# whole-run spend for the incumbents, token-load audit § 6; uplift at
-# full-cost basis 10 x $4.66 + $11.27). Both of a run's cells (carried
-# and oracle) share the run's cost — the operating point is free.
-FAMILY_COST = {
-    "A-N1": 20.53, "A-N3": 41.22, "A-N5": 59.75, "A-N10": 103.91,
-    "B-N1": 30.99, "B-N3": 65.48, "B-N5": 97.22, "B-N10": 173.59,
-    "TM": 23.4, "TH7": 207.4, "T03": 261.0, "IM": 195.4, "UPL": 57.87,
+#: Each board family's register rows, priced at the uniform discounted tier
+#: (PI ruling D19, amended 2026-10-04): proposer passes x N plus its verifier
+#: leg, or its rung's union at the leg's per-candidate unit. Replaced the
+#: hand-entered FAMILY_COST of 2026-08-27 (13 figures on a mixed basis, the
+#: nine 3.7 families None and dropped from the efficiency table). A family
+#: whose verifier leg is a floor is completed from nominated comparable legs
+#: and marked. Design: planning/wp4b-frontier-cost-design-2026-10-04.md.
+FRONTIER_CONFIG = PROJECT_ROOT / "data/pricing/frontier-configurations.json"
+FAMILY_SPECS: dict = json.loads(
+    FRONTIER_CONFIG.read_text(encoding="utf-8"))["board_families"]
+
+#: Marks a cost completed from comparable legs in the board's tables.
+COMPLETED_MARK = "†"
+
+#: What the board JSON's ``cost_usd`` is, recorded beside the cells.
+COST_AXIS = {
+    "tier": "flex (uniform; equals batch on the rate card)",
+    "ruling": "D19, amended 2026-10-04 (planning/pi-decisions-2026-09-20.md)",
+    "mapping": "data/pricing/frontier-configurations.json",
+    "priced_by": "scripts/lib_frontier_cost.py",
+    "cost_basis": "measured: the family's own register tokens; completed: a verifier "
+                  "leg that is a floor in the register, priced at nominated comparable "
+                  "legs' pooled per-candidate unit",
 }
-
-
-#: 3.7 campaign families (on the board from reference r2). Their audited
-#: all-in flex costs are NOT yet in the cost table -- the campaign card
-#: prices B-geometry K=5 at ~$125-195 all-in (planning/gemini37-55map-
-#: 2026-08-29.md § cost) but no per-cell audited line-item has landed.
-#: Rendered as "--" and excluded from the efficiency table until the PI
-#: supplies the figures; never guessed.
-FAMILY_COST.update({
-    "ARM1-N1": None, "ARM1-N3": None, "ARM1-N5": None,
-    "ARM2-N1": None, "ARM2-N3": None, "ARM2-N5": None,
-    "FOURTH-N1": None, "FOURTH-N3": None, "FOURTH-N10": None,
-})
 
 
 def family_of(label: str) -> str:
     """Cost family for a board cell label."""
-    for fam in sorted(FAMILY_COST, key=len, reverse=True):
+    for fam in sorted(FAMILY_SPECS, key=len, reverse=True):
         if label == fam or label.startswith(fam + "-"):
             return fam
     raise KeyError(label)
 
 
-def cost_of(label: str) -> float | None:
-    """Audited all-in cost for a cell's family, or None if not yet audited."""
-    return FAMILY_COST.get(family_of(label))
+@functools.lru_cache(maxsize=None)
+def family_cost(family: str) -> Priced:
+    """A family's cost at the uniform tier, with the register rows it came from."""
+    return default_coster().configuration_cost(FAMILY_SPECS[family])
 
 
-def fmt_cost(cost: float | None) -> str:
-    """Render a cost cell: ``$123`` or ``--`` when unaudited."""
-    return f"${cost:.0f}" if cost is not None else "—"
+def cost_of(label: str) -> float:
+    """All-in cost (US$, uniform tier) for a cell's family."""
+    return family_cost(family_of(label)).usd
+
+
+def cost_completed(label: str) -> bool:
+    """Whether a cell's family cost completes a floor from comparable legs."""
+    return family_cost(family_of(label)).basis == "completed"
+
+
+def fmt_cost(cost: float | None, completed: bool = False) -> str:
+    """Render a cost cell: ``$123``, ``$123†`` when completed, ``—`` when absent."""
+    if cost is None:
+        return "—"
+    return f"${cost:.0f}{COMPLETED_MARK if completed else ''}"
+
+
+#: The board's sentence on what ``cost`` means (also matched by the cost refresh).
+COST_SENTENCE = (
+    "cannot. `cost` is the run's own register tokens priced at one uniform",
+    "discounted tier (flex, which equals batch; PI ruling D19, amended",
+    "2026-10-04): proposer passes x N plus its verification, from",
+    "`data/pricing/frontier-configurations.json` via",
+    "`scripts/lib_frontier_cost.py`; a run's carried and oracle cells share",
+    f"it, and `{COMPLETED_MARK}` marks a verifier leg completed from comparable",
+    "legs (a floor). See",
+)
+
+
+def efficiency_rows(paper_rows: list[tuple], by_label: dict[str, dict],
+                    tier_of: dict[str, int], tier1: list[str],
+                    cost_fn=None, completed_fn=None) -> list[dict]:
+    """The cost-efficiency table's rows: one per run, plus the Tier-1 ceiling.
+
+    Args:
+        paper_rows: ``(row name, carried label, oracle label)`` on this board.
+        by_label: Board cells by label (``f1_50``, ``precision_50``,
+            ``n_detections``, ``basis``).
+        tier_of: Each label's tier.
+        tier1: The Tier-1 labels, shown as ceiling rows outside the frontier.
+        cost_fn: A label's cost (default :func:`cost_of`); a run whose cost
+            is None has no $/mound claim and is left out, as the board did
+            before every family was priced.
+        completed_fn: Whether a label's cost is completed (default
+            :func:`cost_completed`).
+
+    Returns:
+        Rows sorted by cost, each with its frontier flag and, on the
+        frontier, the marginal US$ per +0.01 F1 from the previous step.
+    """
+    cost_fn = cost_fn or cost_of
+    completed_fn = completed_fn or cost_completed
+    eff_rows = []
+    for row_name, carried, oracle in paper_rows:
+        lbl = carried or oracle
+        c = by_label[lbl]
+        cost = cost_fn(lbl)
+        if cost is None:
+            continue
+        tp = round(c["precision_50"] * c["n_detections"])
+        eff_rows.append({
+            "name": row_name, "label": lbl,
+            "basis": DISPLAY_BASIS.get(row_name, c["basis"]),
+            "cost": cost, "completed": completed_fn(lbl), "f1": c["f1_50"],
+            "tier": tier_of[lbl], "tp": tp,
+            "usd_per_mound": cost / tp})
+    eff_rows.sort(key=lambda r: r["cost"])
+    best_so_far = 0.0
+    for r in eff_rows:
+        r["frontier"] = r["f1"] > best_so_far
+        if r["frontier"]:
+            best_so_far = r["f1"]
+    prev = None
+    for r in eff_rows:
+        if r["frontier"]:
+            if prev is not None:
+                d_f1 = (r["f1"] - prev["f1"]) * 100
+                r["marginal"] = (r["cost"] - prev["cost"]) / d_f1
+            prev = r
+    # T1 ceiling rows: the Tier-1 cell(s), shown for cost comparison
+    # only — outside the deployment-basis frontier computation.
+    for lbl in tier1:
+        c = by_label[lbl]
+        cost = cost_fn(lbl)
+        if cost is None:
+            continue
+        tp = round(c["precision_50"] * c["n_detections"])
+        eff_rows.append({
+            "name": f"{lbl} (T1 ceiling)", "label": lbl,
+            "basis": c["basis"], "cost": cost, "completed": completed_fn(lbl),
+            "f1": c["f1_50"], "tier": tier_of[lbl], "tp": tp,
+            "usd_per_mound": cost / tp, "frontier": "ceiling"})
+    eff_rows.sort(key=lambda r: r["cost"])
+    return eff_rows
+
+
+def render_efficiency(eff_rows: list[dict]) -> list[str]:
+    """The "Cost efficiency" section, heading to table, as markdown lines."""
+    lines = [
+        "## Cost efficiency: what a dollar buys",
+        "",
+        "One row per run at its DEPLOYMENT basis (carried where one",
+        "exists, otherwise the rung oracle, marked). `$/mound` is the",
+        "run's cost at the uniform discounted tier (D19) per true-positive",
+        "mound at 50 m — the project's established per-mound economics.",
+        "`marginal $/+0.01 F1` prices each step UP the cost-sorted Pareto",
+        "frontier (— = dominated: a cheaper run scores higher). Plain",
+        "F1-per-dollar is deliberately omitted — it is maximised by the",
+        f"cheapest run almost regardless of quality. `{COMPLETED_MARK}`: a verifier",
+        "leg completed from comparable legs.",
+        "",
+        "| run | basis | cost | F1@50 (tier) | TP mounds | $/mound | "
+        "frontier | marginal $/+0.01 F1 |",
+        "|---|---|---:|---|---:|---:|---|---:|",
+    ]
+    for r in eff_rows:
+        marg = (f"${r['marginal']:.2f}" if r.get("marginal") is not None
+                and r["frontier"] and "marginal" in r else "—")
+        front = ("ceiling" if r["frontier"] == "ceiling"
+                 else "YES" if r["frontier"] else "—")
+        lines.append(
+            f"| {r['name']} | {r['basis']} | {fmt_cost(r['cost'], r['completed'])} | "
+            f"{r['f1']:.4f} (T{r['tier']}) | {r['tp']:,} | "
+            f"${r['usd_per_mound']:.4f} | {front} | {marg} |")
+    return lines
 
 
 def compact_letters(ordered_labels: list[str],
@@ -528,8 +654,10 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "cells": [{**{k: v for k, v in c.items()
                       if k not in ("tp", "fp", "fn")},
                    "group": cld[c["label"]],
-                   "cost_usd": cost_of(c["label"])}
+                   "cost_usd": cost_of(c["label"]),
+                   "cost_basis": family_cost(family_of(c["label"])).basis}
                   for c in ordered],
+        "cost_axis": COST_AXIS,
         "pairwise": pairs,
     }
     (out / "final_board_50m.json").write_text(
@@ -561,7 +689,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         mcc = f"{c['mcc']:.3f}" if c["mcc"] is not None else "—"
         lines.append(
             f"| {i} | {c['label']} | {c['basis']} | "
-            f"{tier_of[c['label']]} | {cld[c['label']]} | {fmt_cost(cost_of(c['label']))} | "
+            f"{tier_of[c['label']]} | {cld[c['label']]} | "
+            f"{fmt_cost(cost_of(c['label']), cost_completed(c['label']))} | "
             f"{c['point']} | {c['f1_50']:.4f} | "
             f"[{c['ci'][0]:.4f}, {c['ci'][1]:.4f}] | "
             f"{c['precision_50']:.4f} | {c['recall_50']:.4f} | {mcc} | "
@@ -572,8 +701,7 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "bands); `group` is the compact letter display — cells sharing ANY",
         "letter are statistically indistinguishable under the BH-adjusted",
         "pairwise tests, so letters show the overlaps the disjoint tiers",
-        "cannot. `cost` is the run's audited all-in flex spend (full",
-        "basis); a run's carried and oracle cells share it. See",
+        *COST_SENTENCE,
         "`significance-groups.png` for the dot-and-CI plot and the full",
         "pairwise significance matrix.",
     ]
@@ -610,73 +738,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "the board as E82's like-for-like comparability derivation.",
     ]
     # ---- Cost-efficiency table: one row per run, deployment basis. ----
-    eff_rows = []
-    for row_name, carried, oracle in paper_rows:
-        lbl = carried or oracle
-        c = by_label[lbl]
-        cost = cost_of(lbl)
-        if cost is None:
-            continue  # unaudited family: no $/mound claim
-        tp = round(c["precision_50"] * c["n_detections"])
-        eff_rows.append({
-            "name": row_name, "label": lbl,
-            "basis": DISPLAY_BASIS.get(row_name, c["basis"]),
-            "cost": cost, "f1": c["f1_50"],
-            "tier": tier_of[lbl], "tp": tp,
-            "usd_per_mound": cost / tp})
-    eff_rows.sort(key=lambda r: r["cost"])
-    best_so_far = 0.0
-    for r in eff_rows:
-        r["frontier"] = r["f1"] > best_so_far
-        if r["frontier"]:
-            best_so_far = r["f1"]
-    prev = None
-    for r in eff_rows:
-        if r["frontier"]:
-            if prev is not None:
-                d_f1 = (r["f1"] - prev["f1"]) * 100
-                r["marginal"] = (r["cost"] - prev["cost"]) / d_f1
-            prev = r
-    # T1 ceiling rows: the Tier-1 cell(s), shown for cost comparison
-    # only — outside the deployment-basis frontier computation.
-    for lbl in tiers[0]:
-        c = by_label[lbl]
-        cost = cost_of(lbl)
-        if cost is None:
-            continue
-        tp = round(c["precision_50"] * c["n_detections"])
-        eff_rows.append({
-            "name": f"{lbl} (T1 ceiling)", "label": lbl,
-            "basis": c["basis"], "cost": cost, "f1": c["f1_50"],
-            "tier": tier_of[lbl], "tp": tp,
-            "usd_per_mound": cost / tp, "frontier": "ceiling"})
-    eff_rows.sort(key=lambda r: r["cost"])
-    lines += [
-        "",
-        "## Cost efficiency: what a dollar buys",
-        "",
-        "One row per run at its DEPLOYMENT basis (carried where one",
-        "exists, otherwise the rung oracle, marked). `$/mound` is the",
-        "run's full flex cost per true-positive mound at 50 m — the",
-        "project's established per-mound economics. `marginal $/+0.01 F1`",
-        "prices each step UP the cost-sorted Pareto frontier (— =",
-        "dominated: a cheaper run scores higher). Plain F1-per-dollar is",
-        "deliberately omitted — it is maximised by the cheapest run",
-        "almost regardless of quality.",
-        "",
-        "| run | basis | cost | F1@50 (tier) | TP mounds | $/mound | "
-        "frontier | marginal $/+0.01 F1 |",
-        "|---|---|---:|---|---:|---:|---|---:|",
-    ]
-    for r in eff_rows:
-        marg = (f"${r['marginal']:.2f}" if r.get("marginal") is not None
-                and r["frontier"] and "marginal" in r else "—")
-        front = ("ceiling" if r["frontier"] == "ceiling"
-                 else "YES" if r["frontier"] else "—")
-        lines.append(
-            f"| {r['name']} | {r['basis']} | ${r['cost']:.0f} | "
-            f"{r['f1']:.4f} (T{r['tier']}) | {r['tp']:,} | "
-            f"${r['usd_per_mound']:.4f} | {front} | {marg} |")
+    eff_rows = efficiency_rows(paper_rows, by_label, tier_of, tiers[0])
+    lines += ["", *render_efficiency(eff_rows)]
     lines += [
         "",
         "## Post-hoc: the emergent N = 3 carried cells",

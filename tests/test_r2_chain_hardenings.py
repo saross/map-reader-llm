@@ -277,12 +277,20 @@ def test_committed_pins_match_the_tree():
 
 
 @pytest.mark.tier1
-def test_build_tolerates_unaudited_3_7_costs():
-    """family_of must not KeyError on a 3.7 label; cost renders as a dash."""
+def test_every_board_family_is_priced_including_the_3_7_cells():
+    """family_of resolves every 3.7 label, and since WP4b (2026-10-04) each is priced.
+
+    Before WP4b the nine 3.7 families had no cost and rendered as a dash; the
+    register now prices them (``data/pricing/frontier-configurations.json``).
+    """
     assert fbb.family_of("ARM1-N3-oracle") == "ARM1-N3"
-    assert fbb.cost_of("FOURTH-N10-carried") is None
+    assert fbb.family_of("FOURTH-N5-carried") == "FOURTH-N5"  # absent from the old table
+    assert fbb.cost_of("FOURTH-N10-carried") == pytest.approx(198.17, abs=0.01)
+    assert fbb.cost_completed("FOURTH-N10-carried") is True
+    assert fbb.cost_completed("ARM2-N5-oracle") is False
     assert fbb.fmt_cost(None) == "—"
     assert fbb.fmt_cost(97.22) == "$97"
+    assert fbb.fmt_cost(30.39, completed=True) == "$30†"
 
 
 @pytest.mark.tier1
