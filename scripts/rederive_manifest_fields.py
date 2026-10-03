@@ -34,6 +34,7 @@ import argparse
 import gzip
 import json
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -647,10 +648,11 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
     ends = [dig(mm, "timestamp.end", "end_time") for mm in metas]
     starts = [s for s in starts if s]
     ends = [e for e in ends if e]
+    # As instants, not strings: offsets differ across meta eras (re-audit round 4).
     fields.append(verdict_row("timestamps.start", man_ts.get("start"),
-                              min(starts) if starts else None))
+                              min(starts, key=datetime.fromisoformat) if starts else None))
     fields.append(verdict_row("timestamps.end", man_ts.get("end"),
-                              max(ends) if ends else None))
+                              max(ends, key=datetime.fromisoformat) if ends else None))
     fields.append(verdict_row(
         "retries", row.get("retries"),
         agg_retries if have_ex else dig(meta, "retries")))

@@ -139,11 +139,15 @@ CACHE_LINE = re.compile(r"^Context cache created: ", re.MULTILINE)
 #: switch is that stage's requested tier. Only a command marks the stage: a
 #: looser pattern ("verif") is tripped by an output path such as
 #: ``outputs/verifier-t-pilot/`` or by the word "unverified" (re-audit round 2).
-VERIFIER_CMD = re.compile(r"run_pv\.py\s+(?:verify|cleanup)\b|5_verify_crops")
+#: A back-quoted mention ("Run `run_pv.py cleanup` to retry", an error hint) is
+#: not a command (re-audit round 4).
+VERIFIER_CMD = re.compile(r"(?<!`)run_pv\.py\s+(?:verify|cleanup)\b|(?<!`)5_verify_crops")
 SWITCH = re.compile(r"--service-tier[= ]([a-z]+)")
 
-#: Where one command ends on a combined command line.
-COMMAND_END = re.compile(r"&&|\|\||;|\||&")
+#: Where one command ends on a combined command line: ``&&``, ``||``, ``;``,
+#: ``|``, or a background ``&`` — but not the ``&`` of a redirect (``2>&1``,
+#: ``&>``) or inside a value such as a URL query (re-audit round 4).
+COMMAND_END = re.compile(r"&&|\|\||;|\||(?<![>\d&=])&(?![>&\w])")
 
 #: The service tiers a tier line may name; anything else is recorded as unknown
 #: rather than passed on as a tier.

@@ -1294,3 +1294,74 @@ def test_log_evidence_cites_only_the_logs_that_supplied_the_tier(evidence, tmp_p
         "cost_source"]["fragments"][0]
     ref = next(e for e in frag["evidence"] if e.startswith("run-log"))
     assert "launch.log" in ref and "notes.log" not in ref
+
+
+# ---------------------------------------------------------------------------
+# Audit round 5 (fourth re-audit, 2026-10-03): the helpers it found untested.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("log", "verifier_tiers"), [
+    ("run_pv.py verify --x y 2>&1 --service-tier flex\n", ["flex"]),
+    ("run_pv.py verify --x y &>log --service-tier flex\n", ["flex"]),
+    ("run_pv.py verify --url 'h?a=1&b=2' --service-tier flex\n", ["flex"]),
+    ("Run `run_pv.py cleanup` to retry\nService tier: standard\n", []),
+])
+def test_redirects_and_quoted_hints_do_not_break_a_verifier_command(log, verifier_tiers):
+    from scripts.derive_tier_evidence import parse_log
+    assert parse_log(log)["verifier_tiers"] == verifier_tiers
+
+
+@pytest.mark.tier1
+def test_span_compares_instants_not_strings():
+    from scripts.generate_post_run_report import _span
+    a = {"start": "2026-09-04T14:00:00+10:00", "end": "2026-09-04T14:39:16+10:00"}
+    b = {"start": "2026-09-04T04:40:40+00:00", "end": "2026-09-04T04:41:00+00:00"}
+    # 14:00+10:00 is 04:00 UTC, before 04:40 UTC; a string comparison gets both wrong.
+    assert _span([a, b]) == {"start": a["start"], "end": b["end"]}
+    assert _span([None, b]) == b
+    assert _span([None]) is None
+
+
+@pytest.mark.tier1
+def test_sum_or_none_keeps_null_when_nothing_was_recorded():
+    from scripts.generate_post_run_report import _sum_or_none
+    assert _sum_or_none([None, None]) is None
+    assert _sum_or_none([2.5, None, 1.0]) == 3.5
+
+
+@pytest.mark.tier1
+def test_verifier_candidates_count_over_every_meta():
+    from scripts.generate_post_run_report import _verifier_candidates
+    p = Path("x")
+    done = [({"execution_stats": {"completed_items": ["a", "b"]}}, p),
+            ({"execution_stats": {"completed_items": ["b", "c"]}}, p)]
+    assert _verifier_candidates(done) == 3  # a union, not a sum
+    processed = [({"execution_stats": {"items_processed": 5}}, p),
+                 ({"execution_stats": {"items_processed": 2}}, p)]
+    assert _verifier_candidates(processed) == 7
+    calls = [({"usage_stats": {"by_provider": {"google_gemini": {"request_count": 4}}}}, p),
+             ({"usage_stats": {"by_provider": {"google_gemini": {"request_count": 1}}}}, p)]
+    assert _verifier_candidates(calls) == 5
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("source", "is_meta"), [
+    ("outputs/r/p/run_1/detections-x.meta.json", True),
+    ("outputs/r/p/run_1/detections-x.meta.json.gz", True),
+    ("outputs/r/v/run.meta.json", True),
+    ("outputs/r/v/run.meta.main-2026-09-04.json", True),
+    ("results/run-conditions.json", False),
+    ("outputs/r/v/run.log", False),
+    ("outputs/r/v/probabilities.json", False),
+])
+def test_c3_knows_which_cited_sources_are_metas(source, is_meta):
+    from scripts.rederive_manifest_fields import _is_meta
+    assert _is_meta(source) is is_meta
+
+
+@pytest.mark.tier1
+def test_a_basis_priced_at_zero_still_has_a_figure():
+    from scripts.generate_run_reports import _basis_sums
+    assert _basis_sums([{"cost_basis": "audited", "cost_usd": 0.0}]) == "audited US$0.0000 (1)"

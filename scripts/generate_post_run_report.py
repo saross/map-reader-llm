@@ -406,11 +406,37 @@ def _sum_or_none(values: list) -> float | None:
 
 
 def _span(stamps: list[dict | None]) -> dict | None:
-    """Earliest start and latest end over several ``{start, end}`` blocks."""
-    present = [t for t in stamps if t]
+    """Earliest start and latest end over several ``{start, end}`` blocks.
+
+    Compared as instants, not strings: ``14:39+10:00`` is earlier than
+    ``04:40+00:00`` (re-audit round 4).
+    """
+    present = [t for t in stamps if t and t.get("start") and t.get("end")]
     if not present:
         return None
-    return {"start": min(t["start"] for t in present), "end": max(t["end"] for t in present)}
+    instant = datetime.fromisoformat
+    return {"start": min((t["start"] for t in present), key=instant),
+            "end": max((t["end"] for t in present), key=instant)}
+
+
+def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
+    """Candidate crops a verifier leg completed, over all its metas.
+
+    The union of ``completed_items``; else the sum of ``items_processed``;
+    else the sum of the request counts (eras that left ``execution_stats``
+    empty, where requests equal completions when nothing was retried).
+    """
+    completed = {c for m, _ in fragments
+                 for c in ((m.get("execution_stats") or {}).get("completed_items") or [])}
+    if completed:
+        return len(completed)
+    processed = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
+                    for m, _ in fragments)
+    if processed:
+        return processed
+    return sum(int((((m.get("usage_stats") or {}).get("by_provider") or {})
+                    .get("google_gemini") or {}).get("request_count") or 0)
+               for m, _ in fragments)
 
 
 def _preserved_main_legs(primary: dict, primary_path: Path) -> list[Path]:
@@ -436,7 +462,8 @@ def _preserved_main_legs(primary: dict, primary_path: Path) -> list[Path]:
     """
     if primary_path.name != "run.meta.json":
         return []
-    return _sibling_metas(primary, sorted(primary_path.parent.glob("run.meta.main-*.json")))
+    mains = sorted(primary_path.parent.glob("run.meta.main-*.json"))
+    return _sibling_metas(primary, mains)
 
 
 def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
@@ -732,7 +759,6 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
-        usage = meta.get("usage_stats", {})
         # Model-of-record (E57 / feedback_model_version_consistency): when the meta
         # carries per-item identity, it is authoritative over configuration.model
         # (which is a template default on some runs — gemini-3-flash where the API
@@ -773,17 +799,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # beside it; both are this leg's executions (priced, cited, counted).
         main_legs = _preserved_main_legs(meta, meta_path)
         v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
-        v_completed = [c for m, _ in v_fragments
-                       for c in ((m.get("execution_stats") or {}).get("completed_items") or [])]
-        if v_completed:
-            n_candidates = len(set(v_completed))
-        elif any((m.get("execution_stats") or {}).get("items_processed") for m, _ in v_fragments):
-            n_candidates = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
-                               for m, _ in v_fragments)
-        else:
-            n_candidates = (
-                usage.get("by_provider", {}).get("google_gemini", {}) or {}
-            ).get("request_count", 0)
+        n_candidates = _verifier_candidates(v_fragments)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.

@@ -501,7 +501,8 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
    as JSON and crashed on a cited `run.log` and a gzipped meta. Rebuilt and
    re-run: every cost field certifies (`cost_usd` 1,339 MATCH; fragments,
    stamps and basis label 527; bounds 211 + 211). Reading run_pv's `item_id`
-   cleared 131 `status` false alarms; the **414** non-cost MISMATCH verdicts
+   cleared 126 `status` false alarms (540 to 414 between committed C3
+   reports); the **414** non-cost MISMATCH verdicts
    that remain (wall clock and end time on recovery passes, tile counts,
    `model_requested`, retries) predate this work and are queued for a look,
    since some may be the same kind of parsing gap.
@@ -564,7 +565,7 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
 | register total | US$3,086.02 | US$3,088.53 (swap38's main leg priced) |
 | tier lower bound | US$2,827.06 | US$2,828.71 |
 | lower-bound legs | 6 (overrides) | 28 (5 overrides + detected by coverage) |
-| C3 non-cost MISMATCH | 538 | 414 (131 `status` false alarms cleared) |
+| C3 non-cost MISMATCH | 538 | 414 (126 `status` false alarms cleared; the round-4 commit message's "545 to 414, 131" counted an uncommitted build) |
 | tests in `tests/test_lib_pass_cost.py` | 39 cases | 123 cases (91 functions) |
 
 What did NOT change: no proposer pass's cost moved in rounds 2 to 4; the
