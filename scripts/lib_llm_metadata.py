@@ -1515,7 +1515,10 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
     for part in (original, recovery):
         env = part.get("environment") or {}
         for commit in env.get("git_commits") or [env.get("git_commit")]:
-            if commit and commit not in commits:
+            # A part that recorded no commit is UNKNOWN code, never skipped:
+            # skipping it would let the other part's commit speak for both.
+            commit = commit or "unknown"
+            if commit not in commits:
                 commits.append(commit)
     if len(commits) > 1:
         merged["environment"] = {**(original.get("environment") or {}),

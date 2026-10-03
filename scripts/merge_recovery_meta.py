@@ -49,7 +49,11 @@ This script merges the recovery meta into the original (pre-recovery) meta:
   per-item entries; original failed items remain in original metadata).
   Duplicates by ``item_id`` are resolved to the recovery entry (latest).
 
-- Other top-level fields (run_id, environment, configuration, results_summary,
+- ``environment``: kept from original, plus ``git_commits`` listing every
+  commit that contributed when the parts differ (a part that recorded none
+  adds ``"unknown"``), so a reader can tell which code ran.
+
+- Other top-level fields (run_id, configuration, results_summary,
   tpm_governor): kept from original. A ``recovery_history`` field is appended
   to track the merge (initial_failed, recovered, still_failing IDs, recovery
   cost, recovery timestamp).

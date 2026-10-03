@@ -2140,3 +2140,86 @@ def test_a_merge_with_a_pre_fix_part_stays_on_the_cached_path(evidence, tmp_path
                       environment={"git_commit": AFTER_FIX, "git_commits": [AFTER_FIX, FIX_COMMIT]})
     frag = _cost(evidence(logs=logs), [only_post], tmp_path / "r")["cost_source"]["fragments"][0]
     assert frag["tier_method"] == "run-log"
+
+
+
+# ---------------------------------------------------------------------------
+# Round 9 (2026-10-03): the real git call, C3's negative, hash shapes.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_the_tracker_reads_its_own_checkout_from_anywhere(monkeypatch, tmp_path):
+    # From a directory outside any checkout, the tracker still records the
+    # commit of the code it loaded (its own directory's HEAD), a full hash.
+    import subprocess
+
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+    head = subprocess.run(["git", "-C", str(REPO), "rev-parse", "HEAD"], capture_output=True,
+                          text=True, check=True).stdout.strip()
+    monkeypatch.chdir(tmp_path)
+    assert LLMMetadataTracker.get_git_revision() == head
+    assert LLMMetadataTracker({"model": "m"}, "x").finalise()["environment"]["git_commit"] == head
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("counts", "foreign"), [
+    ({"flex": 2, "unreported": 1}, False),     # card tiers and unreported: priceable
+    ({"Flex": 1, "STANDARD": 1}, False),       # case does not make a tier foreign
+    ({"priority": 1, "flex": 1}, True),
+])
+def test_c3_calls_only_a_tier_off_the_card_foreign(counts, foreign):
+    from scripts.rederive_manifest_fields import _unpriceable_reason
+    meta = {"usage_stats": {**USAGE, "served_tier_counts": counts},
+            "timestamp": {"start": "2026-05-20T10:00:00+00:00",
+                          "end": "2026-05-20T11:00:00+00:00"}}
+    why = _unpriceable_reason({"model_used": "gemini-3-flash-preview"}, [meta])
+    assert (why is not None and "rate card does not price" in why) is foreign
+    per_item = {**meta, "usage_stats": USAGE,
+                "per_item_metadata": [{"service_tier_applied": t} for t in counts]}
+    why = _unpriceable_reason({"model_used": "gemini-3-flash-preview"}, [per_item])
+    assert (why is not None and "rate card does not price" in why) is foreign
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("commit", [AFTER_FIX + "~0", AFTER_FIX + "^", "651a2e", "651A2EB90"])
+def test_only_a_plain_hash_can_lift_the_rule(commit):
+    # git itself accepts <hash>~0 and <hash>^ (and would answer yes); a
+    # six-character prefix or upper-case hex is not what the tracker writes.
+    from scripts.lib_pass_cost import has_cached_path_fix
+    assert has_cached_path_fix(commit) is False
+
+
+@pytest.mark.tier1
+def test_a_merge_with_a_part_that_recorded_no_commit_names_it_unknown(evidence, tmp_path):
+    from scripts.lib_llm_metadata import merge_meta
+    base = {"execution_stats": {}, "usage_stats": {}, "timestamp": {}}
+    merged = merge_meta({**base, "environment": {"git_commit": AFTER_FIX_FULL}},
+                        {**base, "environment": {}})
+    assert merged["environment"]["git_commits"] == [AFTER_FIX_FULL, "unknown"]
+    # The recovery side's own list is read too, not just the original's.
+    nested = merge_meta({**base, "environment": {"git_commit": AFTER_FIX_FULL}},
+                        {**base, "environment": {"git_commit": FIX_COMMIT,
+                                                 "git_commits": [FIX_COMMIT, BEFORE_FIX]}})
+    assert nested["environment"]["git_commits"] == [AFTER_FIX_FULL, FIX_COMMIT, BEFORE_FIX]
+
+
+@pytest.mark.tier1
+def test_a_partial_header_against_an_attestation_is_no_conflict(evidence, tmp_path):
+    # Like a batch marker, an attestation may describe the unreported part,
+    # so only the invoice can contradict a partial header (round-8 ruling).
+    leg = tmp_path / "r" / "v"
+    meta = _meta(leg / "run.meta.json", usage=_counted({"standard": 1, "unreported": 4}, 5))
+    att = [{"id": "A1", "run_id": "r", "pool": "*", "tier": "flex", "attested_by": "PI",
+            "attested_on": "2026-10-03", "evidence": "x"}]
+    frag = _cost(evidence(attestations=att), [meta], tmp_path / "r",
+                 stage="verifier")["cost_source"]["fragments"][0]
+    assert "conflicts" not in frag
+    assert set(frag["candidates"]) == {"standard", "flex"}
+
+
+@pytest.mark.tier1
+def test_a_two_directory_repository_glob_is_accepted():
+    from scripts.lib_pass_cost import attestation_glob_problem
+    assert attestation_glob_problem(
+        "outputs/gemini37-screen-2026-08-28/verifier/*/verify_swap38/run.meta.json") is None
