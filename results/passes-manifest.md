@@ -1,1349 +1,1349 @@
-<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.7.1. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
+<!-- GENERATED FILE — DO NOT EDIT. Rendered from results/passes-manifest.json by scripts/generate_post_run_report.py v0.8.0. Edit the source-of-truth files and regenerate; --check-renderings is the drift guard (tier-1: tests/test_manifest_renderings.py). -->
 
 # Passes manifest
 
-> Generated 2026-09-20T02:55:12Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `fa3385628`.
+> Generated 2026-10-03T07:57:28Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `a481b858b`.
 >
-> **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress).
+> **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
-| pass_id | model | modality | think | T | status | tiles | cands | cost_usd |
-|---|---|---|---|---|---|---|---|---|
-| 55maps-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 1 | — | 0.002995 |
-| 55maps-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 7 | — | 0.01474 |
-| 55maps-generalisation::detect_brief-text::run3 |  | text | high | 0.7 | ok | 1 | — | 0.0 |
-| 55maps-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 3 | — | 0.008457 |
-| 55maps-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 4 | — | 0.007735 |
-| 55maps-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10154 | 12.428556 |
-| 55maps-generalisation::verified-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3 | 0.004322 |
-| 55maps-image-generalisation::library_plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 141.602153 |
-| 55maps-image-generalisation::library_plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 141.50889999999998 |
-| 55maps-image-generalisation::library_plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 141.48731099999998 |
-| 55maps-image-generalisation::library_plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 141.360696 |
-| 55maps-image-generalisation::library_plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 141.49752 |
-| 55maps-image-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.001454 |
-| 55maps-text-high-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 22.884031 |
-| 55maps-text-high-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 22.784937 |
-| 55maps-text-high-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 22.68128 |
-| 55maps-text-high-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 22.702465 |
-| 55maps-text-high-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 22.912065 |
-| 55maps-text-high-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 74 | 0.10168 |
-| 55maps-text-high-t0-3-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 10.780936 |
-| 55maps-text-high-t0-3-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 10.791437 |
-| 55maps-text-high-t0-3-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 10.815438 |
-| 55maps-text-high-t0-3-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 10.807385 |
-| 55maps-text-high-t0-3-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 10.824586 |
-| 55maps-text-high-t0-3-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10539 | 13.800743 |
-| 55maps-text-min-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.335445 |
-| 55maps-text-min-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.34761 |
-| 55maps-text-min-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.355527 |
-| 55maps-text-min-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.332298 |
-| 55maps-text-min-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.352437 |
-| 55maps-text-min-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 39 | 0.052845 |
-| gold-standard-v2::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 1.3148469999999999 |
-| gold-standard-v2::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 1.3359299999999998 |
-| gold-standard-v2::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 1.3141280000000002 |
-| gold-standard-v2::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.66163 |
-| gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 1.348076 |
-| gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 11 | 0.015619 |
-| h10::pool_020_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.39313 |
-| h10::pool_020_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.406915 |
-| h10::pool_020_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.409139 |
-| h10::pool_020_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.393349 |
-| h10::pool_020_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.394448 |
-| h10::pool_040_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.401262 |
-| h10::pool_040_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.403023 |
-| h10::pool_040_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.408915 |
-| h10::pool_040_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.399924 |
-| h10::pool_040_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.395175 |
-| h10::pool_080_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.410264 |
-| h10::pool_080_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.413941 |
-| h10::pool_080_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.416138 |
-| h10::pool_080_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.414706 |
-| h10::pool_080_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.411148 |
-| h10::pool_160_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.394297 |
-| h10::pool_160_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.379528 |
-| h10::pool_160_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.384721 |
-| h10::pool_160_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.394945 |
-| h10::pool_160_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.38413 |
-| h10::pool_020-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1763 | 2.445043 |
-| h10::pool_160-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1454 | 2.029003 |
-| consensus-384-t1-0::384::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run10 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run11 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run12 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run13 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run14 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run15 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run16 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run17 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run18 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run19 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run20 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run21 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run22 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run23 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run24 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run25 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run26 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run27 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run28 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run29 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run30 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run4 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run5 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run6 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run7 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run8 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| consensus-384-t1-0::384::run9 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | 0.0 |
-| e47-propose-brief::propose_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| e47-propose-brief::propose_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| e47-propose-brief::propose_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| e47-propose-brief::propose_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.689781 |
-| e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 0.703235 |
-| e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4149 | 5.670534 |
-| e47-propose-brief::verified-flash-high-text-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57 | 0.077856 |
-| e47-propose-brief::verified-text-baseline::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1180 | 1.636178 |
-| n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 |
-| n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 |
-| n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 |
-| n1-outstanding-384::image-t0::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968198 |
-| n1-outstanding-384::image-t0::run2 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968532 |
-| n1-outstanding-384::image-t0::run3 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 3.968382 |
-| n1-outstanding-384::image-t03::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.969399 |
-| n1-outstanding-384::image-t03::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.968975 |
-| n1-outstanding-384::image-t03::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.96837 |
-| n1-outstanding-384::pro-image-high-t0::run1 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 3.971445 |
-| n1-outstanding-384::pro-image-high-t0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 3.973056 |
-| n1-outstanding-384::pro-image-high-t0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 3.97049 |
-| n1-outstanding-384::pro-text-high-t0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.599392 |
-| n1-outstanding-384::pro-text-high-t0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.59995 |
-| n1-outstanding-384::pro-text-high-t0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.591894 |
-| n1-outstanding-384::pro-image-medium-t07::run1 | gemini-3-flash-preview | image | medium | 0.7 | ok | 487 | — | 4.003194 |
-| n1-outstanding-384::pro-text-medium-t07::run1 | gemini-3-flash-preview | text | medium | 0.7 | ok | 487 | — | 0.646861 |
-| n1-outstanding-384::image-t0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 690 | 0.969774 |
-| n1-pro-rerun-384::pro-text-high-t0::run1 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.850932 |
-| n1-pro-rerun-384::pro-text-high-t0::run2 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.849756 |
-| n1-pro-rerun-384::pro-text-high-t0::run3 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.8592 |
-| n1-pro-rerun-384::pro-text-medium-t07::run1 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 1.862104 |
-| n1-pro-rerun-384::pro-text-medium-t07::run2 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 1.854328 |
-| n1-pro-rerun-384::pro-text-medium-t07::run3 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 1.853536 |
-| n1-pro-rerun-384::pro-image-high-t0::run1 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 15.733846 |
-| n1-pro-rerun-384::pro-image-high-t0::run2 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 15.738586 |
-| n1-pro-rerun-384::pro-image-high-t0::run3 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 15.737074 |
-| n1-pro-rerun-384::pro-image-medium-t07::run1 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 15.71665 |
-| n1-pro-rerun-384::pro-image-medium-t07::run2 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 15.716326 |
-| n1-pro-rerun-384::pro-image-medium-t07::run3 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 15.715846 |
-| proposer-verifier-384::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.139405 |
-| proposer-verifier-384::verified-adversarial-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 0.70047 |
-| proposer-verifier-384::verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.103327 |
-| proposer-verifier-384::verified-brief-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 0.66768 |
-| proposer-verifier-384::verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.143546 |
-| proposer-verifier-384::verified-checklist-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 0.708492 |
-| proposer-verifier-384::verified-cascade-adversarial-checklist::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 271 | 0.068167 |
-| proposer-verifier-384::verified-cascade-checklist-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 326 | 0.400782 |
-| proposer-verifier-512::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 140 | 0.034499 |
-| pv-diag-384::flash-high-image-n5-image-t0.0::run1 | gemini-3-flash-preview | image | high | 0.0 | ok | 484 | — | 0.284125 |
-| pv-diag-384::flash-high-image-n5-image-t0.0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 483 | — | 4.005902 |
-| pv-diag-384::flash-high-image-n5-image-t0.0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 4.005909 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.005138 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.012106 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.011731 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.005218 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.008371 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.004633 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.007802 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.004643 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.004549 |
-| pv-diag-384::flash-high-image-n5-image-t0.3::run9 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.009457 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run1 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run10 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run2 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run3 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run4 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run5 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run6 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run7 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run8 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.7::run9 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.019285 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.014926 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.012053 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.997076 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.013693 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.037534 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.004028 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.023687 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.011342 |
-| pv-diag-384::flash-high-image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 4.014455 |
-| pv-diag-384::flash-high-text-n5-text-t0.0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 0.599322 |
-| pv-diag-384::flash-high-text-n5-text-t0.0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 0.594867 |
-| pv-diag-384::flash-high-text-n5-text-t0.0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 0.596377 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run1 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.641506 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run10 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.632572 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.624907 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.614251 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.626485 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.631252 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run6 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.635287 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run7 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.611416 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run8 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.647551 |
-| pv-diag-384::flash-high-text-n5-text-t0.3::run9 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 0.63481 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run1 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run10 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run11 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run12 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run13 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run14 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run15 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run16 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run17 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run18 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run19 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run2 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run20 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run21 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run22 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run23 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run24 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run25 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run26 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run27 | gemini-3-flash | text | high | 0.7 | partial | 486 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run28 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run29 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run3 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run30 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run4 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run5 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run6 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run7 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run8 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t0.7::run9 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run1 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.676153 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run10 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.661837 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run2 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.662476 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run3 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.666973 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run4 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.656509 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run5 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.643672 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run6 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.649204 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run7 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.660385 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run8 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.667057 |
-| pv-diag-384::flash-high-text-n5-text-t1.0::run9 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 0.675247 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.565162 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.570748 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run3 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.562825 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564913 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run10 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.567301 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572506 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573544 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run4 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572206 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run5 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.570703 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run6 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566584 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run7 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566221 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run8 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573964 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run9 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564361 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577204 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run10 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.584041 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.582955 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577369 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run4 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.58642 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run5 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575215 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run6 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.576508 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run7 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575128 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run8 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575794 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run9 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.574969 |
-| pv-diag-384::image-baseline-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | partial | 483 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.978327 |
-| pv-diag-384::image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979802 |
-| pv-diag-384::image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979023 |
-| pv-diag-384::image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980336 |
-| pv-diag-384::image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.982268 |
-| pv-diag-384::image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.979535 |
-| pv-diag-384::image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.978614 |
-| pv-diag-384::image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.982436 |
-| pv-diag-384::image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980822 |
-| pv-diag-384::image-n5-image-t0.3::run9 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 3.980112 |
-| pv-diag-384::image-n5-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | partial | 486 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run10 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run4 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run5 | gemini-3-flash | image | minimal | 0.7 | partial | 486 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run6 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run7 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run8 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t0.7::run9 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.987417 |
-| pv-diag-384::image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.985335 |
-| pv-diag-384::image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982814 |
-| pv-diag-384::image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.978791 |
-| pv-diag-384::image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.980186 |
-| pv-diag-384::image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982746 |
-| pv-diag-384::image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.982911 |
-| pv-diag-384::image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.980765 |
-| pv-diag-384::image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.984077 |
-| pv-diag-384::image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 3.98625 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run1 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run2 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run3 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run4 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-image-n5-image-t0.7::run5 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run1 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run10 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run2 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run3 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run4 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run5 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run6 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run7 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run8 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-high-text-n5-text-t0.7::run9 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::pro-medium-image-baseline-image-t0.0::run1 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 0.868388 |
-| pv-diag-384::pro-medium-image-baseline-image-t0.0::run2 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 15.721018 |
-| pv-diag-384::pro-medium-image-baseline-image-t0.0::run3 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 15.721186 |
-| pv-diag-384::pro-medium-text-baseline-text-t0.0::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 0.093332 |
-| pv-diag-384::pro-medium-text-baseline-text-t0.0::run2 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 1.864804 |
-| pv-diag-384::pro-medium-text-baseline-text-t0.0::run3 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 1.866316 |
-| pv-diag-384::scale-4-optimal-487::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.991154 |
-| pv-diag-384::scale-4-optimal-487::run10 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.993084 |
-| pv-diag-384::scale-4-optimal-487::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.977342 |
-| pv-diag-384::scale-4-optimal-487::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.990083 |
-| pv-diag-384::scale-4-optimal-487::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.978581 |
-| pv-diag-384::scale-4-optimal-487::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.989253 |
-| pv-diag-384::scale-4-optimal-487::run6 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.982047 |
-| pv-diag-384::scale-4-optimal-487::run7 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.983885 |
-| pv-diag-384::scale-4-optimal-487::run8 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.978878 |
-| pv-diag-384::scale-4-optimal-487::run9 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 4.006638 |
-| pv-diag-384::text-baseline-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | partial | 486 | — | 0.0 |
-| pv-diag-384::text-baseline-611tiles-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | partial | 609 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::text-n10-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | 0.0 |
-| pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 460 | 0.64913 |
-| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3412 | 4.704863 |
-| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 11 | 0.015616 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 9.312105 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 26 | 0.036394 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 8.568145 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 19 | 0.018753 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1 | 0.004679 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 19 | 0.027055 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 9.762715 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3211 | 4.443749 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.001502 |
-| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4638 | 6.398247 |
-| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.00137 |
-| pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1267 | 1.735432 |
-| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4413 | 5.904586 |
-| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2954 | 4.050166 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 17.194908 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 41 | 0.055957 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 15.88269 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 27 | 0.026902 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 17.540207 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 21 | 0.029991 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 18.132628 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 5953 | 8.021783 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3737 | 5.117726 |
-| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6105 | 8.097848 |
-| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3942 | 5.156186 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1108 | 1.504319 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1595 | 2.171592 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1388 | 1.916503 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1955 | 2.687157 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1594 | 2.194248 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2486 | 3.395064 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1926 | 2.653605 |
-| pv-diag-384::image-n5-image-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1114 | 1.553633 |
-| pv-diag-384::image-n5-image-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1039 | 1.377597 |
-| pv-diag-384::image-n5-image-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1450 | 2.029988 |
-| pv-diag-384::image-n5-image-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1126 | 1.57265 |
-| pv-diag-384::image-n5-image-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1975 | 2.739647 |
-| pv-diag-384::image-n5-image-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1456 | 2.006568 |
-| pv-diag-384::scale-4-optimal-487-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.001484 |
-| pv-diag-384::scale-4-optimal-487-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2218 | 3.05986 |
-| pv-diag-384::verified-flash-high-image-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-high-text-1of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-high-text-1of30::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-high-text-1of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-high-text-1of5-flash-high-verifier::run1 | gemini-3-flash-preview | text | high | 0.0 | ok | — | 3736 | 0.892958 |
-| pv-diag-384::verified-flash-high-text-1of5-flash-medium-verifier::run1 | gemini-3-flash-preview | text | medium | 0.0 | ok | — | 1 | 0.001358 |
-| pv-diag-384::verified-flash-high-text-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-minimal-image-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-minimal-text-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-flash-minimal-text-t07-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-1of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-1of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-2of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-3of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-4of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-5of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-baseline::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-image-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-high-image-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 8 | 0.041272 |
-| pv-diag-384::verified-pro-high-text-1of5::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-high-text-1of5-flash-minimal-verifier::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 504 | 0.125975 |
-| pv-diag-384::verified-pro-high-text-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 504 | 2.708988 |
-| pv-diag-384::verified-pro-image-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-image-minimal-verifier::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-medium-image-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 10 | 0.053924 |
-| pv-diag-384::verified-pro-medium-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-text-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-pro-text-minimal-verifier::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-10of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-1of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-2of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-2of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-3of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-3of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-4of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-4of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-5of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-5of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-6of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-7of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-8of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-9of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-baseline::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | 0.0 |
-| pv-diag-384::verified-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 21 | 0.111588 |
-| pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 889 | 1.240619 |
-| pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1319 | 1.819798 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 938 | 1.29976 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1244 | 1.714507 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1012 | 1.399757 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1355 | 1.864447 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1022 | 1.414237 |
-| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1588 | 2.184137 |
-| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1326 | 1.830195 |
-| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2201 | 3.019279 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1370 | 1.890418 |
-| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2755 | 3.773552 |
-| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1495 | 2.060147 |
-| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2848 | 3.900716 |
-| pv-diag-384::image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 729 | 1.018839 |
-| pv-diag-384::image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 885 | 1.234911 |
-| pv-diag-384::image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 694 | 0.975149 |
-| pv-diag-384::image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 950 | 1.327741 |
-| pv-diag-384::image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 792 | 1.105863 |
-| pv-diag-384::image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1174 | 1.631348 |
-| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 872 | 1.218856 |
-| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1619 | 2.2453 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 771 | 1.079076 |
-| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1522 | 2.114786 |
-| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 982 | 1.36754 |
-| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1887 | 2.611356 |
-| pv-diag-384::scale-4-optimal-487-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 830 | 1.158025 |
-| pv-diag-384::scale-4-optimal-487-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1586 | 2.20294 |
-| h12-v2::r1-hn-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.395056 |
-| h12-v2::r1-hn-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.400733 |
-| h12-v2::r1-hn-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.392723 |
-| h12-v2::r1-hn-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.394303 |
-| h12-v2::r1-hn-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.398324 |
-| h12-v2::r3-hp-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.397736 |
-| h12-v2::r3-hp-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.382915 |
-| h12-v2::r3-hp-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | partial | 326 | — | 3.397642 |
-| h12-v2::r3-hp-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.382294 |
-| h12-v2::r3-hp-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.391195 |
-| h8-v2::pure-positive-canon::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.629811 |
-| h8-v2::pure-positive-canon::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.624442 |
-| h8-v2::pure-positive-canon::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.634089 |
-| h8-v2::pure-positive-canon::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.634119 |
-| h8-v2::pure-positive-canon::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.628599 |
-| h8-v2::canonical::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.972151 |
-| h8-v2::canonical::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.982267 |
-| h8-v2::canonical::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.968017 |
-| h8-v2::canonical::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.963796 |
-| h8-v2::canonical::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 1.971391 |
-| h8-v2::plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.680339 |
-| h8-v2::plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.679094 |
-| h8-v2::plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.669935 |
-| h8-v2::plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.685677 |
-| h8-v2::plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.683111 |
-| h8-v2::scale-4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.681356 |
-| h8-v2::scale-4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.686957 |
-| h8-v2::scale-4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.68441 |
-| h8-v2::scale-4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.671474 |
-| h8-v2::scale-4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.67331 |
-| h8-v2::scale-8::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.383344 |
-| h8-v2::scale-8::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.385927 |
-| h8-v2::scale-8::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.390254 |
-| h8-v2::scale-8::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.389447 |
-| h8-v2::scale-8::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.381889 |
-| h8-v2::scale-16::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 4.824209 |
-| h8-v2::scale-16::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 4.822573 |
-| h8-v2::scale-16::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 4.821226 |
-| h8-v2::scale-16::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 4.817957 |
-| h8-v2::scale-16::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 4.817674 |
-| h8-v2::scale-32::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 7.67222 |
-| h8-v2::scale-32::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 7.671206 |
-| h8-v2::scale-32::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 7.678555 |
-| h8-v2::scale-32::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 7.680248 |
-| h8-v2::scale-32::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 7.673872 |
-| h8-v2::scale-4-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1551 | 2.160168 |
-| h8-v2::wbf-scale-4-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 15 | 0.021753 |
-| h8-v2::wbf-scale-8-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1053 | 1.3917 |
-| retest-phase2a::brief-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::brief-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::brief-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::brief-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::brief-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::brief-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::image-only::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::image-only::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::image-only::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2a::verbose-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.0::run2 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.0::run3 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.3::run1 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.3::run2 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.3::run3 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.0::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.0::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.0::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.3::run1 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.3::run2 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track1-image-t1.3::run3 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.0::run2 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.0::run3 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.3::run1 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.3::run2 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.3::run3 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.0::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.0::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.0::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.3::run1 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.3::run2 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2b::track2-text-t1.3::run3 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-canonical::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-plus-hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-scale-4::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-scale-8::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-exploratory-pure-positive-2hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-exploratory-pure-positive-4hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track1-image-exploratory-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track2-text-canonical::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track2-text-plus-hp::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track2-text-pure-positive-canon::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track2-text-scale-4::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2c::track2-text-scale-8::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2d::track1-image-terse::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2d::track1-image-verbose::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2d::track2-text-terse::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2d::track2-text-verbose::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2e::canonical-first::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2e::canonical-last::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2e::config-default::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase2e::random::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run1 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run10 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run11 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run12 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run13 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run14 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run15 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run16 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run17 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run18 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run19 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run2 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run20 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run21 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run22 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run23 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run24 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run25 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run26 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run27 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run28 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run29 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run3 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run30 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run4 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run5 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run6 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run7 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run8 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.3::run9 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run10 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run11 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run12 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run13 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run14 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run15 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run16 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run17 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run18 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run19 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run20 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run21 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run22 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run23 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run24 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run25 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run26 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run27 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run28 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run29 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run30 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run4 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run5 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run6 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run7 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run8 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t0.7::run9 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run10 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run11 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run12 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run13 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run14 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run15 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run16 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run17 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run18 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run19 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run20 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run21 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run22 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run23 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run24 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run25 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run26 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run27 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run28 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run29 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run30 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run4 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run5 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run6 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run7 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run8 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track1-image-t1.0::run9 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run1 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run10 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run11 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run12 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run13 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run14 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run15 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run16 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run17 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run18 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run19 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run2 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run20 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run21 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run22 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run23 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run24 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run25 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run26 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run27 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run28 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run29 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run3 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run30 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run4 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run5 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run6 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run7 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run8 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.3::run9 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run10 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run11 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run12 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run13 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run14 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run15 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run16 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run17 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run18 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run19 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run20 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run21 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run22 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run23 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run24 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run25 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run26 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run27 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run28 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run29 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run30 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run4 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run5 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run6 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run7 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run8 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a::track2-text-t1.0::run9 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run1 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run10 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run11 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run12 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run13 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run14 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run15 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run16 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run17 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run18 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run19 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run2 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run20 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run21 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run22 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run23 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run24 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run25 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run26 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run27 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run28 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run29 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run3 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run30 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run4 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run5 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run6 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run7 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run8 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.3::run9 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run10 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run11 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run12 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run13 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run14 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run15 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run16 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run17 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run18 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run19 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run20 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run21 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run22 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run23 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run24 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run25 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run26 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run27 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run28 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run29 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run30 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run6 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run7 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run8 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t0.7::run9 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run10 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run11 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run12 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run13 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run14 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run15 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run16 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run17 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run18 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run19 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run20 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run21 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run22 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run23 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run24 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run25 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run26 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run27 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run28 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run29 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run30 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run6 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run7 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run8 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-high::track2-text-t1.0::run9 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run10 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run11 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run12 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run13 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run14 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run15 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run16 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run17 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run18 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run19 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run20 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run21 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run22 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run23 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run24 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run25 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run26 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run27 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run28 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run29 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run30 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run6 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run7 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run8 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::high::run9 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3a-replication::minimal::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-a-p5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-b-v5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-c-img5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t1::run1 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t1::run2 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t1::run3 | gemini-3-flash | image | high | 0.4 | partial | 339 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t1::run4 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t1::run5 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t2::run1 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t2::run2 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t2::run3 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t2::run4 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t2::run5 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t4::run1 | gemini-3-flash | image | high | 0.85 | partial | 335 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t4::run2 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t4::run3 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t4::run4 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t4::run5 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t5::run1 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t5::run2 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t5::run3 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t5::run4 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-d-t5::run5 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p1::run1 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p1::run2 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p1::run3 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p1::run4 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p1::run5 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p2::run1 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p2::run2 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p2::run3 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p2::run4 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p2::run5 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p4::run1 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p4::run2 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p4::run3 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p4::run4 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p4::run5 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p5::run1 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p5::run2 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p5::run3 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p5::run4 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track1-image-h9-e-p5::run5 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p1::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p1::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p1::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p1::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p1::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p2::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p2::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p2::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p2::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p2::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p4::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p4::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p4::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p4::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p4::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p5::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p5::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p5::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p5::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-a-p5::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v1::run1 | gemini-3-flash | text | high | 0.7 | partial | 339 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v1::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v1::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v1::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v1::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v2::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v2::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v2::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v2::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v2::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v4::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v4::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v4::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v4::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v4::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v5::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v5::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v5::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v5::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-b-v5::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t1::run1 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t1::run2 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t1::run3 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t1::run4 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t1::run5 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t2::run1 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t2::run2 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t2::run3 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t2::run4 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t2::run5 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t4::run1 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t4::run2 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t4::run3 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t4::run4 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t4::run5 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t5::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t5::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t5::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t5::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-d-t5::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p1::run1 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p1::run2 | gemini-3-flash | text | high | 0.4 | partial | 339 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p1::run3 | gemini-3-flash | text | high | 0.4 | partial | 339 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p1::run4 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p1::run5 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p2::run1 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p2::run2 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p2::run3 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p2::run4 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p2::run5 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p4::run1 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p4::run2 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p4::run3 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p4::run4 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p4::run5 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p5::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p5::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p5::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p5::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-phase3c::track2-text-h9-e-p5::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run10 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run3 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run4 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run5 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run6 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run7 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run8 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| retest-h11-single-pass-384-t0::brief-text-t0::run9 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.0 |
-| verifier-t-pilot::t0-5::run1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | — | 627 | 0.851831 |
-| verifier-t-pilot::t1-0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | — | 614 | 0.854939 |
-| flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.5405490000000001 |
-| flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540316 |
-| flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.541704 |
-| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540711 |
-| flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.543667 |
-| flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.540739 |
-| flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.542455 |
-| flash35-pv-2x2::flash35-min-text-1of10::run7 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.542616 |
-| flash35-pv-2x2::flash35-min-text-1of10::run8 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.54353 |
-| flash35-pv-2x2::flash35-min-text-1of10::run9 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.55021 |
-| flash35-pv-2x2::verified-f3vf::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.001391 |
-| flash35-pv-2x2::verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | — | 1132 | 1.505498 |
-| flash35-pv-2x2::min-f3-verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | — | 1939 | 2.572595 |
-| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.277887 |
-| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.318612 |
-| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.338464 |
-| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.277686 |
-| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 9.319278 |
-| 55maps-text-min-n10-uplift::verified-3of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 16482 | 22.532409 |
-| grid-2026-08-18::g512_ov064-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1402 | 1.935656 |
-| grid-2026-08-18::g512_ov256-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2585 | 3.554404 |
-| grid-2026-08-18::g384_ov048-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1827 | 2.510424 |
-| grid-2026-08-18::g384_ov192-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3319 | 4.542317 |
-| grid-2026-08-18::g384_ov192-union-k10-verify37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 1 | 0.001364 |
-| grid-2026-08-18::g384_ov192-k-ladder-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1826 | 2.506213 |
-| grid-2026-08-18::g384_ov192-k-ladder-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2481 | 3.39789 |
-| grid-2026-08-18::g384_ov192-k-ladder-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2932 | 4.014995 |
-| h13::armb::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.579331 |
-| h13::armb::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.581053 |
-| h13::armb::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.584686 |
-| h13::armc::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.321305 |
-| h13::armc::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.338168 |
-| h13::armc::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 1.337097 |
-| stride-phaseb-2026-08-25::g512_ov176::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.319218 |
-| stride-phaseb-2026-08-25::g512_ov176::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.320647 |
-| stride-phaseb-2026-08-25::g512_ov176::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.315817 |
-| stride-phaseb-2026-08-25::g512_ov176::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.319097 |
-| stride-phaseb-2026-08-25::g512_ov176::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.320835 |
-| stride-phaseb-2026-08-25::g512_ov176::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.317078 |
-| stride-phaseb-2026-08-25::g512_ov176::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.32003 |
-| stride-phaseb-2026-08-25::g512_ov176::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.321004 |
-| stride-phaseb-2026-08-25::g512_ov176::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.318809 |
-| stride-phaseb-2026-08-25::g512_ov176::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.318998 |
-| stride-phaseb-2026-08-25::g384_ov128::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492777 |
-| stride-phaseb-2026-08-25::g384_ov128::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490796 |
-| stride-phaseb-2026-08-25::g384_ov128::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.48815 |
-| stride-phaseb-2026-08-25::g384_ov128::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.489453 |
-| stride-phaseb-2026-08-25::g384_ov128::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490202 |
-| stride-phaseb-2026-08-25::g384_ov128::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490817 |
-| stride-phaseb-2026-08-25::g384_ov128::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492961 |
-| stride-phaseb-2026-08-25::g384_ov128::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492407 |
-| stride-phaseb-2026-08-25::g384_ov128::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.487594 |
-| stride-phaseb-2026-08-25::g384_ov128::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.49274 |
-| stride-phaseb-2026-08-25::g256_ov064::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.789346 |
-| stride-phaseb-2026-08-25::g256_ov064::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.786836 |
-| stride-phaseb-2026-08-25::g256_ov064::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.792691 |
-| stride-phaseb-2026-08-25::g256_ov064::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.789818 |
-| stride-phaseb-2026-08-25::g256_ov064::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.788543 |
-| stride-phaseb-2026-08-25::g256_ov064::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.790218 |
-| stride-phaseb-2026-08-25::g256_ov064::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.784556 |
-| stride-phaseb-2026-08-25::g256_ov064::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.784036 |
-| stride-phaseb-2026-08-25::g256_ov064::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.790927 |
-| stride-phaseb-2026-08-25::g256_ov064::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.788162 |
-| stride-phaseb-2026-08-25::g512_ov320::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.902916 |
-| stride-phaseb-2026-08-25::g512_ov320::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.904779 |
-| stride-phaseb-2026-08-25::g512_ov320::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.908556 |
-| stride-phaseb-2026-08-25::g512_ov320::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.907442 |
-| stride-phaseb-2026-08-25::g512_ov320::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.915614 |
-| stride-phaseb-2026-08-25::g512_ov320::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.897723 |
-| stride-phaseb-2026-08-25::g512_ov320::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.906773 |
-| stride-phaseb-2026-08-25::g512_ov320::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.905991 |
-| stride-phaseb-2026-08-25::g512_ov320::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.906245 |
-| stride-phaseb-2026-08-25::g512_ov320::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.906455 |
-| stride-phaseb-2026-08-25::g512_ov176-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1981 | 2.720897 |
-| stride-phaseb-2026-08-25::g384_ov128-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2387 | 3.273247 |
-| stride-phaseb-2026-08-25::g256_ov064-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3570 | 4.882425 |
-| stride-phaseb-2026-08-25::g512_ov320-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3778 | 5.180915 |
-| stride-phaseb-2026-08-25::g384_ov128-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1290 | 1.773144 |
-| stride-phaseb-2026-08-25::g384_ov128-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1700 | 2.337556 |
-| stride-phaseb-2026-08-25::g384_ov128-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1968 | 2.703249 |
-| stride-phasec-2026-08-25::g384_ov240::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.490146 |
-| stride-phasec-2026-08-25::g384_ov240::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.486229 |
-| stride-phasec-2026-08-25::g384_ov240::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.480767 |
-| stride-phasec-2026-08-25::g384_ov240::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.497961 |
-| stride-phasec-2026-08-25::g384_ov240::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.489984 |
-| stride-phasec-2026-08-25::g384_ov240::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.484684 |
-| stride-phasec-2026-08-25::g384_ov240::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.492131 |
-| stride-phasec-2026-08-25::g384_ov240::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.48582 |
-| stride-phasec-2026-08-25::g384_ov240::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.492055 |
-| stride-phasec-2026-08-25::g384_ov240::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.491483 |
-| stride-phasec-2026-08-25::g384_ov240-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 5250 | 7.144653 |
-| stride-55map-2026-08-25::g384_ov128_55map::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.709325 |
-| stride-55map-2026-08-25::g384_ov128_55map::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.707655 |
-| stride-55map-2026-08-25::g384_ov128_55map::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.710759 |
-| stride-55map-2026-08-25::g384_ov128_55map::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.709049 |
-| stride-55map-2026-08-25::g384_ov128_55map::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.693257 |
-| stride-55map-2026-08-25::g384_ov128_55map::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.695104 |
-| stride-55map-2026-08-25::g384_ov128_55map::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.699071 |
-| stride-55map-2026-08-25::g384_ov128_55map::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.693425 |
-| stride-55map-2026-08-25::g384_ov128_55map::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.699229 |
-| stride-55map-2026-08-25::g384_ov128_55map::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.712784 |
-| stride-55map-2026-08-25::g384_ov192_55map::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.306687 |
-| stride-55map-2026-08-25::g384_ov192_55map::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.369629 |
-| stride-55map-2026-08-25::g384_ov192_55map::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.321188 |
-| stride-55map-2026-08-25::g384_ov192_55map::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.357977 |
-| stride-55map-2026-08-25::g384_ov192_55map::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.302452 |
-| stride-55map-2026-08-25::g384_ov192_55map::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.346846 |
-| stride-55map-2026-08-25::g384_ov192_55map::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.33638 |
-| stride-55map-2026-08-25::g384_ov192_55map::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.347074 |
-| stride-55map-2026-08-25::g384_ov192_55map::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.400187 |
-| stride-55map-2026-08-25::g384_ov192_55map::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.35283 |
-| stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6 | 0.008145 |
-| stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57482 | 78.355447 |
-| stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 29 | 0.037501 |
-| image-b-gs-2026-08-28::g384_ov192_image::run1 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.246036 |
-| image-b-gs-2026-08-28::g384_ov192_image::run10 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.247956 |
-| image-b-gs-2026-08-28::g384_ov192_image::run2 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.242614 |
-| image-b-gs-2026-08-28::g384_ov192_image::run3 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.240114 |
-| image-b-gs-2026-08-28::g384_ov192_image::run4 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.243023 |
-| image-b-gs-2026-08-28::g384_ov192_image::run5 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.246671 |
-| image-b-gs-2026-08-28::g384_ov192_image::run6 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.251138 |
-| image-b-gs-2026-08-28::g384_ov192_image::run7 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.246009 |
-| image-b-gs-2026-08-28::g384_ov192_image::run8 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.24461 |
-| image-b-gs-2026-08-28::g384_ov192_image::run9 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 7.246779 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.278287 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run10 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.270497 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.27218 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.269712 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.27801 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.278853 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run6 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.27137 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run7 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.285618 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run8 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.267401 |
-| image-b-gs-2026-08-28::g384_ov192_image_high::run9 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 7.285591 |
-| image-b-gs-2026-08-28::g384_ov192_image-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4065 | 5.593209 |
-| image-b-gs-2026-08-28::g384_ov192_image_high-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 9189 | 12.628593 |
-| h7-escalation-2026-08-28::t1.6::run1 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.227944 |
-| h7-escalation-2026-08-28::t1.6::run2 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.227111 |
-| h7-escalation-2026-08-28::t1.6::run3 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.230138 |
-| h7-escalation-2026-08-28::t2.0::run1 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.226187 |
-| h7-escalation-2026-08-28::t2.0::run2 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.231633 |
-| h7-escalation-2026-08-28::t2.0::run3 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.229196 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.683274 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run10 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.686856 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.6772 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.680106 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run4 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.683998 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run5 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.687601 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run6 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.686373 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run7 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.685675 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run8 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.686321 |
-| gemini37-screen-2026-08-28::g384_ov192_g37::run9 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 0.684606 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 791 | 1.110919 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 913 | 1.280777 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 2 | 0.002665 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.003871 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 640 | 0.904184 |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 757 | 1.065866 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.042451 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.149652 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 4.033745 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.198634 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 11.195205 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 12715 | 17.780444 |
-| gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 12715 | 16.218149 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 6.624697 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 0.020698 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 0.00502 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run4 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 0.670179 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 6.522182 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 674 | 0.956203 |
-| gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 674 | 0.851863 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.049311 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.397329 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.394827 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run4 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.191948 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 201.272635 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6985 | 9.925184 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 13 | 0.030545 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 8337 | 11.811639 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 1 | 0.002413 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 9173 | 12.97918 |
-| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 9173 | 20.357637 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run1 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.538377 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run2 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.543132 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run3 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.54888 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run4 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.544896 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run5 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 126.556855 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 22785 | 31.511874 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 36389 | 50.204098 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 45786 | 63.084351 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 22785 | 50.79567 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 36389 | 81.162554 |
-| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 45786 | 102.18491 |
+| pass_id | model | modality | think | T | status | tiles | cands | cost_usd | basis |
+|---|---|---|---|---|---|---|---|---|---|
+| 55maps-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 1 | — | 0.004913 | audited |
+| 55maps-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 7 | — | 0.053288 | audited |
+| 55maps-generalisation::detect_brief-text::run3 |  | text | high | 0.7 | ok | 1 | — | — | unrecorded |
+| 55maps-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 3 | — | 0.019636 | audited |
+| 55maps-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 4 | — | 0.027212 | audited |
+| 55maps-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10154 | 6.214278 | audited |
+| 55maps-generalisation::verified-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3 | 0.002161 | audited |
+| 55maps-image-generalisation::library_plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 143.878339 | audited |
+| 55maps-image-generalisation::library_plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 144.671988 | audited |
+| 55maps-image-generalisation::library_plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 143.575904 | audited |
+| 55maps-image-generalisation::library_plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 142.729596 | audited |
+| 55maps-image-generalisation::library_plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 8541 | — | 144.599193 | audited |
+| 55maps-image-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000727 | audited-lower-bound |
+| 55maps-text-high-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.005214 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.396531 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.732059 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 81.013417 | audited |
+| 55maps-text-high-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | — | 80.581259 | audited |
+| 55maps-text-high-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 74 | 0.05084 | audited-lower-bound |
+| 55maps-text-high-t0-3-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 49.977922 | audited |
+| 55maps-text-high-t0-3-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 51.27583 | audited |
+| 55maps-text-high-t0-3-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 50.73153 | audited |
+| 55maps-text-high-t0-3-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 51.676869 | audited |
+| 55maps-text-high-t0-3-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 8541 | — | 50.586512 | audited |
+| 55maps-text-high-t0-3-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 10539 | 6.900372 | audited-lower-bound |
+| 55maps-text-min-generalisation::detect_brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.667722 | audited |
+| 55maps-text-min-generalisation::detect_brief-text::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.673805 | audited |
+| 55maps-text-min-generalisation::detect_brief-text::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.677764 | audited |
+| 55maps-text-min-generalisation::detect_brief-text::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.666149 | audited |
+| 55maps-text-min-generalisation::detect_brief-text::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.676219 | audited |
+| 55maps-text-min-generalisation::verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 39 | 0.026423 | audited-lower-bound |
+| gold-standard-v2::detect_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.700896 | audited |
+| gold-standard-v2::detect_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.465804 | audited |
+| gold-standard-v2::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.610472 | audited |
+| gold-standard-v2::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.339605 | audited |
+| gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.724539 | audited |
+| gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 11 | 0.00781 | audited |
+| h10::pool_020_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.47992 | audited-upper-bound |
+| h10::pool_020_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.588784 | audited-upper-bound |
+| h10::pool_020_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.653701 | audited-upper-bound |
+| h10::pool_020_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.542587 | audited-upper-bound |
+| h10::pool_020_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.503602 | audited-upper-bound |
+| h10::pool_040_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.615925 | audited-upper-bound |
+| h10::pool_040_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.599416 | audited-upper-bound |
+| h10::pool_040_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.527104 | audited-upper-bound |
+| h10::pool_040_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.63274 | audited-upper-bound |
+| h10::pool_040_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.652333 | audited-upper-bound |
+| h10::pool_080_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.489244 | audited-upper-bound |
+| h10::pool_080_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.607246 | audited-upper-bound |
+| h10::pool_080_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.654709 | audited-upper-bound |
+| h10::pool_080_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.725437 | audited-upper-bound |
+| h10::pool_080_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.724249 | audited-upper-bound |
+| h10::pool_160_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.403543 | audited-upper-bound |
+| h10::pool_160_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.359848 | audited-upper-bound |
+| h10::pool_160_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.450874 | audited-upper-bound |
+| h10::pool_160_hp4hn4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.573634 | audited-upper-bound |
+| h10::pool_160_hp4hn4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.375484 | audited-upper-bound |
+| h10::pool_020-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1763 | 2.445043 | audited-upper-bound |
+| h10::pool_160-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1454 | 2.029003 | audited-upper-bound |
+| consensus-384-t1-0::384::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run10 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run11 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run12 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run13 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run14 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run15 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run16 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run17 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run18 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run19 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run20 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run21 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run22 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run23 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run24 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run25 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run26 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run27 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run28 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run29 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run30 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run4 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run5 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run6 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run7 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run8 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| consensus-384-t1-0::384::run9 | gemini-3-flash | text | minimal | 1.0 | ok | 240 | — | — | unrecorded |
+| e47-propose-brief::propose_brief-text::run1 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| e47-propose-brief::propose_brief-text::run2 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| e47-propose-brief::propose_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| e47-propose-brief::propose_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 4.915872 | audited-upper-bound |
+| e47-propose-brief::propose_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 5.036243 | audited-upper-bound |
+| e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4149 | 2.835267 | audited |
+| e47-propose-brief::verified-flash-high-text-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57 | 0.038928 | audited |
+| e47-propose-brief::verified-text-baseline::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1180 | 1.636178 | audited |
+| n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 | audited |
+| n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 | audited |
+| n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 | audited |
+| n1-outstanding-384::image-t0::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 0.779785 | audited |
+| n1-outstanding-384::image-t0::run2 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 0.780118 | audited |
+| n1-outstanding-384::image-t0::run3 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 487 | — | 0.779968 | audited |
+| n1-outstanding-384::image-t03::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.780985 | audited |
+| n1-outstanding-384::image-t03::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.780562 | audited |
+| n1-outstanding-384::image-t03::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.779956 | audited |
+| n1-outstanding-384::pro-image-high-t0::run1 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 4.521619 | audited-upper-bound |
+| n1-outstanding-384::pro-image-high-t0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 486 | — | 4.499986 | audited-upper-bound |
+| n1-outstanding-384::pro-image-high-t0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 4.453381 | audited-upper-bound |
+| n1-outstanding-384::pro-text-high-t0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 6.635743 | audited-upper-bound |
+| n1-outstanding-384::pro-text-high-t0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 6.616897 | audited-upper-bound |
+| n1-outstanding-384::pro-text-high-t0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 6.596517 | audited-upper-bound |
+| n1-outstanding-384::pro-image-medium-t07::run1 | gemini-3-flash-preview | image | medium | 0.7 | ok | 487 | — | 3.733786 | audited |
+| n1-outstanding-384::pro-text-medium-t07::run1 | gemini-3-flash-preview | text | medium | 0.7 | ok | 487 | — | 4.826035 | audited |
+| n1-outstanding-384::image-t0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 690 | 0.969774 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-high-t0::run1 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.850932 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-high-t0::run2 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.849756 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-high-t0::run3 | gemini-3.1-pro-preview | text | high | 0.0 | ok | 487 | — | 1.8592 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-medium-t07::run1 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 2.111092 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-medium-t07::run2 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 2.02546 | audited-upper-bound |
+| n1-pro-rerun-384::pro-text-medium-t07::run3 | gemini-3.1-pro-preview | text | medium | 0.7 | ok | 487 | — | 2.011108 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-high-t0::run1 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 2.980193 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-high-t0::run2 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 2.984933 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-high-t0::run3 | gemini-3.1-pro-preview | image | high | 0.0 | ok | 487 | — | 2.983421 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-medium-t07::run1 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 3.079493 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-medium-t07::run2 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 3.181253 | audited-upper-bound |
+| n1-pro-rerun-384::pro-image-medium-t07::run3 | gemini-3.1-pro-preview | image | medium | 0.7 | ok | 487 | — | 3.188693 | audited-upper-bound |
+| proposer-verifier-384::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.798575 | audited-upper-bound |
+| proposer-verifier-384::verified-adversarial-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 3.594436 | audited-upper-bound |
+| proposer-verifier-384::verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.560165 | audited-upper-bound |
+| proposer-verifier-384::verified-brief-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 3.380692 | audited-upper-bound |
+| proposer-verifier-384::verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.809328 | audited-upper-bound |
+| proposer-verifier-384::verified-checklist-image::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 572 | 3.634298 | audited-upper-bound |
+| proposer-verifier-384::verified-cascade-adversarial-checklist::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 271 | 0.384629 | audited-upper-bound |
+| proposer-verifier-384::verified-cascade-checklist-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 326 | 2.060302 | audited-upper-bound |
+| proposer-verifier-512::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 140 | 0.198296 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.0::run1 | gemini-3-flash-preview | image | high | 0.0 | ok | 484 | — | 0.644706 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 483 | — | 5.453974 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.0::run3 | gemini-3-flash-preview | image | high | 0.0 | partial | 485 | — | 5.450383 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.38016 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.348543 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.231846 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.187992 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.195237 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.256761 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.408711 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.442959 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.200091 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3::run9 | gemini-3-flash-preview | image | high | 0.3 | ok | 487 | — | 4.41007 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run1 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run10 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run2 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run3 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run4 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run5 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run6 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run7 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run8 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.7::run9 | gemini-3-flash | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.56707 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.618967 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.556855 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.5245 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.521029 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.75874 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.544705 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.556462 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.671188 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | high | 1.0 | ok | 487 | — | 3.703357 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.0::run1 | gemini-3-flash-preview | text | high | 0.0 | partial | 485 | — | 6.421917 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.0::run2 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 6.376929 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.0::run3 | gemini-3-flash-preview | text | high | 0.0 | partial | 486 | — | 6.49177 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run1 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.261281 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run10 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.492392 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run2 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.319988 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run3 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.475703 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run4 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.358076 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run5 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.245987 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run6 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.062288 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run7 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.413834 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run8 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.114074 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3::run9 | gemini-3-flash-preview | text | high | 0.3 | ok | 487 | — | 5.130712 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run1 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run10 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run11 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run12 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run13 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run14 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run15 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run16 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run17 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run18 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run19 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run2 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run20 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run21 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run22 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run23 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run24 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run25 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run26 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run27 | gemini-3-flash | text | high | 0.7 | partial | 486 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run28 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run29 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run3 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run30 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run4 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run5 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run6 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run7 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run8 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t0.7::run9 | gemini-3-flash | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run1 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.256695 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run10 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.254859 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run2 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.367098 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run3 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.265638 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run4 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.372315 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run5 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.367626 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run6 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.235446 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run7 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.298935 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run8 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.365601 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0::run9 | gemini-3-flash-preview | text | high | 1.0 | ok | 487 | — | 4.174858 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.565162 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.570748 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0::run3 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | 0.562825 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564913 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run10 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.567301 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572506 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573544 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run4 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.572206 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run5 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.570703 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run6 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566584 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run7 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.566221 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run8 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.573964 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3::run9 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.564361 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577204 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run10 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.584041 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.582955 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.577369 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run4 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.58642 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run5 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575215 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run6 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.576508 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run7 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575128 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run8 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.575794 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0::run9 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 487 | — | 0.574969 | audited-upper-bound |
+| pv-diag-384::image-baseline-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | partial | 483 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.3::run1 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.789913 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run10 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.791389 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run2 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.790609 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run3 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.791923 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run4 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.793855 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run5 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.791122 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run6 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.790201 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run7 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.794023 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run8 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.792409 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3::run9 | gemini-3-flash-preview | image | minimal | 0.3 | ok | 487 | — | 0.791698 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | partial | 486 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run10 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run4 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run5 | gemini-3-flash | image | minimal | 0.7 | partial | 486 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run6 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run7 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run8 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t0.7::run9 | gemini-3-flash | image | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::image-n5-image-t1.0::run1 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.799003 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run10 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.796921 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run2 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.794401 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run3 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.790378 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run4 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.791773 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run5 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.794332 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run6 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.794497 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run7 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.792352 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run8 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.795664 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0::run9 | gemini-3-flash-preview | image | minimal | 1.0 | ok | 487 | — | 0.797836 | audited-upper-bound |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run1 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run2 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run3 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run4 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-image-n5-image-t0.7::run5 | gemini-3.1-pro-preview | image | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run1 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run10 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run2 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run3 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run4 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run5 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run6 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run7 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run8 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-high-text-n5-text-t0.7::run9 | gemini-3.1-pro-preview | text | high | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::pro-medium-image-baseline-image-t0.0::run1 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 0.135529 | audited |
+| pv-diag-384::pro-medium-image-baseline-image-t0.0::run2 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 3.004517 | audited-upper-bound |
+| pv-diag-384::pro-medium-image-baseline-image-t0.0::run3 | gemini-3.1-pro-preview | image | medium | 0.0 | ok | 487 | — | 3.003041 | audited-upper-bound |
+| pv-diag-384::pro-medium-text-baseline-text-t0.0::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 0.046666 | audited |
+| pv-diag-384::pro-medium-text-baseline-text-t0.0::run2 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 1.905592 | audited-upper-bound |
+| pv-diag-384::pro-medium-text-baseline-text-t0.0::run3 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 487 | — | 1.906288 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.515335 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run10 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.377983 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.379432 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.543226 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.436768 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.444694 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run6 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.508591 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run7 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.535054 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run8 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.438196 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487::run9 | gemini-3-flash-preview | image | high | 0.7 | ok | 487 | — | 3.529924 | audited-upper-bound |
+| pv-diag-384::text-baseline-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | partial | 486 | — | — | unrecorded |
+| pv-diag-384::text-baseline-611tiles-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | partial | 609 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::text-n10-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 487 | — | — | unrecorded |
+| pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 460 | 0.324565 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3412 | 4.704863 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 11 | 0.007808 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 4.654437 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 26 | 0.018197 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 4.281651 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 19 | 0.009377 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 1 | 0.002339 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 19 | 0.013528 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-session-78-matrix-verified-comparative::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 2017 | 4.879742 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3211 | 4.443749 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000751 | audited |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4638 | 6.398247 | audited-upper-bound |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000685 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1267 | 1.735432 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4413 | 5.904586 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2954 | 4.050166 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 8.56514 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 41 | 0.027978 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 7.909851 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 27 | 0.013451 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 8.745862 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 21 | 0.014995 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 3736 | 9.032384 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 5953 | 8.021783 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3737 | 5.117726 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6105 | 8.097848 | audited-upper-bound |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3942 | 5.156186 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1108 | 1.504319 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1595 | 2.171592 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1388 | 1.916503 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1955 | 2.687157 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1594 | 2.194248 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2486 | 3.395064 | audited-upper-bound |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1926 | 2.653605 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1114 | 1.553633 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1039 | 1.377597 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1450 | 2.029988 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1126 | 1.57265 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1975 | 2.739647 | audited-upper-bound |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1456 | 2.006568 | audited-upper-bound |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000742 | audited |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2218 | 3.05986 | audited-upper-bound |
+| pv-diag-384::verified-flash-high-image-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-high-text-1of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-high-text-1of30::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-high-text-1of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-high-text-1of5-flash-high-verifier::run1 | gemini-3-flash-preview | text | high | 0.0 | ok | — | 3736 | 15.504299 | audited |
+| pv-diag-384::verified-flash-high-text-1of5-flash-medium-verifier::run1 | gemini-3-flash-preview | text | medium | 0.0 | ok | — | 1 | 0.003579 | audited |
+| pv-diag-384::verified-flash-high-text-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-minimal-image-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-minimal-text-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-flash-minimal-text-t07-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-1of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-1of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-2of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-3of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-4of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-5of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-baseline::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-image-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-high-image-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 8 | 0.077452 | audited |
+| pv-diag-384::verified-pro-high-text-1of5::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-high-text-1of5-flash-minimal-verifier::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 504 | 0.719019 | audited |
+| pv-diag-384::verified-pro-high-text-1of5-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 504 | 5.243736 | audited |
+| pv-diag-384::verified-pro-image-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-image-minimal-verifier::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-medium-image-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 10 | 0.10208 | audited |
+| pv-diag-384::verified-pro-medium-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-text-medium-verifier::run1 | gemini-3-flash | text | medium | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-pro-text-minimal-verifier::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-10of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-1of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-2of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-2of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-3of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-3of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-4of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-4of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-5of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-5of5::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-6of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-7of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-8of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-9of10::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-baseline::run1 | gemini-3-flash | text | minimal | 0.0 | ok | — | 0 | — | unrecorded |
+| pv-diag-384::verified-text-baseline-pro-verifier::run1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | — | 21 | 0.213324 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 889 | 0.62031 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1319 | 0.909899 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 938 | 0.64988 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1244 | 0.857254 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1012 | 0.699879 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1355 | 0.932224 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1022 | 0.707118 | audited |
+| pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1588 | 1.092068 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1326 | 0.915098 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2201 | 1.50964 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1370 | 0.945209 | audited |
+| pv-diag-384::flash-high-text-n5-text-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2755 | 1.886776 | audited |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1495 | 1.030074 | audited |
+| pv-diag-384::flash-high-text-n5-text-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2848 | 1.950358 | audited |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 729 | 0.50942 | audited |
+| pv-diag-384::image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 885 | 0.617455 | audited |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 694 | 0.487575 | audited |
+| pv-diag-384::image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 950 | 0.663871 | audited |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 792 | 0.552932 | audited |
+| pv-diag-384::image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1174 | 0.815674 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 872 | 0.609428 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.3-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1619 | 1.12265 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 771 | 0.539538 | audited |
+| pv-diag-384::flash-high-image-n5-image-t0.7-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1522 | 1.057393 | audited |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 982 | 0.68377 | audited |
+| pv-diag-384::flash-high-image-n5-image-t1.0-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1887 | 1.305678 | audited |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 830 | 0.579013 | audited |
+| pv-diag-384::scale-4-optimal-487-verified-v1-n3::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1586 | 1.10147 | audited |
+| h12-v2::r1-hn-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.529891 | audited |
+| h12-v2::r1-hn-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.505117 | audited |
+| h12-v2::r1-hn-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.577582 | audited |
+| h12-v2::r1-hn-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.424726 | audited |
+| h12-v2::r1-hn-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.495124 | audited |
+| h12-v2::r3-hp-heavy::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.488434 | audited |
+| h12-v2::r3-hp-heavy::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.259033 | audited-upper-bound |
+| h12-v2::r3-hp-heavy::run3 | gemini-3-flash-preview | image | high | 0.7 | partial | 326 | — | 2.449428 | audited-upper-bound |
+| h12-v2::r3-hp-heavy::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.291316 | audited-upper-bound |
+| h12-v2::r3-hp-heavy::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.359134 | audited-upper-bound |
+| h8-v2::pure-positive-canon::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.414577 | audited |
+| h8-v2::pure-positive-canon::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.376492 | audited |
+| h8-v2::pure-positive-canon::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.369736 | audited |
+| h8-v2::pure-positive-canon::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.322207 | audited |
+| h8-v2::pure-positive-canon::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.365839 | audited |
+| h8-v2::canonical::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.337981 | audited |
+| h8-v2::canonical::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.296188 | audited |
+| h8-v2::canonical::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.319108 | audited |
+| h8-v2::canonical::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.339949 | audited |
+| h8-v2::canonical::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.40696 | audited |
+| h8-v2::plus-hp::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.303211 | audited |
+| h8-v2::plus-hp::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.295726 | audited |
+| h8-v2::plus-hp::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.25168 | audited |
+| h8-v2::plus-hp::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.247396 | audited |
+| h8-v2::plus-hp::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.167311 | audited |
+| h8-v2::scale-4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.419323 | audited |
+| h8-v2::scale-4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.433111 | audited |
+| h8-v2::scale-4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.28279 | audited |
+| h8-v2::scale-4::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.298612 | audited |
+| h8-v2::scale-4::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.269671 | audited |
+| h8-v2::scale-8::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.365731 | audited |
+| h8-v2::scale-8::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.393769 | audited |
+| h8-v2::scale-8::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.454051 | audited |
+| h8-v2::scale-8::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.413242 | audited |
+| h8-v2::scale-8::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.429481 | audited |
+| h8-v2::scale-16::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.590455 | audited |
+| h8-v2::scale-16::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.605878 | audited |
+| h8-v2::scale-16::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.558487 | audited |
+| h8-v2::scale-16::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.678061 | audited |
+| h8-v2::scale-16::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.496411 | audited |
+| h8-v2::scale-32::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.865813 | audited |
+| h8-v2::scale-32::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.897583 | audited |
+| h8-v2::scale-32::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.968557 | audited |
+| h8-v2::scale-32::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 3.014316 | audited |
+| h8-v2::scale-32::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.95731 | audited |
+| h8-v2::scale-4-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1551 | 2.160168 | audited-upper-bound |
+| h8-v2::wbf-scale-4-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 15 | 0.010877 | audited |
+| h8-v2::wbf-scale-8-verified::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1053 | 1.3917 | audited-upper-bound |
+| retest-phase2a::brief-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::brief-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::brief-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::brief-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::brief-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::brief-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::image-only::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::image-only::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::image-only::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text-image::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text-image::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2a::verbose-text-image::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.0::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.0::run2 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.0::run3 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.3::run1 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.3::run2 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.3::run3 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.0::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.0::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.0::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.3::run1 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.3::run2 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track1-image-t1.3::run3 | gemini-3-flash | image | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.0::run2 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.0::run3 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.3::run1 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.3::run2 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.3::run3 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.0::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.0::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.0::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.3::run1 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.3::run2 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2b::track2-text-t1.3::run3 | gemini-3-flash | text | minimal | 1.3 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-canonical::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-plus-hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-scale-4::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-scale-8::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-exploratory-pure-positive-2hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-exploratory-pure-positive-4hp::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track1-image-exploratory-pure-positive-canon::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track2-text-canonical::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track2-text-plus-hp::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track2-text-pure-positive-canon::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track2-text-scale-4::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2c::track2-text-scale-8::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2d::track1-image-terse::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2d::track1-image-verbose::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2d::track2-text-terse::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2d::track2-text-verbose::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2e::canonical-first::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2e::canonical-last::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2e::config-default::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase2e::random::run1 | gemini-3-flash | image | minimal | 0.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run1 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run10 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run11 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run12 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run13 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run14 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run15 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run16 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run17 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run18 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run19 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run2 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run20 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run21 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run22 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run23 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run24 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run25 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run26 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run27 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run28 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run29 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run3 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run30 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run4 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run5 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run6 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run7 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run8 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.3::run9 | gemini-3-flash | image | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run1 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run10 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run11 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run12 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run13 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run14 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run15 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run16 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run17 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run18 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run19 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run2 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run20 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run21 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run22 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run23 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run24 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run25 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run26 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run27 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run28 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run29 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run3 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run30 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run4 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run5 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run6 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run7 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run8 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t0.7::run9 | gemini-3-flash | image | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run1 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run10 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run11 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run12 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run13 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run14 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run15 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run16 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run17 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run18 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run19 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run2 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run20 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run21 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run22 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run23 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run24 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run25 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run26 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run27 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run28 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run29 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run3 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run30 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run4 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run5 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run6 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run7 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run8 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track1-image-t1.0::run9 | gemini-3-flash | image | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run1 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run10 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run11 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run12 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run13 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run14 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run15 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run16 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run17 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run18 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run19 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run2 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run20 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run21 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run22 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run23 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run24 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run25 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run26 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run27 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run28 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run29 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run3 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run30 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run4 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run5 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run6 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run7 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run8 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.3::run9 | gemini-3-flash | text | minimal | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t0.7::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run1 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run10 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run11 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run12 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run13 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run14 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run15 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run16 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run17 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run18 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run19 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run2 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run20 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run21 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run22 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run23 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run24 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run25 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run26 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run27 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run28 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run29 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run3 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run30 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run4 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run5 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run6 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run7 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run8 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a::track2-text-t1.0::run9 | gemini-3-flash | text | minimal | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run1 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run10 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run11 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run12 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run13 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run14 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run15 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run16 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run17 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run18 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run19 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run2 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run20 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run21 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run22 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run23 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run24 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run25 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run26 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run27 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run28 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run29 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run3 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run30 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run4 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run5 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run6 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run7 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run8 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.3::run9 | gemini-3-flash | text | high | 0.3 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run10 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run11 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run12 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run13 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run14 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run15 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run16 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run17 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run18 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run19 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run20 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run21 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run22 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run23 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run24 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run25 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run26 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run27 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run28 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run29 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run30 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run6 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run7 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run8 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t0.7::run9 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run10 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run11 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run12 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run13 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run14 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run15 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run16 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run17 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run18 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run19 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run20 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run21 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run22 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run23 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run24 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run25 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run26 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run27 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run28 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run29 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run30 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run6 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run7 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run8 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-high::track2-text-t1.0::run9 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run10 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run11 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run12 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run13 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run14 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run15 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run16 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run17 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run18 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run19 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run20 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run21 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run22 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run23 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run24 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run25 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run26 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run27 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run28 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run29 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run30 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run6 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run7 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run8 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::high::run9 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run10 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run11 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run12 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run13 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run14 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run15 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run16 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run17 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run18 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run19 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run20 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run21 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run22 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run23 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run24 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run25 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run26 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run27 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run28 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run29 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run30 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run6 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run7 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run8 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3a-replication::minimal::run9 | gemini-3-flash | text | minimal | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-a-p5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-b-v5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img1::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img1::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img1::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img1::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img1::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img2::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img2::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img2::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img2::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img2::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img4::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img4::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img4::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img4::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img4::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img5::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img5::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img5::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img5::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-c-img5::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t1::run1 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t1::run2 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t1::run3 | gemini-3-flash | image | high | 0.4 | partial | 339 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t1::run4 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t1::run5 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t2::run1 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t2::run2 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t2::run3 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t2::run4 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t2::run5 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t4::run1 | gemini-3-flash | image | high | 0.85 | partial | 335 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t4::run2 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t4::run3 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t4::run4 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t4::run5 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t5::run1 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t5::run2 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t5::run3 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t5::run4 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-d-t5::run5 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p1::run1 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p1::run2 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p1::run3 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p1::run4 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p1::run5 | gemini-3-flash | image | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p2::run1 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p2::run2 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p2::run3 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p2::run4 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p2::run5 | gemini-3-flash | image | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p3::run1 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p3::run2 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p3::run3 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p3::run4 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p3::run5 | gemini-3-flash | image | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p4::run1 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p4::run2 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p4::run3 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p4::run4 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p4::run5 | gemini-3-flash | image | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p5::run1 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p5::run2 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p5::run3 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p5::run4 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track1-image-h9-e-p5::run5 | gemini-3-flash | image | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p1::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p1::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p1::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p1::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p1::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p2::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p2::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p2::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p2::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p2::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p4::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p4::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p4::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p4::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p4::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p5::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p5::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p5::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p5::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-a-p5::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v1::run1 | gemini-3-flash | text | high | 0.7 | partial | 339 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v1::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v1::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v1::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v1::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v2::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v2::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v2::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v2::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v2::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v4::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v4::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v4::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v4::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v4::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v5::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v5::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v5::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v5::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-b-v5::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t1::run1 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t1::run2 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t1::run3 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t1::run4 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t1::run5 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t2::run1 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t2::run2 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t2::run3 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t2::run4 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t2::run5 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t4::run1 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t4::run2 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t4::run3 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t4::run4 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t4::run5 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t5::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t5::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t5::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t5::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-d-t5::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p1::run1 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p1::run2 | gemini-3-flash | text | high | 0.4 | partial | 339 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p1::run3 | gemini-3-flash | text | high | 0.4 | partial | 339 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p1::run4 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p1::run5 | gemini-3-flash | text | high | 0.4 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p2::run1 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p2::run2 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p2::run3 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p2::run4 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p2::run5 | gemini-3-flash | text | high | 0.55 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p3::run1 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p3::run2 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p3::run3 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p3::run4 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p3::run5 | gemini-3-flash | text | high | 0.7 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p4::run1 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p4::run2 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p4::run3 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p4::run4 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p4::run5 | gemini-3-flash | text | high | 0.85 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p5::run1 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p5::run2 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p5::run3 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p5::run4 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-phase3c::track2-text-h9-e-p5::run5 | gemini-3-flash | text | high | 1.0 | ok | 340 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run10 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run2 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run3 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run4 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run5 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run6 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run7 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run8 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| retest-h11-single-pass-384-t0::brief-text-t0::run9 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | — | — | unrecorded |
+| verifier-t-pilot::t0-5::run1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | — | 627 | 0.425916 | audited |
+| verifier-t-pilot::t1-0::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | — | 614 | 0.42747 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run1 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.810824 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run10 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.810474 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run2 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.812556 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run3 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.811067 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run4 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.8155 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run5 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.811109 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run6 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.813682 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run7 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.813924 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run8 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.815295 | audited |
+| flash35-pv-2x2::flash35-min-text-1of10::run9 | gemini-3.5-flash | text | minimal | 0.7 | ok | 487 | — | 0.825315 | audited |
+| flash35-pv-2x2::verified-f3vf::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000695 | audited |
+| flash35-pv-2x2::verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | — | 1132 | 2.258247 | audited |
+| flash35-pv-2x2::min-f3-verified-f35vf::run1 | gemini-3.5-flash | text | minimal | 0.0 | ok | — | 1939 | 3.858892 | audited |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.638943 | audited |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.659306 | audited |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.669232 | audited |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.638843 | audited |
+| 55maps-text-min-n10-uplift::detect_brief-text-min-n10::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 8541 | — | 4.659639 | audited |
+| 55maps-text-min-n10-uplift::verified-3of10::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 16482 | 11.266205 | audited |
+| grid-2026-08-18::g512_ov064-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1402 | 0.967828 | audited |
+| grid-2026-08-18::g512_ov256-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2585 | 1.777202 | audited |
+| grid-2026-08-18::g384_ov048-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1827 | 1.255212 | audited |
+| grid-2026-08-18::g384_ov192-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3319 | 2.271158 | audited |
+| grid-2026-08-18::g384_ov192-union-k10-verify37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 1 | 0.002379 | audited |
+| grid-2026-08-18::g384_ov192-k-ladder-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1826 | 1.253106 | audited |
+| grid-2026-08-18::g384_ov192-k-ladder-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2481 | 1.698945 | audited |
+| grid-2026-08-18::g384_ov192-k-ladder-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2932 | 2.007497 | audited |
+| h13::armb::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.290709 | audited |
+| h13::armb::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.290527 | audited |
+| h13::armb::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 430 | — | 0.292343 | audited |
+| h13::armc::run1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 0.660653 | audited |
+| h13::armc::run2 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 0.669084 | audited |
+| h13::armc::run3 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 999 | — | 0.668548 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.319217 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.320647 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.315817 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.319098 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.320835 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.318134 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.32003 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.321004 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.318809 | audited |
+| stride-phaseb-2026-08-25::g512_ov176::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 494 | — | 0.318998 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492777 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490796 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.48815 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.489453 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490202 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.490817 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492961 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.492407 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.487594 | audited |
+| stride-phaseb-2026-08-25::g384_ov128::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 820 | — | 0.49274 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.789346 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.786836 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.792691 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.789818 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.788543 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.790218 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.784556 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.784036 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.790927 | audited |
+| stride-phaseb-2026-08-25::g256_ov064::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1403 | — | 0.788162 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.902916 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.905267 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.908556 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.907442 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.915614 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.897723 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.907351 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.905991 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.906245 | audited |
+| stride-phaseb-2026-08-25::g512_ov320::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1408 | — | 0.906455 | audited |
+| stride-phaseb-2026-08-25::g512_ov176-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1981 | 1.360448 | audited |
+| stride-phaseb-2026-08-25::g384_ov128-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 2387 | 1.636624 | audited |
+| stride-phaseb-2026-08-25::g256_ov064-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3570 | 2.441212 | audited |
+| stride-phaseb-2026-08-25::g512_ov320-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3778 | 2.590458 | audited |
+| stride-phaseb-2026-08-25::g384_ov128-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1290 | 0.886572 | audited |
+| stride-phaseb-2026-08-25::g384_ov128-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1700 | 1.168778 | audited |
+| stride-phaseb-2026-08-25::g384_ov128-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1968 | 1.351625 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.490722 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.486229 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.480767 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.497961 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.489984 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.484684 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.492131 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.48582 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.492055 | audited |
+| stride-phasec-2026-08-25::g384_ov240::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 2483 | — | 1.491483 | audited |
+| stride-phasec-2026-08-25::g384_ov240-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 5250 | 3.572326 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.709816 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.70823 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.711741 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.711552 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.694158 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.695582 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.699071 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.694394 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.700196 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 14160 | — | 7.713749 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run1 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.344956 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run10 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.373067 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run2 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.324021 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run3 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.360073 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run4 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.304358 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run5 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.347319 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run6 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.337448 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run7 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.348038 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run8 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.403153 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map::run9 | gemini-3-flash-preview | text | minimal | 0.7 | ok | 24561 | — | 13.35283 | audited |
+| stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6 | 0.004072 | audited-lower-bound |
+| stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57482 | 39.177723 | audited |
+| stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 29 | 0.034947 | audited-lower-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run1 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.599705 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run10 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.600261 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run2 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.589575 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run3 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.587486 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run4 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.590394 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run5 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.59769 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run6 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.60953 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run7 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.596367 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run8 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.59648 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image::run9 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 1398 | — | 2.603717 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.449723 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run10 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.520747 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.595197 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.497611 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run4 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.447367 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run5 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.170717 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run6 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.474679 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run7 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.687891 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run8 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.46728 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image_high::run9 | gemini-3-flash-preview | image | high | 0.7 | ok | 1398 | — | 10.52969 | audited |
+| image-b-gs-2026-08-28::g384_ov192_image-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4065 | 5.593209 | audited-upper-bound |
+| image-b-gs-2026-08-28::g384_ov192_image_high-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 9189 | 12.628593 | audited-upper-bound |
+| h7-escalation-2026-08-28::t1.6::run1 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.455887 | audited-upper-bound |
+| h7-escalation-2026-08-28::t1.6::run2 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.454222 | audited-upper-bound |
+| h7-escalation-2026-08-28::t1.6::run3 | gemini-3-flash-preview | text | minimal | 1.6 | ok | 340 | — | 0.460276 | audited-upper-bound |
+| h7-escalation-2026-08-28::t2.0::run1 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.452374 | audited-upper-bound |
+| h7-escalation-2026-08-28::t2.0::run2 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.463267 | audited-upper-bound |
+| h7-escalation-2026-08-28::t2.0::run3 | gemini-3-flash-preview | text | minimal | 2.0 | ok | 340 | — | 0.458392 | audited-upper-bound |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.722851 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run10 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.722982 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.691233 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.696892 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run4 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.713715 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run5 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.729442 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run6 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.733185 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run7 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.736685 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run8 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.729373 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37::run9 | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | — | 1.719902 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 791 | 0.555459 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 913 | 0.640389 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 2 | 0.00213 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.001936 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 640 | 0.452092 | audited |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 757 | 0.532933 | audited |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.688984 | audited |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run2 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.895105 | audited-upper-bound |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run3 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.869864 | audited-upper-bound |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run4 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.925518 | audited-upper-bound |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37::run5 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 29.044043 | audited |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 12715 | 8.890222 | audited |
+| gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 12715 | 14.305547 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 3.727074 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 3.686861 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 3.588804 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run4 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 3.676044 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 1398 | — | 3.651062 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 674 | 0.478101 | audited |
+| gemini37-image-gs-2026-09-01::g384_ov192_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 674 | 0.737004 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run1 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 67.036055 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run2 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 66.927085 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run3 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 66.884675 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run4 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 44.448865 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run5 | gemini-3.7-flash | image | low | 0.7 | ok | 24561 | — | 44.529553 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 6985 | 4.962592 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 13 | 7.7028 | published |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 8337 | 5.905819 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 1 | 9.265 | published |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 9173 | 6.48959 | audited |
+| gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 9173 | 10.178819 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run1 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 46.703326 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run2 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 46.692701 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run3 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 46.719564 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run4 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 46.730708 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run5 | gemini-3-flash-preview | image | minimal | 0.7 | ok | 24561 | — | 46.783185 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 22785 | 15.755937 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 36389 | 25.102049 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 45786 | 31.542175 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 22785 | 25.397835 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 36389 | 40.581277 | audited |
+| gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 45786 | 51.092455 | audited |

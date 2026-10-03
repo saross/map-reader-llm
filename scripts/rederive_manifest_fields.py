@@ -263,7 +263,10 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                                   at=frag.get("priced_at"))["total_cost_usd"] or 0.0
                       for t in tiers]
             total += max(prices)
-            low += min(prices)
+            # Only an unresolved fragment spans a range. A pinned or
+            # tier-indifferent one has one cost (its highest candidate, which
+            # the half-cent rule makes equal to the rest), counted in both bounds.
+            low += min(prices) if frag.get("candidates") else max(prices)
         out.append(verdict_row("cost_usd", claim, round(total, 6)))
         if basis == "audited-lower-bound":
             out[-1]["note"] = "lower bound: the cited metas cover part of the pass (cost-overrides)"
@@ -299,7 +302,15 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
         if not p.exists():
             return {"pass_id": row["pass_id"], "error": "MISSING_SOURCE",
                     "missing": s, "fields": []}
-        metas.append(load(p))
+        # Every cited source must exist, but only JSON ones are parsed: a
+        # verifier row cites its run.log for the E55 temperature correction,
+        # and a gzipped meta must be read as such. Parsing every source as
+        # plain JSON crashed this script on both (found 2026-10-03; the last
+        # complete run was 2026-07-29, before either kind was cited).
+        if s.endswith((".meta.json", ".meta.json.gz")):
+            metas.append(_load_meta(s))
+        elif s.endswith(".json"):
+            metas.append(load(p))
     meta = metas[0] if metas else {}
 
     for f in STRUCTURAL_PASS_FIELDS:
