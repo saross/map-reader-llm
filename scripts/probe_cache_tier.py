@@ -14,8 +14,9 @@ combination of the two levers, and records what each response reports about
 the tier that served it (``usage_metadata.traffic_type`` and any tier header),
 so the billed tier can be read per request from now on.
 
-It makes ONE explicit cache and FOUR ``generate_content`` calls, one per
-combination (flex or standard, with or without the cache), on
+It makes ONE explicit cache and FIVE ``generate_content`` calls: one per
+combination (flex or standard, with or without the cache), and the pre-fix
+cached config on a flex launch (the defect reproduced), on
 ``gemini-3-flash-preview`` with minimal thinking: a few thousand tokens, under
 US$0.01. The PI approved the API spend for testing the fix on 2026-10-03.
 
@@ -117,6 +118,23 @@ def main(argv: list[str] | None = None) -> int:
                     record.update(ok=False, error=f"{type(exc).__name__}: {exc}"[:500])
                 results.append(record)
                 print(json.dumps(record))
+        # The defect itself, reproduced: the PRE-FIX cached rebuild (fields
+        # copied one by one, no service_tier) on a run launched with flex.
+        legacy = types.GenerateContentConfig(
+            cached_content=cache.name, temperature=0.0, max_output_tokens=64,
+            thinking_config=types.ThinkingConfig(thinking_level="minimal"))
+        record = {"tier_requested": "flex", "explicit_cache": True,
+                  "config": "pre-2026-10-03 cached rebuild (no service_tier)"}
+        try:
+            resp = client.models.generate_content(
+                model=MODEL, contents="Is a circle with radiating hachures a mound?",
+                config=legacy)
+            record.update(ok=True, tier_headers=_tier_headers(resp),
+                          cached_tokens=resp.usage_metadata.cached_content_token_count)
+        except Exception as exc:  # noqa: BLE001
+            record.update(ok=False, error=f"{type(exc).__name__}: {exc}"[:500])
+        results.append(record)
+        print(json.dumps(record))
     finally:
         client.caches.delete(name=cache.name)
     doc = {"probe": "explicit cache x service tier", "model": MODEL,
