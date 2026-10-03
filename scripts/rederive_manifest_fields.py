@@ -45,6 +45,7 @@ sys.path.insert(0, str(REPO_ROOT))
 # applied this function to the cited tokens, so the function is the contract
 # and the generator's tier inference is what it must not borrow.
 from scripts.lib_cost import (  # noqa: E402
+    TIERS,
     RateCardError,
     UnknownModelError,
     is_unrecorded,
@@ -230,12 +231,32 @@ def _billed_usage(meta: dict) -> dict:
     return out
 
 
+def _foreign_served_tiers(meta: dict) -> list[str]:
+    """Served-tier header values in a meta that the rate card does not price.
+
+    Read independently of the coster: the run-level counts, else the per-item
+    record (2026-10-03 onwards); a value is foreign unless it is a card tier
+    or ``unreported``.
+    """
+    counts = dict((meta.get("usage_stats") or {}).get("served_tier_counts") or {})
+    if not counts:
+        for item in meta.get("per_item_metadata") or []:
+            if item.get("service_tier_applied"):
+                key = str(item["service_tier_applied"])
+                counts[key] = counts.get(key, 0) + 1
+    return sorted({str(t).lower() for t, n in counts.items() if n}
+                  - set(TIERS) - {"unreported"})
+
+
 def _unpriceable_reason(row: dict, metas: list[dict]) -> str | None:
     """Why a row's cited metas cannot be priced, re-derived; None if they can."""
     for meta in metas:
         usage = meta.get("usage_stats")
         if not usage or is_unrecorded(usage):
             continue
+        foreign = _foreign_served_tiers(meta)
+        if foreign:
+            return f"served at a tier the rate card does not price: {', '.join(foreign)}"
         stamp = meta.get("timestamp") or {}
         if not (stamp.get("end") or stamp.get("start")):
             return "a cited meta with usage has no timestamp"
@@ -359,8 +380,9 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                     "manifest": claim, "derived": entry.get("cost_usd"),
                     "note": f"published: {source.get('published')}"})
     elif basis == "unpriceable":
-        # Certified only if a cited meta really cannot be priced: no date, or a
-        # model the card does not know. A priceable pass wrongly nulled fails.
+        # Certified only if a cited meta really cannot be priced: no date, a
+        # model the card does not know, or a served tier it does not price.
+        # A priceable pass wrongly nulled fails.
         why = _unpriceable_reason(row, metas)
         out.append({"field": "cost_usd",
                     "verdict": "MATCH" if (claim is None and why) else "MISMATCH",

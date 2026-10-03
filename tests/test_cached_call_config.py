@@ -125,4 +125,7 @@ def test_the_cached_config_is_the_one_sent():
     node = preflights[0]
     while node in parents:
         node = parents[node]
-        assert not isinstance(node, ast.Try), "the preflight sits inside a try"
+        # A try, an except* group, or a with block (contextlib.suppress) could
+        # each swallow the refusal.
+        assert not isinstance(node, (ast.Try, ast.TryStar, ast.With)), (
+            f"the preflight sits inside a {type(node).__name__}")

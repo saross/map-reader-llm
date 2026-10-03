@@ -1519,8 +1519,11 @@ def test_the_superseded_ledger_is_consistent_and_never_priced_in_the_register():
 
 #: Commits either side of the cached-path fix (2df65047e), for the ancestry test.
 BEFORE_FIX = "2ce4536ea"        # 2026-08-31, live at swap38's launch
+FIX_PARENT = "50bfec432"        # the commit just before the fix
+MAIN_AT_BRANCH = "e10d50dd0"    # main when this branch left it: no fix
 FIX_COMMIT = "2df65047e"
 AFTER_FIX = "651a2eb90"         # header capture, which the probe runs used
+AFTER_FIX_FULL = "651a2eb902228d1202ff8389ad824588fdc06c62"
 
 
 def _counted(counts: dict, requests: int) -> dict:
@@ -1704,9 +1707,11 @@ def test_a_single_tier_header_against_a_request_record_is_a_note(evidence, tmp_p
 
 @pytest.mark.tier1
 @pytest.mark.parametrize(("commit", "subject"), [
-    (BEFORE_FIX, True), (FIX_COMMIT, False), (AFTER_FIX, False),
+    (BEFORE_FIX, True), (FIX_PARENT, True), (MAIN_AT_BRANCH, True),
+    (FIX_COMMIT, False), (AFTER_FIX, False), (AFTER_FIX_FULL, False),
     ("0" * 40, True),          # a commit this clone does not hold: the rule stays
     (None, True),              # no commit recorded: the rule stays
+    ("unknown", True),         # what the tracker writes when git is unavailable
 ])
 def test_the_cached_path_rule_follows_the_code_a_run_executed(evidence, tmp_path, commit,
                                                               subject):
@@ -1839,8 +1844,8 @@ def test_named_and_globbed_main_legs_are_deduplicated_together(tmp_path):
     with pytest.raises(ValueError, match="missing"):
         _preserved_main_legs(primary, leg / "run.meta.json", [str(leg / "absent.json")])
     # A mis-keyed entry naming another leg's file is refused, not priced here.
-    other = tmp_path / "w"
-    other.mkdir()
+    other = tmp_path / "elsewhere" / "v"  # the same leg name under another pool
+    other.mkdir(parents=True)
     (other / "run.meta.json.pre-recovery-9.backup").write_text(json.dumps({"run_id": "Z"}))
     with pytest.raises(ValueError, match="do not sit beside"):
         _preserved_main_legs(primary, leg / "run.meta.json",
@@ -1959,6 +1964,7 @@ def test_the_superseded_ledger_reprices_and_points_at_real_passes():
         if e["cost_usd"] is None:
             assert not (meta.get("usage_stats") or {}).get("total_input_tokens")
             continue
+        assert e["model"] == meta["configuration"]["model"], e["meta"]  # not the entry's say-so
         tier = "flex" if e["tier"].startswith("flex") else e["tier"]
         priced = price_usage(meta["usage_stats"], e["model"], tier,
                              at=meta["timestamp"]["end"][:10])["total_cost_usd"]
@@ -1981,6 +1987,112 @@ def test_a_withdrawn_ledger_entry_is_inside_its_live_meta():
                              ("usage_stats", "total_input_tokens"),
                              ("usage_stats", "total_output_tokens")):
             assert live[section][key] > sidecar[section][key], (w["meta"], key)
+        # Containment, not just size: the sidecar recorded itself as an
+        # INCOMPLETE snapshot of the leg the live meta completes, and the live
+        # meta was rebuilt by batch-recover from the leg's jobs.
+        gap = sidecar["results_summary"]["completeness_gap"]
+        assert gap["expected"] == live["execution_stats"]["items_processed"], w["meta"]
+        assert gap["actual"] == sidecar["execution_stats"]["items_processed"], w["meta"]
+        assert live["results_summary"]["batch_recover"]["recovered_rows"] >= gap["missing_count"]
         results = (REPO / w["meta"]).with_name("batch_results.jsonl")
         with results.open(encoding="utf-8") as fh:
             assert sum(1 for _ in fh) == live["execution_stats"]["items_processed"]
+
+
+# ---------------------------------------------------------------------------
+# Round 8 (2026-10-03): the fix commit pinned, C3's counterpart, negatives.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_the_fix_commit_is_the_runner_fix():
+    # The constant names exactly the commit that fixed the cached path; a
+    # constant anywhere in the 1,235 commits before it would exempt runs from
+    # main (round-8 audit).
+    import subprocess
+
+    from scripts.lib_pass_cost import CACHED_PATH_FIX_COMMIT
+    head = subprocess.run(["git", "rev-parse", FIX_COMMIT], cwd=REPO, capture_output=True,
+                          text=True, check=True).stdout.strip()
+    assert CACHED_PATH_FIX_COMMIT == head
+    subject = subprocess.run(["git", "log", "-1", "--format=%s", CACHED_PATH_FIX_COMMIT],
+                             cwd=REPO, capture_output=True, text=True, check=True).stdout
+    assert subject.startswith("fix(runner): cache and service tier are independent levers")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("commit", [["a", "list"], {"a": 1}, 7])
+def test_an_unhashable_or_odd_commit_keeps_the_rule(commit):
+    from scripts.lib_pass_cost import has_cached_path_fix
+    assert has_cached_path_fix(commit) is False
+
+
+@pytest.mark.tier1
+def test_the_tracker_records_the_commit_it_launched_with(monkeypatch):
+    # A pull during a long run must not change the recorded commit: the code
+    # that ran is the code loaded at launch.
+    from scripts.lib_llm_metadata import LLMMetadataTracker
+    monkeypatch.setattr(LLMMetadataTracker, "get_git_revision", staticmethod(lambda: "launch"))
+    tracker = LLMMetadataTracker({"model": "gemini-3-flash-preview"}, "x")
+    monkeypatch.setattr(LLMMetadataTracker, "get_git_revision", staticmethod(lambda: "later"))
+    assert tracker.finalise()["environment"]["git_commit"] == "launch"
+
+
+@pytest.mark.tier1
+def test_a_post_fix_run_with_a_partial_header_is_not_on_the_cached_path(evidence, tmp_path):
+    # The commit lifts the rule whatever the header says: a partial header
+    # agreeing with the launch line leaves the pass audited at flex.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "explicit_cache": True}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 1, "unreported": 2}, 3),
+                 environment={"git_commit": AFTER_FIX})
+    out = _cost(evidence(logs=logs), [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
+    assert out["cost_basis"] == "audited"
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_a_partial_header_the_evidence_allows_is_no_conflict(evidence, tmp_path):
+    # Negative: the invoice billed flex AND standard that day; two responses
+    # said standard. Nothing contradicts the API, so nothing is reported.
+    day = {"2026-05-20": {"project_filter": "unverified", "models": {
+        "gemini-3-flash-preview": {"tiers": {"flex": {"output": 9_000_000},
+                                             "standard": {"output": 9_000_000}}}}}}
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 usage=_counted({"standard": 2, "unreported": 1}, 3))
+    frag = _cost(evidence(billing={"days": day}), [meta],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert "conflicts" not in frag
+
+
+@pytest.mark.tier1
+def test_a_partial_header_against_a_batch_marker_is_a_conflict(evidence, tmp_path):
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 usage=_counted({"flex": 2, "unreported": 1}, 3), batch_api={"job": "x"})
+    frag = _cost(evidence(), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert any(c.startswith("applied-header-partial served flex but batch-marker")
+               for c in frag["conflicts"])
+
+
+@pytest.mark.tier1
+def test_c3_certifies_a_foreign_served_tier_as_unpriceable(evidence, tmp_path, monkeypatch):
+    # The coster nulls a fragment served at a tier the card does not price;
+    # C3 must re-derive the same reason independently, or the row would read
+    # as a priceable pass wrongly nulled.
+    import scripts.rederive_manifest_fields as c3
+    monkeypatch.setattr(c3, "REPO_ROOT", tmp_path)
+    pdir = tmp_path / "outputs" / "r" / "p" / "run_1"
+    meta, path = _meta(pdir / "a.meta.json", usage=_counted({"priority": 2}, 2))
+    out = _cost(evidence(), [(meta, path)], tmp_path / "outputs" / "r")
+    assert out["cost_basis"] == "unpriceable"
+    row = {"pass_id": "r::p::run1", "run_id": "r", "proposer_pool": "p", "pass_n": 1,
+           "model_used": "gemini-3-flash-preview", "status": "ok", "n_tiles_processed": 1,
+           "tokens": None, "cost_usd": out["cost_usd"], "cost_basis": out["cost_basis"],
+           "cost_source": out["cost_source"],
+           "timestamps": {"start": meta["timestamp"]["start"], "end": meta["timestamp"]["end"]},
+           "provenance": {"source_files": ["outputs/r/p/run_1/a.meta.json"]}}
+    verdicts = {f["field"]: f for f in c3.rederive_pass(row)["fields"]}
+    assert verdicts["cost_usd"]["verdict"] == "MATCH"
+    assert "priority" in verdicts["cost_usd"]["note"]

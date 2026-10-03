@@ -415,14 +415,16 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     return accounted, results
 
 
-@lru_cache(maxsize=None)
-def has_cached_path_fix(commit: str | None) -> bool:
+def has_cached_path_fix(commit: Any) -> bool:
     """Whether a run's recorded code commit contains the cached-path fix.
 
     Asks git whether :data:`CACHED_PATH_FIX_COMMIT` is an ancestor of (or is)
     *commit*. A missing commit, one this clone does not hold, or no git at
     all answers False, which keeps the cached-path rule: the conservative
     answer, because the rule can only price a fragment at the dearer tier.
+    Metas written before 2026-10-03 recorded the commit at FINALISE time,
+    so a pull during a run could name a later commit than the code loaded;
+    no such meta has a commit descending from the fix.
 
     Args:
         commit: ``environment.git_commit`` from a meta (full or abbreviated).
@@ -432,6 +434,12 @@ def has_cached_path_fix(commit: str | None) -> bool:
     """
     if not commit or not isinstance(commit, str):
         return False
+    return _descends_from_fix(commit)
+
+
+@lru_cache(maxsize=None)
+def _descends_from_fix(commit: str) -> bool:
+    """Git's answer for one commit string, cached (type-checked by the caller)."""
     try:
         done = subprocess.run(["git", "merge-base", "--is-ancestor", CACHED_PATH_FIX_COMMIT,
                                commit], cwd=PROJECT_ROOT, capture_output=True, timeout=30)
@@ -879,12 +887,9 @@ class PassCoster:
             evidence.append(bill)
         conflicts: list[str] = []
         notes: list[str] = []
-        served = served_tiers(meta)
-        unknown = sorted(t for t in (served[0] if served else {})
-                         if t not in TIERS and t != UNREPORTED)
-        if unknown:
-            notes.append(f"served-tier header values outside {'|'.join(TIERS)} "
-                         f"({', '.join(unknown)}) count as unreported")
+        # Header values outside the card's tiers never reach here through
+        # cost_fragment, which refuses to price them; called directly, they
+        # count as unreported (served_tiers keeps them out of "known").
         partial = [e for e in evidence if e.kind == "applied-header-partial"]
         mixed = [e for e in evidence if e.kind == "applied-header" and not e.pins]
         if mixed:

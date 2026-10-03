@@ -361,6 +361,11 @@ class LLMMetadataTracker:
         """
         self.run_id = str(uuid.uuid4())
         self.start_time = datetime.now(timezone.utc)
+        # The commit of the code that RUNS, read at launch. Read at finalise
+        # (before 2026-10-03), a pull during a long run recorded a later
+        # commit than the one loaded, and the cost coster decides whether a
+        # run had the cached-path fix from this field (round-8 audit).
+        self.git_commit_at_launch = self.get_git_revision()
         self.cli_overrides = {
             key: value
             for key, value in (cli_overrides or {}).items()
@@ -666,11 +671,17 @@ class LLMMetadataTracker:
 
     @staticmethod
     def get_git_revision() -> str:
-        """Get the current git commit hash."""
+        """The commit checked out where this module lives (``unknown`` if none).
+
+        Read in the module's own directory, not the process's working
+        directory, so a run launched from elsewhere (or from a worktree)
+        records the checkout whose code it loaded.
+        """
         try:
             return subprocess.check_output(
                 ['git', 'rev-parse', 'HEAD'],
                 stderr=subprocess.DEVNULL,
+                cwd=Path(__file__).resolve().parent,
             ).decode('ascii').strip()
         except Exception:
             return "unknown"
@@ -702,7 +713,7 @@ class LLMMetadataTracker:
                     "duration_seconds": duration,
                 },
                 "environment": {
-                    "git_commit": self.get_git_revision(),
+                    "git_commit": self.git_commit_at_launch,
                     "script": self.script_name,
                     "script_version": self.script_version,
                 },
