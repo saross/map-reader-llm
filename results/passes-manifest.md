@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-10-03T09:02:47Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `992e82963`.
+> Generated 2026-10-03T10:00:39Z · 1339 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `ec0aaa922`.
 >
 > **Coverage**: 1339 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
@@ -1308,7 +1308,7 @@
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 791 | 0.555459 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 913 | 0.640389 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap37::run1 | gemini-3.7-flash | text | low | 0.0 | ok | — | 2 | 0.00213 | audited-lower-bound |
-| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 1 | 0.003871 | audited-lower-bound |
+| gemini37-screen-2026-08-28::g384_ov192_g37-union-k5-verify-swap38::run1 | gemini-3.8-flash | text | low | 0.0 | ok | — | 791 | 1.69385 | audited-upper-bound |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k1-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 640 | 0.452092 | audited |
 | gemini37-screen-2026-08-28::g384_ov192_g37-union-k3-verify::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 757 | 0.532933 | audited |
 | gemini37-55map-2026-08-29::g384_ov192_55map_g37::run1 | gemini-3.7-flash | text | low | 0.7 | ok | 24561 | — | 28.688984 | audited |

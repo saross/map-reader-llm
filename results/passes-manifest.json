@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-03T09:02:47Z",
+  "generated_at": "2026-10-03T10:00:39Z",
   "generator_version": "0.8.0",
   "passes": [
     {
@@ -420,7 +420,7 @@
             "cost_usd": 0.002161
           }
         ],
-        "note": "LOWER bound: the meta accounts for 3 request(s) against 8,942 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 3 candidate(s) against 8,942 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 4.479926,
       "timestamps": {
@@ -432,7 +432,7 @@
         "source_files": [
           "outputs/55maps-generalisation/verified-v2/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -836,7 +836,7 @@
             "cost_usd": 0.000727
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.001 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 1 request(s) against 7,878 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.001 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the leg's metas account for 1 candidate(s) against 7,878 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 6.251105,
       "timestamps": {
@@ -848,7 +848,7 @@
         "source_files": [
           "outputs/55maps-image-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -1221,7 +1221,7 @@
             "cost_usd": 0.05084
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TH7 (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$6.42 (9,205 calls, from the .pre-recovery backup meta) at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 74 request(s) against 9,205 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TH7 (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$6.42 (9,205 calls, from the .pre-recovery backup meta) at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the leg's metas account for 74 candidate(s) against 9,205 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 14.640159,
       "timestamps": {
@@ -1233,7 +1233,7 @@
         "source_files": [
           "outputs/55maps-text-high-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -1985,14 +1985,14 @@
             "tier_method": "run-log-inherited",
             "evidence": [
               "verifier-mode: outputs/55maps-text-min-generalisation/verified/probabilities.json mode=realtime -> flex|standard",
-              "run-log-inherited: outputs/55maps-text-min-generalisation/{recovery-phase1.log, run.log} -> flex",
+              "run-log-inherited: outputs/55maps-text-min-generalisation/{run.log} -> flex",
               "launch-manifest-inherited: outputs/55maps-text-min-generalisation/launch_manifest.json -> flex",
               "billing-day: gemini-3-flash-preview: 2026-05-02 flex [invoice line windows] -> flex"
             ],
             "cost_usd": 0.026423
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.03 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the meta accounts for 39 request(s) against 10,170 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TM (auditor_complete false); reports/token-load-audit-2026-06-12.md \u00a7 6 tabled US$0.03 at flex but labels its own totals lower bounds (\u00a7 8), so no figure is published yet; the leg's metas account for 39 candidate(s) against 10,170 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 7.14809,
       "timestamps": {
@@ -2004,7 +2004,7 @@
         "source_files": [
           "outputs/55maps-text-min-generalisation/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2370,7 +2370,7 @@
             "cost_usd": 0.00781
           }
         ],
-        "note": "LOWER bound: the meta accounts for 11 request(s) against 608 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 11 candidate(s) against 608 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 8.626864,
       "timestamps": {
@@ -2382,7 +2382,7 @@
         "source_files": [
           "outputs/gs/gold-standard-v2/verified-v1/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -6094,7 +6094,7 @@
             "cost_usd": 0.038928
           }
         ],
-        "note": "LOWER bound: the meta accounts for 57 request(s) against 4,358 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 57 candidate(s) against 4,358 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 21.100274,
       "timestamps": {
@@ -6106,7 +6106,7 @@
         "source_files": [
           "outputs/h11/e47-propose-brief/verified/flash-high-text-1of5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22490,7 +22490,7 @@
             "cost_usd": 0.324565
           }
         ],
-        "note": "LOWER bound: the meta accounts for 460 request(s) against 802 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 460 candidate(s) against 802 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 224.184638,
       "timestamps": {
@@ -22502,7 +22502,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/verified-v1-n10/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22625,7 +22625,7 @@
             "cost_usd": 0.007808
           }
         ],
-        "note": "LOWER bound: the meta accounts for 11 request(s) against 2,190 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 11 candidate(s) against 2,190 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 18.987465,
       "timestamps": {
@@ -22637,7 +22637,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22752,7 +22752,7 @@
             "cost_usd": 0.018197
           }
         ],
-        "note": "LOWER bound: the meta accounts for 26 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 26 candidate(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 9.66775,
       "timestamps": {
@@ -22764,7 +22764,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22879,7 +22879,7 @@
             "cost_usd": 0.009377
           }
         ],
-        "note": "LOWER bound: the meta accounts for 19 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 19 candidate(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 9.031089,
       "timestamps": {
@@ -22891,7 +22891,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-brief-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -22943,7 +22943,7 @@
             "cost_usd": 0.002339
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 7.323665,
       "timestamps": {
@@ -22955,7 +22955,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23007,7 +23007,7 @@
             "cost_usd": 0.013528
           }
         ],
-        "note": "LOWER bound: the meta accounts for 19 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 19 candidate(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 6.303492,
       "timestamps": {
@@ -23019,7 +23019,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/session-78-matrix/verified-checklist-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23205,7 +23205,7 @@
             "cost_usd": 0.000751
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 2,017 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 3.540989,
       "timestamps": {
@@ -23217,7 +23217,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23340,7 +23340,7 @@
             "cost_usd": 0.000685
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 2,840 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 2,840 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 4.743909,
       "timestamps": {
@@ -23352,7 +23352,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n5/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23680,7 +23680,7 @@
             "cost_usd": 0.027978
           }
         ],
-        "note": "LOWER bound: the meta accounts for 41 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 41 candidate(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 15.421488,
       "timestamps": {
@@ -23692,7 +23692,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-adversarial-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23807,7 +23807,7 @@
             "cost_usd": 0.013451
           }
         ],
-        "note": "LOWER bound: the meta accounts for 27 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 27 candidate(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 7.8537,
       "timestamps": {
@@ -23819,7 +23819,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-brief-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -23934,7 +23934,7 @@
             "cost_usd": 0.014995
           }
         ],
-        "note": "LOWER bound: the meta accounts for 21 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 21 candidate(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 12.915017,
       "timestamps": {
@@ -23946,7 +23946,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/session-78-matrix/verified-checklist-text/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -25268,7 +25268,7 @@
             "cost_usd": 0.000742
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,601 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 3,601 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 4.377842,
       "timestamps": {
@@ -25280,7 +25280,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n10/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -25698,7 +25698,7 @@
             "cost_usd": 0.003579
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 3,736 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 15.512789,
       "timestamps": {
@@ -25710,7 +25710,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -26458,7 +26458,7 @@
             "cost_usd": 0.077452
           }
         ],
-        "note": "LOWER bound: the meta accounts for 8 request(s) against 841 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 8 candidate(s) against 841 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 13.396195,
       "timestamps": {
@@ -26470,7 +26470,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/pro-high-image-1of5-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -26822,7 +26822,7 @@
             "cost_usd": 0.10208
           }
         ],
-        "note": "LOWER bound: the meta accounts for 10 request(s) against 519 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 10 candidate(s) against 519 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 11.373166,
       "timestamps": {
@@ -26834,7 +26834,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/pro-medium-image-baseline-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -27930,7 +27930,7 @@
             "cost_usd": 0.213324
           }
         ],
-        "note": "LOWER bound: the meta accounts for 21 request(s) against 1,047 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 21 candidate(s) against 1,047 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 22.748682,
       "timestamps": {
@@ -27942,7 +27942,7 @@
         "source_files": [
           "outputs/h11/pv-diag-384/verified/text-baseline-pro-verifier/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -32826,7 +32826,7 @@
             "cost_usd": 0.010877
           }
         ],
-        "note": "LOWER bound: the meta accounts for 15 request(s) against 1,114 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 15 candidate(s) against 1,114 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 8.202044,
       "timestamps": {
@@ -32838,7 +32838,7 @@
         "source_files": [
           "outputs/h8-v2/wbf/scale-4/verified/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -70331,7 +70331,7 @@
             "cost_usd": 0.000695
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 1,132 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 1,132 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 34.152397,
       "timestamps": {
@@ -70343,7 +70343,7 @@
         "source_files": [
           "outputs/flash35-pv-2x2/verified-f3vf/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -71151,7 +71151,7 @@
             "cost_usd": 0.002379
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 3,319 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 1 candidate(s) against 3,319 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 2.227227,
       "timestamps": {
@@ -71163,7 +71163,7 @@
         "source_files": [
           "outputs/grid-2026-08-18/verifier/g384_ov192/verify_37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -76919,7 +76919,7 @@
             "cost_usd": 0.004072
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.A-N1 (auditor_complete false); the meta accounts for 6 request(s) against 38,713 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.A-N1 (auditor_complete false); the leg's metas account for 6 candidate(s) against 38,713 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 10.287255,
       "timestamps": {
@@ -76931,7 +76931,7 @@
         "source_files": [
           "outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -77046,7 +77046,7 @@
             "cost_usd": 0.034947
           }
         ],
-        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false); the meta accounts for 79 request(s) against 57,482 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false); the leg's metas account for 29 candidate(s) against 57,482 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 592.18232,
       "timestamps": {
@@ -77058,7 +77058,7 @@
         "source_files": [
           "outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -79994,7 +79994,7 @@
             "cost_usd": 0.00213
           }
         ],
-        "note": "LOWER bound: the meta accounts for 16 request(s) against 791 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "note": "LOWER bound: the leg's metas account for 2 candidate(s) against 791 results in probabilities.json: a later leg (a cleanup) overwrote the main meta"
       },
       "wall_clock_s": 1608.336636,
       "timestamps": {
@@ -80006,7 +80006,7 @@
         "source_files": [
           "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap37/run.meta.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -80026,17 +80026,17 @@
       "status": "ok",
       "n_tiles_processed": null,
       "n_tiles_null_reason": "verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand_NNNN) in execution_stats.completed_items and candidate API items in per_item_metadata, so no tile-scale record exists to report. Completed crop count is in n_candidates_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)",
-      "n_candidates_verified": 1,
+      "n_candidates_verified": 791,
       "n_tiles_dispatched": null,
       "tokens": {
-        "input_billed": 1792,
+        "input_billed": 1417472,
         "input_cached": 0,
-        "output": 144,
-        "thinking": 530,
-        "total": 2466
+        "output": 107235,
+        "thinking": 60964,
+        "total": 1585671
       },
-      "cost_usd": 0.003871,
-      "cost_basis": "audited-lower-bound",
+      "cost_usd": 1.69385,
+      "cost_basis": "audited-upper-bound",
       "cost_source": {
         "rate_card": {
           "path": "data/pricing/gemini-rate-card.json",
@@ -80056,21 +80056,42 @@
               "billing-day: gemini-3.8-flash: 2026-09-03 flex|standard [invoice line windows] -> standard|flex"
             ],
             "cost_usd": 0.003871
+          },
+          {
+            "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.main-2026-09-04.json",
+            "model_recorded": "gemini-3.8-flash",
+            "priced_at": "2026-09-04",
+            "model": "gemini-3.8-flash",
+            "tier": null,
+            "tier_method": "unresolved",
+            "evidence": [
+              "verifier-mode: outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/probabilities.json mode=realtime -> flex|standard",
+              "billing-day: gemini-3.8-flash: 2026-09-03 flex|standard [invoice line windows] -> standard|flex"
+            ],
+            "candidates": {
+              "standard": 1.689979,
+              "flex": 0.844989
+            },
+            "cost_usd": 1.689979
           }
         ],
-        "note": "LOWER bound: the meta accounts for 1 request(s) against 791 results in probabilities.json: a later leg (a cleanup) overwrote it"
+        "bounds_usd": {
+          "low": 0.84886,
+          "high": 1.69385
+        }
       },
-      "wall_clock_s": 8.576354,
+      "wall_clock_s": 2357.21533,
       "timestamps": {
-        "start": "2026-09-04T04:40:40.794155+00:00",
+        "start": "2026-09-04T04:00:07.783650+00:00",
         "end": "2026-09-04T04:40:49.370509+00:00"
       },
-      "retries": 0,
+      "retries": 803,
       "provenance": {
         "source_files": [
-          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.json"
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.json",
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_swap38/run.meta.main-2026-09-04.json"
         ],
-        "last_extracted_at": "2026-10-03T09:02:47Z",
+        "last_extracted_at": "2026-10-03T10:00:39Z",
         "extractor_version": "0.8.0"
       }
     },

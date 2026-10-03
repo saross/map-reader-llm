@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `992e82963`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `ec0aaa922`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -61,7 +61,7 @@
 | `g384_ov192_g37-union-k3-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 757 | 0 |
 | `g384_ov192_g37-union-k5-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 791 | 0 |
 | `g384_ov192_g37-union-k5-verify-swap37` | 1 | gemini-3.7-flash | text | low | 0.0 | ok | 2 | 14 |
-| `g384_ov192_g37-union-k5-verify-swap38` | 1 | gemini-3.8-flash | text | low | 0.0 | ok | 1 | 0 |
+| `g384_ov192_g37-union-k5-verify-swap38` | 1 | gemini-3.8-flash | text | low | 0.0 | ok | 791 | 803 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -70,18 +70,18 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Field | Value |
 |---|---|
 | Passes on file | 16 |
-| Input tokens (billed) | 26,563,332 |
+| Input tokens (billed) | 27,979,012 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,599,559 |
-| Thinking tokens | 3,900,431 |
-| Total tokens | 32,063,322 |
+| Output tokens | 1,706,650 |
+| Thinking tokens | 3,960,865 |
+| Total tokens | 33,646,527 |
 | Passes with no token record | 0 |
-| Sum of `cost_usd` (audited basis) | US$19.3831 over 16 of 16 pass(es) |
-| `cost_basis` of the passes | audited 14, audited-lower-bound 2 |
+| `cost_usd` by basis | audited US$19.3771 (14); audited-lower-bound US$0.0021 (1); audited-upper-bound US$1.6939 (1) |
+| Run total (range) | at least US$20.2281; no ceiling (1 audited-lower-bound pass(es)) |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 9.74 h over 16 pass(es) |
+| Summed wall clock | 10.39 h over 16 pass(es) |
 
-> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum over upper or lower bounds is itself a bound, not a total to cite as exact.
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
 
@@ -224,7 +224,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `992e82963` |
+| Source commit | `ec0aaa922` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
