@@ -250,8 +250,11 @@ class FrontierCoster:
         """A verifier leg's uniform-tier cost, verifications and configuration.
 
         The leg's verifications (calls) are read from the
-        ``probabilities.json`` beside its primary meta (results times
-        iterations), never from the register's request-count fallback.
+        ``probabilities.json`` beside its primary meta, one entry per call,
+        never from the register's request-count fallback. A file whose
+        ``iterations`` exceeds one must key its entries per iteration
+        (``..._iterN``); otherwise the iteration count is suspect (the
+        wrong-K booking ``run_pv.py`` warns about) and the leg is refused.
         A floor's fragments may lack usage; it is still a leg, priced by
         :meth:`leg_cost` from its comparables.
         """
@@ -269,17 +272,29 @@ class FrontierCoster:
         doc = _load(prob)
         # One entry per CALL: a multi-iteration leg keys its results per
         # iteration, so the iterations are already in the count (audit lens A,
-        # 2026-10-04: multiplying again counted the June opmax leg 5x over).
-        verifications = len(doc.get("results") or {})
+        # 2026-10-04: multiplying again would have counted a five-iteration
+        # leg five times over; latent, as every register leg runs one).
+        keys = list(doc.get("results") or {})
+        verifications = len(keys)
+        iterations = max(int(doc.get("iterations") or 1), 1)
+        if iterations > 1 and not all("_iter" in str(k) for k in keys):
+            raise FrontierCostError(
+                f"{row['pass_id']}: probabilities.json records {iterations} iterations but "
+                "its results are not keyed per iteration; the iteration count is suspect")
         priced = {(self.root / f["meta"]).resolve() for f in frags}
         for merge in doc.get("cleanup_merges") or []:
             # Results a cleanup merged in, from a leg whose cost this row does
             # not carry, would be priced at nothing: leave them out
             # (55maps-generalisation: 26 from verified-cleanup, no register row).
+            if "added" not in merge or "source" not in merge:
+                raise FrontierCostError(f"{row['pass_id']}: a cleanup merge records no "
+                                        "'added' count or 'source', so its results cannot "
+                                        "be set apart")
             source_meta = (self.root / merge["source"]).parent / "run.meta.json"
             if source_meta.resolve() not in priced:
-                verifications -= int(merge.get("added") or 0)
-        iterations = max(int(doc.get("iterations") or 1), 1)
+                verifications -= int(merge["added"])
+        if verifications <= 0:
+            raise FrontierCostError(f"{row['pass_id']}: no verifications left to price")
         complete = row.get("cost_basis") in COMPLETE_BASES
         config = dict(_load(primary).get("configuration") or {})
         if config.get("model"):
@@ -455,8 +470,9 @@ def gs_units() -> dict[str, Priced]:
     Returns:
         ``min_pass`` and ``high_pass`` (the 55-map Gemini 3 Flash pass units
         scaled by 487/8,541), ``g37_pass`` (the GS 3.7 screen pool's own
-        mean pass) and ``vf_call`` (the Gemini 3 Flash verifier per
-        candidate), each with the register rows it came from.
+        mean pass) and ``vf_call`` (the Gemini 3 Flash verifier per call;
+        one call per candidate on every leg that runs one iteration), each
+        with the register rows it came from.
     """
     units = json.loads(MAPPING.read_text(encoding="utf-8"))["units"]
     coster = default_coster()

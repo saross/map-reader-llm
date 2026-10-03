@@ -1,6 +1,6 @@
 # WP4b design: the frontier cost axis from the register
 
-> **Last revised**: 2026-10-04 (original publication). See
+> **Last revised**: 2026-10-04 (build values; audit corrections). See
 > [§ Changelog](#changelog) for revision history.
 
 WP4b of `planning/cost-accounting-fix-plan-2026-09-21.md`, on branch
@@ -89,7 +89,7 @@ verifications). Checked 2026-10-04:
   the five T 0.7 text-high passes, the candidate unit from the pooled
   Gemini 3 Flash comparables. The June anchor leg for the candidate unit
   (`outputs/verifier-robustness/.../T0.3/verified`, US$0.000693) is not in
-  the register (see § 6); the pooled unit is 0.000685.
+  the register (see § 6); the pooled unit as shipped is 0.000692.
 - **K-ladder rungs**: the same units, the arms' legs from the register
   (`ARM_PROPOSER_USD_TOTAL` 144.27 and `ARM_VERIFIER_USD` 8.890222 /
   14.3055 reproduce exactly), Phase 1's board join from the rebuilt board.
@@ -98,19 +98,19 @@ verifications). Checked 2026-10-04:
 
 | Family | Register-derived (US$) | `FAMILY_COST` (US$) | Note |
 |---|---:|---:|---|
-| A-N1, A-N3, A-N5, A-N10 | 20.40, 41.00, 59.45, 103.42 | 20.53, 41.22, 59.75, 103.91 | within 0.5 % |
-| B-N1, B-N3, B-N5, B-N10 | 30.79, 65.10, 96.67, 172.67 | 30.99, 65.48, 97.22, 173.59 | within 0.6 % |
+| A-N1, A-N3, A-N5, A-N10 | 20.40, 41.00, 59.45, 103.42 | 20.53, 41.22, 59.75, 103.91 | within 0.7 % |
+| B-N1, B-N3, B-N5, B-N10 | 30.79, 65.10, 96.67, 172.67 | 30.99, 65.48, 97.22, 173.59 | within 0.7 % |
 | TH7, T03, UPL | 207.35, 261.15, 57.89 | 207.4, 261.0, 57.87 | within 0.1 % |
 | TM | 30.33 | 23.4 | old figure omitted the verifier (a floor); completed adds 10,170 x 0.000685 |
 | IM | 200.75 | 195.4 | old figure omitted the verifier (a floor); completed adds 7,878 x 0.000685 |
+| ARM1-N1, -N3, -N5 | 34.75, 94.31, 153.16 | None | first figures |
+| ARM2-N1, -N3, -N5 | 38.33, 99.03, 158.58 | None | first figures |
+| FOURTH-N1, -N3, -N5, -N10 | 42.14, 81.40, 116.15, 198.17 | None (no N5 entry) | first figures; N10 completed from ARM2's unit |
 
 The prototype pooled four Gemini 3 Flash legs (TH7, T03, uplift, stride B:
 US$0.0006851 per candidate). The build pools the four NOMINATED legs of the
 55-map generalisation campaign (55maps-generalisation, TH7, T03, uplift;
 ARM1 is not nominated): TM US$30.40 and IM US$200.80 as shipped.
-| ARM1-N1, -N3, -N5 | 34.75, 94.31, 153.16 | None | first figures |
-| ARM2-N1, -N3, -N5 | 38.33, 99.03, 158.58 | None | first figures |
-| FOURTH-N1, -N3, -N5, -N10 | 42.14, 81.40, 116.15, 198.17 | None (no N5 entry) | first figures; N10 completed from ARM2's unit |
 
 **The frontier will change**: nine 3.7 families enter the efficiency table
 for the first time, and TM moves up by 30 %. Membership before and after

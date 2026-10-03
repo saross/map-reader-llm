@@ -421,8 +421,15 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
         requests = max(int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
                            "request_count") or 0),
                        int(usage.get("n_responses_with_usage") or 0))
-        accounted += (len(set(es.get("completed_items") or []))
-                      or int(es.get("items_processed") or 0)
+        # Every side in CANDIDATES. A multi-iteration writer logs one
+        # completion per call key (run_pv ``log_success(key)``), so completed
+        # items are reduced to their candidates and processed items, which
+        # count calls, are divided like the requests (WP4b re-audit B: the
+        # half-fixed version read a real 5-iteration leg as (60, 12)).
+        completed = {str(item).rsplit("_iter", 1)[0]
+                     for item in (es.get("completed_items") or [])}
+        accounted += (len(completed)
+                      or int(es.get("items_processed") or 0) // iterations
                       or requests // iterations)
     return accounted, results
 

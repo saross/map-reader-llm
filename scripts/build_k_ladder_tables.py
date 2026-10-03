@@ -62,6 +62,7 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from scripts.lib_cost import UnknownModelError, resolve_model  # noqa: E402
 from scripts.lib_frontier_cost import default_coster  # noqa: E402
 INVENTORY = PROJECT_ROOT / "results/k-ladder-2026-09-12/inventory.json"
 BOARD_FRAME_DIR = PROJECT_ROOT / "results/k-ladder-2026-09-12/board-frame"
@@ -102,8 +103,14 @@ def board_family(pool: str, verifier_model: str, label: str) -> str | None:
         True
     """
     del label  # unused: the verifier decides, never a label substring
-    g3 = verifier_model.startswith("gemini-3-flash")
-    g37 = verifier_model.startswith("gemini-3.7")
+    try:
+        # Exact models, not prefixes: a "gemini-3-flash-lite" or "gemini-3.7-pro"
+        # verifier must route nowhere (WP4b re-audit B).
+        model = resolve_model(verifier_model)
+    except UnknownModelError:
+        return None
+    g3 = model == "gemini-3-flash-preview"
+    g37 = model == "gemini-3.7-flash"
     routes = {("g384_ov128_55map", True, False): "A",
               ("g384_ov192_55map", True, False): "B",
               ("g384_ov192_55map", False, True): "FOURTH",

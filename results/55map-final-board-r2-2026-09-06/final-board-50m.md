@@ -283,9 +283,12 @@ Before: A N = 1 → A N = 3 → A N = 5 → B N = 3 → B N = 5. After: A N = 1 
 3.7 arm 1 N = 1 → 3.7 arm 2 N = 1 → fourth cell N = 3 → 3.7 arm 2 N = 3. The
 3.7 runs' deployment-basis cells (carried where one exists, otherwise the
 rung oracle, as for every run) were unpriced and so absent, not dominated:
-the old frontier was an artefact of their missing costs. Four of the five
-new frontier rows are oracle cells; the addendum's carried-analogue
-ARM1-N1-carried (F1@50 0.7859 at US$35) would be dominated by A N = 1.
+the old frontier was an artefact of their missing costs. All five new
+frontier rows are oracle cells, where four of the old five were carried; on
+the carried basis (with the addendum's post-hoc carried-analogues) the
+frontier would run A N = 1 → ARM2-N1-carried → FOURTH-N3-carried →
+ARM2-N3-carried → ARM2 N = 5 carried, and ARM1-N1-carried (F1@50 0.7859 at
+US$35) would be dominated by A N = 1.
 
 **What did NOT change**: the 35-cell tiered board, its 595-pair family, every
 tier, group and F1 value, and the seven-cell addendum. This board is signed

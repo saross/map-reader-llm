@@ -1,6 +1,7 @@
 # WP4b: the frontiers re-priced from the register — walkthrough for the PI
 
-> **Last revised**: 2026-10-04 (original publication). See
+> **Last revised**: 2026-10-04 (audit corrections: precision claims, the
+> oracle-basis caution, two estimation choices). See
 > [§ Changelog](#changelog) for revision history.
 
 Branch `wp4b-frontier-cost`. Three signed analyses change their cost axis:
@@ -56,10 +57,14 @@ legs: TM, IM, stride A's union leg, and the fourth cell's 3.7 leg.
 
 The 3.7 runs' deployment-basis cells were unpriced, and so absent, not
 dominated: the old frontier was an artefact of their missing costs. A
-caution for the paper: four of the five new frontier rows are ORACLE cells
-(the board's deployment basis where no carried point exists, as for every
-run), and the addendum's carried-analogue ARM1-N1-carried (F1@50 0.7859 at
-US$35) would be dominated by A N = 1 (0.8227 at US$20.40).
+caution for the paper: ALL FIVE new frontier rows are ORACLE cells (the
+board's deployment basis where no carried point exists, as for every run),
+where four of the old five were carried. On the carried basis the frontier
+would run A N = 1 → ARM2-N1-carried (0.8459, US$38) → FOURTH-N3-carried
+(0.8744, US$81) → ARM2-N3-carried (0.8802, US$99) → ARM2 N = 5 carried
+(0.8827, US$159), those N < 5 carried cells being the addendum's post-hoc
+carried-analogues; only ARM1-N1-carried (0.7859 at US$35) drops out,
+dominated by A N = 1 (0.8227 at US$20.40).
 
 Applied by `scripts/final_board_cost_refresh.py`, which rewrites only the
 cost fields, the cost sentence and the efficiency section; the tiered
@@ -75,7 +80,8 @@ campaign's four complete legs). They reproduce the June audit's
 
 **Nothing moves that matters.** Both efficient sets are unchanged (F1:
 min6, min11, high31, high35; MCC: min6, min11), tiers and pairwise results
-are identical, and every rung's cost moves by less than 0.12 %.
+are identical, and every rung's cost moves by less than 0.1 % (largest
+0.094 %).
 
 The June audit's anchor leg for the verifier unit (the GS opmax run,
 `outputs/verifier-robustness/.../T0.3/verified`) is not in the register,
@@ -114,12 +120,12 @@ interpolated).
   HIGH image T1.0 and scale-4 fall 13 to 17 %.
 - `cost_share_at_k3` moves accordingly (MINIMAL image: about 40 % → 36 %).
 - Two choices the PI may wish to revisit. The T0.7 TEXT families keep the
-  55-map T0.7 measurement scaled (0.2659 for MINIMAL), which sits about 7 %
-  below both GS neighbours (0.2846 at T0.3, 0.2893 at T1.0), because the
+  55-map T0.7 measurement scaled (0.2659 for MINIMAL), which sits 6.6 % and
+  8.1 % below its GS neighbours (0.2846 at T0.3, 0.2893 at T1.0), because the
   55-map corpus is sparser; the T0.7 IMAGE families take the plain mean of
   their GS neighbours, so text and image T0.7 are estimated two ways. And
   the committed K = 5 and K = 10 rungs' verifier legs are priced at the
-  pooled unit rather than their own legs (under 1 % apart).
+  pooled unit rather than their own legs (within 1.5 %; pennies).
 
 ## 5. Things the PI should know
 
@@ -170,11 +176,14 @@ An agent never signs. These are drafts, dated when given.
 
 ### 2026-10-04 (later) — audit lens A corrections
 
-Precision claims corrected (A and B within 0.7 %, not 0.5 / 0.6 %; Pareto
-v2 within 0.12 %, not 0.1 %; stride A within US$0.02, not "to the cent");
-"the 3.7 runs were never dominated" narrowed to their deployment-basis
-cells, with the ARM1-N1-carried caution; the two estimation choices
-added to § 4. A counting fix (results merged from an unpriced cleanup)
+Precision claims corrected (A and B within 0.7 %, not 0.5 / 0.6 %; stride
+A within US$0.02, not "to the cent"; Pareto v2 stays within 0.1 %, largest
+0.094 % after the fix, a brief "0.12 %" having described the pre-fix
+output); "the 3.7 runs were never dominated" narrowed to their
+deployment-basis cells, with the oracle-basis caution (all five new
+frontier rows are oracle cells) and a carried-basis frontier for
+comparison; the two estimation choices added to § 4 with their exact
+gaps. A counting fix (results merged from an unpriced cleanup)
 moved TM from US$30.39 to US$30.40; no membership changed. Commit
 `61ab7a446` and the regeneration after it.
 

@@ -508,6 +508,9 @@ def test_a_pool_with_an_incomplete_pass_is_refused(repo, basis):
     ("g384_ov192_55map_g37", "gemini-3-flash-preview", "ARM1"),
     ("g384_ov192_55map_g37", "gemini-3.7-flash", "ARM2"),
     ("g384_ov192_55map_g37", "gemini-3.1-pro-preview", None),
+    ("g384_ov192_55map", "gemini-3-flash", "B"),               # an alias of the same model
+    ("g384_ov192_55map", "gemini-3-flash-lite", None),         # a prefix sibling
+    ("g384_ov192_55map", "gemini-3.7-pro", None),
 ])
 def test_ladder_routing_names_its_verifier(pool, model, family):
     # The arms are told apart by their verifier, never by a label substring.
@@ -526,5 +529,48 @@ def test_coverage_counts_candidates_for_a_multi_iteration_leg(tmp_path):
         "iterations": 5,
         "results": {f"candidate_{i:05d}_iter{j}": 0.9 for i in range(729)
                     for j in range(1, 6)}}))
-    meta = {"execution_stats": {"completed_items": [f"candidate_{i:05d}" for i in range(729)]}}
-    assert verifier_coverage([(meta, leg / "run.meta.json")]) == (729, 729)
+    # The writer logs one completion per CALL key (run_pv log_success(key)).
+    calls = [f"candidate_{i:05d}_iter{j}" for i in range(729) for j in range(1, 6)]
+    whole = {"execution_stats": {"completed_items": calls}}
+    assert verifier_coverage([(whole, leg / "run.meta.json")]) == (729, 729)
+    # A meta a cleanup overwrote, still holding 18 % of the calls, is a floor.
+    partial = {"execution_stats": {"completed_items": calls[:656]}}
+    accounted, results = verifier_coverage([(partial, leg / "run.meta.json")])
+    assert accounted < 0.9 * results
+    # Processed items count calls too, and are divided like the requests.
+    processed = {"execution_stats": {"items_processed": 3645}}
+    assert verifier_coverage([(processed, leg / "run.meta.json")]) == (729, 729)
+
+
+
+@pytest.mark.tier1
+def test_results_merged_from_a_priced_cleanup_are_kept(repo):
+    # Negative of the subtraction: the cleanup's own meta is one of the row's
+    # fragments, so its results carry their cost and stay in the count.
+    repo.leg("r", "v", results=1000)
+    cleanup_meta = repo._write("outputs/r/v-cleanup/run.meta.json", {"usage_stats": USAGE})
+    repo.rows[-1]["cost_source"]["fragments"].append({
+        "meta": cleanup_meta, "model_recorded": "gemini-3-flash-preview",
+        "model": "gemini-3-flash-preview", "priced_at": "2026-05-20", "tier": "flex"})
+    prob = repo.root / "outputs/r/v/probabilities.json"
+    doc = json.loads(prob.read_text())
+    doc["cleanup_merges"] = [{"source": "outputs/r/v-cleanup/probabilities.json", "added": 26}]
+    prob.write_text(json.dumps(doc))
+    leg = repo.coster().leg("r", "v")
+    assert leg.verifications == 1000
+    assert leg.usd == pytest.approx(2 * FLEX_USD)  # both fragments priced
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("change", "reason"), [
+    ({"cleanup_merges": [{"source": "outputs/r/v-cleanup/probabilities.json"}]}, "'added'"),
+    ({"iterations": 5}, "not keyed per iteration"),     # a wrong-K booking
+    ({"cleanup_merges": [{"source": "outputs/r/v-cleanup/probabilities.json",
+                          "added": 1000}]}, "no verifications left"),
+])
+def test_a_suspect_results_file_is_refused(repo, change, reason):
+    repo.leg("r", "v", results=1000)
+    prob = repo.root / "outputs/r/v/probabilities.json"
+    prob.write_text(json.dumps({**json.loads(prob.read_text()), **change}))
+    with pytest.raises(FrontierCostError, match=reason):
+        repo.coster().leg("r", "v")

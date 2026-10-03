@@ -73,8 +73,12 @@ def test_pareto_v2_carries_todays_units_and_rung_costs():
 def test_phase2_ladders_carry_each_familys_own_unit():
     from scripts import build_k_ladder_phase2_tables as tables
     doc = json.loads(PHASE2.read_text(encoding="utf-8"))
-    units, vf = phase2_pass_units(), gs_units()["vf_call"].usd
-    assert doc["cost_model"]["vf_call_usd"] == pytest.approx(vf, abs=1e-15)
+    units, named = phase2_pass_units(), gs_units()
+    vf = named["vf_call"].usd
+    for field, name in (("vf_call_usd", "vf_call"), ("min_pass_usd", "min_pass"),
+                        ("high_pass_usd", "high_pass"), ("g37_pass_usd", "g37_pass")):
+        assert doc["cost_model"][field] == pytest.approx(named[name].usd, abs=1e-12), field
+    assert "passes register" in doc["cost_model"]["basis"]
     assert len(doc["ladders"]) == len(units) == 14
     for ladder in doc["ladders"]:
         unit, anchor = units[ladder["proposer_pool"]]
@@ -86,6 +90,8 @@ def test_phase2_ladders_carry_each_familys_own_unit():
             if rung["source"].startswith("committed") and rung["candidates"]:
                 assert rung["verifier_flex_usd"] == pytest.approx(
                     round(rung["candidates"] * vf, 4), abs=1e-9), (ladder["family"], rung["K"])
+                assert rung["verifier_usd_basis"] == \
+                    f"priced at VF_CALL_USD {vf:.7f} (register, D19)"
 
 
 @pytest.mark.tier1
@@ -96,14 +102,14 @@ def test_phase1_ladders_carry_todays_costs_and_the_fourth_cells_own():
     rebuilt = phase1.build()
     assert len(rebuilt["ladders"]) == len(committed["ladders"])
     fourth = []
-    for new, old in zip(rebuilt["ladders"], committed["ladders"]):
+    for new, old in zip(rebuilt["ladders"], committed["ladders"], strict=True):
         assert new["family"] == old["family"]
-        for rn, ro in zip(new["rungs"], old["rungs"]):
+        for rn, ro in zip(new["rungs"], old["rungs"], strict=True):
             assert rn["condition_id"] == ro["condition_id"]
-            assert (rn["cost"] or {}).get("usd") == (ro["cost"] or {}).get("usd"), \
-                rn["condition_id"]
-            assert (rn["cost"] or {}).get("register_rows") == \
-                (ro["cost"] or {}).get("register_rows"), rn["condition_id"]
+            for key in ("usd", "register_rows", "basis"):
+                assert (rn["cost"] or {}).get(key) == (ro["cost"] or {}).get(key), \
+                    (rn["condition_id"], key)
+            assert rn.get("projection_55map_usd") == ro.get("projection_55map_usd")
         if new["verifier"]["model"].startswith("gemini-3.7") and \
                 new["proposer_pool"] == "g384_ov192_55map":
             fourth.append(new)
