@@ -1,25 +1,7 @@
 {
- "_README": "Executions whose results were superseded or that were aborted: real, billed project spend that belongs to NO configuration's cost (PI ruling D22, 2026-10-03: excluded from per-run and per-configuration costs, counted in the project total). The register never prices these; the project-total reconciliation (plan WP6) adds them. Figures are on the audited basis (scripts/lib_cost.price_usage over the meta's own usage); null where the execution left no meta. Append as more are found; never delete an entry.",
+ "_README": "Executions whose results were superseded or that were aborted: real, billed project spend that belongs to NO configuration's cost (PI ruling D22, 2026-10-03: excluded from per-run and per-configuration costs, counted in the project total). The register never prices these; the project-total reconciliation (plan WP6) adds them. Figures are on the audited basis (scripts/lib_cost.price_usage over the meta's own usage); null where the execution left no meta. Append as more are found; never delete an entry. An entry found NOT to be separate spend moves to 'withdrawn' with its reason (it is kept, never deleted). Note that a run.meta.pre-rerun-N.json sidecar is not by itself a superseded execution: batch mode keeps its predecessor under that name, and a batch-recover leg's live meta already contains the predecessor's results (check the results file before listing one).",
  "schema": "superseded-executions/1",
  "executions": [
-  {
-   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.pre-rerun-1.json",
-   "superseded_by": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1",
-   "kind": "superseded execution (the leg was re-run; its results replaced these)",
-   "model": "gemini-3-flash-preview",
-   "tier": "flex or batch (equal rates for this model)",
-   "cost_usd": 15.082752,
-   "evidence": "33,662,720 input / 2,375,784 output / 2,068,931 thinking tokens, 2026-09-19 00:37-04:09 UTC; the meta records no tier and no batch marker of its own; Gemini 3 Flash billed only flex on that Pacific day. outputs/gemini3-image-55map-2026-09-16/post_run_report.md § 3.2 (the auditor correctly does not add it to the leg)."
-  },
-  {
-   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/run.meta.pre-rerun-1.json",
-   "superseded_by": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1",
-   "kind": "superseded execution (the leg was re-run; its results replaced these)",
-   "model": "gemini-3-flash-preview",
-   "tier": "flex or batch (equal rates for this model)",
-   "cost_usd": 12.768106,
-   "evidence": "28,672,000 input / 2,013,808 output / 1,719,596 thinking tokens, 2026-09-19 14:00-18:01 UTC; Gemini 3 Flash billed flex and batch that Pacific day, at equal rates. post_run_report.md § 3.2."
-  },
   {
    "meta": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/archive-run2-fd-storm-attempt1/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
    "superseded_by": "gemini37-image-gs-2026-09-01::g384_ov192_g37img::run2",
@@ -66,5 +48,23 @@
    "evidence": "killed within its first request on 2026-10-03; under US$0.01"
   }
  ],
- "priced_total_usd": 27.962372
+ "priced_total_usd": 0.111514,
+ "withdrawn": [
+  {
+   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.pre-rerun-1.json",
+   "withdrawn_on": "2026-10-03",
+   "was_priced_usd": 15.082752,
+   "reason": "A partial snapshot of the SAME Batch API jobs the live run.meta.json prices, not a separate execution. The live meta (run_pv.py batch-recover, 2026-09-19 04:10 UTC) is whole-leg, sourced from batch_results.jsonl: 22,785 results, the sidecar's 18,785 plus the 4,000 recovered rows of one job, at 1,792 input tokens per request in both (33,662,720 = 18,785 x 1,792; 40,830,720 = 22,785 x 1,792). No request was billed twice. outputs/gemini3-image-55map-2026-09-16/post_run_report.md § 3.2; reports/cleanup-meta-fix-2026-09-14.md § 2.1 (batch mode keeps its predecessor as a pre-rerun sidecar).",
+   "also_wrong": "the entry named the model gemini-3-flash-preview; the meta records gemini-3.7-flash (configuration.model and pricing_used.model)",
+   "found_by": "the round-7 re-audit (implementation lens), before merge"
+  },
+  {
+   "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/run.meta.pre-rerun-1.json",
+   "withdrawn_on": "2026-10-03",
+   "was_priced_usd": 12.768106,
+   "reason": "A partial snapshot of the SAME Batch API jobs the live run.meta.json prices, not a separate execution. Chunks 0-3 succeeded at first lodging (16,000 results, the sidecar's items_processed); chunks 4-11 failed to lodge (File API 429) and were re-lodged; the live meta (batch-recover, 2026-09-19 22:11 UTC) folds in all twelve jobs, 45,786 results from batch_results.jsonl, so the sidecar's tokens are inside it. post_run_report.md §§ 3.1-3.2.",
+   "also_wrong": "the entry named the model gemini-3-flash-preview; the meta records gemini-3.7-flash (configuration.model and pricing_used.model)",
+   "found_by": "the round-7 re-audit (implementation lens), before merge"
+  }
+ ]
 }

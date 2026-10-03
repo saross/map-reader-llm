@@ -10,7 +10,7 @@
    "tier": "flex",
    "attested_by": "PI",
    "attested_on": "2026-10-03",
-   "evidence": "planning/gemini38-screen-2026-09-04.md (Arm V): the main run, 790 of 791 candidates, was launched under --service-tier flex (about US$0.85 flex token basis); the verifier code live at its launch (2026-09-04 04:00 UTC: scripts/run_pv.py and scripts/lib_verifier.py as last changed by 2ce4536ea, 2026-08-31, and unchanged at 21a34339f, the Arm V commit two minutes after launch; lib_verifier.py lines 291-292) forwarded the tier on every request and had no cached path, so no known defect could have switched it. The PI ruled 2026-10-03: flex, per the notes, absent evidence of a deviation. Citation corrected 2026-10-03 before merge: it first named 69a081b2c, a documentation commit made after the run."
+   "evidence": "planning/gemini38-screen-2026-09-04.md (Arm V): the main run, 790 of 791 candidates, was launched under --service-tier flex (about US$0.85 flex token basis); the verifier code live at its launch (2026-09-04 04:00 UTC: scripts/run_pv.py as last changed by 2ce4536ea, 2026-08-31, and scripts/lib_verifier.py by 4bb33b7e2, 2026-05-03, both unchanged at 21a34339f, the Arm V commit two minutes after launch; lib_verifier.py lines 291-292) forwarded the tier on every request and had no cached path, so no known defect could have switched it. The PI ruled 2026-10-03: flex, per the notes, absent evidence of a deviation. Citation corrected 2026-10-03 before merge: it first named 69a081b2c, a documentation commit made after the run, then 2ce4536ea for both files (that commit changed run_pv.py only)."
   },
   {
    "id": "A2",

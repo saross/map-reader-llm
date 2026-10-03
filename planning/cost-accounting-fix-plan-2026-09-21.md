@@ -511,9 +511,12 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
    with the tier uncertainty bracketing it down to **US$2,828.71**; it was
    US$4,674.00 on the runner estimate. The invoices total **USD 5,554.83**
    over December to September; the difference is the 810 unrecorded passes,
-   the 28 floors' missing spend, superseded executions (the Gemini 3 row's
-   two `pre-rerun` verifier legs, about 62 M input tokens), and unregistered
-   traffic (layer 3: top-down, by work units).
+   the 28 floors' missing spend, superseded executions, and unregistered
+   traffic (layer 3: top-down, by work units). (Corrected 2026-10-03 before
+   merge: this item first counted the Gemini 3 row's two `pre-rerun`
+   verifier legs, about 62 M input tokens, as superseded spend. They are
+   snapshots of the same Batch API jobs their legs' live metas price; see
+   item 15.)
 9. **Two downloads were missing** because billing days are Pacific:
    2026-04-14 (`h10`, 14.3 M output) and 2026-06-02 (`n1-pro-rerun-384`). The
    2026-08-28 and 08-31 re-exports of 2026-10-03 lack the project filter
@@ -622,12 +625,30 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
       deduplicated together, and a named one that would not be priced is
       an error; an attestation glob that matches no file is refused; the
       runner refuses `tools` beside a cache instead of dropping them.
-    - **Corrected before merge**: the superseded ledger's fd-storm entry
-      read "no meta", but the four attempts have metas: US$0.11 over the
-      three with usage (`data/pricing/superseded-executions.json`, priced
-      total US$27.96); A1 and D21 cited a later documentation commit
-      (`69a081b2c`) for the code live at swap38's launch, which was
-      `2ce4536ea` (unchanged at `21a34339f`).
+    - **Corrected before merge**:
+      - The superseded ledger's fd-storm entry read "no meta", but the four
+        attempts have metas: US$0.11 over the three with usage.
+      - **The ledger's two `pre-rerun` entries (US$27.85) were a double
+        count**, found by the round-7 re-audit. Batch mode keeps a leg's
+        predecessor meta as `run.meta.pre-rerun-N.json` when it rebuilds the
+        meta from the whole results file. The Gemini 3 row's K = 1 and
+        K = 5 arm 2 sidecars hold 18,785 of 22,785 and 16,000 of 45,786
+        results of the SAME jobs the live metas price; no request was
+        billed twice. They are withdrawn (kept, with the reason) and the
+        ledger's priced total is US$0.11. The entries had also named the
+        wrong model (`gemini-3-flash-preview`; the metas say
+        `gemini-3.7-flash`). D22 was put to the PI with those two entries
+        as its example; its principle stands.
+      - A1 and D21 cited a later documentation commit (`69a081b2c`) for the
+        code live at swap38's launch: `scripts/run_pv.py` was last changed
+        by `2ce4536ea` and `scripts/lib_verifier.py` by `4bb33b7e2`, both
+        unchanged at `21a34339f`.
+    - The re-audit also moved the cached-path rule from the clock to the
+      code: it is lifted when the meta's `environment.git_commit` descends
+      from `2df65047e`, because the fix reaches `main` only when this branch
+      merges, and a run launched from `main` meanwhile still drops its tier.
+      A response served at a tier the rate card does not price now makes
+      its fragment unpriceable.
     - No figure moved: the register is US$3,094.05 on the audited basis,
       US$2,859.81 at the tier lower bound. Full tier-1 on sapphire: 3,477
       passed. Every round-7 rule has a mutation that turns a test red.
@@ -640,11 +661,13 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
 
 § 8.15 added. What changed: the tracker's run-level served-tier count,
 the coverage rule for the header, the cached-path rule's end at its
-fix, and two corrections made before merge (the fd-storm ledger entry
-and the swap38 citation). What did NOT change: every register figure
+fix (by the run's recorded commit), and three corrections made before
+merge (the fd-storm ledger entry; the two `pre-rerun` entries withdrawn
+as a US$27.85 double count, ledger now US$0.11; the swap38 citation). What did NOT change: every register figure
 (US$3,094.05; tier lower bound US$2,859.81; 312 audited, 188 upper
 bound, 27 lower bound, 2 published, 810 unrecorded) and every C3 cost
-verdict (MATCH). Commits `429dfac1f` (code) and `1da842f1d` (register).
+verdict (MATCH). Commits `429dfac1f` and `6c8444884` (code),
+`1da842f1d` (register), and the re-audit fixes after them.
 
 ### 2026-10-03 (later) — four audit rounds; § 8 figures refreshed (Session 158)
 

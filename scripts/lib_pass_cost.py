@@ -89,10 +89,13 @@ that tier is pinned, above every other record. Where they reported several,
 the fragment is priced across exactly those tiers (an upper bound), and a
 request record naming one of them is a note, not a conflict: the API's
 statement of what it served outranks what was asked for. Where only some
-responses reported a tier (a meta that merged a pre-header leg, or an
-unrecognised header value), the reported tiers WIDEN the candidates instead
-of narrowing them: the unreported responses may have run elsewhere, and
-narrowing would understate.
+responses reported a tier (a meta that merged a pre-header leg), the
+reported tiers WIDEN the candidates instead of narrowing them: the
+unreported responses may have run elsewhere, and narrowing would
+understate; evidence other than a request record that rules a served tier
+out is a conflict. A response served at a tier the rate card does not
+price makes the fragment unpriceable, because any card tier could
+understate it.
 
 **The cached-path defect (fixed).** Until ``2df65047e`` (2026-10-03
 12:02:23 UTC) ``scripts/4_detect_mounds_batch.py`` built a fresh
@@ -437,29 +440,49 @@ def has_cached_path_fix(commit: str | None) -> bool:
     return done.returncode == 0
 
 
-def _glob_matches_a_file(pattern: Any) -> bool:
-    """Whether an attestation's ``meta`` glob matches at least one existing file.
+def attestation_glob_problem(pattern: Any) -> str | None:
+    """Why an attestation's ``meta`` glob could never apply, or None if it can.
 
     Matched the way :meth:`PassCoster.attestation` matches (``fnmatch`` over
-    the repository-relative path, absolute outside the repository), over the
-    files beneath the pattern's literal directory prefix.
+    the repository-relative path; absolute only outside the repository),
+    over the files beneath the pattern's literal directory prefix.
+
+    Args:
+        pattern: The attestation's ``meta`` value.
+
+    Returns:
+        A reason the glob is refused, or None when it matches a file.
+
+    Examples:
+        >>> attestation_glob_problem("../x")
+        'climbs out of its directory'
+        >>> attestation_glob_problem("outputs/*/run.meta.json")
+        'names fewer than two directories before its first wildcard (too broad to check)'
     """
-    if not isinstance(pattern, str) or ".." in pattern.split("/"):
-        return False
+    if not isinstance(pattern, str) or not pattern:
+        return "is not a non-empty string"
+    if ".." in pattern.split("/"):
+        return "climbs out of its directory"
+    if pattern.startswith("/") and Path(pattern).is_relative_to(PROJECT_ROOT):
+        # attestation() compares against the REPOSITORY-RELATIVE path, so an
+        # absolute path inside the repository could never match (audit A L1).
+        return "is absolute inside the repository: write it repository-relative"
     literal = pattern
     for ch in "*?[":
         literal = literal.split(ch, 1)[0]
-    if "/" not in literal.strip("/"):
-        # A glob must name at least one directory: a wildcard in the first
-        # component would walk the whole repository (or its parent).
-        return False
+    if literal != pattern and "/" not in literal.strip("/"):
+        # Fewer than two directories before the first wildcard would walk the
+        # whole repository, or its parent (``outputs/*/...`` took 17.6 s).
+        return ("names fewer than two directories before its first wildcard (too broad "
+                "to check)")
     root = Path(literal) if literal.startswith("/") else PROJECT_ROOT / literal
     if literal == pattern:
-        return root.is_file()
+        return None if root.is_file() else "matches no file"
     base = root if literal.endswith("/") else root.parent
-    if not base.is_dir():
-        return False
-    return any(f.is_file() and fnmatch.fnmatchcase(_rel(f), pattern) for f in base.rglob("*"))
+    if base.is_dir() and any(f.is_file() and fnmatch.fnmatchcase(_rel(f), pattern)
+                             for f in base.rglob("*")):
+        return None
+    return "matches no file"
 
 
 def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
@@ -553,11 +576,12 @@ class PassCoster:
             if att["id"] in ids:
                 raise ValueError(f"tier attestation id {att['id']!r} is duplicated")
             ids.add(att["id"])
-            if "meta" in att and not _glob_matches_a_file(att["meta"]):
-                # A typo in a fragment glob would never match, and the
-                # attestation would silently never apply (re-audit round 7).
+            problem = attestation_glob_problem(att["meta"]) if "meta" in att else None
+            if problem:
+                # A glob that could never match would leave the attestation
+                # silently never applying (re-audit round 7).
                 raise ValueError(f"tier attestation {att['id']!r}: meta {att['meta']!r} "
-                                 "matches no file")
+                                 f"{problem}")
 
     def _log_evidence(self, directory: Path, run_dir: Path,
                       stage: str = "proposer") -> list[Evidence]:
@@ -870,7 +894,18 @@ class PassCoster:
         for e in partial:
             # Some responses reported the tier that served them, the rest did
             # not: the fragment ran at least partly at each reported tier, so
-            # every one of them is a candidate, whatever the records pin.
+            # every one of them is a candidate, whatever the records pin. A
+            # record of what was REQUESTED yields; anything else that rules a
+            # served tier out (the invoice, a batch marker) contradicts the
+            # API and is reported as a conflict (re-audit A, L3).
+            for other in finding.evidence:
+                if other.kind.startswith("applied-header") or other.kind in REQUEST_RECORDS \
+                        or other.kind == "cached-path":
+                    continue
+                outside = [t for t in e.tiers if t not in other.tiers]
+                if outside:
+                    finding.conflicts.append(f"applied-header-partial served "
+                                             f"{'|'.join(outside)} but {other.describe()}")
             extra = [t for t in e.tiers if t not in finding.candidates]
             if not extra:
                 continue
@@ -978,6 +1013,17 @@ class PassCoster:
             entry.update(tier=None, tier_method="not-needed", unpriceable=str(exc))
             return {**entry, "_basis": "unpriceable", "_cost": None, "_low": None, "_high": None}
         entry["model"] = canonical
+        served = served_tiers(meta)
+        foreign = {t: n for t, n in (served[0] if served else {}).items()
+                   if t not in TIERS and t != UNREPORTED and n}
+        if foreign:
+            # The API says it served these responses at a tier the rate card
+            # does not price (re-audit A, L4): any card tier could understate.
+            entry.update(tier=None, tier_method="not-needed", unpriceable=(
+                "served at a tier the rate card does not price: "
+                + ", ".join(f"{t} ({n} of {served[1]} responses)"
+                            for t, n in sorted(foreign.items()))))
+            return {**entry, "_basis": "unpriceable", "_cost": None, "_low": None, "_high": None}
         finding = self.resolve(
             meta=meta, meta_path=meta_path, run_id=run_id, pool=pool, run_dir=run_dir,
             model=canonical, start=start, end=end, duration_s=ts.get("duration_seconds"),

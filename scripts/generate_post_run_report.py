@@ -458,9 +458,11 @@ def _preserved_main_legs(primary: dict, primary_path: Path,
     A meta with its own ``run_id`` is a separate, billed execution of the leg
     and is priced with it (re-audit round 2). Two kinds of file beside it are
     NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's ``run_id``
-    (cumulative), and ``run.meta.pre-rerun-*`` are superseded executions whose
-    results were discarded, which are project spend (D22) but not the cost of
-    producing this leg's result.
+    (cumulative), and ``run.meta.pre-rerun-*`` is the predecessor batch mode
+    keeps when it rebuilds a leg's meta from the whole results file, so its
+    results are already inside the primary (the Gemini 3 row's two such
+    sidecars were first booked as superseded spend, a US$27.85 double count
+    withdrawn before merge; ``data/pricing/superseded-executions.json``).
 
     Args:
         primary: The leg's ``run.meta.json``, parsed.
@@ -472,9 +474,11 @@ def _preserved_main_legs(primary: dict, primary_path: Path,
         named ones in their listed order.
 
     Raises:
-        ValueError: When a named file is missing, or would not be priced (no
-            ``run_id``, the primary's, or one already priced): the PI named
-            it, so dropping it silently would hide the spend it was named for.
+        ValueError: When a named file is missing, does not sit beside the
+            primary (a mis-keyed entry would price another leg's spend into
+            this one), or would not be priced (no ``run_id``, the primary's,
+            or one already priced): the PI named it, so dropping it silently
+            would hide the spend it was named for.
     """
     mains = (sorted(primary_path.parent.glob("run.meta.main-*.json"))
              if primary_path.name == "run.meta.json" else [])
@@ -483,6 +487,12 @@ def _preserved_main_legs(primary: dict, primary_path: Path,
     if missing:
         raise ValueError(f"cost-overrides.json preserved_main_legs names missing files: "
                          f"{missing}")
+    elsewhere = [m for m, path in named.items()
+                 if path.resolve().parent != primary_path.resolve().parent]
+    if elsewhere:
+        raise ValueError(f"cost-overrides.json preserved_main_legs names {elsewhere} for the "
+                         f"leg in {primary_path.parent.name}/, but they do not sit beside its "
+                         f"{primary_path.name}")
     resolved = {path.resolve() for path in mains}
     kept = _sibling_metas(primary, mains + [path for path in named.values()
                                             if path.resolve() not in resolved])

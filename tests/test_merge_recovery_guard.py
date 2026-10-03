@@ -79,6 +79,7 @@ def _by_script(script):
 @pytest.mark.parametrize("where", ["original", "recovery"])
 @pytest.mark.parametrize("verifier", [
     _meta(["candidate_00001"]),             # a completed candidate
+    _meta(["cand_0001"]),                   # the 5_verify_crops.py spelling
     _failed_only("candidate_00002"),        # a failed candidate (a dict)
     _by_script("run_pv.py"),                # no items, the script says so
     _by_script("5_verify_crops.py"),

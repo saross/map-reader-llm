@@ -1624,13 +1624,33 @@ def test_a_partial_header_alone_never_lowers_the_price(evidence, tmp_path, usage
 
 
 @pytest.mark.tier1
-def test_an_unknown_header_value_is_unreported_and_noted(evidence, tmp_path):
+@pytest.mark.parametrize("counts", [{"flex": 2, "priority": 1}, {"priority": 3}])
+def test_a_tier_the_card_does_not_price_makes_the_fragment_unpriceable(evidence, tmp_path,
+                                                                        counts):
+    # The API says it served some responses at a tier the rate card does not
+    # know; any card tier, the requested one included, could understate them.
     pdir = tmp_path / "r" / "p" / "run_1"
     logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
-    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 2, "priority": 1}, 3))
-    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
-    assert frag["tier_method"] == "run-log"  # not pinned by a 2-of-3 header
-    assert any("priority" in n and "unreported" in n for n in frag["notes"])
+    meta = _meta(pdir / "a.meta.json", usage=_counted(counts, 3))
+    out = _cost(evidence(logs=logs), [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert out["cost_usd"] is None and out["cost_basis"] == "unpriceable"
+    assert f"priority ({counts['priority']} of 3 responses)" in frag["unpriceable"]
+
+
+@pytest.mark.tier1
+def test_a_partial_header_against_the_invoice_is_a_conflict(evidence, tmp_path):
+    # Two responses said standard on a day the invoice billed only flex: the
+    # widening stands (no understatement), and the contradiction is reported.
+    day = {"2026-05-20": {"project_filter": "unverified", "models": {
+        "gemini-3-flash-preview": {"tiers": {"flex": {"output": 9_000_000}}}}}}
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 usage=_counted({"standard": 2, "unreported": 1}, 3))
+    frag = _cost(evidence(billing={"days": day}), [meta],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert set(frag["candidates"]) == {"standard", "flex"}
+    assert any(c.startswith("applied-header-partial served standard but billing-day")
+               for c in frag["conflicts"])
 
 
 @pytest.mark.tier1
@@ -1785,8 +1805,10 @@ def test_an_attestation_whose_meta_glob_matches_nothing_is_refused(evidence, tmp
     good = {"id": "A1", "run_id": "r", "pool": "*", "tier": "flex", "attested_by": "PI",
             "attested_on": "2026-10-03", "evidence": "x"}
     evidence(attestations=[{**good, "meta": _rel(leg / "run.meta.main-*.json")}])
-    for bad in (_rel(leg / "run.meta.main-y.json"), _rel(leg / "nope" / "*.json"), "../x", ""):
-        with pytest.raises(ValueError, match="matches no file"):
+    for bad, reason in ((_rel(leg / "run.meta.main-y.json"), "matches no file"),
+                        (_rel(leg / "nope" / "*.json"), "matches no file"),
+                        ("../x", "climbs out"), ("", "non-empty string"), (None, "non-empty")):
+        with pytest.raises(ValueError, match=reason):
             evidence(attestations=[{**good, "meta": bad}])
 
 
@@ -1816,6 +1838,25 @@ def test_named_and_globbed_main_legs_are_deduplicated_together(tmp_path):
             _preserved_main_legs(primary, leg / "run.meta.json", [str(leg / bad)])
     with pytest.raises(ValueError, match="missing"):
         _preserved_main_legs(primary, leg / "run.meta.json", [str(leg / "absent.json")])
+    # A mis-keyed entry naming another leg's file is refused, not priced here.
+    other = tmp_path / "w"
+    other.mkdir()
+    (other / "run.meta.json.pre-recovery-9.backup").write_text(json.dumps({"run_id": "Z"}))
+    with pytest.raises(ValueError, match="do not sit beside"):
+        _preserved_main_legs(primary, leg / "run.meta.json",
+                             [str(other / "run.meta.json.pre-recovery-9.backup")])
+
+
+@pytest.mark.tier1
+def test_every_override_and_named_leg_is_keyed_to_a_register_pass():
+    # A key that matches no pass is never read, so its figure or leg would
+    # silently not apply (re-audit A, L7).
+    doc = json.loads((REPO / "data/pricing/cost-overrides.json").read_text())
+    ids = {r["pass_id"] for r in json.loads(
+        (REPO / "results/passes-manifest.json").read_text())["passes"]}
+    for section in ("entries", "preserved_main_legs"):
+        for key in doc.get(section, {}):
+            assert key in ids, f"{section}: {key}"
 
 
 # ---------------------------------------------------------------------------
@@ -1880,10 +1921,17 @@ def test_the_docstring_examples_run(module):
 
 
 @pytest.mark.tier1
-@pytest.mark.parametrize("pattern", ["*/run.meta.json", "outputs/*/run.meta.json", "x.json"])
-def test_an_attestation_glob_must_name_a_directory(pattern):
-    from scripts.lib_pass_cost import _glob_matches_a_file
-    assert _glob_matches_a_file(pattern) is False
+@pytest.mark.parametrize(("pattern", "reason"), [
+    ("*/run.meta.json", "too broad"),
+    ("outputs/*/run.meta.json", "too broad"),
+    ("x.json", "matches no file"),
+    (str(REPO / "data/pricing/tier-attestations.json"), "repository-relative"),
+])
+def test_an_attestation_glob_that_could_never_apply_says_why(pattern, reason):
+    from scripts.lib_pass_cost import attestation_glob_problem
+    assert reason in attestation_glob_problem(pattern)
+    # The same file, written repository-relative, is accepted.
+    assert attestation_glob_problem("data/pricing/tier-attestations.json") is None
 
 
 @pytest.mark.tier1
@@ -1915,3 +1963,24 @@ def test_the_superseded_ledger_reprices_and_points_at_real_passes():
         priced = price_usage(meta["usage_stats"], e["model"], tier,
                              at=meta["timestamp"]["end"][:10])["total_cost_usd"]
         assert priced == pytest.approx(e["cost_usd"], abs=5e-7), e["meta"]
+
+
+@pytest.mark.tier1
+def test_a_withdrawn_ledger_entry_is_inside_its_live_meta():
+    # SENTINEL for the US$27.85 double count found before merge: a batch
+    # leg's pre-rerun sidecar is a snapshot of the jobs its live meta already
+    # prices, so it must never return to the priced executions.
+    doc = json.loads((REPO / "data/pricing/superseded-executions.json").read_text())
+    listed = {e.get("meta") for e in doc["executions"]}
+    assert len(doc["withdrawn"]) == 2
+    for w in doc["withdrawn"]:
+        assert w["meta"] not in listed and w["reason"]
+        sidecar = json.loads((REPO / w["meta"]).read_text())
+        live = json.loads((REPO / w["meta"]).with_name("run.meta.json").read_text())
+        for section, key in (("execution_stats", "items_processed"),
+                             ("usage_stats", "total_input_tokens"),
+                             ("usage_stats", "total_output_tokens")):
+            assert live[section][key] > sidecar[section][key], (w["meta"], key)
+        results = (REPO / w["meta"]).with_name("batch_results.jsonl")
+        with results.open(encoding="utf-8") as fh:
+            assert sum(1 for _ in fh) == live["execution_stats"]["items_processed"]

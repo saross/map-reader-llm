@@ -84,8 +84,9 @@ from scripts.lib_llm_metadata import merge_meta  # noqa: E402
 #: items is cumulative, not a recovery.
 CUMULATIVE_OVERLAP = 0.5
 
-#: Verifier metas name their items ``candidate_NNNNN``; proposer metas name tiles.
-VERIFIER_ITEM_PREFIX = "candidate_"
+#: Verifier metas name their items ``candidate_NNNNN`` (``run_pv.py``) or
+#: ``cand_NNNN`` (``5_verify_crops.py``); proposer metas name tiles.
+VERIFIER_ITEM_PREFIX = ("candidate_", "cand_")
 
 #: Scripts whose metas are a verifier leg's (``environment.script``). Every
 #: tracked verifier meta records one, including the 98 that list no items.
