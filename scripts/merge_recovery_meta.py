@@ -87,6 +87,19 @@ CUMULATIVE_OVERLAP = 0.5
 #: Verifier metas name their items ``candidate_NNNNN``; proposer metas name tiles.
 VERIFIER_ITEM_PREFIX = "candidate_"
 
+#: Scripts whose metas are a verifier leg's (``environment.script``). Every
+#: tracked verifier meta records one, including the 98 that list no items.
+VERIFIER_SCRIPTS = ("run_pv.py", "5_verify_crops.py")
+
+
+def _item_ids(meta: dict) -> list[str]:
+    """Completed and failed item ids; a failed item is a dict with ``item_id``."""
+    es = meta.get("execution_stats") or {}
+    ids = [str(i) for i in es.get("completed_items") or []]
+    for item in es.get("failed_items") or []:
+        ids.append(str(item.get("item_id") if isinstance(item, dict) else item))
+    return ids
+
 
 def refuse_cumulative(original: dict, recovery: dict) -> None:
     """Refuse a "recovery" meta that already contains the original run.
@@ -118,9 +131,9 @@ def refuse_cumulative(original: dict, recovery: dict) -> None:
     done = set((original.get("execution_stats") or {}).get("completed_items") or [])
     again = set((recovery.get("execution_stats") or {}).get("completed_items") or [])
     for meta in (original, recovery):
-        es = meta.get("execution_stats") or {}
-        items = list(es.get("completed_items") or []) + list(es.get("failed_items") or [])
-        if any(str(i).startswith(VERIFIER_ITEM_PREFIX) for i in items):
+        script = (meta.get("environment") or {}).get("script")
+        if script in VERIFIER_SCRIPTS or any(
+                i.startswith(VERIFIER_ITEM_PREFIX) for i in _item_ids(meta)):
             raise SystemExit(
                 "merge_recovery_meta: these are verifier metas (candidate items). The script "
                 "merges proposer recoveries only; a verifier cleanup merges itself "

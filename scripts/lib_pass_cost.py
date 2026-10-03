@@ -106,10 +106,14 @@ every launch log reading flex) against 0.60 M flex output billed for the
 whole day; the two runs whose logs record an explicit cache (``h8-v2`` and
 ``55maps-image-generalisation``) are the two that fall in the April
 standard-tier window. A log directory recording an explicit cache therefore
-pins standard for a real-time fragment beneath it that STARTED before the
-fix, outranking the launch line it sits beside. A fragment started after
-the fix, or one whose every response reported its served tier, is not
-subject to the rule.
+pins standard for a real-time fragment beneath it, outranking the launch
+line it sits beside, unless the fragment's own code had the fix: its
+``environment.git_commit`` descends from ``2df65047e``, or every response
+reported its served tier. The test is the code a run executed, not the
+date it ran: a run launched after the fix from a checkout without it (the
+fix reached ``main`` only when this branch merged) still dropped its tier.
+A meta whose commit cannot be resolved stays subject to the rule, which
+can only overstate (standard is the dearer real-time tier).
 
 A pass whose meta a cleanup leg overwrote carries its report's figure where
 ``data/pricing/cost-overrides.json`` publishes one (``published``, D13).
@@ -143,7 +147,9 @@ from __future__ import annotations
 
 import fnmatch
 import json
+import subprocess
 from dataclasses import dataclass, field
+from functools import lru_cache
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
@@ -202,9 +208,9 @@ COVERAGE_FLOOR = 0.9
 CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig "
                     "omitted service_tier from 76a2cc719 until 2df65047e")
 
-#: When the cached-path fix (``2df65047e``) was committed. A fragment that
-#: started at or after this instant sent its tier on the cached call too.
-CACHED_PATH_FIXED = datetime.fromisoformat("2026-10-03T12:02:23+00:00")
+#: The commit that fixed the cached path. A fragment whose recorded code
+#: descends from it sent its tier on the cached call too.
+CACHED_PATH_FIX_COMMIT = "2df65047ed913f93ff8b7319bc89e478676194d9"
 
 #: The ``served_tier_counts`` key for a response that carried no tier header.
 UNREPORTED = "unreported"
@@ -406,6 +412,31 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     return accounted, results
 
 
+@lru_cache(maxsize=None)
+def has_cached_path_fix(commit: str | None) -> bool:
+    """Whether a run's recorded code commit contains the cached-path fix.
+
+    Asks git whether :data:`CACHED_PATH_FIX_COMMIT` is an ancestor of (or is)
+    *commit*. A missing commit, one this clone does not hold, or no git at
+    all answers False, which keeps the cached-path rule: the conservative
+    answer, because the rule can only price a fragment at the dearer tier.
+
+    Args:
+        commit: ``environment.git_commit`` from a meta (full or abbreviated).
+
+    Returns:
+        True only when git confirms the ancestry.
+    """
+    if not commit or not isinstance(commit, str):
+        return False
+    try:
+        done = subprocess.run(["git", "merge-base", "--is-ancestor", CACHED_PATH_FIX_COMMIT,
+                               commit], cwd=PROJECT_ROOT, capture_output=True, timeout=30)
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return done.returncode == 0
+
+
 def _glob_matches_a_file(pattern: Any) -> bool:
     """Whether an attestation's ``meta`` glob matches at least one existing file.
 
@@ -413,11 +444,15 @@ def _glob_matches_a_file(pattern: Any) -> bool:
     the repository-relative path, absolute outside the repository), over the
     files beneath the pattern's literal directory prefix.
     """
-    if not isinstance(pattern, str) or not pattern or ".." in pattern.split("/"):
+    if not isinstance(pattern, str) or ".." in pattern.split("/"):
         return False
     literal = pattern
     for ch in "*?[":
         literal = literal.split(ch, 1)[0]
+    if "/" not in literal.strip("/"):
+        # A glob must name at least one directory: a wildcard in the first
+        # component would walk the whole repository (or its parent).
+        return False
     root = Path(literal) if literal.startswith("/") else PROJECT_ROOT / literal
     if literal == pattern:
         return root.is_file()
@@ -658,13 +693,14 @@ class PassCoster:
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
         logs = self._log_evidence(here, run_dir, stage)
-        started = (meta.get("timestamp") or {}).get("start")
-        if (stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
-                or (started and datetime.fromisoformat(started) >= CACHED_PATH_FIXED)):
+        if any(e.kind == "cached-path" for e in logs) and (
+                stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
+                or has_cached_path_fix((meta.get("environment") or {}).get("git_commit"))):
             # The cached-path rule is about the detection runner's REAL-TIME
-            # call BEFORE the fix: a verifier leg, a batch leg, a fragment
-            # started after 2df65047e, or one whose every response reported
-            # the tier that served it, is not subject to it.
+            # call on code WITHOUT the fix: a verifier leg, a batch leg, a
+            # fragment whose recorded commit descends from 2df65047e, or one
+            # whose every response reported the tier that served it, is not
+            # subject to it.
             logs = [e for e in logs if e.kind != "cached-path"]
         out.extend(logs)
         lm = self._launch_manifest(here, run_dir, stage)

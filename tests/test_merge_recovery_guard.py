@@ -64,13 +64,38 @@ def test_a_shared_run_id_is_refused_whatever_the_overlap():
     refuse_cumulative(_meta([], run_id=None), _meta(["t1"], run_id=None))
 
 
+def _failed_only(item_id):
+    """A meta whose only item is a FAILED one, recorded as the tracker does."""
+    return {"execution_stats": {"completed_items": [],
+                                "failed_items": [{"item_id": item_id, "error": "503"}]}}
+
+
+def _by_script(script):
+    """A meta that lists no items at all, as 98 tracked verifier metas do."""
+    return {"environment": {"script": script}, "execution_stats": {}}
+
+
 @pytest.mark.tier1
 @pytest.mark.parametrize("where", ["original", "recovery"])
-def test_a_verifier_meta_is_refused(where):
-    tiles, cands = _meta(["t1"]), _meta(["candidate_00001"])
-    pair = (cands, tiles) if where == "original" else (tiles, cands)
+@pytest.mark.parametrize("verifier", [
+    _meta(["candidate_00001"]),             # a completed candidate
+    _failed_only("candidate_00002"),        # a failed candidate (a dict)
+    _by_script("run_pv.py"),                # no items, the script says so
+    _by_script("5_verify_crops.py"),
+])
+def test_a_verifier_meta_is_refused(where, verifier):
+    tiles = _meta(["t1"])
+    pair = (verifier, tiles) if where == "original" else (tiles, verifier)
     with pytest.raises(SystemExit, match="verifier"):
         refuse_cumulative(*pair)
+
+
+@pytest.mark.tier1
+def test_a_proposer_meta_with_failed_tiles_is_not_a_verifier():
+    # Negative: failed TILE dicts and the detection runner's script pass.
+    proposer = {**_failed_only("tile_00001"),
+                "environment": {"script": "4_detect_mounds_batch.py"}}
+    refuse_cumulative(_meta(["t1"]), proposer)
 
 
 def _run_main(tmp_path, monkeypatch, original, recovery):

@@ -113,3 +113,16 @@ def test_the_cached_config_is_the_one_sent():
     pre = src.index('cached_call_config(gen_config, "cachedContents/preflight")')
     assert pre < src.index("client.caches.create(")
     assert src.rfind("try:", 0, src.index("client.caches.create(")) > pre
+    # And no try of any kind encloses the preflight, or a handler could
+    # swallow its refusal and run on without the lever.
+    tree = ast.parse(src)
+    parents = {child: node for node in ast.walk(tree) for child in ast.iter_child_nodes(node)}
+    preflights = [n for n in ast.walk(tree) if isinstance(n, ast.Call)
+                  and getattr(n.func, "id", None) == "cached_call_config"
+                  and any(isinstance(a, ast.Constant) and a.value == "cachedContents/preflight"
+                          for a in n.args)]
+    assert len(preflights) == 1
+    node = preflights[0]
+    while node in parents:
+        node = parents[node]
+        assert not isinstance(node, ast.Try), "the preflight sits inside a try"
