@@ -52,9 +52,8 @@ def test_the_refresh_is_idempotent_on_the_committed_board(committed):
 
 @pytest.mark.tier1
 def test_the_refresh_changes_only_the_cost_axis(committed):
-    # Rebuild the pre-WP4b shape (old sentence, old costs) and refresh it:
-    # every line outside the cost column, the sentence and the efficiency
-    # section must come back unchanged.
+    # Revert the cost sentence alone and refresh: every other line must come
+    # back unchanged. (Stale COSTS are the next test's sentinel.)
     board, md = committed
     old_md = md.replace("\n".join(fbb.COST_SENTENCE), "\n".join(OLD_SENTENCE))
     refreshed = refresh_markdown(old_md, board, fbb.efficiency_rows(*frontier_inputs(board)))

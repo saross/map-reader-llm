@@ -405,7 +405,12 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     if not prob.exists():
         return None
     doc = _read_json(prob) or {}
-    results = len(doc.get("results") or {})
+    # Results are keyed per CALL: a multi-iteration leg writes
+    # ``candidate_00005_iter1`` to ``_iter5``. Coverage is counted in
+    # CANDIDATES on both sides, so the keys are reduced to their candidates
+    # (WP4b audit lens A, 2026-10-04; latent: every register leg runs one
+    # iteration).
+    results = len({str(key).rsplit("_iter", 1)[0] for key in (doc.get("results") or {})})
     if not results:
         return None
     iterations = max(int(doc.get("iterations") or 1), 1)

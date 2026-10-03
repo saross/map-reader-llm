@@ -17,7 +17,7 @@ discounted tier (PI ruling D19, amended 2026-10-04), priced by
     The gold-standard stride-A ladder: N passes of the 487-tile pool plus that
     rung's own verified union leg. It reproduces the hand-copied figures it
     replaced (``results/stride-2026-08-25/findings.md``: 1.38 / 2.64 / 3.81 /
-    6.56) to the cent.
+    6.56) within US$0.02 (1.3774 / 2.6411 / 3.8056 / 6.5445).
 ``board_families``
     The 55-map rungs, priced as the r2 final board prices them: stride A and B,
     the two 3.7 arms, and the fourth cell, each ladder routed to its family by
@@ -86,23 +86,30 @@ def board_family(pool: str, verifier_model: str, label: str) -> str | None:
     """The r2 board family a 55-map ladder's rungs belong to, by pool AND verifier.
 
     The pool alone is ambiguous: stride B's union was verified twice, by the
-    Gemini 3 verifier (family B) and by Gemini 3.7 (the fourth cell, FOURTH).
+    Gemini 3 verifier (family B) and by Gemini 3.7 (the fourth cell, FOURTH);
+    the 3.7 arms share one pool and differ only in their verifier (arm 1
+    Gemini 3, arm 2 Gemini 3.7). Every route therefore names its verifier, and
+    an unexpected one routes nowhere (the rung is written "not supplied").
 
     Examples:
         >>> board_family("g384_ov192_55map", "gemini-3.7-flash", "x")
         'FOURTH'
         >>> board_family("g384_ov192_55map", "gemini-3-flash-preview", "x")
         'B'
-        >>> board_family("g384_ov192_55map_g37", "gemini-3.7-flash", "arm2-n1") is None
+        >>> board_family("g384_ov192_55map_g37", "gemini-3.7-flash", "arm1-n1") is None
         False
+        >>> board_family("g384_ov128_55map", "gemini-3.7-flash", "x") is None
+        True
     """
-    if pool == "g384_ov128_55map":
-        return "A"
-    if pool == "g384_ov192_55map":
-        return "FOURTH" if verifier_model.startswith("gemini-3.7") else "B"
-    if pool == "g384_ov192_55map_g37":
-        return "ARM1" if "arm1" in label else "ARM2"
-    return None
+    del label  # unused: the verifier decides, never a label substring
+    g3 = verifier_model.startswith("gemini-3-flash")
+    g37 = verifier_model.startswith("gemini-3.7")
+    routes = {("g384_ov128_55map", True, False): "A",
+              ("g384_ov192_55map", True, False): "B",
+              ("g384_ov192_55map", False, True): "FOURTH",
+              ("g384_ov192_55map_g37", True, False): "ARM1",
+              ("g384_ov192_55map_g37", False, True): "ARM2"}
+    return routes.get((pool, g3, g37))
 
 
 def priced_rung(spec: dict[str, Any], what: str) -> dict[str, Any]:

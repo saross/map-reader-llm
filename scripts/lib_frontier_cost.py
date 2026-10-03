@@ -17,8 +17,10 @@ The PI's ruling D19 (amended 2026-10-04,
 ``planning/pi-decisions-2026-09-20.md``): every configuration's own tokens
 are priced at ONE uniform discounted tier, so no configuration is penalised
 for how it happened to be billed (the cached-path defect, or runs made
-before the project knew of discounts). Flex and batch carry identical rates
-for every model on the rate card, so the uniform tier is ``flex``. The
+before the project knew of discounts). Flex and batch carry identical input
+and output rates for every model on the rate card (Gemini 3.5 Flash's
+cached input differs by half a hundredth of a cent per million tokens; no
+configuration here runs it), so the uniform tier is ``flex``. The
 register's own ``cost_usd`` (as billed) is untouched; this is a second,
 counterfactual price of the same tokens.
 
@@ -28,10 +30,13 @@ Units
   uniform tier with its own model and date, read exactly as the register
   reads them (``lib_pass_cost.fragment_usage``: recovery fragments
   included, recovery-merged metas from their per-item sums).
-- **Verifier candidate**: a leg's fragments re-priced the same way, divided
-  by the candidate verifications it produced (``probabilities.json``
-  results times its iterations). Retries are spend, so they stay in the
-  numerator: T03's leg made 10,539 requests for 9,910 results.
+- **Verifier call**: a leg's fragments re-priced the same way, divided by
+  the verifications it produced: the entries of its ``probabilities.json``,
+  ONE PER CALL (a multi-iteration leg keys them per iteration,
+  ``candidate_00005_iter1`` to ``_iter5``), less any merged in from a leg
+  whose cost this row does not carry. Retries are spend, so they stay in
+  the numerator: T03's leg made 10,539 requests for 9,910 results. A rung
+  of N candidates is N x the leg's iterations calls.
 
 Floors
 ------
@@ -128,7 +133,9 @@ class Leg:
     Attributes:
         pass_id: Its register key.
         usd: Its fragments re-priced at the uniform tier.
-        verifications: Candidate verifications it produced (results x iterations).
+        verifications: Verifier calls it produced: its results entries (one per
+            call), less those merged in from a leg this row does not price.
+        iterations: Calls per candidate (``probabilities.json`` ``iterations``).
         complete: Whether its tokens are its whole spend (not a floor).
         fingerprint: Its verifier configuration, for the comparables test.
     """
@@ -137,6 +144,7 @@ class Leg:
     usd: float
     verifications: int
     complete: bool
+    iterations: int = 1
     fingerprint: tuple[Any, ...] = field(default=())
 
 
@@ -199,6 +207,12 @@ class FrontierCoster:
                and r.get("n_candidates_verified") is None]
         if not ids:
             raise FrontierCostError(f"no register passes for {run_id}::{pool}")
+        short = [pid for pid in ids if self.rows[pid].get("cost_basis") not in COMPLETE_BASES]
+        if short:
+            # A published, floored or unrecorded pass's metas are not its whole
+            # spend: re-pricing them would price the pass short (audit lens A).
+            raise FrontierCostError(f"{run_id}::{pool} has passes whose tokens are not "
+                                    f"complete: {short}")
         return sorted(ids, key=lambda p: self.rows[p].get("pass_n") or 0)
 
     def proposer_unit(self, run_id: str, pool: str) -> Priced:
@@ -235,7 +249,7 @@ class FrontierCoster:
     def leg(self, run_id: str, pool: str) -> Leg:
         """A verifier leg's uniform-tier cost, verifications and configuration.
 
-        The leg's candidate verifications are read from the
+        The leg's verifications (calls) are read from the
         ``probabilities.json`` beside its primary meta (results times
         iterations), never from the register's request-count fallback.
         A floor's fragments may lack usage; it is still a leg, priced by
@@ -253,7 +267,19 @@ class FrontierCoster:
             raise FrontierCostError(f"{row['pass_id']}: no probabilities.json beside "
                                     f"{frags[0]['meta']}, so its verifications are unknown")
         doc = _load(prob)
-        verifications = len(doc.get("results") or {}) * max(int(doc.get("iterations") or 1), 1)
+        # One entry per CALL: a multi-iteration leg keys its results per
+        # iteration, so the iterations are already in the count (audit lens A,
+        # 2026-10-04: multiplying again counted the June opmax leg 5x over).
+        verifications = len(doc.get("results") or {})
+        priced = {(self.root / f["meta"]).resolve() for f in frags}
+        for merge in doc.get("cleanup_merges") or []:
+            # Results a cleanup merged in, from a leg whose cost this row does
+            # not carry, would be priced at nothing: leave them out
+            # (55maps-generalisation: 26 from verified-cleanup, no register row).
+            source_meta = (self.root / merge["source"]).parent / "run.meta.json"
+            if source_meta.resolve() not in priced:
+                verifications -= int(merge.get("added") or 0)
+        iterations = max(int(doc.get("iterations") or 1), 1)
         complete = row.get("cost_basis") in COMPLETE_BASES
         config = dict(_load(primary).get("configuration") or {})
         if config.get("model"):
@@ -266,7 +292,8 @@ class FrontierCoster:
             config["temperature"] = config["temperature_effective"]
         fingerprint = tuple(config.get(k) for k in FINGERPRINT_FIELDS)
         usd = self.pass_usd(row["pass_id"]) if complete else 0.0
-        leg = Leg(row["pass_id"], usd, verifications, complete, fingerprint)
+        leg = Leg(pass_id=row["pass_id"], usd=usd, verifications=verifications,
+                  complete=complete, fingerprint=fingerprint, iterations=iterations)
         self._legs[(run_id, pool)] = leg
         return leg
 
@@ -311,7 +338,7 @@ class FrontierCoster:
 
     def candidate_unit(self, run_id: str, pool: str,
                        comparables: list[dict[str, str]] | None = None) -> Priced:
-        """US$ per candidate verification for a leg: its own, or its nominees' pooled.
+        """US$ per verifier call for a leg: its own, or its nominees' pooled.
 
         A complete leg's own unit is measured (``comparables`` is ignored). A
         floor's is completed from the nominated comparables (D19), labelled
@@ -369,11 +396,12 @@ class FrontierCoster:
             if "leg" in ver:
                 cost = self.leg_cost(ver["leg"]["run_id"], ver["leg"]["pool"], comps)
             else:
-                unit = self.candidate_unit(ver["unit_from"]["run_id"], ver["unit_from"]["pool"],
-                                           comps)
+                ref = ver["unit_from"]
+                unit = self.candidate_unit(ref["run_id"], ref["pool"], comps)
                 n = int(ver["candidates"])
-                cost = Priced(unit.usd * n, unit.sources, unit.basis,
-                              unit.notes + (f"{n:,} union candidates x unit",))
+                calls = n * self.leg(ref["run_id"], ref["pool"]).iterations
+                cost = Priced(unit.usd * calls, unit.sources, unit.basis,
+                              unit.notes + (f"{n:,} union candidates, {calls:,} calls x unit",))
             total = cost if total is None else total + cost
         if total is None:
             raise FrontierCostError(f"configuration has neither proposer nor verifier: {spec}")

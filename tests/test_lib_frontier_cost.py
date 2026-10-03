@@ -80,9 +80,14 @@ class Repo:
         """A verifier leg: a meta, its probabilities file, and its register row."""
         meta = self._write(f"outputs/{run}/{pool}/run.meta.json",
                            {"usage_stats": usage or {}, "configuration": config or G3})
+        # One entry per CALL, keyed per iteration when there are several
+        # (the layout run_pv writes: candidate_00005_iter1 ... _iter5).
+        keys = ([f"candidate_{i:05d}" for i in range(results)] if iterations == 1 else
+                [f"candidate_{i:05d}_iter{j}" for i in range(results // iterations)
+                 for j in range(1, iterations + 1)])
         self._write(f"outputs/{run}/{pool}/probabilities.json",
-                    {"iterations": iterations,
-                     "results": {f"candidate_{i:05d}": [0.9] for i in range(results)}})
+                    {"iterations": iterations, "total_results": len(keys),
+                     "results": {k: 0.9 for k in keys}})
         self.rows.append({
             "pass_id": f"{run}::{pool}::run1", "run_id": run, "proposer_pool": pool,
             # The register's count (a request-count fallback on 85 rows) is
@@ -142,12 +147,30 @@ def test_a_pass_with_an_unrecorded_fragment_is_refused_not_priced_short(repo, us
 
 
 @pytest.mark.tier1
-def test_a_legs_unit_is_its_cost_over_its_verifications(repo):
-    # 1,000 results x 2 iterations; the cost includes any retries.
+def test_a_legs_unit_is_its_cost_over_its_calls(repo):
+    # SENTINEL (audit lens A): 1,000 results keyed per iteration are 500
+    # candidates x 2 calls, i.e. 1,000 calls, not 2,000.
     repo.leg("r", "v", results=1000, iterations=2)
-    unit = repo.coster().candidate_unit("r", "v")
-    assert unit.usd == pytest.approx(FLEX_USD / 2000)
+    coster = repo.coster()
+    unit = coster.candidate_unit("r", "v")
+    assert unit.usd == pytest.approx(FLEX_USD / 1000)
     assert unit.basis == "measured" and unit.sources == ("r::v::run1",)
+    # A rung of 300 candidates verified like this leg is 600 calls.
+    rung = coster.configuration_cost({"verifier": {"unit_from": {"run_id": "r", "pool": "v"},
+                                                   "candidates": 300}})
+    assert rung.usd == pytest.approx(600 * FLEX_USD / 1000)
+
+
+@pytest.mark.tier1
+def test_results_merged_from_an_unpriced_cleanup_are_left_out(repo):
+    # 55maps-generalisation: 26 results merged from a cleanup leg that has
+    # no register row would otherwise be priced at nothing.
+    repo.leg("r", "v", results=1000)
+    prob = repo.root / "outputs/r/v/probabilities.json"
+    doc = json.loads(prob.read_text())
+    doc["cleanup_merges"] = [{"source": "outputs/r/v-cleanup/probabilities.json", "added": 26}]
+    prob.write_text(json.dumps(doc))
+    assert repo.coster().leg("r", "v").verifications == 974
 
 
 @pytest.mark.tier1
@@ -464,3 +487,44 @@ def test_each_phase2_family_names_exactly_its_own_pools():
             stem = family.rsplit("-t", 1)[0]
             assert pools == {f"{stem}-t0.3", f"{stem}-t1.0"}, family
     assert units["flash-high-text-n5-text-t0.7"] == (named["high_pass"], "t07-55map-measured")
+
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("basis", ["published", "audited-lower-bound", "unrecorded"])
+def test_a_pool_with_an_incomplete_pass_is_refused(repo, basis):
+    repo.proposer("r", "p", 2)
+    repo.rows[1]["cost_basis"] = basis
+    with pytest.raises(FrontierCostError, match="not complete"):
+        repo.coster().proposer_unit("r", "p")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("pool", "model", "family"), [
+    ("g384_ov128_55map", "gemini-3-flash-preview", "A"),
+    ("g384_ov128_55map", "gemini-3.7-flash", None),          # no such configuration
+    ("g384_ov192_55map", "gemini-3-flash-preview", "B"),
+    ("g384_ov192_55map", "gemini-3.7-flash", "FOURTH"),
+    ("g384_ov192_55map_g37", "gemini-3-flash-preview", "ARM1"),
+    ("g384_ov192_55map_g37", "gemini-3.7-flash", "ARM2"),
+    ("g384_ov192_55map_g37", "gemini-3.1-pro-preview", None),
+])
+def test_ladder_routing_names_its_verifier(pool, model, family):
+    # The arms are told apart by their verifier, never by a label substring.
+    from scripts.build_k_ladder_tables import board_family
+    assert board_family(pool, model, "arm1-arm2-anything") == family
+
+
+@pytest.mark.tier1
+def test_coverage_counts_candidates_for_a_multi_iteration_leg(tmp_path):
+    # WP3's coverage detector compared candidates with per-CALL results, so a
+    # whole multi-iteration leg would have read as a floor (latent).
+    from scripts.lib_pass_cost import verifier_coverage
+    leg = tmp_path / "v"
+    leg.mkdir()
+    (leg / "probabilities.json").write_text(json.dumps({
+        "iterations": 5,
+        "results": {f"candidate_{i:05d}_iter{j}": 0.9 for i in range(729)
+                    for j in range(1, 6)}}))
+    meta = {"execution_stats": {"completed_items": [f"candidate_{i:05d}" for i in range(729)]}}
+    assert verifier_coverage([(meta, leg / "run.meta.json")]) == (729, 729)

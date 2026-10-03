@@ -96,7 +96,7 @@ from scripts.lib_frontier_cost import gs_units, phase2_pass_units  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"  # 2026-10-04: costs from the register (WP4b)
 
 #: Which of the two readings of "the carried point" the tables REPORT, settled
 #: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
@@ -216,9 +216,10 @@ PASS_ANCHORS: dict[str, str] = {
         "passes recorded no tokens"
     ),
     "t07-interpolated": (
-        "INTERPOLATED: the mean of the same family's own T0.3 and T1.0 GS "
-        "passes, because its T0.7 passes recorded no tokens. The two flank "
-        "it within 0.3 % for MINIMAL image and 16 % for HIGH image"
+        "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS "
+        "passes (not a linear interpolation at T 0.7), because its T0.7 passes "
+        "recorded no tokens. The two differ by 0.3 % for MINIMAL image and "
+        "16 % for HIGH image"
     ),
 }
 
@@ -606,7 +607,10 @@ def build() -> dict[str, Any]:
             "high_pass_usd": HIGH_PASS_USD,
             "g37_pass_usd": G37_PASS_USD,
             "vf_call_usd": VF_CALL_USD,
-            "basis": "flex (0.5 x list); input 0.25, output+thinking 1.50 per M",
+            "basis": ("the passes register at the uniform discounted tier (PI ruling D19, "
+                      "amended 2026-10-04), through scripts/lib_frontier_cost.py; each "
+                      "family's pass unit and its anchor are on its ladder (pass_usd, "
+                      "pass_usd_anchor)"),
         },
         "n_ladders": len(ladders),
         "ladders": ladders,
@@ -702,7 +706,8 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
                     "prob_threshold": point.get("prob_t"),
                     "cost": {
                         "usd": rung.get("all_in_flex_usd"),
-                        "basis": "audited (flex)",
+                        "basis": "uniform discounted tier (D19); see the ladder's "
+                                 "pass_usd_anchor",
                     },
                 }
             )
