@@ -527,7 +527,7 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
     USD 0.075/M at FX 1.3904); the card's `gemini-3-flash-preview` note
     "billed US$402.08 against US$419.64" repeats the AUD-for-USD comparison
     corrected on 2026-09-11.
-11. **Four audit rounds** (`/audit`: two fresh-context lenses, then three
+11. **Five audit rounds** (`/audit`: two fresh-context lenses, then four
     re-audits of the fixes, each on the Opus tier). Each round found real
     defects in the previous round's fixes, none critical after round 1:
     a CLI `cost/2` tier outranking the cached path; a resumed fragment
@@ -535,8 +535,8 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
     verifier legs (and then a looser "mentions a verifier" test doing the
     same); C3 certifying by default in four places; the run reports adding
     ceilings and floors into one sum; a cleanup-overwritten verifier class
-    the overrides file missed. 123 test cases (91 functions) now pin the rules; each round's
-    fresh mutations turned the suite red. Full tier-1 on sapphire: 3,409
+    the overrides file missed. 142 test cases (99 functions) now pin the rules; each round's
+    fresh mutations turned the suite red. Full tier-1 on sapphire: 3,424
     passed.
 12. **Decisions for the PI** (none blocks the merge):
     - The TH7 verifier's main leg survives only as a gitignored
@@ -581,7 +581,7 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
 | tier lower bound | US$2,827.06 | US$2,828.71 |
 | lower-bound legs | 6 (overrides) | 28 (5 overrides + detected by coverage) |
 | C3 non-cost MISMATCH | 538 | 414 (126 `status` false alarms cleared; the round-4 commit message's "545 to 414, 131" counted an uncommitted build) |
-| tests in `tests/test_lib_pass_cost.py` | 39 cases | 123 cases (91 functions) |
+| tests in `tests/test_lib_pass_cost.py` | 39 cases | 142 cases (99 functions) |
 
 What did NOT change: no proposer pass's cost moved in rounds 2 to 4; the
 frontier incumbents' figures are as in WP4b; the register-equals-auditor
