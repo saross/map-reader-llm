@@ -61,7 +61,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 # planning/cost-accounting-fix-plan-2026-09-21.md). The coster resolves each
 # fragment's service tier from committed evidence and prices it through the
 # one cost function, scripts/lib_cost.price_usage.
-from scripts.lib_pass_cost import PassCoster  # noqa: E402
+from scripts.lib_pass_cost import PassCoster, fragment_usage  # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # Constants
@@ -114,7 +114,9 @@ SCHEMA_DIR: Path = REPO_ROOT / "docs" / "manifest-schemas"
 #: evidence supports, never the meta's ``cost_estimate`` copied; ``cost_basis``
 #: and ``cost_source`` say how. ``tokens`` and ``cost_usd`` now include the
 #: pass's ``run_N_recovery*`` fragments, which the tile count already unioned
-#: (118 M tokens on 57 passes were missing from the cost before).
+#: (118 M tokens on 57 passes were missing from the cost before). A meta the
+#: 2026-05-02 recovery merge double-counted (14 passes: IM, TH7, gold-standard-v2)
+#: reads its per-item sums for both, as the June token-load audit did.
 GENERATOR_VERSION: str = "0.8.0"
 
 #: Why a verifier pass's ``n_tiles_processed`` is null. Written verbatim into
@@ -617,7 +619,9 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "n_tiles_null_reason": None,  # proposer rows carry a real count
                 "n_candidates_verified": None,  # no candidate stage
                 "n_tiles_dispatched": n_dispatched,
-                "tokens": _sum_tokens([_tokens_from_usage(m.get("usage_stats", {}))
+                # The same usage the cost is priced from: a meta the 2026-05-02
+                # recovery merge double-counted reads its per-item sums (WP3).
+                "tokens": _sum_tokens([_tokens_from_usage(fragment_usage(m)[0])
                                        for m, _ in fragments]),
                 **_coster().cost_pass(
                     pass_id=f"{run_id}::{pool}::run{pass_n}", fragments=fragments,
@@ -727,7 +731,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # per_item_metadata on a verifier pass records candidate API items,
             # not tiles dispatched — so this tile-scale field is null too.
             "n_tiles_dispatched": None,
-            "tokens": _tokens_from_usage(usage),
+            "tokens": _tokens_from_usage(fragment_usage(meta)[0]),
             **_coster().cost_pass(
                 pass_id=f"{run_id}::{vdir}::run1", fragments=[(meta, meta_path)],
                 run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,

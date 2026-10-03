@@ -184,6 +184,30 @@ def _load_meta(rel: str) -> dict:
     return load(path)
 
 
+def _billed_usage(meta: dict) -> dict:
+    """A meta's usage, undoing the 2026-05-02 recovery-merge double count.
+
+    Independent of the generator's ``fragment_usage`` by design: the merge
+    summed the original run's usage into the cumulative usage, which shows as
+    ``items_processed`` far above the unique completed items in a meta that
+    carries ``recovery_history``; there the per-item token records, one per
+    tile, are the usage (token-load-audit-2026-06-12 §§ 3.2, 3.4).
+    """
+    es = meta.get("execution_stats") or {}
+    done = len(set(es.get("completed_items") or []))
+    items = meta.get("per_item_metadata") or []
+    if not (meta.get("recovery_history") and done
+            and (es.get("items_processed") or 0) > 1.5 * done and items
+            and all(isinstance(i.get("tokens"), dict) for i in items)):
+        return meta.get("usage_stats") or {}
+    field = {"total_input_tokens": "input_tokens", "total_cached_tokens": "cached_input_tokens",
+             "total_output_tokens": "output_tokens", "total_thoughts_tokens": "thoughts_tokens",
+             "total_tokens": "total_tokens"}
+    out = {k: sum(int(i["tokens"].get(v) or 0) for i in items) for k, v in field.items()}
+    out["n_responses_with_usage"] = len(items)
+    return out
+
+
 def _fragment_tiers(frag: dict) -> list[str]:
     """The tiers a ``cost_source`` fragment says it was priced at.
 
@@ -255,7 +279,7 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
                     "manifest": priced, "derived": cited})
         total = low = 0.0
         for frag in frags:
-            usage = _load_meta(frag["meta"]).get("usage_stats") or {}
+            usage = _billed_usage(_load_meta(frag["meta"]))
             tiers = _fragment_tiers(frag)
             if not tiers:
                 continue  # an unrecorded fragment of a priced pass contributes nothing
@@ -449,8 +473,12 @@ def rederive_pass(row: dict, decomposition: dict | None = None) -> dict:
                 if isinstance(v, (int, float)))
         for mm in metas) and bool(usage)
     man_tokens = row.get("tokens") or {}
+    # Token claims are on the billed usage: a recovery-merged meta's doubled
+    # usage_stats are replaced by its per-item sums (see _billed_usage).
+    billed = [{**mm, "usage_stats": _billed_usage(mm)} if mm.get("usage_stats") else mm
+              for mm in metas]
     for mf, cands in TOKEN_MAP.items():
-        vals = [dig(mm, *cands) for mm in metas]
+        vals = [dig(mm, *cands) for mm in billed]
         vals = [v for v in vals if v is not None]
         derived = sum(vals) if vals else None
         man_val = man_tokens.get(mf)

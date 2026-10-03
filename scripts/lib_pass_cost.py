@@ -244,6 +244,58 @@ def pacific_days(start: str | None, end: str | None) -> list[str]:
     return out
 
 
+#: A meta whose ``items_processed`` exceeds its unique completed items by this
+#: factor, and which carries a ``recovery_history``, was double-counted by the
+#: 2026-05-02 recovery merge (``reports/token-load-audit-2026-06-12.md`` § 3.2).
+MERGE_INFLATION_FACTOR = 1.5
+
+
+def fragment_usage(meta: dict[str, Any]) -> tuple[dict[str, Any], str | None]:
+    """The usage block a fragment is priced (and counted) from.
+
+    Normally the meta's own ``usage_stats``. The exception is a meta the
+    2026-05-02 recovery merge inflated: it summed the original run's usage
+    into the post-recovery cumulative usage, doubling every token class
+    (TH7 run 1 records 25,694,714 input tokens = 2 x 12,828,582 + 37,550 for
+    25 re-sent tiles). Its signature is a ``recovery_history`` block with
+    ``items_processed`` well above the unique ``completed_items``. For such
+    a meta the per-item records are summed instead, one per tile, which is
+    the June audit's "clean" method (§§ 3.2, 3.4) and reproduces its figures
+    exactly; it omits the re-sent tiles' second attempt (about 0.3 %).
+
+    Args:
+        meta: A parsed pass meta.
+
+    Returns:
+        ``(usage, note)``: the usage block, and None or a note saying it was
+        rebuilt from per-item sums and why.
+    """
+    usage = meta.get("usage_stats") or {}
+    es = meta.get("execution_stats") or {}
+    pim = meta.get("per_item_metadata") or []
+    completed = len(set(es.get("completed_items") or []))
+    processed = es.get("items_processed") or 0
+    inflated = (bool(meta.get("recovery_history")) and completed > 0
+                and processed > MERGE_INFLATION_FACTOR * completed
+                and pim and all(isinstance(it.get("tokens"), dict) for it in pim))
+    if not inflated:
+        return usage, None
+
+    def total(key: str) -> int:
+        return sum(int((it["tokens"].get(key) or 0)) for it in pim)
+
+    rebuilt = {"total_input_tokens": total("input_tokens"),
+               "total_cached_tokens": total("cached_input_tokens"),
+               "total_output_tokens": total("output_tokens"),
+               "total_thoughts_tokens": total("thoughts_tokens"),
+               "total_tokens": total("total_tokens"),
+               "n_responses_with_usage": len(pim)}
+    note = (f"usage_stats double-counted by the 2026-05-02 recovery merge (items_processed "
+            f"{processed} vs {completed} completed; token-load-audit-2026-06-12 § 3.2): "
+            f"priced from the sum of {len(pim)} per-item records instead")
+    return rebuilt, note
+
+
 def is_continuous(start: str | None, end: str | None, duration_s: float | None) -> bool:
     """Whether a fragment ran in one sitting rather than across resumed sessions.
 
@@ -583,11 +635,13 @@ class PassCoster:
             A ``cost_source.fragments`` entry with private ``_cost``,
             ``_low``, ``_high`` and ``_basis`` keys the caller strips.
         """
-        usage = meta.get("usage_stats") or {}
+        usage, usage_note = fragment_usage(meta)
         ts = meta.get("timestamp") or {}
         start, end = ts.get("start"), ts.get("end")
         entry: dict[str, Any] = {"meta": _rel(meta_path), "model_recorded": model,
                                  "priced_at": (end or start or "")[:10] or None}
+        if usage_note:
+            entry["usage_source"] = usage_note
         if not usage or is_unrecorded(usage):
             entry.update(tier=None, tier_method="not-needed: no usage recorded")
             return {**entry, "_basis": "unrecorded", "_cost": None, "_low": None, "_high": None}
@@ -685,5 +739,5 @@ class PassCoster:
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "Evidence", "PassCoster", "TierFinding", "is_continuous",
-           "pacific_days"]
+__all__ = ["BASES", "Evidence", "PassCoster", "TierFinding", "fragment_usage",
+           "is_continuous", "pacific_days"]

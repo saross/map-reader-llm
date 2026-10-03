@@ -493,3 +493,17 @@ def test_c3_refuses_a_fragment_list_that_is_not_the_cited_metas():
     src = {**row["cost_source"], "fragments": row["cost_source"]["fragments"][:1]}
     v = _verdicts({**row, "cost_source": src})
     assert v["cost_source.fragments"]["verdict"] == "MISMATCH"
+
+
+@pytest.mark.tier1
+def test_recovery_merged_meta_is_priced_from_per_item_sums():
+    # SENTINEL: the 2026-05-02 recovery merge doubled every token class in
+    # the TH7 and IM metas (token-load-audit-2026-06-12 §§ 3.2, 3.4). The
+    # register must read the per-item sums the June audit called clean.
+    th7 = _committed_pass("55maps-text-high-generalisation", "detect_brief-text", 1)
+    assert th7["tokens"]["input_billed"] == 12_828_582  # not 25,694,714
+    assert "recovery merge" in th7["cost_source"]["fragments"][0]["usage_source"]
+    # The June audit's clean flex cost per TH7 pass: US$39.92 to US$40.45.
+    assert 39.9 < th7["cost_usd"] < 40.5
+    im = _committed_pass("55maps-image-generalisation", "library_plus-hp", 1)
+    assert im["tokens"]["input_cached"] < 130_000_000  # clean ~124 M, not ~248 M
