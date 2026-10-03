@@ -553,6 +553,21 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
       3 Pro batch SKU was ever invoiced (US$0.96; a probable mislabel).
     - The live cached-path defect (§ 8.3): approve a one-request probe
       before the runner fix, or a guard refusing `--use-cache` with flex.
+13. **Queued, not fixed in WP3** (the fifth audit round, 2026-10-03, found no
+    critical or medium defect in WP3's code; these predate it or are latent):
+    - `n_candidates_verified` falls back to request counts on 85 verifier rows
+      (`generate_post_run_report._verifier_candidates`): 37 record nothing
+      and should be null, not 0; 20 count errored requests as completions
+      (2,657 over); 4 read a cleanup-overwritten meta. Count
+      `finish_reason_counts["success"]` and return null when nothing is
+      recorded. The coverage detector shares the request fallback, so the
+      same fix tightens it: an errored request can make a partial leg look
+      whole. A non-cost field on 85 rows: its own small PR and audit.
+    - The 414 non-cost C3 MISMATCH verdicts (§ 8.7).
+    - Latent, no committed case: the command splitter is not quote-aware
+      (`'a;b'` cuts a following switch) and does not split `N&cmd`; the
+      instant comparisons raise on a naive timestamp (every cited stamp is
+      offset-aware UTC).
 
 ---
 

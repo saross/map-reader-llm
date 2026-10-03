@@ -1365,3 +1365,42 @@ def test_c3_knows_which_cited_sources_are_metas(source, is_meta):
 def test_a_basis_priced_at_zero_still_has_a_figure():
     from scripts.generate_run_reports import _basis_sums
     assert _basis_sums([{"cost_basis": "audited", "cost_usd": 0.0}]) == "audited US$0.0000 (1)"
+
+
+# ---------------------------------------------------------------------------
+# Round-5 re-audit: each half of the command splitter and C3's instants.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("log", "verifier_tiers"), [
+    ("run_pv.py verify --x y >& log --service-tier flex\n", ["flex"]),   # lookbehind '>'
+    ("run_pv.py verify --x 'h?a=x&b=y' --service-tier flex\n", ["flex"]),  # lookahead word
+    ("Run `5_verify_crops --x` to retry\nService tier: standard\n", []),  # quoted hint
+])
+def test_each_half_of_the_command_splitter_holds(log, verifier_tiers):
+    from scripts.derive_tier_evidence import parse_log
+    assert parse_log(log)["verifier_tiers"] == verifier_tiers
+
+
+@pytest.mark.tier1
+def test_c3_compares_timestamps_as_instants(tmp_path, monkeypatch):
+    # Two cited metas stamped in different offsets: 14:00+10:00 (04:00 UTC)
+    # starts before 04:40+00:00, which a string comparison gets backwards.
+    import scripts.rederive_manifest_fields as c3
+    monkeypatch.setattr(c3, "REPO_ROOT", tmp_path)
+    stamps = [("a.meta.json", "2026-09-04T14:00:00+10:00", "2026-09-04T14:30:00+10:00"),
+              ("b.meta.json", "2026-09-04T04:40:00+00:00", "2026-09-04T04:41:00+00:00")]
+    for name, start, end in stamps:
+        _write(tmp_path / "outputs" / "r" / name,
+               {"usage_stats": {}, "timestamp": {"start": start, "end": end,
+                                                 "duration_seconds": 60}})
+    row = {"pass_id": "r::p::run1", "run_id": "r", "proposer_pool": "p", "pass_n": 1,
+           "model_used": "gemini-3-flash-preview", "status": "ok", "n_tiles_processed": 1,
+           "tokens": None, "cost_usd": None, "cost_basis": "unrecorded",
+           "cost_source": {"rate_card": {}, "fragments": []},
+           "timestamps": {"start": stamps[0][1], "end": stamps[1][2]},
+           "provenance": {"source_files": [f"outputs/r/{n}" for n, _, _ in stamps]}}
+    verdicts = {f["field"]: f["verdict"] for f in c3.rederive_pass(row)["fields"]}
+    assert verdicts["timestamps.start"] == "MATCH"
+    assert verdicts["timestamps.end"] == "MATCH"
