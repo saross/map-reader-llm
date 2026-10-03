@@ -265,6 +265,8 @@ def rederive_cost(row: dict, sources: list[str], metas: list[dict]) -> list[dict
             total += max(prices)
             low += min(prices)
         out.append(verdict_row("cost_usd", claim, round(total, 6)))
+        if basis == "audited-lower-bound":
+            out[-1]["note"] = "lower bound: the cited metas cover part of the pass (cost-overrides)"
         if basis == "audited-upper-bound":
             bounds = source.get("bounds_usd") or {}
             out.append(verdict_row("cost_source.bounds_usd.low", bounds.get("low"),

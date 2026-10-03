@@ -85,6 +85,11 @@ standard-tier window. A log directory recording an explicit cache therefore
 pins standard for a real-time fragment beneath it, outranking the launch
 line it sits beside.
 
+A pass whose meta a cleanup leg overwrote is listed in
+``data/pricing/cost-overrides.json``: with a published figure it carries
+that figure (``published``, D13); without one, its remaining tokens are
+priced and labelled ``audited-lower-bound``.
+
 When the evidence leaves more than one tier possible, the pass is priced at
 every candidate and published at the HIGHEST, with ``cost_basis:
 "audited-upper-bound"`` and both bounds in ``cost_source``, so the register
@@ -130,7 +135,7 @@ PRICING_DIR = PROJECT_ROOT / "data" / "pricing"
 BILLING_DAYS = PRICING_DIR / "billing-day-tiers.json"
 RUN_LOG_TIERS = PRICING_DIR / "run-log-tiers.json"
 ATTESTATIONS = PRICING_DIR / "tier-attestations.json"
-PUBLISHED = PRICING_DIR / "published-costs.json"
+OVERRIDES = PRICING_DIR / "cost-overrides.json"
 
 #: Cloud Billing dates usage in US Pacific time
 #: (``reports/billing-reconciliation-2026-09-11.md`` § 3.1).
@@ -165,7 +170,8 @@ VOLUME_SLACK = 1.001
 INDIFFERENT_USD = 0.005
 
 #: ``cost_basis`` values the register may carry (passes schema).
-BASES = ("audited", "audited-upper-bound", "published", "unrecorded", "unpriceable")
+BASES = ("audited", "audited-upper-bound", "audited-lower-bound", "published", "unrecorded",
+         "unpriceable")
 
 
 @dataclass(frozen=True)
@@ -264,17 +270,22 @@ class PassCoster:
         billing_path: ``billing-day-tiers.json`` (tests pass fixtures).
         logs_path: ``run-log-tiers.json``.
         attestations_path: ``tier-attestations.json``.
-        published_path: ``published-costs.json``.
+        overrides_path: ``cost-overrides.json`` (published figures and lower bounds).
         card_path: An alternative rate card, for tests.
     """
 
     def __init__(self, billing_path: Path = BILLING_DAYS, logs_path: Path = RUN_LOG_TIERS,
-                 attestations_path: Path = ATTESTATIONS, published_path: Path = PUBLISHED,
+                 attestations_path: Path = ATTESTATIONS, overrides_path: Path = OVERRIDES,
                  card_path: Path | None = None) -> None:
         self.billing = _read_json(billing_path)
         self.log_dirs: dict[str, dict[str, Any]] = _read_json(logs_path)["directories"]
         self.attestations: list[dict[str, Any]] = _read_json(attestations_path)["attestations"]
-        self.published: dict[str, dict[str, Any]] = _read_json(published_path)["entries"]
+        self.overrides: dict[str, dict[str, Any]] = _read_json(overrides_path)["entries"]
+        for pid, entry in self.overrides.items():
+            if entry.get("basis") not in ("published", "audited-lower-bound") or not entry.get(
+                    "source") or (entry["basis"] == "published" and entry.get("cost_usd") is None):
+                raise ValueError(f"cost override for {pid!r} needs basis published (with "
+                                 "cost_usd) or audited-lower-bound, and a source")
         self.card_path = card_path
         self.card_identity = rate_card_identity(card_path)
         self._validate_attestations()
@@ -623,7 +634,7 @@ class PassCoster:
         """The register's ``cost_usd``, ``cost_basis`` and ``cost_source`` for a pass.
 
         Args:
-            pass_id: The register key (``published-costs.json`` is keyed by it).
+            pass_id: The register key (``cost-overrides.json`` is keyed by it).
             fragments: ``(meta, meta_path)`` for the primary meta then each
                 recovery fragment.
             run_id: The run id.
@@ -637,10 +648,10 @@ class PassCoster:
         Returns:
             The three register fields.
         """
-        published = self.published.get(pass_id)
-        if published:
-            return {"cost_usd": published["cost_usd"], "cost_basis": "published",
-                    "cost_source": {"published": published["source"],
+        override = self.overrides.get(pass_id) or {}
+        if override.get("basis") == "published":
+            return {"cost_usd": override["cost_usd"], "cost_basis": "published",
+                    "cost_source": {"published": override["source"],
                                     "rate_card": self.card_identity}}
         models = fragment_models or [model] * len(fragments)
         priced = [self.cost_fragment(meta=m, meta_path=p, run_id=run_id, pool=pool,
@@ -666,6 +677,11 @@ class PassCoster:
                                     "high": round(sum(f["_high"] for f in costed), 6)}
         if basis == "unrecorded":
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
+        if override.get("basis") == "audited-lower-bound" and cost is not None:
+            # The cited metas price correctly but cover only part of the pass:
+            # the figure is a floor, and is labelled so rather than "audited".
+            basis = "audited-lower-bound"
+            source["note"] = "LOWER bound: " + override["source"]
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 

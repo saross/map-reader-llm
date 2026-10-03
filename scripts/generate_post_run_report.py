@@ -1721,7 +1721,12 @@ def _coverage_note(manifest: str, n_rows: int) -> str:
     return {
         "runs": f"all {n_rows} runs (run-level facts; conditions/passes added as 3b batches land)",
         "conditions": f"{n_rows} condition(s) across the decomposed runs (sub-step 3b in progress)",
-        "passes": f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress)",
+        "passes": (f"{n_rows} pass(es) across the decomposed runs (sub-step 3b in progress). "
+                   "`cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, "
+                   "recovery fragments included, priced by `scripts/lib_cost.price_usage` at the "
+                   "tier the evidence supports; `basis` says which kind of figure it is "
+                   "(`audited-upper-bound` = tier unresolved, priced at the highest candidate; "
+                   "the row's `cost_source` gives both bounds and the evidence)"),
         "analyses": f"{n_rows} analysis(es) over conditions (sub-step 3c; hybrid human-authored)",
         "run-registry": f"all {n_rows} runs (hand-verified input)",
     }.get(manifest, f"{n_rows} row(s)")
@@ -1803,10 +1808,10 @@ def render_manifest(manifest: str, obj: dict, json_rel: str,
         # row is not silently empty. ``_md_table`` renders None as "—".
         table = _md_table(
             ["pass_id", "model", "modality", "think", "T", "status", "tiles",
-             "cands", "cost_usd"],
+             "cands", "cost_usd", "basis"],
             [[r["pass_id"], r["model_used"], r["modality"], r["thinking_level"], r["temperature"],
               r["status"], r["n_tiles_processed"], r.get("n_candidates_verified"),
-              r["cost_usd"]] for r in rows])
+              r["cost_usd"], r.get("cost_basis")] for r in rows])
     elif manifest == "analyses":
         table = _md_table(
             ["analysis_id", "type", "#conditions", "preregistered", "paper_section", "outcome"],

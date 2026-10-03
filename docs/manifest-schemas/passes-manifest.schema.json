@@ -111,8 +111,8 @@
         },
         "cost_basis": {
           "type": ["string", "null"],
-          "enum": ["audited", "audited-upper-bound", "published", "unrecorded", "unpriceable", null],
-          "description": "What cost_usd is. audited: every fragment's tier is pinned by evidence (or every candidate tier prices the same to half a cent). audited-upper-bound: at least one fragment's tier could not be pinned, and it is priced at the HIGHEST candidate tier so the register never understates; cost_source.bounds_usd gives the low and high. published: the figure the run's post-run report published, for a pass whose metas can no longer be priced (D13; data/pricing/published-costs.json). unrecorded: no usage was recorded; cost_usd is null (D12). unpriceable: usage exists but the rate card has no row for the model or date; cost_usd is null."
+          "enum": ["audited", "audited-upper-bound", "audited-lower-bound", "published", "unrecorded", "unpriceable", null],
+          "description": "What cost_usd is. audited: every fragment's tier is pinned by evidence (or every candidate tier prices the same to half a cent). audited-upper-bound: at least one fragment's tier could not be pinned, and it is priced at the HIGHEST candidate tier so the register never understates; cost_source.bounds_usd gives the low and high. audited-lower-bound: a cleanup leg overwrote the pass's meta and no report publishes the leg, so the remaining tokens are priced and the figure is a FLOOR (data/pricing/cost-overrides.json cites why). published: the figure the run's post-run report published, for a pass whose metas can no longer be priced (D13; data/pricing/cost-overrides.json). unrecorded: no usage was recorded; cost_usd is null (D12). unpriceable: usage exists but the rate card has no row for the model or date; cost_usd is null."
         },
         "cost_source": {
           "type": ["object", "null"],

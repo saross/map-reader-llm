@@ -1,0 +1,40 @@
+{
+ "_README": "Register passes whose cited metas cannot give their whole cost, keyed by pass_id. basis 'published': a cleanup leg overwrote the pass's meta, and the figure is the one its post-run report published, cited in source (PI ruling D13). basis 'audited-lower-bound': the meta was overwritten the same way and no report publishes the leg, so the register prices the tokens that remain (the cleanup's) and labels the figure a LOWER bound rather than calling it audited. Read by scripts/lib_pass_cost.py. Seeded 2026-10-03 from results/tile-presence-2026-09-21/verifier-costs.json, which identified the overwritten stages; a figure found later for a lower-bound leg (for example a June per-run audit) replaces its entry as 'published' with its source.",
+ "schema": "cost-overrides/1",
+ "entries": {
+  "55maps-image-generalisation::verified::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md § 6 tabled US$0.001 at flex but labels its own totals lower bounds (§ 8), so no figure is published yet"
+  },
+  "55maps-text-high-generalisation::verified::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TH7 (auditor_complete false); reports/token-load-audit-2026-06-12.md § 6 tabled US$6.42 (9,205 calls, from the .pre-recovery backup meta) at flex but labels its own totals lower bounds (§ 8), so no figure is published yet"
+  },
+  "55maps-text-high-t0-3-generalisation::verified::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.T03 (auditor_complete false); reports/token-load-audit-2026-06-12.md § 6 tabled US$6.90 (9,910 calls) at flex but labels its own totals lower bounds (§ 8), so no figure is published yet"
+  },
+  "55maps-text-min-generalisation::verified::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.TM (auditor_complete false); reports/token-load-audit-2026-06-12.md § 6 tabled US$0.03 at flex but labels its own totals lower bounds (§ 8), so no figure is published yet"
+  },
+  "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1": {
+   "basis": "published",
+   "cost_usd": 7.7028,
+   "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md (verifier-leg figure), as tabled in results/tile-presence-2026-09-21/verifier-costs.json legs.IMG-ARM2-K1"
+  },
+  "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm2::run1": {
+   "basis": "published",
+   "cost_usd": 9.265,
+   "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md (verifier-leg figure), as tabled in results/tile-presence-2026-09-21/verifier-costs.json legs.IMG-ARM2-K3"
+  },
+  "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.A-N1 (auditor_complete false)"
+  },
+  "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1": {
+   "basis": "audited-lower-bound",
+   "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false)"
+  }
+ }
+}

@@ -93,7 +93,7 @@ def evidence(tmp_path):
         if published is not None:
             _write(paths["pub"], {"entries": published})
         return PassCoster(billing_path=paths["billing"], logs_path=paths["logs"],
-                          attestations_path=paths["att"], published_path=paths["pub"])
+                          attestations_path=paths["att"], overrides_path=paths["pub"])
 
     return make
 
@@ -359,12 +359,30 @@ def test_attestation_file_refuses_what_it_cannot_apply(evidence, bad):
 
 @pytest.mark.tier1
 def test_published_figure_overrides_with_its_source(evidence, tmp_path):
-    coster = evidence(published={"r::p::run1": {"cost_usd": 12.5,
+    coster = evidence(published={"r::p::run1": {"basis": "published", "cost_usd": 12.5,
                                                 "source": "post_run_report.md § 4"}})
     out = _cost(coster, [_meta(tmp_path / "run" / "p" / "run_1" / "a.meta.json")],
                 tmp_path / "run")
     assert (out["cost_usd"], out["cost_basis"]) == (12.5, "published")
     assert out["cost_source"]["published"] == "post_run_report.md § 4"
+
+
+@pytest.mark.tier1
+def test_overwritten_meta_without_a_figure_is_a_lower_bound(evidence, tmp_path):
+    pdir = tmp_path / "run" / "p" / "run_1"
+    logs = {_rel(pdir): {"tiers": ["flex"], "explicit_cache": False,
+                         "logs": [{"path": "x/launch.log"}]}}
+    coster = evidence(logs=logs, published={"r::p::run1": {
+        "basis": "audited-lower-bound", "source": "cleanup overwrote run.meta.json"}})
+    out = _cost(coster, [_meta(pdir / "a.meta.json")], tmp_path / "run")
+    assert (out["cost_basis"], out["cost_usd"]) == ("audited-lower-bound", pytest.approx(FLEX_USD))
+    assert out["cost_source"]["note"].startswith("LOWER bound")
+
+
+@pytest.mark.tier1
+def test_override_file_refuses_a_published_entry_without_a_figure(evidence):
+    with pytest.raises(ValueError):
+        evidence(published={"r::p::run1": {"basis": "published", "source": "x"}})
 
 
 @pytest.mark.tier1

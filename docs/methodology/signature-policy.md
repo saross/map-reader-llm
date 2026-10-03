@@ -1,8 +1,7 @@
 # Signature policy — what a PI signature means and how it is recorded
 
-> **Last revised**: 2026-09-16 (original publication — the policy, the status
-> vocabulary, and the migration of 69 register rows onto it). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-03 (a signature covers the basis of any cost a
+> row quotes). See [§ Changelog](#changelog) for revision history.
 
 This project records which of its findings a human has actually reviewed. That
 record is only worth having if "signed" means one thing. Until 2026-09-16 it
@@ -29,6 +28,11 @@ Nothing else is a signature. In particular:
   one revision never carries to a later one.
 - **An agent never signs.** The agent prepares the walkthrough and writes the
   record after the PI's affirmative — it does not decide that a row is signed.
+- **A signature covers the basis of any cost the row quotes.** A dollar figure
+  is signed together with its basis (`docs/methodology/notation-key.md` § 8:
+  audited, audited upper bound, published), so the walkthrough must state it,
+  and a later re-pricing of that figure is recorded as a dated signature note
+  (the D9 pattern), never as a silent change to what was signed.
 
 ## What the agent owes the walkthrough
 
@@ -143,6 +147,14 @@ because both produced confident wrong answers first:
   Compare positions in history instead.
 
 ## Changelog
+
+### 2026-10-03 — a signature covers the basis of any cost a row quotes
+
+One sentence added under "What a signature means", as the cost accounting
+plan's WP3 requires (`planning/cost-accounting-fix-plan-2026-09-21.md` § 4.4):
+the register's costs moved from the runner's estimate to the audited basis,
+and a signed row quoting dollars must say which basis it signed. No status,
+row or tally changed.
 
 ### 2026-09-16 — PI ruling: no legacy stamp counts as a signature
 
