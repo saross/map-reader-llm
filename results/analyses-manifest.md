@@ -2,7 +2,7 @@
 
 # Analyses manifest
 
-> Generated 2026-10-03T07:57:28Z · 71 row(s) · schema v1.0 · rendered from `results/analyses-manifest.json` at commit `ec0aaa922`.
+> Generated 2026-10-03T07:57:28Z · 71 row(s) · schema v1.0 · rendered from `results/analyses-manifest.json` at commit `2f749329c`.
 >
 > **Coverage**: 71 analysis(es) over conditions (sub-step 3c; hybrid human-authored).
 
