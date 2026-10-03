@@ -116,11 +116,24 @@ def test_the_refresh_rewrites_a_stale_cost_column_and_section(committed, monkeyp
     # A refresh that left the column or the section alone stays stale here.
     board, md = committed
     real_cost_of, real_completed = fbb.cost_of, fbb.cost_completed
-    monkeypatch.setattr(fbb, "cost_of", lambda lbl: OLD_FAMILY_COST.get(fbb.family_of(lbl)))
+    old_cost = lambda lbl: OLD_FAMILY_COST.get(fbb.family_of(lbl))  # noqa: E731
+    # The stale ranked column is written HERE, independently of the function
+    # under test (built through it, a no-op column survived; mutation round).
+    labels = {c["label"] for c in board["cells"]}
+    lines = md.split("\n")
+    for i, line in enumerate(lines):
+        cells = line.split(" | ")
+        if line.startswith("| ") and len(cells) > 6 and cells[1] in labels:
+            cells[5] = fbb.fmt_cost(old_cost(cells[1]))
+            lines[i] = " | ".join(cells)
+    stale = "\n".join(lines)
+    monkeypatch.setattr(fbb, "cost_of", old_cost)
     monkeypatch.setattr(fbb, "cost_completed", lambda _lbl: False)
-    stale_rows = fbb.efficiency_rows(*frontier_inputs(board))
-    stale = refresh_markdown(md, board, stale_rows).replace(
-        "\n".join(fbb.COST_SENTENCE), "\n".join(OLD_SENTENCE))
+    stale_section = "\n".join(fbb.render_efficiency(fbb.efficiency_rows(*frontier_inputs(board))))
+    head, rest = stale.split("## Cost efficiency: what a dollar buys", 1)
+    stale = head + stale_section + "\n" + rest[rest.find("\n## "):]
+    stale = stale.replace("\n".join(fbb.COST_SENTENCE), "\n".join(OLD_SENTENCE))
+    assert "| 1 | ARM2-N5-oracle | oracle | 1 | a | — |" in stale  # the old, unpriced column
     assert stale != md
     assert "| A, N = 1 | oracle | $21 |" in stale       # the old cost, in the section
     assert "3.7 arm 1, N = 1" not in stale.split("## Cost efficiency")[1].split("\n## ")[0]

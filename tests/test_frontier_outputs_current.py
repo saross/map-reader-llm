@@ -116,3 +116,16 @@ def test_phase1_ladders_carry_todays_costs_and_the_fourth_cells_own():
     for ladder in fourth:
         tens = [r for r in ladder["rungs"] if r["K"] == 10]
         assert tens and all(r["cost"]["usd"] == expected for r in tens)
+
+
+
+@pytest.mark.tier1
+def test_the_phase2_builder_prices_each_family_at_its_mapped_unit():
+    # The builder's own family table, not only its committed output: a
+    # builder that fell back to the borrowed unit would regenerate wrong.
+    from scripts import build_k_ladder_phase2_tables as tables
+    units = phase2_pass_units()
+    for family, meta in tables.FAMILIES.items():
+        unit, anchor = units[family]
+        assert meta["pass_usd"] == unit.usd, family
+        assert meta["pass_anchor"] == anchor, family
