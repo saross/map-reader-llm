@@ -191,6 +191,8 @@ def _is_meta(rel: str) -> bool:
     (re-audit round 3).
     """
     name = rel.rsplit("/", 1)[-1]
+    if name.endswith(".tmp"):
+        return False  # an interrupted atomic write, never a cited meta
     return (name.endswith((".meta.json", ".meta.json.gz"))
             or name.startswith("run.meta."))
 

@@ -1352,6 +1352,9 @@ def test_verifier_candidates_count_over_every_meta():
     ("outputs/r/p/run_1/detections-x.meta.json.gz", True),
     ("outputs/r/v/run.meta.json", True),
     ("outputs/r/v/run.meta.main-2026-09-04.json", True),
+    ("outputs/r/v/run.meta.json.pre-recovery-20260502T235106.backup", True),
+    ("outputs/r/v/run.meta.json.tmp", False),
+    ("outputs/r/p/run_1/detections-x.meta.json.tmp", False),
     ("results/run-conditions.json", False),
     ("outputs/r/v/run.log", False),
     ("outputs/r/v/probabilities.json", False),
@@ -1423,7 +1426,7 @@ def test_an_applied_header_outranks_every_request_record(evidence, tmp_path):
 
 
 @pytest.mark.tier1
-def test_mixed_applied_tiers_narrow_rather_than_pin(evidence, tmp_path):
+def test_mixed_applied_tiers_bound_rather_than_pin(evidence, tmp_path):
     meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
                  per_item_metadata=[{"service_tier_applied": "flex"},
                                     {"service_tier_applied": "standard"}])
@@ -1461,9 +1464,9 @@ def test_an_attestation_can_pin_one_fragment_of_a_pass(evidence, tmp_path):
     leg = run / "v"
     att = [{"id": "A1", "run_id": "r", "pool": "*", "meta": _rel(leg / "run.meta.main-x.json"),
             "tier": "flex", "attested_by": "PI", "attested_on": "2026-10-03", "evidence": "x"}]
-    coster = evidence(attestations=att)
     main = _meta(leg / "run.meta.main-x.json")
     cleanup = _meta(leg / "run.meta.json")
+    coster = evidence(attestations=att)  # after the metas: the glob must match a file
     frags = _cost(coster, [cleanup, main], run, stage="verifier")["cost_source"]["fragments"]
     by_name = {f["meta"].rsplit("/", 1)[-1]: f for f in frags}
     assert by_name["run.meta.main-x.json"]["tier_method"] == "attestation"
@@ -1507,3 +1510,263 @@ def test_the_superseded_ledger_is_consistent_and_never_priced_in_the_register():
         assert subprocess.run(["git", "ls-files", "--error-unmatch", e["meta"]], cwd=REPO,
                               capture_output=True).returncode == 0
         assert e["meta"] not in cited
+
+
+# ---------------------------------------------------------------------------
+# Round 7 (2026-10-03): the served tier at run level, its coverage, and the
+# cached-path rule's end at the fix.
+# ---------------------------------------------------------------------------
+
+#: The cached-path fix (2df65047e) was committed at this instant.
+FIX = datetime.fromisoformat("2026-10-03T12:02:23+00:00")
+
+
+def _counted(counts: dict, requests: int) -> dict:
+    """Usage with run-level served-tier counts and the provider's request count."""
+    return {**USAGE, "served_tier_counts": counts,
+            "by_provider": {"google_gemini": {"request_count": requests}}}
+
+
+def _stamp(at: datetime) -> dict:
+    return {"start": at.isoformat(), "end": (at + timedelta(minutes=30)).isoformat(),
+            "duration": 1800.0}
+
+
+@pytest.mark.tier1
+def test_served_tiers_read_run_level_counts_before_per_item_records():
+    from scripts.lib_pass_cost import served_tiers
+    # merge_meta sums the counts with the tokens but deduplicates per-item
+    # records, so the run-level count is the one that matches the usage.
+    meta = {"usage_stats": _counted({"flex": 4}, 4),
+            "per_item_metadata": [{"service_tier_applied": "standard"}]}
+    assert served_tiers(meta) == ({"flex": 4}, 4)
+    assert served_tiers({"usage_stats": _counted({"Flex": 2, "FLEX": 1}, 3)}) == ({"flex": 3}, 3)
+    assert served_tiers({"usage_stats": _counted({"unreported": 3}, 3)}) is None
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("header", ["flex", "Flex", "FLEX"])
+def test_a_full_header_pins_whatever_its_case(evidence, tmp_path, header):
+    meta = _meta(tmp_path / "r" / "p" / "run_1" / "a.meta.json",
+                 per_item_metadata=[{"service_tier_applied": header}] * 2)
+    frag = _cost(evidence(), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "applied-header")
+
+
+@pytest.mark.tier1
+def test_a_verifier_leg_is_pinned_by_run_level_counts_alone(evidence, tmp_path):
+    # run_pv verify finalises without per-item records; the run-level count
+    # is the only place its served tier survives.
+    leg = tmp_path / "r" / "verified"
+    meta = _meta(leg / "run.meta.json", usage=_counted({"flex": 10}, 10))
+    out = _cost(evidence(), [meta], tmp_path / "r", stage="verifier")
+    frag = out["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "applied-header")
+    assert out["cost_usd"] == pytest.approx(FLEX_USD) and out["cost_basis"] == "audited"
+
+
+@pytest.mark.tier1
+def test_a_partial_header_widens_the_records_rather_than_narrowing(evidence, tmp_path):
+    # Two of three responses reported standard; the launch line asked for
+    # flex. The third may have run at either, so both are candidates.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"standard": 2, "unreported": 1}, 3))
+    out = _cost(evidence(logs=logs), [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert out["cost_basis"] == "audited-upper-bound"
+    assert set(frag["candidates"]) == {"flex", "standard"}
+    assert any("widens flex" in n for n in frag["notes"])
+    assert any(e.startswith("applied-header-partial") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_a_partial_header_agreeing_with_the_pin_keeps_it(evidence, tmp_path):
+    # Negative: a partial header that names only the pinned tier changes nothing.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 2, "unreported": 1}, 3))
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
+    assert "notes" not in frag and "conflicts" not in frag
+
+
+@pytest.mark.tier1
+def test_a_header_short_of_the_request_count_is_partial(evidence, tmp_path):
+    # A meta that merged a pre-header leg: three counted responses of five.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"standard": 3}, 5))
+    frag = _cost(evidence(), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert frag["tier_method"] != "applied-header"
+    assert any(e.startswith("applied-header-partial") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+def test_an_unknown_header_value_is_unreported_and_noted(evidence, tmp_path):
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 2, "priority": 1}, 3))
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert frag["tier_method"] == "run-log"  # not pinned by a 2-of-3 header
+    assert any("priority" in n and "unreported" in n for n in frag["notes"])
+
+
+@pytest.mark.tier1
+def test_a_mixed_full_header_overrules_a_request_pin_as_a_note(evidence, tmp_path):
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 2, "standard": 1}, 3))
+    out = _cost(evidence(logs=logs), [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert out["cost_basis"] == "audited-upper-bound"
+    assert set(frag["candidates"]) == {"flex", "standard"}
+    assert out["cost_usd"] == pytest.approx(STANDARD_USD)
+    assert "conflicts" not in frag
+    assert any("REQUESTED" in n and "served standard|flex" in n for n in frag["notes"])
+
+
+@pytest.mark.tier1
+def test_a_mixed_full_header_against_a_batch_marker_is_a_conflict(evidence, tmp_path):
+    pdir = tmp_path / "r" / "p" / "run_1"
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 2, "standard": 1}, 3),
+                 batch_api={"job": "x"})
+    frag = _cost(evidence(), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert any("applied-header served" in c and "batch" in c for c in frag["conflicts"])
+
+
+@pytest.mark.tier1
+def test_a_single_tier_header_against_a_request_record_is_a_note(evidence, tmp_path):
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"standard": 3}, 3))
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "applied-header")
+    assert "conflicts" not in frag
+    assert any("REQUESTED" in n and "served standard" in n for n in frag["notes"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("offset_s", "subject"), [(-1, True), (0, False), (3600, False)])
+def test_the_cached_path_rule_ends_at_the_fix(evidence, tmp_path, offset_s, subject):
+    # A fragment that started before 2df65047e dropped its tier on the cached
+    # call; one that started at or after it did not, and is not overruled.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "explicit_cache": True}}
+    stamp = _stamp(FIX + timedelta(seconds=offset_s))
+    meta = _meta(pdir / "a.meta.json", **stamp)
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    if subject:
+        assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    else:
+        assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
+        assert not any(e.startswith("cached-path") for e in frag["evidence"])
+        assert "conflicts" not in frag
+
+
+@pytest.mark.tier1
+def test_a_full_header_retires_the_cached_path_rule(evidence, tmp_path):
+    # Before the fix, but every response said flex: the API's statement wins
+    # and the rule is not even raised, so there is nothing to conflict.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "explicit_cache": True}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 3}, 3))
+    frag = _cost(evidence(logs=logs), [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "applied-header")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+    assert "conflicts" not in frag
+
+
+@pytest.mark.tier1
+def test_a_partial_header_keeps_the_cached_path_rule_and_widens_it(evidence, tmp_path):
+    # Before the fix, some responses reported flex: the cached path pins
+    # standard for the rest, and flex is added, so the pass is bounded.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    logs = {_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"], "explicit_cache": True}}
+    meta = _meta(pdir / "a.meta.json", usage=_counted({"flex": 1, "unreported": 2}, 3))
+    out = _cost(evidence(logs=logs), [meta], tmp_path / "r")
+    assert set(out["cost_source"]["fragments"][0]["candidates"]) == {"flex", "standard"}
+    assert out["cost_basis"] == "audited-upper-bound"
+
+
+@pytest.mark.tier1
+def test_the_live_probe_runs_resolve_by_their_served_tier():
+    # The four adjacent runs of 2026-10-03, one per combination of the two
+    # levers, through the real coster and the committed evidence.
+    coster = PassCoster()
+    run = REPO / "outputs" / "tier-cache-probe-2026-10-03"
+    expected = {"run_A_flex_cache": "flex", "run_B_flex_nocache": "flex",
+                "run_C_standard_cache": "standard", "run_D_standard_nocache": "standard"}
+    for name, tier in expected.items():
+        (path,) = (run / name).glob("*.meta.json")
+        meta = json.loads(path.read_text())
+        frag = coster.cost_fragment(meta=meta, meta_path=path, run_id=run.name, pool=name,
+                                    run_dir=run, model="gemini-3-flash-preview")
+        assert (frag["tier"], frag["tier_method"]) == (tier, "applied-header"), name
+        assert "conflicts" not in frag, name
+
+
+@pytest.mark.tier1
+def test_the_tracker_counts_served_tiers_and_merges_sum_them():
+    from scripts.lib_llm_metadata import (
+        LLMMetadataTracker,
+        LLMResponseMetadata,
+        merge_cleanup_meta,
+    )
+
+    def tracked(tiers):
+        tracker = LLMMetadataTracker({"model": "gemini-3-flash-preview"}, "x")
+        for i, tier in enumerate(tiers):
+            md = LLMResponseMetadata(provider="google_gemini",
+                                     model_requested="gemini-3-flash-preview")
+            md.service_tier_applied = tier
+            tracker.log_response(f"c{i}", md)
+        return tracker.finalise(include_per_item=False)
+
+    main = tracked(["flex", "flex", None])
+    assert main["usage_stats"]["served_tier_counts"] == {"flex": 2, "unreported": 1}
+    assert "per_item_metadata" not in main  # the run_pv verify shape
+    merged = merge_cleanup_meta(main, tracked(["standard"]))
+    assert merged["usage_stats"]["served_tier_counts"] == {
+        "flex": 2, "unreported": 1, "standard": 1}
+    assert merged["main_pass"]["usage_stats"]["served_tier_counts"] == {
+        "flex": 2, "unreported": 1}
+
+
+@pytest.mark.tier1
+def test_an_attestation_whose_meta_glob_matches_nothing_is_refused(evidence, tmp_path):
+    leg = tmp_path / "run" / "v"
+    _meta(leg / "run.meta.main-x.json")
+    good = {"id": "A1", "run_id": "r", "pool": "*", "tier": "flex", "attested_by": "PI",
+            "attested_on": "2026-10-03", "evidence": "x"}
+    evidence(attestations=[{**good, "meta": _rel(leg / "run.meta.main-*.json")}])
+    for bad in (_rel(leg / "run.meta.main-y.json"), _rel(leg / "nope" / "*.json"), "../x", ""):
+        with pytest.raises(ValueError, match="matches no file"):
+            evidence(attestations=[{**good, "meta": bad}])
+
+
+@pytest.mark.tier1
+def test_named_and_globbed_main_legs_are_deduplicated_together(tmp_path):
+    from scripts.generate_post_run_report import _preserved_main_legs
+    leg = tmp_path / "v"
+    leg.mkdir()
+    primary = {"run_id": "C"}
+    for name, run_id in (("run.meta.json", "C"), ("run.meta.main-2026-09-04.json", "M"),
+                         ("run.meta.json.pre-recovery-1.backup", "M"),
+                         ("run.meta.json.pre-recovery-2.backup", "N"),
+                         ("run.meta.json.pre-recovery-3.backup", "C")):
+        (leg / name).write_text(json.dumps({"run_id": run_id}))
+    named = str(leg / "run.meta.json.pre-recovery-2.backup")
+    got = _preserved_main_legs(primary, leg / "run.meta.json", [named])
+    assert [g.name for g in got] == ["run.meta.main-2026-09-04.json",
+                                     "run.meta.json.pre-recovery-2.backup"]
+    # Naming the globbed file again is not a second execution.
+    again = _preserved_main_legs(primary, leg / "run.meta.json",
+                                 [str(leg / "run.meta.main-2026-09-04.json")])
+    assert [g.name for g in again] == ["run.meta.main-2026-09-04.json"]
+    # A named file that would not be priced is an error, never a silent drop:
+    # the globbed leg's run_id again, the primary's, or a missing file.
+    for bad in ("run.meta.json.pre-recovery-1.backup", "run.meta.json.pre-recovery-3.backup"):
+        with pytest.raises(ValueError, match="would not be priced"):
+            _preserved_main_legs(primary, leg / "run.meta.json", [str(leg / bad)])
+    with pytest.raises(ValueError, match="missing"):
+        _preserved_main_legs(primary, leg / "run.meta.json", [str(leg / "absent.json")])

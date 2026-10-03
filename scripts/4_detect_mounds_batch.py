@@ -105,15 +105,27 @@ def cached_call_config(gen_config: "types.GenerateContentConfig",
     output tokens against 0.60 M flex billed that day
     (``planning/cost-accounting-fix-plan-2026-09-21.md`` § 8.3).
 
+    The API also refuses ``tools`` and ``tool_config`` beside a cache (they
+    must live in it). This runner's cache holds none and the runner sets
+    none, so a config carrying either is refused here rather than cleared:
+    clearing would drop a lever silently, the defect this helper replaced.
+
     Args:
         gen_config: The run's full request config (service tier included).
         cache_name: The ``cachedContents/...`` resource to read.
 
     Returns:
         The config for this call.
+
+    Raises:
+        ValueError: When the config carries ``tools`` or ``tool_config``.
     """
+    if gen_config.tools or gen_config.tool_config:
+        raise ValueError("cached_call_config: tools and tool_config must live in the context "
+                         "cache, and this runner's cache holds none; refusing to drop them")
     return gen_config.model_copy(update={"cached_content": cache_name,
                                          "system_instruction": None})
+
 
 def _save_geojson(
     features: list,
@@ -1000,6 +1012,9 @@ def detect_mounds_versioned(
     # by ~50-90% depending on example count.
     cache_name = None
     if use_cache:
+        # Refuse, before any request, a config the cached call cannot carry
+        # (outside the try below, whose fallback would hide it).
+        cached_call_config(gen_config, "cachedContents/preflight")
         cache_parts = [
             types.Part.from_text(
                 text="Here are the Reference Symbols you must find:"

@@ -84,6 +84,9 @@ from scripts.lib_llm_metadata import merge_meta  # noqa: E402
 #: items is cumulative, not a recovery.
 CUMULATIVE_OVERLAP = 0.5
 
+#: Verifier metas name their items ``candidate_NNNNN``; proposer metas name tiles.
+VERIFIER_ITEM_PREFIX = "candidate_"
+
 
 def refuse_cumulative(original: dict, recovery: dict) -> None:
     """Refuse a "recovery" meta that already contains the original run.
@@ -95,18 +98,39 @@ def refuse_cumulative(original: dict, recovery: dict) -> None:
     doubled every token class in the TH7 and IM metas
     (``reports/token-load-audit-2026-06-12.md`` §§ 3.2, 3.4). A genuine
     recovery-only meta holds just the re-sent tiles, so it shares almost no
-    completed items with the original.
+    completed items with the original, and it carries its own ``run_id``
+    (the automatic resume merge keeps the original's, so a shared ``run_id``
+    means the meta already holds the original run).
+
+    The script is for PROPOSER metas only. A verifier leg's cleanup merges
+    itself (``run_pv.py cleanup`` through ``merge_cleanup_meta``), and its
+    items are candidates, not tiles, so a verifier meta is refused.
 
     Args:
         original: The pre-recovery meta.
         recovery: The meta to merge in.
 
     Raises:
-        SystemExit: When the recovery meta repeats most of the original's
-            completed items.
+        SystemExit: When either meta is a verifier's, when the two share a
+            ``run_id``, or when the recovery meta repeats more than half of
+            the original's completed items.
     """
     done = set((original.get("execution_stats") or {}).get("completed_items") or [])
     again = set((recovery.get("execution_stats") or {}).get("completed_items") or [])
+    for meta in (original, recovery):
+        es = meta.get("execution_stats") or {}
+        items = list(es.get("completed_items") or []) + list(es.get("failed_items") or [])
+        if any(str(i).startswith(VERIFIER_ITEM_PREFIX) for i in items):
+            raise SystemExit(
+                "merge_recovery_meta: these are verifier metas (candidate items). The script "
+                "merges proposer recoveries only; a verifier cleanup merges itself "
+                "(run_pv.py cleanup).")
+    run_id = original.get("run_id")
+    if run_id and recovery.get("run_id") == run_id:
+        raise SystemExit(
+            f"merge_recovery_meta: the recovery meta carries the original's run_id ({run_id}), "
+            "so it is cumulative (resume has merged automatically since 1ce1a982d). Merging "
+            "it would count the original run twice; there is nothing to merge.")
     if done and len(done & again) > CUMULATIVE_OVERLAP * len(done):
         raise SystemExit(
             f"merge_recovery_meta: the recovery meta already holds {len(done & again):,} of "

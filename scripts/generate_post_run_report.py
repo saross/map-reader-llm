@@ -439,31 +439,62 @@ def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
                for m, _ in fragments)
 
 
-def _preserved_main_legs(primary: dict, primary_path: Path) -> list[Path]:
+def _preserved_main_legs(primary: dict, primary_path: Path,
+                         listed: list[str] | tuple[str, ...] = ()) -> list[Path]:
     """A verifier leg's preserved main meta(s), when a cleanup overwrote ``run.meta.json``.
 
-    An operator may keep the overwritten main leg as ``run.meta.main-<date>.json``
-    before a cleanup (no script writes it; ``planning/gemini38-screen-2026-09-04.md``
-    records the copy for ``gemini37-screen-2026-08-28``'s swap38 leg: 790
-    candidates, 1,593 requests, beside a 1-request cleanup meta). Such a meta with its own ``run_id`` is a separate, billed execution
-    of the leg and is priced with it (re-audit round 2). Two kinds of file
-    beside it are NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's
-    ``run_id`` (cumulative), and ``run.meta.pre-rerun-*`` are superseded
-    executions whose results were discarded, which are project spend but not
-    the cost of producing this leg's result. ``*.backup`` files are gitignored
-    and absent from a clean clone, so they are never read.
+    Two sources, deduplicated together by path and by ``run_id``:
+
+    - **Globbed**: an operator may keep the overwritten main leg as
+      ``run.meta.main-<date>.json`` before a cleanup (no script writes it;
+      ``planning/gemini38-screen-2026-09-04.md`` records the copy for
+      ``gemini37-screen-2026-08-28``'s swap38 leg: 790 candidates, 1,593
+      requests, beside a 1-request cleanup meta).
+    - **Named**: ``preserved_main_legs`` in ``data/pricing/cost-overrides.json``
+      lists a file the PI force-added, such as TH7's
+      ``run.meta.json.pre-recovery-*.backup``. Other ``*.backup`` files are
+      gitignored and absent from a clean clone, so they are never globbed.
+
+    A meta with its own ``run_id`` is a separate, billed execution of the leg
+    and is priced with it (re-audit round 2). Two kinds of file beside it are
+    NOT: ``run.meta.pre-cleanup-*`` snapshots share the primary's ``run_id``
+    (cumulative), and ``run.meta.pre-rerun-*`` are superseded executions whose
+    results were discarded, which are project spend (D22) but not the cost of
+    producing this leg's result.
 
     Args:
         primary: The leg's ``run.meta.json``, parsed.
         primary_path: Its path.
+        listed: Repository-relative paths the overrides file names for the pass.
 
     Returns:
-        The preserved main metas to price and cite, sorted.
+        The preserved main metas to price and cite: globbed ones sorted, then
+        named ones in their listed order.
+
+    Raises:
+        ValueError: When a named file is missing, or would not be priced (no
+            ``run_id``, the primary's, or one already priced): the PI named
+            it, so dropping it silently would hide the spend it was named for.
     """
-    if primary_path.name != "run.meta.json":
-        return []
-    mains = sorted(primary_path.parent.glob("run.meta.main-*.json"))
-    return _sibling_metas(primary, mains)
+    mains = (sorted(primary_path.parent.glob("run.meta.main-*.json"))
+             if primary_path.name == "run.meta.json" else [])
+    named = {m: REPO_ROOT / m for m in listed}
+    missing = [m for m, path in named.items() if not path.exists()]
+    if missing:
+        raise ValueError(f"cost-overrides.json preserved_main_legs names missing files: "
+                         f"{missing}")
+    resolved = {path.resolve() for path in mains}
+    kept = _sibling_metas(primary, mains + [path for path in named.values()
+                                            if path.resolve() not in resolved])
+    kept_resolved = {path.resolve() for path in kept}
+    dropped = [m for m, path in named.items() if path.resolve() not in kept_resolved]
+    if dropped:
+        raise ValueError(
+            f"cost-overrides.json preserved_main_legs names {dropped} beside "
+            f"{primary_path.name} in {primary_path.parent.name}/, but it would not be priced: "
+            "no run_id, the primary's run_id (a cumulative rewrite), or a run_id already "
+            "priced")
+    return kept
 
 
 def _fragment_model(meta: dict, row_model: str, model_of_record: str | None) -> str:
@@ -797,12 +828,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # be a different quantity wearing the same name.
         # A cleanup that overwrote run.meta.json leaves the main leg preserved
         # beside it; both are this leg's executions (priced, cited, counted).
-        main_legs = _preserved_main_legs(meta, meta_path)
-        # And any the overrides file names for this pass (a gitignored backup
-        # the PI force-added; named there, never globbed).
+        # With any the overrides file names for this pass (a gitignored backup
+        # the PI force-added; named there, never globbed), deduplicated together.
         listed = _coster().main_legs.get(f"{run_id}::{vdir}::run1", {}).get("metas", [])
-        main_legs += _sibling_metas(meta, [REPO_ROOT / m for m in listed
-                                           if REPO_ROOT / m not in main_legs])
+        main_legs = _preserved_main_legs(meta, meta_path, listed)
         v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
         n_candidates = _verifier_candidates(v_fragments)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from

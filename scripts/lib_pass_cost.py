@@ -21,9 +21,12 @@ things that sentence needs and the metas do not record:
    first, and the evidence is cited per pass:
 
    ========================  ==================================================
-   ``applied-header``        the tier that SERVED each request, recorded per item
-                             from the ``x-gemini-service-tier`` response header
-                             (``service_tier_applied``; runs from 2026-10-03)
+   ``applied-header``        the tier that SERVED each request, from the
+                             ``x-gemini-service-tier`` response header (runs from
+                             2026-10-03): per item (``service_tier_applied``) or
+                             counted per run (``usage_stats.served_tier_counts``).
+                             It pins only when EVERY response reported a tier
+                             (see below)
    ``batch-marker``          ``batch_api`` block in the meta, ``batch_jobs.json``
                              beside it, or ``probabilities.json`` ``mode: batch``
    ``runner-record-batch``   a ``cost/2`` block (WP2 onwards) priced on the Batch
@@ -80,19 +83,33 @@ things that sentence needs and the metas do not record:
    because a recovery can run at a different tier from its pass (the
    ``gemini37-55map-2026-08-29`` run-2 recovery ran at standard).
 
-**The cached-path defect.** ``scripts/4_detect_mounds_batch.py`` builds a
-fresh ``GenerateContentConfig`` for requests that use an explicit context
-cache (``--use-cache``) and does not copy ``service_tier`` into it (the
-block dates from ``76a2cc719``, 2026-03-28; flex arrived on the main path
-only, ``2a2cd81c7``, 2026-04-09). Such a run prints ``Service tier: flex``
+**The served tier.** From 2026-10-03 every real-time response records the
+tier that served it. Where every response of a fragment reported one tier,
+that tier is pinned, above every other record. Where they reported several,
+the fragment is priced across exactly those tiers (an upper bound), and a
+request record naming one of them is a note, not a conflict: the API's
+statement of what it served outranks what was asked for. Where only some
+responses reported a tier (a meta that merged a pre-header leg, or an
+unrecognised header value), the reported tiers WIDEN the candidates instead
+of narrowing them: the unreported responses may have run elsewhere, and
+narrowing would understate.
+
+**The cached-path defect (fixed).** Until ``2df65047e`` (2026-10-03
+12:02:23 UTC) ``scripts/4_detect_mounds_batch.py`` built a fresh
+``GenerateContentConfig`` for requests that use an explicit context cache
+(``--use-cache``) and did not copy ``service_tier`` into it (the block
+dated from ``76a2cc719``, 2026-03-28; flex arrived on the main path only,
+``2a2cd81c7``, 2026-04-09). Such a run prints ``Service tier: flex``
 at launch and is billed at standard. Found 2026-10-03 when the volume rule
 showed ``h8-v2`` (35 passes, 23.25 M output tokens on 2026-04-15 Pacific,
 every launch log reading flex) against 0.60 M flex output billed for the
 whole day; the two runs whose logs record an explicit cache (``h8-v2`` and
 ``55maps-image-generalisation``) are the two that fall in the April
 standard-tier window. A log directory recording an explicit cache therefore
-pins standard for a real-time fragment beneath it, outranking the launch
-line it sits beside.
+pins standard for a real-time fragment beneath it that STARTED before the
+fix, outranking the launch line it sits beside. A fragment started after
+the fix, or one whose every response reported its served tier, is not
+subject to the rule.
 
 A pass whose meta a cleanup leg overwrote carries its report's figure where
 ``data/pricing/cost-overrides.json`` publishes one (``published``, D13).
@@ -181,9 +198,16 @@ INHERITED_KINDS = ("run-log-inherited", "launch-manifest-inherited")
 #: leg's ``probabilities.json`` results was overwritten by a later leg.
 COVERAGE_FLOOR = 0.9
 
-#: Where the cached call path drops ``service_tier`` (cited in evidence).
+#: Where the cached call path dropped ``service_tier`` (cited in evidence).
 CACHED_PATH_CITE = ("scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig "
-                    "omits service_tier (since 76a2cc719)")
+                    "omitted service_tier from 76a2cc719 until 2df65047e")
+
+#: When the cached-path fix (``2df65047e``) was committed. A fragment that
+#: started at or after this instant sent its tier on the cached call too.
+CACHED_PATH_FIXED = datetime.fromisoformat("2026-10-03T12:02:23+00:00")
+
+#: The ``served_tier_counts`` key for a response that carried no tier header.
+UNREPORTED = "unreported"
 
 #: A fragment whose span exceeds its own recorded run time by more than this
 #: was resumed in a later session, and is not held to every day in between.
@@ -382,6 +406,72 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     return accounted, results
 
 
+def _glob_matches_a_file(pattern: Any) -> bool:
+    """Whether an attestation's ``meta`` glob matches at least one existing file.
+
+    Matched the way :meth:`PassCoster.attestation` matches (``fnmatch`` over
+    the repository-relative path, absolute outside the repository), over the
+    files beneath the pattern's literal directory prefix.
+    """
+    if not isinstance(pattern, str) or not pattern or ".." in pattern.split("/"):
+        return False
+    literal = pattern
+    for ch in "*?[":
+        literal = literal.split(ch, 1)[0]
+    root = Path(literal) if literal.startswith("/") else PROJECT_ROOT / literal
+    if literal == pattern:
+        return root.is_file()
+    base = root if literal.endswith("/") else root.parent
+    if not base.is_dir():
+        return False
+    return any(f.is_file() and fnmatch.fnmatchcase(_rel(f), pattern) for f in base.rglob("*"))
+
+
+def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
+    """Responses per served tier, and the number of responses they must cover.
+
+    The run-level ``usage_stats.served_tier_counts`` is read first, because
+    ``merge_meta`` sums it with the tokens it describes, whereas per-item
+    records are deduplicated by ``item_id`` on a merge (a superseded
+    attempt's record is dropped, its tokens kept). Per-item
+    ``service_tier_applied`` is the fallback, for a meta written between the
+    per-item field (``651a2eb90``) and the run-level count.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        ``(counts, responses)``: counts keyed by the header's value, lower-cased
+        (``unreported`` for none), and the responses the fragment's usage
+        covers (the provider's request count, or the counts' own sum if
+        larger). None when the meta records no served tier at all, which is
+        every meta written before 2026-10-03.
+
+    Examples:
+        >>> served_tiers({"usage_stats": {"served_tier_counts": {"flex": 3},
+        ...     "by_provider": {"google_gemini": {"request_count": 4}}}})
+        ({'flex': 3}, 4)
+        >>> served_tiers({"per_item_metadata": [{"service_tier_applied": "Flex"}, {}]})
+        ({'flex': 1, 'unreported': 1}, 2)
+        >>> served_tiers({"usage_stats": {}}) is None
+        True
+    """
+    usage = meta.get("usage_stats") or {}
+    counts: dict[str, int] = {}
+    for key, n in (usage.get("served_tier_counts") or {}).items():
+        tier = str(key).lower()
+        counts[tier] = counts.get(tier, 0) + int(n or 0)
+    if not counts:
+        for item in meta.get("per_item_metadata") or []:
+            tier = str(item.get("service_tier_applied") or UNREPORTED).lower()
+            counts[tier] = counts.get(tier, 0) + 1
+    if not any(n and t != UNREPORTED for t, n in counts.items()):
+        return None
+    requests = int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
+        "request_count") or 0)
+    return counts, max(requests, sum(counts.values()))
+
+
 class PassCoster:
     """Prices register passes on the audited basis from committed evidence.
 
@@ -428,6 +518,11 @@ class PassCoster:
             if att["id"] in ids:
                 raise ValueError(f"tier attestation id {att['id']!r} is duplicated")
             ids.add(att["id"])
+            if "meta" in att and not _glob_matches_a_file(att["meta"]):
+                # A typo in a fragment glob would never match, and the
+                # attestation would silently never apply (re-audit round 7).
+                raise ValueError(f"tier attestation {att['id']!r}: meta {att['meta']!r} "
+                                 "matches no file")
 
     def _log_evidence(self, directory: Path, run_dir: Path,
                       stage: str = "proposer") -> list[Evidence]:
@@ -516,14 +611,20 @@ class PassCoster:
         out: list[Evidence] = []
         here = meta_path.parent
         # The API's own statement of the tier that served each request: the
-        # strongest evidence there is, where the run recorded it.
-        applied = {str(it.get("service_tier_applied")).lower()
-                   for it in (meta.get("per_item_metadata") or [])
-                   if it.get("service_tier_applied")}
-        applied &= set(TIERS)
-        if applied:
-            out.append(Evidence("applied-header", tuple(t for t in TIERS if t in applied),
-                                f"{_rel(meta_path)} per-item service_tier_applied"))
+        # strongest evidence there is, where EVERY response recorded it. A
+        # partial record cannot speak for the responses it lacks, so it is
+        # "applied-header-partial", which widens the candidates (resolve).
+        served = served_tiers(meta)
+        full_header = False
+        if served:
+            counts, responses = served
+            known = {t: n for t, n in counts.items() if t in TIERS and n}
+            full_header = sum(known.values()) >= responses
+            tally = ", ".join(f"{t} {n}" for t, n in sorted(counts.items()))
+            out.append(Evidence("applied-header" if full_header else "applied-header-partial",
+                                tuple(t for t in TIERS if t in known),
+                                f"{_rel(meta_path)} served tiers ({tally}) of {responses} "
+                                "responses"))
         if meta.get("batch_api"):
             out.append(Evidence("batch-marker", ("batch",), f"{_rel(meta_path)} batch_api block"))
         if (here / "batch_jobs.json").exists():
@@ -557,10 +658,13 @@ class PassCoster:
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
         logs = self._log_evidence(here, run_dir, stage)
-        if stage != "proposer" or any(e.kind in BATCH_KINDS for e in out):
+        started = (meta.get("timestamp") or {}).get("start")
+        if (stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
+                or (started and datetime.fromisoformat(started) >= CACHED_PATH_FIXED)):
             # The cached-path rule is about the detection runner's REAL-TIME
-            # call; a verifier leg, or a batch leg, beneath a cached run's log
-            # is not on that path.
+            # call BEFORE the fix: a verifier leg, a batch leg, a fragment
+            # started after 2df65047e, or one whose every response reported
+            # the tier that served it, is not subject to it.
             logs = [e for e in logs if e.kind != "cached-path"]
         out.extend(logs)
         lm = self._launch_manifest(here, run_dir, stage)
@@ -715,6 +819,61 @@ class PassCoster:
             evidence.append(bill)
         conflicts: list[str] = []
         notes: list[str] = []
+        served = served_tiers(meta)
+        unknown = sorted(t for t in (served[0] if served else {})
+                         if t not in TIERS and t != UNREPORTED)
+        if unknown:
+            notes.append(f"served-tier header values outside {'|'.join(TIERS)} "
+                         f"({', '.join(unknown)}) count as unreported")
+        partial = [e for e in evidence if e.kind == "applied-header-partial"]
+        mixed = [e for e in evidence if e.kind == "applied-header" and not e.pins]
+        if mixed:
+            return self._served_mixed(mixed[0], evidence, notes)
+        finding = self._resolve_records(
+            [e for e in evidence if e.kind != "applied-header-partial"], conflicts, notes)
+        for e in partial:
+            # Some responses reported the tier that served them, the rest did
+            # not: the fragment ran at least partly at each reported tier, so
+            # every one of them is a candidate, whatever the records pin.
+            extra = [t for t in e.tiers if t not in finding.candidates]
+            if not extra:
+                continue
+            widened = tuple(t for t in TIERS if t in set(finding.candidates) | set(extra))
+            finding.notes.append(f"{e.describe()} widens {'|'.join(finding.candidates)} "
+                                 f"(by {finding.method}) to {'|'.join(widened)}")
+            finding.tier = widened[0] if len(widened) == 1 else None
+            finding.method = "unresolved" if finding.tier is None else finding.method
+            finding.candidates = widened
+        finding.evidence = evidence
+        return finding
+
+    def _served_mixed(self, served: Evidence, evidence: list[Evidence],
+                      notes: list[str]) -> TierFinding:
+        """A fragment whose every response reported a tier, and they differ.
+
+        Its candidates are exactly the served tiers: it ran at each of them,
+        so its cost lies between their prices. A record of the tier REQUESTED
+        that names one of them is a note; any other evidence excluding a
+        served tier is a conflict, because the API's statement stands.
+        """
+        conflicts: list[str] = []
+        for e in evidence:
+            if e is served or e.kind == "applied-header-partial":
+                continue
+            outside = [t for t in served.tiers if t not in e.tiers]
+            if not outside:
+                continue
+            if e.kind in REQUEST_RECORDS or e.kind == "cached-path":
+                notes.append(f"{e.describe()} is the tier REQUESTED; the API served "
+                             f"{'|'.join(served.tiers)}")
+            else:
+                conflicts.append(f"applied-header served {'|'.join(served.tiers)} but "
+                                 f"{e.describe()}")
+        return TierFinding(None, "unresolved", served.tiers, evidence, conflicts, notes)
+
+    def _resolve_records(self, evidence: list[Evidence], conflicts: list[str],
+                         notes: list[str]) -> TierFinding:
+        """Pins first, by priority; else the intersection of the narrowing evidence."""
         pins = [e for e in evidence if e.pins and e.kind in PIN_PRIORITY]
         narrows = [e for e in evidence if e not in pins]
         if pins:
@@ -726,6 +885,9 @@ class PassCoster:
                 if chosen.kind == "cached-path" and e.kind in REQUEST_RECORDS:
                     notes.append(f"{e.describe()} is the tier REQUESTED; the cached path "
                                  "dropped it")
+                elif chosen.kind == "applied-header" and e.kind in REQUEST_RECORDS:
+                    notes.append(f"{e.describe()} is the tier REQUESTED; the API served "
+                                 f"{tier}")
                 elif e.kind in INHERITED_KINDS and chosen.kind not in INHERITED_KINDS:
                     notes.append(f"{e.describe()} overruled by the fragment's own {chosen.kind}")
                 else:

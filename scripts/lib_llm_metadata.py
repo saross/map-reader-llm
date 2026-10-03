@@ -235,6 +235,12 @@ class AggregatedUsage:
     # Per-provider breakdown (if mixed providers used)
     by_provider: dict[str, dict[str, int]] = field(default_factory=dict)
 
+    # Responses per SERVED service tier, from the x-gemini-service-tier header
+    # ("unreported" when a response carried none). Kept at run level because
+    # some runners finalise without per-item records (run_pv verify), and
+    # summed by merge_meta like every other usage count (2026-10-03).
+    served_tier_counts: dict[str, int] = field(default_factory=dict)
+
 
 @dataclass
 class ExecutionStats:
@@ -536,6 +542,11 @@ class LLMMetadataTracker:
             self.usage.by_provider[provider]["total_tokens"] += metadata.tokens.total_tokens
             self.usage.by_provider[provider]["request_count"] += 1
 
+            # The tier that served this response, counted at run level.
+            served = metadata.service_tier_applied or "unreported"
+            self.usage.served_tier_counts[served] = (
+                self.usage.served_tier_counts.get(served, 0) + 1)
+
             # Finish reason distribution
             reason = metadata.finish_reason
             self.stats.finish_reason_counts[reason] = (
@@ -775,7 +786,8 @@ def applied_service_tier(response: Any) -> str | None:
         The tier, lower-cased, or None when the response carries no header.
 
     Examples:
-        >>> class R: sdk_http_response = type("H", (), {"headers": {"x-gemini-service-tier": "Flex"}})()
+        >>> H = type("H", (), {"headers": {"x-gemini-service-tier": "Flex"}})
+        >>> class R: sdk_http_response = H()
         >>> applied_service_tier(R())
         'flex'
         >>> applied_service_tier(object()) is None
