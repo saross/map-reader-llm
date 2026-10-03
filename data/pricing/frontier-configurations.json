@@ -1,5 +1,5 @@
 {
- "_README": "Which passes-register rows price each frontier configuration at the uniform discounted tier (PI ruling D19, amended 2026-10-04: every configuration's own tokens at one tier, flex, which equals batch on the rate card). Read by scripts/lib_frontier_cost.py (FrontierCoster.configuration_cost); design in planning/wp4b-frontier-cost-design-2026-10-04.md. Each entry: 'proposer', a list of {run_id, pool, passes}, costed as passes x the pool's mean pass (all passes when 'passes' is absent); 'verifier', either {'leg': {run_id, pool}} for a full run's own verifier leg, or {'unit_from': {run_id, pool}, 'candidates': N, 'candidates_source': {file, keys}} for a rung whose union of N candidates is costed at that leg's per-candidate unit (the convention of scripts/stride55_ladder.py), the count copied from the committed ladder named in candidates_source. A leg that is a floor in the register (a cleanup overwrote its main record) needs 'comparables': audited legs with an identical verifier configuration, nominated here so they can be reviewed; the library refuses a nominee that is itself a floor or differs in configuration. Nominations: stride A's union leg from stride B's (same campaign, corpus and day); FOURTH's 3.7 leg from ARM2's (the 3.7 verifier on the same 55-map corpus, same campaign); TM and IM from the four complete legs of the 55-map generalisation campaign they belong to.",
+ "_README": "Which passes-register rows price each frontier configuration at the uniform discounted tier (PI ruling D19, amended 2026-10-04: every configuration's own tokens at one tier, flex, which equals batch on the rate card). Read by scripts/lib_frontier_cost.py (FrontierCoster.configuration_cost); design in planning/wp4b-frontier-cost-design-2026-10-04.md. Each entry: 'proposer', a list of {run_id, pool, passes}, costed as passes x the pool's mean pass (all passes when 'passes' is absent); 'verifier', either {'leg': {run_id, pool}} for a full run's own verifier leg, or {'unit_from': {run_id, pool}, 'candidates': N, 'candidates_source': {file, keys}} for a rung whose union of N candidates is costed at that leg's per-candidate unit (the convention of scripts/stride55_ladder.py), the count copied from the committed ladder named in candidates_source. A leg that is a floor in the register (a cleanup overwrote its main record) needs 'comparables': audited legs with an identical verifier configuration, nominated here so they can be reviewed; the library refuses a nominee that is itself a floor or differs in configuration. Nominations: stride A's union leg from stride B's (same campaign, corpus and day); FOURTH's 3.7 leg from ARM2's (the 3.7 verifier on the same 55-map corpus, same campaign); TM and IM from the four complete legs of the 55-map generalisation campaign they belong to. 'units' names the unit costs the GS Pareto v2 and the K-ladder builders scale by their own formulas: 'mean_pass' is the mean pass over every listed pool; 'pooled_candidate' is the per-candidate unit pooled over complete legs sharing one verifier configuration. 'k_ladder_phase2_pass_units' gives each Phase 2 K-ladder family's GS pass unit (PI ruling 2026-10-04: own measured passes where recorded): 'own-gs-measured' the family's own GS passes; 't07-55map-measured' a T0.7 text family whose GS passes recorded no tokens, priced at the 55-map T0.7 measurement of the same configuration scaled 487/8541 ('named' refers to a gs_units name); 't07-interpolated' a T0.7 image family priced at the mean of the same family's T0.3 and T1.0 GS passes. 'k_ladder_phase1_gs_stride_a' prices the gold-standard stride-A ladder's rungs: N passes of the 487-tile pool plus that rung's own verified union leg (each rung was verified separately, so no union is simulated).",
  "schema": "frontier-configurations/1",
  "uniform_tier": "flex",
  "board_families": {
@@ -561,6 +561,266 @@
     "leg": {
      "run_id": "55maps-text-min-n10-uplift",
      "pool": "verified-3of10"
+    }
+   }
+  }
+ },
+ "units": {
+  "min_pass_55map": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "detect_brief-text"
+    },
+    {
+     "run_id": "55maps-text-min-n10-uplift",
+     "pool": "detect_brief-text-min-n10"
+    }
+   ],
+   "note": "Gemini 3 Flash, minimal thinking, 8,541 tiles: the June audit's 'ten measured 55-map minimal passes' (reports/token-load-audit-2026-06-12.md § 5)"
+  },
+  "high_pass_55map": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "note": "Gemini 3 Flash, HIGH thinking, T 0.7, 8,541 tiles: the June audit's 'five measured 55-map T0.7 HIGH passes'"
+  },
+  "g37_pass_gs": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "gemini37-screen-2026-08-28",
+     "pool": "g384_ov192_g37"
+    }
+   ],
+   "note": "Gemini 3.7 Flash, low thinking, 487 GS tiles: the pool's own ten passes (G37_PASS_USD's anchor, billing-reconciliation-2026-09-11.md)"
+  },
+  "g3_verifier_candidate": {
+   "kind": "pooled_candidate",
+   "legs": [
+    {
+     "run_id": "55maps-generalisation",
+     "pool": "verified"
+    },
+    {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "verified"
+    },
+    {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "verified"
+    },
+    {
+     "run_id": "55maps-text-min-n10-uplift",
+     "pool": "verified-3of10"
+    }
+   ],
+   "note": "the Gemini 3 Flash adversarial verifier (T 0, minimal) per candidate, pooled over the 55-map generalisation campaign's four complete legs. The June audit anchored VF_CALL_USD on the GS opmax leg (US$0.000693), which is not in the register (the verifier-robustness run's legs were never extracted); the deployment legs measured 0.000684-0.000698"
+  }
+ },
+ "k_ladder_phase2_pass_units": {
+  "flash-minimal-text-n30-t07-text-t0.3": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-minimal-text-n30-t07-text-t0.3"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "flash-minimal-text-n30-t07-text-t0.7": {
+   "kind": "named",
+   "unit": "min_pass",
+   "anchor": "t07-55map-measured"
+  },
+  "flash-minimal-text-n30-t07-text-t1.0": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-minimal-text-n30-t07-text-t1.0"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "flash-high-text-n5-text-t0.3": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-text-n5-text-t0.3"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "flash-high-text-n5-text-t0.7": {
+   "kind": "named",
+   "unit": "high_pass",
+   "anchor": "t07-55map-measured"
+  },
+  "flash-high-text-n5-text-t1.0": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-text-n5-text-t1.0"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "image-n5-image-t0.3": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "image-n5-image-t0.3"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "image-n5-image-t0.7": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "image-n5-image-t0.3"
+    },
+    {
+     "run_id": "pv-diag-384",
+     "pool": "image-n5-image-t1.0"
+    }
+   ],
+   "anchor": "t07-interpolated"
+  },
+  "image-n5-image-t1.0": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "image-n5-image-t1.0"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "flash-high-image-n5-image-t0.3": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-image-n5-image-t0.3"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "flash-high-image-n5-image-t0.7": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-image-n5-image-t0.3"
+    },
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-image-n5-image-t1.0"
+    }
+   ],
+   "anchor": "t07-interpolated"
+  },
+  "flash-high-image-n5-image-t1.0": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "flash-high-image-n5-image-t1.0"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "scale-4-optimal-487": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "pv-diag-384",
+     "pool": "scale-4-optimal-487"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  },
+  "g384_ov192_g37": {
+   "kind": "mean_pass",
+   "pools": [
+    {
+     "run_id": "gemini37-screen-2026-08-28",
+     "pool": "g384_ov192_g37"
+    }
+   ],
+   "anchor": "own-gs-measured"
+  }
+ },
+ "k_ladder_phase1_gs_stride_a": {
+  "1": {
+   "proposer": [
+    {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128",
+     "passes": 1
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128-union-k1-verify"
+    }
+   }
+  },
+  "3": {
+   "proposer": [
+    {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128",
+     "passes": 3
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128-union-k3-verify"
+    }
+   }
+  },
+  "5": {
+   "proposer": [
+    {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128",
+     "passes": 5
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128-union-k5-verify"
+    }
+   }
+  },
+  "10": {
+   "proposer": [
+    {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128",
+     "passes": 10
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "stride-phaseb-2026-08-25",
+     "pool": "g384_ov128-union-k10-verify"
     }
    }
   }

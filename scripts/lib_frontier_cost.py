@@ -70,11 +70,17 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-from scripts.lib_cost import price_usage, resolve_model
+from scripts.lib_cost import is_unrecorded, price_usage, resolve_model
 from scripts.lib_pass_cost import fragment_usage
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REGISTER = PROJECT_ROOT / "results" / "passes-manifest.json"
+MAPPING = PROJECT_ROOT / "data" / "pricing" / "frontier-configurations.json"
+
+#: The gold-standard (GS) and 55-map corpora, in tiles: a 55-map pass unit is
+#: carried to GS scale by GS/55-map (the June audit's convention).
+TILES_GS = 487
+TILES_55MAP = 8541
 
 #: The one tier every configuration is priced at (D19, amended 2026-10-04).
 UNIFORM_TIER = "flex"
@@ -172,7 +178,10 @@ class FrontierCoster:
         for frag in (row.get("cost_source") or {}).get("fragments") or []:
             meta = _load(self.root / frag["meta"])
             usage, _ = fragment_usage(meta)
-            if not usage or frag.get("unpriceable") or not frag.get("priced_at"):
+            # A usage block of zeros is unrecorded (D12), not free: refuse it
+            # as firmly as a missing one.
+            if not usage or is_unrecorded(usage) or frag.get("unpriceable") \
+                    or not frag.get("priced_at"):
                 raise FrontierCostError(f"{pass_id}: fragment {frag['meta']} has no priceable "
                                         "usage, so the pass cannot be priced whole")
             model = frag.get("model") or resolve_model(frag["model_recorded"])
@@ -371,7 +380,88 @@ class FrontierCoster:
         return total
 
 
+    def unit(self, spec: dict[str, Any]) -> Priced:
+        """A named unit cost from the mapping's ``units`` section.
+
+        Args:
+            spec: ``{"kind": "mean_pass", "pools": [{"run_id", "pool"}, ...]}``
+                for the mean pass over every listed pool's passes (the June
+                audit's "ten measured minimal passes" spans two runs), or
+                ``{"kind": "pooled_candidate", "legs": [{"run_id", "pool"}, ...]}``
+                for the pooled per-candidate unit of complete legs that share
+                ONE verifier configuration.
+
+        Raises:
+            FrontierCostError: For an unknown kind, a floor among the legs, or
+                legs of different configurations.
+        """
+        if spec.get("kind") == "mean_pass":
+            ids = [pid for ref in spec["pools"] for pid in self.pool_passes(ref["run_id"],
+                                                                             ref["pool"])]
+            usd = sum(self.pass_usd(p) for p in ids) / len(ids)
+            return Priced(usd, tuple(ids), notes=(f"mean of {len(ids)} passes",))
+        if spec.get("kind") == "pooled_candidate":
+            legs = [self.leg(ref["run_id"], ref["pool"]) for ref in spec["legs"]]
+            floors = [leg.pass_id for leg in legs if not leg.complete]
+            if floors:
+                raise FrontierCostError(f"pooled unit over floors: {floors}")
+            if len({leg.fingerprint for leg in legs}) != 1:
+                raise FrontierCostError("pooled unit over legs of different configurations: "
+                                        f"{sorted({leg.fingerprint for leg in legs}, key=str)}")
+            usd = sum(leg.usd for leg in legs) / sum(leg.verifications for leg in legs)
+            return Priced(usd, tuple(leg.pass_id for leg in legs),
+                          notes=(f"pooled over {len(legs)} complete legs",))
+        raise FrontierCostError(f"unknown unit kind {spec.get('kind')!r}")
+
+
 @lru_cache(maxsize=1)
 def default_coster() -> FrontierCoster:
     """The coster over the committed register, built once per process."""
     return FrontierCoster()
+
+
+@lru_cache(maxsize=1)
+def gs_units() -> dict[str, Priced]:
+    """The GS-scale unit costs the Pareto v2 and K-ladder builders share.
+
+    Returns:
+        ``min_pass`` and ``high_pass`` (the 55-map Gemini 3 Flash pass units
+        scaled by 487/8,541), ``g37_pass`` (the GS 3.7 screen pool's own
+        mean pass) and ``vf_call`` (the Gemini 3 Flash verifier per
+        candidate), each with the register rows it came from.
+    """
+    units = json.loads(MAPPING.read_text(encoding="utf-8"))["units"]
+    coster = default_coster()
+    scale = TILES_GS / TILES_55MAP
+
+    def scaled(name: str) -> Priced:
+        u = coster.unit(units[name])
+        return Priced(u.usd * scale, u.sources, u.basis,
+                      u.notes + (f"x {TILES_GS}/{TILES_55MAP} to GS scale",))
+
+    return {"min_pass": scaled("min_pass_55map"), "high_pass": scaled("high_pass_55map"),
+            "g37_pass": coster.unit(units["g37_pass_gs"]),
+            "vf_call": coster.unit(units["g3_verifier_candidate"])}
+
+
+@lru_cache(maxsize=1)
+def phase2_pass_units() -> dict[str, tuple[Priced, str]]:
+    """Each Phase 2 K-ladder family's GS pass unit and its anchor label.
+
+    PI ruling 2026-10-04: a family is priced at its OWN measured GS passes
+    where the register records them; a T0.7 text family (no recorded GS
+    tokens) at the 55-map T0.7 measurement of the same configuration, scaled;
+    a T0.7 image family at the mean of its own T0.3 and T1.0 passes,
+    labelled interpolated.
+
+    Returns:
+        ``{family: (unit, anchor)}`` from the mapping's
+        ``k_ladder_phase2_pass_units``.
+    """
+    specs = json.loads(MAPPING.read_text(encoding="utf-8"))["k_ladder_phase2_pass_units"]
+    coster, named = default_coster(), gs_units()
+    out = {}
+    for family, spec in specs.items():
+        unit = named[spec["unit"]] if spec["kind"] == "named" else coster.unit(spec)
+        out[family] = (unit, spec["anchor"])
+    return out

@@ -125,8 +125,12 @@ def test_a_rung_of_n_passes_is_n_mean_passes(repo):
 
 
 @pytest.mark.tier1
-def test_a_pass_with_an_unrecorded_fragment_is_refused_not_priced_short(repo):
-    repo.proposer("r", "p", 1, usage=None)
+@pytest.mark.parametrize("usage", [None, {"total_input_tokens": 0, "total_output_tokens": 0,
+                                          "n_responses_with_usage": 0}])
+def test_a_pass_with_an_unrecorded_fragment_is_refused_not_priced_short(repo, usage):
+    # Both a missing block and a block of zeros (the "empty batch records" of
+    # the GS T0.7 pools) are unrecorded, never free.
+    repo.proposer("r", "p", 1, usage=usage)
     with pytest.raises(FrontierCostError, match="no priceable usage"):
         repo.coster().pass_usd("r::p::run1")
 
@@ -330,3 +334,56 @@ def test_flex_equals_batch_on_the_rate_card():
             for usage_class in ("input_fresh", "output"):
                 assert row["rates"]["flex"][usage_class] == row["rates"]["batch"][usage_class], \
                     (model, usage_class)
+
+
+# ---------------------------------------------------------------------------
+# The K-ladder builders (WP4b, 2026-10-04).
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.tier1
+def test_the_fourth_cells_ladder_is_not_priced_as_stride_b():
+    # SENTINEL for the Phase 1 defect found 2026-10-04: the cost lookup was
+    # keyed by pool alone, and stride B's union was verified twice (Gemini 3,
+    # family B; Gemini 3.7, the fourth cell), so the fourth cell's ladder
+    # carried B's Gemini 3 verifier costs.
+    from scripts.build_k_ladder_tables import board_family
+    assert board_family("g384_ov192_55map", "gemini-3.7-flash", "n1-verified37") == "FOURTH"
+    assert board_family("g384_ov192_55map", "gemini-3-flash-preview", "n1") == "B"
+    assert board_family("g384_ov192_55map_g37", "gemini-3-flash-preview", "arm1-n1") == "ARM1"
+    assert board_family("g384_ov192_55map_g37", "gemini-3.7-flash", "arm2-n1") == "ARM2"
+    assert board_family("g384_ov128", "gemini-3-flash-preview", "x") is None  # GS: own section
+
+
+@pytest.mark.tier1
+def test_the_gs_stride_a_ladder_reproduces_its_measured_figures(committed):
+    doc, coster, _ = committed
+    old = {"1": 1.38, "3": 2.64, "5": 3.81, "10": 6.56}  # results/stride-2026-08-25/findings.md
+    for n, figure in old.items():
+        cost = coster.configuration_cost(doc["k_ladder_phase1_gs_stride_a"][n])
+        assert cost.usd == pytest.approx(figure, abs=0.02), n
+        assert cost.basis == "measured"
+
+
+@pytest.mark.tier1
+def test_each_phase2_family_is_priced_at_its_own_passes_where_recorded():
+    # PI ruling 2026-10-04: own measured GS passes, not a unit borrowed from
+    # another family. The MINIMAL image families had borrowed the MINIMAL
+    # text unit (0.266) at less than half their measured pass.
+    from scripts.lib_frontier_cost import gs_units, phase2_pass_units
+    units, named = phase2_pass_units(), gs_units()
+    assert len(units) == 14
+    for family, (unit, anchor) in units.items():
+        if anchor == "own-gs-measured":
+            assert all(family in src for src in unit.sources), family
+            assert len(unit.sources) == 10, family
+    image_min, anchor = units["image-n5-image-t0.3"]
+    assert anchor == "own-gs-measured"
+    assert image_min.usd > 2 * named["min_pass"].usd
+    # T0.7 text: the 55-map measurement of the same configuration, scaled.
+    assert units["flash-minimal-text-n30-t07-text-t0.7"] == (named["min_pass"],
+                                                              "t07-55map-measured")
+    # T0.7 image: the mean of the family's own T0.3 and T1.0 passes.
+    mid, anchor = units["flash-high-image-n5-image-t0.7"]
+    lo, hi = sorted(units[f"flash-high-image-n5-image-t{t}"][0].usd for t in ("0.3", "1.0"))
+    assert anchor == "t07-interpolated" and lo < mid.usd < hi

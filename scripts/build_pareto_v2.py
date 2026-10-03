@@ -10,7 +10,10 @@
 #   - an ESTIMATED FLEX-COST axis;
 #   - a refreshed C(7,2)=21 round-robin + BH-FDR + greedy-clique tiers.
 #
-# COST MODEL (token-load audit, 2026-06-12 — see
+# COST MODEL (since 2026-10-04, WP4b): the three units below are derived
+# from the passes register at the uniform discounted tier (PI ruling D19,
+# amended) by scripts/lib_frontier_cost.gs_units; the June figures they
+# replaced, kept here as the record (token-load audit, 2026-06-12 — see
 # reports/token-load-audit-2026-06-12.md; supersedes the 2026-06-11
 # manifest-derived calibration, which was built on a 2x double-counted
 # cost manifest and a "3x minimal" HIGH extrapolation):
@@ -67,6 +70,7 @@ from scripts.analyse_verifier_robustness import GROUND_TRUTH  # noqa: E402
 from scripts.apply_fdr_correction import apply_bh_correction  # noqa: E402
 from scripts.consensus_vs_baseline_tiering import consensus_per_tile  # noqa: E402
 from scripts.evaluate_detections import load_geojson  # noqa: E402
+from scripts.lib_frontier_cost import gs_units  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_classification,
 )
@@ -82,9 +86,16 @@ from scripts.pairwise_permutation_test import (  # noqa: E402
 
 BOUNDS = BASE_DIR / "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
 OUT_DIR = BASE_DIR / "results/verifier-robustness/pareto"
-MIN_PASS_USD = 0.266  # ten measured 55-map minimal passes, scaled by 487/8541 (audit 2026-06-12)
-HIGH_PASS_USD = 2.29  # five measured 55-map T0.7 HIGH passes incl. thinking tokens, scaled
-VF_CALL_USD = 0.000693
+# Unit costs at the uniform discounted tier (PI ruling D19, amended
+# 2026-10-04), derived from the passes register through
+# scripts/lib_frontier_cost.gs_units (data/pricing/frontier-configurations.json
+# "units"), so each traces to named register rows. They replaced the June
+# audit's hand-entered 0.266 / 2.29 / 0.000693, which they reproduce within
+# 0.3 % (WP4b, planning/wp4b-frontier-cost-design-2026-10-04.md).
+_GS_UNITS = gs_units()
+MIN_PASS_USD = _GS_UNITS["min_pass"].usd    # ten 55-map minimal passes, x 487/8541
+HIGH_PASS_USD = _GS_UNITS["high_pass"].usd  # five 55-map T0.7 HIGH passes, x 487/8541
+VF_CALL_USD = _GS_UNITS["vf_call"].usd      # Gemini 3 Flash verifier, per candidate
 # 55-map production scaling (Shawn, 2026-06-11): the real-world costing is a
 # deployment over the 8,541-tile generalisation corpus. Both cost components
 # scale with the tile factor (proposer passes by tiles; verifier crops by
@@ -392,15 +403,19 @@ def main() -> int:
                                             "note": "crops/tile from GS pools; 55-map "
                                                     "corpus sparser -> slight upper bound; "
                                                     "flex == batch pricing on Gemini 3"},
-                       "basis": "token-load audit 2026-06-12 "
-                                "(reports/token-load-audit-2026-06-12.md): all three "
-                                "rates measured from per-item metadata at F3 flex "
-                                "rates with thinking billed at the output rate; "
-                                "MIN/HIGH from the 55-map deployment passes scaled "
-                                "by 487/8541 (replaces the manifest-derived MIN, "
-                                "which was 2x double-counted, and the 'HIGH = 3x "
-                                "minimal' extrapolation, which under-priced "
-                                "proposer thinking 1.4x)"},
+                       "basis": "the passes register at the uniform discounted "
+                                "tier (PI ruling D19, amended 2026-10-04): MIN/HIGH "
+                                "the 55-map deployment passes' mean, re-priced at "
+                                "flex and scaled by 487/8541; VF the Gemini 3 Flash "
+                                "verifier per candidate, pooled over the 55-map "
+                                "generalisation campaign's four complete legs "
+                                "(scripts/lib_frontier_cost.gs_units, "
+                                "data/pricing/frontier-configurations.json). It "
+                                "replaced the token-load audit of 2026-06-12's "
+                                "0.266 / 2.29 / 0.000693, which it reproduces "
+                                "within 0.3 %",
+                       "sources": {name: list(u.sources) for name, u in _GS_UNITS.items()
+                                   if name != "g37_pass"}},
         "tiers": tiers, "pareto_efficient": eff,
         "mcc": {
             "statistic": "tile-level MCC from each rung's committed "
