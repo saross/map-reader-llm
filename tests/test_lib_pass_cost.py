@@ -2164,6 +2164,38 @@ def test_the_superseded_ledger_reprices_and_points_at_real_passes():
 
 
 @pytest.mark.tier1
+def test_the_unmetered_ledger_is_consistent():
+    # D35: spend with no usage record, each figure labelled by derivation.
+    doc = json.loads((REPO / "data/pricing/unmetered-executions.json").read_text())
+    entries = doc["executions"]
+    assert len({e["id"] for e in entries}) == len(entries)
+    derivations = {"invoice", "transcript-reconstruction", "comparable-leg", "note-estimate",
+                   "exposure-bound"}
+    for e in entries:
+        assert e["derivation"] in derivations, e["id"]
+        low, high = e["bounds_usd"]["low"], e["bounds_usd"]["high"]
+        if e["derivation"] == "exposure-bound":
+            assert e["estimate_usd"] is None and low == 0.0 < high, e["id"]
+        else:
+            assert low <= e["estimate_usd"] <= high, e["id"]
+        assert e["evidence"] and e["register_effect"], e["id"]
+    assert doc["estimated_total_usd"] == pytest.approx(
+        sum(e["estimate_usd"] for e in entries if e["estimate_usd"] is not None), abs=5e-7)
+    assert doc["exposure_total_usd"] == pytest.approx(
+        sum(e["bounds_usd"]["high"] for e in entries if e["derivation"] == "exposure-bound"),
+        abs=5e-7)
+    # A pass said to have lost spend is a register row, and a lower bound
+    # where the ledger says so.
+    rows = {r["pass_id"]: r for r in json.loads(
+        (REPO / "results/passes-manifest.json").read_text())["passes"]}
+    for e in entries:
+        for pid in e.get("pass_ids") or []:
+            assert pid in rows, (e["id"], pid)
+            if "lower-bound" in e["register_effect"] or "floor" in e["register_effect"]:
+                assert rows[pid]["cost_basis"] == "audited-lower-bound", (e["id"], pid)
+
+
+@pytest.mark.tier1
 def test_a_withdrawn_ledger_entry_is_inside_its_live_meta():
     # SENTINEL for the US$27.85 double count found before merge: a batch
     # leg's pre-rerun sidecar is a snapshot of the jobs its live meta already

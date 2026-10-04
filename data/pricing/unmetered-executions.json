@@ -1,0 +1,191 @@
+{
+ "_README": "Billed executions that left NO usage record, so neither the passes register nor the superseded-executions ledger (D22) can price them from a meta (PI ruling D35, 2026-10-05). Each entry names its derivation: 'invoice' (an invoice line isolates it), 'transcript-reconstruction' (usage rebuilt from figures a session transcript kept; D35 admits these for this ledger only, never a register row), 'comparable-leg' (a same-configuration leg's measured tokens, scaled), 'note-estimate' (a figure from the project's notes), or 'exposure-bound' (a ceiling on spend that may be zero; estimate_usd null). estimate_usd is the best figure, at the higher candidate tier where the tier is unknown (the register's never-understate rule); bounds_usd brackets it. WP6's project total adds estimated_total_usd and reports exposure_total_usd separately. A register pass that lost spend this way is audited-lower-bound (register_effect). Built in the S160 register repair from reports/launch-archaeology-2026-10-04.md section 4 and its follow-up; append as more are found, never delete an entry.",
+ "schema": "unmetered-executions/1",
+ "estimated_total_usd": 26.725644,
+ "exposure_total_usd": 7.678651,
+ "executions": [
+  {
+   "id": "U1",
+   "what": "the E71 dead-tile recovery rerun (protocol errata E71; scripts/run_recovery_rerun.py, e8c2a5d0d): pass 1 and sweeps A and B over 15 passes",
+   "runs": [
+    "e47-propose-brief",
+    "h12-v2",
+    "n1-outstanding-384",
+    "pv-diag-384"
+   ],
+   "pass_ids": null,
+   "when_utc": "2026-07-30T04:41Z..08:26Z",
+   "pacific_days": [
+    "2026-07-29",
+    "2026-07-30"
+   ],
+   "model": "gemini-3-flash-preview",
+   "tier": "flex",
+   "derivation": "invoice",
+   "estimate_usd": 11.407655,
+   "bounds_usd": {
+    "low": 8.51,
+    "high": 11.407655
+   },
+   "register_effect": "none: operational recovery spend, not apportioned to the 15 passes (any split would be modelled, not measured)",
+   "evidence": "_retry_tile_sync (scripts/lib_batch_api.py) discards usage_metadata, at 99ae28ec4 and still at HEAD, so no meta records the rerun's tokens (its 22 recovery_history entries read recovery_cost_usd 0.0). July 2026 invoice (docs/costs/, gitignored; reports/billing/gemini-spend-by-sku.csv rows 93-97): Gemini 3 Flash flex output 6,272,963 tokens A$13.613099, image input 6,279,100 A$2.271057, text input 722,101 A$0.261162 (usage 07-26..07-31), cached image 4,831,901 A$0.349521 and text 134,939 A$0.009756 (usage 07-29..07-30, the rerun's two Pacific days): A$16.504595 / 1.4468 = US$11.407655. The flex lines' wider window leaves a small unidentified share, so the invoice figure is an upper bound; a token model of 1,183 to 1,783 calls puts the rerun at US$8.51 to 19.56. The registration (reports/verification/recovery-rerun-registration.md) had estimated US$2-4 (worst case US$5) and its changelog 'well under US$1' for the sweeps. Session ~/cc-archives/vlm-burial-mound-detection/2026-07-30T00-59_execute-family-fdr-registration-land-errata; commits 99ae28ec4, d01ea4412, bff914c02."
+  },
+  {
+   "id": "U2",
+   "what": "pv-diag-384 flash-high-image-n5 image-t0.0 run 1's first launch (454 of 487 tiles)",
+   "runs": [
+    "pv-diag-384"
+   ],
+   "pass_ids": [
+    "pv-diag-384::flash-high-image-n5-image-t0.0::run1"
+   ],
+   "when_utc": "2026-04-16T08:11Z..08:27Z",
+   "pacific_days": [
+    "2026-04-16"
+   ],
+   "model": "gemini-3-flash-preview",
+   "tier": "standard",
+   "derivation": "transcript-reconstruction",
+   "estimate_usd": 5.387839,
+   "bounds_usd": {
+    "low": 2.871054,
+    "high": 5.387839
+   },
+   "register_effect": "the pass is audited-lower-bound (data/pricing/cost-overrides.json): its meta holds only the 33-tile resume",
+   "evidence": "Launched on sapphire 2026-04-16T08:11:47Z (scripts/run_phase3a_image_matrix.sh; session ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e). Log head: 'Service tier: flex', 'Context cache created: ... (14549 tokens, TTL=1h)'. Runner summary read at 08:27:19Z: 'Tiles processed: 454 / Tiles failed: 33 / Tokens used: 9,213,695 / Estimated cost: $4.0055'. The 09:22Z resume's 33-tile meta replaced it before the first commit (2e8cc6481). Reconstructed with the runner's estimator (input x US$0.50/M + output excluding thinking x US$3/M; checked on run 2 to US$0.000001): input 7,625,933 (cached 7,085,363), output 64,178, thinking 1,523,584; priced by lib_cost.price_usage at 2026-04-16: standard US$5.387839 (the cached path, D34 (1) and (3)), flex US$2.871054. Excludes retries, as the register does. PI ruling D35 admits transcript-derived usage for this ledger only."
+  },
+  {
+   "id": "U3",
+   "what": "the e47 run 5 Batch API job that completed after run 5 was relaunched on flex",
+   "runs": [
+    "e47-propose-brief"
+   ],
+   "pass_ids": null,
+   "when_utc": "2026-04-09T03:36Z (completion)",
+   "pacific_days": [
+    "2026-04-08"
+   ],
+   "model": "gemini-3-flash-preview",
+   "tier": "batch",
+   "derivation": "comparable-leg",
+   "estimate_usd": 2.311294,
+   "bounds_usd": {
+    "low": 2.311294,
+    "high": 2.817254
+   },
+   "register_effect": "none: superseded by e47-propose-brief::propose_brief-text::run5 (the flex relaunch)",
+   "evidence": "Loop bqkbtf9t9 (session ~/cc-archives/map-reader-llm/2026-04-07T23-44_automated-mound-detection-pipeline) ran its run-5 iteration in batch mode after the 23:51Z flex relaunch and completed at 2026-04-09T03:36:42Z, exit 0. Its output is the trio archived by ad87e55fa as a 'spurious zero-duration copy' (archive/reorg-artifacts/e47-propose-brief-run5-zero-duration-copy/; execution_mode batch, lib_batch_api 1.5.0, 447 completed and 40 failed items, zero recorded usage): a real, billed job. The invoice bills Gemini 3 Flash at batch only on Pacific 2026-04-08 in April. Estimate: the committed flex run 5's usage (744,136 input, 110,389 output, 1,444,336 thinking; batch rates equal flex for 3 Flash) priced at batch, US$2.518121 a full pass, x 447/487 = US$2.311294; high adds 40 billed truncations at about 8,178 output tokens each: US$2.817254."
+  },
+  {
+   "id": "U4",
+   "what": "the e47 run 4-5 Batch API jobs abandoned without a confirmed cancellation (2 or 3 jobs)",
+   "runs": [
+    "e47-propose-brief"
+   ],
+   "pass_ids": null,
+   "when_utc": "2026-04-08T21:17Z..23:45Z (submissions)",
+   "pacific_days": [
+    "2026-04-08"
+   ],
+   "model": "gemini-3-flash-preview",
+   "tier": "batch",
+   "derivation": "exposure-bound",
+   "estimate_usd": null,
+   "bounds_usd": {
+    "low": 0.0,
+    "high": 7.554363
+   },
+   "register_effect": "none",
+   "evidence": "batches/ta2p44lj7ym24euqp52xo67ohncrha7wm8ua (pending at 22:15Z when its poller was killed) and batches/z3yhm81fy9wjnp3xrcakrbfro01jaa7lxmuu (pending at 23:42Z), and possibly run 5's first submission (id not captured); no cancel path existed in lib_batch_api.py or 4_detect_mounds_batch.py at ed04977d6. Any that ran was billed on Pacific 2026-04-08 (the month's only Flash batch day), whose volume is shared with zero-usage metas and cannot isolate them. Bound: 3 x US$2.518121 (one full pass at batch). client.batches.get() on the two named jobs would settle it at no token cost (an API call, so under the approval gate)."
+  },
+  {
+   "id": "U5",
+   "what": "the killed gemini37-55map run 2 flex recovery attempt (95 tiles)",
+   "runs": [
+    "gemini37-55map-2026-08-29"
+   ],
+   "pass_ids": null,
+   "when_utc": "2026-08-30T07:16Z..08:35Z",
+   "pacific_days": [
+    "2026-08-30"
+   ],
+   "model": "gemini-3.7-flash",
+   "tier": "flex",
+   "derivation": "exposure-bound",
+   "estimate_usd": null,
+   "bounds_usd": {
+    "low": 0.0,
+    "high": 0.124288
+   },
+   "register_effect": "none",
+   "evidence": "Session ~/cc-archives/map-reader-llm/2026-08-29T02-01_launch-gemini-3-7-55-map-campaign-and: launched 07:16:36Z, --mode realtime --service-tier flex, no log file; its directory held only experiment_intent.md at 07:41Z (the runner saves after every successful tile, so no tile had completed) and was deleted at 08:35Z before the standard relaunch. Bound: the standard replacement's usage (142,690 input, 4,894 output, 32,855 thinking) at flex; most likely about US$0 (flex 503 storms)."
+  },
+  {
+   "id": "U6",
+   "what": "the e47 WBF n5 v1 verifier main leg, overwritten by its one-request cleanup before the first commit",
+   "runs": [
+    "e47-propose-brief"
+   ],
+   "pass_ids": [
+    "e47-propose-brief::wbf-n5-verified-v1::run1"
+   ],
+   "when_utc": "2026-04-13",
+   "pacific_days": [
+    "2026-04-12",
+    "2026-04-13"
+   ],
+   "model": "gemini-3-flash-preview",
+   "tier": null,
+   "derivation": "comparable-leg",
+   "estimate_usd": 5.518004,
+   "bounds_usd": {
+    "low": 2.759002,
+    "high": 5.518004
+   },
+   "register_effect": "the register row is a floor (audited-lower-bound, its cleanup only)",
+   "evidence": "outputs/wbf/e47-propose-brief-n5/verified-v1/run.meta.json is the 1-request cleanup ('1 cleanup retry on v1', docs/notes/working-notes.md:8208); probabilities.json holds 3,890 results; the main leg's meta was overwritten before its first commit (1e6f2e9ce). Comparable: the v2 leg over the same 3,890 candidates (outputs/wbf/e47-propose-brief-n5/verified-v2/run.meta.json, verify_adversarial-text_v2, 2026-04-13), priced US$2.759002 flex to US$5.518004 standard; tier unresolved, so the higher is the estimate. The working notes' '~$8' (working-notes.md:8519) overstates the measured comparable. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled."
+  },
+  {
+   "id": "U7",
+   "what": "the gold-standard-v2 WBF v2 verifier leg, no meta committed",
+   "runs": [
+    "gold-standard-v2"
+   ],
+   "pass_ids": null,
+   "when_utc": "2026-04-13",
+   "pacific_days": null,
+   "model": "gemini-3-flash-preview",
+   "tier": null,
+   "derivation": "comparable-leg",
+   "estimate_usd": 1.822868,
+   "bounds_usd": {
+    "low": 0.911434,
+    "high": 1.822868
+   },
+   "register_effect": "none: no meta, so no row",
+   "evidence": "Obs 233 records both a v1 and a v2 WBF verifier leg over the gold-standard-v2 fusion, 'Total cost ~$5-6 Flex' (docs/notes/working-notes.md:8843-8846); only verified-v1/ exists (outputs/wbf/gold-standard-v2-detect/verified-v1/, 0dede119f, 1,318 results). Comparable: the v1 leg, US$0.911434 flex to US$1.822868 standard. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled."
+  },
+  {
+   "id": "U8",
+   "what": "proposer-verifier-384's 238-tile proposer main round, overwritten by a 2-tile resume",
+   "runs": [
+    "proposer-verifier-384"
+   ],
+   "pass_ids": [
+    "proposer-verifier-384::proposer::run1"
+   ],
+   "when_utc": "2026-03-14",
+   "pacific_days": null,
+   "model": "gemini-3-flash-preview",
+   "tier": "standard",
+   "derivation": "comparable-leg",
+   "estimate_usd": 0.277984,
+   "bounds_usd": {
+    "low": 0.138992,
+    "high": 0.277984
+   },
+   "register_effect": "the register row (single_pass pool, the resume's meta) prices the resume only",
+   "evidence": "outputs/h11/proposer-verifier-384/proposer.log:13-28: 'Resuming: 238 tiles already processed ... Tiles processed: 2'; the committed meta (detections-detect_brief-text-3-flash-2026-03-15.meta.json) is the resume's. Before flex existed (2a2cd81c7, 2026-04-09), so real time was standard. Estimate: the resume's own per-tile cost (US$0.001168 at standard for its recorded tile) x 238; low at the batch rate. A single tile makes the unit noisy."
+  }
+ ]
+}
