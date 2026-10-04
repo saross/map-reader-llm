@@ -49,6 +49,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import calendar
 import csv
 import io
 import re
@@ -61,8 +62,9 @@ EXPORTS = PROJECT_ROOT / "docs" / "costs"
 HEADER = "month,sku,usage_amount,usage_unit,aud,aud_per_usd,usd,basis"
 SERVICE = "Gemini API"
 PROJECT = "map-reader-llm"
-#: The Cost table export's file name carries the invoice month's first day.
-EXPORT_NAME = re.compile(r"Cost table, (\d{4}-\d{2})-01 ")
+#: The Cost table export's file name carries the invoice month's first and
+#: last days; only a whole month is an invoice.
+EXPORT_NAME = re.compile(r"Cost table, (\d{4}-\d{2})-01 \S+ (\d{4}-\d{2})-(\d{2})")
 
 
 class DerivationError(Exception):
@@ -80,8 +82,15 @@ def find_exports(directory: Path = EXPORTS) -> dict[str, Path]:
     for path in sorted(directory.glob("*Cost table*.csv")):
         match = EXPORT_NAME.search(path.name)
         if not match:
+            print(f"skipped (name not a Cost table export): {path.name}", file=sys.stderr)
             continue
-        month = match.group(1)
+        month, end_month, end_day = match.group(1), match.group(2), int(match.group(3))
+        year, mon = (int(x) for x in month.split("-"))
+        if end_month != month or end_day != calendar.monthrange(year, mon)[1]:
+            # A part-month export is not an invoice (the 2026-09-11 Reports
+            # export was one): it must never replace or gate invoice rows.
+            print(f"skipped (not a whole month): {path.name}", file=sys.stderr)
+            continue
         if month in found:
             raise DerivationError(f"two Cost table exports for {month}: {found[month].name}, "
                                   f"{path.name}")
@@ -107,7 +116,7 @@ def derive_month(month: str, export_text: str) -> list[str]:
         >>> derive_month("2026-08", text)[0]  # doctest: +SKIP
         '2026-08,Generate content ... caching,20122880,count,1.09,1.4389,0.76,invoice'
     """
-    lines = export_text.lstrip("﻿").splitlines()
+    lines = export_text.lstrip("\ufeff").splitlines()  # a BOM, if read without utf-8-sig
     try:
         start = next(i for i, line in enumerate(lines) if line.startswith("Billing account name"))
     except StopIteration as exc:
@@ -121,6 +130,14 @@ def derive_month(month: str, export_text: str) -> list[str]:
     for row in csv.DictReader(io.StringIO("\n".join(lines[start:]))):
         if row["Service description"] != SERVICE or row["Project name"] != PROJECT:
             continue
+        if row["Cost type"] != "Usage" or row.get("Credit type"):
+            # Every row of the ten months so far is plain usage. A credit,
+            # adjustment or refund would emit a second row for its SKU, which
+            # the table's one-row-per-SKU method has no place for: refuse it
+            # so a human decides (audit lens A, 2026-10-04).
+            raise DerivationError(f"{month}: a {row['Cost type']!r} row "
+                                  f"(credit {row.get('Credit type')!r}) for "
+                                  f"{row['SKU description']!r}; the method covers usage only")
         aud = row["Cost ($)"]
         usd = float(aud) / fx  # from the ROUNDED AUD, as the committed rows are
         out.append(",".join([month, row["SKU description"],
@@ -199,11 +216,19 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--check", action="store_true", help="exit 1 if the table would change")
     args = parser.parse_args(argv)
     try:
-        new, report = reconcile(read_table(), find_exports())
-    except DerivationError as exc:
+        # The module paths are read at call time (not as bound defaults), so a
+        # caller that repoints them, as the tests do, is obeyed.
+        exports = find_exports(EXPORTS)
+        new, report = reconcile(read_table(TABLE), exports)
+    except (DerivationError, KeyError) as exc:  # KeyError: a renamed export column
         print(f"refused: {exc}", file=sys.stderr)
         return 2
     print("\n".join(report))
+    if not exports:
+        # Without the gitignored exports nothing can be compared: say so
+        # rather than report the table current (audit lens A, 2026-10-04).
+        print(f"no invoice exports in {EXPORTS.relative_to(PROJECT_ROOT)}/; nothing checked")
+        return 0
     current = TABLE.read_bytes().decode("utf-8")
     text = render(new, "\r\n" if "\r\n" in current else "\n")
     changed = text != current

@@ -59,8 +59,12 @@ def test_an_export_without_a_rate_is_refused():
         d.derive_month("2026-08", text)
 
 
-def _write(tmp_path: Path, month: str, text: str) -> Path:
-    path = tmp_path / f"Acct_Cost table, {month}-01 — {month}-28.csv"
+def _write(tmp_path: Path, month: str, text: str, end: str | None = None) -> Path:
+    """An export named as the console names one: the month's first and last days."""
+    import calendar
+    year, mon = (int(x) for x in month.split("-"))
+    end = end or f"{month}-{calendar.monthrange(year, mon)[1]:02d}"
+    path = tmp_path / f"Acct_Cost table, {month}-01 — {end}.csv"
     path.write_text(text, encoding="utf-8")
     return path
 
@@ -94,6 +98,7 @@ def test_an_invoiced_month_that_reproduces_passes_the_gate(tmp_path):
 def test_two_exports_for_one_month_are_refused(tmp_path):
     _write(tmp_path, "2026-08", AUGUST)
     (tmp_path / "Acct_Cost table, 2026-08-01 — 2026-08-31 (1).csv").write_text(AUGUST)
+    # (the second name is the console's own spelling of a re-download)
     with pytest.raises(d.DerivationError, match="two Cost table exports"):
         d.find_exports(tmp_path)
 
@@ -107,3 +112,76 @@ def test_render_keeps_a_crlf_terminator():
     # The committed table is CRLF; an LF rewrite churned all 128 lines once.
     text = d.render({"2026-08": ["2026-08,a"]}, "\r\n")
     assert text == f"{d.HEADER}\r\n2026-08,a\r\n"
+
+
+def test_a_part_month_export_is_not_an_invoice(tmp_path):
+    # The 2026-09-11 partial export must never gate or replace invoice rows.
+    _write(tmp_path, "2026-09", AUGUST, end="2026-09-11")
+    assert d.find_exports(tmp_path) == {}
+    _write(tmp_path, "2026-08", AUGUST)
+    assert list(d.find_exports(tmp_path)) == ["2026-08"]
+
+
+def test_a_credit_or_adjustment_row_is_refused():
+    text = AUGUST.replace(",Usage,d1,d2,\"46,546\"", ",Adjustment,d1,d2,\"46,546\"")
+    assert text != AUGUST
+    with pytest.raises(d.DerivationError, match="usage only"):
+        d.derive_month("2026-08", text)
+
+
+def test_a_new_month_is_added_and_a_mixed_basis_month_replaced(tmp_path):
+    exports = {"2026-08": _write(tmp_path, "2026-08", AUGUST)}
+    new, report = d.reconcile({}, exports)                  # a month the table lacks
+    assert new == {"2026-08": d.derive_month("2026-08", AUGUST)}
+    assert report == ["2026-08: added from the invoice (0 -> 2 rows)"]
+    mixed = {"2026-08": ["2026-08,a,1,count,0.01,1.4389,0.01,invoice",
+                         "2026-08,b,1,count,0.01,1.4000,0.01,reports export; provisional"]}
+    new, report = d.reconcile(mixed, exports)               # not wholly invoiced: replaced
+    assert new["2026-08"] == d.derive_month("2026-08", AUGUST)
+    assert report == ["2026-08: replaced from the invoice (2 -> 2 rows)"]
+
+
+@pytest.fixture
+def cli(tmp_path, monkeypatch):
+    """main() pointed at a scratch table and export directory."""
+    exports = tmp_path / "costs"
+    exports.mkdir()
+    table = tmp_path / "gemini-spend-by-sku.csv"
+    monkeypatch.setattr(d, "EXPORTS", exports)
+    monkeypatch.setattr(d, "TABLE", table)
+    monkeypatch.setattr(d, "PROJECT_ROOT", tmp_path)
+    return table, exports
+
+
+def test_main_keeps_crlf_checks_and_writes(cli):
+    table, exports = cli
+    _write(exports, "2026-08", AUGUST)
+    provisional = "2026-08,partial,1,count,0.01,1.4000,0.01,reports export; provisional"
+    table.write_bytes(f"{d.HEADER}\r\n{provisional}\r\n".encode())
+    assert d.main(["--check"]) == 1                         # drift before the write
+    assert d.main(["--write"]) == 0
+    written = table.read_bytes()
+    # SENTINEL: the CRLF terminator survives main's choice, not only render's.
+    assert written.count(b"\r\n") == 3 and b"\n" not in written.replace(b"\r\n", b"")
+    assert d.main(["--check"]) == 0
+    assert d.main([]) == 0 and table.read_bytes() == written  # a dry run writes nothing
+
+
+def test_main_refuses_a_gate_failure_and_a_bad_header(cli, capsys):
+    table, exports = cli
+    _write(exports, "2026-08", AUGUST)
+    wrong = "2026-08,sku caching,20122880,count,1.09,1.4389,0.75,invoice"
+    table.write_text(f"{d.HEADER}\n{wrong}\n")
+    assert d.main(["--write"]) == 2                         # the gate refuses
+    assert table.read_text() == f"{d.HEADER}\n{wrong}\n"   # and nothing is written
+    table.write_text("month,sku\n")
+    assert d.main(["--check"]) == 2
+    assert "unexpected header" in capsys.readouterr().err
+
+
+def test_main_without_exports_says_nothing_was_checked(cli, capsys):
+    table, _ = cli
+    table.write_text(f"{d.HEADER}\n2026-08,a,1,count,0.01,1.4389,0.01,invoice\n")
+    assert d.main(["--check"]) == 0
+    out = capsys.readouterr().out
+    assert "nothing checked" in out and "table current" not in out
