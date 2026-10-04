@@ -49,7 +49,12 @@ register prices) is recorded and non-zero:
   chunked Batch API pass whose merged meta the register prices also gets a
   ``merged_into`` pointer: its tokens are already inside that row, so its
   figure is for reference and must not be added to the register's
-  (:func:`chunk_links` says how the link is verified).
+  (:func:`chunk_links` says how the link is verified). A verifier meta
+  that accounts for fewer candidates than its ``probabilities.json`` holds,
+  below the register's coverage floor, is published as
+  ``audited-lower-bound`` with the count beside it, as the register
+  publishes such a leg, unless the stage carried the missing results
+  forward from a stage priced elsewhere (:func:`leg_coverage`).
 * **Zero or unrecorded usage**: no sidecar (plan § 4.5; such passes are
   ``null`` with ``cost_basis: unrecorded`` in the register, D12).
 
@@ -88,7 +93,12 @@ from typing import Any
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts.lib_cost import is_unrecorded, token_classes  # noqa: E402
-from scripts.lib_pass_cost import PassCoster, fragment_usage  # noqa: E402
+from scripts.lib_pass_cost import (  # noqa: E402
+    COVERAGE_FLOOR,
+    PassCoster,
+    fragment_usage,
+    verifier_coverage,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
@@ -228,10 +238,12 @@ def register_stamp(register: dict[str, Any], register_rel: str) -> dict[str, Any
 def index_register(register: dict[str, Any]) -> dict[str, list[tuple[str, dict, dict | None]]]:
     """Map each meta path the register cites to the rows that cite it.
 
-    A meta is matched first under ``cost_source.fragments`` (the metas that
-    priced the row). A row with no fragment naming the meta (the two legs
-    whose figure is published from their report, D13) is matched under
-    ``provenance.source_files``, with no fragment record.
+    A meta is matched under ``cost_source.fragments`` (the metas that priced
+    the row). Only a row with NO fragments at all (the two legs whose figure
+    is published from their report, D13) is matched under
+    ``provenance.source_files`` instead, with no fragment record: a meta a
+    priced row cites as provenance but did not price is not in its figure,
+    so it is treated as outside the register.
 
     Args:
         register: The parsed passes register.
@@ -248,8 +260,10 @@ def index_register(register: dict[str, Any]) -> dict[str, list[tuple[str, dict, 
             if meta and meta not in priced:
                 priced.add(meta)
                 index.setdefault(meta, []).append((BY_FRAGMENT, row, frag))
-        for src in (row.get("provenance") or {}).get("source_files") or []:
-            if src.endswith(META_SUFFIX) and src not in priced:
+        if fragments:
+            continue
+        for src in dict.fromkeys((row.get("provenance") or {}).get("source_files") or []):
+            if src.endswith(META_SUFFIX):
                 index.setdefault(src, []).append((BY_SOURCE, row, None))
     return index
 
@@ -404,6 +418,84 @@ def chunk_links(parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]],
     return links
 
 
+#: The schema of the provenance a carry-forward verifier stage writes.
+CARRY_SCHEMA = "verifier-stage-carry/1"
+
+
+def carried_forward(directory: Path) -> tuple[int, str] | None:
+    """Results a verifier stage carried from an earlier stage, unverified again.
+
+    A stage rebuilt over a re-numbered union (the ``*_recovery-fixed``
+    stages) copies the earlier stage's results into its own
+    ``probabilities.json`` and verifies only the candidates it could not
+    match; ``carry_provenance.json`` records how many it carried and from
+    where. Those results' spend belongs to the stage it extends.
+
+    Args:
+        directory: The verifier stage's directory.
+
+    Returns:
+        ``(carried, extends_stage)``, or None when the stage carries nothing.
+    """
+    path = directory / "carry_provenance.json"
+    if not path.is_file():
+        return None
+    doc = read_json(path)
+    carried = doc.get("carried") if isinstance(doc, dict) else None
+    if doc.get("schema") != CARRY_SCHEMA or not isinstance(carried, int) or carried <= 0:
+        return None
+    return carried, str(doc.get("extends_stage") or "")
+
+
+def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str, Any] | None:
+    """The register's coverage test for a verifier meta, where it falls short.
+
+    The register publishes a verifier leg whose metas account for fewer
+    than :data:`scripts.lib_pass_cost.COVERAGE_FLOOR` of the candidates in
+    its ``probabilities.json`` as ``audited-lower-bound`` (a later leg, such
+    as a cleanup, overwrote the main meta; ``PassCoster.cost_pass``). The
+    count is :func:`scripts.lib_pass_cost.verifier_coverage`'s, reused here,
+    not re-derived. One case the register has never met: a carry-forward
+    stage (:func:`carried_forward`), whose shortfall is results copied from
+    a stage priced elsewhere, so its meta IS its whole spend.
+
+    Args:
+        meta: The parsed meta.
+        meta_path: Its path.
+        stage: ``verifier`` or ``proposer`` (a proposer is never tested).
+
+    Returns:
+        None when the meta covers its results (or there is nothing to test);
+        else a record of the count with ``lower_bound`` True, or False with
+        the carry that explains the shortfall.
+    """
+    if stage == "proposer":
+        return None
+    cover = verifier_coverage([(meta, meta_path)])
+    if not cover or cover[0] >= COVERAGE_FLOOR * cover[1]:
+        return None
+    accounted, results = cover
+    record: dict[str, Any] = {
+        "accounted_candidates": accounted, "results": results, "floor": COVERAGE_FLOOR,
+        "method": "scripts/lib_pass_cost.py verifier_coverage, as PassCoster.cost_pass applies it",
+    }
+    carry = carried_forward(meta_path.parent)
+    if carry and accounted + carry[0] >= COVERAGE_FLOOR * results:
+        record.update(lower_bound=False, carried=carry[0], carried_from=carry[1], note=(
+            f"the meta accounts for {accounted:,} candidate(s) against {results:,} results, "
+            f"but {carry[0]:,} of those results were carried forward from {carry[1]} "
+            "(carry_provenance.json) and their spend is priced there: this meta is the "
+            "stage's whole spend, so the figure is not a lower bound"))
+    else:
+        record.update(lower_bound=True, note=(
+            f"LOWER bound: the meta accounts for {accounted:,} candidate(s) against "
+            f"{results:,} results in probabilities.json, below the register's "
+            f"{COVERAGE_FLOOR:.0%} coverage floor: the leg's other calls are not recorded "
+            "here (as the register reads it, a later leg such as a cleanup overwrote the "
+            "main meta), so this is a floor on the leg's spend"))
+    return record
+
+
 def _relativise(value: Any, prefix: str) -> Any:
     """Strip an absolute repository prefix from every string in *value*."""
     if isinstance(value, str):
@@ -432,7 +524,10 @@ def outside_entry(meta: dict[str, Any], meta_path: Path, meta_rel: str,
 
     Returns:
         The sidecar fields for a meta outside the register: reason, cost,
-        basis, the fragment record, and the context it was resolved in.
+        basis, the fragment record, and the context it was resolved in;
+        for a verifier meta short of the register's coverage floor, the
+        coverage record (:func:`leg_coverage`) and, unless a carry explains
+        the shortfall, ``audited-lower-bound`` at the lowest candidate.
     """
     run_id, run_dir, registered = run_context(meta_rel, runs)
     stage = meta_stage(meta_path)
@@ -442,6 +537,7 @@ def outside_entry(meta: dict[str, Any], meta_path: Path, meta_rel: str,
     parent = Path(meta_rel).parent
     pool = (parent.relative_to(run_dir).as_posix() if meta_rel.startswith(run_dir + "/")
             else parent.name)
+    coverage = None
     if model is None:
         fragment: dict[str, Any] = {"meta": meta_rel, "model_recorded": None, "tier": None,
                                     "tier_method": "not-needed",
@@ -456,6 +552,12 @@ def outside_entry(meta: dict[str, Any], meta_path: Path, meta_rel: str,
         if basis == "audited-upper-bound":
             fragment["bounds_usd"] = {"low": round(priced["_low"], 6),
                                       "high": round(priced["_high"], 6)}
+        coverage = leg_coverage(meta, meta_path, stage)
+        if coverage and coverage["lower_bound"] and basis in ("audited",
+                                                              "audited-upper-bound"):
+            # cost_pass's floor: the fragment at its LOWEST candidate tier,
+            # valid whatever an unresolved tier was.
+            basis, cost = "audited-lower-bound", priced["_low"]
     if merged_into:
         reason = (f"a chunk of a chunked Batch API pass: the register prices the merged meta "
                   f"{merged_into['meta']} ({', '.join(merged_into['pass_ids'])}), whose usage "
@@ -484,6 +586,8 @@ def outside_entry(meta: dict[str, Any], meta_path: Path, meta_rel: str,
     }
     if merged_into:
         entry["merged_into"] = merged_into
+    if coverage:
+        entry["coverage"] = coverage
     return _relativise(entry, str(repo_root.resolve()) + "/")
 
 
@@ -591,8 +695,11 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
                              key=lambda e: str(e["pass_id"]))
             doc.update(in_register=True, rows=entries,
                        note=("copied from the passes register (PI ruling D28), which is the "
-                             "source of truth; cost_usd is the ROW's figure (every fragment "
-                             "of the pass), the fragment record's cost_usd this meta's share"))
+                             "source of truth: cost_usd and cost_basis are the ROW's (every "
+                             "fragment of the pass), and the fragment record is copied as the "
+                             "register holds it (on a lower-bound row the row sums each "
+                             "fragment's lowest candidate, so the record's cost_usd need not "
+                             "be this meta's part of the row's figure)"))
             plan.stats["sidecars in register"] += 1
             for e in entries:
                 plan.stats[f"in register via {e['matched_by']}"] += 1
