@@ -52,18 +52,16 @@ Description:
     family                                 pass unit (anchor)
     =====================================  ==========================================
     ten families with recorded GS passes   their own ten passes (``own-gs-measured``)
-    MINIMAL and HIGH text, T 0.7           the 55-map T0.7 passes of the same
-                                           configuration, scaled 487 / 8,541
-                                           (``t07-55map-measured``)
-    MINIMAL and HIGH image, T 0.7          the mean of the family's own T0.3 and
-                                           T1.0 passes (``t07-interpolated``)
+    the four T 0.7 families (text, image)  the mean of the family's own T0.3 and
+                                           T1.0 GS passes (``t07-neighbour-mean``)
     =====================================  ==========================================
 
     The T0.7 GS pools recorded no tokens (empty batch records). Before
     2026-10-04 the MINIMAL image families borrowed the MINIMAL text unit
-    (0.266) and were priced at less than half their measured pass (0.573);
-    the pass rate is still constant within a family, so each ladder's cost
-    RATIO between rungs is exact.
+    (0.266) and were priced at less than half their measured pass (0.573),
+    and (briefly) the T0.7 text families took the 55-map T0.7 measurement,
+    about 7 % below their GS neighbours; the pass rate is still constant
+    within a family, so each ladder's cost RATIO between rungs is exact.
 
 Usage::
 
@@ -210,16 +208,13 @@ PASS_ANCHORS: dict[str, str] = {
         "the family's own ten GS passes from the passes register, re-priced at "
         "the uniform discounted tier (PI ruling D19, amended 2026-10-04)"
     ),
-    "t07-55map-measured": (
-        "the 55-map T0.7 passes of the same configuration, re-priced at the "
-        "uniform tier and scaled by 487/8,541: this family's own GS T0.7 "
-        "passes recorded no tokens"
-    ),
-    "t07-interpolated": (
+    "t07-neighbour-mean": (
         "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS "
-        "passes (not a linear interpolation at T 0.7), because its T0.7 passes "
-        "recorded no tokens. The two differ by 0.3 % for MINIMAL image and "
-        "16 % for HIGH image"
+        "passes (not a linear interpolation at T 0.7), because its T0.7 GS "
+        "passes recorded no tokens (PI ruling 2026-10-04: text and image alike, "
+        "so every Phase 2 family rests on GS measurements). The two neighbours "
+        "differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL "
+        "image) and 18 % (HIGH image)"
     ),
 }
 

@@ -409,13 +409,15 @@ def test_each_phase2_family_is_priced_at_its_own_passes_where_recorded():
     image_min, anchor = units["image-n5-image-t0.3"]
     assert anchor == "own-gs-measured"
     assert image_min.usd > 2 * named["min_pass"].usd
-    # T0.7 text: the 55-map measurement of the same configuration, scaled.
-    assert units["flash-minimal-text-n30-t07-text-t0.7"] == (named["min_pass"],
-                                                              "t07-55map-measured")
-    # T0.7 image: the mean of the family's own T0.3 and T1.0 passes.
-    mid, anchor = units["flash-high-image-n5-image-t0.7"]
-    lo, hi = sorted(units[f"flash-high-image-n5-image-t{t}"][0].usd for t in ("0.3", "1.0"))
-    assert anchor == "t07-interpolated" and lo < mid.usd < hi
+    # Every T0.7 family, text and image alike (PI ruling 2026-10-04): the mean
+    # of the family's own T0.3 and T1.0 GS passes, never the 55-map unit.
+    for stem in ("flash-minimal-text-n30-t07-text", "flash-high-text-n5-text",
+                 "image-n5-image", "flash-high-image-n5-image"):
+        mid, anchor = units[f"{stem}-t0.7"]
+        lo, hi = sorted(units[f"{stem}-t{t}"][0].usd for t in ("0.3", "1.0"))
+        assert anchor == "t07-neighbour-mean" and lo < mid.usd < hi, stem
+        assert mid.usd == pytest.approx((lo + hi) / 2), stem
+    assert units["flash-minimal-text-n30-t07-text-t0.7"][0] != named["min_pass"]
 
 
 
@@ -483,10 +485,12 @@ def test_each_phase2_family_names_exactly_its_own_pools():
         pools = {src.split("::")[1] for src in unit.sources}
         if anchor == "own-gs-measured":
             assert pools == {family}, family
-        elif anchor == "t07-interpolated":
+        else:
+            assert anchor == "t07-neighbour-mean", family
             stem = family.rsplit("-t", 1)[0]
             assert pools == {f"{stem}-t0.3", f"{stem}-t1.0"}, family
-    assert units["flash-high-text-n5-text-t0.7"] == (named["high_pass"], "t07-55map-measured")
+    assert {a for _u, a in units.values()} == {"own-gs-measured", "t07-neighbour-mean"}
+    assert named  # the shared GS units still build (Pareto v2 uses them)
 
 
 

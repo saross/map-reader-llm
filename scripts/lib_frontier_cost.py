@@ -492,11 +492,10 @@ def gs_units() -> dict[str, Priced]:
 def phase2_pass_units() -> dict[str, tuple[Priced, str]]:
     """Each Phase 2 K-ladder family's GS pass unit and its anchor label.
 
-    PI ruling 2026-10-04: a family is priced at its OWN measured GS passes
-    where the register records them; a T0.7 text family (no recorded GS
-    tokens) at the 55-map T0.7 measurement of the same configuration, scaled;
-    a T0.7 image family at the mean of its own T0.3 and T1.0 passes,
-    labelled interpolated.
+    PI rulings 2026-10-04: a family is priced at its OWN measured GS passes
+    where the register records them; a T0.7 family (text or image; no
+    recorded GS tokens) at the plain mean of its own T0.3 and T1.0 GS passes,
+    so every family rests on GS measurements.
 
     Returns:
         ``{family: (unit, anchor)}`` from the mapping's
