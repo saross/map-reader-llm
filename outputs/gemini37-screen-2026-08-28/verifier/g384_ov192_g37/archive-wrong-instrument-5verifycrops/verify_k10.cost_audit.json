@@ -1,0 +1,51 @@
+{
+  "cost_basis": "audited-upper-bound",
+  "cost_usd": 1.209725,
+  "fragment": {
+    "bounds_usd": {
+      "high": 1.209725,
+      "low": 0.604862
+    },
+    "candidates": {
+      "flex": 0.604862,
+      "standard": 1.209725
+    },
+    "cost_usd": 1.209725,
+    "evidence": [
+      "billing-day: gemini-3-flash-preview: 2026-08-28 flex|standard [day export (documented)] -> standard|flex"
+    ],
+    "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/archive-wrong-instrument-5verifycrops/verify_k10.meta.json",
+    "model": "gemini-3-flash-preview",
+    "model_recorded": "gemini-3-flash-preview",
+    "priced_at": "2026-08-29",
+    "tier": null,
+    "tier_method": "unresolved"
+  },
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": false,
+  "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/archive-wrong-instrument-5verifycrops/verify_k10.meta.json",
+  "priced_by": "scripts/lib_pass_cost.py PassCoster.cost_fragment: this meta's own recorded usage through scripts/lib_cost.py price_usage at its end date, at the tier the committed evidence resolves for it (the register's per-fragment method; several candidate tiers publish the highest)",
+  "rate_card": {
+    "path": "data/pricing/gemini-rate-card.json",
+    "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+    "version": "2026-09-21.2"
+  },
+  "reason": "no row of the passes register cites this meta (its run gemini37-screen-2026-08-28 is in results/run-registry.json, but the register's pass extraction does not reach this file)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "resolution_context": {
+    "model": "gemini-3-flash-preview",
+    "model_source": "per_item_metadata.model_used",
+    "pool": "verifier/g384_ov192_g37/archive-wrong-instrument-5verifycrops",
+    "run_dir": "outputs/gemini37-screen-2026-08-28",
+    "run_id": "gemini37-screen-2026-08-28",
+    "run_registered": true,
+    "stage": "verifier"
+  },
+  "schema": "cost_audit/1"
+}

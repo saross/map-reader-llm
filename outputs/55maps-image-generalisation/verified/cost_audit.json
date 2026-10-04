@@ -1,0 +1,52 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/55maps-image-generalisation/verified/run.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited-lower-bound",
+      "cost_usd": 0.000727,
+      "fragment": {
+        "cost_usd": 0.000727,
+        "evidence": [
+          "verifier-mode: outputs/55maps-image-generalisation/verified/probabilities.json mode=realtime -> flex|standard",
+          "run-log-inherited: outputs/55maps-image-generalisation/{run.log} -> flex",
+          "launch-manifest-inherited: outputs/55maps-image-generalisation/launch_manifest.json -> flex",
+          "billing-day: gemini-3-flash-preview: 2026-05-02 flex [invoice line windows] -> flex"
+        ],
+        "meta": "outputs/55maps-image-generalisation/verified/run.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "priced_at": "2026-05-03",
+        "tier": "flex",
+        "tier_method": "run-log-inherited"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "55maps-image-generalisation::verified::run1",
+      "row_cost_source": {
+        "note": "LOWER bound: a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.IM (auditor_complete false); reports/token-load-audit-2026-06-12.md § 6 tabled US$0.001 at flex but labels its own totals lower bounds (§ 8), so no figure is published yet; the leg's metas account for 1 candidate(s) against 7,878 results in probabilities.json: a later leg (a cleanup) overwrote the main meta",
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/55maps-image-generalisation/verified/run.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T10:00:39Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}

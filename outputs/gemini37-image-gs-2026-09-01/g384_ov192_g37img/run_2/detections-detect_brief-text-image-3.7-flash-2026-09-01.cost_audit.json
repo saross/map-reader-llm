@@ -1,0 +1,50 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 3.686861,
+      "fragment": {
+        "cost_usd": 0.032335,
+        "evidence": [
+          "run-log-inherited: outputs/gemini37-image-gs-2026-09-01/{driver-k5.log, recovery-driver.log} -> flex",
+          "billing-day: gemini-3.7-flash: 2026-09-01 flex [day export (documented)] -> flex"
+        ],
+        "meta": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+        "model": "gemini-3.7-flash",
+        "model_recorded": "gemini-3.7-flash",
+        "priced_at": "2026-09-01",
+        "tier": "flex",
+        "tier_method": "run-log-inherited"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "gemini37-image-gs-2026-09-01::g384_ov192_g37img::run2",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json",
+        "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img/run_2_recovery/detections-detect_brief-text-image-3.7-flash-2026-09-01.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T07:57:28Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}

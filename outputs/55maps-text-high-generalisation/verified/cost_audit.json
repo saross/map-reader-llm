@@ -1,0 +1,51 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/55maps-text-high-generalisation/verified/run.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 6.420148,
+      "fragment": {
+        "cost_usd": 0.05084,
+        "evidence": [
+          "verifier-mode: outputs/55maps-text-high-generalisation/verified/probabilities.json mode=realtime -> flex|standard",
+          "launch-manifest-inherited: outputs/55maps-text-high-generalisation/launch_manifest.json -> flex",
+          "billing-day: gemini-3-flash-preview: 2026-05-02 flex [invoice line windows] -> flex"
+        ],
+        "meta": "outputs/55maps-text-high-generalisation/verified/run.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "priced_at": "2026-05-02",
+        "tier": "flex",
+        "tier_method": "launch-manifest-inherited"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "55maps-text-high-generalisation::verified::run1",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/55maps-text-high-generalisation/verified/run.meta.json",
+        "outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T12:09:59Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}

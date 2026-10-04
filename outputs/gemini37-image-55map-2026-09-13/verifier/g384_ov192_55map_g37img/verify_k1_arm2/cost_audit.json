@@ -1,0 +1,36 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2/run.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "published",
+      "cost_usd": 7.7028,
+      "fragment": null,
+      "matched_by": "provenance.source_files",
+      "pass_id": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm2::run1",
+      "row_cost_source": {
+        "published": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md (verifier-leg figure), as tabled in results/tile-presence-2026-09-21/verifier-costs.json legs.IMG-ARM2-K1",
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T07:57:28Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}
