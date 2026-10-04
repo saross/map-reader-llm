@@ -32,8 +32,11 @@ import pytest
 
 from scripts.generate_post_run_report import (
     PLANNED_STALE_DAYS,
+    REPO_ROOT,
     VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
+    _pool_spec,
+    _verifier_leg_root,
     _metrics_from_eval,
     _stabilise_timestamps,
     _strip_ts,
@@ -158,6 +161,114 @@ def test_verifier_pass_sidecar_meta(registry):
     assert passes[0]["model_used"] == "gemini-3-flash-preview"  # per-item, not cfg.model
     assert passes[0]["model_version"] == "gemini-3-flash-preview"
     assert passes[0]["status"] == "ok"
+
+
+# ---------------------------------------------------------------------------
+# D31 / D32: legs outside the run's tree, and hints that resolve to nothing
+# ---------------------------------------------------------------------------
+
+VOTE3_TH7 = "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation"
+
+
+def _th7_context(verifier_passes: dict) -> dict:
+    """An extraction context for the TH7 55-map run with the given verifier hints."""
+    return {
+        "run_id": "55maps-text-high-generalisation",
+        "directory_path": "outputs/55maps-text-high-generalisation",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": verifier_passes,
+        "conditions": [],
+    }
+
+
+@pytest.mark.tier1
+def test_verifier_pass_outside_the_run_tree_resolves_by_repo_path(registry):
+    """D32: the S104 vote-3 increment, run under results/, is a row of its parent run.
+
+    The red sentinel is built in: without ``repo_path`` the same ``path``
+    resolves inside the run's own tree, to the run's MAIN verifier leg, so
+    the row would cite (and price) the wrong meta.
+    """
+    spec = {"modality": "text", "repo_path": VOTE3_TH7, "path": "verified"}
+    passes = extract_passes(_th7_context({"vote3-increment": spec}))
+    assert len(passes) == 1
+    row = passes[0]
+    assert validate_row("passes", row, registry) == []
+    assert row["pass_id"] == "55maps-text-high-generalisation::vote3-increment::run1"
+    assert row["provenance"]["source_files"] == [f"{VOTE3_TH7}/verified/run.meta.json"]
+    assert row["n_candidates_verified"] == 4367
+    assert row["cost_basis"] == "audited"
+    # Sentinel: the same hint without repo_path reads the main leg instead.
+    main = extract_passes(_th7_context(
+        {"vote3-increment": {"modality": "text", "path": "verified"}}))
+    assert main[0]["provenance"]["source_files"][0].startswith(
+        "outputs/55maps-text-high-generalisation/verified/")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("spec, match", [
+    ({"modality": "text", "repo_path": "/abs/leg", "path": "verified"}, "repository-relative"),
+    ({"modality": "text", "repo_path": "results/../outputs", "path": "verified"},
+     "repository-relative"),
+    ({"modality": "text", "repo_path": VOTE3_TH7}, "needs a path"),
+])
+def test_repo_path_refuses_an_ambiguous_leg_root(spec, match):
+    """A leg root that is absolute, climbs out, or names no path beneath it is refused."""
+    with pytest.raises(ValueError, match=match):
+        extract_passes(_th7_context({"v": spec}))
+
+
+@pytest.mark.tier1
+def test_a_verifier_hint_that_resolves_to_no_meta_warns(capsys):
+    """D31: the extractor once skipped such a hint silently.
+
+    This is verifier-robustness's pre-repair hint, one directory short of
+    ``…/verified/run.meta.json``: eight legs (US$51.44) never reached the
+    register. A dropped leg must at least be said aloud.
+    """
+    ctx = {
+        "run_id": "verifier-robustness",
+        "directory_path": "outputs/verifier-robustness",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"384-union-t0-0": {
+            "modality": "text", "path": "384-flash-high-text-1of5-union/T0.0"}},
+        "conditions": [],
+    }
+    assert extract_passes(ctx) == []
+    err = capsys.readouterr().err
+    assert "verifier pass verifier-robustness::384-union-t0-0 resolves to no meta" in err
+
+
+#: Committed verifier hints allowed to resolve to no meta, each with its reason.
+DANGLING_VERIFIER_HINTS = {
+    ("pv-diag-384", "verified-text-1of5"): (
+        "archived in 8913cab2c to archive/superseded-unions/text-1of5-partial-coverage/: "
+        "a superseded stale union (D22's class), outside the register by design"),
+}
+
+
+@pytest.mark.tier1
+def test_every_committed_verifier_hint_resolves_to_a_meta():
+    """D31 drift guard over the committed decomposition.
+
+    Every ``verifier_passes`` hint of every registered run must find its
+    meta in one of the two forms, or be named above with a reason. A new
+    dangling hint is a leg silently missing from the register.
+    """
+    decomposition = load_run_conditions()
+    dangling = []
+    for entry in load_run_registry()["registry"]:
+        run_id = entry["run_id"]
+        hints = (decomposition.get(run_id) or {}).get("verifier_passes") or {}
+        for key, spec in hints.items():
+            root = _verifier_leg_root(spec, REPO_ROOT / entry["directory_path"], run_id, key)
+            base = _pool_spec(spec)[1] or key
+            if not ((root / base / "run.meta.json").exists()
+                    or (root / f"{base}.meta.json").exists()):
+                dangling.append((run_id, key))
+    assert sorted(dangling) == sorted(DANGLING_VERIFIER_HINTS)
 
 
 # ---------------------------------------------------------------------------

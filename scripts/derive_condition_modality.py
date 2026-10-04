@@ -944,6 +944,11 @@ def verify_stage_dirs(run: str, key: str, spec: Any) -> list[str]:
     """
     path = spec.get("path") if isinstance(spec, dict) else None
     cands: list[str] = []
+    # A leg outside the run's tree names its root (ruling D32; see
+    # generate_post_run_report._verifier_leg_root): resolve there first.
+    repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
+    if repo_path and path:
+        cands.append(f"{repo_path}/{path}")
     for name in ([path] if path else []) + [key]:
         if not name:
             continue

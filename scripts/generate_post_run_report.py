@@ -553,6 +553,47 @@ def _pool_spec(value: Any) -> tuple[Any, str | None]:
     return value, None
 
 
+def _verifier_leg_root(spec: Any, run_dir: Path, run_id: str, vdir: str) -> Path:
+    """The directory a verifier pass's ``path`` is resolved against.
+
+    Normally the run directory. A leg executed outside the run's own tree
+    (the S104 vote-3 increments, which live under
+    ``results/deployment-oracle-2026-06-06/vote3-verify/<run>/``; ruling
+    D32) names its leg root with ``repo_path``, a repository-relative
+    directory, and then must name ``path`` beneath it too, so that both
+    meta forms (``<path>/run.meta.json`` and ``<path>.meta.json``) stay
+    well defined.
+
+    Args:
+        spec: the ``verifier_passes`` entry (string or dict form).
+        run_dir: the run's own directory (absolute).
+        run_id: the run, for error messages.
+        vdir: the pass key, for error messages.
+
+    Returns:
+        The absolute leg root.
+
+    Raises:
+        ValueError: ``repo_path`` is absolute, climbs out with ``..``, or
+            comes without ``path``.
+
+    Examples:
+        >>> _verifier_leg_root("text", Path("/r/outputs/x"), "x", "v")
+        PosixPath('/r/outputs/x')
+    """
+    repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
+    if not repo_path:
+        return run_dir
+    where = f"verifier pass {run_id}::{vdir}"
+    if Path(repo_path).is_absolute() or ".." in Path(repo_path).parts:
+        raise ValueError(f"{where}: repo_path must be repository-relative, "
+                         f"without '..' (got {repo_path!r})")
+    if not spec.get("path"):
+        raise ValueError(f"{where}: repo_path needs a path beneath it "
+                         f"(e.g. 'verified')")
+    return REPO_ROOT / repo_path
+
+
 def _effective_temperature(cfg: dict) -> Any:
     """Return the verifier/proposer temperature, preferring the E55-corrected value.
 
@@ -784,6 +825,11 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     # --- verifier passes ---
     for vdir, spec in facts.get("verifier_passes", {}).items():
         modality, path = _pool_spec(spec)
+        # A leg run outside the run's own tree (the S104 vote-3 increments,
+        # under results/; D32) names its leg root with ``repo_path``. The root
+        # stands in for the run directory for this pass only: the meta is
+        # found under it, and the coster's upward evidence walks stop there.
+        leg_root = _verifier_leg_root(spec, run_dir, run_id, vdir)
         # Two on-disk shapes for a verifier pass's run metadata:
         #   * dir form    — ``<base>/run.meta.json`` (gold-standard-v2, verifier-t-pilot);
         #   * sidecar form — ``<base>.meta.json`` next to the verified geojson
@@ -792,13 +838,20 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # Prefer the dir form so the gold-standard-v2 extraction stays byte-identical,
         # then fall back to the sidecar.
         base = path or vdir
-        dir_meta = run_dir / base / "run.meta.json"
-        sidecar_meta = run_dir / f"{base}.meta.json"
+        dir_meta = leg_root / base / "run.meta.json"
+        sidecar_meta = leg_root / f"{base}.meta.json"
         if dir_meta.exists():
             meta_path = dir_meta
         elif sidecar_meta.exists():
             meta_path = sidecar_meta
         else:
+            # Never silent: a hint that resolves to no meta drops a leg's
+            # spend from the register. Eight verifier-robustness legs went
+            # unextracted for four months this way, their hints one
+            # directory short of ``…/verified/run.meta.json`` (D31, S160).
+            print(f"WARNING: verifier pass {run_id}::{vdir} resolves to no meta "
+                  f"(looked for {_repo_rel(dir_meta)} and {_repo_rel(sidecar_meta)})",
+                  file=sys.stderr)
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
@@ -878,7 +931,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                                    for m, _ in v_fragments]),
             **_coster().cost_pass(
                 pass_id=f"{run_id}::{vdir}::run1", fragments=v_fragments,
-                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
+                run_id=run_id, pool=vdir, run_dir=leg_root, model=model_used,
                 stage="verifier"),
             # A leg with a preserved main meta ran twice (main, then cleanup):
             # its time, span and retries are both executions', as C3 derives them.
