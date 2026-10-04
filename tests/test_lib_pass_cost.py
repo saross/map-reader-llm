@@ -1058,6 +1058,8 @@ def test_run_report_sums_each_basis_apart():
     (3, "outputs/r/verifier/k1", "audited-lower-bound"),     # meta misses an uncovered result
     (2, "outputs/r/verifier/gone", "audited-lower-bound"),   # the extended stage is absent
     (None, None, "audited-lower-bound"),                     # no carry file: a cleanup overwrite
+    (2, "", "audited-lower-bound"),                          # the file names no extended stage
+    (-1, "outputs/r/verifier/k1", "audited-lower-bound"),    # a malformed (negative) count
 ])
 def test_a_carry_forward_stage_is_its_metas_whole_spend(evidence, tmp_path, uncovered,
                                                         carried_stage, basis):
@@ -1079,6 +1081,35 @@ def test_a_carry_forward_stage_is_its_metas_whole_spend(evidence, tmp_path, unco
     assert out["cost_basis"] == basis
     if basis == "audited":
         assert "carried forward from outputs/r/verifier/k1" in out["cost_source"]["note"]
+
+
+@pytest.mark.tier1
+def test_a_carry_must_reach_the_results_with_the_meta(evidence, tmp_path):
+    # WP4 re-audit mutant (accounted + carried >= results dropped): the meta
+    # covers every uncovered result and the stage exists, but 5 carried + 2
+    # accounted fall short of 10 results, so 3 calls are unrecorded: a floor.
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 5,
+                                            "uncovered": 2, "extends_stage": "outputs/r/verifier/k1"})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]})
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert out["cost_basis"] == "audited-lower-bound"
+
+
+@pytest.mark.tier1
+def test_a_stage_outside_any_repository_does_not_exist(tmp_path):
+    # WP4 re-audit mutant (stage_exists' final return False): with no
+    # repository marker above the meta, no stage can be shown to exist.
+    from scripts.lib_pass_cost import stage_exists
+    (tmp_path / "outputs" / "r" / "k1").mkdir(parents=True)
+    meta = tmp_path / "outputs" / "r" / "k2" / "run.meta.json"
+    assert stage_exists(meta, "outputs/r/k1") is False
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    assert stage_exists(meta, "outputs/r/k1") is True
 
 
 @pytest.mark.tier1

@@ -423,9 +423,17 @@ def carried_forward(directory: Path) -> tuple[int, str, int] | None:
 
 
 def stage_exists(meta_path: Path, stage: str) -> bool:
-    """Whether a repository-relative stage directory exists, found from a meta's path."""
+    """Whether a repository-relative stage directory exists, found from a meta's path.
+
+    The repository root is the nearest ancestor with a real git directory (one
+    holding ``HEAD``), a ``.git`` file (a worktree), or the passes register.
+    A bare ``.git`` directory does not count: an empty ``/tmp/.git`` on the
+    workstation once passed for every scratch tree's root (S160).
+    """
     for parent in meta_path.resolve().parents:
-        if (parent / ".git").exists() or (parent / "results" / "passes-manifest.json").exists():
+        git = parent / ".git"
+        if (git / "HEAD").exists() or git.is_file() \
+                or (parent / "results" / "passes-manifest.json").exists():
             return (parent / stage).is_dir()
     return False
 
