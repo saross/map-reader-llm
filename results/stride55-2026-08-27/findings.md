@@ -1,8 +1,12 @@
 # The 55-map portfolio at deployment: the transfer tax collapses
 
-> **Last revised**: 2026-08-27 (later: A-vs-B at the N = 5 carried
-> points, lean deployment costs, uplift basis correction). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-04 (every cost re-priced from the passes
+> register at the uniform discounted tier, PI ruling D19 as amended
+> 2026-10-04; the incumbents' verifier legs completed where the register
+> holds only a floor; no F1, verdict or recommendation changes). Prior:
+> 2026-08-27 (later: A-vs-B at the N = 5 carried points, lean deployment
+> costs, uplift basis correction). See [§ Changelog](#changelog) for
+> revision history.
 
 **Classification**: post-hoc, E41-class deployment extension (card:
 `planning/55map-portfolio-2026-08-25.md`; the measurement contract and
@@ -84,7 +88,7 @@ inside the bound.
 **Added post-hoc at PI request (2026-08-27), clearly labelled as
 outside the card's declared family**: paired A-vs-B at the **N = 5
 carried points** — the rung the deployment recommendation lives on
-(A 0.8322 at ~$60 vs B 0.8438 at ~$97). ΔF1 = −0.0116, p = 0.0042
+(A 0.8322 at ~$59 vs B 0.8438 at ~$97). ΔF1 = −0.0116, p = 0.0042
 (same instrument; gates reproduced both committed carried F1s to 1e-6
 first). **B is significantly better at the recommendation rung too** —
 the extra ~$37 buys a real ~0.012, at every rung tested.
@@ -106,20 +110,28 @@ cells: exact K = 10 union rebuild (count and votes identical, centroid
 drift ≤ 0.069 m = manifest storage precision) and 1e-6 primary
 reproduction through the ladder's own path.
 
-| Run | N | Union | Rung oracle | Point | Carried (GS) | Est. all-in (flex) |
+| Run | N | Union | Rung oracle | Point | Carried (GS) | All-in (uniform tier) |
 |---|---:|---:|---:|---|---:|---:|
-| A | 1 | 18,631 | 0.8186 | (0.20, k1) | — | $20.53 |
-| A | 3 | 26,245 | 0.8274 | (0.20, k2) | — | $41.22 |
-| A | 5 | 30,713 | 0.8322 | (0.15, k4) | **0.8322** — carried IS the optimum | $59.75 |
-| A | 10 | 38,713 | 0.8362 | (0.15, k7) | 0.8326 | $103.91 |
-| B | 1 | 25,586 | 0.8004 | (0.20, k1) | — | $30.99 |
-| B | 3 | 36,757 | 0.8449 | (0.20, k3) | — | $65.48 |
-| B | 5 | 43,909 | 0.8450 | (0.20, k5) | 0.8438 | $97.22 |
-| B | 10 | 57,482 | 0.8503 | (0.20, k9) | 0.8422 | $173.59 |
+| A | 1 | 18,631 | 0.8186 | (0.20, k1) | — | $20.40 |
+| A | 3 | 26,245 | 0.8274 | (0.20, k2) | — | $41.00 |
+| A | 5 | 30,713 | 0.8322 | (0.15, k4) | **0.8322** — carried IS the optimum | $59.45 |
+| A | 10 | 38,713 | 0.8362 | (0.15, k7) | 0.8326 | $103.42 |
+| B | 1 | 25,586 | 0.8004 | (0.20, k1) | — | $30.79 |
+| B | 3 | 36,757 | 0.8449 | (0.20, k3) | — | $65.10 |
+| B | 5 | 43,909 | 0.8450 | (0.20, k5) | 0.8438 | $96.67 |
+| B | 10 | 57,482 | 0.8503 | (0.20, k9) | 0.8422 | $172.67 |
 
 (N = 10 rows are the sweep's committed values; carried N = 3/N = 1
 points were not registered, so those rungs are oracle-only. Costs are
-proposer flex × N/10 + full-union verification at $0.000687/call.)
+the r2 final board's, priced from the passes register at the uniform
+discounted tier (PI ruling D19, amended 2026-10-04;
+`scripts/lib_frontier_cost.py`, `data/pricing/frontier-configurations.json`):
+N × the run's own proposer pass (US$7.70 for A, US$13.35 for B) plus
+verification of the rung's union at US$0.000682 per candidate. A's
+verifier leg is a floor in the register, so it takes B's per-candidate
+unit, which has an identical verifier configuration. These replace the
+2026-08-27 estimates, proposer flex × N/10 + full-union verification at
+$0.000687/call, which they reproduce within 0.7 %.)
 
 **P7 saturation** (per-map paired permutation, delta = N5 − N10):
 
@@ -199,31 +211,40 @@ its two-axis oracle) on the strength of geometry + K = 10 + verifier.
 
 ## Deployment Pareto and recommendation
 
-Two cost bases, both flex, full 55-sheet corpus. **Full** = proposer ×
-N/10 + verification of the entire vote ≥ 1 union (what this analysis
-paid: it buys the sweep, the oracle, and the ladder inheritance).
-**Lean deploy** = proposer × N/10 + verification of only the carried
+Two cost bases, both at the uniform discounted tier (PI ruling D19,
+amended 2026-10-04: every configuration's own register tokens priced
+at flex, which equals batch on the rate card), full 55-sheet corpus.
+**Full** = N proposer passes + verification of the entire vote ≥ 1
+union (what this analysis paid: it buys the sweep, the oracle, and the
+ladder inheritance); these are the r2 final board's family costs.
+**Lean deploy** = N proposer passes + verification of only the carried
 vote-shell (vote ≥ k at the row's operating point) — what a
-practitioner deploying the carried point actually needs. Incumbent
-costs from the S113 token-load audit; incumbent lean adds the ~$2
-S104-campaign shell share to the proposer cost (approximate — their
-as-billed verifier lines vary in scope).
+practitioner deploying the carried point actually needs. The lean
+column re-prices the 2026-08-27 lean figures component by component:
+each row's shell size is implied by its old figure and old rates, and
+for the two N = 10 rows it matches the K = 10 union's own vote counts
+(12,910 candidates at vote ≥ 8 for A, implied 12,911; 13,196 at
+vote ≥ 10 for B, implied 13,202). The incumbents' full costs are the
+board's; their lean adds the ~$2 S104-campaign shell share to their
+proposer cost (approximate — their as-billed verifier lines vary in
+scope). † marks a verifier leg that is a floor in the register,
+completed at comparable legs' per-candidate unit (D19).
 
 | Configuration | Full cost | Lean deploy | corrected-F1@50 | Basis |
 |---|---:|---:|---:|---|
-| A, N = 1 | $20.53 | $20.53 (shell = union at k1) | 0.8186 | rung oracle |
-| text-min incumbent (K = 5) | ~$23.4 | ~$25 | 0.783 carried / 0.8127 post-hoc k3 | as-billed is proposer-only |
-| B, N = 1 | $30.99 | $30.99 | 0.8004 | rung oracle; dominated by A N = 1 |
-| A, N = 3 | $41.22 | $34.74 | 0.8274 | rung oracle |
-| min11-uplift incumbent (10-pass min, std grid) | ~$58 | ~$47 + k5-shell (count not on disk; as-run band $11.27) | 0.8290 | **post-hoc best** (0.15, 5-of-10) — corrected from "committed cell" |
-| A, N = 5 | $59.75 | $48.18 | 0.8322 | carried (= rung oracle) |
-| B, N = 3 | $65.48 | $51.71 | 0.8449 | rung oracle |
-| B, N = 5 | $97.22 | $77.28 | **0.8438 carried** / 0.8450 oracle | carried |
-| B, N = 10 | $173.59 | $143.17 | 0.8422 carried / **0.8503 oracle** | carried / oracle |
-| A, N = 10 | $103.91 | $86.18 | 0.8326 carried / 0.8362 oracle | dominated by B N = 3 |
-| image incumbent (HIGH, K = 5) | ~$195.4 | ~$197 | 0.799 carried / 0.801 post-hoc k3 | dominated |
-| TH7-k4 incumbent (HIGH, K = 5) | ~$207.4 | ~$203 | 0.8152 carried / 0.8425 post-hoc k3 | dominated from A N = 3 up |
-| T03 incumbent (HIGH T0.3, K = 5) | ~$261.0 | ~$256 | 0.836 carried / 0.8476 post-hoc k3 (the old oracle) | dominated |
+| A, N = 1 | $20.40 † | $20.40 (shell = union at k1) | 0.8186 | rung oracle |
+| text-min incumbent (K = 5) | $30.40 † | ~$25 | 0.783 carried / 0.8127 post-hoc k3 | proposer $23.36; the verifier leg is completed |
+| B, N = 1 | $30.79 | $30.79 | 0.8004 | rung oracle; dominated by A N = 1 |
+| A, N = 3 | $41.00 † | $34.57 | 0.8274 | rung oracle |
+| min11-uplift incumbent (10-pass min, std grid) | $57.89 | ~$47 + k5-shell (count not on disk; as-run band $11.27) | 0.8290 | **post-hoc best** (0.15, 5-of-10) — corrected from "committed cell" |
+| A, N = 5 | $59.45 † | $47.97 | 0.8322 | carried (= rung oracle) |
+| B, N = 3 | $65.10 | $51.44 | 0.8449 | rung oracle |
+| B, N = 5 | $96.67 | $76.90 | **0.8438 carried** / 0.8450 oracle | carried |
+| B, N = 10 | $172.67 | $142.49 | 0.8422 carried / **0.8503 oracle** | carried / oracle |
+| A, N = 10 | $103.42 † | $85.84 | 0.8326 carried / 0.8362 oracle | dominated by B N = 3 |
+| image incumbent (HIGH, K = 5) | $200.80 † | ~$197 | 0.799 carried / 0.801 post-hoc k3 | dominated |
+| TH7-k4 incumbent (HIGH, K = 5) | $207.35 | ~$203 | 0.8152 carried / 0.8425 post-hoc k3 | dominated from A N = 3 up |
+| T03 incumbent (HIGH T0.3, K = 5) | $261.15 | ~$256 | 0.836 carried / 0.8476 post-hoc k3 (the old oracle) | dominated |
 
 A matched-config aside the table makes visible: min11-uplift, A, and B
 are all MINIMAL-text T = 0.7 at 10 passes with the same verifier —
@@ -235,17 +256,18 @@ a clean monotone overlap gradient with everything else frozen.
 geometry (384 px / 50 % overlap) at N = 5 with the GS-carried
 calibration (0.15, k5)** — an honestly-carried 0.8438 at ~$97 full /
 **~$77 lean** for 55 sheets, above every other carried point on the
-board including its own N = 10 (0.8422, $174/$143) and the
+board including its own N = 10 (0.8422, $173/$142) and the
 HIGH-thinking incumbent (0.8152, ~$207) — and the A-vs-B margin at
 this rung is statistically real (−0.0116, p = 0.0042). Budget floor:
 A at N = 3–5 ($35–48 lean) holds 0.827–0.832. Peak: B at N = 10 only
 if the last ~0.005 matters and post-hoc calibration is acceptable
 (its 0.8503 is an oracle).
 
-Caveats: N < 10 costs are simulated from the audited per-call rates
-(the passes were physically run inside the K = 10 campaign); N = 3
-rungs are oracle-only (no carried point was registered there); all
-costs are flex-tier estimates, not billing-console figures.
+Caveats: N < 10 costs are N of the run's own passes plus the rung's
+union at the leg's per-candidate unit (the passes were physically run
+inside the K = 10 campaign); N = 3 rungs are oracle-only (no carried
+point was registered there); all costs are register tokens at the
+uniform discounted tier, not billing-console figures.
 
 ## Method
 
@@ -290,6 +312,39 @@ costs are flex-tier estimates, not billing-console figures.
   that selected these two geometries.
 
 ## Changelog
+
+### 2026-10-04 — Costs re-priced from the register (WP4b)
+
+**Trigger.** PI ruling D19, amended 2026-10-04: one uniform discounted
+tier for every configuration, priced from the passes register
+(`scripts/lib_frontier_cost.py`, `data/pricing/frontier-configurations.json`).
+The r2 final board's cost axis was re-priced in WP4b (PR #22,
+`562ff6a96`) and its signature note given 2026-10-04T00:25:02Z
+(`reports/wp4b-frontier-repricing-2026-10-04.md` § 2). This entry brings
+the ladder and Pareto tables to those figures.
+
+| Figure | Before | After |
+|---|---:|---:|
+| A, N = 1 / 3 / 5 / 10, full | $20.53 / 41.22 / 59.75 / 103.91 | $20.40 / 41.00 / 59.45 / 103.42 † |
+| B, N = 1 / 3 / 5 / 10, full | $30.99 / 65.48 / 97.22 / 173.59 | $30.79 / 65.10 / 96.67 / 172.67 |
+| A, N = 3 / 5 / 10, lean | $34.74 / 48.18 / 86.18 | $34.57 / 47.97 / 85.84 |
+| B, N = 3 / 5 / 10, lean | $51.71 / 77.28 / 143.17 | $51.44 / 76.90 / 142.49 |
+| text-min incumbent, full | ~$23.4 (proposer only) | $30.40 † |
+| image incumbent, full | ~$195.4 (proposer only) | $200.80 † |
+| TH7-k4 / T03 / min11-uplift, full | ~$207.4 / ~$261.0 / ~$58 | $207.35 / $261.15 / $57.89 |
+
+The two incumbents that move most, text-min and image, had been quoted
+without their verifier legs, which are floors in the register; D19
+completes them from comparable legs' per-candidate unit. The lean column
+is re-priced from each row's implied shell size, checked against the
+K = 10 unions' own vote counts for the N = 10 rows (Pareto basis note).
+
+**What did NOT change.** Every F1, test, BH result, scorecard verdict and
+transfer tax; the P5 decomposition; the Pareto ordering and its
+dominance labels; every incumbent lean figure at its stated precision;
+the recommendation's prices (~$97 full / ~$77 lean for B at N = 5; A's
+budget floor $35–48 lean). Only the N = 10 cross-reference moves, from
+$174/$143 to $173/$142.
 
 ### 2026-08-27 (later) — A5-vs-B5, lean costs, uplift basis correction
 
