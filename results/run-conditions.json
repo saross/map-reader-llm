@@ -7,7 +7,12 @@
     "detect_brief-text": "text"
    },
    "verifier_passes": {
-    "verified-v1": "image"
+    "verified-v1": "image",
+    "wbf-verified-v1": {
+     "modality": "text",
+     "repo_path": "outputs/wbf",
+     "path": "gold-standard-v2-detect/verified-v1"
+    }
    },
    "conditions": [
     {
@@ -67,6 +72,11 @@
     "propose_brief-text": {
      "modality": "text",
      "path": "flash-high-text-n5/propose_brief-text"
+    },
+    "text-baseline": {
+     "modality": "text",
+     "path": "text-baseline",
+     "single_pass": true
     }
    },
    "verifier_passes": {
@@ -81,6 +91,16 @@
     "verified-text-baseline": {
      "modality": "text",
      "path": "verified/text-baseline"
+    },
+    "wbf-n5-verified-v1": {
+     "modality": "text",
+     "repo_path": "outputs/wbf",
+     "path": "e47-propose-brief-n5/verified-v1"
+    },
+    "wbf-n5-verified-v2": {
+     "modality": "text",
+     "repo_path": "outputs/wbf",
+     "path": "e47-propose-brief-n5/verified-v2"
     }
    },
    "conditions": [
@@ -2322,6 +2342,24 @@
     "scale-4-optimal-487-verified-v1-n3": {
      "modality": "text",
      "path": "scale-4-optimal-487/verified-v1-n3"
+    },
+    "verified-flash-high-text-t03-1of5": {
+     "modality": "text",
+     "path": "verified/flash-high-text-t03-1of5"
+    },
+    "verified-text-min-t07-true-1of5": {
+     "modality": "text",
+     "path": "verified/text-min-t07-true-1of5"
+    },
+    "wbf-fh-text-n5-verified": {
+     "modality": "text",
+     "repo_path": "outputs/wbf",
+     "path": "fh-text-n5/verified"
+    },
+    "wbf-fh-text-n30-verified": {
+     "modality": "text",
+     "repo_path": "outputs/wbf",
+     "path": "fh-text-n30/verified"
     }
    },
    "conditions": [
@@ -8318,7 +8356,13 @@
   },
   "proposer-verifier-384": {
    "_note": "Batch A residual (H11 + pv-strategy). Verifier-strategy matrix over ONE shared proposer pool (detect_brief-text, flash, single pass, 572 candidates at era-2-487). 8 canonical verified conditions = adversarial/brief/checklist x text/image (6) + 2 cascade orderings, each scored at its verifier-accepted operating point (Session 100, user-confirmed grain). proposer_pools intentionally EMPTY: the on-disk proposer meta (proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json) is a degenerate stub (items_processed=1, items_failed=1, 1 tile) although the geojson holds 572 features, so no faithful proposer PASS can be extracted; conditions reference the pool by string -> benign pool-unresolved WARN (pv-diag-384 precedent). The 8 verifier_passes are real sidecar metas (verified-<strategy>.meta.json, 572 items, 0 failures). The v2 / v1-prompt replicates (identical T=0.0 config re-runs, ~10h apart) and the n=572 pre-verifier 'full' scorings are deliberately excluded; they register in _ignored_evals at the deferred 3b close-out sweep. Cascade instruction_file = the final stage the single sidecar meta records (stage 1 not separately captured). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the run's single proposer pass was written straight into proposer/ with no run_N directory, so proposer_pools is empty and the conditions name the pool by prompt string. source_run records this run as the pool's home (pv-512 / pv-256 precedent). No metric, eval or detection changed.",
-   "proposer_pools": {},
+   "proposer_pools": {
+    "proposer": {
+     "modality": "text",
+     "path": "proposer",
+     "single_pass": true
+    }
+   },
    "verifier_passes": {
     "verified-adversarial-text": "text",
     "verified-adversarial-image": "image",
@@ -8327,7 +8371,13 @@
     "verified-checklist-text": "text",
     "verified-checklist-image": "image",
     "verified-cascade-adversarial-checklist": "text",
-    "verified-cascade-checklist-adversarial": "image"
+    "verified-cascade-checklist-adversarial": "image",
+    "verified-adversarial-text-v2": "text",
+    "verified-adversarial-image-v2": "image",
+    "verified-brief-text-v2": "text",
+    "verified-brief-image-v2": "image",
+    "verified-checklist-text-v2": "text",
+    "verified-adversarial-text-v1-prompt": "text"
    },
    "conditions": [
     {
@@ -8806,7 +8856,8 @@
    "_note": "Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -> benign pool-unresolved WARN. The 1 verifier_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -> _ignored_evals at the deferred 3b close-out sweep. SIDELINED from the Era-1 leaderboard (Session 106 decision): thin GAP-9 provenance + n=1 -> superseded by the planned clean Era-1 PV verifier run (Stage D, planning/era1-leaderboard-plan-2026-06-08.md). Data kept (archive-never-delete); excluded from the leaderboard cell set. | Pool annotation (2026-09-13, S153 Batch 1 item 2): as for proposer-verifier-384 \u2014 one un-numbered proposer pass at proposer/detections.geojson, empty proposer_pools, pool named by prompt string; source_run records this run as the pool's home. No metric, eval or detection changed.",
    "proposer_pools": {},
    "verifier_passes": {
-    "verified-adversarial-text": "text"
+    "verified-adversarial-text": "text",
+    "verified-adversarial-text-v2": "text"
    },
    "conditions": [
     {
@@ -10013,7 +10064,38 @@
      "path": "track2-text/T1.3"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-adv-text-t0.0-pass1": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-text-t0.0/pass_1/verified"
+    },
+    "verified-adv-text-t0.0-pass2": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-text-t0.0/pass_2/verified"
+    },
+    "verified-adv-text-t0.0-pass3": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-text-t0.0/pass_3/verified"
+    },
+    "verified-adv-image-t0.0-pass1": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-image-t0.0/pass_1/verified"
+    },
+    "verified-adv-image-t0.0-pass2": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-image-t0.0/pass_2/verified"
+    },
+    "verified-adv-image-t0.0-pass3": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-single-image-t0.0/pass_3/verified"
+    }
+   },
    "conditions": [
     {
      "label": "image-t0.0",
@@ -10660,7 +10742,13 @@
      "path": "track2-text/T1.0"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-adv-image-t0.7-n30-18of30": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-consensus-image/pass_1/verified"
+    }
+   },
    "conditions": [
     {
      "label": "image-t0.3-n5-4of5",
@@ -11241,7 +11329,13 @@
      "path": "track2-text/T1.0"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-adv-text-high-t1.0-n30-23of30": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "512-consensus-text-high/pass_1/verified"
+    }
+   },
    "conditions": [
     {
      "label": "text-high-t0.3-n5-4of5",
@@ -12089,7 +12183,13 @@
   "pv-diag-256": {
    "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable \u2014 source_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into _ignored_evals with reasons. No metric, eval or detection changed.",
    "proposer_pools": {},
-   "verifier_passes": {},
+   "verifier_passes": {
+    "verified-adv-text-consensus-5of5": {
+     "modality": "text",
+     "repo_path": "outputs/era1-pv-stage-d",
+     "path": "256-consensus-text-5of5/pass_1/verified"
+    }
+   },
    "conditions": [
     {
      "label": "text-baseline",
@@ -14915,6 +15015,22 @@
     "g384_ov192_image_high-union-k10-verify": {
      "modality": "text",
      "path": "verifier/g384_ov192_image_high/verify"
+    },
+    "g384_ov192_image-union-k3-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_image/verify_k3_arm1"
+    },
+    "g384_ov192_image-union-k3-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_image/verify_k3_arm2"
+    },
+    "g384_ov192_image-union-k5-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_image/verify_k5_arm1"
+    },
+    "g384_ov192_image-union-k5-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_image/verify_k5_arm2"
     }
    },
    "conditions": [
@@ -15110,6 +15226,14 @@
     "g384_ov192_g37-union-k3-verify": {
      "modality": "text",
      "path": "verifier/g384_ov192_g37/verify_k3"
+    },
+    "g384_ov192_g37-union-k1-verify-recovery-fixed": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify_k1_recovery-fixed"
+    },
+    "g384_ov192_g37-union-k3-verify-recovery-fixed": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37/verify_k3_recovery-fixed"
     }
    },
    "conditions": [
@@ -15445,6 +15569,14 @@
     "g384_ov192_g37img-union-k5-verify-arm2": {
      "modality": "text",
      "path": "verifier/g384_ov192_g37img/verify_arm2"
+    },
+    "g384_ov192_g37img-union-k3-verify-arm1": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37img/verify_k3_arm1"
+    },
+    "g384_ov192_g37img-union-k3-verify-arm2": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_g37img/verify_k3_arm2"
     }
    },
    "conditions": [
@@ -16221,6 +16353,14 @@
      "modality": "text",
      "path": "verifier/g384_ov192_55map_g37img/verify_k5_arm2",
      "_modality_erratum": "2026-09-20: was \"image\"; every leg's run.meta.json has example_count 0 and library_hash \"no_examples\", which the _README's E88 rule derives as text (reports/comparability-inventory-37-runs-2026-09-20.md section 5 item 13)"
+    },
+    "g384_ov192_55map_g37img-union-k5-verify-arm1-replicate-batch-2026-09-20": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20"
+    },
+    "g384_ov192_55map_g37img-union-k5-verify-arm2-replicate-batch-2026-09-20": {
+     "modality": "text",
+     "path": "verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20"
     }
    },
    "conditions": [
