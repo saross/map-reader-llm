@@ -27,6 +27,14 @@
   "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1": {
    "basis": "audited-lower-bound",
    "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false)"
+  },
+  "pv-diag-384::pro-medium-image-baseline-image-t0.0::run1": {
+   "basis": "audited-lower-bound",
+   "source": "the pass's 2026-03-23 Batch API execution (about 461 of 487 tiles) recorded no usage (usage_stats all zero at its first commit, 3d22184d6); the meta's tokens are only the 2026-06-03 real-time resume's 26 requests (c07c57766), so the figure is a floor (PI ruling D36, S160)"
+  },
+  "pv-diag-384::pro-medium-text-baseline-text-t0.0::run1": {
+   "basis": "audited-lower-bound",
+   "source": "the pass's 2026-03-23 Batch API execution (about 461 of 487 tiles) recorded no usage (usage_stats all zero at its first commit, 3d22184d6); the meta's tokens are only the 2026-06-03 real-time resume's 26 requests (c07c57766), so the figure is a floor (PI ruling D36, S160)"
   }
  },
  "preserved_main_legs": {

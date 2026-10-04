@@ -27,7 +27,8 @@ things that sentence needs and the metas do not record:
                              counted per run (``usage_stats.served_tier_counts``).
                              It pins only when EVERY response reported a tier
                              (see below)
-   ``batch-marker``          ``batch_api`` block in the meta, ``batch_jobs.json``
+   ``batch-marker``          ``batch_api`` block in the meta (unless a real-time
+                             resume merge carried it, D36), ``batch_jobs.json``
                              beside it, or ``probabilities.json`` ``mode: batch``
    ``runner-record-batch``   a ``cost/2`` block (WP2 onwards) priced on the Batch
                              API path: structural, like a batch marker
@@ -650,6 +651,51 @@ def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
     return counts, max(requests, sum(counts.values()))
 
 
+def realtime_resume_only(meta: dict[str, Any]) -> bool:
+    """Whether a meta's recorded usage is all a later real-time resume's.
+
+    A Batch API pass whose own execution recorded no usage can be resumed
+    in real time weeks later; the resume merge keeps the original's
+    ``batch_api`` block, so the block then describes an execution the meta
+    holds no tokens for (the two ``pv-diag-384`` pro-medium baseline run 1
+    metas: batch on 2026-03-23 with zero usage, 26 real-time requests on
+    2026-06-03; PI ruling D36). All four must hold, else the block stands:
+
+    - the meta records a ``recovery_history`` (the real-time runner's resume);
+    - its per-item records are exactly its requests (none unrecorded);
+    - every one was sent more than :data:`RESUME_GAP_S` after the meta's
+      start, so none belongs to the original session.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        True when the ``batch_api`` block must not pin the meta's usage.
+
+    Examples:
+        >>> item = {"request_timestamp": "2026-06-03T12:26:39+00:00"}
+        >>> meta = {"recovery_history": [{"recovered": 1}], "per_item_metadata": [item],
+        ...         "timestamp": {"start": "2026-03-23T15:11:34+00:00"},
+        ...         "usage_stats": {"by_provider": {"google_gemini": {"request_count": 1}}}}
+        >>> realtime_resume_only(meta)
+        True
+        >>> realtime_resume_only({**meta, "recovery_history": []})
+        False
+    """
+    items = meta.get("per_item_metadata") or []
+    start = (meta.get("timestamp") or {}).get("start")
+    requests = int((((meta.get("usage_stats") or {}).get("by_provider") or {})
+                    .get("google_gemini") or {}).get("request_count") or 0)
+    if not meta.get("recovery_history") or not items or not start or requests != len(items):
+        return False
+    origin = datetime.fromisoformat(start)
+    for item in items:
+        sent = item.get("request_timestamp")
+        if not sent or (datetime.fromisoformat(sent) - origin).total_seconds() <= RESUME_GAP_S:
+            return False
+    return True
+
+
 def billed_cache_sizes(meta: dict[str, Any]) -> list[int]:
     """The cached input tokens of each billed request a meta records.
 
@@ -876,7 +922,9 @@ class PassCoster:
                                 tuple(t for t in TIERS if t in known),
                                 f"{_rel(meta_path)} served tiers ({tally}) of {responses} "
                                 "responses"))
-        if meta.get("batch_api"):
+        # A batch_api block carried by a real-time resume merge describes
+        # an execution the meta holds no tokens for (D36): it pins nothing.
+        if meta.get("batch_api") and not realtime_resume_only(meta):
             out.append(Evidence("batch-marker", ("batch",), f"{_rel(meta_path)} batch_api block"))
         if (here / "batch_jobs.json").exists():
             out.append(Evidence("batch-marker", ("batch",), _rel(here / "batch_jobs.json")))
@@ -1367,5 +1415,5 @@ class PassCoster:
 __all__ = ["BASES", "BATCH_KINDS", "CARRY_SCHEMA", "COVERAGE_FLOOR", "Evidence",
            "INHERITED_KINDS", "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding",
            "billed_cache_sizes", "cache_signature", "carried_forward", "carry_explains",
-           "fragment_usage", "is_continuous", "pacific_days", "stage_exists",
-           "verifier_coverage"]
+           "fragment_usage", "is_continuous", "pacific_days", "realtime_resume_only",
+           "stage_exists", "verifier_coverage"]

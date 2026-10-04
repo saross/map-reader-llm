@@ -1851,6 +1851,47 @@ def test_no_signature_leaves_the_launch_line_in_charge(evidence, tmp_path, cache
     assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
 
 
+def _resumed_batch_meta(path: Path, *, first_sent: str = "2026-06-03T12:26:39+00:00",
+                        requests: int = 2) -> tuple[dict, Path]:
+    """A March Batch API meta resumed in real time in June (the D36 shape)."""
+    items = [{"request_timestamp": first_sent,
+              "tokens": {"input_tokens": 15_659, "cached_input_tokens": 14_549}},
+             {"request_timestamp": "2026-06-03T12:26:40+00:00",
+              "tokens": {"input_tokens": 15_659, "cached_input_tokens": 14_549}}]
+    return _meta(path, start="2026-03-23T15:11:34+00:00", end="2026-06-03T12:27:04+00:00",
+                 duration=29.2, batch_api={"execution_mode": "batch"},
+                 recovery_history=[{"recovered": 2}], per_item_metadata=items,
+                 usage={**USAGE, "by_provider": {"google_gemini": {"request_count": requests}}})
+
+
+@pytest.mark.tier1
+def test_a_batch_block_carried_by_a_realtime_resume_pins_nothing(evidence, tmp_path):
+    # D36: the pv-diag-384 pro-medium baseline image run 1 shape. Its usage
+    # is all the June resume's, on the explicit cache: standard, not batch.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(cache_sizes=CACHE_SIZES)
+    frag = _cost(coster, [_resumed_batch_meta(pdir / "a.meta.json")],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    assert not any(e.startswith("batch-marker") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("first_sent, requests", [
+    ("2026-03-23T15:20:00+00:00", 2),   # one request from the batch session itself
+    ("2026-06-03T12:26:39+00:00", 3),   # a request no per-item record accounts for
+])
+def test_the_batch_block_stands_unless_all_usage_is_the_resume(evidence, tmp_path,
+                                                                first_sent, requests):
+    # SENTINELS for the rule above: anything short of every recorded request
+    # being a later session's keeps the batch marker, as before D36.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    meta = _resumed_batch_meta(pdir / "a.meta.json", first_sent=first_sent, requests=requests)
+    frag = _cost(evidence(cache_sizes=CACHE_SIZES), [meta],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("batch", "batch-marker")
+
+
 @pytest.mark.tier1
 def test_requests_with_no_cache_retire_a_logged_cache(evidence, tmp_path):
     # One run-level log recorded the image pools' explicit caches; the text

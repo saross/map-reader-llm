@@ -514,6 +514,16 @@
    "attested_by": "derived: archived launch commands + committed run log + exact billing-day volume match (drafted by Claude in reports/launch-archaeology-2026-10-04.md; evidence standards ruled by the PI, D34, 2026-10-04)",
    "attested_on": "2026-10-04",
    "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-29T02-01_launch-gemini-3-7-55-map-campaign-and, on sapphire: run_2_recovery 2026-08-30T08:35:21Z (after a flex attempt was killed and its directory removed at 08:35:00Z) '... --output-dir .../run_2_recovery --mode realtime --service-tier standard --temperature 0.7 --model gemini-3.7-flash --thinking-level low --workers 95 > outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log'; run_3_recovery2 2026-08-31T01:21:22Z and run_4_recovery 01:25:09Z, both '--mode realtime --service-tier standard'. Committed log run2-recovery-standard.log line 10 'Service tier: standard', line 16 'Output: .../run_2_recovery/...'. Billing 2026-08-30 gemini-3.7-flash standard: input 168,514 and output 46,705, which these three fragments plus run_5_recovery (also '--service-tier standard', 03:40:30Z) match to the token."
+  },
+  {
+   "id": "A72",
+   "run_id": "pv-diag-384",
+   "pool": "pro-medium-text-baseline-text-t0.0",
+   "meta": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.meta.json",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command (S160 register repair, archaeology finding C; evidence standards ruled by the PI, D34, and the batch marker's scope, D36, 2026-10-05)",
+   "attested_on": "2026-10-05",
+   "evidence": "The meta's recorded usage is only the 2026-06-03 real-time resume (26 requests, per-item timestamps 12:25:08Z; recovery_history; the 2026-03-23 Batch API execution recorded no usage), committed in c07c57766. Launch: ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score, 12:25:05Z: '4_detect_mounds_batch.py ... --mode realtime --service-tier flex --use-cache --max-retries 15'. The text configuration's cache creation fails ('Cached content is too small'), so the main path, which carries the tier, served it: all 26 requests report 0 cached tokens. The 2026-06-03 day export bills 3.1 Pro at standard and flex, no batch."
   }
  ]
 }
