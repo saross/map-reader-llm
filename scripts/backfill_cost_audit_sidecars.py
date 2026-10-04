@@ -604,11 +604,14 @@ class Plan:
     cited_outside_glob: list[str] = field(default_factory=list)
     outside: list[str] = field(default_factory=list)
     stale: list[Path] = field(default_factory=list)
+    #: Set when the default scope could not be held to the committed metas.
+    scope_warning: str | None = None
 
 
 #: The trees whose metas get sidecars when no directory is named. ``results/``
-#: holds six metas (the S104 vote-3 increments among them, outside the
-#: register until D30's repair); ``archive/`` is superseded and is left alone.
+#: holds six metas (the S104 vote-3 increments among them, register rows of
+#: their parent runs since the S160 repair, D32); ``archive/`` is superseded
+#: and is left alone (its spend is classified by the D38 survey instead).
 META_ROOTS = ("outputs", "results")
 
 
@@ -638,6 +641,12 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
     # The default scope is the committed metas only; a named directory (the
     # tests' scratch trees) is read as it stands.
     tracked = None if outputs_dir else tracked_files(repo_root)
+    plan = Plan()
+    if tracked is None and not outputs_dir:
+        # Never silent (WP4 re-audit L1): untracked metas on this machine
+        # now shape the plan, so it may differ from a clean checkout's.
+        plan.scope_warning = ("git unavailable: every meta on disk was read, untracked ones "
+                              "included, so this plan may differ from a clean checkout's")
     register_path = register_path or repo_root / "results" / "passes-manifest.json"
     run_registry_path = run_registry_path or repo_root / "results" / "run-registry.json"
     register = read_json(register_path)
@@ -647,7 +656,6 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
             if run_registry_path.exists() else [])
     header = {"schema": SCHEMA, "generator": GENERATOR, "generator_version": GENERATOR_VERSION,
               "register": stamp}
-    plan = Plan()
     # Pass 1: read every meta and keep those with recorded usage.
     parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]] = {}
     notes: dict[str, str | None] = {}
@@ -777,7 +785,8 @@ def write_plan(plan: Plan) -> int:
 def report(plan: Plan, repo_root: Path) -> list[str]:
     """Human-readable counts for the dry run and the log."""
     s = plan.stats
-    lines = [
+    lines = [f"WARNING: {plan.scope_warning}"] if plan.scope_warning else []
+    lines += [
         f"metas: {s['metas']} ({s['metas named run.meta.json']} named run.meta.json)",
         f"usage recorded: {s['usage recorded']}; unrecorded: {s['usage unrecorded']}; "
         f"zero: {s['usage zero']} (no sidecar for the last two)",

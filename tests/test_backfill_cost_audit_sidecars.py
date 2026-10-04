@@ -31,6 +31,7 @@ from scripts.backfill_cost_audit_sidecars import (
     build_plan,
     main,
     render,
+    report,
     sidecar_path,
     write_plan,
 )
@@ -297,6 +298,23 @@ def test_an_untracked_meta_gets_no_sidecar_in_a_git_checkout(repo: Path,
     # A named directory is read as it stands (the scratch-tree path).
     assert sidecar_path(repo / stray) in build_plan(repo, outputs_dir=repo / "outputs",
                                                     coster=coster).sidecars
+
+
+def test_a_scope_without_git_is_reported_not_silent(repo: Path, coster: PassCoster) -> None:
+    """WP4 re-audit L1: outside a git checkout the default scope falls back to
+    every meta on disk; the plan and its report must say so. SENTINEL: in a
+    git checkout there is no warning."""
+    import subprocess
+    meta = "outputs/probe-a/verify/run.meta.json"
+    _meta(repo, meta)
+    plan = build_plan(repo, coster=coster)
+    assert plan.scope_warning and "git unavailable" in plan.scope_warning
+    assert report(plan, repo)[0].startswith("WARNING: git unavailable")
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    subprocess.run(["git", "add", meta], cwd=repo, check=True)
+    checked = build_plan(repo, coster=coster)
+    assert checked.scope_warning is None
+    assert not report(checked, repo)[0].startswith("WARNING")
 
 
 def test_zero_and_unrecorded_usage_get_no_sidecar(repo: Path, coster: PassCoster) -> None:
