@@ -1,6 +1,10 @@
 # Verifier-robustness — findings
 
-> **Last revised**: 2026-09-12 (§ 15 gains a tile-MCC column and a second
+> **Last revised**: 2026-10-04 (§ 15's cost model re-derived from the passes
+> register at the uniform discounted tier, PI ruling D19 as amended
+> 2026-10-04; three GS dollars move by US$0.01–0.04 and one production
+> estimate by ~$1; both efficient sets, every tier and every F1 and MCC
+> unchanged). Prior: 2026-09-12 (§ 15 gains a tile-MCC column and a second
 > Pareto frontier, per the PI's ruling; the F1 column, the cost model and the
 > F1 tiering are unchanged). Prior: 2026-06-13 (currency sweep: the one remaining
 > pre-audit dollar — Run B's "~$60" launch estimate in § 16(c) —
@@ -382,24 +386,32 @@ harness self-validated by reproducing min11 exactly).
 The passes-axis board (§ 12) is superseded by the cost-weighted v2
 (`pareto/pareto_v2.{json,png}`; proposer-centric rung names — the old
 "cheap6" is **high6**, the third most expensive way to buy ~0.87). Cost
-model (token-load audit, 2026-06-12 —
-`reports/token-load-audit-2026-06-12.md`): verifier $0.000693/call
-(measured); minimal pass $0.266 at GS (ten measured 55-map passes,
-$4.66/8,541-tile pass, scaled by 487/8,541); HIGH pass $2.29 at GS
-(five measured 55-map T0.7 passes, $40.19/8,541-tile pass with
-~2,693 thinking tokens/tile billed at the output rate); **flex ≡
-batch pricing**. All seven rungs remain ONE statistical tier (0/21 pairs)
-— and, since 2026-09-12, one tier on tile-MCC as well (0/21 pairs).
+model (re-derived 2026-10-04 from the passes register at the uniform
+discounted tier, PI ruling D19 as amended that day —
+`scripts/lib_frontier_cost.gs_units`,
+`data/pricing/frontier-configurations.json`): verifier $0.000692 per
+candidate (the Gemini 3 Flash verifier, pooled over the 55-map
+generalisation campaign's four complete legs); minimal pass $0.2659 at GS
+(the ten 55-map minimal passes at flex, scaled by 487/8,541); HIGH pass
+$2.2914 at GS (the five 55-map T0.7 text passes, thinking billed at the
+output rate); **flex ≡ batch pricing**. These reproduce the token-load
+audit's 0.266 / 2.29 / 0.000693 (2026-06-12,
+`reports/token-load-audit-2026-06-12.md`) within 0.3 %. The audit's own
+anchor leg for the verifier unit, the GS opmax run in this programme, is
+not in the register, because the `verifier-robustness` run's legs were
+never extracted (a register gap, queued). All seven rungs remain ONE
+statistical tier (0/21 pairs) — and, since 2026-09-12, one tier on
+tile-MCC as well (0/21 pairs).
 
 | rung | F1@20m | tile-MCC | GS run | 55-map production | F1 frontier | MCC frontier |
 |---|---:|---:|---:|---:|---|---|
 | min6 | 0.8784 | 0.7903 | $2.43 | ~$43 | ✓ | ✓ |
 | min11 | 0.8835 | **0.8068** | $4.00 | ~$70 | ✓ | ✓ |
 | high6 | 0.8641 | 0.7693 | $14.04 | ~$246 | dominated | dominated |
-| high5+5vf | 0.8739 | 0.7713 | $14.41 | ~$253 | dominated | dominated |
+| high5+5vf | 0.8739 | 0.7713 | $14.42 | ~$253 | dominated | dominated |
 | high11 | 0.8769 | 0.7903 | $26.97 | ~$473 | dominated | dominated |
-| high31 (headline) | 0.8902 | 0.7903 | $69.21 | ~$1,214 | ✓ | **dominated** |
-| high35 (opmax) | **0.8951** | 0.7941 | $71.23 | ~$1,249 | ✓ | **dominated** |
+| high31 (headline) | 0.8902 | 0.7903 | $69.25 | ~$1,214 | ✓ | **dominated** |
+| high35 (opmax) | **0.8951** | 0.7941 | $71.26 | ~$1,250 | ✓ | **dominated** |
 
 **The tile-MCC column (added 2026-09-12, per the PI's ruling).** Each rung's
 MCC is read from that rung's own committed evaluation — resolved through its
@@ -419,8 +431,8 @@ F1@20 m, (b) cost against tile-MCC.
 `min6, min11, high31, high35` — but the **MCC-efficient set is `min6, min11`
 alone**: the two expensive HIGH rungs fall off it. **min11, at $4.00, has the
 highest tile-MCC of all seven rungs (0.8068)** — above high35's 0.7941 at
-$71.23, a 17.8× cost ratio. Read on tile discrimination rather than point
-localisation, the $67.23 of extra GS spend between min11 and high35 buys
+$71.26, a 17.8× cost ratio. Read on tile discrimination rather than point
+localisation, the $67.26 of extra GS spend between min11 and high35 buys
 **nothing**, and the reversal is not marginal: min11's MCC lead over high35 is
 +0.0127, larger than high35's F1 lead over min11 (+0.0116).
 
@@ -434,7 +446,7 @@ dominate, not a demonstration that they do not. Second, **the 487-tile frame is
 coarse enough to tie**: `min6`, `high11` and `high31` have the *identical* tile
 confusion (188 TP / 247 TN / 11 FP / 41 FN) and therefore the identical MCC of
 0.7903, despite being three different detection sets with F1s spanning
-0.8769–0.8902 and GS costs spanning $2.43–$69.21. That is not an error — the gate recomputed all three from their
+0.8769–0.8902 and GS costs spanning $2.43–$69.25. That is not an error — the gate recomputed all three from their
 own geojsons and reproduced the recorded cells exactly — but it is the reason a
 tile-level metric on 487 tiles cannot be asked to rank fine-grained rungs.
 
@@ -527,6 +539,32 @@ flags live at `results/metric-leaderboards/` (GS @ 30 m; 55-map @ 50 m).
   preregistration amendment needed for a robustness check.
 
 ## Changelog
+
+### 2026-10-04 — § 15's cost model re-derived from the register (WP4b)
+
+**Refresh trigger**: PI ruling D19, amended 2026-10-04 (one uniform discounted
+tier for every configuration, priced from the passes register). WP4b
+regenerated `pareto/pareto_v2.json` on sapphire with register-derived units
+(PR #22, `0f484491c`); the row `pass-budget-pareto-v2` carries a signature
+note given 2026-10-04T00:25:02Z
+(`reports/wp4b-frontier-repricing-2026-10-04.md` § 3).
+
+**What moved**:
+
+| claim | before | after |
+|---|---|---|
+| units: minimal pass / HIGH pass / verifier per candidate | 0.266 / 2.29 / 0.000693 (token-load audit) | 0.2659 / 2.2914 / 0.000692 (register, uniform tier) |
+| high5+5vf GS run | $14.41 | $14.42 |
+| high31 GS run | $69.21 | $69.25 |
+| high35 GS run / production | $71.23 / ~$1,249 | $71.26 / ~$1,250 |
+| min11 → high35 extra GS spend | $67.23 | $67.26 |
+
+**What did NOT change**: both efficient sets (F1 `min6, min11, high31, high35`;
+MCC `min6, min11`), every tier and pairwise result, every F1 and MCC, the
+17.8× cost ratio, and every other dollar at its stated precision (the largest
+rung move is 0.094 %). § 16(c)'s "~$58 vs ~$207" are as-run figures and agree
+with the uniform-tier board families (US$57.89 and US$207.35) at their
+precision, so § 16 is not edited.
 
 ### 2026-09-12 — § 15 gains a tile-MCC column and a second Pareto frontier
 
