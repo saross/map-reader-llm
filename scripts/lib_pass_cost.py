@@ -387,6 +387,81 @@ def is_continuous(start: str | None, end: str | None, duration_s: float | None) 
     return span <= CONTINUOUS_MAX_S
 
 
+#: The schema of the provenance a carry-forward verifier stage writes.
+CARRY_SCHEMA = "verifier-stage-carry/1"
+
+
+def carried_forward(directory: Path) -> tuple[int, str, int] | None:
+    """Results a verifier stage carried from an earlier stage, unverified again.
+
+    A stage rebuilt over a re-numbered union (the ``*_recovery-fixed``
+    stages) copies the earlier stage's results into its own
+    ``probabilities.json`` and verifies only the candidates it could not
+    match; ``carry_provenance.json`` records how many it carried and from
+    where. Those results' spend belongs to the stage it extends.
+
+    Args:
+        directory: The verifier stage's directory.
+
+    Returns:
+        ``(carried, extends_stage, uncovered)``, or None when the stage carries
+        nothing or the file is malformed (no schema, counts, or extended stage).
+    """
+    path = directory / "carry_provenance.json"
+    if not path.is_file():
+        return None
+    doc = _read_json(path)
+    if not isinstance(doc, dict) or doc.get("schema") != CARRY_SCHEMA:
+        return None
+    carried, uncovered = doc.get("carried"), doc.get("uncovered")
+    extends = str(doc.get("extends_stage") or "")
+    if not isinstance(carried, int) or carried <= 0 or not isinstance(uncovered, int) \
+            or uncovered < 0 or not extends:
+        return None
+    return carried, extends, uncovered
+
+
+def stage_exists(meta_path: Path, stage: str) -> bool:
+    """Whether a repository-relative stage directory exists, found from a meta's path."""
+    for parent in meta_path.resolve().parents:
+        if (parent / ".git").exists() or (parent / "results" / "passes-manifest.json").exists():
+            return (parent / stage).is_dir()
+    return False
+
+
+def carry_explains(metas: list[tuple[dict[str, Any], Path]],
+                   cover: tuple[int, int]) -> tuple[int, str] | None:
+    """Whether a carry-forward explains a verifier leg's coverage shortfall.
+
+    A carry-forward stage's metas account for fewer candidates than its
+    ``probabilities.json`` holds because the rest were copied from the stage
+    it extends, whose own leg prices them: its metas are its whole spend, not
+    a floor. The exemption holds only when the metas account for every
+    result the carry did NOT bring (the file's own ``uncovered`` count), the
+    two together reach the results, and the extended stage exists. Testing
+    ``accounted + carried`` alone was vacuous whenever the carry was 90 % of
+    the results (WP4 re-audit, 2026-10-04: 756 of 759 passed with the meta
+    covering none). Shared by the register (:meth:`PassCoster.cost_pass`) and
+    the ``cost_audit.json`` sidecars, so the two never disagree on a basis
+    (they did on the two 3.7 screen ``recovery-fixed`` legs until S160).
+
+    Args:
+        metas: The leg's ``(meta, path)`` list; the carry file sits beside
+            the first.
+        cover: ``(accounted, results)`` from :func:`verifier_coverage`.
+
+    Returns:
+        ``(carried, extends_stage)`` when the carry explains the shortfall,
+        else None.
+    """
+    accounted, results = cover
+    carry = carried_forward(metas[0][1].parent)
+    if carry and accounted >= carry[2] and accounted + carry[0] >= results \
+            and stage_exists(metas[0][1], carry[1]):
+        return carry[0], carry[1]
+    return None
+
+
 def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, int] | None:
     """How many candidates a verifier leg's metas account for, against its results.
 
@@ -1240,13 +1315,23 @@ class PassCoster:
             partial_why.append(override["source"])
         if "unrecorded" in bases and bases != {"unrecorded"}:
             partial_why.append("a fragment of this pass recorded no usage")
+        carry_note = None
         if stage != "proposer" and fragments:
             cover = verifier_coverage(fragments)
             if cover and cover[0] < COVERAGE_FLOOR * cover[1]:
-                partial_why.append(
-                    f"the leg's metas account for {cover[0]:,} candidate(s) against "
-                    f"{cover[1]:,} results in probabilities.json: a later leg (a cleanup) "
-                    "overwrote the main meta")
+                carry = carry_explains(fragments, cover)
+                if carry:
+                    carry_note = (
+                        f"the leg's metas account for {cover[0]:,} candidate(s) against "
+                        f"{cover[1]:,} results in probabilities.json, but {carry[0]:,} of "
+                        f"those results were carried forward from {carry[1]} "
+                        "(carry_provenance.json) and are priced there: the metas are this "
+                        "stage's whole spend")
+                else:
+                    partial_why.append(
+                        f"the leg's metas account for {cover[0]:,} candidate(s) against "
+                        f"{cover[1]:,} results in probabilities.json: a later leg (a cleanup) "
+                        "overwrote the main meta")
         costed = [f for f in priced if f["_cost"] is not None]
         if bases == {"unrecorded"}:
             basis, cost = "unrecorded", None
@@ -1274,9 +1359,13 @@ class PassCoster:
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
         if basis == "audited-lower-bound":
             source["note"] = "LOWER bound: " + "; ".join(partial_why)
+        elif carry_note:
+            source["note"] = carry_note
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "BATCH_KINDS", "COVERAGE_FLOOR", "Evidence", "INHERITED_KINDS",
-           "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding", "fragment_usage",
-           "is_continuous", "pacific_days", "verifier_coverage"]
+__all__ = ["BASES", "BATCH_KINDS", "CARRY_SCHEMA", "COVERAGE_FLOOR", "Evidence",
+           "INHERITED_KINDS", "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding",
+           "billed_cache_sizes", "cache_signature", "carried_forward", "carry_explains",
+           "fragment_usage", "is_continuous", "pacific_days", "stage_exists",
+           "verifier_coverage"]

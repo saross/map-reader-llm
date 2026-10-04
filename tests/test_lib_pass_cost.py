@@ -1053,6 +1053,35 @@ def test_run_report_sums_each_basis_apart():
 
 
 @pytest.mark.tier1
+@pytest.mark.parametrize("uncovered, carried_stage, basis", [
+    (2, "outputs/r/verifier/k1", "audited"),                 # the carry explains it
+    (3, "outputs/r/verifier/k1", "audited-lower-bound"),     # meta misses an uncovered result
+    (2, "outputs/r/verifier/gone", "audited-lower-bound"),   # the extended stage is absent
+    (None, None, "audited-lower-bound"),                     # no carry file: a cleanup overwrite
+])
+def test_a_carry_forward_stage_is_its_metas_whole_spend(evidence, tmp_path, uncovered,
+                                                        carried_stage, basis):
+    # S160: the register now meets the recovery-fixed stages, which copy 8 of
+    # 10 results from the stage they extend; their meta (2 candidates) is the
+    # stage's whole spend, as the WP4 sidecars already said. One shared rule
+    # (lib_pass_cost.carry_explains); the last three cases are its sentinels.
+    _write(tmp_path / "results" / "passes-manifest.json", {})   # the repository root marker
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    if uncovered is not None:
+        _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 8,
+                                                "uncovered": uncovered,
+                                                "extends_stage": carried_stage})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},  # pins the tier
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]})
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert out["cost_basis"] == basis
+    if basis == "audited":
+        assert "carried forward from outputs/r/verifier/k1" in out["cost_source"]["note"]
+
+
+@pytest.mark.tier1
 def test_an_overwritten_verifier_meta_is_detected_as_a_floor():
     # Re-audit M3: verified-f3vf's meta is the 1-request cleanup leg; its
     # probabilities.json holds 1,132 results. T03's verifier meta (10,539

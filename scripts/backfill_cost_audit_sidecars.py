@@ -97,6 +97,7 @@ from scripts.lib_cost import is_unrecorded, token_classes  # noqa: E402
 from scripts.lib_pass_cost import (  # noqa: E402
     COVERAGE_FLOOR,
     PassCoster,
+    carry_explains,
     fragment_usage,
     verifier_coverage,
 )
@@ -435,48 +436,6 @@ def chunk_links(parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]],
     return links
 
 
-#: The schema of the provenance a carry-forward verifier stage writes.
-CARRY_SCHEMA = "verifier-stage-carry/1"
-
-
-def carried_forward(directory: Path) -> tuple[int, str, int] | None:
-    """Results a verifier stage carried from an earlier stage, unverified again.
-
-    A stage rebuilt over a re-numbered union (the ``*_recovery-fixed``
-    stages) copies the earlier stage's results into its own
-    ``probabilities.json`` and verifies only the candidates it could not
-    match; ``carry_provenance.json`` records how many it carried and from
-    where. Those results' spend belongs to the stage it extends.
-
-    Args:
-        directory: The verifier stage's directory.
-
-    Returns:
-        ``(carried, extends_stage, uncovered)``, or None when the stage carries
-        nothing or the file is malformed (no schema, counts, or extended stage).
-    """
-    path = directory / "carry_provenance.json"
-    if not path.is_file():
-        return None
-    doc = read_json(path)
-    if not isinstance(doc, dict) or doc.get("schema") != CARRY_SCHEMA:
-        return None
-    carried, uncovered = doc.get("carried"), doc.get("uncovered")
-    extends = str(doc.get("extends_stage") or "")
-    if not isinstance(carried, int) or carried <= 0 or not isinstance(uncovered, int) \
-            or uncovered < 0 or not extends:
-        return None
-    return carried, extends, uncovered
-
-
-def _stage_exists(meta_path: Path, stage: str) -> bool:
-    """Whether a repository-relative stage directory exists, found from a meta's path."""
-    for parent in meta_path.resolve().parents:
-        if (parent / ".git").exists() or (parent / "results" / "passes-manifest.json").exists():
-            return (parent / stage).is_dir()
-    return False
-
-
 def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str, Any] | None:
     """The register's coverage test for a verifier meta, where it falls short.
 
@@ -485,9 +444,10 @@ def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str,
     its ``probabilities.json`` as ``audited-lower-bound`` (a later leg, such
     as a cleanup, overwrote the main meta; ``PassCoster.cost_pass``). The
     count is :func:`scripts.lib_pass_cost.verifier_coverage`'s, reused here,
-    not re-derived. One case the register has never met: a carry-forward
-    stage (:func:`carried_forward`), whose shortfall is results copied from
-    a stage priced elsewhere, so its meta IS its whole spend.
+    not re-derived, and so is the carry-forward exemption
+    (:func:`scripts.lib_pass_cost.carry_explains`): a stage whose shortfall
+    is results copied from a stage priced elsewhere, so its meta IS its
+    whole spend. The register applies the same rule (one rule since S160).
 
     Args:
         meta: The parsed meta.
@@ -509,14 +469,8 @@ def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str,
         "accounted_candidates": accounted, "results": results, "floor": COVERAGE_FLOOR,
         "method": "scripts/lib_pass_cost.py verifier_coverage, as PassCoster.cost_pass applies it",
     }
-    carry = carried_forward(meta_path.parent)
-    # The exemption holds only when this meta accounts for every result the
-    # carry did NOT bring (the file's own ``uncovered`` count), and the carry
-    # came from a stage that exists. Testing ``accounted + carried`` against
-    # the floor alone was vacuous whenever the carry was 90 % of the results
-    # (re-audit, 2026-10-04: 756 of 759 passed with the meta covering none).
-    if carry and accounted >= carry[2] and accounted + carry[0] >= results \
-            and _stage_exists(meta_path, carry[1]):
+    carry = carry_explains([(meta, meta_path)], cover)
+    if carry:
         record.update(lower_bound=False, carried=carry[0], carried_from=carry[1], note=(
             f"the meta accounts for {accounted:,} candidate(s) against {results:,} results, "
             f"but {carry[0]:,} of those results were carried forward from {carry[1]} "
