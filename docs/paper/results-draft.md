@@ -14,9 +14,9 @@
 > from the passes register at one uniform discounted tier, PI ruling D19 as
 > amended 2026-10-04; **the fourth cell's "≈ $231" corrected** — it counted
 > B's own Gemini 3 verifier, a leg the fourth cell does not use — to $198 on
-> the board's basis, or about $191.50 on § R7.3's ruled mixed basis; one
-> `[DRAFT NOTE, S159]` asks the PI to confirm the § R7.2 basis. No F1, tier,
-> or verdict changed. See [§ Changelog](#changelog).) Prior:
+> the board's basis, or about $191.50 on § R7.3's ruled mixed basis; the
+> PI confirmed that split the same day (D26). No F1, tier, or verdict
+> changed. See [§ Changelog](#changelog).) Prior:
 > 2026-09-14 (**§ R2's image-bearing tile-MCC range
 > corrected under erratum E88** — MCC 0.0665–0.291 across the twenty-one
 > computable of twenty-two image-bearing cells, from 0.094–0.291 across
@@ -713,14 +713,14 @@ register, because a cleanup pass overwrote its record; D19 completes it
 at the per-candidate unit of audited legs with an identical verifier
 configuration. Neither text MIN's $30 nor image's $201 is new spending:
 until 2026-10-04 both were quoted without their verifier legs ($23,
-$195). [DRAFT NOTE, S159: the fourth cell's cost follows the board's
-basis here and the 2026-09-12 mixed basis in § R7.3's as-billed
-paragraph. The two differ by about $7 and are both correct, but on
-different bases. Until 2026-10-04 this row read "≈ $231", which added
-the invoice verifier to B's ALL-IN $173.59, so it counted B's own
-Gemini 3 verifier (about $39), a leg the fourth cell does not use
-(`reports/wp4b-frontier-repricing-2026-10-04.md` § 5.2). PI to confirm
-that the table follows the board.]
+$195). [RULED 2026-10-04 (D26, `planning/pi-decisions-2026-09-20.md`):
+the fourth cell's cost follows the board's basis here and the 2026-09-12
+mixed basis in § R7.3's as-billed paragraph. The two differ by about $7
+and are both correct, but on different bases. Until 2026-10-04 this row
+read "≈ $231", which added the invoice verifier to B's ALL-IN $173.59,
+so it counted B's own Gemini 3 verifier (about $39), a leg the fourth
+cell does not use (`reports/wp4b-frontier-repricing-2026-10-04.md`
+§ 5.2).]
 
 Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
 (T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
@@ -1047,8 +1047,9 @@ fourth cell uses only B's proposer passes ($133.50, the same as billed and
 at the uniform tier, since those passes were served flex). § R7.3 keeps the
 mixed basis the PI ruled on 2026-09-12 with the arithmetic corrected;
 § R7.2 follows the board, which completes the leg at arm 2's audited
-per-candidate unit ($64.67). A `[DRAFT NOTE, S159]` asks the PI to confirm
-that split.
+per-candidate unit ($64.67). The PI confirmed that split the same day
+(D26, `planning/pi-decisions-2026-09-20.md`); the `[DRAFT NOTE, S159]`
+first written beside the table now reads `[RULED 2026-10-04 (D26) …]`.
 
 **The † legs.** Text MIN's and image's verifier legs, stride A's union leg
 and the fourth cell's 3.7 leg are floors in the register (a cleanup pass
