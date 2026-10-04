@@ -1398,3 +1398,29 @@ discard / replace; an unanswered gate holds over.*
   enable an export neither machine could enable; it cost him two attempts
   and produced nothing. Did the plan make clear early enough that the
   export was optional and the fallback already existed?
+
+## S158 candidates (pending review, 2026-10-04, drafted at handoff) — silence never discards
+
+*Things Shawn may have observed about Claude this session. Accept / edit /
+discard / replace; an unanswered gate holds over.*
+
+- **C1 — The framing question before the build.** Before building WP4b I
+  asked whether D19's "tier it was meant to run at" meant each launch's
+  requested tier or one discounted tier for all. The answer (uniform)
+  removed the tier archaeology from the frontier's path. Was asking first
+  the right call, or would he rather I had built on the recorded wording
+  and flagged the alternative?
+- **C2 — Question density.** The session put about a dozen decisions to
+  him through structured questions: the tier basis, the order, the scope,
+  the Phase 2 units, the T0.7 rule, three signature notes, the merge and
+  the board view. Was that the right granularity, or should some (the
+  order, the merge) have been defaults I stated and proceeded on?
+- **C3 — The T0.7 explanation.** The walkthrough described the T0.7
+  difference by mechanism ("55-map scaled" against "neighbour mean"), and he
+  had to ask what it meant. The plain version (one temperature, two
+  pricing rules, one looking 7 % cheaper for a corpus reason) came only
+  after.
+- **C4 — Raising a defect at sign-off.** The 1,000× units error in the
+  signed K-ladder row surfaced while I was preparing that row's sign-off,
+  at the end of a long session. Useful to have it then, or would he rather
+  defects in signed claims were batched for a separate review?
