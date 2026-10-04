@@ -52,9 +52,13 @@ A tile-MCC optimum at k = 1 needs a verifier probability for every candidate
 in the union at one vote, not just for the unanimous ones. The pool is read
 from the committed sweep CSV — the row at ``prob_t`` 0.0 for that vote count
 is exactly "how many candidates have at least k votes" — and priced at the
-AUDITED per-candidate rate of that configuration's own verifier leg, via
-``scripts/audit_verifier_cost.py`` over the leg's committed metas (the same
-auditor the campaigns' post-run reports cite). Where the pool is smaller than
+per-candidate rate of that configuration's own verifier leg, at the uniform
+discounted tier from the passes register (PI rulings D29 and D30,
+2026-10-04; ``scripts/lib_frontier_cost.py``), as the r2 board and the
+K-ladders are priced. A leg that is a floor in the register is completed from
+nominated comparable legs; a leg absent from the register (the S104 vote-3
+increments, until the register is repaired) is priced from its own meta. Where
+the pool is smaller than
 the leg, the configuration INHERITS its probabilities from a larger
 verification and the row says so; where it is larger, the point asks for
 candidates that were never verified, and the row says that instead.
@@ -96,7 +100,6 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -109,6 +112,11 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 from scripts.final_board_sweeps import (  # noqa: E402
     carried_k_by_family,
     read_sweep_csv,
+)
+from scripts.lib_frontier_cost import (  # noqa: E402
+    FrontierCoster,
+    FrontierCostError,
+    Priced,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -124,7 +132,7 @@ BUFFER_M = 50
 #: The verifier leg each configuration's probabilities come from, keyed by the
 #: configuration-name prefix and resolved longest-prefix-first. Every path is a
 #: verifier STAGE directory holding a ``run.meta.json``; a tuple of two is a
-#: leg run in two passes, which ``audit_verifier_cost.py`` sums.
+#: leg run in two passes, whose costs and calls are summed.
 #:
 #: Provenance: the text incumbents' two-pass union is
 #: ``final_board_sweeps.build_families`` (the original vote >= 4 verification
@@ -160,22 +168,12 @@ for _k in (1, 3, 5):
             f"outputs/gemini3-image-55map-2026-09-16/verifier/"
             f"g384_ov192_55map_g3img/verify_k{_k}_arm{_a}",)
 
-#: A leg whose meta records no model of its own needs a rate card named. Only
-#: the legs that actually need one are listed, and each says why.
-LEG_MODEL: dict[str, str] = {}
-
 #: Audited verifier-leg costs as the campaigns' own post-run reports PUBLISH
-#: them, transcribed with their source. These exist because
-#: ``scripts/audit_verifier_cost.py`` cannot always reach the truth from the
-#: working tree: ``run_pv.py cleanup`` before 2026-09-14 rewrote
-#: ``run.meta.json`` with the retry pass's usage only, so a stage whose main
-#: pass survives nowhere on disc audits to a LOWER BOUND. The auditor says so
-#: rather than guessing, and its own docstring names this campaign's K = 1
-#: arm 2 as the worked example (US$0.0153 read against US$7.7028 audited).
-#:
-#: Where the auditor IS complete it is cross-checked against these figures and
-#: must agree to the cent, so neither source can drift from the other
-#: unnoticed.
+#: them, transcribed with their source. Since 2026-10-04 (D29) they price
+#: nothing: they are the CROSS-CHECK for the uniform-tier figure, which must
+#: agree within ``COST_AGREEMENT_USD`` (the image legs ran batch or flex, which
+#: carry one rate, so a measured leg agrees to the cent and a completed one,
+#: priced at a comparable leg's unit, within the D30 tolerance).
 PUBLISHED_USD = "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
 PUBLISHED_USD_G3 = "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
 PUBLISHED_LEG_COST: dict[str, dict[str, Any]] = {
@@ -206,14 +204,32 @@ PUBLISHED_LEG_COST: dict[str, dict[str, Any]] = {
                       "source": PUBLISHED_USD_G3},
 }
 
-#: How close an auditor run and a published figure must be to be called the
-#: same number. One cent: both are quoted to four decimal places.
-COST_AGREEMENT_USD = 0.01
+#: How close the uniform-tier figure and a published figure must be to be
+#: called the same number (PI ruling D30, 2026-10-04: a completed leg is
+#: checked against its published figure at US$0.05).
+COST_AGREEMENT_USD = 0.05
 
-#: Cost bases that may be used to price a pool. ``unaudited`` may not: a
-#: cleanup-overwritten stage yields a lower bound, and multiplying a lower
-#: bound by a pool size produces a number that looks like a cost and is not.
-PRICEABLE = ("audited", "published")
+#: Cost bases that may be used to price a pool: ``measured`` (the leg's own
+#: tokens at the uniform tier) and ``completed`` (a floor's calls at nominated
+#: comparable legs' unit, D19). ``unpriced`` may not: a leg the register cannot
+#: price whole has no cost, and multiplying a lower bound by a pool size
+#: produces a number that looks like a cost and is not.
+PRICEABLE = ("measured", "completed")
+
+MAPPING = PROJECT_ROOT / "data/pricing/frontier-configurations.json"
+REGISTER = PROJECT_ROOT / "results/passes-manifest.json"
+
+#: A floor on one of the board's verifier legs is completed from the
+#: comparables the r2 board nominates for it, so the leg costs the same here
+#: as on the board: leg prefix -> board family in ``MAPPING``.
+FLOOR_COMPARABLES_FROM = {"TM": "TM", "IM": "IM", "A-": "A-N10", "FOURTH-": "FOURTH-N10"}
+
+#: A register row on the ``published`` basis records the post-run report's
+#: figure and no fragments. D30 completes it as a floor from the audited leg
+#: with the identical verifier configuration in the same campaign.
+_G37_IMG = "gemini37-image-55map-2026-09-13"
+_G37_IMG_K5_ARM2 = [{"run_id": _G37_IMG, "pool": "g384_ov192_55map_g37img-union-k5-verify-arm2"}]
+PUBLISHED_COMPARABLES = {"IMG-ARM2-K1": _G37_IMG_K5_ARM2, "IMG-ARM2-K3": _G37_IMG_K5_ARM2}
 
 
 @dataclass(frozen=True)
@@ -274,10 +290,14 @@ def leg_for(config: str) -> tuple[str, ...] | None:
     Returns:
         The stage directories, or ``None`` when no prefix matches.
     """
+    key = leg_key_for(config)
+    return None if key is None else LEGS[key]
+
+
+def leg_key_for(config: str) -> str | None:
+    """The ``LEGS`` prefix a configuration resolves to (longest wins), or ``None``."""
     matches = [p for p in LEGS if config.startswith(p)]
-    if not matches:
-        return None
-    return LEGS[max(matches, key=len)]
+    return max(matches, key=len) if matches else None
 
 
 def pool_at_vote(rows: list[dict], min_votes: int) -> int | None:
@@ -356,12 +376,12 @@ def pareto_front(rows: list[dict]) -> list[dict]:
 def cost_block(pool_n: int | None, leg: dict | None) -> dict:
     """Price one configuration's pool at its leg's per-candidate rate.
 
-    A leg is priceable only when its cost is ``audited`` (the auditor read
-    every pass) or ``published`` (a post-run report states it). An
-    ``unaudited`` leg — one whose main pass was cleanup-overwritten — yields
-    a LOWER BOUND, and a lower bound multiplied by a pool size is a number
-    that looks like a cost and is not, so the row is left null with its
-    reason instead.
+    A leg is priceable only when its cost is ``measured`` (its own tokens at
+    the uniform tier) or ``completed`` (a floor's calls at nominated
+    comparable legs' unit, D19). An ``unpriced`` leg — one the register cannot
+    price whole and no rule completes — has no cost, and a lower bound
+    multiplied by a pool size is a number that looks like a cost and is not,
+    so the row is left null with its reason instead.
 
     Args:
         pool_n: Candidates the operating point's vote count admits.
@@ -379,7 +399,7 @@ def cost_block(pool_n: int | None, leg: dict | None) -> dict:
                 "verifier_usd_per_candidate": None, "pool_verifier_usd": None,
                 "pool_exceeds_verified": None, "inherits_larger_leg": None,
                 "verifier_leg_paths": None, "verifier_cost_note": None}
-    basis = leg.get("basis", "unaudited")
+    basis = leg.get("basis", "unpriced")
     items = leg.get("candidates")
     usd = leg.get("usd")
     block = {
@@ -548,18 +568,86 @@ def emit(expected: dict[Path, str], check: bool) -> int:
 # ---------------------------------------------------------------------------
 
 
-def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
-    """Price every mapped verifier leg through the cost auditor.
+def register_index(register: Path = REGISTER) -> dict[str, list[dict]]:
+    """Each verifier stage directory the passes register names, to its rows.
 
-    Calls ``scripts/audit_verifier_cost.py`` — the auditor both campaigns'
-    post-run reports cite — rather than re-deriving a rate here, so this
-    table cannot drift from the audited figures those reports publish.
+    A verifier row's ``provenance.source_files`` lists the metas it was read
+    from; their directory is the stage ``LEGS`` names. Some stages elsewhere
+    in the register hold several legs' metas (``outputs/h11/...``); that is
+    refused only when a mapped leg asks for such a stage (:func:`price_stage`).
+    """
+    out: dict[str, list[dict]] = {}
+    for row in json.loads(register.read_text(encoding="utf-8"))["passes"]:
+        if row.get("n_candidates_verified") is None:
+            continue  # a proposer pass
+        for source in (row.get("provenance") or {}).get("source_files") or []:
+            rows = out.setdefault(str(Path(source).parent), [])
+            if all(r["pass_id"] != row["pass_id"] for r in rows):
+                rows.append(row)
+    return out
+
+
+def price_stage(coster: FrontierCoster, stage: str, key: str, index: dict[str, list[dict]],
+                board_families: dict[str, dict]) -> tuple[Priced, int, bool]:
+    """One verifier stage at the uniform tier, by the rule its register state sets.
+
+    * a register row with fragments: its own tokens, or (a floor) its calls
+      at the comparables the r2 board nominates (``FLOOR_COMPARABLES_FROM``);
+    * a register row on the ``published`` basis (no fragments): a floor,
+      completed from ``PUBLISHED_COMPARABLES`` (D30, C1);
+    * no register row: the stage's own meta, marked not in the register
+      (D30, C2; the register is to be repaired).
+
+    Args:
+        coster: The frontier coster over the register.
+        stage: Repository-relative stage directory.
+        key: The configuration's ``LEGS`` prefix.
+        index: :func:`register_index`.
+        board_families: ``MAPPING``'s ``board_families``.
+
+    Returns:
+        ``(cost, calls, in_register)``.
+
+    Raises:
+        FrontierCostError: When no rule prices the stage whole, or two
+            register rows claim it, so neither can be taken as its cost.
+    """
+    rows = index.get(stage) or []
+    if len(rows) > 1:
+        raise FrontierCostError(f"{stage} is claimed by "
+                                f"{', '.join(r['pass_id'] for r in rows)}")
+    row = rows[0] if rows else None
+    if row is None:
+        cost = coster.stage_leg_cost(stage, complete=True)
+        return cost, coster.stage_leg(stage, complete=True).verifications, False
+    if not (row.get("cost_source") or {}).get("fragments"):
+        comparables = PUBLISHED_COMPARABLES.get(key)
+        if comparables is None:
+            raise FrontierCostError(f"{row['pass_id']} records no fragments and no "
+                                    "comparable is nominated for it (D30)")
+        cost = coster.stage_leg_cost(stage, complete=False, comparables=comparables)
+        return cost, coster.stage_leg(stage, complete=False).verifications, True
+    family = FLOOR_COMPARABLES_FROM.get(key)
+    comparables = (board_families[family]["verifier"].get("comparables")
+                   if family else None)
+    run_id, pool = row["run_id"], row["proposer_pool"]
+    return (coster.leg_cost(run_id, pool, comparables),
+            coster.leg(run_id, pool).verifications, True)
+
+
+def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
+    """Price every mapped verifier leg at the uniform tier from the register.
+
+    PI rulings D29 and D30 (2026-10-04): the legs are priced as the r2 board
+    and the K-ladders are, through ``scripts/lib_frontier_cost.py``, so every
+    frontier in the paper shares one basis. Each leg's figure is cross-checked
+    against its campaign's published figure where one exists.
 
     Returns:
         ``(costs, n_legs, disagreements)``: the per-configuration cost
-        records, how many distinct legs were audited, and one line per leg
-        whose audited and published figures disagree. ``costs`` is empty
-        when the auditor produced no JSON for a leg.
+        records, how many distinct legs were priced, and one line per leg
+        whose figure and published figure differ by more than
+        ``COST_AGREEMENT_USD``.
     """
     configs = sorted({
         name
@@ -575,35 +663,48 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
             continue
         by_leg.setdefault(leg, []).append(config)
 
+    coster = FrontierCoster()
+    index = register_index()
+    board_families = json.loads(MAPPING.read_text(encoding="utf-8"))["board_families"]
     costs: dict[str, dict] = {}
     disagreements: list[str] = []
     for leg, members in sorted(by_leg.items()):
-        cmd = [".venv/bin/python", "scripts/audit_verifier_cost.py",
-               *leg, "--json"]
-        model = next((LEG_MODEL[m] for m in members if m in LEG_MODEL), None)
-        if model:
-            cmd += ["--model", model]
-        proc = subprocess.run(cmd, cwd=PROJECT_ROOT, capture_output=True,
-                              text=True, check=False)
-        start = proc.stdout.find("[")
-        if start < 0:
-            logger.error("auditor produced no JSON for %s: %s", leg,
-                         proc.stderr[-600:])
-            return {}, len(by_leg), disagreements
-        stages = json.loads(proc.stdout[start:])
-        audited = {
-            "usd": sum(s["audited_usd"] for s in stages),
-            "candidates": sum(s["items_covered"] for s in stages),
-            "complete": all(s["complete"] for s in stages),
-            "notes": [n for s in stages for n in s.get("notes", [])],
-        }
-        # One published figure per leg at most; every member of a shared leg
-        # is the same leg, so the first that has one speaks for all of them.
-        published = next((PUBLISHED_LEG_COST[m] for m in members
-                          if m in PUBLISHED_LEG_COST), None)
-        record = reconcile(leg, members, audited, published)
-        if record.get("disagreement"):
-            disagreements.append(record["disagreement"])
+        key = leg_key_for(members[0])
+        base = {"stages": list(leg), "configs": members}
+        try:
+            parts = [price_stage(coster, stage, key, index, board_families)
+                     for stage in leg]
+        except FrontierCostError as exc:
+            record = {**base, "basis": "unpriced", "usd": None, "candidates": None,
+                      "register_rows": None, "in_register": None, "source": None,
+                      "note": f"no uniform-tier cost: {exc}"}
+        else:
+            usd = sum(cost.usd for cost, _, _ in parts)
+            record = {
+                **base,
+                "basis": ("completed" if any(c.basis == "completed" for c, _, _ in parts)
+                          else "measured"),
+                "usd": usd,
+                "candidates": sum(calls for _, calls, _ in parts),
+                "register_rows": [s for cost, _, _ in parts for s in cost.sources],
+                "in_register": all(inside for _, _, inside in parts),
+                "source": ("the passes register at the uniform discounted tier "
+                           "(PI rulings D19 amended, D29, D30) via "
+                           "scripts/lib_frontier_cost.py"),
+                "note": "; ".join(n for cost, _, _ in parts for n in cost.notes),
+            }
+            published = next((PUBLISHED_LEG_COST[m] for m in members
+                              if m in PUBLISHED_LEG_COST), None)
+            if published:
+                gap = usd - published["usd"]
+                record["cross_check"] = {
+                    "published_usd": published["usd"], "source": published["source"],
+                    "gap_usd": round(gap, 6),
+                    "within_tolerance": abs(gap) <= COST_AGREEMENT_USD}
+                if abs(gap) > COST_AGREEMENT_USD:
+                    disagreements.append(
+                        f"{members[0]}: uniform tier US${usd:.4f} vs published "
+                        f"US${published['usd']:.4f} ({published['source']})")
         for config in members:
             costs[config] = record
         logger.info("%-44s %-9s US$%9.4f over %7d candidates  (%s)",
@@ -613,7 +714,7 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
                     record["candidates"] or 0,
                     ", ".join(members[:3])
                     + ("…" if len(members) > 3 else ""))
-        if record["basis"] == "unaudited":
+        if record["basis"] == "unpriced":
             logger.warning("  %s", record["note"])
     return costs, len(by_leg), disagreements
 
@@ -629,14 +730,18 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
     """
     return {OUT / COSTS: json.dumps({
         "_README": (
-            "Verifier-leg cost per configuration. basis 'audited' = "
-            "scripts/audit_verifier_cost.py read every pass of the leg; "
-            "'published' = the auditor could not (a pre-2026-09-14 cleanup "
-            "overwrote the main pass's meta, so it yields a LOWER BOUND) and "
-            "the figure is the campaign post-run report's, cited in 'source'; "
-            "'unaudited' = neither, so the leg has no usable cost and nothing "
-            "derived from it is priced. Where both exist they are required to "
-            f"agree to US${COST_AGREEMENT_USD:.2f}."),
+            "Verifier-leg cost per configuration, at the uniform discounted tier "
+            "from the passes register (PI rulings D19 amended, D29 and D30, "
+            "2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the "
+            "K-ladders are priced. basis 'measured' = the leg's own tokens; "
+            "'completed' = a floor (a cleanup-overwritten leg, or a register row "
+            "on the published basis) whose calls are priced at nominated "
+            "comparable legs' unit, listed in register_rows; 'unpriced' = no rule "
+            "prices the leg whole, so nothing derived from it is priced. "
+            "in_register false = a stage absent from the register (the S104 "
+            "vote-3 increments), priced from its own meta until the register is "
+            "repaired. cross_check compares the campaign post-run report's "
+            f"figure, which must agree within US${COST_AGREEMENT_USD:.2f}."),
         "agreement_tolerance_usd": COST_AGREEMENT_USD,
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",
         "legs": costs,
@@ -670,55 +775,6 @@ def audit_legs(check: bool = False) -> int:
                 rel(OUT / COSTS), len(costs), n_legs,
                 ", ".join(f"{n} {b}" for b, n in sorted(by_basis.items())))
     return 0
-
-
-def reconcile(leg: tuple[str, ...], members: list[str], audited: dict,
-              published: dict | None) -> dict:
-    """Settle one leg's cost between the auditor and the published figure.
-
-    Args:
-        leg: The stage directories audited.
-        members: Configurations drawing on this leg.
-        audited: The auditor's summed result for the leg.
-        published: The post-run report's figure, or ``None``.
-
-    Returns:
-        The leg record written into ``verifier-costs.json``, carrying the
-        basis the cost may be used under and, on a mismatch, a
-        ``disagreement`` the caller turns into a failure.
-    """
-    base = {"stages": list(leg), "configs": members,
-            "auditor_usd": round(audited["usd"], 6),
-            "auditor_candidates": audited["candidates"],
-            "auditor_complete": audited["complete"],
-            "auditor_notes": audited["notes"]}
-    if audited["complete"] and audited["candidates"]:
-        record = {**base, "basis": "audited", "usd": audited["usd"],
-                  "candidates": audited["candidates"],
-                  "source": "scripts/audit_verifier_cost.py over the leg's "
-                            "committed metas",
-                  "note": None}
-        if published and abs(published["usd"] - audited["usd"]) \
-                > COST_AGREEMENT_USD:
-            record["disagreement"] = (
-                f"{members[0]}: auditor US${audited['usd']:.4f} vs published "
-                f"US${published['usd']:.4f} ({published['source']})")
-        elif published:
-            record["cross_checked_against"] = published["source"]
-        return record
-    if published:
-        return {**base, "basis": "published", "usd": published["usd"],
-                "candidates": published["candidates"],
-                "source": published["source"],
-                "note": ("the auditor reads a LOWER BOUND here — a "
-                         "pre-2026-09-14 cleanup overwrote the main pass's "
-                         "meta — so the published audited figure is used; "
-                         "see auditor_notes")}
-    return {**base, "basis": "unaudited", "usd": None, "candidates": None,
-            "source": None,
-            "note": ("no usable verifier-leg cost: the auditor reads only a "
-                     "lower bound (cleanup-overwrite) and no post-run report "
-                     f"publishes this leg. Audit target: {', '.join(leg)}")}
 
 
 # ---------------------------------------------------------------------------
@@ -786,11 +842,12 @@ Read `votes` before reading `tile-MCC`.
 
 **The cost column prices the pool, not the run.** A point at k votes needs a
 verifier probability for every candidate with at least k votes — `pool @
-votes`, read off the sweep's own zero-threshold row — at the audited
-per-candidate rate of that configuration's verifier leg
-(`scripts/audit_verifier_cost.py` over the leg's committed metas, the
-auditor the campaigns' post-run reports cite; `verifier-costs.json` records
-the leg paths). {n_inherit} rows draw on a pool SMALLER than their leg:
+votes`, read off the sweep's own zero-threshold row — at the
+per-candidate rate of that configuration's verifier leg, priced at the
+uniform discounted tier from the passes register as the r2 board and the
+K-ladders are (PI rulings D29 and D30; `verifier-costs.json` records each
+leg's register rows, its basis, and the cross-check against the campaign's
+published figure). {n_inherit} rows draw on a pool SMALLER than their leg:
 they inherit probabilities from a larger verification and their `pool US$`
 is what the point alone would cost, not what was spent. {n_exceed} rows
 ask for more candidates than their leg verified (marked ⚠) — for those the
@@ -805,7 +862,7 @@ point is not reachable without further verifier spend.
 | `carried tile-MCC` / `ΔMCC` | tile-MCC at the carried point, and what the oracle adds |
 | `pool @ votes` | candidates with at least `votes` votes — the verifier pool the point needs |
 | `verified` | candidates the configuration's verifier leg actually priced |
-| `US$/cand` / `pool US$` | audited rate, and the pool at that rate |
+| `US$/cand` / `pool US$` | uniform-tier rate, and the pool at that rate |
 
 {HEADER}
 {RULE}
@@ -821,6 +878,23 @@ needs — is in [`frontier/`](frontier/frontier.md).
 
 ## Changelog
 
+### 2026-10-04 — Costs at the uniform tier, from the register
+
+**Refresh trigger**: PI rulings D29 and D30
+(`planning/pi-decisions-2026-09-20.md`). The cost column priced each leg
+through `scripts/audit_verifier_cost.py` (the dated rate card, a hand formula,
+the as-billed tier), which left twelve configurations unpriced: their legs
+were cleanup-overwritten floors. It now prices every leg at the uniform
+discounted tier from the passes register (`scripts/lib_frontier_cost.py`),
+as the r2 board and the K-ladders are: floors completed from nominated
+comparable legs, the two published-basis image legs completed from the
+identical-verifier leg of their campaign, and the S104 vote-3 increments
+priced from their own metas until the register is repaired. Every
+configuration is now priced.
+
+**Numbers that moved**: the cost columns only. Every tile-MCC, F1, vote
+count, pool size and rank is unchanged.
+
 ### 2026-09-21 — Original publication
 
 **Refresh trigger**: PI ruling 2026-09-21, superseding ruling 6c of
@@ -834,7 +908,7 @@ and the two image campaigns' twelve rung x arm cells — each at its
 unconstrained tile-MCC optimum, costed. Built from the committed sweep
 records with no re-sweep and no API.
 
-**Numbers that moved**: none. Every figure is read from a committed sweep
+**Numbers that moved**: none. Every figure was read from a committed sweep
 CSV or from `scripts/audit_verifier_cost.py` over committed metas.
 """
 
