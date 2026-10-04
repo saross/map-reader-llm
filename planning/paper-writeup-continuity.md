@@ -100,7 +100,14 @@ project state.
 >   `docs/notes/user-observations.md`. Working-notes candidates are held
 >   over (no verdict given):
 >   - S157's "the audited basis was a method, not an authority";
->   - S158's three, listed in this session's handoff and reflection.
+>   - S158 (a): a cost frontier drawn around a hole. Unpriced rows were
+>     silently excluded; once they were priced, the 3.7 runs took the
+>     frontier. Material: the abductive entry of 2026-10-04.
+>   - S158 (b): a 1,000× units error in a signed claim, found by
+>     re-deriving the row's figures at sign-off.
+>   - S158 (c): a batch-recover `pre-rerun` sidecar is a snapshot of the
+>     same jobs, not superseded spend. The US$27.85 double count was caught
+>     before merge.
 >   Claude-obs 128–131 are written.
 > - **Left for their owners:**
 >   - untracked `ib.md` and `otel_m.md` in the repo root (not this
