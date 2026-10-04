@@ -18,13 +18,17 @@ at one uniform tier from the register), this script refreshes exactly that:
   pairwise results and the addendum are not touched.
 * ``final-board-50m.md``: the ranked table's cost column, the sentence
   saying what ``cost`` is, and the "Cost efficiency" section (heading to the
-  next ``##``). The banner and the changelog are NOT touched: they are the
-  human-written revision trail the document revision policy asks for.
+  next ``##``), which holds two frontiers since PI ruling D24 (2026-10-04):
+  carried, with the addendum's post-hoc carried-analogues standing in for
+  the 3.7 rungs that have no carried cell, and oracle, the ceiling. The
+  JSON gains their memberships as ``efficiency_frontiers``. The banner and
+  the changelog are NOT touched: they are the human-written revision trail
+  the document revision policy asks for.
 
-A dry run (the default) prints every family's cost before and after and the
-efficiency frontier's membership before and after, which is what the PI is
-shown before a signed board's costs move (the signature policy: a re-pricing
-is recorded as a dated signature note, never silently).
+A dry run (the default) prints every family's cost before and after and both
+frontiers' membership, which is what the PI is shown before a signed board's
+costs move (the signature policy: a re-pricing is recorded as a dated
+signature note, never silently).
 
 Usage::
 
@@ -78,7 +82,30 @@ def membership(rows: list[dict]) -> list[str]:
     return [r["name"] for r in rows if r["frontier"] is True]
 
 
-def refresh_markdown(md: str, board: dict, eff_rows: list[dict]) -> str:
+def frontiers_of(board: dict, cost_fn=None, completed_fn=None) -> dict[str, list[dict]]:
+    """Both efficiency frontiers' rows (D24), with the addendum's carried-analogues.
+
+    Args:
+        board: The board JSON, ``addendum_cells`` included.
+        cost_fn: A label's cost (default: the mapping's, via the builder).
+        completed_fn: Whether a label's cost is completed.
+
+    Returns:
+        ``{"carried": rows, "oracle": rows}``.
+    """
+    paper_rows, by_label, tier_of, _tier1 = frontier_inputs(board)
+    analogues = {c["label"]: c for c in board.get("addendum_cells", [])}
+    return fbb.frontier_rows(paper_rows, by_label, tier_of, analogues,
+                             cost_fn=cost_fn, completed_fn=completed_fn)
+
+
+def frontier_labels(frontiers: dict[str, list[dict]]) -> dict[str, list[str]]:
+    """Each frontier's member cell labels, cheapest first, for the board JSON."""
+    return {name: [r["label"] for r in rows if r["frontier"] is True]
+            for name, rows in frontiers.items()}
+
+
+def refresh_markdown(md: str, board: dict, frontiers: dict[str, list[dict]]) -> str:
     """The document with its cost column, cost sentence and efficiency section re-priced.
 
     Raises:
@@ -113,7 +140,7 @@ def refresh_markdown(md: str, board: dict, eff_rows: list[dict]) -> str:
     nxt = rest.find("\n## ")
     if nxt < 0:
         raise SystemExit("no section follows the cost-efficiency section")
-    section = "\n".join(fbb.render_efficiency(eff_rows))
+    section = "\n".join(fbb.render_efficiency(frontiers))
     return head + section + "\n" + rest[nxt:]
 
 
@@ -126,12 +153,8 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     json_path, md_path = board_paths(args.reference)
     board = json.loads(json_path.read_text(encoding="utf-8"))
-    paper_rows, by_label, tier_of, tier1 = frontier_inputs(board)
-
     old_cost = {c["label"]: c.get("cost_usd") for c in board["cells"]}
-    before = fbb.efficiency_rows(paper_rows, by_label, tier_of, tier1,
-                                 cost_fn=old_cost.get, completed_fn=lambda _: False)
-    after = fbb.efficiency_rows(paper_rows, by_label, tier_of, tier1)
+    frontiers = frontiers_of(board)
 
     print(f"{'family':12} {'before':>9} {'after':>9}  basis")
     seen = set()
@@ -144,10 +167,10 @@ def main(argv: list[str] | None = None) -> int:
         cost = fbb.family_cost(fam)
         print(f"{fam:12} {('$%.2f' % prior) if prior is not None else '—':>9} "
               f"${cost.usd:8.2f}  {cost.basis}")
-    print("\nfrontier before:", " -> ".join(membership(before)))
-    print("frontier after: ", " -> ".join(membership(after)))
+    print("\ncarried frontier:", " -> ".join(membership(frontiers["carried"])))
+    print("oracle frontier: ", " -> ".join(membership(frontiers["oracle"])))
 
-    md = refresh_markdown(md_path.read_text(encoding="utf-8"), board, after)
+    md = refresh_markdown(md_path.read_text(encoding="utf-8"), board, frontiers)
     if not args.write:
         print("\n(dry run: nothing written; --write applies it)")
         return 0
@@ -155,6 +178,10 @@ def main(argv: list[str] | None = None) -> int:
         c["cost_usd"] = fbb.cost_of(c["label"])
         c["cost_basis"] = fbb.family_cost(fbb.family_of(c["label"])).basis
     board["cost_axis"] = fbb.COST_AXIS
+    board["efficiency_frontiers"] = {
+        "ruling": "D24, 2026-10-04 (planning/pi-decisions-2026-09-20.md)",
+        **frontier_labels(frontiers),
+    }
     json_path.write_text(json.dumps(board, indent=2) + "\n", encoding="utf-8")
     md_path.write_text(md, encoding="utf-8")
     shown = [str(p.relative_to(PROJECT_ROOT)) if p.is_relative_to(PROJECT_ROOT) else str(p)

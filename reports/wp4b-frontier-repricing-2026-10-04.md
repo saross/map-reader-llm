@@ -1,6 +1,9 @@
 # WP4b: the frontiers re-priced from the register — walkthrough for the PI
 
-> **Last revised**: 2026-10-04 (the PI's sign-offs: all three signature
+> **Last revised**: 2026-10-04 (later, Session 159: § 2's carried frontier
+> corrected — it omitted B-N3-carried — and the oracle-versus-carried
+> decision ruled, D24: both frontiers on the board). Earlier: (the PI's
+> sign-offs: all three signature
 > notes given; the T0.7 families reconciled; a K-ladder units error
 > corrected). See
 > [§ Changelog](#changelog) for revision history.
@@ -61,11 +64,15 @@ dominated: the old frontier was an artefact of their missing costs. A
 caution for the paper: ALL FIVE new frontier rows are ORACLE cells (the
 board's deployment basis where no carried point exists, as for every run),
 where four of the old five were carried. On the carried basis the frontier
-would run A N = 1 → ARM2-N1-carried (0.8459, US$38) → FOURTH-N3-carried
-(0.8744, US$81) → ARM2-N3-carried (0.8802, US$99) → ARM2 N = 5 carried
-(0.8827, US$159), those N < 5 carried cells being the addendum's post-hoc
-carried-analogues; only ARM1-N1-carried (0.7859 at US$35) drops out,
-dominated by A N = 1 (0.8227 at US$20.40).
+runs A N = 1 → ARM2-N1-carried (0.8459, US$38) → B-N3-carried (0.8477,
+US$65) → FOURTH-N3-carried (0.8744, US$81) → ARM2-N3-carried (0.8802,
+US$99) → ARM2 N = 5 carried (0.8827, US$159), the 3.7 N < 5 carried cells
+being the addendum's post-hoc carried-analogues; ARM1-N1-carried (0.7859
+at US$35) drops out, dominated by A N = 1 (0.8227 at US$20.40).
+**Corrected 2026-10-04 (Session 159):** this paragraph first omitted
+B-N3-carried, which beats ARM2-N1-carried by 0.0018 F1 and so is on the
+carried frontier. The PI then ruled for both frontiers on the board (D24);
+the board's efficiency section now shows them.
 
 Applied by `scripts/final_board_cost_refresh.py`, which rewrites only the
 cost fields, the cost sentence and the efficiency section; the tiered
@@ -190,6 +197,17 @@ The drafts as first proposed, kept for the record:
   unchanged."
 
 ## Changelog
+
+### 2026-10-04 (Session 159) — carried frontier corrected; D24 executed
+
+Recomputed with the board's own row selection before the decision went to the
+PI: B-N3-carried (0.8477, US$65.10) is on the carried frontier, between
+ARM2-N1-carried and FOURTH-N3-carried, and § 2 had left it out. The PI ruled
+for both frontiers on the one signed board (D24,
+`planning/pi-decisions-2026-09-20.md`); the board's efficiency section and
+`efficiency_frontiers` JSON block now carry them
+(`results/55map-final-board-r2-2026-09-06/`). § 5.2's fourth-cell defect is
+corrected in the draft and in the two reports it came from (D26).
 
 ### 2026-10-04 (sign-offs) — notes given; T0.7 reconciled; units corrected
 

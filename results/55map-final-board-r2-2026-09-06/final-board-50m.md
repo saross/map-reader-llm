@@ -1,9 +1,11 @@
 # The final 55-map board @ 50 m — every run, carried and oracle (reference r2)
 
-> **Last revised**: 2026-10-04 (the cost axis re-priced from the passes
-> register at one uniform tier, PI ruling D19 amended; every run now
-> priced, so the efficiency frontier's membership changes; tiers, groups
-> and F1 unchanged; signature note pending). See
+> **Last revised**: 2026-10-04 (later: the cost-efficiency section now
+> shows TWO frontiers, carried beside oracle, under PI ruling D24; tiers,
+> groups, F1 and costs unchanged). Earlier the same day: the cost axis
+> re-priced from the passes register at one uniform tier, PI ruling D19
+> amended; every run now priced, so the efficiency frontier's membership
+> changes; signature note given 2026-10-04T00:25:02Z. See
 > [§ Changelog](#changelog) for revision history.
 > Card:
 > `planning/55map-final-board-2026-08-27.md`. Reference:
@@ -103,43 +105,78 @@ the board as E82's like-for-like comparability derivation.
 
 ## Cost efficiency: what a dollar buys
 
-One row per run at its DEPLOYMENT basis (carried where one
-exists, otherwise the rung oracle, marked). `$/mound` is the
-run's cost at the uniform discounted tier (D19) per true-positive
-mound at 50 m — the project's established per-mound economics.
-`marginal $/+0.01 F1` prices each step UP the cost-sorted Pareto
-frontier (— = dominated: a cheaper run scores higher). Plain
-F1-per-dollar is deliberately omitted — it is maximised by the
-cheapest run almost regardless of quality. `†`: a verifier
-leg completed from comparable legs.
+Two frontiers over the same runs and the same costs (PI ruling D24,
+2026-10-04). The CARRIED frontier takes each run at an operating
+point fixed before deployment scoring: its carried cell where one
+exists; for the 3.7 rungs below their full runs, which have none,
+the addendum's post-hoc carried-analogue (labelled, and untiered
+because it is not a board cell); and the rung oracle only where a
+run has neither (marked by its basis). The ORACLE frontier takes
+every run at its rung oracle, the argmax over the deployment sweep:
+the ceiling that better calibration transfer could reach, not
+achieved performance. `$/mound` is the run's cost at the uniform
+discounted tier (D19) per true-positive mound at 50 m — the
+project's established per-mound economics. `marginal $/+0.01 F1`
+prices each step UP the cost-sorted Pareto frontier (— =
+dominated: a cheaper run scores higher). Plain F1-per-dollar is
+deliberately omitted — it is maximised by the cheapest run almost
+regardless of quality. `†`: a verifier leg completed from
+comparable legs.
+
+### The carried frontier
 
 | run | basis | cost | F1@50 (tier) | TP mounds | $/mound | frontier | marginal $/+0.01 F1 |
 |---|---|---:|---|---:|---:|---|---:|
 | A, N = 1 | oracle | $20† | 0.8227 (T9) | 4,071 | $0.0050 | YES | — |
 | text-min (K = 5) | carried | $30† | 0.7826 (T11) | 3,476 | $0.0087 | — | — |
 | B, N = 1 | oracle | $31 | 0.8013 (T10) | 4,276 | $0.0072 | — | — |
-| 3.7 arm 1, N = 1 | oracle | $35 | 0.8413 (T6) | 4,306 | $0.0081 | YES | $7.71 |
-| 3.7 arm 2, N = 1 | oracle | $38 | 0.8610 (T4) | 4,322 | $0.0089 | YES | $1.82 |
+| 3.7 arm 1, N = 1 | carried-analogue (post-hoc) | $35 | 0.7859 (untiered) | 4,589 | $0.0076 | — | — |
+| 3.7 arm 2, N = 1 | carried-analogue (post-hoc) | $38 | 0.8459 (untiered) | 4,633 | $0.0083 | YES | $7.73 |
 | A, N = 3 | carried (post-hoc) | $41† | 0.8307 (T8) | 3,912 | $0.0105 | — | — |
-| fourth cell, N = 1 | oracle | $42† | 0.8352 (T7) | 4,324 | $0.0097 | — | — |
+| fourth cell, N = 1 | carried-analogue (post-hoc) | $42† | 0.8348 (untiered) | 4,321 | $0.0098 | — | — |
 | min-uplift (K = 10) | oracle | $58 | 0.8274 (T8) | 3,880 | $0.0149 | — | — |
 | A, N = 5 | carried | $59† | 0.8383 (T7) | 4,030 | $0.0148 | — | — |
-| B, N = 3 | carried (post-hoc) | $65 | 0.8477 (T6) | 4,234 | $0.0154 | — | — |
-| fourth cell, N = 3 | oracle | $81† | 0.8747 (T3) | 4,218 | $0.0193 | YES | $31.44 |
-| 3.7 arm 1, N = 3 | oracle | $94 | 0.8705 (T3) | 4,261 | $0.0221 | — | — |
+| B, N = 3 | carried (post-hoc) | $65 | 0.8477 (T6) | 4,234 | $0.0154 | YES | $148.70 |
+| fourth cell, N = 3 | carried-analogue (post-hoc) | $81† | 0.8744 (untiered) | 4,215 | $0.0193 | YES | $6.11 |
+| 3.7 arm 1, N = 3 | carried-analogue (post-hoc) | $94 | 0.8469 (untiered) | 4,446 | $0.0212 | — | — |
 | B, N = 5 | carried | $97 | 0.8503 (T5) | 4,147 | $0.0233 | — | — |
-| 3.7 arm 2, N = 3 | oracle | $99 | 0.8848 (T1) | 4,475 | $0.0221 | YES | $17.45 |
-| ARM2-N3-oracle (T1 ceiling) | oracle | $99 | 0.8848 (T1) | 4,475 | $0.0221 | ceiling | — |
+| 3.7 arm 2, N = 3 | carried-analogue (post-hoc) | $99 | 0.8802 (untiered) | 4,491 | $0.0221 | YES | $30.39 |
 | A, N = 10 (384/33 %) | carried | $103† | 0.8391 (T7) | 3,983 | $0.0260 | — | — |
 | 3.7 arm 1: 3.7 proposer + G3 verifier, N = 5 | carried | $153 | 0.8551 (T4) | 4,381 | $0.0350 | — | — |
-| 3.7 arm 2: all-3.7 stack, N = 5 | carried | $159 | 0.8827 (T2) | 4,423 | $0.0359 | — | — |
-| ARM2-N5-oracle (T1 ceiling) | oracle | $159 | 0.8871 (T1) | 4,410 | $0.0360 | ceiling | — |
+| 3.7 arm 2: all-3.7 stack, N = 5 | carried | $159 | 0.8827 (T2) | 4,423 | $0.0359 | YES | $238.20 |
 | B, N = 10 (384/50 %) | carried | $173 | 0.8497 (T5) | 4,046 | $0.0427 | — | — |
 | fourth cell: B K = 10 union + 3.7 verifier | carried | $198† | 0.8728 (T3) | 4,043 | $0.0490 | — | — |
 | image (HIGH, K = 5) — as shipped (k3) | as-shipped (k3) | $201† | 0.8008 (T10) | 3,883 | $0.0517 | — | — |
 | image comparability (k4, E82) | comparability (k4) | $201† | 0.7398 (T12) | 3,166 | $0.0634 | — | — |
 | T0.7 (HIGH, K = 5) | carried | $207 | 0.8162 (T9) | 3,747 | $0.0553 | — | — |
 | T0.3 (HIGH, K = 5) | carried | $261 | 0.8294 (T8) | 3,885 | $0.0672 | — | — |
+
+### The oracle frontier (the ceiling)
+
+| run | basis | cost | F1@50 (tier) | TP mounds | $/mound | frontier | marginal $/+0.01 F1 |
+|---|---|---:|---|---:|---:|---|---:|
+| A, N = 1 | oracle | $20† | 0.8227 (T9) | 4,071 | $0.0050 | YES | — |
+| text-min (K = 5) | oracle | $30† | 0.8103 (T10) | 3,717 | $0.0082 | — | — |
+| B, N = 1 | oracle | $31 | 0.8013 (T10) | 4,276 | $0.0072 | — | — |
+| 3.7 arm 1, N = 1 | oracle | $35 | 0.8413 (T6) | 4,306 | $0.0081 | YES | $7.71 |
+| 3.7 arm 2, N = 1 | oracle | $38 | 0.8610 (T4) | 4,322 | $0.0089 | YES | $1.82 |
+| A, N = 3 | oracle | $41† | 0.8321 (T8) | 4,083 | $0.0100 | — | — |
+| fourth cell, N = 1 | oracle | $42† | 0.8352 (T7) | 4,324 | $0.0097 | — | — |
+| min-uplift (K = 10) | oracle | $58 | 0.8274 (T8) | 3,880 | $0.0149 | — | — |
+| A, N = 5 | oracle | $59† | 0.8383 (T7) | 4,030 | $0.0148 | — | — |
+| B, N = 3 | oracle | $65 | 0.8507 (T5) | 4,164 | $0.0156 | — | — |
+| fourth cell, N = 3 | oracle | $81† | 0.8747 (T3) | 4,218 | $0.0193 | YES | $31.44 |
+| 3.7 arm 1, N = 3 | oracle | $94 | 0.8705 (T3) | 4,261 | $0.0221 | — | — |
+| B, N = 5 | oracle | $97 | 0.8516 (T5) | 4,081 | $0.0237 | — | — |
+| 3.7 arm 2, N = 3 | oracle | $99 | 0.8848 (T1) | 4,475 | $0.0221 | YES | $17.45 |
+| A, N = 10 (384/33 %) | oracle | $103† | 0.8419 (T6) | 4,065 | $0.0254 | — | — |
+| 3.7 arm 1: 3.7 proposer + G3 verifier, N = 5 | oracle | $153 | 0.8727 (T3) | 4,204 | $0.0364 | — | — |
+| 3.7 arm 2: all-3.7 stack, N = 5 | oracle | $159 | 0.8871 (T1) | 4,410 | $0.0360 | YES | $258.91 |
+| B, N = 10 (384/50 %) | oracle | $173 | 0.8560 (T4) | 4,133 | $0.0418 | — | — |
+| fourth cell: B K = 10 union + 3.7 verifier | oracle | $198† | 0.8813 (T2) | 4,192 | $0.0473 | — | — |
+| image (HIGH, K = 5) — as shipped (k3) | as-shipped (k3) | $201† | 0.8008 (T10) | 3,883 | $0.0517 | — | — |
+| T0.7 (HIGH, K = 5) | oracle | $207 | 0.8380 (T7) | 4,108 | $0.0505 | — | — |
+| T0.3 (HIGH, K = 5) | oracle | $261 | 0.8399 (T6) | 4,107 | $0.0636 | — | — |
 
 ## Post-hoc: the emergent N = 3 carried cells
 
@@ -248,6 +285,46 @@ re-labelled in `cells_manifest.json`.
   point was ever registered there).
 
 ## Changelog
+
+### 2026-10-04 (later) — Two efficiency frontiers, carried and oracle (D24)
+
+**Refresh trigger**: PI ruling D24 (`planning/pi-decisions-2026-09-20.md`),
+the presentation queued at Session 158's close: keep this one signed board
+and show a carried frontier beside the oracle frontier. The re-priced section
+of the entry below had a single table on the deployment basis (carried where
+a registered carried cell exists, otherwise the rung oracle), on which all
+five new frontier steps were oracle cells. The section now holds:
+
+- **the carried frontier**: each run at an operating point fixed before
+  deployment scoring. For the six 3.7 rungs below their full runs, which have
+  no registered carried cell, the addendum's post-hoc carried-analogues stand
+  in, labelled and shown as untiered (they are not board cells). Runs with
+  neither (A N = 1, B N = 1, the uplift) keep their rung oracle, marked;
+- **the oracle frontier (the ceiling)**: every run at its rung oracle. It
+  replaces the two Tier-1 ceiling rows the single table carried.
+
+| Frontier | Members, cheapest first |
+|---|---|
+| deployment basis (before) | A N1 → 3.7 arm 1 N1 → 3.7 arm 2 N1 → fourth N3 → 3.7 arm 2 N3 |
+| carried | A N1 (oracle) → ARM2-N1-carried → B-N3-carried → FOURTH-N3-carried → ARM2-N3-carried → ARM2-N5-carried |
+| oracle | A N1 → ARM1 N1 → ARM2 N1 → FOURTH N3 → ARM2 N3 → ARM2 N5 |
+
+B N = 3 carried (0.8477, $65) is on the carried frontier because it beats
+ARM2-N1-carried (0.8459, $38). It is a poor buy at $148.70 per +0.01 F1, but
+it is not dominated; the Session 158 walkthrough's carried path had left it
+out (corrected there). `final_board_50m.json` gains `efficiency_frontiers`,
+the two memberships by cell label.
+
+**How**: `scripts/final_board_build.py` gains `CARRIED_ANALOGUES` and
+`frontier_rows`, and `render_efficiency` renders both tables;
+`scripts/final_board_cost_refresh.py` supplies the addendum's analogues
+(`frontiers_of`) and rewrote only the efficiency section and the new JSON
+block. Tier-1 tests pin both memberships
+(`tests/test_final_board_cost_refresh.py`).
+
+**What did NOT change**: every tier, group, pairwise result, F1, tile-MCC and
+cost; the ranked table; the addendum; the signature, whose cost-axis note of
+00:25:02Z covers this section's figures.
 
 ### 2026-10-04 — Cost axis re-priced from the register (WP4b)
 

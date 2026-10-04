@@ -9164,5 +9164,24 @@
     "mapping": "data/pricing/frontier-configurations.json",
     "priced_by": "scripts/lib_frontier_cost.py",
     "cost_basis": "measured: the family's own register tokens; completed: a verifier leg that is a floor in the register, priced at nominated comparable legs' pooled per-candidate unit"
+  },
+  "efficiency_frontiers": {
+    "ruling": "D24, 2026-10-04 (planning/pi-decisions-2026-09-20.md)",
+    "carried": [
+      "A-N1-oracle",
+      "ARM2-N1-carried",
+      "B-N3-carried",
+      "FOURTH-N3-carried",
+      "ARM2-N3-carried",
+      "ARM2-N5-carried"
+    ],
+    "oracle": [
+      "A-N1-oracle",
+      "ARM1-N1-oracle",
+      "ARM2-N1-oracle",
+      "FOURTH-N3-oracle",
+      "ARM2-N3-oracle",
+      "ARM2-N5-oracle"
+    ]
   }
 }

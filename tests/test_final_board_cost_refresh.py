@@ -17,6 +17,7 @@ from scripts.final_board_cost_refresh import (
     OLD_SENTENCE,
     board_paths,
     frontier_inputs,
+    frontiers_of,
     main,
     membership,
     refresh_markdown,
@@ -46,7 +47,7 @@ def test_the_committed_board_carries_the_mappings_costs(committed):
 @pytest.mark.tier1
 def test_the_refresh_is_idempotent_on_the_committed_board(committed):
     board, md = committed
-    rows = fbb.efficiency_rows(*frontier_inputs(board))
+    rows = frontiers_of(board)
     assert refresh_markdown(md, board, rows) == md
 
 
@@ -56,7 +57,7 @@ def test_the_refresh_changes_only_the_cost_axis(committed):
     # back unchanged. (Stale COSTS are the next test's sentinel.)
     board, md = committed
     old_md = md.replace("\n".join(fbb.COST_SENTENCE), "\n".join(OLD_SENTENCE))
-    refreshed = refresh_markdown(old_md, board, fbb.efficiency_rows(*frontier_inputs(board)))
+    refreshed = refresh_markdown(old_md, board, frontiers_of(board))
     assert refreshed == md
     head = md.split("## Cost efficiency: what a dollar buys")[0]
     assert "| 1 | ARM2-N5-oracle |" in head  # the ranked table is still there
@@ -65,7 +66,7 @@ def test_the_refresh_changes_only_the_cost_axis(committed):
 @pytest.mark.tier1
 def test_a_document_of_another_shape_is_refused(committed):
     board, md = committed
-    rows = fbb.efficiency_rows(*frontier_inputs(board))
+    rows = frontiers_of(board)
     with pytest.raises(SystemExit, match="cost-efficiency section"):
         refresh_markdown(md.replace("## Cost efficiency: what a dollar buys", "## X"),
                          board, rows)
@@ -75,7 +76,8 @@ def test_a_document_of_another_shape_is_refused(committed):
 
 @pytest.mark.tier1
 def test_the_efficiency_frontier_is_the_priced_one(committed):
-    # The frontier the PI reviews (2026-10-04): every run priced.
+    # The frontier the PI reviewed (2026-10-04): every run priced, on the
+    # deployment basis (carried where a registered carried cell exists).
     board, _ = committed
     rows = fbb.efficiency_rows(*frontier_inputs(board))
     assert membership(rows) == ["A, N = 1", "3.7 arm 1, N = 1", "3.7 arm 2, N = 1",
@@ -88,6 +90,38 @@ def test_the_efficiency_frontier_is_the_priced_one(committed):
                                  cost_fn=lambda lbl: old.get(fbb.family_of(lbl)),
                                  completed_fn=lambda _: False)
     assert membership(before) == ["A, N = 1", "A, N = 3", "A, N = 5", "B, N = 3", "B, N = 5"]
+
+
+@pytest.mark.tier1
+def test_the_two_frontiers_of_d24(committed):
+    # PI ruling D24 (2026-10-04): a carried frontier, the 3.7 rungs at their
+    # addendum carried-analogues, beside the oracle frontier as the ceiling.
+    board, md = committed
+    frontiers = frontiers_of(board)
+    # B N = 3 carried (0.8477) beats ARM2 N = 1 carried (0.8459): the step the
+    # S158 walkthrough's carried path had left out.
+    assert membership(frontiers["carried"]) == [
+        "A, N = 1", "3.7 arm 2, N = 1", "B, N = 3", "fourth cell, N = 3",
+        "3.7 arm 2, N = 3", "3.7 arm 2: all-3.7 stack, N = 5"]
+    assert membership(frontiers["oracle"]) == [
+        "A, N = 1", "3.7 arm 1, N = 1", "3.7 arm 2, N = 1", "fourth cell, N = 3",
+        "3.7 arm 2, N = 3", "3.7 arm 2: all-3.7 stack, N = 5"]
+    carried = {r["name"]: r for r in frontiers["carried"]}
+    assert carried["3.7 arm 2, N = 1"]["label"] == "ARM2-N1-carried"
+    assert carried["3.7 arm 2, N = 1"]["basis"] == "carried-analogue (post-hoc)"
+    assert carried["3.7 arm 2, N = 1"]["tier"] is None  # untiered: not a board cell
+    assert carried["A, N = 1"]["basis"] == "oracle"  # no carried point exists
+    # The oracle frontier holds oracle cells only, and no ceiling rows.
+    assert all(r["label"].endswith("-oracle") for r in frontiers["oracle"])
+    assert not any(r["frontier"] == "ceiling" for rows in frontiers.values() for r in rows)
+    # The committed document and JSON carry both.
+    section = md.split("## Cost efficiency: what a dollar buys")[1].split("\n## ")[0]
+    assert "### The carried frontier" in section
+    assert "### The oracle frontier (the ceiling)" in section
+    assert "| 3.7 arm 2, N = 1 | carried-analogue (post-hoc) | $38 | 0.8459 (untiered) |" \
+        in section
+    assert board["efficiency_frontiers"]["carried"][2] == "B-N3-carried"
+    assert board["efficiency_frontiers"]["oracle"][-1] == "ARM2-N5-oracle"
 
 
 @pytest.mark.tier1
@@ -129,7 +163,7 @@ def test_the_refresh_rewrites_a_stale_cost_column_and_section(committed, monkeyp
     stale = "\n".join(lines)
     monkeypatch.setattr(fbb, "cost_of", old_cost)
     monkeypatch.setattr(fbb, "cost_completed", lambda _lbl: False)
-    stale_section = "\n".join(fbb.render_efficiency(fbb.efficiency_rows(*frontier_inputs(board))))
+    stale_section = "\n".join(fbb.render_efficiency(frontiers_of(board)))
     head, rest = stale.split("## Cost efficiency: what a dollar buys", 1)
     stale = head + stale_section + "\n" + rest[rest.find("\n## "):]
     stale = stale.replace("\n".join(fbb.COST_SENTENCE), "\n".join(OLD_SENTENCE))
@@ -139,7 +173,7 @@ def test_the_refresh_rewrites_a_stale_cost_column_and_section(committed, monkeyp
     assert "3.7 arm 1, N = 1" not in stale.split("## Cost efficiency")[1].split("\n## ")[0]
     monkeypatch.setattr(fbb, "cost_of", real_cost_of)
     monkeypatch.setattr(fbb, "cost_completed", real_completed)
-    assert refresh_markdown(stale, board, fbb.efficiency_rows(*frontier_inputs(board))) == md
+    assert refresh_markdown(stale, board, frontiers_of(board)) == md
 
 
 @pytest.mark.tier1

@@ -251,7 +251,9 @@ def efficiency_rows(paper_rows: list[tuple], by_label: dict[str, dict],
             "name": row_name, "label": lbl,
             "basis": DISPLAY_BASIS.get(row_name, c["basis"]),
             "cost": cost, "completed": completed_fn(lbl), "f1": c["f1_50"],
-            "tier": tier_of[lbl], "tp": tp,
+            # An addendum carried-analogue is untiered: it is not one of the
+            # board's cells, so it has no tier (shown as "untiered").
+            "tier": tier_of.get(lbl), "tp": tp,
             "usd_per_mound": cost / tp})
     eff_rows.sort(key=lambda r: r["cost"])
     best_so_far = 0.0
@@ -283,21 +285,71 @@ def efficiency_rows(paper_rows: list[tuple], by_label: dict[str, dict],
     return eff_rows
 
 
-def render_efficiency(eff_rows: list[dict]) -> list[str]:
-    """The "Cost efficiency" section, heading to table, as markdown lines."""
+#: The 3.7 campaign's rungs below each full run have no registered carried
+#: cell. On the carried frontier the r2 addendum's post-hoc carried-analogues
+#: stand in for them, labelled as post-hoc (PI ruling D24, 2026-10-04,
+#: ``planning/pi-decisions-2026-09-20.md``). FOURTH-N5-carried is in the
+#: addendum too, but the fourth cell's N = 5 rung is not a board row.
+CARRIED_ANALOGUES = {
+    "3.7 arm 1, N = 3": "ARM1-N3-carried",
+    "3.7 arm 1, N = 1": "ARM1-N1-carried",
+    "3.7 arm 2, N = 3": "ARM2-N3-carried",
+    "3.7 arm 2, N = 1": "ARM2-N1-carried",
+    "fourth cell, N = 3": "FOURTH-N3-carried",
+    "fourth cell, N = 1": "FOURTH-N1-carried",
+}
+
+
+def frontier_rows(paper_rows: list[tuple], by_label: dict[str, dict],
+                  tier_of: dict[str, int], analogues: dict[str, dict] | None = None,
+                  cost_fn=None, completed_fn=None) -> dict[str, list[dict]]:
+    """The two efficiency frontiers' rows: carried and oracle (PI ruling D24).
+
+    The CARRIED frontier takes each run at an operating point fixed before
+    deployment scoring: its carried cell where one exists, else the
+    addendum's post-hoc carried-analogue (``CARRIED_ANALOGUES``), else its
+    rung oracle (marked by its basis). The ORACLE frontier takes every run
+    that has one at its rung oracle: the ceiling, not achieved performance.
+
+    Args:
+        paper_rows: ``(row name, carried label, oracle label)`` on this board.
+        by_label: Board cells by label.
+        tier_of: Each board cell's tier.
+        analogues: Addendum cells by label. ``None`` (as at a full rebuild,
+            before ``scripts/final_board_addendum_render.py`` has run) leaves
+            the carried frontier on the deployment basis; the cost refresh
+            then substitutes the analogues.
+        cost_fn: Passed to :func:`efficiency_rows`.
+        completed_fn: Passed to :func:`efficiency_rows`.
+
+    Returns:
+        ``{"carried": rows, "oracle": rows}``, each as :func:`efficiency_rows`
+        returns them, with no Tier-1 ceiling rows (the oracle frontier is the
+        ceiling).
+
+    Example:
+        >>> rows = frontier_rows(paper_rows, by_label, tier_of, analogues)
+        >>> [r["name"] for r in rows["oracle"] if r["frontier"] is True][0]
+        'A, N = 1'
+    """
+    analogues = analogues or {}
+    cells = {**by_label, **analogues}
+    carried = []
+    for name, carried_lbl, oracle_lbl in paper_rows:
+        sub = CARRIED_ANALOGUES.get(name)
+        if carried_lbl is None and sub in analogues:
+            carried_lbl = sub
+        carried.append((name, carried_lbl, oracle_lbl))
+    oracle = [(name, None, o) for name, _c, o in paper_rows if o is not None]
+    return {
+        "carried": efficiency_rows(carried, cells, tier_of, [], cost_fn, completed_fn),
+        "oracle": efficiency_rows(oracle, cells, tier_of, [], cost_fn, completed_fn),
+    }
+
+
+def _efficiency_table(eff_rows: list[dict]) -> list[str]:
+    """One frontier's markdown table."""
     lines = [
-        "## Cost efficiency: what a dollar buys",
-        "",
-        "One row per run at its DEPLOYMENT basis (carried where one",
-        "exists, otherwise the rung oracle, marked). `$/mound` is the",
-        "run's cost at the uniform discounted tier (D19) per true-positive",
-        "mound at 50 m — the project's established per-mound economics.",
-        "`marginal $/+0.01 F1` prices each step UP the cost-sorted Pareto",
-        "frontier (— = dominated: a cheaper run scores higher). Plain",
-        "F1-per-dollar is deliberately omitted — it is maximised by the",
-        f"cheapest run almost regardless of quality. `{COMPLETED_MARK}`: a verifier",
-        "leg completed from comparable legs.",
-        "",
         "| run | basis | cost | F1@50 (tier) | TP mounds | $/mound | "
         "frontier | marginal $/+0.01 F1 |",
         "|---|---|---:|---|---:|---:|---|---:|",
@@ -307,11 +359,50 @@ def render_efficiency(eff_rows: list[dict]) -> list[str]:
                 and r["frontier"] and "marginal" in r else "—")
         front = ("ceiling" if r["frontier"] == "ceiling"
                  else "YES" if r["frontier"] else "—")
+        tier = "untiered" if r["tier"] is None else f"T{r['tier']}"
         lines.append(
             f"| {r['name']} | {r['basis']} | {fmt_cost(r['cost'], r['completed'])} | "
-            f"{r['f1']:.4f} (T{r['tier']}) | {r['tp']:,} | "
+            f"{r['f1']:.4f} ({tier}) | {r['tp']:,} | "
             f"${r['usd_per_mound']:.4f} | {front} | {marg} |")
     return lines
+
+
+def render_efficiency(frontiers: dict[str, list[dict]]) -> list[str]:
+    """The "Cost efficiency" section, heading to both tables, as markdown lines.
+
+    Args:
+        frontiers: ``{"carried": rows, "oracle": rows}`` from
+            :func:`frontier_rows`.
+    """
+    return [
+        "## Cost efficiency: what a dollar buys",
+        "",
+        "Two frontiers over the same runs and the same costs (PI ruling D24,",
+        "2026-10-04). The CARRIED frontier takes each run at an operating",
+        "point fixed before deployment scoring: its carried cell where one",
+        "exists; for the 3.7 rungs below their full runs, which have none,",
+        "the addendum's post-hoc carried-analogue (labelled, and untiered",
+        "because it is not a board cell); and the rung oracle only where a",
+        "run has neither (marked by its basis). The ORACLE frontier takes",
+        "every run at its rung oracle, the argmax over the deployment sweep:",
+        "the ceiling that better calibration transfer could reach, not",
+        "achieved performance. `$/mound` is the run's cost at the uniform",
+        "discounted tier (D19) per true-positive mound at 50 m — the",
+        "project's established per-mound economics. `marginal $/+0.01 F1`",
+        "prices each step UP the cost-sorted Pareto frontier (— =",
+        "dominated: a cheaper run scores higher). Plain F1-per-dollar is",
+        "deliberately omitted — it is maximised by the cheapest run almost",
+        f"regardless of quality. `{COMPLETED_MARK}`: a verifier leg completed from",
+        "comparable legs.",
+        "",
+        "### The carried frontier",
+        "",
+        *_efficiency_table(frontiers["carried"]),
+        "",
+        "### The oracle frontier (the ceiling)",
+        "",
+        *_efficiency_table(frontiers["oracle"]),
+    ]
 
 
 def compact_letters(ordered_labels: list[str],
@@ -737,9 +828,10 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
         "carried and oracle entries are the same cell); IM-k4 remains on",
         "the board as E82's like-for-like comparability derivation.",
     ]
-    # ---- Cost-efficiency table: one row per run, deployment basis. ----
-    eff_rows = efficiency_rows(paper_rows, by_label, tier_of, tiers[0])
-    lines += ["", *render_efficiency(eff_rows)]
+    # ---- Cost efficiency: the carried and oracle frontiers (D24). The
+    # addendum's carried-analogues do not exist yet at a full rebuild; the
+    # cost refresh (scripts/final_board_cost_refresh.py) substitutes them. ----
+    lines += ["", *render_efficiency(frontier_rows(paper_rows, by_label, tier_of))]
     lines += [
         "",
         "## Post-hoc: the emergent N = 3 carried cells",
