@@ -1,6 +1,14 @@
 {
-  "cost_basis": "audited",
+  "cost_basis": "audited-lower-bound",
   "cost_usd": 0.000638,
+  "coverage": {
+    "accounted_candidates": 1,
+    "floor": 0.9,
+    "lower_bound": true,
+    "method": "scripts/lib_pass_cost.py verifier_coverage, as PassCoster.cost_pass applies it",
+    "note": "LOWER bound: the meta accounts for 1 candidate(s) against 572 results in probabilities.json, below the register's 90% coverage floor: the leg's other calls are not recorded here (as the register reads it, a later leg such as a cleanup overwrote the main meta), so this is a floor on the leg's spend",
+    "results": 572
+  },
   "fragment": {
     "cost_usd": 0.000638,
     "evidence": [
