@@ -2883,3 +2883,20 @@ it. Size is not a proxy for risk when the code feeds a signed board.
 audit before it reaches `main`, however small; if that is too heavy for one
 change, batch it into the next PR that will be audited, rather than
 shipping it unaudited.
+
+## claude-obs 136 — 2026-10-04: He grants autonomy with a stop condition attached
+
+**Pattern.** Closing the session he wrote "If you don't run into any other
+issues, go ahead and do (4) too": permission to start a multi-hour
+investigation unsupervised, bounded by a condition rather than a scope. The
+same message answered (2) as a question to be corrected ("if I'm wrong,
+tell me") and settled (3) as a ruling with a reporting requirement.
+
+**Lesson.** A conditional grant is a stop rule, not a formality. "Other
+issues" includes anything that would need his judgement: a register change
+beyond what was ruled, spend, or a finding that changes a signed claim.
+
+**How to apply.** Under a conditional grant, keep going while the work stays
+inside what is already ruled, and stop and report at the first finding that
+needs a decision, with the work up to that point committed, rather than
+resolving it myself to keep going.
