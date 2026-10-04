@@ -1424,3 +1424,29 @@ discard / replace; an unanswered gate holds over.*
   signed K-ladder row surfaced while I was preparing that row's sign-off,
   at the end of a long session. Useful to have it then, or would he rather
   defects in signed claims were batched for a separate review?
+
+## S159 candidates (pending review, 2026-10-04, drafted at handoff) — silence never discards
+
+*Things Shawn may have observed about Claude this session. Accept / edit /
+discard / replace; an unanswered gate holds over.*
+
+- **C1 — Recomputing before asking.** Before putting the oracle-versus-carried
+  decision to him, I recomputed the carried frontier from the board JSON and
+  found that the recommendation I had written at S158's close was missing
+  B-N3-carried. Useful to have the corrected option in front of him, or
+  would he rather see the original recommendation and the correction side
+  by side?
+- **C2 — Scope growth inside a clerical task.** "Refresh the documents that
+  quote the old figures" became four signed-text corrections, a builder fix
+  and three new rulings. Each was flagged before it was acted on, but the
+  item took far longer than its description implied. Was the growth
+  welcome, or should a refresh stay a refresh with the deeper findings
+  queued?
+- **C3 — The disclosed evidence gap.** The PR body stated that the second
+  fix round had been checked only in-session, which is what led him to ask
+  for one more independent re-audit. Did that disclosure land as useful, or
+  as one more caveat in a long PR?
+- **C4 — A relayed count was wrong.** "44 proposer metas" went from a
+  subagent's report into two rulings and the PR body unverified; the final
+  re-audit found 46 plus 2. Caught before merge, but it reached his
+  decisions log.
