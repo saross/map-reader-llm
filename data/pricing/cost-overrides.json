@@ -35,6 +35,12 @@
     "outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup"
    ],
    "source": "the main verifier leg (9,131 requests, run_id 3e7bb633..., 2026-04-18) that a 2026-05-02 recovery overwrote; with the live meta's 74 it covers the 9,205 probabilities.json results (token-load-audit-2026-06-12 § 4: disjoint call sets). Gitignored as *.pre-recovery-*.backup; force-added 2026-10-03 at the PI's instruction so the register can price a frontier incumbent's verifier."
+  },
+  "proposer-verifier-384::verified-adversarial-text-v1-prompt::run1": {
+   "metas": [
+    "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/run.meta.main-2026-04-10.json"
+   ],
+   "source": "the main verifier leg (623 requests, run_id 0e695515..., 2026-04-10) that the 2026-05-06 cleanup (6683952ac, 1 request) overwrote; restored byte for byte from git history (f33058f01:.../run.meta.json) at the PI's ruling D37 (S160), so the register prices the leg's whole spend rather than a floor."
   }
  }
 }
