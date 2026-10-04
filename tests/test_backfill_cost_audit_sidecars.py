@@ -318,6 +318,177 @@ def test_chunks_already_merged_into_a_register_meta_say_so(repo: Path,
     assert "merged_into" not in other
 
 
+#: Two chunk names and two halves of one usage block, for the chunk-link cases.
+CHUNKS = ["detections_run01_chunk0.meta.json", "detections_run01_chunk1.meta.json"]
+HALVES = [{**USAGE, "total_output_tokens": 40_000}, {**USAGE, "total_output_tokens": 60_000}]
+
+
+def _chunked_pass(repo: Path, stagings: list[str]) -> str:
+    """Write HALVES under each staging directory and a merged meta; return its path."""
+    for staging in stagings:
+        for name, usage in zip(CHUNKS, HALVES, strict=True):
+            _meta(repo, f"{RUN}/{staging}/run_1/{name}", usage=usage)
+    merged = f"{RUN}/pool/run_4/detections-m.meta.json"
+    _meta(repo, merged, usage={k: HALVES[0][k] + HALVES[1][k] for k in USAGE},
+          chunked_run={"n_chunks": 2, "chunk_metas": CHUNKS})
+    return merged
+
+
+def test_chunks_matching_in_two_directories_are_not_linked(repo: Path,
+                                                           coster: PassCoster) -> None:
+    """Ambiguity guard: two staging directories that both sum to the merged meta link neither."""
+    merged = _chunked_pass(repo, ["staging-run4", "staging-run5"])
+    _register(repo, [_row("run-a::pool::run4", [_fragment(merged, 1.0)])])
+    plan = build_plan(repo, coster=coster)
+    assert plan.merged == []
+    assert not any("merged_into" in json.loads(t) for t in plan.sidecars.values())
+
+
+def test_chunks_of_a_meta_cited_only_as_provenance_are_not_linked(repo: Path,
+                                                                  coster: PassCoster) -> None:
+    """The link needs a row that PRICED the merged meta (a fragment), not a citation."""
+    merged = _chunked_pass(repo, ["staging-run4"])
+    published = _row("run-a::pool::run4", [], cost=2.0, basis="published", sources=[merged])
+    _register(repo, [published])
+    plan = build_plan(repo, coster=coster)
+    assert json.loads(plan.sidecars[sidecar_path(repo / merged)])["in_register"] is True
+    assert plan.merged == []
+
+
+def test_source_files_match_only_rows_without_fragments(repo: Path,
+                                                        coster: PassCoster) -> None:
+    """A priced row's provenance-only meta is outside the register; a published row's is in."""
+    primary = f"{RUN}/pool/run_1/detections-p.meta.json"
+    cited = f"{RUN}/pool/run_1/detections-extra.meta.json"
+    leg = f"{RUN}/verifier/leg/run.meta.json"
+    for rel in (primary, cited, leg):
+        _meta(repo, rel)
+    priced = _row("run-a::pool::run1", [_fragment(primary, 0.7)], sources=[primary, cited])
+    published = _row("run-a::leg::run1", [], cost=3.0, basis="published", sources=[leg])
+    _register(repo, [priced, published])
+    plan = build_plan(repo, coster=coster)
+    assert json.loads(plan.sidecars[sidecar_path(repo / cited)])["in_register"] is False
+    doc = json.loads(plan.sidecars[sidecar_path(repo / leg)])
+    assert doc["in_register"] is True
+    assert doc["rows"][0]["matched_by"] == "provenance.source_files"
+
+
+def test_register_copy_note_does_not_call_the_fragment_cost_a_share(
+        repo: Path, coster: PassCoster) -> None:
+    """On a lower-bound row the fragment's cost_usd is not its part of the row's floor."""
+    meta = f"{RUN}/pool/run_1/detections-p.meta.json"
+    _meta(repo, meta)
+    _register(repo, [_row("run-a::pool::run1", [_fragment(meta, 1.4)], cost=0.7,
+                          basis="audited-lower-bound")])
+    note = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / meta)])["note"]
+    assert "copied as the register holds it" in note
+    assert "this meta's share" not in note
+
+
+def test_per_item_model_used_outranks_the_configuration(repo: Path,
+                                                        coster: PassCoster) -> None:
+    """The model the API dispatched (per item) is priced, not the template default."""
+    meta = f"{RUN}/smoke/detections-s.meta.json"
+    _meta(repo, meta, configuration={"model": "gemini-3-flash"},
+          per_item_metadata=[{"model_used": "gemini-3-flash-preview"}])
+    ctx = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / meta)])[
+        "resolution_context"]
+    assert ctx["model"] == "gemini-3-flash-preview"
+    assert ctx["model_source"] == "per_item_metadata.model_used"
+
+
+def test_verified_sidecar_form_is_a_verifier_stage(repo: Path, coster: PassCoster) -> None:
+    """``verified-*.meta.json`` (the sidecar form) is a verifier, as in the register."""
+    verified = f"{RUN}/pv/verified-brief-text-v2.meta.json"
+    proposer = f"{RUN}/pv/proposer/detections-p.meta.json"
+    _meta(repo, verified)
+    _meta(repo, proposer)
+    plan = build_plan(repo, coster=coster)
+    stage = {rel: json.loads(plan.sidecars[sidecar_path(repo / rel)])["resolution_context"][
+        "stage"] for rel in (verified, proposer)}
+    assert stage == {verified: "verifier", proposer: "proposer"}
+
+
+def test_usage_rebuilt_from_per_item_records_is_noted(repo: Path, coster: PassCoster) -> None:
+    """A meta the 2026-05-02 recovery merge double-counted says what it was priced from."""
+    item = {"tokens": {"input_tokens": 500_000, "output_tokens": 50_000,
+                       "thoughts_tokens": 100_000, "total_tokens": 650_000}}
+    meta = f"{RUN}/pool/run_1/detections-r.meta.json"
+    _meta(repo, meta, usage={k: 2 * v for k, v in USAGE.items()},
+          recovery_history=[{"round": 1}], per_item_metadata=[item, item],
+          execution_stats={"completed_items": ["t1", "t2"], "items_processed": 4})
+    plan = build_plan(repo, coster=coster)
+    doc = json.loads(plan.sidecars[sidecar_path(repo / meta)])
+    assert doc["usage_source"].startswith("usage_stats double-counted")
+    assert plan.rebuilt_usage == [meta]
+    # Priced from the per-item sums (1 M input, 300 k output), not the doubled block.
+    assert doc["cost_usd"] == STANDARD_USD
+
+
+# ---------------------------------------------------------------------------
+# Verifier coverage (the register's lower-bound rule).
+# ---------------------------------------------------------------------------
+
+
+def _verifier_leg(repo: Path, accounted: int, results: int,
+                  carried: int | None = None) -> str:
+    """A verifier leg whose meta completed *accounted* of *results* candidates."""
+    leg = f"{RUN}/verifier/leg/run.meta.json"
+    _meta(repo, leg, execution_stats={
+        "completed_items": [f"candidate_{i:05d}" for i in range(accounted)]})
+    _write(repo / RUN / "verifier/leg/probabilities.json",
+           {"mode": "realtime", "iterations": 1,
+            "results": {f"candidate_{i:05d}": {"mound_probability": 0.5}
+                        for i in range(results)}})
+    if carried is not None:
+        _write(repo / RUN / "verifier/leg/carry_provenance.json",
+               {"schema": "verifier-stage-carry/1", "carried": carried,
+                "extends_stage": f"{RUN}/verifier/main"})
+    return leg
+
+
+def test_short_verifier_meta_is_a_lower_bound(repo: Path, coster: PassCoster) -> None:
+    """Red sentinel: a meta covering 2 of 10 results publishes a floor, with the count."""
+    leg = _verifier_leg(repo, accounted=2, results=10)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["cost_basis"] == "audited-lower-bound"
+    # The floor is the lowest candidate tier (real-time mode leaves flex or standard).
+    assert doc["cost_usd"] == DISCOUNT_USD
+    cov = doc["coverage"]
+    assert (cov["accounted_candidates"], cov["results"], cov["lower_bound"]) == (2, 10, True)
+    assert cov["floor"] == 0.9
+    assert cov["note"].startswith("LOWER bound")
+
+
+def test_carried_results_explain_a_shortfall(repo: Path, coster: PassCoster) -> None:
+    """A carry-forward stage's meta is its whole spend: recorded, not a lower bound."""
+    leg = _verifier_leg(repo, accounted=2, results=10, carried=8)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["cost_basis"] == "audited-upper-bound"
+    assert doc["cost_usd"] == STANDARD_USD
+    assert doc["coverage"]["lower_bound"] is False
+    assert doc["coverage"]["carried"] == 8
+    assert doc["coverage"]["carried_from"] == f"{RUN}/verifier/main"
+
+
+def test_a_carry_too_small_for_the_shortfall_is_still_a_lower_bound(
+        repo: Path, coster: PassCoster) -> None:
+    """Two accounted plus five carried of ten is still below the 90 % floor."""
+    leg = _verifier_leg(repo, accounted=2, results=10, carried=5)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["cost_basis"] == "audited-lower-bound"
+    assert doc["coverage"]["lower_bound"] is True
+
+
+def test_covered_verifier_meta_carries_no_coverage_record(repo: Path,
+                                                          coster: PassCoster) -> None:
+    """At or above the floor (9 of 10) nothing changes."""
+    leg = _verifier_leg(repo, accounted=9, results=10)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert "coverage" not in doc
+    assert doc["cost_basis"] == "audited-upper-bound"
+
+
 # ---------------------------------------------------------------------------
 # Determinism, drift, and safety.
 # ---------------------------------------------------------------------------

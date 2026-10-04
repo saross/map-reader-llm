@@ -3,7 +3,7 @@
   "generator_version": "1.0.0",
   "in_register": true,
   "meta": "outputs/h11/n1-outstanding-384/brief-text-t03/run_3/detections_brief-text-t03_run03.meta.json",
-  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth: cost_usd and cost_basis are the ROW's (every fragment of the pass), and the fragment record is copied as the register holds it (on a lower-bound row the row sums each fragment's lowest candidate, so the record's cost_usd need not be this meta's part of the row's figure)",
   "register": {
     "generated_at": "2026-10-03T12:35:34Z",
     "generator_version": "0.8.0",

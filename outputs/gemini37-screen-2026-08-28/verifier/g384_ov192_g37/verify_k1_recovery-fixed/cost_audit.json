@@ -1,6 +1,16 @@
 {
   "cost_basis": "audited",
   "cost_usd": 0.000757,
+  "coverage": {
+    "accounted_candidates": 1,
+    "carried": 639,
+    "carried_from": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k1",
+    "floor": 0.9,
+    "lower_bound": false,
+    "method": "scripts/lib_pass_cost.py verifier_coverage, as PassCoster.cost_pass applies it",
+    "note": "the meta accounts for 1 candidate(s) against 640 results, but 639 of those results were carried forward from outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k1 (carry_provenance.json) and their spend is priced there: this meta is the stage's whole spend, so the figure is not a lower bound",
+    "results": 640
+  },
   "fragment": {
     "cost_usd": 0.000757,
     "evidence": [
