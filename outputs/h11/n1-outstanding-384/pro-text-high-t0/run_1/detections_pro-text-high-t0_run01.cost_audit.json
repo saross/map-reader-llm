@@ -1,0 +1,56 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth: cost_usd and cost_basis are the ROW's (every fragment of the pass), and the fragment record is copied as the register holds it (on a lower-bound row the row sums each fragment's lowest candidate, so the record's cost_usd need not be this meta's part of the row's figure)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited-upper-bound",
+      "cost_usd": 6.635743,
+      "fragment": {
+        "candidates": {
+          "flex": 3.317872,
+          "standard": 6.635743
+        },
+        "cost_usd": 6.635743,
+        "evidence": [
+          "billing-day: gemini-3-flash-preview: resumed over 2026-03-26..2026-07-30, first and last days united: 2026-03-26 standard [invoice line windows]; 2026-07-30 flex [invoice line windows] -> standard|flex"
+        ],
+        "meta": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "priced_at": "2026-07-30",
+        "tier": null,
+        "tier_method": "unresolved"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "n1-outstanding-384::pro-text-high-t0::run1",
+      "row_cost_source": {
+        "bounds_usd": {
+          "high": 6.635743,
+          "low": 3.317872
+        },
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T07:57:28Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}

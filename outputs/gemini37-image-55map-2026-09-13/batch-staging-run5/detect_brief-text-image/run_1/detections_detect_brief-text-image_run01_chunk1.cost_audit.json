@@ -1,0 +1,56 @@
+{
+  "cost_basis": "audited",
+  "cost_usd": 7.257962,
+  "fragment": {
+    "cost_usd": 7.257962,
+    "evidence": [
+      "batch-marker: outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json batch_api block -> batch",
+      "batch-path-pricing: outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json discount_reason names the Batch API -> batch",
+      "run-log-inherited: outputs/gemini37-image-55map-2026-09-13/{driver.log} -> flex",
+      "billing-day: gemini-3.7-flash: 2026-09-17 batch|flex|standard [invoice line windows] -> standard|flex|batch"
+    ],
+    "meta": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json",
+    "model": "gemini-3.7-flash",
+    "model_recorded": "gemini-3.7-flash",
+    "notes": [
+      "run-log-inherited: outputs/gemini37-image-55map-2026-09-13/{driver.log} -> flex overruled by the fragment's own batch-marker"
+    ],
+    "priced_at": "2026-09-17",
+    "tier": "batch",
+    "tier_method": "batch-marker"
+  },
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": false,
+  "merged_into": {
+    "meta": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.meta.json",
+    "pass_ids": [
+      "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run5"
+    ],
+    "verified_by": "listed in the merged meta's chunked_run.chunk_metas, and the 7 chunks' summed token classes equal its usage exactly"
+  },
+  "meta": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json",
+  "priced_by": "scripts/lib_pass_cost.py PassCoster.cost_fragment: this meta's own recorded usage through scripts/lib_cost.py price_usage at its end date, at the tier the committed evidence resolves for it (the register's per-fragment method; several candidate tiers publish the highest)",
+  "rate_card": {
+    "path": "data/pricing/gemini-rate-card.json",
+    "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+    "version": "2026-09-21.2"
+  },
+  "reason": "a chunk of a chunked Batch API pass: the register prices the merged meta outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.meta.json (gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img::run5), whose usage is the sum of its chunks', so this meta's cost is ALREADY inside that row and must not be added to it",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "resolution_context": {
+    "model": "gemini-3.7-flash",
+    "model_source": "configuration.model",
+    "pool": "batch-staging-run5/detect_brief-text-image/run_1",
+    "run_dir": "outputs/gemini37-image-55map-2026-09-13",
+    "run_id": "gemini37-image-55map-2026-09-13",
+    "run_registered": true,
+    "stage": "proposer"
+  },
+  "schema": "cost_audit/1"
+}

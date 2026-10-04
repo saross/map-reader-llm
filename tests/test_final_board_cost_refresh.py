@@ -184,11 +184,60 @@ def test_the_write_path_records_cost_basis_and_leaves_the_addendum(tmp_path, mon
     for cell in stale["cells"]:
         cell["cost_usd"], cell.pop("cost_basis", None)
     stale.pop("cost_axis", None)
+    stale.pop("efficiency_frontiers", None)  # the D24 block must be written back
     j, m = tmp_path / "b.json", tmp_path / "b.md"
     j.write_text(json.dumps(stale)), m.write_text(md)
     monkeypatch.setattr("scripts.final_board_cost_refresh.board_paths", lambda _ref: (j, m))
     assert main(["--write"]) == 0
     written = json.loads(j.read_text())
     assert written["cells"] == board["cells"] and written["cost_axis"] == board["cost_axis"]
+    # Labels, not run names, in both frontiers' memberships (D24).
+    assert written["efficiency_frontiers"] == board["efficiency_frontiers"]
+    assert board["efficiency_frontiers"]["carried"] == [
+        "A-N1-oracle", "ARM2-N1-carried", "B-N3-carried", "FOURTH-N3-carried",
+        "ARM2-N3-carried", "ARM2-N5-carried"]
+    assert board["efficiency_frontiers"]["oracle"] == [
+        "A-N1-oracle", "ARM1-N1-oracle", "ARM2-N1-oracle", "FOURTH-N3-oracle",
+        "ARM2-N3-oracle", "ARM2-N5-oracle"]
     assert written["addendum_cells"] == board["addendum_cells"]  # untouched
     assert written["tiers"] == board["tiers"] and written["pairwise"] == board["pairwise"]
+
+
+@pytest.mark.tier1
+def test_an_analogue_label_may_not_shadow_a_board_cell(committed):
+    board, _ = committed
+    paper_rows, by_label, tier_of, _ = frontier_inputs(board)
+    clash = {"B-N3-carried": dict(by_label["B-N3-carried"])}
+    with pytest.raises(ValueError, match="collide with board cells"):
+        fbb.frontier_rows(paper_rows, by_label, tier_of, clash)
+
+
+@pytest.mark.tier1
+def test_a_board_cell_without_a_tier_is_a_defect_not_untiered(committed):
+    board, _ = committed
+    # Both an oracle and a CARRIED board cell: "carried" must not pass as the
+    # untiered "carried-analogue" prefix (re-audit, 2026-10-04).
+    for dropped in ("A-N1-oracle", "B-N3-carried"):
+        untiered = [[label for label in tier if label != dropped] for tier in board["tiers"]]
+        with pytest.raises(KeyError):
+            frontiers_of({**board, "tiers": untiered})
+
+
+@pytest.mark.tier1
+def test_at_equal_cost_the_better_run_takes_the_step():
+    rows = [("weak", "W", None), ("strong", "S", None)]
+    cells = {lbl: {"f1_50": f1, "precision_50": 0.9, "n_detections": 100, "basis": "carried"}
+             for lbl, f1 in (("W", 0.80), ("S", 0.85))}
+    out = fbb.efficiency_rows(rows, cells, {"W": 2, "S": 1}, [],
+                              cost_fn=lambda _: 10.0, completed_fn=lambda _: False)
+    assert [r["name"] for r in out if r["frontier"] is True] == ["strong"]
+
+
+@pytest.mark.tier1
+def test_a_full_rebuild_says_its_analogues_are_pending(committed):
+    board, _ = committed
+    paper_rows, by_label, tier_of, _ = frontier_inputs(board)
+    text = "\n".join(fbb.render_efficiency(fbb.frontier_rows(paper_rows, by_label, tier_of),
+                                           analogues_applied=False))
+    assert "not yet" in text and "substituted" in text
+    assert "not yet" not in "\n".join(fbb.render_efficiency(frontiers_of(board)))

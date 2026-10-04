@@ -522,6 +522,48 @@ def test_pct_rounds_once_from_the_raw_ratio() -> None:
     assert tables.pct(None) == "—"
 
 
+def test_the_tables_render_the_committed_markdown() -> None:
+    """tables() run end to end on the committed payload reproduces the
+    committed ladder-tables.md, banner aside (it stamps the commit and time):
+    a code regression in any rendered column, the D27 shares included, turns
+    this red without waiting for a regeneration (audit lens B, 2026-10-04)."""
+    root = Path(__file__).resolve().parents[1] / "results/k-ladder-2026-09-12/phase2"
+    payload = json.loads((root / "ladders.json").read_text(encoding="utf-8"))
+    committed_summary = json.loads(json.dumps(payload["summary"]))
+    rendered = tables.tables(payload).splitlines()
+    # tables() rebuilds the summary rows it stores: they must be the committed ones.
+    assert payload["summary"] == committed_summary
+    committed = (root / "ladder-tables.md").read_text(encoding="utf-8").splitlines()
+    assert len(rendered) == len(committed)
+    banner = [i for i, line in enumerate(committed) if line.startswith("> **GENERATED")]
+    assert banner == [2]
+    assert [x for i, x in enumerate(rendered) if i != 2] == \
+        [x for i, x in enumerate(committed) if i != 2]
+
+
+def test_committed_gain_shares_are_rounded_once() -> None:
+    """D27 covers the gain-share column too: 91.46 % is 91 %, never 92 %."""
+    root = Path(__file__).resolve().parents[1] / "results/k-ladder-2026-09-12/phase2"
+    doc = json.loads((root / "ladders.json").read_text(encoding="utf-8"))
+    md = (root / "ladder-tables.md").read_text(encoding="utf-8")
+    by_family = {row["family"]: row for row in doc["summary"]}
+    checked = 0
+    for ladder in doc["ladders"]:
+        f1 = {r["K"]: r["opmax"]["f1_20"] for r in ladder["rungs"]}
+        best = max(f1.values())
+        raw = (f1[3] - f1[1]) / round(best - f1[1], 4)
+        assert by_family[ladder["family"]]["share_at_k3"] == pytest.approx(round(raw, 4),
+                                                                          abs=1e-12)
+        line = next(x for x in md.splitlines() if x.startswith(f"| {ladder['family']} | ")
+                    and "(K=" in x)
+        assert line.split(" | ")[4] == tables.pct(raw), ladder["family"]
+        checked += 1
+    assert checked == 14
+    # The real sentinel: MINIMAL text T 0.7 is the case the double rounding broke.
+    t07 = by_family["Gemini 3 MINIMAL text 384 px, T 0.7"]["share_at_k3"]
+    assert tables.pct(t07) == "91 %" and f"{round(t07, 3) * 100:.0f} %" == "92 %"
+
+
 def test_committed_summary_shares_are_rounded_once() -> None:
     """The committed table renders each share from its raw quotient."""
     root = Path(__file__).resolve().parents[1] / "results/k-ladder-2026-09-12/phase2"

@@ -257,6 +257,110 @@ def test_nominees_pool_cost_over_verifications(repo):
 
 
 # ---------------------------------------------------------------------------
+# Stage legs (D30): a published row with no fragments, or a leg absent from
+# the register.
+# ---------------------------------------------------------------------------
+
+
+def _stage(repo: Repo, rel: str, *, results: int, processed: int,
+           usage: dict | None = USAGE, config: dict | None = None) -> str:
+    """A verifier stage directory the register does not price through fragments."""
+    repo._write(f"{rel}/run.meta.json", {
+        "usage_stats": usage or {}, "configuration": config or G3,
+        "execution_stats": {"items_processed": processed},
+        "timestamp": {"end": "2026-06-06T05:04:14+00:00"}})
+    repo._write(f"{rel}/probabilities.json",
+                {"iterations": 1, "results": {f"candidate_{i:05d}": 0.9
+                                              for i in range(results)}})
+    return rel
+
+
+@pytest.mark.tier1
+def test_a_stage_outside_the_register_is_priced_from_its_own_meta(repo):
+    stage = _stage(repo, "results/x/vote3/verified", results=400, processed=400)
+    cost = repo.coster().stage_leg_cost(stage, complete=True)
+    assert cost.usd == pytest.approx(FLEX_USD)  # its tokens at the uniform tier
+    assert cost.basis == "measured"
+    assert cost.sources == (f"stage:{stage}",)
+
+
+@pytest.mark.tier1
+def test_a_short_stage_is_refused_as_complete(repo):
+    # SENTINEL: a cleanup-overwritten meta (13 items of 6,985 calls on the
+    # 3.7 image arm 2 at K = 1) must never be priced as a whole leg.
+    stage = _stage(repo, "outputs/x/verify_k1_arm2", results=500, processed=13)
+    with pytest.raises(FrontierCostError, match="so it is a floor"):
+        repo.coster().stage_leg_cost(stage, complete=True)
+
+
+@pytest.mark.tier1
+def test_a_stage_floor_is_completed_from_its_nominees(repo):
+    stage = _stage(repo, "outputs/x/verify_k1_arm2", results=500, processed=13)
+    repo.leg("c", "whole", results=1000)
+    coster = repo.coster()
+    cost = coster.stage_leg_cost(stage, complete=False,
+                                 comparables=[{"run_id": "c", "pool": "whole"}])
+    assert cost.usd == pytest.approx(500 * FLEX_USD / 1000)
+    assert cost.basis == "completed"
+    assert cost.sources == (f"stage:{stage}", "c::whole::run1")
+    with pytest.raises(FrontierCostError, match="nominate comparable legs"):
+        coster.stage_leg_cost(stage, complete=False)
+
+
+@pytest.mark.tier1
+def test_a_stage_floor_refuses_a_nominee_of_another_configuration(repo):
+    stage = _stage(repo, "outputs/x/verify_k1_arm2", results=500, processed=13)
+    repo.leg("c", "whole", results=1000, config={**G3, "thinking_level": "low"})
+    with pytest.raises(FrontierCostError, match="has configuration"):
+        repo.coster().stage_leg_cost(stage, complete=False,
+                                     comparables=[{"run_id": "c", "pool": "whole"}])
+
+
+@pytest.mark.tier1
+def test_a_stage_floor_pools_two_nominees_not_their_mean(repo):
+    stage = _stage(repo, "outputs/x/verify_k1_arm2", results=100, processed=13)
+    repo.leg("c", "a", results=1000)   # 0.70 / 1,000
+    repo.leg("c", "b", results=3000)   # 0.70 / 3,000
+    cost = repo.coster().stage_leg_cost(
+        stage, complete=False,
+        comparables=[{"run_id": "c", "pool": "a"}, {"run_id": "c", "pool": "b"}])
+    assert cost.usd == pytest.approx(100 * 1.40 / 4000)       # pooled
+    assert cost.usd != pytest.approx(100 * (0.70 / 1000 + 0.70 / 3000) / 2)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("config", [{**G3, "model": "no-such-model"},
+                                    {k: v for k, v in G3.items() if k != "model"}])
+def test_a_stage_with_an_unpriceable_model_is_refused_in_its_own_error(repo, config):
+    # A KeyError escaping would crash a caller that records "unpriced".
+    stage = _stage(repo, "results/x/vote3/verified", results=40, processed=40, config=config)
+    with pytest.raises(FrontierCostError, match="cannot price its model"):
+        repo.coster().stage_leg_cost(stage, complete=True)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("change", [{"model": "no-such-model"},
+                                    {"model": None, "model_recorded": "no-such-model"},
+                                    {"priced_at": "1999-01-01"}])
+def test_a_register_fragment_that_cannot_be_priced_raises_frontier_cost_error(repo, change):
+    # An unknown model (UnknownModelError, a KeyError) or a date the rate card
+    # does not cover (RateCardError, a ValueError) must not escape as itself.
+    repo.proposer("r", "p", 1)
+    repo.rows[-1]["cost_source"]["fragments"][0].update(change)
+    with pytest.raises(FrontierCostError, match="cannot be priced"):
+        repo.coster().pass_usd("r::p::run1")
+
+
+@pytest.mark.tier1
+def test_a_stage_is_priced_one_way_only(repo):
+    stage = _stage(repo, "results/x/vote3/verified", results=400, processed=400)
+    coster = repo.coster()
+    coster.stage_leg(stage, complete=True)
+    with pytest.raises(FrontierCostError, match="first priced as complete=True"):
+        coster.stage_leg(stage, complete=False)
+
+
+# ---------------------------------------------------------------------------
 # Configurations.
 # ---------------------------------------------------------------------------
 

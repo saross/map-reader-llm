@@ -1,0 +1,49 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/flash35-pv-2x2/proposer/run_8/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth: cost_usd and cost_basis are the ROW's (every fragment of the pass), and the fragment record is copied as the register holds it (on a lower-bound row the row sums each fragment's lowest candidate, so the record's cost_usd need not be this meta's part of the row's figure)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 0.815295,
+      "fragment": {
+        "cost_usd": 0.815295,
+        "evidence": [
+          "run-log-inherited: outputs/flash35-pv-2x2/{tranche-full.log} -> flex",
+          "billing-day: gemini-3.5-flash: 2026-06-10 flex [day export (unverified)] -> flex"
+        ],
+        "meta": "outputs/flash35-pv-2x2/proposer/run_8/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json",
+        "model": "gemini-3.5-flash",
+        "model_recorded": "gemini-3.5-flash",
+        "priced_at": "2026-06-10",
+        "tier": "flex",
+        "tier_method": "run-log-inherited"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "flash35-pv-2x2::flash35-min-text-1of10::run8",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/flash35-pv-2x2/proposer/run_8/detections-detect_brief-text-3.5-flash-2026-06-11.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T07:57:28Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}

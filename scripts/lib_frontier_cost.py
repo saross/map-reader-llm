@@ -192,9 +192,16 @@ class FrontierCoster:
                     or not frag.get("priced_at"):
                 raise FrontierCostError(f"{pass_id}: fragment {frag['meta']} has no priceable "
                                         "usage, so the pass cannot be priced whole")
-            model = frag.get("model") or resolve_model(frag["model_recorded"])
-            total += price_usage(usage, model, UNIFORM_TIER,
-                                 at=frag["priced_at"])["total_cost_usd"]
+            try:
+                # UnknownModelError and a missing key are KeyErrors, RateCardError
+                # a ValueError: each is a pass this module cannot price, said in
+                # its own error type (re-audit, 2026-10-04).
+                model = frag.get("model") or resolve_model(frag["model_recorded"])
+                total += price_usage(usage, model, UNIFORM_TIER,
+                                     at=frag["priced_at"])["total_cost_usd"]
+            except (KeyError, ValueError) as exc:
+                raise FrontierCostError(f"{pass_id}: fragment {frag['meta']} cannot be "
+                                        f"priced: {exc}") from exc
         if not (row.get("cost_source") or {}).get("fragments"):
             raise FrontierCostError(f"{pass_id}: no fragments to price")
         self._pass_usd[pass_id] = total
@@ -265,10 +272,42 @@ class FrontierCoster:
         if not frags:
             raise FrontierCostError(f"{row['pass_id']}: no fragments")
         primary = self.root / frags[0]["meta"]
+        priced = {(self.root / f["meta"]).resolve() for f in frags}
+        verifications, iterations, fingerprint = self._calls_and_configuration(
+            row["pass_id"], primary, frags[0]["meta"], priced)
+        complete = row.get("cost_basis") in COMPLETE_BASES
+        usd = self.pass_usd(row["pass_id"]) if complete else 0.0
+        leg = Leg(pass_id=row["pass_id"], usd=usd, verifications=verifications,
+                  complete=complete, fingerprint=fingerprint, iterations=iterations)
+        self._legs[(run_id, pool)] = leg
+        return leg
+
+    def _calls_and_configuration(self, label: str, primary: Path, shown: str,
+                                 priced: set[Path]) -> tuple[int, int, tuple[Any, ...]]:
+        """A leg's verifier calls, iterations and configuration, from its primary meta.
+
+        Shared by :meth:`leg` (a register row) and :meth:`stage_leg` (a stage
+        the register does not price through fragments), so both count calls
+        and compare configurations by one rule.
+
+        Args:
+            label: The leg's name, for messages.
+            primary: Its primary meta; ``probabilities.json`` sits beside it.
+            shown: The primary meta's path as messages show it.
+            priced: The metas whose tokens this leg's cost carries (resolved),
+                so results a cleanup merged in from elsewhere can be set apart.
+
+        Returns:
+            ``(verifications, iterations, fingerprint)``.
+
+        Raises:
+            FrontierCostError: When the results file is missing or suspect, a
+                cleanup merge cannot be set apart, or no call is left.
+        """
         prob = primary.parent / "probabilities.json"
         if not prob.exists():
-            raise FrontierCostError(f"{row['pass_id']}: no probabilities.json beside "
-                                    f"{frags[0]['meta']}, so its verifications are unknown")
+            raise FrontierCostError(f"{label}: no probabilities.json beside "
+                                    f"{shown}, so its verifications are unknown")
         doc = _load(prob)
         # One entry per CALL: a multi-iteration leg keys its results per
         # iteration, so the iterations are already in the count (audit lens A,
@@ -279,38 +318,127 @@ class FrontierCoster:
         iterations = max(int(doc.get("iterations") or 1), 1)
         if iterations > 1 and not all("_iter" in str(k) for k in keys):
             raise FrontierCostError(
-                f"{row['pass_id']}: probabilities.json records {iterations} iterations but "
+                f"{label}: probabilities.json records {iterations} iterations but "
                 "its results are not keyed per iteration; the iteration count is suspect")
-        priced = {(self.root / f["meta"]).resolve() for f in frags}
         for merge in doc.get("cleanup_merges") or []:
             # Results a cleanup merged in, from a leg whose cost this row does
             # not carry, would be priced at nothing: leave them out
             # (55maps-generalisation: 26 from verified-cleanup, no register row).
             if "added" not in merge or "source" not in merge:
-                raise FrontierCostError(f"{row['pass_id']}: a cleanup merge records no "
+                raise FrontierCostError(f"{label}: a cleanup merge records no "
                                         "'added' count or 'source', so its results cannot "
                                         "be set apart")
             source_meta = (self.root / merge["source"]).parent / "run.meta.json"
             if source_meta.resolve() not in priced:
                 verifications -= int(merge["added"])
         if verifications <= 0:
-            raise FrontierCostError(f"{row['pass_id']}: no verifications left to price")
-        complete = row.get("cost_basis") in COMPLETE_BASES
+            raise FrontierCostError(f"{label}: no verifications left to price")
         config = dict(_load(primary).get("configuration") or {})
         if config.get("model"):
             # One spelling per model ("gemini-3-flash" is "gemini-3-flash-preview").
-            config["model"] = resolve_model(config["model"])
+            try:
+                config["model"] = resolve_model(config["model"])
+            except KeyError as exc:  # UnknownModelError: said in this module's type
+                raise FrontierCostError(f"{label}: cannot price its model: {exc}") from exc
         if config.get("temperature_effective") is not None:
             # E55: where a CLI override changed the temperature, the meta's
             # ``temperature`` is the config file's and the run's is here
             # (verifier-t-pilot's t0-5 and t1-0 legs record 0.0 beside it).
             config["temperature"] = config["temperature_effective"]
-        fingerprint = tuple(config.get(k) for k in FINGERPRINT_FIELDS)
-        usd = self.pass_usd(row["pass_id"]) if complete else 0.0
-        leg = Leg(pass_id=row["pass_id"], usd=usd, verifications=verifications,
-                  complete=complete, fingerprint=fingerprint, iterations=iterations)
-        self._legs[(run_id, pool)] = leg
+        return verifications, iterations, tuple(config.get(k) for k in FINGERPRINT_FIELDS)
+
+    def stage_leg(self, stage: str, *, complete: bool) -> Leg:
+        """A verifier stage the register does not price through fragments.
+
+        Two kinds exist (PI ruling D30, 2026-10-04): a register row on the
+        ``published`` basis, which records the post-run report's figure and
+        no fragments (a floor here: ``complete=False``), and a leg absent from
+        the register altogether (the S104 vote-3 increments: ``complete=True``,
+        priced from the stage's own meta until the register is repaired).
+
+        Args:
+            stage: Repository-relative stage directory holding
+                ``run.meta.json`` and ``probabilities.json``.
+            complete: Whether the stage's meta is its whole spend. Asserted:
+                a meta whose ``items_processed`` falls short of its calls is a
+                cleanup-overwritten floor, and is refused as complete.
+
+        Returns:
+            The leg, named ``stage:<stage>``; a floor carries ``usd`` 0 and is
+            priced by :meth:`stage_leg_cost` from its nominated comparables.
+
+        Raises:
+            FrontierCostError: When the meta's usage is unrecorded, its
+                coverage falls short of a complete leg's calls, or the
+                results file is missing or suspect.
+        """
+        key = ("stage", stage)
+        if key in self._legs:
+            leg = self._legs[key]
+            if leg.complete != complete:
+                raise FrontierCostError(f"stage:{stage} asked for as complete={complete}, "
+                                        f"first priced as complete={leg.complete}")
+            return leg
+        label = f"stage:{stage}"
+        primary = self.root / stage / "run.meta.json"
+        if not primary.exists():
+            raise FrontierCostError(f"{label}: no run.meta.json")
+        verifications, iterations, fingerprint = self._calls_and_configuration(
+            label, primary, f"{stage}/run.meta.json", {primary.resolve()})
+        usd = 0.0
+        if complete:
+            meta = _load(primary)
+            covered = int((meta.get("execution_stats") or {}).get("items_processed") or 0)
+            if covered < verifications:
+                raise FrontierCostError(
+                    f"{label}: its meta covers {covered:,} items of {verifications:,} calls, "
+                    "so it is a floor, not a complete leg")
+            usage, _ = fragment_usage(meta)
+            if not usage or is_unrecorded(usage):
+                raise FrontierCostError(f"{label}: no priceable usage")
+            # Priced on the day the stage finished, as the register prices a
+            # fragment (``priced_at``).
+            at = str((meta.get("timestamp") or {}).get("end") or "")[:10] or None
+            if at is None:
+                raise FrontierCostError(f"{label}: no end timestamp to price it at")
+            try:
+                # UnknownModelError is a KeyError: a missing or unknown model is
+                # a leg this module cannot price, said in its own error type so
+                # callers that record "unpriced" do not crash (audit lens A).
+                model = resolve_model((meta.get("configuration") or {})["model"])
+                usd = price_usage(usage, model, UNIFORM_TIER, at=at)["total_cost_usd"]
+            except (KeyError, ValueError) as exc:  # ValueError: RateCardError
+                raise FrontierCostError(f"{label}: cannot price its model: {exc}") from exc
+            if usd is None:
+                raise FrontierCostError(f"{label}: its usage prices to nothing")
+        leg = Leg(pass_id=label, usd=usd, verifications=verifications, complete=complete,
+                  fingerprint=fingerprint, iterations=iterations)
+        self._legs[key] = leg
         return leg
+
+    def stage_leg_cost(self, stage: str, *, complete: bool,
+                       comparables: list[dict[str, str]] | None = None) -> Priced:
+        """A whole stage leg (see :meth:`stage_leg`): its own cost, or a floor completed.
+
+        Args:
+            stage: Repository-relative stage directory.
+            complete: As :meth:`stage_leg`.
+            comparables: Nominated register legs, required for a floor (D19).
+
+        Returns:
+            The leg's cost at the uniform tier, ``measured`` or ``completed``.
+        """
+        leg = self.stage_leg(stage, complete=complete)
+        if leg.complete:
+            return Priced(leg.usd, (leg.pass_id,),
+                          notes=(f"{leg.pass_id}: own cost (not in the register), "
+                                 f"{leg.verifications:,} verifications",))
+        comps = self._nominees(leg, comparables)
+        unit = sum(c.usd for c in comps) / sum(c.verifications for c in comps)
+        return Priced(leg.verifications * unit, (leg.pass_id,) + tuple(c.pass_id for c in comps),
+                      "completed",
+                      (f"{leg.pass_id} is a floor: {leg.verifications:,} verifications x the "
+                       f"unit pooled over {', '.join(c.pass_id for c in comps)}",))
 
     def eligible_comparables(self, fingerprint: tuple[Any, ...]) -> list[Leg]:
         """Every complete verifier leg with this exact configuration (for review, not pooling)."""

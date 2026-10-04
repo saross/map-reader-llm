@@ -1,0 +1,43 @@
+{
+  "cost_basis": "audited",
+  "cost_usd": 0.001168,
+  "fragment": {
+    "cost_usd": 0.001168,
+    "evidence": [
+      "billing-day: gemini-3-flash-preview: 2026-03-14 batch|standard [day export (unverified)] -> standard|batch"
+    ],
+    "meta": "outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json",
+    "model": "gemini-3-flash-preview",
+    "model_recorded": "gemini-3-flash-preview",
+    "priced_at": "2026-03-14",
+    "tier": null,
+    "tier_method": "tier-indifferent: standard|batch"
+  },
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": false,
+  "meta": "outputs/h11/proposer-verifier-384/proposer/detections-detect_brief-text-3-flash-2026-03-15.meta.json",
+  "priced_by": "scripts/lib_pass_cost.py PassCoster.cost_fragment: this meta's own recorded usage through scripts/lib_cost.py price_usage at its end date, at the tier the committed evidence resolves for it (the register's per-fragment method; several candidate tiers publish the highest)",
+  "rate_card": {
+    "path": "data/pricing/gemini-rate-card.json",
+    "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+    "version": "2026-09-21.2"
+  },
+  "reason": "no row of the passes register cites this meta (its run proposer-verifier-384 is in results/run-registry.json, but the register's pass extraction does not reach this file)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "resolution_context": {
+    "model": "gemini-3-flash-preview",
+    "model_source": "per_item_metadata.model_used",
+    "pool": "proposer",
+    "run_dir": "outputs/h11/proposer-verifier-384",
+    "run_id": "proposer-verifier-384",
+    "run_registered": true,
+    "stage": "proposer"
+  },
+  "schema": "cost_audit/1"
+}

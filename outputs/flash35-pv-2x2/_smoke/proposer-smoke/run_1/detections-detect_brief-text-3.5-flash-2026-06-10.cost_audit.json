@@ -1,0 +1,44 @@
+{
+  "cost_basis": "audited",
+  "cost_usd": 0.01604,
+  "fragment": {
+    "cost_usd": 0.01604,
+    "evidence": [
+      "run-log-inherited: outputs/flash35-pv-2x2/{tranche-full.log} -> flex",
+      "billing-day: gemini-3.5-flash: 2026-06-10 flex [day export (unverified)] -> flex"
+    ],
+    "meta": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json",
+    "model": "gemini-3.5-flash",
+    "model_recorded": "gemini-3.5-flash",
+    "priced_at": "2026-06-10",
+    "tier": "flex",
+    "tier_method": "run-log-inherited"
+  },
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": false,
+  "meta": "outputs/flash35-pv-2x2/_smoke/proposer-smoke/run_1/detections-detect_brief-text-3.5-flash-2026-06-10.meta.json",
+  "priced_by": "scripts/lib_pass_cost.py PassCoster.cost_fragment: this meta's own recorded usage through scripts/lib_cost.py price_usage at its end date, at the tier the committed evidence resolves for it (the register's per-fragment method; several candidate tiers publish the highest)",
+  "rate_card": {
+    "path": "data/pricing/gemini-rate-card.json",
+    "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+    "version": "2026-09-21.2"
+  },
+  "reason": "no row of the passes register cites this meta (its run flash35-pv-2x2 is in results/run-registry.json, but the register's pass extraction does not reach this file)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "resolution_context": {
+    "model": "gemini-3.5-flash",
+    "model_source": "per_item_metadata.model_used",
+    "pool": "_smoke/proposer-smoke/run_1",
+    "run_dir": "outputs/flash35-pv-2x2",
+    "run_id": "flash35-pv-2x2",
+    "run_registered": true,
+    "stage": "proposer"
+  },
+  "schema": "cost_audit/1"
+}

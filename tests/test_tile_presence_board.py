@@ -16,8 +16,11 @@ each of them would be invisible in the rendered table:
 * the verifier-leg lookup, which must resolve LONGEST prefix first or
   ``IMG-ARM2-K3`` silently takes another configuration's rate card.
 
-Everything runs over synthetic sweep rows in memory; no committed artefact is
-read and nothing is written.
+Everything here runs over synthetic sweep rows or stub costers in memory and
+writes nothing. The cost stage's wiring run for real against the committed
+register (register -> price_stage -> record -> cross-check -> refusal) is in
+``tests/test_tile_presence_board_committed.py`` (tier 2: it reads the 3 MB
+register).
 """
 
 from __future__ import annotations
@@ -104,27 +107,26 @@ def test_sweep_row_at_tolerates_float_representation() -> None:
 
 # --- The cost block ---------------------------------------------------------
 
-LEG = {"stages": ["outputs/x/verify"], "basis": "audited", "usd": 9.2650,
+LEG = {"stages": ["outputs/x/verify"], "basis": "measured", "usd": 9.2650,
        "candidates": 8337}
 
-#: The same leg as the auditor can only lower-bound it: a pre-2026-09-14
-#: cleanup overwrote the main pass's meta, so it has no usable cost.
-UNAUDITED_LEG = {"stages": ["outputs/x/verify"], "basis": "unaudited",
-                 "usd": None, "candidates": None,
-                 "note": "lower bound only (cleanup-overwrite)"}
+#: A leg no rule prices whole (D29): it has no usable cost.
+UNPRICED_LEG = {"stages": ["outputs/x/verify"], "basis": "unpriced",
+                "usd": None, "candidates": None,
+                "note": "no uniform-tier cost: lower bound only (cleanup-overwrite)"}
 
 
-def test_the_rate_is_the_legs_audited_usd_per_candidate() -> None:
+def test_the_rate_is_the_legs_usd_per_candidate() -> None:
     block = tp.cost_block(8337, LEG)
-    assert block["verifier_cost_basis"] == "audited"
+    assert block["verifier_cost_basis"] == "measured"
     assert block["verifier_usd_per_candidate"] == pytest.approx(
         9.2650 / 8337)
     assert block["pool_verifier_usd"] == pytest.approx(9.2650, abs=1e-4)
 
 
-def test_a_published_leg_prices_the_pool_too() -> None:
-    """Where the auditor cannot reach the truth, the report's figure does."""
-    leg = {**LEG, "basis": "published", "source": "outputs/x/report.md"}
+def test_a_completed_leg_prices_the_pool_too() -> None:
+    """A floor completed from comparable legs (D19) is a cost, labelled so."""
+    leg = {**LEG, "basis": "completed"}
     assert tp.cost_block(8337, leg)["pool_verifier_usd"] == pytest.approx(
         9.2650, abs=1e-4)
 
@@ -133,16 +135,16 @@ def test_a_lower_bound_is_never_multiplied_into_a_cost() -> None:
     """The one arithmetic this builder must refuse to do.
 
     A lower bound times a pool size is a number that looks like a cost and
-    is not, so an unaudited leg prices nothing and says why.
+    is not, so an unpriced leg prices nothing and says why.
     """
-    block = tp.cost_block(8337, UNAUDITED_LEG)
-    assert block["verifier_cost_basis"] == "unaudited"
+    block = tp.cost_block(8337, UNPRICED_LEG)
+    assert block["verifier_cost_basis"] == "unpriced"
     assert block["verifier_usd_per_candidate"] is None
     assert block["pool_verifier_usd"] is None
     assert "cleanup-overwrite" in block["verifier_cost_note"]
 
 
-def test_an_unmapped_leg_is_distinguished_from_an_unaudited_one() -> None:
+def test_an_unmapped_leg_is_distinguished_from_an_unpriced_one() -> None:
     assert tp.cost_block(100, None)["verifier_cost_basis"] == "unmapped"
 
 
@@ -204,6 +206,107 @@ def test_the_two_pass_text_legs_carry_both_stages() -> None:
 
 def test_an_unmapped_configuration_returns_none() -> None:
     assert tp.leg_for("NOT-A-FAMILY") is None
+
+
+class _StubCoster:
+    """Records which pricing route each stage took; prices nothing real."""
+
+    def __init__(self) -> None:
+        self.calls: list[tuple] = []
+
+    def leg_cost(self, run_id, pool, comparables):
+        self.calls.append(("register", run_id, pool, comparables))
+        return tp.Priced(1.0, (f"{run_id}::{pool}::run1",))
+
+    def leg(self, run_id, pool):
+        return type("L", (), {"verifications": 10})()
+
+    def stage_leg_cost(self, stage, *, complete, comparables=None):
+        self.calls.append(("stage", stage, complete, comparables))
+        return tp.Priced(2.0, (f"stage:{stage}",), "measured" if complete else "completed")
+
+    def stage_leg(self, stage, *, complete):
+        return type("L", (), {"verifications": 20})()
+
+
+BOARD_FAMILIES = {"TM": {"verifier": {"comparables": [{"run_id": "c", "pool": "p"}]}}}
+
+
+def test_a_register_floor_takes_the_boards_nominated_comparables() -> None:
+    coster = _StubCoster()
+    row = {"pass_id": "r::v::run1", "run_id": "r", "proposer_pool": "v",
+           "cost_source": {"fragments": [{"meta": "outputs/r/v/run.meta.json"}]}}
+    cost, calls, inside = tp.price_stage(coster, "outputs/r/v", "TM",
+                                         {"outputs/r/v": [row]}, BOARD_FAMILIES)
+    assert coster.calls == [("register", "r", "v", [{"run_id": "c", "pool": "p"}])]
+    assert (calls, inside) == (10, True)
+
+
+def test_a_register_row_whose_first_fragment_is_elsewhere_is_refused() -> None:
+    # The leg's calls are counted beside its first fragment: a row indexed
+    # under this stage by a later source file must not be priced here.
+    row = {"pass_id": "r::v::run1", "run_id": "r", "proposer_pool": "v",
+           "cost_source": {"fragments": [{"meta": "outputs/r/elsewhere/run.meta.json"}]}}
+    with pytest.raises(tp.FrontierCostError, match="first fragment is not in"):
+        tp.price_stage(_StubCoster(), "outputs/r/v", "TM", {"outputs/r/v": [row]},
+                       BOARD_FAMILIES)
+
+
+def test_a_published_row_is_completed_from_its_d30_nominee() -> None:
+    coster = _StubCoster()
+    row = {"pass_id": "g::k1::run1", "run_id": "g", "proposer_pool": "k1",
+           "cost_basis": "published", "cost_source": None}
+    cost, calls, inside = tp.price_stage(coster, "outputs/g/k1", "IMG-ARM2-K1",
+                                         {"outputs/g/k1": [row]}, BOARD_FAMILIES)
+    assert coster.calls == [("stage", "outputs/g/k1", False,
+                             tp.PUBLISHED_COMPARABLES["IMG-ARM2-K1"])]
+    assert cost.basis == "completed" and inside is True
+
+
+def test_a_published_row_without_a_nominee_is_refused() -> None:
+    # SENTINEL: a published figure is never silently re-priced as the
+    # leg's own tokens, nor passed through unchecked.
+    row = {"pass_id": "g::k9::run1", "run_id": "g", "proposer_pool": "k9",
+           "cost_source": {}}
+    with pytest.raises(tp.FrontierCostError, match="no comparable is nominated"):
+        tp.price_stage(_StubCoster(), "outputs/g/k9", "IMG-ARM2-K9",
+                       {"outputs/g/k9": [row]}, BOARD_FAMILIES)
+
+
+def test_a_stage_outside_the_register_is_priced_from_its_meta_and_marked() -> None:
+    coster = _StubCoster()
+    cost, calls, inside = tp.price_stage(coster, "results/v3/verified", "TH7", {},
+                                         BOARD_FAMILIES)
+    assert coster.calls == [("stage", "results/v3/verified", True, None)]
+    assert (calls, inside) == (20, False)
+
+
+def test_two_rows_claiming_one_stage_are_refused_when_it_is_asked_for(tmp_path) -> None:
+    # Shared stages exist elsewhere in the register (outputs/h11/...): the
+    # index keeps them, and only a mapped leg asking for one is refused.
+    rows = [{"pass_id": f"r::v::run{i}", "n_candidates_verified": 5,
+             "provenance": {"source_files": [f"outputs/r/v/m{i}.meta.json"]}} for i in (1, 2)]
+    path = tmp_path / "register.json"
+    path.write_text(json.dumps({"passes": rows}))
+    index = tp.register_index(path)
+    assert [r["pass_id"] for r in index["outputs/r/v"]] == ["r::v::run1", "r::v::run2"]
+    with pytest.raises(tp.FrontierCostError, match="is claimed by"):
+        tp.price_stage(_StubCoster(), "outputs/r/v", "B-", index, BOARD_FAMILIES)
+
+
+def test_every_committed_leg_resolves_to_the_register_or_a_named_gap() -> None:
+    """Drift guard over the committed register (D30): every stage of every
+    mapped leg is a register stage, except the three vote-3 increments the
+    register is to be repaired for. When the repair lands this test turns
+    red, which is the cue to price them through their rows."""
+    index = tp.register_index()
+    assert all(len(index[s]) == 1 for stages in tp.LEGS.values() for s in stages if s in index)
+    outside = sorted(s for stages in tp.LEGS.values() for s in stages if s not in index)
+    assert outside == sorted(s for f in ("TH7", "T03", "TM") for s in tp.LEGS[f]
+                             if "vote3-verify" in s)
+    published = sorted(k for k, stages in tp.LEGS.items()
+                       if not (index[stages[0]][0].get("cost_source") or {}).get("fragments"))
+    assert published == sorted(tp.PUBLISHED_COMPARABLES)
 
 
 def test_every_mapped_leg_is_a_repository_relative_path() -> None:
@@ -370,7 +473,7 @@ def test_build_rows_reads_the_carried_point_and_prices_the_pool(
     """The real path: sweep record + CSV + costs -> one row, every derived field."""
     monkeypatch.setattr(tp, "TRACKS", (_real_shaped_track(tmp_path),))
     monkeypatch.setattr(tp, "BOARD_HOME", tmp_path / "no-board")
-    costs = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80,
+    costs = {"X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80,
                       "stages": ["outputs/leg"], "note": None}}
     [row] = tp.build_rows(costs)
     assert (row["config"], row["rank"], row["min_votes"], row["prob_t"]) == ("X-K3", 1, 1, 0.9)
@@ -418,9 +521,9 @@ def test_check_frontier_draws_no_figure_and_fails_on_drift(
 
 
 def test_check_costs_fails_on_drift_and_writes_nothing(tmp_path, monkeypatch) -> None:
-    """The costs guard: the auditor's records are compared, not written."""
+    """The costs guard: the priced records are compared, not written."""
     monkeypatch.setattr(tp, "OUT", tmp_path)
-    records = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80}}
+    records = {"X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80}}
     monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
     assert tp.main(["--stage", "costs", "--check"]) == 1
     assert not (tmp_path / tp.COSTS).exists()
@@ -434,7 +537,7 @@ def test_a_cost_disagreement_blocks_the_write_and_the_check(
         tmp_path, monkeypatch) -> None:
     monkeypatch.setattr(tp, "OUT", tmp_path)
     monkeypatch.setattr(tp, "collect_costs",
-                        lambda: ({"X": {"basis": "audited"}}, 1, ["X: off by 1"]))
+                        lambda: ({"X": {"basis": "measured"}}, 1, ["X: off by 1"]))
     assert tp.main(["--stage", "costs"]) == 1
     assert not (tmp_path / tp.COSTS).exists()
 
@@ -443,7 +546,7 @@ def test_check_all_compares_every_stage_before_deciding(
         tmp_path, monkeypatch, caplog) -> None:
     """One run names every stale file; a stale first stage still yields 1."""
     monkeypatch.setattr(tp, "OUT", tmp_path)
-    records = {"X-K3": {"basis": "audited", "usd": 2.0, "candidates": 80}}
+    records = {"X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80}}
     monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
     monkeypatch.setattr(tp, "build_rows", lambda costs: _ranked_rows())
     monkeypatch.setattr(tp, "compute_fronts", _stub_fronts)

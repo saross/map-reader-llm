@@ -1,6 +1,11 @@
 # Tile presence: what a metric indifferent to over-generation buys, and what it costs
 
-> **Last revised**: 2026-09-21 (first publication; PI ruling 2026-09-21).
+> **Last revised**: 2026-10-04 (later: the cross-check's rules stated after the
+> code audit; no figure moved). Earlier the same day: (every leg now priced at the uniform
+> discounted tier from the passes register, PI rulings D29 and D30; all 35
+> configurations priced where 12 were not; no tile-MCC, F1, vote count, pool
+> or rank changes). Prior: 2026-09-21 (first publication; PI ruling
+> 2026-09-21).
 > See [§ Changelog](#changelog) for revision history.
 > Sources: [`leaderboard.md`](leaderboard.md),
 > [`frontier/frontier.md`](frontier/frontier.md),
@@ -87,8 +92,10 @@ data already on disk.
 A tile-MCC optimum at k = 1 does not just change a threshold: it needs a
 verifier probability for **every candidate with at least one vote**, not
 only the unanimous ones. The `pool @ votes` column is that pool, read off
-the sweep's own zero-threshold row, and `pool US$` prices it at the audited
-per-candidate rate of that configuration's verifier leg.
+the sweep's own zero-threshold row, and `pool US$` prices it at the
+per-candidate rate of that configuration's verifier leg, at the uniform
+discounted tier from the passes register (PI rulings D29 and D30), the basis
+the r2 board and the K-ladders use.
 
 What that buys is not flattering. The table's top two rows —
 `G3IMG-ARM2-K5` at tile-MCC 0.7755 and `G3IMG-ARM2-K3` at 0.7706 — need
@@ -99,35 +106,48 @@ pool for **US$6.21**, and does it at micro-F1 **0.9280** against
 collapse in micro-F1 buys **0.0073** of tile-MCC. Anyone choosing a tile-presence
 deployment on tile-MCC alone should see that trade before choosing.
 
-**11 of 35 rows draw on a pool smaller than their verifier leg**: they
+**17 of 35 rows draw on a pool smaller than their verifier leg**: they
 inherit probabilities from a larger verification (every A/B and 3.7 rung
 inherits from its K = 10 or K = 5 union's single leg), so `pool US$` is what
-the point alone would cost, not what was spent. **No row asks for more
+the point alone would cost, not what was spent. (The count was 11 until
+2026-10-04, when the A and fourth-cell rungs' leg sizes became known with
+their costs.) **No row asks for more
 candidates than its leg verified**, so every point on this table is
 reachable from a verification that already exists.
 
-### What is not priced, and why
+### How each leg is priced
 
-Costs come from `scripts/audit_verifier_cost.py` over each leg's committed
-metas — the auditor both image campaigns' post-run reports cite — with the
-campaigns' own published figures used where the auditor cannot reach the
-truth. **21 of 35 configurations are audited, 2 published, and 12 have no
-usable cost**:
+Every leg is priced through `scripts/lib_frontier_cost.py` from the passes
+register, at the uniform discounted tier: **23 of 35 configurations are
+measured and 12 completed**.
 
 | basis | configurations | meaning |
 |---|---|---|
-| `audited` | 21 | the auditor read every pass of the leg |
-| `published` | `IMG-ARM2-K1`, `IMG-ARM2-K3` | the auditor reads a lower bound; the figure is `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`'s |
-| `unaudited` | `TH7`, `T03`, `TM`, `IM`, `A-N{1,3,5,10}`, `FOURTH-N{1,3,5,10}` | neither: no cost is shown |
+| `measured` | 23 | the leg's own tokens at the uniform tier |
+| `completed` | `TM`, `IM`, `A-N{1,3,5,10}`, `FOURTH-N{1,3,5,10}` | a cleanup-overwritten floor: its calls at the unit of the comparable legs the r2 board nominates for it (D19) |
+| `completed` | `IMG-ARM2-K1`, `IMG-ARM2-K3` | a register row on the `published` basis, with no fragments: its calls at the unit of `IMG-ARM2-K5`, the same campaign's leg with the identical verifier (D30) |
 
-The twelve unaudited legs are all pre-2026-09-14 stages whose `run_pv.py`
-cleanup overwrote `run.meta.json` with the retry pass's usage only, so the
-auditor reads a **lower bound** and says so. A lower bound multiplied by a
-pool size is a number that looks like a cost and is not, so those rows are
-left blank rather than filled. `verifier-costs.json` names each leg's stage
-directories as an audit target. **Where the auditor and a published figure
-both exist they agree to the cent on all ten overlapping legs** — an
-unplanned cross-check that the two sources have not drifted.
+The two-pass text legs of `TH7`, `T03` and `TM` include the S104 vote-3
+increment (`results/deployment-oracle-2026-06-06/vote3-verify/`), which the
+register does not hold. It is priced from its own metas and marked
+under `stages_outside_register` in `verifier-costs.json`: US$2.97, US$2.74 and
+US$1.51.
+The PI ruled that the register be repaired to hold it (D30), and a drift test
+turns red when it does.
+
+**Cross-check.** Twelve legs have a figure their campaign's post-run report
+publishes. The ten measured ones agree with it to under US$0.0001. The two
+completed ones differ by +US$0.048 (`IMG-ARM2-K1`) and −US$0.014
+(`IMG-ARM2-K3`), within the US$0.05 tolerance D30 set. A measured leg must
+agree to the cent, and every cross-checked leg over the same number of
+candidates; a gap beyond either refuses the write and fails `--check`. A leg
+whose report publishes a figure but which this stage cannot price is a
+disagreement too: a lost cost refuses the write rather than leaving a blank.
+
+Until 2026-10-04 the stage used `scripts/audit_verifier_cost.py` on the
+as-billed tier, which reads a cleanup-overwritten leg as a lower bound. It
+left the twelve floor-leg configurations unpriced and took the two published
+figures as given.
 
 ## The frontier is the honest version
 
@@ -165,6 +185,35 @@ quoting it, and note that **no drift floor has been measured for the Gemini
 no band to be read against.
 
 ## Changelog
+
+### 2026-10-04 (later) — Cross-check rules after the code audit
+
+The two-lens audit of WP4 and its re-audit tightened the cost stage's cross-check,
+and § "How each leg is priced" now states it: a measured leg must agree with its
+published figure to the cent and a completed one within US$0.05 (D30), over the
+same number of candidates; an unpriced leg that its report prices is itself a
+disagreement; and any disagreement refuses the write and fails `--check`. The
+record's fields were renamed (`sources`, `stages_outside_register`). No figure
+moved: every leg's cost, every pool and every rank is as in the entry below.
+
+### 2026-10-04 — Costs at the uniform tier, from the register (D29, D30)
+
+**Refresh trigger**: PI rulings D29 and D30 (`planning/pi-decisions-2026-09-20.md`).
+The cost stage now prices every verifier leg through `scripts/lib_frontier_cost.py`
+from the passes register at the uniform discounted tier, as the r2 board and
+the K-ladders are (`310a45757`; regenerated in `959ae8a3f`).
+
+| Figure | Before | After |
+|---|---|---|
+| configurations priced | 23 (21 audited, 2 published) | 35 (23 measured, 12 completed) |
+| rows inheriting from a larger leg | 11 | 17 |
+| `IMG-ARM2-K1` pool US$ | 7.70 (published) | 7.75 (completed) |
+| `IMG-ARM2-K3` pool US$ | 7.32 (published) | 7.31 (completed) |
+
+**What did NOT change**: every tile-MCC, F1, vote count, pool size and rank;
+the frontier (it reads no costs, and its drift check passes); every measured
+leg's cost, which agrees with its published figure to under US$0.0001; and
+the § "The cost dimension" comparison (US$51.09, US$40.58 and US$6.21).
 
 ### 2026-09-21 — Original publication
 

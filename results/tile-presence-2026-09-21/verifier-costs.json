@@ -1,6 +1,9 @@
 {
-  "_README": "Verifier-leg cost per configuration. basis 'audited' = scripts/audit_verifier_cost.py read every pass of the leg; 'published' = the auditor could not (a pre-2026-09-14 cleanup overwrote the main pass's meta, so it yields a LOWER BOUND) and the figure is the campaign post-run report's, cited in 'source'; 'unaudited' = neither, so the leg has no usable cost and nothing derived from it is priced. Where both exist they are required to agree to US$0.01.",
-  "agreement_tolerance_usd": 0.01,
+  "_README": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register (the S104 vote-3 increments), priced from its own meta until the register is repaired. cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis.",
+  "agreement_tolerance_usd": {
+    "measured": 0.01,
+    "completed": 0.05
+  },
   "generated_by": "scripts/build_tile_presence_board.py --stage costs",
   "legs": {
     "IM": {
@@ -10,17 +13,19 @@
       "configs": [
         "IM"
       ],
-      "auditor_usd": 0.000727,
-      "auditor_candidates": 0,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "7878 of 7878 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 5.451223274863523,
+      "candidates": 7878,
+      "sources": [
+        "55maps-image-generalisation::verified::run1",
+        "55maps-generalisation::verified::run1",
+        "55maps-text-high-generalisation::verified::run1",
+        "55maps-text-high-t0-3-generalisation::verified::run1",
+        "55maps-text-min-n10-uplift::verified-3of10::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-image-generalisation/verified"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "55maps-image-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 7,878 verifications x pooled unit"
     },
     "TH7": {
       "stages": [
@@ -30,17 +35,18 @@
       "configs": [
         "TH7"
       ],
-      "auditor_usd": 9.39037,
-      "auditor_candidates": 4367,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "9205 of 9205 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "measured",
+      "usd": 9.390371,
+      "candidates": 13572,
+      "sources": [
+        "55maps-text-high-generalisation::verified::run1",
+        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-high-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+      ],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified: own cost (not in the register), 4,367 verifications"
     },
     "T03": {
       "stages": [
@@ -50,18 +56,18 @@
       "configs": [
         "T03"
       ],
-      "auditor_usd": 9.642493,
-      "auditor_candidates": 4035,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "run.meta.json.pre-recovery-20260427.backup skipped: it holds a pass already counted from another file in this stage (run_id b92052cf-1374-423e-8963-d381825e53be)",
-        "9910 of 9910 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "measured",
+      "usd": 9.642494,
+      "candidates": 13945,
+      "sources": [
+        "55maps-text-high-t0-3-generalisation::verified::run1",
+        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-high-t0.3-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+      ],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified: own cost (not in the register), 4,035 verifications"
     },
     "TM": {
       "stages": [
@@ -71,17 +77,22 @@
       "configs": [
         "TM"
       ],
-      "auditor_usd": 1.538019,
-      "auditor_candidates": 2220,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "10170 of 10170 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 8.54878165414598,
+      "candidates": 12390,
+      "sources": [
+        "55maps-text-min-generalisation::verified::run1",
+        "55maps-generalisation::verified::run1",
+        "55maps-text-high-generalisation::verified::run1",
+        "55maps-text-high-t0-3-generalisation::verified::run1",
+        "55maps-text-min-n10-uplift::verified-3of10::run1",
+        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/55maps-text-min-generalisation/verified, results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+      ],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified: own cost (not in the register), 2,220 verifications"
     },
     "UPL": {
       "stages": [
@@ -90,15 +101,15 @@
       "configs": [
         "UPL"
       ],
-      "auditor_usd": 11.266204,
-      "auditor_candidates": 16482,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 11.266204499999999,
+      "basis": "measured",
+      "usd": 11.266205,
       "candidates": 16482,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "55maps-text-min-n10-uplift::verified-3of10::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "55maps-text-min-n10-uplift::verified-3of10::run1: own cost, 16,482 verifications"
     },
     "G3IMG-ARM1-K1": {
       "stages": [
@@ -107,16 +118,23 @@
       "configs": [
         "G3IMG-ARM1-K1"
       ],
-      "auditor_usd": 15.755937,
-      "auditor_candidates": 22785,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 15.755937,
       "candidates": 22785,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1: own cost, 22,785 verifications",
+      "cross_check": {
+        "published_usd": 15.7559,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": 3.7e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 22785,
+        "within_tolerance": true
+      }
     },
     "G3IMG-ARM2-K1": {
       "stages": [
@@ -125,18 +143,23 @@
       "configs": [
         "G3IMG-ARM2-K1"
       ],
-      "auditor_usd": 25.397835,
-      "auditor_candidates": 22785,
-      "auditor_complete": true,
-      "auditor_notes": [
-        "merge sidecars present without a merged primary meta: run.meta.pre-rerun-1.json"
-      ],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 25.397835,
       "candidates": 22785,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1: own cost, 22,785 verifications",
+      "cross_check": {
+        "published_usd": 25.3978,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": 3.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 22785,
+        "within_tolerance": true
+      }
     },
     "G3IMG-ARM1-K3": {
       "stages": [
@@ -145,16 +168,23 @@
       "configs": [
         "G3IMG-ARM1-K3"
       ],
-      "auditor_usd": 25.102049,
-      "auditor_candidates": 36389,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 25.102049,
       "candidates": 36389,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1: own cost, 36,389 verifications",
+      "cross_check": {
+        "published_usd": 25.102,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": 4.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 36389,
+        "within_tolerance": true
+      }
     },
     "G3IMG-ARM2-K3": {
       "stages": [
@@ -163,16 +193,23 @@
       "configs": [
         "G3IMG-ARM2-K3"
       ],
-      "auditor_usd": 40.581277,
-      "auditor_candidates": 36389,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 40.58127675,
+      "basis": "measured",
+      "usd": 40.581277,
       "candidates": 36389,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1: own cost, 36,389 verifications",
+      "cross_check": {
+        "published_usd": 40.5813,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": -2.3e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 36389,
+        "within_tolerance": true
+      }
     },
     "G3IMG-ARM1-K5": {
       "stages": [
@@ -181,16 +218,23 @@
       "configs": [
         "G3IMG-ARM1-K5"
       ],
-      "auditor_usd": 31.542175,
-      "auditor_candidates": 45786,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 31.5421755,
+      "basis": "measured",
+      "usd": 31.542175,
       "candidates": 45786,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1: own cost, 45,786 verifications",
+      "cross_check": {
+        "published_usd": 31.5422,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": -2.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 45786,
+        "within_tolerance": true
+      }
     },
     "G3IMG-ARM2-K5": {
       "stages": [
@@ -199,18 +243,23 @@
       "configs": [
         "G3IMG-ARM2-K5"
       ],
-      "auditor_usd": 51.092455,
-      "auditor_candidates": 45786,
-      "auditor_complete": true,
-      "auditor_notes": [
-        "merge sidecars present without a merged primary meta: run.meta.pre-rerun-1.json"
-      ],
-      "basis": "audited",
-      "usd": 51.092455125,
+      "basis": "measured",
+      "usd": 51.092455,
       "candidates": 45786,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
+      "sources": [
+        "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1: own cost, 45,786 verifications",
+      "cross_check": {
+        "published_usd": 51.0925,
+        "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+        "gap_usd": -4.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 45786,
+        "within_tolerance": true
+      }
     },
     "ARM1-N1": {
       "stages": [
@@ -221,15 +270,15 @@
         "ARM1-N3",
         "ARM1-N5"
       ],
-      "auditor_usd": 8.890222,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
     "ARM1-N3": {
       "stages": [
@@ -240,15 +289,15 @@
         "ARM1-N3",
         "ARM1-N5"
       ],
-      "auditor_usd": 8.890222,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
     "ARM1-N5": {
       "stages": [
@@ -259,15 +308,15 @@
         "ARM1-N3",
         "ARM1-N5"
       ],
-      "auditor_usd": 8.890222,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
     "ARM2-N1": {
       "stages": [
@@ -278,15 +327,15 @@
         "ARM2-N3",
         "ARM2-N5"
       ],
-      "auditor_usd": 14.305547,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 14.305546875000001,
+      "basis": "measured",
+      "usd": 14.305547,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
     "ARM2-N3": {
       "stages": [
@@ -297,15 +346,15 @@
         "ARM2-N3",
         "ARM2-N5"
       ],
-      "auditor_usd": 14.305547,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 14.305546875000001,
+      "basis": "measured",
+      "usd": 14.305547,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
     "ARM2-N5": {
       "stages": [
@@ -316,15 +365,15 @@
         "ARM2-N3",
         "ARM2-N5"
       ],
-      "auditor_usd": 14.305547,
-      "auditor_candidates": 12715,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 14.305546875000001,
+      "basis": "measured",
+      "usd": 14.305547,
       "candidates": 12715,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
     "IMG-ARM1-K1": {
       "stages": [
@@ -333,16 +382,23 @@
       "configs": [
         "IMG-ARM1-K1"
       ],
-      "auditor_usd": 4.962592,
-      "auditor_candidates": 6985,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 4.962592,
       "candidates": 6985,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+      "sources": [
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1: own cost, 6,985 verifications",
+      "cross_check": {
+        "published_usd": 4.9626,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": -8e-06,
+        "tolerance_usd": 0.01,
+        "published_candidates": 6985,
+        "within_tolerance": true
+      }
     },
     "IMG-ARM2-K1": {
       "stages": [
@@ -351,17 +407,24 @@
       "configs": [
         "IMG-ARM2-K1"
       ],
-      "auditor_usd": 0.015272,
-      "auditor_candidates": 13,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "6972 of 6985 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
-      ],
-      "basis": "published",
-      "usd": 7.7028,
+      "basis": "completed",
+      "usd": 7.750904907336749,
       "candidates": 6985,
-      "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
-      "note": "the auditor reads a LOWER BOUND here \u2014 a pre-2026-09-14 cleanup overwrote the main pass's meta \u2014 so the published audited figure is used; see auditor_notes"
+      "sources": [
+        "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2",
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2 is a floor: 6,985 verifications x the unit pooled over gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1",
+      "cross_check": {
+        "published_usd": 7.7028,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": 0.048105,
+        "tolerance_usd": 0.05,
+        "published_candidates": 6985,
+        "within_tolerance": true
+      }
     },
     "IMG-ARM1-K3": {
       "stages": [
@@ -370,16 +433,23 @@
       "configs": [
         "IMG-ARM1-K3"
       ],
-      "auditor_usd": 5.905819,
-      "auditor_candidates": 8337,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 5.9058195,
+      "basis": "measured",
+      "usd": 5.905819,
       "candidates": 8337,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+      "sources": [
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1: own cost, 8,337 verifications",
+      "cross_check": {
+        "published_usd": 5.9058,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": 1.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 8337,
+        "within_tolerance": true
+      }
     },
     "IMG-ARM2-K3": {
       "stages": [
@@ -388,17 +458,24 @@
       "configs": [
         "IMG-ARM2-K3"
       ],
-      "auditor_usd": 0.001206,
-      "auditor_candidates": 1,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "8336 of 8337 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
-      ],
-      "basis": "published",
-      "usd": 9.265,
+      "basis": "completed",
+      "usd": 9.251151641011665,
       "candidates": 8337,
-      "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
-      "note": "the auditor reads a LOWER BOUND here \u2014 a pre-2026-09-14 cleanup overwrote the main pass's meta \u2014 so the published audited figure is used; see auditor_notes"
+      "sources": [
+        "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2",
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2 is a floor: 8,337 verifications x the unit pooled over gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1",
+      "cross_check": {
+        "published_usd": 9.265,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": -0.013848,
+        "tolerance_usd": 0.05,
+        "published_candidates": 8337,
+        "within_tolerance": true
+      }
     },
     "IMG-ARM1-K5": {
       "stages": [
@@ -407,16 +484,23 @@
       "configs": [
         "IMG-ARM1-K5"
       ],
-      "auditor_usd": 6.48959,
-      "auditor_candidates": 9173,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
+      "basis": "measured",
       "usd": 6.48959,
       "candidates": 9173,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+      "sources": [
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1: own cost, 9,173 verifications",
+      "cross_check": {
+        "published_usd": 6.4896,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": -1e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 9173,
+        "within_tolerance": true
+      }
     },
     "IMG-ARM2-K5": {
       "stages": [
@@ -425,16 +509,23 @@
       "configs": [
         "IMG-ARM2-K5"
       ],
-      "auditor_usd": 10.178819,
-      "auditor_candidates": 9173,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 10.1788185,
+      "basis": "measured",
+      "usd": 10.178819,
       "candidates": 9173,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null,
-      "cross_checked_against": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
+      "sources": [
+        "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1: own cost, 9,173 verifications",
+      "cross_check": {
+        "published_usd": 10.1788,
+        "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+        "gap_usd": 1.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 9173,
+        "within_tolerance": true
+      }
     },
     "A-N1": {
       "stages": [
@@ -446,18 +537,16 @@
         "A-N3",
         "A-N5"
       ],
-      "auditor_usd": 0.004072,
-      "auditor_candidates": 6,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 26.385428316673046,
+      "candidates": 38713,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
     "A-N10": {
       "stages": [
@@ -469,18 +558,16 @@
         "A-N3",
         "A-N5"
       ],
-      "auditor_usd": 0.004072,
-      "auditor_candidates": 6,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 26.385428316673046,
+      "candidates": 38713,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
     "A-N3": {
       "stages": [
@@ -492,18 +579,16 @@
         "A-N3",
         "A-N5"
       ],
-      "auditor_usd": 0.004072,
-      "auditor_candidates": 6,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 26.385428316673046,
+      "candidates": 38713,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
     "A-N5": {
       "stages": [
@@ -515,18 +600,16 @@
         "A-N3",
         "A-N5"
       ],
-      "auditor_usd": 0.004072,
-      "auditor_candidates": 6,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (38707 candidates, 69,362,944 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "38707 of 38713 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 26.385428316673046,
+      "candidates": 38713,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov128_55map/verify"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
     "B-N1": {
       "stages": [
@@ -538,15 +621,15 @@
         "B-N3",
         "B-N5"
       ],
-      "auditor_usd": 39.177723,
-      "auditor_candidates": 57482,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 39.1777235,
+      "basis": "measured",
+      "usd": 39.177723,
       "candidates": 57482,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
     "B-N10": {
       "stages": [
@@ -558,15 +641,15 @@
         "B-N3",
         "B-N5"
       ],
-      "auditor_usd": 39.177723,
-      "auditor_candidates": 57482,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 39.1777235,
+      "basis": "measured",
+      "usd": 39.177723,
       "candidates": 57482,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
     "B-N3": {
       "stages": [
@@ -578,15 +661,15 @@
         "B-N3",
         "B-N5"
       ],
-      "auditor_usd": 39.177723,
-      "auditor_candidates": 57482,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 39.1777235,
+      "basis": "measured",
+      "usd": 39.177723,
       "candidates": 57482,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
     "B-N5": {
       "stages": [
@@ -598,15 +681,15 @@
         "B-N3",
         "B-N5"
       ],
-      "auditor_usd": 39.177723,
-      "auditor_candidates": 57482,
-      "auditor_complete": true,
-      "auditor_notes": [],
-      "basis": "audited",
-      "usd": 39.1777235,
+      "basis": "measured",
+      "usd": 39.177723,
       "candidates": 57482,
-      "source": "scripts/audit_verifier_cost.py over the leg's committed metas",
-      "note": null
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
+      ],
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
     "FOURTH-N1": {
       "stages": [
@@ -618,18 +701,16 @@
         "FOURTH-N3",
         "FOURTH-N5"
       ],
-      "auditor_usd": 0.034947,
-      "auditor_candidates": 29,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 64.6725483801809,
+      "candidates": 57482,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
     "FOURTH-N10": {
       "stages": [
@@ -641,18 +722,16 @@
         "FOURTH-N3",
         "FOURTH-N5"
       ],
-      "auditor_usd": 0.034947,
-      "auditor_candidates": 29,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 64.6725483801809,
+      "candidates": 57482,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
     "FOURTH-N3": {
       "stages": [
@@ -664,18 +743,16 @@
         "FOURTH-N3",
         "FOURTH-N5"
       ],
-      "auditor_usd": 0.034947,
-      "auditor_candidates": 29,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 64.6725483801809,
+      "candidates": 57482,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
     "FOURTH-N5": {
       "stages": [
@@ -687,18 +764,16 @@
         "FOURTH-N3",
         "FOURTH-N5"
       ],
-      "auditor_usd": 0.034947,
-      "auditor_candidates": 29,
-      "auditor_complete": false,
-      "auditor_notes": [
-        "the register carries a residual ESTIMATE for this stage (57453 candidates, 102,955,776 input tokens) \u2014 an estimate, never counted into the audited total; see the register for its basis",
-        "57453 of 57482 results are not accounted for by any pass on disc \u2014 the cleanup-overwrite signature; the figure below is a LOWER BOUND, not the stage's cost"
+      "basis": "completed",
+      "usd": 64.6725483801809,
+      "candidates": 57482,
+      "sources": [
+        "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
+        "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "basis": "unaudited",
-      "usd": null,
-      "candidates": null,
-      "source": null,
-      "note": "no usable verifier-leg cost: the auditor reads only a lower bound (cleanup-overwrite) and no post-run report publishes this leg. Audit target: outputs/stride-55map-2026-08-25/verifier/g384_ov192_55map/verify_37"
+      "stages_outside_register": [],
+      "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
+      "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     }
   }
 }

@@ -1,0 +1,50 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth: cost_usd and cost_basis are the ROW's (every fragment of the pass), and the fragment record is copied as the register holds it (on a lower-bound row the row sums each fragment's lowest candidate, so the record's cost_usd need not be this meta's part of the row's figure)",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 46.703326,
+      "fragment": {
+        "cost_usd": 0.040943,
+        "evidence": [
+          "run-log-inherited: outputs/gemini3-image-55map-2026-09-16/{pass1.log, pass2.log, pass3.log, pass4.log, pass5.log, recover2_3.log, recover2_5.log, recover_1.log, recover_2.log, recover_3.log, recover_4.log, recover_5.log} -> flex",
+          "billing-day: gemini-3-flash-preview: 2026-09-16 flex|standard [invoice line windows] -> standard|flex"
+        ],
+        "meta": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "priced_at": "2026-09-17",
+        "tier": "flex",
+        "tier_method": "run-log-inherited"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img::run1",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+        "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T07:57:28Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}
