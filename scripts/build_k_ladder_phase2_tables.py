@@ -94,7 +94,7 @@ from scripts.lib_frontier_cost import gs_units, phase2_pass_units  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.2.0"  # 2026-10-04: costs from the register (WP4b)
+__version__ = "1.2.1"  # 2026-10-04: shares rounded once (D27); 1.2.0 costs from the register
 
 #: Which of the two readings of "the carried point" the tables REPORT, settled
 #: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
@@ -788,6 +788,29 @@ def fmt(value: Any, places: int = 4) -> str:
     return str(value)
 
 
+def pct(ratio: float | None) -> str:
+    """Format a ratio as a whole percentage, rounding once, or an em dash.
+
+    The ratio must be the raw quotient, never a value already rounded:
+    v1.2.0 rounded the shares to three decimals and then to a whole
+    percentage, which turned 0.31491 into 0.315 and then "32 %" (PI
+    ruling D27, 2026-10-04).
+
+    Args:
+        ratio: A share in [0, 1], or ``None`` when it is undefined.
+
+    Returns:
+        ``"31 %"``-style text, or ``"—"`` for ``None``.
+
+    Example:
+        >>> pct(7.2405 / 22.9921)
+        '31 %'
+    """
+    if ratio is None:
+        return "—"
+    return f"{ratio * 100:.0f} %"
+
+
 def tables(payload: dict[str, Any]) -> str:
     """Render the per-family ladder tables and the two summary tables."""
     lines: list[str] = []
@@ -880,11 +903,14 @@ def tables(payload: dict[str, Any]) -> str:
         best = by_k[best_k]["opmax"]["f1_20"]
         gain = round(best - base, 4)
         at3 = by_k.get(3, {}).get("opmax", {}).get("f1_20")
-        share = (
-            round((at3 - base) / gain, 3)
+        # Each share is rendered from its raw quotient and stored to four
+        # decimals; rounding before rendering double-rounds (D27).
+        share_raw = (
+            (at3 - base) / gain
             if at3 is not None and gain not in (0, None) and gain != 0
             else None
         )
+        share = None if share_raw is None else round(share_raw, 4)
         mcc1 = by_k[1]["opmax"].get("tile_mcc")
         mccbest = by_k[best_k]["opmax"].get("tile_mcc")
         verdict = "—"
@@ -896,17 +922,16 @@ def tables(payload: dict[str, Any]) -> str:
             )
         top_cost = by_k[max(by_k)].get("all_in_flex_usd")
         cost3 = by_k.get(3, {}).get("all_in_flex_usd")
+        cost_share_raw = cost3 / top_cost if cost3 and top_cost else None
         cost_share = (
-            round(cost3 / top_cost, 3)
-            if cost3 and top_cost
-            else None
+            None if cost_share_raw is None else round(cost_share_raw, 4)
         )
         lines.append(
             f"| {ladder['family']} | {fmt(base)} | {fmt(best)} (K={best_k}) | "
             f"**{gain:+.4f}** | "
-            f"{'—' if share is None else f'{share * 100:.0f} %'} | "
+            f"{pct(share_raw)} | "
             f"{fmt(mcc1)} | {fmt(mccbest)} | {verdict} | "
-            f"{'—' if cost_share is None else f'{cost_share * 100:.0f} %'} |"
+            f"{pct(cost_share_raw)} |"
         )
         summary_rows.append(
             {

@@ -511,6 +511,18 @@ def test_fmt_renders_missing_values_as_an_em_dash() -> None:
     assert tables.fmt(412, 0) == "412"
 
 
+def test_pct_rounds_once_from_the_raw_ratio() -> None:
+    """D27: a share is rounded once, so 31.49 % never renders as 32 %."""
+    raw = 7.2405 / 22.9921  # HIGH image T 1.0: K = 3 over K = 10 all-in
+    assert tables.pct(raw) == "31 %"
+    # The red sentinel: v1.2.0's three-decimal intermediate gives 32 %, so
+    # this test would fail on the old rendering.
+    assert f"{round(raw, 3) * 100:.0f} %" == "32 %"
+    assert tables.pct(1.7111 / 3.9360) == "43 %"  # MINIMAL text T 0.3
+    assert tables.pct(None) == "—"
+
+
+
 # --------------------------------------------------------------------------
 # Reuse of the existing gated instrument
 # --------------------------------------------------------------------------
