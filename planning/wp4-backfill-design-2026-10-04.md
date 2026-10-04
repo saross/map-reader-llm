@@ -3,7 +3,9 @@
 **Created**: 2026-10-04 (Session 159). **Status**: on branch
 `wp4-backfill`, D built (`34edba875`), B a recorded no-op, C built
 (`ca2726fbe` library, `310a45757` stage, `959ae8a3f` data, `e6787427c`
-findings) after the PI's choices C1 and C2 (D30); A in progress.
+findings) after the PI's choices C1 and C2 (D30); A built (729 sidecars).
+Audited by two fresh-context lenses and a fresh-context re-audit of the first
+fix round; the second fix round was verified by mutation tests in session.
 
 WP4 is row 4 of § 5 of `planning/cost-accounting-fix-plan-2026-09-21.md`.
 The plan budgeted it as "one sapphire regeneration". The dry run below
@@ -149,6 +151,14 @@ script, the tests and a sample, not file by file.
    full tier-1 on sapphire; PR from `wp4-backfill`.
 
 ## Changelog
+
+### 2026-10-04 (later still) — A built; audited
+
+A built (a sub-branch, merged), its scope widened to `results/` and narrowed
+to git-tracked metas (a sapphire-only untracked meta had made the drift
+check machine-dependent). Two-lens audit, two fix rounds, one fresh re-audit;
+tier-1 and tier-2 on sapphire. Findings for the PI: a third register gap
+(grid-2026-08-18 proposer metas) and the board's vote-3 increment pricing (X1).
 
 ### 2026-10-04 (later) — C built after D30
 

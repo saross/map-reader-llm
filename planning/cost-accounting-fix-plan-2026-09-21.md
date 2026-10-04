@@ -670,6 +670,17 @@ exports in `docs/costs/` (gitignored) are reduced to committed evidence by
 
 ## Changelog
 
+### 2026-10-04 (Session 159) — WP4 built on a branch
+
+WP4's four deliverables, after a dry run that found only one was a regeneration
+(`planning/wp4-backfill-design-2026-10-04.md`): the September SKU rows from the
+full invoice by a new gated writer (FX 1.3905, the header rate, as every month);
+the hypothesis table a no-op; the tile-presence costs at the uniform tier (D29,
+D30); 729 `cost_audit.json` sidecars copying the register (D28). Rulings D28 to
+D30. The register repair D30 requires is a separate PR and now covers three
+gaps (the vote-3 campaign, `verifier-robustness`, grid-2026-08-18's proposer
+metas).
+
 ### 2026-10-04 — WP4b built: the frontier cost axis from the register (Session 158)
 
 D19 amended (uniform discount tier) and WP4b widened to all three
