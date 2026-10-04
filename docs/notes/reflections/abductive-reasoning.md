@@ -8858,3 +8858,86 @@ filter feeds a ranking.
 It is not evidence that the June costs were wrong: where they existed they
 were right to under 1 %. Nor is it a re-tiering, since the board's F1 tiers
 and pairs are byte-identical.
+
+## Entry — 2026-10-04 (Session 159, map-reader-llm): A universal that survived a signature
+
+**Session:** ebd68f50-7724-4a4e-bf47-839e74d2c95f
+**Instance:** primary
+
+### Surprising fact
+
+Refreshing the K-ladder findings' § 7.4 to the re-priced costs, I computed
+every Phase 2 ladder's three step costs per 0.001 F1 to quote the range.
+The section said "the last step is the worst buy on every ladder", and the
+signed outcome said the same. On HIGH image T 1.0 the K = 3 → 5 step cost
+about US$0.50 per 0.001 F1 against the last step's US$0.38; on MINIMAL
+image T 0.3 the K = 3 → 5 step lost F1 outright. A universal in a signed
+row was false on two of fourteen ladders.
+
+### Probe
+
+Two questions, in order. Did the re-pricing cause it? I recomputed the
+steps from the pre-WP4b `phase2/ladders.json` (`git show 0f484491c^`): both
+exceptions held under the old prices, so the claim had been false since
+publication. Was it confined to Phase 2? The same census over the Phase 1
+ladders found four more exceptions (GS stride A, both stride B ladders, the
+fourth cell), and showed that § 5's "always by the smallest margin" failed
+on stride B for the same reason: the K = 3 → 5 step is nearly flat there.
+
+### Belief revision
+
+I had treated a signed claim's prose as checked because its numbers were.
+The signing re-derived the figures the row quoted; nobody re-derived the
+universal the figures were offered as evidence for. The pattern is general:
+"every", "always" and "never" in a findings document are claims about the
+whole table, and they are cheap to state from the cases one looked at and
+cheap to falsify from the cases one did not. The correction went in as a
+second signature note (D25), not an edit, because the signature attests
+what was signed.
+
+### What would change this belief
+
+A K-ladder whose exceptions all fell inside the noise of the GS instrument
+(± 0.03 F1 at 487 tiles) would make "worst buy" a defensible reading of
+point estimates rather than a false universal. On stride B, at 8,541 tiles,
+it is not inside the noise.
+
+### Implications for practice
+
+When refreshing a document, recompute any universal it states over the
+full table, not only the figures that changed.
+
+## Entry — 2026-10-04 (Session 159, map-reader-llm): Drift on one machine only
+
+**Session:** ebd68f50-7724-4a4e-bf47-839e74d2c95f
+**Instance:** primary
+
+### Surprising fact
+
+The tier-2 test that checks the 729 committed `cost_audit.json` sidecars
+against a rebuild passed on amd-tower and failed on sapphire, at the same
+commit, with "2 missing".
+
+### Probe
+
+The two missing sidecars belonged to merged batch-staging metas for runs 4
+and 5 of the 3.7 image campaign. On sapphire those metas existed, untracked
+and not ignored; on amd-tower they did not exist. The back-fill enumerated
+whatever `*.meta.json` the disc held. A second check: did the register
+depend on those files? No: its run 4 and run 5 rows cite the committed
+merged metas under `run_4/` and `run_5/`.
+
+### Belief revision
+
+I had read "the committed sidecars are current" as a property of the
+commit. It was a property of the commit plus each machine's untracked
+files. A generator whose output is committed must read only committed
+inputs, or its drift check is machine-dependent. The scope moved to
+`git ls-files`, and the final re-audit confirmed the plan is now identical
+on both machines (1,545 metas, 729 sidecars).
+
+### What this is not
+
+Not evidence that sapphire's untracked files are wrong; they are staging
+intermediates whose committed copies the register already cites. They are
+flagged for housekeeping, not deleted.

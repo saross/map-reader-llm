@@ -8360,3 +8360,42 @@ compaction summary.*
   auditor's `git status` held `.git/index.lock` at the moment I tried to
   commit. Checking for the process and retrying was right; deleting the
   lock would have been wrong. Read-only subagents are not lock-free.
+
+## Session 159 — 2026-10-04 (WP4b's figures carried into five documents; rulings D24 to D30; WP4 built, audited three times and merged as PR #23)
+
+- **A subagent's number is a claim, not a fact.** The sidecar agent reported
+  "44 proposer metas" for the grid run's register gap; I relayed it into two
+  rulings and a PR body. The final re-audit counted 46 plus 2 smoke metas
+  with `git ls-files`. The same agent's other figures were all correct,
+  which is exactly why the one wrong one passed: a report that is right
+  twenty times earns trust it has not earned on the twenty-first. Counts that
+  scope work get re-derived before they are written down.
+- **An in-memory mutation harness can manufacture survivors.** Lens B's
+  plugin swapped a function on its module; `main()` dispatches stages
+  through a `STAGES` tuple bound at import, so the swap never reached it and
+  the mutant "survived". I nearly wrote a test to kill a mutant that the
+  harness had not applied. A red sentinel per mutated function, not one per
+  harness, is the check.
+- **A test exposed a definition-time default.** `find_exports(directory=
+  EXPORTS)` and `read_table(path=TABLE)` bound their defaults when the module
+  loaded, so `main()` ignored the test's repointed paths and read the real
+  table. Production behaviour was identical, which is why nothing had shown
+  it; the first end-to-end test of `main()` did.
+- **Delegating the code you did not write back to its author worked.** The
+  sidecar fixes went to the agent that built the back-fill, resumed with its
+  context; it applied four findings and declined one with evidence I could
+  check. Two lenses, then the author fixing, then a fresh re-auditor is a
+  better division than me fixing someone else's 900 lines.
+- **Telling an audit lens the intent let it check numbers, not just code.**
+  Lens A was told which board figures the tile-presence legs should equal;
+  it recomputed every leg through the configuration specs and confirmed
+  them, which no code reading could have done. Its one cross-module finding
+  (X1, the vote-3 increment unpriced on the board) came from the same
+  instruction.
+- **Phantom modifications came from the filesystem, not a session.** About 20
+  files under `archive/` and `inputs/` showed as modified with months-old
+  mtimes; `git diff` failed with "short read". eCryptfs had briefly reported
+  page-rounded sizes. Hashing every file against HEAD before acting showed
+  nothing had changed, and the flags cleared on their own. The instinct to
+  "restore" them would have been wrong twice: nothing needed restoring, and
+  they were not mine.

@@ -9902,3 +9902,57 @@ compaction record.*
   design: as-billed is the honest total, uniform tier is the frontier.
 - The oracle-versus-carried frontier presentation is queued for a PI
   decision.
+
+## Session 159
+
+*2026-10-04; amd-tower + sapphire; Opus 5.5 driving; Opus subagents (sidecar
+builder, audit lenses A and B, two re-auditors) and one Sonnet search agent;
+API spend US$0. Primary instance, no compaction.*
+
+**Item 1: the WP4b figures carried into the documents.**
+
+- Refreshed: K-ladder findings (`479bcb895`), stride55 findings
+  (`b47a691e1`), verifier-robustness § 15 (`944980fee`), the results draft
+  §§ R6, R7.2, R7.3 (`ac1b04a0c`), the claims inventory (`177f6c8e5`), and
+  four reports carrying the same errors (`9de7d10d3`).
+- The fourth cell's "≈ $231" corrected: US$198 on the board basis, about
+  US$191.50 on the PI's 2026-09-12 mixed basis.
+- Older errors found and corrected: the K-ladder's "worst buy on every
+  ladder" (17 of 23), "always by the smallest margin" (false on stride B),
+  § 1's "six of the eight" (five), two claims-inventory verdicts.
+
+**Item 2 and the rulings it raised (D24 to D30,
+`planning/pi-decisions-2026-09-20.md`).**
+
+- D24: two efficiency frontiers on the r2 board (`3753dea61`); the carried
+  frontier includes B-N3-carried, which the S158 recommendation omitted.
+- D25: a second K-ladder signature note (`1c5e8fb84`).
+- D26: the fourth-cell basis split confirmed (`26f718778`).
+- D27: Phase 2 shares rounded once (`9cab57ad9`, `32d0c6445`); the gain-share
+  ceiling is 91 %.
+- D28 to D30: WP4 sidecars copy the register; tile-presence costs at the
+  uniform tier; published legs completed, vote-3 increments priced from
+  their metas, and the register repair REQUIRED.
+
+**WP4 (PR #23, merged `399f12c50`).**
+
+- D: `scripts/derive_gemini_spend_by_sku.py`; September rebuilt from the full
+  invoice, AUD 1,225.45 = US$881.30 at 1.3905.
+- B: the hypothesis table reads no costs (no-op).
+- C: `lib_frontier_cost.stage_leg`; all 35 tile-presence configurations
+  priced (23 measured, 12 completed).
+- A: `scripts/backfill_cost_audit_sidecars.py`; 729 sidecars over 1,545
+  tracked metas.
+- Audit: two lenses, two fix rounds, a fresh re-audit, and a final
+  independent re-audit at the PI's request (merge-ready; one planning count
+  corrected, 44 → 46 + 2). Tier 1 and tier 2 on sapphire: 3,714 pass.
+
+**Found for later:** a third register gap (grid-2026-08-18's 46 proposer
+metas, US$18.53); X1 (the board's TH7/T03/TM oracle cells omit the vote-3
+increment they use); untracked staging metas on sapphire; a transient
+eCryptfs size quirk on amd-tower (contents verified identical to HEAD).
+
+**Contextual assumptions.** The second audit fix round and the D24/D27 code
+were first checked only in-session; the PI's request for a final
+independent pass is what closed that. The sapphire-only drift showed that a
+generator's committed output is only as machine-independent as its inputs.

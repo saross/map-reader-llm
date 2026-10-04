@@ -11735,3 +11735,68 @@ quite understand the differences between the T0.7 text and image ladders,
 but it sounds like they need reconciliation?" was exactly right on both
 counts, and the walkthrough I had written did not make the difference plain
 enough to read without asking.*
+
+## Session 159 — 2026-10-04 — the session that refreshed some numbers and kept finding claims the numbers did not support
+
+*Reflecting on session work in map-reader-llm. Primary instance; no
+compaction.*
+
+**What surprised you about this session?** How little of the work was the
+work it was scheduled as. The first item was clerical: carry the WP4b
+re-pricing into five documents that still quoted the old dollars. Every one
+of those documents had a second problem underneath the stale figure, and
+none was a pricing problem. The K-ladder findings said the last step was
+"the worst buy on every ladder" and that K = 10 always joined the frontier
+"by the smallest margin"; both were false, on six of 23 ladders and on both
+stride B ladders, and both had been false since first publication. § 1
+said "six of the eight" where the shares give five. The claims inventory
+had marked two rows VERIFIED after checking that 173.59 + 58 = 231.6,
+without asking what 173.59 contained. And the carried frontier I had
+recommended to the PI at S158's close was missing a member. Each was found
+the same way: by re-deriving a universal or a sum from the artefact before
+quoting it, rather than by reading it. The re-pricing was the occasion, not
+the cause. A refresh that only swaps numbers would have carried every one
+of those claims forward under a new date.
+
+**What would you do differently if you replayed this session?** Three
+things, in order of cost. First, I would not have written "44 proposer
+metas" into the decisions log. The sidecar agent reported 44; I relayed it
+into D28 and D30 and the PR body without a `git ls-files`, and the final
+re-audit found 46 plus 2. The anti-confabulation rule covers a subagent's
+count exactly as it covers my own memory, and I applied it to everything
+else that day except the number that scoped a required repair. Second, I
+would have audited D24 and D27 before pushing them to `main`. They went
+straight to `main` because they were the PI's rulings and small, and the
+audit then found a tie-break defect and two unpinned paths in them. Small
+and ruled is not the same as checked. Third, I would have written the
+end-to-end test of `collect_costs` before asking for an audit, because I
+knew when I wrote the stage tests that every one of them stubbed it. Lens B
+found it as its critical finding; it was mine to find first.
+
+**Where did you and the human disagree, and who was right?** Twice, and in
+both the disagreement was partial. Asked whether the board's TH7, T03 and
+TM cells should carry the vote-3 increment because "they were part of the
+run", the PI was right for the oracle cells at k3 and not for the carried
+cells at k4, which never needed it; the answer turned on which candidates
+each operating point reads. The sharper disagreement was with a subagent,
+not the PI: I sent the sidecar agent five "lower bound" legs from lens A's
+finding, and it applied the rule to three and declined two, because their
+`carry_provenance.json` showed the small metas were the whole spend of a
+carry-forward stage. It was right, and I confirmed it from the files before
+merging. The re-audit then showed that its exemption was vacuous whenever a
+carry exceeded 90 % of a stage, so the agent was right about the case and
+wrong about the rule. A pushback can be correct in its instance and still
+need its general form audited.
+
+The session's rhythm was the audit loop again: two lenses, a fix round, a
+fresh re-audit, a second round, and, at the PI's request, a final
+independent pass to close the gap that the second round had been checked
+only by its author. That last pass is the one I would not have asked for
+myself, and it found the count I had relayed.
+
+*Texture: long and mostly autonomous; nine PI rulings (D24 to D30, the
+fourth-cell split, the merge), each given in one line on a laid-out
+choice. Relational note: "merge after one more independent re-audit
+please, closing the evidence gap" took the evidence gap I had disclosed in
+the PR body at its word, which is the right response to a disclosure and
+not the one I had planned for.*

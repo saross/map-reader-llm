@@ -2818,3 +2818,68 @@ commits ago is a pointer, not an authority.
 **How to apply.** When writing or correcting a numeric claim in a
 walkthrough, changelog or note, recompute it from the current artefact in
 the same step (one line of Python), and quote the recomputed value.
+
+## claude-obs 132 — 2026-10-04: He took a disclosed evidence gap at its word and paid to close it
+
+**Pattern.** PR #23's description said plainly that the second audit fix
+round had been checked only in-session, "weaker evidence". Offered three
+options with that gap stated, he chose "merge after one more independent
+re-audit please, closing the evidence gap" without discussion. The extra
+pass cost about twenty minutes and found a wrong count in the rulings.
+
+**Lesson.** He reads a disclosure of evidence strength as a decision input,
+not as boilerplate. A gap stated plainly gets closed; a gap buried in a
+long verification list would not have been seen.
+
+**How to apply.** In any PR or walkthrough, put the weakest link in the
+evidence in its own line, name what would close it and what it costs, and
+offer that as an option beside "merge now".
+
+## claude-obs 133 — 2026-10-04: Self-critique — I relayed a subagent's count into two rulings without re-deriving it
+
+**Pattern.** The sidecar agent reported "44 proposer metas" missing from the
+register for the grid run. I wrote 44 into D28, D30 and the PR body. The
+final re-audit counted 46 plus 2 smoke metas with one `git ls-files`. The
+same day I re-derived almost every other figure I quoted; this one slipped
+because it came in a report I had otherwise verified line by line. This is
+claude-obs 131's pattern again with a different source: there it was my
+own just-computed number, here a subagent's.
+
+**Lesson.** A count that scopes a required piece of work is exactly the
+number the next session will act on. Its source does not change the rule.
+
+**How to apply.** Before writing any count from a subagent report into a
+decisions log, a ruling or a PR, re-derive it with one command in the same
+step and cite the command's result, not the report.
+
+## claude-obs 134 — 2026-10-04: "If I understand correctly … if I'm wrong, tell me" invites the boundary, not a yes or no
+
+**Pattern.** On the board's vote-3 increment he wrote "we should add the
+vote-3 increment costs since they were part of the run? if I'm wrong, tell
+me." He was right for the oracle cells at k3 and not for the carried cells
+at k4. The useful answer was where the line falls and why (which candidates
+each operating point reads), not "yes".
+
+**Lesson.** When he frames a ruling as a check on his understanding, the
+answer he needs is the precise boundary of where it holds, so the ruling he
+gives is the right shape.
+
+**How to apply.** Answer such questions with "right for X, not for Y,
+because Z", then stage the ruling in the shape the boundary implies, for
+him to confirm.
+
+## claude-obs 135 — 2026-10-04: Self-critique — small, ruled changes went to main without the audit the larger ones got
+
+**Pattern.** D24 (two frontiers) and D27 (rounding once) were the PI's
+rulings and small, so I pushed them straight to `main` with tests and a
+full tier-1 run. The WP4 audit, which I widened to include them, found a
+tie-break defect in the frontier sort, a tier lookup that hid a missing
+tier, and two paths no test reached.
+
+**Lesson.** A ruling settles what the code should do, not whether it does
+it. Size is not a proxy for risk when the code feeds a signed board.
+
+**How to apply.** Code that changes a signed artefact gets the two-lens
+audit before it reaches `main`, however small; if that is too heavy for one
+change, batch it into the next PR that will be audited, rather than
+shipping it unaudited.
