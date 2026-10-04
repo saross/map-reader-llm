@@ -1,6 +1,6 @@
 # Phase 2: the fourteen new four-rung K ladders
 
-> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.2.0; regenerate rather than correct. Source commit `5eaa8cb9f`, generated 2026-10-04T00:26:26+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
+> **GENERATED — do not edit by hand.** Written by `scripts/build_k_ladder_phase2_tables.py` v1.2.1; regenerate rather than correct. Source commit `9cab57ad9`, generated 2026-10-04T03:50:12+00:00. Per `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope" (2026-08-14 ruling), a generated projection carries a GENERATED banner and a source-commit stamp instead of a hand changelog. The machine-readable form is `ladders.json`.
 
 Assembled from `phase2/scores.json`, `phase2/committed-carried/scores.json`, `phase2/g37-opmax/scores.json`, the signed board's `opmax/membership.json` and its `cells/`, and `phase2/spend-ledger.json`. Every rung is on the board frame `era2-b-487`, the Gold Standard curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC.
 
@@ -162,9 +162,9 @@ Pool `g384_ov192_g37`, thinking low (3.7), text, T 0.7. Proposer pass US$1.720 �
 
 | family | K=1 F1@20 | best rung F1@20 (K) | total F1 gain | K=3 share of the gain | K=1 MCC | best-rung MCC | MCC verdict | K=3 cost / top-rung cost |
 |---|---:|---|---:|---:|---:|---:|:---:|---:|
-| Gemini 3 MINIMAL text 384 px, T 0.3 | 0.8555 | 0.8778 (K=5) | **+0.0223** | 69 % | 0.7986 | 0.7735 | **down** | 44 % |
-| Gemini 3 MINIMAL text 384 px, T 0.7 | 0.8575 | 0.8739 (K=5) | **+0.0164** | 92 % | 0.7881 | 0.7957 | up | 42 % |
-| Gemini 3 MINIMAL text 384 px, T 1.0 | 0.8235 | 0.8781 (K=10) | **+0.0546** | 76 % | 0.8095 | 0.7881 | **down** | 43 % |
+| Gemini 3 MINIMAL text 384 px, T 0.3 | 0.8555 | 0.8778 (K=5) | **+0.0223** | 69 % | 0.7986 | 0.7735 | **down** | 43 % |
+| Gemini 3 MINIMAL text 384 px, T 0.7 | 0.8575 | 0.8739 (K=5) | **+0.0164** | 91 % | 0.7881 | 0.7957 | up | 42 % |
+| Gemini 3 MINIMAL text 384 px, T 1.0 | 0.8235 | 0.8781 (K=10) | **+0.0546** | 75 % | 0.8095 | 0.7881 | **down** | 43 % |
 | Gemini 3 HIGH text 384 px, T 0.3 | 0.8314 | 0.8873 (K=5) | **+0.0559** | 84 % | 0.8068 | 0.7805 | **down** | 32 % |
 | Gemini 3 HIGH text 384 px, T 0.7 | 0.8009 | 0.8744 (K=10) | **+0.0735** | 66 % | 0.7737 | 0.7641 | **down** | 32 % |
 | Gemini 3 HIGH text 384 px, T 1.0 | 0.7810 | 0.8804 (K=10) | **+0.0994** | 74 % | 0.8162 | 0.7910 | **down** | 33 % |
@@ -173,7 +173,7 @@ Pool `g384_ov192_g37`, thinking low (3.7), text, T 0.7. Proposer pass US$1.720 �
 | Gemini 3 MINIMAL image 384 px, T 1.0 | 0.7044 | 0.7428 (K=10) | **+0.0384** | 64 % | 0.8360 | 0.8078 | **down** | 36 % |
 | Gemini 3 HIGH image 384 px, T 0.3 | 0.6925 | 0.7705 (K=10) | **+0.0780** | 37 % | 0.8270 | 0.8294 | flat | 32 % |
 | Gemini 3 HIGH image 384 px, T 0.7 | 0.6909 | 0.7868 (K=5) | **+0.0959** | 79 % | 0.8435 | 0.8359 | **down** | 32 % |
-| Gemini 3 HIGH image 384 px, T 1.0 | 0.6119 | 0.7633 (K=10) | **+0.1514** | 74 % | 0.8640 | 0.8002 | **down** | 32 % |
+| Gemini 3 HIGH image 384 px, T 1.0 | 0.6119 | 0.7633 (K=10) | **+0.1514** | 74 % | 0.8640 | 0.8002 | **down** | 31 % |
 | Gemini 3 scale-4-optimal 487 | 0.6376 | 0.7683 (K=10) | **+0.1307** | 70 % | 0.8726 | 0.8154 | **down** | 32 % |
 | Gemini 3.7 text, GS B geometry | 0.8495 | 0.9068 (K=10) | **+0.0573** | 65 % | — | 0.7675 | — | 32 % |
 
