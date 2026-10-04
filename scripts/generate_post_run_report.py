@@ -422,21 +422,30 @@ def _span(stamps: list[dict | None]) -> dict | None:
 def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
     """Candidate crops a verifier leg completed, over all its metas.
 
-    The union of ``completed_items``; else the sum of ``items_processed``;
-    else the sum of the request counts (eras that left ``execution_stats``
-    empty, where requests equal completions when nothing was retried).
+    Per fragment, the best count it records: fragments that list
+    ``completed_items`` are unioned (a cleanup re-verifies candidates its
+    main leg may already hold); every other fragment adds its own
+    ``items_processed``, else its successful responses
+    (``finish_reason_counts.success``), else its request count (eras that
+    left ``execution_stats`` empty, where requests equal completions when
+    nothing failed or was retried). Until S160 one fragment with a list
+    made the union the whole answer, so a preserved main leg from before
+    ``completed_items`` (pv-384's v1-prompt, 571 successes, restored under
+    D37) counted for nothing beside its one-candidate cleanup.
     """
-    completed = {c for m, _ in fragments
-                 for c in ((m.get("execution_stats") or {}).get("completed_items") or [])}
-    if completed:
-        return len(completed)
-    processed = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
-                    for m, _ in fragments)
-    if processed:
-        return processed
-    return sum(int((((m.get("usage_stats") or {}).get("by_provider") or {})
-                    .get("google_gemini") or {}).get("request_count") or 0)
-               for m, _ in fragments)
+    completed: set = set()
+    rest = 0
+    for meta, _ in fragments:
+        es = meta.get("execution_stats") or {}
+        items = es.get("completed_items")
+        if isinstance(items, list) and items:
+            completed.update(items)
+            continue
+        success = (es.get("finish_reason_counts") or {}).get("success")
+        rest += int(es.get("items_processed") or success
+                    or (((meta.get("usage_stats") or {}).get("by_provider") or {})
+                        .get("google_gemini") or {}).get("request_count") or 0)
+    return len(completed) + rest
 
 
 def _preserved_main_legs(primary: dict, primary_path: Path,

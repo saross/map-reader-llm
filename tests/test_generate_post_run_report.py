@@ -278,6 +278,32 @@ def test_a_retry_under_run_n_is_spend_but_not_coverage():
     assert row["cost_usd"] is not None and row["cost_usd"] > 0
 
 
+@pytest.mark.tier1
+def test_a_preserved_main_leg_counts_its_own_candidates():
+    """D37: pv-384's v1-prompt main leg (restored from f33058f01) predates
+    ``completed_items``; its 571 successful responses must count beside the
+    cleanup's one listed candidate (572 = its probabilities.json results).
+    Sentinel: the old rule, a union whenever any fragment lists items, gave 1.
+    """
+    row = next(r for r in extract_passes(extraction_context("proposer-verifier-384"))
+               if r["proposer_pool"] == "verified-adversarial-text-v1-prompt")
+    assert len(row["provenance"]["source_files"]) == 2
+    assert row["n_candidates_verified"] == 572
+    assert row["cost_basis"] == "audited"
+
+
+@pytest.mark.tier1
+def test_a_leg_with_failed_requests_counts_successes_not_requests():
+    """T03's verifier meta records 10,539 requests and no completed items; its
+    successful responses are 9,910, exactly the leg's probabilities.json
+    results. The request count included failed and retried calls (S160)."""
+    row = next(r for r in extract_passes(extraction_context(
+        "55maps-text-high-t0-3-generalisation")) if r["proposer_pool"] == "verified")
+    results = json.loads((REPO_ROOT / "outputs/55maps-text-high-t0.3-generalisation/verified/"
+                          "probabilities.json").read_text())["results"]
+    assert row["n_candidates_verified"] == len(results) == 9_910
+
+
 #: Committed verifier hints allowed to resolve to no meta, each with its reason.
 DANGLING_VERIFIER_HINTS = {
     ("pv-diag-384", "verified-text-1of5"): (
