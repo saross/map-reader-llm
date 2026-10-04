@@ -512,6 +512,12 @@ class Plan:
     stale: list[Path] = field(default_factory=list)
 
 
+#: The trees whose metas get sidecars when no directory is named. ``results/``
+#: holds six metas (the S104 vote-3 increments among them, outside the
+#: register until D30's repair); ``archive/`` is superseded and is left alone.
+META_ROOTS = ("outputs", "results")
+
+
 def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
                register_path: Path | None = None, run_registry_path: Path | None = None,
                coster: PassCoster | None = None) -> Plan:
@@ -519,7 +525,8 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
 
     Args:
         repo_root: The repository root (all recorded paths are relative to it).
-        outputs_dir: The tree of metas; ``<repo_root>/outputs`` by default.
+        outputs_dir: One tree of metas; by default every ``META_ROOTS`` tree
+            under ``repo_root`` (``outputs/`` and ``results/``).
         register_path: The passes register; ``<repo_root>/results/passes-manifest.json``.
         run_registry_path: ``<repo_root>/results/run-registry.json`` by default
             (optional: absent, every meta outside the register is unregistered).
@@ -532,7 +539,8 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
     Raises:
         BackfillError: On a sidecar name collision or an unreadable meta.
     """
-    outputs_dir = outputs_dir or repo_root / "outputs"
+    roots = [outputs_dir] if outputs_dir else [repo_root / r for r in META_ROOTS
+                                                if (repo_root / r).is_dir()]
     register_path = register_path or repo_root / "results" / "passes-manifest.json"
     run_registry_path = run_registry_path or repo_root / "results" / "run-registry.json"
     register = read_json(register_path)
@@ -547,7 +555,7 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
     parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]] = {}
     notes: dict[str, str | None] = {}
     seen_rel = set()
-    for meta_path in enumerate_metas(outputs_dir):
+    for meta_path in (m for root in roots for m in enumerate_metas(root)):
         meta_rel = rel_path(meta_path, repo_root)
         seen_rel.add(meta_rel)
         plan.stats["metas"] += 1
@@ -606,10 +614,11 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
                 plan.merged.append(meta_rel)
                 plan.merged_usd += doc["cost_usd"] or 0.0
         plan.sidecars[target] = render(doc)
-    plan.cited_outside_glob = sorted(m for m in index if m.startswith(
-        rel_path(outputs_dir, repo_root) + "/") and m not in seen_rel)
+    prefixes = tuple(rel_path(root, repo_root) + "/" for root in roots)
+    plan.cited_outside_glob = sorted(m for m in index if m.startswith(prefixes)
+                                     and m not in seen_rel)
     wanted = set(plan.sidecars)
-    plan.stale = sorted(p for p in outputs_dir.rglob("*cost_audit.json")
+    plan.stale = sorted(p for root in roots for p in root.rglob("*cost_audit.json")
                         if p.is_file() and is_sidecar_name(p.name) and p not in wanted)
     return plan
 

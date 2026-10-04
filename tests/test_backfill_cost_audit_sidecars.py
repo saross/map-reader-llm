@@ -265,6 +265,20 @@ def test_outside_meta_in_an_unregistered_directory(repo: Path, coster: PassCoste
     assert doc["resolution_context"]["stage"] == "verifier"
 
 
+def test_metas_under_results_get_sidecars_and_archive_does_not(repo: Path,
+                                                                coster: PassCoster) -> None:
+    """The default scope is outputs/ and results/ (the vote-3 increments live
+    under results/); archive/ is superseded and gets none."""
+    vote3 = "results/deployment-oracle/vote3-verify/text-high/verified/run.meta.json"
+    archived = "archive/old-run/verify/run.meta.json"
+    _meta(repo, vote3)
+    _meta(repo, archived)
+    plan = build_plan(repo, coster=coster)
+    assert sidecar_path(repo / vote3) in plan.sidecars
+    assert sidecar_path(repo / archived) not in plan.sidecars
+    assert json.loads(plan.sidecars[sidecar_path(repo / vote3)])["in_register"] is False
+
+
 def test_zero_and_unrecorded_usage_get_no_sidecar(repo: Path, coster: PassCoster) -> None:
     """Plan § 4.5: a zero-usage or unrecorded meta stays without a sidecar."""
     unrec = f"{RUN}/pool/run_1/detections-u.meta.json"
