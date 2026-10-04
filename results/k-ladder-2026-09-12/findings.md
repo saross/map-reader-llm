@@ -1,6 +1,9 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-10-04 (**every cost re-priced** from the passes
+> **Last revised**: 2026-10-04 (later: § 1's "six of the eight" corrected to
+> five, and § 7.4's Phase 2 gain-share ceiling to 91 %, after the builder's
+> double rounding was fixed under PI ruling D27). Earlier the same day:
+> (**every cost re-priced** from the passes
 > register at the uniform discounted tier, under PI ruling D19 as amended
 > 2026-10-04 and the row's signature note of that day: §§ 1, 2, 3.1–3.4, 5
 > and 7.4. The fourth cell's ladder (§ 3.3) now carries its own costs rather
@@ -83,7 +86,7 @@ artefact named beside it; the machine-readable form of every table is
 tile-level discrimination does not improve with K at all.** On the gold standard,
 K = 1 → 3 buys +0.0229 F1@20 on the board frame and K = 3 → 10 buys a further
 +0.0071 for 2.5 × the money. Across all eight ladders K = 3 takes **49 % to 93 %
-of the ladder's total F1 gain** — above 85 % on six of the eight — for **38 % to
+of the ladder's total F1 gain** — above 85 % on five of the eight — for **38 % to
 62 % of the top rung's cost**. Meanwhile tile-MCC, the buffer-free measure of
 *which tiles* hold a mound, **falls on five of the eight ladders**, moves by
 +0.003 on two more, and rises by +0.0135 on only one (the gold standard, on the
@@ -1051,11 +1054,13 @@ repairing any of these three cells**, which raises its priority.
 Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
 figure is `figures/k-ladder-pareto-phase2.png`. Two things to read off them.
 
-**K = 3 takes 37 % to 92 % of each ladder's total F1 gain for 31 % to 43 % of
+**K = 3 takes 37 % to 91 % of each ladder's total F1 gain for 31 % to 43 % of
 its top rung's cost.** Every one of the fourteen has K = 3 on its efficient set.
-(The generated table prints the two ends as 32 % and 44 %: it rounds each share
-to three decimals and then to a whole percentage, which turns HIGH image T 1.0's
-31.49 % and MINIMAL text T 0.3's 43.47 % into 32 % and 44 %.)
+(Until 2026-10-04 the generated table printed 92 %, 32 % and 44 % for three of
+those ends: builder v1.2.0 rounded each share to three decimals and then to a
+whole percentage, which turned MINIMAL text T 0.7's 91.46 %, HIGH image T 1.0's
+31.49 % and MINIMAL text T 0.3's 43.47 % into 92 %, 32 % and 44 %. v1.2.1 rounds
+once, PI ruling D27; regenerated in `32d0c6445`.)
 
 **The last step is usually the worst buy, and on the 3.7 family it is the worst
 in the corpus.** On twelve of the fourteen ladders the K = 5 → 10 step costs
@@ -1443,6 +1448,28 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-04 (later) — Two share figures corrected after the builder fix (D27)
+
+**Trigger.** PI ruling D27: `scripts/build_k_ladder_phase2_tables.py` rounded each
+K = 3 share to three decimals and then to a whole percentage. Fixed in `9cab57ad9`
+(v1.2.1) and regenerated on sapphire in `32d0c6445`. Four summary cells moved:
+the cost share of MINIMAL text T 0.3 (44 → 43 %) and HIGH image T 1.0 (32 → 31 %),
+and the gain share of MINIMAL text T 0.7 (92 → 91 %) and MINIMAL text T 1.0
+(76 → 75 %).
+
+| Figure | Before | After |
+|---|---:|---:|
+| § 7.4 K = 3's share of the F1 gain, Phase 2 | 37 % to 92 % | 37 % to 91 % |
+| § 1 ladders above 85 % of the F1 gain at K = 3 | six of the eight | five of the eight |
+
+**§ 1's count is a separate, pre-existing slip**, found while checking the
+shares: the eight Phase 1 ladders' K = 3 gain shares are 93.0, 91.2, 90.3,
+90.3, 85.7, 76.3, 50.3 and 49.0 % (`ladders.json`, each family's best-scoring
+point per K; the gold standard on the board frame of § 2), so five clear 85 %.
+The range 49 % to 93 % is unchanged. **What did NOT change**: the signed
+outcome's corpus-wide range, 37 % to 93 % of the gain (its ceiling is Phase 1's
+93 %); every cost, F1, MCC, tier and admissible set.
 
 ### 2026-10-04 — Costs re-priced from the register (WP4b); two universal claims corrected
 

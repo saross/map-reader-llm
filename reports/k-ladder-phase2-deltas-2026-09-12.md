@@ -210,7 +210,8 @@ stride B. Every one of the fourteen ladders has K = 3 on its efficient set, at
 2026-10-04**: the two prices are per unit of F1, a 1,000× slip — about
 US$43 and US$17 per 0.001 F1. At the WP4b re-pricing, under PI ruling D19
 as amended 2026-10-04, the 3.7 step costs US$8.68 and K = 3's cost share
-is 31–43 %; findings § 7.4.)
+is 31–43 %; the gain share's ceiling is 91 %, not 92 %, once the builder's
+double rounding is fixed (D27); findings § 7.4.)
 
 ## 5. What did NOT change
 
