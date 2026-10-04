@@ -522,6 +522,21 @@ def test_pct_rounds_once_from_the_raw_ratio() -> None:
     assert tables.pct(None) == "—"
 
 
+def test_committed_summary_shares_are_rounded_once() -> None:
+    """The committed table renders each share from its raw quotient."""
+    root = Path(__file__).resolve().parents[1] / "results/k-ladder-2026-09-12/phase2"
+    doc = json.loads((root / "ladders.json").read_text(encoding="utf-8"))
+    md = (root / "ladder-tables.md").read_text(encoding="utf-8")
+    by_family = {row["family"]: row for row in doc["summary"]}
+    for ladder in doc["ladders"]:
+        by_k = {r["K"]: r for r in ladder["rungs"]}
+        raw = by_k[3]["all_in_flex_usd"] / by_k[max(by_k)]["all_in_flex_usd"]
+        row = by_family[ladder["family"]]
+        assert row["cost_share_at_k3"] == pytest.approx(round(raw, 4), abs=1e-12)
+        line = next(x for x in md.splitlines() if x.startswith(f"| {ladder['family']} | ")
+                    and "(K=" in x)
+        assert line.rstrip().endswith(f"| {tables.pct(raw)} |"), ladder["family"]
+
 
 # --------------------------------------------------------------------------
 # Reuse of the existing gated instrument
