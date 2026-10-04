@@ -580,6 +580,25 @@ def test_a_configurations_sources_include_its_proposer_and_verifier_rows(repo):
 
 
 @pytest.mark.tier1
+def test_an_oracle_cell_adds_the_increment_it_drew_on(repo):
+    # D33 (X1): TH7's oracle cell (k3) uses the vote-3 increment's
+    # probabilities, so its configuration adds that leg; the carried cell
+    # (k4) never used it. SENTINEL: without "increments" the two cost the same.
+    repo.proposer("r", "p", 2)
+    repo.leg("r", "v", results=1000)
+    repo.leg("r", "vote3-increment", results=400)
+    coster = repo.coster()
+    carried = {"proposer": [{"run_id": "r", "pool": "p"}],
+               "verifier": {"leg": {"run_id": "r", "pool": "v"}}}
+    oracle = {**carried, "increments": [{"run_id": "r", "pool": "vote3-increment"}]}
+    c, o = coster.configuration_cost(carried), coster.configuration_cost(oracle)
+    assert c.usd == pytest.approx(3 * FLEX_USD)
+    assert o.usd == pytest.approx(c.usd + FLEX_USD)
+    assert o.sources == c.sources + ("r::vote3-increment::run1",)
+    assert o.basis == "measured"
+
+
+@pytest.mark.tier1
 def test_each_phase2_family_names_exactly_its_own_pools():
     # Exact pool names, not substrings: "image-n5-image-t0.3" is a substring
     # of "flash-high-image-n5-image-t0.3".

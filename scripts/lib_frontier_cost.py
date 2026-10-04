@@ -524,7 +524,10 @@ class FrontierCoster:
                 "candidates": int}`` for a rung whose union of ``candidates``
                 would be verified at that leg's unit. Either verifier form
                 takes ``"comparables": [{"run_id", "pool"}, ...]``, required
-                when the leg is a floor.
+                when the leg is a floor. ``"increments": [{"run_id", "pool"}, ...]``
+                adds further verifier legs the configuration's cell drew on
+                (an oracle cell's vote-3 increment, PI ruling D33), each at
+                the uniform tier like the main leg.
 
         Returns:
             The summed cost with every register row it used.
@@ -548,6 +551,8 @@ class FrontierCoster:
             total = cost if total is None else total + cost
         if total is None:
             raise FrontierCostError(f"configuration has neither proposer nor verifier: {spec}")
+        for inc in spec.get("increments") or []:
+            total = total + self.leg_cost(inc["run_id"], inc["pool"], inc.get("comparables"))
         return total
 
 

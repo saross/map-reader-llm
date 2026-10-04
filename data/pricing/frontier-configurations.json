@@ -1,5 +1,5 @@
 {
- "_README": "Which passes-register rows price each frontier configuration at the uniform discounted tier (PI ruling D19, amended 2026-10-04: every configuration's own tokens at one tier, flex, which equals batch on the rate card). Read by scripts/lib_frontier_cost.py (FrontierCoster.configuration_cost); design in planning/wp4b-frontier-cost-design-2026-10-04.md. Each entry: 'proposer', a list of {run_id, pool, passes}, costed as passes x the pool's mean pass (all passes when 'passes' is absent); 'verifier', either {'leg': {run_id, pool}} for a full run's own verifier leg, or {'unit_from': {run_id, pool}, 'candidates': N, 'candidates_source': {file, keys}} for a rung whose union of N candidates is costed at that leg's per-call unit (one call per candidate per iteration) (the convention of scripts/stride55_ladder.py), the count copied from the committed ladder named in candidates_source. A leg that is a floor in the register (a cleanup overwrote its main record) needs 'comparables': audited legs with an identical verifier configuration, nominated here so they can be reviewed; the library refuses a nominee that is itself a floor or differs in configuration. Nominations: stride A's union leg from stride B's (same campaign, corpus and day); FOURTH's 3.7 leg from ARM2's (the 3.7 verifier on the same 55-map corpus, same campaign); TM and IM from the four complete legs of the 55-map generalisation campaign they belong to. 'units' names the unit costs the GS Pareto v2 and the K-ladder builders scale by their own formulas: 'mean_pass' is the mean pass over every listed pool; 'pooled_candidate' is the per-call unit pooled over complete legs sharing one verifier configuration. 'k_ladder_phase2_pass_units' gives each Phase 2 K-ladder family's GS pass unit (PI ruling 2026-10-04: own measured passes where recorded): 'own-gs-measured' the family's own GS passes; 't07-neighbour-mean' a T0.7 family (text or image) whose GS passes recorded no tokens, priced at the plain mean of the same family's own T0.3 and T1.0 GS passes (PI ruling 2026-10-04: every Phase 2 family rests on GS measurements; before it, the T0.7 text families used the 55-map T0.7 measurement scaled, about 7 % below their GS neighbours because the 55-map corpus is sparser). 'named' (a gs_units name) remains available but is unused. 'k_ladder_phase1_gs_stride_a' prices the gold-standard stride-A ladder's rungs: N passes of the 487-tile pool plus that rung's own verified union leg (each rung was verified separately, so no union is simulated).",
+ "_README": "Which passes-register rows price each frontier configuration at the uniform discounted tier (PI ruling D19, amended 2026-10-04: every configuration's own tokens at one tier, flex, which equals batch on the rate card). Read by scripts/lib_frontier_cost.py (FrontierCoster.configuration_cost); design in planning/wp4b-frontier-cost-design-2026-10-04.md. Each entry: 'proposer', a list of {run_id, pool, passes}, costed as passes x the pool's mean pass (all passes when 'passes' is absent); 'verifier', either {'leg': {run_id, pool}} for a full run's own verifier leg, or {'unit_from': {run_id, pool}, 'candidates': N, 'candidates_source': {file, keys}} for a rung whose union of N candidates is costed at that leg's per-call unit (one call per candidate per iteration) (the convention of scripts/stride55_ladder.py), the count copied from the committed ladder named in candidates_source. A leg that is a floor in the register (a cleanup overwrote its main record) needs 'comparables': audited legs with an identical verifier configuration, nominated here so they can be reviewed; the library refuses a nominee that is itself a floor or differs in configuration. Nominations: stride A's union leg from stride B's (same campaign, corpus and day); FOURTH's 3.7 leg from ARM2's (the 3.7 verifier on the same 55-map corpus, same campaign); TM and IM from the four complete legs of the 55-map generalisation campaign they belong to. 'units' names the unit costs the GS Pareto v2 and the K-ladder builders scale by their own formulas: 'mean_pass' is the mean pass over every listed pool; 'pooled_candidate' is the per-call unit pooled over complete legs sharing one verifier configuration. 'k_ladder_phase2_pass_units' gives each Phase 2 K-ladder family's GS pass unit (PI ruling 2026-10-04: own measured passes where recorded): 'own-gs-measured' the family's own GS passes; 't07-neighbour-mean' a T0.7 family (text or image) whose GS passes recorded no tokens, priced at the plain mean of the same family's own T0.3 and T1.0 GS passes (PI ruling 2026-10-04: every Phase 2 family rests on GS measurements; before it, the T0.7 text families used the 55-map T0.7 measurement scaled, about 7 % below their GS neighbours because the 55-map corpus is sparser). 'named' (a gs_units name) remains available but is unused. 'k_ladder_phase1_gs_stride_a' prices the gold-standard stride-A ladder's rungs: N passes of the 487-tile pool plus that rung's own verified union leg (each rung was verified separately, so no union is simulated). 'increments' (PI ruling D33, 2026-10-05) lists further verifier legs a cell drew on, each priced like the main leg: the TH7, T03 and TM ORACLE cells (k3) add their vote-3 increment (results/deployment-oracle-2026-06-06/vote3-verify/, register rows <run>::vote3-increment::run1 since the S160 repair); their carried cells (k4) never used it. A label takes the longest family key it starts with, so 'TH7-oracle' is priced by 'TH7-oracle' and 'TH7-k4' by 'TH7'.",
  "schema": "frontier-configurations/1",
  "uniform_tier": "flex",
  "board_families": {
@@ -468,6 +468,26 @@
     }
    }
   },
+  "TH7-oracle": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "verified"
+    }
+   },
+   "increments": [
+    {
+     "run_id": "55maps-text-high-generalisation",
+     "pool": "vote3-increment"
+    }
+   ]
+  },
   "T03": {
    "proposer": [
     {
@@ -481,6 +501,26 @@
      "pool": "verified"
     }
    }
+  },
+  "T03-oracle": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "verified"
+    }
+   },
+   "increments": [
+    {
+     "run_id": "55maps-text-high-t0-3-generalisation",
+     "pool": "vote3-increment"
+    }
+   ]
   },
   "TM": {
    "proposer": [
@@ -513,6 +553,44 @@
      }
     ]
    }
+  },
+  "TM-oracle": {
+   "proposer": [
+    {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "detect_brief-text"
+    }
+   ],
+   "verifier": {
+    "leg": {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "verified"
+    },
+    "comparables": [
+     {
+      "run_id": "55maps-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-high-t0-3-generalisation",
+      "pool": "verified"
+     },
+     {
+      "run_id": "55maps-text-min-n10-uplift",
+      "pool": "verified-3of10"
+     }
+    ]
+   },
+   "increments": [
+    {
+     "run_id": "55maps-text-min-generalisation",
+     "pool": "vote3-increment"
+    }
+   ]
   },
   "IM": {
    "proposer": [
