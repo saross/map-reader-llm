@@ -1,6 +1,16 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-09-13 (latest — **§ 7.3 amended** after the
+> **Last revised**: 2026-10-04 (**every cost re-priced** from the passes
+> register at the uniform discounted tier, under PI ruling D19 as amended
+> 2026-10-04 and the row's signature note of that day: §§ 1, 2, 3.1–3.4, 5
+> and 7.4. The fourth cell's ladder (§ 3.3) now carries its own costs rather
+> than stride B's; the 3.7 arms' K = 1 and K = 3 rungs price their own unions.
+> **Two corrections**: a 1,000× units slip in §§ 5 and 7.4 (US$17,400 and
+> US$43,000 per 0.001 F1 were per unit of F1: US$17 and US$43), and two
+> universal claims that the data do not support — K = 10's step is not the
+> smallest on every ladder (§ 5), and the last step is not the worst buy on
+> every ladder (§ 7.4). No F1, tile-MCC, tier or admissible set moves.)
+> Prior: 2026-09-13 (latest — **§ 7.3 amended** after the
 > recovery-fragment fix `75d7c8d4c` rebuilt the three refused rungs' proposer
 > unions: **no number in this document moves**, and the amendment records the
 > sharper finding that the tile-join refusal now **blocks correction** as well as
@@ -74,7 +84,7 @@ tile-level discrimination does not improve with K at all.** On the gold standard
 K = 1 → 3 buys +0.0229 F1@20 on the board frame and K = 3 → 10 buys a further
 +0.0071 for 2.5 × the money. Across all eight ladders K = 3 takes **49 % to 93 %
 of the ladder's total F1 gain** — above 85 % on six of the eight — for **38 % to
-64 % of the top rung's cost**. Meanwhile tile-MCC, the buffer-free measure of
+62 % of the top rung's cost**. Meanwhile tile-MCC, the buffer-free measure of
 *which tiles* hold a mound, **falls on five of the eight ladders**, moves by
 +0.003 on two more, and rises by +0.0135 on only one (the gold standard, on the
 board frame) — a rise that **does not survive permutation testing** (§ 4.1,
@@ -107,19 +117,26 @@ property.
 
 | K | k | F1@20, board frame | F1@20, grid-common | frame tax | tile-MCC, board frame | n | all-in flex | 55-map, projected | 55-map, measured |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 1 | 0.8605 | 0.8677 | −0.0072 | 0.7834 | 411 | **$1.38** | $24.20 | $20.53 |
-| 3 | 3 | **0.8834** | 0.8911 | −0.0077 | 0.7762 | 380 | **$2.64** | $46.30 | $41.22 |
-| 5 | 4 | 0.8782 | 0.8856 | −0.0074 | 0.7751 | 394 | **$3.81** | $66.82 | $59.75 |
-| 10 | 8 | **0.8905** | 0.8982 | −0.0077 | 0.7969 | 387 | **$6.56** | $115.05 | $103.91 |
+| 1 | 1 | 0.8605 | 0.8677 | −0.0072 | 0.7834 | 411 | **$1.38** | $24.16 | $20.40 |
+| 3 | 3 | **0.8834** | 0.8911 | −0.0077 | 0.7762 | 380 | **$2.64** | $46.32 | $41.00 |
+| 5 | 4 | 0.8782 | 0.8856 | −0.0074 | 0.7751 | 394 | **$3.81** | $66.74 | $59.45 |
+| 10 | 8 | **0.8905** | 0.8982 | −0.0077 | 0.7969 | 387 | **$6.54** | $114.78 | $103.42 |
 
 Anchors: board-frame columns from `board-frame/*/evaluation.json` (this run, on
 sapphire: 14 buffers, 10,000 BCa draws, seed 42, MCC, `era2-b-487`);
 grid-common columns from
 `results/stride-2026-08-25/conditions-verified/*/eval/evaluation.json`; cost from
-`results/stride-2026-08-25/findings.md`, "Exact winner ladder" ("$3.407 flex
-measured vs $3.41 priced"); measured 55-map cost from
+the passes register at the uniform discounted tier (PI ruling D19, amended
+2026-10-04), through `scripts/lib_frontier_cost.py` and
+`data/pricing/frontier-configurations.json` — each rung's `cost` and
+`register_rows` in `ladders.json` (US$1.3774 / 2.6411 / 3.8056 / 6.5445,
+which reproduce `results/stride-2026-08-25/findings.md`'s "Exact winner
+ladder" within US$0.02); measured 55-map cost from
 `results/55map-final-board-r2-2026-09-06/final_board_50m.json`, cells
-`A-N1/3/5/10-oracle`.
+`A-N1/3/5/10-oracle`, on the same basis (stride A's verifier leg is a floor in
+the register and is completed from stride B's per-candidate unit, D19). The
+projected column is the gold-standard cost times the tile factor
+8,541 / 487 = 17.538.
 
 **Three things to read off it.**
 
@@ -129,15 +146,15 @@ measured vs $3.41 priced"); measured 55-map cost from
    the frame and not the cell. Because it is uniform, **the ladder's shape is
    frame-invariant** — every conclusion below holds on either frame.
 2. **K = 3 is 99.2 % of K = 10's F1 for 40 % of its cost** (0.8834 / 0.8905;
-   $2.64 / $6.56). K = 5 is *below* K = 3 by 0.0052, an inversion the stride
+   $2.64 / $6.54). K = 5 is *below* K = 3 by 0.0052, an inversion the stride
    programme already recorded as noise-level (CI half-widths ≈ ±0.025, and the
    inheritance estimates it was first read from were accurate to ±0.008).
 3. **The 8,541 / 487 projection overstates by 11 %.** `pass-budget-pareto-v2`
    projected gold-standard rungs to the 55-map corpus by the tile factor
    8,541 / 487 = 17.54. For THIS geometry that is wrong: `g384_ov128` runs **820
-   tiles per pass** on the gold standard, not 487, so the projection ($115.05 at
-   K = 10) exceeds the measured 55-map cost of the same geometry ($103.91) by
-   10.7 %. The projection column is kept for comparability with the registered
+   tiles per pass** on the gold standard, not 487, so the projection ($114.78 at
+   K = 10) exceeds the measured 55-map cost of the same geometry ($103.42) by
+   11.0 %. The projection column is kept for comparability with the registered
    Pareto row; the measured column is the one to cite.
 
 ### 2.1 Statistical separation, board instrument, board frame
@@ -202,19 +219,26 @@ already on the ruling's convention.
 
 | K | oracle F1@50 | oracle (prob_t, k) | carried F1@50 | transfer tax | oracle tile-MCC | all-in flex |
 |---:|---:|---|---:|---:|---:|---:|
-| 1 | 0.8227 | (0.20, k1) | — | — | 0.7006 | $20.53 |
-| 3 | 0.8321 | (0.20, k2) | 0.8307 | −0.0014 | 0.7018 | $41.22 |
-| 5 | 0.8383 | (0.15, k4) | 0.8383 | 0.0000 | 0.6907 | $59.75 |
-| 10 | 0.8419 | (0.15, k7) | 0.8391 | −0.0028 | 0.6954 | $103.91 |
+| 1 | 0.8227 | (0.20, k1) | — | — | 0.7006 | $20.40 |
+| 3 | 0.8321 | (0.20, k2) | 0.8307 | −0.0014 | 0.7018 | $41.00 |
+| 5 | 0.8383 | (0.15, k4) | 0.8383 | 0.0000 | 0.6907 | $59.45 |
+| 10 | 0.8419 | (0.15, k7) | 0.8391 | −0.0028 | 0.6954 | $103.42 |
+
+Every cost in §§ 3.1–3.4 is the r2 board's, priced from the passes register at
+the uniform discounted tier (D19, amended 2026-10-04): a rung is N of the run's
+own passes plus its own union's verification at its leg's per-candidate unit.
+Stride A's verifier leg is a floor in the register (a cleanup overwrote its main
+record), so it is completed from stride B's per-candidate unit, which has an
+identical verifier configuration.
 
 ### 3.2 Stride B (`g384_ov192_55map`), r2 reference
 
 | K | oracle F1@50 | oracle (prob_t, k) | carried F1@50 | transfer tax | oracle tile-MCC | all-in flex |
 |---:|---:|---|---:|---:|---:|---:|
-| 1 | 0.8013 | (0.20, k1) | — | — | 0.7092 | $30.99 |
-| 3 | 0.8507 | (0.20, k3) | 0.8477 | −0.0030 | 0.7128 | $65.48 |
-| 5 | 0.8516 | (0.20, k5) | 0.8503 | −0.0013 | 0.7098 | $97.22 |
-| 10 | 0.8560 | (0.20, k9) | 0.8497 | −0.0063 | 0.7123 | $173.59 |
+| 1 | 0.8013 | (0.20, k1) | — | — | 0.7092 | $30.79 |
+| 3 | 0.8507 | (0.20, k3) | 0.8477 | −0.0030 | 0.7128 | $65.10 |
+| 5 | 0.8516 | (0.20, k5) | 0.8503 | −0.0013 | 0.7098 | $96.67 |
+| 10 | 0.8560 | (0.20, k9) | 0.8497 | −0.0063 | 0.7123 | $172.67 |
 
 ### 3.3 Stride B under the Gemini 3.7 verifier, r2 reference (R1-non-compliant)
 
@@ -224,18 +248,25 @@ under a 3.7 verifier.
 
 | K | oracle F1@50 | oracle (prob_t, k) | carried F1@50 | transfer tax | oracle tile-MCC | all-in flex |
 |---:|---:|---|---:|---:|---:|---:|
-| 1 | 0.8352 | (0.96, k1) | — | — | 0.7471 | $30.99 † |
-| 3 | 0.8747 | (0.96, k3) | — | — | 0.7376 | $65.48 † |
-| 5 | 0.8758 | (0.96, k5) | — ‡ | — ‡ | **0.7326** | $97.22 † |
-| 10 | 0.8813 | (0.96, k9) | 0.8728 | −0.0085 | 0.7359 | $173.59 † |
+| 1 | 0.8352 | (0.96, k1) | — | — | 0.7471 | $42.14 † |
+| 3 | 0.8747 | (0.96, k3) | — | — | 0.7376 | $81.40 † |
+| 5 | 0.8758 | (0.96, k5) | — ‡ | — ‡ | **0.7326** | $116.15 † |
+| 10 | 0.8813 | (0.96, k9) | 0.8728 | −0.0085 | 0.7359 | $198.17 † |
 
-† The proposer leg is the same as § 3.2's, so the cost figure is the Gemini 3
-board's. The 3.7 **verifier** leg is **not supplied**: that stage's meta was
-overwritten by a 29-item cleanup pass, so its 57,482-candidate token load is not
-on file (`reports/r7-gaps-deltas-2026-09-11.md` § 2.5). A simulated figure for
-the K = 10 rung is about $64.7 on arm 2's per-candidate rate, giving about $238
-all-in; it is recorded there, deliberately not in this table, because every other
-cost cell here is audited.
+† The proposer leg is stride B's own first N passes, as in § 3.2. The 3.7
+**verifier** leg is **completed**, not measured: that stage's meta was
+overwritten by a 29-item cleanup pass, so the register holds only a floor for its
+57,482-candidate load (US$0.03; `reports/r7-gaps-deltas-2026-09-11.md` § 2.5).
+Under D19 it is priced at the per-candidate unit of the one audited leg with an
+identical verifier configuration, arm 2's, over each rung's own union: US$64.67
+at K = 10. Until 2026-10-04 this column carried stride B's Gemini 3 costs,
+because the cost lookup was keyed by pool alone and stride B's union was
+verified twice (`reports/wp4b-frontier-repricing-2026-10-04.md` § 4). The
+"about $238" simulated here before then had the same defect: it added the 3.7
+leg to stride B's all-in figure, which already holds stride B's own Gemini 3
+verifier (about US$39). The invoice isolates the 3.7 leg at about US$58 on its
+billing day (`reports/billing-reconciliation-2026-09-11.md` § 3.1), which would
+put K = 10 at about US$191.50; the frontier uses the completion.
 
 ‡ **The K = 5 rung, built 2026-09-13 on the PI's ruling.** It was absent from this
 table as `zero-usd-inherited, never built` until then, for a reason that turned
@@ -248,8 +279,8 @@ the rungs they had and this cell gains N = 5. The rung is
 `stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-oracle-p0.96-k5-r2-gt`,
 `results/55map-final-board-r2-2026-09-06/cells/FOURTH-N5-oracle/evaluation.json`
 — F1@50 **0.8758** (BCa 95 % CI 0.8679–0.8832), tile-MCC **0.7326**, 4,434
-detections, r2 reference, the chain's one engine. Its verifier leg is **not
-supplied** for the same reason as every other row here. **No carried figure is
+detections, r2 reference, the chain's one engine. Its cost is priced as every
+other row here is (†). **No carried figure is
 given**, because this family's rungs have no carried cells: the carried column is
 "—" at K = 1 and K = 3 too, and the only post-hoc carried nominations on this
 board are Runs A and B at N = 3 (PI direction 2026-08-28,
@@ -278,21 +309,22 @@ Both arms share one five-pass proposer, so their costs are not additive.
 
 | arm | K | oracle F1@50 | carried F1@50 | transfer tax | oracle tile-MCC | all-in flex ‡ |
 |---|---:|---:|---:|---:|---:|---:|
-| 1 (Gemini 3 vf) | 1 | 0.8413 | — | — | 0.7246 | $37.74 |
-| 1 | 3 | 0.8705 | — | — | 0.7179 | $95.45 |
+| 1 (Gemini 3 vf) | 1 | 0.8413 | — | — | 0.7246 | $34.75 |
+| 1 | 3 | 0.8705 | — | — | 0.7179 | $94.31 |
 | 1 | 5 | 0.8727 | 0.8551 | **−0.0176** | 0.7147 | $153.16 |
-| 2 (3.7 vf) | 1 | 0.8610 | — | — | 0.7422 | $43.16 |
-| 2 | 3 | 0.8848 | — | — | 0.7163 | $100.87 |
+| 2 (3.7 vf) | 1 | 0.8610 | — | — | 0.7422 | $38.33 |
+| 2 | 3 | 0.8848 | — | — | 0.7163 | $99.03 |
 | 2 | 5 | 0.8871 | 0.8827 | −0.0044 | 0.7147 | $158.58 |
 
-‡ Part-audited, part-simulated and an **upper bound**: the proposer leg is the
-audited US$144.27 over five passes (`reports/r7-gaps-deltas-2026-09-11.md`
-§ 2.2) scaled to K, and the verifier leg is the arm's audited figure over the
-FULL K = 5 union of 12,715 candidates (arm 1 $8.89, arm 2 $14.31, § 2.3) — not
-over the rung's smaller union. The rung's own union would be cheaper, so the
-K = 1 and K = 3 figures overstate the verifier leg. Flagged rather than silently
-scaled: the rung's verifier was never run at all (the ladder inherited
-probabilities), so there is no audited figure to scale.
+‡ Measured at the uniform tier from the register: the proposer leg is the
+arms' shared five passes (US$144.27, `reports/r7-gaps-deltas-2026-09-11.md`
+§ 2.2) scaled to K, and the verifier leg is each rung's own union at its arm's
+audited per-candidate unit (arm 1 US$8.89 and arm 2 US$14.31 over the full
+K = 5 union of 12,715 candidates, § 2.3). The K = 1 and K = 3 rungs' verifiers
+were never run (the ladder inherited probabilities), so their verifier legs are
+estimates of what those unions would have cost. Until 2026-10-04 those two rungs
+carried the full union's verifier, an upper bound (arm 1 $37.74 and $95.45,
+arm 2 $43.16 and $100.87).
 
 The K = 10 rung of both arms cannot be built: the arms hold five proposer passes.
 
@@ -589,21 +621,34 @@ cheaper rung of the same ladder scores as well):
 
 | ladder | efficient rungs (K @ US$ → F1) |
 |---|---|
-| GS stride A (20 m, board frame) | 1 @ $1.38 → 0.8605; 3 @ $2.64 → 0.8834; 10 @ $6.56 → 0.8905 |
-| 55-map stride A, r2 (50 m) | 1 @ $20.53 → 0.8227; 3 @ $41.22 → 0.8321; 5 @ $59.75 → 0.8383; 10 @ $103.91 → 0.8419 |
-| 55-map stride B, r2 (50 m) | 1 @ $30.99 → 0.8013; 3 @ $65.48 → 0.8507; 5 @ $97.22 → 0.8516; 10 @ $173.59 → 0.8560 |
-| 55-map stride B, 3.7 vf (50 m) | 1 → 0.8352; 3 → 0.8747; 10 → 0.8813 (verifier cost not supplied) |
-| 3.7 arm 1 (50 m) | 1 @ $37.74 → 0.8413; 3 @ $95.45 → 0.8705; 5 @ $153.16 → 0.8727 |
-| 3.7 arm 2 (50 m) | 1 @ $43.16 → 0.8610; 3 @ $100.87 → 0.8848; 5 @ $158.58 → 0.8871 |
+| GS stride A (20 m, board frame) | 1 @ $1.38 → 0.8605; 3 @ $2.64 → 0.8834; 10 @ $6.54 → 0.8905 |
+| 55-map stride A, r2 (50 m) | 1 @ $20.40 → 0.8227; 3 @ $41.00 → 0.8321; 5 @ $59.45 → 0.8383; 10 @ $103.42 → 0.8419 |
+| 55-map stride B, r2 (50 m) | 1 @ $30.79 → 0.8013; 3 @ $65.10 → 0.8507; 5 @ $96.67 → 0.8516; 10 @ $172.67 → 0.8560 |
+| 55-map stride B, 3.7 vf (50 m) | 1 @ $42.14 → 0.8352; 3 @ $81.40 → 0.8747; 5 @ $116.15 → 0.8758; 10 @ $198.17 → 0.8813 (verifier leg completed, § 3.3 †) |
+| 3.7 arm 1 (50 m) | 1 @ $34.75 → 0.8413; 3 @ $94.31 → 0.8705; 5 @ $153.16 → 0.8727 |
+| 3.7 arm 2 (50 m) | 1 @ $38.33 → 0.8610; 3 @ $99.03 → 0.8848; 5 @ $158.58 → 0.8871 |
 
 **K = 5 is off the efficient set on the gold standard** (0.8782 for $3.81, below
 K = 3's 0.8834 for $2.64) and on it, barely, everywhere else. **K = 10 is on every
-efficient set it exists in, and always by the smallest margin on its ladder**:
-+0.0071 F1 for $3.92 more on the gold standard, +0.0036 for $44.16 more on 55-map
-stride A, +0.0044 for $76.37 more on stride B. On stride B that last step is
-**about US$17,400 per 0.001 F1** (76.37 / 0.0044) — which is the number to put
-beside a deployment decision, and it is the sense in which "the ladder
-saturates" is an economic statement rather than a statistical one.
+efficient set it exists in**: +0.0071 F1 for $3.90 more on the gold standard,
++0.0036 for $43.97 more on 55-map stride A, +0.0044 for $76.00 more on stride B,
+and +0.0055 for $82.02 more on stride B under the 3.7 verifier. On stride B that
+last step costs **about US$17 per 0.001 F1** (US$76.00 for 4.4 thousandths of
+F1), which is the number to put beside a deployment decision, and it is the sense
+in which "the ladder saturates" is an economic statement rather than a
+statistical one.
+
+**Corrected 2026-10-04: K = 10's step is not the smallest on every ladder.**
+This paragraph first said K = 10 joined every efficient set "always by the
+smallest margin on its ladder". On both stride B ladders the K = 3 → 5 step is
+smaller: +0.0009 F1 for US$31.57 (about US$35 per 0.001 F1) under the Gemini 3
+verifier, and +0.0011 for US$34.75 (about US$32) under the 3.7 verifier, against
+last steps of US$17 and US$15. What holds is weaker: beyond K = 3 every step is a
+poor buy, and on stride B the K = 3 → 5 step is the worst of them. The first
+version also quoted the stride B price a thousand times too large (US$17,400 for
+US$17); that units slip is recorded in the row's signature note of 2026-10-04.
+Stride B under the 3.7 verifier gained its K = 5 rung on 2026-09-13 (§ 3.3) and
+its costs on 2026-10-04, so it is in this table for the first time.
 
 ## 6. What is NOT in this document
 
@@ -1006,16 +1051,35 @@ repairing any of these three cells**, which raises its priority.
 Efficient rungs per family are tabulated in `phase2/ladder-tables.md`; the
 figure is `figures/k-ladder-pareto-phase2.png`. Two things to read off them.
 
-**K = 3 takes 37 % to 92 % of each ladder's total F1 gain for 31 % to 44 % of
+**K = 3 takes 37 % to 92 % of each ladder's total F1 gain for 31 % to 43 % of
 its top rung's cost.** Every one of the fourteen has K = 3 on its efficient set.
+(The generated table prints the two ends as 32 % and 44 %: it rounds each share
+to three decimals and then to a whole percentage, which turns HIGH image T 1.0's
+31.49 % and MINIMAL text T 0.3's 43.47 % into 32 % and 44 %.)
 
-**The last step is the worst buy on every ladder, and on the 3.7 family it is
-the worst in the corpus.** Its K = 5 → K = 10 step buys **+0.0002 F1 for
-US$8.65** — about **US$43,000 per 0.001 F1**, two and a half times the
-US$17,400 that § 5 records for 55-map stride B, and the cleanest statement yet
-that "the ladder saturates" is an economic claim rather than a statistical one.
-For comparison the HIGH text T 1.0 ladder's last step buys +0.0116 for
-US$12.94, or about US$1,100 per 0.001 F1.
+**The last step is usually the worst buy, and on the 3.7 family it is the worst
+in the corpus.** On twelve of the fourteen ladders the K = 5 → 10 step costs
+the most per 0.001 F1 of the three steps, and on four of those (MINIMAL text
+T 0.3 and T 0.7, HIGH text T 0.3, HIGH image T 0.7) it loses F1 outright. The
+two exceptions are MINIMAL image T 0.3, whose K = 3 → 5 step loses F1
+(−0.0007), and HIGH image T 1.0, whose K = 3 → 5 step costs about US$0.50 per
+0.001 F1 against its last step's US$0.38. Where the last step gains F1, it costs
+from about US$0.21 per 0.001 F1 (MINIMAL image T 0.7) to about US$43 (the 3.7
+family, whose K = 5 → K = 10 step buys **+0.0002 F1 for US$8.68**). The 3.7
+figure is two and a half times the US$17 that § 5 records for 55-map stride B,
+and the cleanest statement yet that "the ladder saturates" is an economic claim
+rather than a statistical one. For comparison, the HIGH text T 1.0 ladder's
+last step buys +0.0116 for US$12.23, about US$1.05 per 0.001 F1. Step
+arithmetic: `phase2/ladders.json`, each rung's `all_in_flex_usd` and opmax
+`f1_20`.
+
+**Corrected 2026-10-04.** This section first said the last step was the worst
+buy on every ladder, and quoted its prices a thousand times too large
+(US$43,000 and US$1,100 per 0.001 F1 were per unit of F1). The units slip is
+recorded in the row's signature note of 2026-10-04. The two exceptions above
+were found while re-deriving the steps for the WP4b refresh, and they hold
+under the pre-WP4b prices too, so the over-statement dates from first
+publication, not from the re-pricing.
 
 ### 7.5 What § 7 does not claim
 
@@ -1379,6 +1443,56 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-04 — Costs re-priced from the register (WP4b); two universal claims corrected
+
+**Trigger.** PI ruling D19, amended 2026-10-04: every configuration's own
+tokens priced at one uniform discounted tier (flex, which equals batch on the
+rate card), from the passes register through `scripts/lib_frontier_cost.py`.
+`ladders.json` and `phase2/` were regenerated on sapphire in WP4b (PR #22,
+`0f484491c`, `61870d9e7`, `2e0c2941d`); the row's signature note was given
+2026-10-04T02:49:10Z. This entry brings the prose to those artefacts
+(walkthrough: `reports/wp4b-frontier-repricing-2026-10-04.md`).
+
+| Figure | Before | After |
+|---|---:|---:|
+| § 1, K = 3's cost share across the eight Phase 1 ladders | 38 % to 64 % | 38 % to 62 % |
+| § 2, GS stride A K = 10, all-in | $6.56 | $6.54 |
+| § 2, 55-map projection at K = 10, and its overstatement | $115.05, 10.7 % | $114.78, 11.0 % |
+| § 3.1 stride A, K = 1 / 3 / 5 / 10 | $20.53 / 41.22 / 59.75 / 103.91 | $20.40 / 41.00 / 59.45 / 103.42 |
+| § 3.2 stride B, K = 1 / 3 / 5 / 10 | $30.99 / 65.48 / 97.22 / 173.59 | $30.79 / 65.10 / 96.67 / 172.67 |
+| § 3.3 fourth cell, K = 1 / 3 / 5 / 10 | stride B's costs (a defect) | $42.14 / 81.40 / 116.15 / 198.17 † |
+| § 3.4 arm 1, K = 1 / 3 | $37.74 / 95.45 (upper bound) | $34.75 / 94.31 |
+| § 3.4 arm 2, K = 1 / 3 | $43.16 / 100.87 (upper bound) | $38.33 / 99.03 |
+| § 5 stride B, last step per 0.001 F1 | US$17,400 (units slip) | about US$17 |
+| § 7.4 K = 3's cost share, Phase 2 | 31 % to 44 % | 31 % to 43 % |
+| § 7.4 3.7 family, K = 5 → 10 | +0.0002 for US$8.65, "US$43,000" | +0.0002 for US$8.68, about US$43 |
+| § 7.4 HIGH text T 1.0, last step | US$12.94, "US$1,100" | US$12.23, about US$1.05 |
+
+**Corrected, not re-priced.** (1) § 5's "always by the smallest margin on its
+ladder" is false on both stride B ladders, where the K = 3 → 5 step is smaller
+(+0.0009 and +0.0011 F1) and dearer per 0.001 F1 than the last step. (2)
+§ 7.4's "the last step is the worst buy on every ladder" holds on twelve of
+the fourteen Phase 2 ladders; MINIMAL image T 0.3 and HIGH image T 1.0 are
+the exceptions. Across all 23 ladders the signed outcome counts, the last
+step is the dearest on seventeen, and the exceptions are those two plus the
+GS stride A ladder, both stride B ladders and the fourth cell. In five of the
+six the K = 3 → 5 step is the dud; on HIGH image T 1.0 it is merely the dearer
+step. Both errors hold under the pre-WP4b prices, so they date from first
+publication. The signed outcome text of `k-ladder-2026-09-12` repeats claim
+(2) ("the last step is the worst buy on every ladder"), and its correction is
+queued for the PI as a signature-note decision; that row is not edited here.
+(3) The 1,000× units slip in §§ 5 and 7.4, which the signature note already
+records. The 2026-09-12 (later) entry below repeats the slipped figures in its
+table and is left as written, because it records what was published then.
+
+**What did NOT change.** Every F1, tile-MCC, tier, pairwise result and MCB
+admissible set; every ladder's efficient rungs; tier E's figures in § 8.4,
+which are that run's own spend ledger and stay out of WP4b's scope
+(signature note: "tier E (its own spend ledger)"); and the as-billed spend
+quotes (Phase 2's US$24.8065, tier E's US$4.9595). § 3.3 also notes that the
+"about $238" simulated there before had the same double count as the results
+draft's "≈ $231".
 
 ### 2026-09-13 (latest) — § 7.3 amended: the refused rungs' unions rebuilt, no number here moves, and the refusal is now shown to block correction
 
