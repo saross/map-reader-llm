@@ -439,7 +439,7 @@ def chunk_links(parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]],
 CARRY_SCHEMA = "verifier-stage-carry/1"
 
 
-def carried_forward(directory: Path) -> tuple[int, str] | None:
+def carried_forward(directory: Path) -> tuple[int, str, int] | None:
     """Results a verifier stage carried from an earlier stage, unverified again.
 
     A stage rebuilt over a re-numbered union (the ``*_recovery-fixed``

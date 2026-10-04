@@ -142,6 +142,25 @@ Sidecars are committed beside their metas (the metas are tracked). About
 723 new small files land in one commit, so the PR is reviewed on the
 script, the tests and a sample, not file by file.
 
+## Follow-ups from the final re-audit (2026-10-04, PR #23 merge-ready)
+
+None blocks the merge; each is recorded here so it is not rediscovered.
+
+- **Tests for five surviving mutants** in `scripts/backfill_cost_audit_sidecars.py`
+  (dropping `accounted + carried >= results`, `or not extends`, `uncovered < 0`,
+  `_stage_exists`' final `return False`) and `scripts/lib_frontier_cost.py`
+  (`stage_leg`'s wrap narrowed to `KeyError`: the `RateCardError` half is untested).
+  The unpriced-published disagreement is killed only by the tier-2 module.
+- **L1**: `tracked_files` falls back silently to every meta on disk when `git`
+  is unavailable; it should say so in the report.
+- **L2, for the PI**: a pricing failure on a leg with no published figure now
+  records "unpriced" and the write exits 0 (it crashed before). `--check` and
+  the tier-2 basis assertion backstop it, but D29's "all 35 priced" is not
+  enforced in write mode.
+- **L5**: only the meta list is machine-independent; carry files,
+  `probabilities.json` and `_stage_exists` still read the working tree (all
+  tracked today).
+
 ## Order of work
 
 1. C on the branch, after the PI's choices C1 and C2; regenerate the four

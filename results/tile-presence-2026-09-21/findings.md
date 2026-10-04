@@ -140,7 +140,9 @@ publishes. The ten measured ones agree with it to under US$0.0001. The two
 completed ones differ by +US$0.048 (`IMG-ARM2-K1`) and −US$0.014
 (`IMG-ARM2-K3`), within the US$0.05 tolerance D30 set. A measured leg must
 agree to the cent, and every cross-checked leg over the same number of
-candidates; a gap beyond either refuses the write and fails `--check`.
+candidates; a gap beyond either refuses the write and fails `--check`. A leg
+whose report publishes a figure but which this stage cannot price is a
+disagreement too: a lost cost refuses the write rather than leaving a blank.
 
 Until 2026-10-04 the stage used `scripts/audit_verifier_cost.py` on the
 as-billed tier, which reads a cleanup-overwritten leg as a lower bound. It
