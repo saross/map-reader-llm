@@ -1823,6 +1823,27 @@ def test_no_signature_leaves_the_launch_line_in_charge(evidence, tmp_path, cache
 
 
 @pytest.mark.tier1
+def test_requests_with_no_cache_retire_a_logged_cache(evidence, tmp_path):
+    # One run-level log recorded the image pools' explicit caches; the text
+    # pools beneath it failed to create theirs ("Cached content is too small")
+    # and ran on the main path, which carries the tier (n1-pro-rerun-384).
+    # Every billed request reporting 0 cached tokens proves no cache was
+    # attached. SENTINEL: the same fragment without per-item records keeps
+    # the rule, as before.
+    run = tmp_path / "r"
+    coster = evidence(logs={_rel(run): {**LOG_ENTRY, "tiers": ["flex"],
+                                        "explicit_cache": True}})
+    pdir = run / "text-pool" / "run_1"
+    uncached = _meta(pdir / "a.meta.json", per_item_metadata=_requests(0, 0, 0))
+    frag = _cost(coster, [uncached], run)["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log-inherited")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+    unrecorded = _meta(run / "old-pool" / "run_1" / "a.meta.json")
+    frag = _cost(coster, [unrecorded], run)["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+
+
+@pytest.mark.tier1
 @pytest.mark.parametrize("case", ["verifier", "post-fix commit", "batch leg"])
 def test_the_cache_signature_keeps_the_cached_path_exemptions(evidence, tmp_path, case):
     # The signature is cached-path evidence like a log's cache line, so the

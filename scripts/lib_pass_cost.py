@@ -575,6 +575,31 @@ def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
     return counts, max(requests, sum(counts.values()))
 
 
+def billed_cache_sizes(meta: dict[str, Any]) -> list[int]:
+    """The cached input tokens of each billed request a meta records.
+
+    Requests that recorded no input tokens were not billed (a failure before
+    the model ran) and are left out, as is the per-item record a merge
+    dropped for a superseded attempt.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        One count per billed request, in record order; empty for a meta
+        without per-item records.
+
+    Examples:
+        >>> billed_cache_sizes({"per_item_metadata": [
+        ...     {"tokens": {"input_tokens": 900, "cached_input_tokens": 0}},
+        ...     {"tokens": {"input_tokens": 0}}]})
+        [0]
+    """
+    return [int((item.get("tokens") or {}).get("cached_input_tokens") or 0)
+            for item in meta.get("per_item_metadata") or []
+            if (item.get("tokens") or {}).get("input_tokens")]
+
+
 def cache_signature(meta: dict[str, Any]) -> tuple[int, int] | None:
     """An explicit context cache's size, when every billed request reports it.
 
@@ -591,9 +616,8 @@ def cache_signature(meta: dict[str, Any]) -> tuple[int, int] | None:
     overstate a cost, as the cached path is billed at standard, the dearer
     real-time tier.
 
-    Requests that recorded no input tokens were not billed (a failure before
-    the model ran) and are left out, as is the per-item record a merge
-    dropped for a superseded attempt.
+    Requests that recorded no input tokens are left out
+    (:func:`billed_cache_sizes`).
 
     Args:
         meta: A parsed meta.
@@ -613,9 +637,7 @@ def cache_signature(meta: dict[str, Any]) -> tuple[int, int] | None:
         >>> cache_signature({"per_item_metadata": [item, failed]})
         (14549, 1)
     """
-    sizes = [int((item.get("tokens") or {}).get("cached_input_tokens") or 0)
-             for item in meta.get("per_item_metadata") or []
-             if (item.get("tokens") or {}).get("input_tokens")]
+    sizes = billed_cache_sizes(meta)
     if sizes and sizes[0] > 0 and all(s == sizes[0] for s in sizes):
         return sizes[0], len(sizes)
     return None
@@ -828,15 +850,22 @@ class PassCoster:
                                  f"report {size} cached input tokens, the exact size of the "
                                  f"explicit cache {self.cache_sizes[size][0]} records "
                                  f"(D34 (1)); {CACHED_PATH_CITE}"))
+        # An explicit cache reports its size on every request it is attached
+        # to, so a fragment none of whose billed requests reports a cached
+        # token never used one, whatever its directory's logs record: one
+        # run-level log can cover pools whose cache creation failed (the
+        # n1-pro-rerun text pools, "Cached content is too small"; D34 (2)).
+        sizes = billed_cache_sizes(meta)
+        uncached = bool(sizes) and not any(sizes)
         if any(e.kind == "cached-path" for e in logs) and (
                 stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
-                or _every_commit_has_fix(meta.get("environment") or {})):
+                or uncached or _every_commit_has_fix(meta.get("environment") or {})):
             # The cached-path rule is about the detection runner's REAL-TIME
-            # call on code WITHOUT the fix: a verifier leg, a batch leg, a
-            # fragment whose every recorded commit (git_commit, or a merge's
-            # git_commits) descends from 2df65047e, or one
-            # whose every response reported the tier that served it, is not
-            # subject to it.
+            # call on code WITHOUT the fix, WITH a cache attached: a verifier
+            # leg, a batch leg, a fragment whose every recorded commit
+            # (git_commit, or a merge's git_commits) descends from 2df65047e,
+            # one whose every response reported the tier that served it, or
+            # one whose requests show no cache at all, is not subject to it.
             logs = [e for e in logs if e.kind != "cached-path"]
         out.extend(logs)
         lm = self._launch_manifest(here, run_dir, stage)
