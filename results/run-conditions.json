@@ -12903,7 +12903,24 @@
    ]
   },
   "grid-2026-08-18": {
-   "proposer_pools": {},
+   "proposer_pools": {
+    "g512_ov064": {
+     "modality": "text",
+     "path": "g512_ov064"
+    },
+    "g512_ov256": {
+     "modality": "text",
+     "path": "g512_ov256"
+    },
+    "g384_ov048": {
+     "modality": "text",
+     "path": "g384_ov048"
+    },
+    "g384_ov192": {
+     "modality": "text",
+     "path": "g384_ov192"
+    }
+   },
    "verifier_passes": {
     "g512_ov064-union-k10-verify": {
      "modality": "text",
@@ -13299,7 +13316,7 @@
      "reason": "GS Era-2 board gate G2 (planning/gs-era2-verified-board-2026-09-08.md): g384-ov192-k10-verified37-p0.98-k10's committed recipe re-run on its committed frame with a 200-draw bootstrap to prove the evaluator reproduces the committed evaluation; a gate artefact, not a condition."
     }
    ],
-   "_note": "Pool annotation (2026-09-13, S153 Batch 1 item 2): the conditions name their proposer pool by PROMPT ('brief-text'); the physical passes are keyed by grid geometry (g384_ov048 / g384_ov192 / g512_ov064 / g512_ov256, each with run_*), which was never decomposed into proposer_pools. source_run records this run as the pool's home so the benign pool-unresolved WARN is machine-readable. No metric, eval or detection changed."
+   "_note": "Pool annotation (2026-09-13, S153 Batch 1 item 2): the conditions name their proposer pool by PROMPT ('brief-text'); the physical passes are keyed by grid geometry (g384_ov048 / g384_ov192 / g512_ov064 / g512_ov256, each with run_*), which was never decomposed into proposer_pools. source_run records this run as the pool's home so the benign pool-unresolved WARN is machine-readable. No metric, eval or detection changed. AMENDED 2026-10-04 (S160, register repair, rulings D30/D31): the four geometry pools are now decomposed as proposer_pools (keys = directories, as stride-phaseb-2026-08-25 does), so the register carries the 40 passes and their six run_N_recovery folds (46 metas, US$18.5302 at flex). The conditions keep naming 'brief-text'; re-pointing them to the geometry keys is a separate decision."
   },
   "h13": {
    "proposer_pools": {
