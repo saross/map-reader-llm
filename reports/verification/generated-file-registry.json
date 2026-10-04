@@ -1,9 +1,9 @@
 {
  "_meta": {
-  "generated_at": "2026-10-04T02:50:19.916401+00:00",
+  "generated_at": "2026-10-04T06:18:13.454609+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "7a41e8781",
+  "git_head": "a86627029",
   "counts": {
    "total": 4016,
    "generated": 3689,
@@ -64874,7 +64874,8 @@
     "--check"
    ],
    "check_tests": [
-    "tests/test_tile_presence_board.py"
+    "tests/test_tile_presence_board.py",
+    "tests/test_tile_presence_board_committed.py"
    ],
    "tier1_check_test": true,
    "regime2_compliant": false
@@ -64895,7 +64896,8 @@
     "--check"
    ],
    "check_tests": [
-    "tests/test_tile_presence_board.py"
+    "tests/test_tile_presence_board.py",
+    "tests/test_tile_presence_board_committed.py"
    ],
    "tier1_check_test": true,
    "regime2_compliant": false
