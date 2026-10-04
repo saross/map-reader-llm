@@ -36,7 +36,10 @@ things that sentence needs and the metas do not record:
    ``cached-path``           the run used an EXPLICIT context cache on the
                              real-time path, whose request config omits
                              ``service_tier``: billed at standard, whatever the
-                             launch line asked for (see below)
+                             launch line asked for (see below). Read from a log
+                             recording the cache, or from the fragment's own
+                             requests all reporting one cached size (D34 (1),
+                             :func:`cache_signature`)
    ``runner-record``         a ``cost/2`` block whose tier came from the CLI: the
                              tier REQUESTED, which the cached path can drop
    ``run-log``               the runner's ``Service tier: <tier>`` launch line in
@@ -572,6 +575,52 @@ def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
     return counts, max(requests, sum(counts.values()))
 
 
+def cache_signature(meta: dict[str, Any]) -> tuple[int, int] | None:
+    """An explicit context cache's size, when every billed request reports it.
+
+    An explicit cache (``--use-cache``) is attached to every request, so each
+    one reports the cache's exact size as ``cached_input_tokens``: 14,549 on
+    all 487 requests of ``pv-diag-384``'s image passes, against 0 on the
+    matching text passes. The PI ruled the signature sufficient to establish
+    the cached path where a pass's own "Context cache created" line did not
+    survive (D34 (1), 2026-10-04). One count on every request is NOT enough
+    by itself: implicit caching hit every request of image-b's no-cache
+    recoveries (16,272 tokens, where that pool's explicit cache is 18,909).
+    The caller therefore also requires the size to be one a log records for
+    an explicit cache (``PassCoster.cache_sizes``). A false reading can only
+    overstate a cost, as the cached path is billed at standard, the dearer
+    real-time tier.
+
+    Requests that recorded no input tokens were not billed (a failure before
+    the model ran) and are left out, as is the per-item record a merge
+    dropped for a superseded attempt.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        ``(cached tokens per request, requests)``, or None when no request
+        recorded usage or the counts are not one positive value.
+
+    Examples:
+        >>> item = {"tokens": {"input_tokens": 15659, "cached_input_tokens": 14549}}
+        >>> cache_signature({"per_item_metadata": [item, item]})
+        (14549, 2)
+        >>> cache_signature({"per_item_metadata": [item, {"tokens": {
+        ...     "input_tokens": 900, "cached_input_tokens": 0}}]}) is None
+        True
+        >>> failed = {"tokens": {"input_tokens": 0, "cached_input_tokens": 0}}
+        >>> cache_signature({"per_item_metadata": [item, failed]})
+        (14549, 1)
+    """
+    sizes = [int((item.get("tokens") or {}).get("cached_input_tokens") or 0)
+             for item in meta.get("per_item_metadata") or []
+             if (item.get("tokens") or {}).get("input_tokens")]
+    if sizes and sizes[0] > 0 and all(s == sizes[0] for s in sizes):
+        return sizes[0], len(sizes)
+    return None
+
+
 class PassCoster:
     """Prices register passes on the audited basis from committed evidence.
 
@@ -587,7 +636,11 @@ class PassCoster:
                  attestations_path: Path = ATTESTATIONS, overrides_path: Path = OVERRIDES,
                  card_path: Path | None = None) -> None:
         self.billing = _read_json(billing_path)
-        self.log_dirs: dict[str, dict[str, Any]] = _read_json(logs_path)["directories"]
+        logs_doc = _read_json(logs_path)
+        self.log_dirs: dict[str, dict[str, Any]] = logs_doc["directories"]
+        #: Explicit-cache sizes the runner's logs print, with the logs (D34 (1)).
+        self.cache_sizes: dict[int, list[str]] = {
+            int(n): paths for n, paths in (logs_doc.get("explicit_cache_sizes") or {}).items()}
         self.attestations: list[dict[str, Any]] = _read_json(attestations_path)["attestations"]
         overrides_doc = _read_json(overrides_path)
         self.overrides: dict[str, dict[str, Any]] = overrides_doc["entries"]
@@ -759,6 +812,22 @@ class PassCoster:
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
         logs = self._log_evidence(here, run_dir, stage)
+        # The fragment's own requests can show the cached path where no log
+        # line about the cache survived (D34 (1)): the same fact as a log's
+        # "Context cache created", so it is cached-path evidence, subject to
+        # the same exemptions just below. The size must be one a log records
+        # for an explicit cache: implicit caching can also hit every request
+        # (16,272 on all of image-b's no-cache recoveries, 2026-08-28; 99.9 %
+        # of the Gemini 3 batch passes), but at a size of its own.
+        signature = cache_signature(meta)
+        if (signature and signature[0] in self.cache_sizes
+                and not any(e.kind == "cached-path" for e in logs)):
+            size, requests = signature
+            logs.append(Evidence("cached-path", ("standard",),
+                                 f"{_rel(meta_path)}: all {requests} requests with usage "
+                                 f"report {size} cached input tokens, the exact size of the "
+                                 f"explicit cache {self.cache_sizes[size][0]} records "
+                                 f"(D34 (1)); {CACHED_PATH_CITE}"))
         if any(e.kind == "cached-path" for e in logs) and (
                 stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
                 or _every_commit_has_fix(meta.get("environment") or {})):

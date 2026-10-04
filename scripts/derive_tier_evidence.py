@@ -134,6 +134,18 @@ TIER_LINE = re.compile(r"service tier:\s*([a-z]+)", re.IGNORECASE)
 #: its own request config without ``service_tier`` (see lib_pass_cost).
 CACHE_LINE = re.compile(r"^Context cache created: ", re.MULTILINE)
 
+#: The size the runner prints on that line:
+#: ``Context cache created: cachedContents/<id> (14549 tokens, TTL=1h)``. An
+#: explicit cache's size is fixed by its content (configuration, exemplar
+#: library and model), so a size any log records is that cache's signature in
+#: the per-request ``cached_input_tokens`` of runs whose log line is lost
+#: (D34 (1); lib_pass_cost.cache_signature).
+CACHE_SIZE = re.compile(r"^Context cache created: \S+ \((\d+) tokens", re.MULTILINE)
+
+#: Run-log file patterns. ``*.txt`` since D34 (8), 2026-10-04: the two
+#: n1-pro-rerun logs, the only machine record for 16 rows, are ``.txt``.
+LOG_GLOBS = ("*.log", "*.txt")
+
 #: A verifier COMMAND (``run_pv.py verify|cleanup`` or ``5_verify_crops``):
 #: the line where a verifier stage starts, and whose own ``--service-tier``
 #: switch is that stage's requested tier. Only a command marks the stage: a
@@ -470,7 +482,8 @@ def parse_log(text: str) -> dict[str, Any]:
 
     Returns:
         ``tiers`` (known tier words on ``Service tier:`` lines), ``unknown``,
-        ``tier_lines``, ``explicit_cache_lines`` and ``verifier_tiers``.
+        ``tier_lines``, ``explicit_cache_lines``, ``explicit_cache_tokens``
+        (the distinct sizes those lines print) and ``verifier_tiers``.
 
     Examples:
         >>> log = "Service tier: flex\nrun_pv.py verify --x y\nService tier: standard\n"
@@ -484,6 +497,9 @@ def parse_log(text: str) -> dict[str, Any]:
         ['flex']
         >>> parse_log("python3 scripts/run_pv.py verify --x y --service-tier flex\n")["verifier_tiers"]
         ['flex']
+        >>> parse_log("Context cache created: cachedContents/ab1 (14549 tokens, TTL=1h)\n")[
+        ...     "explicit_cache_tokens"]
+        [14549]
     """
     lines = text.splitlines()
     first_verifier = next((i for i, ln in enumerate(lines) if VERIFIER_CMD.search(ln)), None)
@@ -502,6 +518,7 @@ def parse_log(text: str) -> dict[str, Any]:
             "unknown": sorted({w for w in words if w not in KNOWN_TIERS}),
             "tier_lines": len(words),
             "explicit_cache_lines": len(CACHE_LINE.findall(text)),
+            "explicit_cache_tokens": sorted({int(n) for n in CACHE_SIZE.findall(text)}),
             "verifier_tiers": sorted(verifier)}
 
 
@@ -514,15 +531,20 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
     Returns:
         The document written to ``data/pricing/run-log-tiers.json``: per
         directory (repository-relative), the tiers its own logs name and the
-        logs cited.
+        logs cited; and every explicit-cache size any log prints, with the
+        logs that print it (whether or not those logs name a tier: a log from
+        before the tier line still records its cache).
     """
-    logs = sorted(outputs_dir.rglob("*.log"))
+    logs = sorted({p for pattern in LOG_GLOBS for p in outputs_dir.rglob(pattern)})
     hits: list[tuple[Path, dict[str, Any]]] = []
+    sizes: dict[int, list[str]] = {}
     for path in logs:
         try:
             parsed = parse_log(path.read_text(errors="ignore"))
         except OSError:
             continue
+        for size in parsed["explicit_cache_tokens"]:
+            sizes.setdefault(size, []).append(path.relative_to(PROJECT_ROOT).as_posix())
         if parsed["tier_lines"] or parsed["verifier_tiers"]:
             hits.append((path, parsed))
     tracked = _git_tracked([p for p, _ in hits])
@@ -535,6 +557,7 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
         record = {"path": rel, "sha256": _sha256(path), "tracked": rel in tracked,
                   "tiers": parsed["tiers"], "tier_lines": parsed["tier_lines"],
                   "explicit_cache_lines": parsed["explicit_cache_lines"],
+                  "explicit_cache_tokens": parsed["explicit_cache_tokens"],
                   "verifier_tiers": parsed["verifier_tiers"]}
         if parsed["unknown"]:
             record["unknown_tier_words"] = parsed["unknown"]
@@ -552,7 +575,8 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
         "_README": (
             "Service tiers named by run logs, per directory. The detection runner prints "
             "'Service tier: <tier>' at launch from 2026-04-09 (commit 2a2cd81c7); this file "
-            "is the sweep of every *.log under outputs/ by scripts/derive_tier_evidence.py "
+            "is the sweep of every *.log and *.txt under outputs/ by "
+            "scripts/derive_tier_evidence.py "
             "logs, run on sapphire (which holds logs the workstation clone does not). A "
             "directory whose logs name more than one tier is a conflict the reader must not "
             "resolve by walking further up. explicit_cache records that the run created an "
@@ -563,12 +587,16 @@ def build_log_evidence(outputs_dir: Path) -> dict[str, Any]:
             "line after the log's first verifier command, or --service-tier on a run_pv.py "
             "verify or cleanup command; only these pin a verifier leg beneath a run-level "
             "log. Tier words other than standard, flex and batch are kept as "
-            "unknown_tier_words, never as tiers. Read by scripts/lib_pass_cost.py; never "
-            "edit by hand."),
-        "schema": "run-log-tiers/4",
+            "unknown_tier_words, never as tiers. explicit_cache_sizes maps every size a "
+            "'Context cache created' line prints to the logs printing it: a fragment whose "
+            "every billed request reports one of these sizes as cached input ran on an "
+            "explicit cache (D34 (1)), where an implicit hit reports another size. Read by "
+            "scripts/lib_pass_cost.py; never edit by hand."),
+        "schema": "run-log-tiers/5",
         "logs_scanned": len(logs),
         "logs_with_tier_lines": len(hits),
         "directories": dict(sorted(dirs.items())),
+        "explicit_cache_sizes": {str(n): paths for n, paths in sorted(sizes.items())},
     }
 
 

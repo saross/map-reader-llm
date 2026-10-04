@@ -89,12 +89,14 @@ def evidence(tmp_path):
     }
 
     def make(billing: dict | None = None, logs: dict | None = None,
-             attestations: list | None = None, published: dict | None = None) -> PassCoster:
+             attestations: list | None = None, published: dict | None = None,
+             cache_sizes: dict | None = None) -> PassCoster:
         if billing is not None:
             _write(paths["billing"], {"months_covered": [], "intervals": {}, "days": {},
                                       **billing})
-        if logs is not None:
-            _write(paths["logs"], {"directories": logs})
+        if logs is not None or cache_sizes is not None:
+            _write(paths["logs"], {"directories": logs or {},
+                                   "explicit_cache_sizes": cache_sizes or {}})
         if attestations is not None:
             _write(paths["att"], {"attestations": attestations})
         if published is not None:
@@ -1001,7 +1003,8 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
     from scripts.derive_tier_evidence import parse_log
     proposer_only = "Service tier: flex\n... 9,910 candidates to verify later\n"
     assert parse_log(proposer_only) == {"tiers": ["flex"], "unknown": [], "tier_lines": 1,
-                                        "explicit_cache_lines": 0, "verifier_tiers": []}
+                                        "explicit_cache_lines": 0, "explicit_cache_tokens": [],
+                                        "verifier_tiers": []}
     staged = "Service tier: flex\nrun_pv.py verify --c d\nService tier: standard\n"
     assert parse_log(staged)["verifier_tiers"] == ["standard"]
     banner = "Service tier: flex\n=== Stage V: verifier ===\nService tier: standard\n"
@@ -1011,6 +1014,32 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
     assert parse_log("Service tier: priority\n")["unknown"] == ["priority"]
     assert parse_log("Context cache created: x\nService tier: flex\n")[
         "explicit_cache_lines"] == 1
+
+
+@pytest.mark.tier1
+def test_the_log_sweep_reads_txt_logs_and_records_cache_sizes(tmp_path, monkeypatch):
+    # D34 (8): the n1-pro-rerun logs are .txt, the only machine record for 16
+    # rows, and the *.log-only sweep never read them. A cache line in a log
+    # with no tier line (a launch before 2a2cd81c7) still records its size.
+    import scripts.derive_tier_evidence as dte
+    monkeypatch.setattr(dte, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(dte, "_git_tracked", lambda paths: set())  # tmp_path is no repository
+    out = tmp_path / "outputs"
+    _write(out / "a" / "run.json", {})
+    (out / "a" / "_run_log.txt").write_text(
+        "Service tier: flex\nContext cache created: cachedContents/x (14549 tokens, TTL=1h)\n")
+    (out / "b").mkdir()
+    (out / "b" / "launch.log").write_text(
+        "Context cache created: cachedContents/y (18909 tokens, TTL=1h)\n")
+    (out / "c" / "notes.md").parent.mkdir(parents=True)
+    (out / "c" / "notes.md").write_text("Service tier: standard\n")  # not a log pattern
+    doc = dte.build_log_evidence(out)
+    assert doc["logs_scanned"] == 2
+    assert doc["directories"]["outputs/a"]["tiers"] == ["flex"]
+    assert doc["directories"]["outputs/a"]["explicit_cache"] is True
+    assert "outputs/b" not in doc["directories"]  # no tier line: no tier evidence
+    assert doc["explicit_cache_sizes"] == {"14549": ["outputs/a/_run_log.txt"],
+                                           "18909": ["outputs/b/launch.log"]}
 
 
 @pytest.mark.tier1
@@ -1745,6 +1774,73 @@ def test_a_full_header_retires_the_cached_path_rule(evidence, tmp_path):
     assert (frag["tier"], frag["tier_method"]) == ("flex", "applied-header")
     assert not any(e.startswith("cached-path") for e in frag["evidence"])
     assert "conflicts" not in frag
+
+
+def _requests(*cached: int) -> list[dict]:
+    """Per-item records, one billed request per cached-token count given."""
+    return [{"tokens": {"input_tokens": 15_659, "cached_input_tokens": c}} for c in cached]
+
+
+#: An explicit-cache size as the log sweep records it, with the log printing it.
+CACHE_SIZES = {"14549": ["outputs/h8-v2/plus-hp/run_1/launch.log"]}
+
+
+@pytest.mark.tier1
+def test_the_cache_signature_puts_a_proposer_on_the_cached_path(evidence, tmp_path):
+    # D34 (1): every request reporting an explicit cache's exact size IS that
+    # cache, where no log line of the pass's own survived. Its launch line
+    # read flex.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    meta = _meta(pdir / "a.meta.json", per_item_metadata=_requests(14_549, 14_549, 14_549))
+    out = _cost(coster, [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    assert any("14549 cached input tokens" in e and "plus-hp/run_1/launch.log" in e
+               for e in frag["evidence"])
+    assert "conflicts" not in frag
+    assert out["cost_usd"] == pytest.approx(STANDARD_USD)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("cached", [
+    (14_549, 14_549, 0),        # one request missed: implicit caching, best effort
+    (14_549, 8_129, 14_549),    # two sizes: not one explicit cache
+    (0, 0, 0),                  # no cache at all (the text passes)
+    (16_272, 16_272, 16_272),   # an implicit hit on every request: no log records the size
+])
+def test_no_signature_leaves_the_launch_line_in_charge(evidence, tmp_path, cached):
+    # SENTINEL for the rule above: anything short of one logged explicit-cache
+    # size on every request is not the signature. The last case is image-b's
+    # no-cache recoveries (2026-08-28), launched without --use-cache.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    meta = _meta(pdir / "a.meta.json", per_item_metadata=_requests(*cached))
+    frag = _cost(coster, [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("case", ["verifier", "post-fix commit", "batch leg"])
+def test_the_cache_signature_keeps_the_cached_path_exemptions(evidence, tmp_path, case):
+    # The signature is cached-path evidence like a log's cache line, so the
+    # rule's exemptions apply to it unchanged.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"],
+                                         "verifier_tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    extra = {"per_item_metadata": _requests(14_549, 14_549)}
+    if case == "post-fix commit":
+        extra["environment"] = {"git_commit": AFTER_FIX_FULL}
+    if case == "batch leg":
+        extra["batch_api"] = {"job": "batches/x"}
+    meta = _meta(pdir / "a.meta.json", **extra)
+    stage = "verifier" if case == "verifier" else "proposer"
+    frag = _cost(coster, [meta], tmp_path / "r", stage=stage)["cost_source"]["fragments"][0]
+    assert frag["tier"] == ("batch" if case == "batch leg" else "flex")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
 
 
 @pytest.mark.tier1
