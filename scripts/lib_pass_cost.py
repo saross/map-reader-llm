@@ -405,7 +405,12 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
     if not prob.exists():
         return None
     doc = _read_json(prob) or {}
-    results = len(doc.get("results") or {})
+    # Results are keyed per CALL: a multi-iteration leg writes
+    # ``candidate_00005_iter1`` to ``_iter5``. Coverage is counted in
+    # CANDIDATES on both sides, so the keys are reduced to their candidates
+    # (WP4b audit lens A, 2026-10-04; latent: every register leg runs one
+    # iteration).
+    results = len({str(key).rsplit("_iter", 1)[0] for key in (doc.get("results") or {})})
     if not results:
         return None
     iterations = max(int(doc.get("iterations") or 1), 1)
@@ -416,8 +421,15 @@ def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, in
         requests = max(int(((usage.get("by_provider") or {}).get("google_gemini") or {}).get(
                            "request_count") or 0),
                        int(usage.get("n_responses_with_usage") or 0))
-        accounted += (len(set(es.get("completed_items") or []))
-                      or int(es.get("items_processed") or 0)
+        # Every side in CANDIDATES. A multi-iteration writer logs one
+        # completion per call key (run_pv ``log_success(key)``), so completed
+        # items are reduced to their candidates and processed items, which
+        # count calls, are divided like the requests (WP4b re-audit B: the
+        # half-fixed version read a real 5-iteration leg as (60, 12)).
+        completed = {str(item).rsplit("_iter", 1)[0]
+                     for item in (es.get("completed_items") or [])}
+        accounted += (len(completed)
+                      or int(es.get("items_processed") or 0) // iterations
                       or requests // iterations)
     return accounted, results
 

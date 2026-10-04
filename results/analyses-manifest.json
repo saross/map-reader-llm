@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-03T07:57:28Z",
+  "generated_at": "2026-10-04T02:49:57Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -968,16 +968,23 @@
       "signature": {
         "status": "signed",
         "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md \u00a7 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z",
+        "attests": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md \u00a7 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z\n\nSIGNATURE NOTE 2026-10-04 (D9 pattern; re-pricing; approved by the PI 2026-10-04T00:25:02Z, Session 158). The three cost units are re-derived from the passes register at the uniform tier (D19 amended): MINIMAL 0.2659 and HIGH 2.2914 per GS pass (55-map passes, scaled 487/8,541), verifier 0.000692 per call. UNCHANGED: both efficient sets (F1: min6, min11, high31, high35; MCC: min6, min11), the tiers and the pairs. CHANGED: every rung's cost, by under 0.1 % (largest 0.094 %); e.g. high35 US$71.23 -> 71.26 at GS, US$1,249.16 -> 1,249.80 at 55-map scale. The outcome text keeps the signed figures; the regenerated pareto_v2.json carries these. The signature stands. Walkthrough: reports/wp4b-frontier-repricing-2026-10-04.md \u00a7 3.",
         "presentation": null,
-        "history": []
+        "history": [
+          {
+            "noted_at": "2026-10-04T00:25:02Z",
+            "kind": "signature note (D9 pattern): re-pricing under D19 as amended 2026-10-04",
+            "prior_attests": "Re-signed 2026-09-12T09:03:09Z by the PI (S153 ruling 3: the tile-MCC column amendment appended verbatim from reports/k-ladder-mcc-test-2026-09-12.md \u00a7 5.1; all prior text preserved). Original signature: 2026-06-12T06:59:01Z",
+            "presentation": "Session 158 conversation; reports/wp4b-frontier-repricing-2026-10-04.md"
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/verifier-robustness/pareto"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-04T00:26:27Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -3006,13 +3013,19 @@
       "signature": {
         "status": "signed",
         "signed_at": "2026-09-17T07:01:26Z",
-        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A7, source commit 60bac9fb8, 2026-09-07). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"register(r2): eight analysis rows, PI-signed 2026-09-07\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-09-07T08:36:56Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
+        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A7, source commit 60bac9fb8, 2026-09-07). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"register(r2): eight analysis rows, PI-signed 2026-09-07\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-09-07T08:36:56Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-04 (D9 pattern; re-pricing; approved by the PI 2026-10-04T00:25:02Z, Session 158). The cost axis was re-priced under D19 as amended 2026-10-04: each family's own register tokens at one uniform discounted tier (data/pricing/frontier-configurations.json, scripts/lib_frontier_cost.py). UNCHANGED: the 35-cell tiering, its 595-pair family, every F1, MCC, tier and group, and the addendum. CHANGED: every family's cost (four floored verifier legs completed from nominated comparable legs, marked \u2020; the nine 3.7 families priced for the first time), and so the efficiency frontier's membership: A N=1 -> 3.7 arm 1 N=1 -> 3.7 arm 2 N=1 -> fourth cell N=3 -> 3.7 arm 2 N=3 (all five oracle cells). The signature of 2026-09-17 stands for the tiering; the PI approves the re-priced cost axis as of this note. Walkthrough: reports/wp4b-frontier-repricing-2026-10-04.md.",
         "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
         "history": [
           {
             "stamped_at": "2026-09-07T08:36:56Z",
             "convention": "pre-2026-09-16: one field served authoring and signature",
             "note": "retained as an authoring stamp; not established as a PI signature"
+          },
+          {
+            "noted_at": "2026-10-04T00:25:02Z",
+            "kind": "signature note (D9 pattern): re-pricing under D19 as amended 2026-10-04",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A7, source commit 60bac9fb8, 2026-09-07). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"register(r2): eight analysis rows, PI-signed 2026-09-07\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-09-07T08:36:56Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
+            "presentation": "Session 158 conversation; reports/wp4b-frontier-repricing-2026-10-04.md"
           }
         ]
       },
@@ -3021,7 +3034,7 @@
           "results/run-analyses.json",
           "results/55map-final-board-r2-2026-09-06/final_board_50m.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-04T00:26:27Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -4348,16 +4361,23 @@
       "signature": {
         "status": "signed",
         "signed_at": "2026-09-13T06:58:12Z",
-        "attests": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the \u00a7 8.6 reversal claim, and approval of the outcome as written with those additions.",
+        "attests": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the \u00a7 8.6 reversal claim, and approval of the outcome as written with those additions.\n\nSIGNATURE NOTE 2026-10-04 (D9 pattern; re-pricing; approved by the PI 2026-10-04T02:49:10Z, Session 158). Re-priced under D19 amended (uniform tier, from the register): Phase 1: the fourth cell's ladder corrected from stride B's costs to its own (US$42.14 / 81.40 / 198.17 at K = 1 / 3 / 10); the 3.7 arms' K = 1 and 3 rungs priced on their own unions. Phase 2: each family at its own measured GS passes; the four T0.7 families at the mean of their GS T0.3 and T1.0 passes. MINIMAL image ladders cost 1.4-1.9x their former figures. UNCHANGED: every F1 and MCC; every ladder's efficient rungs; tier E (its own spend ledger). OUTCOME FIGURES THAT MOVE: K = 3's cost share 31-64 % -> 32-62 %; the 3.7 family's K = 5 -> 10 step US$8.65 -> US$8.68. CORRECTION (units): 'US$1,100 to US$43,000 per 0.001 F1' are per unit of F1. Per 0.001 F1 the last steps cost about US$0.2 to US$43, and four ladders' last steps lose F1. Findings 5 and 7.4 carry the same 1,000x slip (stride B: US$17, not US$17,400). The ordering of the steps is unchanged. Walkthrough: reports/wp4b-frontier-repricing-2026-10-04.md \u00a7 4.",
         "presentation": null,
-        "history": []
+        "history": [
+          {
+            "noted_at": "2026-10-04T02:49:10Z",
+            "kind": "signature note (D9 pattern): re-pricing under D19 as amended 2026-10-04, with a units correction",
+            "prior_attests": "Signed 2026-09-13T06:58:12Z by the PI (S153, 2026-09-13) on the final text, after rulings on the carried convention (stride shell), the MCB sets ('wait for the sets'), hypothesis_refs H3+H13, the \u00a7 8.6 reversal claim, and approval of the outcome as written with those additions.",
+            "presentation": "Session 158 conversation; reports/wp4b-frontier-repricing-2026-10-04.md"
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/k-ladder-2026-09-12/findings.md"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-04T02:49:57Z",
         "extractor_version": "0.8.0"
       }
     },

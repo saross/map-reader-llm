@@ -37,33 +37,31 @@ Description:
     and for them both readings were already computed and committed
     (``phase2/committed-carried/scores.json``).
 
-    **Cost.** Every rung's verifier leg is audited flex: measured from this
-    run's own metas at K = 1 and K = 3, and priced at the audit's
-    ``VF_CALL_USD`` for the committed rungs. The proposer leg uses the cost
-    model ``scripts/build_pareto_v2.py`` already adopts, plus one figure audited
-    from the 3.7 screen's own metas:
+    **Cost.** Every cost is at the uniform discounted tier (PI ruling D19,
+    amended 2026-10-04) and traces to the passes register through
+    ``scripts/lib_frontier_cost.py`` (WP4b,
+    ``planning/wp4b-frontier-cost-design-2026-10-04.md``). Every rung's
+    verifier leg is measured from this run's own metas at K = 1 and K = 3, and
+    priced at ``VF_CALL_USD`` (the Gemini 3 Flash verifier per candidate,
+    pooled over the 55-map generalisation campaign's four complete legs) for
+    the committed rungs. The proposer leg prices each family at its OWN
+    measured GS passes where the register records them (PI ruling
+    2026-10-04), which replaced units borrowed across families:
 
-    ========================  ==========  =====================================
-    pass type                 US$ / pass  anchor
-    ========================  ==========  =====================================
-    Gemini 3 MINIMAL (GS 487)      0.266  `token-load-audit-2026-06-12.md` § 5
-    Gemini 3 HIGH (GS 487)          2.29  same
-    Gemini 3.7 low (GS screen)     1.714  `billing-reconciliation-2026-09-11.md`
-                                          line 102 (ten passes, 20.9 M input /
-                                          1.07 M output / 3.89 M thinking →
-                                          US$17.1 flex) at the 3.7 flex rates
-                                          0.375 / 1.875 (line 41: list
-                                          0.75 / 3.75, flex 0.5 ×)
-    ========================  ==========  =====================================
+    =====================================  ==========================================
+    family                                 pass unit (anchor)
+    =====================================  ==========================================
+    ten families with recorded GS passes   their own ten passes (``own-gs-measured``)
+    the four T 0.7 families (text, image)  the mean of the family's own T0.3 and
+                                           T1.0 GS passes (``t07-neighbour-mean``)
+    =====================================  ==========================================
 
-    The two Gemini 3 constants were measured on TEXT passes and scaled by
-    487 / 8,541. The audit's measured HIGH **image** pass scales to US$2.23,
-    within 3 % of ``HIGH_PASS_USD``, so carrying 2.29 across to the image pools
-    is sound; no MINIMAL image pass was ever measured, and that is flagged per
-    family rather than hidden. Crucially the pass rate is **constant within a
-    family**, so each ladder's cost RATIO between rungs is exact even where the
-    absolute level inherits the constant's uncertainty — and the ratio is what a
-    Pareto reading of K turns on.
+    The T0.7 GS pools recorded no tokens (empty batch records). Before
+    2026-10-04 the MINIMAL image families borrowed the MINIMAL text unit
+    (0.266) and were priced at less than half their measured pass (0.573),
+    and (briefly) the T0.7 text families took the 55-map T0.7 measurement,
+    about 7 % below their GS neighbours; the pass rate is still constant
+    within a family, so each ladder's cost RATIO between rungs is exact.
 
 Usage::
 
@@ -86,13 +84,17 @@ import logging
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+import sys
 from typing import Any
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR))
+
+from scripts.lib_frontier_cost import gs_units, phase2_pass_units  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"  # 2026-10-04: costs from the register (WP4b)
 
 #: Which of the two readings of "the carried point" the tables REPORT, settled
 #: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
@@ -120,10 +122,15 @@ FIGURE = (
     / "k-ladder-pareto-phase2.png"
 )
 
-MIN_PASS_USD = 0.266
-HIGH_PASS_USD = 2.29
-G37_PASS_USD = 1.714
-VF_CALL_USD = 0.000693
+# The GS-scale units at the uniform discounted tier (PI ruling D19, amended
+# 2026-10-04), from the passes register (scripts/lib_frontier_cost.gs_units),
+# shared with scripts/build_pareto_v2.py. They replaced 0.266 / 2.29 / 1.714 /
+# 0.000693, which they reproduce within 0.4 % (WP4b).
+_GS_UNITS = gs_units()
+MIN_PASS_USD = _GS_UNITS["min_pass"].usd
+HIGH_PASS_USD = _GS_UNITS["high_pass"].usd
+G37_PASS_USD = _GS_UNITS["g37_pass"].usd
+VF_CALL_USD = _GS_UNITS["vf_call"].usd
 HEADLINE_BUFFER = 20
 
 #: Per family: display label, thinking level, modality, the per-pass proposer
@@ -132,115 +139,82 @@ FAMILIES: dict[str, dict[str, Any]] = {
     "flash-minimal-text-n30-t07-text-t0.3": {
         "label": "Gemini 3 MINIMAL text 384 px, T 0.3",
         "thinking": "minimal", "modality": "text", "temperature": 0.3,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-text-scaled",
     },
     "flash-minimal-text-n30-t07-text-t0.7": {
         "label": "Gemini 3 MINIMAL text 384 px, T 0.7",
         "thinking": "minimal", "modality": "text", "temperature": 0.7,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-text-measured",
     },
     "flash-minimal-text-n30-t07-text-t1.0": {
         "label": "Gemini 3 MINIMAL text 384 px, T 1.0",
         "thinking": "minimal", "modality": "text", "temperature": 1.0,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-text-scaled",
     },
     "flash-high-text-n5-text-t0.3": {
         "label": "Gemini 3 HIGH text 384 px, T 0.3",
         "thinking": "high", "modality": "text", "temperature": 0.3,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-text-t03-measured",
     },
     "flash-high-text-n5-text-t0.7": {
         "label": "Gemini 3 HIGH text 384 px, T 0.7",
         "thinking": "high", "modality": "text", "temperature": 0.7,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-text-measured",
     },
     "flash-high-text-n5-text-t1.0": {
         "label": "Gemini 3 HIGH text 384 px, T 1.0",
         "thinking": "high", "modality": "text", "temperature": 1.0,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-text-scaled",
     },
     "image-n5-image-t0.3": {
         "label": "Gemini 3 MINIMAL image 384 px, T 0.3",
         "thinking": "minimal", "modality": "image", "temperature": 0.3,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-image-unmeasured",
     },
     "image-n5-image-t0.7": {
         "label": "Gemini 3 MINIMAL image 384 px, T 0.7",
         "thinking": "minimal", "modality": "image", "temperature": 0.7,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-image-unmeasured",
     },
     "image-n5-image-t1.0": {
         "label": "Gemini 3 MINIMAL image 384 px, T 1.0",
         "thinking": "minimal", "modality": "image", "temperature": 1.0,
-        "pass_usd": MIN_PASS_USD, "pass_anchor": "min-image-unmeasured",
     },
     "flash-high-image-n5-image-t0.3": {
         "label": "Gemini 3 HIGH image 384 px, T 0.3",
         "thinking": "high", "modality": "image", "temperature": 0.3,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-image-measured",
     },
     "flash-high-image-n5-image-t0.7": {
         "label": "Gemini 3 HIGH image 384 px, T 0.7",
         "thinking": "high", "modality": "image", "temperature": 0.7,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-image-measured",
     },
     "flash-high-image-n5-image-t1.0": {
         "label": "Gemini 3 HIGH image 384 px, T 1.0",
         "thinking": "high", "modality": "image", "temperature": 1.0,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-image-measured",
     },
     "scale-4-optimal-487": {
         "label": "Gemini 3 scale-4-optimal 487",
         "thinking": "high", "modality": "text+image", "temperature": 0.7,
-        "pass_usd": HIGH_PASS_USD, "pass_anchor": "high-text-scaled",
     },
     "g384_ov192_g37": {
         "label": "Gemini 3.7 text, GS B geometry",
         "thinking": "low (3.7)", "modality": "text", "temperature": 0.7,
-        "pass_usd": G37_PASS_USD, "pass_anchor": "g37-gs-measured",
     },
 }
 
+# Each family's pass unit is set from the passes register (PI ruling
+# 2026-10-04, WP4b): its own measured GS passes where recorded, otherwise the
+# anchors below. ``data/pricing/frontier-configurations.json``
+# ``k_ladder_phase2_pass_units``; ``scripts/lib_frontier_cost.phase2_pass_units``.
+_PASS_UNITS = phase2_pass_units()
+for _family, _meta in FAMILIES.items():
+    _unit, _anchor = _PASS_UNITS[_family]
+    _meta["pass_usd"], _meta["pass_anchor"] = _unit.usd, _anchor
+
 PASS_ANCHORS: dict[str, str] = {
-    "min-text-measured": (
-        "MIN_PASS_USD 0.266 — ten measured 55-map MINIMAL text T0.7 passes "
-        "scaled by 487/8,541 (token-load-audit § 5). This family IS that "
-        "family's temperature"
+    "own-gs-measured": (
+        "the family's own ten GS passes from the passes register, re-priced at "
+        "the uniform discounted tier (PI ruling D19, amended 2026-10-04)"
     ),
-    "min-text-scaled": (
-        "MIN_PASS_USD 0.266, measured at T 0.7 and carried to this "
-        "temperature. The HIGH track's T0.3 pass measures 26 % above its T0.7 "
-        "pass, so the absolute level is approximate; the ladder's cost RATIO "
-        "in K is exact"
-    ),
-    "high-text-measured": (
-        "HIGH_PASS_USD 2.29 — five measured 55-map HIGH text T0.7 passes "
-        "scaled by 487/8,541; GS bracket [2.15, 2.64] (token-load-audit § 5)"
-    ),
-    "high-text-t03-measured": (
-        "HIGH_PASS_USD 2.29 is used for comparability, though this family's "
-        "own T0.3 HIGH pass measures US$50.82 at deployment = US$2.90 scaled "
-        "(token-load-audit § 5 deployment table), 27 % higher"
-    ),
-    "high-text-scaled": (
-        "HIGH_PASS_USD 2.29, measured at T 0.7 text and carried here; "
-        "approximate in level, exact in the ladder's K ratio"
-    ),
-    "high-image-measured": (
-        "HIGH_PASS_USD 2.29; the audit's measured HIGH image pass "
-        "(US$39.07 at deployment, cached) scales to US$2.23, within 3 %"
-    ),
-    "min-image-unmeasured": (
-        "MIN_PASS_USD 0.266 carried from MINIMAL text. **No MINIMAL image "
-        "pass has ever been measured**, and an image prompt is roughly ten "
-        "times larger, so this level is the weakest in the table. The "
-        "ladder's K ratio is still exact"
-    ),
-    "g37-gs-measured": (
-        "US$1.714/pass — audited from this pool's OWN metas: ten passes at "
-        "20.9 M input / 1.07 M output / 3.89 M thinking = US$17.1 flex "
-        "(billing-reconciliation-2026-09-11.md line 102) at the 3.7 flex "
-        "rates 0.375 / 1.875 (line 41)"
+    "t07-neighbour-mean": (
+        "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS "
+        "passes (not a linear interpolation at T 0.7), because its T0.7 GS "
+        "passes recorded no tokens (PI ruling 2026-10-04: text and image alike, "
+        "so every Phase 2 family rests on GS measurements). The two neighbours "
+        "differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL "
+        "image) and 18 % (HIGH image)"
     ),
 }
 
@@ -437,7 +411,7 @@ def build() -> dict[str, Any]:
                             if candidates
                             else None
                         ),
-                        "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+                        "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
                         "opmax": opmax_point,
                         "carried": {
                             "k-equals-K": carried_point,
@@ -495,7 +469,7 @@ def build() -> dict[str, Any]:
                         if candidates
                         else None
                     ),
-                    "verifier_usd_basis": "priced at VF_CALL_USD 0.000693",
+                    "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
                     "verifier_stage": member["stage_id"],
                     "condition_id": member["condition_id"],
                     "opmax": (
@@ -628,7 +602,10 @@ def build() -> dict[str, Any]:
             "high_pass_usd": HIGH_PASS_USD,
             "g37_pass_usd": G37_PASS_USD,
             "vf_call_usd": VF_CALL_USD,
-            "basis": "flex (0.5 x list); input 0.25, output+thinking 1.50 per M",
+            "basis": ("the passes register at the uniform discounted tier (PI ruling D19, "
+                      "amended 2026-10-04), through scripts/lib_frontier_cost.py; each "
+                      "family's pass unit and its anchor are on its ladder (pass_usd, "
+                      "pass_usd_anchor)"),
         },
         "n_ladders": len(ladders),
         "ladders": ladders,
@@ -724,7 +701,8 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
                     "prob_threshold": point.get("prob_t"),
                     "cost": {
                         "usd": rung.get("all_in_flex_usd"),
-                        "basis": "audited (flex)",
+                        "basis": "uniform discounted tier (D19); see the ladder's "
+                                 "pass_usd_anchor",
                     },
                 }
             )
