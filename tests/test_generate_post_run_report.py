@@ -241,6 +241,43 @@ def test_a_verifier_hint_that_resolves_to_no_meta_warns(capsys):
     assert "verifier pass verifier-robustness::384-union-t0-0 resolves to no meta" in err
 
 
+@pytest.mark.tier1
+def test_a_flat_single_pass_pool_is_pass_one(registry):
+    """D31: the e47 text baseline was written flat, with no ``run_N/``.
+
+    Without ``single_pass`` the pool's ``run_*`` glob finds nothing and the
+    pass (US$0.61) is silently absent: the red sentinel below.
+    """
+    def ctx(spec):
+        return {"run_id": "e47-propose-brief", "directory_path": "outputs/h11/e47-propose-brief",
+                "scope": {}, "proposer_pools": {"text-baseline": spec},
+                "verifier_passes": {}, "conditions": []}
+    rows = extract_passes(ctx({"modality": "text", "path": "text-baseline", "single_pass": True}))
+    assert [r["pass_id"] for r in rows] == ["e47-propose-brief::text-baseline::run1"]
+    assert validate_row("passes", rows[0], registry) == []
+    assert rows[0]["provenance"]["source_files"] == [
+        "outputs/h11/e47-propose-brief/text-baseline/"
+        "detections-propose_brief-text-3-flash-2026-04-08.meta.json"]
+    assert rows[0]["cost_usd"] > 0
+    assert extract_passes(ctx({"modality": "text", "path": "text-baseline"})) == []
+
+
+@pytest.mark.tier1
+def test_a_retry_under_run_n_is_spend_but_not_coverage():
+    """D31: consensus-384-t1-0 run 4's one-tile retry (``run_4/retry/``).
+
+    Its spend joins the pass and its meta is cited; its tile does not join
+    the count, because the pass's own meta already lists it among its 240.
+    """
+    ctx = extraction_context("consensus-384-t1-0")
+    row = next(r for r in extract_passes(ctx) if r["pass_n"] == 4)
+    retry = ("outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/retry/"
+             "retry_K-35-078-1_Lesovo_x3360_y0.meta.json")
+    assert retry in row["provenance"]["source_files"]
+    assert row["n_tiles_processed"] == 240 and row["status"] == "ok"
+    assert row["cost_usd"] is not None and row["cost_usd"] > 0
+
+
 #: Committed verifier hints allowed to resolve to no meta, each with its reason.
 DANGLING_VERIFIER_HINTS = {
     ("pv-diag-384", "verified-text-1of5"): (

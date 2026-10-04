@@ -644,8 +644,14 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # from the study YAML; None for the normal case (trust the meta).
         model_of_record = spec.get("model_of_record") if isinstance(spec, dict) else None
         pool_dir = run_dir / (path or f"proposer/{pool}")
-        for run_n_dir in sorted(pool_dir.glob("run_*")):
-            suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
+        # A single-pass pool written flat, with no ``run_N/`` (the e47 text
+        # baseline; pv-384's proposer stub), declares ``single_pass``: its
+        # directory is pass 1 (D31, S160).
+        single_pass = isinstance(spec, dict) and bool(spec.get("single_pass"))
+        pass_dirs = [pool_dir] if single_pass else sorted(pool_dir.glob("run_*"))
+        for run_n_dir in pass_dirs:
+            suffix = ("1" if single_pass else
+                      run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else "")
             if not suffix.isdigit():
                 # ``run_N_recovery*`` fragments are consumed by their pass's row
                 # (completed-tile union below), so they are not "skipped".
@@ -775,11 +781,18 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # audit lens A, 2026-10-03), and every recovery fragment: the metas
             # its provenance cites. Each is priced at its own tier and date.
             siblings = _sibling_metas(meta, meta_files[1:])
+            # A one-tile retry the runner wrote under ``run_N/retry/`` is
+            # this pass's spend, but never its coverage: the pass's own meta
+            # already counts the tile it retried (consensus-384-t1-0 run 4,
+            # whose 240 completed tiles include it; D31, S160).
+            retry_metas = _meta_files(run_n_dir / "retry")
             fragments = ([(meta, meta_path)] + [(_load_json(m), m) for m in siblings]
-                         + [(_load_json(m), m) for m in recovery_metas])
+                         + [(_load_json(m), m) for m in recovery_metas]
+                         + [(_load_json(m), m) for m in retry_metas])
             prov_sources = [_repo_rel(meta_path)]
             prov_sources.extend(_repo_rel(m) for m in siblings)
             prov_sources.extend(_repo_rel(m) for m in recovery_metas)
+            prov_sources.extend(_repo_rel(m) for m in retry_metas)
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")
             failed = es.get("items_failed", 0)
