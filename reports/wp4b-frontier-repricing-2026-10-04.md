@@ -1,7 +1,8 @@
 # WP4b: the frontiers re-priced from the register — walkthrough for the PI
 
-> **Last revised**: 2026-10-04 (audit corrections: precision claims, the
-> oracle-basis caution, two estimation choices). See
+> **Last revised**: 2026-10-04 (the PI's sign-offs: all three signature
+> notes given; the T0.7 families reconciled; a K-ladder units error
+> corrected). See
 > [§ Changelog](#changelog) for revision history.
 
 Branch `wp4b-frontier-cost`. Three signed analyses change their cost axis:
@@ -119,13 +120,19 @@ interpolated).
   K = 10: US$3.43 → 6.50). HIGH text T0.3 rises 15 % (own pass 2.64);
   HIGH image T1.0 and scale-4 fall 13 to 17 %.
 - `cost_share_at_k3` moves accordingly (MINIMAL image: about 40 % → 36 %).
-- Two choices the PI may wish to revisit. The T0.7 TEXT families keep the
-  55-map T0.7 measurement scaled (0.2659 for MINIMAL), which sits 6.6 % and
-  8.1 % below its GS neighbours (0.2846 at T0.3, 0.2893 at T1.0), because the
-  55-map corpus is sparser; the T0.7 IMAGE families take the plain mean of
-  their GS neighbours, so text and image T0.7 are estimated two ways. And
-  the committed K = 5 and K = 10 rungs' verifier legs are priced at the
+- **Reconciled (PI, 2026-10-04):** all four T0.7 families, text and image,
+  are priced at the plain mean of their own GS T0.3 and T1.0 passes. The
+  text families had first taken the 55-map T0.7 measurement (0.2659 for
+  MINIMAL), 6.6 % and 8.1 % below their GS neighbours because the 55-map
+  corpus is sparser. MINIMAL text T0.7 is now 0.2869, HIGH text T0.7 2.3958.
+- The committed K = 5 and K = 10 rungs' verifier legs are priced at the
   pooled unit rather than their own legs (within 1.5 %; pennies).
+- **A units error in the signed row and the findings** (found preparing the
+  sign-off): "US$1,100 to US$43,000 per 0.001 F1" are per UNIT of F1. Per
+  0.001 F1 the last steps cost about US$0.2 (MINIMAL image T0.7) to US$43
+  (3.7), and four ladders' last steps lose F1; findings §§ 5 and 7.4 carry
+  the same 1,000x slip (stride B: US$17, not US$17,400). The ordering is
+  unchanged. Recorded in the K-ladder signature note.
 
 ## 5. Things the PI should know
 
@@ -151,9 +158,19 @@ interpolated).
    `docs/paper/results-claims-inventory-2026-09-12.md` R6, and the
    continuity file.
 
-## 6. Proposed signature notes (for the PI to approve, amend or refuse)
+## 6. Signature notes — GIVEN 2026-10-04
 
-An agent never signs. These are drafts, dated when given.
+The PI approved all three notes, each in the D9 pattern: the original
+signature stands, the prior attests text is kept in the row's `history`,
+and the dated note is appended (`results/run-analyses.json`).
+
+| Row | Approved (UTC) |
+|---|---|
+| `55map-final-board-r2-2026-09-06` | 2026-10-04T00:25:02Z |
+| `pass-budget-pareto-v2` | 2026-10-04T00:25:02Z |
+| `k-ladder-2026-09-12` | 2026-10-04T02:49:10Z (after the T0.7 reconciliation; with the units correction) |
+
+The drafts as first proposed, kept for the record:
 
 - **`55map-final-board-r2-2026-09-06`**: "Cost axis re-priced
   2026-10-04 (WP4b, D19 amended): each family's register tokens at the
@@ -173,6 +190,15 @@ An agent never signs. These are drafts, dated when given.
   unchanged."
 
 ## Changelog
+
+### 2026-10-04 (sign-offs) — notes given; T0.7 reconciled; units corrected
+
+The PI approved the three signature notes (§ 6, with times); ruled that
+all four Phase 2 T0.7 families take their GS-neighbour mean (§ 4); and the
+K-ladder note records a 1,000x units error found in the signed row and the
+findings (§ 4). The oracle-versus-carried frontier presentation is queued
+as an open decision (one signed board, two efficiency frontiers
+recommended). Commits `5eaa8cb9f`, `2e0c2941d` and the note commit after.
 
 ### 2026-10-04 (later) — audit lens A corrections
 
