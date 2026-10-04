@@ -601,7 +601,8 @@ def price_stage(coster: FrontierCoster, stage: str, key: str, index: dict[str, l
     * a register row on the ``published`` basis (no fragments): a floor,
       completed from ``PUBLISHED_COMPARABLES`` (D30, C1);
     * no register row: the stage's own meta, marked not in the register
-      (D30, C2; the register is to be repaired).
+      (D30, C2). None since the S160 repair, which extracted the S104 vote-3
+      increments as rows of their parent runs (D32).
 
     Args:
         coster: The frontier coster over the register.
@@ -808,9 +809,9 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
             "on the published basis) whose calls are priced at nominated "
             "comparable legs' unit, listed in sources; 'unpriced' = no rule "
             "prices the leg whole, so nothing derived from it is priced. "
-            "stages_outside_register = stages absent from the register (the S104 "
-            "vote-3 increments), priced from its own meta until the register is "
-            "repaired. cross_check compares the campaign post-run report's "
+            "stages_outside_register = stages absent from the register, priced "
+            "from their own metas (none since the S160 repair extracted the S104 "
+            "vote-3 increments as rows of their parent runs, D32). cross_check compares the campaign post-run report's "
             "figure, which must agree over the same candidates and within "
             "agreement_tolerance_usd for the leg's basis. unpriced_legs lists "
             "every leg left unpriced, to be recovered by hand with the PI."),

@@ -296,17 +296,33 @@ def test_two_rows_claiming_one_stage_are_refused_when_it_is_asked_for(tmp_path) 
 
 def test_every_committed_leg_resolves_to_the_register_or_a_named_gap() -> None:
     """Drift guard over the committed register (D30): every stage of every
-    mapped leg is a register stage, except the three vote-3 increments the
-    register is to be repaired for. When the repair lands this test turns
-    red, which is the cue to price them through their rows."""
+    mapped leg is a register stage. The three vote-3 increments were the
+    named gap until the S160 repair extracted them (D32: rows of their
+    parent runs), so the gap is now empty; a new outside stage turns this
+    red."""
     index = tp.register_index()
     assert all(len(index[s]) == 1 for stages in tp.LEGS.values() for s in stages if s in index)
     outside = sorted(s for stages in tp.LEGS.values() for s in stages if s not in index)
-    assert outside == sorted(s for f in ("TH7", "T03", "TM") for s in tp.LEGS[f]
-                             if "vote3-verify" in s)
+    assert outside == []
     published = sorted(k for k, stages in tp.LEGS.items()
                        if not (index[stages[0]][0].get("cost_source") or {}).get("fragments"))
     assert published == sorted(tp.PUBLISHED_COMPARABLES)
+
+
+def test_the_vote3_increments_price_the_same_through_their_register_rows() -> None:
+    """D30's drift test: the increments priced through their new register
+    rows (D32) equal their own metas priced directly, as WP4 priced them
+    while they were outside the register (US$2.97, US$2.74, US$1.51)."""
+    coster = tp.FrontierCoster()
+    index = tp.register_index()
+    stages = [s for f in ("TH7", "T03", "TM") for s in tp.LEGS[f] if "vote3-verify" in s]
+    assert len(stages) == 3
+    for stage in stages:
+        (row,) = index[stage]
+        assert row["proposer_pool"] == "vote3-increment"
+        via_row = coster.leg_cost(row["run_id"], row["proposer_pool"], None).usd
+        direct = coster.stage_leg_cost(stage, complete=True).usd
+        assert via_row == pytest.approx(direct, abs=5e-7), stage
 
 
 def test_every_mapped_leg_is_a_repository_relative_path() -> None:
