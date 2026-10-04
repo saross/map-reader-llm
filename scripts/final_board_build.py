@@ -252,10 +252,14 @@ def efficiency_rows(paper_rows: list[tuple], by_label: dict[str, dict],
             "basis": DISPLAY_BASIS.get(row_name, c["basis"]),
             "cost": cost, "completed": completed_fn(lbl), "f1": c["f1_50"],
             # An addendum carried-analogue is untiered: it is not one of the
-            # board's cells, so it has no tier (shown as "untiered").
-            "tier": tier_of.get(lbl), "tp": tp,
+            # board's cells, so it has no tier (shown as "untiered"). A board
+            # cell must have one: a missing tier there is a defect, not a blank.
+            "tier": (tier_of.get(lbl) if c["basis"].startswith("carried-analogue")
+                     else tier_of[lbl]), "tp": tp,
             "usd_per_mound": cost / tp})
-    eff_rows.sort(key=lambda r: r["cost"])
+    # At equal cost the better run sorts first, so a weaker run of the same
+    # cost can never claim a frontier step (audit lens A, 2026-10-04).
+    eff_rows.sort(key=lambda r: (r["cost"], -r["f1"]))
     best_so_far = 0.0
     for r in eff_rows:
         r["frontier"] = r["f1"] > best_so_far
@@ -333,6 +337,9 @@ def frontier_rows(paper_rows: list[tuple], by_label: dict[str, dict],
         'A, N = 1'
     """
     analogues = analogues or {}
+    clash = sorted(set(by_label) & set(analogues))
+    if clash:
+        raise ValueError(f"addendum labels collide with board cells: {clash}")
     cells = {**by_label, **analogues}
     carried = []
     for name, carried_lbl, oracle_lbl in paper_rows:
@@ -367,13 +374,24 @@ def _efficiency_table(eff_rows: list[dict]) -> list[str]:
     return lines
 
 
-def render_efficiency(frontiers: dict[str, list[dict]]) -> list[str]:
+def render_efficiency(frontiers: dict[str, list[dict]],
+                      analogues_applied: bool = True) -> list[str]:
     """The "Cost efficiency" section, heading to both tables, as markdown lines.
 
     Args:
         frontiers: ``{"carried": rows, "oracle": rows}`` from
             :func:`frontier_rows`.
+        analogues_applied: False on a full rebuild, before the addendum
+            exists: the carried table then shows rung oracles for the 3.7
+            rungs, and the prose says so instead of claiming the analogues.
     """
+    pending = [] if analogues_applied else [
+        "",
+        "**On this rebuild the addendum's carried-analogues are not yet",
+        "substituted**: the 3.7 rungs below their full runs show their rung",
+        "oracles in the carried table until `scripts/final_board_addendum_render.py`",
+        "and then `scripts/final_board_cost_refresh.py --write` have run.",
+    ]
     return [
         "## Cost efficiency: what a dollar buys",
         "",
@@ -394,6 +412,7 @@ def render_efficiency(frontiers: dict[str, list[dict]]) -> list[str]:
         "deliberately omitted — it is maximised by the cheapest run almost",
         f"regardless of quality. `{COMPLETED_MARK}`: a verifier leg completed from",
         "comparable legs.",
+        *pending,
         "",
         "### The carried frontier",
         "",
@@ -831,7 +850,8 @@ def main(reference: str = "standardised", force_r1: bool = False) -> int:
     # ---- Cost efficiency: the carried and oracle frontiers (D24). The
     # addendum's carried-analogues do not exist yet at a full rebuild; the
     # cost refresh (scripts/final_board_cost_refresh.py) substitutes them. ----
-    lines += ["", *render_efficiency(frontier_rows(paper_rows, by_label, tier_of))]
+    lines += ["", *render_efficiency(frontier_rows(paper_rows, by_label, tier_of),
+                                     analogues_applied=False)]
     lines += [
         "",
         "## Post-hoc: the emergent N = 3 carried cells",
