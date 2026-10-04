@@ -750,6 +750,45 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
     return costs, len(by_leg), disagreements
 
 
+def unpriced_legs(costs: dict[str, dict]) -> list[dict]:
+    """One entry per verifier leg left unpriced, for the PI to recover by hand.
+
+    PI ruling 2026-10-04 (Session 159): a leg no rule prices whole does not
+    block the write (the stage runs to the end and the leg's configurations
+    show no cost), but it must never pass quietly. It is listed in the costs
+    file, logged as an ERROR block on every run, and the tier-2 check fails
+    on it, so that the failure reaches the PI and the leg can be recovered
+    together.
+
+    Args:
+        costs: From :func:`collect_costs`, one record per configuration.
+
+    Returns:
+        ``[{"stages", "configs", "note"}, ...]``, one per leg, sorted.
+    """
+    seen: dict[tuple[str, ...], dict] = {}
+    for record in costs.values():
+        if record.get("basis") == "unpriced":
+            seen.setdefault(tuple(record.get("stages") or ()), {
+                "stages": list(record.get("stages") or ()),
+                "configs": list(record.get("configs") or ()),
+                "note": record.get("note")})
+    return [seen[k] for k in sorted(seen)]
+
+
+def report_unpriced(costs: dict[str, dict]) -> list[dict]:
+    """Log the unpriced legs as one ERROR block (see :func:`unpriced_legs`)."""
+    legs = unpriced_legs(costs)
+    if legs:
+        logger.error("UNPRICED: %d verifier leg(s) have no cost. The write goes ahead "
+                     "(PI ruling 2026-10-04), but each must be recovered by hand WITH "
+                     "THE PI before its costs are quoted:", len(legs))
+        for leg in legs:
+            logger.error("  UNPRICED %s (%s): %s", ", ".join(leg["stages"]),
+                         ", ".join(leg["configs"]), leg["note"])
+    return legs
+
+
 def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
     """``verifier-costs.json`` as text, from the collected records. Pure.
 
@@ -773,8 +812,10 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
             "vote-3 increments), priced from its own meta until the register is "
             "repaired. cross_check compares the campaign post-run report's "
             "figure, which must agree over the same candidates and within "
-            "agreement_tolerance_usd for the leg's basis."),
+            "agreement_tolerance_usd for the leg's basis. unpriced_legs lists "
+            "every leg left unpriced, to be recovered by hand with the PI."),
         "agreement_tolerance_usd": AGREEMENT_USD,
+        "unpriced_legs": unpriced_legs(costs),
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",
         "legs": costs,
     }, indent=2) + "\n"}
@@ -793,6 +834,7 @@ def audit_legs(check: bool = False) -> int:
     costs, n_legs, disagreements = collect_costs()
     if not costs:
         return 1
+    report_unpriced(costs)  # on --check as well as on a write
     if disagreements:
         for line in disagreements:
             logger.error("COST DISAGREEMENT %s", line)

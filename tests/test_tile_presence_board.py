@@ -599,3 +599,35 @@ def test_an_unreadable_costs_file_is_drift_under_check(tmp_path, monkeypatch, ca
     (tmp_path / tp.COSTS).write_text("{}\n")
     with pytest.raises(SystemExit, match="unreadable"):
         tp.main(["--stage", "leaderboard"])
+
+
+def test_an_unpriced_leg_is_written_listed_and_reported(tmp_path, monkeypatch, caplog) -> None:
+    """PI ruling 2026-10-04: the write goes ahead, but an unpriced leg is listed
+    in the file and logged as an ERROR block, so it reaches the PI."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {
+        "X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80, "stages": ["outputs/x"],
+                 "configs": ["X-K3"]},
+        "Y-K1": {"basis": "unpriced", "usd": None, "candidates": None,
+                 "stages": ["outputs/y"], "configs": ["Y-K1"], "note": "no rule prices it"},
+    }
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 2, []))
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "costs"]) == 0          # kept as is: not blocked
+    written = json.loads((tmp_path / tp.COSTS).read_text())
+    assert written["unpriced_legs"] == [{"stages": ["outputs/y"], "configs": ["Y-K1"],
+                                         "note": "no rule prices it"}]
+    errors = [r.getMessage() for r in caplog.records if r.levelname == "ERROR"]
+    assert any("UNPRICED" in m and "WITH THE PI" in m for m in errors)
+    assert any("outputs/y" in m and "Y-K1" in m for m in errors)
+
+
+def test_a_fully_priced_run_reports_nothing_unpriced(tmp_path, monkeypatch, caplog) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {"X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80,
+                        "stages": ["outputs/x"], "configs": ["X-K3"]}}
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "costs"]) == 0
+    assert json.loads((tmp_path / tp.COSTS).read_text())["unpriced_legs"] == []
+    assert not any("UNPRICED" in r.getMessage() for r in caplog.records)

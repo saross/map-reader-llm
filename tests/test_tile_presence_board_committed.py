@@ -31,7 +31,10 @@ def test_the_committed_costs_regenerate_exactly(priced) -> None:
     text = tp.costs_payload(costs)[tp.OUT / tp.COSTS]
     assert text == COMMITTED_COSTS.read_text(encoding="utf-8")
     assert n_legs == 22 and len(costs) == 35
-    assert {r["basis"] for r in costs.values()} == {"measured", "completed"}
+    assert {r["basis"] for r in costs.values()} == {"measured", "completed"}, (
+        "a verifier leg is UNPRICED: run --stage costs, read the UNPRICED block, and "
+        "recover it by hand WITH THE PI before quoting its costs (ruling 2026-10-04)")
+    assert tp.unpriced_legs(costs) == []
 
 
 def test_a_two_stage_leg_sums_both_stages(priced) -> None:
