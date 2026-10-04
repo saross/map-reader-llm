@@ -1,0 +1,57 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2/detections-library_plus-hp-3-flash-2026-04-18.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 72.327028,
+      "fragment": {
+        "cost_usd": 72.327028,
+        "evidence": [
+          "run-log-inherited: outputs/55maps-image-generalisation/{run.log} -> flex",
+          "cached-path: outputs/55maps-image-generalisation logs record an explicit context cache; scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig omitted service_tier from 76a2cc719 until 2df65047e -> standard",
+          "launch-manifest-inherited: outputs/55maps-image-generalisation/launch_manifest.json -> flex",
+          "billing-day: gemini-3-flash-preview: resumed over 2026-04-17..2026-05-02, first and last days united: 2026-04-17 flex|standard [day export (unverified)]; 2026-05-02 flex [invoice line windows] -> standard|flex"
+        ],
+        "meta": "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2/detections-library_plus-hp-3-flash-2026-04-18.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "notes": [
+          "run-log-inherited: outputs/55maps-image-generalisation/{run.log} -> flex is the tier REQUESTED; the cached path dropped it",
+          "launch-manifest-inherited: outputs/55maps-image-generalisation/launch_manifest.json -> flex is the tier REQUESTED; the cached path dropped it"
+        ],
+        "priced_at": "2026-05-03",
+        "tier": "standard",
+        "tier_method": "cached-path",
+        "usage_source": "usage_stats double-counted by the 2026-05-02 recovery merge (items_processed 17085 vs 8541 completed; token-load-audit-2026-06-12 § 3.2): priced from the sum of 8541 per-item records instead"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "55maps-image-generalisation::library_plus-hp::run2",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/55maps-image-generalisation/proposer/library_plus-hp/run_2/detections-library_plus-hp-3-flash-2026-04-18.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T12:35:34Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1",
+  "usage_source": "usage_stats double-counted by the 2026-05-02 recovery merge (items_processed 17085 vs 8541 completed; token-load-audit-2026-06-12 § 3.2): priced from the sum of 8541 per-item records instead"
+}

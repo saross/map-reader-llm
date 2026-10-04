@@ -1,0 +1,53 @@
+{
+  "generator": "scripts/backfill_cost_audit_sidecars.py",
+  "generator_version": "1.0.0",
+  "in_register": true,
+  "meta": "outputs/h8-v2/canonical/run_5/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json",
+  "note": "copied from the passes register (PI ruling D28), which is the source of truth; cost_usd is the ROW's figure (every fragment of the pass), the fragment record's cost_usd this meta's share",
+  "register": {
+    "generated_at": "2026-10-03T12:35:34Z",
+    "generator_version": "0.8.0",
+    "path": "results/passes-manifest.json",
+    "schema_version": "1.0"
+  },
+  "rows": [
+    {
+      "cost_basis": "audited",
+      "cost_usd": 2.40696,
+      "fragment": {
+        "cost_usd": 2.40696,
+        "evidence": [
+          "run-log: outputs/h8-v2/canonical/run_5/{launch.log} -> flex",
+          "cached-path: outputs/h8-v2/canonical/run_5 logs record an explicit context cache; scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig omitted service_tier from 76a2cc719 until 2df65047e -> standard",
+          "billing-day: gemini-3-flash-preview: 2026-04-15 flex|standard [day export (unverified)]; not flex: fragment output 686,295 exceeds the 600,910 flex output billed on 2026-04-15 -> standard"
+        ],
+        "meta": "outputs/h8-v2/canonical/run_5/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json",
+        "model": "gemini-3-flash-preview",
+        "model_recorded": "gemini-3-flash-preview",
+        "notes": [
+          "run-log: outputs/h8-v2/canonical/run_5/{launch.log} -> flex is the tier REQUESTED; the cached path dropped it"
+        ],
+        "priced_at": "2026-04-15",
+        "tier": "standard",
+        "tier_method": "cached-path"
+      },
+      "matched_by": "cost_source.fragments",
+      "pass_id": "h8-v2::canonical::run5",
+      "row_cost_source": {
+        "rate_card": {
+          "path": "data/pricing/gemini-rate-card.json",
+          "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+          "version": "2026-09-21.2"
+        }
+      },
+      "row_fragment_metas": [
+        "outputs/h8-v2/canonical/run_5/detections-detect_h8_canonical_v2-3-flash-2026-04-15.meta.json"
+      ],
+      "row_provenance": {
+        "extractor_version": "0.8.0",
+        "last_extracted_at": "2026-10-03T12:35:34Z"
+      }
+    }
+  ],
+  "schema": "cost_audit/1"
+}
