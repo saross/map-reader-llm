@@ -279,6 +279,26 @@ def test_metas_under_results_get_sidecars_and_archive_does_not(repo: Path,
     assert json.loads(plan.sidecars[sidecar_path(repo / vote3)])["in_register"] is False
 
 
+def test_an_untracked_meta_gets_no_sidecar_in_a_git_checkout(repo: Path,
+                                                             coster: PassCoster) -> None:
+    """The default scope is the committed metas: a meta on one machine only
+    (sapphire's untracked batch-staging merges, 2026-10-04) must not change
+    the plan, or the committed sidecars drift on that machine alone."""
+    import subprocess
+    tracked = "outputs/probe-a/verify/run.meta.json"
+    stray = "outputs/probe-b/verify/run.meta.json"
+    _meta(repo, tracked)
+    _meta(repo, stray)
+    subprocess.run(["git", "init", "-q"], cwd=repo, check=True)
+    subprocess.run(["git", "add", tracked], cwd=repo, check=True)
+    plan = build_plan(repo, coster=coster)
+    assert sidecar_path(repo / tracked) in plan.sidecars
+    assert sidecar_path(repo / stray) not in plan.sidecars
+    # A named directory is read as it stands (the scratch-tree path).
+    assert sidecar_path(repo / stray) in build_plan(repo, outputs_dir=repo / "outputs",
+                                                    coster=coster).sidecars
+
+
 def test_zero_and_unrecorded_usage_get_no_sidecar(repo: Path, coster: PassCoster) -> None:
     """Plan § 4.5: a zero-usage or unrecorded meta stays without a sidecar."""
     unrec = f"{RUN}/pool/run_1/detections-u.meta.json"

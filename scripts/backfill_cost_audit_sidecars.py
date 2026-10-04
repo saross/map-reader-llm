@@ -84,6 +84,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
@@ -165,6 +166,22 @@ def is_sidecar_name(name: str) -> bool:
         False
     """
     return name == RUN_SIDECAR or name.endswith(SIDECAR_SUFFIX)
+
+
+def tracked_files(repo_root: Path) -> set[Path] | None:
+    """The repository's git-tracked files (resolved), or ``None`` outside a git checkout.
+
+    The back-fill is for the committed, historical metas (D14). A meta that
+    exists on one machine only (sapphire held two untracked batch-staging
+    merges on 2026-10-04) must not change the plan, or the committed sidecars
+    would be current on one machine and drifted on another.
+    """
+    try:
+        out = subprocess.run(["git", "ls-files", "-z"], cwd=repo_root, check=True,
+                             capture_output=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return {(repo_root / name).resolve() for name in out.decode("utf-8").split("\0") if name}
 
 
 def enumerate_metas(outputs_dir: Path) -> list[Path]:
@@ -645,6 +662,9 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
     """
     roots = [outputs_dir] if outputs_dir else [repo_root / r for r in META_ROOTS
                                                 if (repo_root / r).is_dir()]
+    # The default scope is the committed metas only; a named directory (the
+    # tests' scratch trees) is read as it stands.
+    tracked = None if outputs_dir else tracked_files(repo_root)
     register_path = register_path or repo_root / "results" / "passes-manifest.json"
     run_registry_path = run_registry_path or repo_root / "results" / "run-registry.json"
     register = read_json(register_path)
@@ -659,7 +679,8 @@ def build_plan(repo_root: Path, *, outputs_dir: Path | None = None,
     parsed: dict[str, tuple[Path, dict[str, Any], dict[str, int]]] = {}
     notes: dict[str, str | None] = {}
     seen_rel = set()
-    for meta_path in (m for root in roots for m in enumerate_metas(root)):
+    for meta_path in (m for root in roots for m in enumerate_metas(root)
+                      if tracked is None or m.resolve() in tracked):
         meta_rel = rel_path(meta_path, repo_root)
         seen_rel.add(meta_rel)
         plan.stats["metas"] += 1
