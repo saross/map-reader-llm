@@ -1,8 +1,9 @@
 # WP4 back-fill: gap analysis and design
 
-**Created**: 2026-10-04 (Session 159). **Status**: D built on branch
-`wp4-backfill` (`34edba875`); B a recorded no-op; C and A designed here,
-with two pricing choices for C put to the PI.
+**Created**: 2026-10-04 (Session 159). **Status**: on branch
+`wp4-backfill`, D built (`34edba875`), B a recorded no-op, C built
+(`ca2726fbe` library, `310a45757` stage, `959ae8a3f` data, `e6787427c`
+findings) after the PI's choices C1 and C2 (D30); A in progress.
 
 WP4 is row 4 of § 5 of `planning/cost-accounting-fix-plan-2026-09-21.md`.
 The plan budgeted it as "one sapphire regeneration". The dry run below
@@ -20,7 +21,7 @@ D29 (tile-presence costs move to the uniform tier), all in
 |---|---|---|---|
 | D | the September CSV row re-derived from the invoice, FX 1.3904 | no writer existed; the full-month invoice export is present; FX by precedent is the header's 1.3905 | **built** (`scripts/derive_gemini_spend_by_sku.py`; gated on nine months exact) |
 | B | hypothesis table re-projected | the generator reads no costs; `--check` passes (15 hypotheses) | **no-op**, recorded |
-| C | the tile-presence `verifier-costs.json` re-run | a re-run would keep the old auditor; D29 moves it to the register at the uniform tier; 5 of 25 legs need a rule | designed (§ C); two choices for the PI |
+| C | the tile-presence `verifier-costs.json` re-run | a re-run would keep the old auditor; D29 moves it to the register at the uniform tier; 5 of 25 legs need a rule | **built** (§ C); the PI chose C1 (a) and C2 (a) plus a required register repair (D30) |
 | A | `cost_audit.json` sidecars for every meta with usage | no writer exists; 723 of 1,539 metas carry token usage; none has a sidecar | designed (§ A) |
 
 ## D — the per-SKU spend table (built)
@@ -87,6 +88,18 @@ S104 vote-3 campaign into the register first, as a register fix alongside
 the queued `verifier-robustness` extraction. Recommendation: (a) now, with
 (b) queued; (a) gives the same figure (b) would, without widening WP4.
 
+**Ruled (D30)**: C1 (a), and C2 (a) WITH (b) as a required deliverable: the
+register is repaired (the vote-3 campaign and `verifier-robustness`
+extracted) in its own PR after WP4's. **Built**: `lib_frontier_cost` gains
+`stage_leg` and `stage_leg_cost` (one shared rule for counting calls and
+reading configurations); the stage routes each stage by its register state.
+All 35 configurations are priced (23 measured, 12 completed; 12 had been
+unpriced). The vote-3 increments price at US$2.97, US$2.74 and US$1.51; the
+two completed image legs differ from their published figures by +US$0.048
+and −US$0.014; the ten measured legs with a published figure agree to under
+US$0.0001. A drift test pins the out-of-register stages, so the repair
+turns it red on purpose.
+
 **Downstream.** `leaderboard.md`, `leaderboard.json`, `frontier/` and
 `findings.md` in `results/tile-presence-2026-09-21/` read the cost file.
 The leaderboard and frontier stages are regenerated after it, and the
@@ -136,6 +149,11 @@ script, the tests and a sample, not file by file.
    full tier-1 on sapphire; PR from `wp4-backfill`.
 
 ## Changelog
+
+### 2026-10-04 (later) — C built after D30
+
+The PI's choices recorded and C built and regenerated on sapphire (commits
+in the status line). A is being built on a sub-branch.
 
 ### 2026-10-04 — Original publication (Session 159)
 
