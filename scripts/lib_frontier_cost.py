@@ -192,9 +192,16 @@ class FrontierCoster:
                     or not frag.get("priced_at"):
                 raise FrontierCostError(f"{pass_id}: fragment {frag['meta']} has no priceable "
                                         "usage, so the pass cannot be priced whole")
-            model = frag.get("model") or resolve_model(frag["model_recorded"])
-            total += price_usage(usage, model, UNIFORM_TIER,
-                                 at=frag["priced_at"])["total_cost_usd"]
+            try:
+                # UnknownModelError and a missing key are KeyErrors, RateCardError
+                # a ValueError: each is a pass this module cannot price, said in
+                # its own error type (re-audit, 2026-10-04).
+                model = frag.get("model") or resolve_model(frag["model_recorded"])
+                total += price_usage(usage, model, UNIFORM_TIER,
+                                     at=frag["priced_at"])["total_cost_usd"]
+            except (KeyError, ValueError) as exc:
+                raise FrontierCostError(f"{pass_id}: fragment {frag['meta']} cannot be "
+                                        f"priced: {exc}") from exc
         if not (row.get("cost_source") or {}).get("fragments"):
             raise FrontierCostError(f"{pass_id}: no fragments to price")
         self._pass_usd[pass_id] = total
@@ -400,7 +407,7 @@ class FrontierCoster:
                 # callers that record "unpriced" do not crash (audit lens A).
                 model = resolve_model((meta.get("configuration") or {})["model"])
                 usd = price_usage(usage, model, UNIFORM_TIER, at=at)["total_cost_usd"]
-            except KeyError as exc:
+            except (KeyError, ValueError) as exc:  # ValueError: RateCardError
                 raise FrontierCostError(f"{label}: cannot price its model: {exc}") from exc
             if usd is None:
                 raise FrontierCostError(f"{label}: its usage prices to nothing")

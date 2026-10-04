@@ -185,3 +185,25 @@ def test_main_without_exports_says_nothing_was_checked(cli, capsys):
     assert d.main(["--check"]) == 0
     out = capsys.readouterr().out
     assert "nothing checked" in out and "table current" not in out
+
+
+def test_an_export_ending_in_another_month_is_not_an_invoice(tmp_path):
+    # Ends on day 31, August's last day number, but in October: the month
+    # must match, not only the day.
+    _write(tmp_path, "2026-08", AUGUST, end="2026-10-31")
+    assert d.find_exports(tmp_path) == {}
+
+
+def test_a_credit_line_is_refused_even_on_a_usage_row():
+    text = AUGUST.replace(",Default,,Usage,d1,d2,\"46,546\"", ",Default,Promotion,Usage,d1,d2,\"46,546\"")
+    assert text != AUGUST
+    with pytest.raises(d.DerivationError, match="usage only"):
+        d.derive_month("2026-08", text)
+
+
+def test_a_renamed_export_column_is_a_refusal_not_drift(cli, capsys):
+    table, exports = cli
+    _write(exports, "2026-08", AUGUST.replace("Credit type", "Credit category"))
+    table.write_text(f"{d.HEADER}\n")
+    assert d.main(["--check"]) == 2            # refused (2), never drift (1)
+    assert "refused" in capsys.readouterr().err

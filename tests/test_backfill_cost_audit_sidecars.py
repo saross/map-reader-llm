@@ -451,8 +451,13 @@ def test_usage_rebuilt_from_per_item_records_is_noted(repo: Path, coster: PassCo
 
 
 def _verifier_leg(repo: Path, accounted: int, results: int,
-                  carried: int | None = None) -> str:
-    """A verifier leg whose meta completed *accounted* of *results* candidates."""
+                  carried: int | None = None, uncovered: int | None = None,
+                  extends_exists: bool = True) -> str:
+    """A verifier leg whose meta completed *accounted* of *results* candidates.
+
+    A carry file records, as ``verifier-stage-carry/1`` does, how many results
+    were carried and how many were left for this stage (``uncovered``).
+    """
     leg = f"{RUN}/verifier/leg/run.meta.json"
     _meta(repo, leg, execution_stats={
         "completed_items": [f"candidate_{i:05d}" for i in range(accounted)]})
@@ -463,7 +468,10 @@ def _verifier_leg(repo: Path, accounted: int, results: int,
     if carried is not None:
         _write(repo / RUN / "verifier/leg/carry_provenance.json",
                {"schema": "verifier-stage-carry/1", "carried": carried,
+                "uncovered": results - carried if uncovered is None else uncovered,
                 "extends_stage": f"{RUN}/verifier/main"})
+        if extends_exists:
+            (repo / RUN / "verifier/main").mkdir(parents=True, exist_ok=True)
     return leg
 
 
@@ -498,6 +506,41 @@ def test_a_carry_too_small_for_the_shortfall_is_still_a_lower_bound(
     doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
     assert doc["cost_basis"] == "audited-lower-bound"
     assert doc["coverage"]["lower_bound"] is True
+
+
+def test_a_large_carry_does_not_excuse_a_short_meta(repo: Path, coster: PassCoster) -> None:
+    """Re-audit sentinel: 756 of 759 carried clears the 90 % floor on its own, but
+    the meta must still account for the 3 results the carry left; 1 does not."""
+    leg = _verifier_leg(repo, accounted=1, results=759, carried=756)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["coverage"]["lower_bound"] is True
+    assert doc["cost_basis"] == "audited-lower-bound"
+
+
+def test_the_meta_must_cover_the_files_own_uncovered_count(repo: Path,
+                                                           coster: PassCoster) -> None:
+    """The carry file says 3 results were left for this stage; the meta covers 2.
+    Arithmetic alone (2 + 8 = 10 results) would excuse it; the file's count does not."""
+    leg = _verifier_leg(repo, accounted=2, results=10, carried=8, uncovered=3)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["coverage"]["lower_bound"] is True
+
+
+def test_a_carry_from_a_missing_stage_excuses_nothing(repo: Path, coster: PassCoster) -> None:
+    leg = _verifier_leg(repo, accounted=2, results=10, carried=8, extends_exists=False)
+    doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+    assert doc["coverage"]["lower_bound"] is True
+
+
+def test_a_malformed_carry_file_excuses_nothing_and_does_not_crash(
+        repo: Path, coster: PassCoster) -> None:
+    leg = _verifier_leg(repo, accounted=2, results=10)
+    (repo / RUN / "verifier/main").mkdir(parents=True, exist_ok=True)
+    for bad in ([1, 2], {"schema": "verifier-stage-carry/1", "carried": 8},
+                {"carried": 8, "uncovered": 0, "extends_stage": f"{RUN}/verifier/main"}):
+        _write(repo / RUN / "verifier/leg/carry_provenance.json", bad)
+        doc = json.loads(build_plan(repo, coster=coster).sidecars[sidecar_path(repo / leg)])
+        assert doc["coverage"]["lower_bound"] is True, bad
 
 
 def test_covered_verifier_meta_carries_no_coverage_record(repo: Path,

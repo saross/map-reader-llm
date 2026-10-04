@@ -339,6 +339,19 @@ def test_a_stage_with_an_unpriceable_model_is_refused_in_its_own_error(repo, con
 
 
 @pytest.mark.tier1
+@pytest.mark.parametrize("change", [{"model": "no-such-model"},
+                                    {"model": None, "model_recorded": "no-such-model"},
+                                    {"priced_at": "1999-01-01"}])
+def test_a_register_fragment_that_cannot_be_priced_raises_frontier_cost_error(repo, change):
+    # An unknown model (UnknownModelError, a KeyError) or a date the rate card
+    # does not cover (RateCardError, a ValueError) must not escape as itself.
+    repo.proposer("r", "p", 1)
+    repo.rows[-1]["cost_source"]["fragments"][0].update(change)
+    with pytest.raises(FrontierCostError, match="cannot be priced"):
+        repo.coster().pass_usd("r::p::run1")
+
+
+@pytest.mark.tier1
 def test_a_stage_is_priced_one_way_only(repo):
     stage = _stage(repo, "results/x/vote3/verified", results=400, processed=400)
     coster = repo.coster()

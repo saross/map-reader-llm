@@ -452,16 +452,29 @@ def carried_forward(directory: Path) -> tuple[int, str] | None:
         directory: The verifier stage's directory.
 
     Returns:
-        ``(carried, extends_stage)``, or None when the stage carries nothing.
+        ``(carried, extends_stage, uncovered)``, or None when the stage carries
+        nothing or the file is malformed (no schema, counts, or extended stage).
     """
     path = directory / "carry_provenance.json"
     if not path.is_file():
         return None
     doc = read_json(path)
-    carried = doc.get("carried") if isinstance(doc, dict) else None
-    if doc.get("schema") != CARRY_SCHEMA or not isinstance(carried, int) or carried <= 0:
+    if not isinstance(doc, dict) or doc.get("schema") != CARRY_SCHEMA:
         return None
-    return carried, str(doc.get("extends_stage") or "")
+    carried, uncovered = doc.get("carried"), doc.get("uncovered")
+    extends = str(doc.get("extends_stage") or "")
+    if not isinstance(carried, int) or carried <= 0 or not isinstance(uncovered, int) \
+            or uncovered < 0 or not extends:
+        return None
+    return carried, extends, uncovered
+
+
+def _stage_exists(meta_path: Path, stage: str) -> bool:
+    """Whether a repository-relative stage directory exists, found from a meta's path."""
+    for parent in meta_path.resolve().parents:
+        if (parent / ".git").exists() or (parent / "results" / "passes-manifest.json").exists():
+            return (parent / stage).is_dir()
+    return False
 
 
 def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str, Any] | None:
@@ -497,7 +510,13 @@ def leg_coverage(meta: dict[str, Any], meta_path: Path, stage: str) -> dict[str,
         "method": "scripts/lib_pass_cost.py verifier_coverage, as PassCoster.cost_pass applies it",
     }
     carry = carried_forward(meta_path.parent)
-    if carry and accounted + carry[0] >= COVERAGE_FLOOR * results:
+    # The exemption holds only when this meta accounts for every result the
+    # carry did NOT bring (the file's own ``uncovered`` count), and the carry
+    # came from a stage that exists. Testing ``accounted + carried`` against
+    # the floor alone was vacuous whenever the carry was 90 % of the results
+    # (re-audit, 2026-10-04: 756 of 759 passed with the meta covering none).
+    if carry and accounted >= carry[2] and accounted + carry[0] >= results \
+            and _stage_exists(meta_path, carry[1]):
         record.update(lower_bound=False, carried=carry[0], carried_from=carry[1], note=(
             f"the meta accounts for {accounted:,} candidate(s) against {results:,} results, "
             f"but {carry[0]:,} of those results were carried forward from {carry[1]} "

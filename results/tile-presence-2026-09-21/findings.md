@@ -1,6 +1,7 @@
 # Tile presence: what a metric indifferent to over-generation buys, and what it costs
 
-> **Last revised**: 2026-10-04 (every leg now priced at the uniform
+> **Last revised**: 2026-10-04 (later: the cross-check's rules stated after the
+> code audit; no figure moved). Earlier the same day: (every leg now priced at the uniform
 > discounted tier from the passes register, PI rulings D29 and D30; all 35
 > configurations priced where 12 were not; no tile-MCC, F1, vote count, pool
 > or rank changes). Prior: 2026-09-21 (first publication; PI ruling
@@ -182,6 +183,16 @@ quoting it, and note that **no drift floor has been measured for the Gemini
 no band to be read against.
 
 ## Changelog
+
+### 2026-10-04 (later) — Cross-check rules after the code audit
+
+The two-lens audit of WP4 and its re-audit tightened the cost stage's cross-check,
+and § "How each leg is priced" now states it: a measured leg must agree with its
+published figure to the cent and a completed one within US$0.05 (D30), over the
+same number of candidates; an unpriced leg that its report prices is itself a
+disagreement; and any disagreement refuses the write and fails `--check`. The
+record's fields were renamed (`sources`, `stages_outside_register`). No figure
+moved: every leg's cost, every pool and every rank is as in the entry below.
 
 ### 2026-10-04 — Costs at the uniform tier, from the register (D29, D30)
 

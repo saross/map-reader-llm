@@ -130,13 +130,15 @@ def derive_month(month: str, export_text: str) -> list[str]:
     for row in csv.DictReader(io.StringIO("\n".join(lines[start:]))):
         if row["Service description"] != SERVICE or row["Project name"] != PROJECT:
             continue
-        if row["Cost type"] != "Usage" or row.get("Credit type"):
+        # Both read strictly: a renamed column must refuse (KeyError -> exit 2),
+        # never silently switch this guard off (re-audit, 2026-10-04).
+        if row["Cost type"] != "Usage" or row["Credit type"]:
             # Every row of the ten months so far is plain usage. A credit,
             # adjustment or refund would emit a second row for its SKU, which
             # the table's one-row-per-SKU method has no place for: refuse it
             # so a human decides (audit lens A, 2026-10-04).
             raise DerivationError(f"{month}: a {row['Cost type']!r} row "
-                                  f"(credit {row.get('Credit type')!r}) for "
+                                  f"(credit {row['Credit type']!r}) for "
                                   f"{row['SKU description']!r}; the method covers usage only")
         aud = row["Cost ($)"]
         usd = float(aud) / fx  # from the ROUNDED AUD, as the committed rows are

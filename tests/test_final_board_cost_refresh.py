@@ -215,9 +215,12 @@ def test_an_analogue_label_may_not_shadow_a_board_cell(committed):
 @pytest.mark.tier1
 def test_a_board_cell_without_a_tier_is_a_defect_not_untiered(committed):
     board, _ = committed
-    untiered = [[label for label in tier if label != "A-N1-oracle"] for tier in board["tiers"]]
-    with pytest.raises(KeyError):
-        frontiers_of({**board, "tiers": untiered})
+    # Both an oracle and a CARRIED board cell: "carried" must not pass as the
+    # untiered "carried-analogue" prefix (re-audit, 2026-10-04).
+    for dropped in ("A-N1-oracle", "B-N3-carried"):
+        untiered = [[label for label in tier if label != dropped] for tier in board["tiers"]]
+        with pytest.raises(KeyError):
+            frontiers_of({**board, "tiers": untiered})
 
 
 @pytest.mark.tier1
