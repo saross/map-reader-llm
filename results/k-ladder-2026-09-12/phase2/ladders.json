@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-03T23:37:53+00:00",
+  "generated_at_utc": "2026-10-04T00:26:26+00:00",
   "script": "scripts/build_k_ladder_phase2_tables.py",
   "script_version": "1.2.0",
   "card": "planning/k-ladder-review-2026-09-11.md",
@@ -263,8 +263,8 @@
       "thinking_level": "minimal",
       "modality": "text",
       "temperature": 0.7,
-      "pass_usd": 0.2658664314951411,
-      "pass_usd_anchor": "the 55-map T0.7 passes of the same configuration, re-priced at the uniform tier and scaled by 487/8,541: this family's own GS T0.7 passes recorded no tokens",
+      "pass_usd": 0.28694765,
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 GS passes recorded no tokens (PI ruling 2026-10-04: text and image alike, so every Phase 2 family rests on GS measurements). The two neighbours differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL image) and 18 % (HIGH image)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -337,8 +337,8 @@
             "opmax": "pv-min-text-t0.7-n1-opmax",
             "carried": "pv-min-text-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 0.2659,
-          "all_in_flex_usd": 0.9658
+          "proposer_flex_usd": 0.2869,
+          "all_in_flex_usd": 0.9868
         },
         {
           "K": 3,
@@ -404,8 +404,8 @@
             "opmax": "pv-min-text-t0.7-n3-opmax",
             "carried": "pv-min-text-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 0.7976,
-          "all_in_flex_usd": 1.7298
+          "proposer_flex_usd": 0.8608,
+          "all_in_flex_usd": 1.793
         },
         {
           "K": 5,
@@ -446,8 +446,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 1.3293,
-          "all_in_flex_usd": 2.4316
+          "proposer_flex_usd": 1.4347,
+          "all_in_flex_usd": 2.537
         },
         {
           "K": 10,
@@ -488,8 +488,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 2.6587,
-          "all_in_flex_usd": 4.0101
+          "proposer_flex_usd": 2.8695,
+          "all_in_flex_usd": 4.2209
         }
       ]
     },
@@ -974,8 +974,8 @@
       "thinking_level": "high",
       "modality": "text",
       "temperature": 0.7,
-      "pass_usd": 2.291385986465285,
-      "pass_usd_anchor": "the 55-map T0.7 passes of the same configuration, re-priced at the uniform tier and scaled by 487/8,541: this family's own GS T0.7 passes recorded no tokens",
+      "pass_usd": 2.3958351999999996,
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 GS passes recorded no tokens (PI ruling 2026-10-04: text and image alike, so every Phase 2 family rests on GS measurements). The two neighbours differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL image) and 18 % (HIGH image)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -1048,8 +1048,8 @@
             "opmax": "pv-high-text-t0.7-n1-opmax",
             "carried": "pv-high-text-t0.7-n1-carried-p0.15-k1"
           },
-          "proposer_flex_usd": 2.2914,
-          "all_in_flex_usd": 3.2366
+          "proposer_flex_usd": 2.3958,
+          "all_in_flex_usd": 3.341
         },
         {
           "K": 3,
@@ -1115,8 +1115,8 @@
             "opmax": "pv-high-text-t0.7-n3-opmax",
             "carried": "pv-high-text-t0.7-n3-carried-p0.15-k3"
           },
-          "proposer_flex_usd": 6.8742,
-          "all_in_flex_usd": 8.761
+          "proposer_flex_usd": 7.1875,
+          "all_in_flex_usd": 9.0743
         },
         {
           "K": 5,
@@ -1157,8 +1157,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 11.4569,
-          "all_in_flex_usd": 14.042
+          "proposer_flex_usd": 11.9792,
+          "all_in_flex_usd": 14.5643
         },
         {
           "K": 10,
@@ -1199,8 +1199,8 @@
             }
           },
           "carried_readings_coincide": false,
-          "proposer_flex_usd": 22.9139,
-          "all_in_flex_usd": 26.9729
+          "proposer_flex_usd": 23.9584,
+          "all_in_flex_usd": 28.0174
         }
       ]
     },
@@ -1686,7 +1686,7 @@
       "modality": "image",
       "temperature": 0.7,
       "pass_usd": 0.5737418,
-      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image",
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 GS passes recorded no tokens (PI ruling 2026-10-04: text and image alike, so every Phase 2 family rests on GS measurements). The two neighbours differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL image) and 18 % (HIGH image)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -2397,7 +2397,7 @@
       "modality": "image",
       "temperature": 0.7,
       "pass_usd": 2.15426535,
-      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 passes recorded no tokens. The two differ by 0.3 % for MINIMAL image and 16 % for HIGH image",
+      "pass_usd_anchor": "ESTIMATED as the plain mean of the same family's own T0.3 and T1.0 GS passes (not a linear interpolation at T 0.7), because its T0.7 GS passes recorded no tokens (PI ruling 2026-10-04: text and image alike, so every Phase 2 family rests on GS measurements). The two neighbours differ by 1.7 % (MINIMAL text), 23 % (HIGH text), 0.3 % (MINIMAL image) and 18 % (HIGH image)",
       "corpus": "4-map-gs",
       "frame": "era2-b-487",
       "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
@@ -3383,7 +3383,7 @@
       "mcc_k1": 0.7881,
       "mcc_best": 0.7957,
       "mcc_verdict": "up",
-      "cost_share_at_k3": 0.431
+      "cost_share_at_k3": 0.425
     },
     {
       "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
@@ -3419,7 +3419,7 @@
       "mcc_k1": 0.7737,
       "mcc_best": 0.7641,
       "mcc_verdict": "down",
-      "cost_share_at_k3": 0.325
+      "cost_share_at_k3": 0.324
     },
     {
       "family": "Gemini 3 HIGH text 384 px, T 1.0",
