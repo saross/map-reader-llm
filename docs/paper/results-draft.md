@@ -10,7 +10,14 @@
 
 ---
 
-> **Last revised**: 2026-09-14 (**§ R2's image-bearing tile-MCC range
+> **Last revised**: 2026-10-04 (**§§ R6, R7.2 and R7.3 costs re-priced**
+> from the passes register at one uniform discounted tier, PI ruling D19 as
+> amended 2026-10-04; **the fourth cell's "≈ $231" corrected** — it counted
+> B's own Gemini 3 verifier, a leg the fourth cell does not use — to $198 on
+> the board's basis, or about $191.50 on § R7.3's ruled mixed basis; one
+> `[DRAFT NOTE, S159]` asks the PI to confirm the § R7.2 basis. No F1, tier,
+> or verdict changed. See [§ Changelog](#changelog).) Prior:
+> 2026-09-14 (**§ R2's image-bearing tile-MCC range
 > corrected under erratum E88** — MCC 0.0665–0.291 across the twenty-one
 > computable of twenty-two image-bearing cells, from 0.094–0.291 across
 > seventeen; the four phase-2e exemplar-ordering cells are image-bearing and
@@ -475,10 +482,11 @@ on the GS instrument. The same comparison reverses at deployment (§ R6).
 
 *Registration status: post-hoc. The registered H3 cost-efficiency analysis is the nearest registered antecedent; the boards here extend it to the proposer–verifier architecture and to measured-token dollar costing, neither of which is registered.*
 
-Re-pricing the pass ladder in dollars (per-item token metadata at June
-2026 flex rates, thinking tokens billed at the output rate; a
-HIGH-thinking deployment pass costs ~8.6× a minimal one — token-load
-audit, 2026-06-12) collapses the frontier onto four rungs (analysis
+Re-pricing the pass ladder in dollars (each pass's own register tokens
+at one uniform discounted tier, thinking tokens billed at the output
+rate; a HIGH-thinking deployment pass costs ~8.6× a minimal one — PI
+ruling D19, amended 2026-10-04, which reproduces the token-load audit of
+2026-06-12 within 0.3 %) collapses the frontier onto four rungs (analysis
 `pass-budget-pareto-v2`; no pairwise F1 separation anywhere on the
 ladder, 0/21 pairs, though the MCB admissible set is six of the seven
 rungs — the 0.8641 rung is ruled out as best; erratum E83):
@@ -488,10 +496,10 @@ rungs — the 0.8641 rung is ruled out as best; erratum E83):
 | min6 (5 minimal passes + vf) | 0.8784 | $2.43 | ~$43 | efficient |
 | min11 (10 minimal passes + vf) | 0.8835 | $4.00 | ~$70 | efficient |
 | high6 | 0.8641 | $14.04 | ~$246 | dominated |
-| high5+5vf | 0.8739 | $14.41 | ~$253 | dominated |
+| high5+5vf | 0.8739 | $14.42 | ~$253 | dominated |
 | high11 | 0.8769 | $26.97 | ~$473 | dominated |
-| high31 (headline) | 0.8902 | $69.21 | ~$1,214 | efficient |
-| high35 (opmax) | 0.8951 | $71.23 | ~$1,249 | efficient |
+| high31 (headline) | 0.8902 | $69.25 | ~$1,214 | efficient |
+| high35 (opmax) | 0.8951 | $71.26 | ~$1,250 | efficient |
 
 Read naively, the table says: buy minimal thinking; the entire HIGH ladder
 is dominated. **Deployment says otherwise, and this is one of the study's
@@ -530,16 +538,16 @@ Second, the gap is partly *buyable*: doubling the minimal pass count
 the 5-pass minimal deployment (+0.0170, p < 10⁻⁴) and significantly below
 the HIGH-thinking cell (−0.0108, BH p = 0.018) — converting the thinking
 choice at deployment into a priced cost/quality trade (~$58 for 0.828 vs
-~$207 for 0.839 at audited production rates) rather than a tie (Obs 364;
+~$207 for 0.839 at the uniform production tier) rather than a tie (Obs 364;
 run `55maps-text-min-n10-uplift`). The confusion-matrix decomposition of
 the frontier steps (Obs 365, re-measured on the standardised reference
 with Obs 365's own endpoints) shows the two purchases differ in kind:
 the pass-count step (min5 → min10) is a strict improvement (+113 mounds
-*and* −31 false positives for ~$26), while the step from the uplift
+*and* −31 false positives for ~$27), while the step from the uplift
 cell to the board-leading HIGH configuration (T0.3 × 3-of-5, which
 moves thinking level, temperature, and threshold together) trades
 precision for recall (+282 mounds at +262 false positives for ~$203 at
-the audited production rate).
+the uniform production tier).
 
 ## R7. Deployment: the 55-map board (reference r2)
 
@@ -684,18 +692,35 @@ The final board scores every run on reference r2 (35 cells, 512 of 595
 pairs significant, 12 tiers, in `results/55map-final-board-r2-2026-09-06/`).
 One row per run family, its best carried and its best oracle cell:
 
-| run family | carried: F1@50 (tier) | tile-MCC | cost (flex, full) | oracle: F1@50 (tier) at (prob, k) | note |
+| run family | carried: F1@50 (tier) | tile-MCC | cost (uniform tier, full) | oracle: F1@50 (tier) at (prob, k) | note |
 |---|---:|---:|---:|---|---|
 | Gemini 3 text HIGH T0.7, K = 5 (the carry-forward) | 0.8162 (T9) | 0.665 | $207 | 0.8380 (T7) at (0.15, k3) |  |
 | Gemini 3 text HIGH T0.3, K = 5 | 0.8294 (T8) | 0.669 | $261 | 0.8399 (T6) at (0.20, k3) |  |
-| Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $23 | 0.8103 (T10) at (0.20, k3) |  |
+| Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $30 † | 0.8103 (T10) at (0.20, k3) |  |
 | Gemini 3 text MIN uplift, K = 10 | none | none | $58 | 0.8274 (T8) at (0.15, k5) | no carried point was registered at this rung, so the cost is the oracle cell's |
-| Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $195 | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
-| A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $104 | 0.8419 (T6) at (0.15, k7) |  |
+| Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $201 † | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
+| A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $103 † | 0.8419 (T6) at (0.15, k7) |  |
 | B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
 | 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | $153 | 0.8727 (T3) at (0.15, k5) | shares its proposer with arm 2 |
 | 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | $159 | 0.8871 (T1) at (0.95, k5) | shares its proposer with arm 1 |
-| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | ≈ $231 (verifier billed) | 0.8813 (T2) at (0.96, k9) | proposer $173.59 audited (B, K = 10) + verifier ≈ $58 from the invoice, isolated on its billing day (its `run.meta.json` records only the cleanup pass; `reports/billing-reconciliation-2026-09-11.md` § 3; mixed basis approved by the PI 2026-09-12) |
+| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | $198 † | 0.8813 (T2) at (0.96, k9) | proposer $133.50 (B's ten passes) + 3.7 verifier $64.67, completed at arm 2's per-candidate unit (its `run.meta.json` records only the cleanup pass); the invoice isolates the verifier at about $58 on its billing day, about $191.50 all-in (`reports/billing-reconciliation-2026-09-11.md` § 3.1) |
+
+Costs are the board's (`results/55map-final-board-r2-2026-09-06/`): each
+family's own register tokens at one uniform discounted tier (PI ruling
+D19, amended 2026-10-04), so no configuration is penalised for how it
+happened to be billed. † marks a verifier leg that is a floor in the
+register, because a cleanup pass overwrote its record; D19 completes it
+at the per-candidate unit of audited legs with an identical verifier
+configuration. Neither text MIN's $30 nor image's $201 is new spending:
+until 2026-10-04 both were quoted without their verifier legs ($23,
+$195). [DRAFT NOTE, S159: the fourth cell's cost follows the board's
+basis here and the 2026-09-12 mixed basis in § R7.3's as-billed
+paragraph. The two differ by about $7 and are both correct, but on
+different bases. Until 2026-10-04 this row read "≈ $231", which added
+the invoice verifier to B's ALL-IN $173.59, so it counted B's own
+Gemini 3 verifier (about $39), a leg the fourth cell does not use
+(`reports/wp4b-frontier-repricing-2026-10-04.md` § 5.2). PI to confirm
+that the table follows the board.]
 
 Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
 (T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
@@ -705,12 +730,13 @@ crown now belongs to the fourth cell of § R7.3. The practitioner
 recommendation (pre-declared question 4) is B at N = 5 with the
 GS-carried (0.15, k5). That cell scores 0.8503 on r2 (0.8438 on the
 canonical chain) for about $97 full or $77 lean-deploy over 55 sheets,
-above its own N = 10 carried point (0.8497, $174) and the HIGH
+above its own N = 10 carried point (0.8497, $173) and the HIGH
 incumbent (0.8162, $207). A budget floor exists at A with N = 3–5 ($35–48 lean),
-holding 0.827–0.832 on the canonical chain. Costs are flex-tier
-estimates rather than billing figures, and the N < 10 rungs' costs
-are simulated from audited per-call rates because those passes ran
-inside the K = 10 campaign. The estimated-correction column (§ M.3)
+holding 0.827–0.832 on the canonical chain. Costs are register tokens at
+the uniform discounted tier rather than billing figures. Because the
+N < 10 rungs' passes ran inside the K = 10 campaign, each rung is
+priced as N of the run's own passes plus its own union's verification
+at the leg's per-candidate unit. The estimated-correction column (§ M.3)
 sits within 0.0007 of each r2 point — below it for 32 of the 35 cells,
 at it for one, and marginally above it for the two lowest-recall cells
 (TM-k4 +0.0003, IM-k4 +0.0007) — with intervals of about ±0.005, and
@@ -828,7 +854,9 @@ proposer, so the campaign spent $167 to place both. The fourth cell's
 verifier token load is not on file, because its run metadata records
 only the cleanup pass that followed it; its cost is taken from the
 invoice instead, about $58 for the verifier on the one billing day it
-occupied, giving about $231 with B's audited K = 10 proposer. Every
+occupied, giving about $191.50 with B's ten audited proposer passes
+($133.50). The board prices the same leg at arm 2's audited
+per-candidate unit instead, $64.67 and $198 all-in (§ R7.2). Every
 token-basis figure is at list rates less the flex discount, on the
 method of § 5.4 and the audit that fixed the Gemini 3 manifests, with
 thinking billed at the output rate and retries and recovery merges
@@ -842,7 +870,10 @@ metadata's own cost stamps, which priced 3.7 at Gemini 3 rates.
 Thinking volume was 265–277
 tokens per call on the text arms (D4) and 88–157 on image (I4).
 [RULED 2026-09-12: the fourth cell's mixed basis — token-audited
-proposer, invoice-derived verifier — is kept as marked.]
+proposer, invoice-derived verifier — is kept as marked. Arithmetic
+corrected 2026-10-04: the "about $231" first written here used B's
+all-in K = 10 figure ($173.59, which includes B's own Gemini 3
+verifier) as the proposer; the proposer alone is $133.50.]
 
 [DRAFT NOTE, S151: (a) RESOLVED S153 by ruling 1 (outline § D18) —
 chains are named per sentence, canonical for the bets and r2 for the
@@ -987,6 +1018,49 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-10-04 — §§ R6, R7.2 and R7.3 costs re-priced (WP4b); the fourth cell's "≈ $231" corrected
+
+**Trigger.** PI ruling D19, amended 2026-10-04: every configuration's own
+register tokens priced at one uniform discounted tier (flex, which equals
+batch on the rate card). WP4b re-priced the r2 final board, Pareto v2 and
+the K-ladders (PR #22, `562ff6a96`); all three rows carry signature notes
+given 2026-10-04. The walkthrough, `reports/wp4b-frontier-repricing-2026-10-04.md`
+§ 5.2, found the fourth cell's defect.
+
+| Figure | Before | After |
+|---|---:|---:|
+| § R6 high5+5vf / high31 / high35, GS run | $14.41 / $69.21 / $71.23 | $14.42 / $69.25 / $71.26 |
+| § R6 high35, 55-map production | ~$1,249 | ~$1,250 |
+| § R6 pass-count step (min5 → min10) | ~$26 | ~$27 (TM $30.40 → uplift $57.89) |
+| § R7.2 text MIN, K = 5 | $23 | $30 † |
+| § R7.2 image HIGH, K = 5 | $195 | $201 † |
+| § R7.2 A, K = 10 | $104 | $103 † |
+| § R7.2 fourth cell | ≈ $231 (mixed basis) | $198 † (board basis) |
+| § R7.2 B N = 10 carried, cross-reference | $174 | $173 |
+| § R7.3 fourth cell, as-billed mixed basis | about $231 | about $191.50 |
+
+**The fourth cell's defect.** "≈ $231" added the invoice-isolated 3.7
+verifier (about $58) to $173.59, which is B's ALL-IN K = 10 figure and
+already includes B's own Gemini 3 verifier ($39.18 in the register). The
+fourth cell uses only B's proposer passes ($133.50, the same as billed and
+at the uniform tier, since those passes were served flex). § R7.3 keeps the
+mixed basis the PI ruled on 2026-09-12 with the arithmetic corrected;
+§ R7.2 follows the board, which completes the leg at arm 2's audited
+per-candidate unit ($64.67). A `[DRAFT NOTE, S159]` asks the PI to confirm
+that split.
+
+**The † legs.** Text MIN's and image's verifier legs, stride A's union leg
+and the fourth cell's 3.7 leg are floors in the register (a cleanup pass
+overwrote each main record). D19 completes them from comparable legs. Text
+MIN and image move most because their earlier figures omitted the verifier
+entirely.
+
+**What did NOT change.** Every F1, tile-MCC, tier, pairwise result, and
+verdict; § R6's efficient set and the deployment reversal; the arms' $153
+and $159 and the campaign's $167; § R7.2's recommendation prices (~$97 full,
+~$77 lean; A's budget floor $35–48 lean); and the uplift's ~$58 against
+TH7's ~$207.
 
 ### 2026-09-14 — § R2's image-bearing tile-MCC range corrected (erratum E88)
 
