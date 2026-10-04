@@ -2745,3 +2745,76 @@ needed a different rule, not the whole batch.
 **How to apply.** One patch script per file; assert counts per edit and
 report which edits applied; for text that plausibly repeats, patch by line
 with its own indent rather than by substring. Keep the assert.
+
+## claude-obs 128 — 2026-10-04: He extends a fairness principle to his own mistakes without being asked twice
+
+**Pattern.** D19 ruled that the frontier should rank configurations "as if
+they had been run correctly, and not penalise a configuration for our API
+usage error". Asked whether that meant each launch's requested tier or one
+discounted tier for all, he chose the uniform tier in one line. That
+extended the principle to the months when he himself did not know discounts
+existed, which costs the early configurations' as-billed record nothing and
+removes a whole investigation from the frontier's path. He made the same
+move on the T0.7 ladders: when shown that text and image were estimated two
+ways, he picked the rule that treats them alike.
+
+**Lesson.** When a ruling's wording admits a narrow and a principled
+reading, he wants the principled one and will say so immediately, provided
+the question puts the consequence first.
+
+**How to apply.** Frame interpretive questions about his rulings as "the
+narrow reading does X to these configurations; the principled one does Y".
+Do not implement the narrow reading and wait to be corrected.
+
+## claude-obs 129 — 2026-10-04: His mid-turn question reached the paper-level consequence before I did
+
+**Pattern.** While I was recomputing K-ladder figures he asked whether
+oracle and carried-forward comparisons should get their own boards or
+whether the boards should go deep enough to show leading carried-forward
+configurations. I had flagged the oracle basis of the new frontier as a
+"caution". He saw that it is a presentation decision the paper has to make,
+and that it has three shapes: separate boards, deeper boards, or (my
+recommendation) one board with two frontiers.
+
+**Lesson.** When a technical change shifts which *kind* of evidence a
+headline rests on, he reads it as a question about the paper's claim, not a
+caveat. A caveat buried in a walkthrough is too quiet for that.
+
+**How to apply.** When a regenerated result changes its evidential basis
+(oracle against carried, post-hoc against registered), lead with "this
+changes what the paper can claim about X", give the options, and queue the
+decision explicitly. Do not leave it as a caution in § 2.
+
+## claude-obs 130 — 2026-10-04: Self-critique — I explained the T0.7 difference in pipeline terms, so he had to ask
+
+**Pattern.** The walkthrough described the T0.7 issue as "text families keep
+the 55-map T0.7 measurement scaled; image families take the plain mean of
+their GS neighbours". That is accurate and unreadable. He replied "I don't
+quite understand the differences … but it sounds like they need
+reconciliation?" He was right on both counts. The plain version, two
+families at the same temperature priced two different ways with one
+looking 7 % cheaper for a corpus reason, took one table to say.
+
+**Lesson.** An estimation choice is understood by its effect (what looks
+cheaper or dearer than it should, and why), not by its mechanism.
+
+**How to apply.** For any estimation or imputation choice put to him, open
+with the visible consequence and a two-row table, then the mechanism.
+
+## claude-obs 131 — 2026-10-04: Self-critique — I "corrected" two numeric claims from memory of a superseded state
+
+**Pattern.** After lens A flagged a precision claim, I rewrote Pareto v2's
+change as "within 0.12 %". That figure came from the pre-fix output; after
+the fix the largest move was 0.094 %, so my correction was itself wrong.
+The re-audit caught it. In the same pass I wrote "four of the five new
+frontier rows are oracle cells" without re-reading the table; all five are.
+Both were claims about numbers I had just produced, written from memory
+rather than re-derived.
+
+**Lesson.** The anti-confabulation rule applies to my own just-computed
+numbers as much as to identifiers from old sessions: a figure from three
+commits ago is a pointer, not an authority.
+
+**How to apply.** When writing or correcting a numeric claim in a
+walkthrough, changelog or note, recompute it from the current artefact in
+the same step (one line of Python), and quote the recomputed value.

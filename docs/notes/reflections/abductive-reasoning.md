@@ -8794,3 +8794,67 @@ Not a claim that the reconciliations were wasted: they established the
 method and the invoice CSV the card now cites. Nor that the live figures
 were wrong: for legs without cached tokens they reproduce to the cent under
 the new card, which is what let the change be accepted in a day.
+
+## Entry — 2026-10-04 (Session 158, map-reader-llm): A frontier drawn around a hole
+
+**Session:** 6ca5b861-a2a5-48ba-b40a-32e0c1e57b15
+**Instance:** primary
+
+### Surprising fact
+
+Re-pricing the r2 board's cost axis from the passes register changed
+nearly every family's cost by under 1 %. Yet it changed the efficiency
+frontier's membership almost completely:
+
+- before: A N1 → A N3 → A N5 → B N3 → B N5;
+- after: A N1 → 3.7 arm 1 N1 → 3.7 arm 2 N1 → fourth cell N3 → 3.7 arm 2 N3.
+
+A sub-1 % re-pricing should not reorder a frontier.
+
+### Probe
+
+The before-and-after costs per family showed the stride families
+reproducing their hand-typed figures within 0.7 %. So the movement had to
+come from rows that were not on the old frontier. The old cost table held
+`None` for all nine 3.7 families, and the efficiency builder skips a run
+whose cost is `None` ("unaudited family: no $/mound claim"). The 3.7 runs
+had not been ranked and beaten; they had not been ranked. The re-audit then
+asked the follow-up I had not: which *kind* of cell the new frontier rests
+on.
+
+- All five new steps are oracle cells, where four of the old five were
+  carried.
+- A frontier on the carried basis, using the addendum's post-hoc
+  carried-analogues, keeps nearly the same shape. Only ARM1-N1-carried
+  drops out, dominated by A N1.
+
+### Belief revision
+
+I had read the published frontier as a finding about which configurations
+buy detection most cheaply. It was a finding about which configurations had
+a typed-in cost. The new frontier is a real finding, that the 3.7 runs
+dominate the stride runs on cost-efficiency, but it is an oracle-basis
+finding. Its deployment reading depends on post-hoc carried cells. That
+makes "which basis does the paper's frontier use" a question the PI now
+has to answer, not one the data settles.
+
+### What would change this belief
+
+- A carried-basis frontier built only from *registered* carried points (no
+  post-hoc analogues) that kept the 3.7 rows on it. That would make the
+  dominance a deployment finding, not just an oracle one.
+- Or a 3.7 cost found to be wrong in a way that restores the stride rows.
+
+### Implications for practice
+
+A dash in a rendered table can hide a selection effect. Any ranking that
+silently skips unpriced or unscored rows should say how many it skipped and
+which. The rebuilt board now has none to skip, and the walkthrough states
+the old exclusion. The general rule is to count exclusions wherever a
+filter feeds a ranking.
+
+### What this is not
+
+It is not evidence that the June costs were wrong: where they existed they
+were right to under 1 %. Nor is it a re-tiering, since the board's F1 tiers
+and pairs are byte-identical.

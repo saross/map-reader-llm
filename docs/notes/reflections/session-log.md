@@ -9819,3 +9819,86 @@ main fixed after the signing (000f2e7cc).
 **Contextual assumptions.** The PI's Fable credit ran out at close; the
 next sessions run on Opus. WP3 (schema change, branch + PR) is next; the
 register still publishes the runner's estimate until WP4 regenerates it.
+
+## Session 158
+
+*2026-10-03/04; amd-tower + sapphire; Opus 5.5 driving; Opus subagents (audit
+lenses for WP3 rounds 1 to 9, WP4b audit and re-audit, a frontier-source
+sweep on Sonnet); API spend about US$0.03 (the live cache-and-tier probe,
+PI-approved). The instance was compacted mid-session; the first half (WP3
+build, rounds 1 to 6, billing downloads, live probe) is summarised from the
+compaction record.*
+
+**WP3: the passes register prices its own tokens (PR #21, merged
+`d79876f21`).**
+
+- **Code:**
+  - `scripts/lib_pass_cost.py`: the tier evidence ladder, priced per
+    fragment, plus floors, bounds and conflicts.
+  - `scripts/derive_tier_evidence.py`: billing-day and run-log evidence.
+  - C3 re-derives the cost claim.
+- **Register on the audited basis:** US$3,094.05 (tier lower bound
+  US$2,859.81) against the runner estimate's US$4,674.00.
+- **Live defect fixed and tested:** the cached-path runner dropped
+  `service_tier` (`2df65047e`). The probe at
+  `outputs/tier-cache-probe-2026-10-03/` reproduced the defect and the
+  fix.
+- **Served-tier capture.** It is recorded per request and per run
+  (`usage_stats.served_tier_counts`), and the code commit is read once at
+  import.
+- **Rulings recorded:** D19 to D23.
+- **Audit rounds 7 to 9:**
+  - The superseded ledger's two pre-rerun entries (US$27.85) were
+    withdrawn as a double count.
+  - The cached-path rule now follows the run's recorded commit ancestry.
+  - `merge_recovery_meta` refuses cumulative inputs and verifier metas.
+- **Tier-1:** 3,536 passed.
+
+**WP4b: the frontier cost axis from the register (PR #22, merged
+`562ff6a96`).**
+
+- **Rulings:**
+  - D19 amended: one uniform discounted tier for every configuration.
+  - Scope: all three frontiers.
+  - Phase 2 families at their own measured GS passes; the four T0.7
+    families at their GS T0.3/T1.0 mean.
+- **Code and data:** `scripts/lib_frontier_cost.py`,
+  `data/pricing/frontier-configurations.json`,
+  `scripts/final_board_cost_refresh.py`. `final_board_build`,
+  `build_pareto_v2` and both K-ladder builders were rewired.
+- **Outputs regenerated:** the r2 board (in place, tiering
+  byte-identical), Pareto v2, and K-ladder Phases 1 and 2.
+- **Findings:**
+  - The board's efficiency frontier changed membership (3.7 runs priced
+    for the first time; all five steps oracle cells).
+  - Phase 1's fourth-cell ladder had carried stride B's costs.
+  - Phase 2's MINIMAL-image ladders were under-priced about 2×.
+  - TM and IM had omitted floored verifiers.
+  - Pareto v2 is unchanged (under 0.1 %).
+  - The results draft overstates the fourth cell (≈ US$231).
+- **Audit:** two lenses plus a two-lens re-audit; 29 mutations (27 red,
+  1 misfired, 1 equivalent); drift guards on every output.
+- **Tier-1:** 3,601 passed.
+- **Walkthrough:** `reports/wp4b-frontier-repricing-2026-10-04.md`.
+
+**Signature notes (D9 pattern), approved by the PI 2026-10-04.**
+
+- `55map-final-board-r2-2026-09-06` and `pass-budget-pareto-v2` at
+  00:25:02Z.
+- `k-ladder-2026-09-12` at 02:49:10Z, with a 1,000× units correction to
+  its outcome ("per 0.001 F1" figures that are per unit of F1).
+- The analyses manifest shows 45 signed.
+
+**Housekeeping.**
+
+- Worktrees cleaned on both machines. Sol's archived worktree is left for
+  its owner.
+- Local and sapphire are on `main` at `562ff6a96`.
+
+**Contextual assumptions.**
+
+- Opus credit until Thursday.
+- The as-billed register and the frontier now use different bases by
+  design: as-billed is the honest total, uniform tier is the frontier.
+- The oracle-versus-carried frontier presentation is queued for a PI
+  decision.

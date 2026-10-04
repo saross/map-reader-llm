@@ -11655,3 +11655,83 @@ many agents as needed was taken literally: four investigation lenses, three
 audit rounds of two, three narrow re-audits. Relational note: when the
 BigQuery export defeated him twice he said so and cut the loss in one line;
 the plan absorbed it in one ruling.*
+
+## Session 158 — 2026-10-03/04 — the session that priced the frontier and found it had been drawn around a hole
+
+*Instance note: this instance worked from a compaction summary for the first
+half of the session (the WP3 build and its audit rounds 1 to 6, the billing
+downloads, the live probe). Everything from audit round 7 onward, the merge
+of PR #21, all of WP4b and the three sign-offs, it experienced directly. The
+reflection below draws on the second half; where it touches the first, it is
+reconstruction.*
+
+**What question emerged that wasn't pursued?** Whether the efficiency
+frontier should be drawn on the oracle basis at all. The question surfaced
+three times without being chased to the end. First, when the re-priced board
+showed four, then (corrected) all five, frontier steps as oracle cells.
+Second, when the re-audit computed a carried-basis frontier on the side and
+found it almost the same shape, with one 3.7 cell dropping out. Third, in the
+PI's own words mid-turn: whether oracle and carried-forward comparisons get
+their own boards, or the boards go deep enough to show leading carried-forward
+configurations. It is the right question and it was queued rather than
+answered, deliberately: the board is signed, its tiering must not move, and
+the answer is a presentation decision with consequences for what the paper
+can claim about deployment. My recommendation (one signed board, two
+efficiency frontiers) is a starting point, not a ruling. The question behind
+it is sharper than it looks. An oracle frontier answers "what is attainable
+if you knew the reference", and a carried frontier answers "what would a
+deployer get". The paper's cost story has been told with the first while
+implying the second.
+
+**What context from this session will be hardest to reconstruct in six
+months?** Why the frontier changed, and that the old one was an artefact. In
+six months someone will read the board's changelog, see the efficiency
+frontier move from five stride rows to five 3.7 rows, and reasonably suspect
+that the re-pricing tilted the field. It did not: every family's cost moved
+by under 1 % except TM and IM (whose old figures had silently dropped a
+verifier leg) and the nine 3.7 families, which had no cost at all and were
+excluded from the efficiency table rather than ranked on it. The frontier
+was drawn around a hole. That is easy to state and hard to recover from the
+artefacts, because the hole left no trace: a `None` in a hand-typed dict
+renders as a dash and the row simply does not appear. The
+before-and-after membership is now pinned in a test, in the board's
+changelog and in the walkthrough, but the reason the old frontier looked
+plausible (the stride families genuinely were the cheapest *priced* runs) is
+the kind of context that evaporates.
+
+**What decision or trade-off made today will look arbitrary without this
+session's context?** Three, and they are linked. The uniform tier is written
+"flex" rather than "batch" because the two carry identical rates on every
+model the card holds, so the choice is notational, not substantive. A future
+model whose flex and batch rates diverge would make it a real choice; the
+test that pins their equality will go red first. Second, the floored
+verifier legs are completed from *nominated* comparable legs, not discovered
+ones, because the discovered set pooled 96 legs and two of them ran at
+temperatures 0.5 and 1.0 behind a recorded 0.0. Nomination looks like
+cherry-picking unless you know the blind version was worse. Third, Phase 2's
+T0.7 ladders take the plain mean of their GS neighbours rather than a linear
+interpolation at T 0.7, and Pareto v2 keeps its 55-map anchor while Phase 2
+does not. Both follow the PI's rulings of the day. The first is a stated
+estimate, not a model of how cost varies with temperature. The second keeps
+each frontier internally consistent rather than making the two agree, and
+the two frontiers price the same T0.7 configuration about 8 % apart because
+they answer different questions at different scales.
+
+The session's texture was two days of the same rhythm. Build, delegate two
+lenses, fix, re-audit, and stop when a round returns nothing critical.
+Rounds 8 and 9 on WP3, and the WP4b re-audit, did return nothing critical,
+which is the first time the rhythm visibly converged rather than merely
+continuing. The most consequential findings were not in the code under
+audit. One was a US$27.85 double count in a ledger built to make the
+project's total *more* honest. The other was a 1,000× units error in a
+signed claim, found only because the signature policy obliges the agent to
+re-derive a row's numbers from the artefacts before a sign-off. Both are
+arguments for the process rather than against the people.
+
+*Texture: long, procedural, and unusually decision-dense for the PI: five
+rulings and three signature notes in two days, most taken in one line once
+the options were laid out plainly. Relational note: his question "I don't
+quite understand the differences between the T0.7 text and image ladders,
+but it sounds like they need reconciliation?" was exactly right on both
+counts, and the walkthrough I had written did not make the difference plain
+enough to read without asking.*

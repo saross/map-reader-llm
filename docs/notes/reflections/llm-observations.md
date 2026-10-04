@@ -8302,3 +8302,61 @@ remains the missing primitive.
   agreement with the meta. A verification apparatus that checks fidelity to
   source cannot see a wrong basis; the invoice gate in WP6 is the check that
   can.
+
+## Session 158 — 2026-10-03/04 (WP3 merged; WP4b built across three frontiers; three signature notes)
+
+*Instance note: observations from audit round 7 onward are first-hand; the
+WP3 build and rounds 1 to 6 are known to this instance only from its
+compaction summary.*
+
+- **The rhythm converged, visibly.** WP3's audit ran nine rounds. Rounds 1
+  to 7 each found defects in the previous round's fixes; rounds 8 and 9
+  found nothing critical, only label-level and latent issues. WP4b's audit
+  and re-audit followed the same curve in two rounds. Convergence is
+  observable; stopping at it, rather than at a fixed count, is the rule
+  that worked.
+- **Two lenses, independently, found the same defect.** In the WP4b
+  re-audit both the implementation lens and the test-adequacy lens
+  reported that the coverage fix was lopsided: results reduced to
+  candidates while the meta's completed items stayed per call. Agreement
+  from orthogonal questions is strong evidence. The test I had written
+  alongside the fix enshrined the wrong file layout, which is exactly why
+  the same-context check had passed.
+- **My own same-context errors, all caught by machinery rather than
+  review.**
+  - A new dataclass field inserted between two existing ones silently
+    swapped them under positional construction. The new rung test caught
+    it.
+  - A quoted heredoc wrote `"\\n"` into a test, which then compared a
+    document with itself and passed. I caught it by reading the test's
+    intermediate values.
+  - A mutation targeted the wrong test file and read RED because pytest
+    exits 5 when it collects nothing. I caught it by printing the exit
+    code. The harness should distinguish 1 from 5, and the later one did.
+  Each is a reason to verify that a check *can* fail before trusting that
+  it passed.
+- **A blind comparables search is a probe, not an answer.** The first
+  version of the floor-completion rule discovered comparable legs by
+  configuration fingerprint and pooled 96 legs across corpora. Two of them
+  matched only because their recorded temperature was the config file's
+  0.0 while the run's effective temperature (the E55 field) was 0.5 or 1.0.
+  The fix had two parts: read the effective temperature, and make
+  nomination explicit. The search stays as a review tool.
+- **The signature policy's re-derivation clause earns its keep.** Preparing
+  the K-ladder sign-off required re-deriving the row's quoted figures from
+  the regenerated outputs. That surfaced a 1,000× units error ("US$43,000
+  per 0.001 F1" that is per unit of F1) which had passed the original
+  signing and a findings document. Neither audit lens was asked to check
+  the row's prose, so neither saw it. The walkthrough obligation is the
+  check that reads claims rather than code.
+- **Asking a framing question saved a work package.** WP4b as planned
+  needed tier archaeology for the frontier. Asking the PI whether "the tier
+  it was MEANT to run at" meant each launch's requested tier or one
+  discounted tier for all turned the archaeology from a prerequisite into
+  an optional refinement of the as-billed total. One question replaced a
+  multi-session investigation, and the answer (uniform) is also the fairer
+  frontier.
+- **Concurrent agents share a working tree's git lock.** A read-only
+  auditor's `git status` held `.git/index.lock` at the moment I tried to
+  commit. Checking for the process and retrying was right; deleting the
+  lock would have been wrong. Read-only subagents are not lock-free.
