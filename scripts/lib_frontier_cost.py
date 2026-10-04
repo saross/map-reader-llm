@@ -329,7 +329,10 @@ class FrontierCoster:
         config = dict(_load(primary).get("configuration") or {})
         if config.get("model"):
             # One spelling per model ("gemini-3-flash" is "gemini-3-flash-preview").
-            config["model"] = resolve_model(config["model"])
+            try:
+                config["model"] = resolve_model(config["model"])
+            except KeyError as exc:  # UnknownModelError: said in this module's type
+                raise FrontierCostError(f"{label}: cannot price its model: {exc}") from exc
         if config.get("temperature_effective") is not None:
             # E55: where a CLI override changed the temperature, the meta's
             # ``temperature`` is the config file's and the run's is here
@@ -386,13 +389,21 @@ class FrontierCoster:
             usage, _ = fragment_usage(meta)
             if not usage or is_unrecorded(usage):
                 raise FrontierCostError(f"{label}: no priceable usage")
-            model = resolve_model((meta.get("configuration") or {})["model"])
             # Priced on the day the stage finished, as the register prices a
             # fragment (``priced_at``).
             at = str((meta.get("timestamp") or {}).get("end") or "")[:10] or None
             if at is None:
                 raise FrontierCostError(f"{label}: no end timestamp to price it at")
-            usd = price_usage(usage, model, UNIFORM_TIER, at=at)["total_cost_usd"]
+            try:
+                # UnknownModelError is a KeyError: a missing or unknown model is
+                # a leg this module cannot price, said in its own error type so
+                # callers that record "unpriced" do not crash (audit lens A).
+                model = resolve_model((meta.get("configuration") or {})["model"])
+                usd = price_usage(usage, model, UNIFORM_TIER, at=at)["total_cost_usd"]
+            except KeyError as exc:
+                raise FrontierCostError(f"{label}: cannot price its model: {exc}") from exc
+            if usd is None:
+                raise FrontierCostError(f"{label}: its usage prices to nothing")
         leg = Leg(pass_id=label, usd=usd, verifications=verifications, complete=complete,
                   fingerprint=fingerprint, iterations=iterations)
         self._legs[key] = leg

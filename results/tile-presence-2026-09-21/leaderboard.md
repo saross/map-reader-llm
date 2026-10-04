@@ -27,7 +27,7 @@ votes`, read off the sweep's own zero-threshold row — at the
 per-candidate rate of that configuration's verifier leg, priced at the
 uniform discounted tier from the passes register as the r2 board and the
 K-ladders are (PI rulings D29 and D30; `verifier-costs.json` records each
-leg's register rows, its basis, and the cross-check against the campaign's
+leg's sources, its basis, and the cross-check against the campaign's
 published figure). 17 rows draw on a pool SMALLER than their leg:
 they inherit probabilities from a larger verification and their `pool US$`
 is what the point alone would cost, not what was spent. 0 rows

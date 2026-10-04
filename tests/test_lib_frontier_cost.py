@@ -317,6 +317,28 @@ def test_a_stage_floor_refuses_a_nominee_of_another_configuration(repo):
 
 
 @pytest.mark.tier1
+def test_a_stage_floor_pools_two_nominees_not_their_mean(repo):
+    stage = _stage(repo, "outputs/x/verify_k1_arm2", results=100, processed=13)
+    repo.leg("c", "a", results=1000)   # 0.70 / 1,000
+    repo.leg("c", "b", results=3000)   # 0.70 / 3,000
+    cost = repo.coster().stage_leg_cost(
+        stage, complete=False,
+        comparables=[{"run_id": "c", "pool": "a"}, {"run_id": "c", "pool": "b"}])
+    assert cost.usd == pytest.approx(100 * 1.40 / 4000)       # pooled
+    assert cost.usd != pytest.approx(100 * (0.70 / 1000 + 0.70 / 3000) / 2)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("config", [{**G3, "model": "no-such-model"},
+                                    {k: v for k, v in G3.items() if k != "model"}])
+def test_a_stage_with_an_unpriceable_model_is_refused_in_its_own_error(repo, config):
+    # A KeyError escaping would crash a caller that records "unpriced".
+    stage = _stage(repo, "results/x/vote3/verified", results=40, processed=40, config=config)
+    with pytest.raises(FrontierCostError, match="cannot price its model"):
+        repo.coster().stage_leg_cost(stage, complete=True)
+
+
+@pytest.mark.tier1
 def test_a_stage_is_priced_one_way_only(repo):
     stage = _stage(repo, "results/x/vote3/verified", results=400, processed=400)
     coster = repo.coster()

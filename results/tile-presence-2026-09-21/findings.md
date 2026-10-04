@@ -129,14 +129,17 @@ measured and 12 completed**.
 The two-pass text legs of `TH7`, `T03` and `TM` include the S104 vote-3
 increment (`results/deployment-oracle-2026-06-06/vote3-verify/`), which the
 register does not hold. It is priced from its own metas and marked
-`in_register: false` in `verifier-costs.json`: US$2.97, US$2.74 and US$1.51.
+under `stages_outside_register` in `verifier-costs.json`: US$2.97, US$2.74 and
+US$1.51.
 The PI ruled that the register be repaired to hold it (D30), and a drift test
 turns red when it does.
 
 **Cross-check.** Twelve legs have a figure their campaign's post-run report
 publishes. The ten measured ones agree with it to under US$0.0001. The two
 completed ones differ by +US$0.048 (`IMG-ARM2-K1`) and −US$0.014
-(`IMG-ARM2-K3`), within the US$0.05 tolerance D30 set.
+(`IMG-ARM2-K3`), within the US$0.05 tolerance D30 set. A measured leg must
+agree to the cent, and every cross-checked leg over the same number of
+candidates; a gap beyond either refuses the write and fails `--check`.
 
 Until 2026-10-04 the stage used `scripts/audit_verifier_cost.py` on the
 as-billed tier, which reads a cleanup-overwritten leg as a lower bound. It

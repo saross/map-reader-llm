@@ -171,9 +171,10 @@ for _k in (1, 3, 5):
 #: Audited verifier-leg costs as the campaigns' own post-run reports PUBLISH
 #: them, transcribed with their source. Since 2026-10-04 (D29) they price
 #: nothing: they are the CROSS-CHECK for the uniform-tier figure, which must
-#: agree within ``COST_AGREEMENT_USD`` (the image legs ran batch or flex, which
-#: carry one rate, so a measured leg agrees to the cent and a completed one,
-#: priced at a comparable leg's unit, within the D30 tolerance).
+#: agree within ``AGREEMENT_USD`` for its basis (the image legs ran batch or
+#: flex, which carry one rate, so a measured leg agrees to the cent and a
+#: completed one, priced at a comparable leg's unit, within the D30 tolerance)
+#: and over the same number of candidates.
 PUBLISHED_USD = "outputs/gemini37-image-55map-2026-09-13/post_run_report.md"
 PUBLISHED_USD_G3 = "outputs/gemini3-image-55map-2026-09-16/post_run_report.md"
 PUBLISHED_LEG_COST: dict[str, dict[str, Any]] = {
@@ -205,9 +206,13 @@ PUBLISHED_LEG_COST: dict[str, dict[str, Any]] = {
 }
 
 #: How close the uniform-tier figure and a published figure must be to be
-#: called the same number (PI ruling D30, 2026-10-04: a completed leg is
-#: checked against its published figure at US$0.05).
-COST_AGREEMENT_USD = 0.05
+#: called the same number, by basis. A measured leg re-prices the very tokens
+#: the report priced, at the tier it ran at, so it must agree to the cent
+#: (both are quoted to four decimal places); a completed leg is priced at a
+#: comparable leg's unit, and PI ruling D30 (2026-10-04) sets US$0.05 for it.
+#: A gap beyond either refuses the write and fails ``--check``: that is how the
+#: stage reports it.
+AGREEMENT_USD = {"measured": 0.01, "completed": 0.05}
 
 #: Cost bases that may be used to price a pool: ``measured`` (the leg's own
 #: tokens at the uniform tier) and ``completed`` (a floor's calls at nominated
@@ -617,6 +622,12 @@ def price_stage(coster: FrontierCoster, stage: str, key: str, index: dict[str, l
         raise FrontierCostError(f"{stage} is claimed by "
                                 f"{', '.join(r['pass_id'] for r in rows)}")
     row = rows[0] if rows else None
+    frags = ((row or {}).get("cost_source") or {}).get("fragments") or []
+    if frags and str(Path(frags[0]["meta"]).parent) != stage:
+        # The leg's calls are counted beside its first fragment: that must be
+        # this stage, or the cost and the candidates belong to different
+        # directories (audit lens A, 2026-10-04).
+        raise FrontierCostError(f"{row['pass_id']}'s first fragment is not in {stage}")
     if row is None:
         cost = coster.stage_leg_cost(stage, complete=True)
         return cost, coster.stage_leg(stage, complete=True).verifications, False
@@ -646,8 +657,8 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
     Returns:
         ``(costs, n_legs, disagreements)``: the per-configuration cost
         records, how many distinct legs were priced, and one line per leg
-        whose figure and published figure differ by more than
-        ``COST_AGREEMENT_USD``.
+        whose figure differs from its published figure by more than its
+        basis's ``AGREEMENT_USD``, or over another number of candidates.
     """
     configs = sorted({
         name
@@ -676,8 +687,8 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
                      for stage in leg]
         except FrontierCostError as exc:
             record = {**base, "basis": "unpriced", "usd": None, "candidates": None,
-                      "register_rows": None, "in_register": None, "source": None,
-                      "note": f"no uniform-tier cost: {exc}"}
+                      "sources": None, "stages_outside_register": None,
+                      "source": None, "note": f"no uniform-tier cost: {exc}"}
         else:
             usd = sum(cost.usd for cost, _, _ in parts)
             record = {
@@ -686,25 +697,42 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
                           else "measured"),
                 "usd": usd,
                 "candidates": sum(calls for _, calls, _ in parts),
-                "register_rows": [s for cost, _, _ in parts for s in cost.sources],
-                "in_register": all(inside for _, _, inside in parts),
+                # Register pass ids, and ``stage:<dir>`` for a stage priced
+                # outside the register's fragment records (D30).
+                "sources": [s for cost, _, _ in parts for s in cost.sources],
+                "stages_outside_register": [stage for stage, (_, _, inside)
+                                            in zip(leg, parts, strict=True)
+                                            if not inside],
                 "source": ("the passes register at the uniform discounted tier "
                            "(PI rulings D19 amended, D29, D30) via "
                            "scripts/lib_frontier_cost.py"),
                 "note": "; ".join(n for cost, _, _ in parts for n in cost.notes),
             }
-            published = next((PUBLISHED_LEG_COST[m] for m in members
-                              if m in PUBLISHED_LEG_COST), None)
-            if published:
-                gap = usd - published["usd"]
-                record["cross_check"] = {
-                    "published_usd": published["usd"], "source": published["source"],
-                    "gap_usd": round(gap, 6),
-                    "within_tolerance": abs(gap) <= COST_AGREEMENT_USD}
-                if abs(gap) > COST_AGREEMENT_USD:
-                    disagreements.append(
-                        f"{members[0]}: uniform tier US${usd:.4f} vs published "
-                        f"US${published['usd']:.4f} ({published['source']})")
+        published = next((PUBLISHED_LEG_COST[m] for m in members
+                          if m in PUBLISHED_LEG_COST), None)
+        if published and record["usd"] is None:
+            # Kept visible: an unpriced leg must not lose its cross-check.
+            record["cross_check"] = {"published_usd": published["usd"],
+                                     "source": published["source"], "gap_usd": None,
+                                     "within_tolerance": None}
+            logger.warning("%s: unpriced, though its report publishes US$%.4f",
+                           members[0], published["usd"])
+        elif published:
+            gap = record["usd"] - published["usd"]
+            tolerance = AGREEMENT_USD[record["basis"]]
+            same_n = published["candidates"] == record["candidates"]
+            record["cross_check"] = {
+                "published_usd": published["usd"], "source": published["source"],
+                "gap_usd": round(gap, 6), "tolerance_usd": tolerance,
+                "published_candidates": published["candidates"],
+                "within_tolerance": abs(gap) <= tolerance and same_n}
+            if abs(gap) > tolerance or not same_n:
+                disagreements.append(
+                    f"{members[0]}: uniform tier US${record['usd']:.4f} over "
+                    f"{record['candidates']} candidates vs published "
+                    f"US${published['usd']:.4f} over {published['candidates']} "
+                    f"({published['source']}; {record['basis']} tolerance "
+                    f"US${tolerance:.2f})")
         for config in members:
             costs[config] = record
         logger.info("%-44s %-9s US$%9.4f over %7d candidates  (%s)",
@@ -736,13 +764,14 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
             "K-ladders are priced. basis 'measured' = the leg's own tokens; "
             "'completed' = a floor (a cleanup-overwritten leg, or a register row "
             "on the published basis) whose calls are priced at nominated "
-            "comparable legs' unit, listed in register_rows; 'unpriced' = no rule "
+            "comparable legs' unit, listed in sources; 'unpriced' = no rule "
             "prices the leg whole, so nothing derived from it is priced. "
-            "in_register false = a stage absent from the register (the S104 "
+            "stages_outside_register = stages absent from the register (the S104 "
             "vote-3 increments), priced from its own meta until the register is "
             "repaired. cross_check compares the campaign post-run report's "
-            f"figure, which must agree within US${COST_AGREEMENT_USD:.2f}."),
-        "agreement_tolerance_usd": COST_AGREEMENT_USD,
+            "figure, which must agree over the same candidates and within "
+            "agreement_tolerance_usd for the leg's basis."),
+        "agreement_tolerance_usd": AGREEMENT_USD,
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",
         "legs": costs,
     }, indent=2) + "\n"}
@@ -846,7 +875,7 @@ votes`, read off the sweep's own zero-threshold row — at the
 per-candidate rate of that configuration's verifier leg, priced at the
 uniform discounted tier from the passes register as the r2 board and the
 K-ladders are (PI rulings D29 and D30; `verifier-costs.json` records each
-leg's register rows, its basis, and the cross-check against the campaign's
+leg's sources, its basis, and the cross-check against the campaign's
 published figure). {n_inherit} rows draw on a pool SMALLER than their leg:
 they inherit probabilities from a larger verification and their `pool US$`
 is what the point alone would cost, not what was spent. {n_exceed} rows

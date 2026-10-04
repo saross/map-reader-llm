@@ -16,8 +16,11 @@ each of them would be invisible in the rendered table:
 * the verifier-leg lookup, which must resolve LONGEST prefix first or
   ``IMG-ARM2-K3`` silently takes another configuration's rate card.
 
-Everything runs over synthetic sweep rows in memory; no committed artefact is
-read and nothing is written.
+Most tests run over synthetic sweep rows in memory and write nothing. The
+cost stage's wiring (register -> price_stage -> record -> cross-check ->
+refusal) is also run for real against the committed register and pinned to
+the committed ``verifier-costs.json`` (audit lens B, 2026-10-04: until then
+every test stubbed ``collect_costs`` away).
 """
 
 from __future__ import annotations
@@ -586,3 +589,84 @@ def test_an_unreadable_costs_file_is_drift_under_check(tmp_path, monkeypatch, ca
     (tmp_path / tp.COSTS).write_text("{}\n")
     with pytest.raises(SystemExit, match="unreadable"):
         tp.main(["--stage", "leaderboard"])
+
+
+# --- The cost stage end to end, against the committed register ----------------
+
+COMMITTED_COSTS = tp.OUT / tp.COSTS
+
+
+@pytest.fixture(scope="module")
+def priced():
+    """``collect_costs`` run for real once (a few seconds, zero API)."""
+    return tp.collect_costs()
+
+
+def test_the_committed_costs_regenerate_exactly(priced) -> None:
+    costs, n_legs, disagreements = priced
+    assert disagreements == []
+    text = tp.costs_payload(costs)[tp.OUT / tp.COSTS]
+    assert text == COMMITTED_COSTS.read_text(encoding="utf-8")
+    assert n_legs == 22 and len(costs) == 35
+    assert {r["basis"] for r in costs.values()} == {"measured", "completed"}
+
+
+def test_a_two_stage_leg_sums_both_stages(priced) -> None:
+    from scripts.lib_frontier_cost import FrontierCoster
+    costs, _, _ = priced
+    coster = FrontierCoster()
+    main_stage, vote3 = tp.LEGS["TH7"]
+    main = coster.leg_cost("55maps-text-high-generalisation", "verified")
+    increment = coster.stage_leg_cost(vote3, complete=True)
+    record = costs["TH7"]
+    assert record["usd"] == pytest.approx(main.usd + increment.usd, abs=1e-9)
+    assert record["candidates"] == (coster.leg("55maps-text-high-generalisation",
+                                               "verified").verifications
+                                    + coster.stage_leg(vote3, complete=True).verifications)
+    assert record["stages_outside_register"] == [vote3]
+    assert costs["TM"]["basis"] == "completed"  # its main leg is a floor
+    assert costs["T03"]["basis"] == "measured"
+
+
+def _with_published(monkeypatch, config: str, **change) -> None:
+    table = {k: dict(v) for k, v in tp.PUBLISHED_LEG_COST.items()}
+    table[config].update(change)
+    monkeypatch.setattr(tp, "PUBLISHED_LEG_COST", table)
+
+
+def test_a_measured_leg_must_agree_to_the_cent(monkeypatch, priced) -> None:
+    # SENTINEL: a measured leg two cents off its report is a disagreement
+    # (one tolerance for every leg would have let five cents through).
+    usd = priced[0]["G3IMG-ARM1-K1"]["usd"]
+    _with_published(monkeypatch, "G3IMG-ARM1-K1", usd=usd + 0.02)
+    _, _, disagreements = tp.collect_costs()
+    assert [d.split(":")[0] for d in disagreements] == ["G3IMG-ARM1-K1"]
+
+
+def test_a_completed_leg_has_the_d30_tolerance(monkeypatch, priced) -> None:
+    usd = priced[0]["IMG-ARM2-K1"]["usd"]
+    assert priced[0]["IMG-ARM2-K1"]["basis"] == "completed"
+    _with_published(monkeypatch, "IMG-ARM2-K1", usd=usd - 0.049)
+    assert tp.collect_costs()[2] == []                      # within US$0.05
+    _with_published(monkeypatch, "IMG-ARM2-K1", usd=usd - 0.051)
+    assert [d.split(":")[0] for d in tp.collect_costs()[2]] == ["IMG-ARM2-K1"]
+
+
+def test_a_published_leg_over_other_candidates_is_a_disagreement(monkeypatch) -> None:
+    _with_published(monkeypatch, "IMG-ARM1-K5", candidates=9172)
+    assert [d.split(":")[0] for d in tp.collect_costs()[2]] == ["IMG-ARM1-K5"]
+
+
+def test_a_disagreement_refuses_the_write_and_fails_the_check(
+        tmp_path, monkeypatch, priced) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    _with_published(monkeypatch, "G3IMG-ARM1-K1", usd=priced[0]["G3IMG-ARM1-K1"]["usd"] + 1)
+    assert tp.main(["--stage", "costs"]) == 1
+    assert not (tmp_path / tp.COSTS).exists()
+    # The check path: a file byte-identical to what this very run produces, so
+    # nothing but the disagreement can fail it.
+    costs, _, disagreements = tp.collect_costs()
+    assert disagreements
+    (tmp_path / tp.COSTS).write_text(tp.costs_payload(costs)[tmp_path / tp.COSTS],
+                                     encoding="utf-8")
+    assert tp.main(["--stage", "costs", "--check"]) == 1

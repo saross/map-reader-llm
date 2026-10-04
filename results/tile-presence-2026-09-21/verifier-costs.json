@@ -1,6 +1,9 @@
 {
-  "_README": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in register_rows; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. in_register false = a stage absent from the register (the S104 vote-3 increments), priced from its own meta until the register is repaired. cross_check compares the campaign post-run report's figure, which must agree within US$0.05.",
-  "agreement_tolerance_usd": 0.05,
+  "_README": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register (the S104 vote-3 increments), priced from its own meta until the register is repaired. cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis.",
+  "agreement_tolerance_usd": {
+    "measured": 0.01,
+    "completed": 0.05
+  },
   "generated_by": "scripts/build_tile_presence_board.py --stage costs",
   "legs": {
     "IM": {
@@ -13,14 +16,14 @@
       "basis": "completed",
       "usd": 5.451223274863523,
       "candidates": 7878,
-      "register_rows": [
+      "sources": [
         "55maps-image-generalisation::verified::run1",
         "55maps-generalisation::verified::run1",
         "55maps-text-high-generalisation::verified::run1",
         "55maps-text-high-t0-3-generalisation::verified::run1",
         "55maps-text-min-n10-uplift::verified-3of10::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "55maps-image-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 7,878 verifications x pooled unit"
     },
@@ -35,11 +38,13 @@
       "basis": "measured",
       "usd": 9.390371,
       "candidates": 13572,
-      "register_rows": [
+      "sources": [
         "55maps-text-high-generalisation::verified::run1",
         "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
       ],
-      "in_register": false,
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+      ],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified: own cost (not in the register), 4,367 verifications"
     },
@@ -54,11 +59,13 @@
       "basis": "measured",
       "usd": 9.642494,
       "candidates": 13945,
-      "register_rows": [
+      "sources": [
         "55maps-text-high-t0-3-generalisation::verified::run1",
         "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
       ],
-      "in_register": false,
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+      ],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified: own cost (not in the register), 4,035 verifications"
     },
@@ -73,7 +80,7 @@
       "basis": "completed",
       "usd": 8.54878165414598,
       "candidates": 12390,
-      "register_rows": [
+      "sources": [
         "55maps-text-min-generalisation::verified::run1",
         "55maps-generalisation::verified::run1",
         "55maps-text-high-generalisation::verified::run1",
@@ -81,7 +88,9 @@
         "55maps-text-min-n10-uplift::verified-3of10::run1",
         "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
       ],
-      "in_register": false,
+      "stages_outside_register": [
+        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+      ],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified: own cost (not in the register), 2,220 verifications"
     },
@@ -95,10 +104,10 @@
       "basis": "measured",
       "usd": 11.266205,
       "candidates": 16482,
-      "register_rows": [
+      "sources": [
         "55maps-text-min-n10-uplift::verified-3of10::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "55maps-text-min-n10-uplift::verified-3of10::run1: own cost, 16,482 verifications"
     },
@@ -112,16 +121,18 @@
       "basis": "measured",
       "usd": 15.755937,
       "candidates": 22785,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm1::run1: own cost, 22,785 verifications",
       "cross_check": {
         "published_usd": 15.7559,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": 3.7e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 22785,
         "within_tolerance": true
       }
     },
@@ -135,16 +146,18 @@
       "basis": "measured",
       "usd": 25.397835,
       "candidates": 22785,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k1-verify-arm2::run1: own cost, 22,785 verifications",
       "cross_check": {
         "published_usd": 25.3978,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": 3.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 22785,
         "within_tolerance": true
       }
     },
@@ -158,16 +171,18 @@
       "basis": "measured",
       "usd": 25.102049,
       "candidates": 36389,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm1::run1: own cost, 36,389 verifications",
       "cross_check": {
         "published_usd": 25.102,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": 4.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 36389,
         "within_tolerance": true
       }
     },
@@ -181,16 +196,18 @@
       "basis": "measured",
       "usd": 40.581277,
       "candidates": 36389,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k3-verify-arm2::run1: own cost, 36,389 verifications",
       "cross_check": {
         "published_usd": 40.5813,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": -2.3e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 36389,
         "within_tolerance": true
       }
     },
@@ -204,16 +221,18 @@
       "basis": "measured",
       "usd": 31.542175,
       "candidates": 45786,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm1::run1: own cost, 45,786 verifications",
       "cross_check": {
         "published_usd": 31.5422,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": -2.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 45786,
         "within_tolerance": true
       }
     },
@@ -227,16 +246,18 @@
       "basis": "measured",
       "usd": 51.092455,
       "candidates": 45786,
-      "register_rows": [
+      "sources": [
         "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini3-image-55map-2026-09-16::g384_ov192_55map_g3img-union-k5-verify-arm2::run1: own cost, 45,786 verifications",
       "cross_check": {
         "published_usd": 51.0925,
         "source": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
         "gap_usd": -4.5e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 45786,
         "within_tolerance": true
       }
     },
@@ -252,10 +273,10 @@
       "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
@@ -271,10 +292,10 @@
       "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
@@ -290,10 +311,10 @@
       "basis": "measured",
       "usd": 8.890222,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm1::run1: own cost, 12,715 verifications"
     },
@@ -309,10 +330,10 @@
       "basis": "measured",
       "usd": 14.305547,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
@@ -328,10 +349,10 @@
       "basis": "measured",
       "usd": 14.305547,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
@@ -347,10 +368,10 @@
       "basis": "measured",
       "usd": 14.305547,
       "candidates": 12715,
-      "register_rows": [
+      "sources": [
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1: own cost, 12,715 verifications"
     },
@@ -364,16 +385,18 @@
       "basis": "measured",
       "usd": 4.962592,
       "candidates": 6985,
-      "register_rows": [
+      "sources": [
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k1-verify-arm1::run1: own cost, 6,985 verifications",
       "cross_check": {
         "published_usd": 4.9626,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": -8e-06,
+        "tolerance_usd": 0.01,
+        "published_candidates": 6985,
         "within_tolerance": true
       }
     },
@@ -387,17 +410,19 @@
       "basis": "completed",
       "usd": 7.750904907336749,
       "candidates": 6985,
-      "register_rows": [
+      "sources": [
         "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2",
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2 is a floor: 6,985 verifications x the unit pooled over gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1",
       "cross_check": {
         "published_usd": 7.7028,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": 0.048105,
+        "tolerance_usd": 0.05,
+        "published_candidates": 6985,
         "within_tolerance": true
       }
     },
@@ -411,16 +436,18 @@
       "basis": "measured",
       "usd": 5.905819,
       "candidates": 8337,
-      "register_rows": [
+      "sources": [
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k3-verify-arm1::run1: own cost, 8,337 verifications",
       "cross_check": {
         "published_usd": 5.9058,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": 1.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 8337,
         "within_tolerance": true
       }
     },
@@ -434,17 +461,19 @@
       "basis": "completed",
       "usd": 9.251151641011665,
       "candidates": 8337,
-      "register_rows": [
+      "sources": [
         "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2",
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stage:outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2 is a floor: 8,337 verifications x the unit pooled over gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1",
       "cross_check": {
         "published_usd": 9.265,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": -0.013848,
+        "tolerance_usd": 0.05,
+        "published_candidates": 8337,
         "within_tolerance": true
       }
     },
@@ -458,16 +487,18 @@
       "basis": "measured",
       "usd": 6.48959,
       "candidates": 9173,
-      "register_rows": [
+      "sources": [
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm1::run1: own cost, 9,173 verifications",
       "cross_check": {
         "published_usd": 6.4896,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": -1e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 9173,
         "within_tolerance": true
       }
     },
@@ -481,16 +512,18 @@
       "basis": "measured",
       "usd": 10.178819,
       "candidates": 9173,
-      "register_rows": [
+      "sources": [
         "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "gemini37-image-55map-2026-09-13::g384_ov192_55map_g37img-union-k5-verify-arm2::run1: own cost, 9,173 verifications",
       "cross_check": {
         "published_usd": 10.1788,
         "source": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
         "gap_usd": 1.9e-05,
+        "tolerance_usd": 0.01,
+        "published_candidates": 9173,
         "within_tolerance": true
       }
     },
@@ -507,11 +540,11 @@
       "basis": "completed",
       "usd": 26.385428316673046,
       "candidates": 38713,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
@@ -528,11 +561,11 @@
       "basis": "completed",
       "usd": 26.385428316673046,
       "candidates": 38713,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
@@ -549,11 +582,11 @@
       "basis": "completed",
       "usd": 26.385428316673046,
       "candidates": 38713,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
@@ -570,11 +603,11 @@
       "basis": "completed",
       "usd": 26.385428316673046,
       "candidates": 38713,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1",
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov128_55map-union-k10-verify::run1 is a floor: unit pooled over the nominated stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1; 38,713 verifications x pooled unit"
     },
@@ -591,10 +624,10 @@
       "basis": "measured",
       "usd": 39.177723,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
@@ -611,10 +644,10 @@
       "basis": "measured",
       "usd": 39.177723,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
@@ -631,10 +664,10 @@
       "basis": "measured",
       "usd": 39.177723,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
@@ -651,10 +684,10 @@
       "basis": "measured",
       "usd": 39.177723,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify::run1: own cost, 57,482 verifications"
     },
@@ -671,11 +704,11 @@
       "basis": "completed",
       "usd": 64.6725483801809,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
@@ -692,11 +725,11 @@
       "basis": "completed",
       "usd": 64.6725483801809,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
@@ -713,11 +746,11 @@
       "basis": "completed",
       "usd": 64.6725483801809,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     },
@@ -734,11 +767,11 @@
       "basis": "completed",
       "usd": 64.6725483801809,
       "candidates": 57482,
-      "register_rows": [
+      "sources": [
         "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1",
         "gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1"
       ],
-      "in_register": true,
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
       "note": "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1 is a floor: unit pooled over the nominated gemini37-55map-2026-08-29::g384_ov192_55map_g37-union-k5-verify-arm2::run1; 57,482 verifications x pooled unit"
     }
