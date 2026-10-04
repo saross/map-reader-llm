@@ -1,0 +1,638 @@
+{
+ "_README": "DRAFT, not applied. Proposed entries for data/pricing/tier-attestations.json (schema tier-attestations/1), high-confidence findings only, from the archaeology of archived Claude Code sessions on 2026-10-04 (report.md beside this file). Ids continue after A2 and must be re-checked for collisions when applied. Each attested_by names its derivation, so none is a PI attestation until the PI adopts it.",
+ "schema": "tier-attestations/1",
+ "attestations": [
+  {
+   "id": "A3",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t0.0",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T08:09:50Z of scripts/run_phase3a_image_matrix.sh, COMMON_FLAGS edited 08:11:31Z to '--tile-size 384 --mode realtime --service-tier flex --use-cache --workers 250' (committed 8bc59613c, line 48); relaunched on sapphire 2026-04-16T09:22:24Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_image_matrix.sh > /tmp/phase3a-image-matrix-2.log 2>&1 &'\". Log head read 09:22:31Z: 'Service tier: flex' then 'Context cache created: cachedContents/bt1nbwykrpye0hdt2nh7fd3mzufagekjgqh54ebg (14549 tokens, TTL=1h)' for image-t0.0/run_1. Every request of every pass in these pools records cached_input_tokens = 14549 in per_item_metadata (the explicit cache's size; implicit hits would vary). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor). Billing 2026-04-16 (day export) bills standard; the 53 image passes' output (36.2 M) exceeds the day's flex headroom (21.09 M billed less 9.66 M on fragments attributed flex). The 2026-07-30 E71 recovery_history entries added no usage to these metas (all per-item request timestamps 2026-04-16)."
+  },
+  {
+   "id": "A4",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t0.3",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T08:09:50Z of scripts/run_phase3a_image_matrix.sh, COMMON_FLAGS edited 08:11:31Z to '--tile-size 384 --mode realtime --service-tier flex --use-cache --workers 250' (committed 8bc59613c, line 48); relaunched on sapphire 2026-04-16T09:22:24Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_image_matrix.sh > /tmp/phase3a-image-matrix-2.log 2>&1 &'\". Log head read 09:22:31Z: 'Service tier: flex' then 'Context cache created: cachedContents/bt1nbwykrpye0hdt2nh7fd3mzufagekjgqh54ebg (14549 tokens, TTL=1h)' for image-t0.0/run_1. Every request of every pass in these pools records cached_input_tokens = 14549 in per_item_metadata (the explicit cache's size; implicit hits would vary). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor). Billing 2026-04-16 (day export) bills standard; the 53 image passes' output (36.2 M) exceeds the day's flex headroom (21.09 M billed less 9.66 M on fragments attributed flex). The 2026-07-30 E71 recovery_history entries added no usage to these metas (all per-item request timestamps 2026-04-16)."
+  },
+  {
+   "id": "A5",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t1.0",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T08:09:50Z of scripts/run_phase3a_image_matrix.sh, COMMON_FLAGS edited 08:11:31Z to '--tile-size 384 --mode realtime --service-tier flex --use-cache --workers 250' (committed 8bc59613c, line 48); relaunched on sapphire 2026-04-16T09:22:24Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_image_matrix.sh > /tmp/phase3a-image-matrix-2.log 2>&1 &'\". Log head read 09:22:31Z: 'Service tier: flex' then 'Context cache created: cachedContents/bt1nbwykrpye0hdt2nh7fd3mzufagekjgqh54ebg (14549 tokens, TTL=1h)' for image-t0.0/run_1. Every request of every pass in these pools records cached_input_tokens = 14549 in per_item_metadata (the explicit cache's size; implicit hits would vary). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor). Billing 2026-04-16 (day export) bills standard; the 53 image passes' output (36.2 M) exceeds the day's flex headroom (21.09 M billed less 9.66 M on fragments attributed flex). The 2026-07-30 E71 recovery_history entries added no usage to these metas (all per-item request timestamps 2026-04-16)."
+  },
+  {
+   "id": "A6",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t0.3",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T08:09:50Z of scripts/run_phase3a_image_matrix.sh, COMMON_FLAGS edited 08:11:31Z to '--tile-size 384 --mode realtime --service-tier flex --use-cache --workers 250' (committed 8bc59613c, line 48); relaunched on sapphire 2026-04-16T09:22:24Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_image_matrix.sh > /tmp/phase3a-image-matrix-2.log 2>&1 &'\". Log head read 09:22:31Z: 'Service tier: flex' then 'Context cache created: cachedContents/bt1nbwykrpye0hdt2nh7fd3mzufagekjgqh54ebg (14549 tokens, TTL=1h)' for image-t0.0/run_1. Every request of every pass in these pools records cached_input_tokens = 14549 in per_item_metadata (the explicit cache's size; implicit hits would vary). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor). Billing 2026-04-16 (day export) bills standard; the 53 image passes' output (36.2 M) exceeds the day's flex headroom (21.09 M billed less 9.66 M on fragments attributed flex). The 2026-07-30 E71 recovery_history entries added no usage to these metas (all per-item request timestamps 2026-04-16)."
+  },
+  {
+   "id": "A7",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t1.0",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T08:09:50Z of scripts/run_phase3a_image_matrix.sh, COMMON_FLAGS edited 08:11:31Z to '--tile-size 384 --mode realtime --service-tier flex --use-cache --workers 250' (committed 8bc59613c, line 48); relaunched on sapphire 2026-04-16T09:22:24Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_image_matrix.sh > /tmp/phase3a-image-matrix-2.log 2>&1 &'\". Log head read 09:22:31Z: 'Service tier: flex' then 'Context cache created: cachedContents/bt1nbwykrpye0hdt2nh7fd3mzufagekjgqh54ebg (14549 tokens, TTL=1h)' for image-t0.0/run_1. Every request of every pass in these pools records cached_input_tokens = 14549 in per_item_metadata (the explicit cache's size; implicit hits would vary). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor). Billing 2026-04-16 (day export) bills standard; the 53 image passes' output (36.2 M) exceeds the day's flex headroom (21.09 M billed less 9.66 M on fragments attributed flex). The 2026-07-30 E71 recovery_history entries added no usage to these metas (all per-item request timestamps 2026-04-16)."
+  },
+  {
+   "id": "A8",
+   "run_id": "pv-diag-384",
+   "pool": "scale-4-optimal-487",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + runner log cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, 2026-04-16T22:01:57Z, ssh sapphire inline loop over scripts/4_detect_mounds_batch.py --config prompts/configs/h8/v2/detect_h8_scale-4_v2.json ... --mode realtime --service-tier flex --use-cache --workers 250 (OUT=outputs/h11/pv-diag-384/scale-4-optimal-487). Log head read 22:02:35Z (/tmp/scale4-optimal.log): 'Service tier: flex' then 'Context cache created: cachedContents/y897r0qqh4qk54d4h91z1zf82as1ielhba7zkwog (14549 tokens, TTL=1h)' for run_1. Every request of every pass records cached_input_tokens = 14549. cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of b57cf6c22 (git merge-base --is-ancestor)."
+  },
+  {
+   "id": "A9",
+   "run_id": "pv-diag-384",
+   "pool": "pro-medium-image-baseline-image-t0.0",
+   "meta": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_[23]/*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: committed per-pass run log (Service tier + Context cache created) + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score, 2026-06-03T11:53:09Z: 'nohup bash scripts/run_n1_pro_topup.sh > /dev/null 2>&1 &' (committed 5c3480fd5; flags '--mode realtime --service-tier flex --use-cache --skip-intent-check'). Committed per-pass log outputs/h11/n1-pro-rerun-384/_topup_run_log.txt (a .txt, so derive_tier_evidence.py, which sweeps *.log, never read it): START .../pro-medium-image-baseline/image-t0.0/run_2 at 11:55:11Z, line 95 'Service tier: flex', line 96 'Context cache created: cachedContents/xha5z0yxryfs4c44lds3pzxrfc1yxn6k3wwsue9o (14549 tokens, TTL=1h)'; run_3 at 11:57:43Z, lines 143-144 likewise. cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 383-393); fix 2df65047e is not an ancestor of 5c3480fd5 (git merge-base --is-ancestor). Billing 2026-06-03 gemini-3.1-pro-preview: standard and tier-silent cache volumes are accounted for by these and the other cached Pro passes (report section 7)."
+  },
+  {
+   "id": "A10",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.0",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A11",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.3",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A12",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t1.0",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A13",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.0",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A14",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.3",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A15",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t1.0",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command + log tier line + dry-run cache failure + zero cached tokens (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T06:14:40Z of scripts/run_phase3a_text_matrix.sh (committed 09fe46a7f, line 48: '--mode realtime --service-tier flex --use-cache --workers 250'); launched 06:15:08Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_phase3a_text_matrix.sh > /tmp/phase3a-text-matrix.log 2>&1 &'\". Log head read 06:15:43Z: 'Service tier: flex' for flash-high-text-n5/text-t0.0/run_1. Sapphire dry run of the same config and flags at 06:14:49Z: 'WARNING: Cache creation failed (400 INVALID_ARGUMENT ... Cached content is too small. total_token_count=393, min_total_token_count=1024 ...), proceeding without cache'. Every request of every pass records cached_input_tokens = 0, so no explicit cache was active and the request used gen_config, which carries service_tier (runner b57cf6c22 lines 874-875, 387). Billing: 2026-04-16 and 2026-04-17 day exports bill flex; if these passes were standard, 2026-04-17 standard output would be 132.7 M against 123.3 M billed."
+  },
+  {
+   "id": "A16",
+   "run_id": "pv-diag-384",
+   "pool": "pro-medium-text-baseline-text-t0.0",
+   "meta": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_[23]/*.meta.json",
+   "tier": "flex",
+   "attested_by": "derived: committed per-pass run log (Service tier + Cache creation failed) (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score, 2026-06-03T11:53:09Z: 'nohup bash scripts/run_n1_pro_topup.sh > /dev/null 2>&1 &' (committed 5c3480fd5; '--mode realtime --service-tier flex --use-cache'). Committed log outputs/h11/n1-pro-rerun-384/_topup_run_log.txt: START .../pro-medium-text-baseline/text-t0.0/run_2 at 11:53:09Z, line 14 'Service tier: flex', line 15 'WARNING: Cache creation failed (... total_token_count=393, min_total_token_count=1024 ...)'; run_3 at 11:54:33Z, lines 56-57 likewise. Zero cached tokens on every request; the non-cached path sends gen_config with service_tier."
+  },
+  {
+   "id": "A17",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t0.3-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A18",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t0.7-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A19",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-image-n5-image-t1.0-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A20",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t0.3-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A21",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t0.3-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A22",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t0.7-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A23",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t0.7-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A24",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t1.0-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A25",
+   "run_id": "pv-diag-384",
+   "pool": "image-n5-image-t1.0-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A26",
+   "run_id": "pv-diag-384",
+   "pool": "scale-4-optimal-487-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A27",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.0-verified-v1-n3",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A28",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.3-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A29",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.3-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A30",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.7-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A31",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t0.7-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A32",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t1.0-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A33",
+   "run_id": "pv-diag-384",
+   "pool": "flash-high-text-n5-text-t1.0-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A34",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A35",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A36",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A37",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A38",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A39",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A40",
+   "run_id": "pv-diag-384",
+   "pool": "flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-17T10:09:09Z of scripts/run_verifier_matrix_text.sh (committed 09fe46a7f; verify step '--mode realtime --workers 20 --service-tier flex'); launched 10:09:30Z: 'ssh sapphire \"cd ~/Code/map-reader-llm && nohup bash scripts/run_verifier_matrix_text.sh > /tmp/verifier-matrix-text.log 2>&1 &\"'. run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279), no cached path; probabilities.json mode realtime; meta start inside the driver's run."
+  },
+  {
+   "id": "A41",
+   "run_id": "n1-outstanding-384",
+   "pool": "pro-image-high-t0",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + absence of tier code before 2a2cd81c7 + invoice line windows (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-26T06-38_complete-multi-buffer-and-tile-level, 2026-03-27T05:47:11Z (local): 'nohup python scripts/run_phase2.py studies/h11-384-n1-outstanding.yaml --use-cache --workers 3 > outputs/h11/n1-outstanding-run.log 2>&1 &' (run_phase2 default --mode concurrent, i.e. real time). No tier code existed: --service-tier and flex reached the runner only at 2a2cd81c7 (2026-04-09), which is not an ancestor of the recorded bb73b52f5. Log greps 06:02:30Z and 10:24:29Z show 'Cache creation failed' (text) and 'Context cache created: ... (14549 tokens, TTL=1h)' (image) and no 'Service tier' line. Invoice line windows: gemini-3-flash-preview billed only standard on 2026-03-26/27 (standard 2026-03-06..2026-03-27; batch ends 2026-03-25; flex starts 2026-04-08). All per-item request timestamps are 2026-03-27 UTC; the 2026-07-30 E71 recovery added no usage to these metas."
+  },
+  {
+   "id": "A42",
+   "run_id": "n1-outstanding-384",
+   "pool": "pro-text-high-t0",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + absence of tier code before 2a2cd81c7 + invoice line windows (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-26T06-38_complete-multi-buffer-and-tile-level, 2026-03-27T05:47:11Z (local): 'nohup python scripts/run_phase2.py studies/h11-384-n1-outstanding.yaml --use-cache --workers 3 > outputs/h11/n1-outstanding-run.log 2>&1 &' (run_phase2 default --mode concurrent, i.e. real time). No tier code existed: --service-tier and flex reached the runner only at 2a2cd81c7 (2026-04-09), which is not an ancestor of the recorded bb73b52f5. Log greps 06:02:30Z and 10:24:29Z show 'Cache creation failed' (text) and 'Context cache created: ... (14549 tokens, TTL=1h)' (image) and no 'Service tier' line. Invoice line windows: gemini-3-flash-preview billed only standard on 2026-03-26/27 (standard 2026-03-06..2026-03-27; batch ends 2026-03-25; flex starts 2026-04-08). All per-item request timestamps are 2026-03-27 UTC; the 2026-07-30 E71 recovery added no usage to these metas."
+  },
+  {
+   "id": "A43",
+   "run_id": "n1-outstanding-384",
+   "pool": "image-t0-verified-v1-n3",
+   "tier": "flex",
+   "attested_by": "derived: archived driver script and launch command + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-16T05-56_b089991e, Write 2026-04-16T22:35:56Z of scripts/run_verifier_matrix.sh (committed 6e16586b7; verify step: 'run_pv.py verify --crops-dir ... --verifier-config prompts/configs/verify_adversarial-text.json --output-dir ... --mode realtime --workers 20 --service-tier flex'); launched 2026-04-16T23:37:51Z: \"ssh sapphire 'cd Code/map-reader-llm && nohup bash scripts/run_verifier_matrix.sh > /tmp/verifier-matrix.log 2>&1 &'\". The leg's meta records run_pv.py at b57cf6c22, whose real-time path passes service_tier into gen_config_to_sdk (run_pv.py lines 220, 685; lib_verifier.py lines 278-279) and has no cached path; probabilities.json mode realtime; meta start falls inside the driver's run. 5_verify_crops.py (which sent no tier before 9932dbe46) was not used."
+  },
+  {
+   "id": "A44",
+   "run_id": "n1-pro-rerun-384",
+   "pool": "pro-image-high-t0",
+   "tier": "standard",
+   "attested_by": "derived: committed per-pass run logs + cached-path code + exact billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-06-03T00-21_establish-expected-single-pass-baseline-and, 2026-06-03T05:39:33Z (local): 'nohup bash scripts/run_n1_pro_rerun.sh > outputs/h11/n1-pro-rerun-384/_nohup.out 2>&1 &' (committed 058380647; '--mode realtime --service-tier flex --use-cache --skip-intent-check'); top-up ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score 11:53:09Z 'nohup bash scripts/run_n1_pro_topup.sh' for medium run_2/3. Committed logs outputs/h11/n1-pro-rerun-384/_run_log.txt (pro-image-high-t0 run_1..3 lines 131-132, 174-175, 219-220; pro-image-medium-t07 run_1 lines 307-308) and _topup_run_log.txt (pro-image-medium-t07 run_2/3 lines 272-273, 320-321): 'Service tier: flex' then 'Context cache created: ... (14549 tokens, TTL=1h)'. cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 383-393); fix 2df65047e is not an ancestor of 058380647/5c3480fd5 (git merge-base --is-ancestor). Billing 2026-06-02 (Pacific): these passes' fresh input 2,162,280, cached 28,341,452 and output 169,599 equal the day's standard input, tier-silent cache input and standard output exactly."
+  },
+  {
+   "id": "A45",
+   "run_id": "n1-pro-rerun-384",
+   "pool": "pro-image-medium-t07",
+   "tier": "standard",
+   "attested_by": "derived: committed per-pass run logs + cached-path code + exact billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-06-03T00-21_establish-expected-single-pass-baseline-and, 2026-06-03T05:39:33Z (local): 'nohup bash scripts/run_n1_pro_rerun.sh > outputs/h11/n1-pro-rerun-384/_nohup.out 2>&1 &' (committed 058380647; '--mode realtime --service-tier flex --use-cache --skip-intent-check'); top-up ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score 11:53:09Z 'nohup bash scripts/run_n1_pro_topup.sh' for medium run_2/3. Committed logs outputs/h11/n1-pro-rerun-384/_run_log.txt (pro-image-high-t0 run_1..3 lines 131-132, 174-175, 219-220; pro-image-medium-t07 run_1 lines 307-308) and _topup_run_log.txt (pro-image-medium-t07 run_2/3 lines 272-273, 320-321): 'Service tier: flex' then 'Context cache created: ... (14549 tokens, TTL=1h)'. cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 383-393); fix 2df65047e is not an ancestor of 058380647/5c3480fd5 (git merge-base --is-ancestor). Billing 2026-06-02 (Pacific): these passes' fresh input 2,162,280, cached 28,341,452 and output 169,599 equal the day's standard input, tier-silent cache input and standard output exactly."
+  },
+  {
+   "id": "A46",
+   "run_id": "n1-pro-rerun-384",
+   "pool": "pro-text-high-t0",
+   "tier": "flex",
+   "attested_by": "derived: committed per-pass run logs + billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: as for the image cells (~/cc-archives/map-reader-llm/2026-06-03T00-21_establish-expected-single-pass-baseline-and 05:39:33Z run_n1_pro_rerun.sh; top-up 2026-06-03T06-59_... 11:53:09Z). Committed logs outputs/h11/n1-pro-rerun-384/_run_log.txt (pro-text-high-t0 run_1..3 lines 14-15, 54-55, 93-94; pro-text-medium-t07 run_1 lines 268-269) and _topup_run_log.txt (pro-text-medium-t07 run_2/3 lines 193-194, 233-234): 'Service tier: flex' then 'WARNING: Cache creation failed (... total_token_count=393, min_total_token_count=1024 ...)'. Zero cached tokens per request; non-cached path carries service_tier. Billing 2026-06-02: these passes' 2,925,896 input and 151,599 output against 2,928,900 and 151,745 flex billed (the small remainder is plausibly the 2026-06-03T05:24:30Z one-tile flex test)."
+  },
+  {
+   "id": "A47",
+   "run_id": "n1-pro-rerun-384",
+   "pool": "pro-text-medium-t07",
+   "tier": "flex",
+   "attested_by": "derived: committed per-pass run logs + billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: as for the image cells (~/cc-archives/map-reader-llm/2026-06-03T00-21_establish-expected-single-pass-baseline-and 05:39:33Z run_n1_pro_rerun.sh; top-up 2026-06-03T06-59_... 11:53:09Z). Committed logs outputs/h11/n1-pro-rerun-384/_run_log.txt (pro-text-high-t0 run_1..3 lines 14-15, 54-55, 93-94; pro-text-medium-t07 run_1 lines 268-269) and _topup_run_log.txt (pro-text-medium-t07 run_2/3 lines 193-194, 233-234): 'Service tier: flex' then 'WARNING: Cache creation failed (... total_token_count=393, min_total_token_count=1024 ...)'. Zero cached tokens per request; non-cached path carries service_tier. Billing 2026-06-02: these passes' 2,925,896 input and 151,599 output against 2,928,900 and 151,745 flex billed (the small remainder is plausibly the 2026-06-03T05:24:30Z one-tile flex test)."
+  },
+  {
+   "id": "A48",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-adversarial-image",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A49",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-adversarial-text",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A50",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-brief-image",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A51",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-brief-text",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A52",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-cascade-adversarial-checklist",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A53",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-cascade-checklist-adversarial",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A54",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-checklist-image",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A55",
+   "run_id": "proposer-verifier-384",
+   "pool": "verified-checklist-text",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A56",
+   "run_id": "proposer-verifier-512",
+   "pool": "verified-adversarial-text",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + 5_verify_crops.py sending no tier before 9932dbe46 + committed request logs (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-03-14T13-06_execute-full-3x2-verifier-factorial-on-384 (13:16:12Z, 13:48:53Z, 14:15:04Z, 21:24:13Z, 21:28:17Z) and ~/cc-archives/map-reader-llm/2026-03-14T21-50_correct-experimental-configuration-drift-and (22:12:58Z), all on zbook: 'python scripts/5_verify_crops.py --candidates ... --output ... --config prompts/configs/verify_*.json --workers 10' (no tier or batch option exists in 5_verify_crops.py at b9d4c872e/26bf0f4e3; service_tier first appears at 9932dbe46, 2026-09-21). Committed logs outputs/h11/proposer-verifier-384/verifier-*.log each record 572 'HTTP Request: POST .../models/gemini-3-flash-preview:generateContent' lines (real time, no tier). Billing 2026-03-14: standard and batch only; the nine legs' 588,883 output fits the 1,001,439 standard output billed."
+  },
+  {
+   "id": "A57",
+   "run_id": "e47-propose-brief",
+   "pool": "propose_brief-text",
+   "meta": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_[45]/*.meta.json",
+   "tier": "flex",
+   "attested_by": "derived: archived launch command and working-tree edits + billing-day volume exclusion of standard (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-07T23-44_automated-mound-detection-pipeline, 2026-04-08T23:51:13Z (local), after killing the stalled batch pollers (23:45:16Z): 'for run in 4 5; do python scripts/4_detect_mounds_batch.py --config prompts/configs/propose_brief-text.json ... --output-dir outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_${run} --temperature 0.7 --thinking-level high --tile-size 384 --tiles-dir inputs/tiles_384 --service-tier flex --workers 10' (no --mode batch, no --use-cache). The flex code was uncommitted at launch: Edits 23:46:22Z-23:47:26Z added --service-tier and passed it into the main GenerateContentConfig (committed later as 2a2cd81c7); a live flex test ran at 23:49:54Z. The recorded commit ed04977d6 predates it, but that commit's argparse has no --service-tier, so the run could only have started from the edited tree. Billing 2026-04-08: run_4 + run_5 output 3,069,581 exceeds the day's entire standard output (3,037,047), so they were not standard; batch is excluded by the real-time path."
+  },
+  {
+   "id": "A58",
+   "run_id": "h12-v2",
+   "pool": "r3-hp-heavy",
+   "meta": "outputs/h12-v2/r3-hp-heavy/run_[2-5]/*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived launch command + per-request cached-token signature + cached-path code + cumulative flex volume (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-15T12-42_complete-h12-v2-hp-hn-ratio-execution-and, 2026-04-15T13:37:04Z (local): CMD_R3='.venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/h12/v2/detect_h12_r3-hp-heavy_v2.json ... --mode realtime --service-tier flex --use-cache --workers 250', looped over r3 run_1..5. The R1 production run of the same pattern (13:33:41Z) printed 'Service tier: flex' then 'Context cache created: cachedContents/05exaaqwjvyys1iqafjfq2cl2ywr71d357l8u4la (18909 tokens, TTL=1h)'. Every request of r3 run_2..5 records cached_input_tokens = 18909. cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 377-387); fix 2df65047e is not an ancestor of d89596fa2 (git merge-base --is-ancestor). Billing 2026-04-15: flex output billed 600,910 for the whole day against 2,465,441 output for r3 run_2..5; with the h8-v2 verifier legs (421,460, launched flex) the headroom is 179,450, smaller than any one r3 pass (589,462 to 652,927)."
+  },
+  {
+   "id": "A59",
+   "run_id": "h8-v2",
+   "pool": "scale-4-verified",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-15T12-42_complete-h12-v2-hp-hn-ratio-execution-and: 2026-04-15T23:00:17Z \"ssh sapphire 'cd ~/Code/map-reader-llm && nohup .venv/bin/python scripts/run_pv.py verify --crops-dir outputs/h8-v2/scale-4/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir outputs/h8-v2/scale-4/verified --mode realtime --service-tier flex --iterations 1 --workers 10 ...'\" and 23:47:51Z (chain: wbf/scale-4 then wbf/scale-8, each '--mode realtime --service-tier flex --iterations 1 --workers 10'). run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279); no cached path. Billing 2026-04-15 flex output 600,910 covers the legs' 421,460."
+  },
+  {
+   "id": "A60",
+   "run_id": "h8-v2",
+   "pool": "wbf-scale-8-verified",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-04-15T12-42_complete-h12-v2-hp-hn-ratio-execution-and: 2026-04-15T23:00:17Z \"ssh sapphire 'cd ~/Code/map-reader-llm && nohup .venv/bin/python scripts/run_pv.py verify --crops-dir outputs/h8-v2/scale-4/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir outputs/h8-v2/scale-4/verified --mode realtime --service-tier flex --iterations 1 --workers 10 ...'\" and 23:47:51Z (chain: wbf/scale-4 then wbf/scale-8, each '--mode realtime --service-tier flex --iterations 1 --workers 10'). run_pv.py at b57cf6c22 forwards the tier on the real-time path (run_pv.py lines 220, 685; lib_verifier.py lines 278-279); no cached path. Billing 2026-04-15 flex output 600,910 covers the legs' 421,460."
+  },
+  {
+   "id": "A61",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image",
+   "meta": "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_?/detections-*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived driver and launch + probe cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio, 2026-08-28T01:05:00Z: \"ssh sapphire 'cd ~/Code/map-reader-llm && WORKERS=12 bash scripts/image-b-gs-overnight.sh'\"; driver Write 00:59:27Z (committed 5018888ad): '--mode realtime --service-tier flex --temperature 0.7 --use-cache'. The 5-tile probe with the same config and flags (01:00:08Z) printed 'Context cache deleted: cachedContents/34wsw8r6hx6oiodasnd6ii5trx4z0lhyir559kx1', i.e. a cache was created. Every one of the 1,398 requests of each pass records cached_input_tokens = 18909 (the 17-example cache size; the no-cache recoveries show implicit hits of 16272/16278). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 384-394); fix 2df65047e is not an ancestor of c9f178bf7/221031f95 (git merge-base --is-ancestor). Billing 2026-08-27: the HIGH passes of the same driver are already pinned standard by the volume rule; flex billed that day (1,901,055 output) is used up by the fragments attributed flex (report section 7), leaving no room for these 1.66 M."
+  },
+  {
+   "id": "A62",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image",
+   "meta": "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_10/detections-*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived driver and launch + probe cache line + per-request cached-token signature + cached-path code (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio, 2026-08-28T01:05:00Z: \"ssh sapphire 'cd ~/Code/map-reader-llm && WORKERS=12 bash scripts/image-b-gs-overnight.sh'\"; driver Write 00:59:27Z (committed 5018888ad): '--mode realtime --service-tier flex --temperature 0.7 --use-cache'. The 5-tile probe with the same config and flags (01:00:08Z) printed 'Context cache deleted: cachedContents/34wsw8r6hx6oiodasnd6ii5trx4z0lhyir559kx1', i.e. a cache was created. Every one of the 1,398 requests of each pass records cached_input_tokens = 18909 (the 17-example cache size; the no-cache recoveries show implicit hits of 16272/16278). cached-path defect: scripts/4_detect_mounds_batch.py at the recorded commit builds a separate GenerateContentConfig for explicit-cache calls that omits service_tier (lines 384-394); fix 2df65047e is not an ancestor of c9f178bf7/221031f95 (git merge-base --is-ancestor). Billing 2026-08-27: the HIGH passes of the same driver are already pinned standard by the volume rule; flex billed that day (1,901,055 output) is used up by the fragments attributed flex (report section 7), leaving no room for these 1.66 M."
+  },
+  {
+   "id": "A63",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image",
+   "meta": "outputs/image-b-gs-2026-08-28/g384_ov192_image/run_*_recovery/detections-*.meta.json",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands without --use-cache (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: MINIMAL recoveries 2026-08-28T01:34:09Z and HIGH recoveries 06:00:58Z, on sapphire: 'for r in ...; do .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --manifest inputs/image-b-gs-2026-08-28/recovery_[high_]run_$r.json ... --output-dir .../run_${r}_recovery --mode realtime --service-tier flex --temperature 0.7 [--thinking-level high] --workers 1|2'. No --use-cache, so no explicit cache (cached tokens 0 or implicit 16272/16278, not 18909); the non-cached path at 221031f95/1d9b5ee81 carries service_tier."
+  },
+  {
+   "id": "A64",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image_high",
+   "meta": "outputs/image-b-gs-2026-08-28/g384_ov192_image_high/run_*_recovery/detections-*.meta.json",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands without --use-cache (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: MINIMAL recoveries 2026-08-28T01:34:09Z and HIGH recoveries 06:00:58Z, on sapphire: 'for r in ...; do .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --manifest inputs/image-b-gs-2026-08-28/recovery_[high_]run_$r.json ... --output-dir .../run_${r}_recovery --mode realtime --service-tier flex --temperature 0.7 [--thinking-level high] --workers 1|2'. No --use-cache, so no explicit cache (cached tokens 0 or implicit 16272/16278, not 18909); the non-cached path at 221031f95/1d9b5ee81 carries service_tier."
+  },
+  {
+   "id": "A65",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image-union-k10-verify",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: 2026-08-28T03:16:45Z (MINIMAL union) and 06:11:44Z (HIGH union), on sapphire: '.venv/bin/python scripts/run_pv.py verify --crops-dir $OUT/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir $OUT/verify --mode realtime --service-tier flex --no-strict --workers 10'. run_pv.py at 2ccf1b334/3d3adb7a7 forwards the tier (run_pv.py lines 225, 1028; lib_verifier.py lines 291-292); no cached path; no cleanup leg found in the transcripts; probabilities.json mode realtime."
+  },
+  {
+   "id": "A66",
+   "run_id": "image-b-gs-2026-08-28",
+   "pool": "g384_ov192_image_high-union-k10-verify",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + verifier code forwarding the tier (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: 2026-08-28T03:16:45Z (MINIMAL union) and 06:11:44Z (HIGH union), on sapphire: '.venv/bin/python scripts/run_pv.py verify --crops-dir $OUT/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir $OUT/verify --mode realtime --service-tier flex --no-strict --workers 10'. run_pv.py at 2ccf1b334/3d3adb7a7 forwards the tier (run_pv.py lines 225, 1028; lib_verifier.py lines 291-292); no cached path; no cleanup leg found in the transcripts; probabilities.json mode realtime."
+  },
+  {
+   "id": "A67",
+   "run_id": "h7-escalation-2026-08-28",
+   "pool": "t1.6",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + no explicit cache (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: 2026-08-28T06:49:02Z (T1.6) and 06:52:48Z (T2.0), on sapphire: 'for r in 1 2 3; do .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles/full_evaluation_manifest.json --tiles-dir inputs/tiles --output-dir outputs/h7-escalation-2026-08-28/T1.6/run_$r --mode realtime --service-tier flex --temperature 1.6 --workers 12'. Text config, no --use-cache, zero cached tokens on every request; the non-cached path at 9e69611b7 carries service_tier."
+  },
+  {
+   "id": "A68",
+   "run_id": "h7-escalation-2026-08-28",
+   "pool": "t2.0",
+   "tier": "flex",
+   "attested_by": "derived: archived launch commands + no explicit cache (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-27T03-37_evaluate-55-map-deployment-portfolio: 2026-08-28T06:49:02Z (T1.6) and 06:52:48Z (T2.0), on sapphire: 'for r in 1 2 3; do .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --manifest inputs/tiles/full_evaluation_manifest.json --tiles-dir inputs/tiles --output-dir outputs/h7-escalation-2026-08-28/T1.6/run_$r --mode realtime --service-tier flex --temperature 1.6 --workers 12'. Text config, no --use-cache, zero cached tokens on every request; the non-cached path at 9e69611b7 carries service_tier."
+  },
+  {
+   "id": "A69",
+   "run_id": "gemini37-55map-2026-08-29",
+   "pool": "g384_ov192_55map_g37",
+   "meta": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_2_recovery/detections-*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + committed run log + exact billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-29T02-01_launch-gemini-3-7-55-map-campaign-and, on sapphire: run_2_recovery 2026-08-30T08:35:21Z (after a flex attempt was killed and its directory removed at 08:35:00Z) '... --output-dir .../run_2_recovery --mode realtime --service-tier standard --temperature 0.7 --model gemini-3.7-flash --thinking-level low --workers 95 > outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log'; run_3_recovery2 2026-08-31T01:21:22Z and run_4_recovery 01:25:09Z, both '--mode realtime --service-tier standard'. Committed log run2-recovery-standard.log line 10 'Service tier: standard', line 16 'Output: .../run_2_recovery/...'. Billing 2026-08-30 gemini-3.7-flash standard: input 168,514 and output 46,705, which these three fragments plus run_5_recovery (also '--service-tier standard', 03:40:30Z) match to the token."
+  },
+  {
+   "id": "A70",
+   "run_id": "gemini37-55map-2026-08-29",
+   "pool": "g384_ov192_55map_g37",
+   "meta": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_3_recovery2/detections-*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + committed run log + exact billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-29T02-01_launch-gemini-3-7-55-map-campaign-and, on sapphire: run_2_recovery 2026-08-30T08:35:21Z (after a flex attempt was killed and its directory removed at 08:35:00Z) '... --output-dir .../run_2_recovery --mode realtime --service-tier standard --temperature 0.7 --model gemini-3.7-flash --thinking-level low --workers 95 > outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log'; run_3_recovery2 2026-08-31T01:21:22Z and run_4_recovery 01:25:09Z, both '--mode realtime --service-tier standard'. Committed log run2-recovery-standard.log line 10 'Service tier: standard', line 16 'Output: .../run_2_recovery/...'. Billing 2026-08-30 gemini-3.7-flash standard: input 168,514 and output 46,705, which these three fragments plus run_5_recovery (also '--service-tier standard', 03:40:30Z) match to the token."
+  },
+  {
+   "id": "A71",
+   "run_id": "gemini37-55map-2026-08-29",
+   "pool": "g384_ov192_55map_g37",
+   "meta": "outputs/gemini37-55map-2026-08-29/g384_ov192_55map_g37/run_4_recovery/detections-*.meta.json",
+   "tier": "standard",
+   "attested_by": "derived: archived launch commands + committed run log + exact billing-day volume match (draft by Claude for PI review)",
+   "attested_on": "2026-10-04",
+   "evidence": "Launch: ~/cc-archives/map-reader-llm/2026-08-29T02-01_launch-gemini-3-7-55-map-campaign-and, on sapphire: run_2_recovery 2026-08-30T08:35:21Z (after a flex attempt was killed and its directory removed at 08:35:00Z) '... --output-dir .../run_2_recovery --mode realtime --service-tier standard --temperature 0.7 --model gemini-3.7-flash --thinking-level low --workers 95 > outputs/gemini37-55map-2026-08-29/run2-recovery-standard.log'; run_3_recovery2 2026-08-31T01:21:22Z and run_4_recovery 01:25:09Z, both '--mode realtime --service-tier standard'. Committed log run2-recovery-standard.log line 10 'Service tier: standard', line 16 'Output: .../run_2_recovery/...'. Billing 2026-08-30 gemini-3.7-flash standard: input 168,514 and output 46,705, which these three fragments plus run_5_recovery (also '--service-tier standard', 03:40:30Z) match to the token."
+  }
+ ]
+}
