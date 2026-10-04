@@ -56,7 +56,9 @@ project state.
 >    `tests/test_tile_presence_board.py::test_every_committed_leg_resolves_to_the_register_or_a_named_gap`
 >    and `scripts/backfill_cost_audit_sidecars.py --check` (refresh with
 >    `--write`). The branch already carries the unpriced-leg reporting
->    (`61226eba2`), to be audited with this PR (claude-obs 135).
+>    (`61226eba2`), to be audited with this PR (claude-obs 135). Fold in
+>    the archaeology's register findings and, after the PI's § 5 rulings,
+>    its attestations (item 4).
 > 2. **X1, for the PI to confirm (proposed, not ruled).** The r2 board's TH7,
 >    T03 and TM ORACLE cells (k3) use the vote-3 increment's probabilities but
 >    are priced on the register leg alone: add US$2.97, US$2.74 and US$1.51 to
@@ -70,8 +72,20 @@ project state.
 >    mutants, the silent `git` fallback (L1), L5. The PI ruled on L2: keep
 >    the write going ahead, but every unpriced leg must reach him for manual
 >    recovery (implemented on `register-repair`, `61226eba2`).
-> 4. Launch-command archaeology (S158's item 4): attempted after this
->    handoff; see the addendum below if one exists, else still open.
+> 4. **Launch-command archaeology: DONE as a proposal**
+>    (`reports/launch-archaeology-2026-10-04.md`, `a954c7182`). All 188
+>    upper-bound passes resolve at high confidence; proposed as-billed
+>    total **US$510.12** (high 642.04, low 407.79). 69 draft attestations
+>    (A3–A71, `reports/launch-archaeology-2026-10-04-proposed-attestations.json`)
+>    are NOT applied: the PI rules on the report's § 5 (eight evidence
+>    questions), then they go in with item 1. Its § 4 adds to item 1's
+>    scope: `derive_tier_evidence.py` skips committed `*.txt` logs; the E71
+>    rerun's 2026-07-30 spend is absent from the register; two pv-diag
+>    pro-medium baseline run 1 rows look mispriced as batch; image-t0.0
+>    run 1's first launch (454 tiles) is unregistered; e47 runs 4–5 batch
+>    jobs abandoned, not confirmed cancelled. And a finding for the paper's
+>    cost story: the cached-path defect forfeited the flex discount on
+>    every explicit-cache image run, April to August.
 > 5. WP5–WP7; the `n_candidates_verified` request fallback; the 414
 >    non-cost C3 MISMATCH verdicts (S158 items, unchanged).
 >
