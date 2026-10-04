@@ -1,6 +1,6 @@
 # K-ladder Phase 2: what US$24.81 bought
 
-> **Last revised**: 2026-09-12 (later — § 6.3 corrected and § 3's withheld
+> **Last revised**: 2026-10-04 (§ 4's last-step prices corrected for the 1,000x units slip; the re-priced figures noted). Prior: 2026-09-12 (later — § 6.3 corrected and § 3's withheld
 > footnote amended after the tile-join work the PI ruled for:
 > `reports/tile-mcc-geometric-join-2026-09-12.md`). Before that: original
 > publication — the Phase 2 run's closing report. Controlling card:
@@ -206,7 +206,11 @@ reported in full in `findings.md` § 4.3 and `phase2/ladder-tables.md`.
 K = 5 → K = 10 step buys **+0.0002 F1@20 for US$8.65** — about **US$43,000 per
 0.001 F1**, two and a half times `findings.md` § 5's US$17,400 for 55-map
 stride B. Every one of the fourteen ladders has K = 3 on its efficient set, at
-31–44 % of the top rung's cost for 37–92 % of the gain.
+31–44 % of the top rung's cost for 37–92 % of the gain. (**Corrected
+2026-10-04**: the two prices are per unit of F1, a 1,000× slip — about
+US$43 and US$17 per 0.001 F1. At the WP4b re-pricing, under PI ruling D19
+as amended 2026-10-04, the 3.7 step costs US$8.68 and K = 3's cost share
+is 31–43 %; findings § 7.4.)
 
 ## 5. What did NOT change
 
@@ -424,6 +428,10 @@ Every gate this run passed, with the artefact that records it.
 - **The 55-map ladders' instrument.** Unchanged and still with the PI.
 
 ## Changelog
+
+### 2026-10-04 — WP4b straggler correction
+
+§ 4 quoted "about US$43,000 per 0.001 F1" and findings § 5's "US$17,400", which are per unit of F1 (the K-ladder row's signature note of 2026-10-04 records the slip). Corrected inline to about US$43 and US$17, with the WP4b re-pricing's figures beside them (the 3.7 step US$8.68; K = 3's share 31–43 %; findings § 7.4). The spend this report records, US$24.81, is as-billed and unchanged.
 
 ### 2026-09-12 (later) — § 6.3 corrected after the tile-join work
 

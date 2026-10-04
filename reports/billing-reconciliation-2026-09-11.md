@@ -1,6 +1,6 @@
 # Billing reconciliation: Google Cloud invoices against the audited token basis
 
-> **Last revised**: 2026-09-11 (later: daily attribution of the 3.7 leg,
+> **Last revised**: 2026-10-04 (fourth cell's "about $231" corrected to about $191.50: it used B's all-in $173.59, which holds B's own Gemini 3 verifier). Prior: 2026-09-11 (later: daily attribution of the 3.7 leg,
 > fourth cell costed from the invoice, September rows, the June audit's
 > currency question answered; earlier: original publication, Session
 > 153). See
@@ -137,6 +137,13 @@ This is the figure now carried in the § R7.2 table as "verifier
 billed, day-isolated", with B's audited K = 10 proposer $173.59, about
 $231 in all. Its uncertainty is the three recoveries (under 0.01 M
 tokens) and the exact split of the image pass, a few dollars at most.
+**Corrected 2026-10-04:** $173.59 is B's all-in K = 10 figure, which
+includes B's own Gemini 3 verifier ($39.18 in the passes register); the
+fourth cell uses only B's ten proposer passes ($133.50), so this basis
+gives about **$191.50**, not $231. The day-isolated ≈ US$58 itself is
+unaffected. The r2 board now completes the leg at arm 2's per-candidate
+unit instead, $64.67 and $198.17 all-in (PI ruling D19, amended
+2026-10-04; `reports/wp4b-frontier-repricing-2026-10-04.md` § 5).
 
 ### 3.2 September to date (project-filtered, 1–30 September export)
 
@@ -182,6 +189,10 @@ from the invoices and the September export; September's USD column is
 at August's rate until its invoice issues.
 
 ## Changelog
+
+### 2026-10-04 — WP4b straggler correction
+
+Found by the WP4b walkthrough (`reports/wp4b-frontier-repricing-2026-10-04.md` § 5.2). § 3.1 added B's audited K = 10 figure, $173.59, to the day-isolated verifier (≈ US$58) to give "about $231". $173.59 is B's all-in figure and includes B's own Gemini 3 verifier ($39.18 in the passes register), a leg the fourth cell does not use; with B's ten proposer passes ($133.50) the total is about $191.50. Corrected inline. The ≈ US$58 isolation, the reconciliation totals and every other figure here are unchanged. The r2 board now prices the leg by D19 completion ($198.17); the results draft carries both (`docs/paper/results-draft.md` §§ R7.2, R7.3).
 
 ### 2026-09-11 (later) — daily attribution, fourth cell, September, June-audit currency (Session 153)
 

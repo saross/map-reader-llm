@@ -1,6 +1,6 @@
 # § R7.2–R7.3 gaps — claims-with-anchors deltas for PI ruling (S153)
 
-> **Last revised**: 2026-09-11 (original publication; the six scheduled
+> **Last revised**: 2026-10-04 (§ 2.5's simulated "about $238" corrected to about $198: it added the 3.7 leg to B's all-in $173.59). Prior: 2026-09-11 (original publication; the six scheduled
 > R7.2–R7.3 gap items of S153 item (A)). See [§ Changelog](#changelog) for
 > revision history.
 
@@ -203,7 +203,11 @@ audited per-call rates"): arm 2's audited 3.7-verifier rate is
 $14.3055 / 12,715 = **$0.001125 per candidate**, giving about **$64.7** over
 57,482 candidates, and with B's K = 10 proposer cost of **$173.59**
 (`results/55map-final-board-r2-2026-09-06/final_board_50m.json`,
-`B-N10-oracle.cost_usd`) a full-stack of about $238. I have **not** put
+`B-N10-oracle.cost_usd`) a full-stack of about $238. (**Corrected
+2026-10-04:** $173.59 is B's all-in figure and includes B's own Gemini 3
+verifier, $39.18; with B's ten proposer passes alone, $133.50, the
+full-stack is about $198. The r2 board now carries exactly this
+completion, $198.17, under PI ruling D19 as amended 2026-10-04.) I have **not** put
 this in the table, because every other filled cell in that column is
 audited and mixing bases silently would be worse than a gap. Ruling
 wanted: table it as "about $238 (verifier simulated)", or leave the gap.
@@ -527,6 +531,10 @@ Also raised, no action taken:
 ---
 
 ## Changelog
+
+### 2026-10-04 — WP4b straggler correction
+
+Found by the WP4b walkthrough (`reports/wp4b-frontier-repricing-2026-10-04.md` § 5.2). § 2.5 simulated the fourth cell's full stack as the 3.7 verifier ($64.7) plus B's K = 10 cost, $173.59, which is B's all-in figure and already includes B's own Gemini 3 verifier ($39.18). With B's proposer passes alone ($133.50) the simulation gives about $198, which is the completion the r2 board now carries ($198.17, PI ruling D19 as amended 2026-10-04). Corrected inline; nothing else here changes.
 
 ### 2026-09-11 — Original publication
 

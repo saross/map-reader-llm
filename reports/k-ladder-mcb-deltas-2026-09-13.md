@@ -1,6 +1,6 @@
 # The K-ladder MCB job: what changed, with anchors
 
-> **Last revised**: 2026-09-13 (original publication). See
+> **Last revised**: 2026-10-04 (the quoted last-step prices corrected for the K-ladder's 1,000x units slip). Prior: 2026-09-13 (original publication). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this reports.** The Principal Investigator (PI) gave two rulings on
@@ -97,7 +97,10 @@ roughly half the corpus and declined on the other half: on nine ladders nothing
 below K = 5 is admissible, even though K = 3 remains the efficient *buy*, so
 "K = 3 is on the efficient set" is a cost claim rather than a statistical one.
 *(b)* The top rung is never statistically excluded, only never worth its price —
-the formal counterpart of § 7.4's US$1,100-to-US$43,000 per 0.001 F1 figures.
+the formal counterpart of § 7.4's US$1,100-to-US$43,000 per 0.001 F1 figures
+(**corrected 2026-10-04**: those are per unit of F1; per 0.001 F1 the last
+steps cost about US$0.21 to US$43, and the last step is the dearest on 17 of
+the 23 ladders, not all — findings §§ 5 and 7.4).
 *(c)* The review's "the two objectives select different rungs" finding now has
 its sharpest statement: **on F1 the cheapest rung is almost always ruled out; on
 tile-level discrimination it never is.** *(d)* Resolution tracks the corpus, not
@@ -220,6 +223,10 @@ never be misread as "no rung can be the best".
 --check` reports up to date.
 
 ## Changelog
+
+### 2026-10-04 — WP4b straggler correction
+
+Reading (b) quoted findings § 7.4's "US$1,100-to-US$43,000 per 0.001 F1", which are per unit of F1 (the K-ladder row's signature note of 2026-10-04 records the slip). Corrected inline to about US$0.21 to US$43 per 0.001 F1, with the findings' further correction that the last step is the dearest on 17 of 23 ladders rather than all. No MCB result changes.
 
 ### 2026-09-13 — Original publication
 
