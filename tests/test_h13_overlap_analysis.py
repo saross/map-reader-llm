@@ -105,13 +105,22 @@ def test_paired_bootstrap_separable_contrast_excludes_zero():
 
 
 @pytest.mark.tier1
-def test_paired_bootstrap_p_value_floor():
-    """The two-sided p-value never reports below the 1/B resolution floor."""
+def test_paired_bootstrap_p_value_is_the_permutation_p():
+    """The p-value is the tile-swap permutation test's (D42), not a 1/B floor.
+
+    Until 2026-10-05 this test pinned the retired bootstrap p at its 1/B
+    floor. Every tile favouring A means no swap reaches the observed
+    delta, so the permutation p is 0; identical arms give exactly 1.
+    """
     n = 100
     a = _counts(np.full(n, 9.0), np.full(n, 1.0), np.full(n, 1.0))
     b = _counts(np.full(n, 1.0), np.full(n, 9.0), np.full(n, 9.0))
     res = paired_bootstrap(a, b, 250, seed=42)
-    assert res["p_two_sided"] == pytest.approx(1 / 250)
+    assert res["p_two_sided"] == 0.0
+    assert "permutation" in res["p_method"]
+    same = paired_bootstrap(a, a, 250, seed=42)
+    assert same["p_two_sided"] == 1.0
+    assert same["n_discordant_tiles"] == 0
 
 
 @pytest.mark.tier1
