@@ -1,7 +1,7 @@
 {
  "_README": "Billed executions that left NO usage record, so neither the passes register nor the superseded-executions ledger (D22) can price them from a meta (PI ruling D35, 2026-10-05). Each entry names its derivation: 'invoice' (an invoice line isolates it), 'transcript-reconstruction' (usage rebuilt from figures a session transcript kept; D35 admits these for this ledger only, never a register row), 'comparable-leg' (a same-configuration leg's measured tokens, scaled), 'note-estimate' (a figure from the project's notes), or 'exposure-bound' (a ceiling on spend that may be zero; estimate_usd null). estimate_usd is the best figure, at the higher candidate tier where the tier is unknown (the register's never-understate rule); bounds_usd brackets it. WP6's project total adds estimated_total_usd and reports exposure_total_usd separately. A register pass that lost spend this way is audited-lower-bound (register_effect). Built in the S160 register repair from reports/launch-archaeology-2026-10-04.md section 4 and its follow-up; append as more are found, never delete an entry.",
  "schema": "unmetered-executions/1",
- "estimated_total_usd": 26.725644,
+ "estimated_total_usd": 23.055208,
  "exposure_total_usd": 7.678651,
  "executions": [
   {
@@ -135,15 +135,15 @@
     "2026-04-13"
    ],
    "model": "gemini-3-flash-preview",
-   "tier": null,
+   "tier": "flex",
    "derivation": "comparable-leg",
-   "estimate_usd": 5.518004,
+   "estimate_usd": 2.759002,
    "bounds_usd": {
     "low": 2.759002,
     "high": 5.518004
    },
    "register_effect": "the register row is a floor (audited-lower-bound, its cleanup only)",
-   "evidence": "outputs/wbf/e47-propose-brief-n5/verified-v1/run.meta.json is the 1-request cleanup ('1 cleanup retry on v1', docs/notes/working-notes.md:8208); probabilities.json holds 3,890 results; the main leg's meta was overwritten before its first commit (1e6f2e9ce). Comparable: the v2 leg over the same 3,890 candidates (outputs/wbf/e47-propose-brief-n5/verified-v2/run.meta.json, verify_adversarial-text_v2, 2026-04-13), priced US$2.759002 flex to US$5.518004 standard; tier unresolved, so the higher is the estimate. The working notes' '~$8' (working-notes.md:8519) overstates the measured comparable. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled."
+   "evidence": "outputs/wbf/e47-propose-brief-n5/verified-v1/run.meta.json is the 1-request cleanup ('1 cleanup retry on v1', docs/notes/working-notes.md:8208); probabilities.json holds 3,890 results; the main leg's meta was overwritten before its first commit (1e6f2e9ce). Comparable: the v2 leg over the same 3,890 candidates (outputs/wbf/e47-propose-brief-n5/verified-v2/run.meta.json, verify_adversarial-text_v2, 2026-04-13), priced US$2.759002 flex to US$5.518004 standard; tier unresolved, so the higher is the estimate. The working notes' '~$8' (working-notes.md:8519) overstates the measured comparable. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled. UPDATED 2026-10-05: the PI accepted the notes' Flex for these legs by D21's precedent (attestations A73-A75), so the estimate is the flex figure."
   },
   {
    "id": "U7",
@@ -155,15 +155,15 @@
    "when_utc": "2026-04-13",
    "pacific_days": null,
    "model": "gemini-3-flash-preview",
-   "tier": null,
+   "tier": "flex",
    "derivation": "comparable-leg",
-   "estimate_usd": 1.822868,
+   "estimate_usd": 0.911434,
    "bounds_usd": {
     "low": 0.911434,
     "high": 1.822868
    },
    "register_effect": "none: no meta, so no row",
-   "evidence": "Obs 233 records both a v1 and a v2 WBF verifier leg over the gold-standard-v2 fusion, 'Total cost ~$5-6 Flex' (docs/notes/working-notes.md:8843-8846); only verified-v1/ exists (outputs/wbf/gold-standard-v2-detect/verified-v1/, 0dede119f, 1,318 results). Comparable: the v1 leg, US$0.911434 flex to US$1.822868 standard. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled."
+   "evidence": "Obs 233 records both a v1 and a v2 WBF verifier leg over the gold-standard-v2 fusion, 'Total cost ~$5-6 Flex' (docs/notes/working-notes.md:8843-8846); only verified-v1/ exists (outputs/wbf/gold-standard-v2-detect/verified-v1/, 0dede119f, 1,318 results). Comparable: the v1 leg, US$0.911434 flex to US$1.822868 standard. The working notes record this pair of legs as Flex; by D21's precedent that would pin the low bound, but the register's measured legs of the same pairs are still upper bounds, so the estimate keeps the higher figure until the tier is ruled. UPDATED 2026-10-05: the PI accepted the notes' Flex for these legs by D21's precedent (attestations A73-A75), so the estimate is the flex figure."
   },
   {
    "id": "U8",

@@ -524,6 +524,33 @@
    "attested_by": "derived: archived launch command (S160 register repair, archaeology finding C; evidence standards ruled by the PI, D34, and the batch marker's scope, D36, 2026-10-05)",
    "attested_on": "2026-10-05",
    "evidence": "The meta's recorded usage is only the 2026-06-03 real-time resume (26 requests, per-item timestamps 12:25:08Z; recovery_history; the 2026-03-23 Batch API execution recorded no usage), committed in c07c57766. Launch: ~/cc-archives/map-reader-llm/2026-06-03T06-59_complete-n-1-baseline-matrix-re-score, 12:25:05Z: '4_detect_mounds_batch.py ... --mode realtime --service-tier flex --use-cache --max-retries 15'. The text configuration's cache creation fails ('Cached content is too small'), so the main path, which carries the tier, served it: all 26 requests report 0 cached tokens. The 2026-06-03 day export bills 3.1 Pro at standard and flex, no batch."
+  },
+  {
+   "id": "A73",
+   "run_id": "e47-propose-brief",
+   "pool": "wbf-n5-verified-v1",
+   "tier": "flex",
+   "attested_by": "PI, by D21's precedent, on Claude's recommendation (S160, 2026-10-05: 'I accept your recommendations')",
+   "attested_on": "2026-10-05",
+   "evidence": "docs/notes/working-notes.md:8519-8520 records both e47 WBF verifier legs as Flex ('v1 verifier (3,890 candidates, Flex)', 'v2 verifier (3,890 candidates, Flex)'). The legs ran run_pv.py at 84af90320 (2026-04-13), which descends from 2a2cd81c7, the commit that made run_pv forward --service-tier on every request; the verifier path has no cached call, so no known defect could have switched the tier (D21's test: per the notes, unless a defect at the time says otherwise)."
+  },
+  {
+   "id": "A74",
+   "run_id": "e47-propose-brief",
+   "pool": "wbf-n5-verified-v2",
+   "tier": "flex",
+   "attested_by": "PI, by D21's precedent, on Claude's recommendation (S160, 2026-10-05: 'I accept your recommendations')",
+   "attested_on": "2026-10-05",
+   "evidence": "docs/notes/working-notes.md:8519-8520 records both e47 WBF verifier legs as Flex ('v1 verifier (3,890 candidates, Flex)', 'v2 verifier (3,890 candidates, Flex)'). The legs ran run_pv.py at 84af90320 (2026-04-13), which descends from 2a2cd81c7, the commit that made run_pv forward --service-tier on every request; the verifier path has no cached call, so no known defect could have switched the tier (D21's test: per the notes, unless a defect at the time says otherwise)."
+  },
+  {
+   "id": "A75",
+   "run_id": "gold-standard-v2",
+   "pool": "wbf-verified-v1",
+   "tier": "flex",
+   "attested_by": "PI, by D21's precedent, on Claude's recommendation (S160, 2026-10-05: 'I accept your recommendations')",
+   "attested_on": "2026-10-05",
+   "evidence": "docs/notes/working-notes.md:8843-8846 (Obs 233): the gold-standard-v2 WBF verifier legs ran 'Flex tier, minimal thinking'. The leg ran run_pv.py at b3b30d0a4 (2026-04-13), which descends from 2a2cd81c7 (tier forwarded on every request; no cached path), so no known defect contradicts the notes (D21's test)."
   }
  ]
 }
