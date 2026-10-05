@@ -142,7 +142,7 @@ in brackets (§ 4).
 - [ ] **C-26 (L, W1).** Reporting errors whatever the test: "FDR p = 0.004" is
   a raw p (`results-draft.md:231` and 24 other sites); "6/10 significant" is
   5/10.
-- [ ] **C-27 (D, W6).** The bootstrap p-value (2 × min(P(d ≤ 0), P(d > 0)),
+- [x] **C-27 (D, W6).** DONE 2026-10-05 (S161, D42 implemented; `reports/d42-implementation-2026-10-05.md`): no live path reads p from a bootstrap, and the floor-pinning tests now assert p = 1 for identical arms. Was: the bootstrap p-value (2 × min(P(d ≤ 0), P(d > 0)),
   floored at 1/B, read off the uncentred distribution) is still live:
   `scripts/lib_advanced_metrics.py:1945-1955` and four other code paths;
   `tests/test_e45_bootstrap_pairings.py:71-89` pins identical arms at the
@@ -393,7 +393,7 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   and map-reader-bench (informed 2026-10-05).
 - [ ] W8.2 For each: the correction, and who sends it (outward messages are
   the PI's; Claude drafts).
-- [ ] W8.3 OSF (next session, before any upload): the project's storage
+- [x] W8.3 OSF (next session, before any upload). DONE 2026-10-05 (S161). The project's storage
   (`osf.io/h9x4g`, `preregistration-files/`) was found to hold only the
   31 January upload (the three lodged documents and a 1,686-byte README); no
   `errata-pointers.md` and no E87 tile-count files. The PI expected otherwise
@@ -415,7 +415,6 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   confirmed; project made public; registration update agreed; deposit with
   GitHub commit links. Uploads DONE 2026-10-05 (see W8.4); update 2
   submitted and approved 2026-10-05.
-- [x] W8.3 DONE 2026-10-05 (S161).
 - [x] W8.4 (S-11) DONE 2026-10-05 (S161): erratum E91 (`690154d23`); the
   late deposit uploaded to OSF `late-deposit-2026-10-05/` and SHA-256
   verified (index `osf/late-deposit/deposit-index.md`); the errata pointers,
