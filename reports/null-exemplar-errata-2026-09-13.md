@@ -1,7 +1,7 @@
 # Null-exemplar and tile-count errata (E86, E87) — claims with anchors
 
-> **Last revised**: 2026-09-13 (original publication, with the two errata).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (a text-only config sends no exemplar, E90). See
+> [§ Changelog](#changelog) for revision history.
 
 **Scope**: what was verified, recomputed, corrected and deliberately not done
 when the two errata drafted in `map-reader-bench`
@@ -95,7 +95,7 @@ example images were transmitted. Census over all `prompts/configs/*.json`:
 |---|---:|---|
 | Image modality (key `true` or absent) **and** the three nulls in the example list | **37** | **yes** |
 | Image modality, nulls **not** in the list — exactly the four `verify_*.json` verifier configs (library is examples 01–04, 09, 10) | 4 | no |
-| Text modality (`include_example_images: false`) | 22 | no — labels only; 21 of the 22 list the nulls, `detect_brief-text_high-recall.json` carries 10 examples and none |
+| Text modality (`include_example_images: false`) | 22 | no — nothing from the list is sent (E90; first read "labels only"); 21 of the 22 list the nulls, `detect_brief-text_high-recall.json` carries 10 examples and none |
 | No example library at all — `library_scale-{16,32}.json` (deferred, never executed) and the four text verifier configs | 6 | no |
 
 So the exposure is **the image modality on the Gold Standard boards**: text
@@ -336,6 +336,10 @@ owned elsewhere.
   branch in the main checkout.
 
 ## Changelog
+
+### 2026-10-05 — A text-only request sends no exemplar (E90)
+
+Trigger: erratum E90 (Session 160). The table said text-modality configurations send "labels only"; they send nothing from the example list. Its counts and conclusion stand. Nothing else in this document changes; no figure moves.
 
 ### 2026-09-13 — Original publication
 

@@ -1,6 +1,7 @@
 # The null-exemplar leak: how much of the Gold-Standard boards moves when the leaked tiles come out
 
-> **Last revised**: 2026-09-13 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (a text-only config sends no exemplar, E90). See
+> [§ Changelog](#changelog) for revision history.
 
 Three "null" (empty) exemplar tiles in the few-shot library
 (`inputs/examples/null-tiles/`) were never excluded from the Gold-Standard
@@ -41,8 +42,9 @@ The mechanism was verified rather than assumed:
   in every proposer config's example list.
 - `include_example_images` defaults to **true** in the pipeline
   (`scripts/4_detect_mounds_batch.py:885`), so a config without the key
-  sent the images. A text-only config sets it false and sent the labels
-  only.
+  sent the images. A text-only config sets it false and sent no exemplar
+  at all: no image, no label (E90; this line first read "sent the labels
+  only").
 - No `verify_*.json` config carries a null-category example — all eight
   have zero — so the verifier stage never transmitted the pixels. A cell
   whose `-image`/`-text` suffix names its *verifier* is therefore
@@ -372,6 +374,10 @@ re-scores answer that question, and they answer it in thousandths.
   cannot drift from them.
 
 ## Changelog
+
+### 2026-10-05 — A text-only request sends no exemplar (E90)
+
+Trigger: erratum E90 (Session 160). One sentence said a text-only configuration "sent the labels only"; it sends no exemplar at all. The conclusion (text cells never saw the null pixels) stands. Nothing else in this document changes; no figure moves.
 
 ### 2026-09-13 — Original publication
 
