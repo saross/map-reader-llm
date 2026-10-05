@@ -8154,6 +8154,11 @@
     "pool_160_hp4hn4": {
      "modality": "image",
      "path": "evaluation-v2/pool_160_hp4hn4"
+    },
+    "coldstart-pool_160": {
+     "modality": "image",
+     "repo_path": "archive/intermediate-calibration/h10-calibration-runs-v2",
+     "path": "pool_160"
     }
    },
    "verifier_passes": {
@@ -8902,7 +8907,12 @@
    },
    "verifier_passes": {
     "verified": "text",
-    "verified-v2": "text"
+    "verified-v2": "text",
+    "verified-cleanup-20260410": {
+     "modality": "text",
+     "repo_path": "archive/deprecated-staging/55maps-generalisation-verified-cleanup-20260410",
+     "path": "."
+    }
    },
    "conditions": [
     {

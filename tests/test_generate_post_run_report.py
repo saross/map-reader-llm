@@ -36,7 +36,7 @@ from scripts.generate_post_run_report import (
     VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
     _pool_spec,
-    _verifier_leg_root,
+    _leg_root,
     _metrics_from_eval,
     _stabilise_timestamps,
     _strip_ts,
@@ -263,6 +263,27 @@ def test_a_flat_single_pass_pool_is_pass_one(registry):
 
 
 @pytest.mark.tier1
+def test_a_proposer_pool_outside_the_run_tree_resolves_by_repo_path(registry):
+    """D41: h10's pool_160 cold-start mining passes, archived under archive/.
+
+    Sentinel: without ``repo_path`` the same path resolves inside outputs/h10,
+    where no such pool exists, so the five passes vanish silently.
+    """
+    def ctx(spec):
+        return {"run_id": "h10", "directory_path": "outputs/h10", "scope": {},
+                "proposer_pools": {"coldstart-pool_160": spec}, "verifier_passes": {},
+                "conditions": []}
+    root = "archive/intermediate-calibration/h10-calibration-runs-v2"
+    rows = extract_passes(ctx({"modality": "image", "repo_path": root, "path": "pool_160"}))
+    assert [r["pass_n"] for r in rows] == [1, 2, 3, 4, 5]
+    for r in rows:
+        assert validate_row("passes", r, registry) == []
+        assert r["n_tiles_processed"] == 160 and r["status"] == "ok"
+        assert r["provenance"]["source_files"][0].startswith(f"{root}/pool_160/run_{r['pass_n']}/")
+    assert extract_passes(ctx({"modality": "image", "path": "pool_160"})) == []
+
+
+@pytest.mark.tier1
 def test_a_retry_under_run_n_is_spend_but_not_coverage():
     """D31: consensus-384-t1-0 run 4's one-tile retry (``run_4/retry/``).
 
@@ -326,7 +347,7 @@ def test_every_committed_verifier_hint_resolves_to_a_meta():
         run_id = entry["run_id"]
         hints = (decomposition.get(run_id) or {}).get("verifier_passes") or {}
         for key, spec in hints.items():
-            root = _verifier_leg_root(spec, REPO_ROOT / entry["directory_path"], run_id, key)
+            root = _leg_root(spec, REPO_ROOT / entry["directory_path"], run_id, key)
             base = _pool_spec(spec)[1] or key
             if not ((root / base / "run.meta.json").exists()
                     or (root / f"{base}.meta.json").exists()):

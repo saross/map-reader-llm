@@ -562,19 +562,20 @@ def _pool_spec(value: Any) -> tuple[Any, str | None]:
     return value, None
 
 
-def _verifier_leg_root(spec: Any, run_dir: Path, run_id: str, vdir: str) -> Path:
-    """The directory a verifier pass's ``path`` is resolved against.
+def _leg_root(spec: Any, run_dir: Path, run_id: str, vdir: str) -> Path:
+    """The directory a pass's ``path`` is resolved against.
 
     Normally the run directory. A leg executed outside the run's own tree
     (the S104 vote-3 increments, which live under
-    ``results/deployment-oracle-2026-06-06/vote3-verify/<run>/``; ruling
-    D32) names its leg root with ``repo_path``, a repository-relative
-    directory, and then must name ``path`` beneath it too, so that both
-    meta forms (``<path>/run.meta.json`` and ``<path>.meta.json``) stay
-    well defined.
+    ``results/deployment-oracle-2026-06-06/vote3-verify/<run>/``, ruling
+    D32; h10's archived pool_160 mining passes, D41) names its root with
+    ``repo_path``, a repository-relative directory, and then must name
+    ``path`` beneath it too, so that the layout beneath it stays explicit
+    (both verifier meta forms; a proposer pool's ``run_N/``).
 
     Args:
-        spec: the ``verifier_passes`` entry (string or dict form).
+        spec: the ``verifier_passes`` or ``proposer_pools`` entry (string or
+            dict form).
         run_dir: the run's own directory (absolute).
         run_id: the run, for error messages.
         vdir: the pass key, for error messages.
@@ -587,19 +588,19 @@ def _verifier_leg_root(spec: Any, run_dir: Path, run_id: str, vdir: str) -> Path
             comes without ``path``.
 
     Examples:
-        >>> _verifier_leg_root("text", Path("/r/outputs/x"), "x", "v")
+        >>> _leg_root("text", Path("/r/outputs/x"), "x", "v")
         PosixPath('/r/outputs/x')
     """
     repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
     if not repo_path:
         return run_dir
-    where = f"verifier pass {run_id}::{vdir}"
+    where = f"pass {run_id}::{vdir}"
     if Path(repo_path).is_absolute() or ".." in Path(repo_path).parts:
         raise ValueError(f"{where}: repo_path must be repository-relative, "
                          f"without '..' (got {repo_path!r})")
     if not spec.get("path"):
         raise ValueError(f"{where}: repo_path needs a path beneath it "
-                         f"(e.g. 'verified')")
+                         f"(e.g. 'verified', 'pool_160')")
     return REPO_ROOT / repo_path
 
 
@@ -652,7 +653,12 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # meta is an unreliable template default (see below). Authored in the sidecar
         # from the study YAML; None for the normal case (trust the meta).
         model_of_record = spec.get("model_of_record") if isinstance(spec, dict) else None
-        pool_dir = run_dir / (path or f"proposer/{pool}")
+        # A pool run outside the run's own tree (h10's pool_160 cold-start
+        # mining passes, archived under archive/intermediate-calibration/;
+        # ruling D41) names its root with ``repo_path``, as a verifier leg
+        # may (D32): the root stands in for the run directory for this pool.
+        pool_root = _leg_root(spec, run_dir, run_id, pool)
+        pool_dir = pool_root / (path or f"proposer/{pool}")
         # A single-pass pool written flat, with no ``run_N/`` (the e47 text
         # baseline; pv-384's proposer stub), declares ``single_pass``: its
         # directory is pass 1 (D31, S160).
@@ -834,7 +840,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                                        for m, _ in fragments]),
                 **_coster().cost_pass(
                     pass_id=f"{run_id}::{pool}::run{pass_n}", fragments=fragments,
-                    run_id=run_id, pool=pool, run_dir=run_dir, model=model_used,
+                    run_id=run_id, pool=pool, run_dir=pool_root, model=model_used,
                     fragment_models=[model_used] + [
                         _fragment_model(m, model_used, model_of_record)
                         for m, _ in fragments[1:]]),
@@ -851,7 +857,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # under results/; D32) names its leg root with ``repo_path``. The root
         # stands in for the run directory for this pass only: the meta is
         # found under it, and the coster's upward evidence walks stop there.
-        leg_root = _verifier_leg_root(spec, run_dir, run_id, vdir)
+        leg_root = _leg_root(spec, run_dir, run_id, vdir)
         # Two on-disk shapes for a verifier pass's run metadata:
         #   * dir form    — ``<base>/run.meta.json`` (gold-standard-v2, verifier-t-pilot);
         #   * sidecar form — ``<base>.meta.json`` next to the verified geojson
