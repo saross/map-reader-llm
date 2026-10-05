@@ -1,6 +1,6 @@
 {
  "_README": "First execution of registered contrast CMT-0106 (H1 pooled modality effect: text-only conditions vs image-using conditions), under the reconstruction rule registered BEFORE computation at reports/verification/family-fdr-registration.md S 5.1.1 (run-it-now policy, PI ruling 2026-07-30).",
- "generated_at": "2026-07-30T03:29:14.223365+00:00",
+ "generated_at": "2026-10-05T06:51:31.575818+00:00",
  "registration": "reports/verification/family-fdr-registration.md",
  "conditions": {
   "text_only": [
@@ -19,7 +19,7 @@
   "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
   "buffer_metres": 20
  },
- "method": "paired tile bootstrap; per condition mean F1 across 3 runs; unweighted group means; two-sided p = 2*min tail, floor 1/B",
+ "method": "per condition mean F1 across 3 runs; unweighted group means. CI: paired tile bootstrap, percentile. p: within-tile label permutation of the five conditions (each with its 3 runs), two-sided p = mean(|null| >= |observed|) (PI ruling D42)",
  "n_iterations": 10000,
  "seed": 42,
  "point_estimate": {
@@ -34,12 +34,19 @@
   "ci95": {
    "lower": -0.01035902138814961,
    "upper": 0.05853936810199798
-  },
-  "prop_le_zero": 0.0887,
-  "prop_gt_zero": 0.9113
+  }
  },
- "p_value": 0.1774,
- "p_at_floor": false,
+ "permutation": {
+  "method": "within-tile label permutation of the five conditions (each carrying its runs), two-sided p = mean(|null| >= |observed|)",
+  "observed": 0.02384247907349879,
+  "p_value": 0.0715,
+  "null_mean": 2.592761775768233e-05,
+  "null_std": 0.013292133292386503,
+  "n_permutations": 10000,
+  "seed": 42
+ },
+ "p_value": 0.0715,
+ "p_is_zero": false,
  "validation_gates": {
   "gate_a": "per-condition mean F1 == results/retest/phase2a-evaluation.json (1e-6)",
   "gate_b": "vectorised scoring == lib aggregate_tile_metrics on 50 probes (1e-9)"

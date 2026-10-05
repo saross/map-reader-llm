@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-19T01:49:53.685833+00:00",
+  "generated_at_utc": "2026-10-05T06:53:21.989210+00:00",
   "classification": "POST-HOC (E41-class) tile-size x overlap grid; not a registered hypothesis. Proposer stage only, consensus-only aggregation.",
   "configuration": {
     "config": "detect_brief-text",
@@ -1225,7 +1225,10 @@
       "ci_lower": 0.08721772655938077,
       "ci_upper": 0.15312642870789123,
       "bootstrap_mean": 0.12017352212529782,
-      "p_two_sided": 0.0001,
+      "p_two_sided": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 394,
       "n_iterations": 10000,
       "seed": 42,
       "excludes_zero": true
@@ -1235,7 +1238,10 @@
       "ci_lower": 0.10575966969020076,
       "ci_upper": 0.1635836838218975,
       "bootstrap_mean": 0.13451505750338918,
-      "p_two_sided": 0.0001,
+      "p_two_sided": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 426,
       "n_iterations": 10000,
       "seed": 42,
       "excludes_zero": true
@@ -1245,7 +1251,10 @@
       "ci_lower": -0.12429465316906066,
       "ci_upper": -0.04287027632736235,
       "bootstrap_mean": -0.08267197900078356,
-      "p_two_sided": 0.0001,
+      "p_two_sided": 0.0002,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 381,
       "n_iterations": 10000,
       "seed": 42,
       "excludes_zero": true
@@ -1255,7 +1264,10 @@
       "ci_lower": -0.119628078923726,
       "ci_upper": -0.07528577235872773,
       "bootstrap_mean": -0.09701351437887495,
-      "p_two_sided": 0.0001,
+      "p_two_sided": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 437,
       "n_iterations": 10000,
       "seed": 42,
       "excludes_zero": true
@@ -1266,7 +1278,9 @@
     "ci_lower": -0.05519698295909766,
     "ci_upper": 0.02683531821663162,
     "bootstrap_mean": -0.014341535378091385,
-    "p_two_sided": 0.4902,
+    "p_two_sided": 0.4681,
+    "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+    "n_permutations": 10000,
     "n_iterations": 10000,
     "seed": 42,
     "excludes_zero": false
