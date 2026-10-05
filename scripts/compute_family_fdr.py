@@ -13,14 +13,23 @@ Implements `reports/verification/family-fdr-registration.md` (REGISTERED
    condition scores its mean F1 across runs (per-run evaluation per E22,
    per-tile TP/FP/FN precompute per E26, 20 m buffer); each group scores
    the unweighted mean of its conditions; the contrast is text-only minus
-   image-using. Two-sided bootstrap p per the executed artefact's
-   convention (2 x min tail proportion, floored at 1/B).
+   image-using. The bootstrap gives the CI. The p-value comes from a
+   within-tile label permutation test (PI ruling D42, 2026-10-05): on
+   each of 10,000 permutations every tile's five condition labels are
+   permuted uniformly and independently (each condition carrying its three
+   runs), and the statistic is recomputed; two-sided p = mean(|null| >=
+   |observed|). It replaces the bootstrap p (2 x min tail, floor 1/B) this
+   script first used, which D42 retired.
 
 2. **The seven-hypothesis BH-FDR family** (§ 8): monotone step-up at
    q = 0.05 over the seven registered primaries (H6 never ran), with
    resolution floors recorded as inequalities and the fixed tie rule.
-   Every registered p-value is re-read from its anchored artefact and
-   asserted equal to the value quoted in the registration before use.
+   Every p-value is re-read from its anchored artefact and asserted equal
+   to its expected value before use. H4, H5 and H7 now read the
+   permutation re-test of the March pairwise contrasts (each comparison's
+   ``permutation_retest`` block, D42) instead of the registration's quoted
+   bootstrap values (0.124, 0.756, 0.001), which stay recorded beside
+   them.
 
 Validation gates (both must pass before anything is written):
 
@@ -68,6 +77,7 @@ from lib_advanced_metrics import (  # noqa: E402
     aggregate_tile_metrics,
     compute_per_tile_tp_fp_fn,
 )
+from lib_permutation import label_permutation_sums  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -84,6 +94,7 @@ IMAGE_GROUP = ["image-only", "brief-text-image", "verbose-text-image"]
 ALL_CONDITIONS = TEXT_GROUP + IMAGE_GROUP
 BUFFER_METRES = 20
 B_ITERATIONS = 10_000
+N_PERMUTATIONS = 10_000  # D42: the H1 label-permutation test
 SEED = 42
 FDR_Q = 0.05
 
@@ -107,17 +118,17 @@ def _p_h3(root: Path) -> float:
 
 def _p_h4(root: Path) -> float:
     with open(root / "results/retest/pairwise-bootstrap-comparisons.json") as f:
-        return json.load(f)["comparisons"][55]["f1_p_value"]
+        return json.load(f)["comparisons"][55]["permutation_retest"]["f1_p"]
 
 
 def _p_h5(root: Path) -> float:
     with open(root / "results/retest/pairwise-bootstrap-comparisons.json") as f:
-        return json.load(f)["comparisons"][53]["precision_p"]
+        return json.load(f)["comparisons"][53]["permutation_retest"]["precision_p"]
 
 
 def _p_h7(root: Path) -> float:
     with open(root / "results/retest/pairwise-bootstrap-comparisons.json") as f:
-        return json.load(f)["comparisons"][25]["f1_p_value"]
+        return json.load(f)["comparisons"][25]["permutation_retest"]["f1_p"]
 
 
 def _p_h8(root: Path) -> float:
@@ -130,12 +141,15 @@ FIXED_PRIMARIES: list[dict] = [
      "numeric_p": PERM_FLOOR, "report_as": "p < 1e-4 (permutation floor)"},
     {"hypothesis": "H3", "reader": _p_h3, "registered_value": 0.0,
      "numeric_p": PERM_FLOOR, "report_as": "p < 1e-4 (permutation floor)"},
-    {"hypothesis": "H4", "reader": _p_h4, "registered_value": 0.124,
-     "numeric_p": 0.124, "report_as": "p = 0.124"},
-    {"hypothesis": "H5", "reader": _p_h5, "registered_value": 0.756,
-     "numeric_p": 0.756, "report_as": "p = 0.756"},
-    {"hypothesis": "H7", "reader": _p_h7, "registered_value": 0.001,
-     "numeric_p": 0.001, "report_as": "p <= 0.001 (bootstrap floor, B=1000)"},
+    {"hypothesis": "H4", "reader": _p_h4, "registered_value": 0.1366,
+     "registration_quoted_bootstrap": 0.124,
+     "numeric_p": 0.1366, "report_as": "p = 0.1366 (permutation, D42)"},
+    {"hypothesis": "H5", "reader": _p_h5, "registered_value": 0.7262,
+     "registration_quoted_bootstrap": 0.756,
+     "numeric_p": 0.7262, "report_as": "p = 0.7262 (permutation, D42)"},
+    {"hypothesis": "H7", "reader": _p_h7, "registered_value": 0.0002,
+     "registration_quoted_bootstrap": 0.001,
+     "numeric_p": 0.0002, "report_as": "p = 0.0002 (permutation, D42)"},
     {"hypothesis": "H8", "reader": _p_h8, "registered_value": 0.8344,
      "numeric_p": 0.8344, "report_as": "Simes p = 0.8344 (within-H8 BH minimum)"},
 ]
@@ -209,6 +223,56 @@ def pooled_delta(mat_by_cond: dict[str, np.ndarray], idx: np.ndarray) -> float:
     text = float(np.mean([condition_mean_f1(mat_by_cond[c], idx) for c in TEXT_GROUP]))
     image = float(np.mean([condition_mean_f1(mat_by_cond[c], idx) for c in IMAGE_GROUP]))
     return text - image
+
+
+def h1_label_permutation(mat_by_cond: dict[str, np.ndarray],
+                         point_delta: float) -> dict:
+    """Within-tile label permutation test of the H1 pooled contrast (D42).
+
+    Under the null that the five conditions are exchangeable within each
+    tile, every tile's condition labels are permuted uniformly and
+    independently (each condition carrying all of its runs), and the
+    § 5.1.1 statistic is recomputed: per condition the mean over runs of
+    run F1, then text-group mean minus image-group mean.
+
+    Args:
+        mat_by_cond: Condition -> ``[n_runs, n_tiles, 3]`` count matrix.
+        point_delta: The statistic on the unpermuted data, for the identity
+            check.
+
+    Returns:
+        Dict with ``p_value``, ``observed``, ``null_mean``, ``null_std``,
+        ``n_permutations``, ``seed`` and ``method``.
+    """
+    order = TEXT_GROUP + IMAGE_GROUP
+    stack = np.stack([mat_by_cond[c] for c in order])  # [K, R, T, 3]
+    n_text = len(TEXT_GROUP)
+
+    def _delta(sums: np.ndarray) -> np.ndarray:
+        """Statistic from summed counts ``[..., K, R, 3]``."""
+        tp, fp, fn = sums[..., 0], sums[..., 1], sums[..., 2]
+        denom = 2 * tp + fp + fn
+        f1 = np.divide(2 * tp, denom, out=np.zeros_like(tp), where=denom > 0)
+        cond_f1 = f1.mean(axis=-1)  # mean over runs -> [..., K]
+        return cond_f1[..., :n_text].mean(axis=-1) - cond_f1[..., n_text:].mean(axis=-1)
+
+    observed = float(_delta(stack.sum(axis=2)))
+    if abs(observed - point_delta) > 1e-12:
+        raise SystemExit(f"H1 permutation statistic {observed} != point delta {point_delta}")
+    null = np.concatenate([
+        _delta(sums) for sums in label_permutation_sums(
+            stack, n_permutations=N_PERMUTATIONS, seed=SEED)
+    ])
+    return {
+        "method": ("within-tile label permutation of the five conditions (each "
+                   "carrying its runs), two-sided p = mean(|null| >= |observed|)"),
+        "observed": observed,
+        "p_value": float(np.mean(np.abs(null) >= abs(observed))),
+        "null_mean": float(np.mean(null)),
+        "null_std": float(np.std(null)),
+        "n_permutations": N_PERMUTATIONS,
+        "seed": SEED,
+    }
 
 
 def gate_a(mat_by_cond: dict[str, np.ndarray], tile_names: list[str]) -> None:
@@ -323,11 +387,12 @@ def main() -> None:
         if (i + 1) % 1000 == 0:
             logger.info("bootstrap %d/%d", i + 1, B_ITERATIONS)
 
-    prop_le = float(np.mean(deltas <= 0))
-    prop_gt = float(np.mean(deltas > 0))
-    p_h1 = max(2.0 * min(prop_le, prop_gt), 1.0 / B_ITERATIONS)
     ci = (float(np.percentile(deltas, 2.5)), float(np.percentile(deltas, 97.5)))
-    at_floor = p_h1 <= 2.0 / B_ITERATIONS
+
+    # D42: the p-value is the within-tile label permutation test's.
+    perm = h1_label_permutation(mat_by_cond, point_delta)
+    p_h1 = perm["p_value"]
+    at_floor = p_h1 == 0.0
 
     h1 = {
         "_README": (
@@ -341,16 +406,18 @@ def main() -> None:
         "corpus": {"tiles": len(tile_names), "bounds": str(BOUNDS.relative_to(REPO_ROOT)),
                    "ground_truth": str(GROUND_TRUTH.relative_to(REPO_ROOT)),
                    "buffer_metres": BUFFER_METRES},
-        "method": ("paired tile bootstrap; per condition mean F1 across 3 runs; "
-                   "unweighted group means; two-sided p = 2*min tail, floor 1/B"),
+        "method": ("per condition mean F1 across 3 runs; unweighted group means. "
+                   "CI: paired tile bootstrap, percentile. p: within-tile label "
+                   "permutation of the five conditions (each with its 3 runs), "
+                   "two-sided p = mean(|null| >= |observed|) (PI ruling D42)"),
         "n_iterations": B_ITERATIONS,
         "seed": SEED,
         "point_estimate": {"group_f1": point_groups, "delta_text_minus_image": point_delta},
         "bootstrap": {"delta_mean": float(np.mean(deltas)),
-                      "ci95": {"lower": ci[0], "upper": ci[1]},
-                      "prop_le_zero": prop_le, "prop_gt_zero": prop_gt},
+                      "ci95": {"lower": ci[0], "upper": ci[1]}},
+        "permutation": perm,
         "p_value": p_h1,
-        "p_at_floor": at_floor,
+        "p_is_zero": at_floor,
         "validation_gates": {
             "gate_a": "per-condition mean F1 == results/retest/phase2a-evaluation.json (1e-6)",
             "gate_b": "vectorised scoring == lib aggregate_tile_metrics on 50 probes (1e-9)",
@@ -358,8 +425,8 @@ def main() -> None:
     }
     with open(out_dir / "h1_cmt0106_pooled_modality.json", "w") as f:
         json.dump(h1, f, indent=1)
-    logger.info("H1 pooled contrast: delta=%.4f  p=%.4g  (floor=%s)",
-                point_delta, p_h1, at_floor)
+    logger.info("H1 pooled contrast: delta=%.4f  permutation p=%.4g",
+                point_delta, p_h1)
 
     # ---------- Part 2: the seven-hypothesis BH family ----------
     family_inputs = []
@@ -369,16 +436,20 @@ def main() -> None:
             raise SystemExit(
                 f"registered value mismatch for {spec['hypothesis']}: artefact "
                 f"{observed} vs registration {spec['registered_value']}")
-        family_inputs.append({
+        row = {
             "hypothesis": spec["hypothesis"],
             "numeric_p": spec["numeric_p"],
             "report_as": spec["report_as"],
             "source": "registered artefact (re-read and asserted)",
-        })
-    h1_report = (f"p <= {2.0 / B_ITERATIONS} (bootstrap floor, B={B_ITERATIONS})"
-                 if at_floor else f"p = {p_h1:.4g}")
+        }
+        if "registration_quoted_bootstrap" in spec:
+            row["registration_quoted_bootstrap_p"] = spec["registration_quoted_bootstrap"]
+        family_inputs.append(row)
+    h1_report = (f"p < {1.0 / N_PERMUTATIONS:g} (permutation, D42)"
+                 if at_floor else f"p = {p_h1:.4g} (permutation, D42)")
     family_inputs.append({
-        "hypothesis": "H1", "numeric_p": p_h1, "report_as": h1_report,
+        "hypothesis": "H1", "numeric_p": PERM_FLOOR if at_floor else p_h1,
+        "report_as": h1_report,
         "source": "computed this run (h1_cmt0106_pooled_modality.json)",
     })
 
@@ -391,7 +462,11 @@ def main() -> None:
             "(preregistration.md S 3.1) over the seven executable confirmatory "
             f"hypotheses, per the pre-execution registration at {REGISTRATION} "
             "(committed before this computation; PI rulings "
-            "reports/verification/phase2-rulings-2026-07-30.md S 3)."),
+            "reports/verification/phase2-rulings-2026-07-30.md S 3). Since PI "
+            "ruling D42 (2026-10-05) every input is a permutation p: H1 by "
+            "within-tile label permutation, H4/H5/H7 by the tile-swap re-test "
+            "of the March contrasts; the registration's quoted bootstrap values "
+            "are kept as registration_quoted_bootstrap_p."),
         "generated_at": at,
         "registration": REGISTRATION,
         "q": FDR_Q,

@@ -61,3 +61,55 @@ def test_f1_from_counts():
     assert f1_from_counts(0, 0, 0) == 0.0
     assert f1_from_counts(10, 0, 0) == 1.0
     assert abs(f1_from_counts(5, 5, 5) - 0.5) < 1e-12
+
+
+def _mats(rng, scale_text: float = 1.0, scale_image: float = 1.0) -> dict:
+    """Five conditions x 3 runs x 40 tiles of synthetic TP/FP/FN counts."""
+    import numpy as np
+
+    from scripts.compute_family_fdr import IMAGE_GROUP, TEXT_GROUP
+
+    out = {}
+    for cond in TEXT_GROUP + IMAGE_GROUP:
+        scale = scale_text if cond in TEXT_GROUP else scale_image
+        tp = rng.poisson(1.5 * scale, (3, 40))
+        fp = rng.poisson(0.8 / scale, (3, 40))
+        fn = rng.poisson(0.6, (3, 40))
+        out[cond] = np.stack([tp, fp, fn], axis=-1).astype(float)
+    return out
+
+
+@pytest.mark.tier1
+def test_h1_label_permutation_identical_conditions_give_p_one():
+    """D42: five identical conditions give observed 0 and p = 1."""
+    import numpy as np
+
+    from scripts.compute_family_fdr import (
+        ALL_CONDITIONS,
+        h1_label_permutation,
+        pooled_delta,
+    )
+
+    rng = np.random.default_rng(0)
+    one = _mats(rng)["brief-text"]
+    mats = {c: one.copy() for c in ALL_CONDITIONS}
+    point = pooled_delta(mats, np.arange(40))
+    res = h1_label_permutation(mats, point)
+    assert res["observed"] == 0.0
+    assert res["p_value"] == 1.0
+
+
+@pytest.mark.tier1
+def test_h1_label_permutation_detects_a_group_difference():
+    """A text group far better than the image group gives a small p."""
+    import numpy as np
+
+    from scripts.compute_family_fdr import h1_label_permutation, pooled_delta
+
+    rng = np.random.default_rng(1)
+    mats = _mats(rng, scale_text=2.5, scale_image=0.6)
+    point = pooled_delta(mats, np.arange(40))
+    res = h1_label_permutation(mats, point)
+    assert res["observed"] == pytest.approx(point, abs=1e-12)
+    assert res["observed"] > 0
+    assert res["p_value"] < 0.01
