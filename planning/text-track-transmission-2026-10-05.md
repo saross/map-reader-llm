@@ -217,6 +217,12 @@ in brackets (§ 4).
 - **S-11. The registered pre-holdout OSF deposit was never made**
   (found 2026-10-05, S161; W8.4). The "exact ordering for each
   condition" it promised is what W3 had to reconstruct from code (S-3).
+- **S-12. The February pseudo-p was conservative** (found 2026-10-05, S161,
+  D42 re-test). Its "0.05 minus the CI bound" construction under-rejected:
+  four 60-tile contrasts pass BH on real p-values that it never declared
+  (Phase 2b text T0.3 > T1.0 and T1.0 > T1.3; Phase 2e config-default and
+  canonical-last > random). No carry-forward rested on them; prose calling
+  them null needs checking (W1).
 - **S-8. 384 and 512 px tiles cost the same input tokens** (1,502): a fixed
   image-token budget whatever the tile size (relevant to how tile-size
   results are read).
@@ -265,7 +271,15 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
   measure each test's false-positive rate.
 - [x] W2.4 RULED 2026-10-05 (D42): the paired tile-swap permutation test with
   BH for every contrast; no p-value read from the bootstrap (CIs only).
-- [ ] W2.6 IMPLEMENT D42 (next session): replace the bootstrap p-value in
+- [ ] W2.6 IMPLEMENT D42. CODE, REGENERATION AND FINDINGS DONE 2026-10-05
+  (S161; `reports/d42-implementation-2026-10-05.md`): seven paths converted
+  (the five W2 named, the February pseudo-p, and the retest evaluator's
+  uncorrected CI flag); eight analyses regenerated, the March pairwise file
+  and nine retest evaluations annotated, the February 60-tile instrument
+  re-tested; five findings documents updated; tier 1 green (3,750). STILL
+  OPEN: the batch signature note on four signed analyses (report § 7, PI);
+  class B (two PI choices: B-17's two-file mix, I4's sweep; report § 6);
+  the C-25 documentation sites (W1). Was: replace the bootstrap p-value in
   live code (C-27: `scripts/lib_advanced_metrics.py:1945-1955` and four
   other paths; retire the test that pins the floor), apply the re-test
   results (C-25) to every inventoried site, and re-test what W2 could not
@@ -397,8 +411,17 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   first-upload set. One registration update exists (2026-02-04, errata
   E1-E16), and it left the form's file field empty. The repository's
   three lodged documents are byte-identical to OSF. Upload waits for the
-  PI's own check and his choice of channel (report § 5).
-- [ ] W8.4 (S-11) The registered pre-holdout deposit was never made
+  PI's own check and his choice of channel (report § 5). PI 2026-10-05: state
+  confirmed; project made public; registration update agreed; deposit with
+  GitHub commit links. Uploads DONE 2026-10-05 (see W8.4); update 2 awaits
+  the PI's approval of its text.
+- [x] W8.4 (S-11) DONE 2026-10-05 (S161): erratum E91 (`690154d23`); the
+  late deposit uploaded to OSF `late-deposit-2026-10-05/` and SHA-256
+  verified (index `osf/late-deposit/deposit-index.md`); the errata pointers,
+  E87 files and a new README version uploaded to `preregistration-files/`;
+  project made public by the PI. Registration update 2 drafted for the PI
+  (`planning/osf-registration-update-2-draft-2026-10-05.md`). Was: the
+  registered pre-holdout deposit was never made
   (`osf/preregistration.md:1498-1500`, appendix `:161-167`: library
   manifest, prompt texts, mapping table, image filenames, H9 variants,
   the exact ordering per condition, seeds). No erratum records it. Needs
@@ -456,6 +479,13 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (Session 161, later still) — D42 implemented; E91 and the late deposit
+
+D42's code, regeneration and findings are done (W2.6; three items left for
+the PI). S-11 is resolved by erratum E91 and a verified late deposit on OSF
+(W8.4); registration update 2 is drafted. S-12 added: the February pseudo-p
+was conservative.
 
 ### 2026-10-05 (Session 161, later) — W8.3 investigated; S-11 found
 
