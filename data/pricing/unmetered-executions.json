@@ -96,7 +96,7 @@
     "high": 7.554363
    },
    "register_effect": "none",
-   "evidence": "batches/ta2p44lj7ym24euqp52xo67ohncrha7wm8ua (pending at 22:15Z when its poller was killed) and batches/z3yhm81fy9wjnp3xrcakrbfro01jaa7lxmuu (pending at 23:42Z), and possibly run 5's first submission (id not captured); no cancel path existed in lib_batch_api.py or 4_detect_mounds_batch.py at ed04977d6. Any that ran was billed on Pacific 2026-04-08 (the month's only Flash batch day), whose volume is shared with zero-usage metas and cannot isolate them. Bound: 3 x US$2.518121 (one full pass at batch). client.batches.get() on the two named jobs would settle it at no token cost (an API call, so under the approval gate)."
+   "evidence": "batches/ta2p44lj7ym24euqp52xo67ohncrha7wm8ua (pending at 22:15Z when its poller was killed) and batches/z3yhm81fy9wjnp3xrcakrbfro01jaa7lxmuu (pending at 23:42Z), and possibly run 5's first submission (id not captured); no cancel path existed in lib_batch_api.py or 4_detect_mounds_batch.py at ed04977d6. Any that ran was billed on Pacific 2026-04-08 (the month's only Flash batch day), whose volume is shared with zero-usage metas and cannot isolate them. Bound: 3 x US$2.518121 (one full pass at batch). client.batches.get() on the two named jobs would settle it at no token cost (an API call, so under the approval gate). LOOKED UP 2026-10-05 (two batches.get calls, PI-approved, no tokens): both NOT_FOUND, so the records are purged (or belong to another key's project) and the exposure stays a bound."
   },
   {
    "id": "U5",
