@@ -413,14 +413,16 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   three lodged documents are byte-identical to OSF. Upload waits for the
   PI's own check and his choice of channel (report § 5). PI 2026-10-05: state
   confirmed; project made public; registration update agreed; deposit with
-  GitHub commit links. Uploads DONE 2026-10-05 (see W8.4); update 2 awaits
-  the PI's approval of its text.
+  GitHub commit links. Uploads DONE 2026-10-05 (see W8.4); update 2
+  submitted and approved 2026-10-05.
+- [x] W8.3 DONE 2026-10-05 (S161).
 - [x] W8.4 (S-11) DONE 2026-10-05 (S161): erratum E91 (`690154d23`); the
   late deposit uploaded to OSF `late-deposit-2026-10-05/` and SHA-256
   verified (index `osf/late-deposit/deposit-index.md`); the errata pointers,
   E87 files and a new README version uploaded to `preregistration-files/`;
-  project made public by the PI. Registration update 2 drafted for the PI
-  (`planning/osf-registration-update-2-draft-2026-10-05.md`). Was: the
+  project made public by the PI. Registration update 2 SUBMITTED AND
+  APPROVED 2026-10-05 11:30 UTC through the OSF API (text approved by the PI;
+  lodged documents re-attached; `planning/osf-registration-update-2-draft-2026-10-05.md`). Was: the
   registered pre-holdout deposit was never made
   (`osf/preregistration.md:1498-1500`, appendix `:161-167`: library
   manifest, prompt texts, mapping table, image filenames, H9 variants,

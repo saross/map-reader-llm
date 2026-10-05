@@ -1,9 +1,14 @@
 # OSF registration update 2 — draft for the PI
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (submitted; the ordering sentence expanded
+> as the PI asked). See [§ Changelog](#changelog) for revision history.
 
-**Status: DRAFT, not submitted.** The second update to registration
+**Status: SUBMITTED AND APPROVED 2026-10-05 11:30 UTC** (schema response
+`6ac38a3364e75f041c219724`, through the OSF API, after the PI approved the
+text and asked for the lodged documents to be re-attached; the stored text
+matches the block below word for word, except that OSF's sanitiser strips
+`<...>` links, so the two URLs were sent as plain text). The second update
+to registration
 `osf.io/tybgq` that the PI agreed to in Session 161 (tracker W8.3, erratum
 E91). It is public under the PI's name once submitted, so it waits for his
 approval of the text. The block below is the proposed "justification" field;
@@ -16,7 +21,7 @@ the registration's summary field is left as it is.
 **Preregistration**: v4.7 (2026-01-31), unchanged. Corrections are recorded
 in the errata register, never in the lodged documents.
 **Repository**: <https://github.com/saross/map-reader-llm> (public); state at
-this update: commit `5a3fb86d8`. This project was made public on 2026-10-05.
+this update: commit `70882d192`. This project was made public on 2026-10-05.
 
 ### 1. A registered deposit that was not made (erratum E91)
 
@@ -80,6 +85,14 @@ registration's archive and in this project's
    API after approval, or you paste the text into the OSF interface.
 
 ## Changelog
+
+### 2026-10-05 (later) — Approved, expanded and submitted
+
+The PI approved the text with the H4 ordering sentence expanded (now in the
+block); four other phrases were expanded slightly for readers outside the
+project (the February upload, the seeds, "permanent GitHub link", the list
+of attached files). Cited commit moved to `70882d192`, which holds E91's
+final wording. Submitted and approved through the OSF API.
 
 ### 2026-10-05 — Original publication (Session 161)
 
