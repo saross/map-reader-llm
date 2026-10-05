@@ -2272,6 +2272,31 @@ class TestRetryTileSync:
         assert len(detections) == 1
         assert detections[0]["label"] == "mound"
 
+    def test_the_retry_returns_its_usage(self) -> None:
+        """S160: the sync retry discarded usage, so the E71 rerun's spend
+        (about US$11.41) reached no meta. It now returns the call's usage in
+        the batch format's names."""
+        from types import SimpleNamespace
+        mock_client = MagicMock()
+        mock_response = MagicMock()
+        mock_response.text = '{"detections": []}'
+        mock_response.usage_metadata = SimpleNamespace(
+            prompt_token_count=1502, candidates_token_count=40,
+            thoughts_token_count=8178, cached_content_token_count=None,
+            total_token_count=9720)
+        mock_client.models.generate_content.return_value = mock_response
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_path = _make_geotiff(Path(tmpdir) / "tile.png")
+            result = _retry_tile_sync(
+                client=mock_client, tile_path=tile_path, model_name="gemini-3-flash",
+                system_instruction="Test", prompt_config=_make_prompt_config(),
+                examples=[],
+            )
+        assert result["response"]["usageMetadata"] == {
+            "promptTokenCount": 1502, "candidatesTokenCount": 40,
+            "thoughtsTokenCount": 8178, "cachedContentTokenCount": 0,
+            "totalTokenCount": 9720}
+
     def test_api_error_returns_none(self) -> None:
         """API exception during retry should return None, not raise."""
         mock_client = MagicMock()

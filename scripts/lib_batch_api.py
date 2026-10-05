@@ -2255,6 +2255,80 @@ def parse_detections_to_geojson(
 # ─────────────────────────────────────────────────────────────────────
 
 
+def _usage_from_response(response: Any) -> dict[str, int]:
+    """Token usage of one synchronous response, in the batch format's names.
+
+    The sync retry path discarded usage until 2026-10-05 (tracker W5 / D35:
+    the E71 rerun, about US$11.41 by the July invoice, left no usage in any
+    meta). Missing counts read as 0.
+
+    Args:
+        response: A ``generate_content`` response (anything with a
+            ``usage_metadata`` attribute, or None).
+
+    Returns:
+        ``usageMetadata``-style counts: ``promptTokenCount``,
+        ``candidatesTokenCount``, ``thoughtsTokenCount``,
+        ``cachedContentTokenCount``, ``totalTokenCount``.
+
+    Examples:
+        >>> from types import SimpleNamespace as NS
+        >>> _usage_from_response(NS(usage_metadata=NS(prompt_token_count=1502,
+        ...     candidates_token_count=40, thoughts_token_count=None,
+        ...     cached_content_token_count=None, total_token_count=1542)))["promptTokenCount"]
+        1502
+    """
+    meta = getattr(response, "usage_metadata", None)
+    fields = (("promptTokenCount", "prompt_token_count"),
+              ("candidatesTokenCount", "candidates_token_count"),
+              ("thoughtsTokenCount", "thoughts_token_count"),
+              ("cachedContentTokenCount", "cached_content_token_count"),
+              ("totalTokenCount", "total_token_count"))
+    return {out: int(getattr(meta, attr, 0) or 0) for out, attr in fields}
+
+
+def _patch_usage_stats(calls: list[dict[str, int]]) -> dict[str, Any]:
+    """A recovery meta's ``usage_stats`` from the usage of every billed retry call.
+
+    Every call that returned a response was billed, whether or not its
+    detections parsed, so all of them count.
+
+    Args:
+        calls: One ``usageMetadata``-style dict per call
+            (:func:`_usage_from_response`).
+
+    Returns:
+        ``usage_stats`` in the meta format ``merge_meta`` sums; empty when
+        no call returned.
+
+    Examples:
+        >>> u = {"promptTokenCount": 10, "candidatesTokenCount": 2,
+        ...      "thoughtsTokenCount": 3, "cachedContentTokenCount": 0,
+        ...      "totalTokenCount": 15}
+        >>> _patch_usage_stats([u, u])["total_input_tokens"]
+        20
+        >>> _patch_usage_stats([])
+        {}
+    """
+    if not calls:
+        return {}
+    total = {k: sum(c.get(k, 0) for c in calls) for k in calls[0]}
+    return {
+        "total_input_tokens": total["promptTokenCount"],
+        "total_cached_tokens": total["cachedContentTokenCount"],
+        "total_output_tokens": total["candidatesTokenCount"],
+        "total_thoughts_tokens": total["thoughtsTokenCount"],
+        "total_tokens": total["totalTokenCount"],
+        "n_responses_with_usage": len(calls),
+        "by_provider": {"google_gemini": {
+            "input_tokens": total["promptTokenCount"],
+            "output_tokens": total["candidatesTokenCount"],
+            "total_tokens": total["totalTokenCount"],
+            "request_count": len(calls),
+        }},
+    }
+
+
 def _retry_tile_sync(
     client: Any,
     tile_path: Path,
@@ -2386,6 +2460,9 @@ def _retry_tile_sync(
                         "finish_reason": "STOP",
                     }
                 ],
+                # The call's own usage, so the patcher can record what it
+                # spent (it was discarded until 2026-10-05).
+                "usageMetadata": _usage_from_response(response),
             },
         }
     except Exception as e:
@@ -3392,6 +3469,10 @@ def patch_failed_tiles(
     # ── Tier 1: Retry with original parameters ────────────────
     recovered: list[str] = []
     all_new_features: list[dict] = []
+    # Usage of every retry call that returned (each was billed, parsed or
+    # not), and when the patch began: the recovery meta records both.
+    patch_calls: list[dict[str, int]] = []
+    patch_started = datetime.now(timezone.utc)
     config_version = snapshot.get("version", "patched")
     pending = [
         t for t in failed_tiles if t in tile_paths_by_name
@@ -3416,6 +3497,8 @@ def patch_failed_tiles(
                         service_tier=service_tier,
                     )
                     if result is not None:
+                        patch_calls.append(
+                            (result.get("response") or {}).get("usageMetadata") or {})
                         retry_matched = {tile_name: result}
                         new_features, dets, failures = (
                             parse_detections_to_geojson(
@@ -3464,6 +3547,8 @@ def patch_failed_tiles(
                         service_tier=service_tier,
                     )
                     if result is not None:
+                        patch_calls.append(
+                            (result.get("response") or {}).get("usageMetadata") or {})
                         retry_matched = {tile_name: result}
                         new_features, dets, failures = (
                             parse_detections_to_geojson(
@@ -3556,13 +3641,24 @@ def patch_failed_tiles(
                 "failed_items": list(pending),
             },
             "timestamp": {
-                "start": datetime.now(timezone.utc).isoformat(),
+                "start": patch_started.isoformat(),
                 "end": datetime.now(timezone.utc).isoformat(),
-                "duration_seconds": 0.0,
+                "duration_seconds": (
+                    datetime.now(timezone.utc) - patch_started).total_seconds(),
             },
-            # No cost block: a patch stub records no usage, and an empty
-            # block contributes nothing to a merge (a zero block would have
-            # dragged an audited block down to the legacy additive path).
+            # The patch's own usage, summed over every billed retry call
+            # (until 2026-10-05 it recorded none, so the E71 rerun's spend
+            # reached no meta). merge_meta sums it into the original and
+            # keeps it apart in the recovery_history entry. Still no cost
+            # block: an empty block contributes nothing to a merge (a zero
+            # block would drag an audited block to the legacy additive
+            # path); the register prices the usage.
+            "usage_stats": _patch_usage_stats(
+                [c for c in patch_calls if c]),
+            # The tier the patch requested, for merge_meta's history entry (a
+            # configuration block would be compared field by field with the
+            # original's and log a spurious disagreement on every patch).
+            "service_tier": service_tier,
             "cost_estimate": {},
         }
 

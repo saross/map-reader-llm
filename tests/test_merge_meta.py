@@ -192,6 +192,21 @@ class TestSchemaContract:
         assert us["total_output_tokens"] == 5_100
         assert us["total_tokens"] == 15_300
 
+    def test_history_keeps_the_recovery_usage_and_tier_apart(self) -> None:
+        # S160: a sync patch now records its usage; the history entry keeps
+        # it (and the tier it asked for) apart from the summed usage_stats,
+        # so the pass can be priced fragment by fragment. SENTINEL: a
+        # recovery that recorded no usage leaves None, not an empty dict.
+        original = _make_meta(total_input_tokens=10_000, total_tokens=15_000)
+        recovery = _make_meta(total_input_tokens=1_502, total_tokens=1_600)
+        recovery["service_tier"] = "flex"
+        entry = merge_meta(original, recovery)["recovery_history"][-1]
+        assert entry["recovery_usage"]["total_input_tokens"] == 1_502
+        assert entry["recovery_service_tier"] == "flex"
+        bare = {k: v for k, v in recovery.items() if k not in ("usage_stats", "service_tier")}
+        entry = merge_meta(original, bare)["recovery_history"][-1]
+        assert entry["recovery_usage"] is None and entry["recovery_service_tier"] is None
+
     def test_cost_estimate_total_sums(self) -> None:
         original = _make_meta(total_cost_usd=10.0)
         recovery = _make_meta(total_cost_usd=0.5)
