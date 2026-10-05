@@ -16,9 +16,11 @@ Covers 52 comparisons across 7 groups:
   F: Thinking level under PV (3 comparisons)
   G: Verifier strategy (3 comparisons)
 
-Each comparison uses bootstrap_effect_size_ci() methodology: paired tile-level
-bootstrap with 1000 iterations, seed=42, two-sided p-values for False Discovery
-Rate (FDR) correction.
+Each comparison uses bootstrap_effect_size_ci(): a paired tile-level
+bootstrap (1000 iterations, seed=42) for the confidence intervals, and
+two-sided p-values for False Discovery Rate (FDR) correction from the paired
+tile-swap permutation test (10,000 permutations, seed 42; PI ruling D42,
+2026-10-05; before that the p-values were read off the bootstrap).
 
 Usage:
     python scripts/compute-pairwise-effect-sizes.py \\

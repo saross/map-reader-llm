@@ -54,6 +54,7 @@ from scripts.analyse_phase2_results import apply_fdr_correction, load_condition_
 from scripts.lib_advanced_metrics import (
     aggregate_tile_metrics,
     bootstrap_ci,
+    bootstrap_effect_size_ci,
     bootstrap_multi_run_ci,
     bootstrap_multi_run_effect_size_ci,
     calculate_f1_internal,
@@ -952,3 +953,60 @@ class TestPerTileMetrics:
         assert f1_agg == pytest.approx(f1_pt, abs=1e-6)
         assert p_agg == pytest.approx(p_pt, abs=1e-6)
         assert r_agg == pytest.approx(r_pt, abs=1e-6)
+
+
+@pytest.mark.tier1
+class TestEffectSizePValuesArePermutation:
+    """bootstrap_effect_size_ci's p-values come from the permutation test (D42)."""
+
+    def test_identical_conditions_give_p_one(self) -> None:
+        """Identical detection sets: p = 1 on every metric, never a floor."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _n, gdf_det = run_gdfs[0]
+        res = bootstrap_effect_size_ci(
+            gdf_det, gdf_bounds, gdf_det, gdf_bounds, gdf_ref,
+            n_iterations=200, random_seed=42, return_p_values=True,
+        )
+        for key in ("f1_difference", "precision_difference", "recall_difference"):
+            assert res[key]["p_value"] == 1.0
+            assert "permutation" in res[key]["p_method"]
+        assert res["permutation"]["n_discordant_tiles"] == 0
+
+    def test_p_equals_the_kernel_on_sorted_tile_arrays(self) -> None:
+        """The p-value is the kernel's, on tiles in sorted order."""
+        from scripts.lib_advanced_metrics import _tile_count_arrays
+        from scripts.lib_permutation import paired_permutation_test
+
+        runs_a, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=1,
+        )
+        runs_b, _ref, _bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=2,
+        )
+        det_a, det_b = runs_a[0][1], runs_b[0][1]
+        res = bootstrap_effect_size_ci(
+            det_a, gdf_bounds, det_b, gdf_bounds, gdf_ref,
+            n_iterations=100, random_seed=42, return_p_values=True,
+        )
+        tiles = sorted(gdf_bounds["tile_name"].unique())
+        want = paired_permutation_test(
+            _tile_count_arrays(compute_per_tile_tp_fp_fn(det_a, gdf_ref, gdf_bounds), tiles),
+            _tile_count_arrays(compute_per_tile_tp_fp_fn(det_b, gdf_ref, gdf_bounds), tiles),
+        )
+        assert res["f1_difference"]["p_value"] == want["metrics"]["f1"]["p_value"]
+        assert res["recall_difference"]["p_value"] == want["metrics"]["recall"]["p_value"]
+
+    def test_no_p_value_unless_asked(self) -> None:
+        """Without return_p_values the result carries CIs only."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=6, detections_per_tile=2, seed=3,
+        )
+        _n, gdf_det = run_gdfs[0]
+        res = bootstrap_effect_size_ci(
+            gdf_det, gdf_bounds, gdf_det, gdf_bounds, gdf_ref,
+            n_iterations=50, random_seed=42,
+        )
+        assert "p_value" not in res["f1_difference"]
+        assert "permutation" not in res

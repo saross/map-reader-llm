@@ -1875,15 +1875,20 @@ def bootstrap_effect_size_ci(
         gdf_ref: GeoDataFrame of ground truth references (shared).
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
-        return_p_values: If True, compute and include two-sided bootstrap
-            p-values for each metric. The p-value is the proportion of
-            bootstrap samples where the effect size crosses zero,
-            doubled for a two-sided test. Required for False Discovery
-            Rate (FDR) correction across multiple comparisons.
+        return_p_values: If True, include a two-sided p-value for each
+            metric from the paired tile-swap PERMUTATION test
+            (``lib_permutation.paired_permutation_test``, 10,000
+            permutations, seed 42, tiles in sorted order), never from the
+            bootstrap (PI ruling D42, 2026-10-05). The bootstrap p this
+            function used to return (2 x the minority tail, floored at
+            1/B) sat at its floor between identical arms
+            (``reports/retest-bootstrap-check-2026-10-05.md``).
 
     Returns:
         Effect size estimates with 95% CIs for F1, precision, recall differences.
-        When ``return_p_values=True``, each metric dict also includes ``p_value``.
+        When ``return_p_values=True``, each metric dict also includes
+        ``p_value`` and ``p_method``, and the result gains ``permutation``
+        (tiles, discordant tiles, permutations, seed).
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -1926,6 +1931,7 @@ def bootstrap_effect_size_ci(
     def _build_metric_dict(
         diffs: list[float],
         compute_p: bool,
+        metric_key: str,
     ) -> dict:
         """Build a metric difference dict with BCa CI and optional p-value.
 
@@ -1942,34 +1948,96 @@ def bootstrap_effect_size_ci(
             "method": bca["method"],
         }
         if compute_p:
-            # Two-sided bootstrap p-value: proportion of samples on
-            # the minority side of zero, doubled. Clamped to [1/N, 1]
-            # to avoid exact-zero p-values from finite samples.
-            diffs_arr = np.array(diffs)
-            prop_le_zero = np.mean(diffs_arr <= 0)
-            prop_gt_zero = np.mean(diffs_arr > 0)
-            p_value = 2.0 * min(prop_le_zero, prop_gt_zero)
-            # Floor at 1/n_iterations (cannot claim p=0 from
-            # finite bootstrap)
-            p_value = max(p_value, 1.0 / n_iterations)
-            result["p_value"] = float(p_value)
+            # D42: the p-value comes from the paired tile-swap permutation
+            # test on the same per-tile counts, never from these bootstrap
+            # draws.
+            perm_metric = permutation["metrics"][metric_key]
+            result["p_value"] = perm_metric["p_value"]
+            result["p_method"] = permutation["method"]
         return result
 
-    return {
+    permutation = None
+    if return_p_values:
+        permutation = _permutation_on_tile_metrics(
+            tile_metrics_a, tile_metrics_b, common_tiles,
+        )
+
+    out = {
         "f1_difference": _build_metric_dict(
-            f1_diffs, return_p_values,
+            f1_diffs, return_p_values, "f1",
         ),
         "precision_difference": _build_metric_dict(
-            precision_diffs, return_p_values,
+            precision_diffs, return_p_values, "precision",
         ),
         "recall_difference": _build_metric_dict(
-            recall_diffs, return_p_values,
+            recall_diffs, return_p_values, "recall",
         ),
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
+    if permutation is not None:
+        out["permutation"] = {
+            key: permutation[key]
+            for key in ("method", "n_tiles", "n_discordant_tiles",
+                        "n_permutations", "seed")
+        }
+    return out
+
+
+def _tile_count_arrays(
+    tile_metrics: pd.DataFrame,
+    tiles: list[str],
+) -> dict[str, np.ndarray]:
+    """Per-tile TP/FP/FN arrays aligned to ``tiles`` (absent tile = zeros).
+
+    Mirrors :func:`aggregate_tile_metrics`: a tile listed twice in
+    ``tile_metrics`` contributes its first row.
+
+    Args:
+        tile_metrics: Frame with columns ``tile_name``, ``tp``, ``fp``, ``fn``.
+        tiles: Tile names, in the order the arrays should follow.
+
+    Returns:
+        Dict of float arrays ``tp``, ``fp``, ``fn``, each ``len(tiles)``.
+    """
+    first = tile_metrics.groupby("tile_name", sort=False)[["tp", "fp", "fn"]].first()
+    aligned = first.reindex(tiles).fillna(0.0)
+    return {key: aligned[key].to_numpy(dtype=float) for key in ("tp", "fp", "fn")}
+
+
+def _permutation_on_tile_metrics(
+    tile_metrics_a: pd.DataFrame,
+    tile_metrics_b: pd.DataFrame,
+    common_tiles: list[str],
+) -> dict:
+    """Paired tile-swap permutation test of A - B on per-tile counts (D42).
+
+    Tiles are put in SORTED order first: the swap a tile receives depends
+    on its position, and ``common_tiles`` comes from a set intersection
+    whose order varies with the interpreter's hash seed.
+
+    Args:
+        tile_metrics_a: Per-tile counts for condition A.
+        tile_metrics_b: Per-tile counts for condition B.
+        common_tiles: The tiles both conditions cover.
+
+    Returns:
+        The :func:`lib_permutation.paired_permutation_test` result.
+    """
+    # Imported here, and by either name, because this library is imported
+    # both as ``lib_advanced_metrics`` and as ``scripts.lib_advanced_metrics``.
+    try:
+        from lib_permutation import paired_permutation_test
+    except ImportError:
+        from scripts.lib_permutation import paired_permutation_test
+
+    tiles = sorted(common_tiles)
+    return paired_permutation_test(
+        _tile_count_arrays(tile_metrics_a, tiles),
+        _tile_count_arrays(tile_metrics_b, tiles),
+    )
 
 
 def bootstrap_multi_run_ci(
