@@ -1,8 +1,12 @@
 # The final 55-map board @ 50 m — every run, carried and oracle (reference r2)
 
-> **Last revised**: 2026-10-04 (later: the cost-efficiency section now
+> **Last revised**: 2026-10-05 (the TH7, T03 and TM oracle cells add the
+> vote-3 increment they drew on, PI ruling D33: US$207.35 → 210.32,
+> 261.15 → 263.89 and 30.40 → 31.91; tiers, groups, F1 and both
+> frontiers' membership unchanged; signature note given
+> 2026-10-05T06:06:19Z). 2026-10-04 (later): the cost-efficiency section
 > shows TWO frontiers, carried beside oracle, under PI ruling D24; tiers,
-> groups, F1 and costs unchanged). Earlier the same day: the cost axis
+> groups, F1 and costs unchanged. Earlier the same day: the cost axis
 > re-priced from the passes register at one uniform tier, PI ruling D19
 > amended; every run now priced, so the efficiency frontier's membership
 > changes; signature note given 2026-10-04T00:25:02Z. See
@@ -33,11 +37,11 @@
 | 16 | B-N3-carried | carried (post-hoc) | 6 | fhi | $65 | (0.15, k3) | 0.8477 | [0.8395, 0.8556] | 0.8517 | 0.8438 | 0.702 | 4971 |
 | 17 | A-N10-oracle | oracle | 6 | hij | $103† | (0.15, k7) | 0.8419 | [0.8330, 0.8502] | 0.8763 | 0.8101 | 0.695 | 4639 |
 | 18 | ARM1-N1-oracle | oracle | 6 | hijk | $35 | (0.20, k1) | 0.8413 | [0.8332, 0.8492] | 0.8251 | 0.8581 | 0.725 | 5219 |
-| 19 | T03-oracle | oracle | 6 | ijkl | $261 | (0.20, k3) | 0.8399 | [0.8311, 0.8483] | 0.8625 | 0.8185 | 0.696 | 4762 |
+| 19 | T03-oracle | oracle | 6 | ijkl | $264 | (0.20, k3) | 0.8399 | [0.8311, 0.8483] | 0.8625 | 0.8185 | 0.696 | 4762 |
 | 20 | A-N10-carried | carried | 7 | km | $103† | (0.15, k8) | 0.8391 | [0.8302, 0.8478] | 0.8901 | 0.7937 | 0.693 | 4475 |
 | 21 | A-N5-oracle | oracle | 7 | km | $59† | (0.15, k4) | 0.8383 | [0.8294, 0.8468] | 0.8767 | 0.8031 | 0.691 | 4597 |
 | 22 | A-N5-carried | carried | 7 | km | $59† | (0.15, k4) | 0.8383 | [0.8294, 0.8468] | 0.8767 | 0.8031 | 0.691 | 4597 |
-| 23 | TH7-oracle | oracle | 7 | jkl | $207 | (0.15, k3) | 0.8380 | [0.8287, 0.8467] | 0.8583 | 0.8187 | 0.679 | 4786 |
+| 23 | TH7-oracle | oracle | 7 | jkl | $210 | (0.15, k3) | 0.8380 | [0.8287, 0.8467] | 0.8583 | 0.8187 | 0.679 | 4786 |
 | 24 | FOURTH-N1-oracle | oracle | 7 | jklmn | $42† | (0.96, k1) | 0.8352 | [0.8272, 0.8428] | 0.8102 | 0.8617 | 0.747 | 5337 |
 | 25 | A-N3-oracle | oracle | 8 | ln | $41† | (0.20, k2) | 0.8321 | [0.8233, 0.8405] | 0.8513 | 0.8137 | 0.702 | 4796 |
 | 26 | A-N3-carried | carried (post-hoc) | 8 | ln | $41† | (0.15, k3) | 0.8307 | [0.8217, 0.8395] | 0.8891 | 0.7796 | 0.688 | 4400 |
@@ -45,7 +49,7 @@
 | 28 | UPL-oracle | oracle | 8 | no | $58 | (0.15, k5) | 0.8274 | [0.8174, 0.8367] | 0.8897 | 0.7732 | 0.669 | 4361 |
 | 29 | A-N1-oracle | oracle | 9 | op | $20† | (0.20, k1) | 0.8227 | [0.8139, 0.8313] | 0.8344 | 0.8113 | 0.701 | 4879 |
 | 30 | TH7-k4 | carried | 9 | pq | $207 | (0.15, k4) | 0.8162 | [0.8059, 0.8261] | 0.8999 | 0.7467 | 0.665 | 4164 |
-| 31 | TM-oracle | oracle | 10 | qr | $30† | (0.20, k3) | 0.8103 | [0.7999, 0.8204] | 0.8944 | 0.7407 | 0.662 | 4156 |
+| 31 | TM-oracle | oracle | 10 | qr | $32† | (0.20, k3) | 0.8103 | [0.7999, 0.8204] | 0.8944 | 0.7407 | 0.662 | 4156 |
 | 32 | B-N1-oracle | oracle | 10 | r | $31 | (0.20, k1) | 0.8013 | [0.7925, 0.8096] | 0.7561 | 0.8521 | 0.709 | 5655 |
 | 33 | IM-oracle | oracle | 10 | r | $201† | (0.15, k3) | 0.8008 | [0.7907, 0.8102] | 0.8297 | 0.7738 | 0.711 | 4680 |
 | 34 | TM-k4 | carried | 11 | s | $30† | (0.15, k4) | 0.7826 | [0.7713, 0.7936] | 0.8994 | 0.6927 | 0.640 | 3865 |
@@ -60,8 +64,10 @@ discounted tier (flex, which equals batch; PI ruling D19, amended
 2026-10-04): proposer passes x N plus its verification, from
 `data/pricing/frontier-configurations.json` via
 `scripts/lib_frontier_cost.py`; a run's carried and oracle cells share
-it, and `†` marks a verifier leg completed from comparable
-legs (a floor). See
+it, except that the TH7, T03 and TM oracle cells add the vote-3
+increment their k3 operating point drew on (PI ruling D33), and
+`†` marks a verifier leg completed from comparable legs (a
+floor). See
 `significance-groups.png` for the dot-and-CI plot and the full
 pairwise significance matrix.
 
@@ -156,8 +162,8 @@ comparable legs.
 | run | basis | cost | F1@50 (tier) | TP mounds | $/mound | frontier | marginal $/+0.01 F1 |
 |---|---|---:|---|---:|---:|---|---:|
 | A, N = 1 | oracle | $20† | 0.8227 (T9) | 4,071 | $0.0050 | YES | — |
-| text-min (K = 5) | oracle | $30† | 0.8103 (T10) | 3,717 | $0.0082 | — | — |
 | B, N = 1 | oracle | $31 | 0.8013 (T10) | 4,276 | $0.0072 | — | — |
+| text-min (K = 5) | oracle | $32† | 0.8103 (T10) | 3,717 | $0.0086 | — | — |
 | 3.7 arm 1, N = 1 | oracle | $35 | 0.8413 (T6) | 4,306 | $0.0081 | YES | $7.71 |
 | 3.7 arm 2, N = 1 | oracle | $38 | 0.8610 (T4) | 4,322 | $0.0089 | YES | $1.82 |
 | A, N = 3 | oracle | $41† | 0.8321 (T8) | 4,083 | $0.0100 | — | — |
@@ -175,8 +181,8 @@ comparable legs.
 | B, N = 10 (384/50 %) | oracle | $173 | 0.8560 (T4) | 4,133 | $0.0418 | — | — |
 | fourth cell: B K = 10 union + 3.7 verifier | oracle | $198† | 0.8813 (T2) | 4,192 | $0.0473 | — | — |
 | image (HIGH, K = 5) — as shipped (k3) | as-shipped (k3) | $201† | 0.8008 (T10) | 3,883 | $0.0517 | — | — |
-| T0.7 (HIGH, K = 5) | oracle | $207 | 0.8380 (T7) | 4,108 | $0.0505 | — | — |
-| T0.3 (HIGH, K = 5) | oracle | $261 | 0.8399 (T6) | 4,107 | $0.0636 | — | — |
+| T0.7 (HIGH, K = 5) | oracle | $210 | 0.8380 (T7) | 4,108 | $0.0512 | — | — |
+| T0.3 (HIGH, K = 5) | oracle | $264 | 0.8399 (T6) | 4,107 | $0.0643 | — | — |
 
 ## Post-hoc: the emergent N = 3 carried cells
 
@@ -285,6 +291,37 @@ re-labelled in `cells_manifest.json`.
   point was ever registered there).
 
 ## Changelog
+
+### 2026-10-05 — The oracle cells' vote-3 increments priced (D33)
+
+**Refresh trigger**: PI ruling D33 (`planning/pi-decisions-2026-09-20.md`).
+The TH7, T03 and TM oracle cells (k3) score detections whose 3-of-5
+candidates include the Session 104 vote-3 increment
+(`results/deployment-oracle-2026-06-06/vote3-verify/`), but their cost
+counted only the main verifier leg. The S160 register repair gave the three
+increments their own rows (`<run>::vote3-increment::run1`); the frontier
+mapping prices them for the oracle cells only (`5302693ed`). Applied by
+`scripts/final_board_cost_refresh.py --write`.
+
+| Cell | Cost before | Cost after |
+|---|---:|---:|
+| TH7-oracle | US$207.35 | US$210.32 |
+| T03-oracle | US$261.15 | US$263.89 |
+| TM-oracle | US$30.40† | US$31.91† |
+
+The board's sentence defining `cost` now names the increment. In the
+efficiency table the three rows' cost and $/mound moved, and text-min
+(K = 5) now sorts after B, N = 1 ($32 against $31).
+
+**What did NOT change**: the carried cells (k4), which never used the
+increment; the IM and UPL oracle cells (IM's carried and oracle cells are
+one shipped k3 cell and no image vote-3 increment was run; UPL's oracle is
+priced by its own verifier leg); every other family's cost; every tier,
+group, pairwise result, F1 and tile-MCC; the addendum; and both efficiency
+frontiers' membership. The PI approved the re-priced cost axis by a
+signature note (2026-10-05T06:06:19Z, Session 161), recorded in
+`results/run-analyses.json`; the signature of 2026-09-17 stands for the
+tiering.
 
 ### 2026-10-04 (later) — Two efficiency frontiers, carried and oracle (D24)
 
