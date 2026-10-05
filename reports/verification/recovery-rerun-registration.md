@@ -1,8 +1,8 @@
 # Pre-execution registration — E71 dead-tile recovery rerun
 
-> **Last revised**: 2026-07-30 (EXECUTED — 255/288 recovered; outcome
-> vs prediction recorded, including the text-cell F1 prediction miss).
-> See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (the actual spend: about US$11.41 by the
+> invoice, against the estimate below). See [§ Changelog](#changelog) for
+> revision history.
 
 **Status**: `executed` (2026-07-30, same day as registration — commit
 order verifiable in git: registration → PI approval → audit/dry-run →
@@ -105,6 +105,14 @@ exists in the patch campaign) and the condition's coverage note says so.
 envelope by two orders of magnitude; per-batch approval still required
 before launch.
 
+**Actual (added 2026-10-05):** about **US$11.41**, from the July invoice's
+Gemini 3 Flash lines (A$16.504595 at 1.4468), whose cached-input window is
+exactly the rerun's two Pacific days; a token model brackets the rerun at
+US$8.51-19.56. The estimate's per-tile basis missed that every failed attempt
+burns about 8,178 thinking tokens. No meta recorded the spend: the sync patch
+path discarded usage (fixed 2026-10-05). Ledger entry U1 in
+`data/pricing/unmetered-executions.json` (PI ruling D35).
+
 ## 6. Gate checklist (all complete — see Changelog for the outcome)
 
 - [x] PI approves scope and spend (2026-07-30, "you have my approval,
@@ -117,13 +125,28 @@ before launch.
 
 ## Changelog
 
+### 2026-10-05 — The actual spend (Session 160, ruling D35)
+
+Trigger: the launch-command archaeology's finding that the rerun's spend
+reached no meta, and the PI's ruling D35. § 5 gains the actual, about
+US$11.41 (invoice-derived), beside the estimate of US$2-4; the deep sweeps'
+"well under US$1" is corrected (about US$5.49-8.09 by the token model). The
+recovery counts, the residue and every F1 are unchanged.
+
+| Figure | Before | After |
+|---|---|---|
+| Rerun spend | ~US$2-4 (estimate) | about US$11.41 (invoice) |
+| Deep sweeps | well under US$1 | about US$5.49-8.09 (token model) |
+
 ### 2026-07-30 — Deep sweeps EXECUTED: +10 recovered; residue final at 6 unique tiles; the F1 prediction miss RESOLVED at full coverage
 
 **Sweep A** (10 + 10 ladder, flex): **+10 tiles recovered, all at
 original parameters** — the deeper tier-1 roll paid off; safe mode
 added nothing. **Sweep B** (5 + 5, safe mode halved to 1024): **zero**
 further recoveries. Final recovery: **265/288 (92.0 %)**; spend for
-both sweeps well under US$1.
+both sweeps well under US$1. (Corrected 2026-10-05: the invoice puts the
+whole rerun at about US$11.41, and the token model the two sweeps alone at
+US$5.49-8.09; see § 5.)
 
 **The permanent residue collapses to 6 unique tiles** (23 pass-level
 failures): `K-35-053-3_Elenovo_x672_y2352` fails in **9 independent
