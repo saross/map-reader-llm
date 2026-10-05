@@ -744,7 +744,8 @@ def test_manifest_envelopes_valid(registry):
     # 41: +3 for the S149 Gemini 3.7 arc
     # 42: +gemini37-image-55map-2026-09-13 (the 3.7 image 55-map K = 3 campaign)
     # 43: +gemini3-image-55map-2026-09-16 (row B of the image 2x2)
-    assert len(run_rows) == 43
+    # 44: +phase1-library (the Phase 1 library-construction step, ruling D40)
+    assert len(run_rows) == 44
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
