@@ -5,7 +5,8 @@
     "cost_usd": 0.004522,
     "evidence": [
       "applied-header: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json served tiers (standard 3) of 3 responses -> standard",
-      "runner-record: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json cost/2 tier_source='cli --service-tier' -> standard"
+      "runner-record: outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json cost/2 tier_source='cli --service-tier' -> standard",
+      "run-log-inherited: outputs/tier-cache-probe-2026-10-03/{run_A.log, run_B.log, run_C.log, run_D.log} -> flex|standard"
     ],
     "meta": "outputs/tier-cache-probe-2026-10-03/run_C_standard_cache/detections-library_plus-hp-3-flash-2026-10-03.meta.json",
     "model": "gemini-3-flash-preview",
@@ -26,7 +27,7 @@
   },
   "reason": "no row of the passes register cites this meta (its directory outputs/tier-cache-probe-2026-10-03 is not a run in results/run-registry.json, so the register never extracted it)",
   "register": {
-    "generated_at": "2026-10-03T12:35:34Z",
+    "generated_at": "2026-10-05T02:00:04Z",
     "generator_version": "0.8.0",
     "path": "results/passes-manifest.json",
     "schema_version": "1.0"
