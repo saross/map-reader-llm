@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — proposer-verifier-512
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/proposer-verifier-512` · **Registry status**: active · **Purpose**: not supplied
 
@@ -91,7 +91,7 @@ Grouped by identical text: a caveat written once for a family of sibling cells i
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer\_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -&gt; benign pool-unresolved WARN. The 1 verifier\_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -&gt; \_ignored\_evals at the deferred 3b close-out sweep. SIDELINED from the Era-1 leaderboard (Session 106 decision): thin GAP-9 provenance + n=1 -&gt; superseded by the planned clean Era-1 PV verifier run (Stage D, planning/era1-leaderboard-plan-2026-06-08.md). Data kept (archive-never-delete); excluded from the leaderboard cell set. | Pool annotation (2026-09-13, S153 Batch 1 item 2): as for proposer-verifier-384 — one un-numbered proposer pass at proposer/detections.geojson, empty proposer\_pools, pool named by prompt string; source\_run records this run as the pool's home. No metric, eval or detection changed.
+> Batch A residual (H11), thin Era-1 sibling of pv-384 at 512px / era-1-340. Only the adversarial-text verifier strategy was run here; 1 verified condition at its verifier-accepted operating point (Session 100, user-confirmed). proposer\_pools EMPTY: the proposer dir holds only detections.geojson with NO meta (GAP-9 Era-1 weak provenance), so no proposer pass is extractable; condition references the pool by string -&gt; benign pool-unresolved WARN. The 1 verifier\_pass is a real sidecar meta (verified-adversarial-text.meta.json, 140 items, 0 failures). The v2 replicate re-run is excluded -&gt; \_ignored\_evals at the deferred 3b close-out sweep. SIDELINED from the Era-1 leaderboard (Session 106 decision): thin GAP-9 provenance + n=1 -&gt; superseded by the planned clean Era-1 PV verifier run (Stage D, planning/era1-leaderboard-plan-2026-06-08.md). Data kept (archive-never-delete); excluded from the leaderboard cell set. | Pool annotation (2026-09-13, S153 Batch 1 item 2): as for proposer-verifier-384 — one un-numbered proposer pass at proposer/detections.geojson, empty proposer\_pools, pool named by prompt string; source\_run records this run as the pool's home. No metric, eval or detection changed. AMENDED 2026-10-05 (S160, tracker C-19): the -v2 legs are NOT identical re-runs of the original legs. Their configurations differ in what was sent: the -v2 text configs add text\_only\_labels and crop\_label (six exemplar labels; 1,792 input tokens per request against the original adversarial-text's 1,727), and the -v2 image configs send six exemplar images where the originals sent nine (8,305 against 11,602 tokens). They were the corrected re-runs after the verifier-config drift (9b023aef8, cad5d3365; docs/notes/working-notes.md:3222). Both sets are registered as separate legs (D31); which set the conditions should cite is open (reports/manipulation-check-2026-10-05.md section B.4).
 
 ### 5.4 Waived evaluations (4, 2 distinct reason(s))
 
@@ -136,7 +136,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `1d6f29db3` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — e47-propose-brief
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/e47-propose-brief` · **Registry status**: active · **Purpose**: not supplied
 
@@ -71,8 +71,8 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Thinking tokens | 2,853,033 |
 | Total tokens | 23,848,029 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$10.0540 (5); audited-lower-bound US$0.0403 (2); audited-upper-bound US$5.5180 (1); unrecorded no figure (3) |
-| Run total (range) | at least US$12.8533; no ceiling (2 audited-lower-bound, 3 unrecorded pass(es)) |
+| `cost_usd` by basis | audited US$12.8131 (6); audited-lower-bound US$0.0396 (2); unrecorded no figure (3) |
+| Run total (range) | at least US$12.8527; no ceiling (2 audited-lower-bound, 3 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 3 |
 | Summed wall clock | 1.99 h over 11 pass(es) |
 
@@ -109,7 +109,7 @@ Tile-level MCC is on file for 12 of 12 condition(s).
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier\_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote&gt;=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 stage (4,358 of 4,358 verified, complete after the 2026-05-06 cleanup 6683952ac, never swept) stays unregistered pending a PI call. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1. | PI ruling 2026-09-08 (S151, 'yes, register'): the April stages verified/flash-high-text-1of5 (4,358 of 4,358, complete after the 2026-05-06 cleanup; the pre-recovery record of the refreshed stage) and verified/text-baseline (the same text-only adversarial v1 verifier on the N=1 propose\_brief pass's 1,180 detections, 2026-04-08) are registered as inventory rows. The 2of5-5of5 directories are CPU-derived vote-threshold subsets of the 1of5 probabilities, not verifier runs, and stay unregistered. No condition cites either. Like-for-like sweep of the April 1of5 stage: results/recovery-reeval-2026-09-08/e47-propose-brief/. | Completeness waivers (2026-09-13, S153 Batch 1 item 2): the five rescore-2026-05-31 consensus\_t{1..5} evaluations are the PRE-RECOVERY scoring of the same consensus geojsons the registered consensus-{1..5}of5 conditions now score at recovery-reeval-2026-09-08; waived with reasons. The pinned-vintage WARN on single-pass-run\_4 is left standing: it is the ruling-3a disclosure working as designed, not a defect. No metric changed.
+> Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): first verifier\_passes row. The text-only adversarial v1 stage on the pool's rebuilt vote&gt;=1 consensus (4,149 candidates) at verified/flash-high-text-1of5-recovery-2026-09-08 is complete; the pre-recovery verified/flash-high-text-1of5 stage (4,358 of 4,358 verified, complete after the 2026-05-06 cleanup 6683952ac, never swept) stays unregistered pending a PI call. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md § 6.1. | PI ruling 2026-09-08 (S151, 'yes, register'): the April stages verified/flash-high-text-1of5 (4,358 of 4,358, complete after the 2026-05-06 cleanup; the pre-recovery record of the refreshed stage) and verified/text-baseline (the same text-only adversarial v1 verifier on the N=1 propose\_brief pass's 1,180 detections, 2026-04-08) are registered as inventory rows. The 2of5-5of5 directories are CPU-derived vote-threshold subsets of the 1of5 probabilities, not verifier runs, and stay unregistered. No condition cites either. Like-for-like sweep of the April 1of5 stage: results/recovery-reeval-2026-09-08/e47-propose-brief/. | Completeness waivers (2026-09-13, S153 Batch 1 item 2): the five rescore-2026-05-31 consensus\_t{1..5} evaluations are the PRE-RECOVERY scoring of the same consensus geojsons the registered consensus-{1..5}of5 conditions now score at recovery-reeval-2026-09-08; waived with reasons. The pinned-vintage WARN on single-pass-run\_4 is left standing: it is the ruling-3a disclosure working as designed, not a defect. No metric changed. AMENDED 2026-10-05 (S160): condition baseline-single-pass now names its own pool, text-baseline (the MINIMAL, T = 0.0 single pass it scores, registered as a single\_pass pool under D31); it had named propose\_brief-text, the HIGH, T = 0.7 five-pass pool.
 
 ### 5.4 Waived evaluations (7, 6 distinct reason(s))
 
@@ -169,7 +169,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `1d6f29db3` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

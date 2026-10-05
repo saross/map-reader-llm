@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gold-standard-v2
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gs/gold-standard-v2` · **Registry status**: active · **Purpose**: Canonical 4-map gold-standard pipeline (detect\_brief-text, HIGH, T=0.7, K=5); paper headline GS result.
 
@@ -51,7 +51,7 @@
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
-| `verified-v1` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 11 | 0 |
+| `verified-v1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 11 | 0 |
 | `wbf-verified-v1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1318 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
@@ -67,7 +67,7 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 | Thinking tokens | 6,606,374 |
 | Total tokens | 13,354,740 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$11.5642 (5); audited-lower-bound US$0.0078 (1); audited-upper-bound US$1.8229 (1) |
+| `cost_usd` by basis | audited US$12.4756 (6); audited-lower-bound US$0.0078 (1) |
 | Run total (range) | at least US$12.4834; no ceiling (1 audited-lower-bound pass(es)) |
 | Passes with no `cost_usd` | 0 |
 | Summed wall clock | 1.70 h over 7 pass(es) |
@@ -93,6 +93,12 @@ Buffers on file (metres), by how many conditions carry that set:
 - 1 condition(s): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150
 
 Tile-level MCC is on file for 4 of 4 condition(s).
+
+### 5.3 Decomposition note
+
+Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
+
+> AMENDED 2026-10-05 (S160, tracker C-18): verified-v1 relabelled text. It ran verify\_adversarial-text, which sends six exemplar labels as text and no image (1,792 input tokens per request in run.meta.json); E88 defines a verifier stage's modality by what it transmits. The modality checker could not see it, since its POOL\_ROOTS never reached outputs/gs/.
 
 ## 6. Analyses that read this run (2)
 
@@ -139,7 +145,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `1d6f29db3` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
