@@ -5440,6 +5440,12 @@ remediation 1 for why it cannot be written into that text);
 both entries); `reports/name-keyed-cache-audit-2026-09-12.md` § 1 (the defect
 class).
 
+**Corrected in part 2026-10-05 by E90**: a text-modality configuration sends
+no exemplar at all, neither image nor label; "only the labels travel" (the
+table above and the paragraph after it) should read "nothing from the
+example list travels". This entry's conclusion, that text cells never saw the
+null pixels, stands.
+
 ---
 
 ### E87: The per-tile mound counts in preregistration §§ 2.3–2.5 came from a bounding-box approximation of each sheet's georeferencing — "36 mounds in the 20 training tiles" is 50
@@ -5731,6 +5737,14 @@ carry); **E56** (the in-sample-argmax class the `-opmax` cells belong to);
 `reports/modality-rulings-deltas-2026-09-14.md` (the claims-with-anchors record
 of the four rulings).
 
+**Corrected in part 2026-10-05 by E90**: the description of the factor,
+"few-shot exemplars sent as images or as text labels only", is wrong for the
+text level. The registration defines it by whether exemplar images are sent
+(lodged registration § H1 table, `osf/preregistration.md:413-417`: Brief-text
+"No" images, "Text-only with concise symbol descriptions"), and a text-modality
+request sends no exemplar at all. This entry's relabelling and its rulings
+stand.
+
 ---
 
 ### E89: E31's "perfectly deterministic at T=0.0" claim does not hold for independent API re-invocations — the corrected E44 rerun and four later observations show run-to-run variation at temperature 0
@@ -5803,5 +5817,81 @@ decoding" is the decoding rule, not a claim about the API).
 generalised to independent API calls and then used to skip execution. Test
 determinism with the same design that will rely on it — separate calls,
 separate days — before copying outputs.
+
+---
+
+### E90: A text-modality request sends no exemplar at all — the example lists that text configurations carry are never read, and three experiments varied them as if they were sent
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-10-05 (found during the Session 160 register repair, ruling D40; extended by a manipulation check over every registered run the same day) |
+| Type | Correction of descriptions (E86, E88, the OSF errata pointers, the paper drafts) and record of a null manipulation in a registered run; no cell re-scored |
+| Commit | This entry's commit |
+| Files | `scripts/4_detect_mounds_batch.py` (`:943-945`; the fixed per-tile sentences `:370`, `:387`); `scripts/lib_batch_api.py` (`build_example_parts`, which returns no part when images are off; `:312` at `5a57f586e`); `reports/manipulation-check-2026-10-05.md` and its per-arm table; `planning/text-track-transmission-2026-10-05.md` (the work this entry starts); Observation 496 |
+| Impact | **Nil on every text cell's measured value**: each is a true measurement of what ran. **Void**: the retest's Phase 2c text-track library contrasts (identical requests), Experiment E's "null examples" step (unregistered; Observation 156). **Descriptions corrected**: E86, E88, `osf/errata-pointers.md`, and the paper drafts' account of the text condition (tracker § 2). The registration itself is unaffected: the pipeline did what it registered |
+
+**Description**. A configuration with `include_example_images: false` (the
+registration's Brief-text and Verbose-text levels and every configuration
+derived from them) produces a request of three parts: the system instruction,
+two fixed sentences, and the tile. The real-time runner skips the example
+loop ("Text-only modality: skipping example images"), and the batch path's
+example builder returns no part. No exemplar is sent in any form: no image,
+no label, no text description. An image-modality request sends each exemplar
+as a short label followed by its image.
+
+The token counts show it without exception. In all 1,042 proposer metas that
+record per-request usage, a text-only request with the standard instruction
+costs exactly 1,502 input tokens, and each exemplar image adds about 1,090.
+All 486 text-only metas list between 7 and 41 examples in their configuration
+(inherited from base configurations); none was sent. The second fixed
+sentence still asks the model to match "the above Reference Examples", which
+in a text request are not there.
+
+The registration defines the factor by whether exemplar images are sent
+(`osf/preregistration.md:413-417`), so the pipeline did what was registered.
+What went wrong is downstream of it: an example list that nothing reads looked
+like a manipulable factor, and three experiments varied it.
+
+1. **Phase 2c, text track, Era-1 retest (registered, 2026-03-15).** Five arms
+   (`canonical`, `plus-hp`, `pure-positive-canon`, `scale-4`, `scale-8`)
+   tested library composition (H8) and sent identical requests
+   (`gemini-3-flash`, T = 0.0, minimal thinking, one instruction, one commit
+   `5a57f586e`). They are also identical to `retest-phase2b`'s T = 0.0 text
+   arm: six runs of one configuration. Their F1 spread, 0.597-0.609, is
+   run-to-run variance. Decision 16 (`decisions-log.md:737-738`) had already
+   called the test "meaningless", and the February programme skipped it; the
+   retest ran it and reported it as a library test, with one contrast
+   significant (p = 0.001) between identical requests.
+2. **Experiment E (unregistered, 2026-03-10).** Its "restore null examples"
+   step changed nothing that was sent (1,672 input tokens on every tile of all
+   four passes); two of its arms were therefore an accidental replicate, 0.050
+   F1 apart. Observation 496; ruling D40.
+3. **The H10/H12 v1 probe (unregistered, already retracted by
+   Observation 235).** All 50 metas sit at 1,502 tokens.
+
+The descriptions written since assumed the lists travel: E86 ("only the labels
+travel"), E88 ("sent as images or as text labels only"),
+`osf/errata-pointers.md` (the 22 text configurations "carry the nulls as labels
+only"), and the paper drafts ("presented as images, text descriptions, or
+both"). Only the verifier's `-text` configurations send exemplars as text: six
+labels.
+
+**Resolution**. (i) E86 and E88 are annotated as corrected in part by this
+entry; their conclusions stand. (ii) `osf/errata-pointers.md`'s wording is
+corrected; it needs no new pointer, since the lodged registration's own
+passage (`:413-417`) is right (the lodged copy is untouched, E87
+remediation 1). (iii) The retest summary's text-track library claims, the
+documents that repeat "labels only", and the paper drafts are corrected under
+the tracker `planning/text-track-transmission-2026-10-05.md`, which also holds
+the follow-ups this entry raises: the retest-era bootstrap that rejected
+between identical requests (workstream W2), Phase 2e's unrecorded orderings
+(W3), and any GS-only runs the PI rules necessary (W5). (iv) The Era-1
+single-pass board's 36 cells are 26 transmitted configurations, 15 Tier-1
+cells 9; no tier is driven by a replicate difference on its instrument.
+
+**Lesson**. A configuration field that nothing reads is a hazard: it looks
+like a factor. Check what each arm transmits (a manipulation check: per-arm
+payload or input tokens) before attributing an effect to a manipulation, and
+make an inert field an error, not a no-op.
 
 ---
