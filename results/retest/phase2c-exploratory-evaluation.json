@@ -87,7 +87,15 @@
           "ci_lower": -0.03887531988559392,
           "ci_upper": 0.0316107588663413
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.1577,
+          "precision_p": 0.0926,
+          "recall_p": 0.7658,
+          "f1_bh_within_phase": 0.23655,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "pure-positive-2hp",
@@ -107,7 +115,15 @@
           "ci_lower": 0.021858327335985257,
           "ci_upper": 0.09453045549856473
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.9424,
+          "precision_p": 0.3151,
+          "recall_p": 0.0049,
+          "f1_bh_within_phase": 0.9424,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "pure-positive-4hp",
@@ -127,8 +143,17 @@
           "ci_lower": 0.021387506871555724,
           "ci_upper": 0.10117456585278245
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.1414,
+          "precision_p": 0.5339,
+          "recall_p": 0.004,
+          "f1_bh_within_phase": 0.23655,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       }
-    ]
+    ],
+    "d42_annotation": "PI ruling D42 (2026-10-05): 'significant' in each pairwise row is the RETIRED reading (bootstrap CI excludes zero, uncorrected), kept as published. The authoritative test is permutation_retest: the paired tile-swap permutation test (10,000 permutations, seed 42, 20 m) with BH within the phase, computed 2026-10-05 by scripts/evaluate_retest_all.py at commit 7aef6d2ff on the input files as they now stand. Those inputs re-score within 0.0023 F1 of the values recorded here (evaluator changes since March); the recorded point estimates and CIs are left as published. See reports/d42-implementation-2026-10-05.md."
   }
 }
