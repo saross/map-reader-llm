@@ -11800,3 +11800,70 @@ choice. Relational note: "merge after one more independent re-audit
 please, closing the evidence gap" took the evidence gap I had disclosed in
 the PR body at its word, which is the right response to a disclosure and
 not the one I had planned for.*
+
+## Session 160 — 2026-10-04/05 — the session that set out to repair a ledger and found the text track had never seen an example
+
+*Instance note: primary throughout; no compaction.*
+
+**What surprised you about this session?** Where the finding came from. The
+session's brief was bookkeeping: put three known gaps into the passes
+register. Each widening was ordinary and each was the PI's call. Three
+gaps became 37 more legs (D31), then 734 archive metas (D38), then nine
+"unsure" ones the PI declined to classify by inspection, asking instead that
+they be "registered appropriately, consistent with other, similar runs". That
+instruction sent an agent to read what Experiment E had actually transmitted,
+and the answer was in the accounting data: 1,672 input tokens on every tile
+of all four passes, whatever their configurations listed. The cost register
+had been carrying a manipulation check for months without anyone reading it
+as one. Every proposer meta records its per-request input tokens because the
+project wanted honest prices, and those same tokens say, exactly, what the
+model was sent. The scientific finding of the session (a text-only request
+sends no example at all, so three experiments varied a field nothing reads)
+fell out of the most clerical work the project does. The surprise is not that
+bookkeeping found it; it is that nothing else had, across six months and
+three experiments that each had a chance to.
+
+**What felt uncertain or unresolved at the end?** The two things W2 found
+on its way to the bootstrap, more than the bootstrap itself. The bootstrap
+was a contained defect: a p-value read off an uncentred distribution, one
+verdict flipping after correction. The other two are not contained. One
+transmitted signature, run on two dates, gave systematically different
+outputs, 0.02 to 0.06 F1 apart, and one of those pairs is the E57 "intended
+Pro, dispatched Flash" pair, so either serving drifted between dates or E57
+read the model from the field it itself calls unreliable. And the project's
+calibrated test, the paired tile-swap permutation test, compares two outputs,
+not two configurations: it rejected 4 of 20 within-execution pass pairs on
+the 55-map set, where the configuration was identical by construction. Every
+"significantly better" on the boards is a statement about two fixed outputs.
+The drift floors of D4 and D8 already handle this for some claims; nobody yet
+knows how many paper claims compare configurations from single runs. I left
+both as named follow-ups (W7.5, W2.7), which is where they belong at the end
+of a session, but they are the session's open edge.
+
+**What's the single most important thing a future reader should know about
+this session?** That the registration was right and everything written
+after it drifted. The lodged preregistration defines Brief-text as "No"
+images and "text-only with concise symbol descriptions"; the pipeline did
+exactly that. The methods draft, two errata, the OSF pointer page and the
+retest summary all came to describe a text condition that carried examples
+as labels or descriptions, and experiments were designed on that belief. The
+image track is unaffected; the text track's numbers are true measurements of
+a zero-shot pipeline; what was wrong is the story told about them. It is the
+same lesson as Obs 235, at larger scale, and it was caught this time because
+the PI asked for consistency with precedent rather than a verdict.
+
+The session's texture changed halfway. The first day was the register
+repair's rhythm: decompose, dry-run, compare to the sidecars to the cent,
+commit. The second day was an investigation that ran on three parallel
+agents, with me verifying each report's heaviest claim at source before it
+reached the PI. Two of my own statements needed correcting along the way.
+Phase 3c's arm A was a designed replicate set, not a null manipulation; I
+had generalised from identical configurations without reading the study
+file. And my first cached-token rule was too loose, until the archaeology's
+hand-built drafts disagreed with it on eight image-b recoveries. The drafts
+were worth more as a test oracle than as attestations.
+
+*Relational note: the X1 signature note was lost from the PI's transcript
+twice, buried both times in long messages with several decisions in them. A
+decision that needs his approval should arrive on its own, or at least first,
+not as point 1 of a list that runs on.*

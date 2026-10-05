@@ -8941,3 +8941,83 @@ on both machines (1,545 metas, 729 sidecars).
 Not evidence that sapphire's untracked files are wrong; they are staging
 intermediates whose committed copies the register already cites. They are
 flagged for housekeeping, not deleted.
+
+## Entry — 2026-10-05 (Session 160, map-reader-llm): The text track never saw an example
+
+**Session:** a974067f-7d74-4122-bfc6-891ffb9f9206
+**Instance:** primary
+
+### Surprising fact
+
+All four passes of Experiment E recorded exactly 1,672 input tokens on every
+one of their 60 tiles, although their configurations listed 10 and 13
+examples, and the experiment's headline step was "restore null examples".
+
+### Probe
+
+If examples were sent, adding three must change the token count. It did
+not. The runner at the recorded commit prints "Text-only modality: skipping
+example images" and sends nothing from the list when
+`include_example_images` is false: no image, no label, no description. A
+manipulation check over every registered arm then found the rule holds in
+all 1,042 metas with per-request usage (text-only: 1,502 tokens with the
+standard instruction; about 1,090 more per example image), and found a
+registered experiment, Phase 2c's text track, whose five library arms sent
+identical requests. Two cross-checks pointed the same way: Decision 16 had
+called that test "meaningless" in February, and the lodged registration
+defines Brief-text by "No" images.
+
+### Belief revision
+
+I, and the project's documents, had treated a text configuration's example
+list as part of its prompt ("only the labels travel", E86; "presented as
+images, text descriptions, or both", the methods draft). It is dead
+configuration. What a configuration says is a claim; what the request
+carried is the fact, and the token count measures it.
+
+### What would change this belief
+
+A text-only arm whose recorded input tokens vary with its example list, or a
+code path (batch or real time, at any recorded commit) that sends labels for
+a text-only configuration. The manipulation check found neither in 486
+text-only metas.
+
+### Implications for practice
+
+Read the transmitted payload, not the configuration, before attributing an
+effect to a manipulation; make an inert field an error. The bench now
+refuses an `example_images` that is not false.
+
+## Entry — 2026-10-05 (Session 160, map-reader-llm): An implicit cache that hit every time
+
+**Session:** a974067f-7d74-4122-bfc6-891ffb9f9206
+**Instance:** primary
+
+### Surprising fact
+
+My new evidence rule (every billed request reporting one positive
+cached-token count means an explicit cache, so the cached-path defect
+applies) disagreed with the launch-command archaeology's hand-built drafts
+on eight image-b recovery fragments, each of one or two requests.
+
+### Probe
+
+The drafts cited the recoveries' launch commands: no `--use-cache`. Their
+requests reported 16,272 cached tokens; the same pool's explicit cache was
+18,909. The committed logs record six explicit-cache sizes (8,009 to 45,069),
+and 16,272 is none of them. The Gemini 3 batch passes showed 16,272 on 99.9 %
+of requests, so implicit caching can hit almost every request.
+
+### Belief revision
+
+I had assumed implicit caching is too unreliable to hit every request. It is
+not, and on a one- or two-request fragment "every request" is no evidence at
+all. The signature establishes the cached path only at a size a log records
+for an explicit cache, which is what the PI's ruling (D34 (1), "the explicit
+cache's exact size") had said; my implementation had dropped the second half.
+
+### What this is not
+
+Not a failure of the drafts or of the rule's intent: the drafts were right,
+and checking the machine rule against independent hand evidence before
+trusting it is what caught the error.
