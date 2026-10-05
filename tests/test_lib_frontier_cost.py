@@ -411,7 +411,7 @@ def committed():
 def test_every_board_family_prices_from_register_rows(committed):
     doc, coster, costs = committed
     assert doc["uniform_tier"] == "flex"
-    assert len(costs) == 23
+    assert len(costs) == 26  # 23, plus the TH7, T03 and TM oracle families (D33)
     for family, cost in costs.items():
         assert cost.usd > 0, family
         assert all(src in coster.rows for src in cost.sources), family
@@ -451,8 +451,9 @@ def test_im_is_priced_at_the_uniform_tier_not_as_billed(committed):
 def test_the_four_floors_are_completed_and_nothing_else_is(committed):
     _, _, costs = committed
     completed = {k for k, v in costs.items() if v.basis == "completed"}
+    # TM-oracle (D33) shares TM's floored verifier leg, so it is completed too.
     assert completed == {"A-N1", "A-N3", "A-N5", "A-N10", "FOURTH-N1", "FOURTH-N3",
-                         "FOURTH-N5", "FOURTH-N10", "TM", "IM"}
+                         "FOURTH-N5", "FOURTH-N10", "TM", "TM-oracle", "IM"}
 
 
 @pytest.mark.tier1

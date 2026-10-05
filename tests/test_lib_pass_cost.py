@@ -1356,13 +1356,23 @@ def test_coverage_sums_the_leg_and_counts_completions_first(tmp_path, done, expe
 
 @pytest.mark.tier1
 def test_c3_reads_the_spread_of_every_fragment():
-    # An upper bound decided by an EARLIER fragment must still certify.
+    # An upper bound decided by an EARLIER fragment must still certify. The
+    # S160 repair resolved every committed case of it, so one is built from a
+    # committed two-fragment row: its first fragment left unresolved between
+    # flex and standard, its last still pinned. SENTINEL: the same row
+    # labelled audited must not certify.
+    import copy
     rows = json.loads((REPO / "results/passes-manifest.json").read_text())["passes"]
-    cases = [r for r in rows if r["cost_basis"] == "audited-upper-bound"
-             and len(r["cost_source"]["fragments"]) > 1
-             and "candidates" not in r["cost_source"]["fragments"][-1]]
-    assert cases, "no committed upper bound whose last fragment is pinned"
-    assert _c3(cases[0])["cost_basis"]["verdict"] == "MATCH"
+    base = next(r for r in rows if r["cost_basis"] == "audited"
+                and len(r["cost_source"]["fragments"]) > 1
+                and all(f.get("tier") == "flex" for f in r["cost_source"]["fragments"]))
+    row = copy.deepcopy(base)
+    first = row["cost_source"]["fragments"][0]
+    first.update(tier=None, tier_method="unresolved",
+                 candidates={"flex": first["cost_usd"], "standard": 2 * first["cost_usd"]})
+    row["cost_basis"] = "audited-upper-bound"
+    assert _c3(row)["cost_basis"]["verdict"] == "MATCH"
+    assert _c3({**row, "cost_basis": "audited"})["cost_basis"]["verdict"] == "MISMATCH"
 
 
 @pytest.mark.tier1

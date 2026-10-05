@@ -91,7 +91,9 @@ def test_validate_row_rejects_bad_slug(registry):
 @pytest.mark.tier1
 def test_gs_v2_passes_valid(registry):
     passes = extract_passes(extraction_context("gold-standard-v2"))
-    assert len(passes) == 6  # 5 detect_brief-text proposer + 1 verified-v1 verifier
+    # 5 detect_brief-text proposer + 1 verified-v1 verifier + the WBF fusion's
+    # verifier leg (outputs/wbf/gold-standard-v2-detect/verified-v1, D31, S160)
+    assert len(passes) == 7
     for p in passes:
         assert validate_row("passes", p, registry) == []
     # authoritative model identity, read from metadata not the directory name
@@ -720,8 +722,8 @@ def test_manifest_envelopes_valid(registry):
     passes_obj = assemble_manifest("passes", passes, at)
     assert validate_manifest("passes", passes_obj, registry) == []
     gs_passes = [p for p in passes if p["run_id"] == "gold-standard-v2"]
-    assert len(gs_passes) == 6
-    assert len(passes) >= 6
+    assert len(gs_passes) == 7  # 6, plus the WBF fusion's verifier leg (D31, S160)
+    assert len(passes) >= 7
 
     # Analyses (sub-step 3c): the assembled envelope validates, and every
     # conditions_compared id resolves to a built condition (the build_manifests FK
