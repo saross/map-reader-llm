@@ -1,6 +1,6 @@
 # Text-track transmission gap: claims, surprises and work plan
 
-> **Last revised**: 2026-10-05 (original publication, Session 160). See
+> **Last revised**: 2026-10-05 (Session 161: X1 approved and recorded). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: OPEN.** The PI's working document for the finding of 2026-10-05:
@@ -214,6 +214,9 @@ in brackets (§ 4).
   of one configuration: on the 55-map set, 4 of 20 within-execution pass
   pairs at 20 m. Configuration-level claims need the run-to-run variance
   (the drift floors of D4 and D8 do this for some claims; W2.5).
+- **S-11. The registered pre-holdout OSF deposit was never made**
+  (found 2026-10-05, S161; W8.4). The "exact ordering for each
+  condition" it promised is what W3 had to reconstruct from code (S-3).
 - **S-8. 384 and 512 px tiles cost the same input tokens** (1,502): a fixed
   image-token budget whatever the tile size (relevant to how tile-size
   results are read).
@@ -388,11 +391,27 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   confirmed, the E87 files and the current README) to the right place and
   remove any file they supersede. The OSF token is `OSF_API_KEY` in
   `~/personal-assistant/.env` (read by `scripts/check-credentials.py` there).
+  INVESTIGATED 2026-10-05 (S161), read-only: `reports/osf-state-check-2026-10-05.md`.
+  The project (private, no components) never had more than the January
+  set: its log shows no upload after 2026-01-31 and no removal but the
+  first-upload set. One registration update exists (2026-02-04, errata
+  E1-E16), and it left the form's file field empty. The repository's
+  three lodged documents are byte-identical to OSF. Upload waits for the
+  PI's own check and his choice of channel (report § 5).
+- [ ] W8.4 (S-11) The registered pre-holdout deposit was never made
+  (`osf/preregistration.md:1498-1500`, appendix `:161-167`: library
+  manifest, prompt texts, mapping table, image filenames, H9 variants,
+  the exact ordering per condition, seeds). No erratum records it. Needs
+  an erratum and the PI's decision whether to deposit late (report § 3).
 
 ## 5. Also open (from the same session)
 
-- [ ] **The X1 signature note on the r2 board (D33): PRESENT IT TO THE PI IN
-  FULL next session** (the exchange was lost from his transcript). State:
+- [x] **The X1 signature note on the r2 board (D33): PRESENT IT TO THE PI IN
+  FULL next session** (the exchange was lost from his transcript). DONE
+  2026-10-05 (S161): presented in full; the PI approved the version with
+  points (a) and (b) folded in at 06:06:19Z; refresh written and note
+  recorded (`b044c486e`), manifests regenerated (`d35abeef0`); the five
+  refresh tests pass (13 passed). Was:
   the board refresh is NOT committed (reverted on sapphire 2026-10-05; it
   regenerates in seconds with `scripts/final_board_cost_refresh.py --write`,
   and changes exactly three cells: TH7-oracle US$207.35 → 210.32, T03-oracle
@@ -437,6 +456,20 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (Session 161, later) — W8.3 investigated; S-11 found
+
+The OSF state check (`reports/osf-state-check-2026-10-05.md`): nothing was
+lost from OSF; the expected files were never uploaded. The registered
+pre-holdout deposit was never made either (S-11, W8.4).
+
+### 2026-10-05 (Session 161) — X1 approved and recorded
+
+The PI approved the r2 board's D33 signature note with points (a) and (b)
+folded in (06:06:19Z). The board refresh is written (`b044c486e`), the
+note is in the board's `signature.attests` with the prior text in
+`history`, and the manifests carry it (`d35abeef0`). § 5's first item is
+ticked; D33 records its execution.
 
 ### 2026-10-05 (session close) — the PI's rulings and hand-offs
 

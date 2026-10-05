@@ -26,6 +26,11 @@ later audit found a lodged statement to be wrong, the correction is recorded in
   came from a superseded bounding-box approximation of each sheet's
   georeferencing; the "36 mounds" of § 2.3 is 50 and the "79 mounds" of § 2.4
   is 97.
+- [`late-deposit/deposit-index.md`](late-deposit/deposit-index.md) — the
+  materials the registration promised to deposit before holdout evaluation,
+  deposited **late**, on 2026-10-05 (erratum E91), each from the git commit
+  that holds it and labelled with whether it was public before holdout began.
+  On OSF: folder `late-deposit-2026-10-05/`.
 
 ## Reading Order
 
