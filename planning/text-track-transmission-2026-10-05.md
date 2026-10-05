@@ -53,8 +53,9 @@ in brackets (§ 4).
 - [ ] **C-04 (L, W1).** `docs/paper/results-draft.md:192-215` and
   `docs/paper/results-claims-inventory-2026-09-12.md:360/363/366` (R2-01,
   R2-04, R2-07): the 36 Era-1 single-pass cells are 26 transmitted
-  configurations (23 if Phase 2e's orderings did not transmit); the 15-cell
-  Tier 1 is 9 (7); six Tier-1 cells are one text configuration.
+  configurations; the 15-cell Tier 1 is 9; six Tier-1 cells are one text
+  configuration. (The "23 (7)" alternative is withdrawn: W3 showed the
+  orderings transmitted.)
 - [ ] **C-05 (L, W1).** `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`;
   analyses `era1-single-pass-baseline-matrix`, `era1-leaderboard`
   (`results/run-analyses.json`, both SIGNED): five Phase 2c text cells
@@ -101,12 +102,30 @@ in brackets (§ 4).
 
 ### Phase 2e, ordering not recorded
 
-- [ ] **C-17 (S, W3).** `results-draft.md:194-196` ("led numerically by …
+- [x] **C-17 (S, W3).** RESOLVED 2026-10-05: the orderings DID reach the
+  model (`reports/phase2e-ordering-check-2026-10-05.md`: an offline replay of
+  the recorded commit's batch builder gives four requests differing only in
+  order; the arms' outputs agree on at most 5 % of tiles against 91-99 % for
+  identical requests; the predicted replicate, Phase 2c `plus-hp` ≡ Phase 2e
+  `canonical-first`, agrees on 99.7 %). The claims stand; they should cite
+  this evidence, say "single run" and "shares Tier 1", and describe
+  `canonical-last` as sent (C-24). H4's p-values are W2's (the retest
+  bootstrap; the board's permutation agrees H4's primary is null). Was: `results-draft.md:194-196` ("led numerically by …
   `canonical-last`, F1 0.631"), R2-02 (`results-claims-inventory-2026-09-12.md:361`),
   `retest-production-summary.md:25/145/250-251/300/320`, and H4's
   confirmatory input (canonical-first vs canonical-last, p = 0.124,
   `family-bh-fdr-confirmatory`): the ordering is inferred from code at the
   recorded commit, not shown by any artefact.
+
+- [ ] **C-23 (L, W1).** The Era-1 retest's Phase 2b, 2c and 2d ran their image
+  arms in canonical-first order (their study YAMLs set `fixed: ordering:
+  canonical-first`, honoured by the batch runner since `ead94aa81`), where the
+  February 60-tile runs used config order. No erratum records it; the retest
+  summary's "baseline used in all prior phases" and "reused from Phase 2c" are
+  wrong (W3.2).
+- [ ] **C-24 (L, W1).** `canonical-last` was sent as null×3, hard positives,
+  then canonical examples last, not the study YAML's [HP, null, C+, C−].
+  Canonical placement, what the registration fixes, holds.
 
 ### Labels and register
 
@@ -186,7 +205,11 @@ Order: metadata and register → low-level records → intermediate documents
 
 - [ ] W2.1 Diagnose: how the retest bootstrap resamples (pairing, the unit
   of resampling, the statistic) and why it rejects between replicates.
-- [ ] W2.2 Inventory every claim tested with it (retest summary, findings,
+- [ ] W2.2 Inventory every claim tested with it (W3 found H4's six:
+  `pairwise-bootstrap-comparisons.json` `[55]-[60]`, p 0.124 (H4's
+  confirmatory input), 0.678, 0.138, 0.158, 0.002, 0.046; on the board's
+  permutation 0.137, 0.640, 0.122, 0.186, 0.002, 0.056, so
+  "config-default > random" does not survive) (retest summary, findings,
   decisions, errata, Obs, paper).
 - [ ] W2.3 Calibrate: run the bootstrap and the paired permutation test on
   every replicate set the project holds (S-2 and § B.5 of the report);
@@ -194,14 +217,20 @@ Order: metadata and register → low-level records → intermediate documents
 - [ ] W2.4 Decide (PI): re-test the inventoried claims with a calibrated
   test, on sapphire; report which conclusions change.
 
-### W3. Phase 2e (H4 ordering)
+### W3. Phase 2e (H4 ordering) — DONE 2026-10-05
 
-- [ ] W3.1 Look for any surviving record of what the batch jobs sent: the
+The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
+`reports/phase2e-ordering-check-2026-10-05.md`.
+
+- [x] W3.1 Look for any surviving record of what the batch jobs sent: the
   batch request JSONL, `batch_jobs.json`, run logs, session transcripts.
-- [ ] W3.2 Test the code path: does `_reorder_examples_for_batch` at
+- [x] W3.2 Test the code path: does `_reorder_examples_for_batch` at
   `5a57f586e` produce the four orderings for these configs (offline, no API)?
-- [ ] W3.3 Decide (PI): whether "inferred from code" is enough for H4 and
-  the `canonical-last` sentence, or a GS-only check is needed (W5).
+- [x] W3.3 Recommendation: "transmitted" is defensible on code plus output
+  evidence; no run is needed for transmission. An optional fingerprint replay
+  (4 arms × 40 of the same Era-1 tiles, Batch, about US$0.67; all 340 about
+  US$5.6) would pin the exact orders, only if the model has not drifted since
+  March: listed for W5.
 
 ### W4. Labels
 
@@ -241,6 +270,12 @@ Order: metadata and register → low-level records → intermediate documents
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (later still) — W3 done
+
+The Phase 2e orderings transmitted: C-17 resolved, the "23 (7)" alternative
+withdrawn, C-23 and C-24 found, and the manipulation-check report's § B.2 and
+§ B.5 group 19 corrected.
 
 ### 2026-10-05 (later) — W4 labels done; C-22 found
 

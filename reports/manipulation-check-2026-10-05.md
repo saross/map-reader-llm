@@ -1,7 +1,7 @@
 # Manipulation check: did each arm's manipulation reach the model?
 
-> **Last revised**: 2026-10-05 (original publication, Session 160). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (§ B.2 and § B.5 group 19 corrected by the
+> Phase 2e ordering check). See [§ Changelog](#changelog) for revision history.
 
 **Status**: evidence base for `planning/text-track-transmission-2026-10-05.md`,
 which tracks the work it leads to. Produced by a read-only Opus subagent of
@@ -137,7 +137,7 @@ The archive scan found no other text-only set with differing libraries.
 
 | Run | Arms | Intended | Recorded in metas | Status |
 |---|---|---|---|---|
-| `retest-phase2e` (registered, H4, image) | `config-default`, `canonical-first`, `canonical-last`, `random` | Example ordering of the 13-image `library_plus-hp` | All four snapshots show the same order (examples 01–10, 15–17), the same `library_hash` `3f7f028c2e`, no `ordering_override`, and zero usage | **Unverified from metas.** The batch reorder `_reorder_examples_for_batch` (added `ead94aa81`, 2026-03-15 02:33 UTC) is present at the recorded commit `5a57f586e` (`run_phase2.py:74`, called `:1455`, passed to the JSONL builder `:1469`). The runs ran at 11:02–11:40 UTC. Transmission is inferred from code, not shown by artefact; a permutation cannot be seen in token counts |
+| `retest-phase2e` (registered, H4, image) | `config-default`, `canonical-first`, `canonical-last`, `random` | Example ordering of the 13-image `library_plus-hp` | All four snapshots show the same order (examples 01–10, 15–17), the same `library_hash` `3f7f028c2e`, no `ordering_override`, and zero usage | **Transmitted** (corrected 2026-10-05 by `reports/phase2e-ordering-check-2026-10-05.md`: an offline replay of the recorded commit's batch builder gives four requests differing only in example order, and the arms' outputs agree on at most 5 % of tiles against 91-99 % for identical requests). First read: **Unverified from metas.** The batch reorder `_reorder_examples_for_batch` (added `ead94aa81`, 2026-03-15 02:33 UTC) is present at the recorded commit `5a57f586e` (`run_phase2.py:74`, called `:1455`, passed to the JSONL builder `:1469`). The runs ran at 11:02–11:40 UTC. Transmission is inferred from code, not shown by artefact; a permutation cannot be seen in token counts |
 
 ### B.3 The brief's Phase 3c premise does not hold
 
@@ -182,7 +182,7 @@ configuration names differ:
 |---|---|---|
 | 16 | `retest-phase2b::track2-text-t0.0` ≡ the five 2c text arms | Null manipulation #1 |
 | 15 | `retest-phase2b::track1-image-t0.0` (`detect_brief-text-image`) ≡ `retest-phase2c::track1-image-scale-8` (`library_scale-8`) | Same 17 examples |
-| 19 | `retest-phase2c::track1-image-plus-hp` ≡ `retest-phase2e::config-default` | Study says "reused from Phase 2c" but it was re-run |
+| 19 | `retest-phase2c::track1-image-plus-hp` ≡ `retest-phase2e::canonical-first` (corrected 2026-10-05: first read `::config-default`; the retest's Phase 2c ran canonical-first ordering, and the two outputs agree on 99.7 % of tiles) | Study says "reused from Phase 2c" but it was re-run |
 | 20 | `retest-phase2c::track1-image-pure-positive-canon` ≡ `…exploratory-pure-positive-canon` | Same config, run twice |
 | 10 | `h8-v2::scale-8` ≡ `h10::pool_160_hp4hn4` | Same library hash `f7458f0cfc`. Separate executions (run_ids differ; 11:31–11:40 vs 04:39–04:50 UTC, 2026-04-15), as `results/h8-v2/analysis_summary.md:245-267` says. But E51 (`protocol-errata.md:1629-1636`) says it was "not re-launched" |
 | 5, 6 | `n1-outstanding-384::pro-{image,text}-high-t0` ≡ `pv-diag-384` Flash arms | Known (E57): intended Pro, dispatched Flash |
@@ -194,9 +194,10 @@ example `gold-standard-v2` ≡ `pv-diag-384::flash-high-text-n5-text-t0.7`, and
 "reproduction sanity test", `docs/notes/working-notes.md:11632`).
 
 **Effect on the Era-1 board.** `era1-single-pass-baseline-matrix` has 36
-cells but only **26 distinct transmitted configurations** (23 if Phase 2e's
-orderings did not transmit). Its 15-cell Tier-1 set holds **9** (7). Six
-Tier-1 cells are one text configuration.
+cells but only **26 distinct transmitted configurations**. Its 15-cell Tier-1
+set holds **9**. Six Tier-1 cells are one text configuration. (The first
+version added "23 (7) if Phase 2e's orderings did not transmit"; they did,
+so that alternative is withdrawn.)
 
 ## C. Claims affected
 
@@ -412,6 +413,15 @@ This is **correct as worded**: instruction alone vs instruction plus images.
 Its boundary sentence citing E48 is wrong (§ C.3).
 
 ## Changelog
+
+### 2026-10-05 (later) — Phase 2e corrections
+
+Trigger: `reports/phase2e-ordering-check-2026-10-05.md` (workstream W3). § B.2's
+status moves from "unverified from metas" to transmitted (code replay plus
+output fingerprint); § B.5 group 19 named the wrong partner (Phase 2c `plus-hp`
+is a replicate of Phase 2e `canonical-first`, not `config-default`); the
+"23 (7)" alternative Era-1 counts are withdrawn. The 26 configurations and 9
+Tier-1 configurations stand.
 
 ### 2026-10-05 — Original publication (Session 160)
 
