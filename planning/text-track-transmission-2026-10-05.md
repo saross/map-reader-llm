@@ -85,6 +85,10 @@ in brackets (§ 4).
   read "transmit no exemplar at all".
 - [ ] **C-13 (L, W1).** `methods-draft.md:577-588`: says Track 2 skipped
   Phase 2c; the Era-1 retest ran it (five inert arms) and Phase 2d.
+- [ ] **C-14a (L, W1).** `scripts/analyse_null_exemplar_sensitivity.py:485`
+  still writes "sent the labels only" into its `analysis.json` note; correct
+  it at the script's next run (the findings document it feeds is generated
+  and was corrected through its renderer, 2026-10-05).
 - [x] **C-14 (L, W1).** DONE 2026-10-05 (E86/E88 annotated by E90; the rest corrected in place with revision trails, plus the modality audit's opening sentence, which framed the factor the same way): "Labels only" wording: `protocol-errata.md:5351`,
   `:5367` (E86), `:5640` (E88); `osf/errata-pointers.md:76` (OSF-facing);
   `results/null-exemplar-sensitivity-2026-09-13/findings.md:43-44`;
