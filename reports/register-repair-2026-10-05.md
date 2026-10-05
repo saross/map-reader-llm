@@ -1,11 +1,21 @@
 # The passes register repair (D30-D41)
 
-> **Last revised**: 2026-10-05 (original publication, Session 160). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (session close: D40 ruled; § 2's figures
+> are the trial regeneration's, the final register's are in the note below).
+> See [§ Changelog](#changelog) for revision history.
 
 **Status: built on branch `register-repair`, for audit and PR.** The PI ruled
-D30 on 2026-10-04 (the register MUST be repaired) and D31-D41 during this
-session (`planning/pi-decisions-2026-09-20.md`); D40 is open.
+D30 on 2026-10-04 (the register MUST be repaired) and D31-D42 during this
+session (`planning/pi-decisions-2026-09-20.md`).
+
+> **Final register (session close, `0a08eedc9`).** § 2 below was written from
+> the trial regeneration. The committed register has 1,449 rows (not 1,431)
+> totalling US$3,128.62: `audited` 599 (US$3,100.57), `audited-upper-bound`
+> 6 (US$7.32), `audited-lower-bound` 33 (US$3.76), `published` 2
+> (US$16.97), `unrecorded` 809 (US$0). The difference is the D40 and later
+> registrations (the Phase 1 library, the retest-era PV legs and the other
+> groups the PI ruled on). § 2's breakdown is to be refreshed against this
+> register before the PR's audit.
 
 ## 1. What was wrong
 
@@ -85,8 +95,9 @@ vote-3 increments (US$2.97, US$2.74, US$1.51); no frontier membership changes.
 
 ## 4. Open
 
-- D40: the Phase 1 library and Experiment E (and two related groups) are
-  being investigated for registration consistent with similar runs.
+- D40: RULED 2026-10-05 and applied (registered by precedent; Experiment E's
+  manipulation never reached the model, which opened the text-track
+  transmission investigation, `planning/text-track-transmission-2026-10-05.md`).
 - Eight newly extracted March legs were upper bounds. The three WBF legs are
   now flex by D21's precedent (A73-A75, accepted by the PI 2026-10-05); the
   five `pv-384`/`pv-512` `-v2` legs remain upper bounds, with which set the
@@ -100,6 +111,21 @@ vote-3 increments (US$2.97, US$2.74, US$1.51); no frontier membership changes.
   abandoned e47 batch jobs were looked up, both purged (U4 stays a bound).
 
 ## Changelog
+
+### 2026-10-05 — Session close
+
+Trigger: the final regeneration (`0a08eedc9`) after D40-D42.
+
+| | Trial (§ 2) | Final |
+|---|---:|---:|
+| Register rows | 1,431 | 1,449 |
+| Register total | US$3,108.61 | US$3,128.62 |
+| `audited` | 579 (US$3,073.22) | 599 (US$3,100.57) |
+| `audited-upper-bound` | 8 (US$14.66) | 6 (US$7.32) |
+
+Unchanged: `audited-lower-bound` 33 (US$3.76); the 188 upper bounds'
+resolution (US$510.12). The status line and § 4's D40 item updated; § 2's
+prose breakdown still describes the trial and is to be refreshed.
 
 ### 2026-10-05 — Original publication (Session 160)
 
