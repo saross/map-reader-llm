@@ -119,7 +119,10 @@ RUN_CONDITIONS = "results/run-conditions.json"
 PASSES_MANIFEST = "results/passes-manifest.json"
 
 #: Roots a proposer pool's output directory may sit under.
-POOL_ROOTS = ["outputs/h11", "outputs", "outputs/retest"]
+#: ``outputs/gs`` since S160 (tracker C-18): without it gold-standard-v2's
+#: stages never resolved, and a stage registered ``image`` that sent text
+#: labels went unchecked.
+POOL_ROOTS = ["outputs/h11", "outputs", "outputs/retest", "outputs/gs"]
 
 #: Suffixes a pool KEY may carry that its output DIRECTORY does not: vote
 #: fractions (``-4of5``), union/consensus markers, and the operating-point

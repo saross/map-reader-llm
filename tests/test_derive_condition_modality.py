@@ -315,3 +315,49 @@ def test_register_verifier_modality_is_the_verifier_stages_own_modality():
     """
     plan = d.plan_verifier_modality_fix(d.verifier_pass_audit())
     assert [(e["run_id"], e["stage"], e["before"], e["after"]) for e in plan] == []
+
+
+#: Registered verifier stages the checker cannot resolve to their verify
+#: metadata, each for a stated reason (S160, tracker C-18/W4). Until S160
+#: ``outputs/gs/`` was among them unnamed, and a stage registered ``image``
+#: that sent text labels (gold-standard-v2 verified-v1) went unchecked.
+#: Resolving stages from the register's own paths, as the passes extractor
+#: does, would empty this list (tracker W4 follow-up).
+UNRESOLVED_VERIFIER_STAGES = {
+    ("pv-diag-384", "verified-text-1of5"):
+        "archived in 8913cab2c (a superseded stale union)",
+    **{("proposer-verifier-384", stage): "a sidecar-form meta (verified-*.meta.json); "
+       "the checker looks for stage directories only"
+       for stage in ("verified-adversarial-text", "verified-adversarial-image",
+                     "verified-brief-text", "verified-brief-image",
+                     "verified-checklist-text", "verified-checklist-image",
+                     "verified-cascade-adversarial-checklist",
+                     "verified-cascade-checklist-adversarial",
+                     "verified-adversarial-text-v2", "verified-adversarial-image-v2",
+                     "verified-brief-text-v2", "verified-brief-image-v2",
+                     "verified-checklist-text-v2")},
+    **{("proposer-verifier-512", stage): "a sidecar-form meta (verified-*.meta.json)"
+       for stage in ("verified-adversarial-text", "verified-adversarial-text-v2")},
+    ("55maps-text-high-t0-3-generalisation", "verified"):
+        "the run directory is spelled t0.3, which no POOL_ROOTS guess reaches",
+}
+
+
+@pytest.mark.tier2
+def test_every_unresolved_verifier_stage_is_named():
+    """A verifier stage the checker cannot read is out of its scope by
+    construction, so the set must be named: a new blind spot turns this red
+    rather than leaving a wrong label unchecked, as C-18 was."""
+    unresolved = {(r["run_id"], r["stage"]) for r in d.verifier_pass_audit()
+                  if r["verifier_reading"] is None}
+    assert unresolved == set(UNRESOLVED_VERIFIER_STAGES)
+
+
+@pytest.mark.tier2
+def test_no_pool_keyed_label_disagrees_with_its_derivation():
+    """Pool-keyed modality labels in generated outputs (the K-ladder unions
+    and ladders among them) match what the pool sent. The K-ladder Phase 2
+    unions carried a stale 'text' for an image pool until S160 (C-22), its
+    builder corrected on 2026-09-14 but its output never regenerated."""
+    _records, pool_records = d.derive()
+    assert [r for r in pool_records if r["mismatch"]] == []

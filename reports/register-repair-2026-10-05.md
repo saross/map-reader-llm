@@ -20,7 +20,8 @@ the S104 vote-3 increments, the `verifier-robustness` run, and
   the register.
 - **37 more real legs outside it** (D31), listed by the WP4 sidecars:
   Era-1 Stage D, the D8 replicates, the GS calibration legs, the `-v2`
-  re-runs, the WBF legs and others, about US$61.89.
+  legs (corrected verifier configurations, not identical re-runs: tracker
+  C-19), the WBF legs and others, about US$61.89.
 - **188 upper-bound rows** whose tier the committed evidence could not pin
   (the launch-command archaeology, `reports/launch-archaeology-2026-10-04.md`).
 - **734 archive metas with usage** that neither the register nor the sidecars
