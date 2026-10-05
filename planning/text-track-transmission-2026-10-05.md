@@ -216,6 +216,11 @@ Order: metadata and register → low-level records → intermediate documents
   measure each test's false-positive rate.
 - [ ] W2.4 Decide (PI): re-test the inventoried claims with a calibrated
   test, on sapphire; report which conclusions change.
+- [ ] W2.5 Widen the calibration to every significance test the paper relies
+  on (added 2026-10-05 at the PI's request): the board's permutation test
+  passed on 20 replicate pairs; the bootstrap CIs, the H-family tests
+  (`family-bh-fdr-confirmatory`), the K-ladder tests and any other have not
+  been checked against replicates. W2.3's harness serves all of them.
 
 ### W3. Phase 2e (H4 ordering) — DONE 2026-10-05
 
@@ -260,6 +265,48 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   design that answers it, and its cost; D10 (no new major runs) applies.
 - [ ] W5.3 PI decides.
 
+### W6. Prevention (added 2026-10-05 at the PI's request)
+
+- [ ] W6.1 The manipulation check as a maintained guard: promote
+  `reports/manipulation-check-2026-10-05-scripts/` to a tested script that
+  refuses an analysis whose arms differ in configuration but not in payload
+  (map-reader-bench is designing the same gate; share the design).
+- [ ] W6.2 Configuration validation: an inert field is an error, not a no-op
+  (first, an example list in a text-only configuration).
+- [ ] W6.3 A currency guard for generated outputs: a committed output must
+  match its generator run on committed inputs. Two stale outputs surfaced on
+  2026-10-05 (the analyses manifest after D25's note; the K-ladder unions after
+  their builder's fix, C-22); `reports/verification/generated-file-registry.json`
+  may already list what such a guard would cover.
+- [ ] W6.4 Decide (PI) the text prompt's fixed sentence asking the model to
+  match "the above Reference Examples" (S-7), before any W5 run: keep it for
+  comparability, or fix it.
+
+### W7. Manipulations that leave no token trace (added 2026-10-05 at the PI's request)
+
+- [ ] W7.1 Thinking on Gemini 3.1 Pro (S-6): Pro HIGH metas record 0 thought
+  tokens. Establish offline (raw responses, usage fields, the SDK version's
+  reporting) whether thinking ran.
+- [ ] W7.2 Tile size (S-8): 384 and 512 px tiles cost the same 1,502 tokens.
+  Establish the image-token budget the model received (the SDK's
+  media-resolution default at each recorded commit) and what that means for
+  H11's tile-size results.
+- [ ] W7.3 Temperature and ordering are evidenced by configuration and code
+  only (ordering now also by output fingerprint, W3): say so where the paper
+  relies on them.
+- [ ] W7.4 Each finding feeds W5: no run is designed until W7 says what can be
+  verified offline.
+
+### W8. External communications (added 2026-10-05 at the PI's request)
+
+- [ ] W8.1 List what has left the repository with the wrong description of
+  the text condition, or a void claim: the OSF errata-pointers page (E90), the
+  June colleague summary (`reports/key-findings-summary-2026-06-23.md`), any
+  talk, abstract or slide, the participatory-GIS article if it cites this work,
+  and map-reader-bench (informed 2026-10-05).
+- [ ] W8.2 For each: the correction, and who sends it (outward messages are
+  the PI's; Claude drafts).
+
 ## 5. Also open (from the same session)
 
 - [ ] The X1 signature note on the r2 board (D33): text drafted, awaiting
@@ -270,6 +317,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (evening) — W6, W7, W8 and W2.5 added
+
+At the PI's request: prevention (W6), manipulations with no token trace (W7),
+external communications (W8), and widening W2 to every significance test the
+paper relies on (W2.5).
 
 ### 2026-10-05 (later still) — W3 done
 
