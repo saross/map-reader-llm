@@ -87,10 +87,17 @@ vote-3 increments (US$2.97, US$2.74, US$1.51); no frontier membership changes.
 
 - D40: the Phase 1 library and Experiment E (and two related groups) are
   being investigated for registration consistent with similar runs.
-- Eight newly extracted March legs are upper bounds (the `-v2` and WBF legs);
-  the notes call the WBF legs flex, which D21's precedent would accept.
+- Eight newly extracted March legs were upper bounds. The three WBF legs are
+  now flex by D21's precedent (A73-A75, accepted by the PI 2026-10-05); the
+  five `pv-384`/`pv-512` `-v2` legs remain upper bounds, with which set the
+  conditions should cite still open.
 - 20 archive metas need rate-card entries (3 Pro preview, 3.1 Flash-Lite,
-  Flash-latest, 2.5 Flash) under D18 before they can be priced.
+  Flash-latest, 2.5 Flash) under D18 before they can be priced (accepted,
+  low priority).
+- Done 2026-10-05 on the PI's acceptance: `baseline-single-pass` names its own
+  pool; the E71 registration records the actual spend; the sync patch path
+  records its usage (the in-batch retries do not yet: tracker W6.5); the two
+  abandoned e47 batch jobs were looked up, both purged (U4 stays a bound).
 
 ## Changelog
 
