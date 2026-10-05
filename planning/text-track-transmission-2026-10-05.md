@@ -256,9 +256,19 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
 - [x] W2.3 Calibrate: run the bootstrap and the paired permutation test on
   every replicate set the project holds (S-2 and § B.5 of the report);
   measure each test's false-positive rate.
-- [ ] W2.4 Decide (PI): the recommendation is the paired tile-swap
-  permutation test with BH for every contrast, and no p-value read from the
-  bootstrap (CIs only); the re-test is done (C-25 lists what moves).
+- [x] W2.4 RULED 2026-10-05 (D42): the paired tile-swap permutation test with
+  BH for every contrast; no p-value read from the bootstrap (CIs only).
+- [ ] W2.6 IMPLEMENT D42 (next session): replace the bootstrap p-value in
+  live code (C-27: `scripts/lib_advanced_metrics.py:1945-1955` and four
+  other paths; retire the test that pins the floor), apply the re-test
+  results (C-25) to every inventoried site, and re-test what W2 could not
+  (the 384-vs-512 and PV pairwise files, H1, the E45 companions).
+- [ ] W2.7 FOLLOW UP S-10 (the PI's "two surprises", 2026-10-05): the
+  tile-swap test compares two outputs, not two configurations. Decide how
+  configuration-level claims are tested: a replicate-based floor (the D4/D8
+  drift-floor pattern) or a test whose null includes run-to-run variance;
+  find which paper claims compare configurations from single runs; fix
+  them.
 - [ ] W2.5 Widen the calibration to every significance test the paper relies
   on (added 2026-10-05 at the PI's request): the board's permutation test
   passed on 20 replicate pairs; the bootstrap CIs, the H-family tests
@@ -343,10 +353,13 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 - [ ] W7.3 Temperature and ordering are evidenced by configuration and code
   only (ordering now also by output fingerprint, W3): say so where the paper
   relies on them.
-- [ ] W7.5 S-9: why two executions of one transmitted signature differ
-  systematically, and whether `n1-outstanding`'s "Pro" cells ran Pro after
+- [ ] W7.5 FOLLOW UP S-9 (the PI's "two surprises", 2026-10-05): why two
+  executions of one transmitted signature differ systematically, and whether `n1-outstanding`'s "Pro" cells ran Pro after
   all (E57 read the model from a configuration field E57 itself calls an
   unreliable template default; the outputs differ from the Flash cells').
+  If they did, correct E57, the register's model labels and every claim that
+  reads those cells as Flash; if not, find what differed (serving drift
+  between dates bears on every cross-date comparison).
 - [ ] W7.4 Each finding feeds W5: no run is designed until W7 says what can be
   verified offline.
 
@@ -359,17 +372,74 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   and map-reader-bench (informed 2026-10-05).
 - [ ] W8.2 For each: the correction, and who sends it (outward messages are
   the PI's; Claude drafts).
+- [ ] W8.3 OSF (next session, before any upload): the project's storage
+  (`osf.io/h9x4g`, `preregistration-files/`) was found to hold only the
+  31 January upload (the three lodged documents and a 1,686-byte README); no
+  `errata-pointers.md` and no E87 tile-count files. The PI expected otherwise
+  and recalls several updates to the preregistration. Investigate first:
+  check the registration (`osf.io/tybgq`) and its versions or updates, every
+  component and other storage of the project, and the newest preregistration
+  version in the repository (`docs/methodology/preregistration/`) against
+  OSF; the PI will check too. Then act: upload the pointers page (and, if
+  confirmed, the E87 files and the current README) to the right place and
+  remove any file they supersede. The OSF token is `OSF_API_KEY` in
+  `~/personal-assistant/.env` (read by `scripts/check-credentials.py` there).
 
 ## 5. Also open (from the same session)
 
-- [ ] The X1 signature note on the r2 board (D33): text drafted, awaiting
-  the PI's approval; the board refresh is written on sapphire, uncommitted.
+- [ ] **The X1 signature note on the r2 board (D33): PRESENT IT TO THE PI IN
+  FULL next session** (the exchange was lost from his transcript). State:
+  the board refresh is NOT committed (reverted on sapphire 2026-10-05; it
+  regenerates in seconds with `scripts/final_board_cost_refresh.py --write`,
+  and changes exactly three cells: TH7-oracle US$207.35 → 210.32, T03-oracle
+  261.15 → 263.89, TM-oracle 30.40 → 31.91; tiers and both frontiers
+  byte-identical). Context to give: (1) why a note: the board is a signed
+  analysis (`55map-final-board-r2-2026-09-06` in `results/run-analyses.json`),
+  so a change to what it reports is a dated D9 note the PI approves, the old
+  text kept in `history`; this is its third (WP4b re-pricing; D24). (2) Why
+  the change: the three text oracle cells (k3) score detections whose 3-of-5
+  candidates include the S104 vote-3 increment; their cost counted only the
+  main verifier leg; the carried cells (k4) never touched those candidates
+  (D33). The draft:
+
+  > SIGNATURE NOTE 2026-10-05 (D9 pattern; re-pricing; ruling D33, approved
+  > by the PI ‹timestamp›, Session ‹n›). The TH7, T03 and TM ORACLE cells (k3)
+  > now add the vote-3 increment their operating point drew on
+  > (`results/deployment-oracle-2026-06-06/vote3-verify/`; register rows
+  > `<run>::vote3-increment::run1` since the S160 register repair), at the
+  > uniform tier: TH7-oracle US$207.35 → 210.32, T03-oracle US$261.15 →
+  > 263.89, TM-oracle US$30.40 → 31.91 (TM's verifier leg stays completed from
+  > comparables, †). UNCHANGED: the carried cells (k4), which never used the
+  > increment; every other family's cost (the repair moved none); the 35-cell
+  > tiering, every F1, MCC, tier and group; and both efficiency frontiers'
+  > membership (D24). The signature of 2026-09-17 stands for the tiering; the
+  > PI approves the re-priced cost axis as of this note.
+
+  Three points for the PI: (a) add "the board's cost sentence says so": the
+  board's prose definition of `cost` ("a run's carried and oracle cells
+  share it") was rewritten by the refresh to say the three oracle cells add
+  their increment, so the note should say the board's text moved too
+  (recommended); (b) optionally name IM and UPL, the other two oracle cells,
+  as having no increment (IM's carried and oracle cells are one shipped k3
+  cell and no image vote-3 increment was run; UPL's oracle is priced by its
+  own verifier leg); (c) the closing sentence is in the PI's voice (the WP4b
+  note's formula); his reply is the approval, and its time is recorded. On
+  approval: run the refresh with `--write`, add the note to the analysis's
+  `signature.attests` with the prior text in `history`, regenerate the
+  analyses manifest, commit.
 - [ ] The register-repair PR (D30-D41): audit, then merge.
 - [ ] The manipulation check as a maintained tool: promote
   `reports/manipulation-check-2026-10-05-scripts/` to a tested script and a
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (session close) — the PI's rulings and hand-offs
+
+D42 ruled (W2.4). The two surprises from W2 (S-9, S-10) are follow-up tasks
+W7.5 and W2.7. W8.3 records the OSF investigation the PI asked for before
+any upload. The X1 note's full draft and context are kept in § 5 for the
+next session.
 
 ### 2026-10-05 (night) — W2 investigated
 
