@@ -290,7 +290,11 @@ references must be verified when D.2 drafts, not assumed here.*
   deployment-re-tuned dial (pointer to D.4's plateau rule); (4) the
   proposer–verifier architecture as the largest structural gain,
   with the deliberately minimal production verifier. Boundary: the
-  recall ceiling is perceptual (Experiment E).
+  recall ceiling is perceptual (Experiment E). [NOTE 2026-10-05, S160:
+  Experiment E is unregistered (ruling D40), and its example levers never
+  reached the model (Obs 496): this boundary rests only on its Finding 4,
+  one 60-tile run per arm, whose own accidental replicate spread 0.050 F1.
+  Qualify it or cite it as an unregistered pilot; do not cite Obs 156.]
 - **In-section decisions**: none — registration-status discipline
   (Part A) applies to each claim individually at prose time.
 
