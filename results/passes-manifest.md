@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-10-05T02:00:04Z · 1449 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `1d6f29db3`.
+> Generated 2026-10-05T05:33:46Z · 1449 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `238606a15`.
 >
 > **Coverage**: 1449 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
@@ -48,8 +48,8 @@
 | gold-standard-v2::detect_brief-text::run3 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.308766 | audited |
 | gold-standard-v2::detect_brief-text::run4 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.339605 | audited |
 | gold-standard-v2::detect_brief-text::run5 | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | — | 2.354597 | audited |
-| gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | — | 11 | 0.00781 | audited-lower-bound |
-| gold-standard-v2::wbf-verified-v1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1318 | 1.822868 | audited-upper-bound |
+| gold-standard-v2::verified-v1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 11 | 0.00781 | audited-lower-bound |
+| gold-standard-v2::wbf-verified-v1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1318 | 0.911434 | audited |
 | h10::pool_020_hp4hn4::run1 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.47992 | audited |
 | h10::pool_020_hp4hn4::run2 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.588784 | audited |
 | h10::pool_020_hp4hn4::run3 | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | — | 2.653701 | audited |
@@ -116,8 +116,8 @@
 | e47-propose-brief::verified-flash-high-text-1of5-recovery-2026-09-08::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 4149 | 2.835267 | audited |
 | e47-propose-brief::verified-flash-high-text-1of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 57 | 0.038928 | audited-lower-bound |
 | e47-propose-brief::verified-text-baseline::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1180 | 1.636178 | audited |
-| e47-propose-brief::wbf-n5-verified-v1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.001367 | audited-lower-bound |
-| e47-propose-brief::wbf-n5-verified-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3890 | 5.518004 | audited-upper-bound |
+| e47-propose-brief::wbf-n5-verified-v1::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1 | 0.000683 | audited-lower-bound |
+| e47-propose-brief::wbf-n5-verified-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 3890 | 2.759002 | audited |
 | n1-outstanding-384::brief-text-t03::run1 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.576124 | audited |
 | n1-outstanding-384::brief-text-t03::run2 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.57241 | audited |
 | n1-outstanding-384::brief-text-t03::run3 | gemini-3-flash-preview | text | minimal | 0.3 | ok | 487 | — | 0.579769 | audited |

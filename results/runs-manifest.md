@@ -2,7 +2,7 @@
 
 # Runs manifest
 
-> Generated 2026-10-05T02:00:04Z · 44 row(s) · schema v1.0 · rendered from `results/runs-manifest.json` at commit `1d6f29db3`.
+> Generated 2026-10-05T05:33:46Z · 44 row(s) · schema v1.0 · rendered from `results/runs-manifest.json` at commit `238606a15`.
 >
 > **Coverage**: all 44 runs (run-level facts; conditions/passes added as 3b batches land).
 
