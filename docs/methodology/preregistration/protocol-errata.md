@@ -5977,9 +5977,12 @@ commit, GitHub permalink, and whether it was public before holdout, and a
 `git ls-tree` listing so the deposited bytes can be checked against the
 committed blobs (`osf/late-deposit/deposit-index.md`; uploaded to OSF under
 `late-deposit-2026-10-05/`). Items 2-5 are deposited as what exists; nothing
-is reconstructed and presented as pre-holdout. (iii) A second registration
-update points to the deposit and to the errata since E16 (text approved by
-the PI before submission).
+is reconstructed and presented as pre-holdout. (iii) Registration update 2,
+text approved by the PI, was submitted through the OSF API and approved on
+2026-10-05 at 11:30 UTC (schema response `6ac38a3364e75f041c219724`). It
+points to the deposit and to the errata since E16, and re-attaches the three
+lodged documents to the registration's file list, which the first update
+had left empty.
 
 **Lesson**. A registered "upload before X" is a gate, not a to-do: it needs a
 check that blocks X. The pre-holdout deposit stayed an unticked to-do in
