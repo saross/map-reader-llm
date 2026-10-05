@@ -1,6 +1,6 @@
 # Text-track transmission gap: claims, surprises and work plan
 
-> **Last revised**: 2026-10-05 (original publication, Session 160). See
+> **Last revised**: 2026-10-05 (Session 161: X1 approved and recorded). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: OPEN.** The PI's working document for the finding of 2026-10-05:
@@ -391,8 +391,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 
 ## 5. Also open (from the same session)
 
-- [ ] **The X1 signature note on the r2 board (D33): PRESENT IT TO THE PI IN
-  FULL next session** (the exchange was lost from his transcript). State:
+- [x] **The X1 signature note on the r2 board (D33): PRESENT IT TO THE PI IN
+  FULL next session** (the exchange was lost from his transcript). DONE
+  2026-10-05 (S161): presented in full; the PI approved the version with
+  points (a) and (b) folded in at 06:06:19Z; refresh written and note
+  recorded (`b044c486e`), manifests regenerated (`d35abeef0`); the five
+  refresh tests pass (13 passed). Was:
   the board refresh is NOT committed (reverted on sapphire 2026-10-05; it
   regenerates in seconds with `scripts/final_board_cost_refresh.py --write`,
   and changes exactly three cells: TH7-oracle US$207.35 → 210.32, T03-oracle
@@ -437,6 +441,14 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (Session 161) — X1 approved and recorded
+
+The PI approved the r2 board's D33 signature note with points (a) and (b)
+folded in (06:06:19Z). The board refresh is written (`b044c486e`), the
+note is in the board's `signature.attests` with the prior text in
+`history`, and the manifests carry it (`d35abeef0`). § 5's first item is
+ticked; D33 records its execution.
 
 ### 2026-10-05 (session close) — the PI's rulings and hand-offs
 
