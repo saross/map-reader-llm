@@ -26,8 +26,8 @@ table from hard-example image to text guidance, the final hard-example image
 filenames, the selection rationale, the H9 prompt variants V1–V5, the exact
 ordering for each condition, and the random seeds (preregistration § 8.4.1,
 Step 6; appendix, "Finalisation Documentation"). It was not done. An upload
-of five supporting files on 2026-02-04, alongside the first update, did not
-attach to anything on OSF.
+of five supporting files was attempted on 2026-02-04, alongside the first
+update, but the files did not attach: none of them is on OSF.
 
 The materials are now deposited, late, in this project's folder
 `late-deposit-2026-10-05/`, each from the git commit that holds it. Holdout
@@ -37,10 +37,14 @@ selection rationale) were public in the repository before then,
 byte-identical at commit `5d8c251`, which the first update of this
 registration cites by hash, and are unchanged since. The other four were not
 fixed before holdout: the mapping table never existed as a file; the H9
-variants were finalised on 2026-03-07; the orderings that ran were fixed on
-2026-02-12 and are recorded by no run; some seeds were set or wired after
-holdout began. `deposit-index.md` in that folder gives each item's status,
-commit and permalink.
+variants were finalised on 2026-03-07; the example orderings used in the H4
+experiment were settled in code on 2026-02-12, a week after holdout
+evaluation began, and no run's output records the order in which examples
+were actually sent (the orders are reconstructed from the code at each run's
+recorded commit); and of the random seeds, the one for H4's random ordering
+took effect only on 2026-02-12, while H9 used a fixed rotation instead of a
+seeded draw. `deposit-index.md` in that folder gives each item's status, its
+commit, and a permanent GitHub link.
 
 ### 2. Errata since the first update
 
@@ -58,8 +62,9 @@ execution and later audits, each with its date, evidence and impact.
 
 ### 3. Files
 
-The first update left this registration's file field empty. The lodged
-documents remain in the registration's archive and in this project's
+The first update left this registration's list of attached files empty;
+this update re-attaches the three lodged documents. They remain in the
+registration's archive and in this project's
 `preregistration-files/` folder, byte-identical to the repository copies
 (SHA-256 checked 2026-10-05).
 

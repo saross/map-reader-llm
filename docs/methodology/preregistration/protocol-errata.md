@@ -5956,11 +5956,15 @@ re-checkable):
 3. **H9 variants V1-V5: finalised 2026-03-07** (`ec00c2ae`), 30 days after
    holdout began. The lodged design builds them from the winning holdout
    configuration, so they could not have preceded it.
-4. **Exact ordering per condition: not fixed before holdout.** At holdout
-   start, "canonical-first" was a no-op in code (E29); the H4 definitions
-   that ran date from 2026-02-12 (`ea5f1533`, `8118eb5e`), and no run records
-   the order it sent. The orders are code-inferred
-   (`reports/phase2e-ordering-check-2026-10-05.md`).
+4. **Exact ordering per condition: not fixed before holdout.** The example
+   orderings used in the H4 experiment were settled in code on 2026-02-12
+   (`ea5f1533`, `8118eb5e`), a week after holdout evaluation began; before
+   then "canonical-first" was a no-op in code (E29), so Phases 2a-2d ran in
+   configuration-file order. No run's output records the order in which
+   examples were actually sent: the February metadata records the ordering's
+   name and seed but lists the examples in configuration order, and the March
+   retest's records neither. The orders are reconstructed from the code at
+   each run's recorded commit (`reports/phase2e-ordering-check-2026-10-05.md`).
 5. **Random seeds: partly.** Tile-selection, null-tile and execution-order
    seeds were fixed before holdout; the H4 seed base (42) was declared but
    wired to the detector only on 2026-02-12; H9 used a hand-written rotation
