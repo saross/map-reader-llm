@@ -528,7 +528,11 @@ consensus, and an adversarial text verifier. The honest boundary is
 the recall ceiling: Experiment E showed the missed mounds are
 invisible to the model rather than rejected at its decision
 threshold, so the recipe's remaining errors are perceptual, not
-configurational.
+configurational. [NOTE 2026-10-05, S160: Experiment E is
+unregistered (D40) and its example levers never reached the model
+(Obs 496, E90); this rests on its Finding 4 alone, one 60-tile run per arm
+whose own accidental replicate spread 0.050 F1. Qualify it or cite it as an
+unregistered pilot.]
 
 **S139 literature mapping (verified — prompt-techniques report,
 137/145 pass with the one FAIL corrected).** Five of the seven
@@ -553,7 +557,10 @@ crop sweeps discard disambiguating cartographic context; guided
 search works). (6) reasoning liberalisation — the best-supported:
 Liu et al. 2025 (attention drifts from visual tokens as chains
 lengthen), Tian et al. 2025, Li et al. 2025 give the Obs 155 /
-Experiment E pattern a published mechanism. (7) calibration — claim
+Experiment E pattern a published mechanism. [NOTE 2026-10-05, S160: the
+Obs 155 / Experiment E thinking step is one 60-tile run inside a 0.050
+replicate spread (Obs 496), so the "pattern" is unsupported as stated; the
+mechanism needs a pattern established at adequate n first (tracker W5).] (7) calibration — claim
 the acceptance probabilities are *monotone enough to threshold on*,
 never *calibrated* (Groot & Valdenegro-Toro; Xuan et al.); the
 consensus signal and verbalised probability are complementary

@@ -67,7 +67,7 @@ in brackets (§ 4).
 - [ ] **C-08 (S, W1/W5).** Obs 155 (`working-notes.md:2757`) and Obs 157
   (`:2877`): real manipulations, each one 60-tile run inside a 0.050
   replicate spread; unsupported as stated. Obs 158 (`:2917`) weakened.
-- [ ] **C-09 (S/D, W1).** `docs/paper/discussion-seeds.md:528-531`
+- [x] **C-09 (S/D, W1).** DONE 2026-10-05: dated notes added at both. `docs/paper/discussion-seeds.md:528-531`
   (strength) and `:553-556` (direction unsupported): Experiment E
   citations with no dated note yet.
 - [x] **C-10 (S).** `docs/paper/discussion-outline.md:293-297`: dated D40
@@ -121,9 +121,11 @@ in brackets (§ 4).
 - [ ] **C-20 (L, W4).** Obs 280's table (`working-notes.md:13683`) labels
   `h4-canonical-last` "text"; it transmits 13 images.
 - [ ] **C-21 (L, W1).** `retest-production-summary.md:320` says "Gemini 2.0
-  Flash"; every retest meta records `gemini-3-flash`. E51
-  (`protocol-errata.md:1629-1636`) says the scale-8 run was "not
-  re-launched"; its metas show a fresh run.
+  Flash"; every retest meta records `gemini-3-flash` (with the retest
+  summary's W2 revision). E51 (`protocol-errata.md:1629-1636`) said the
+  scale-8 run was "not re-launched"; its metas show a fresh run. E51 half
+  DONE 2026-10-05: annotated (the H8 v2 analysis already recorded the fresh
+  run).
 
 - [x] **C-22 (L, W4).** `results/k-ladder-2026-09-12/phase2/unions.json` labelled
   `pv-diag-384::scale-4-optimal-487` (an image pool, 13 exemplar images)

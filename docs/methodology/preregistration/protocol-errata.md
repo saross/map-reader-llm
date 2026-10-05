@@ -1697,6 +1697,15 @@ pool_160_hp16hn16) is preserved for both HP and HN. Pre-filter pools archived
 to `archive/h10-v2-prefilter-pools/`. Audit report:
 `reports/configuration-audit-2026-04-15-h8-v2.md`.
 
+**Corrected 2026-10-05 (E90's manipulation check)**: the plan above, to
+reference the H10 v2 `pool_160_hp4hn4` runs as H8 v2's Scale-8 condition
+"rather than re-launched", was not what ran. `outputs/h8-v2/scale-8/run_1..5`
+are fresh executions (their own `run_id`s, 2026-04-15 11:31-11:40 UTC, library
+hash `f7458f0cfc`, the same as the H10 runs of 04:39-04:50 UTC), and the H10
+run was kept as an independent comparison draw
+(`results/h8-v2/analysis_summary.md`, "Sanity check": ΔF1 0.007). No result
+changes; only this entry's description of the execution was stale.
+
 ### E52: H12 HP:HN ratio re-run under production carry-forward (384 px / v2 pipeline)
 
 | Field | Value |
