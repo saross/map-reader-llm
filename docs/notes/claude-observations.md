@@ -2900,3 +2900,56 @@ beyond what was ruled, spend, or a finding that changes a signed claim.
 inside what is already ruled, and stop and report at the first finding that
 needs a decision, with the work up to that point committed, rather than
 resolving it myself to keep going.
+
+## claude-obs 137 — 2026-10-05: He asks for consistency with precedent instead of a verdict, and that is what found the error
+
+**Pattern.** Offered a class for nine unsure archive metas (ledger or
+register), he chose neither: "if the phase 1 library chose the hard positives
+still in production, we should make sure its registered appropriately,
+consistent with other, similar runs (similar for the others you have cited)".
+The investigation that instruction required read what Experiment E had
+transmitted, and found the text-track gap.
+
+**Lesson.** "Consistent with precedent" makes the agent establish facts
+(what ran, what depends on it, how similar runs are treated) before
+classifying; a verdict on the options as offered would have skipped that
+work. His refusal of the offered binary was the more expensive answer and
+the right one.
+
+**How to apply.** When he answers a classification question with "make it
+consistent with similar cases", treat it as a research task: find the
+precedents, quote them, and check the premise behind each option, not just
+the options.
+
+## claude-obs 138 — 2026-10-05: Self-critique — a decision buried in a long message is a decision lost
+
+**Pattern.** The X1 signature note needed his approval. I put it as point 1
+of messages that also carried the manipulation check, the workstreams and
+other questions; he lost it from his transcript twice ("I've lost the X1
+exchange in the transcript again"), and it is carried to the next session
+unapproved.
+
+**Lesson.** Length is not the problem; position and company are. An approval
+he must give in his own words competes badly with findings he wants to read.
+
+**How to apply.** Put an approval request in its own short message, or first
+and alone at the top, with the text to approve quoted in full and the reply
+expected ("approve as written, or change …"). Re-present it rather than
+referring back to it.
+
+## claude-obs 139 — 2026-10-05: He extends trust to act externally, and then asks to verify before acting
+
+**Pattern.** He authorised an OSF upload ("I think you can upload to osf,
+just be sure to put it in the right place and remove any file it
+supersedes"). When I reported that the storage did not hold what we both
+expected, he did not let me proceed on my reading: "let's investigate further
+in the new session to make sure we're correct ... I'll do a check as well".
+
+**Lesson.** An authorisation to act on an outward-facing system carries an
+implied premise (the state is as described). When the premise fails, the
+authorisation lapses, and he wants a joint check, not my resolution.
+
+**How to apply.** Before any outward-facing action, verify the state the
+authorisation assumed; if it differs, stop, report the difference with what
+was checked and what was not, and propose, rather than adapting the plan to
+the new state myself.

@@ -9956,3 +9956,66 @@ eCryptfs size quirk on amd-tower (contents verified identical to HEAD).
 were first checked only in-session; the PI's request for a final
 independent pass is what closed that. The sapphire-only drift showed that a
 generator's committed output is only as machine-independent as its inputs.
+
+## Session 160
+
+*2026-10-04/05; amd-tower + sapphire; Opus 5.5 driving; Opus subagents (grid
+layout, the 38 other legs, archaeology § 4, two archive surveys, D40
+investigation, manipulation check, W2 bootstrap, W3 Phase 2e); two Gemini
+`batches.get` metadata calls (no tokens, PI-approved); API spend US$0.
+Primary instance, no compaction.*
+
+**Rulings D31-D42** (`planning/pi-decisions-2026-09-20.md`): D31 every real
+leg into the register; D32 vote-3 increments as rows of their parent runs;
+D33 X1 confirmed (oracle cells only); D34 the archaeology's evidence
+standards; D35 an unmetered-executions ledger with estimates; D36 a carried
+batch marker pins no real-time resume; D37 pv-384 v1-prompt main leg restored
+from git; D38 survey the archive's metas; D39 the unmetered tail is WP6's
+invoice residual; D40 Phase 1 library and the legacy PV legs registered,
+Experiment E not; D41 h10's pool_160 mining passes registered; D42 paired
+permutation tests with BH for every contrast (implement next session).
+
+**The register repair (branch `register-repair`, not yet a PR).**
+
+- 1,339 → 1,449 rows; as-billed total US$3,094.05 → about US$3,109
+  (re-verify at the final regeneration); upper bounds 188 → 8 → 6 (the WBF
+  attestations resolved two).
+- Extractor: `repo_path` (verifier and proposer), `single_pass`, `pass_glob`,
+  `run_N/retry/` folds, `temperature_of_record`, a warning and a drift guard
+  for hints resolving to no meta, per-fragment candidate counts.
+- Coster: the cached-token signature at a logged explicit-cache size;
+  `*.txt` logs; uncached requests retire a logged cache; a carried
+  `batch_api` block pins no real-time resume; one carry-forward rule shared
+  with the sidecars; repository roots need a real `.git`.
+- 58 attestations applied: 54 of the archaeology's drafts, A72 (D36) and
+  A73-A75 (the WBF legs); the 188 upper bounds resolve to US$510.12 as
+  proposed.
+- Ledgers: D22 superseded (+2), unmetered (new, D35; US$23.06 estimated plus
+  US$7.68 exposure bounds), archive (generated, D38; about US$361 superseded,
+  20 unpriceable for want of rate-card entries).
+- X1 coded (`increments`); board refresh held for the PI's note approval.
+- The sync patch path now records usage (`8ae31a585`); in-batch retries do not
+  (W6.5).
+
+**The text-track transmission gap** (tracker
+`planning/text-track-transmission-2026-10-05.md`, on `main`).
+
+- Found through D40: Experiment E's arms all sent 1,672 tokens per tile.
+  A text-only request sends no example at all; the registration says so; the
+  documents since did not.
+- Manipulation check (`reports/manipulation-check-2026-10-05.md`): one
+  registered null (Phase 2c text, five identical arms); the image track and
+  every temperature, thinking and instruction manipulation transmitted.
+- W3 (`reports/phase2e-ordering-check-2026-10-05.md`): Phase 2e orderings
+  transmitted (code replay plus output fingerprint).
+- W2 (`reports/retest-bootstrap-check-2026-10-05.md`): the retest bootstrap's
+  p sits at its floor between near-identical arms; one verdict flips after
+  BH; two deeper surprises (S-9 cross-date drift, S-10 output-level tests).
+- Done: E90; E51, E86, E88 annotated; "labels only" corrected in five
+  documents; Obs 496; W4 labels (C-18, C-19, C-22); map-reader-bench briefed
+  three times.
+
+**Contextual assumptions.** amd-tower's eCryptfs flagged phantom
+modifications mid-session, so commits to `main` used git plumbing rather than
+stash or merge. The PI was available throughout and ruled in one line on
+laid-out options; the X1 note was nonetheless lost from his transcript twice.

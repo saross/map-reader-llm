@@ -8399,3 +8399,46 @@ compaction summary.*
   nothing had changed, and the flags cleared on their own. The instinct to
   "restore" them would have been wrong twice: nothing needed restoring, and
   they were not mine.
+
+## Session 160 — 2026-10-04/05 (the register repair, D31-D42; the text-track transmission gap found and externalised)
+
+- **Verify a subagent's heaviest claim at source before relaying it.** Five
+  agents reported this session. For each, I re-checked the one or two claims
+  a decision would rest on, from committed files, before they reached the
+  PI: the Phase 2c arms' identical signatures, the retest summary's p = 0.001
+  line, the bootstrap's p formula in live code, the Phase 2e replicate pair
+  (338 of 338 tiles). Every check agreed, and it cost minutes. The check is
+  cheap because the agents cite file:line; the instruction to cite is what
+  makes verification possible.
+- **I generalised from configuration identity without reading the design.**
+  I told the PI, and map-reader-bench, that Phase 3c's text arm A was "meant
+  as five example-order permutations" and sent identical requests. The study
+  file calls them "Baseline — identical pass 1..5". The manipulation-check
+  agent caught it within hours and I corrected both audiences. Identical
+  transmitted signatures are a null manipulation only if the design intended
+  a difference: read the study file before calling a null.
+- **A rule calibrated on the target cases can be wrong outside them.** My
+  first cached-token signature rule (one positive count on every request
+  means an explicit cache) resolved all the archaeology's target rows
+  correctly, and was wrong on eight image-b recoveries launched without
+  `--use-cache`, where implicit caching hit every request at a different
+  size. The disagreement with the hand-built drafts exposed it. Hand evidence
+  built independently of a rule is the best test set the rule can get; run it
+  against the drafts before trusting it, not after.
+- **Accounting fields are experimental evidence.** Per-request input tokens,
+  recorded so the project could price passes, are an exact manipulation
+  check for anything that changes the prompt: 1,502 tokens for every
+  text-only request, about 1,090 more per example image. The finding of the
+  session came from reading cost data as data about the experiment.
+- **A generated output can go stale with no guard noticing.** Twice: the
+  analyses manifest lacked D25's second signature note (its input changed,
+  the manifest was never regenerated), and the K-ladder unions kept a label
+  their builder had corrected a month earlier. Both were found by running a
+  checker, not by a test. A currency guard (regenerate and diff) is the
+  missing piece (tracker W6.3).
+- **Git under eCryptfs: plumbing works when porcelain stashes.** With phantom
+  "modified" files flagged, `git stash` and even `git merge` (which stashed
+  regardless of `merge.autoStash=false`) failed on "short read". Committing
+  to `main` and merging through `read-tree`, `update-index --cacheinfo`,
+  `write-tree` and `commit-tree` into a temporary index never touched the
+  working tree, and kept `main` and the branch in step.
