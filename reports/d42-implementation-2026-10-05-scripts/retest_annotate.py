@@ -8,7 +8,6 @@ pairwise row and a d42_annotation note at the phase level.
 """
 import json
 import subprocess
-import sys
 from pathlib import Path
 
 FILES = sorted(Path("results/retest").glob("phase2*-evaluation.json"))
