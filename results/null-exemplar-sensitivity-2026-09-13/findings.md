@@ -377,7 +377,10 @@ re-scores answer that question, and they answer it in thousandths.
 
 ### 2026-10-05 — A text-only request sends no exemplar (E90)
 
-Trigger: erratum E90 (Session 160). One sentence said a text-only configuration "sent the labels only"; it sends no exemplar at all. The conclusion (text cells never saw the null pixels) stands. Nothing else in this document changes; no figure moves.
+Trigger: erratum E90 (Session 160). One sentence said a text-only configuration
+"sent the labels only"; it sends no exemplar at all. The conclusion (text cells
+never saw the null pixels) stands. Nothing else in this document changes; no
+figure moves.
 
 ### 2026-09-13 — Original publication
 
