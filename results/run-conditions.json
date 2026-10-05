@@ -10031,7 +10031,7 @@
    ]
   },
   "retest-phase2b": {
-   "_note": "Era-1 retest, H7 (phase2b). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates).",
+   "_note": "Era-1 retest, H7 (phase2b). Single-pass replicate conditions (K passes per condition, metric = replicate-mean over runs), scored at the 14-buffer+MCC standard (Session 102 re-score, results/paper-eval/phase2/512px-14buf-mcc/). Era-1 340-tile, curator GT, 512px. Model of record: gemini-3-flash. detections points at the condition dir (the replicate-mean eval has no single geojson); n_detections=None is expected. proposer_pools = the leaf condition dirs (run_* = replicates). AMENDED 2026-10-05: legacy-pv-*: the PV Phase 1 crop-size and strategy legs (2026-03-20, run_pv.py), all over the 882 candidates of outputs/retest/phase2b/track2-text/T0.0/run_1 (their candidate_manifest.json source_geojson); Decisions 22-25 and E39 rest on them, the 150 px crop among them. The N = 5 leg ran at T = 0.7 (its directory name and results/pv/phase1/pv-phase1-analysis.md) though its meta records 0.0 and no run.log survives: temperature_of_record (D14 keeps the meta as written). Registered by ruling D40 (S160).",
    "proposer_pools": {
     "track1-image-t0.0": {
      "modality": "image",
@@ -10104,6 +10104,42 @@
      "modality": "text",
      "repo_path": "outputs/era1-pv-stage-d",
      "path": "512-single-image-t0.0/pass_3/verified"
+    },
+    "legacy-pv-adv-text-crop40": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "adversarial-text-40/text-n1-t0.0-minimal"
+    },
+    "legacy-pv-adv-text-crop75": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "adversarial-text-75/text-n1-t0.0-minimal"
+    },
+    "legacy-pv-adv-text-crop150": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "adversarial-text-150/text-n1-t0.0-minimal"
+    },
+    "legacy-pv-adv-text-crop300": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "adversarial-text-300/text-n1-t0.0-minimal"
+    },
+    "legacy-pv-adv-text-crop150-n5-t0-7": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal",
+     "temperature_of_record": 0.7
+    },
+    "legacy-pv-brief-text-crop150": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "brief-text-150/text-n1-t0.0-minimal"
+    },
+    "legacy-pv-checklist-text-crop150": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "checklist-text-150/text-n1-t0.0-minimal"
     }
    },
    "conditions": [
@@ -10725,7 +10761,7 @@
    ]
   },
   "retest-phase3a": {
-   "_note": "H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal \u2014 see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -> deferred _ignored_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash.",
+   "_note": "H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal \u2014 see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -> deferred _ignored_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash. AMENDED 2026-10-05: legacy-pv-*: PV Phase 2 legs 21-24 (2026-03-21) over this run's 30-pass T = 0.7 unions at 25-of-30 and 1-of-30 (text) and 20-of-30 and 1-of-30 (image). Mapping by the union file names and by size: each leg's results match the same threshold's union to within 1.6 % (590/588, 2,419/2,415, 503/495, 2,617/2,615), the small excess because the unions were rebuilt on 2026-04-16 (1f443fd69), after the legs ran. Registered by ruling D40 (S160).",
    "proposer_pools": {
     "track1-image-t0.3": {
      "modality": "image",
@@ -10757,6 +10793,26 @@
      "modality": "text",
      "repo_path": "outputs/era1-pv-stage-d",
      "path": "512-consensus-image/pass_1/verified"
+    },
+    "legacy-pv-text-t0-7-n30-25of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/21-text-25of30"
+    },
+    "legacy-pv-text-t0-7-n30-1of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/22-text-1of30"
+    },
+    "legacy-pv-image-t0-7-n30-20of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/23-image-20of30"
+    },
+    "legacy-pv-image-t0-7-n30-1of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/24-image-1of30"
     }
    },
    "conditions": [
@@ -11641,7 +11697,7 @@
    ]
   },
   "retest-phase3a-replication": {
-   "_note": "H3 clean HIGH-vs-MINIMAL thinking replication at T0.7 text (built because the original phase3a HIGH/min both used minimal). 2 cells (high, minimal); N in {5,10,30}. One condition per (cell x N) at best-F1@20m. 14-buf+MCC, Era-1 340.",
+   "_note": "H3 clean HIGH-vs-MINIMAL thinking replication at T0.7 text (built because the original phase3a HIGH/min both used minimal). 2 cells (high, minimal); N in {5,10,30}. One condition per (cell x N) at best-F1@20m. 14-buf+MCC, Era-1 340. AMENDED 2026-10-05: legacy-pv-*: PV Phase 2 legs 25-26 (2026-03-21) over the HIGH replication's 30-pass unions at 20-of-30 and 25-of-30 (547/540 and 425/421 against the unions rebuilt on 2026-04-16, 1f443fd69). Registered by ruling D40 (S160).",
    "proposer_pools": {
     "high": {
      "modality": "text",
@@ -11652,7 +11708,18 @@
      "path": "minimal"
     }
    },
-   "verifier_passes": {},
+   "verifier_passes": {
+    "legacy-pv-high-n30-20of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/25-high-20of30"
+    },
+    "legacy-pv-high-n30-25of30": {
+     "modality": "text",
+     "repo_path": "archive/outputs-experimental-pilot/pv/results",
+     "path": "phase2/26-high-25of30"
+    }
+   },
    "conditions": [
     {
      "label": "text-high-t0.7-n5-4of5",
@@ -17295,6 +17362,18 @@
      "_note": "Campaign cell G3IMG-ARM2-K5-mcc-oracle: tile-MCC oracle at the rung's CARRIED vote count k5 -- the tile-MCC optimum over prob_t with min_votes pinned, the like-for-like companion of the F1-argmax oracle (this campaign's primary metric). n_detections 4660 of a 45786-candidate K = 5 first-N union, verified by gemini-3.7-flash at thinking low (Google async Batch API). Scored by evaluate_detections.py on the r2 board's stage-2 recipe (14 buffers, tile-level BCa 10,000 / seed 42, --mcc, --require-clean-inputs) against best-available-gt-55maps-r2.geojson over the 8,541-tile frame \u2014 one engine for the whole r2 chain. source_tile re-stamped onto that frame per the run-facts TILE JOIN flag. The K = 1 and K = 5 rungs are EXPLORATORY replicates of the declared K = 3 primary family (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2); the row's whole registration is UNSIGNED. Re-pointed 2026-09-20 per PI ruling D6/6c (planning/pi-decisions-2026-09-20.md, 2026-09-20; docs/notes/working-notes.md Observation 492): this row replaces the UNCONSTRAINED optimum at (0.98, k1), which keeps its own label g3img-arm2-k5-mcc-oracle-p0.98-k1-r2-gt against cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/. Pinning the vote count moves micro-F1@50 0.5217 -> 0.8353 and tile-MCC 0.7755 -> 0.7451 on n 12508 -> 4660. Post-hoc; NOT covered by either image row's signature, both of which were signed before the redefinition. RETAINED, NOT PRESENTED 2026-09-21. PI ruling D6c amended (planning/pi-decisions-2026-09-20.md, 2026-09-21, superseding 6c of 2026-09-20): the MCC oracle is dropped from the main boards under BOTH definitions; see results/tile-presence-2026-09-21/. Reason: tile-MCC has no interior optimum on this corpus -- its free optimum is the vote-count artefact and its pinned optimum is within noise of the carried point. tile-MCC stays reported beside F1 at the carried and F1-oracle points; the F1 oracle stays free over threshold and vote count. This row is the PINNED (carried-k) cell: retained and NOT deleted, but presented on no board and not to be quoted as an oracle."
     }
    ]
+  },
+  "phase1-library": {
+   "_note": "Phase 1 library construction (prereg 8.4.1 Step 1). One image-only pool, 5 passes over the 20 calibration tiles; no condition (a selection diagnostic only; D41 precedent). Registered by ruling D40 (S160).",
+   "proposer_pools": {
+    "image-only-baseline": {
+     "modality": "image",
+     "path": ".",
+     "pass_glob": "pass_*"
+    }
+   },
+   "verifier_passes": {},
+   "conditions": []
   }
  }
 }

@@ -1,5 +1,5 @@
 {
- "_README": "Hand-reviewed classification of every git-tracked *.meta.json under archive/ that records token usage (PI ruling D38, 2026-10-05): DUPLICATE (the same execution as a meta outside archive/ or another archived meta; twin named), SNAPSHOT (an earlier state of a live meta that contains its usage; twin named), REAL (a leg the passes register carries; register_pass_id names its row), SUPERSEDED (a separate billed execution whose results were replaced or discarded: D22's class, outside per-run costs, inside the project total), UNSURE (awaiting a ruling, open_ruling). 'partial' marks a meta whose last resume overwrote part of its pass: its figure is a floor and the rest falls to D39's invoice residual. Built in the S160 register repair from two read-only surveys (the Era-1 subtrees, and the rest), reviewed against the register; the generator scripts/build_archive_ledger.py prices it into data/pricing/archive-executions.json. A new usage-bearing archive meta must be classified here before the ledger builds.",
+ "_README": "Hand-reviewed classification of every git-tracked *.meta.json under archive/ that records token usage (PI ruling D38, 2026-10-05): DUPLICATE (the same execution as a meta outside archive/ or another archived meta; twin named), SNAPSHOT (an earlier state of a live meta that contains its usage; twin named), REAL (a leg the passes register carries; register_pass_id names its row), SUPERSEDED (a separate billed execution whose results were replaced or discarded: D22's class, outside per-run costs, inside the project total), UNREGISTERED (a real execution whose results are still cited but which no registered run carries, by ruling; priced and counted like SUPERSEDED, cited_by names the citation: D40's Experiment E), UNSURE (awaiting a ruling, open_ruling). 'partial' marks a meta whose last resume overwrote part of its pass: its figure is a floor and the rest falls to D39's invoice residual. Built in the S160 register repair from two read-only surveys (the Era-1 subtrees, and the rest), reviewed against the register; the generator scripts/build_archive_ledger.py prices it into data/pricing/archive-executions.json. A new usage-bearing archive meta must be classified here before the ledger builds.",
  "schema": "archive-classification/1",
  "entries": [
   {
@@ -542,94 +542,107 @@
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-adv-text-crop150-n5-t0-7::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/adversarial-text-150/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-adv-text-crop150::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/adversarial-text-300/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-adv-text-crop300::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/adversarial-text-40/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-adv-text-crop40::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/adversarial-text-75/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-adv-text-crop75::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/brief-text-150/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-brief-text-crop150::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/checklist-text-150/text-n1-t0.0-minimal/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase2b::legacy-pv-checklist-text-crop150::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/21-text-25of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a::legacy-pv-text-t0-7-n30-25of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/22-text-1of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a::legacy-pv-text-t0-7-n30-1of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/23-image-20of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a::legacy-pv-image-t0-7-n30-20of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/24-image-1of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a::legacy-pv-image-t0-7-n30-1of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/25-high-20of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a-replication::legacy-pv-high-n30-20of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/pv/results/phase2/26-high-25of30/run.meta.json",
-   "class": "SUPERSEDED",
+   "class": "REAL",
    "kind": "legacy pipeline (superseded)",
-   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80"
+   "reason": "Legacy proposer-verifier pipeline run (2026-03-20/21) superseded by the H11 PV work (outputs/h11/proposer-verifier-384/, pv-diag-384). Caveat: its threshold sweeps still sit in the live results/pv/ (and results/ci-metadata-registry.md lines 105-106), which no register run covers. RECLASSIFIED 2026-10-05 (D40): registered as a verifier pass of the run whose pool it checked.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (outputs-experimental-pilot); commit 276e4ca80",
+   "register_pass_id": "retest-phase3a-replication::legacy-pv-high-n30-25of30::run1"
   },
   {
    "meta": "archive/outputs-experimental-pilot/verification/brief-text/detections_verify.meta.json",
@@ -647,38 +660,38 @@
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase1-library/pass_01/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\").",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)"
+   "class": "REAL",
+   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\"). RESOLVED 2026-10-05 (D40): registered as run phase1-library (D41 precedent).",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)",
+   "register_pass_id": "phase1-library::image-only-baseline::run1"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase1-library/pass_02/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\").",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)"
+   "class": "REAL",
+   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\"). RESOLVED 2026-10-05 (D40): registered as run phase1-library (D41 precedent).",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)",
+   "register_pass_id": "phase1-library::image-only-baseline::run2"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase1-library/pass_03/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\").",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)"
+   "class": "REAL",
+   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\"). RESOLVED 2026-10-05 (D40): registered as run phase1-library (D41 precedent).",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)",
+   "register_pass_id": "phase1-library::image-only-baseline::run3"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase1-library/pass_04/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\").",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)"
+   "class": "REAL",
+   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\"). RESOLVED 2026-10-05 (D40): registered as run phase1-library (D41 precedent).",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)",
+   "register_pass_id": "phase1-library::image-only-baseline::run4"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase1-library/pass_05/detections-library_pure-positive-canon-3-flash-2026-02-01.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\").",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)"
+   "class": "REAL",
+   "reason": "Phase 1 library-construction baseline (image-only, 5 passes over 20 calibration tiles, 2026-02-01). ARCHIVE-MANIFEST.md lists it as \"superseded by retest/phase2a\", but nothing re-ran it: its FP/FN register (fp-fn-register.md) selected the hard positives (examples 05-08, Decision 4) still in the production plus-hp library. Not a pass of any registered run, so not a register row; not superseded either. Resolve: a PI ruling on whether library-construction spend enters the project total as a D22-style ledger entry of its own kind (e.g. \"preparatory\"). RESOLVED 2026-10-05 (D40): registered as run phase1-library (D41 precedent).",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md; 276e4ca80; docs/methodology/preregistration/decisions-log.md Decision 4; prompts/configs/library_plus-hp*.json (hard_positive examples 05-08)",
+   "register_pass_id": "phase1-library::image-only-baseline::run5"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.meta.json",
@@ -3227,31 +3240,31 @@
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/preliminary-results/detect_brief-text_high-recall/detections-detect_brief-text_high-recall-3-flash-2026-03-10.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md"
+   "class": "UNREGISTERED",
+   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry. RESOLVED 2026-10-05 (D40): not registered (no 60-tile or Phase 3d run is), priced here and flagged as cited. Its manipulation never reached the model: all four passes sent 1,672 input tokens on every tile.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md",
+   "cited_by": "docs/paper/discussion-outline.md (Experiment E); results/phase3d-experiment-e-results.md"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/preliminary-results/detect_brief-text_high-recall_nulls-minimal-t0/detections-detect_brief-text_high-recall_nulls-minimal-t0-3-flash-2026-03-10.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md"
+   "class": "UNREGISTERED",
+   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry. RESOLVED 2026-10-05 (D40): not registered (no 60-tile or Phase 3d run is), priced here and flagged as cited. Its manipulation never reached the model: all four passes sent 1,672 input tokens on every tile.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md",
+   "cited_by": "docs/paper/discussion-outline.md (Experiment E); results/phase3d-experiment-e-results.md"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/preliminary-results/detect_brief-text_high-recall_nulls-minimal/detections-detect_brief-text_high-recall_nulls-minimal-3-flash-2026-03-10.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md"
+   "class": "UNREGISTERED",
+   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry. RESOLVED 2026-10-05 (D40): not registered (no 60-tile or Phase 3d run is), priced here and flagged as cited. Its manipulation never reached the model: all four passes sent 1,672 input tokens on every tile.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md",
+   "cited_by": "docs/paper/discussion-outline.md (Experiment E); results/phase3d-experiment-e-results.md"
   },
   {
    "meta": "archive/outputs-pre-retest-60-tile/preliminary-results/detect_brief-text_high-recall_nulls/detections-detect_brief-text_high-recall_nulls-3-flash-2026-03-10.meta.json",
-   "class": "UNSURE",
-   "open_ruling": "D40",
-   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry.",
-   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md"
+   "class": "UNREGISTERED",
+   "reason": "Phase 3d Experiment E proposer runs (high-recall text proposer ablation, 60 tiles, 2026-03-10). Archived with the 60-tile outputs, but Experiment E was never re-run at 340 tiles, its results document is live (results/phase3d-experiment-e-results.md) and the paper's discussion outline still cites it (\"the recall ceiling is perceptual (Experiment E)\", docs/paper/discussion-outline.md:293). No registered run carries it. Resolve: a PI ruling on whether Experiment E becomes a registered run (then these four are REAL rows, and its verifier stage, about US$3.00 by the results document, left no meta: D35) or a project-total-only ledger entry. RESOLVED 2026-10-05 (D40): not registered (no 60-tile or Phase 3d run is), priced here and flagged as cited. Its manipulation never reached the model: all four passes sent 1,672 input tokens on every tile.",
+   "reason_source": "archive/ARCHIVE-MANIFEST.md (preliminary-results); 276e4ca80; e252ef2f2; results/phase3d-experiment-e-results.md",
+   "cited_by": "docs/paper/discussion-outline.md (Experiment E); results/phase3d-experiment-e-results.md"
   },
   {
    "meta": "archive/phase2a-invalid-text-only-runs/brief-text/run_1/detections_brief-text_run01.meta.json",

@@ -663,7 +663,10 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # baseline; pv-384's proposer stub), declares ``single_pass``: its
         # directory is pass 1 (D31, S160).
         single_pass = isinstance(spec, dict) and bool(spec.get("single_pass"))
-        pass_dirs = [pool_dir] if single_pass else sorted(pool_dir.glob("run_*"))
+        # A pool whose passes are not named run_N (Phase 1's pass_01..pass_05,
+        # D40) names its glob; the number after the first "_" is the pass.
+        pass_glob = (spec.get("pass_glob") if isinstance(spec, dict) else None) or "run_*"
+        pass_dirs = [pool_dir] if single_pass else sorted(pool_dir.glob(pass_glob))
         for run_n_dir in pass_dirs:
             suffix = ("1" if single_pass else
                       run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else "")
@@ -931,6 +934,14 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.
         v_prov_sources = [_repo_rel(meta_path)] + [_repo_rel(m) for m in main_legs]
+        # Temperature of record (D40): a meta written before E55's correction
+        # path that records the wrong temperature, and has no run.log to read
+        # the override from, is corrected in the sidecar, never in the meta
+        # (D14); the sidecar is cited, as model_of_record cites it.
+        temperature_of_record = (spec.get("temperature_of_record")
+                                 if isinstance(spec, dict) else None)
+        if temperature_of_record is not None:
+            v_prov_sources.append("results/run-conditions.json")
         if cfg.get("temperature_effective") is not None:
             log_path = meta_path.parent / "run.log"
             if log_path.exists():
@@ -945,7 +956,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "model_version": model_version,
             "modality": modality,
             "thinking_level": cfg.get("thinking_level"),
-            "temperature": _effective_temperature(cfg),
+            "temperature": (temperature_of_record if temperature_of_record is not None
+                            else _effective_temperature(cfg)),
             "instruction_hash": cfg.get("system_instruction_hash"),
             "library_hash": cfg.get("library_hash"),
             "status": "ok",

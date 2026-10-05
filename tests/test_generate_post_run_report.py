@@ -286,6 +286,44 @@ def test_a_proposer_pool_outside_the_run_tree_resolves_by_repo_path(registry):
 
 
 @pytest.mark.tier1
+def test_a_pool_names_its_pass_glob(registry):
+    """D40: Phase 1's passes are pass_01..pass_05, not run_N.
+
+    Sentinel: without ``pass_glob`` the default ``run_*`` finds nothing.
+    """
+    def ctx(spec):
+        return {"run_id": "phase1-library",
+                "directory_path": "archive/outputs-pre-retest-60-tile/phase1-library",
+                "scope": {}, "proposer_pools": {"image-only-baseline": spec},
+                "verifier_passes": {}, "conditions": []}
+    rows = extract_passes(ctx({"modality": "image", "path": ".", "pass_glob": "pass_*"}))
+    assert [r["pass_n"] for r in rows] == [1, 2, 3, 4, 5]
+    for r in rows:
+        assert validate_row("passes", r, registry) == []
+        assert r["n_tiles_processed"] == 20 and r["temperature"] == 1.0
+    assert extract_passes(ctx({"modality": "image", "path": "."})) == []
+
+
+@pytest.mark.tier1
+def test_a_temperature_of_record_corrects_the_row_not_the_meta():
+    """D40: the legacy PV N = 5 leg ran at T = 0.7 (its directory, its analysis
+    doc); its meta says 0.0 and no run.log survives. The sidecar's value wins
+    and is cited; the meta is left as written (D14). Sentinel: without it, 0.0.
+    """
+    def ctx(extra):
+        return {"run_id": "retest-phase2b", "directory_path": "outputs/retest/phase2b",
+                "scope": {}, "proposer_pools": {}, "conditions": [],
+                "verifier_passes": {"legacy-pv-adv-text-crop150-n5-t0-7": {
+                    "modality": "text", "repo_path": "archive/outputs-experimental-pilot/pv/results",
+                    "path": "adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal", **extra}}}
+    (row,) = extract_passes(ctx({"temperature_of_record": 0.7}))
+    assert row["temperature"] == 0.7
+    assert "results/run-conditions.json" in row["provenance"]["source_files"]
+    (plain,) = extract_passes(ctx({}))
+    assert plain["temperature"] == 0.0
+
+
+@pytest.mark.tier1
 def test_a_retry_under_run_n_is_spend_but_not_coverage():
     """D31: consensus-384-t1-0 run 4's one-tile retry (``run_4/retry/``).
 
@@ -669,7 +707,9 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # 43 since 2026-09-20: row B of the same image 2x2
     # (gemini3-image-55map-2026-09-16), registered with 18 conditions, six
     # verifier passes and one UNSIGNED analysis row.
-    assert len(reg["registry"]) == 43
+    # 44 since 2026-10-05: phase1-library, the Phase 1 library-construction
+    # step, registered from archive/ with no condition (ruling D40, S160).
+    assert len(reg["registry"]) == 44
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
