@@ -278,6 +278,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   2026-10-05 (the analyses manifest after D25's note; the K-ladder unions after
   their builder's fix, C-22); `reports/verification/generated-file-registry.json`
   may already list what such a guard would cover.
+- [ ] W6.5 The in-batch parse-failure retries (`complete_batch_unit` in
+  `scripts/lib_batch_api.py`) pass no service tier, so they ran at standard,
+  and their usage enters no meta (found 2026-10-05 while fixing the sync patch
+  path, `8ae31a585`, which now records its usage). Fix: pass the tier and
+  record the retries' usage at their own tier. Past runs' retry spend is part
+  of D39's invoice residual.
 - [ ] W6.4 Decide (PI) the text prompt's fixed sentence asking the model to
   match "the above Reference Examples" (S-7), before any W5 run: keep it for
   comparability, or fix it.
