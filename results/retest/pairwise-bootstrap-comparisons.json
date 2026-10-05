@@ -3,7 +3,8 @@
     "n_comparisons": 70,
     "bootstrap_iterations": 1000,
     "random_seed": 42,
-    "note": "Raw p-values \u2014 FDR correction deferred until all data available"
+    "note": "Raw p-values \u2014 FDR correction deferred until all data available",
+    "d42_annotation": "PI ruling D42 (2026-10-05): no p-value is read from a bootstrap. The fields f1_p_value, precision_p, recall_p and significant_raw in each comparison are the RETIRED bootstrap values (2 x minority tail, floor 1/B), kept as published. The authoritative test is each comparison's permutation_retest block: the paired tile-swap permutation test (10,000 permutations, seed 42, 20 m) on the same March inputs, with BH within each phase at q = 0.05. Source: reports/retest-bootstrap-check-2026-10-05.md \u00a7 W2.4, retest70.json. Bootstrap CIs (f1_ci_lower/upper) remain in use."
   },
   "comparisons": [
     {
@@ -18,7 +19,19 @@
       "precision_p": 0.576,
       "recall_delta": 0.11907578116982094,
       "recall_p": 0.001,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4209,
+        "precision_p": 0.5667,
+        "recall_p": 0.0,
+        "f1_bh_within_phase": 0.648714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.02161,
+        "n_discordant_tiles": 199,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -32,7 +45,19 @@
       "precision_p": 0.068,
       "recall_delta": 0.1679023822016759,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0055,
+        "precision_p": 0.0878,
+        "recall_p": 0.0,
+        "f1_bh_within_phase": 0.03,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.088116,
+        "n_discordant_tiles": 201,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -46,7 +71,19 @@
       "precision_p": 0.286,
       "recall_delta": 0.0709222872868578,
       "recall_p": 0.004,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1052,
+        "precision_p": 0.3187,
+        "recall_p": 0.0023,
+        "f1_bh_within_phase": 0.2104,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.036281,
+        "n_discordant_tiles": 181,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -60,7 +97,19 @@
       "precision_p": 0.67,
       "recall_delta": 0.11919636433474269,
       "recall_p": 0.002,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4541,
+        "precision_p": 0.6716,
+        "recall_p": 0.0004,
+        "f1_bh_within_phase": 0.648714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.02394,
+        "n_discordant_tiles": 209,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -74,7 +123,19 @@
       "precision_p": 0.004,
       "recall_delta": 0.04882660103185494,
       "recall_p": 0.046,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.009,
+        "precision_p": 0.0066,
+        "recall_p": 0.0653,
+        "f1_bh_within_phase": 0.03,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.066505,
+        "n_discordant_tiles": 176,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -88,7 +149,19 @@
       "precision_p": 0.11,
       "recall_delta": -0.048153493882963146,
       "recall_p": 0.048,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.5597,
+        "precision_p": 0.1389,
+        "recall_p": 0.0481,
+        "f1_bh_within_phase": 0.699625,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.014671,
+        "n_discordant_tiles": 194,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -102,7 +175,19 @@
       "precision_p": 0.912,
       "recall_delta": 0.00012058316492174425,
       "recall_p": 0.954,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.9259,
+        "precision_p": 0.8841,
+        "recall_p": 1.0,
+        "f1_bh_within_phase": 0.9259,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.00233,
+        "n_discordant_tiles": 167,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -116,7 +201,19 @@
       "precision_p": 0.244,
       "recall_delta": -0.0969800949148181,
       "recall_p": 0.001,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.0573,
+        "precision_p": 0.2499,
+        "recall_p": 0.0007,
+        "f1_bh_within_phase": 0.14325,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.051834,
+        "n_discordant_tiles": 202,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -130,7 +227,19 @@
       "precision_p": 0.004,
       "recall_delta": -0.048706017866933196,
       "recall_p": 0.054,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0069,
+        "precision_p": 0.0052,
+        "recall_p": 0.0555,
+        "f1_bh_within_phase": 0.03,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": -0.064175,
+        "n_discordant_tiles": 164,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2a: H1 Modality",
@@ -144,7 +253,19 @@
       "precision_p": 0.186,
       "recall_delta": 0.048274077047884896,
       "recall_p": 0.114,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.6648,
+        "precision_p": 0.2051,
+        "recall_p": 0.1217,
+        "f1_bh_within_phase": 0.738667,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.012341,
+        "n_discordant_tiles": 204,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -158,7 +279,19 @@
       "precision_p": 0.5,
       "recall_delta": 0.018354403724689328,
       "recall_p": 0.17,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.3233,
+        "precision_p": 0.482,
+        "recall_p": 0.178,
+        "f1_bh_within_phase": 0.359222,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.013895,
+        "n_discordant_tiles": 73,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -172,7 +305,19 @@
       "precision_p": 0.002,
       "recall_delta": 0.05781169911109241,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0026,
+        "precision_p": 0.0071,
+        "recall_p": 0.0019,
+        "f1_bh_within_phase": 0.0065,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.049554,
+        "n_discordant_tiles": 95,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -186,7 +331,19 @@
       "precision_p": 0.002,
       "recall_delta": 0.06411427883477933,
       "recall_p": 0.006,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0008,
+        "precision_p": 0.0015,
+        "recall_p": 0.0016,
+        "f1_bh_within_phase": 0.002667,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.064273,
+        "n_discordant_tiles": 121,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -200,7 +357,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.08613655467902687,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0,
+        "precision_p": 0.0,
+        "recall_p": 0.0001,
+        "f1_bh_within_phase": 0.0,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.083631,
+        "n_discordant_tiles": 129,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -214,7 +383,19 @@
       "precision_p": 0.072,
       "recall_delta": 0.03945729538640308,
       "recall_p": 0.034,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.0661,
+        "precision_p": 0.1002,
+        "recall_p": 0.0511,
+        "f1_bh_within_phase": 0.094429,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.035659,
+        "n_discordant_tiles": 98,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -228,7 +409,19 @@
       "precision_p": 0.004,
       "recall_delta": 0.045759875110090005,
       "recall_p": 0.016,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0083,
+        "precision_p": 0.0111,
+        "recall_p": 0.0215,
+        "f1_bh_within_phase": 0.0166,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.050378,
+        "n_discordant_tiles": 117,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -242,7 +435,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.06778215095433754,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0006,
+        "precision_p": 0.0006,
+        "recall_p": 0.0023,
+        "f1_bh_within_phase": 0.002667,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.069736,
+        "n_discordant_tiles": 133,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -256,7 +461,19 @@
       "precision_p": 0.384,
       "recall_delta": 0.006302579723686922,
       "recall_p": 0.75,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4763,
+        "precision_p": 0.3736,
+        "recall_p": 0.7511,
+        "f1_bh_within_phase": 0.4763,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.014719,
+        "n_discordant_tiles": 116,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -270,7 +487,19 @@
       "precision_p": 0.04,
       "recall_delta": 0.028324855567934456,
       "recall_p": 0.156,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0588,
+        "precision_p": 0.0421,
+        "recall_p": 0.1929,
+        "f1_bh_within_phase": 0.094429,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.034077,
+        "n_discordant_tiles": 141,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T1: H7 Temperature (Image)",
@@ -284,7 +513,19 @@
       "precision_p": 0.312,
       "recall_delta": 0.022022275844247537,
       "recall_p": 0.292,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.2995,
+        "precision_p": 0.3145,
+        "recall_p": 0.3671,
+        "f1_bh_within_phase": 0.359222,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.019358,
+        "n_discordant_tiles": 140,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -298,7 +539,19 @@
       "precision_p": 0.672,
       "recall_delta": 0.006751403247113386,
       "recall_p": 0.648,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.9159,
+        "precision_p": 0.7243,
+        "recall_p": 0.5583,
+        "f1_bh_within_phase": 0.9159,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.001508,
+        "n_discordant_tiles": 78,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -312,7 +565,19 @@
       "precision_p": 0.234,
       "recall_delta": 0.0048780355119037,
       "recall_p": 0.742,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.2206,
+        "precision_p": 0.1962,
+        "recall_p": 0.642,
+        "f1_bh_within_phase": 0.274444,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.02203,
+        "n_discordant_tiles": 107,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -326,7 +591,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.05496804430602727,
       "recall_p": 0.004,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0008,
+        "precision_p": 0.0009,
+        "recall_p": 0.0047,
+        "f1_bh_within_phase": 0.004,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.095558,
+        "n_discordant_tiles": 124,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -340,7 +617,19 @@
       "precision_p": 0.004,
       "recall_delta": 0.044014868302314394,
       "recall_p": 0.018,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0034,
+        "precision_p": 0.0069,
+        "recall_p": 0.0171,
+        "f1_bh_within_phase": 0.0085,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.059329,
+        "n_discordant_tiles": 122,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -354,7 +643,19 @@
       "precision_p": 0.12,
       "recall_delta": -0.001873367735209685,
       "recall_p": 0.906,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1593,
+        "precision_p": 0.1071,
+        "recall_p": 0.9059,
+        "f1_bh_within_phase": 0.227571,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.023538,
+        "n_discordant_tiles": 100,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -368,7 +669,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.04821664105891388,
       "recall_p": 0.008,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0002,
+        "precision_p": 0.0002,
+        "recall_p": 0.0104,
+        "f1_bh_within_phase": 0.002,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.097066,
+        "n_discordant_tiles": 123,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -382,7 +695,19 @@
       "precision_p": 0.006,
       "recall_delta": 0.03726346505520101,
       "recall_p": 0.038,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0018,
+        "precision_p": 0.0026,
+        "recall_p": 0.0535,
+        "f1_bh_within_phase": 0.006,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.060837,
+        "n_discordant_tiles": 128,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -396,7 +721,19 @@
       "precision_p": 0.006,
       "recall_delta": 0.050090008794123564,
       "recall_p": 0.006,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0055,
+        "precision_p": 0.0152,
+        "recall_p": 0.0079,
+        "f1_bh_within_phase": 0.011,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.073528,
+        "n_discordant_tiles": 129,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -410,7 +747,19 @@
       "precision_p": 0.114,
       "recall_delta": 0.03913683279041069,
       "recall_p": 0.026,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.0535,
+        "precision_p": 0.1046,
+        "recall_p": 0.0406,
+        "f1_bh_within_phase": 0.089167,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.037299,
+        "n_discordant_tiles": 127,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2b T2: H7 Temperature (Text)",
@@ -424,7 +773,19 @@
       "precision_p": 0.18,
       "recall_delta": -0.010953176003712862,
       "recall_p": 0.582,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.247,
+        "precision_p": 0.2584,
+        "recall_p": 0.5979,
+        "f1_bh_within_phase": 0.274444,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.036229,
+        "n_discordant_tiles": 124,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -438,7 +799,19 @@
       "precision_p": 0.882,
       "recall_delta": -0.05705112220664317,
       "recall_p": 0.002,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.3691,
+        "precision_p": 1.0,
+        "recall_p": 0.02,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.017059,
+        "n_discordant_tiles": 114,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -452,7 +825,19 @@
       "precision_p": 0.312,
       "recall_delta": 4.039862077860334e-05,
       "recall_p": 0.996,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4001,
+        "precision_p": 0.3057,
+        "recall_p": 0.7001,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.013571,
+        "n_discordant_tiles": 101,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -466,7 +851,19 @@
       "precision_p": 0.422,
       "recall_delta": -0.062424097156378595,
       "recall_p": 0.002,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.9158,
+        "precision_p": 0.4088,
+        "recall_p": 0.0021,
+        "f1_bh_within_phase": 0.9158,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.00229,
+        "n_discordant_tiles": 123,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -480,7 +877,19 @@
       "precision_p": 0.694,
       "recall_delta": -0.043967871391866364,
       "recall_p": 0.032,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.7611,
+        "precision_p": 0.5394,
+        "recall_p": 0.083,
+        "f1_bh_within_phase": 0.9158,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.005294,
+        "n_discordant_tiles": 127,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -494,7 +903,19 @@
       "precision_p": 0.322,
       "recall_delta": 0.05709152082742178,
       "recall_p": 0.001,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.0907,
+        "precision_p": 0.3693,
+        "recall_p": 0.0061,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.03063,
+        "n_discordant_tiles": 118,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -508,7 +929,19 @@
       "precision_p": 0.356,
       "recall_delta": -0.005372974949735424,
       "recall_p": 0.756,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.5115,
+        "precision_p": 0.4127,
+        "recall_p": 0.8543,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.01477,
+        "n_discordant_tiles": 111,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -522,7 +955,19 @@
       "precision_p": 0.582,
       "recall_delta": 0.013083250814776804,
       "recall_p": 0.486,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4983,
+        "precision_p": 0.5857,
+        "recall_p": 0.427,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.011766,
+        "n_discordant_tiles": 100,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -536,7 +981,19 @@
       "precision_p": 0.91,
       "recall_delta": -0.0624644957771572,
       "recall_p": 0.001,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4653,
+        "precision_p": 0.8309,
+        "recall_p": 0.0014,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.015861,
+        "n_discordant_tiles": 129,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -550,7 +1007,19 @@
       "precision_p": 0.604,
       "recall_delta": -0.04400827001264497,
       "recall_p": 0.036,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.2757,
+        "precision_p": 0.661,
+        "recall_p": 0.043,
+        "f1_bh_within_phase": 0.730714,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.018864,
+        "n_discordant_tiles": 126,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T1: H8 Library (Image)",
@@ -564,7 +1033,19 @@
       "precision_p": 0.59,
       "recall_delta": 0.018456225764512228,
       "recall_p": 0.282,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.888,
+        "precision_p": 0.6368,
+        "recall_p": 0.3162,
+        "f1_bh_within_phase": 0.9158,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.003004,
+        "n_discordant_tiles": 111,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -578,7 +1059,19 @@
       "precision_p": 0.708,
       "recall_delta": 0.016873031948130876,
       "recall_p": 0.14,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.563,
+        "precision_p": 0.7794,
+        "recall_p": 0.2878,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.007547,
+        "n_discordant_tiles": 14,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -592,7 +1085,19 @@
       "precision_p": 0.956,
       "recall_delta": 0.005371106901883845,
       "recall_p": 0.452,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 1.0,
+        "precision_p": 0.919,
+        "recall_p": 0.5719,
+        "f1_bh_within_phase": 1.0,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -3.1e-05,
+        "n_discordant_tiles": 12,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -606,7 +1111,19 @@
       "precision_p": 0.556,
       "recall_delta": 0.001843442656357897,
       "recall_p": 0.894,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.6216,
+        "precision_p": 0.6524,
+        "recall_p": 0.9045,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.004973,
+        "n_discordant_tiles": 11,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -620,7 +1137,19 @@
       "precision_p": 0.694,
       "recall_delta": 0.005426309577072566,
       "recall_p": 0.42,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.8057,
+        "precision_p": 0.8108,
+        "recall_p": 0.6027,
+        "f1_bh_within_phase": 0.895222,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.002585,
+        "n_discordant_tiles": 9,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -634,7 +1163,19 @@
       "precision_p": 0.482,
       "recall_delta": -0.011501925046247027,
       "recall_p": 0.356,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.608,
+        "precision_p": 0.611,
+        "recall_p": 0.5707,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.007578,
+        "n_discordant_tiles": 13,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -648,7 +1189,19 @@
       "precision_p": 0.001,
       "recall_delta": -0.015029589291772975,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0588,
+        "precision_p": 0.0588,
+        "recall_p": 0.2485,
+        "f1_bh_within_phase": 0.588,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.01252,
+        "n_discordant_tiles": 5,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -662,7 +1215,19 @@
       "precision_p": 0.13,
       "recall_delta": -0.011446722371058307,
       "recall_p": 0.31,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.3089,
+        "precision_p": 0.3089,
+        "recall_p": 0.6314,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.010132,
+        "n_discordant_tiles": 7,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -676,7 +1241,19 @@
       "precision_p": 0.244,
       "recall_delta": -0.0035276642455259488,
       "recall_p": 0.338,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.2623,
+        "precision_p": 0.3367,
+        "recall_p": 0.4045,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.004942,
+        "n_discordant_tiles": 12,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -690,7 +1267,19 @@
       "precision_p": 0.268,
       "recall_delta": 5.520267518872013e-05,
       "recall_p": 0.886,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4549,
+        "precision_p": 0.4212,
+        "recall_p": 1.0,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.002554,
+        "n_discordant_tiles": 8,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c T2: H8 Library (Text)",
@@ -704,7 +1293,19 @@
       "precision_p": 0.616,
       "recall_delta": 0.0035828669207146687,
       "recall_p": 0.184,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4338,
+        "precision_p": 0.7408,
+        "recall_p": 0.3059,
+        "f1_bh_within_phase": 0.777,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.002388,
+        "n_discordant_tiles": 6,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c Exp: HP Scaling",
@@ -718,7 +1319,19 @@
       "precision_p": 0.106,
       "recall_delta": -0.004947395793829282,
       "recall_p": 0.79,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1577,
+        "precision_p": 0.0926,
+        "recall_p": 0.7658,
+        "f1_bh_within_phase": 0.23655,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.027254,
+        "n_discordant_tiles": 112,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c Exp: HP Scaling",
@@ -732,7 +1345,19 @@
       "precision_p": 0.364,
       "recall_delta": 0.05564847739841181,
       "recall_p": 0.004,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.9424,
+        "precision_p": 0.3151,
+        "recall_p": 0.0049,
+        "f1_bh_within_phase": 0.9424,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.001369,
+        "n_discordant_tiles": 123,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2c Exp: HP Scaling",
@@ -746,7 +1371,19 @@
       "precision_p": 0.468,
       "recall_delta": 0.0605958731922411,
       "recall_p": 0.002,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1414,
+        "precision_p": 0.5339,
+        "recall_p": 0.004,
+        "f1_bh_within_phase": 0.23655,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.028623,
+        "n_discordant_tiles": 124,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2d T1: H5 Negtext (Image)",
@@ -760,7 +1397,19 @@
       "precision_p": 0.756,
       "recall_delta": 0.02053674440142455,
       "recall_p": 0.148,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.8779,
+        "precision_p": 0.7262,
+        "recall_p": 0.1604,
+        "f1_bh_within_phase": 0.8779,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.002529,
+        "n_discordant_tiles": 104,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2d T2: H5 Negtext (Text)",
@@ -774,7 +1423,19 @@
       "precision_p": 0.862,
       "recall_delta": 0.05765367089226878,
       "recall_p": 0.001,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.4263,
+        "precision_p": 0.8496,
+        "recall_p": 0.003,
+        "f1_bh_within_phase": 0.4263,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.015041,
+        "n_discordant_tiles": 124,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -788,7 +1449,19 @@
       "precision_p": 0.296,
       "recall_delta": -0.04991108035903079,
       "recall_p": 0.03,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1366,
+        "precision_p": 0.2841,
+        "recall_p": 0.042,
+        "f1_bh_within_phase": 0.2049,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.032947,
+        "n_discordant_tiles": 143,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -802,7 +1475,19 @@
       "precision_p": 0.516,
       "recall_delta": 0.00208212624798714,
       "recall_p": 0.912,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.6401,
+        "precision_p": 0.4513,
+        "recall_p": 0.9199,
+        "f1_bh_within_phase": 0.6401,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": -0.007259,
+        "n_discordant_tiles": 96,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -816,7 +1501,19 @@
       "precision_p": 0.046,
       "recall_delta": 0.005297855485239655,
       "recall_p": 0.774,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1218,
+        "precision_p": 0.057,
+        "recall_p": 0.7052,
+        "f1_bh_within_phase": 0.2049,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.027885,
+        "n_discordant_tiles": 125,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -830,7 +1527,19 @@
       "precision_p": 0.5,
       "recall_delta": 0.05199320660701792,
       "recall_p": 0.004,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.1857,
+        "precision_p": 0.5136,
+        "recall_p": 0.0155,
+        "f1_bh_within_phase": 0.22284,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.025688,
+        "n_discordant_tiles": 135,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -844,7 +1553,19 @@
       "precision_p": 0.008,
       "recall_delta": 0.05520893584427044,
       "recall_p": 0.002,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0019,
+        "precision_p": 0.0051,
+        "recall_p": 0.0026,
+        "f1_bh_within_phase": 0.0114,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.060832,
+        "n_discordant_tiles": 136,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 2e: H4 Ordering",
@@ -858,7 +1579,19 @@
       "precision_p": 0.014,
       "recall_delta": 0.003215729237252515,
       "recall_p": 0.9,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0563,
+        "precision_p": 0.0194,
+        "recall_p": 0.7578,
+        "f1_bh_within_phase": 0.1689,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.035144,
+        "n_discordant_tiles": 121,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T1: Voting (Image)",
@@ -872,7 +1605,19 @@
       "precision_p": 0.208,
       "recall_delta": 0.017317430788756975,
       "recall_p": 0.38,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.2523,
+        "precision_p": 0.2247,
+        "recall_p": 0.404,
+        "f1_bh_within_phase": 0.2523,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.020325,
+        "n_discordant_tiles": 103,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T1: Voting (Image)",
@@ -886,7 +1631,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.0733920054994204,
       "recall_p": 0.004,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0005,
+        "precision_p": 0.0006,
+        "recall_p": 0.0017,
+        "f1_bh_within_phase": 0.0015,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.074837,
+        "n_discordant_tiles": 140,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T1: Voting (Image)",
@@ -900,7 +1657,19 @@
       "precision_p": 0.008,
       "recall_delta": 0.05607457471066343,
       "recall_p": 0.01,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.007,
+        "precision_p": 0.0098,
+        "recall_p": 0.0123,
+        "f1_bh_within_phase": 0.0105,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.054512,
+        "n_discordant_tiles": 135,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T2: Voting (Text)",
@@ -914,7 +1683,19 @@
       "precision_p": 0.014,
       "recall_delta": 0.019228315946947443,
       "recall_p": 0.244,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.024,
+        "precision_p": 0.0183,
+        "recall_p": 0.2623,
+        "f1_bh_within_phase": 0.036,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.037167,
+        "n_discordant_tiles": 99,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T2: Voting (Text)",
@@ -928,7 +1709,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.050994281421634896,
       "recall_p": 0.002,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0001,
+        "precision_p": 0.0003,
+        "recall_p": 0.0053,
+        "f1_bh_within_phase": 0.0003,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.071894,
+        "n_discordant_tiles": 118,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a T2: Voting (Text)",
@@ -942,7 +1735,19 @@
       "precision_p": 0.074,
       "recall_delta": 0.031765965474687456,
       "recall_p": 0.122,
-      "significant_raw": false
+      "significant_raw": false,
+      "permutation_retest": {
+        "f1_p": 0.0673,
+        "precision_p": 0.0894,
+        "recall_p": 0.1226,
+        "f1_bh_within_phase": 0.0673,
+        "significant_raw": false,
+        "significant_bh_within_phase": false,
+        "observed_f1_diff": 0.034728,
+        "n_discordant_tiles": 119,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a Replication",
@@ -956,7 +1761,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.01162602035481972,
       "recall_p": 0.534,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0,
+        "precision_p": 0.0,
+        "recall_p": 0.5813,
+        "f1_bh_within_phase": 0.0,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.13912,
+        "n_discordant_tiles": 227,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a vs Best Single-Pass",
@@ -970,7 +1787,19 @@
       "precision_p": 0.001,
       "recall_delta": -0.08653599038286686,
       "recall_p": 0.001,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0014,
+        "precision_p": 0.0,
+        "recall_p": 0.0001,
+        "f1_bh_within_phase": 0.0014,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.059455,
+        "n_discordant_tiles": 216,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     },
     {
       "phase": "Phase 3a Replication Consensus",
@@ -984,7 +1813,19 @@
       "precision_p": 0.001,
       "recall_delta": 0.0210011209490929,
       "recall_p": 0.202,
-      "significant_raw": true
+      "significant_raw": true,
+      "permutation_retest": {
+        "f1_p": 0.0004,
+        "precision_p": 0.0001,
+        "recall_p": 0.2361,
+        "f1_bh_within_phase": 0.0004,
+        "significant_raw": true,
+        "significant_bh_within_phase": true,
+        "observed_f1_diff": 0.067261,
+        "n_discordant_tiles": 163,
+        "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)",
+        "source": "reports/retest-bootstrap-check-2026-10-05-scripts/retest70.json"
+      }
     }
   ]
 }
