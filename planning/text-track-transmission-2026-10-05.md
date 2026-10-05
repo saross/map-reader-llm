@@ -110,11 +110,11 @@ in brackets (§ 4).
 
 ### Labels and register
 
-- [ ] **C-18 (L, W4).** `gold-standard-v2::verified-v1` registered `image`;
+- [x] **C-18 (L, W4).** DONE 2026-10-05: relabelled `text`; `outputs/gs` added to the checker's `POOL_ROOTS`. `gold-standard-v2::verified-v1` registered `image`;
   it sent six text labels (`verify_adversarial-text`, 1,792 tokens per
   request). `scripts/derive_condition_modality.py` cannot catch it
   (`POOL_ROOTS` never resolve `outputs/gs/`).
-- [ ] **C-19 (L, W4).** `results/run-conditions.json` (proposer-verifier-384
+- [x] **C-19 (L, W4).** DONE 2026-10-05: the register note and the repair report corrected. `results/run-conditions.json` (proposer-verifier-384
   note) and `reports/register-repair-2026-10-05.md:22` call the `-v2` and
   `v1-prompt` legs "identical re-runs"; they sent different exemplars
   (text 1,727 vs 1,792 tokens; image 9 vs 6 images). Same for pv-512.
@@ -124,6 +124,14 @@ in brackets (§ 4).
   Flash"; every retest meta records `gemini-3-flash`. E51
   (`protocol-errata.md:1629-1636`) says the scale-8 run was "not
   re-launched"; its metas show a fresh run.
+
+- [x] **C-22 (L, W4).** `results/k-ladder-2026-09-12/phase2/unions.json` labelled
+  `pv-diag-384::scale-4-optimal-487` (an image pool, 13 exemplar images)
+  `text`: its builder was corrected on 2026-09-14 but the output never
+  regenerated. DONE 2026-10-05 (`eb6d797e0`): regenerated with
+  `--check-only`; row 28's count also moved 757 → 759, the 3.7 screen K = 3
+  union having been rebuilt after 2026-09-12. Found by running the modality
+  checker, which now passes with no mismatch anywhere.
 
 ## 3. Surprises
 
@@ -193,10 +201,21 @@ Order: metadata and register → low-level records → intermediate documents
 
 ### W4. Labels
 
-- [ ] W4.1 `gold-standard-v2::verified-v1` → `text` (C-18); extend
-  `derive_condition_modality.py` so `outputs/gs/` resolves, with a test.
-- [ ] W4.2 The proposer-verifier-384/512 note and the repair report (C-19).
-- [ ] W4.3 Obs 280's label (C-20), by a new Obs (entries are never edited).
+- [x] W4.1 `gold-standard-v2::verified-v1` → `text` (C-18); `outputs/gs/`
+  now resolves in `derive_condition_modality.py`; two tier-2 guards (every
+  unresolved verifier stage named; no pool-keyed label disagrees). Done
+  2026-10-05.
+- [x] W4.2 The proposer-verifier-384/512 note and the repair report (C-19).
+  Done 2026-10-05.
+- [ ] W4.3 Obs 280's label (C-20), by a new Obs (entries are never edited);
+  fold into W1.4's Obs.
+- [ ] W4.4 The checker still cannot resolve 17 verifier stages (sidecar-form
+  metas, a `t0.3`/`t0-3` directory spelling, an archived leg), named in
+  `tests/test_derive_condition_modality.py`. Resolve stages from the
+  register's own paths, as the passes extractor does, so none is out of
+  scope. (The manipulation check covered all 17 by tokens: their labels are
+  right today.)
+- [ ] W4.5 Regenerate the register for C-18's label (with the next batch).
 
 ### W5. Follow-up runs (GS only; each needs the PI's approval and the API gate)
 
@@ -218,6 +237,12 @@ Order: metadata and register → low-level records → intermediate documents
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (later) — W4 labels done; C-22 found
+
+C-18 and C-19 corrected; running the modality checker found C-22 (a stale
+generated label in the K-ladder unions), now regenerated. The checker passes
+with no mismatch; its 17 blind spots are named and guarded (W4.4).
 
 ### 2026-10-05 — Original publication (Session 160)
 
