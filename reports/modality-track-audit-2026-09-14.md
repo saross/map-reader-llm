@@ -1,9 +1,11 @@
 # The modality-track audit: what the corpus records against what the model was sent
 
-> **Last revised**: 2026-09-14 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (the modality description corrected, E90). See
+> [§ Changelog](#changelog) for revision history.
 
-Modality — few-shot exemplars transmitted as **images** against **text labels
-only** — is a preregistered factor (H1, confirmatory, "modality and elaboration
+Modality — few-shot exemplars transmitted as **images** against **no
+exemplar at all** (this sentence first read "text labels only"; a text
+request sends nothing from the example list, E90) — is a preregistered factor (H1, confirmatory, "modality and elaboration
 level"). On 2026-09-13 the null-exemplar sensitivity job
 (`results/null-exemplar-sensitivity-2026-09-13/findings.md`, § "The cells")
 reported that **seven Era-2 board cells carry a `track` field that disagrees
@@ -364,7 +366,10 @@ trying to compute the track and computing it wrongly.
 > | Impact | **Nil on every preregistered outcome.** H1's confirmatory contrast groups the five phase-2a conditions, all correctly labelled; the confirmatory family's per-hypothesis *p* values are unrecomputed; no hypothesis-outcome row changes. **Nil on the signed Era-2 board, the signed uplift supplement, the signed verifier-uplift pairing and the signed K-ladder analysis** — none of them groups by the field. **Two unsigned but verified registered outcomes quote a figure that moves**, and one paper sentence with them |
 >
 > **Description**. Modality — few-shot exemplars sent as images or as text
-> labels only — is a preregistered factor (H1). Four scripts assigned it by
+> labels only — is a preregistered factor (H1). [Corrected 2026-10-05: as
+> registered, the factor is whether exemplar images are sent, and a text
+> request sends no exemplar at all, neither image nor label (E90). The
+> quotation is left as drafted.] Four scripts assigned it by
 > testing the condition label or pool key for the substring `image`. That fails
 > when a label names the **verifier's** modality over a text proposer, and again
 > when a label carries no modality token at all and the test falls through to
@@ -474,6 +479,10 @@ cells, 4.7 % of the contrast, mislabelled in *both* directions.
 > read under the wrong one.
 
 ## Changelog
+
+### 2026-10-05 — A text-only request sends no exemplar (E90)
+
+Trigger: erratum E90 (Session 160). The opening sentence and the quoted draft of E88 described the factor as exemplars sent "as images or as text labels only". The opening sentence is corrected in place; the quotation carries a bracketed note instead (it is left as drafted, as E88 is annotated rather than edited). The audit's findings stand: they concern labels in the corpus, not what text requests carry. Nothing else in this document changes; no figure moves.
 
 ### 2026-09-14 — Original publication
 

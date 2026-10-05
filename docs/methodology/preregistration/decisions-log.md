@@ -1156,7 +1156,7 @@ budget to ~$0.05.
 2. Text 5-of-10 + PV achieves F1=0.831 — new project best, surpassing HIGH 25-of-30 consensus (F1=0.763) by +0.068
 3. The approach uses 11 total API calls per tile (10 proposer + 1 verifier) vs 30 for the previous best — 63% fewer passes at 6.5× lower cost per tile (Obs 174)
 4. No HIGH thinking required — minimal thinking throughout — further reducing per-call cost
-5. Works with text-only examples (no image examples needed), the cheapest modality
+5. Works with text-only examples (no image examples needed), the cheapest modality [NOTE 2026-10-05, E90: a text-only prompt sends no example at all; read "works with a text-only prompt (no examples needed)".]
 
 **Implementation**: Documented in `results/pv/phase2/pv-phase2-analysis.md`
 

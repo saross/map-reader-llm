@@ -84,7 +84,7 @@ in brackets (§ 4).
   read "transmit no exemplar at all".
 - [ ] **C-13 (L, W1).** `methods-draft.md:577-588`: says Track 2 skipped
   Phase 2c; the Era-1 retest ran it (five inert arms) and Phase 2d.
-- [ ] **C-14 (L, W1).** "Labels only" wording: `protocol-errata.md:5351`,
+- [x] **C-14 (L, W1).** DONE 2026-10-05 (E86/E88 annotated by E90; the rest corrected in place with revision trails, plus the modality audit's opening sentence, which framed the factor the same way): "Labels only" wording: `protocol-errata.md:5351`,
   `:5367` (E86), `:5640` (E88); `osf/errata-pointers.md:76` (OSF-facing);
   `results/null-exemplar-sensitivity-2026-09-13/findings.md:43-44`;
   `results/phase2c-carry-forward-parameters.md:16`;
@@ -166,9 +166,11 @@ Order: metadata and register → low-level records → intermediate documents
 → paper text, so each layer cites a corrected one.
 
 - [ ] W1.1 Metadata and register labels (W4's fixes land here first).
-- [ ] W1.2 A new erratum stating what a text-only request sends, correcting
+- [x] W1.2 A new erratum stating what a text-only request sends, correcting
   E86's and E88's descriptions (the originals stay as written) and
-  recording the Phase 2c text null; OSF pointer updated.
+  recording the Phase 2c text null; OSF pointer updated. Done 2026-10-05:
+  **E90** (`dbc59c046` on main). For the PI: re-upload
+  `osf/errata-pointers.md` if it is on OSF.
 - [ ] W1.3 Low-level records: withdraw C-01/C-02 in the retest summary
   under the revision policy; annotate `pairwise-bootstrap-comparisons.json`
   (C-03); the "labels only" sentences (C-14); E51 and "Gemini 2.0" (C-21).

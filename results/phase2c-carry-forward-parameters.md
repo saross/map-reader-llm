@@ -1,5 +1,8 @@
 # Phase 2c Carry-Forward Parameters
 
+> **Last revised**: 2026-10-05 (what a text-only prompt receives, and the
+> retest's Track 2, E90). See [§ Changelog](#changelog) for revision history.
+
 **Created**: 2026-02-09
 **Source**: Phase 2c analysis (Track 1: `results/phase2c-track1-image-analysis.md`)
 **Carries forward to**: Phase 2d (H5 Negative Text Treatment)
@@ -13,11 +16,13 @@ with Benjamini-Hochberg FDR correction at q=0.05.
 
 **Track 2 (text-only) was not executed.** Library composition is an
 inherently visual factor — the library examples contain annotated map
-images. Text-only prompts receive only example labels, not the images
-themselves, so all library conditions collapse to functionally identical
-prompts. This was confirmed during pre-flight when a diagnostic check
+images. Text-only prompts receive no example at all, neither image nor label
+(E90; this sentence first read "only example labels"), so all library
+conditions are identical prompts. This was confirmed during pre-flight when a diagnostic check
 showed text-only configs produced identical detection counts across all
-conditions. Phase 2c therefore ran Track 1 (image-using) only.
+conditions. Phase 2c therefore ran Track 1 (image-using) only. (The Era-1 retest of
+2026-03-15 nonetheless ran Track 2 as five library arms, which sent identical
+requests and are not a library test: E90.)
 
 ## Results Summary
 
@@ -132,3 +137,17 @@ being tested (negative text elaboration) applies to text-based prompts.
 - Phase 2c Track 1 YAML: `studies/phase2c-h8-library.yaml`
 - Phase 2b carry-forward: `results/phase2b-carry-forward-parameters.md` (retest-era, 340-tile K=3; supersedes the archived pre-retest pilot at `archive/outputs-pre-retest-60-tile/phase2b/`)
 - Decision 11 (Scale-16/32 deferral): `docs/methodology/preregistration/protocol-errata.md`
+
+## Changelog
+
+### 2026-10-05 — A text-only prompt receives no example (E90)
+
+Trigger: erratum E90 (Session 160). The Track 2 paragraph said text-only
+prompts "receive only example labels"; they receive no example at all. A
+note records that the March retest ran Track 2 anyway, as five identical
+arms. The carry-forward parameters are unchanged.
+
+### 2026-02-09 — Original publication
+
+Phase 2c's carry-forward record,
+Track 1 (image) only.
