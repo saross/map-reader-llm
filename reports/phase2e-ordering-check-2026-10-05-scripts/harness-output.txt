@@ -1,0 +1,65 @@
+Could not list models for resolution: offline stub: models.list refused
+======================================================================
+Study: Retest: Phase 2e: H4 Example Ordering
+Phase: 2e
+Hypothesis: H4
+Version: 2.0-retest
+Description: Tests 4 example ordering strategies to determine if position of canonical
+vs hard examples affects detection performance. Includes the config-default
+baseline (reused from Phase 2c) plus 3 reordering variants.
+Uses all optimal parameters from Phases 2a-2d.
+Final phase before Phase 3 validation.
+======================================================================
+
+Conditions: 4
+  - config-default: prompts/configs/library_plus-hp.json
+    Overrides: ordering=config-default
+  - canonical-first: prompts/configs/library_plus-hp.json
+    Overrides: ordering=canonical-first
+  - canonical-last: prompts/configs/library_plus-hp.json
+    Overrides: ordering=canonical-last
+  - random: prompts/configs/library_plus-hp.json
+    Overrides: ordering=random
+Runs per condition: 1
+Tiles per run: 5
+Total execution units: 4
+
+Manifest: /tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/study_manifest.json
+
+Execution mode: BATCH (Gemini Batch API — parallel submission)
+
+Phase 1: Preparing 4 execution units...
+
+[1/4] canonical-first/run_1 (ordering=canonical-first)
+  Reordered examples: canonical-first
+  Built JSONL: 5 lines (/tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/canonical-first/run_1/batch_working/detections_canonical-first_run01.jsonl)
+  [DRY RUN] Would submit batch job for 5 tiles
+         Status: OK
+
+[2/4] config-default/run_1 (ordering=config-default)
+  Built JSONL: 5 lines (/tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/config-default/run_1/batch_working/detections_config-default_run01.jsonl)
+  [DRY RUN] Would submit batch job for 5 tiles
+         Status: OK
+
+[3/4] random/run_1 (ordering=random)
+  Reordered examples: random (seed=42)
+  Built JSONL: 5 lines (/tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/random/run_1/batch_working/detections_random_run01.jsonl)
+  [DRY RUN] Would submit batch job for 5 tiles
+         Status: OK
+
+[4/4] canonical-last/run_1 (ordering=canonical-last)
+  Reordered examples: canonical-last
+  Built JSONL: 5 lines (/tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/canonical-last/run_1/batch_working/detections_canonical-last_run01.jsonl)
+  [DRY RUN] Would submit batch job for 5 tiles
+         Status: OK
+
+======================================================================
+Phase 2e Complete
+======================================================================
+Completed: 0 units
+Failed: 0 units
+Running cost: $0.0000
+Checkpoint: /tmp/claude-1000/-home-shawn-Code-map-reader-llm/a974067f-7d74-4122-bfc6-891ffb9f9206/scratchpad/w3/sim/root/outputs/retest/phase2e/checkpoint.json
+
+RESULT: {'completed': ['canonical-first/run_1', 'config-default/run_1', 'random/run_1', 'canonical-last/run_1'], 'failed': []}
+STUB CLIENT CONSTRUCTIONS: [{'api_key': 'offline-dummy', 'http_options': {'api_version': 'v1alpha'}}]
