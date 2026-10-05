@@ -2953,3 +2953,29 @@ authorisation lapses, and he wants a joint check, not my resolution.
 authorisation assumed; if it differs, stop, report the difference with what
 was checked and what was not, and propose, rather than adapting the plan to
 the new state myself.
+
+## claude-obs 140 — 2026-10-05: Self-critique — the residue sweep found three things the session had left only in its own context
+
+**Pattern.** At the handoff's context-residue sweep, three items turned up
+that no committed artefact held:
+
+- The four subagent investigations behind D30, D31, D34-D37 and D40
+  (about 1,400 lines, including where the text-track gap first surfaced)
+  existed only in the session's `/tmp` scratchpad.
+- The register-repair report still gave the trial regeneration's figures
+  (1,431 rows) and "D40 is open", after the final register (1,449 rows) and
+  D40-D42 had landed.
+- A watcher on sapphire from S153 was still running after 22 days. It was
+  an `until … ! pgrep -f score_tier_e` loop, the self-matching pattern the
+  project guidance names.
+
+**Lesson.** Subagent findings are evidence, not scratch. A report written
+mid-session from a trial run goes stale when the final run lands, and
+nothing flags it. The sweep earns its place, but it is the last line of
+defence, not the first.
+
+**How to apply.** Copy a subagent's findings into the repository (beside
+the report that cites them) when a ruling is made on them, not at close.
+When a final regeneration replaces a trial, grep the session's own reports
+for the trial's figures. Check `ps` on sapphire for the session's watchers
+before closing.
