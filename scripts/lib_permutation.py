@@ -434,6 +434,10 @@ def label_permutation_sums(
 def bh_adjust(p_values: Sequence[float]) -> list[float]:
     """Benjamini-Hochberg step-up adjusted p-values (monotone, capped at 1).
 
+    A thin wrapper over the project's one BH implementation,
+    ``apply_fdr_correction.apply_bh_correction``, which every board uses,
+    so the D42 conversions and the boards adjust identically.
+
     Args:
         p_values: Raw p-values, in any order.
 
@@ -445,14 +449,8 @@ def bh_adjust(p_values: Sequence[float]) -> list[float]:
         >>> [round(x, 6) for x in bh_adjust([0.01, 0.04, 0.03])]
         [0.03, 0.04, 0.04]
     """
-    p = np.asarray(p_values, dtype=float)
-    m = len(p)
-    if m == 0:
-        return []
-    order = np.argsort(p, kind="stable")
-    ranked = p[order] * m / np.arange(1, m + 1)
-    # Enforce monotonicity from the largest rank down, then cap at 1.
-    adjusted_sorted = np.minimum.accumulate(ranked[::-1])[::-1]
-    adjusted = np.empty(m)
-    adjusted[order] = np.minimum(adjusted_sorted, 1.0)
-    return [float(x) for x in adjusted]
+    try:
+        from apply_fdr_correction import apply_bh_correction
+    except ImportError:
+        from scripts.apply_fdr_correction import apply_bh_correction
+    return [float(x) for x in apply_bh_correction(list(p_values))]

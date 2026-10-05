@@ -201,3 +201,12 @@ def test_bh_adjust_matches_hand_computation():
     assert got == pytest.approx([0.04, 0.0533333, 0.0533333, 0.5], abs=1e-6)
     assert bh_adjust([]) == []
     assert bh_adjust([0.9, 0.95]) == pytest.approx([0.95, 0.95])
+
+
+def test_bh_adjust_is_the_boards_bh():
+    """bh_adjust and apply_bh_correction agree, ties included."""
+    from apply_fdr_correction import apply_bh_correction
+
+    rng = np.random.default_rng(13)
+    p = list(np.round(rng.random(40), 2))  # rounding forces ties
+    assert bh_adjust(p) == pytest.approx(apply_bh_correction(p), abs=0)

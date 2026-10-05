@@ -2154,6 +2154,7 @@ def bootstrap_multi_run_effect_size_ci(
     n_iterations: int = 1000,
     random_seed: int | None = None,
     buffer_metres: int = 20,
+    return_p_values: bool = False,
 ) -> dict:
     """
     Bootstrap 95% CIs for effect size between two multi-run conditions.
@@ -2174,9 +2175,18 @@ def bootstrap_multi_run_effect_size_ci(
         gdf_bounds: GeoDataFrame of tile boundaries (shared).
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        return_p_values: If True, add a two-sided p-value per metric from
+            the paired tile-swap PERMUTATION test (PI ruling D42): each
+            tile's whole run block swaps between the conditions, and the
+            statistic is the same mean-over-runs metric this function
+            bootstraps. If the run counts differ, blocks cannot swap, so the
+            test runs on pass-averaged per-tile counts (micro metric of the
+            averaged counts) and ``permutation.statistic`` says so.
 
     Returns:
-        dict: Effect size CIs for F1, precision, recall differences.
+        dict: Effect size CIs for F1, precision, recall differences; with
+        ``return_p_values``, each metric also carries ``p_value`` and
+        ``p_method``, and the result gains ``permutation``.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
@@ -2233,7 +2243,7 @@ def bootstrap_multi_run_effect_size_ci(
     f1_bca = _compute_bca_ci(f1_diffs)
     p_bca = _compute_bca_ci(precision_diffs)
     r_bca = _compute_bca_ci(recall_diffs)
-    return {
+    out = {
         "f1_difference": {
             "mean": f1_bca["mean"],
             "ci_lower": f1_bca["ci_lower"],
@@ -2259,6 +2269,60 @@ def bootstrap_multi_run_effect_size_ci(
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
+    if return_p_values:
+        perm, statistic = _multi_run_permutation(
+            run_metrics_a, run_metrics_b, sorted(tiles),
+        )
+        for key, metric in (("f1_difference", "f1"),
+                            ("precision_difference", "precision"),
+                            ("recall_difference", "recall")):
+            out[key]["p_value"] = perm["metrics"][metric]["p_value"]
+            out[key]["p_method"] = perm["method"]
+        out["permutation"] = {
+            "statistic": statistic,
+            **{k: perm[k] for k in ("method", "n_tiles", "n_runs",
+                                    "n_discordant_tiles", "n_permutations", "seed")},
+        }
+    return out
+
+
+def _multi_run_permutation(
+    run_metrics_a: list[pd.DataFrame],
+    run_metrics_b: list[pd.DataFrame],
+    tiles: list[str],
+) -> tuple[dict, str]:
+    """Paired permutation test between two multi-run conditions (D42).
+
+    Equal run counts: each tile's run block swaps, statistic = mean over
+    runs of each run's micro metric (the bootstrap's estimand). Unequal run
+    counts: pass-averaged per-tile counts, statistic = micro metric of the
+    averaged counts.
+
+    Args:
+        run_metrics_a: Per-run per-tile count frames, condition A.
+        run_metrics_b: Per-run per-tile count frames, condition B.
+        tiles: Tiles in the (sorted) order the test uses.
+
+    Returns:
+        (the ``paired_permutation_test`` result, a statistic description).
+    """
+    try:
+        from lib_permutation import paired_permutation_test
+    except ImportError:
+        from scripts.lib_permutation import paired_permutation_test
+
+    def _stack(run_tms: list[pd.DataFrame]) -> dict[str, np.ndarray]:
+        per_run = [_tile_count_arrays(tm, tiles) for tm in run_tms]
+        return {k: np.stack([r[k] for r in per_run]) for k in ("tp", "fp", "fn")}
+
+    a, b = _stack(run_metrics_a), _stack(run_metrics_b)
+    if a["tp"].shape[0] == b["tp"].shape[0]:
+        return (paired_permutation_test(a, b),
+                "mean over runs of each run's micro metric; run blocks swap per tile")
+    a_mean = {k: v.mean(axis=0) for k, v in a.items()}
+    b_mean = {k: v.mean(axis=0) for k, v in b.items()}
+    return (paired_permutation_test(a_mean, b_mean),
+            "run counts differ: micro metric of pass-averaged per-tile counts")
 
 
 def bootstrap_interaction_ci(
