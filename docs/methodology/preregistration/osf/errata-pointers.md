@@ -1,8 +1,9 @@
 # Erratum pointers into the lodged registration
 
-> **Last revised**: 2026-10-05 (the text configurations' exposure wording
-> corrected under erratum E90). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-10-05 (later: a § 8.4.1 row for erratum E91, the
+> late pre-holdout deposit; earlier the same day, the text configurations'
+> exposure wording corrected under erratum E90). See [§ Changelog](#changelog)
+> for revision history.
 
 ## What this document is, and why it exists separately
 
@@ -48,6 +49,7 @@ blob the commitment ledger pins; they are stable for as long as that pin holds.
 | H4 | "`*_canonical-last.json`, `*_random-order.json` … Same instruction file per modality" | 2017 | **E88** | The operative reading of "same instruction file per modality" is that H4's four exemplar-ORDERING variants inherit their arm's configuration, so all four are **image-bearing** (instruction `detect_brief-text-image.md`, `include_example_images` true, `example_count` 13 — read from `outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.meta.json`). Their labels name neither modality, so the retired substring test fell through to `text` on some artefacts and left them in *neither* group on others — the four `retest-phase2e::` cells are exactly the cells E88's recomputation moves into the image group (17 computable cells → 21). |
 | H8 | "**Availability constraint**: The training set contains 36 mounds across 20 tiles. Hard examples are drawn from failures across K=10 baseline runs…" | 815 | **E87** and **E64 (i)** | E87: the 36 is an undercount (50), so the availability constraint this paragraph reasons from — and which it says "motivates H10 (training pool size)" — was looser than stated. The H10 motivation is not reversed, because the binding constraint was the mining campaign's *yield*, but the arithmetic is wrong. E64 (i): "K=10 baseline runs" and the any-run candidacy rule contradict § 8.4.1; operative reading is K=5 passes, any-run hard positives, ≥3-of-5 hard negatives. |
 | H10 | "**Constraints**: Total tiles available: 361 … Maximum training pool: ~301 tiles (361 − 60 holdout)" | 936–938 | **E64 (ii)** | The same already-adjudicated corpus figure as § 2.1. Not re-opened by E87. |
+| 8.4.1 | "**Step 6: Document and Upload** — Before any holdout evaluation, upload to OSF: library manifest, brief text, verbose text, mapping table…" (and the appendix's own list, `preregistration-appendix-prompts.md:159-167`) | 1498–1500 | **E91** | Never deposited: OSF holds no upload after the registration day. Deposited late on 2026-10-05, each item from its git commit, under `late-deposit-2026-10-05/` (index: [`late-deposit/deposit-index.md`](late-deposit/deposit-index.md)). Five of the nine items were public on GitHub before holdout began and are unchanged since; the mapping table never existed; the H9 variants, the orderings and the H4/H9 seeds were fixed only after holdout began. |
 | 8.4.2 | Library-composition table, **Null tile** row, "Source: Training set" | 1512 | **E86** | True of the **2025-12-23** training set, false of the committed calibration set. The set was re-selected on 2026-01-04 (`4d011a839`) and none of the three null tiles survived, but `inputs/examples/null-tiles/null_tiles_manifest.json` was never regenerated. The four hard-example categories in the same table are unaffected (all 20 crops' source tiles are committed calibration tiles). |
 | 8.4.3 | "**Null tiles** (3 tiles selected via stratified sampling)" — the pool, seed and the three named tiles | 1533–1541 | **E86** | The pool ("Training tiles with density=empty") and seed 20251223 describe the superseded set. Because the evaluation exclusion geometry was built from the *committed* calibration set, these three tiles were never excluded: all three are themselves tiles of the 340-tile Era-1 evaluation frame. The pool criterion also reads the mound counts **E87** corrects, though all three tiles are empty under the corrected geometry too (0 references in each window, both at 512 px and over the 448 px core). |
 | 8.6 | "**Reproducibility**: Re-running with same seeds produces identical selection" | 1946 | **E87** | Holds, and is the reason `scripts/select_tiles_phase2.py` is **frozen rather than corrected**: fixing its georeferencing would change the density strata and so change which tiles the registered seeds select. |
@@ -88,6 +90,12 @@ the lodged tables, clearly labelled as a post-hoc correction, in
 and a tier-1 test.
 
 ## Changelog
+
+### 2026-10-05 (later) — The pre-holdout deposit (E91)
+
+One row added (§ 8.4.1, `:1498–1500`): the registered pre-holdout upload was
+never made and was deposited late on 2026-10-05 (E91). Index rows 15 → 16;
+errata indexed + E91.
 
 ### 2026-10-05 — Text configurations send no exemplar (E90)
 

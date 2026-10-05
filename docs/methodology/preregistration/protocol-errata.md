@@ -5904,3 +5904,82 @@ payload or input tokens) before attributing an effect to a manipulation, and
 make an inert field an error, not a no-op.
 
 ---
+
+### E91: The registered pre-holdout deposit on OSF was never made — five of its nine items were public on GitHub, at commits that predate the holdout, and four did not exist before it
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-10-05 (found by the Session 161 OSF state check, tracker W8.3; remedy ruled by the PI the same day) |
+| Type | Deviation (a registered transparency commitment not met), with a late deposit as its remedy; no cell re-scored |
+| Commit | This entry's commit |
+| Files | `osf/preregistration.md:1498-1500`; `osf/preregistration-appendix-prompts.md:159-167`; `reports/osf-state-check-2026-10-05.md`; `reports/osf-deposit-provenance-2026-10-05.md`; `osf/late-deposit/deposit-index.md` |
+| Impact | **Nil on every measured value.** **Transparency**: material the registration promised to make public before holdout evaluation was not on OSF. Five of the nine items were public in this repository, at commits that predate the first holdout call and are unchanged since; the other four did not exist in that form before holdout (below) |
+
+**Description**. The lodged registration commits to an upload "before any
+holdout evaluation": the library manifest, brief text, verbose text and a
+mapping table from hard-example image to text guidance
+(`osf/preregistration.md:1498-1500`); and the final image filenames for all
+hard examples, the selection rationale (frequency counts from training
+evaluation), the complete H9 prompt variants V1-V5, the exact ordering for
+each condition, and the random seeds used (appendix `:159-167`). Nine items.
+
+None reached OSF. The project's complete activity log
+(`osf.io/h9x4g`, 19 entries) shows no upload after 2026-01-31, the day of
+registration; the registration's one update (2026-02-04, the Phase 1 errata
+E1-E16) attaches no file. The Session 15 log records that five supporting
+files were uploaded to OSF on 2026-02-04 (protocol errata, decisions log,
+FP/FN register, hypothesis tracking, prompt-text review synopsis;
+`archive/pre-toolkit-reflections/session-log.md:599`); no OSF storage holds
+them, and the update's file field is empty, so they did not attach. The
+execution plan's own checklist (`execution-plan.md:233-240`, `:802`) still
+lists the deposit unticked.
+
+Holdout evaluation began on 2026-02-05 at 02:03:57 UTC (the first Phase 2a
+run on the 60 validation tiles, at commit `c64a7dce`; the first surviving run
+meta records 02:07:06 UTC). The repository is public. Item by item
+(`reports/osf-deposit-provenance-2026-10-05.md` § 2, with every hash
+re-checkable):
+
+1. **Library manifest, brief text, verbose text, hard-example images and
+   filenames, selection rationale: public before holdout, unchanged since.**
+   They are byte-identical at `c64a7dce` and at `5d8c251b`, the commit the
+   2026-02-04 OSF update cites by hash, which is the one external timestamp
+   tying a git tree to a date. The run metadata's prompt hashes equal the
+   SHA-256 of the committed texts. There was no
+   `inputs/few-shot-library/library-manifest.json`; the manifest that ran is
+   `inputs/examples/neutral-naming/MANIFEST.md` with the library and detection
+   configurations.
+2. **Mapping table: never existed as a file.** A partial mapping, covering
+   seven of the eight hard examples, is in
+   `archive/planning/hard-example-review/prompt-text-review-synopsis.md`
+   (public before holdout).
+3. **H9 variants V1-V5: finalised 2026-03-07** (`ec00c2ae`), 30 days after
+   holdout began. The lodged design builds them from the winning holdout
+   configuration, so they could not have preceded it.
+4. **Exact ordering per condition: not fixed before holdout.** At holdout
+   start, "canonical-first" was a no-op in code (E29); the H4 definitions
+   that ran date from 2026-02-12 (`ea5f1533`, `8118eb5e`), and no run records
+   the order it sent. The orders are code-inferred
+   (`reports/phase2e-ordering-check-2026-10-05.md`).
+5. **Random seeds: partly.** Tile-selection, null-tile and execution-order
+   seeds were fixed before holdout; the H4 seed base (42) was declared but
+   wired to the detector only on 2026-02-12; H9 used a hand-written rotation
+   with no seed.
+
+**Resolution**. (i) The project `h9x4g` was made public by the PI on
+2026-10-05. (ii) A late deposit, labelled as such: the nine items as they
+stand at their commits, with a deposit index that gives each item's file,
+commit, GitHub permalink, and whether it was public before holdout, and a
+`git ls-tree` listing so the deposited bytes can be checked against the
+committed blobs (`osf/late-deposit/deposit-index.md`; uploaded to OSF under
+`late-deposit-2026-10-05/`). Items 2-5 are deposited as what exists; nothing
+is reconstructed and presented as pre-holdout. (iii) A second registration
+update points to the deposit and to the errata since E16 (text approved by
+the PI before submission).
+
+**Lesson**. A registered "upload before X" is a gate, not a to-do: it needs a
+check that blocks X. The pre-holdout deposit stayed an unticked to-do in
+the session log (24 to-do entries, from Session 5 on) and was never verified on OSF,
+and an upload that did not attach was logged as done.
+
+---
