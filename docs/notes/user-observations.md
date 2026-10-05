@@ -1450,3 +1450,31 @@ discard / replace; an unanswered gate holds over.*
   subagent's report into two rulings and the PR body unverified; the final
   re-audit found 46 plus 2. Caught before merge, but it reached his
   decisions log.
+
+## S160 candidates (pending review, 2026-10-05, drafted at handoff) — silence never discards
+
+*Things Shawn may have observed about Claude this session. Accept / edit /
+discard / replace; an unanswered gate holds over.*
+
+- **C1 — Raising the text-track gap at once.** The finding that text-only
+  requests send no examples surfaced inside a registration question (D40).
+  I stopped the repair's flow to put it to him, with the request token
+  counts as evidence, before writing any of it up. He called it "a major
+  piece of news". Was the timing right, or would he rather have had a
+  verified write-up first?
+- **C2 — The manipulation check overstated, then corrected.** I called Phase
+  3c's arm A a null manipulation; it was a designed identical-pass baseline.
+  The report also paired the wrong arm in one group and gave a wrong § B.2
+  status. All three were corrected, the first with him and map-reader-bench.
+  It was a fast report on a high-stakes finding: did the errors cost trust,
+  and should a check of this weight get an independent review before it
+  reaches him?
+- **C3 — Externalising before working.** On his instruction, the claims,
+  surprises and to-dos went into a tracker (C-01 to C-27, S-1 to S-10,
+  W1-W8) before any fix. Did the tracker carry the session, or was it too
+  dense to steer by?
+- **C4 — Question load at the end of a long session.** "Show me all live
+  questions" produced a long list late in the day, and the X1 approval was
+  lost inside it again (claude-obs 138). Would grouping the questions as
+  "needs your words now", "has a default I will apply", and "can wait" have
+  served better?
