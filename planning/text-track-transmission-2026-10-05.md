@@ -123,6 +123,27 @@ in brackets (§ 4).
   February 60-tile runs used config order. No erratum records it; the retest
   summary's "baseline used in all prior phases" and "reused from Phase 2c" are
   wrong (W3.2).
+- [ ] **C-25 (D, W1/W2).** Re-tested with the paired tile-swap permutation
+  test (`reports/retest-bootstrap-check-2026-10-05.md`): A[45] (2c text
+  scale-4 > plus-hp) 0.001 → 0.0588, the only verdict that flips after
+  within-phase BH; at raw α also A[18] 0.042 → 0.0588 and A[60] (2e
+  config-default > random) 0.046 → 0.0563, which voids "config-default
+  significantly beats random" (`retest-production-summary.md:145`). The D17
+  audit (`reports/d17-inventory/d17-inventory-h5-h8.md:905-919`) and E69
+  reason from single-run differences in the same way. UNCHANGED: H7, H4, H5,
+  the family rejection set {H2, H3, H7}, A[1] (E68's basis), all 33
+  grid/stride/H13 rows, the verifier-thinking contrast (Obs 187, E69).
+  Not re-tested: the 384-vs-512 and PV pairwise files (inputs moved), H1,
+  the E45 companions.
+- [ ] **C-26 (L, W1).** Reporting errors whatever the test: "FDR p = 0.004" is
+  a raw p (`results-draft.md:231` and 24 other sites); "6/10 significant" is
+  5/10.
+- [ ] **C-27 (D, W6).** The bootstrap p-value (2 × min(P(d ≤ 0), P(d > 0)),
+  floored at 1/B, read off the uncentred distribution) is still live:
+  `scripts/lib_advanced_metrics.py:1945-1955` and four other code paths;
+  `tests/test_e45_bootstrap_pairings.py:71-89` pins identical arms at the
+  floor. It also depends on which arm is labelled A (0.001 one way, 0.012
+  the other on the same data).
 - [ ] **C-24 (L, W1).** `canonical-last` was sent as null×3, hard positives,
   then canonical examples last, not the study YAML's [HP, null, C+, C−].
   Canonical placement, what the registration fixes, holds.
@@ -175,6 +196,20 @@ in brackets (§ 4).
   usage-reporting gap or a dispatch failure).
 - **S-7. The text prompt asks for absent examples**: "match the above
   Reference Examples" with none above (report § E).
+- **S-9. One transmitted signature, two dates, different outputs.** Two
+  replicate groups are not exchangeable across executions: `n1-outstanding`
+  `image-t03` (F1 0.590-0.594) against `pv-diag` `image-n5` T = 0.3
+  (0.548-0.570), and `n1-outstanding` `pro-image-high-t0` (0.540-0.548, about
+  745 detections) against `pv-diag` `flash-high-image` T = 0.0 (0.476-0.487,
+  about 890). Both tests reject 67-69 % of their cross-execution pairs and
+  none within an execution. Cause unverified: serving drift between dates,
+  or a request difference the signature does not record; for the second,
+  E57's "intended Pro, dispatched Flash" should be re-checked (W7.5).
+- **S-10. The tile-swap test compares two outputs, not two configurations.**
+  It treats each output as fixed, so it rejects genuinely different outputs
+  of one configuration: on the 55-map set, 4 of 20 within-execution pass
+  pairs at 20 m. Configuration-level claims need the run-to-run variance
+  (the drift floors of D4 and D8 do this for some claims; W2.5).
 - **S-8. 384 and 512 px tiles cost the same input tokens** (1,502): a fixed
   image-token budget whatever the tile size (relevant to how tile-size
   results are read).
@@ -201,21 +236,29 @@ Order: metadata and register → low-level records → intermediate documents
 - [ ] W1.5 Paper: methods C-11/C-12/C-13; results C-04/C-17; discussion
   seeds C-09/C-15/C-16; claims inventory rows. Drafted for the PI's review.
 
-### W2. The retest-era bootstrap
+### W2. The retest-era bootstrap — W2.1-W2.3 DONE 2026-10-05; W2.4 for the PI
 
-- [ ] W2.1 Diagnose: how the retest bootstrap resamples (pairing, the unit
+Report: `reports/retest-bootstrap-check-2026-10-05.md`. Mechanism: the p-value
+read off an uncentred bootstrap sits at its floor whenever two arms differ on
+few tiles in one direction (identical outputs too). False-positive rates on
+10,035 replicate pairs: 2.5 % (bootstrap) against 2.2 % (permutation) overall,
+but 12.5 % against 6.2 % where the outputs differ on 50 tiles or fewer (the
+T = 0 case). The re-test took under 30 minutes on sapphire.
+
+- [x] W2.1 Diagnose: how the retest bootstrap resamples (pairing, the unit
   of resampling, the statistic) and why it rejects between replicates.
-- [ ] W2.2 Inventory every claim tested with it (W3 found H4's six:
+- [x] W2.2 (107 contrasts at about 740 sites; 30 reach paper text) Inventory every claim tested with it (W3 found H4's six:
   `pairwise-bootstrap-comparisons.json` `[55]-[60]`, p 0.124 (H4's
   confirmatory input), 0.678, 0.138, 0.158, 0.002, 0.046; on the board's
   permutation 0.137, 0.640, 0.122, 0.186, 0.002, 0.056, so
   "config-default > random" does not survive) (retest summary, findings,
   decisions, errata, Obs, paper).
-- [ ] W2.3 Calibrate: run the bootstrap and the paired permutation test on
+- [x] W2.3 Calibrate: run the bootstrap and the paired permutation test on
   every replicate set the project holds (S-2 and § B.5 of the report);
   measure each test's false-positive rate.
-- [ ] W2.4 Decide (PI): re-test the inventoried claims with a calibrated
-  test, on sapphire; report which conclusions change.
+- [ ] W2.4 Decide (PI): the recommendation is the paired tile-swap
+  permutation test with BH for every contrast, and no p-value read from the
+  bootstrap (CIs only); the re-test is done (C-25 lists what moves).
 - [ ] W2.5 Widen the calibration to every significance test the paper relies
   on (added 2026-10-05 at the PI's request): the board's permutation test
   passed on 20 replicate pairs; the bootstrap CIs, the H-family tests
@@ -300,6 +343,10 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 - [ ] W7.3 Temperature and ordering are evidenced by configuration and code
   only (ordering now also by output fingerprint, W3): say so where the paper
   relies on them.
+- [ ] W7.5 S-9: why two executions of one transmitted signature differ
+  systematically, and whether `n1-outstanding`'s "Pro" cells ran Pro after
+  all (E57 read the model from a configuration field E57 itself calls an
+  unreliable template default; the outputs differ from the Flash cells').
 - [ ] W7.4 Each finding feeds W5: no run is designed until W7 says what can be
   verified offline.
 
@@ -323,6 +370,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (night) — W2 investigated
+
+The bootstrap's mechanism, inventory, calibration and re-test: one verdict
+flips after BH (A[45]) and one more at raw α (A[60]); C-25 to C-27, S-9 and
+S-10 added; W7.5 opened.
 
 ### 2026-10-05 (evening) — W6, W7, W8 and W2.5 added
 

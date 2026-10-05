@@ -1,0 +1,5325 @@
+{
+ "1": [
+  {
+   "run_id": "gold-standard-v2",
+   "arm": "detect_brief-text",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-1: identical transmitted signature and test set as pv-diag-384::flash-high-text-n5-text-t0.7"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_4",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_5",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/gs/gold-standard-v2/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/gs/gold-standard-v2/proposer/detect_brief-text"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-high-text-n5-text-t0.7",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    486,
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-1: identical transmitted signature and test set as gold-standard-v2::detect_brief-text"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1",
+     "identity": "detections_text-t0.7_run01.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2",
+     "identity": "detections_text-t0.7_run02.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3",
+     "identity": "detections_text-t0.7_run03.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4",
+     "identity": "detections_text-t0.7_run04.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5",
+     "identity": "detections_text-t0.7_run05.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6",
+     "identity": "detections_text-t0.7_run06.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7",
+     "identity": "detections_text-t0.7_run07.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8",
+     "identity": "detections_text-t0.7_run08.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9",
+     "identity": "detections_text-t0.7_run09.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10",
+     "identity": "detections_text-t0.7_run10.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_11",
+     "identity": "detections_text-t0.7_run11.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_11/detections_text-t0.7_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_12",
+     "identity": "detections_text-t0.7_run12.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_12/detections_text-t0.7_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_13",
+     "identity": "detections_text-t0.7_run13.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_13/detections_text-t0.7_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_14",
+     "identity": "detections_text-t0.7_run14.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_14/detections_text-t0.7_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_15",
+     "identity": "detections_text-t0.7_run15.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_15/detections_text-t0.7_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_16",
+     "identity": "detections_text-t0.7_run16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_16/detections_text-t0.7_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_17",
+     "identity": "detections_text-t0.7_run17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_17/detections_text-t0.7_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_18",
+     "identity": "detections_text-t0.7_run18.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_18/detections_text-t0.7_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_19",
+     "identity": "detections_text-t0.7_run19.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_19/detections_text-t0.7_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_20",
+     "identity": "detections_text-t0.7_run20.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_20/detections_text-t0.7_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_21",
+     "identity": "detections_text-t0.7_run21.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_21/detections_text-t0.7_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_22",
+     "identity": "detections_text-t0.7_run22.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_22/detections_text-t0.7_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_23",
+     "identity": "detections_text-t0.7_run23.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_23/detections_text-t0.7_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_24",
+     "identity": "detections_text-t0.7_run24.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_24/detections_text-t0.7_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_25",
+     "identity": "detections_text-t0.7_run25.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_25/detections_text-t0.7_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_26",
+     "identity": "detections_text-t0.7_run26.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_26/detections_text-t0.7_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_27",
+     "identity": "detections_text-t0.7_run27.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_27/detections_text-t0.7_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_28",
+     "identity": "detections_text-t0.7_run28.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_28/detections_text-t0.7_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_29",
+     "identity": "detections_text-t0.7_run29.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_29/detections_text-t0.7_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_30",
+     "identity": "detections_text-t0.7_run30.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_30/detections_text-t0.7_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "2": [
+  {
+   "run_id": "n1-outstanding-384",
+   "arm": "brief-text-t03",
+   "n_metas": 3,
+   "manifest": [
+    "/home/shawn/Code/map-reader-llm/inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-2: identical transmitted signature and test set as pv-diag-384::flash-minimal-text-n30-t07-text-t0.3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/brief-text-t03/run_1",
+     "identity": "detections_brief-text-t03_run01.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/brief-text-t03/run_1/detections_brief-text-t03_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/brief-text-t03/run_2",
+     "identity": "detections_brief-text-t03_run02.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/brief-text-t03/run_2/detections_brief-text-t03_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/brief-text-t03/run_3",
+     "identity": "detections_brief-text-t03_run03.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/brief-text-t03/run_3/detections_brief-text-t03_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/n1-outstanding-384/brief-text-t03"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-minimal-text-n30-t07-text-t0.3",
+   "n_metas": 10,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-2: identical transmitted signature and test set as n1-outstanding-384::brief-text-t03"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_6",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_7",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_8",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_9",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_10",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "3": [
+  {
+   "run_id": "n1-outstanding-384",
+   "arm": "image-t0",
+   "n_metas": 3,
+   "manifest": [
+    "/home/shawn/Code/map-reader-llm/inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-3: identical transmitted signature and test set as pv-diag-384::image-baseline-image-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t0/run_1",
+     "identity": "detections_image-t0_run01.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t0/run_1/detections_image-t0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t0/run_2",
+     "identity": "detections_image-t0_run02.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t0/run_2/detections_image-t0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t0/run_3",
+     "identity": "detections_image-t0_run03.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t0/run_3/detections_image-t0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/n1-outstanding-384/image-t0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ],
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "image-baseline-image-t0.0",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    483
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-3: identical transmitted signature and test set as n1-outstanding-384::image-t0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1",
+     "identity": "detections_image-t0.0_run01.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/image-baseline/image-t0.0"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "4": [
+  {
+   "run_id": "n1-outstanding-384",
+   "arm": "image-t03",
+   "n_metas": 3,
+   "manifest": [
+    "/home/shawn/Code/map-reader-llm/inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-4: identical transmitted signature and test set as pv-diag-384::image-n5-image-t0.3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t03/run_1",
+     "identity": "detections_image-t03_run01.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t03/run_1/detections_image-t03_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t03/run_2",
+     "identity": "detections_image-t03_run02.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t03/run_2/detections_image-t03_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/image-t03/run_3",
+     "identity": "detections_image-t03_run03.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/image-t03/run_3/detections_image-t03_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/n1-outstanding-384/image-t03"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "image-n5-image-t0.3",
+   "n_metas": 10,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-4: identical transmitted signature and test set as n1-outstanding-384::image-t03"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_6",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_7",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_8",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_9",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_10",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/image-n5/image-t0.3"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "5": [
+  {
+   "run_id": "n1-outstanding-384",
+   "arm": "pro-image-high-t0",
+   "n_metas": 3,
+   "manifest": [
+    "/home/shawn/Code/map-reader-llm/inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    485,
+    486
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-5: identical transmitted signature and test set as pv-diag-384::flash-high-image-n5-image-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1",
+     "identity": "detections_pro-image-high-t0_run01.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2",
+     "identity": "detections_pro-image-high-t0_run02.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3",
+     "identity": "detections_pro-image-high-t0_run03.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/n1-outstanding-384/pro-image-high-t0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-high-image-n5-image-t0.0",
+   "n_metas": 3,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    483,
+    484,
+    485
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-5: identical transmitted signature and test set as n1-outstanding-384::pro-image-high-t0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_1",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_2",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_3",
+     "identity": "detections-library_plus-hp-3-flash-2026-04-16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "6": [
+  {
+   "run_id": "n1-outstanding-384",
+   "arm": "pro-text-high-t0",
+   "n_metas": 3,
+   "manifest": [
+    "/home/shawn/Code/map-reader-llm/inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    485
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-6: identical transmitted signature and test set as pv-diag-384::flash-high-text-n5-text-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1",
+     "identity": "detections_pro-text-high-t0_run01.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2",
+     "identity": "detections_pro-text-high-t0_run02.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3",
+     "identity": "detections_pro-text-high-t0_run03.geojson",
+     "files": [
+      "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/n1-outstanding-384/pro-text-high-t0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-high-text-n5-text-t0.0",
+   "n_metas": 3,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    485,
+    486
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-6: identical transmitted signature and test set as n1-outstanding-384::pro-text-high-t0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "7": [
+  {
+   "run_id": "retest-h11-single-pass-384-t0",
+   "arm": "brief-text-t0",
+   "n_metas": 10,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    485,
+    486,
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-7: identical transmitted signature and test set as pv-diag-384::flash-minimal-text-n30-t07-text-t0.0, pv-diag-384::text-baseline-text-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1",
+     "identity": "detections_brief-text-t0_run01.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_1/detections_brief-text-t0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2",
+     "identity": "detections_brief-text-t0_run02.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_2/detections_brief-text-t0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3",
+     "identity": "detections_brief-text-t0_run03.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_3/detections_brief-text-t0_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4",
+     "identity": "detections_brief-text-t0_run04.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_4/detections_brief-text-t0_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5",
+     "identity": "detections_brief-text-t0_run05.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_5/detections_brief-text-t0_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6",
+     "identity": "detections_brief-text-t0_run06.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_6/detections_brief-text-t0_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7",
+     "identity": "detections_brief-text-t0_run07.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_7/detections_brief-text-t0_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8",
+     "identity": "detections_brief-text-t0_run08.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_8/detections_brief-text-t0_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9",
+     "identity": "detections_brief-text-t0_run09.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_9/detections_brief-text-t0_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10",
+     "identity": "detections_brief-text-t0_run10.geojson",
+     "files": [
+      "outputs/retest/h11-single-pass-384-t0/brief-text-t0/run_10/detections_brief-text-t0_run10.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/h11-single-pass-384-t0/brief-text-t0"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-minimal-text-n30-t07-text-t0.0",
+   "n_metas": 3,
+   "manifest": [
+    "inputs/tiles_384/full_evaluation_manifest.json"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-7: identical transmitted signature and test set as retest-h11-single-pass-384-t0::brief-text-t0, pv-diag-384::text-baseline-text-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "text-baseline-text-t0.0",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    486
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-7: identical transmitted signature and test set as retest-h11-single-pass-384-t0::brief-text-t0, pv-diag-384::flash-minimal-text-n30-t07-text-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1",
+     "identity": "detections_text-t0.0_run01.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/text-baseline/text-t0.0"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "8": [
+  {
+   "run_id": "pv-diag-384",
+   "arm": "flash-minimal-text-n30-t07-text-t0.7",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-8: identical transmitted signature and test set as pv-diag-384::text-n10-text-t0.7"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1",
+     "identity": "detections_text-t0.7_run01.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2",
+     "identity": "detections_text-t0.7_run02.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3",
+     "identity": "detections_text-t0.7_run03.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4",
+     "identity": "detections_text-t0.7_run04.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5",
+     "identity": "detections_text-t0.7_run05.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6",
+     "identity": "detections_text-t0.7_run06.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7",
+     "identity": "detections_text-t0.7_run07.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8",
+     "identity": "detections_text-t0.7_run08.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9",
+     "identity": "detections_text-t0.7_run09.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10",
+     "identity": "detections_text-t0.7_run10.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_11",
+     "identity": "detections_text-t0.7_run11.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_11/detections_text-t0.7_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_12",
+     "identity": "detections_text-t0.7_run12.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_12/detections_text-t0.7_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_13",
+     "identity": "detections_text-t0.7_run13.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_13/detections_text-t0.7_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_14",
+     "identity": "detections_text-t0.7_run14.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_14/detections_text-t0.7_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_15",
+     "identity": "detections_text-t0.7_run15.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_15/detections_text-t0.7_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_16",
+     "identity": "detections_text-t0.7_run16.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_16/detections_text-t0.7_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_17",
+     "identity": "detections_text-t0.7_run17.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_17/detections_text-t0.7_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_18",
+     "identity": "detections_text-t0.7_run18.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_18/detections_text-t0.7_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_19",
+     "identity": "detections_text-t0.7_run19.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_19/detections_text-t0.7_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_20",
+     "identity": "detections_text-t0.7_run20.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_20/detections_text-t0.7_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_21",
+     "identity": "detections_text-t0.7_run21.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_21/detections_text-t0.7_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_22",
+     "identity": "detections_text-t0.7_run22.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_22/detections_text-t0.7_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_23",
+     "identity": "detections_text-t0.7_run23.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_23/detections_text-t0.7_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_24",
+     "identity": "detections_text-t0.7_run24.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_24/detections_text-t0.7_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_25",
+     "identity": "detections_text-t0.7_run25.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_25/detections_text-t0.7_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_26",
+     "identity": "detections_text-t0.7_run26.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_26/detections_text-t0.7_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_27",
+     "identity": "detections_text-t0.7_run27.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_27/detections_text-t0.7_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_28",
+     "identity": "detections_text-t0.7_run28.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_28/detections_text-t0.7_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_29",
+     "identity": "detections_text-t0.7_run29.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_29/detections_text-t0.7_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_30",
+     "identity": "detections_text-t0.7_run30.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_30/detections_text-t0.7_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "pv-diag-384",
+   "arm": "text-n10-text-t0.7",
+   "n_metas": 10,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    487
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-8: identical transmitted signature and test set as pv-diag-384::flash-minimal-text-n30-t07-text-t0.7"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_1",
+     "identity": "detections_text-t0.7_run01.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_1/detections_text-t0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_2",
+     "identity": "detections_text-t0.7_run02.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_2/detections_text-t0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_3",
+     "identity": "detections_text-t0.7_run03.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_3/detections_text-t0.7_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_4",
+     "identity": "detections_text-t0.7_run04.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_4/detections_text-t0.7_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_5",
+     "identity": "detections_text-t0.7_run05.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_5/detections_text-t0.7_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_6",
+     "identity": "detections_text-t0.7_run06.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_6/detections_text-t0.7_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_7",
+     "identity": "detections_text-t0.7_run07.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_7/detections_text-t0.7_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_8",
+     "identity": "detections_text-t0.7_run08.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_8/detections_text-t0.7_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_9",
+     "identity": "detections_text-t0.7_run09.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_9/detections_text-t0.7_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_10",
+     "identity": "detections_text-t0.7_run10.geojson",
+     "files": [
+      "outputs/h11/pv-diag-384/text-n10/text-t0.7/run_10/detections_text-t0.7_run10.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h11/pv-diag-384/text-n10/text-t0.7"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "10": [
+  {
+   "run_id": "h8-v2",
+   "arm": "scale-8",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/calibration/h10-384/test_manifest.json"
+   ],
+   "items": [
+    327
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:d1c1e46e9da7/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-10: identical transmitted signature and test set as h10::pool_160_hp4hn4"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h8-v2/scale-8/run_1",
+     "identity": "detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h8-v2/scale-8/run_1/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h8-v2/scale-8/run_2",
+     "identity": "detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h8-v2/scale-8/run_2/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h8-v2/scale-8/run_3",
+     "identity": "detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h8-v2/scale-8/run_3/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h8-v2/scale-8/run_4",
+     "identity": "detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h8-v2/scale-8/run_4/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h8-v2/scale-8/run_5",
+     "identity": "detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h8-v2/scale-8/run_5/detections-detect_h8_scale-8_v2-3-flash-2026-04-15.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h8-v2/scale-8"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "h10",
+   "arm": "pool_160_hp4hn4",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/calibration/h10-384/test_manifest.json"
+   ],
+   "items": [
+    327
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:d1c1e46e9da7/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-10: identical transmitted signature and test set as h8-v2::scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_1",
+     "identity": "detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_1/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_2",
+     "identity": "detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_2/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_3",
+     "identity": "detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_3/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_4",
+     "identity": "detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_4/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_5",
+     "identity": "detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson",
+     "files": [
+      "outputs/h10/evaluation-v2/pool_160_hp4hn4/run_5/detections-detect_pool_160_hp4hn4_v2-3-flash-2026-04-15.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/h10/evaluation-v2/pool_160_hp4hn4"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/384/h10_test_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "11": [
+  {
+   "run_id": "55maps-generalisation",
+   "arm": "detect_brief-text",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/tiles_384_55maps/full_evaluation_manifest.json"
+   ],
+   "items": [
+    0,
+    1,
+    3,
+    4,
+    7
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-11: identical transmitted signature and test set as 55maps-text-high-generalisation::detect_brief-text"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/55maps-generalisation/proposer/detect_brief-text/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-09.geojson",
+     "files": [
+      "outputs/55maps-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-generalisation/proposer/detect_brief-text/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-09.geojson",
+     "files": [
+      "outputs/55maps-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-generalisation/proposer/detect_brief-text/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/55maps-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-generalisation/proposer/detect_brief-text/run_4",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/55maps-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-generalisation/proposer/detect_brief-text/run_5",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-10.geojson",
+     "files": [
+      "outputs/55maps-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-10.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/55maps-generalisation/proposer/detect_brief-text"
+   ],
+   "scoring_scope": [
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "55maps-text-high-generalisation",
+   "arm": "detect_brief-text",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/tiles_384_55maps/full_evaluation_manifest.json"
+   ],
+   "items": [
+    8541
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-11: identical transmitted signature and test set as 55maps-generalisation::detect_brief-text"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-high-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/55maps-text-high-generalisation/proposer/detect_brief-text"
+   ],
+   "scoring_scope": [
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "12": [
+  {
+   "run_id": "55maps-text-min-generalisation",
+   "arm": "detect_brief-text",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/tiles_384_55maps/full_evaluation_manifest.json"
+   ],
+   "items": [
+    8541
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-12: identical transmitted signature and test set as 55maps-text-min-n10-uplift::detect_brief-text-min-n10"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_1/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_2",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_2/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_3",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_3/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_4",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_4/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_5",
+     "identity": "detections-detect_brief-text-3-flash-2026-04-18.geojson",
+     "files": [
+      "outputs/55maps-text-min-generalisation/proposer/detect_brief-text/run_5/detections-detect_brief-text-3-flash-2026-04-18.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/55maps-text-min-generalisation/proposer/detect_brief-text"
+   ],
+   "scoring_scope": [
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "55maps-text-min-n10-uplift",
+   "arm": "detect_brief-text-min-n10",
+   "n_metas": 5,
+   "manifest": [
+    "inputs/tiles_384_55maps/full_evaluation_manifest.json"
+   ],
+   "items": [
+    8541
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-12: identical transmitted signature and test set as 55maps-text-min-generalisation::detect_brief-text"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/55maps-text-min-n10-uplift/proposer/run_6",
+     "identity": "detections-detect_brief-text-3-flash-2026-06-11.geojson",
+     "files": [
+      "outputs/55maps-text-min-n10-uplift/proposer/run_6/detections-detect_brief-text-3-flash-2026-06-11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-n10-uplift/proposer/run_7",
+     "identity": "detections-detect_brief-text-3-flash-2026-06-11.geojson",
+     "files": [
+      "outputs/55maps-text-min-n10-uplift/proposer/run_7/detections-detect_brief-text-3-flash-2026-06-11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-n10-uplift/proposer/run_8",
+     "identity": "detections-detect_brief-text-3-flash-2026-06-11.geojson",
+     "files": [
+      "outputs/55maps-text-min-n10-uplift/proposer/run_8/detections-detect_brief-text-3-flash-2026-06-11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-n10-uplift/proposer/run_9",
+     "identity": "detections-detect_brief-text-3-flash-2026-06-11.geojson",
+     "files": [
+      "outputs/55maps-text-min-n10-uplift/proposer/run_9/detections-detect_brief-text-3-flash-2026-06-11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/55maps-text-min-n10-uplift/proposer/run_10",
+     "identity": "detections-detect_brief-text-3-flash-2026-06-11.geojson",
+     "files": [
+      "outputs/55maps-text-min-n10-uplift/proposer/run_10/detections-detect_brief-text-3-flash-2026-06-11.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/55maps-text-min-n10-uplift/proposer"
+   ],
+   "scoring_scope": [
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/best-available-gt-55maps.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ],
+    [
+     "proposer-verifier",
+     "inputs/vectors/references/canonical-gt-55maps-r50.geojson",
+     "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "13": [
+  {
+   "run_id": "retest-phase2a",
+   "arm": "brief-text",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-13: identical transmitted signature and test set as retest-phase2b::track2-text-t1.0, retest-phase3a::track2-text-t1.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text/run_1",
+     "identity": "detections_brief-text_run01.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text/run_2",
+     "identity": "detections_brief-text_run02.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text/run_2/detections_brief-text_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text/run_3",
+     "identity": "detections_brief-text_run03.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text/run_3/detections_brief-text_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2a/brief-text"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track2-text-t1.0",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-13: identical transmitted signature and test set as retest-phase2a::brief-text, retest-phase3a::track2-text-t1.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T1.0/run_1",
+     "identity": "detections_T1.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T1.0/run_2",
+     "identity": "detections_T1.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T1.0/run_2/detections_T1.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T1.0/run_3",
+     "identity": "detections_T1.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T1.0/run_3/detections_T1.0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track2-text/T1.0"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3a",
+   "arm": "track2-text-t1.0",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-13: identical transmitted signature and test set as retest-phase2a::brief-text, retest-phase2b::track2-text-t1.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_1",
+     "identity": "detections_T1.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_1/detections_T1.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_2",
+     "identity": "detections_T1.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_2/detections_T1.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_3",
+     "identity": "detections_T1.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_3/detections_T1.0_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_4",
+     "identity": "detections_T1.0_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_4/detections_T1.0_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_5",
+     "identity": "detections_T1.0_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_5/detections_T1.0_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_6",
+     "identity": "detections_T1.0_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_6/detections_T1.0_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_7",
+     "identity": "detections_T1.0_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_7/detections_T1.0_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_8",
+     "identity": "detections_T1.0_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_8/detections_T1.0_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_9",
+     "identity": "detections_T1.0_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_9/detections_T1.0_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_10",
+     "identity": "detections_T1.0_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_10/detections_T1.0_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_11",
+     "identity": "detections_T1.0_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_11/detections_T1.0_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_12",
+     "identity": "detections_T1.0_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_12/detections_T1.0_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_13",
+     "identity": "detections_T1.0_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_13/detections_T1.0_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_14",
+     "identity": "detections_T1.0_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_14/detections_T1.0_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_15",
+     "identity": "detections_T1.0_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_15/detections_T1.0_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_16",
+     "identity": "detections_T1.0_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_16/detections_T1.0_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_17",
+     "identity": "detections_T1.0_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_17/detections_T1.0_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_18",
+     "identity": "detections_T1.0_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_18/detections_T1.0_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_19",
+     "identity": "detections_T1.0_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_19/detections_T1.0_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_20",
+     "identity": "detections_T1.0_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_20/detections_T1.0_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_21",
+     "identity": "detections_T1.0_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_21/detections_T1.0_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_22",
+     "identity": "detections_T1.0_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_22/detections_T1.0_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_23",
+     "identity": "detections_T1.0_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_23/detections_T1.0_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_24",
+     "identity": "detections_T1.0_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_24/detections_T1.0_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_25",
+     "identity": "detections_T1.0_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_25/detections_T1.0_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_26",
+     "identity": "detections_T1.0_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_26/detections_T1.0_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_27",
+     "identity": "detections_T1.0_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_27/detections_T1.0_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_28",
+     "identity": "detections_T1.0_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_28/detections_T1.0_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_29",
+     "identity": "detections_T1.0_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_29/detections_T1.0_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T1.0/run_30",
+     "identity": "detections_T1.0_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T1.0/run_30/detections_T1.0_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a/track2-text/T1.0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "14": [
+  {
+   "run_id": "retest-phase2a",
+   "arm": "brief-text-image",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-14: identical transmitted signature and test set as retest-phase2b::track1-image-t1.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text-image/run_1",
+     "identity": "detections_brief-text-image_run01.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text-image/run_2",
+     "identity": "detections_brief-text-image_run02.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text-image/run_2/detections_brief-text-image_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2a/brief-text-image/run_3",
+     "identity": "detections_brief-text-image_run03.geojson",
+     "files": [
+      "outputs/retest/phase2a/brief-text-image/run_3/detections_brief-text-image_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2a/brief-text-image"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track1-image-t1.0",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-14: identical transmitted signature and test set as retest-phase2a::brief-text-image"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T1.0/run_1",
+     "identity": "detections_T1.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T1.0/run_1/detections_T1.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T1.0/run_2",
+     "identity": "detections_T1.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T1.0/run_2/detections_T1.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T1.0/run_3",
+     "identity": "detections_T1.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T1.0/run_3/detections_T1.0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track1-image/T1.0"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "15": [
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track1-image-t0.0",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    338,
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-15: identical transmitted signature and test set as retest-phase2c::track1-image-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T0.0/run_1",
+     "identity": "detections_T0.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T0.0/run_2",
+     "identity": "detections_T0.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T0.0/run_2/detections_T0.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track1-image/T0.0/run_3",
+     "identity": "detections_T0.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track1-image/T0.0/run_3/detections_T0.0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track1-image/T0.0"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track1-image-scale-8",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-15: identical transmitted signature and test set as retest-phase2b::track1-image-t0.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track1-image/scale-8/run_1",
+     "identity": "detections_scale-8_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track1-image/scale-8"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "16": [
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track2-text-t0.0",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2c::track2-text-canonical, retest-phase2c::track2-text-plus-hp, retest-phase2c::track2-text-pure-positive-canon, retest-phase2c::track2-text-scale-4, retest-phase2c::track2-text-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.0/run_1",
+     "identity": "detections_T0.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.0/run_2",
+     "identity": "detections_T0.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.0/run_2/detections_T0.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.0/run_3",
+     "identity": "detections_T0.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.0/run_3/detections_T0.0_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track2-text/T0.0"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track2-text-canonical",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "NULL MANIPULATION: H8 library listed in config, nothing from the example list transmitted (text-only)",
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2b::track2-text-t0.0, retest-phase2c::track2-text-plus-hp, retest-phase2c::track2-text-pure-positive-canon, retest-phase2c::track2-text-scale-4, retest-phase2c::track2-text-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track2-text/canonical/run_1",
+     "identity": "detections_canonical_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track2-text/canonical"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track2-text-plus-hp",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "NULL MANIPULATION: H8 library listed in config, nothing from the example list transmitted (text-only)",
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2b::track2-text-t0.0, retest-phase2c::track2-text-canonical, retest-phase2c::track2-text-pure-positive-canon, retest-phase2c::track2-text-scale-4, retest-phase2c::track2-text-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track2-text/plus-hp/run_1",
+     "identity": "detections_plus-hp_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track2-text/plus-hp/run_1/detections_plus-hp_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track2-text/plus-hp"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track2-text-pure-positive-canon",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "NULL MANIPULATION: H8 library listed in config, nothing from the example list transmitted (text-only)",
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2b::track2-text-t0.0, retest-phase2c::track2-text-canonical, retest-phase2c::track2-text-plus-hp, retest-phase2c::track2-text-scale-4, retest-phase2c::track2-text-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1",
+     "identity": "detections_pure-positive-canon_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track2-text/pure-positive-canon"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track2-text-scale-4",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "NULL MANIPULATION: H8 library listed in config, nothing from the example list transmitted (text-only)",
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2b::track2-text-t0.0, retest-phase2c::track2-text-canonical, retest-phase2c::track2-text-plus-hp, retest-phase2c::track2-text-pure-positive-canon, retest-phase2c::track2-text-scale-8"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track2-text/scale-4/run_1",
+     "identity": "detections_scale-4_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track2-text/scale-4"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track2-text-scale-8",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "NULL MANIPULATION: H8 library listed in config, nothing from the example list transmitted (text-only)",
+    "replicate-group-16: identical transmitted signature and test set as retest-phase2b::track2-text-t0.0, retest-phase2c::track2-text-canonical, retest-phase2c::track2-text-plus-hp, retest-phase2c::track2-text-pure-positive-canon, retest-phase2c::track2-text-scale-4"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track2-text/scale-8/run_1",
+     "identity": "detections_scale-8_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track2-text/scale-8/run_1/detections_scale-8_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track2-text/scale-8"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "17": [
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track2-text-t0.3",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-17: identical transmitted signature and test set as retest-phase3a::track2-text-t0.3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.3/run_1",
+     "identity": "detections_T0.3_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.3/run_1/detections_T0.3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.3/run_2",
+     "identity": "detections_T0.3_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.3/run_2/detections_T0.3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.3/run_3",
+     "identity": "detections_T0.3_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.3/run_3/detections_T0.3_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track2-text/T0.3"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3a",
+   "arm": "track2-text-t0.3",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339,
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.3, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-17: identical transmitted signature and test set as retest-phase2b::track2-text-t0.3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_1",
+     "identity": "detections_T0.3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_1/detections_T0.3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_2",
+     "identity": "detections_T0.3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_2/detections_T0.3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_3",
+     "identity": "detections_T0.3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_3/detections_T0.3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_4",
+     "identity": "detections_T0.3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_4/detections_T0.3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_5",
+     "identity": "detections_T0.3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_5/detections_T0.3_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_6",
+     "identity": "detections_T0.3_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_6/detections_T0.3_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_7",
+     "identity": "detections_T0.3_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_7/detections_T0.3_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_8",
+     "identity": "detections_T0.3_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_8/detections_T0.3_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_9",
+     "identity": "detections_T0.3_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_9/detections_T0.3_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_10",
+     "identity": "detections_T0.3_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_10/detections_T0.3_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_11",
+     "identity": "detections_T0.3_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_11/detections_T0.3_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_12",
+     "identity": "detections_T0.3_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_12/detections_T0.3_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_13",
+     "identity": "detections_T0.3_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_13/detections_T0.3_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_14",
+     "identity": "detections_T0.3_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_14/detections_T0.3_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_15",
+     "identity": "detections_T0.3_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_15/detections_T0.3_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_16",
+     "identity": "detections_T0.3_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_16/detections_T0.3_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_17",
+     "identity": "detections_T0.3_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_17/detections_T0.3_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_18",
+     "identity": "detections_T0.3_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_18/detections_T0.3_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_19",
+     "identity": "detections_T0.3_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_19/detections_T0.3_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_20",
+     "identity": "detections_T0.3_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_20/detections_T0.3_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_21",
+     "identity": "detections_T0.3_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_21/detections_T0.3_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_22",
+     "identity": "detections_T0.3_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_22/detections_T0.3_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_23",
+     "identity": "detections_T0.3_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_23/detections_T0.3_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_24",
+     "identity": "detections_T0.3_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_24/detections_T0.3_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_25",
+     "identity": "detections_T0.3_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_25/detections_T0.3_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_26",
+     "identity": "detections_T0.3_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_26/detections_T0.3_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_27",
+     "identity": "detections_T0.3_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_27/detections_T0.3_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_28",
+     "identity": "detections_T0.3_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_28/detections_T0.3_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_29",
+     "identity": "detections_T0.3_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_29/detections_T0.3_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.3/run_30",
+     "identity": "detections_T0.3_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.3/run_30/detections_T0.3_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a/track2-text/T0.3"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "18": [
+  {
+   "run_id": "retest-phase2b",
+   "arm": "track2-text-t0.7",
+   "n_metas": 3,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-18: identical transmitted signature and test set as retest-phase3a::track2-text-t0.7, retest-phase3a-replication::minimal"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.7/run_1",
+     "identity": "detections_T0.7_run01.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.7/run_2",
+     "identity": "detections_T0.7_run02.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.7/run_2/detections_T0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase2b/track2-text/T0.7/run_3",
+     "identity": "detections_T0.7_run03.geojson",
+     "files": [
+      "outputs/retest/phase2b/track2-text/T0.7/run_3/detections_T0.7_run03.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2b/track2-text/T0.7"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3a",
+   "arm": "track2-text-t0.7",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339,
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-18: identical transmitted signature and test set as retest-phase2b::track2-text-t0.7, retest-phase3a-replication::minimal"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_1",
+     "identity": "detections_T0.7_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_1/detections_T0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_2",
+     "identity": "detections_T0.7_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_2/detections_T0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_3",
+     "identity": "detections_T0.7_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_3/detections_T0.7_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_4",
+     "identity": "detections_T0.7_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_4/detections_T0.7_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_5",
+     "identity": "detections_T0.7_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_5/detections_T0.7_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_6",
+     "identity": "detections_T0.7_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_6/detections_T0.7_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_7",
+     "identity": "detections_T0.7_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_7/detections_T0.7_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_8",
+     "identity": "detections_T0.7_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_8/detections_T0.7_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_9",
+     "identity": "detections_T0.7_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_9/detections_T0.7_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_10",
+     "identity": "detections_T0.7_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_10/detections_T0.7_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_11",
+     "identity": "detections_T0.7_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_11/detections_T0.7_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_12",
+     "identity": "detections_T0.7_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_12/detections_T0.7_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_13",
+     "identity": "detections_T0.7_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_13/detections_T0.7_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_14",
+     "identity": "detections_T0.7_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_14/detections_T0.7_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_15",
+     "identity": "detections_T0.7_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_15/detections_T0.7_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_16",
+     "identity": "detections_T0.7_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_16/detections_T0.7_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_17",
+     "identity": "detections_T0.7_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_17/detections_T0.7_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_18",
+     "identity": "detections_T0.7_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_18/detections_T0.7_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_19",
+     "identity": "detections_T0.7_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_19/detections_T0.7_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_20",
+     "identity": "detections_T0.7_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_20/detections_T0.7_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_21",
+     "identity": "detections_T0.7_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_21/detections_T0.7_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_22",
+     "identity": "detections_T0.7_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_22/detections_T0.7_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_23",
+     "identity": "detections_T0.7_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_23/detections_T0.7_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_24",
+     "identity": "detections_T0.7_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_24/detections_T0.7_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_25",
+     "identity": "detections_T0.7_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_25/detections_T0.7_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_26",
+     "identity": "detections_T0.7_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_26/detections_T0.7_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_27",
+     "identity": "detections_T0.7_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_27/detections_T0.7_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_28",
+     "identity": "detections_T0.7_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_28/detections_T0.7_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_29",
+     "identity": "detections_T0.7_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_29/detections_T0.7_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a/track2-text/T0.7/run_30",
+     "identity": "detections_T0.7_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a/track2-text/T0.7/run_30/detections_T0.7_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a/track2-text/T0.7"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3a-replication",
+   "arm": "minimal",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339,
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-18: identical transmitted signature and test set as retest-phase2b::track2-text-t0.7, retest-phase3a::track2-text-t0.7"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_1",
+     "identity": "detections_minimal_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_1/detections_minimal_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_2",
+     "identity": "detections_minimal_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_2/detections_minimal_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_3",
+     "identity": "detections_minimal_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_3/detections_minimal_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_4",
+     "identity": "detections_minimal_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_4/detections_minimal_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_5",
+     "identity": "detections_minimal_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_5/detections_minimal_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_6",
+     "identity": "detections_minimal_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_6/detections_minimal_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_7",
+     "identity": "detections_minimal_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_7/detections_minimal_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_8",
+     "identity": "detections_minimal_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_8/detections_minimal_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_9",
+     "identity": "detections_minimal_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_9/detections_minimal_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_10",
+     "identity": "detections_minimal_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_10/detections_minimal_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_11",
+     "identity": "detections_minimal_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_11/detections_minimal_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_12",
+     "identity": "detections_minimal_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_12/detections_minimal_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_13",
+     "identity": "detections_minimal_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_13/detections_minimal_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_14",
+     "identity": "detections_minimal_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_14/detections_minimal_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_15",
+     "identity": "detections_minimal_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_15/detections_minimal_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_16",
+     "identity": "detections_minimal_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_16/detections_minimal_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_17",
+     "identity": "detections_minimal_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_17/detections_minimal_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_18",
+     "identity": "detections_minimal_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_18/detections_minimal_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_19",
+     "identity": "detections_minimal_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_19/detections_minimal_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_20",
+     "identity": "detections_minimal_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_20/detections_minimal_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_21",
+     "identity": "detections_minimal_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_21/detections_minimal_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_22",
+     "identity": "detections_minimal_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_22/detections_minimal_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_23",
+     "identity": "detections_minimal_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_23/detections_minimal_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_24",
+     "identity": "detections_minimal_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_24/detections_minimal_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_25",
+     "identity": "detections_minimal_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_25/detections_minimal_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_26",
+     "identity": "detections_minimal_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_26/detections_minimal_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_27",
+     "identity": "detections_minimal_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_27/detections_minimal_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_28",
+     "identity": "detections_minimal_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_28/detections_minimal_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_29",
+     "identity": "detections_minimal_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_29/detections_minimal_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/minimal/run_30",
+     "identity": "detections_minimal_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/minimal/run_30/detections_minimal_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a-replication/minimal"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "19": [
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track1-image-plus-hp",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    338
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-19: identical transmitted signature and test set as retest-phase2e::config-default"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track1-image/plus-hp/run_1",
+     "identity": "detections_plus-hp_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track1-image/plus-hp"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2e",
+   "arm": "config-default",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:b36927a7d424/13\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "ORDERING UNRECORDED: meta snapshot shows config-default order for all four arms; reorder applied by scripts/run_phase2.py _reorder_examples_for_batch at recorded commit 5a57f586e (code inference, not meta evidence)",
+    "replicate-group-19: identical transmitted signature and test set as retest-phase2c::track1-image-plus-hp"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2e/config-default/run_1",
+     "identity": "detections_config-default_run01.geojson",
+     "files": [
+      "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2e/config-default"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "20": [
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track1-image-pure-positive-canon",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:94cd9e47f29e/7\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-20: identical transmitted signature and test set as retest-phase2c::track1-image-exploratory-pure-positive-canon"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1",
+     "identity": "detections_pure-positive-canon_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track1-image/pure-positive-canon"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase2c",
+   "arm": "track1-image-exploratory-pure-positive-canon",
+   "n_metas": 1,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    339
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:94cd9e47f29e/7\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.0, \"thinking\": \"minimal\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-20: identical transmitted signature and test set as retest-phase2c::track1-image-pure-positive-canon"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon/run_1",
+     "identity": "detections_pure-positive-canon_run01.geojson",
+     "files": [
+      "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon"
+   ],
+   "scoring_scope": [
+    [
+     "single-pass",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  }
+ ],
+ "21": [
+  {
+   "run_id": "retest-phase3a-high",
+   "arm": "track2-text-t0.7",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_1",
+     "identity": "detections_T0.7_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_1/detections_T0.7_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_2",
+     "identity": "detections_T0.7_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_2/detections_T0.7_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_3",
+     "identity": "detections_T0.7_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_3/detections_T0.7_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_4",
+     "identity": "detections_T0.7_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_4/detections_T0.7_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_5",
+     "identity": "detections_T0.7_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_5/detections_T0.7_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_6",
+     "identity": "detections_T0.7_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_6/detections_T0.7_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_7",
+     "identity": "detections_T0.7_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_7/detections_T0.7_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_8",
+     "identity": "detections_T0.7_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_8/detections_T0.7_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_9",
+     "identity": "detections_T0.7_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_9/detections_T0.7_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_10",
+     "identity": "detections_T0.7_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_10/detections_T0.7_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_11",
+     "identity": "detections_T0.7_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_11/detections_T0.7_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_12",
+     "identity": "detections_T0.7_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_12/detections_T0.7_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_13",
+     "identity": "detections_T0.7_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_13/detections_T0.7_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_14",
+     "identity": "detections_T0.7_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_14/detections_T0.7_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_15",
+     "identity": "detections_T0.7_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_15/detections_T0.7_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_16",
+     "identity": "detections_T0.7_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_16/detections_T0.7_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_17",
+     "identity": "detections_T0.7_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_17/detections_T0.7_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_18",
+     "identity": "detections_T0.7_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_18/detections_T0.7_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_19",
+     "identity": "detections_T0.7_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_19/detections_T0.7_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_20",
+     "identity": "detections_T0.7_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_20/detections_T0.7_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_21",
+     "identity": "detections_T0.7_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_21/detections_T0.7_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_22",
+     "identity": "detections_T0.7_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_22/detections_T0.7_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_23",
+     "identity": "detections_T0.7_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_23/detections_T0.7_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_24",
+     "identity": "detections_T0.7_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_24/detections_T0.7_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_25",
+     "identity": "detections_T0.7_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_25/detections_T0.7_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_26",
+     "identity": "detections_T0.7_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_26/detections_T0.7_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_27",
+     "identity": "detections_T0.7_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_27/detections_T0.7_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_28",
+     "identity": "detections_T0.7_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_28/detections_T0.7_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_29",
+     "identity": "detections_T0.7_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_29/detections_T0.7_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T0.7/run_30",
+     "identity": "detections_T0.7_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T0.7/run_30/detections_T0.7_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a-high/track2-text/T0.7"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3a-replication",
+   "arm": "high",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    324,
+    329,
+    330,
+    331,
+    332,
+    333
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_1",
+     "identity": "detections_high_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_1/detections_high_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_2",
+     "identity": "detections_high_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_2/detections_high_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_3",
+     "identity": "detections_high_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_3/detections_high_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_4",
+     "identity": "detections_high_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_4/detections_high_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_5",
+     "identity": "detections_high_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_5/detections_high_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_6",
+     "identity": "detections_high_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_6/detections_high_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_7",
+     "identity": "detections_high_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_7/detections_high_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_8",
+     "identity": "detections_high_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_8/detections_high_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_9",
+     "identity": "detections_high_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_9/detections_high_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_10",
+     "identity": "detections_high_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_10/detections_high_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_11",
+     "identity": "detections_high_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_11/detections_high_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_12",
+     "identity": "detections_high_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_12/detections_high_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_13",
+     "identity": "detections_high_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_13/detections_high_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_14",
+     "identity": "detections_high_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_14/detections_high_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_15",
+     "identity": "detections_high_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_15/detections_high_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_16",
+     "identity": "detections_high_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_16/detections_high_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_17",
+     "identity": "detections_high_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_17/detections_high_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_18",
+     "identity": "detections_high_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_18/detections_high_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_19",
+     "identity": "detections_high_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_19/detections_high_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_20",
+     "identity": "detections_high_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_20/detections_high_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_21",
+     "identity": "detections_high_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_21/detections_high_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_22",
+     "identity": "detections_high_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_22/detections_high_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_23",
+     "identity": "detections_high_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_23/detections_high_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_24",
+     "identity": "detections_high_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_24/detections_high_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_25",
+     "identity": "detections_high_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_25/detections_high_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_26",
+     "identity": "detections_high_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_26/detections_high_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_27",
+     "identity": "detections_high_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_27/detections_high_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_28",
+     "identity": "detections_high_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_28/detections_high_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_29",
+     "identity": "detections_high_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_29/detections_high_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-replication/high/run_30",
+     "identity": "detections_high_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a-replication/high/run_30/detections_high_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a-replication/high"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-a-p1",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p1/run_1",
+     "identity": "detections_h9-A-p1_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p1/run_2",
+     "identity": "detections_h9-A-p1_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p1/run_2/detections_h9-A-p1_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p1/run_3",
+     "identity": "detections_h9-A-p1_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p1/run_3/detections_h9-A-p1_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p1/run_4",
+     "identity": "detections_h9-A-p1_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p1/run_4/detections_h9-A-p1_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p1/run_5",
+     "identity": "detections_h9-A-p1_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p1/run_5/detections_h9-A-p1_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-A-p1"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-a-p2",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p2/run_1",
+     "identity": "detections_h9-A-p2_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p2/run_1/detections_h9-A-p2_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p2/run_2",
+     "identity": "detections_h9-A-p2_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p2/run_2/detections_h9-A-p2_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p2/run_3",
+     "identity": "detections_h9-A-p2_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p2/run_3/detections_h9-A-p2_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p2/run_4",
+     "identity": "detections_h9-A-p2_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p2/run_4/detections_h9-A-p2_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p2/run_5",
+     "identity": "detections_h9-A-p2_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p2/run_5/detections_h9-A-p2_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-A-p2"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-a-p3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p3/run_1",
+     "identity": "detections_h9-A-p3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p3/run_1/detections_h9-A-p3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p3/run_2",
+     "identity": "detections_h9-A-p3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p3/run_2/detections_h9-A-p3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p3/run_3",
+     "identity": "detections_h9-A-p3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p3/run_3/detections_h9-A-p3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p3/run_4",
+     "identity": "detections_h9-A-p3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p3/run_4/detections_h9-A-p3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p3/run_5",
+     "identity": "detections_h9-A-p3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p3/run_5/detections_h9-A-p3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-A-p3"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-a-p4",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p5, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p4/run_1",
+     "identity": "detections_h9-A-p4_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p4/run_1/detections_h9-A-p4_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p4/run_2",
+     "identity": "detections_h9-A-p4_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p4/run_2/detections_h9-A-p4_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p4/run_3",
+     "identity": "detections_h9-A-p4_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p4/run_3/detections_h9-A-p4_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p4/run_4",
+     "identity": "detections_h9-A-p4_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p4/run_4/detections_h9-A-p4_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p4/run_5",
+     "identity": "detections_h9-A-p4_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p4/run_5/detections_h9-A-p4_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-A-p4"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-a-p5",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p5/run_1",
+     "identity": "detections_h9-A-p5_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p5/run_1/detections_h9-A-p5_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p5/run_2",
+     "identity": "detections_h9-A-p5_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p5/run_2/detections_h9-A-p5_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p5/run_3",
+     "identity": "detections_h9-A-p5_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p5/run_3/detections_h9-A-p5_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p5/run_4",
+     "identity": "detections_h9-A-p5_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p5/run_4/detections_h9-A-p5_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-A-p5/run_5",
+     "identity": "detections_h9-A-p5_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-A-p5/run_5/detections_h9-A-p5_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-A-p5"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-d-t3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-21: identical transmitted signature and test set as retest-phase3a-high::track2-text-t0.7, retest-phase3a-replication::high, retest-phase3c::track2-text-h9-a-p1, retest-phase3c::track2-text-h9-a-p2, retest-phase3c::track2-text-h9-a-p3, retest-phase3c::track2-text-h9-a-p4, retest-phase3c::track2-text-h9-a-p5"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t3/run_1",
+     "identity": "detections_h9-D-t3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t3/run_1/detections_h9-D-t3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t3/run_2",
+     "identity": "detections_h9-D-t3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t3/run_2/detections_h9-D-t3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t3/run_3",
+     "identity": "detections_h9-D-t3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t3/run_3/detections_h9-D-t3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t3/run_4",
+     "identity": "detections_h9-D-t3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t3/run_4/detections_h9-D-t3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t3/run_5",
+     "identity": "detections_h9-D-t3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t3/run_5/detections_h9-D-t3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-D-t3"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "22": [
+  {
+   "run_id": "retest-phase3a-high",
+   "arm": "track2-text-t1.0",
+   "n_metas": 30,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-22: identical transmitted signature and test set as retest-phase3c::track2-text-h9-d-t5"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_1",
+     "identity": "detections_T1.0_run01.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_1/detections_T1.0_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_2",
+     "identity": "detections_T1.0_run02.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_2/detections_T1.0_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_3",
+     "identity": "detections_T1.0_run03.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_3/detections_T1.0_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_4",
+     "identity": "detections_T1.0_run04.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_4/detections_T1.0_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_5",
+     "identity": "detections_T1.0_run05.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_5/detections_T1.0_run05.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_6",
+     "identity": "detections_T1.0_run06.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_6/detections_T1.0_run06.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_7",
+     "identity": "detections_T1.0_run07.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_7/detections_T1.0_run07.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_8",
+     "identity": "detections_T1.0_run08.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_8/detections_T1.0_run08.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_9",
+     "identity": "detections_T1.0_run09.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_9/detections_T1.0_run09.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_10",
+     "identity": "detections_T1.0_run10.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_10/detections_T1.0_run10.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_11",
+     "identity": "detections_T1.0_run11.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_11/detections_T1.0_run11.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_12",
+     "identity": "detections_T1.0_run12.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_12/detections_T1.0_run12.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_13",
+     "identity": "detections_T1.0_run13.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_13/detections_T1.0_run13.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_14",
+     "identity": "detections_T1.0_run14.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_14/detections_T1.0_run14.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_15",
+     "identity": "detections_T1.0_run15.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_15/detections_T1.0_run15.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_16",
+     "identity": "detections_T1.0_run16.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_16/detections_T1.0_run16.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_17",
+     "identity": "detections_T1.0_run17.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_17/detections_T1.0_run17.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_18",
+     "identity": "detections_T1.0_run18.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_18/detections_T1.0_run18.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_19",
+     "identity": "detections_T1.0_run19.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_19/detections_T1.0_run19.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_20",
+     "identity": "detections_T1.0_run20.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_20/detections_T1.0_run20.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_21",
+     "identity": "detections_T1.0_run21.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_21/detections_T1.0_run21.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_22",
+     "identity": "detections_T1.0_run22.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_22/detections_T1.0_run22.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_23",
+     "identity": "detections_T1.0_run23.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_23/detections_T1.0_run23.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_24",
+     "identity": "detections_T1.0_run24.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_24/detections_T1.0_run24.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_25",
+     "identity": "detections_T1.0_run25.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_25/detections_T1.0_run25.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_26",
+     "identity": "detections_T1.0_run26.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_26/detections_T1.0_run26.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_27",
+     "identity": "detections_T1.0_run27.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_27/detections_T1.0_run27.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_28",
+     "identity": "detections_T1.0_run28.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_28/detections_T1.0_run28.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_29",
+     "identity": "detections_T1.0_run29.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_29/detections_T1.0_run29.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3a-high/track2-text/T1.0/run_30",
+     "identity": "detections_T1.0_run30.geojson",
+     "files": [
+      "outputs/retest/phase3a-high/track2-text/T1.0/run_30/detections_T1.0_run30.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3a-high/track2-text/T1.0"
+   ],
+   "scoring_scope": [
+    [
+     "consensus",
+     "inputs/vectors/references/mounds-reference.geojson",
+     "inputs/vectors/bounds/full_evaluation_bounds.geojson"
+    ]
+   ]
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-d-t5",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 1.0, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-22: identical transmitted signature and test set as retest-phase3a-high::track2-text-t1.0"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t5/run_1",
+     "identity": "detections_h9-D-t5_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t5/run_1/detections_h9-D-t5_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t5/run_2",
+     "identity": "detections_h9-D-t5_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t5/run_2/detections_h9-D-t5_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t5/run_3",
+     "identity": "detections_h9-D-t5_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t5/run_3/detections_h9-D-t5_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t5/run_4",
+     "identity": "detections_h9-D-t5_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t5/run_4/detections_h9-D-t5_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-D-t5/run_5",
+     "identity": "detections_h9-D-t5_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-D-t5/run_5/detections_h9-D-t5_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-D-t5"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "23": [
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-a-p1",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p2, retest-phase3c::track1-image-h9-a-p3, retest-phase3c::track1-image-h9-a-p4, retest-phase3c::track1-image-h9-a-p5, retest-phase3c::track1-image-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p1/run_1",
+     "identity": "detections_h9-A-p1_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p1/run_1/detections_h9-A-p1_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p1/run_2",
+     "identity": "detections_h9-A-p1_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p1/run_2/detections_h9-A-p1_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p1/run_3",
+     "identity": "detections_h9-A-p1_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p1/run_3/detections_h9-A-p1_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p1/run_4",
+     "identity": "detections_h9-A-p1_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p1/run_4/detections_h9-A-p1_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p1/run_5",
+     "identity": "detections_h9-A-p1_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p1/run_5/detections_h9-A-p1_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-A-p1"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-a-p2",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p1, retest-phase3c::track1-image-h9-a-p3, retest-phase3c::track1-image-h9-a-p4, retest-phase3c::track1-image-h9-a-p5, retest-phase3c::track1-image-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p2/run_1",
+     "identity": "detections_h9-A-p2_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p2/run_1/detections_h9-A-p2_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p2/run_2",
+     "identity": "detections_h9-A-p2_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p2/run_2/detections_h9-A-p2_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p2/run_3",
+     "identity": "detections_h9-A-p2_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p2/run_3/detections_h9-A-p2_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p2/run_4",
+     "identity": "detections_h9-A-p2_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p2/run_4/detections_h9-A-p2_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p2/run_5",
+     "identity": "detections_h9-A-p2_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p2/run_5/detections_h9-A-p2_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-A-p2"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-a-p3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p1, retest-phase3c::track1-image-h9-a-p2, retest-phase3c::track1-image-h9-a-p4, retest-phase3c::track1-image-h9-a-p5, retest-phase3c::track1-image-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p3/run_1",
+     "identity": "detections_h9-A-p3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p3/run_1/detections_h9-A-p3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p3/run_2",
+     "identity": "detections_h9-A-p3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p3/run_2/detections_h9-A-p3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p3/run_3",
+     "identity": "detections_h9-A-p3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p3/run_3/detections_h9-A-p3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p3/run_4",
+     "identity": "detections_h9-A-p3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p3/run_4/detections_h9-A-p3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p3/run_5",
+     "identity": "detections_h9-A-p3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p3/run_5/detections_h9-A-p3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-A-p3"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-a-p4",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p1, retest-phase3c::track1-image-h9-a-p2, retest-phase3c::track1-image-h9-a-p3, retest-phase3c::track1-image-h9-a-p5, retest-phase3c::track1-image-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p4/run_1",
+     "identity": "detections_h9-A-p4_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p4/run_1/detections_h9-A-p4_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p4/run_2",
+     "identity": "detections_h9-A-p4_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p4/run_2/detections_h9-A-p4_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p4/run_3",
+     "identity": "detections_h9-A-p4_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p4/run_3/detections_h9-A-p4_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p4/run_4",
+     "identity": "detections_h9-A-p4_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p4/run_4/detections_h9-A-p4_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p4/run_5",
+     "identity": "detections_h9-A-p4_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p4/run_5/detections_h9-A-p4_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-A-p4"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-a-p5",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p1, retest-phase3c::track1-image-h9-a-p2, retest-phase3c::track1-image-h9-a-p3, retest-phase3c::track1-image-h9-a-p4, retest-phase3c::track1-image-h9-d-t3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p5/run_1",
+     "identity": "detections_h9-A-p5_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p5/run_1/detections_h9-A-p5_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p5/run_2",
+     "identity": "detections_h9-A-p5_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p5/run_2/detections_h9-A-p5_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p5/run_3",
+     "identity": "detections_h9-A-p5_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p5/run_3/detections_h9-A-p5_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p5/run_4",
+     "identity": "detections_h9-A-p5_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p5/run_4/detections_h9-A-p5_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-A-p5/run_5",
+     "identity": "detections_h9-A-p5_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-A-p5/run_5/detections_h9-A-p5_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-A-p5"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track1-image-h9-d-t3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"images:5038cd7b7b71/17\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"e169b7237b85\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-23: identical transmitted signature and test set as retest-phase3c::track1-image-h9-a-p1, retest-phase3c::track1-image-h9-a-p2, retest-phase3c::track1-image-h9-a-p3, retest-phase3c::track1-image-h9-a-p4, retest-phase3c::track1-image-h9-a-p5"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-D-t3/run_1",
+     "identity": "detections_h9-D-t3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-D-t3/run_1/detections_h9-D-t3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-D-t3/run_2",
+     "identity": "detections_h9-D-t3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-D-t3/run_2/detections_h9-D-t3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-D-t3/run_3",
+     "identity": "detections_h9-D-t3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-D-t3/run_3/detections_h9-D-t3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-D-t3/run_4",
+     "identity": "detections_h9-D-t3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-D-t3/run_4/detections_h9-D-t3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track1-image/h9-D-t3/run_5",
+     "identity": "detections_h9-D-t3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track1-image/h9-D-t3/run_5/detections_h9-D-t3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track1-image/h9-D-t3"
+   ],
+   "scoring_scope": []
+  }
+ ],
+ "24": [
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-b-v3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"6382fe00e17a\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-24: identical transmitted signature and test set as retest-phase3c::track2-text-h9-e-p3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-B-v3/run_1",
+     "identity": "detections_h9-B-v3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-B-v3/run_1/detections_h9-B-v3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-B-v3/run_2",
+     "identity": "detections_h9-B-v3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-B-v3/run_2/detections_h9-B-v3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-B-v3/run_3",
+     "identity": "detections_h9-B-v3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-B-v3/run_3/detections_h9-B-v3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-B-v3/run_4",
+     "identity": "detections_h9-B-v3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-B-v3/run_4/detections_h9-B-v3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-B-v3/run_5",
+     "identity": "detections_h9-B-v3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-B-v3/run_5/detections_h9-B-v3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-B-v3"
+   ],
+   "scoring_scope": []
+  },
+  {
+   "run_id": "retest-phase3c",
+   "arm": "track2-text-h9-e-p3",
+   "n_metas": 5,
+   "manifest": [
+    "None"
+   ],
+   "items": [
+    340
+   ],
+   "signatures": [
+    "{\"examples_sent\": \"none\", \"model\": \"gemini-3-flash-preview\", \"stage\": \"proposer\", \"sys_hash\": \"6382fe00e17a\", \"temperature_eff\": 0.7, \"thinking\": \"high\", \"tile_size\": null}"
+   ],
+   "flags": [
+    "replicate-group-24: identical transmitted signature and test set as retest-phase3c::track2-text-h9-b-v3"
+   ],
+   "passes": [
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-E-p3/run_1",
+     "identity": "detections_h9-E-p3_run01.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-E-p3/run_1/detections_h9-E-p3_run01.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-E-p3/run_2",
+     "identity": "detections_h9-E-p3_run02.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-E-p3/run_2/detections_h9-E-p3_run02.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-E-p3/run_3",
+     "identity": "detections_h9-E-p3_run03.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-E-p3/run_3/detections_h9-E-p3_run03.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-E-p3/run_4",
+     "identity": "detections_h9-E-p3_run04.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-E-p3/run_4/detections_h9-E-p3_run04.geojson"
+     ]
+    },
+    {
+     "run_dir": "outputs/retest/phase3c/track2-text/h9-E-p3/run_5",
+     "identity": "detections_h9-E-p3_run05.geojson",
+     "files": [
+      "outputs/retest/phase3c/track2-text/h9-E-p3/run_5/detections_h9-E-p3_run05.geojson"
+     ]
+    }
+   ],
+   "problems": [],
+   "pool_parents": [
+    "outputs/retest/phase3c/track2-text/h9-E-p3"
+   ],
+   "scoring_scope": []
+  }
+ ]
+}
