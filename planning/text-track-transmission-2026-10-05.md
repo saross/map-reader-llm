@@ -209,6 +209,8 @@ in brackets (§ 4).
   none within an execution. Cause unverified: serving drift between dates,
   or a request difference the signature does not record; for the second,
   E57's "intended Pro, dispatched Flash" should be re-checked (W7.5).
+  RESOLVED 2026-10-05 (W7.5): same request, Flash confirmed; leading
+  explanation serving drift between dates.
 - **S-10. The tile-swap test compares two outputs, not two configurations.**
   It treats each output as fixed, so it rejects genuinely different outputs
   of one configuration: on the 55-map set, 4 of 20 within-execution pass
@@ -374,7 +376,21 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 - [ ] W7.3 Temperature and ordering are evidenced by configuration and code
   only (ordering now also by output fingerprint, W3): say so where the paper
   relies on them.
-- [ ] W7.5 FOLLOW UP S-9 (the PI's "two surprises", 2026-10-05): why two
+- [x] W7.5 DONE 2026-10-05 (S161; `reports/w75-cross-date-drift-2026-10-05.md`).
+  (1) The `n1-outstanding` "Pro" cells were Flash: every response reports
+  `gemini-3-flash-preview` (re-checked at source); E57 stands. (2) The two
+  executions sent the same request: the March run's uncommitted cached-path
+  code equals `76a2cc719`, unchanged to April's `b57cf6c22` in the parts it
+  sends; inputs hash identical; the request bodies rebuilt offline under both
+  SDK versions (1.67.0, 1.71.0) are byte-identical. Within a date the passes
+  agree closely; between dates they do not (T0.3 minimal: 747-753 against
+  795-821 detections per pass). Leading explanation: serving-side drift
+  between 2026-03-27 and 2026-04-16 (machine, quota tier and concurrency also
+  differed); confirming it needs a paid re-send on a third date. Caveat: the
+  HIGH group's counts include tiles the E71 recovery re-ran on 2026-07-30 with
+  a different (uncached, single-turn) request; pre-recovery the gap is about
+  683 against 785. Bears on W2.7: cross-date comparisons carry an execution
+  component. Was: why two
   executions of one transmitted signature differ systematically, and whether `n1-outstanding`'s "Pro" cells ran Pro after
   all (E57 read the model from a configuration field E57 itself calls an
   unreliable template default; the outputs differ from the Flash cells').
@@ -480,6 +496,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-05 (Session 161, late) — W7.5 resolved as far as offline evidence goes
+
+The two S-9 executions sent byte-identical requests; the leading explanation
+is serving-side drift between dates; E57 stands. Report
+`reports/w75-cross-date-drift-2026-10-05.md`.
 
 ### 2026-10-05 (Session 161, later still) — D42 implemented; E91 and the late deposit
 
