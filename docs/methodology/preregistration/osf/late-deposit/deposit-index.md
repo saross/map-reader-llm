@@ -1,7 +1,7 @@
 # Late deposit of the registered pre-holdout materials — index
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (later: items 8 and 9 worded more fully).
+> See [§ Changelog](#changelog) for revision history.
 
 **This is a late deposit.** The registration committed these materials to
 the Open Science Framework (OSF) project "before any holdout evaluation"
@@ -33,8 +33,8 @@ timestamp outside this repository that fixes a git tree to a date.
 | 5 | Final image filenames for all hard examples | **Public before holdout; unchanged since** (images and names) | A / `5d8c251b9/inputs/examples/{hard-positive,hard-negative,legend-positive,legend-negative,null-tiles}/` | [examples](https://github.com/saross/map-reader-llm/tree/5d8c251b9824ae9b3f3f3cf3d90496978578a085/inputs/examples) |
 | 6 | Selection rationale (frequency counts) | **Public before holdout; unchanged since** | A / `5d8c251b9/outputs/phase1-library/fp-fn-register.md`; `c64a7dceb/docs/methodology/preregistration/decisions-log.md` (Decision 4) | [register](https://github.com/saross/map-reader-llm/blob/5d8c251b9824ae9b3f3f3cf3d90496978578a085/outputs/phase1-library/fp-fn-register.md) |
 | 7 | Complete H9 prompt variants V1-V5 | **Finalised 2026-03-07, after holdout began.** The registered design builds them from the winning holdout configuration | B / `ec00c2ae0/prompts/system-instructions/detect_brief-text-image_v1..v5.md`, their configs, study files and generator | [H9 variants](https://github.com/saross/map-reader-llm/tree/ec00c2ae031865f14bbc0014a4f8c37680057e2a/prompts/system-instructions) |
-| 8 | Exact ordering for each condition | **Not fixed before holdout.** At holdout start the code's canonical-first was a no-op (E29); the H4 orderings that ran date from 2026-02-12; no run records the order sent | A / `c64a7dceb/scripts/4_detect_mounds_batch.py`, `studies/phase2e-h4-ordering.yaml` (as at holdout start); B / `8118eb5e7/` (February H4), `f06afb7ac/` and `5a57f586e/` (March retest), `ccf9c613d/reports/phase2e-ordering-check-2026-10-05.md` (the orders, inferred from code and outputs) | [W3 report](https://github.com/saross/map-reader-llm/blob/ccf9c613d4517b94015c1921de6ae54e689b051f/reports/phase2e-ordering-check-2026-10-05.md) |
-| 9 | Random seeds used | **Partly before holdout.** Tile-selection, null-tile and execution-order seeds were fixed before; the H4 seed base 42 was declared but wired only on 2026-02-12; H9 used a hand-written rotation with no seed | A / `c64a7dceb/inputs/tiles/tile_selection_metadata.json`, `5d8c251b9/inputs/examples/null-tiles/null_tiles_manifest.json`, `c64a7dceb/scripts/run_phase2.py`; B / `ec00c2ae0/scripts/generate_phase3c_configs.py` | [tile seeds](https://github.com/saross/map-reader-llm/blob/c64a7dcebcd2fc4a55fafbc296b4c2f6ef1155b3/inputs/tiles/tile_selection_metadata.json) |
+| 8 | Exact ordering for each condition | **Not fixed before holdout.** The example orderings used in the H4 experiment were settled in code on 2026-02-12, a week after holdout evaluation began (before then the code's canonical-first was a no-op, E29). No run's output records the order in which examples were actually sent; the orders are reconstructed from the code at each run's recorded commit | A / `c64a7dceb/scripts/4_detect_mounds_batch.py`, `studies/phase2e-h4-ordering.yaml` (as at holdout start); B / `8118eb5e7/` (February H4), `f06afb7ac/` and `5a57f586e/` (March retest), `ccf9c613d/reports/phase2e-ordering-check-2026-10-05.md` (the orders, inferred from code and outputs) | [W3 report](https://github.com/saross/map-reader-llm/blob/ccf9c613d4517b94015c1921de6ae54e689b051f/reports/phase2e-ordering-check-2026-10-05.md) |
+| 9 | Random seeds used | **Partly before holdout.** Tile-selection, null-tile and execution-order seeds were fixed before; the seed base 42 for H4's random ordering was declared but passed to the code only on 2026-02-12; H9 used a fixed hand-written rotation instead of a seeded draw | A / `c64a7dceb/inputs/tiles/tile_selection_metadata.json`, `5d8c251b9/inputs/examples/null-tiles/null_tiles_manifest.json`, `c64a7dceb/scripts/run_phase2.py`; B / `ec00c2ae0/scripts/generate_phase3c_configs.py` | [tile seeds](https://github.com/saross/map-reader-llm/blob/c64a7dcebcd2fc4a55fafbc296b4c2f6ef1155b3/inputs/tiles/tile_selection_metadata.json) |
 
 Nothing is reconstructed: items 4, 8 and 9 are deposited as what existed,
 and labelled. The detailed provenance (every hash and date, with the
@@ -59,6 +59,12 @@ listing, or `git ls-tree -r <commit> -- <path>` in a clone. All 95 files
 matched when the bundle was built.
 
 ## Changelog
+
+### 2026-10-05 (later) — Items 8 and 9 worded more fully
+
+The ordering and seed rows now say what "not fixed before holdout" and "not
+recorded" mean, in the wording the PI approved for registration update 2. No
+status changed.
 
 ### 2026-10-05 — Original publication (Session 161)
 
