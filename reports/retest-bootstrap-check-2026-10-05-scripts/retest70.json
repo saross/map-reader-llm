@@ -1,0 +1,3175 @@
+[
+ {
+  "i": 0,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text",
+  "b": "brief-text-image",
+  "committed_f1_delta": 0.022473818822873966,
+  "committed_f1_p": 0.38,
+  "committed_prec_p": 0.576,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.696252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.691252+00:00"
+   }
+  ],
+  "k_discordant": 199,
+  "repro_boot_mean": 0.02135209130809415,
+  "repro_boot_p_f1": 0.406,
+  "repro_boot_p_prec": 0.546,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   -0.026299950359895685,
+   0.07005691558961097
+  ],
+  "obs_f1_a": 0.539683,
+  "obs_f1_b": 0.518072,
+  "obs_diff": 0.02161,
+  "perm_p_f1": 0.4209,
+  "perm_p_prec": 0.5667,
+  "perm_p_rec": 0.0,
+  "perm_p_f1_check": 0.4209,
+  "board_refs": [
+   "retest-phase2a::brief-text",
+   "retest-phase2a::brief-text-image"
+  ],
+  "board": "stageA",
+  "board_p": 0.1959,
+  "board_bh_p": 0.350616,
+  "board_diff_a_minus_b": 0.029751
+ },
+ {
+  "i": 1,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text",
+  "b": "image-only",
+  "committed_f1_delta": 0.08783489460034355,
+  "committed_f1_p": 0.004,
+  "committed_prec_p": 0.068,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.696252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/image-only/run_1/detections_image-only_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.700252+00:00"
+   }
+  ],
+  "k_discordant": 201,
+  "repro_boot_mean": 0.08753446853185058,
+  "repro_boot_p_f1": 0.01,
+  "repro_boot_p_prec": 0.08,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.02811340946779656,
+   0.14220983528812373
+  ],
+  "obs_f1_a": 0.539683,
+  "obs_f1_b": 0.451567,
+  "obs_diff": 0.088116,
+  "perm_p_f1": 0.0055,
+  "perm_p_prec": 0.0878,
+  "perm_p_rec": 0.0,
+  "perm_p_f1_check": 0.0055,
+  "board_refs": [
+   "retest-phase2a::brief-text",
+   "retest-phase2a::image-only"
+  ],
+  "board": "stageA",
+  "board_p": 0.0003,
+  "board_bh_p": 0.001537,
+  "board_diff_a_minus_b": 0.082106
+ },
+ {
+  "i": 2,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text",
+  "b": "verbose-text",
+  "committed_f1_delta": 0.03685316012968524,
+  "committed_f1_p": 0.106,
+  "committed_prec_p": 0.286,
+  "committed_rec_p": 0.004,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.696252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text/run_1/detections_verbose-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.703252+00:00"
+   }
+  ],
+  "k_discordant": 181,
+  "repro_boot_mean": 0.03658435453744539,
+  "repro_boot_p_f1": 0.106,
+  "repro_boot_p_prec": 0.298,
+  "repro_boot_p_rec": 0.002,
+  "repro_boot_ci": [
+   -0.006332079689920411,
+   0.076954684156059
+  ],
+  "obs_f1_a": 0.539683,
+  "obs_f1_b": 0.503401,
+  "obs_diff": 0.036281,
+  "perm_p_f1": 0.1052,
+  "perm_p_prec": 0.3187,
+  "perm_p_rec": 0.0023,
+  "perm_p_f1_check": 0.1052,
+  "board_refs": [
+   "retest-phase2a::brief-text",
+   "retest-phase2a::verbose-text"
+  ],
+  "board": "stageA",
+  "board_p": 0.0039,
+  "board_bh_p": 0.013426,
+  "board_diff_a_minus_b": 0.050144
+ },
+ {
+  "i": 3,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text",
+  "b": "verbose-text-image",
+  "committed_f1_delta": 0.024622470121787244,
+  "committed_f1_p": 0.428,
+  "committed_prec_p": 0.67,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.696252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text-image/run_1/detections_verbose-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.701252+00:00"
+   }
+  ],
+  "k_discordant": 209,
+  "repro_boot_mean": 0.023644353170529434,
+  "repro_boot_p_f1": 0.43,
+  "repro_boot_p_prec": 0.684,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   -0.03848690126877366,
+   0.07891458106948547
+  ],
+  "obs_f1_a": 0.539683,
+  "obs_f1_b": 0.515742,
+  "obs_diff": 0.02394,
+  "perm_p_f1": 0.4541,
+  "perm_p_prec": 0.6716,
+  "perm_p_rec": 0.0004,
+  "perm_p_f1_check": 0.4541,
+  "board_refs": [
+   "retest-phase2a::brief-text",
+   "retest-phase2a::verbose-text-image"
+  ],
+  "board": "stageA",
+  "board_p": 0.1656,
+  "board_bh_p": 0.318045,
+  "board_diff_a_minus_b": 0.034821
+ },
+ {
+  "i": 4,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text-image",
+  "b": "image-only",
+  "committed_f1_delta": 0.06536107577746958,
+  "committed_f1_p": 0.006,
+  "committed_prec_p": 0.004,
+  "committed_rec_p": 0.046,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.691252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/image-only/run_1/detections_image-only_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.700252+00:00"
+   }
+  ],
+  "k_discordant": 176,
+  "repro_boot_mean": 0.06618237722375643,
+  "repro_boot_p_f1": 0.01,
+  "repro_boot_p_prec": 0.008,
+  "repro_boot_p_rec": 0.056,
+  "repro_boot_ci": [
+   0.014933271500278593,
+   0.1174082588272897
+  ],
+  "obs_f1_a": 0.518072,
+  "obs_f1_b": 0.451567,
+  "obs_diff": 0.066505,
+  "perm_p_f1": 0.009,
+  "perm_p_prec": 0.0066,
+  "perm_p_rec": 0.0653,
+  "perm_p_f1_check": 0.009,
+  "board_refs": [
+   "retest-phase2a::brief-text-image",
+   "retest-phase2a::image-only"
+  ],
+  "board": "stageA",
+  "board_p": 0.001,
+  "board_bh_p": 0.004315,
+  "board_diff_a_minus_b": 0.052355
+ },
+ {
+  "i": 5,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text-image",
+  "b": "verbose-text",
+  "committed_f1_delta": 0.01437934130681128,
+  "committed_f1_p": 0.558,
+  "committed_prec_p": 0.11,
+  "committed_rec_p": 0.048,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.691252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text/run_1/detections_verbose-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.703252+00:00"
+   }
+  ],
+  "k_discordant": 194,
+  "repro_boot_mean": 0.015232263229351234,
+  "repro_boot_p_f1": 0.514,
+  "repro_boot_p_prec": 0.124,
+  "repro_boot_p_rec": 0.064,
+  "repro_boot_ci": [
+   -0.03288279420758076,
+   0.06199240106752077
+  ],
+  "obs_f1_a": 0.518072,
+  "obs_f1_b": 0.503401,
+  "obs_diff": 0.014671,
+  "perm_p_f1": 0.5597,
+  "perm_p_prec": 0.1389,
+  "perm_p_rec": 0.0481,
+  "perm_p_f1_check": 0.5597,
+  "board_refs": [
+   "retest-phase2a::brief-text-image",
+   "retest-phase2a::verbose-text"
+  ],
+  "board": "stageA",
+  "board_p": 0.3573,
+  "board_bh_p": 0.539806,
+  "board_diff_a_minus_b": 0.020393
+ },
+ {
+  "i": 6,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "brief-text-image",
+  "b": "verbose-text-image",
+  "committed_f1_delta": 0.0021486512989132792,
+  "committed_f1_p": 0.94,
+  "committed_prec_p": 0.912,
+  "committed_rec_p": 0.954,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/brief-text-image/run_1/detections_brief-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.691252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text-image/run_1/detections_verbose-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.701252+00:00"
+   }
+  ],
+  "k_discordant": 167,
+  "repro_boot_mean": 0.0022922618624352793,
+  "repro_boot_p_f1": 0.916,
+  "repro_boot_p_prec": 0.874,
+  "repro_boot_p_rec": 0.976,
+  "repro_boot_ci": [
+   -0.04415741533118397,
+   0.04571858711415836
+  ],
+  "obs_f1_a": 0.518072,
+  "obs_f1_b": 0.515742,
+  "obs_diff": 0.00233,
+  "perm_p_f1": 0.9259,
+  "perm_p_prec": 0.8841,
+  "perm_p_rec": 1.0,
+  "perm_p_f1_check": 0.9259,
+  "board_refs": [
+   "retest-phase2a::brief-text-image",
+   "retest-phase2a::verbose-text-image"
+  ],
+  "board": "stageA",
+  "board_p": 0.7105,
+  "board_bh_p": 0.836396,
+  "board_diff_a_minus_b": 0.00507
+ },
+ {
+  "i": 7,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "image-only",
+  "b": "verbose-text",
+  "committed_f1_delta": -0.05098173447065831,
+  "committed_f1_p": 0.066,
+  "committed_prec_p": 0.244,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/image-only/run_1/detections_image-only_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.700252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text/run_1/detections_verbose-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.703252+00:00"
+   }
+  ],
+  "k_discordant": 202,
+  "repro_boot_mean": -0.0509501139944052,
+  "repro_boot_p_f1": 0.074,
+  "repro_boot_p_prec": 0.262,
+  "repro_boot_p_rec": 0.002,
+  "repro_boot_ci": [
+   -0.10485994008555669,
+   0.005711781548959239
+  ],
+  "obs_f1_a": 0.451567,
+  "obs_f1_b": 0.503401,
+  "obs_diff": -0.051834,
+  "perm_p_f1": 0.0573,
+  "perm_p_prec": 0.2499,
+  "perm_p_rec": 0.0007,
+  "perm_p_f1_check": 0.0573,
+  "board_refs": [
+   "retest-phase2a::image-only",
+   "retest-phase2a::verbose-text"
+  ],
+  "board": "stageA",
+  "board_p": 0.1341,
+  "board_bh_p": 0.2745,
+  "board_diff_a_minus_b": -0.031962
+ },
+ {
+  "i": 8,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "image-only",
+  "b": "verbose-text-image",
+  "committed_f1_delta": -0.06321242447855631,
+  "committed_f1_p": 0.004,
+  "committed_prec_p": 0.004,
+  "committed_rec_p": 0.054,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/image-only/run_1/detections_image-only_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.700252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text-image/run_1/detections_verbose-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.701252+00:00"
+   }
+  ],
+  "k_discordant": 164,
+  "repro_boot_mean": -0.06389011536132115,
+  "repro_boot_p_f1": 0.01,
+  "repro_boot_p_prec": 0.008,
+  "repro_boot_p_rec": 0.052,
+  "repro_boot_ci": [
+   -0.11337427745530927,
+   -0.014466603379658617
+  ],
+  "obs_f1_a": 0.451567,
+  "obs_f1_b": 0.515742,
+  "obs_diff": -0.064175,
+  "perm_p_f1": 0.0069,
+  "perm_p_prec": 0.0052,
+  "perm_p_rec": 0.0555,
+  "perm_p_f1_check": 0.0069,
+  "board_refs": [
+   "retest-phase2a::image-only",
+   "retest-phase2a::verbose-text-image"
+  ],
+  "board": "stageA",
+  "board_p": 0.002,
+  "board_bh_p": 0.00759,
+  "board_diff_a_minus_b": -0.047285
+ },
+ {
+  "i": 9,
+  "phase": "Phase 2a: H1 Modality",
+  "a": "verbose-text",
+  "b": "verbose-text-image",
+  "committed_f1_delta": -0.012230690007898,
+  "committed_f1_p": 0.658,
+  "committed_prec_p": 0.186,
+  "committed_rec_p": 0.114,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2a/verbose-text/run_1/detections_verbose-text_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.703252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2a/verbose-text-image/run_1/detections_verbose-text-image_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.701252+00:00"
+   }
+  ],
+  "k_discordant": 204,
+  "repro_boot_mean": -0.012940001366915952,
+  "repro_boot_p_f1": 0.682,
+  "repro_boot_p_prec": 0.188,
+  "repro_boot_p_rec": 0.162,
+  "repro_boot_ci": [
+   -0.07243684321869781,
+   0.043408227634042146
+  ],
+  "obs_f1_a": 0.503401,
+  "obs_f1_b": 0.515742,
+  "obs_diff": -0.012341,
+  "perm_p_f1": 0.6648,
+  "perm_p_prec": 0.2051,
+  "perm_p_rec": 0.1217,
+  "perm_p_f1_check": 0.6648,
+  "board_refs": [
+   "retest-phase2a::verbose-text",
+   "retest-phase2a::verbose-text-image"
+  ],
+  "board": "stageA",
+  "board_p": 0.4927,
+  "board_bh_p": 0.660428,
+  "board_diff_a_minus_b": -0.015323
+ },
+ {
+  "i": 10,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.0",
+  "b": "T0.3",
+  "committed_f1_delta": 0.013753009520987016,
+  "committed_f1_p": 0.3,
+  "committed_prec_p": 0.5,
+  "committed_rec_p": 0.17,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.706252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.711252+00:00"
+   }
+  ],
+  "k_discordant": 73,
+  "repro_boot_mean": 0.013664499017589182,
+  "repro_boot_p_f1": 0.336,
+  "repro_boot_p_prec": 0.5,
+  "repro_boot_p_rec": 0.212,
+  "repro_boot_ci": [
+   -0.014814580061303541,
+   0.04102138688261776
+  ],
+  "obs_f1_a": 0.585106,
+  "obs_f1_b": 0.571211,
+  "obs_diff": 0.013895,
+  "perm_p_f1": 0.3233,
+  "perm_p_prec": 0.482,
+  "perm_p_rec": 0.178,
+  "perm_p_f1_check": 0.3233,
+  "board_refs": [
+   "retest-phase2b::image-t0.0",
+   "retest-phase2b::image-t0.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.2854,
+  "board_bh_p": 0.462216,
+  "board_diff_a_minus_b": 0.011185
+ },
+ {
+  "i": 11,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.0",
+  "b": "T0.7",
+  "committed_f1_delta": 0.05026665796782001,
+  "committed_f1_p": 0.002,
+  "committed_prec_p": 0.002,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.706252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.715252+00:00"
+   }
+  ],
+  "k_discordant": 95,
+  "repro_boot_mean": 0.049145953184637846,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.01,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.019247908978055096,
+   0.08179235723987935
+  ],
+  "obs_f1_a": 0.585106,
+  "obs_f1_b": 0.535552,
+  "obs_diff": 0.049554,
+  "perm_p_f1": 0.0026,
+  "perm_p_prec": 0.0071,
+  "perm_p_rec": 0.0019,
+  "perm_p_f1_check": 0.0026,
+  "board_refs": [
+   "retest-phase2b::image-t0.0",
+   "retest-phase2b::image-t0.7"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.049586
+ },
+ {
+  "i": 12,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.0",
+  "b": "T1.0",
+  "committed_f1_delta": 0.06390203981488053,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.002,
+  "committed_rec_p": 0.006,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.706252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.717252+00:00"
+   }
+  ],
+  "k_discordant": 121,
+  "repro_boot_mean": 0.06432413675591593,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.002,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.024629141727609785,
+   0.1016620508742155
+  ],
+  "obs_f1_a": 0.585106,
+  "obs_f1_b": 0.520833,
+  "obs_diff": 0.064273,
+  "perm_p_f1": 0.0008,
+  "perm_p_prec": 0.0015,
+  "perm_p_rec": 0.0016,
+  "perm_p_f1_check": 0.0008,
+  "board_refs": [
+   "retest-phase2b::image-t0.0",
+   "retest-phase2b::image-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.059282
+ },
+ {
+  "i": 13,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.0",
+  "b": "T1.3",
+  "committed_f1_delta": 0.08486823227928866,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.706252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.718252+00:00"
+   }
+  ],
+  "k_discordant": 129,
+  "repro_boot_mean": 0.08341901507052472,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.04978837389481364,
+   0.11679365569895442
+  ],
+  "obs_f1_a": 0.585106,
+  "obs_f1_b": 0.501475,
+  "obs_diff": 0.083631,
+  "perm_p_f1": 0.0,
+  "perm_p_prec": 0.0,
+  "perm_p_rec": 0.0001,
+  "perm_p_f1_check": 0.0,
+  "board_refs": [
+   "retest-phase2b::image-t0.0",
+   "retest-phase2b::image-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.094128
+ },
+ {
+  "i": 14,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.3",
+  "b": "T0.7",
+  "committed_f1_delta": 0.03651364844683299,
+  "committed_f1_p": 0.06,
+  "committed_prec_p": 0.072,
+  "committed_rec_p": 0.034,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.711252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.715252+00:00"
+   }
+  ],
+  "k_discordant": 98,
+  "repro_boot_mean": 0.03548145416704867,
+  "repro_boot_p_f1": 0.074,
+  "repro_boot_p_prec": 0.1,
+  "repro_boot_p_rec": 0.044,
+  "repro_boot_ci": [
+   -0.002583531940981351,
+   0.0737221296024754
+  ],
+  "obs_f1_a": 0.571211,
+  "obs_f1_b": 0.535552,
+  "obs_diff": 0.035659,
+  "perm_p_f1": 0.0661,
+  "perm_p_prec": 0.1002,
+  "perm_p_rec": 0.0511,
+  "perm_p_f1_check": 0.0661,
+  "board_refs": [
+   "retest-phase2b::image-t0.3",
+   "retest-phase2b::image-t0.7"
+  ],
+  "board": "stageA",
+  "board_p": 0.0016,
+  "board_bh_p": 0.006261,
+  "board_diff_a_minus_b": 0.038402
+ },
+ {
+  "i": 15,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.3",
+  "b": "T1.0",
+  "committed_f1_delta": 0.050149030293893504,
+  "committed_f1_p": 0.006,
+  "committed_prec_p": 0.004,
+  "committed_rec_p": 0.016,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.711252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.717252+00:00"
+   }
+  ],
+  "k_discordant": 117,
+  "repro_boot_mean": 0.050659637738326754,
+  "repro_boot_p_f1": 0.006,
+  "repro_boot_p_prec": 0.01,
+  "repro_boot_p_rec": 0.02,
+  "repro_boot_ci": [
+   0.014512614089244327,
+   0.08792399036796035
+  ],
+  "obs_f1_a": 0.571211,
+  "obs_f1_b": 0.520833,
+  "obs_diff": 0.050378,
+  "perm_p_f1": 0.0083,
+  "perm_p_prec": 0.0111,
+  "perm_p_rec": 0.0215,
+  "perm_p_f1_check": 0.0083,
+  "board_refs": [
+   "retest-phase2b::image-t0.3",
+   "retest-phase2b::image-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.0007,
+  "board_bh_p": 0.003128,
+  "board_diff_a_minus_b": 0.048098
+ },
+ {
+  "i": 16,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.3",
+  "b": "T1.3",
+  "committed_f1_delta": 0.07111522275830162,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.711252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.718252+00:00"
+   }
+  ],
+  "k_discordant": 133,
+  "repro_boot_mean": 0.06975451605293553,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.002,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.036724488456314854,
+   0.1046913572520042
+  ],
+  "obs_f1_a": 0.571211,
+  "obs_f1_b": 0.501475,
+  "obs_diff": 0.069736,
+  "perm_p_f1": 0.0006,
+  "perm_p_prec": 0.0006,
+  "perm_p_rec": 0.0023,
+  "perm_p_f1_check": 0.0006,
+  "board_refs": [
+   "retest-phase2b::image-t0.3",
+   "retest-phase2b::image-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.082943
+ },
+ {
+  "i": 17,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.7",
+  "b": "T1.0",
+  "committed_f1_delta": 0.013635381847060514,
+  "committed_f1_p": 0.482,
+  "committed_prec_p": 0.384,
+  "committed_rec_p": 0.75,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.715252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.717252+00:00"
+   }
+  ],
+  "k_discordant": 116,
+  "repro_boot_mean": 0.015178183571278083,
+  "repro_boot_p_f1": 0.432,
+  "repro_boot_p_prec": 0.37,
+  "repro_boot_p_rec": 0.722,
+  "repro_boot_ci": [
+   -0.024225096291021063,
+   0.056726476621223924
+  ],
+  "obs_f1_a": 0.535552,
+  "obs_f1_b": 0.520833,
+  "obs_diff": 0.014719,
+  "perm_p_f1": 0.4763,
+  "perm_p_prec": 0.3736,
+  "perm_p_rec": 0.7511,
+  "perm_p_f1_check": 0.4763,
+  "board_refs": [
+   "retest-phase2b::image-t0.7",
+   "retest-phase2b::image-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.4456,
+  "board_bh_p": 0.621916,
+  "board_diff_a_minus_b": 0.009696
+ },
+ {
+  "i": 18,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T0.7",
+  "b": "T1.3",
+  "committed_f1_delta": 0.03460157431146864,
+  "committed_f1_p": 0.042,
+  "committed_prec_p": 0.04,
+  "committed_rec_p": 0.156,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.715252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.718252+00:00"
+   }
+  ],
+  "k_discordant": 141,
+  "repro_boot_mean": 0.034273061885886864,
+  "repro_boot_p_f1": 0.054,
+  "repro_boot_p_prec": 0.036,
+  "repro_boot_p_rec": 0.184,
+  "repro_boot_ci": [
+   -0.0004477680403805134,
+   0.06863211780581176
+  ],
+  "obs_f1_a": 0.535552,
+  "obs_f1_b": 0.501475,
+  "obs_diff": 0.034077,
+  "perm_p_f1": 0.0588,
+  "perm_p_prec": 0.0421,
+  "perm_p_rec": 0.1929,
+  "perm_p_f1_check": 0.0588,
+  "board_refs": [
+   "retest-phase2b::image-t0.7",
+   "retest-phase2b::image-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0003,
+  "board_bh_p": 0.001537,
+  "board_diff_a_minus_b": 0.044541
+ },
+ {
+  "i": 19,
+  "phase": "Phase 2b T1: H7 Temperature (Image)",
+  "a": "T1.0",
+  "b": "T1.3",
+  "committed_f1_delta": 0.02096619246440813,
+  "committed_f1_p": 0.29,
+  "committed_prec_p": 0.312,
+  "committed_rec_p": 0.292,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.717252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track1-image/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.718252+00:00"
+   }
+  ],
+  "k_discordant": 140,
+  "repro_boot_mean": 0.019094878314608786,
+  "repro_boot_p_f1": 0.288,
+  "repro_boot_p_prec": 0.288,
+  "repro_boot_p_rec": 0.364,
+  "repro_boot_ci": [
+   -0.016922771845254144,
+   0.05525833007835384
+  ],
+  "obs_f1_a": 0.520833,
+  "obs_f1_b": 0.501475,
+  "obs_diff": 0.019358,
+  "perm_p_f1": 0.2995,
+  "perm_p_prec": 0.3145,
+  "perm_p_rec": 0.3671,
+  "perm_p_f1_check": 0.2995,
+  "board_refs": [
+   "retest-phase2b::image-t1.0",
+   "retest-phase2b::image-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0218,
+  "board_bh_p": 0.059455,
+  "board_diff_a_minus_b": 0.034846
+ },
+ {
+  "i": 20,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.0",
+  "b": "T0.3",
+  "committed_f1_delta": -0.0028102485061997523,
+  "committed_f1_p": 0.862,
+  "committed_prec_p": 0.672,
+  "committed_rec_p": 0.648,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.720252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.723252+00:00"
+   }
+  ],
+  "k_discordant": 78,
+  "repro_boot_mean": -0.001384831984548335,
+  "repro_boot_p_f1": 0.954,
+  "repro_boot_p_prec": 0.754,
+  "repro_boot_p_rec": 0.496,
+  "repro_boot_ci": [
+   -0.02885143535374336,
+   0.023986856148197438
+  ],
+  "obs_f1_a": 0.605762,
+  "obs_f1_b": 0.60727,
+  "obs_diff": -0.001508,
+  "perm_p_f1": 0.9159,
+  "perm_p_prec": 0.7243,
+  "perm_p_rec": 0.5583,
+  "perm_p_f1_check": 0.9159,
+  "board_refs": [
+   "retest-phase2b::text-t0.0",
+   "retest-phase2b::text-t0.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.9397,
+  "board_bh_p": 0.991172,
+  "board_diff_a_minus_b": -0.000997
+ },
+ {
+  "i": 21,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.0",
+  "b": "T0.7",
+  "committed_f1_delta": 0.020705267526973485,
+  "committed_f1_p": 0.27,
+  "committed_prec_p": 0.234,
+  "committed_rec_p": 0.742,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.720252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.726252+00:00"
+   }
+  ],
+  "k_discordant": 107,
+  "repro_boot_mean": 0.022177981358000996,
+  "repro_boot_p_f1": 0.222,
+  "repro_boot_p_prec": 0.194,
+  "repro_boot_p_rec": 0.628,
+  "repro_boot_ci": [
+   -0.011489972133995443,
+   0.05869032950750681
+  ],
+  "obs_f1_a": 0.605762,
+  "obs_f1_b": 0.583732,
+  "obs_diff": 0.02203,
+  "perm_p_f1": 0.2206,
+  "perm_p_prec": 0.1962,
+  "perm_p_rec": 0.642,
+  "perm_p_f1_check": 0.2206,
+  "board_refs": [
+   "retest-phase2b::text-t0.0",
+   "retest-phase2b::text-t0.7"
+  ],
+  "board": "stageA",
+  "board_p": 0.0933,
+  "board_bh_p": 0.206242,
+  "board_diff_a_minus_b": 0.021316
+ },
+ {
+  "i": 22,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.0",
+  "b": "T1.0",
+  "committed_f1_delta": 0.0930388572836824,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.004,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.720252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.727252+00:00"
+   }
+  ],
+  "k_discordant": 124,
+  "repro_boot_mean": 0.09346099819015213,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.01,
+  "repro_boot_ci": [
+   0.039557929134547046,
+   0.15804172041358835
+  ],
+  "obs_f1_a": 0.605762,
+  "obs_f1_b": 0.510204,
+  "obs_diff": 0.095558,
+  "perm_p_f1": 0.0008,
+  "perm_p_prec": 0.0009,
+  "perm_p_rec": 0.0047,
+  "perm_p_f1_check": 0.0008,
+  "board_refs": [
+   "retest-phase2b::text-t0.0",
+   "retest-phase2b::text-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.072439
+ },
+ {
+  "i": 23,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.0",
+  "b": "T1.3",
+  "committed_f1_delta": 0.05736314666251468,
+  "committed_f1_p": 0.004,
+  "committed_prec_p": 0.004,
+  "committed_rec_p": 0.018,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.0/run_1/detections_T0.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.720252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.729252+00:00"
+   }
+  ],
+  "k_discordant": 122,
+  "repro_boot_mean": 0.05837725208043648,
+  "repro_boot_p_f1": 0.008,
+  "repro_boot_p_prec": 0.018,
+  "repro_boot_p_rec": 0.02,
+  "repro_boot_ci": [
+   0.017528251820050054,
+   0.09999598426461392
+  ],
+  "obs_f1_a": 0.605762,
+  "obs_f1_b": 0.546433,
+  "obs_diff": 0.059329,
+  "perm_p_f1": 0.0034,
+  "perm_p_prec": 0.0069,
+  "perm_p_rec": 0.0171,
+  "perm_p_f1_check": 0.0034,
+  "board_refs": [
+   "retest-phase2b::text-t0.0",
+   "retest-phase2b::text-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0004,
+  "board_bh_p": 0.001924,
+  "board_diff_a_minus_b": 0.061279
+ },
+ {
+  "i": 24,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.3",
+  "b": "T0.7",
+  "committed_f1_delta": 0.02351551603317324,
+  "committed_f1_p": 0.19,
+  "committed_prec_p": 0.12,
+  "committed_rec_p": 0.906,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.723252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.726252+00:00"
+   }
+  ],
+  "k_discordant": 100,
+  "repro_boot_mean": 0.02356281334254933,
+  "repro_boot_p_f1": 0.168,
+  "repro_boot_p_prec": 0.124,
+  "repro_boot_p_rec": 0.904,
+  "repro_boot_ci": [
+   -0.008704789966787804,
+   0.056108288063734864
+  ],
+  "obs_f1_a": 0.60727,
+  "obs_f1_b": 0.583732,
+  "obs_diff": 0.023538,
+  "perm_p_f1": 0.1593,
+  "perm_p_prec": 0.1071,
+  "perm_p_rec": 0.9059,
+  "perm_p_f1_check": 0.1593,
+  "board_refs": [
+   "retest-phase2b::text-t0.3",
+   "retest-phase2b::text-t0.7"
+  ],
+  "board": "stageA",
+  "board_p": 0.0542,
+  "board_bh_p": 0.131331,
+  "board_diff_a_minus_b": 0.022313
+ },
+ {
+  "i": 25,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.3",
+  "b": "T1.0",
+  "committed_f1_delta": 0.09584910578988215,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.008,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.723252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.727252+00:00"
+   }
+  ],
+  "k_discordant": 123,
+  "repro_boot_mean": 0.09484583017470047,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.004,
+  "repro_boot_ci": [
+   0.043225816408559256,
+   0.15701407788071675
+  ],
+  "obs_f1_a": 0.60727,
+  "obs_f1_b": 0.510204,
+  "obs_diff": 0.097066,
+  "perm_p_f1": 0.0002,
+  "perm_p_prec": 0.0002,
+  "perm_p_rec": 0.0104,
+  "perm_p_f1_check": 0.0002,
+  "board_refs": [
+   "retest-phase2b::text-t0.3",
+   "retest-phase2b::text-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.073436
+ },
+ {
+  "i": 26,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.3",
+  "b": "T1.3",
+  "committed_f1_delta": 0.060173395168714436,
+  "committed_f1_p": 0.006,
+  "committed_prec_p": 0.006,
+  "committed_rec_p": 0.038,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.723252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.729252+00:00"
+   }
+  ],
+  "k_discordant": 128,
+  "repro_boot_mean": 0.059762084064984816,
+  "repro_boot_p_f1": 0.002,
+  "repro_boot_p_prec": 0.004,
+  "repro_boot_p_rec": 0.044,
+  "repro_boot_ci": [
+   0.020125737094092225,
+   0.09839668297176954
+  ],
+  "obs_f1_a": 0.60727,
+  "obs_f1_b": 0.546433,
+  "obs_diff": 0.060837,
+  "perm_p_f1": 0.0018,
+  "perm_p_prec": 0.0026,
+  "perm_p_rec": 0.0535,
+  "perm_p_f1_check": 0.0018,
+  "board_refs": [
+   "retest-phase2b::text-t0.3",
+   "retest-phase2b::text-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.062277
+ },
+ {
+  "i": 27,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.7",
+  "b": "T1.0",
+  "committed_f1_delta": 0.07233358975670891,
+  "committed_f1_p": 0.004,
+  "committed_prec_p": 0.006,
+  "committed_rec_p": 0.006,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.726252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.727252+00:00"
+   }
+  ],
+  "k_discordant": 129,
+  "repro_boot_mean": 0.07128301683215113,
+  "repro_boot_p_f1": 0.006,
+  "repro_boot_p_prec": 0.016,
+  "repro_boot_p_rec": 0.008,
+  "repro_boot_ci": [
+   0.021596599180776787,
+   0.13043947657290123
+  ],
+  "obs_f1_a": 0.583732,
+  "obs_f1_b": 0.510204,
+  "obs_diff": 0.073528,
+  "perm_p_f1": 0.0055,
+  "perm_p_prec": 0.0152,
+  "perm_p_rec": 0.0079,
+  "perm_p_f1_check": 0.0055,
+  "board_refs": [
+   "retest-phase2b::text-t0.7",
+   "retest-phase2b::text-t1.0"
+  ],
+  "board": "stageA",
+  "board_p": 0.0,
+  "board_bh_p": 0.0,
+  "board_diff_a_minus_b": 0.051123
+ },
+ {
+  "i": 28,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T0.7",
+  "b": "T1.3",
+  "committed_f1_delta": 0.036657879135541194,
+  "committed_f1_p": 0.064,
+  "committed_prec_p": 0.114,
+  "committed_rec_p": 0.026,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.726252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.729252+00:00"
+   }
+  ],
+  "k_discordant": 127,
+  "repro_boot_mean": 0.03619927072243549,
+  "repro_boot_p_f1": 0.04,
+  "repro_boot_p_prec": 0.102,
+  "repro_boot_p_rec": 0.034,
+  "repro_boot_ci": [
+   0.0006674837940677137,
+   0.07624849179935289
+  ],
+  "obs_f1_a": 0.583732,
+  "obs_f1_b": 0.546433,
+  "obs_diff": 0.037299,
+  "perm_p_f1": 0.0535,
+  "perm_p_prec": 0.1046,
+  "perm_p_rec": 0.0406,
+  "perm_p_f1_check": 0.0535,
+  "board_refs": [
+   "retest-phase2b::text-t0.7",
+   "retest-phase2b::text-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.0028,
+  "board_bh_p": 0.010197,
+  "board_diff_a_minus_b": 0.039963
+ },
+ {
+  "i": 29,
+  "phase": "Phase 2b T2: H7 Temperature (Text)",
+  "a": "T1.0",
+  "b": "T1.3",
+  "committed_f1_delta": -0.035675710621167714,
+  "committed_f1_p": 0.204,
+  "committed_prec_p": 0.18,
+  "committed_rec_p": 0.582,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.727252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2b/track2-text/T1.3/run_1/detections_T1.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.729252+00:00"
+   }
+  ],
+  "k_discordant": 124,
+  "repro_boot_mean": -0.035083746109715645,
+  "repro_boot_p_f1": 0.218,
+  "repro_boot_p_prec": 0.212,
+  "repro_boot_p_rec": 0.574,
+  "repro_boot_ci": [
+   -0.09212313963503095,
+   0.01850709821568389
+  ],
+  "obs_f1_a": 0.510204,
+  "obs_f1_b": 0.546433,
+  "obs_diff": -0.036229,
+  "perm_p_f1": 0.247,
+  "perm_p_prec": 0.2584,
+  "perm_p_rec": 0.5979,
+  "perm_p_f1_check": 0.247,
+  "board_refs": [
+   "retest-phase2b::text-t1.0",
+   "retest-phase2b::text-t1.3"
+  ],
+  "board": "stageA",
+  "board_p": 0.455,
+  "board_bh_p": 0.631388,
+  "board_diff_a_minus_b": -0.01116
+ },
+ {
+  "i": 30,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "canonical",
+  "b": "plus-hp",
+  "committed_f1_delta": -0.022106756998533362,
+  "committed_f1_p": 0.222,
+  "committed_prec_p": 0.882,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   }
+  ],
+  "k_discordant": 114,
+  "repro_boot_mean": -0.016735791891385212,
+  "repro_boot_p_f1": 0.352,
+  "repro_boot_p_prec": 0.996,
+  "repro_boot_p_rec": 0.016,
+  "repro_boot_ci": [
+   -0.0526824555372707,
+   0.021575286964011484
+  ],
+  "obs_f1_a": 0.581414,
+  "obs_f1_b": 0.598473,
+  "obs_diff": -0.017059,
+  "perm_p_f1": 0.3691,
+  "perm_p_prec": 1.0,
+  "perm_p_rec": 0.02,
+  "perm_p_f1_check": 0.3691,
+  "board_refs": [
+   "retest-phase2c::image-canonical",
+   "retest-phase2c::image-plus-hp"
+  ],
+  "board": "stageA",
+  "board_p": 0.3691,
+  "board_bh_p": 0.549723,
+  "board_diff_a_minus_b": -0.017059
+ },
+ {
+  "i": 31,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "canonical",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": 0.010430108339298541,
+  "committed_f1_p": 0.506,
+  "committed_prec_p": 0.312,
+  "committed_rec_p": 0.996,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.736252+00:00"
+   }
+  ],
+  "k_discordant": 101,
+  "repro_boot_mean": 0.01374641667882305,
+  "repro_boot_p_f1": 0.404,
+  "repro_boot_p_prec": 0.314,
+  "repro_boot_p_rec": 0.666,
+  "repro_boot_ci": [
+   -0.014901852039034495,
+   0.04497314812145331
+  ],
+  "obs_f1_a": 0.581414,
+  "obs_f1_b": 0.567843,
+  "obs_diff": 0.013571,
+  "perm_p_f1": 0.4001,
+  "perm_p_prec": 0.3057,
+  "perm_p_rec": 0.7001,
+  "perm_p_f1_check": 0.4001,
+  "board_refs": [
+   "retest-phase2c::image-canonical",
+   "retest-phase2c::image-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 0.4001,
+  "board_bh_p": 0.586193,
+  "board_diff_a_minus_b": 0.013571
+ },
+ {
+  "i": 32,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "canonical",
+  "b": "scale-4",
+  "committed_f1_delta": -0.007954397307941254,
+  "committed_f1_p": 0.674,
+  "committed_prec_p": 0.422,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.737252+00:00"
+   }
+  ],
+  "k_discordant": 123,
+  "repro_boot_mean": -0.003199931401241992,
+  "repro_boot_p_f1": 0.81,
+  "repro_boot_p_prec": 0.34,
+  "repro_boot_p_rec": 0.004,
+  "repro_boot_ci": [
+   -0.041403339662076585,
+   0.03697439219256599
+  ],
+  "obs_f1_a": 0.581414,
+  "obs_f1_b": 0.583704,
+  "obs_diff": -0.00229,
+  "perm_p_f1": 0.9158,
+  "perm_p_prec": 0.4088,
+  "perm_p_rec": 0.0021,
+  "perm_p_f1_check": 0.9158,
+  "board_refs": [
+   "retest-phase2c::image-canonical",
+   "retest-phase2c::image-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.9158,
+  "board_bh_p": 0.97326,
+  "board_diff_a_minus_b": -0.00229
+ },
+ {
+  "i": 33,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "canonical",
+  "b": "scale-8",
+  "committed_f1_delta": -0.011183666714530681,
+  "committed_f1_p": 0.538,
+  "committed_prec_p": 0.694,
+  "committed_rec_p": 0.032,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.738252+00:00"
+   }
+  ],
+  "k_discordant": 127,
+  "repro_boot_mean": -0.005304285725917045,
+  "repro_boot_p_f1": 0.772,
+  "repro_boot_p_prec": 0.514,
+  "repro_boot_p_rec": 0.094,
+  "repro_boot_ci": [
+   -0.03796909956912108,
+   0.0280520936565882
+  ],
+  "obs_f1_a": 0.581414,
+  "obs_f1_b": 0.586707,
+  "obs_diff": -0.005294,
+  "perm_p_f1": 0.7611,
+  "perm_p_prec": 0.5394,
+  "perm_p_rec": 0.083,
+  "perm_p_f1_check": 0.7611,
+  "board_refs": [
+   "retest-phase2c::image-canonical",
+   "retest-phase2c::image-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.7611,
+  "board_bh_p": 0.876022,
+  "board_diff_a_minus_b": -0.005294
+ },
+ {
+  "i": 34,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "plus-hp",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": 0.032536865337831906,
+  "committed_f1_p": 0.076,
+  "committed_prec_p": 0.322,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.736252+00:00"
+   }
+  ],
+  "k_discordant": 118,
+  "repro_boot_mean": 0.030482208570208256,
+  "repro_boot_p_f1": 0.08,
+  "repro_boot_p_prec": 0.33,
+  "repro_boot_p_rec": 0.002,
+  "repro_boot_ci": [
+   -0.003692104906630725,
+   0.062432385144690225
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.567843,
+  "obs_diff": 0.03063,
+  "perm_p_f1": 0.0907,
+  "perm_p_prec": 0.3693,
+  "perm_p_rec": 0.0061,
+  "perm_p_f1_check": 0.0907,
+  "board_refs": [
+   "retest-phase2c::image-plus-hp",
+   "retest-phase2c::image-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 0.0907,
+  "board_bh_p": 0.201912,
+  "board_diff_a_minus_b": 0.03063
+ },
+ {
+  "i": 35,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "plus-hp",
+  "b": "scale-4",
+  "committed_f1_delta": 0.01415235969059211,
+  "committed_f1_p": 0.542,
+  "committed_prec_p": 0.356,
+  "committed_rec_p": 0.756,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.737252+00:00"
+   }
+  ],
+  "k_discordant": 111,
+  "repro_boot_mean": 0.013535860490143216,
+  "repro_boot_p_f1": 0.504,
+  "repro_boot_p_prec": 0.372,
+  "repro_boot_p_rec": 0.798,
+  "repro_boot_ci": [
+   -0.026996729334766052,
+   0.05486975109924718
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.583704,
+  "obs_diff": 0.01477,
+  "perm_p_f1": 0.5115,
+  "perm_p_prec": 0.4127,
+  "perm_p_rec": 0.8543,
+  "perm_p_f1_check": 0.5115,
+  "board_refs": [
+   "retest-phase2c::image-plus-hp",
+   "retest-phase2c::image-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.5115,
+  "board_bh_p": 0.665648,
+  "board_diff_a_minus_b": 0.01477
+ },
+ {
+  "i": 36,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "plus-hp",
+  "b": "scale-8",
+  "committed_f1_delta": 0.010923090284002682,
+  "committed_f1_p": 0.538,
+  "committed_prec_p": 0.582,
+  "committed_rec_p": 0.486,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.735252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.738252+00:00"
+   }
+  ],
+  "k_discordant": 100,
+  "repro_boot_mean": 0.011431506165468164,
+  "repro_boot_p_f1": 0.472,
+  "repro_boot_p_prec": 0.554,
+  "repro_boot_p_rec": 0.422,
+  "repro_boot_ci": [
+   -0.022410461538580645,
+   0.04311244566667685
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.586707,
+  "obs_diff": 0.011766,
+  "perm_p_f1": 0.4983,
+  "perm_p_prec": 0.5857,
+  "perm_p_rec": 0.427,
+  "perm_p_f1_check": 0.4983,
+  "board_refs": [
+   "retest-phase2c::image-plus-hp",
+   "retest-phase2c::image-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.4983,
+  "board_bh_p": 0.660574,
+  "board_diff_a_minus_b": 0.011766
+ },
+ {
+  "i": 37,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "pure-positive-canon",
+  "b": "scale-4",
+  "committed_f1_delta": -0.0183845056472398,
+  "committed_f1_p": 0.346,
+  "committed_prec_p": 0.91,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.736252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.737252+00:00"
+   }
+  ],
+  "k_discordant": 129,
+  "repro_boot_mean": -0.01694634808006504,
+  "repro_boot_p_f1": 0.396,
+  "repro_boot_p_prec": 0.898,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   -0.05576129272780836,
+   0.02356605414896553
+  ],
+  "obs_f1_a": 0.567843,
+  "obs_f1_b": 0.583704,
+  "obs_diff": -0.015861,
+  "perm_p_f1": 0.4653,
+  "perm_p_prec": 0.8309,
+  "perm_p_rec": 0.0014,
+  "perm_p_f1_check": 0.4653,
+  "board_refs": [
+   "retest-phase2c::image-pure-positive-canon",
+   "retest-phase2c::image-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.4653,
+  "board_bh_p": 0.640041,
+  "board_diff_a_minus_b": -0.015861
+ },
+ {
+  "i": 38,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "pure-positive-canon",
+  "b": "scale-8",
+  "committed_f1_delta": -0.021613775053829224,
+  "committed_f1_p": 0.198,
+  "committed_prec_p": 0.604,
+  "committed_rec_p": 0.036,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.736252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.738252+00:00"
+   }
+  ],
+  "k_discordant": 126,
+  "repro_boot_mean": -0.019050702404740095,
+  "repro_boot_p_f1": 0.262,
+  "repro_boot_p_prec": 0.694,
+  "repro_boot_p_rec": 0.042,
+  "repro_boot_ci": [
+   -0.051733460028337896,
+   0.01388707097609406
+  ],
+  "obs_f1_a": 0.567843,
+  "obs_f1_b": 0.586707,
+  "obs_diff": -0.018864,
+  "perm_p_f1": 0.2757,
+  "perm_p_prec": 0.661,
+  "perm_p_rec": 0.043,
+  "perm_p_f1_check": 0.2757,
+  "board_refs": [
+   "retest-phase2c::image-pure-positive-canon",
+   "retest-phase2c::image-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.2757,
+  "board_bh_p": 0.451964,
+  "board_diff_a_minus_b": -0.018864
+ },
+ {
+  "i": 39,
+  "phase": "Phase 2c T1: H8 Library (Image)",
+  "a": "scale-4",
+  "b": "scale-8",
+  "committed_f1_delta": -0.0032292694065894256,
+  "committed_f1_p": 0.902,
+  "committed_prec_p": 0.59,
+  "committed_rec_p": 0.282,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.737252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.738252+00:00"
+   }
+  ],
+  "k_discordant": 111,
+  "repro_boot_mean": -0.002104354324675052,
+  "repro_boot_p_f1": 0.924,
+  "repro_boot_p_prec": 0.658,
+  "repro_boot_p_rec": 0.286,
+  "repro_boot_ci": [
+   -0.04130624868396522,
+   0.034282307278425406
+  ],
+  "obs_f1_a": 0.583704,
+  "obs_f1_b": 0.586707,
+  "obs_diff": -0.003004,
+  "perm_p_f1": 0.888,
+  "perm_p_prec": 0.6368,
+  "perm_p_rec": 0.3162,
+  "perm_p_f1_check": 0.888,
+  "board_refs": [
+   "retest-phase2c::image-scale-4",
+   "retest-phase2c::image-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.888,
+  "board_bh_p": 0.956308,
+  "board_diff_a_minus_b": -0.003004
+ },
+ {
+  "i": 40,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "canonical",
+  "b": "plus-hp",
+  "committed_f1_delta": 0.007882276216507627,
+  "committed_f1_p": 0.496,
+  "committed_prec_p": 0.708,
+  "committed_rec_p": 0.14,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   }
+  ],
+  "k_discordant": 14,
+  "repro_boot_mean": 0.007637287959576622,
+  "repro_boot_p_f1": 0.546,
+  "repro_boot_p_prec": 0.74,
+  "repro_boot_p_rec": 0.158,
+  "repro_boot_ci": [
+   -0.01528371337643098,
+   0.0332191830804149
+  ],
+  "obs_f1_a": 0.604457,
+  "obs_f1_b": 0.59691,
+  "obs_diff": 0.007547,
+  "perm_p_f1": 0.563,
+  "perm_p_prec": 0.7794,
+  "perm_p_rec": 0.2878,
+  "perm_p_f1_check": 0.563,
+  "board_refs": [
+   "retest-phase2c::text-canonical",
+   "retest-phase2c::text-plus-hp"
+  ],
+  "board": "stageA",
+  "board_p": 0.563,
+  "board_bh_p": 0.713662,
+  "board_diff_a_minus_b": 0.007547
+ },
+ {
+  "i": 41,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "canonical",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": 9.472388145007116e-05,
+  "committed_f1_p": 0.926,
+  "committed_prec_p": 0.956,
+  "committed_rec_p": 0.452,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   }
+  ],
+  "k_discordant": 12,
+  "repro_boot_mean": 1.3279632467085966e-05,
+  "repro_boot_p_f1": 0.934,
+  "repro_boot_p_prec": 0.924,
+  "repro_boot_p_rec": 0.456,
+  "repro_boot_ci": [
+   -0.018784623104935772,
+   0.01593257884895833
+  ],
+  "obs_f1_a": 0.604457,
+  "obs_f1_b": 0.604488,
+  "obs_diff": -3.1e-05,
+  "perm_p_f1": 1.0,
+  "perm_p_prec": 0.919,
+  "perm_p_rec": 0.5719,
+  "perm_p_f1_check": 1.0,
+  "board_refs": [
+   "retest-phase2c::text-canonical",
+   "retest-phase2c::text-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 1.0,
+  "board_bh_p": 1.0,
+  "board_diff_a_minus_b": -3.1e-05
+ },
+ {
+  "i": 42,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "canonical",
+  "b": "scale-4",
+  "committed_f1_delta": -0.004814125468309351,
+  "committed_f1_p": 0.624,
+  "committed_prec_p": 0.556,
+  "committed_rec_p": 0.894,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   }
+  ],
+  "k_discordant": 11,
+  "repro_boot_mean": -0.004713373666561365,
+  "repro_boot_p_f1": 0.612,
+  "repro_boot_p_prec": 0.562,
+  "repro_boot_p_rec": 0.87,
+  "repro_boot_ci": [
+   -0.02358766976985614,
+   0.010398841028490462
+  ],
+  "obs_f1_a": 0.604457,
+  "obs_f1_b": 0.60943,
+  "obs_diff": -0.004973,
+  "perm_p_f1": 0.6216,
+  "perm_p_prec": 0.6524,
+  "perm_p_rec": 0.9045,
+  "perm_p_f1_check": 0.6216,
+  "board_refs": [
+   "retest-phase2c::text-canonical",
+   "retest-phase2c::text-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.6216,
+  "board_bh_p": 0.764859,
+  "board_diff_a_minus_b": -0.004973
+ },
+ {
+  "i": 43,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "canonical",
+  "b": "scale-8",
+  "committed_f1_delta": -0.0025167430159325804,
+  "committed_f1_p": 0.842,
+  "committed_prec_p": 0.694,
+  "committed_rec_p": 0.42,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/canonical/run_1/detections_canonical_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.741252+00:00"
+   }
+  ],
+  "k_discordant": 9,
+  "repro_boot_mean": -0.00249959264817617,
+  "repro_boot_p_f1": 0.798,
+  "repro_boot_p_prec": 0.664,
+  "repro_boot_p_rec": 0.398,
+  "repro_boot_ci": [
+   -0.02074395285002022,
+   0.012959875490662466
+  ],
+  "obs_f1_a": 0.604457,
+  "obs_f1_b": 0.607042,
+  "obs_diff": -0.002585,
+  "perm_p_f1": 0.8057,
+  "perm_p_prec": 0.8108,
+  "perm_p_rec": 0.6027,
+  "perm_p_f1_check": 0.8057,
+  "board_refs": [
+   "retest-phase2c::text-canonical",
+   "retest-phase2c::text-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.8057,
+  "board_bh_p": 0.90738,
+  "board_diff_a_minus_b": -0.002585
+ },
+ {
+  "i": 44,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "plus-hp",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": -0.007787552335057555,
+  "committed_f1_p": 0.438,
+  "committed_prec_p": 0.482,
+  "committed_rec_p": 0.356,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   }
+  ],
+  "k_discordant": 13,
+  "repro_boot_mean": -0.0076240083271095355,
+  "repro_boot_p_f1": 0.434,
+  "repro_boot_p_prec": 0.49,
+  "repro_boot_p_rec": 0.324,
+  "repro_boot_ci": [
+   -0.02731023860110216,
+   0.006297280004360597
+  ],
+  "obs_f1_a": 0.59691,
+  "obs_f1_b": 0.604488,
+  "obs_diff": -0.007578,
+  "perm_p_f1": 0.608,
+  "perm_p_prec": 0.611,
+  "perm_p_rec": 0.5707,
+  "perm_p_f1_check": 0.608,
+  "board_refs": [
+   "retest-phase2c::text-plus-hp",
+   "retest-phase2c::text-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 0.608,
+  "board_bh_p": 0.751315,
+  "board_diff_a_minus_b": -0.007578
+ },
+ {
+  "i": 45,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "plus-hp",
+  "b": "scale-4",
+  "committed_f1_delta": -0.012696401684816977,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   }
+  ],
+  "k_discordant": 5,
+  "repro_boot_mean": -0.012350661626137986,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   -0.031761221269824474,
+   -0.0009455529514009827
+  ],
+  "obs_f1_a": 0.59691,
+  "obs_f1_b": 0.60943,
+  "obs_diff": -0.01252,
+  "perm_p_f1": 0.0588,
+  "perm_p_prec": 0.0588,
+  "perm_p_rec": 0.2485,
+  "perm_p_f1_check": 0.0588,
+  "board_refs": [
+   "retest-phase2c::text-plus-hp",
+   "retest-phase2c::text-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.0588,
+  "board_bh_p": 0.140318,
+  "board_diff_a_minus_b": -0.01252
+ },
+ {
+  "i": 46,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "plus-hp",
+  "b": "scale-8",
+  "committed_f1_delta": -0.010399019232440207,
+  "committed_f1_p": 0.148,
+  "committed_prec_p": 0.13,
+  "committed_rec_p": 0.31,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/plus-hp/run_1/detections_plus-hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.739252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.741252+00:00"
+   }
+  ],
+  "k_discordant": 7,
+  "repro_boot_mean": -0.01013688060775279,
+  "repro_boot_p_f1": 0.176,
+  "repro_boot_p_prec": 0.162,
+  "repro_boot_p_rec": 0.306,
+  "repro_boot_ci": [
+   -0.030033049992205213,
+   0.0018345504194531425
+  ],
+  "obs_f1_a": 0.59691,
+  "obs_f1_b": 0.607042,
+  "obs_diff": -0.010132,
+  "perm_p_f1": 0.3089,
+  "perm_p_prec": 0.3089,
+  "perm_p_rec": 0.6314,
+  "perm_p_f1_check": 0.3089,
+  "board_refs": [
+   "retest-phase2c::text-plus-hp",
+   "retest-phase2c::text-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.3089,
+  "board_bh_p": 0.488962,
+  "board_diff_a_minus_b": -0.010132
+ },
+ {
+  "i": 47,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "pure-positive-canon",
+  "b": "scale-4",
+  "committed_f1_delta": -0.004908849349759422,
+  "committed_f1_p": 0.236,
+  "committed_prec_p": 0.244,
+  "committed_rec_p": 0.338,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   }
+  ],
+  "k_discordant": 12,
+  "repro_boot_mean": -0.00472665329902845,
+  "repro_boot_p_f1": 0.232,
+  "repro_boot_p_prec": 0.232,
+  "repro_boot_p_rec": 0.36,
+  "repro_boot_ci": [
+   -0.012668643812424465,
+   0.0033987956012280353
+  ],
+  "obs_f1_a": 0.604488,
+  "obs_f1_b": 0.60943,
+  "obs_diff": -0.004942,
+  "perm_p_f1": 0.2623,
+  "perm_p_prec": 0.3367,
+  "perm_p_rec": 0.4045,
+  "perm_p_f1_check": 0.2623,
+  "board_refs": [
+   "retest-phase2c::text-pure-positive-canon",
+   "retest-phase2c::text-scale-4"
+  ],
+  "board": "stageA",
+  "board_p": 0.2623,
+  "board_bh_p": 0.440664,
+  "board_diff_a_minus_b": -0.004942
+ },
+ {
+  "i": 48,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "pure-positive-canon",
+  "b": "scale-8",
+  "committed_f1_delta": -0.002611466897382652,
+  "committed_f1_p": 0.36,
+  "committed_prec_p": 0.268,
+  "committed_rec_p": 0.886,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.741252+00:00"
+   }
+  ],
+  "k_discordant": 8,
+  "repro_boot_mean": -0.002512872280643256,
+  "repro_boot_p_f1": 0.364,
+  "repro_boot_p_prec": 0.288,
+  "repro_boot_p_rec": 0.942,
+  "repro_boot_ci": [
+   -0.008182853757711953,
+   0.0028674104698114523
+  ],
+  "obs_f1_a": 0.604488,
+  "obs_f1_b": 0.607042,
+  "obs_diff": -0.002554,
+  "perm_p_f1": 0.4549,
+  "perm_p_prec": 0.4212,
+  "perm_p_rec": 1.0,
+  "perm_p_f1_check": 0.4549,
+  "board_refs": [
+   "retest-phase2c::text-pure-positive-canon",
+   "retest-phase2c::text-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.4549,
+  "board_bh_p": 0.631388,
+  "board_diff_a_minus_b": -0.002554
+ },
+ {
+  "i": 49,
+  "phase": "Phase 2c T2: H8 Library (Text)",
+  "a": "scale-4",
+  "b": "scale-8",
+  "committed_f1_delta": 0.0022973824523767703,
+  "committed_f1_p": 0.46,
+  "committed_prec_p": 0.616,
+  "committed_rec_p": 0.184,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-4/run_1/detections_scale-4_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.740252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track2-text/scale-8/run_1/detections_scale-8_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.741252+00:00"
+   }
+  ],
+  "k_discordant": 6,
+  "repro_boot_mean": 0.0022137810183851954,
+  "repro_boot_p_f1": 0.474,
+  "repro_boot_p_prec": 0.64,
+  "repro_boot_p_rec": 0.184,
+  "repro_boot_ci": [
+   -0.003985855055956583,
+   0.00807994724691588
+  ],
+  "obs_f1_a": 0.60943,
+  "obs_f1_b": 0.607042,
+  "obs_diff": 0.002388,
+  "perm_p_f1": 0.4338,
+  "perm_p_prec": 0.7408,
+  "perm_p_rec": 0.3059,
+  "perm_p_f1_check": 0.4338,
+  "board_refs": [
+   "retest-phase2c::text-scale-4",
+   "retest-phase2c::text-scale-8"
+  ],
+  "board": "stageA",
+  "board_p": 0.4338,
+  "board_bh_p": 0.609514,
+  "board_diff_a_minus_b": 0.002388
+ },
+ {
+  "i": 50,
+  "phase": "Phase 2c Exp: HP Scaling",
+  "a": "pure-positive-2hp",
+  "b": "pure-positive-4hp",
+  "committed_f1_delta": -0.02593804097564248,
+  "committed_f1_p": 0.172,
+  "committed_prec_p": 0.106,
+  "committed_rec_p": 0.79,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.733252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.734252+00:00"
+   }
+  ],
+  "k_discordant": 112,
+  "repro_boot_mean": -0.027595052201782374,
+  "repro_boot_p_f1": 0.13,
+  "repro_boot_p_prec": 0.066,
+  "repro_boot_p_rec": 0.722,
+  "repro_boot_ci": [
+   -0.06488472336568275,
+   0.010540733851726485
+  ],
+  "obs_f1_a": 0.571219,
+  "obs_f1_b": 0.598473,
+  "obs_diff": -0.027254,
+  "perm_p_f1": 0.1577,
+  "perm_p_prec": 0.0926,
+  "perm_p_rec": 0.7658,
+  "perm_p_f1_check": 0.1577,
+  "board_refs": [
+   "retest-phase2c::image-exploratory-pure-positive-2hp",
+   "retest-phase2c::image-exploratory-pure-positive-4hp"
+  ],
+  "board": "stageA",
+  "board_p": 0.1577,
+  "board_bh_p": 0.308543,
+  "board_diff_a_minus_b": -0.027254
+ },
+ {
+  "i": 51,
+  "phase": "Phase 2c Exp: HP Scaling",
+  "a": "pure-positive-2hp",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": 0.0047763812298344446,
+  "committed_f1_p": 0.824,
+  "committed_prec_p": 0.364,
+  "committed_rec_p": 0.004,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-2hp/run_1/detections_pure-positive-2hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.733252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.734252+00:00"
+   }
+  ],
+  "k_discordant": 123,
+  "repro_boot_mean": 0.0007840612599631053,
+  "repro_boot_p_f1": 0.982,
+  "repro_boot_p_prec": 0.272,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   -0.0393472850915065,
+   0.03911570408162812
+  ],
+  "obs_f1_a": 0.571219,
+  "obs_f1_b": 0.56985,
+  "obs_diff": 0.001369,
+  "perm_p_f1": 0.9424,
+  "perm_p_prec": 0.3151,
+  "perm_p_rec": 0.0049,
+  "perm_p_f1_check": 0.9424,
+  "board_refs": [
+   "retest-phase2c::image-exploratory-pure-positive-2hp",
+   "retest-phase2c::image-exploratory-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 0.9424,
+  "board_bh_p": 0.991172,
+  "board_diff_a_minus_b": 0.001369
+ },
+ {
+  "i": 52,
+  "phase": "Phase 2c Exp: HP Scaling",
+  "a": "pure-positive-4hp",
+  "b": "pure-positive-canon",
+  "committed_f1_delta": 0.030714422205476922,
+  "committed_f1_p": 0.094,
+  "committed_prec_p": 0.468,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-4hp/run_1/detections_pure-positive-4hp_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.734252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2c/track1-image-exploratory/pure-positive-canon/run_1/detections_pure-positive-canon_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.734252+00:00"
+   }
+  ],
+  "k_discordant": 124,
+  "repro_boot_mean": 0.02837911346174548,
+  "repro_boot_p_f1": 0.138,
+  "repro_boot_p_prec": 0.526,
+  "repro_boot_p_rec": 0.004,
+  "repro_boot_ci": [
+   -0.008730149498705939,
+   0.06407480786890501
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.56985,
+  "obs_diff": 0.028623,
+  "perm_p_f1": 0.1414,
+  "perm_p_prec": 0.5339,
+  "perm_p_rec": 0.004,
+  "perm_p_f1_check": 0.1414,
+  "board_refs": [
+   "retest-phase2c::image-exploratory-pure-positive-4hp",
+   "retest-phase2c::image-exploratory-pure-positive-canon"
+  ],
+  "board": "stageA",
+  "board_p": 0.1414,
+  "board_bh_p": 0.281905,
+  "board_diff_a_minus_b": 0.028623
+ },
+ {
+  "i": 53,
+  "phase": "Phase 2d T1: H5 Negtext (Image)",
+  "a": "terse",
+  "b": "verbose",
+  "committed_f1_delta": 0.0029398534014057984,
+  "committed_f1_p": 0.85,
+  "committed_prec_p": 0.756,
+  "committed_rec_p": 0.148,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2d/track1-image/terse/run_1/detections_terse_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.741252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2d/track1-image/verbose/run_1/detections_verbose_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.742252+00:00"
+   }
+  ],
+  "k_discordant": 104,
+  "repro_boot_mean": 0.002485225160325991,
+  "repro_boot_p_f1": 0.876,
+  "repro_boot_p_prec": 0.748,
+  "repro_boot_p_rec": 0.132,
+  "repro_boot_ci": [
+   -0.028974135838722014,
+   0.03398362814301561
+  ],
+  "obs_f1_a": 0.605183,
+  "obs_f1_b": 0.602654,
+  "obs_diff": 0.002529,
+  "perm_p_f1": 0.8779,
+  "perm_p_prec": 0.7262,
+  "perm_p_rec": 0.1604,
+  "perm_p_f1_check": 0.8779,
+  "board_refs": [
+   "retest-phase2d::image-terse",
+   "retest-phase2d::image-verbose"
+  ],
+  "board": "stageA",
+  "board_p": 0.8779,
+  "board_bh_p": 0.950304,
+  "board_diff_a_minus_b": 0.002529
+ },
+ {
+  "i": 54,
+  "phase": "Phase 2d T2: H5 Negtext (Text)",
+  "a": "terse",
+  "b": "verbose",
+  "committed_f1_delta": 0.015831354314835705,
+  "committed_f1_p": 0.376,
+  "committed_prec_p": 0.862,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2d/track2-text/terse/run_1/detections_terse_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.743252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2d/track2-text/verbose/run_1/detections_verbose_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.744252+00:00"
+   }
+  ],
+  "k_discordant": 124,
+  "repro_boot_mean": 0.015541332395806273,
+  "repro_boot_p_f1": 0.416,
+  "repro_boot_p_prec": 0.866,
+  "repro_boot_p_rec": 0.002,
+  "repro_boot_ci": [
+   -0.019553624349952912,
+   0.05367038401071957
+  ],
+  "obs_f1_a": 0.598436,
+  "obs_f1_b": 0.583396,
+  "obs_diff": 0.015041,
+  "perm_p_f1": 0.4263,
+  "perm_p_prec": 0.8496,
+  "perm_p_rec": 0.003,
+  "perm_p_f1_check": 0.4263,
+  "board_refs": [
+   "retest-phase2d::text-terse",
+   "retest-phase2d::text-verbose"
+  ],
+  "board": "stageA",
+  "board_p": 0.4263,
+  "board_bh_p": 0.602173,
+  "board_diff_a_minus_b": 0.015041
+ },
+ {
+  "i": 55,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "canonical-first",
+  "b": "canonical-last",
+  "committed_f1_delta": -0.03294330664745624,
+  "committed_f1_p": 0.124,
+  "committed_prec_p": 0.296,
+  "committed_rec_p": 0.03,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   }
+  ],
+  "k_discordant": 143,
+  "repro_boot_mean": -0.03230039378298493,
+  "repro_boot_p_f1": 0.136,
+  "repro_boot_p_prec": 0.27,
+  "repro_boot_p_rec": 0.034,
+  "repro_boot_ci": [
+   -0.07530534279920954,
+   0.0072954893105088405
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.63142,
+  "obs_diff": -0.032947,
+  "perm_p_f1": 0.1366,
+  "perm_p_prec": 0.2841,
+  "perm_p_rec": 0.042,
+  "perm_p_f1_check": 0.1366,
+  "board_refs": [
+   "retest-phase2e::canonical-first",
+   "retest-phase2e::canonical-last"
+  ],
+  "board": "stageA",
+  "board_p": 0.1366,
+  "board_bh_p": 0.277606,
+  "board_diff_a_minus_b": -0.032947
+ },
+ {
+  "i": 56,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "canonical-first",
+  "b": "config-default",
+  "committed_f1_delta": -0.006566275459515144,
+  "committed_f1_p": 0.678,
+  "committed_prec_p": 0.516,
+  "committed_rec_p": 0.912,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   }
+  ],
+  "k_discordant": 96,
+  "repro_boot_mean": -0.007448166439823431,
+  "repro_boot_p_f1": 0.63,
+  "repro_boot_p_prec": 0.448,
+  "repro_boot_p_rec": 0.866,
+  "repro_boot_ci": [
+   -0.037658862113627886,
+   0.023129266700750342
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.605732,
+  "obs_diff": -0.007259,
+  "perm_p_f1": 0.6401,
+  "perm_p_prec": 0.4513,
+  "perm_p_rec": 0.9199,
+  "perm_p_f1_check": 0.6401,
+  "board_refs": [
+   "retest-phase2e::canonical-first",
+   "retest-phase2e::config-default"
+  ],
+  "board": "stageA",
+  "board_p": 0.6401,
+  "board_bh_p": 0.783035,
+  "board_diff_a_minus_b": -0.007259
+ },
+ {
+  "i": 57,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "canonical-first",
+  "b": "random",
+  "committed_f1_delta": 0.027629822372189725,
+  "committed_f1_p": 0.138,
+  "committed_prec_p": 0.046,
+  "committed_rec_p": 0.774,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/canonical-first/run_1/detections_canonical-first_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/random/run_1/detections_random_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   }
+  ],
+  "k_discordant": 125,
+  "repro_boot_mean": 0.02828493133849207,
+  "repro_boot_p_f1": 0.12,
+  "repro_boot_p_prec": 0.052,
+  "repro_boot_p_rec": 0.646,
+  "repro_boot_ci": [
+   -0.00668298776763212,
+   0.06302727836604474
+  ],
+  "obs_f1_a": 0.598473,
+  "obs_f1_b": 0.570588,
+  "obs_diff": 0.027885,
+  "perm_p_f1": 0.1218,
+  "perm_p_prec": 0.057,
+  "perm_p_rec": 0.7052,
+  "perm_p_f1_check": 0.1218,
+  "board_refs": [
+   "retest-phase2e::canonical-first",
+   "retest-phase2e::random"
+  ],
+  "board": "stageA",
+  "board_p": 0.1218,
+  "board_bh_p": 0.258364,
+  "board_diff_a_minus_b": 0.027885
+ },
+ {
+  "i": 58,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "canonical-last",
+  "b": "config-default",
+  "committed_f1_delta": 0.026377031187941095,
+  "committed_f1_p": 0.158,
+  "committed_prec_p": 0.5,
+  "committed_rec_p": 0.004,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   }
+  ],
+  "k_discordant": 135,
+  "repro_boot_mean": 0.0248522273431615,
+  "repro_boot_p_f1": 0.2,
+  "repro_boot_p_prec": 0.53,
+  "repro_boot_p_rec": 0.016,
+  "repro_boot_ci": [
+   -0.012586316419970413,
+   0.061478793695289406
+  ],
+  "obs_f1_a": 0.63142,
+  "obs_f1_b": 0.605732,
+  "obs_diff": 0.025688,
+  "perm_p_f1": 0.1857,
+  "perm_p_prec": 0.5136,
+  "perm_p_rec": 0.0155,
+  "perm_p_f1_check": 0.1857,
+  "board_refs": [
+   "retest-phase2e::canonical-last",
+   "retest-phase2e::config-default"
+  ],
+  "board": "stageA",
+  "board_p": 0.1857,
+  "board_bh_p": 0.340273,
+  "board_diff_a_minus_b": 0.025688
+ },
+ {
+  "i": 59,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "canonical-last",
+  "b": "random",
+  "committed_f1_delta": 0.06057312901964596,
+  "committed_f1_p": 0.002,
+  "committed_prec_p": 0.008,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.745252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/random/run_1/detections_random_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   }
+  ],
+  "k_discordant": 136,
+  "repro_boot_mean": 0.060585325121477,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.002,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.024517827582356665,
+   0.09978169002635848
+  ],
+  "obs_f1_a": 0.63142,
+  "obs_f1_b": 0.570588,
+  "obs_diff": 0.060832,
+  "perm_p_f1": 0.0019,
+  "perm_p_prec": 0.0051,
+  "perm_p_rec": 0.0026,
+  "perm_p_f1_check": 0.0019,
+  "board_refs": [
+   "retest-phase2e::canonical-last",
+   "retest-phase2e::random"
+  ],
+  "board": "stageA",
+  "board_p": 0.0019,
+  "board_bh_p": 0.007255,
+  "board_diff_a_minus_b": 0.060832
+ },
+ {
+  "i": 60,
+  "phase": "Phase 2e: H4 Ordering",
+  "a": "config-default",
+  "b": "random",
+  "committed_f1_delta": 0.034196097831704866,
+  "committed_f1_p": 0.046,
+  "committed_prec_p": 0.014,
+  "committed_rec_p": 0.9,
+  "sources": [
+   {
+    "file": "outputs/retest/phase2e/config-default/run_1/detections_config-default_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   },
+   {
+    "file": "outputs/retest/phase2e/random/run_1/detections_random_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.746252+00:00"
+   }
+  ],
+  "k_discordant": 121,
+  "repro_boot_mean": 0.035733097778315494,
+  "repro_boot_p_f1": 0.032,
+  "repro_boot_p_prec": 0.008,
+  "repro_boot_p_rec": 0.744,
+  "repro_boot_ci": [
+   0.0023164102453502675,
+   0.07300134999256284
+  ],
+  "obs_f1_a": 0.605732,
+  "obs_f1_b": 0.570588,
+  "obs_diff": 0.035144,
+  "perm_p_f1": 0.0563,
+  "perm_p_prec": 0.0194,
+  "perm_p_rec": 0.7578,
+  "perm_p_f1_check": 0.0563,
+  "board_refs": [
+   "retest-phase2e::config-default",
+   "retest-phase2e::random"
+  ],
+  "board": "stageA",
+  "board_p": 0.0563,
+  "board_bh_p": 0.135897,
+  "board_diff_a_minus_b": 0.035144
+ },
+ {
+  "i": 61,
+  "phase": "Phase 3a T1: Voting (Image)",
+  "a": "T0.3",
+  "b": "T0.7",
+  "committed_f1_delta": 0.02064942792233056,
+  "committed_f1_p": 0.228,
+  "committed_prec_p": 0.208,
+  "committed_rec_p": 0.38,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.895250+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.918249+00:00"
+   }
+  ],
+  "k_discordant": 103,
+  "repro_boot_mean": 0.020583196406521644,
+  "repro_boot_p_f1": 0.278,
+  "repro_boot_p_prec": 0.236,
+  "repro_boot_p_rec": 0.42,
+  "repro_boot_ci": [
+   -0.013103874860955596,
+   0.05401784985594742
+  ],
+  "obs_f1_a": 0.580446,
+  "obs_f1_b": 0.560122,
+  "obs_diff": 0.020325,
+  "perm_p_f1": 0.2523,
+  "perm_p_prec": 0.2247,
+  "perm_p_rec": 0.404,
+  "perm_p_f1_check": 0.2523,
+  "board_refs": null
+ },
+ {
+  "i": 62,
+  "phase": "Phase 3a T1: Voting (Image)",
+  "a": "T0.3",
+  "b": "T1.0",
+  "committed_f1_delta": 0.07512158518322291,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.004,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track1-image/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.895250+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.932249+00:00"
+   }
+  ],
+  "k_discordant": 140,
+  "repro_boot_mean": 0.07475125156104584,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.03573232840592639,
+   0.1155905161816045
+  ],
+  "obs_f1_a": 0.580446,
+  "obs_f1_b": 0.50561,
+  "obs_diff": 0.074837,
+  "perm_p_f1": 0.0005,
+  "perm_p_prec": 0.0006,
+  "perm_p_rec": 0.0017,
+  "perm_p_f1_check": 0.0005,
+  "board_refs": null
+ },
+ {
+  "i": 63,
+  "phase": "Phase 3a T1: Voting (Image)",
+  "a": "T0.7",
+  "b": "T1.0",
+  "committed_f1_delta": 0.05447215726089236,
+  "committed_f1_p": 0.008,
+  "committed_prec_p": 0.008,
+  "committed_rec_p": 0.01,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track1-image/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.918249+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track1-image/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.932249+00:00"
+   }
+  ],
+  "k_discordant": 135,
+  "repro_boot_mean": 0.0541680551545242,
+  "repro_boot_p_f1": 0.008,
+  "repro_boot_p_prec": 0.012,
+  "repro_boot_p_rec": 0.01,
+  "repro_boot_ci": [
+   0.01478227771683141,
+   0.09558407845055339
+  ],
+  "obs_f1_a": 0.560122,
+  "obs_f1_b": 0.50561,
+  "obs_diff": 0.054512,
+  "perm_p_f1": 0.007,
+  "perm_p_prec": 0.0098,
+  "perm_p_rec": 0.0123,
+  "perm_p_f1_check": 0.007,
+  "board_refs": null
+ },
+ {
+  "i": 64,
+  "phase": "Phase 3a T2: Voting (Text)",
+  "a": "T0.3",
+  "b": "T0.7",
+  "committed_f1_delta": 0.03750497520189019,
+  "committed_f1_p": 0.024,
+  "committed_prec_p": 0.014,
+  "committed_rec_p": 0.244,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.946249+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.965249+00:00"
+   }
+  ],
+  "k_discordant": 99,
+  "repro_boot_mean": 0.036789652092362166,
+  "repro_boot_p_f1": 0.01,
+  "repro_boot_p_prec": 0.01,
+  "repro_boot_p_rec": 0.248,
+  "repro_boot_ci": [
+   0.008202257767956984,
+   0.06570584833652633
+  ],
+  "obs_f1_a": 0.605674,
+  "obs_f1_b": 0.568507,
+  "obs_diff": 0.037167,
+  "perm_p_f1": 0.024,
+  "perm_p_prec": 0.0183,
+  "perm_p_rec": 0.2623,
+  "perm_p_f1_check": 0.024,
+  "board_refs": null
+ },
+ {
+  "i": 65,
+  "phase": "Phase 3a T2: Voting (Text)",
+  "a": "T0.3",
+  "b": "T1.0",
+  "committed_f1_delta": 0.07137024898200167,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.002,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track2-text/T0.3/run_1/detections_T0.3_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.946249+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.980248+00:00"
+   }
+  ],
+  "k_discordant": 118,
+  "repro_boot_mean": 0.07132463459901897,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.004,
+  "repro_boot_ci": [
+   0.034518256138663835,
+   0.10622615811726496
+  ],
+  "obs_f1_a": 0.605674,
+  "obs_f1_b": 0.533779,
+  "obs_diff": 0.071894,
+  "perm_p_f1": 0.0001,
+  "perm_p_prec": 0.0003,
+  "perm_p_rec": 0.0053,
+  "perm_p_f1_check": 0.0001,
+  "board_refs": null
+ },
+ {
+  "i": 66,
+  "phase": "Phase 3a T2: Voting (Text)",
+  "a": "T0.7",
+  "b": "T1.0",
+  "committed_f1_delta": 0.03386527378011147,
+  "committed_f1_p": 0.058,
+  "committed_prec_p": 0.074,
+  "committed_rec_p": 0.122,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a/track2-text/T0.7/run_1/detections_T0.7_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.965249+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a/track2-text/T1.0/run_1/detections_T1.0_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.980248+00:00"
+   }
+  ],
+  "k_discordant": 119,
+  "repro_boot_mean": 0.03453498250665682,
+  "repro_boot_p_f1": 0.062,
+  "repro_boot_p_prec": 0.1,
+  "repro_boot_p_rec": 0.11,
+  "repro_boot_ci": [
+   -0.0011278002789029504,
+   0.07222588238193825
+  ],
+  "obs_f1_a": 0.568507,
+  "obs_f1_b": 0.533779,
+  "obs_diff": 0.034728,
+  "perm_p_f1": 0.0673,
+  "perm_p_prec": 0.0894,
+  "perm_p_rec": 0.1226,
+  "perm_p_f1_check": 0.0673,
+  "board_refs": null
+ },
+ {
+  "i": 67,
+  "phase": "Phase 3a Replication",
+  "a": "minimal",
+  "b": "high",
+  "committed_f1_delta": 0.13939262092737806,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.534,
+  "sources": [
+   {
+    "file": "outputs/retest/phase3a-replication/minimal/run_1/detections_minimal_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.874250+00:00"
+   },
+   {
+    "file": "outputs/retest/phase3a-replication/high/run_1/detections_high_run01.geojson",
+    "modified_after_run": true,
+    "mtime": "2026-04-14T22:30:59.845250+00:00"
+   }
+  ],
+  "k_discordant": 227,
+  "repro_boot_mean": 0.13848748495380067,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.622,
+  "repro_boot_ci": [
+   0.08978399656098637,
+   0.18868144564942604
+  ],
+  "obs_f1_a": 0.581541,
+  "obs_f1_b": 0.442421,
+  "obs_diff": 0.13912,
+  "perm_p_f1": 0.0,
+  "perm_p_prec": 0.0,
+  "perm_p_rec": 0.5813,
+  "perm_p_f1_check": 0.0,
+  "board_refs": null
+ },
+ {
+  "i": 68,
+  "phase": "Phase 3a vs Best Single-Pass",
+  "a": "consensus_T0.7_18of30_image",
+  "b": "single_pass_canonical_last",
+  "committed_f1_delta": 0.060029355287517336,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.001,
+  "sources": [
+   {
+    "board_cell": "retest-phase3a::image-t0.7-n30-18of30",
+    "detections": [
+     "outputs/retest/phase3a/track1-image/T0.7/consensus/consensus_t18.geojson"
+    ]
+   },
+   {
+    "file": "outputs/retest/phase2e/canonical-last/run_1/detections_canonical-last_run01.geojson",
+    "modified_after_run": true
+   }
+  ],
+  "k_discordant": 216,
+  "repro_boot_mean": 0.06014962447379526,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.001,
+  "repro_boot_ci": [
+   0.022871134386990226,
+   0.09709046935710494
+  ],
+  "obs_f1_a": 0.690875,
+  "obs_f1_b": 0.63142,
+  "obs_diff": 0.059455,
+  "perm_p_f1": 0.0014,
+  "perm_p_prec": 0.0,
+  "perm_p_rec": 0.0001,
+  "perm_p_f1_check": 0.0014,
+  "board_refs": [
+   "retest-phase3a::image-t0.7-n30-18of30",
+   "retest-phase2e::canonical-last"
+  ],
+  "board": "stageB",
+  "board_p": 0.0014,
+  "board_bh_p": 0.0024,
+  "board_diff_a_minus_b": 0.059455
+ },
+ {
+  "i": 69,
+  "phase": "Phase 3a Replication Consensus",
+  "a": "high_consensus_21of30",
+  "b": "minimal_consensus_25of30",
+  "committed_f1_delta": 0.06752037659914416,
+  "committed_f1_p": 0.001,
+  "committed_prec_p": 0.001,
+  "committed_rec_p": 0.202,
+  "sources": [
+   {
+    "board_cell": "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+    "detections": [
+     "outputs/retest/phase3a-replication/high/consensus/consensus_t21.geojson"
+    ]
+   },
+   {
+    "board_cell": "retest-phase3a-replication::text-minimal-t0.7-n30-25of30",
+    "detections": [
+     "outputs/retest/phase3a-replication/minimal/consensus/consensus_t25.geojson"
+    ]
+   }
+  ],
+  "k_discordant": 163,
+  "repro_boot_mean": 0.06736273734154485,
+  "repro_boot_p_f1": 0.001,
+  "repro_boot_p_prec": 0.001,
+  "repro_boot_p_rec": 0.236,
+  "repro_boot_ci": [
+   0.03478967574413812,
+   0.10197005213146579
+  ],
+  "obs_f1_a": 0.770538,
+  "obs_f1_b": 0.703277,
+  "obs_diff": 0.067261,
+  "perm_p_f1": 0.0004,
+  "perm_p_prec": 0.0001,
+  "perm_p_rec": 0.2361,
+  "perm_p_f1_check": 0.0004,
+  "board_refs": [
+   "retest-phase3a-replication::text-high-t0.7-n30-21of30",
+   "retest-phase3a-replication::text-minimal-t0.7-n30-25of30"
+  ],
+  "board": "stageB",
+  "board_p": 0.0004,
+  "board_bh_p": 0.000749,
+  "board_diff_a_minus_b": 0.067261
+ }
+]
