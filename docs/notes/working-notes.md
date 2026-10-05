@@ -36869,3 +36869,62 @@ silently per request). This is also a concrete case of the S157 working-notes
 candidate held over without a verdict, "the audited basis was a method, not an
 authority": the run logs and meta labels were methods, and the invoice was the
 authority that overruled them.
+
+## Observation 496: Experiment E's example manipulations never reached the model — Obs 156's "null examples are necessary" is a replicate's noise, and one 60-tile run moved 0.050 F1 by itself (Session 160, 2026-10-05)
+
+**Context.** The S160 register repair surveyed every archive meta that
+records usage (ruling D38). Experiment E
+(`archive/outputs-pre-retest-60-tile/preliminary-results/`, 2026-03-10,
+Session 48) was one of nine left unsure, and the PI asked for it to be
+registered consistently with similar runs (D40). Checking what each pass
+actually sent found that its example levers were never transmitted.
+
+**What the metas show.** All four passes sent exactly 1,672 input tokens on
+every one of their 60 tiles (100,320 each), whether the configuration
+snapshot listed 10 examples (E1) or 13 (E2, E3, E4). Every configuration is
+text-only (`include_example_images: false`), and the runner at the recorded
+commit (`866b9e0bb`, `scripts/4_detect_mounds_batch.py` lines 751-754) skips
+examples for text-only conditions ("Text-only modality: skipping example
+images"). The mechanism is Obs 235's: a configuration's intent that the
+transmitted request did not carry.
+
+**What follows.**
+
+1. **E1 → E2, "restore null examples"** (+0.050 F1, 32 % of the ablation's
+   attribution; Finding 2 of `results/phase3d-experiment-e-results.md`;
+   Obs 156) changed nothing that was sent. E1 and E2 share the instruction
+   (hash `d85c843902`), HIGH thinking and T = 0.7: an accidental replicate.
+   Their verified F1, 0.640 and 0.690, is run-to-run variance on 60 tiles,
+   as are the 212 against 183 detections and 66 against 71 true positives
+   that Obs 156 interprets. Obs 156's mechanism (nulls as structural
+   constraints) has no evidence in this experiment.
+2. **E4 → Baseline, "restore hard negatives"**, changed the prompt only; its
+   effect belongs to the prompt.
+3. **The thinking (E2 → E3, +0.021) and temperature (E3 → E4) steps were real
+   manipulations**, but each is one run at 60 tiles, and the replicate's
+   0.050 spread exceeds the thinking step. Obs 155 ("extended reasoning as
+   liberaliser") and Obs 157 ("temperature dominates"), where they rest on
+   these steps, sit inside the noise this experiment measured of itself.
+4. **Finding 4** (a recall-biased prompt does not raise recall: E4 against
+   Baseline, prompt only; Obs 158) survives as a real contrast, but from one
+   60-tile run each; "identical recall" (0.784) is weaker than it reads.
+
+**Scope.** This concerns example-composition claims for TEXT-only
+configurations, which transmit no examples; the project's text headline,
+`detect_brief-text`, is one. Image configurations do transmit their
+libraries: their explicit-cache sizes differ by library, from 8,009 to 45,069
+tokens (`data/pricing/run-log-tiers.json` `explicit_cache_sizes`). Which
+other findings attributed an effect to examples in a text-only configuration
+is not yet surveyed; a manipulation check (per-arm input tokens, from
+committed metas, no API) would answer it.
+
+**For the paper.** The discussion outline's "the recall ceiling is
+perceptual (Experiment E)" rests on Finding 4, an unregistered single
+60-tile run (D40 keeps Experiment E unregistered): qualify it, or cite it as
+an unregistered pilot. Obs 156's claim should not be cited.
+
+**Related.** Obs 156 (stands as written; this entry corrects it), Obs 155,
+Obs 157, Obs 158, Obs 235 (the same mechanism, H10/H12 v1), ruling D40
+(`planning/pi-decisions-2026-09-20.md`). The PI, on reading it: "this is a
+major piece of news that changes how I've been thinking about things ...
+including how we're designing map-reader-bench" — discussion to follow.
