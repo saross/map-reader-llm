@@ -1,7 +1,8 @@
 # Erratum pointers into the lodged registration
 
-> **Last revised**: 2026-09-14 (three § H1 / § H4 / factorial-table rows added
-> under erratum E88). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (the text configurations' exposure wording
+> corrected under erratum E90). See [§ Changelog](#changelog) for revision
+> history.
 
 ## What this document is, and why it exists separately
 
@@ -73,7 +74,8 @@ Matthews correlation coefficient (MCC) value changes. The exposure is confined
 to the image modality: of the 41 configurations that transmit example images,
 37 include the three null exemplars and the only four that do not are the
 `verify_*.json` verifier configurations; the 22 text-modality configurations
-carry the nulls as labels only (`include_example_images: false`), and the 55-map
+transmit no exemplar at all (`include_example_images: false`; corrected by
+E90, which first read "carry the nulls as labels only"), and the 55-map
 deployment corpus shares no sheet with the three tiles.
 
 ## Corrected counts
@@ -86,6 +88,14 @@ the lodged tables, clearly labelled as a post-hoc correction, in
 and a tier-1 test.
 
 ## Changelog
+
+### 2026-10-05 — Text configurations send no exemplar (E90)
+
+The null-exemplar section said the 22 text-modality configurations "carry
+the nulls as labels only"; a text-modality request sends no exemplar at all
+(E90). Wording corrected; no pointer added or removed, no count changed. For
+the PI: if this page has been uploaded to OSF, the uploaded copy needs the
+same edit.
 
 ### 2026-09-14 — Three modality rows added under erratum E88
 
