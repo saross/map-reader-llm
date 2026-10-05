@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-phase3a
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/phase3a` · **Registry status**: active · **Purpose**: not supplied
 
@@ -222,21 +222,33 @@
 | `track2-text-t1.0` | 29 | gemini-3-flash | gemini-3-flash | text | minimal | 1.0 | ok | 340 | not supplied | 0 |
 | `track2-text-t1.0` | 30 | gemini-3-flash | gemini-3-flash | text | minimal | 1.0 | ok | 340 | not supplied | 0 |
 
+### 3.2 Verifier passes (5)
+
+| Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
+|---|---:|---|---|---|---:|---|---:|---:|
+| `legacy-pv-image-t0-7-n30-1of30` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 2617 | 0 |
+| `legacy-pv-image-t0-7-n30-20of30` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 503 | 0 |
+| `legacy-pv-text-t0-7-n30-1of30` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 2419 | 0 |
+| `legacy-pv-text-t0-7-n30-25of30` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 590 | 0 |
+| `verified-adv-image-t0.7-n30-18of30` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 535 | 22 |
+
+Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
+
 ## 4. Token load and audited cost
 
 | Field | Value |
 |---|---|
-| Passes on file | 180 |
-| Input tokens (billed) | 0 |
+| Passes on file | 185 |
+| Input tokens (billed) | 11,941,888 |
 | Input tokens (cached) | 0 |
-| Output tokens | 0 |
+| Output tokens | 1,110,299 |
 | Thinking tokens | 0 |
-| Total tokens | 0 |
+| Total tokens | 13,052,187 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | not supplied |
-| Run total (range) | not supplied |
+| `cost_usd` by basis | audited US$8.9257 (5); unrecorded no figure (180) |
+| Run total (range) | at least US$8.9257; no ceiling (180 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 180 |
-| Summed wall clock | 0.00 h over 180 pass(es) |
+| Summed wall clock | 0.56 h over 185 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -278,7 +290,7 @@ Tile-level MCC is on file for 19 of 19 condition(s).
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal — see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -&gt; deferred \_ignored\_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash.
+> H3 consensus vote-threshold x N sweep, MINIMAL thinking (the original phase3a accidentally ran minimal — see retest-phase3a-replication). 2 tracks x 3 temps; N in {5,10,30} (first-N sub-pools). One citable condition per (cell x N) at best-F1@20m; non-headline thresholds -&gt; deferred \_ignored\_evals. 14-buf+MCC re-score, Era-1 340-tile, curator GT, gemini-3-flash. AMENDED 2026-10-05: legacy-pv-\*: PV Phase 2 legs 21-24 (2026-03-21) over this run's 30-pass T = 0.7 unions at 25-of-30 and 1-of-30 (text) and 20-of-30 and 1-of-30 (image). Mapping by the union file names and by size: each leg's results match the same threshold's union to within 1.6 % (590/588, 2,419/2,415, 503/495, 2,617/2,615), the small excess because the unions were rebuilt on 2026-04-16 (1f443fd69), after the legs ran. Registered by ruling D40 (S160).
 
 ### 5.4 Waived evaluations (270, 2 distinct reason(s))
 
@@ -378,6 +390,8 @@ No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospecti
 | `track2-text-t0.7` | text | `track2-text/T0.7` |
 | `track2-text-t1.0` | text | `track2-text/T1.0` |
 
+5 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+
 ## 10. Provenance of this report
 
 This report is a projection. Every figure above is read from one of the committed inputs below; nothing is estimated, and a figure that is not on file is written **not supplied** with its reason.
@@ -385,7 +399,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `1d6f29db3` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

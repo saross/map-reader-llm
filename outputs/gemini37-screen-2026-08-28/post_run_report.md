@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -52,13 +52,15 @@
 | `g384_ov192_g37` | 9 | gemini-3.7-flash | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | 1398 | 1289 |
 | `g384_ov192_g37` | 10 | gemini-3.7-flash | gemini-3.7-flash | text | low | 0.7 | ok | 1398 | 1398 | 1650 |
 
-### 3.2 Verifier passes (6)
+### 3.2 Verifier passes (8)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
 | `g384_ov192_g37-union-k1-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 640 | 0 |
+| `g384_ov192_g37-union-k1-verify-recovery-fixed` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
 | `g384_ov192_g37-union-k10-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 913 | 0 |
 | `g384_ov192_g37-union-k3-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 757 | 0 |
+| `g384_ov192_g37-union-k3-verify-recovery-fixed` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3 | 0 |
 | `g384_ov192_g37-union-k5-verify` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 791 | 0 |
 | `g384_ov192_g37-union-k5-verify-swap37` | 1 | gemini-3.7-flash | text | low | 0.0 | ok | 2 | 14 |
 | `g384_ov192_g37-union-k5-verify-swap38` | 1 | gemini-3.8-flash | text | low | 0.0 | ok | 791 | 803 |
@@ -69,17 +71,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 16 |
-| Input tokens (billed) | 27,979,012 |
+| Passes on file | 18 |
+| Input tokens (billed) | 27,986,180 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,706,650 |
+| Output tokens | 1,707,311 |
 | Thinking tokens | 3,960,865 |
-| Total tokens | 33,646,527 |
+| Total tokens | 33,654,356 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$20.2260 (15); audited-lower-bound US$0.0021 (1) |
-| Run total (range) | at least US$20.2281; no ceiling (1 audited-lower-bound pass(es)) |
+| `cost_usd` by basis | audited US$20.2288 (17); audited-lower-bound US$0.0021 (1) |
+| Run total (range) | at least US$20.2309; no ceiling (1 audited-lower-bound pass(es)) |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 10.39 h over 16 pass(es) |
+| Summed wall clock | 10.39 h over 18 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -215,7 +217,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 |---|---|---|
 | `g384_ov192_g37` | text | `g384_ov192_g37` |
 
-6 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+8 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -224,7 +226,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `1d6f29db3` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

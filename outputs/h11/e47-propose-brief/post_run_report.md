@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — e47-propose-brief
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/e47-propose-brief` · **Registry status**: active · **Purpose**: not supplied
 
@@ -37,7 +37,7 @@
 
 ## 3. Execution — passes on file
 
-### 3.1 Proposer passes (5)
+### 3.1 Proposer passes (6)
 
 | Pool | Pass | Model used | Model requested | Modality | Thinking | Temp | Status | Tiles done | Dispatched | Retries |
 |---|---:|---|---|---|---|---:|---|---:|---:|---:|
@@ -46,14 +46,17 @@
 | `propose_brief-text` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | not supplied | 0 |
 | `propose_brief-text` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | 487 | 388 |
 | `propose_brief-text` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 487 | 487 | 473 |
+| `text-baseline` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.0 | ok | 487 | 487 | 0 |
 
-### 3.2 Verifier passes (3)
+### 3.2 Verifier passes (5)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
 | `verified-flash-high-text-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 57 | 0 |
 | `verified-flash-high-text-1of5-recovery-2026-09-08` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4149 | 2 |
 | `verified-text-baseline` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1180 | 0 |
+| `wbf-n5-verified-v1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
+| `wbf-n5-verified-v2` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3890 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -61,17 +64,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 8 |
-| Input tokens (billed) | 11,138,456 |
+| Passes on file | 11 |
+| Input tokens (billed) | 19,232,594 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,069,452 |
+| Output tokens | 1,762,402 |
 | Thinking tokens | 2,853,033 |
-| Total tokens | 15,060,941 |
+| Total tokens | 23,848,029 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$4.4714 (2); audited-lower-bound US$0.0389 (1); audited-upper-bound US$9.9521 (2); unrecorded no figure (3) |
-| Run total (range) | at least US$9.4864; no ceiling (1 audited-lower-bound, 3 unrecorded pass(es)) |
+| `cost_usd` by basis | audited US$10.0540 (5); audited-lower-bound US$0.0403 (2); audited-upper-bound US$5.5180 (1); unrecorded no figure (3) |
+| Run total (range) | at least US$12.8533; no ceiling (2 audited-lower-bound, 3 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 3 |
-| Summed wall clock | 0.96 h over 8 pass(es) |
+| Summed wall clock | 1.99 h over 11 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -155,8 +158,9 @@ No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospecti
 | Proposer pool | Modality | Path within the run directory |
 |---|---|---|
 | `propose_brief-text` | text | `flash-high-text-n5/propose_brief-text` |
+| `text-baseline` | text | `text-baseline` |
 
-3 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+5 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -165,7 +169,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `1d6f29db3` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-256
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-256` · **Registry status**: active · **Purpose**: 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT): the small-tile anchor for the tile-size comparison, where F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). Unregistered exploratory extension of the registered H11 two-level design (E62); populated 2026-07-30 per the PI ruling at reports/verification/phase2-rulings-2026-07-30.md S 1b.
 
@@ -37,11 +37,31 @@
 
 ## 3. Execution — passes on file
 
-No pass rows in `results/passes-manifest.json` for this run. A run is decomposed into passes only where its proposer/verifier metas were materialised as resolvable pass files; where they were not, the decomposition records pools and conditions without passes. See § 5 for the registered conditions and § 1 for the registry note.
+### 3.2 Verifier passes (1)
+
+| Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
+|---|---:|---|---|---|---:|---|---:|---:|
+| `verified-adv-text-consensus-5of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1165 | 36 |
+
+Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
 ## 4. Token load and audited cost
 
-No pass rows, so no recorded token load. not supplied: this run's spend is not reconstructable from the passes manifest.
+| Field | Value |
+|---|---|
+| Passes on file | 1 |
+| Input tokens (billed) | 2,087,680 |
+| Input tokens (cached) | 0 |
+| Output tokens | 184,732 |
+| Thinking tokens | 0 |
+| Total tokens | 2,272,412 |
+| Passes with no token record | 0 |
+| `cost_usd` by basis | audited US$0.7990 (1) |
+| Run total (range) | US$0.7990 |
+| Passes with no `cost_usd` | 0 |
+| Summed wall clock | 0.15 h over 1 pass(es) |
+
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
 No cost audit on file names this run or its directory: an independently audited cost for this run is **not supplied**. The four audits checked are `reports/token-load-audit-2026-06-12.md`, `reports/r7-gaps-deltas-2026-09-11.md`, `reports/k-ladder-phase2-deltas-2026-09-12.md`, `reports/billing-reconciliation-2026-09-11.md`.
 
@@ -113,6 +133,10 @@ Listed in the `deviations` field of an analysis that reads this run:
 
 No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospective report under this directory.
 
+### 9.1 Registered pools
+
+1 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+
 ## 10. Provenance of this report
 
 This report is a projection. Every figure above is read from one of the committed inputs below; nothing is estimated, and a figure that is not on file is written **not supplied** with its reason.
@@ -120,7 +144,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `1d6f29db3` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

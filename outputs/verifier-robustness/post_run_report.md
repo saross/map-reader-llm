@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — verifier-robustness
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `1d6f29db3`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/verifier-robustness` · **Registry status**: active · **Purpose**: Verifier-robustness programme: determinism (n=1 vindicated), proposer-input band, temperature/thinking matrix, model roles, compute allocation, operational maximum, pass-budget Pareto. Meta-rule: on a within-noise tie, take the cheaper config.
 
@@ -37,11 +37,38 @@
 
 ## 3. Execution — passes on file
 
-No pass rows in `results/passes-manifest.json` for this run. A run is decomposed into passes only where its proposer/verifier metas were materialised as resolvable pass files; where they were not, the decomposition records pools and conditions without passes. See § 5 for the registered conditions and § 1 for the registry note.
+### 3.2 Verifier passes (8)
+
+| Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
+|---|---:|---|---|---|---:|---|---:|---:|
+| `256-ge3of5-t0-3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 8225 | 151 |
+| `256-union-t0-0` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 12790 | 132 |
+| `384-16of30-t0-3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3645 | 2 |
+| `384-ge3of5-t0-3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2775 | 128 |
+| `384-ge3of5-t0-3-high` | 1 | gemini-3-flash-preview | text | high | 0.0 | ok | 4275 | 5 |
+| `384-ge3of5-t0-7` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4275 | 3 |
+| `384-ge3of5-t0-7-high` | 1 | gemini-3-flash-preview | text | high | 0.0 | ok | 4275 | 42 |
+| `384-union-t0-0` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 18680 | 18 |
+
+Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
 ## 4. Token load and audited cost
 
-No pass rows, so no recorded token load. not supplied: this run's spend is not reconstructable from the passes manifest.
+| Field | Value |
+|---|---|
+| Passes on file | 8 |
+| Input tokens (billed) | 105,622,272 |
+| Input tokens (cached) | 0 |
+| Output tokens | 9,255,581 |
+| Thinking tokens | 7,433,686 |
+| Total tokens | 122,311,539 |
+| Passes with no token record | 0 |
+| `cost_usd` by basis | audited US$49.5279 (7); audited-lower-bound US$1.9116 (1) |
+| Run total (range) | at least US$51.4395; no ceiling (1 audited-lower-bound pass(es)) |
+| Passes with no `cost_usd` | 0 |
+| Summed wall clock | 5.60 h over 8 pass(es) |
+
+> **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
 Audit and reconciliation reports whose text names this run or its directory — consult these for audited figures; a mention is a pointer, not a claim that the report audits this run in full:
 
@@ -190,7 +217,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `1d6f29db3` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
