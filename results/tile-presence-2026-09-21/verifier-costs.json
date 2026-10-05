@@ -1,5 +1,5 @@
 {
-  "_README": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register (the S104 vote-3 increments), priced from its own meta until the register is repaired. cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis. unpriced_legs lists every leg left unpriced, to be recovered by hand with the PI.",
+  "_README": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register, priced from their own metas (none since the S160 repair extracted the S104 vote-3 increments as rows of their parent runs, D32). cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis. unpriced_legs lists every leg left unpriced, to be recovered by hand with the PI.",
   "agreement_tolerance_usd": {
     "measured": 0.01,
     "completed": 0.05
@@ -41,13 +41,11 @@
       "candidates": 13572,
       "sources": [
         "55maps-text-high-generalisation::verified::run1",
-        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
+        "55maps-text-high-generalisation::vote3-increment::run1"
       ],
-      "stages_outside_register": [
-        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
-      ],
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
-      "note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified: own cost (not in the register), 4,367 verifications"
+      "note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; 55maps-text-high-generalisation::vote3-increment::run1: own cost, 4,367 verifications"
     },
     "T03": {
       "stages": [
@@ -62,13 +60,11 @@
       "candidates": 13945,
       "sources": [
         "55maps-text-high-t0-3-generalisation::verified::run1",
-        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
+        "55maps-text-high-t0-3-generalisation::vote3-increment::run1"
       ],
-      "stages_outside_register": [
-        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
-      ],
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
-      "note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified: own cost (not in the register), 4,035 verifications"
+      "note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; 55maps-text-high-t0-3-generalisation::vote3-increment::run1: own cost, 4,035 verifications"
     },
     "TM": {
       "stages": [
@@ -87,13 +83,11 @@
         "55maps-text-high-generalisation::verified::run1",
         "55maps-text-high-t0-3-generalisation::verified::run1",
         "55maps-text-min-n10-uplift::verified-3of10::run1",
-        "stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
+        "55maps-text-min-generalisation::vote3-increment::run1"
       ],
-      "stages_outside_register": [
-        "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
-      ],
+      "stages_outside_register": [],
       "source": "the passes register at the uniform discounted tier (PI rulings D19 amended, D29, D30) via scripts/lib_frontier_cost.py",
-      "note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified: own cost (not in the register), 2,220 verifications"
+      "note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; 55maps-text-min-generalisation::vote3-increment::run1: own cost, 2,220 verifications"
     },
     "UPL": {
       "stages": [

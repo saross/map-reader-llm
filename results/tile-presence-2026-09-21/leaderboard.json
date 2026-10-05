@@ -1148,7 +1148,7 @@
         "outputs/55maps-text-high-t0.3-generalisation/verified",
         "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified"
       ],
-      "verifier_cost_note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-t0.3-generalisation/verified: own cost (not in the register), 4,035 verifications",
+      "verifier_cost_note": "55maps-text-high-t0-3-generalisation::verified::run1: own cost, 9,910 verifications; 55maps-text-high-t0-3-generalisation::vote3-increment::run1: own cost, 4,035 verifications",
       "sweep_csv": "results/55map-final-board-r2-2026-09-06/sweep_T03.csv",
       "rank": 32
     },
@@ -1185,7 +1185,7 @@
         "outputs/55maps-text-high-generalisation/verified",
         "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified"
       ],
-      "verifier_cost_note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation/verified: own cost (not in the register), 4,367 verifications",
+      "verifier_cost_note": "55maps-text-high-generalisation::verified::run1: own cost, 9,205 verifications; 55maps-text-high-generalisation::vote3-increment::run1: own cost, 4,367 verifications",
       "sweep_csv": "results/55map-final-board-r2-2026-09-06/sweep_TH7.csv",
       "rank": 33
     },
@@ -1255,7 +1255,7 @@
         "outputs/55maps-text-min-generalisation/verified",
         "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified"
       ],
-      "verifier_cost_note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; stage:results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-min-generalisation/verified: own cost (not in the register), 2,220 verifications",
+      "verifier_cost_note": "55maps-text-min-generalisation::verified::run1 is a floor: unit pooled over the nominated 55maps-generalisation::verified::run1, 55maps-text-high-generalisation::verified::run1, 55maps-text-high-t0-3-generalisation::verified::run1, 55maps-text-min-n10-uplift::verified-3of10::run1; 10,170 verifications x pooled unit; 55maps-text-min-generalisation::vote3-increment::run1: own cost, 2,220 verifications",
       "sweep_csv": "results/55map-final-board-r2-2026-09-06/sweep_TM.csv",
       "rank": 35
     }
