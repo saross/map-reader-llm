@@ -49,7 +49,7 @@ def test_paired_bootstrap_deterministic():
 @pytest.mark.tier1
 def test_paired_bootstrap_separable_contrast():
     """A clearly better arm A yields a positive CI excluding zero and a
-    floored p-value."""
+    permutation p of 0 (D42: no p is read from the bootstrap)."""
     n = 100
     tp_a = np.full(n, 8.0)
     fp_a = np.full(n, 1.0)
@@ -60,8 +60,9 @@ def test_paired_bootstrap_separable_contrast():
     res = paired_bootstrap(tp_a, fp_a, fn_a, tp_b, fp_b, fn_b, 1000, seed=42)
     assert res["ci95"]["lower"] > 0
     assert res["ci_excludes_zero"] is True
-    assert res["p_value"] == pytest.approx(1 / 1000)
-    assert res["p_at_floor"] is True
+    # Every tile favours A, so no tile swap reaches the observed delta.
+    assert res["p_value"] == 0.0
+    assert "permutation" in res["p_method"]
     # Observed delta equals the point difference of the full arrays.
     expected = micro_f1(800, 100, 100) - micro_f1(200, 600, 600)
     assert res["observed_delta"] == pytest.approx(expected, abs=1e-6)
@@ -69,12 +70,12 @@ def test_paired_bootstrap_separable_contrast():
 
 @pytest.mark.tier1
 def test_paired_bootstrap_null_contrast():
-    """Identical arms give a degenerate all-zero delta distribution.
+    """Identical arms: a zero CI and a permutation p of 1.
 
-    The 2*min-tail convention clamps p to the floor on an all-zero
-    distribution (prop_gt_zero = 0), so `ci_excludes_zero` — not the
-    p-value — is the operative null indicator here. Documented
-    behaviour, inherited from the family-FDR H1 conventions.
+    This test used to pin the retired bootstrap p at its floor (1/B)
+    for identical arms, the defect PI ruling D42 removed
+    (``reports/retest-bootstrap-check-2026-10-05.md``). The permutation
+    p for identical arms is exactly 1.
     """
     n = 60
     tp = np.full(n, 4.0)
@@ -84,9 +85,8 @@ def test_paired_bootstrap_null_contrast():
     assert res["observed_delta"] == 0.0
     assert res["ci95"]["lower"] == 0.0 and res["ci95"]["upper"] == 0.0
     assert res["ci_excludes_zero"] is False
-    # All deltas are exactly zero -> prop_le_zero = 1, p clamps to 1-ish
-    # via 2*min(1, 0) floored at 1/B; min tail is prop_gt_zero = 0.
-    assert res["p_value"] == pytest.approx(1 / 500)
+    assert res["p_value"] == 1.0
+    assert res["n_discordant_tiles"] == 0
 
 
 @pytest.mark.tier1

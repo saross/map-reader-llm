@@ -33,9 +33,11 @@ each contrast must reproduce the committed micro-F1 point estimates and
 difference to within 1e-6. The bootstrap then resamples 487 evaluation
 tiles with replacement, recomputing the paired micro-F1 difference:
 B = 1,000 (registered-convention primary) and B = 10,000 (E54
-narrow-effect sensitivity), seed 42, percentile CI95, two-sided
-p = max(2 * min tail, 1/B) — conventions copied from the family-FDR H1
-leg (`compute_family_fdr.py`) for cross-artefact comparability.
+narrow-effect sensitivity), seed 42, percentile CI95. The p-value beside
+each CI is the paired tile-swap permutation test's on the same arrays
+(`lib_permutation`, 10,000 permutations, seed 42): PI ruling D42
+(2026-10-05) retired the bootstrap p = max(2 * min tail, 1/B) this script
+first carried, which sat at its floor between identical arms.
 
 Usage (run on sapphire; ~seconds)::
 
@@ -58,6 +60,8 @@ import numpy as np
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from lib_permutation import paired_permutation_test  # noqa: E402
 
 SEED = 42
 B_PRIMARY = 1_000       # registered convention (Decision 10, E54)
@@ -92,12 +96,14 @@ def micro_f1(tp: float, fp: float, fn: float) -> float:
 def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
                      tp_b: np.ndarray, fp_b: np.ndarray, fn_b: np.ndarray,
                      n_iterations: int, seed: int) -> dict:
-    """Paired tile-resampling bootstrap of a micro-F1 difference.
+    """Paired tile-resampling bootstrap CI, with a permutation p (D42).
 
     The same resampled tile index set is applied to both arms (paired
     design), micro-F1 is recomputed per arm, and the difference
-    distribution yields the percentile CI and the two-sided p per the
-    family-FDR H1 conventions (2 * min tail, floored at 1/B).
+    distribution yields the percentile CI. The p-value is NOT read from
+    these draws: it is the paired tile-swap permutation test on the same
+    arrays (``lib_permutation.paired_permutation_test``, 10,000
+    permutations, seed 42), per PI ruling D42.
 
     Args:
         tp_a: Per-tile true positives, arm A (length = n tiles).
@@ -110,8 +116,9 @@ def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
         seed: RNG seed.
 
     Returns:
-        Dict with the observed delta, CI95 bounds, tail proportions,
-        p-value, and floor flag.
+        Dict with the observed delta, CI95 bounds, the bootstrap mean, the
+        CI-excludes-zero reading, and the permutation p (``p_value``,
+        ``p_method``, ``n_permutations``, ``n_discordant_tiles``).
     """
     lengths = {len(a) for a in (tp_a, fp_a, fn_a, tp_b, fp_b, fn_b)}
     if len(lengths) != 1:
@@ -127,9 +134,10 @@ def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
                               fn_a[take].sum())
                      - micro_f1(tp_b[take].sum(), fp_b[take].sum(),
                                 fn_b[take].sum()))
-    prop_le = float(np.mean(deltas <= 0))
-    prop_gt = float(np.mean(deltas > 0))
-    p_value = max(2.0 * min(prop_le, prop_gt), 1.0 / n_iterations)
+    perm = paired_permutation_test(
+        {"tp": tp_a, "fp": fp_a, "fn": fn_a},
+        {"tp": tp_b, "fp": fp_b, "fn": fn_b},
+    )
     observed = micro_f1(tp_a.sum(), fp_a.sum(), fn_a.sum()) - micro_f1(
         tp_b.sum(), fp_b.sum(), fn_b.sum())
     ci_lower = round(float(np.percentile(deltas, 2.5)), 6)
@@ -140,10 +148,10 @@ def paired_bootstrap(tp_a: np.ndarray, fp_a: np.ndarray, fn_a: np.ndarray,
         "observed_delta": round(float(observed), 6),
         "bootstrap_delta_mean": round(float(np.mean(deltas)), 6),
         "ci95": {"lower": ci_lower, "upper": ci_upper},
-        "prop_le_zero": prop_le,
-        "prop_gt_zero": prop_gt,
-        "p_value": p_value,
-        "p_at_floor": p_value <= 2.0 / n_iterations,
+        "p_value": perm["metrics"]["f1"]["p_value"],
+        "p_method": perm["method"],
+        "n_permutations": perm["n_permutations"],
+        "n_discordant_tiles": perm["n_discordant_tiles"],
         # Derived from the same rounded bounds reported above, so the
         # flag can never disagree with the artefact's own CI (audit L-4).
         "ci_excludes_zero": bool(ci_lower > 0 or ci_upper < 0),
@@ -317,11 +325,12 @@ def main() -> int:
             "not defined). REGISTERED quantities: the percentile CI95 "
             "from tile-level resampling and the CI-excludes-zero "
             "significance reading (Decision 10, decisions-log.md:335-345; "
-            "B=1,000 registered, B=10,000 per E54). The 2*min-tail "
-            "p-value is NOT registered — it is carried for comparability "
-            "with the family-FDR H1 leg's convention only (audit M-9). "
-            "The permutation p remains the family input; this artefact "
-            "is the paired disclosure, not a replacement."),
+            "B=1,000 registered, B=10,000 per E54). The p-value beside "
+            "each CI is the paired tile-swap permutation test's (PI ruling "
+            "D42, 2026-10-05); the 2*min-tail bootstrap p this artefact "
+            "first carried is retired. The permutation p remains the "
+            "family input; this artefact is the paired disclosure, not a "
+            "replacement."),
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "registration_anchors": {
             "registered_inference": (
@@ -353,8 +362,8 @@ def main() -> int:
                        "eval mean-of-runs vintage (<=0.0005 apart)")},
         },
         "method": ("paired tile bootstrap of the micro-F1 difference; "
-                   "percentile CI95; two-sided p = 2*min tail, floor 1/B; "
-                   "seed 42; conventions per compute_family_fdr.py H1 leg"),
+                   "percentile CI95; seed 42. p-value: paired tile-swap "
+                   "permutation test, 10,000 permutations, seed 42 (D42)"),
         "results": results,
     }
     args.output_dir.mkdir(parents=True, exist_ok=True)
