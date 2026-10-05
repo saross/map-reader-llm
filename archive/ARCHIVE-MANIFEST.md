@@ -225,3 +225,13 @@ carry-forward #3.
 **Scope guard**: still held for review under `results/paper-eval/n1/`:
 `384px-all-buffers/` (the keeper), `512px/` + `512px-all-buffers/` (the
 `retest-phase2*` runs, NOT n1).
+
+## 2026-10-05 addition: `pre-patch-retest-detections-2026-03-21/`
+
+85 retest detection GeoJSONs as they stood on 2026-03-21, copied from the
+untracked sapphire working copy `~/cc-scratch/bootstrap-cis/data/retest/`,
+the only copy of these versions. Each has 1-119 fewer detections than the
+repository's `outputs/retest/` version (tracked from 2026-04-15). Some March
+pairwise artefacts were computed from them, so D42's class B re-test needs
+them. Archived at the PI's request (Session 161); `README.md` in the folder
+gives the detail and an MD5 inventory of the whole scratch directory.
