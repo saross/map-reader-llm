@@ -1,10 +1,11 @@
 # D42 implemented: every contrast by permutation
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (the batch signature note approved and
+> recorded). See [§ Changelog](#changelog) for revision history.
 
-**Status: code, regeneration and findings DONE; one batch signature note
-and two class B decisions wait for the PI (§ 6, § 7).** Tracker item W2.6
+**Status: code, regeneration and findings DONE; the batch signature note
+APPROVED by the PI 2026-10-05T11:34:51Z and recorded on the four analyses;
+class B (§ 6) next.** Tracker item W2.6
 (`planning/text-track-transmission-2026-10-05.md`).
 
 ## 1. The ruling
@@ -190,6 +191,14 @@ pattern; the analysis-specific CHANGED clause is § 4.2's rows for it:
 > this note. Walkthrough: `reports/d42-implementation-2026-10-05.md`.
 
 ## Changelog
+
+### 2026-10-05 (later) — Batch signature note approved
+
+The PI approved § 7's note as written (2026-10-05T11:34:51Z). It is appended
+to `signature.attests` of `e45-bootstrap-pairings`, `h13-overlap-2026-08-18`,
+`grid-tilesize-overlap-2026-08-18` and `grid-postverifier-2026-08-18` in
+`results/run-analyses.json`, each with its § 4.2 rows and its prior text in
+`history`.
 
 ### 2026-10-05 — Original publication (Session 161)
 
