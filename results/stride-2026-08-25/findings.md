@@ -2,7 +2,9 @@
 
 > **Last revised**: 2026-08-25, twice (original publication, then the
 > plateau follow-ups: corrected 13-cell board, k-curves, the free
-> N-ladder, and the EXACT re-verification of the winner's ladder). See
+> N-ladder, and the EXACT re-verification of the winner's ladder).
+> 2026-10-05: p-values from the paired permutation test (PI ruling D42);
+> no verdict changes. See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The execution of
@@ -44,9 +46,9 @@ verifiers ≤ $15.6 / $7.4 pre-approved, measured $8.03 / $3.57).
 **1. Is stride the real lever? NO — the pure-stride reading dies.**
 The grid's stride-monotone ladder was an artefact of having only one
 cell per stride. With three tile sizes at stride 192, 384 px leads
-both others (−0.0161 vs 512 px, p = 0.127; −0.0166 vs 256 px,
-p = 0.167; the two others are identical, p = 0.978); at stride 256,
-384 px leads 512 px (+0.0167, p = 0.151); at stride 336 the pair is
+both others (−0.0161 vs 512 px, p = 0.137; −0.0166 vs 256 px,
+p = 0.178; the two others are identical, p = 0.968); at stride 256,
+384 px leads 512 px (+0.0167, p = 0.154); at stride 336 the pair is
 a dead tie (p = 0.885). No single iso-stride contrast is significant,
 but the direction is consistent: **at fixed stride, 384 px is at or
 above every alternative, never below** — the study's long-standing
@@ -55,17 +57,17 @@ above every alternative, never below** — the study's long-standing
 **2. Where is the optimum? An interior plateau at 384 px, strides
 192–256.** The 384 px ladder reads 0.8677 (336) → 0.8982 (256) →
 0.8961 (192) → 0.8860 (144): the climb 336 → 256 is **significant**
-(+0.0305 [+0.0052, +0.0564], p = 0.020), the top is flat
-(256 vs 192: +0.0020, p = 0.862), and the Phase C rung falls away
-(144 vs 256: −0.0121, p = 0.297; 144 vs 192: −0.0101, p = 0.360).
+(+0.0305 [+0.0052, +0.0564], p = 0.022), the top is flat
+(256 vs 192: +0.0020, p = 0.866), and the Phase C rung falls away
+(144 vs 256: −0.0121, p = 0.284; 144 vs 192: −0.0101, p = 0.352).
 **The stop rule fires at stride 144**: the descent is over.
 
 **3. Does anything beat the incumbent bar? NO — the plateau is the
 answer.** The best new cell (384/33.3, 0.8982) sits +0.0020 above the
-grid winner (p = 0.862) — a dead statistical tie — and at 30 m the
+grid winner (p = 0.866) — a dead statistical tie — and at 30 m the
 top three (0.9031/0.9034 and Phase A's opmax 0.9031) are
 indistinguishable to the third decimal. One new cell is significantly
-*below* the bar (512/34.4: −0.0306, p = 0.021). **No new F1 high
+*below* the bar (512/34.4: −0.0306, p = 0.022). **No new F1 high
 exists on this corpus from geometry**: the leading shelf remains
 ~0.896–0.898 @20 m / ~0.903 @30 m.
 
@@ -106,7 +108,8 @@ c = 1 unions with per-cluster vote counts, join gates per the S142
 audit standard (counts, contiguous keys, carrier reassignment; the
 candidate manifests — join witnesses — are committed), prob_t × k
 sweeps (750 rows), best-F1@20 m operating points, paired tile
-bootstrap contrasts at B = 10,000, seed 42 (Decision 10 / E82).
+bootstrap CIs at B = 10,000, seed 42 (Decision 10 / E82), with p-values
+from the paired tile-swap permutation test (PI ruling D42, 2026-10-05).
 Selection caveat as on the grid: operating points are F1-selected on
 the scored tiles; the paired contrasts are the instrument. Undefined
 MCC stays null (E81; none occurred at any best point).
@@ -132,6 +135,27 @@ MCC stays null (E81; none occurred at any best point).
   Decision 10.
 
 ## Changelog
+
+### 2026-10-05 — p-values from the permutation test (PI ruling D42)
+
+**Refresh trigger**: PI ruling D42 (`planning/pi-decisions-2026-09-20.md`).
+`stride_verifier_analysis.py` takes p from the paired tile-swap permutation
+test (through `h13_overlap_analysis.paired_bootstrap`); its JSON was
+regenerated on sapphire (`5986316b5`). The script also gained the two
+`ladder384` contrasts its JSON held but its contrast list lacked
+(`7aef6d2ff`).
+
+| Contrast | Before | After |
+|---|---:|---:|
+| iso192: 512 − 384 / 256 − 384 / 256 − 512 | 0.127 / 0.167 / 0.978 | 0.137 / 0.178 / 0.968 |
+| iso256: 384 − 512 | 0.151 | 0.154 |
+| iso336 | 0.885 | 0.885 (0.8845) |
+| ladder384: 256 − 336 | 0.020 | 0.022 |
+| ladder384: 144 − 256 | 0.297 | 0.284 |
+| 144 − 192 (rung) / 256 − 192 (bar) | 0.360 / 0.862 | 0.352 / 0.866 |
+| bar: 512/34.4 − grid winner | 0.021 | 0.022 |
+
+**What did NOT change**: every Δ, CI and verdict at 0.05.
 
 ### 2026-08-25 (later) — Plateau follow-ups and the exact winner ladder
 
