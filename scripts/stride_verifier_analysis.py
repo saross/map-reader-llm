@@ -94,6 +94,14 @@ CONTRASTS: dict[str, tuple[str, str]] = {
     "bar: 384/62.5 - grid winner": ("g384_ov240", "g384_ov192"),
     "bar: 384/33.3 - grid winner": ("g384_ov128", "g384_ov192"),
     "bar: 512/34.4 - grid winner": ("g512_ov176", "g384_ov192"),
+    # The 384 px stride ladder. These two rows are in the committed
+    # stride_verifier_analysis.json (2026-08-25) but were missing from this
+    # list, so the script could not reproduce its own artefact. Restored
+    # 2026-10-05 (D42 regeneration) with the cells their names imply; W2's
+    # re-test reproduced the committed values exactly with this mapping
+    # (reports/retest-bootstrap-check-2026-10-05.md, class C2).
+    "ladder384: 256-stride - 336-stride": ("g384_ov128", "g384_ov048"),
+    "ladder384: 144-stride - 256-stride": ("g384_ov240", "g384_ov128"),
 }
 
 
