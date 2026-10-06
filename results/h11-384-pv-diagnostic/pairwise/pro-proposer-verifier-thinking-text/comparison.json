@@ -80,7 +80,34 @@
         "ci_lower": -0.04067704794551437,
         "ci_upper": -0.006299329253622999,
         "p_value": 0.002
+      },
+      "permutation_retest": {
+        "f1_p": 0.0047,
+        "precision_p": 0.1048,
+        "recall_p": 0.0144,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/b17-text-as-is-comparison.json"
+      },
+      "resweep_sensitivity": {
+        "_note": "D43: labelled sensitivity. The minimal-verifier probabilities were rewritten 33 s after the March sweep read them (inferred from timestamps; moved-inputs.md \u00a7 3), so the 0.20 threshold was chosen on a file that no longer exists. Re-swept on today's file, the optimum is 0.15; this is the pairwise at that threshold.",
+        "minimal_threshold": 0.15,
+        "minimal_f1": 0.7696,
+        "minimal_n_accepted": 394,
+        "f1_difference_bootstrap_mean": -0.014475404825910084,
+        "f1_ci": [
+          -0.025886214509170707,
+          -0.005563030145382191
+        ],
+        "permutation_retest": {
+          "f1_p": 0.0067,
+          "precision_p": 0.1369,
+          "recall_p": 0.0252,
+          "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+          "source": "results/d42-retest-2026-10-05/class-b/b17-text-resweep-comparison.json"
+        }
       }
     }
-  ]
+  ],
+  "d42_variant_note": "The minimal (\"flash\") variant's summary (threshold 0.20, F1 0.774, n 397) comes from the first submission of that verifier leg, whose probabilities.json was overwritten 33 s after the sweep read it; today's file gives F1 0.7666, n 392 at 0.20, and the pairwise above was computed on today's file. Two runs of the same minimal verifier therefore differ by about 0.007 F1, against the 0.018 minimal-vs-medium difference (W2.7, D43).",
+  "d42_annotation": "PI ruling D42: the p_value fields inside f1/precision/recall_difference are the RETIRED bootstrap values (2 x minority tail, floor 1/B), kept as published; the authoritative test is each comparison's permutation_retest block. Bootstrap CIs stay as published (a re-run would move them: BCa since April). Re-run outputs: results/d42-retest-2026-10-05/class-b/; report: reports/d42-implementation-2026-10-05.md."
 }

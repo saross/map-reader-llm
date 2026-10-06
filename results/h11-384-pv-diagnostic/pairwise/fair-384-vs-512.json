@@ -28,7 +28,15 @@
         "p_value": 0.086
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.0049,
+        "precision_p": 0.0126,
+        "recall_p": 0.072,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 149
+      }
     }
   },
   "I2:goldilocks": {
@@ -60,7 +68,15 @@
         "p_value": 0.004
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.0019,
+        "precision_p": 0.0205,
+        "recall_p": 0.0056,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 112
+      }
     }
   },
   "I3:best_vs_best": {
@@ -92,7 +108,15 @@
         "p_value": 0.016
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.001,
+        "precision_p": 0.0024,
+        "recall_p": 0.0177,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 109
+      }
     }
   },
   "I5:image_moderate": {
@@ -124,7 +148,15 @@
         "p_value": 0.02
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.0,
+        "precision_p": 0.0,
+        "recall_p": 0.0302,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 166
+      }
     }
   },
   "I6:image_baseline": {
@@ -156,7 +188,15 @@
         "p_value": 0.001
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.0075,
+        "precision_p": 0.2046,
+        "recall_p": 0.0,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 188
+      }
     }
   },
   "I4:deterministic": {
@@ -188,7 +228,35 @@
         "p_value": 0.001
       },
       "n_tiles": 487,
-      "n_iterations": 1000
+      "n_iterations": 1000,
+      "permutation_retest": {
+        "f1_p": 0.007,
+        "precision_p": 0.1487,
+        "recall_p": 0.0005,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json",
+        "n_discordant_tiles": 168
+      }
+    },
+    "current_e39_sweep": {
+      "_note": "D44: the figure to cite. The March 512 px sweep (step 0.1) had no 0.15 row and pinned the 512 px threshold at 0.20; E39 (01c84b841) re-swept on the common 0.05 grid, whose optimum is 0.15.",
+      "f1_512": 0.7701,
+      "det_512_raw": 531,
+      "det_512_clipped": 443,
+      "f1_difference_bootstrap_mean": 0.062494461150470755,
+      "f1_ci": [
+        0.014767526553527251,
+        0.10753264122531096
+      ],
+      "permutation_retest": {
+        "f1_p": 0.0111,
+        "precision_p": 0.1526,
+        "recall_p": 0.0017,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-e39-sweep.json",
+        "n_discordant_tiles": 167
+      }
     }
-  }
+  },
+  "d42_annotation": "PI ruling D42: the p_value fields inside f1/precision/recall_difference are the RETIRED bootstrap values (2 x minority tail, floor 1/B), kept as published; the authoritative test is each comparison's permutation_retest block. Bootstrap CIs stay as published (a re-run would move them: BCa since April). Re-run outputs: results/d42-retest-2026-10-05/class-b/; report: reports/d42-implementation-2026-10-05.md."
 }
