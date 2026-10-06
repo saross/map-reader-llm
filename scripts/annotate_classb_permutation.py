@@ -151,6 +151,10 @@ def fair_384(data: dict) -> list[str]:
     e39 = load(RE / "fair-384-vs-512-e39-sweep.json")
     log = []
     for key, row in data.items():
+        if not isinstance(row, dict):
+            # The d42_annotation note a previous --write added: not a
+            # comparison. Without this a re-run, dry runs included, died on it.
+            continue
         m = march[key]
         check(f"fair {key}", row, m, ("f1_384", "f1_512", "det_384", "det_512_raw", "det_512_clipped"))
         row["result"]["permutation_retest"] = block(
