@@ -83,12 +83,14 @@ changed the model's input.
 
 Reuse
 -----
-Per-meta field extraction is the 2026-10-05 harvester's own
-``harvest()``, imported from ``reports/manipulation-check-2026-10-05-scripts/
-harvest.py`` (:data:`HARVEST_SCRIPT`). ``arms.py`` there runs at import time
-against hard-coded paths, so its ``signature()``, ``_model_of_record()`` and
-``eff_temp()`` are COPIED below with attribution (and extended by
-``max_output_tokens`` and ``inputs``).
+Per-meta field extraction and the signature live in
+``scripts/lib_manipulation_signature.py``: the 2026-10-05 harvester's
+``harvest()`` and ``arms.py``'s ``signature()``, ``_model_of_record()`` and
+``eff_temp()``, copied there with attribution (and extended by
+``max_output_tokens`` and ``inputs``). This gate once loaded the harvester
+from ``reports/manipulation-check-2026-10-05-scripts/`` at import, so
+archiving that report would have broken it (PR #24 review, finding 4); the
+report's scripts stay as the record of what that check ran.
 
 Arms are resolved through ``results/passes-manifest.json``
 (``provenance.source_files`` per pass), falling back to the pool's output
@@ -131,8 +133,6 @@ from __future__ import annotations
 
 import argparse
 import functools
-import hashlib
-import importlib.util
 import itertools
 import json
 import sys
@@ -144,19 +144,20 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from scripts import derive_condition_modality as dcm  # noqa: E402
-
-#: The 2026-10-05 harvester, imported for its per-meta field extraction.
-HARVEST_SCRIPT = BASE_DIR / "reports" / "manipulation-check-2026-10-05-scripts" / "harvest.py"
+from scripts.lib_manipulation_signature import (  # noqa: E402,F401 - re-exported
+    SIGNATURE_FIELDS,
+    SIGNATURE_VERSION,
+    dispatched_ids,
+    eff_temp,
+    harvest,
+    inputs_fingerprint,
+    is_verifier_record,
+    model_of_record,
+    signature,
+)
 
 RUN_ANALYSES = "results/run-analyses.json"
 CONDITIONS_MANIFEST = "results/conditions-manifest.json"
-
-#: The signature definition's version (see the module docstring).
-SIGNATURE_VERSION = "manipulation-signature/1"
-
-#: The fields of a transmitted signature, in order.
-SIGNATURE_FIELDS = ("stage", "model", "temperature_eff", "thinking", "sys_hash",
-                    "examples_sent", "tile_size", "max_output_tokens", "inputs")
 
 #: The fields of a configuration identity, in order.
 CONFIG_FIELDS = ("stage", "version", "instruction_file", "model", "temperature",
@@ -168,197 +169,30 @@ PASS, REFUSE, UNVERIFIABLE = "PASS", "REFUSE", "UNVERIFIABLE"
 EXIT_CODES = {PASS: 0, REFUSE: 2, UNVERIFIABLE: 3}
 
 
-def _load_harvest():
-    """Import the 2026-10-05 harvester's ``harvest`` function.
-
-    Returns:
-        The ``harvest(path) -> dict`` function.
-
-    Raises:
-        ImportError: The provenance script has moved; update
-            :data:`HARVEST_SCRIPT`.
-    """
-    spec = importlib.util.spec_from_file_location("manipulation_harvest", HARVEST_SCRIPT)
-    if spec is None or spec.loader is None or not HARVEST_SCRIPT.exists():
-        raise ImportError(f"the manipulation-check harvester is not at {HARVEST_SCRIPT}")
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module.harvest
-
-
-_harvest = _load_harvest()
-
-
-def dispatched_ids(meta: dict[str, Any]) -> frozenset[str]:
-    """The ids of every item a pass dispatched (its tiles, or its candidates).
-
-    Args:
-        meta: A parsed ``*.meta.json``.
-
-    Returns:
-        ``execution_stats`` ``completed_items`` plus ``failed_items`` ids.
-
-    Examples:
-        >>> sorted(dispatched_ids({"execution_stats": {"completed_items": ["b", "a"],
-        ...     "failed_items": [{"item_id": "c"}]}}))
-        ['a', 'b', 'c']
-    """
-    stats = meta.get("execution_stats") or {}
-    ids = {str(i) for i in stats.get("completed_items") or [] if i is not None}
-    for f in stats.get("failed_items") or []:
-        item = f.get("item_id") if isinstance(f, dict) else f
-        if item is not None:
-            ids.add(str(item))
-    return frozenset(ids)
-
-
-def inputs_fingerprint(ids: frozenset[str] | set[str], manifest_path: str | None = None) -> str:
-    """The ``inputs`` signature field for a set of dispatched ids.
-
-    Args:
-        ids: Dispatched item ids (one pass's, or the union over an arm).
-        manifest_path: The recorded manifest path, used when no ids are.
-
-    Returns:
-        ``"<first 12 hex of sha256 over the sorted ids>/<n>"``; else
-        ``"manifest:<path>"``; else ``"unrecorded"``.
-
-    Examples:
-        >>> inputs_fingerprint(frozenset({"a", "b"})).endswith("/2")
-        True
-        >>> inputs_fingerprint(frozenset())
-        'unrecorded'
-    """
-    if ids:
-        digest = hashlib.sha256(json.dumps(sorted(ids)).encode()).hexdigest()
-        return f"{digest[:12]}/{len(ids)}"
-    if manifest_path:
-        return f"manifest:{manifest_path}"
-    return "unrecorded"
-
-
 @functools.lru_cache(maxsize=None)
 def meta_record(path: str) -> dict[str, Any]:
-    """One meta's harvested fields, plus the output budget the harvester omits.
+    """One meta's harvested fields, with its dispatched-item fingerprint.
+
+    The meta is parsed once, by :func:`lib_manipulation_signature.harvest`,
+    whose record carries ``max_output_tokens`` and ``dispatched_ids`` (until
+    PR #24 review finding 9, this function re-read the file for both).
 
     Args:
         path: Repository-relative or absolute ``*.meta.json`` path.
 
     Returns:
         The harvester's record (``error`` set when unreadable), with
-        ``max_output_tokens`` added from ``configuration`` or its snapshot,
-        and ``inputs`` (the dispatched-item fingerprint, see the module
-        docstring).
+        ``input_ids`` (the dispatched ids, a frozenset) and ``inputs`` (their
+        fingerprint, see the module docstring).
     """
     p = Path(path)
     full = p if p.is_absolute() else BASE_DIR / p
-    rec = dict(_harvest(str(full)))
+    rec = harvest(str(full))
     rec["path"] = path
     if "error" not in rec:
-        try:
-            meta = json.loads(full.read_text())
-        except (OSError, ValueError):
-            meta = {}
-        cfg = meta.get("configuration") or {}
-        snap = cfg.get("full_config_snapshot") or {}
-        rec["max_output_tokens"] = cfg.get("max_output_tokens", snap.get("max_output_tokens"))
-        rec["input_ids"] = dispatched_ids(meta)
+        rec["input_ids"] = frozenset(rec.pop("dispatched_ids"))
         rec["inputs"] = inputs_fingerprint(rec["input_ids"], rec.get("manifest_path"))
     return rec
-
-
-# ── copied from reports/manipulation-check-2026-10-05-scripts/arms.py ────
-# (2026-10-05, Session 160; that script runs at import against hard-coded
-# paths, so these three functions are copied rather than imported. Change
-# made here: max_output_tokens and inputs added to the signature.)
-
-def eff_temp(r: dict[str, Any]) -> Any:
-    """Effective temperature of a record: ``temperature_effective`` if set (E55).
-
-    Args:
-        r: A harvested meta record.
-
-    Returns:
-        The effective temperature, else the configured one.
-    """
-    t = r.get("temperature_effective")
-    return t if t is not None else r.get("temperature")
-
-
-def _model_of_record(r: dict[str, Any]) -> Any:
-    """What ran: per-item model_version, else pricing model, else config (E57).
-
-    Args:
-        r: A harvested meta record.
-
-    Returns:
-        The model of record.
-    """
-    pm = r.get("pim_models") or []
-    if len(pm) == 1:
-        return pm[0]
-    if r.get("pricing_model"):
-        return r["pricing_model"]
-    return r.get("model")
-
-
-def is_verifier_record(r: dict[str, Any]) -> bool:
-    """True for a verifier pass's meta (verify config or verifier script).
-
-    Args:
-        r: A harvested meta record.
-
-    Returns:
-        Whether the record is a verifier pass.
-    """
-    return str(r.get("version") or "").startswith("verify_") or \
-        r.get("script") in ("run_pv.py", "5_verify_crops.py")
-
-
-def signature(r: dict[str, Any]) -> dict[str, Any]:
-    """Transmitted signature of one meta record (:data:`SIGNATURE_FIELDS`).
-
-    Args:
-        r: A harvested meta record (:func:`meta_record`).
-
-    Returns:
-        The signature dict.
-
-    Examples:
-        >>> sig = signature({"version": "detect_x", "temperature": 0.7,
-        ...     "images_sent_by_config": False, "listed_example_n": 17,
-        ...     "listed_library_fp": "abc", "sys_hash": "e169b7237b85ffff"})
-        >>> (sig["stage"], sig["examples_sent"], sig["sys_hash"])
-        ('proposer', 'none', 'e169b7237b85')
-    """
-    if is_verifier_record(r):
-        # lib_verifier.build_reference_items: text_only_labels win; else
-        # every listed example is sent as an image (no include flag read).
-        tl = r.get("text_only_labels") or []
-        if tl:
-            sent = "text-labels:" + str(len(tl))
-        elif r.get("listed_example_n"):
-            sent = "images:" + r["listed_library_fp"] + f"/{r['listed_example_n']}"
-        else:
-            sent = "none"
-    else:
-        if r.get("images_sent_by_config") and r.get("listed_example_n"):
-            sent = "images:" + r["listed_library_fp"] + f"/{r['listed_example_n']}"
-        else:
-            sent = "none"
-    return {
-        "stage": "verifier" if is_verifier_record(r) else "proposer",
-        "model": _model_of_record(r),
-        "temperature_eff": eff_temp(r),
-        "thinking": r.get("thinking_level"),
-        "sys_hash": (r.get("sys_hash") or "")[:12] or None,
-        "examples_sent": sent,
-        "tile_size": r.get("tile_size"),
-        "max_output_tokens": r.get("max_output_tokens"),
-        "inputs": r.get("inputs"),
-    }
-
-# ── end of the copied functions ──────────────────────────────────────────
 
 
 def configuration_identity(r: dict[str, Any]) -> dict[str, Any]:

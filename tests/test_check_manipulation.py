@@ -29,6 +29,7 @@ from pathlib import Path
 import pytest
 
 from scripts import check_manipulation as cm
+from scripts import lib_manipulation_signature as sig
 
 _LIBRARY_A = [{"path": f"neutral-naming/example_{i:02d}.png", "label": "Positive",
                "category": "canonical_positive"} for i in range(1, 10)]
@@ -267,7 +268,7 @@ def test_the_signature_carries_exactly_the_shared_fields(tmp_path) -> None:
     """The signature is the definition shared with map-reader-bench:
     its keys are SIGNATURE_FIELDS, no more and no fewer."""
     rec = cm.meta_record(_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A, True))
-    assert tuple(cm.signature(rec)) == cm.SIGNATURE_FIELDS
+    assert tuple(sig.signature(rec)) == sig.SIGNATURE_FIELDS
     assert tuple(cm.configuration_identity(rec)) == cm.CONFIG_FIELDS
 
 
