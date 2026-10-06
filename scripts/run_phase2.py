@@ -1102,8 +1102,19 @@ def run_phase2(
             )
             return {"error": "model_mismatch"}
 
+    # Apply condition filter
+    if condition_filter:
+        conditions = [c for c in conditions if c["name"] == condition_filter]
+        if not conditions:
+            print(f"ERROR: Condition '{condition_filter}' not found")
+            all_names = [c["name"] for c in extract_conditions(config)]
+            print(f"Available conditions: {', '.join(all_names)}")
+            return {"error": "condition_not_found"}
+
     # An inert field is an error, not a no-op (tracker W6.2, erratum E90):
-    # every condition's configuration is checked before any unit runs.
+    # every configuration that will RUN is checked before any unit runs.
+    # After the --condition filter, so a clean condition is not refused for
+    # an inert sibling it will never launch beside (PR #24 review, finding 7).
     inert_errors = validate_condition_configs(conditions, allow_inert_fields)
     if inert_errors:
         print("=" * 70)
@@ -1113,15 +1124,6 @@ def run_phase2(
             print(msg)
         print()
         return {"error": "inert_configuration_fields"}
-
-    # Apply condition filter
-    if condition_filter:
-        conditions = [c for c in conditions if c["name"] == condition_filter]
-        if not conditions:
-            print(f"ERROR: Condition '{condition_filter}' not found")
-            all_names = [c["name"] for c in extract_conditions(config)]
-            print(f"Available conditions: {', '.join(all_names)}")
-            return {"error": "condition_not_found"}
 
     # Determine number of runs
     num_runs = runs if runs is not None else execution.get("runs", 10)

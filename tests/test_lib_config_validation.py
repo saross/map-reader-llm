@@ -226,6 +226,36 @@ def test_run_phase2_refuses_an_inert_condition_at_launch(tmp_path) -> None:
     assert validate_condition_configs([conditions[1]]) == []
 
 
+@pytest.mark.parametrize(("condition", "refused"), [
+    ("clean", False),   # the filtered set is clean: the sibling does not block it
+    ("inert", True),    # the filtered set itself is inert: refused
+    (None, True),       # the whole study runs: the inert sibling is in it
+])
+def test_run_phase2_checks_only_the_conditions_that_will_run(tmp_path, condition,
+                                                             refused) -> None:
+    """PR #24 review, finding 7: the inert-field check ran over every
+    condition before ``--condition`` filtering, so a clean condition was
+    refused because of a sibling it would never launch beside."""
+    import yaml
+
+    from scripts.run_phase2 import run_phase2
+    text, image = tmp_path / "t.json", tmp_path / "i.json"
+    text.write_text(json.dumps(_text_config()))
+    image.write_text(json.dumps(_image_config()))
+    study = {"study": {"name": "Inert sibling", "version": "1.0", "phase": "2d",
+                       "hypothesis": "H5"},
+             "factors": {"f": {"description": "Placeholder", "levels": []}},
+             "conditions": [{"name": "clean", "config": str(image), "run": True},
+                            {"name": "inert", "config": str(text), "run": True}],
+             "inputs": {"manifest": "inputs/tiles/validation_manifest.json"},
+             "execution": {"runs": 1, "workers": 1, "output_dir": str(tmp_path / "out")}}
+    path = tmp_path / "study.yaml"
+    path.write_text(yaml.safe_dump(study))
+    results = run_phase2(study_path=path, dry_run=True, condition_filter=condition,
+                         verbose=False)
+    assert (results.get("error") == "inert_configuration_fields") is refused
+
+
 def test_run_phase2_passes_the_opt_out_to_the_detector(capsys) -> None:
     """A concurrent-mode unit launched with the opt-out passes it on, or the
     detector subprocess would refuse the configuration the study allowed."""
