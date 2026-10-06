@@ -73,6 +73,10 @@ from scripts.lib_token_bucket import TokenBucketGovernor
 # Recovers ~92 % of historical realtime proposer parse failures
 # (Tier 1 trailing-comma, Tier 2 json5, Tier 3 longest-valid-prefix).
 from scripts.lib_batch_api import parse_response_with_repair
+from scripts.lib_config_validation import (  # noqa: E402
+    InertConfigurationError,
+    validate_no_inert_fields,
+)
 
 
 # Script Version
@@ -773,6 +777,7 @@ def detect_mounds_versioned(
     cache_ttl_seconds=86400,
     service_tier=None,
     skip_intent_check=False,
+    allow_inert_fields=False,
 ):
     """
     Executes the detection pipeline using a specific versioned configuration.
@@ -802,10 +807,18 @@ def detect_mounds_versioned(
             coordinate conversion. Defaults to TILE_SIZE from config.
         tiles_dir_override (str, optional): Override tiles directory path. Defaults to
             TILES_DIR from config.
+        allow_inert_fields (bool, optional): Launch even when the configuration
+            carries fields that cannot reach the model (an example list with
+            ``include_example_images: false``), logged loudly. For historical
+            reproduction runs only; see ``scripts/lib_config_validation.py``.
 
     Returns:
         Dict with items_processed and items_failed counts, or None if
         setup failed before processing could begin.
+
+    Raises:
+        InertConfigurationError: The effective configuration carries an inert
+            field and ``allow_inert_fields`` is false (tracker W6.2).
     """
     # Load Config
     try:
@@ -843,6 +856,11 @@ def detect_mounds_versioned(
             f"with CLI Argument: {thinking_level_override}"
         )
         config["thinking_level"] = thinking_level_override
+
+    # An inert field is an error, not a no-op (tracker W6.2, erratum E90):
+    # checked on the EFFECTIVE configuration, before any client exists.
+    validate_no_inert_fields(config, source=str(config_path),
+                             allow_inert_fields=allow_inert_fields)
 
     # Resolve effective tile size — CLI override > default from config import
     effective_tile_size = tile_size if tile_size is not None else TILE_SIZE
@@ -1506,6 +1524,11 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
     if args.model:
         config_json["model"] = args.model
 
+    # An inert field is an error, not a no-op (tracker W6.2, erratum E90).
+    validate_no_inert_fields(
+        config_json, source=str(args.config),
+        allow_inert_fields=getattr(args, "allow_inert_fields", False))
+
     # Resolve effective tile size and tiles directory
     effective_tile_size = (
         args.tile_size if args.tile_size is not None else TILE_SIZE
@@ -1963,6 +1986,19 @@ Examples:
         "Default: flex.",
     )
     parser.add_argument(
+        "--allow-inert-fields",
+        action="store_true",
+        dest="allow_inert_fields",
+        help=(
+            "Launch even when the configuration carries fields that cannot "
+            "reach the model (e.g. an example list with "
+            "include_example_images: false, which transmits nothing from the "
+            "library). For historical reproduction runs only; the findings "
+            "are logged loudly. Without it such a configuration is refused "
+            "at launch (scripts/lib_config_validation.py)."
+        ),
+    )
+    parser.add_argument(
         "--skip-intent-check",
         action="store_true",
         help=(
@@ -1975,31 +2011,37 @@ Examples:
     )
     args = parser.parse_args()
 
-    if args.mode == "batch":
-        result = _detect_mounds_batch(args)
-    else:
-        result = detect_mounds_versioned(
-            args.config,
-            manifest_path=args.manifest,
-            output_name=args.output,
-            output_dir=getattr(args, 'output_dir', None),
-            model_override=args.model,
-            temperature_override=args.temperature,
-            thinking_level_override=getattr(args, 'thinking_level', None),
-            ordering_override=args.ordering,
-            ordering_seed=getattr(args, 'ordering_seed', None),
-            workers=args.workers,
-            dry_run=args.dry_run,
-            limit=args.limit,
-            max_retries=args.max_retries,
-            base_wait=args.base_wait,
-            tile_size=args.tile_size,
-            tiles_dir_override=args.tiles_dir,
-            use_cache=args.use_cache,
-            cache_ttl_seconds=args.cache_ttl,
-            service_tier=args.service_tier,
-            skip_intent_check=args.skip_intent_check,
-        )
+    try:
+        if args.mode == "batch":
+            result = _detect_mounds_batch(args)
+        else:
+            result = detect_mounds_versioned(
+                args.config,
+                manifest_path=args.manifest,
+                output_name=args.output,
+                output_dir=getattr(args, 'output_dir', None),
+                model_override=args.model,
+                temperature_override=args.temperature,
+                thinking_level_override=getattr(args, 'thinking_level', None),
+                ordering_override=args.ordering,
+                ordering_seed=getattr(args, 'ordering_seed', None),
+                workers=args.workers,
+                dry_run=args.dry_run,
+                limit=args.limit,
+                max_retries=args.max_retries,
+                base_wait=args.base_wait,
+                tile_size=args.tile_size,
+                tiles_dir_override=args.tiles_dir,
+                use_cache=args.use_cache,
+                cache_ttl_seconds=args.cache_ttl,
+                service_tier=args.service_tier,
+                skip_intent_check=args.skip_intent_check,
+                allow_inert_fields=args.allow_inert_fields,
+            )
+    except InertConfigurationError as exc:
+        # A clear launch error, not a traceback: nothing has been sent.
+        print(f"ERROR: {exc}")
+        sys.exit(1)
 
     # Exit code: 0 = success, 1 = setup error, 2 = partial failure
     if result is None:
