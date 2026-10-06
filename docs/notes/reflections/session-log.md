@@ -10019,3 +10019,69 @@ permutation tests with BH for every contrast (implement next session).
 modifications mid-session, so commits to `main` used git plumbing rather than
 stash or merge. The PI was available throughout and ruled in one line on
 laid-out options; the X1 note was nonetheless lost from his transcript twice.
+
+## Session 161
+
+*2026-10-05/06; amd-tower + sapphire; Opus 5.5 driving; Opus subagents
+(deposit provenance, class B input search, W7.5 request comparison); OSF API
+reads and writes (PI-approved); no model API calls; API spend US$0. Primary
+instance, no compaction. Branch `register-repair`; planning, notes, errata and
+reports mirrored to `main` by git plumbing.*
+
+**X1 (D33) signed.** The PI approved the r2 board's signature note with its
+points (a) and (b) (2026-10-05T06:06:19Z). Board refresh written, note in
+`signature.attests`, manifests regenerated (`b044c486e`, `d35abeef0`); the five
+red refresh tests pass.
+
+**OSF (W8.3, W8.4; E91).**
+
+- State check (`reports/osf-state-check-2026-10-05.md`): project `h9x4g`
+  private, no components, nothing uploaded after 2026-01-31, nothing deleted
+  but the first-upload set; one registration update (2026-02-04) with an empty
+  file list; the five files the February session log records as uploaded never
+  attached.
+- S-11: the registered pre-holdout deposit was never made. Provenance
+  (`reports/osf-deposit-provenance-2026-10-05.md`): five of nine items public
+  on GitHub before holdout at `5d8c251`/`c64a7dce`, unchanged since.
+- Erratum E91; late deposit uploaded to `late-deposit-2026-10-05/` (two zips,
+  95 files, blob-verified) with an index; errata pointers, E87 files and a new
+  README version uploaded; project made public by the PI.
+- Registration update 2 submitted and approved through the API
+  (2026-10-05 11:30 UTC; lodged documents re-attached; URLs sent as plain text
+  because OSF strips `<...>` links).
+
+**D42 implemented.** `scripts/lib_permutation.py` (reproduces the board kernel
+bit for bit); seven paths converted (five from W2, the February pseudo-p, the
+retest evaluator's uncorrected CI flag); eight analyses regenerated; the March
+pairwise file and nine retest evaluations annotated, not regenerated; the
+February instrument re-tested on a copy (S-12: four contrasts gain
+significance); five findings documents updated; batch signature note on four
+signed analyses approved (2026-10-05T11:34:51Z); tier 1 green (3,750). Report
+`reports/d42-implementation-2026-10-05.md`.
+
+**Class B under D43/D44** (`e7b32de0b`): six files annotated after
+point-estimate checks; B-17 significant as run (0.0047) and re-swept (0.0067);
+I4 on both sweeps; one raw-alpha flip in the PV files; B-16 not re-testable
+(the per-tile scorer refuses its 512 px detections on the 384 px frame).
+
+**W7.5 resolved; W2.7 and W7.6 opened.** Same request on two dates, outputs
+disjoint (`reports/w75-cross-date-drift-2026-10-05.md`; Obs 497); E57 stands.
+W2.7 options note (`planning/w27-configuration-level-testing-2026-10-05.md`;
+corrected 2026-10-06). W7.6, a replicate atlas from the accidental re-runs.
+
+**Rulings D43-D47** (B-17 and I4 both ways; replicate floor at the 95th
+percentile; replicate runs claim by claim) and the five defaults accepted.
+C-05: both Era-1 boards found unsigned; their outcomes amended in place with
+PI-approved text (`111c2747d`).
+
+**Other.** 85 pre-patch retest detections archived from
+`~/cc-scratch/bootstrap-cis/` (`ce9600edf`); two stale sapphire watchers
+stopped (1287463, 1734339); the grouped open-questions list
+(`planning/open-questions-2026-10-05.md`).
+
+**Contextual assumptions.** The OSF actions (uploads, update, project made
+public) were authorised by the PI in this session, the update's text approved
+word for word. Annotating rather than regenerating was chosen wherever a
+re-run would also move published values for reasons other than D42. Items 1-4
+of the end list (W2.7 floors and inventory, the W1 pass, W4/W6 fixes, the
+register-repair PR) were left for a fresh session at the PI's suggestion.

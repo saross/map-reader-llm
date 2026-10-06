@@ -56,7 +56,7 @@ in brackets (§ 4).
   configurations; the 15-cell Tier 1 is 9; six Tier-1 cells are one text
   configuration. (The "23 (7)" alternative is withdrawn: W3 showed the
   orderings transmitted.)
-- [ ] **C-05 (L, W1).** `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`;
+- [x] **C-05 (L, W1).** DONE 2026-10-06 (S161): both boards are UNSIGNED (not signed, as first written here), so each outcome was amended in place with PI-approved text (`planning/era1-c05-amendments-draft-2026-10-06.md`). Was: `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`;
   analyses `era1-single-pass-baseline-matrix`, `era1-leaderboard`
   (`results/run-analyses.json`, both SIGNED): five Phase 2c text cells
   ranked as distinct configurations. No tier is driven by a replicate
@@ -279,9 +279,9 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
   uncorrected CI flag); eight analyses regenerated, the March pairwise file
   and nine retest evaluations annotated, the February 60-tile instrument
   re-tested; five findings documents updated; tier 1 green (3,750). STILL
-  OPEN: the batch signature note on four signed analyses (report § 7, PI);
-  class B (two PI choices: B-17's two-file mix, I4's sweep; report § 6);
-  the C-25 documentation sites (W1). Was: replace the bootstrap p-value in
+  OPEN: the C-25 documentation sites (W1). DONE since: the batch signature
+  note (approved 2026-10-05T11:34:51Z, `eb2581eba`); class B under D43/D44
+  (2026-10-06, `e7b32de0b`; report § 6.1). Was: replace the bootstrap p-value in
   live code (C-27: `scripts/lib_advanced_metrics.py:1945-1955` and four
   other paths; retire the test that pins the floor), apply the re-test
   results (C-25) to every inventoried site, and re-test what W2 could not
@@ -397,6 +397,25 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   If they did, correct E57, the register's model labels and every claim that
   reads those cells as Flash; if not, find what differed (serving drift
   between dates bears on every cross-date comparison).
+- [ ] W7.6 A REPLICATE ATLAS from the accidental re-runs (added 2026-10-06 at
+  the PI's question "is there anything else we can learn from these accidental
+  re-runs?"; offline, no API). The same-signature pairs span every time gap:
+  minutes (B-17's resubmitted minimal verifier, 2026-03-24), hours (`h8-v2`
+  scale-8 against `h10` pool_160_hp4hn4, 2026-04-15), 8 days on the 55-map
+  corpus (`55maps-generalisation` 04-10 against `55maps-text-high-generalisation`
+  04-18), 17 days on the text track (`gold-standard-v2` 04-10 against
+  `pv-diag-384` text T0.7 03-24) and 20 days on the image track (S-9). Tabulate
+  within- and cross-execution differences by time gap, track, stage and corpus
+  size: (1) where in time the drift appears (same-day pairs like within-run
+  pairs, or not), which separates serving drift from execution context
+  (Obs 497); (2) the cross-execution floor on the 55-map corpus itself, which
+  D46's floors for the board's cross-date comparisons need (W2.7); (3) a drift
+  timeline from every meta with fixed settings (per-request thought tokens,
+  output length, MAX_TOKENS and parse-failure rates by date), looking for change
+  points; (4) which tiles flip between replicates (intrinsic ambiguity), against
+  the ground-truth reviews and the FP classes; (5) a sentinel design for future
+  campaigns and map-reader-bench: one fixed configuration on a fixed tile set at
+  each run date, so drift is measured, not inferred.
 - [ ] W7.4 Each finding feeds W5: no run is designed until W7 says what can be
   verified offline.
 

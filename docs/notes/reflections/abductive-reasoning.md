@@ -9021,3 +9021,85 @@ cache's exact size") had said; my implementation had dropped the second half.
 Not a failure of the drafts or of the rule's intent: the drafts were right,
 and checking the machine rule against independent hand evidence before
 trusting it is what caught the error.
+
+## Entry — 2026-10-05 (Session 161, map-reader-llm): The same request on two dates
+
+**Session:** d2c550e4-c122-498d-942d-160a7dd91359
+**Instance:** primary
+
+### Surprising fact
+
+Two executions with an identical transmitted signature (same model, same
+instruction hash, same 13 example images, same temperature and thinking
+level, same 487 tiles) gave outputs that did not overlap. At T = 0.3 minimal
+thinking, the 27 March passes held 746-753 detections and the 16 April
+passes 793-821; pass pairs across the dates differed by a median 0.037 F1,
+pairs within a date by about 0.006.
+
+### Probe
+
+My first hypothesis was a request difference the signature cannot see,
+by analogy with E57, where a per-study model override never reached the
+request: perhaps a thinking or caching override behaved differently in the
+March run, which used uncommitted code. The probes, all offline: per-request
+metadata (identical input, cached and image tokens; `gemini-3-flash-preview`
+on every response); the March code recovered from the session archive and
+found byte-identical to `76a2cc719`, with no diff hunk to April's
+`b57cf6c22` in what the cached path sends; and the request bodies rebuilt
+under both SDK versions with the network patched out, identical apart from
+client-version headers.
+
+### Belief revision
+
+The request-difference hypothesis failed every probe. The leading
+explanation became a change on the serving side between the two dates, with
+the machine, quota tier and concurrency as residual alternatives. I had
+treated "same signature" as "replicate"; a date can carry an effect larger
+than many configuration contrasts in this project (Obs 497).
+
+### What would change this belief
+
+A same-request pair a few hours apart that disagrees as much as the
+three-week pair would point to execution context, not drift; one that agrees
+like within-run passes would favour drift. The project holds such a pair
+(`h8-v2` against `h10`, 2026-04-15; tracker W7.6). A paid re-send on a third
+date would settle it directly.
+
+## Entry — 2026-10-05 (Session 161, map-reader-llm): A defective p-value that erred the other way
+
+**Session:** d2c550e4-c122-498d-942d-160a7dd91359
+**Instance:** primary
+
+### Surprising fact
+
+Re-testing the February 60-tile Phase 2 analyses with the permutation test
+(D42), I expected the old instrument to lose verdicts, as the retest-era
+bootstrap had (A[45], A[60]). It lost none and gained four: Phase 2b text
+T0.3 > T1.0 and T1.0 > T1.3, Phase 2e config-default and canonical-last >
+random, all significant after BH on real p-values and none declared in
+February.
+
+### Probe
+
+The per-condition F1 reproduced the archived reports exactly, so the inputs
+were right. The difference is in the construction: the February "pseudo-p"
+was 0.05 minus the CI's lower bound when the bootstrap CI excluded zero, and
+1.0 otherwise. A weak but real effect whose CI clears zero by 0.013 gets a
+pseudo-p of about 0.037, well above the BH thresholds for the first ranks
+(0.005, 0.010, … for ten contrasts), so it fails; its permutation p was
+0.013.
+
+### Belief revision
+
+I had generalised from one defect to "this project's homemade p-values err
+towards false positives". The two defects err in opposite directions for
+opposite reasons: the bootstrap p sat at its floor when outputs barely
+differed; the pseudo-p sat near 0.05 whenever an effect was small. Each
+instrument has to be calibrated on its own, which is what W2.5 asks for
+every test the paper relies on.
+
+### Implications for practice
+
+None of the four new verdicts was a carry-forward input (those took the
+highest F1), but prose that called those February contrasts null needs
+checking (tracker S-12, W1).

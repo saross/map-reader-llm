@@ -1478,3 +1478,35 @@ discard / replace; an unanswered gate holds over.*
   lost inside it again (claude-obs 138). Would grouping the questions as
   "needs your words now", "has a default I will apply", and "can wait" have
   served better?
+
+## S161 candidates (pending review, 2026-10-06, drafted at handoff) — silence never discards
+
+*Things Shawn may have observed about Claude this session. Accept / edit /
+discard / replace; an unanswered gate holds over.*
+
+- **C1 — The decision walk-through.** After decisions had scattered across
+  long messages, he wrote that he could not find them in the transcript and
+  asked to be walked through them. I gave five self-contained items, each
+  with its context, options and a recommendation, answerable as "1: C, 2: C,
+  3: A …", and he answered all five in one line. Should that format be the
+  default whenever more than one decision is pending, rather than something
+  he has to ask for? (claude-obs 143 is my side of this.)
+- **C2 — Correcting my own numbers in the open.** While checking Obs 497 at
+  source I found the W2.7 note's cross-execution row was wrong (it had pooled
+  within-run pairs; 0.013/0.054 became 0.037/0.061). I said so before writing
+  the observation and corrected the note with a changelog. Is that the
+  disclosure he wants, or would he rather such corrections arrive batched at
+  close?
+- **C3 — OSF: verifying before acting, and finding his memory half right.**
+  He recalled uploading amendments that were not on OSF. Before any upload I
+  read the full activity log, the update's API record and the session log,
+  and could tell him that nothing had been deleted, that the February upload
+  had been made but never attached, and that the registered deposit was
+  never made. Did the read-only investigation first (and the late-deposit
+  design that pointed each item to its git commit) match how he wants public
+  records handled?
+- **C4 — Insider shorthand in public text.** The update 2 draft said the
+  orderings "are recorded by no run", and he had to ask what that meant; he
+  then asked for a conservative outsider pass over the rest. Should every
+  outward-facing draft come to him already with that pass done and the
+  expanded phrases named (claude-obs 144)?

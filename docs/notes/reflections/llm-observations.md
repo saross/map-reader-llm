@@ -8442,3 +8442,47 @@ compaction summary.*
   to `main` and merging through `read-tree`, `update-index --cacheinfo`,
   `write-tree` and `commit-tree` into a temporary index never touched the
   working tree, and kept `main` and the branch in step.
+
+## Session 161 — 2026-10-05/06 (X1 signed; OSF investigated, deposit made late, update 2 submitted; D42 implemented and class B re-tested; W7.5 resolved; D43-D47)
+
+- **Read back what a public service stored before submitting it.** OSF's
+  sanitiser silently strips `<https://...>` autolinks from a registration
+  update's text. That is how the February update came to read
+  "**Repository**: at commit `5d8c251`" with no repository. Creating update
+  2 as a draft through the API, reading the stored text back and diffing it
+  against the approved draft caught the same loss before submission; the URLs
+  went as plain text. For any outward text: create, read back, diff, then
+  submit.
+- **Re-running an old producer under today's guards is an audit.** The class
+  B re-run of `pairwise-384px.json` stopped on a `TileJoinRefusalError`: its
+  512 px detections carry 512-frame tile names, and only 72 of 558 can be
+  credited on the 384 px frame. The guard was added after March; in March the
+  same mismatch silently dropped most detections' TP and FP from the per-tile
+  tables behind the published CIs and p-values. A refusal from a later guard
+  is a finding about the artefact, not a nuisance to route around.
+- **Request identity can be proved offline.** To separate "a request
+  difference" from "serving drift" (W7.5), the agent rebuilt the cached-path
+  request bodies under both SDK versions (google-genai 1.67.0 and 1.71.0)
+  with the network layer patched out, and compared bytes. No API call, and a
+  stronger result than any diff of the code alone: identical bodies apart
+  from client-version headers.
+- **A new kernel that must agree with signed results should be tested
+  against the old one, bit for bit.** `lib_permutation` mirrors the board
+  kernel's scalar observed statistic and vectorised null exactly, and draws
+  its swap masks in chunks of the same row-major random stream; a test
+  asserts identical p on integer and float counts at 3, 40 and 300 discordant
+  tiles. Without that, a "reimplementation" of the boards' test would have
+  shifted signed p-values in the fourth decimal and nobody could say why.
+- **Over ssh, two quoting traps cost a retry each.** An apostrophe in a
+  commit message closes a single-quoted remote command (twice this session);
+  pass messages with `git commit -F <file>`. And `mkdir … && setsid nohup job >
+  log 2>&1 < /dev/null &` backgrounds the whole `&&` list, so the ssh session
+  waits for the job: the project's launch rule (nothing after a launch on the
+  line) needs its twin, nothing chained before it either.
+- **Keep the record and the correction separate.** Every time a corrected
+  figure and the published one disagreed for reasons other than the change
+  being made (an evaluator that moved since March, a threshold grid fixed by
+  E39, a verifier file overwritten 33 s after it was read), the clean path
+  was to annotate, not regenerate: the published value stays, the change's
+  own effect sits beside it, and anything else that moved is named rather
+  than absorbed.
