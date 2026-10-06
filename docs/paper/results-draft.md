@@ -10,7 +10,15 @@
 
 ---
 
-> **Last revised**: 2026-10-04 (**§§ R6, R7.2 and R7.3 costs re-priced**
+> **Last revised**: 2026-10-06 (**§ R2 drafted for PI review, W1; not
+> finalised**: the Era-1 board's 36 single-pass cells are 26 transmitted
+> configurations and its Tier 1 is 9, six Tier-1 cells being one text
+> request, E90; `canonical-last` described as a single run, sent nulls
+> first, E92; the confirmatory p-values restated on the permutation test,
+> D42, and the H7 parenthesis's "FDR p = 0.004", a raw p of a non-registered
+> row, replaced by the registered contrast. No verdict changed. See
+> [§ Changelog](#changelog).) Prior:
+> 2026-10-04 (**§§ R6, R7.2 and R7.3 costs re-priced**
 > from the passes register at one uniform discounted tier, PI ruling D19 as
 > amended 2026-10-04; **the fourth cell's "≈ $231" corrected** — it counted
 > B's own Gemini 3 verifier, a leg the fourth cell does not use — to $198 on
@@ -191,13 +199,24 @@ Changelog.]
 
 No single-pass configuration separates from the pack. On the Era-1 board
 (512 px, 340 tiles, curator GT, F1@20 m) the Tier-1 admissible set spans
-15 of the 36 single-pass cells, led numerically by a few-shot-ordering
-variant (`canonical-last`, F1 0.631, MCC 0.213; analysis
-`era1-single-pass-baseline-matrix`, 227/630 pairs significant). The
+15 of the 36 single-pass cells. Counted by what each cell transmitted, the
+36 are 26 configurations and the 15 are 9: six Tier-1 cells, the five
+Phase 2c text-track library arms and Phase 2b's T = 0.0 text arm, sent one
+identical request, because a text-only request carries no exemplar
+(erratum E90; `reports/manipulation-check-2026-10-05.md` § B.5). The set
+is led numerically by a few-shot-ordering variant, from a single run that
+shares Tier 1 with fourteen other cells (`canonical-last`, F1 0.631, MCC
+0.213; analysis `era1-single-pass-baseline-matrix`, 227/630 pairs
+significant). That arm was sent with the null examples first, then the
+hard positives, then the canonical examples last, and the four orderings
+did reach the model: their outputs agree on at most 5 % of tiles, against
+91–99 % for identical requests (`reports/phase2e-ordering-check-2026-10-05.md`;
+erratum E92). The
 single-factor manipulations the study preregistered — modality and prompt
 elaboration (H1), example ordering (H4), negative-text treatment (H5),
-temperature (H7), example-library composition (H8) — all land inside or
-near that tie: the GS instrument cannot separate the stronger single-pass
+temperature (H7), example-library composition (H8, on this board an
+image-track test only, since a text request sends no library) — all land
+inside or near that tie: the GS instrument cannot separate the stronger single-pass
 configs from one another. Two robust patterns do emerge: text-modality
 prompts dominate image-only prompts at the bottom of the board — a
 property of the Gemini 3 family rather than of the task, since under
@@ -209,8 +228,9 @@ F1 for markedly better discrimination (MCC 0.0665–0.291 across the
 twenty-one computable of the twenty-two image-bearing cells)
 [E88]. For the text-only cells that
 "essentially none" is literal rather than numerical: eight of the
-fourteen returned at least one detection on every one of the 340
-evaluation tiles, which empties the predicted-negative column of the
+fourteen (three transmitted configurations, six of the eight being the
+one text request above; the fourteen are eight) returned at least one
+detection on every one of the 340 evaluation tiles, which empties the predicted-negative column of the
 tile confusion matrix and leaves MCC undefined; the six that are
 computable all sit at 0.0665, the value of leaving exactly one of the
 136 reference-empty tiles alone.
@@ -223,12 +243,13 @@ unchanged; its magnitude rested on values the data do not carry.]
 The registered contrasts read the same way, with one exception. In
 the confirmatory family (Methods § M.x), H1's registered pooled
 modality contrast returns a null (Δ = +0.0238, 95 % CI −0.0104 to
-+0.0585, two-sided paired bootstrap p = 0.1774, adjusted p = 0.248),
++0.0585, two-sided permutation p = 0.0715, adjusted p = 0.125),
 and H4 (example ordering), H5 (negative-text treatment), and H8
 (library composition and scaling) are likewise not rejected (adjusted
-p = 0.217, 0.834, and 0.834). The exception is temperature. H7
-rejects (adjusted p = 0.00233, from the registered five-level Phase 2b
-sweep: single-pass text track, F1, +0.072 at FDR p = 0.004), and
+p = 0.191, 0.834, and 0.834). The exception is temperature. H7
+rejects (adjusted p = 0.00047, from the registered five-level Phase 2b
+sweep: single-pass text track, F1, T = 0.3 above T = 1.0 by 0.096,
+permutation p = 0.0002), and
 it rejects against its own registered expectation, which was that the
 vendor-recommended T = 1.0 would be optimal with lower temperatures
 degrading performance. The reverse held, though at single-pass Pro
@@ -1018,6 +1039,37 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-10-06 — § R2 drafted 2026-10-06 for PI review (W1); not finalised
+
+**Trigger.** Tracker `planning/text-track-transmission-2026-10-05.md`,
+workstream W1.5, claims C-04, C-17/C-24, C-25 and C-26. Erratum E90 (a
+text-only request sends no exemplar; the manipulation check counts the
+Era-1 board by transmitted configuration), the Phase 2e ordering check and
+erratum E92 (the orderings reached the model; `canonical-last` was sent
+nulls first), and ruling D42 (permutation p-values;
+`results/family-fdr/family_fdr.md`, regenerated `5986316b5`). Every change
+is drafted for the PI's review and is not finalised.
+
+| Claim | Before | After (draft) |
+|---|---|---|
+| Era-1 board, cells and Tier 1 | 15 of 36 cells | unchanged, plus: 26 transmitted configurations, 9 in Tier 1; six Tier-1 cells are one text request |
+| `canonical-last` | "led numerically by" | a single run sharing Tier 1 with fourteen cells; sent as nulls, hard positives, canonicals; orderings shown to transmit |
+| H8 on the board | one of five factors "inside or near that tie" | an image-track test only |
+| Eight text cells with undefined MCC | eight of fourteen | three transmitted configurations (the fourteen are eight) |
+| H1 p, adjusted p | 0.1774 (bootstrap), 0.248 | **0.0715** (permutation), **0.125** |
+| H4 adjusted p | 0.217 | **0.191** |
+| H7 adjusted p; its parenthesis | 0.00233; "+0.072 at FDR p = 0.004" | **0.00047**; T = 0.3 above T = 1.0 by 0.096, permutation p = 0.0002 (the old figure was a raw p of T = 0.7 against T = 1.0, not the registered row) |
+
+**What did NOT change**: every verdict (H7 rejected; H1, H4, H5, H8 not),
+every F1, MCC and tier, and H5's and H8's adjusted p (0.834). H1's
+permutation p comes from a within-tile label permutation whose null (all
+five conditions interchangeable) is sharper than H1's own; its verdict
+does not depend on that. The register rows that § M.11's phase table copies
+(`h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`) still quote
+the bootstrap figures.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-04 — §§ R6, R7.2 and R7.3 costs re-priced (WP4b); the fourth cell's "≈ $231" corrected
 
