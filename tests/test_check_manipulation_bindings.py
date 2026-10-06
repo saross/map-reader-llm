@@ -347,6 +347,71 @@ def test_one_dead_proposer_source_voids_the_arm(repo) -> None:
     assert cm.judge([arm])["verdict"] == cm.UNVERIFIABLE
 
 
+def _add_stage_condition(repo: dict[str, Any], stage: str, path: str, label: str) -> str:
+    """Register one more verifier stage and a condition its label names.
+
+    Args:
+        repo: The :func:`repo` namespace.
+        stage: The ``verifier_passes`` key.
+        path: Its registered path (under ``outputs/<run>/``).
+        label: The new condition's label (``<stage>-...`` names the stage).
+
+    Returns:
+        The new condition's id.
+    """
+    entry = repo["decomposition"][RUN]
+    entry["verifier_passes"][stage] = {"path": path}
+    entry["conditions"].append({"label": label,
+                                "detections": f"results/cells/{label}/detections.geojson"})
+    cid = f"{RUN}::{label}"
+    repo["conditions"][cid] = {"condition_id": cid, "run_id": RUN, "label": label,
+                               "architecture": "proposer-verifier", "proposer_pool": "pool",
+                               "verifier_config": _DECLARED}
+    _clear_caches()
+    return cid
+
+
+# ── PR #25 review, finding 7: a binding against the register's stage ────
+
+def test_a_binding_to_another_stage_does_not_override_the_register(repo) -> None:
+    """The label names stage ``pool-verify-d``, whose metas cannot be found;
+    a binding naming stage ``pool-verify-a`` is NOT silently used in its
+    place. The half is UNVERIFIABLE with both stages named, and the stage
+    field keeps the register's stage."""
+    cid = _add_stage_condition(repo, "pool-verify-d", "verifier/pool/verify_d",
+                               "pool-verify-d-k5")
+    entry = {**_entry("other", ["pool-verify-d-k5"]),
+             "verifier_sources": [f"outputs/{RUN}/verifier/pool/verify_a"]}
+    repo["write_bindings"]([entry])
+    arm = cm.arm_for_condition(cid)
+    assert arm["verifier_basis"] == "unverifiable"
+    assert arm["verifier_unverifiable_reason"] == (
+        f"binding other names stage(s) {RUN}/pool-verify-a, but the register identifies "
+        f"stage {RUN}/pool-verify-d (by label); the binding is not used")
+    assert arm["verifier_stage"] == {"stage": "pool-verify-d", "how": "label"}
+    assert arm["binding"] is None
+    assert repo["meta"]["a"] not in arm["meta_paths"]
+
+
+def test_a_binding_inside_the_registers_stage_is_followed(repo) -> None:
+    """A binding whose source lies inside the register's own stage (here a
+    leg two levels down, beyond the stage resolver's reach) agrees with the
+    register and is followed; the stage field names the stage, and the
+    route is recorded apart from it."""
+    cid = _add_stage_condition(repo, "pool-verify-d", "verifier/pool/verify_d",
+                               "pool-verify-d-k5")
+    leg = f"outputs/{RUN}/verifier/pool/verify_d/leg/one"
+    meta = _write(repo["root"], f"{leg}/run.meta.json", _verifier_meta(temperature=0.5))
+    entry = {**_entry("inside", ["pool-verify-d-k5"]), "verifier_sources": [leg]}
+    repo["write_bindings"]([entry])
+    arm = cm.arm_for_condition(cid)
+    assert arm["verifier_basis"] == "transmitted"
+    assert meta in arm["meta_paths"]
+    assert arm["verifier_stage"] == {"stage": f"{RUN}/pool-verify-d", "how": "binding:inside"}
+    assert arm["verifier_route"] == "source-directory"
+    assert arm["binding"] == "inside"
+
+
 # ── PR #25 review, finding 1: listed but unreadable verifier metas ──────
 
 def test_a_register_stage_with_no_readable_meta_is_unverifiable_not_absent(repo) -> None:

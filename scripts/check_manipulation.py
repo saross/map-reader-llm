@@ -1131,7 +1131,11 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
     sources that did resolve are not a partial substitute (a missing pass
     or stage changes the inputs fingerprint and the configuration set), so
     that half is UNVERIFIABLE, with the dead sources named and a BINDING GAP
-    line printed (PR #25 review, finding 2).
+    line printed (PR #25 review, finding 2). When the register identifies
+    the verifier stage but reads no meta for it, a binding is followed only
+    if every verifier source lies in that same stage; a binding naming any
+    other stage leaves the half UNVERIFIABLE, with both stages named
+    (finding 7).
 
     Args:
         condition_id: A ``run_id::label`` condition id.
@@ -1172,11 +1176,20 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
         stage, how = verifier_stage_of(cond)
         if stage:
             verifier = list(stage_metas(run, stage))
-        if not verifier and binding and binding.get("verifier_sources"):
-            sources = binding["verifier_sources"]
+        sources = (binding or {}).get("verifier_sources") or []
+        bound = "|".join(dict.fromkeys(_source_stage_label(s) for s in sources))
+        if not verifier and sources and stage and any(
+                stages_containing(s) != [(run, stage)] for s in sources):
+            # The register identified a stage (whose metas it could not
+            # read) and the binding names another: neither silently wins,
+            # and the stage field keeps the register's stage (PR #25
+            # review, finding 7).
+            v_reason = (f"binding {binding['id']} names stage(s) {bound}, but the register "
+                        f"identifies stage {run}/{stage} (by {how}); the binding is not used")
+            v_identity = f"{run}/{stage} vs {bound}"
+        elif not verifier and sources:
             found, routes, dead = _from_sources(sources, verifier_metas_for_source)
-            stage = "|".join(dict.fromkeys(_source_stage_label(s) for s in sources))
-            how = f"binding:{binding['id']}"
+            stage, how = bound, f"binding:{binding['id']}"
             if dead:
                 note = (f"binding {binding['id']}: verifier source(s) resolved no meta: "
                         + ", ".join(dead))
