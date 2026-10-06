@@ -58,6 +58,26 @@ project state.
 >   (51 analyses pass, 5 refused = the known null manipulations, 15
 >   unverifiable: 43 arms the register ties to no meta).
 > - **Registry rebuilt** (`3d8018315`); planning ticked (`098281066`).
+> - **PR #24 reviewed and the fixes applied** (code review at medium effort,
+>   12 findings, recorded as a PR comment; fixes in 13 commits
+>   `99a4dc106`..`ecdfe6928`, Opus agent under this session's attribution
+>   line; tier 1 after them 3,819 passed, 0 failed). Of note: the
+>   manipulation gate now treats a declared-only verifier configuration as
+>   unverifiable, so 21 analyses move from PASS to UNVERIFIABLE (36 in all;
+>   the lasting fix is to locate those verifier stages' metas, as W4.4 did
+>   for the modality checker); the five refusals are the known
+>   null-manipulation groups and the gate labels them KNOWN against an
+>   allow-list; `--all` exits 0 only with `--allow-unverifiable`. The
+>   refused `verifier-uplift-pairing` is a pairing table in which the two
+>   replicate pools (h10 pool_160, h8-v2 scale-8) are separate rows each
+>   against its own anchor, never contrasted with each other (verified
+>   2026-10-06 in `results/uplift-supplement/verifier-uplift.csv` rows 35
+>   and 78). Leftovers: `run_phase2`'s model-consistency check still runs
+>   before the `--condition` filter; the gate's pool search finds only
+>   `*.meta.json`; two `run.log` files cited by the passes manifest read as
+>   unreadable metas; the repo-root `ruff.toml` (ignores E501, E402) shadows
+>   `pyproject.toml`, so "config in pyproject" in the agent guidance is wrong
+>   — the PI's call which wins.
 >
 > ### Next session, in order
 >
