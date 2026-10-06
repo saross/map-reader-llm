@@ -1648,6 +1648,15 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         ),
     }
 
+    # ---- retry_usage: concatenate the in-batch retry blocks ----
+    # Each block carries its own service tier (tracker W6.5), so blocks are
+    # kept whole rather than summed; the original's shallow copy above
+    # would otherwise drop the recovery's blocks.
+    retry_blocks = (list(original.get("retry_usage") or [])
+                    + list(recovery.get("retry_usage") or []))
+    if retry_blocks:
+        merged["retry_usage"] = retry_blocks
+
     # ---- usage_stats: sum tokens ----
     o_us = original.get("usage_stats", {})
     r_us = recovery.get("usage_stats", {})

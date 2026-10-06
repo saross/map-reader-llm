@@ -1725,6 +1725,9 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
             output_name_suffix=suffix,
             use_context_cache=args.use_cache,
             cache_ttl_seconds=args.cache_ttl,
+            # The batch bills at the batch tier; this is the tier of its
+            # synchronous parse-failure retries (tracker W6.5).
+            retry_service_tier=getattr(args, "service_tier", "flex"),
         )
 
         # A chunk whose usage went unrecorded prices to None (D12); the
@@ -1955,7 +1958,9 @@ Examples:
         dest="service_tier",
         help="Service tier for real-time API calls. 'flex' gives 50%% "
         "discount with 1-15 min latency (uses off-peak capacity). "
-        "Ignored in batch mode. Default: flex.",
+        "In batch mode the batch itself bills at the batch tier, and this "
+        "sets the tier of its synchronous parse-failure retries. "
+        "Default: flex.",
     )
     parser.add_argument(
         "--skip-intent-check",

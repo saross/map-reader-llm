@@ -140,6 +140,13 @@ class BatchUnitContext:
     examples: list[dict] = dataclasses.field(
         default_factory=list,
     )                           # Prompt examples (for parse-failure retry)
+    # Service tier of the SYNCHRONOUS parse-failure retries made by
+    # complete_batch_unit(). The batch job itself always bills at the batch
+    # tier; its retries are ordinary generate_content calls, which ran at
+    # standard until 2026-10-06 because no tier reached them (tracker W6.5).
+    # "flex" follows the standing PI instruction of 2026-07-30 and the
+    # patch path's default; None requests standard.
+    retry_service_tier: str | None = "flex"
 
 
 def _get_state_name(state: Any) -> str:
@@ -1913,6 +1920,13 @@ def merge_chunk_metadata(chunk_metas: list[Path], chunk_tiles: list[Path],
     from scripts.lib_cost import merge_cost_blocks
     base["cost_estimate"] = merge_cost_blocks(
         [m.get("cost_estimate") for m in metas], usage)
+    # The in-batch retries' blocks (tracker W6.5): concatenated, never taken
+    # from chunk 0 alone, and never summed across tiers.
+    retry_blocks = [b for m in metas for b in (m.get("retry_usage") or [])]
+    if retry_blocks:
+        base["retry_usage"] = retry_blocks
+    else:
+        base.pop("retry_usage", None)
     base["chunked_run"] = {"n_chunks": len(metas),
                            "chunk_metas": [Path(m).name for m in
                                            sorted(chunk_metas, key=_chunk_sort_key)]}
@@ -2329,6 +2343,77 @@ def _patch_usage_stats(calls: list[dict[str, int]]) -> dict[str, Any]:
     }
 
 
+#: Where an in-batch retry block says its usage came from.
+RETRY_USAGE_SOURCE = (
+    "in-batch parse-failure retries (lib_batch_api.complete_batch_unit), "
+    "synchronous generate_content calls"
+)
+
+
+def retry_usage_block(
+    calls: list[dict[str, int]],
+    service_tier: str | None,
+    n_attempts: int,
+    n_tiles_retried: int,
+    n_tiles_recovered: int,
+    output_name: str | None = None,
+) -> dict[str, Any] | None:
+    """One ``retry_usage`` entry for a meta: what the in-batch retries spent.
+
+    The batch job's own usage (``usage_stats``) is read from its results
+    file and priced at the batch tier. The parse-failure retries that
+    :func:`complete_batch_unit` makes afterwards are SYNCHRONOUS calls at
+    their own tier, so their usage is kept apart from ``usage_stats``, in a
+    list of blocks of this shape, rather than summed into it and priced at a
+    tier it never ran at (tracker W6.5, 2026-10-06; the patch path's
+    precedent is ``8ae31a585``). A meta reader prices each block at its own
+    ``service_tier``; ``merge_meta`` and :func:`merge_chunk_metadata`
+    concatenate the lists, so no block is lost to a resume or a chunk merge.
+
+    Args:
+        calls: One ``usageMetadata``-style dict per retry call that returned
+            a response (each was billed, parsed or not); an empty dict for a
+            response that reported no usage, which is counted as a call but
+            adds no tokens, so a missing count shows as
+            ``n_calls > usage_stats.n_responses_with_usage``.
+        service_tier: The tier the retries requested (``None`` → standard).
+        n_attempts: Retry calls made, including any that raised or returned
+            nothing (those are not billed, so they carry no usage).
+        n_tiles_retried: Distinct tiles that entered the retry loop.
+        n_tiles_recovered: Of those, the tiles a retry recovered.
+        output_name: The unit's output filename, so a chunk's block keeps
+            its provenance after a chunk merge.
+
+    Returns:
+        The block, or None when no retry was attempted.
+
+    Examples:
+        >>> u = {"promptTokenCount": 10, "candidatesTokenCount": 2,
+        ...      "thoughtsTokenCount": 3, "cachedContentTokenCount": 0,
+        ...      "totalTokenCount": 15}
+        >>> b = retry_usage_block([u, u], "flex", 3, 2, 1)
+        >>> (b["service_tier"], b["n_calls"], b["usage_stats"]["total_tokens"])
+        ('flex', 2, 30)
+        >>> retry_usage_block([], "flex", 0, 0, 0) is None
+        True
+    """
+    if n_attempts == 0 and not calls:
+        return None
+    return {
+        "source": RETRY_USAGE_SOURCE,
+        # Recorded as requested; None is written as "standard" so a reader
+        # never has to know the SDK's default.
+        "service_tier": service_tier or "standard",
+        "n_calls": len(calls),
+        "n_attempts": n_attempts,
+        "n_tiles_retried": n_tiles_retried,
+        "n_tiles_recovered": n_tiles_recovered,
+        "output_name": output_name,
+        "recorded_at": datetime.now(timezone.utc).isoformat(),
+        "usage_stats": _patch_usage_stats([c for c in calls if c]),
+    }
+
+
 def _retry_tile_sync(
     client: Any,
     tile_path: Path,
@@ -2513,6 +2598,7 @@ def write_batch_outputs(
     system_instruction: str,
     total_detections: int,
     usage_stats: dict | None = None,
+    retry_usage: dict | None = None,
 ) -> dict[str, float]:
     """
     Write GeoJSON, .meta.json, and .tiles.json files.
@@ -2531,6 +2617,10 @@ def write_batch_outputs(
         system_instruction: System instruction text.
         total_detections: Total detection count.
         usage_stats: Optional token usage dict from batch job metadata.
+        retry_usage: Optional :func:`retry_usage_block` for the unit's
+            synchronous parse-failure retries. Written as a one-element
+            ``retry_usage`` list, apart from ``usage_stats`` and the batch
+            ``cost_estimate``: the retries did not run at the batch tier.
 
     Returns:
         Cost estimate dict with ``total_cost_usd``.
@@ -2623,6 +2713,11 @@ def write_batch_outputs(
         "execution_mode": "batch",
         "batch_discount_applied": True,
     }
+    if retry_usage:
+        # The in-batch retries' own usage at their own tier (tracker W6.5).
+        # A list, so a resume merge or a chunk merge concatenates blocks
+        # instead of summing usage across tiers.
+        meta["retry_usage"] = [retry_usage]
 
     meta_path = output_file.with_suffix(".meta.json")
 
@@ -2700,6 +2795,7 @@ def prepare_batch_unit(
     tiles_dir: Path | None = None,
     output_name_suffix: str = "",
     cached_content: str | None = None,
+    retry_service_tier: str | None = "flex",
 ) -> BatchUnitContext | None:
     """
     Prepare one execution unit for batch submission (Phase 1).
@@ -2727,6 +2823,11 @@ def prepare_batch_unit(
         output_name_suffix: Optional suffix appended to output filenames
             (e.g., ``"_chunk0"``). Used for chunked submissions to avoid
             overwriting earlier chunks' output files.
+        cached_content: Optional context-cache name the JSONL references.
+        retry_service_tier: Service tier for the synchronous parse-failure
+            retries ``complete_batch_unit()`` makes (the batch itself bills
+            at the batch tier). Defaults to ``"flex"``, the patch path's
+            default; ``None`` requests standard (tracker W6.5).
 
     Returns:
         A ``BatchUnitContext`` carrying all state needed for submission
@@ -2824,6 +2925,7 @@ def prepare_batch_unit(
         line_count=line_count,
         tile_size=effective_tile_size,
         examples=examples,
+        retry_service_tier=retry_service_tier,
     )
 
 
@@ -2944,6 +3046,13 @@ def complete_batch_unit(
     # Cost is negligible: ~$0.0003 per text retry, ~$0.0005 per image
     # retry. Even 5 retries × 30 tiles ≈ $0.05.
     retried_keys: list[str] = []
+    # Usage of every retry call that returned a response (each was billed,
+    # parsed or not) and the number of calls made: until 2026-10-06 these
+    # calls passed no service tier (so ran at standard) and their usage
+    # entered no meta (tracker W6.5). Mirrors patch_failed_tiles.
+    retry_calls: list[dict[str, int]] = []
+    retry_attempts = 0
+    n_tiles_retried = 0
     if parse_failed_keys:
         pending_retries = list(parse_failed_keys)
         logger.info(
@@ -2966,6 +3075,7 @@ def complete_batch_unit(
             pending_retries = [
                 k for k in pending_retries if k not in unresolvable
             ]
+        n_tiles_retried = len(pending_retries)
 
         for attempt in range(1, MAX_SYNC_RETRIES + 1):
             if not pending_retries:
@@ -2976,6 +3086,7 @@ def complete_batch_unit(
                 tile_path = tile_paths_by_name[tile_key]
 
                 try:
+                    retry_attempts += 1
                     retry_result = _retry_tile_sync(
                         client=client,
                         tile_path=tile_path,
@@ -2983,9 +3094,13 @@ def complete_batch_unit(
                         system_instruction=ctx.system_instruction,
                         prompt_config=ctx.prompt_config,
                         examples=ctx.examples,
+                        service_tier=ctx.retry_service_tier,
                     )
 
                     if retry_result is not None:
+                        retry_calls.append(
+                            (retry_result.get("response") or {}).get("usageMetadata")
+                            or {})
                         # Feed through the same parse pipeline
                         retry_matched = {tile_key: retry_result}
                         retry_features, retry_dets, retry_failures = (
@@ -3087,6 +3202,23 @@ def complete_batch_unit(
             "audited from its metadata; see aggregate_batch_usage()",
         )
 
+    # The retries' own usage, at their own tier, kept apart from the batch's
+    # usage_stats (tracker W6.5).
+    retry_usage = retry_usage_block(
+        calls=retry_calls,
+        service_tier=ctx.retry_service_tier,
+        n_attempts=retry_attempts,
+        n_tiles_retried=n_tiles_retried,
+        n_tiles_recovered=len(retried_keys),
+        output_name=ctx.output_file.name,
+    )
+    if retry_usage is not None:
+        retry_tokens = retry_usage["usage_stats"].get("total_tokens", 0)
+        logger.info(
+            "in-batch retries: %d call(s) at tier %s, %s tokens",
+            len(retry_calls), retry_usage["service_tier"], f"{retry_tokens:,}",
+        )
+
     # Write outputs
     cost_estimate = write_batch_outputs(
         features=features,
@@ -3098,6 +3230,7 @@ def complete_batch_unit(
         system_instruction=ctx.system_instruction,
         total_detections=total_detections,
         usage_stats=usage_stats,
+        retry_usage=retry_usage,
     )
 
     cost = cost_estimate.get("total_cost_usd")
@@ -3157,6 +3290,7 @@ def run_batch_unit(
     tile_size: int | None = None,
     tiles_dir: Path | None = None,
     output_name_suffix: str = "",
+    retry_service_tier: str | None = "flex",
 ) -> tuple[bool, str, float]:
     """
     Orchestrate the full batch lifecycle for one execution unit.
@@ -3196,6 +3330,8 @@ def run_batch_unit(
             ``prepare_batch_unit()``.
         output_name_suffix: Suffix for output filenames (e.g.,
             ``"_chunk0"``). Forwarded to ``prepare_batch_unit()``.
+        retry_service_tier: Service tier for the in-batch parse-failure
+            retries. Forwarded to ``prepare_batch_unit()`` (tracker W6.5).
 
     Returns:
         Tuple of (success, message, cost_usd).
@@ -3244,6 +3380,7 @@ def run_batch_unit(
         tiles_dir=tiles_dir,
         output_name_suffix=output_name_suffix,
         cached_content=cached_content,
+        retry_service_tier=retry_service_tier,
     )
     if ctx is None:
         return False, "no_tiles_found", 0.0
