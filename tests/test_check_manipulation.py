@@ -16,8 +16,9 @@ pairs of minimal pass metas and judge them:
 One test runs the CLI on a registered analysis and pins the 2026-10-05
 finding: the Era-1 single-pass matrix carries the Phase 2c text replicates.
 
-Tier 2: the tests read and write meta files, and the last reads the
-committed register and metas.
+Tiers: the synthetic tests write their metas to ``tmp_path`` and run in
+well under a second, so they are tier 1 (the per-commit gate); the tests
+that read the committed register and metas are tier 2.
 """
 
 from __future__ import annotations
@@ -28,8 +29,6 @@ from pathlib import Path
 import pytest
 
 from scripts import check_manipulation as cm
-
-pytestmark = pytest.mark.tier2
 
 _LIBRARY_A = [{"path": f"neutral-naming/example_{i:02d}.png", "label": "Positive",
                "category": "canonical_positive"} for i in range(1, 10)]
@@ -72,6 +71,7 @@ def _meta(path: Path, version: str, examples: list[dict], include_images: bool,
     return str(path)
 
 
+@pytest.mark.tier1
 def test_identical_requests_under_different_configurations_refuse(tmp_path) -> None:
     """Two text-only arms with different listed libraries sent the same
     request: the analysis compares replicates, and the guard refuses."""
@@ -86,6 +86,7 @@ def test_identical_requests_under_different_configurations_refuse(tmp_path) -> N
     assert pair["config_fields_differing"] == ["listed_library", "version"]
 
 
+@pytest.mark.tier1
 def test_a_recovery_fragment_does_not_hide_a_null_manipulation(tmp_path) -> None:
     """A recovery fragment re-sends a few of its pass's tiles; the arm's
     inputs are the union over its passes, so a fragment in one arm and not
@@ -101,6 +102,7 @@ def test_a_recovery_fragment_does_not_hide_a_null_manipulation(tmp_path) -> None
     assert cm.judge([a, b])["verdict"] == cm.REFUSE
 
 
+@pytest.mark.tier1
 def test_a_manipulation_that_reached_the_request_passes(tmp_path) -> None:
     """With images on, the library reaches the request: the signatures
     differ and the analysis passes."""
@@ -112,6 +114,7 @@ def test_a_manipulation_that_reached_the_request_passes(tmp_path) -> None:
     assert cm.judge([a, b])["verdict"] == cm.PASS
 
 
+@pytest.mark.tier1
 def test_a_replicate_of_one_configuration_passes(tmp_path) -> None:
     """Identical configuration and identical request: a replicate, not a
     null manipulation (e.g. two aggregations of one pool)."""
@@ -122,6 +125,7 @@ def test_a_replicate_of_one_configuration_passes(tmp_path) -> None:
     assert cm.judge([a, b])["verdict"] == cm.PASS
 
 
+@pytest.mark.tier1
 def test_different_inputs_are_different_requests(tmp_path) -> None:
     """One configuration on two tile sets sent different tiles: not a null
     manipulation, even when the version names differ."""
@@ -132,6 +136,7 @@ def test_different_inputs_are_different_requests(tmp_path) -> None:
     assert cm.judge([a, b])["verdict"] == cm.PASS
 
 
+@pytest.mark.tier1
 def test_a_configured_temperature_that_was_sent_passes(tmp_path) -> None:
     """A temperature manipulation reaches the request (temperature_eff)."""
     a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A,
@@ -141,6 +146,7 @@ def test_a_configured_temperature_that_was_sent_passes(tmp_path) -> None:
     assert cm.judge([a, b])["verdict"] == cm.PASS
 
 
+@pytest.mark.tier1
 def test_an_arm_without_metadata_is_unverifiable_not_passed(tmp_path) -> None:
     """No readable meta is a named absence: UNVERIFIABLE unless allowed."""
     a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A, False)])
@@ -151,6 +157,7 @@ def test_an_arm_without_metadata_is_unverifiable_not_passed(tmp_path) -> None:
     assert cm.judge([a, b], allow_unverifiable=True)["verdict"] == cm.PASS
 
 
+@pytest.mark.tier1
 def test_the_signature_carries_exactly_the_shared_fields(tmp_path) -> None:
     """The signature is the definition shared with map-reader-bench:
     its keys are SIGNATURE_FIELDS, no more and no fewer."""
@@ -159,6 +166,7 @@ def test_the_signature_carries_exactly_the_shared_fields(tmp_path) -> None:
     assert tuple(cm.configuration_identity(rec)) == cm.CONFIG_FIELDS
 
 
+@pytest.mark.tier2
 def test_the_registered_era1_matrix_is_refused(capsys) -> None:
     """The 2026-10-05 finding, pinned: the Era-1 single-pass matrix compares
     the retest's Phase 2c text arms (five libraries, one request) and the
