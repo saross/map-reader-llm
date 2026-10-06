@@ -850,6 +850,41 @@ def _is_relative_path(value: Any) -> bool:
             and ".." not in Path(value).parts)
 
 
+def _is_text(value: Any) -> bool:
+    """True for a non-empty string.
+
+    Args:
+        value: A candidate value.
+
+    Returns:
+        Whether it is a ``str`` with at least one non-space character.
+    """
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _str_list(entry: dict[str, Any], field: str, where: str,
+              problems: list[str]) -> list[str]:
+    """One list-of-strings field of a binding, its type checked.
+
+    Args:
+        entry: The binding entry.
+        field: The field name.
+        where: The entry's name, for messages.
+        problems: Collects a problem when the field is present but not a
+            list of strings.
+
+    Returns:
+        The field's value, or ``[]`` when it is absent, null or malformed.
+    """
+    value = entry.get(field)
+    if value is None:
+        return []
+    if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+        problems.append(f"{where}: {field} is {type(value).__name__}, not a list of strings")
+        return []
+    return value
+
+
 def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
                       registered_detections: Any) -> list[str]:
     """Check a bindings document against the register; name every problem.
@@ -859,7 +894,11 @@ def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
     among them, so an entry cannot drift from the product it was reviewed
     for), at least one source, and evidence: a derivation and a script or
     document. A condition may be bound once; a verifier source binds only a
-    proposer-verifier condition.
+    proposer-verifier condition. Every field is type-checked, so a
+    malformed file yields named problems rather than an exception, and an
+    absent, null or empty ``bindings`` list is a problem, not a silent "no
+    bindings" (PR #25 review, finding 8): to run without bindings, delete
+    the file.
 
     Args:
         doc: The parsed bindings file.
@@ -871,47 +910,60 @@ def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
         Problem descriptions; empty when the document is valid.
 
     Examples:
-        >>> validate_bindings({"schema_version": "x", "bindings": []}, {}, dict.get)
-        ["schema_version is 'x', expected 'manipulation-gate-bindings/1'"]
+        >>> validate_bindings({"schema_version": "x", "bindings": []}, {}, dict.get)[0]
+        "schema_version is 'x', expected 'manipulation-gate-bindings/1'"
     """
     if not isinstance(doc, dict):
-        return ["the bindings file is not a JSON object"]
+        return [f"the bindings file is a JSON {type(doc).__name__}, not an object"]
     problems = []
     if doc.get("schema_version") != BINDINGS_SCHEMA:
         problems.append(f"schema_version is {doc.get('schema_version')!r}, "
                         f"expected {BINDINGS_SCHEMA!r}")
+    entries = doc.get("bindings")
+    if not isinstance(entries, list) or not entries:
+        state = ("absent" if "bindings" not in doc else "null" if entries is None
+                 else "empty" if entries == [] else f"a {type(entries).__name__}, not a list")
+        problems.append(f"bindings is {state} (a bindings file must bind something; delete "
+                        "it to run without bindings)")
+        return problems
     ids: set[str] = set()
     bound: dict[str, str] = {}
-    for i, entry in enumerate(doc.get("bindings") or []):
-        name = entry.get("id") if isinstance(entry, dict) else None
-        where = f"binding {name or f'#{i}'}"
+    for i, entry in enumerate(entries):
         if not isinstance(entry, dict):
-            problems.append(f"{where}: not an object")
+            problems.append(f"binding #{i}: a {type(entry).__name__}, not an object")
             continue
-        if not name:
-            problems.append(f"{where}: no id")
+        name = entry.get("id") if _is_text(entry.get("id")) else None
+        where = f"binding {name or f'#{i}'}"
+        if name is None:
+            problems.append(f"{where}: no id (a non-empty string)")
         elif name in ids:
             problems.append(f"{where}: duplicate id")
         ids.add(name or "")
-        sources = (entry.get("verifier_sources") or []) + (entry.get("proposer_sources") or [])
-        if not sources:
+        fields = {f: _str_list(entry, f, where, problems)
+                  for f in ("conditions", "detections", "verifier_sources", "proposer_sources",
+                            "resolves_to")}
+        if not (fields["verifier_sources"] or fields["proposer_sources"]):
             problems.append(f"{where}: names no verifier or proposer source")
         for field in ("detections", "verifier_sources", "proposer_sources"):
-            for path in entry.get(field) or []:
+            for path in fields[field]:
                 if not _is_relative_path(path):
                     problems.append(f"{where}: {field} entry {path!r} is not a "
                                     "repository-relative path")
-        evidence = entry.get("evidence") or {}
-        if not evidence.get("derivation"):
+        evidence = entry.get("evidence")
+        if not isinstance(evidence, dict):
+            problems.append(f"{where}: evidence is {type(evidence).__name__}, not an object")
+            evidence = {}
+        if not _is_text(evidence.get("derivation")):
             problems.append(f"{where}: evidence has no derivation")
-        if not (evidence.get("script") or evidence.get("documents")):
+        documents = _str_list(evidence, "documents", f"{where}: evidence", problems)
+        if not (_is_text(evidence.get("script")) or documents):
             problems.append(f"{where}: evidence cites no script or document")
-        products = set(entry.get("detections") or [])
+        products = set(fields["detections"])
         if not products:
             problems.append(f"{where}: names no detections (the products it binds)")
-        if not entry.get("conditions"):
+        if not fields["conditions"]:
             problems.append(f"{where}: binds no conditions")
-        for cid in entry.get("conditions") or []:
+        for cid in fields["conditions"]:
             cond = conditions.get(cid)
             if cond is None:
                 problems.append(f"{where}: {cid} is not a registered condition")
@@ -923,7 +975,7 @@ def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
             if products and det not in products:
                 problems.append(f"{where}: {cid}'s registered detections {det!r} are not "
                                 "among the binding's detections")
-            if entry.get("verifier_sources") and cond.get("architecture") != "proposer-verifier":
+            if fields["verifier_sources"] and cond.get("architecture") != "proposer-verifier":
                 problems.append(f"{where}: {cid} is not proposer-verifier, but the binding "
                                 "names verifier sources")
     return problems
@@ -937,16 +989,16 @@ def _bindings() -> dict[str, dict[str, Any]]:
         Condition id -> its binding entry.
 
     Raises:
-        BindingError: The file is not valid JSON, or :func:`validate_bindings`
-            finds a problem.
+        BindingError: The file cannot be read, is not valid UTF-8 JSON, or
+            :func:`validate_bindings` finds a problem.
     """
     path = BASE_DIR / BINDINGS
     if not path.exists():
         return {}
     try:
         doc = json.loads(path.read_text(encoding="utf-8"))
-    except ValueError as exc:
-        raise BindingError(f"{BINDINGS} is not valid JSON: {exc}") from exc
+    except (OSError, ValueError) as exc:
+        raise BindingError(f"{BINDINGS} cannot be read as JSON: {exc}") from exc
     problems = validate_bindings(doc, _conditions(),
                                  lambda cond: _register_entry(cond).get("detections"))
     if problems:

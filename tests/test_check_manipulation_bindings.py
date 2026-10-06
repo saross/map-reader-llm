@@ -540,6 +540,70 @@ def test_a_condition_bound_twice_stops_the_gate(repo, monkeypatch, capsys) -> No
     assert "run1::cell-a is already bound by one" in capsys.readouterr().err
 
 
+# ── PR #25 review, finding 8: a malformed file stops the gate, by name ──
+
+def _good() -> dict[str, Any]:
+    """A well-formed entry for the malformed-file cases to break.
+
+    Returns:
+        A binding of ``cell-a`` to the unregistered ``loose`` stage.
+    """
+    return _entry("bad", ["cell-a"], verifier_sources=["outputs/loose"])
+
+
+def _doc(*entries: Any) -> dict[str, Any]:
+    """A bindings document holding ``entries``.
+
+    Args:
+        *entries: The ``bindings`` list's items.
+
+    Returns:
+        The document.
+    """
+    return {"schema_version": cm.BINDINGS_SCHEMA, "bindings": list(entries)}
+
+
+@pytest.mark.parametrize(("doc", "problem"), [
+    ({"schema_version": cm.BINDINGS_SCHEMA}, "bindings is absent"),
+    ({"schema_version": cm.BINDINGS_SCHEMA, "bindings": None}, "bindings is null"),
+    ({"schema_version": cm.BINDINGS_SCHEMA, "bindings": []}, "bindings is empty"),
+    ({"schema_version": cm.BINDINGS_SCHEMA, "bindings": {"x": 1}},
+     "bindings is a dict, not a list"),
+    (["not", "an", "object"], "the bindings file is a JSON list, not an object"),
+    ("{not json", "cannot be read as JSON"),
+    (_doc("a binding"), "binding #0: a str, not an object"),
+    (_doc({**_good(), "id": ["x"]}), "binding #0: no id"),
+    (_doc({**_good(), "verifier_sources": "outputs/loose"}),
+     "verifier_sources is str, not a list of strings"),
+    (_doc({**_good(), "verifier_sources": [1, 2]}),
+     "verifier_sources is list, not a list of strings"),
+    (_doc({**_good(), "proposer_sources": "outputs/other-pool"}),
+     "proposer_sources is str, not a list of strings"),
+    (_doc({**_good(), "conditions": "run1::cell-a"}), "conditions is str, not a list"),
+    (_doc({**_good(), "detections": "results/cells/cell-a/detections.geojson"}),
+     "detections is str, not a list"),
+    (_doc({**_good(), "evidence": "see the log"}), "evidence is str, not an object"),
+    (_doc({**_good(), "evidence": {"derivation": "x", "documents": "doc.md"}}),
+     "evidence: documents is str, not a list of strings"),
+])
+def test_a_malformed_bindings_file_exits_1_with_an_error(repo, monkeypatch, capsys, doc,
+                                                         problem) -> None:
+    """Every malformed case (wrong types, a missing, null or empty bindings
+    list) is named on an ``ERROR:`` line and exits 1. Until the fix a str
+    source raised TypeError, a missing list KeyError, a str evidence
+    AttributeError, and an empty or null list silently disabled every
+    binding."""
+    path = repo["root"] / cm.BINDINGS
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(doc if isinstance(doc, str) else json.dumps(doc))
+    _clear_caches()
+    monkeypatch.setattr(cm, "_analyses", lambda: {"x": {"conditions_compared": [
+        f"{RUN}::cell-a", f"{RUN}::cell-b"]}})
+    assert cm.main(["x"]) == 1
+    err = capsys.readouterr().err
+    assert err.startswith("ERROR: ") and problem in err, err
+
+
 def test_bound_arms_that_sent_identical_requests_are_refused_as_new(repo, monkeypatch) -> None:
     """Two arms bound to two stages whose configurations differ only in a
     name (the verify version) but whose requests were identical: the gate
