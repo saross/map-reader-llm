@@ -207,6 +207,38 @@ Two-stage configs are templates pending finalisation after Phase 2:
 
 ---
 
+## Text-only configurations and the inert-fields guard (added 2026-10-06)
+
+A text-only configuration (`include_example_images: false`) transmits NO
+example: the example list it carries never reaches the model (erratum E90;
+`planning/text-track-transmission-2026-10-05.md`). Since 2026-10-06 both
+launchers (`scripts/4_detect_mounds_batch.py`, `scripts/run_phase2.py`)
+refuse such a configuration at launch (`scripts/lib_config_validation.py`,
+tracker W6.2) unless `--allow-inert-fields` is passed, which logs the inert
+field loudly. The 22 committed configurations this refuses are historical
+and are left unchanged, because their file hashes are recorded in the metas
+of the runs that used them:
+
+- `detect_brief-text.json`, `detect_brief-text-high.json`,
+  `detect_brief-text-safemode.json`, `detect_brief-text_terse.json`,
+  `detect_brief-text_verbose.json`, `detect_brief-text_high-recall.json`,
+  `detect_brief-text_high-recall_nulls.json`,
+  `detect_brief-text_high-recall_nulls-minimal.json`,
+  `detect_brief-text_high-recall_nulls-minimal-t0.json`,
+  `detect_verbose-text.json`;
+- `library_canonical-text.json`, `library_plus-hp-text.json`,
+  `library_pure-positive-canon-text.json`, `library_scale-4-text.json`,
+  `library_scale-8-text.json`;
+- `phase3c-t2-h9A.json`, `phase3c-t2-h9B-v1.json` to `phase3c-t2-h9B-v5.json`;
+- `propose_brief-text.json`.
+
+To reproduce a historical text leg, pass `--allow-inert-fields`; the
+historical launchers (`scripts/55maps-*.sh`,
+`scripts/11maps-gold-standard-v2.sh`, `scripts/run_generalisation.py`) are
+execution records and are not edited to add it. A new text-only run should
+use a configuration without an example list. The refused set is pinned in
+`tests/test_lib_config_validation.py` (`REFUSED_COMMITTED_CONFIGS`).
+
 ## Active Configs
 
 ### Detection Instruction Files (11 total)
