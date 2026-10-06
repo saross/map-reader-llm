@@ -387,3 +387,26 @@ def test_the_h8_h10_replicate_pair_is_a_known_refusal(capsys) -> None:
     assert ("NULL MANIPULATION: h10::verified-pool-160 vs h8-v2::verified-wbf-scale-8 "
             "differ in configuration (version)") in out
     assert "[KNOWN: reports/manipulation-check-2026-10-05.md § B.5 group 10" in out
+
+
+# ── the committed reviewed bindings (gate coverage, 2026-10-06) ──────────
+
+@pytest.mark.tier2
+def test_the_committed_bindings_agree_with_the_register() -> None:
+    """``results/manipulation-gate-bindings.json`` validates against the
+    register (every condition registered and bound once, its registered
+    detections listed, evidence present), every verifier source lies in a
+    registered stage's directory unless its entry says the stage is
+    unregistered, and each entry's recorded ``resolves_to`` is still the
+    stage the gate maps its sources to (so a register edit that moves a
+    stage shows up here, not as a silent re-binding)."""
+    cm._bindings.cache_clear()
+    bindings = cm._bindings()
+    assert bindings, "the bindings file is missing or empty"
+    for entry in {e["id"]: e for e in bindings.values()}.values():
+        mapped = [f"{run}/{key}" for source in entry.get("verifier_sources") or []
+                  for run, key in cm.stages_containing(source)]
+        if not entry.get("unregistered_stage"):
+            for source in entry.get("verifier_sources") or []:
+                assert cm.stages_containing(source), (entry["id"], source)
+            assert list(dict.fromkeys(mapped)) == (entry.get("resolves_to") or []), entry["id"]
