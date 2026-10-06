@@ -1,10 +1,13 @@
 # W2.7: testing configurations, not outputs — options for the PI
 
-> **Last revised**: 2026-10-06 (the cross-execution row corrected: it had
-> pooled within-execution pairs). See [§ Changelog](#changelog) for revision
+> **Last revised**: 2026-10-06 (later: status RULED, D45-D47; earlier the
+> same day the cross-execution row corrected: it had pooled
+> within-execution pairs). See [§ Changelog](#changelog) for revision
 > history.
 
-**Status: OPEN, for the PI's decision.** Tracker
+**Status: RULED 2026-10-06 (D45 option 1 with option 3's wording, D46 the
+95th percentile, D47 replicate runs claim by claim); the floors are measured
+in `reports/w27-replicate-floors-2026-10-06.md`.** Tracker
 `planning/text-track-transmission-2026-10-05.md`, W2.7 (surprise S-10).
 Nothing here changes a result yet.
 
@@ -102,6 +105,12 @@ worth buying (W5, API gate). Concretely:
    existing data (W5, each with its own API approval).
 
 ## Changelog
+
+### 2026-10-06 (later) — Ruled and measured (Session 162)
+
+Status line updated for D45-D47; the measured floors and the claims screen
+are in `reports/w27-replicate-floors-2026-10-06.md`. The § 2 table and the
+recommendation are unchanged.
 
 ### 2026-10-06 — The cross-execution row corrected
 

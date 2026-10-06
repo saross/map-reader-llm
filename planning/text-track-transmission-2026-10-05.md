@@ -1,6 +1,6 @@
 # Text-track transmission gap: claims, surprises and work plan
 
-> **Last revised**: 2026-10-06 (Session 162: the W1 documentation pass;
+> **Last revised**: 2026-10-06 (W2.7 and W7.6 (1)-(3) done, S162). See [§ Changelog](#changelog) for revision history.
 > W1.3-W1.5 done, paper text drafted for the PI's review). Prior: 2026-10-05
 > (Session 161: X1 approved and recorded). See [§ Changelog](#changelog) for
 > revision history.
@@ -288,7 +288,23 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
   other paths; retire the test that pins the floor), apply the re-test
   results (C-25) to every inventoried site, and re-test what W2 could not
   (the 384-vs-512 and PV pairwise files, H1, the E45 companions).
-- [ ] W2.7 FOLLOW UP S-10 (the PI's "two surprises", 2026-10-05): the
+- [x] W2.7 DONE 2026-10-06 (S162; `reports/w27-replicate-floors-2026-10-06.md`;
+  rulings D45-D47): the floors measured without API calls. Gold-standard
+  consensus floors from disjoint pass subsets (95th percentile of replicate
+  |ΔF1| 0.02-0.06 at the boards' operating thresholds; consensus does NOT
+  shrink the single-pass floor and unanimity widens it) and 55-map
+  proposer-stage floors with the verifier held fixed (0.001-0.005 at N = 5,
+  about 0.008 at N = 1 for the Gemini 3 text families; 0.017 for the Gemini 3
+  image pool at N = 1). The paper's 103 configuration-level claims are
+  inventoried against them (report § 7): the headline, the verifier-axis
+  results, lesson (ii) and the A-against-B results clear their floors
+  several times over; six board claims sit at or inside a floor and are
+  reworded as output differences or ties; two need corrections of fact
+  (A beats B at N = 1 on r2, +0.0214; the P5 decomposition is
+  chain-dependent); lesson (i) and every 3-of-5-against-4-of-5 contrast
+  carry a verifier-date confound (the k3 shells were verified 2026-06-06,
+  40-49 days after the k4 legs). The paper edits are W1.5's next item. Was:
+  FOLLOW UP S-10 (the PI's "two surprises", 2026-10-05): the
   tile-swap test compares two outputs, not two configurations. Decide how
   configuration-level claims are tested: a replicate-based floor (the D4/D8
   drift-floor pattern) or a test whose null includes run-to-run variance;
@@ -429,7 +445,15 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   If they did, correct E57, the register's model labels and every claim that
   reads those cells as Flash; if not, find what differed (serving drift
   between dates bears on every cross-date comparison).
-- [ ] W7.6 A REPLICATE ATLAS from the accidental re-runs (added 2026-10-06 at
+- [x] W7.6 items (1)-(3) DONE 2026-10-06 (S162; same report § 4-5): no
+  execution component at 0-2 days; at 17-23 days one on the image track and
+  on text MIN T0.0 but not on text HIGH; on the 55-map corpus the uplift's two
+  executions 54 days apart differ by 0.02-0.03 F1 as proposer-only consensus
+  (all p < 0.0001) and by 0.003-0.006 through the fixed verifier. The metas'
+  drift timeline shows one change point (image HIGH T0.0, 2026-03-27 →
+  04-16: thought tokens +21 %, detections per 1,000 items +43 %); the March
+  batch metas booked no usage. Items (4) and (5) stay open. Was: A REPLICATE
+  ATLAS from the accidental re-runs (added 2026-10-06 at
   the PI's question "is there anything else we can learn from these accidental
   re-runs?"; offline, no API). The same-signature pairs span every time gap:
   minutes (B-17's resubmitted minimal verifier, 2026-03-24), hours (`h8-v2`
@@ -547,6 +571,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-06 (Session 162) — W2.7 and W7.6 (1)-(3) done; W1 and W4/W6 passes
+
+W2.7 and W7.6 (1)-(3) ticked against `reports/w27-replicate-floors-2026-10-06.md`
+(rulings D45-D47). The W1 documentation pass and the W4/W6 engineering pass
+ticked their own items earlier the same day.
 
 ### 2026-10-06 — W4.4, W6.1-W6.3 and W6.5 done (code)
 
