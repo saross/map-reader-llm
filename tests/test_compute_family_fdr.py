@@ -1,10 +1,13 @@
 """Tier-1 tests for ``scripts/compute_family_fdr.py`` (the registered family
 BH-FDR correction).
 
-Covers the pure arithmetic only — the monotone Benjamini–Hochberg step-up,
-its tie rule, and the F1-from-counts helper. The bootstrap itself is
-validated at run time by the script's own Gates A and B against committed
-artefacts (no 10 000-iteration compute belongs in tier 1).
+Covers the arithmetic — the monotone Benjamini–Hochberg step-up, its tie
+rule, and the F1-from-counts helper — and the six fixed primaries: each
+reader returns its expected value from the small committed artefacts, the
+registered figures are the registration's, and a mismatch names where the
+expected value comes from (PR #24 review, finding 8). The bootstrap itself
+is validated at run time by the script's own Gates A and B against
+committed artefacts (no 10 000-iteration compute belongs in tier 1).
 """
 
 from __future__ import annotations
@@ -113,3 +116,55 @@ def test_h1_label_permutation_detects_a_group_difference():
     assert res["observed"] == pytest.approx(point, abs=1e-12)
     assert res["observed"] > 0
     assert res["p_value"] < 0.01
+
+
+# ── the fixed primaries' expected and registered values (PR #24 review, finding 8)
+
+#: The figures the registration quoted (family-fdr-registration.md § 8).
+REGISTERED = {"H2": 0.0, "H3": 0.0, "H4": 0.124, "H5": 0.756, "H7": 0.001, "H8": 0.8344}
+
+
+@pytest.mark.tier1
+def test_registered_value_holds_the_registered_figure():
+    """``registered_value`` is what the registration quoted; the D42
+    permutation figures H4, H5 and H7 now read are ``expected_value``."""
+    from scripts.compute_family_fdr import FIXED_PRIMARIES
+    assert {s["hypothesis"]: s["registered_value"] for s in FIXED_PRIMARIES} == REGISTERED
+    expected = {s["hypothesis"]: s["expected_value"] for s in FIXED_PRIMARIES}
+    assert {h: expected[h] for h in ("H4", "H5", "H7")} == {"H4": 0.1366, "H5": 0.7262,
+                                                           "H7": 0.0002}
+
+
+@pytest.mark.tier1
+def test_every_reader_returns_its_expected_value():
+    """The committed artefacts carry exactly the expected values, and the
+    rows built from them match the committed family artefact's inputs."""
+    import json
+    from pathlib import Path
+
+    from scripts.compute_family_fdr import FIXED_PRIMARIES, fixed_primary_row
+    root = Path(__file__).resolve().parents[1]
+    committed = {r["hypothesis"]: r for r in json.loads(
+        (root / "results/family-fdr/family_fdr.json").read_text())["inputs_ranked"]}
+    for spec in FIXED_PRIMARIES:
+        row = fixed_primary_row(spec, root)
+        assert {k: committed[spec["hypothesis"]].get(k) for k in row} == row
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("hypothesis", "origin"), [
+    ("H4", "(the D42 permutation re-test; the registration quoted 0.124)"),
+    ("H8", "(the registered figure)"),
+])
+def test_a_mismatch_names_the_expected_values_origin(hypothesis, origin):
+    """The message no longer calls the D42 figure "registration"."""
+    from scripts.compute_family_fdr import FIXED_PRIMARIES, fixed_primary_row
+    spec = {**next(s for s in FIXED_PRIMARIES if s["hypothesis"] == hypothesis),
+            "reader": lambda _root: 0.5}
+    with pytest.raises(SystemExit) as exc:
+        fixed_primary_row(spec, root=None)
+    message = str(exc.value)
+    assert message.startswith(f"expected value mismatch for {hypothesis}: artefact 0.5 "
+                              f"vs expected {spec['expected_value']}")
+    assert message.endswith(origin)
+    assert "vs registration" not in message

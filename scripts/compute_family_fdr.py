@@ -98,10 +98,16 @@ N_PERMUTATIONS = 10_000  # D42: the H1 label-permutation test
 SEED = 42
 FDR_Q = 0.05
 
-#: The six fixed primaries: hypothesis -> (artefact, extractor, registered
-#: quoted value, numeric stand-in for the step-up, floor note). H1 is
-#: computed live. Extractors re-read each p from source (anti-confabulation:
-#: the registration's quoted values are asserted, not trusted).
+#: The six fixed primaries: hypothesis -> (artefact extractor, expected value,
+#: registered value, numeric stand-in for the step-up, floor note). H1 is
+#: computed live. Extractors re-read each p from source and assert it equals
+#: ``expected_value`` (anti-confabulation: quoted values are asserted, not
+#: trusted). ``registered_value`` is the figure the registration quoted
+#: (``reports/verification/family-fdr-registration.md`` § 8). For H4, H5 and
+#: H7 the two differ: since PI ruling D42 the expected value is the
+#: permutation re-test's p, and the registered figure is the bootstrap p it
+#: replaced (PR #24 review, finding 8: the D42 figure had been stored as
+#: ``registered_value``, so a mismatch named it "registration").
 PERM_FLOOR = 1.0 / 10_001  # (b+1)/(B+1) convention, § 8.3
 
 
@@ -137,22 +143,54 @@ def _p_h8(root: Path) -> float:
 
 
 FIXED_PRIMARIES: list[dict] = [
-    {"hypothesis": "H2", "reader": _p_h2, "registered_value": 0.0,
+    {"hypothesis": "H2", "reader": _p_h2, "expected_value": 0.0, "registered_value": 0.0,
      "numeric_p": PERM_FLOOR, "report_as": "p < 1e-4 (permutation floor)"},
-    {"hypothesis": "H3", "reader": _p_h3, "registered_value": 0.0,
+    {"hypothesis": "H3", "reader": _p_h3, "expected_value": 0.0, "registered_value": 0.0,
      "numeric_p": PERM_FLOOR, "report_as": "p < 1e-4 (permutation floor)"},
-    {"hypothesis": "H4", "reader": _p_h4, "registered_value": 0.1366,
-     "registration_quoted_bootstrap": 0.124,
+    {"hypothesis": "H4", "reader": _p_h4, "expected_value": 0.1366, "registered_value": 0.124,
      "numeric_p": 0.1366, "report_as": "p = 0.1366 (permutation, D42)"},
-    {"hypothesis": "H5", "reader": _p_h5, "registered_value": 0.7262,
-     "registration_quoted_bootstrap": 0.756,
+    {"hypothesis": "H5", "reader": _p_h5, "expected_value": 0.7262, "registered_value": 0.756,
      "numeric_p": 0.7262, "report_as": "p = 0.7262 (permutation, D42)"},
-    {"hypothesis": "H7", "reader": _p_h7, "registered_value": 0.0002,
-     "registration_quoted_bootstrap": 0.001,
+    {"hypothesis": "H7", "reader": _p_h7, "expected_value": 0.0002, "registered_value": 0.001,
      "numeric_p": 0.0002, "report_as": "p = 0.0002 (permutation, D42)"},
-    {"hypothesis": "H8", "reader": _p_h8, "registered_value": 0.8344,
+    {"hypothesis": "H8", "reader": _p_h8, "expected_value": 0.8344, "registered_value": 0.8344,
      "numeric_p": 0.8344, "report_as": "Simes p = 0.8344 (within-H8 BH minimum)"},
 ]
+
+
+def fixed_primary_row(spec: dict, root: Path) -> dict:
+    """Re-read one fixed primary's p, assert it, and build its family input row.
+
+    Args:
+        spec: A :data:`FIXED_PRIMARIES` entry.
+        root: The repository root the reader reads from.
+
+    Returns:
+        The family input row. Where the registered figure differs from the
+        expected one (H4, H5, H7 since D42), the registered figure is kept
+        as ``registration_quoted_bootstrap_p``.
+
+    Raises:
+        SystemExit: The artefact's p is not the expected value; the message
+            names where the expected value comes from.
+    """
+    observed = spec["reader"](root)
+    expected, registered = spec["expected_value"], spec["registered_value"]
+    if abs(observed - expected) > 1e-12:
+        origin = ("the registered figure" if registered == expected else
+                  f"the D42 permutation re-test; the registration quoted {registered}")
+        raise SystemExit(
+            f"expected value mismatch for {spec['hypothesis']}: artefact "
+            f"{observed} vs expected {expected} ({origin})")
+    row = {
+        "hypothesis": spec["hypothesis"],
+        "numeric_p": spec["numeric_p"],
+        "report_as": spec["report_as"],
+        "source": "registered artefact (re-read and asserted)",
+    }
+    if registered != expected:
+        row["registration_quoted_bootstrap_p"] = registered
+    return row
 
 #: § 8.3 tie rule: presentational rank order for floor ties.
 TIE_ORDER = ["H2", "H3", "H7", "H1"]
@@ -429,22 +467,7 @@ def main() -> None:
                 point_delta, p_h1)
 
     # ---------- Part 2: the seven-hypothesis BH family ----------
-    family_inputs = []
-    for spec in FIXED_PRIMARIES:
-        observed = spec["reader"](REPO_ROOT)
-        if abs(observed - spec["registered_value"]) > 1e-12:
-            raise SystemExit(
-                f"registered value mismatch for {spec['hypothesis']}: artefact "
-                f"{observed} vs registration {spec['registered_value']}")
-        row = {
-            "hypothesis": spec["hypothesis"],
-            "numeric_p": spec["numeric_p"],
-            "report_as": spec["report_as"],
-            "source": "registered artefact (re-read and asserted)",
-        }
-        if "registration_quoted_bootstrap" in spec:
-            row["registration_quoted_bootstrap_p"] = spec["registration_quoted_bootstrap"]
-        family_inputs.append(row)
+    family_inputs = [fixed_primary_row(spec, REPO_ROOT) for spec in FIXED_PRIMARIES]
     h1_report = (f"p < {1.0 / N_PERMUTATIONS:g} (permutation, D42)"
                  if at_floor else f"p = {p_h1:.4g} (permutation, D42)")
     family_inputs.append({
