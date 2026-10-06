@@ -36928,3 +36928,58 @@ Obs 157, Obs 158, Obs 235 (the same mechanism, H10/H12 v1), ruling D40
 (`planning/pi-decisions-2026-09-20.md`). The PI, on reading it: "this is a
 major piece of news that changes how I've been thinking about things ...
 including how we're designing map-reader-bench" — discussion to follow.
+
+## Observation 497: The same request, sent to the same preview model three weeks apart, gave systematically different outputs — the run date is a factor the transmitted signature cannot see (Session 161, 2026-10-05)
+
+**Context.** W2's replicate calibration
+(`reports/retest-bootstrap-check-2026-10-05.md`) flagged two groups of passes
+whose transmitted signatures were identical but whose outputs were not
+exchangeable (surprise S-9): `n1-outstanding-384` (2026-03-27) against
+`pv-diag-384` (2026-04-16), image track, at T = 0.3 minimal thinking and at
+T = 0.0 HIGH thinking. Tracker item W7.5 checked whether anything in the
+request differed (`reports/w75-cross-date-drift-2026-10-05.md`).
+
+**What was established.**
+
+1. **The model was the same.** Every response on both dates reports
+   `gemini-3-flash-preview`; the March "Pro" cells were Flash, as E57 says.
+2. **The request was the same, byte for byte.** The March run's uncommitted
+   cached-path code equals `76a2cc719`, and nothing it sends changed before
+   April's `b57cf6c22`. Tiles, examples, instruction and configuration hash
+   identically. Rebuilt offline under both SDK versions (google-genai 1.67.0
+   in March, 1.71.0 in April), the request bodies are identical apart from
+   client-version headers. Input, cached and image tokens per request match
+   exactly (15,659; 14,549; 15,232).
+3. **The outputs differed by date, not within a date.** At T = 0.3 minimal,
+   March passes held 746-753 detections and April passes 793-821 (F1
+   0.590-0.594 against 0.548-0.570). Across dates, pass pairs differ by a
+   median of 0.037 F1 (group 4) and 0.061 (group 5); within a date, by about
+   0.006. The tile-swap test rejects 67 % of the 39 cross-date pairs and
+   none of the 54 within-date pairs. At T = 0.0 HIGH, March also thought
+   less (median about 1,320 thought tokens per request against about 1,600).
+
+**Reading.** The leading explanation is a change on the serving side between
+the two dates. The machine, quota tier and concurrency also differed (March
+about 600 s per pass, April about 40 s with 250 workers) and cannot be ruled
+out; confirming drift needs a paid re-send on a third date, which D10 and the
+API gate stand against, and the preview model may no longer be served.
+
+**What follows.**
+
+1. **Same-signature runs on different dates are not replicates.** The
+   manipulation check of Obs 496 records what was sent; it cannot record
+   when, and the date carried an effect larger than many of the project's
+   configuration contrasts.
+2. **Cross-date comparisons carry an execution component** (W2.7): the
+   55-map board's cells come from runs in April, June and late August, so a
+   difference between cells from different dates includes whatever changed
+   in between. A claim resting on such a difference needs a caveat or a
+   bridging replicate run on both dates.
+3. **For the paper and for map-reader-bench:** report each run's date with
+   its model identifier, and treat a hosted preview model as a moving
+   instrument. "Same model name, same request" did not guarantee the same
+   behaviour here, by margins of 0.04-0.06 F1 on 487 tiles.
+
+**Related.** S-9 and W7.5 (`planning/text-track-transmission-2026-10-05.md`),
+the W2.7 options note (`planning/w27-configuration-level-testing-2026-10-05.md`),
+E57, Obs 496, Obs 235.

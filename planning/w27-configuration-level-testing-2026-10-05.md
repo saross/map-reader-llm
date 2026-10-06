@@ -1,7 +1,8 @@
 # W2.7: testing configurations, not outputs — options for the PI
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-06 (the cross-execution row corrected: it had
+> pooled within-execution pairs). See [§ Changelog](#changelog) for revision
+> history.
 
 **Status: OPEN, for the PI's decision.** Tracker
 `planning/text-track-transmission-2026-10-05.md`, W2.7 (surprise S-10).
@@ -29,7 +30,7 @@ two cross-execution groups of S-9):
 | H10 pool | 327 | 45 | 0.009 | 0.029 | 0.038 | 0 % |
 | 55-map, 20 m | 8,541 | 90 | 0.003 | 0.009 | 0.014 | **11 %** |
 | 55-map, 50 m | 8,541 | 90 | 0.005 | 0.012 | 0.015 | **20 %** |
-| Across executions (S-9 group 4 / group 5) | 487 | 78 / 15 | 0.013 / 0.054 | — | — | 22 % / 60 % |
+| Across executions (S-9 group 4 / group 5; cross pairs only) | 487 | 30 / 9 | 0.037 / 0.061 | — | 0.047 / 0.072 | 57 % / 100 % |
 
 Reading:
 
@@ -41,8 +42,11 @@ Reading:
   to call run-to-run noise significant: 11-20 % of same-configuration pairs
   reject. A significant tile-swap p between two 55-map cells is therefore
   not, by itself, evidence that the configurations differ.
-- Across executions (different dates or code; S-9) the gap can exceed every
-  within-execution floor: 0.054 median in group 5.
+- Across executions (different dates; S-9) the gap exceeds every
+  within-execution floor: a median of 0.037 F1 in group 4 and 0.061 in
+  group 5, where the same groups' within-execution pairs differ by a median
+  of about 0.006. W7.5 found the two executions sent byte-identical requests
+  (`reports/w75-cross-date-drift-2026-10-05.md`).
 - One concrete case: B-17's two runs of the same minimal verifier differ by
   0.007 F1 at one threshold, against the 0.018 minimal-vs-medium difference
   that E69 and ruling 1a read as a configuration effect.
@@ -98,6 +102,19 @@ worth buying (W5, API gate). Concretely:
    existing data (W5, each with its own API approval).
 
 ## Changelog
+
+### 2026-10-06 — The cross-execution row corrected
+
+The § 2 row for S-9's groups 4 and 5 pooled all their pairs, including the
+within-execution ones, and so understated the gap. Cross-execution pairs only:
+
+| | Before | After |
+|---|---|---|
+| Pairs (group 4 / 5) | 78 / 15 | 30 / 9 |
+| Median \|ΔF1\| | 0.013 / 0.054 | 0.037 / 0.061 |
+| Tile-swap test rejects | 22 % / 60 % | 57 % / 100 % (39 pairs, 67 %, as W2 reported) |
+
+The recommendation is unchanged; the case for cross-date caveats is stronger.
 
 ### 2026-10-05 — Original publication (Session 161)
 
