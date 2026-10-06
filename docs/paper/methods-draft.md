@@ -149,10 +149,11 @@ The registered family-level correction was executed on 2026-07-30 as
 a single family: one primary p-value per confirmatory hypothesis,
 m = 7 (H6 excluded as never run), with the one input that had never
 been computed (H1's pooled modality contrast) reconstructed under a
-rule fixed before computation. The family rejects {H2, H3, H7} at
-q = 0.05 (adjusted p = 0.00035, 0.00035, and 0.00233 respectively)
-and retains H4 (adjusted p = 0.217), H1 (0.248), H5 (0.834), and H8
-(0.834). Two of the three rejections read against their registered
+rule fixed before computation. Since ruling D42 every input is a
+paired permutation p, not a bootstrap one (re-executed 2026-10-05). The
+family rejects {H2, H3, H7} at q = 0.05 (adjusted p = 0.00035, 0.00035,
+and 0.00047 respectively) and retains H1 (adjusted p = 0.125), H4
+(0.191), H5 (0.834), and H8 (0.834). Two of the three rejections read against their registered
 predictions: H2's registered prediction was that two-stage
 architectures would not improve detection, so its rejection is a
 falsification in the study's favour (Results § R4), and H7's
@@ -770,6 +771,7 @@ drafted for the PI's review and is not finalised.
 | § M.9 null-exemplar exposure (C-12) | the 22 text configurations "carry them as labels alone" | "transmit no exemplar at all" (the 2026-09-13 changelog's same phrase bracketed, not rewritten) |
 | § M.11 dual-track paragraph (C-13) | Track 2 ran temperature testing, then Phase 3a | Track 2 also ran Phase 2d (February and retest); the retest also ran Phase 2c on Track 2, as five identical requests |
 | § M.11 phase table | as regenerated from the register | unchanged; a DRAFT NOTE gives the D42 p-values, the S-12 re-test of the 60-tile stage, and E90/E92 |
+| § M.x family correction (C-25) | adjusted p H7 0.00233, H4 0.217, H1 0.248 (bootstrap inputs) | H7 0.00047, H1 0.125, H4 0.191 (permutation inputs, D42; `results/family-fdr/family_fdr.md`); the rejection set {H2, H3, H7} unchanged |
 
 **What did NOT change**: every number in the phase table and the rest of
 the draft; the conclusion that text cells never saw the null pixels; the
