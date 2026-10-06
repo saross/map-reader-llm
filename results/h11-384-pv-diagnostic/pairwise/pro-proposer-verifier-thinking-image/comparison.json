@@ -80,7 +80,15 @@
         "ci_lower": -0.006317094544802687,
         "ci_upper": 0.02137936423789692,
         "p_value": 0.36
+      },
+      "permutation_retest": {
+        "f1_p": 0.1626,
+        "precision_p": 0.0043,
+        "recall_p": 0.4052,
+        "method": "paired tile-swap permutation, 10,000, seed 42 (D42); re-run 2026-10-06",
+        "source": "results/d42-retest-2026-10-05/class-b/b18-image-as-is-comparison.json"
       }
     }
-  ]
+  ],
+  "d42_annotation": "PI ruling D42: the p_value fields inside f1/precision/recall_difference are the RETIRED bootstrap values (2 x minority tail, floor 1/B), kept as published; the authoritative test is each comparison's permutation_retest block. Bootstrap CIs stay as published (a re-run would move them: BCa since April). Re-run outputs: results/d42-retest-2026-10-05/class-b/; report: reports/d42-implementation-2026-10-05.md."
 }

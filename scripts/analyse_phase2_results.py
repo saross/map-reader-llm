@@ -9,7 +9,13 @@ bootstrapped confidence intervals with Benjamini-Hochberg FDR correction.
 Aligned with preregistration Section 3.5:
 - Bootstrapped 95% CIs for absolute metrics and effect sizes
 - FDR correction at q=0.05 for multiple pairwise comparisons
-- Significance criterion: 95% CI excludes zero after FDR adjustment
+
+Significance (PI ruling D42, 2026-10-05): each pairwise contrast is tested
+by the paired tile-swap permutation test (run blocks swap per tile; 10,000
+permutations, seed 42) and the Benjamini-Hochberg step-up runs on those
+p-values. Until then this script fed BH a "pseudo-p" derived from where the
+bootstrap CI sat relative to zero (0.05 minus the CI bound), which is not a
+p-value; D42 retired it.
 
 Usage:
     python scripts/analyse_phase2_results.py \\
@@ -45,6 +51,7 @@ from lib_advanced_metrics import (
     calculate_f1_internal,
 )
 from lib_detection_paths import find_pass_geojsons
+from lib_permutation import bh_adjust
 
 # Script version
 __version__ = "1.0.0"
@@ -60,6 +67,7 @@ logger = logging.getLogger(__name__)
 DEFAULT_N_BOOTSTRAP = 1000
 DEFAULT_FDR_Q = 0.05
 DEFAULT_BUFFER_M = 20
+RAW_ALPHA = 0.05  # uncorrected threshold for initially_significant
 
 
 def load_condition_results(
@@ -182,76 +190,48 @@ def apply_fdr_correction(
     q: float = 0.05,
 ) -> list[dict]:
     """
-    Apply Benjamini-Hochberg FDR correction to pairwise comparisons.
+    Benjamini-Hochberg FDR correction over permutation p-values (D42).
 
-    The B-H procedure controls the expected proportion of false discoveries
-    among rejected hypotheses at level q.
+    Each comparison must carry ``f1_difference.p_value`` from the paired
+    permutation test (``bootstrap_multi_run_effect_size_ci(...,
+    return_p_values=True)``). The CI-position pseudo-p this function used
+    to derive (0.05 minus the CI bound) is retired: a comparison with no
+    permutation p is refused rather than scored.
 
     Args:
-        pairwise_results: List of pairwise comparison dictionaries,
-            each containing 'f1_difference' with 'ci_lower' and 'ci_upper'.
+        pairwise_results: List of pairwise comparison dictionaries, each
+            with ``f1_difference.p_value``.
         q: FDR control level (default 0.05).
 
     Returns:
-        Updated pairwise_results with 'fdr_significant' field added.
+        The same list, each comparison gaining ``initially_significant``
+        (raw p < 0.05), ``fdr_adjusted_p``, ``fdr_significant``
+        (adjusted p <= q) and ``ci_excludes_zero`` (descriptive only).
+
+    Raises:
+        ValueError: If any comparison lacks a permutation p-value.
     """
     if not pairwise_results:
         return pairwise_results
 
-    # Determine which comparisons are initially significant (CI excludes 0)
-    # and compute pseudo-p-values based on CI position
-    comparisons_with_pvalues = []
+    raw_p = []
+    for result in pairwise_results:
+        p_value = result.get("f1_difference", {}).get("p_value")
+        if p_value is None:
+            raise ValueError(
+                f"{result.get('condition_a')} vs {result.get('condition_b')}: no "
+                "permutation p-value. D42 retired the CI-position pseudo-p; compute "
+                "the effect with return_p_values=True.")
+        raw_p.append(float(p_value))
 
-    for i, result in enumerate(pairwise_results):
+    adjusted = bh_adjust(raw_p)
+    for result, p_value, adj in zip(pairwise_results, raw_p, adjusted):
         f1_diff = result.get("f1_difference", {})
-        ci_lower = f1_diff.get("ci_lower", 0)
-        ci_upper = f1_diff.get("ci_upper", 0)
-
-        # Compute pseudo-p-value based on distance from zero
-        # If CI contains 0, p > 0.05; otherwise scale by CI width
-        if ci_lower > 0:
-            # Positive effect: p-value inversely related to distance from 0
-            # Approximation: smaller CI lower bound (closer to 0) = higher p-value
-            pseudo_p = max(0.001, 0.05 - ci_lower)
-        elif ci_upper < 0:
-            # Negative effect: similar logic with absolute upper bound
-            pseudo_p = max(0.001, 0.05 - abs(ci_upper))
-        else:
-            # CI contains 0: not significant at α=0.05
-            pseudo_p = 1.0
-
-        comparisons_with_pvalues.append({
-            "index": i,
-            "pseudo_p": pseudo_p,
-            "initially_significant": ci_lower > 0 or ci_upper < 0,
-        })
-
-    # Sort by pseudo-p-value
-    sorted_comparisons = sorted(comparisons_with_pvalues, key=lambda x: x["pseudo_p"])
-
-    # Apply B-H procedure
-    m = len(sorted_comparisons)  # Total number of comparisons
-    fdr_significant_indices = set()
-
-    for rank, comp in enumerate(sorted_comparisons, start=1):
-        # B-H critical value: (rank / m) * q
-        bh_critical = (rank / m) * q
-
-        if comp["pseudo_p"] <= bh_critical:
-            fdr_significant_indices.add(comp["index"])
-        else:
-            # Once a comparison fails, all subsequent also fail
-            break
-
-    # Update results with FDR significance
-    for i, result in enumerate(pairwise_results):
-        f1_diff = result.get("f1_difference", {})
-        ci_lower = f1_diff.get("ci_lower", 0)
-        ci_upper = f1_diff.get("ci_upper", 0)
-
-        result["initially_significant"] = ci_lower > 0 or ci_upper < 0
-        result["fdr_significant"] = i in fdr_significant_indices
-
+        result["initially_significant"] = p_value < RAW_ALPHA
+        result["fdr_adjusted_p"] = adj
+        result["fdr_significant"] = adj <= q
+        result["ci_excludes_zero"] = (
+            f1_diff.get("ci_lower", 0) > 0 or f1_diff.get("ci_upper", 0) < 0)
     return pairwise_results
 
 
@@ -428,6 +408,7 @@ def analyse_phase_results(
             gdf_bounds=gdf_bounds_common,
             n_iterations=n_bootstrap,
             random_seed=random_seed,
+            return_p_values=True,
         )
 
         pairwise_comparisons.append({

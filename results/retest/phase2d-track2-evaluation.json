@@ -65,8 +65,17 @@
           "ci_lower": 0.023067955715187948,
           "ci_upper": 0.09579543828610722
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.4263,
+          "precision_p": 0.8496,
+          "recall_p": 0.003,
+          "f1_bh_within_phase": 0.4263,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       }
-    ]
+    ],
+    "d42_annotation": "PI ruling D42 (2026-10-05): 'significant' in each pairwise row is the RETIRED reading (bootstrap CI excludes zero, uncorrected), kept as published. The authoritative test is permutation_retest: the paired tile-swap permutation test (10,000 permutations, seed 42, 20 m) with BH within the phase, computed 2026-10-05 by scripts/evaluate_retest_all.py at commit 7aef6d2ff on the input files as they now stand. Those inputs re-score within 0.0000 F1 of the values recorded here (evaluator changes since March); the recorded point estimates and CIs are left as published. See reports/d42-implementation-2026-10-05.md."
   }
 }

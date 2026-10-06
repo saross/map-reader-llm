@@ -1,25 +1,18 @@
 {
-  "cost_basis": "audited-upper-bound",
+  "cost_basis": "audited",
   "cost_usd": 0.020972,
   "fragment": {
-    "bounds_usd": {
-      "high": 0.020972,
-      "low": 0.01285
-    },
-    "candidates": {
-      "flex": 0.01285,
-      "standard": 0.020972
-    },
     "cost_usd": 0.020972,
     "evidence": [
+      "cached-path: outputs/image-b-gs-2026-08-28/probe-high/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json: all 5 requests with usage report 18909 cached input tokens, the exact size of the explicit cache outputs/h8-v2/scale-8/run_1/launch.log records (D34 (1)); scripts/4_detect_mounds_batch.py cached-call GenerateContentConfig omitted service_tier from 76a2cc719 until 2df65047e -> standard",
       "billing-day: gemini-3-flash-preview: 2026-08-27 flex|standard [day export (unverified)] -> standard|flex"
     ],
     "meta": "outputs/image-b-gs-2026-08-28/probe-high/detections-detect_brief-text-image-3-flash-2026-08-28.meta.json",
     "model": "gemini-3-flash-preview",
     "model_recorded": "gemini-3-flash-preview",
     "priced_at": "2026-08-28",
-    "tier": null,
-    "tier_method": "unresolved"
+    "tier": "standard",
+    "tier_method": "cached-path"
   },
   "generator": "scripts/backfill_cost_audit_sidecars.py",
   "generator_version": "1.0.0",
@@ -33,7 +26,7 @@
   },
   "reason": "no row of the passes register cites this meta (its run image-b-gs-2026-08-28 is in results/run-registry.json, but the register's pass extraction does not reach this file)",
   "register": {
-    "generated_at": "2026-10-03T12:35:34Z",
+    "generated_at": "2026-10-05T05:33:46Z",
     "generator_version": "0.8.0",
     "path": "results/passes-manifest.json",
     "schema_version": "1.0"

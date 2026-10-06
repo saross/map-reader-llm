@@ -103,6 +103,7 @@ import glob
 import gzip
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -119,7 +120,10 @@ RUN_CONDITIONS = "results/run-conditions.json"
 PASSES_MANIFEST = "results/passes-manifest.json"
 
 #: Roots a proposer pool's output directory may sit under.
-POOL_ROOTS = ["outputs/h11", "outputs", "outputs/retest"]
+#: ``outputs/gs`` since S160 (tracker C-18): without it gold-standard-v2's
+#: stages never resolved, and a stage registered ``image`` that sent text
+#: labels went unchecked.
+POOL_ROOTS = ["outputs/h11", "outputs", "outputs/retest", "outputs/gs"]
 
 #: Suffixes a pool KEY may carry that its output DIRECTORY does not: vote
 #: fractions (``-4of5``), union/consensus markers, and the operating-point
@@ -180,6 +184,32 @@ POOL_KEYED_JSON = [
 # ── reading what was sent ────────────────────────────────────────────────
 
 @functools.lru_cache(maxsize=None)
+def load_meta_json(path: str | Path) -> Any:
+    """Parse one meta file, gzipped or not.
+
+    Some archived metas are gzipped in place under their ``.json`` name, and
+    the passes manifest cites one ``.meta.json.gz``; both are recognised by
+    the gzip magic bytes, not by the name. Shared with
+    ``lib_manipulation_signature.load_meta`` (PR #24 review, finding 6: the
+    manipulation gate read neither form and silently dropped the pass).
+
+    Args:
+        path: The meta's path.
+
+    Returns:
+        The parsed JSON value.
+
+    Raises:
+        OSError: The file cannot be read, or is a corrupt gzip stream.
+        EOFError: The gzip stream is truncated.
+        ValueError: The content is not valid UTF-8 JSON.
+    """
+    raw = Path(path).read_bytes()
+    if raw[:2] == b"\x1f\x8b":
+        raw = gzip.decompress(raw)
+    return json.loads(raw.decode("utf-8"))
+
+
 def read_meta(path: str | Path) -> dict[str, Any] | None:
     """Read one ``*.meta.json``'s exemplar-transmission state.
 
@@ -198,12 +228,9 @@ def read_meta(path: str | Path) -> dict[str, Any] | None:
     if not p.exists():
         return None
     try:
-        raw = p.read_bytes()
-        # Some archived metas are gzipped in place under their .json name.
-        if raw[:2] == b"\x1f\x8b":
-            raw = gzip.decompress(raw)
-        cfg = json.loads(raw.decode("utf-8")).get("configuration") or {}
-    except (OSError, ValueError, json.JSONDecodeError):
+        # Gzipped or not (load_meta_json).
+        cfg = load_meta_json(p).get("configuration") or {}
+    except (OSError, ValueError, EOFError):
         return None
     if not cfg:
         return None
@@ -931,6 +958,36 @@ def derive() -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
 
 # ── the verifier stage's own modality ────────────────────────────────────
 
+def stage_path_candidates(run: str, key: str, spec: Any) -> list[str]:
+    """Every repository-relative path a registered verifier stage may occupy.
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict with ``path``).
+
+    Returns:
+        Candidate directories, most specific first, whether or not they exist
+        (:func:`verify_stage_dirs` keeps the ones that do; the git-rename
+        route asks where the others went).
+    """
+    path = spec.get("path") if isinstance(spec, dict) else None
+    cands: list[str] = []
+    # A leg outside the run's tree names its root (ruling D32; see
+    # generate_post_run_report._leg_root): resolve there first.
+    repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
+    if repo_path and path:
+        cands.append(f"{repo_path}/{path}")
+    for name in ([path] if path else []) + [key]:
+        if not name:
+            continue
+        for root in POOL_ROOTS:
+            cands.append(f"{root}/{run}/{name}")
+        if run.startswith("retest-"):
+            cands.append(f"outputs/retest/{run[len('retest-'):]}/{name}")
+    return cands
+
+
 def verify_stage_dirs(run: str, key: str, spec: Any) -> list[str]:
     """Locate a registered verifier stage's output directory.
 
@@ -942,16 +999,153 @@ def verify_stage_dirs(run: str, key: str, spec: Any) -> list[str]:
     Returns:
         Existing repository-relative directories, most specific first.
     """
-    path = spec.get("path") if isinstance(spec, dict) else None
-    cands: list[str] = []
-    for name in ([path] if path else []) + [key]:
-        if not name:
+    return [c for c in stage_path_candidates(run, key, spec) if (BASE_DIR / c).is_dir()]
+
+
+def git_renamed_to(paths: list[str]) -> tuple[list[str], str | None]:
+    """Follow registered paths that git moved elsewhere (archive, never delete).
+
+    A stage the register still names may have been archived since: its files
+    were moved by a commit (``git mv`` into ``archive/``), so its path is
+    gone but its bytes are not. This asks git which commit last removed each
+    path and where that commit's renames took the files.
+
+    Args:
+        paths: Repository-relative files or directories.
+
+    Returns:
+        ``(current_paths, commit)`` — the existing destinations of every file
+        renamed away from ``paths`` by the most recent commit that removed
+        any of them, and that commit's abbreviated hash; ``([], None)`` when
+        none was moved, or when git is unavailable.
+    """
+    if not paths:
+        return [], None
+    try:
+        log = subprocess.run(
+            ["git", "log", "--diff-filter=D", "--format=%h", "-1", "--", *paths],
+            cwd=BASE_DIR, capture_output=True, text=True, check=True).stdout.strip()
+        if not log:
+            return [], None
+        show = subprocess.run(
+            ["git", "show", "-M", "--name-status", "--format=", log],
+            cwd=BASE_DIR, capture_output=True, text=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return [], None
+    moved: list[str] = []
+    for line in show.splitlines():
+        parts = line.split("\t")
+        if len(parts) != 3 or not parts[0].startswith("R"):
             continue
-        for root in POOL_ROOTS:
-            cands.append(f"{root}/{run}/{name}")
-        if run.startswith("retest-"):
-            cands.append(f"outputs/retest/{run[len('retest-'):]}/{name}")
-    return [c for c in cands if (BASE_DIR / c).is_dir()]
+        old, new = parts[1], parts[2]
+        if any(old == q or old.startswith(q.rstrip("/") + "/") for q in paths) \
+                and (BASE_DIR / new).exists():
+            moved.append(new)
+    return moved, log
+
+
+def _verify_metas(files: list[str]) -> list[dict[str, Any]]:
+    """Read the ``verify_*`` metas among ``files``.
+
+    Args:
+        files: Meta paths (repository-relative or absolute).
+
+    Returns:
+        The :func:`read_meta` records whose configuration is a verify config.
+    """
+    out = []
+    for f in files:
+        meta = read_meta(f)
+        if meta and str(meta.get("config") or "").startswith("verify_"):
+            out.append(meta)
+    return out
+
+
+def _metas_under(directory: str) -> list[str]:
+    """Meta files directly in a directory or one level below it.
+
+    Args:
+        directory: Repository-relative directory.
+
+    Returns:
+        Sorted absolute paths of ``*.meta.json`` files.
+    """
+    root = BASE_DIR / directory
+    return sorted(glob.glob(str(root / "*.meta.json"))
+                  + glob.glob(str(root / "*/*.meta.json")))
+
+
+def resolve_verifier_stage(run: str, key: str, spec: Any) -> dict[str, Any]:
+    """Find a registered verifier stage's verify metadata, by every route.
+
+    Routes, all tried so their union is read (any route that speaks is
+    recorded in ``resolved_by``):
+
+    1. ``passes-manifest`` — the ``provenance.source_files`` of the passes
+       ``results/passes-manifest.json`` records under ``(run, key)``: the
+       register's own record of which metas the stage's passes were
+       extracted from, as the passes extractor resolved them. This is what
+       reaches sidecar-form metas (``verified-*.meta.json`` beside the
+       proposer pools) and the ``t0.3`` directory a ``t0-3`` run id names
+       (tracker W4.4, 2026-10-06).
+    2. ``stage-directory`` — ``*.meta.json`` under the directories
+       :func:`verify_stage_dirs` locates from the registered path.
+    3. ``git-rename`` — only when 1 and 2 read nothing: where git moved the
+       registered path's files (an archived leg; :func:`git_renamed_to`).
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict with
+            ``path``).
+
+    Returns:
+        ``{"metas", "resolved_by", "unresolved_reason"}``: the deduplicated
+        verify metas, the routes that contributed, and — when nothing was
+        read — a named reason (never a silent skip).
+    """
+    metas: list[dict[str, Any]] = []
+    resolved_by: list[str] = []
+    missing_sources: list[str] = []
+
+    passes = _passes_index().get((run, key), [])
+    sources = [f for p in passes for f in (p.get("provenance") or {}).get("source_files") or []]
+    missing_sources = [f for f in sources if not (BASE_DIR / f).exists()]
+    found = _verify_metas([f for f in sources if f not in missing_sources])
+    if found:
+        metas += found
+        resolved_by.append("passes-manifest")
+
+    dirs = verify_stage_dirs(run, key, spec)
+    found = _verify_metas([f for d_ in dirs for f in _metas_under(d_)])
+    if found:
+        metas += found
+        resolved_by.append("stage-directory")
+
+    if not metas:
+        moved, commit = git_renamed_to(
+            missing_sources + stage_path_candidates(run, key, spec))
+        found = _verify_metas([f for f in moved if f.endswith(".meta.json")])
+        if found:
+            metas += found
+            resolved_by.append(f"git-rename:{commit}")
+
+    reason = None
+    if not metas:
+        parts = []
+        if missing_sources:
+            parts.append(f"{len(missing_sources)} passes-manifest source meta(s) absent on "
+                         f"this machine (e.g. {missing_sources[0]})")
+        elif sources:
+            parts.append("the passes manifest's source metas carry no verify_* configuration")
+        else:
+            parts.append("no passes-manifest entry")
+        parts.append("no stage directory with a verify_* meta" if not dirs
+                     else "its stage directories hold no verify_* meta")
+        parts.append("no git rename of the registered path")
+        reason = "; ".join(parts)
+    return {"metas": dedupe(metas), "resolved_by": resolved_by,
+            "unresolved_reason": reason}
 
 
 def verifier_stage_modality(run: str, key: str, spec: Any) -> tuple[str | None, list[str]]:
@@ -975,17 +1169,10 @@ def verifier_stage_modality(run: str, key: str, spec: Any) -> tuple[str | None, 
     Returns:
         ``(modality, verify_configs)`` — the derived modality, or ``None`` when
         no ``verify_*`` pass metadata can be read for the stage, and the sorted
-        verify config names the derivation read.
+        verify config names the derivation read. The routes are those of
+        :func:`resolve_verifier_stage`.
     """
-    metas: list[dict[str, Any]] = []
-    for stage_dir in verify_stage_dirs(run, key, spec):
-        root = BASE_DIR / stage_dir
-        for p in sorted(glob.glob(str(root / "*.meta.json"))
-                        + glob.glob(str(root / "*/*.meta.json"))):
-            meta = read_meta(p)
-            if meta and str(meta.get("config") or "").startswith("verify_"):
-                metas.append(meta)
-    metas = dedupe(metas)
+    metas = resolve_verifier_stage(run, key, spec)["metas"]
     return modality_of(metas), sorted({str(m["config"]) for m in metas})
 
 
@@ -1021,7 +1208,9 @@ def verifier_pass_audit() -> list[dict[str, Any]]:
     for run, entry in decomposition.items():
         for key, spec in (entry.get("verifier_passes") or {}).items():
             recorded = spec if isinstance(spec, str) else spec.get("modality")
-            verifier_reading, verify_configs = verifier_stage_modality(run, key, spec)
+            resolution = resolve_verifier_stage(run, key, spec)
+            verifier_reading = modality_of(resolution["metas"])
+            verify_configs = sorted({str(m["config"]) for m in resolution["metas"]})
 
             # The track: the modality of every proposer pool whose conditions
             # name this stage, plus the pool the stage's path sits under.
@@ -1042,6 +1231,8 @@ def verifier_pass_audit() -> list[dict[str, Any]]:
                 "recorded": recorded,
                 "verify_configs": verify_configs,
                 "verifier_reading": verifier_reading,
+                "resolved_by": resolution["resolved_by"],
+                "unresolved_reason": resolution["unresolved_reason"],
                 "track_reading": track_reading,
                 "matches_verifier_reading": (
                     None if not verifier_reading or not comparable(recorded)
@@ -1250,6 +1441,10 @@ def main() -> int:
           f"{sum(1 for r in verifier_rows if r['matches_track_reading'] is True)}, "
           f"contradict it "
           f"{sum(1 for r in verifier_rows if r['matches_track_reading'] is False)}")
+    unresolved = [r for r in verifier_rows if r["verifier_reading"] is None]
+    print(f"registered verifier stages no route resolves: {len(unresolved)}")
+    for r in unresolved:
+        print(f"  UNRESOLVED {r['run_id']}::{r['stage']}: {r['unresolved_reason']}")
     for artefact, counts in sorted(summary.items()):
         print(f"  {artefact}: {counts['records_carrying_a_modality']} recorded, "
               f"{counts['checked_against_a_derivation']} checkable, "

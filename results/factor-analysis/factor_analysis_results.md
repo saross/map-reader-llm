@@ -1,8 +1,10 @@
 # Factor Analysis — Pairwise Permutation Test Results
 
-> **Last revised**: 2026-08-02 (E72 — the Temperature family's headline
-> recomputed from the retained clean contrasts). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-06 (§ 9 implication 4's "FDR p = 0.004"
+> qualified: a raw p, of a row that is not H7's registered contrast). Prior:
+> 2026-08-02 (E72 — the Temperature family's headline recomputed from the
+> retained clean contrasts). See [§ Changelog](#changelog) for revision
+> history.
 >
 > **⚠ Superseded figures (2026-08-02, E72)**: four of the six Temperature
 > contrasts — the three Group 4 rows (`Flash MIN text T=0.7` versus `T=1.0` at
@@ -335,7 +337,11 @@ These 512 px Phase 2a–2e contrasts are consistent with the H8 v2
    image track null (+0.015, ns). The paper's practitioner claim
    ("change Gemini's T=1.0 default") should be sourced to the
    preregistered Phase 2b sweep (text +0.072, FDR p = 0.004; image
-   +0.014, ns) — that claim stands, but as a text-track finding rather
+   +0.014, ns) — that claim stands [2026-10-06: "FDR p = 0.004" is the
+   raw p of T=0.7 > T=1.0, which is not H7's registered row; on the
+   paired tile-swap permutation test it is p = 0.0055, BH within track
+   0.011 (D42). The registered H7 contrast, T=0.3 > T=1.0, is +0.096 at
+   p = 0.0002, BH-adjusted 0.00047 in the confirmatory family], but as a text-track finding rather
    than a universal T=0.7 superiority across K.
 5. **Modality effects are model-dependent.** Text > image at Pro;
    ambiguous or flipped at Flash N=1. The paper's modality claim
@@ -389,6 +395,24 @@ explicitly flagged; their statistical outputs (ΔF1, p-values) remain
 valid.
 
 ## Changelog
+
+### 2026-10-06 — "FDR p = 0.004" qualified (C-26)
+
+**Trigger**: the W2 inventory (`reports/retest-bootstrap-check-2026-10-05.md`
+§ W2.2): "+0.072 at FDR p = 0.004" is the raw bootstrap p of the Phase 2b
+text contrast T=0.7 > T=1.0 (`pairwise-bootstrap-comparisons.json`
+`comparisons[27]`), not an FDR-adjusted value and not H7's registered row;
+PI ruling D42 retired the bootstrap p. Tracker C-26 (W1).
+
+| Claim | Before | After |
+|---|---|---|
+| § 9 implication 4, Phase 2b text contrast | "+0.072, FDR p = 0.004" | kept, with a bracket: raw p; permutation p 0.0055, BH within track 0.011; H7's registered T=0.3 > T=1.0 is +0.096, p 0.0002 |
+
+**What did NOT change**: every factor-family table, q-value and verdict in
+this document; the 2026-08-02 entry below, which quotes the same "FDR
+p = 0.004" in its before → after table and is left as the dated record.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-08-02 — Temperature family corrected under E72
 

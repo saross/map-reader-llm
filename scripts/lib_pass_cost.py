@@ -27,7 +27,8 @@ things that sentence needs and the metas do not record:
                              counted per run (``usage_stats.served_tier_counts``).
                              It pins only when EVERY response reported a tier
                              (see below)
-   ``batch-marker``          ``batch_api`` block in the meta, ``batch_jobs.json``
+   ``batch-marker``          ``batch_api`` block in the meta (unless a real-time
+                             resume merge carried it, D36), ``batch_jobs.json``
                              beside it, or ``probabilities.json`` ``mode: batch``
    ``runner-record-batch``   a ``cost/2`` block (WP2 onwards) priced on the Batch
                              API path: structural, like a batch marker
@@ -36,7 +37,10 @@ things that sentence needs and the metas do not record:
    ``cached-path``           the run used an EXPLICIT context cache on the
                              real-time path, whose request config omits
                              ``service_tier``: billed at standard, whatever the
-                             launch line asked for (see below)
+                             launch line asked for (see below). Read from a log
+                             recording the cache, or from the fragment's own
+                             requests all reporting one cached size (D34 (1),
+                             :func:`cache_signature`)
    ``runner-record``         a ``cost/2`` block whose tier came from the CLI: the
                              tier REQUESTED, which the cached path can drop
    ``run-log``               the runner's ``Service tier: <tier>`` launch line in
@@ -384,6 +388,89 @@ def is_continuous(start: str | None, end: str | None, duration_s: float | None) 
     return span <= CONTINUOUS_MAX_S
 
 
+#: The schema of the provenance a carry-forward verifier stage writes.
+CARRY_SCHEMA = "verifier-stage-carry/1"
+
+
+def carried_forward(directory: Path) -> tuple[int, str, int] | None:
+    """Results a verifier stage carried from an earlier stage, unverified again.
+
+    A stage rebuilt over a re-numbered union (the ``*_recovery-fixed``
+    stages) copies the earlier stage's results into its own
+    ``probabilities.json`` and verifies only the candidates it could not
+    match; ``carry_provenance.json`` records how many it carried and from
+    where. Those results' spend belongs to the stage it extends.
+
+    Args:
+        directory: The verifier stage's directory.
+
+    Returns:
+        ``(carried, extends_stage, uncovered)``, or None when the stage carries
+        nothing or the file is malformed (no schema, counts, or extended stage).
+    """
+    path = directory / "carry_provenance.json"
+    if not path.is_file():
+        return None
+    doc = _read_json(path)
+    if not isinstance(doc, dict) or doc.get("schema") != CARRY_SCHEMA:
+        return None
+    carried, uncovered = doc.get("carried"), doc.get("uncovered")
+    extends = str(doc.get("extends_stage") or "")
+    if not isinstance(carried, int) or carried <= 0 or not isinstance(uncovered, int) \
+            or uncovered < 0 or not extends:
+        return None
+    return carried, extends, uncovered
+
+
+def stage_exists(meta_path: Path, stage: str) -> bool:
+    """Whether a repository-relative stage directory exists, found from a meta's path.
+
+    The repository root is the nearest ancestor with a real git directory (one
+    holding ``HEAD``), a ``.git`` file (a worktree), or the passes register.
+    A bare ``.git`` directory does not count: an empty ``/tmp/.git`` on the
+    workstation once passed for every scratch tree's root (S160).
+    """
+    for parent in meta_path.resolve().parents:
+        git = parent / ".git"
+        if (git / "HEAD").exists() or git.is_file() \
+                or (parent / "results" / "passes-manifest.json").exists():
+            return (parent / stage).is_dir()
+    return False
+
+
+def carry_explains(metas: list[tuple[dict[str, Any], Path]],
+                   cover: tuple[int, int]) -> tuple[int, str] | None:
+    """Whether a carry-forward explains a verifier leg's coverage shortfall.
+
+    A carry-forward stage's metas account for fewer candidates than its
+    ``probabilities.json`` holds because the rest were copied from the stage
+    it extends, whose own leg prices them: its metas are its whole spend, not
+    a floor. The exemption holds only when the metas account for every
+    result the carry did NOT bring (the file's own ``uncovered`` count), the
+    two together reach the results, and the extended stage exists. Testing
+    ``accounted + carried`` alone was vacuous whenever the carry was 90 % of
+    the results (WP4 re-audit, 2026-10-04: 756 of 759 passed with the meta
+    covering none). Shared by the register (:meth:`PassCoster.cost_pass`) and
+    the ``cost_audit.json`` sidecars, so the two never disagree on a basis
+    (they did on the two 3.7 screen ``recovery-fixed`` legs until S160).
+
+    Args:
+        metas: The leg's ``(meta, path)`` list; the carry file sits beside
+            the first.
+        cover: ``(accounted, results)`` from :func:`verifier_coverage`.
+
+    Returns:
+        ``(carried, extends_stage)`` when the carry explains the shortfall,
+        else None.
+    """
+    accounted, results = cover
+    carry = carried_forward(metas[0][1].parent)
+    if carry and accounted >= carry[2] and accounted + carry[0] >= results \
+            and stage_exists(metas[0][1], carry[1]):
+        return carry[0], carry[1]
+    return None
+
+
 def verifier_coverage(metas: list[tuple[dict[str, Any], Path]]) -> tuple[int, int] | None:
     """How many candidates a verifier leg's metas account for, against its results.
 
@@ -572,6 +659,119 @@ def served_tiers(meta: dict[str, Any]) -> tuple[dict[str, int], int] | None:
     return counts, max(requests, sum(counts.values()))
 
 
+def realtime_resume_only(meta: dict[str, Any]) -> bool:
+    """Whether a meta's recorded usage is all a later real-time resume's.
+
+    A Batch API pass whose own execution recorded no usage can be resumed
+    in real time weeks later; the resume merge keeps the original's
+    ``batch_api`` block, so the block then describes an execution the meta
+    holds no tokens for (the two ``pv-diag-384`` pro-medium baseline run 1
+    metas: batch on 2026-03-23 with zero usage, 26 real-time requests on
+    2026-06-03; PI ruling D36). All four must hold, else the block stands:
+
+    - the meta records a ``recovery_history`` (the real-time runner's resume);
+    - its per-item records are exactly its requests (none unrecorded);
+    - every one was sent more than :data:`RESUME_GAP_S` after the meta's
+      start, so none belongs to the original session.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        True when the ``batch_api`` block must not pin the meta's usage.
+
+    Examples:
+        >>> item = {"request_timestamp": "2026-06-03T12:26:39+00:00"}
+        >>> meta = {"recovery_history": [{"recovered": 1}], "per_item_metadata": [item],
+        ...         "timestamp": {"start": "2026-03-23T15:11:34+00:00"},
+        ...         "usage_stats": {"by_provider": {"google_gemini": {"request_count": 1}}}}
+        >>> realtime_resume_only(meta)
+        True
+        >>> realtime_resume_only({**meta, "recovery_history": []})
+        False
+    """
+    items = meta.get("per_item_metadata") or []
+    start = (meta.get("timestamp") or {}).get("start")
+    requests = int((((meta.get("usage_stats") or {}).get("by_provider") or {})
+                    .get("google_gemini") or {}).get("request_count") or 0)
+    if not meta.get("recovery_history") or not items or not start or requests != len(items):
+        return False
+    origin = datetime.fromisoformat(start)
+    for item in items:
+        sent = item.get("request_timestamp")
+        if not sent or (datetime.fromisoformat(sent) - origin).total_seconds() <= RESUME_GAP_S:
+            return False
+    return True
+
+
+def billed_cache_sizes(meta: dict[str, Any]) -> list[int]:
+    """The cached input tokens of each billed request a meta records.
+
+    Requests that recorded no input tokens were not billed (a failure before
+    the model ran) and are left out, as is the per-item record a merge
+    dropped for a superseded attempt.
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        One count per billed request, in record order; empty for a meta
+        without per-item records.
+
+    Examples:
+        >>> billed_cache_sizes({"per_item_metadata": [
+        ...     {"tokens": {"input_tokens": 900, "cached_input_tokens": 0}},
+        ...     {"tokens": {"input_tokens": 0}}]})
+        [0]
+    """
+    return [int((item.get("tokens") or {}).get("cached_input_tokens") or 0)
+            for item in meta.get("per_item_metadata") or []
+            if (item.get("tokens") or {}).get("input_tokens")]
+
+
+def cache_signature(meta: dict[str, Any]) -> tuple[int, int] | None:
+    """An explicit context cache's size, when every billed request reports it.
+
+    An explicit cache (``--use-cache``) is attached to every request, so each
+    one reports the cache's exact size as ``cached_input_tokens``: 14,549 on
+    all 487 requests of ``pv-diag-384``'s image passes, against 0 on the
+    matching text passes. The PI ruled the signature sufficient to establish
+    the cached path where a pass's own "Context cache created" line did not
+    survive (D34 (1), 2026-10-04). One count on every request is NOT enough
+    by itself: implicit caching hit every request of image-b's no-cache
+    recoveries (16,272 tokens, where that pool's explicit cache is 18,909).
+    The caller therefore also requires the size to be one a log records for
+    an explicit cache (``PassCoster.cache_sizes``). A false reading can only
+    overstate a cost, as the cached path is billed at standard, the dearer
+    real-time tier.
+
+    Requests that recorded no input tokens are left out
+    (:func:`billed_cache_sizes`).
+
+    Args:
+        meta: A parsed meta.
+
+    Returns:
+        ``(cached tokens per request, requests)``, or None when no request
+        recorded usage or the counts are not one positive value.
+
+    Examples:
+        >>> item = {"tokens": {"input_tokens": 15659, "cached_input_tokens": 14549}}
+        >>> cache_signature({"per_item_metadata": [item, item]})
+        (14549, 2)
+        >>> cache_signature({"per_item_metadata": [item, {"tokens": {
+        ...     "input_tokens": 900, "cached_input_tokens": 0}}]}) is None
+        True
+        >>> failed = {"tokens": {"input_tokens": 0, "cached_input_tokens": 0}}
+        >>> cache_signature({"per_item_metadata": [item, failed]})
+        (14549, 1)
+    """
+    sizes = billed_cache_sizes(meta)
+    if sizes and sizes[0] > 0 and all(s == sizes[0] for s in sizes):
+        return sizes[0], len(sizes)
+    return None
+
+
 class PassCoster:
     """Prices register passes on the audited basis from committed evidence.
 
@@ -587,7 +787,11 @@ class PassCoster:
                  attestations_path: Path = ATTESTATIONS, overrides_path: Path = OVERRIDES,
                  card_path: Path | None = None) -> None:
         self.billing = _read_json(billing_path)
-        self.log_dirs: dict[str, dict[str, Any]] = _read_json(logs_path)["directories"]
+        logs_doc = _read_json(logs_path)
+        self.log_dirs: dict[str, dict[str, Any]] = logs_doc["directories"]
+        #: Explicit-cache sizes the runner's logs print, with the logs (D34 (1)).
+        self.cache_sizes: dict[int, list[str]] = {
+            int(n): paths for n, paths in (logs_doc.get("explicit_cache_sizes") or {}).items()}
         self.attestations: list[dict[str, Any]] = _read_json(attestations_path)["attestations"]
         overrides_doc = _read_json(overrides_path)
         self.overrides: dict[str, dict[str, Any]] = overrides_doc["entries"]
@@ -726,7 +930,9 @@ class PassCoster:
                                 tuple(t for t in TIERS if t in known),
                                 f"{_rel(meta_path)} served tiers ({tally}) of {responses} "
                                 "responses"))
-        if meta.get("batch_api"):
+        # A batch_api block carried by a real-time resume merge describes
+        # an execution the meta holds no tokens for (D36): it pins nothing.
+        if meta.get("batch_api") and not realtime_resume_only(meta):
             out.append(Evidence("batch-marker", ("batch",), f"{_rel(meta_path)} batch_api block"))
         if (here / "batch_jobs.json").exists():
             out.append(Evidence("batch-marker", ("batch",), _rel(here / "batch_jobs.json")))
@@ -759,15 +965,38 @@ class PassCoster:
             out.append(Evidence("batch-path-pricing", ("batch",),
                                 f"{_rel(meta_path)} discount_reason names the Batch API"))
         logs = self._log_evidence(here, run_dir, stage)
+        # The fragment's own requests can show the cached path where no log
+        # line about the cache survived (D34 (1)): the same fact as a log's
+        # "Context cache created", so it is cached-path evidence, subject to
+        # the same exemptions just below. The size must be one a log records
+        # for an explicit cache: implicit caching can also hit every request
+        # (16,272 on all of image-b's no-cache recoveries, 2026-08-28; 99.9 %
+        # of the Gemini 3 batch passes), but at a size of its own.
+        signature = cache_signature(meta)
+        if (signature and signature[0] in self.cache_sizes
+                and not any(e.kind == "cached-path" for e in logs)):
+            size, requests = signature
+            logs.append(Evidence("cached-path", ("standard",),
+                                 f"{_rel(meta_path)}: all {requests} requests with usage "
+                                 f"report {size} cached input tokens, the exact size of the "
+                                 f"explicit cache {self.cache_sizes[size][0]} records "
+                                 f"(D34 (1)); {CACHED_PATH_CITE}"))
+        # An explicit cache reports its size on every request it is attached
+        # to, so a fragment none of whose billed requests reports a cached
+        # token never used one, whatever its directory's logs record: one
+        # run-level log can cover pools whose cache creation failed (the
+        # n1-pro-rerun text pools, "Cached content is too small"; D34 (2)).
+        sizes = billed_cache_sizes(meta)
+        uncached = bool(sizes) and not any(sizes)
         if any(e.kind == "cached-path" for e in logs) and (
                 stage != "proposer" or any(e.kind in BATCH_KINDS for e in out) or full_header
-                or _every_commit_has_fix(meta.get("environment") or {})):
+                or uncached or _every_commit_has_fix(meta.get("environment") or {})):
             # The cached-path rule is about the detection runner's REAL-TIME
-            # call on code WITHOUT the fix: a verifier leg, a batch leg, a
-            # fragment whose every recorded commit (git_commit, or a merge's
-            # git_commits) descends from 2df65047e, or one
-            # whose every response reported the tier that served it, is not
-            # subject to it.
+            # call on code WITHOUT the fix, WITH a cache attached: a verifier
+            # leg, a batch leg, a fragment whose every recorded commit
+            # (git_commit, or a merge's git_commits) descends from 2df65047e,
+            # one whose every response reported the tier that served it, or
+            # one whose requests show no cache at all, is not subject to it.
             logs = [e for e in logs if e.kind != "cached-path"]
         out.extend(logs)
         lm = self._launch_manifest(here, run_dir, stage)
@@ -1142,13 +1371,23 @@ class PassCoster:
             partial_why.append(override["source"])
         if "unrecorded" in bases and bases != {"unrecorded"}:
             partial_why.append("a fragment of this pass recorded no usage")
+        carry_note = None
         if stage != "proposer" and fragments:
             cover = verifier_coverage(fragments)
             if cover and cover[0] < COVERAGE_FLOOR * cover[1]:
-                partial_why.append(
-                    f"the leg's metas account for {cover[0]:,} candidate(s) against "
-                    f"{cover[1]:,} results in probabilities.json: a later leg (a cleanup) "
-                    "overwrote the main meta")
+                carry = carry_explains(fragments, cover)
+                if carry:
+                    carry_note = (
+                        f"the leg's metas account for {cover[0]:,} candidate(s) against "
+                        f"{cover[1]:,} results in probabilities.json, but {carry[0]:,} of "
+                        f"those results were carried forward from {carry[1]} "
+                        "(carry_provenance.json) and are priced there: the metas are this "
+                        "stage's whole spend")
+                else:
+                    partial_why.append(
+                        f"the leg's metas account for {cover[0]:,} candidate(s) against "
+                        f"{cover[1]:,} results in probabilities.json: a later leg (a cleanup) "
+                        "overwrote the main meta")
         costed = [f for f in priced if f["_cost"] is not None]
         if bases == {"unrecorded"}:
             basis, cost = "unrecorded", None
@@ -1176,9 +1415,17 @@ class PassCoster:
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
         if basis == "audited-lower-bound":
             source["note"] = "LOWER bound: " + "; ".join(partial_why)
+        elif carry_note and basis in ("audited", "audited-upper-bound"):
+            # The carry note says the metas are the stage's whole PRICED spend,
+            # so it belongs only on a priced basis. On an unrecorded basis it
+            # would overwrite the D12 "null, not zero" note; on an unpriceable
+            # one it would claim a whole spend nobody could price.
+            source["note"] = carry_note
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
 
-__all__ = ["BASES", "BATCH_KINDS", "COVERAGE_FLOOR", "Evidence", "INHERITED_KINDS",
-           "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding", "fragment_usage",
-           "is_continuous", "pacific_days", "verifier_coverage"]
+__all__ = ["BASES", "BATCH_KINDS", "CARRY_SCHEMA", "COVERAGE_FLOOR", "Evidence",
+           "INHERITED_KINDS", "PIN_PRIORITY", "PassCoster", "REQUEST_RECORDS", "TierFinding",
+           "billed_cache_sizes", "cache_signature", "carried_forward", "carry_explains",
+           "fragment_usage", "is_continuous", "pacific_days", "realtime_resume_only",
+           "stage_exists", "verifier_coverage"]

@@ -89,12 +89,14 @@ def evidence(tmp_path):
     }
 
     def make(billing: dict | None = None, logs: dict | None = None,
-             attestations: list | None = None, published: dict | None = None) -> PassCoster:
+             attestations: list | None = None, published: dict | None = None,
+             cache_sizes: dict | None = None) -> PassCoster:
         if billing is not None:
             _write(paths["billing"], {"months_covered": [], "intervals": {}, "days": {},
                                       **billing})
-        if logs is not None:
-            _write(paths["logs"], {"directories": logs})
+        if logs is not None or cache_sizes is not None:
+            _write(paths["logs"], {"directories": logs or {},
+                                   "explicit_cache_sizes": cache_sizes or {}})
         if attestations is not None:
             _write(paths["att"], {"attestations": attestations})
         if published is not None:
@@ -1001,7 +1003,8 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
     from scripts.derive_tier_evidence import parse_log
     proposer_only = "Service tier: flex\n... 9,910 candidates to verify later\n"
     assert parse_log(proposer_only) == {"tiers": ["flex"], "unknown": [], "tier_lines": 1,
-                                        "explicit_cache_lines": 0, "verifier_tiers": []}
+                                        "explicit_cache_lines": 0, "explicit_cache_tokens": [],
+                                        "verifier_tiers": []}
     staged = "Service tier: flex\nrun_pv.py verify --c d\nService tier: standard\n"
     assert parse_log(staged)["verifier_tiers"] == ["standard"]
     banner = "Service tier: flex\n=== Stage V: verifier ===\nService tier: standard\n"
@@ -1014,6 +1017,32 @@ def test_parse_log_reads_only_verifier_stage_tiers_as_verifier_evidence():
 
 
 @pytest.mark.tier1
+def test_the_log_sweep_reads_txt_logs_and_records_cache_sizes(tmp_path, monkeypatch):
+    # D34 (8): the n1-pro-rerun logs are .txt, the only machine record for 16
+    # rows, and the *.log-only sweep never read them. A cache line in a log
+    # with no tier line (a launch before 2a2cd81c7) still records its size.
+    import scripts.derive_tier_evidence as dte
+    monkeypatch.setattr(dte, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(dte, "_git_tracked", lambda paths: set())  # tmp_path is no repository
+    out = tmp_path / "outputs"
+    _write(out / "a" / "run.json", {})
+    (out / "a" / "_run_log.txt").write_text(
+        "Service tier: flex\nContext cache created: cachedContents/x (14549 tokens, TTL=1h)\n")
+    (out / "b").mkdir()
+    (out / "b" / "launch.log").write_text(
+        "Context cache created: cachedContents/y (18909 tokens, TTL=1h)\n")
+    (out / "c" / "notes.md").parent.mkdir(parents=True)
+    (out / "c" / "notes.md").write_text("Service tier: standard\n")  # not a log pattern
+    doc = dte.build_log_evidence(out)
+    assert doc["logs_scanned"] == 2
+    assert doc["directories"]["outputs/a"]["tiers"] == ["flex"]
+    assert doc["directories"]["outputs/a"]["explicit_cache"] is True
+    assert "outputs/b" not in doc["directories"]  # no tier line: no tier evidence
+    assert doc["explicit_cache_sizes"] == {"14549": ["outputs/a/_run_log.txt"],
+                                           "18909": ["outputs/b/launch.log"]}
+
+
+@pytest.mark.tier1
 def test_run_report_sums_each_basis_apart():
     from scripts.generate_run_reports import _basis_sums
     passes = ([{"cost_basis": "audited", "cost_usd": 1.0}] * 3
@@ -1021,6 +1050,96 @@ def test_run_report_sums_each_basis_apart():
     # A basis with no priced pass has no sum: null, not zero (D12).
     assert _basis_sums(passes) == ("audited US$3.0000 (3); none recorded no figure (1); "
                                    "unrecorded no figure (1)")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("uncovered, carried_stage, basis", [
+    (2, "outputs/r/verifier/k1", "audited"),                 # the carry explains it
+    (3, "outputs/r/verifier/k1", "audited-lower-bound"),     # meta misses an uncovered result
+    (2, "outputs/r/verifier/gone", "audited-lower-bound"),   # the extended stage is absent
+    (None, None, "audited-lower-bound"),                     # no carry file: a cleanup overwrite
+    (2, "", "audited-lower-bound"),                          # the file names no extended stage
+    (-1, "outputs/r/verifier/k1", "audited-lower-bound"),    # a malformed (negative) count
+])
+def test_a_carry_forward_stage_is_its_metas_whole_spend(evidence, tmp_path, uncovered,
+                                                        carried_stage, basis):
+    # S160: the register now meets the recovery-fixed stages, which copy 8 of
+    # 10 results from the stage they extend; their meta (2 candidates) is the
+    # stage's whole spend, as the WP4 sidecars already said. One shared rule
+    # (lib_pass_cost.carry_explains); the last three cases are its sentinels.
+    _write(tmp_path / "results" / "passes-manifest.json", {})   # the repository root marker
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    if uncovered is not None:
+        _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 8,
+                                                "uncovered": uncovered,
+                                                "extends_stage": carried_stage})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},  # pins the tier
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]})
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert out["cost_basis"] == basis
+    if basis == "audited":
+        assert "carried forward from outputs/r/verifier/k1" in out["cost_source"]["note"]
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("meta_kwargs, basis", [
+    ({"usage": {k: 0 for k in USAGE}}, "unrecorded"),             # no tokens recorded
+    ({"start": None, "end": None, "duration": None}, "unpriceable"),  # no timestamp
+])
+def test_a_carry_note_never_replaces_a_null_basis_note(evidence, tmp_path, meta_kwargs,
+                                                       basis):
+    # PR #24 review, finding 5: the carry note ("the metas are this stage's
+    # whole spend") once ran for every basis but audited-lower-bound, so an
+    # unrecorded carry-forward stage lost its D12 "null, not zero" note and
+    # an unpriceable one gained a whole-spend claim it cannot price.
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 8,
+                                            "uncovered": 2,
+                                            "extends_stage": "outputs/r/verifier/k1"})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]},
+                 **meta_kwargs)
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert (out["cost_usd"], out["cost_basis"]) == (None, basis)
+    note = out["cost_source"].get("note", "")
+    assert "carried forward" not in note
+    if basis == "unrecorded":
+        assert note == "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
+
+
+@pytest.mark.tier1
+def test_a_carry_must_reach_the_results_with_the_meta(evidence, tmp_path):
+    # WP4 re-audit mutant (accounted + carried >= results dropped): the meta
+    # covers every uncovered result and the stage exists, but 5 carried + 2
+    # accounted fall short of 10 results, so 3 calls are unrecorded: a floor.
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 5,
+                                            "uncovered": 2,
+                                            "extends_stage": "outputs/r/verifier/k1"})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]})
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert out["cost_basis"] == "audited-lower-bound"
+
+
+@pytest.mark.tier1
+def test_a_stage_outside_any_repository_does_not_exist(tmp_path):
+    # WP4 re-audit mutant (stage_exists' final return False): with no
+    # repository marker above the meta, no stage can be shown to exist.
+    from scripts.lib_pass_cost import stage_exists
+    (tmp_path / "outputs" / "r" / "k1").mkdir(parents=True)
+    meta = tmp_path / "outputs" / "r" / "k2" / "run.meta.json"
+    assert stage_exists(meta, "outputs/r/k1") is False
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    assert stage_exists(meta, "outputs/r/k1") is True
 
 
 @pytest.mark.tier1
@@ -1267,13 +1386,23 @@ def test_coverage_sums_the_leg_and_counts_completions_first(tmp_path, done, expe
 
 @pytest.mark.tier1
 def test_c3_reads_the_spread_of_every_fragment():
-    # An upper bound decided by an EARLIER fragment must still certify.
+    # An upper bound decided by an EARLIER fragment must still certify. The
+    # S160 repair resolved every committed case of it, so one is built from a
+    # committed two-fragment row: its first fragment left unresolved between
+    # flex and standard, its last still pinned. SENTINEL: the same row
+    # labelled audited must not certify.
+    import copy
     rows = json.loads((REPO / "results/passes-manifest.json").read_text())["passes"]
-    cases = [r for r in rows if r["cost_basis"] == "audited-upper-bound"
-             and len(r["cost_source"]["fragments"]) > 1
-             and "candidates" not in r["cost_source"]["fragments"][-1]]
-    assert cases, "no committed upper bound whose last fragment is pinned"
-    assert _c3(cases[0])["cost_basis"]["verdict"] == "MATCH"
+    base = next(r for r in rows if r["cost_basis"] == "audited"
+                and len(r["cost_source"]["fragments"]) > 1
+                and all(f.get("tier") == "flex" for f in r["cost_source"]["fragments"]))
+    row = copy.deepcopy(base)
+    first = row["cost_source"]["fragments"][0]
+    first.update(tier=None, tier_method="unresolved",
+                 candidates={"flex": first["cost_usd"], "standard": 2 * first["cost_usd"]})
+    row["cost_basis"] = "audited-upper-bound"
+    assert _c3(row)["cost_basis"]["verdict"] == "MATCH"
+    assert _c3({**row, "cost_basis": "audited"})["cost_basis"]["verdict"] == "MISMATCH"
 
 
 @pytest.mark.tier1
@@ -1747,6 +1876,135 @@ def test_a_full_header_retires_the_cached_path_rule(evidence, tmp_path):
     assert "conflicts" not in frag
 
 
+def _requests(*cached: int) -> list[dict]:
+    """Per-item records, one billed request per cached-token count given."""
+    return [{"tokens": {"input_tokens": 15_659, "cached_input_tokens": c}} for c in cached]
+
+
+#: An explicit-cache size as the log sweep records it, with the log printing it.
+CACHE_SIZES = {"14549": ["outputs/h8-v2/plus-hp/run_1/launch.log"]}
+
+
+@pytest.mark.tier1
+def test_the_cache_signature_puts_a_proposer_on_the_cached_path(evidence, tmp_path):
+    # D34 (1): every request reporting an explicit cache's exact size IS that
+    # cache, where no log line of the pass's own survived. Its launch line
+    # read flex.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    meta = _meta(pdir / "a.meta.json", per_item_metadata=_requests(14_549, 14_549, 14_549))
+    out = _cost(coster, [meta], tmp_path / "r")
+    frag = out["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    assert any("14549 cached input tokens" in e and "plus-hp/run_1/launch.log" in e
+               for e in frag["evidence"])
+    assert "conflicts" not in frag
+    assert out["cost_usd"] == pytest.approx(STANDARD_USD)
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("cached", [
+    (14_549, 14_549, 0),        # one request missed: implicit caching, best effort
+    (14_549, 8_129, 14_549),    # two sizes: not one explicit cache
+    (0, 0, 0),                  # no cache at all (the text passes)
+    (16_272, 16_272, 16_272),   # an implicit hit on every request: no log records the size
+])
+def test_no_signature_leaves_the_launch_line_in_charge(evidence, tmp_path, cached):
+    # SENTINEL for the rule above: anything short of one logged explicit-cache
+    # size on every request is not the signature. The last case is image-b's
+    # no-cache recoveries (2026-08-28), launched without --use-cache.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    meta = _meta(pdir / "a.meta.json", per_item_metadata=_requests(*cached))
+    frag = _cost(coster, [meta], tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log")
+
+
+def _resumed_batch_meta(path: Path, *, first_sent: str = "2026-06-03T12:26:39+00:00",
+                        requests: int = 2) -> tuple[dict, Path]:
+    """A March Batch API meta resumed in real time in June (the D36 shape)."""
+    items = [{"request_timestamp": first_sent,
+              "tokens": {"input_tokens": 15_659, "cached_input_tokens": 14_549}},
+             {"request_timestamp": "2026-06-03T12:26:40+00:00",
+              "tokens": {"input_tokens": 15_659, "cached_input_tokens": 14_549}}]
+    return _meta(path, start="2026-03-23T15:11:34+00:00", end="2026-06-03T12:27:04+00:00",
+                 duration=29.2, batch_api={"execution_mode": "batch"},
+                 recovery_history=[{"recovered": 2}], per_item_metadata=items,
+                 usage={**USAGE, "by_provider": {"google_gemini": {"request_count": requests}}})
+
+
+@pytest.mark.tier1
+def test_a_batch_block_carried_by_a_realtime_resume_pins_nothing(evidence, tmp_path):
+    # D36: the pv-diag-384 pro-medium baseline image run 1 shape. Its usage
+    # is all the June resume's, on the explicit cache: standard, not batch.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(cache_sizes=CACHE_SIZES)
+    frag = _cost(coster, [_resumed_batch_meta(pdir / "a.meta.json")],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+    assert not any(e.startswith("batch-marker") for e in frag["evidence"])
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("first_sent, requests", [
+    ("2026-03-23T15:20:00+00:00", 2),   # one request from the batch session itself
+    ("2026-06-03T12:26:39+00:00", 3),   # a request no per-item record accounts for
+])
+def test_the_batch_block_stands_unless_all_usage_is_the_resume(evidence, tmp_path,
+                                                                first_sent, requests):
+    # SENTINELS for the rule above: anything short of every recorded request
+    # being a later session's keeps the batch marker, as before D36.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    meta = _resumed_batch_meta(pdir / "a.meta.json", first_sent=first_sent, requests=requests)
+    frag = _cost(evidence(cache_sizes=CACHE_SIZES), [meta],
+                 tmp_path / "r")["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("batch", "batch-marker")
+
+
+@pytest.mark.tier1
+def test_requests_with_no_cache_retire_a_logged_cache(evidence, tmp_path):
+    # One run-level log recorded the image pools' explicit caches; the text
+    # pools beneath it failed to create theirs ("Cached content is too small")
+    # and ran on the main path, which carries the tier (n1-pro-rerun-384).
+    # Every billed request reporting 0 cached tokens proves no cache was
+    # attached. SENTINEL: the same fragment without per-item records keeps
+    # the rule, as before.
+    run = tmp_path / "r"
+    coster = evidence(logs={_rel(run): {**LOG_ENTRY, "tiers": ["flex"],
+                                        "explicit_cache": True}})
+    pdir = run / "text-pool" / "run_1"
+    uncached = _meta(pdir / "a.meta.json", per_item_metadata=_requests(0, 0, 0))
+    frag = _cost(coster, [uncached], run)["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("flex", "run-log-inherited")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+    unrecorded = _meta(run / "old-pool" / "run_1" / "a.meta.json")
+    frag = _cost(coster, [unrecorded], run)["cost_source"]["fragments"][0]
+    assert (frag["tier"], frag["tier_method"]) == ("standard", "cached-path")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("case", ["verifier", "post-fix commit", "batch leg"])
+def test_the_cache_signature_keeps_the_cached_path_exemptions(evidence, tmp_path, case):
+    # The signature is cached-path evidence like a log's cache line, so the
+    # rule's exemptions apply to it unchanged.
+    pdir = tmp_path / "r" / "p" / "run_1"
+    coster = evidence(logs={_rel(pdir): {**LOG_ENTRY, "tiers": ["flex"],
+                                         "verifier_tiers": ["flex"]}},
+                      cache_sizes=CACHE_SIZES)
+    extra = {"per_item_metadata": _requests(14_549, 14_549)}
+    if case == "post-fix commit":
+        extra["environment"] = {"git_commit": AFTER_FIX_FULL}
+    if case == "batch leg":
+        extra["batch_api"] = {"job": "batches/x"}
+    meta = _meta(pdir / "a.meta.json", **extra)
+    stage = "verifier" if case == "verifier" else "proposer"
+    frag = _cost(coster, [meta], tmp_path / "r", stage=stage)["cost_source"]["fragments"][0]
+    assert frag["tier"] == ("batch" if case == "batch leg" else "flex")
+    assert not any(e.startswith("cached-path") for e in frag["evidence"])
+
+
 @pytest.mark.tier1
 def test_a_partial_header_keeps_the_cached_path_rule_and_widens_it(evidence, tmp_path):
     # Before the fix, some responses reported flex: the cached path pins
@@ -1974,6 +2232,38 @@ def test_the_superseded_ledger_reprices_and_points_at_real_passes():
         priced = price_usage(meta["usage_stats"], e["model"], tier,
                              at=meta["timestamp"]["end"][:10])["total_cost_usd"]
         assert priced == pytest.approx(e["cost_usd"], abs=5e-7), e["meta"]
+
+
+@pytest.mark.tier1
+def test_the_unmetered_ledger_is_consistent():
+    # D35: spend with no usage record, each figure labelled by derivation.
+    doc = json.loads((REPO / "data/pricing/unmetered-executions.json").read_text())
+    entries = doc["executions"]
+    assert len({e["id"] for e in entries}) == len(entries)
+    derivations = {"invoice", "transcript-reconstruction", "comparable-leg", "note-estimate",
+                   "exposure-bound"}
+    for e in entries:
+        assert e["derivation"] in derivations, e["id"]
+        low, high = e["bounds_usd"]["low"], e["bounds_usd"]["high"]
+        if e["derivation"] == "exposure-bound":
+            assert e["estimate_usd"] is None and low == 0.0 < high, e["id"]
+        else:
+            assert low <= e["estimate_usd"] <= high, e["id"]
+        assert e["evidence"] and e["register_effect"], e["id"]
+    assert doc["estimated_total_usd"] == pytest.approx(
+        sum(e["estimate_usd"] for e in entries if e["estimate_usd"] is not None), abs=5e-7)
+    assert doc["exposure_total_usd"] == pytest.approx(
+        sum(e["bounds_usd"]["high"] for e in entries if e["derivation"] == "exposure-bound"),
+        abs=5e-7)
+    # A pass said to have lost spend is a register row, and a lower bound
+    # where the ledger says so.
+    rows = {r["pass_id"]: r for r in json.loads(
+        (REPO / "results/passes-manifest.json").read_text())["passes"]}
+    for e in entries:
+        for pid in e.get("pass_ids") or []:
+            assert pid in rows, (e["id"], pid)
+            if "lower-bound" in e["register_effect"] or "floor" in e["register_effect"]:
+                assert rows[pid]["cost_basis"] == "audited-lower-bound", (e["id"], pid)
 
 
 @pytest.mark.tier1

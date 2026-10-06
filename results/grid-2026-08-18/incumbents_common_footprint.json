@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-08-24T13:55:18.476135+00:00",
+  "generated_at_utc": "2026-10-05T06:51:38.408470+00:00",
   "classification": "Stride-programme Phase A ($0): incumbent verified sets clipped to the grid common footprint and re-scored at 20/30 m, each under an own-scope reproduction gate at 5e-4. POST-HOC (E41-class) comparison material for planning/stride-programme-2026-08-24.md.",
   "scope": {
     "own": "era-2-487 (full_evaluation_bounds, 384px grid)",
@@ -33,7 +33,10 @@
         "ci_lower": -0.013499882732776821,
         "ci_upper": 0.037127386162567395,
         "bootstrap_mean": 0.011927774347969279,
-        "p_two_sided": 0.3504,
+        "p_two_sided": 0.3523,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+        "n_permutations": 10000,
+        "n_discordant_tiles": 70,
         "n_iterations": 10000,
         "seed": 42,
         "excludes_zero": false
@@ -66,7 +69,10 @@
         "ci_lower": -0.011675553521983828,
         "ci_upper": 0.035793405100435945,
         "bootstrap_mean": 0.01213164532645591,
-        "p_two_sided": 0.3122,
+        "p_two_sided": 0.3128,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+        "n_permutations": 10000,
+        "n_discordant_tiles": 64,
         "n_iterations": 10000,
         "seed": 42,
         "excludes_zero": false
@@ -99,7 +105,10 @@
         "ci_lower": -0.003492305956024241,
         "ci_upper": 0.05191602579135401,
         "bootstrap_mean": 0.024317761473090248,
-        "p_two_sided": 0.0804,
+        "p_two_sided": 0.0894,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+        "n_permutations": 10000,
+        "n_discordant_tiles": 69,
         "n_iterations": 10000,
         "seed": 42,
         "excludes_zero": false
@@ -132,7 +141,10 @@
         "ci_lower": 0.006527329371756913,
         "ci_upper": 0.062265831843794715,
         "bootstrap_mean": 0.03384200393429474,
-        "p_two_sided": 0.015,
+        "p_two_sided": 0.0196,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+        "n_permutations": 10000,
+        "n_discordant_tiles": 76,
         "n_iterations": 10000,
         "seed": 42,
         "excludes_zero": true

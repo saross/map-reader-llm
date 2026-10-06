@@ -1281,6 +1281,15 @@ investigation. Identified by the C4 verification sweep (wave-4 blind
 triage, Session 125); matched figures re-derived from committed
 artefacts by two independent investigation passes.
 
+**Annotated 2026-10-06 (ruling D42; tracker C-26)**: "text +0.072, FDR
+p=0.004" above is the raw bootstrap p of Phase 2b's T=0.7 > T=1.0 text
+contrast (`results/retest/pairwise-bootstrap-comparisons.json`
+`comparisons[27]`), not an FDR-adjusted value, and not H7's registered row.
+On the paired tile-swap permutation test it is p = 0.0055 (BH within track
+0.011); the registered T=0.3 > T=1.0 contrast is +0.096 at p = 0.0002. The
+conclusion that the preregistered sweep is the citable temperature result
+stands.
+
 ---
 
 ### E44: single-pass-384 executed at T=1.0 instead of T=0.0
@@ -3091,6 +3100,12 @@ role. Approved by the PI 2026-07-30
 package § 3 item 6 recommendation (finding 10). Cross-references: E27, CMT-0109,
 `reports/verification/phase1-gate-package.md` § 2 finding 10.
 
+**Annotated 2026-10-06 (ruling D42; tracker C-25)**: the two p-values above
+are the retired bootstrap's. On the paired tile-swap permutation test,
+brief-text > image-only (`comparisons[1]`) is p = 0.0055 (BH within phase
+0.030) and brief-text vs brief-text-image (`comparisons[0]`) p = 0.42. This
+entry's basis and its retirement of the designation stand.
+
 ---
 
 ### E69: Unregistered Flash-verifier thinking levels in `pv-diag-384` (MEDIUM on six conditions, HIGH on one) — a deliberate exploratory verifier-variant matrix
@@ -3164,6 +3179,21 @@ programme (E62's third family). Any paper use of these cells must be labelled
 unregistered exploratory, and Obs 187's medium-helps finding must be reported with
 this licence status. Cross-references: E40 (and its 2026-07-30 clarification), E62,
 Obs 185, Obs 187.
+
+**Annotated 2026-10-06 (ruling D43; Observation 499)**: provenance item 3's
+figures are superseded. Obs 187's "ΔF1 = +0.010, p = 0.001" compared the
+medium verifier with a minimal-verifier file that was overwritten 33 s after
+its sweep loaded it (two runs of the minimal job; inferred from timestamps
+and mean probabilities). Re-tested under D42/D43 as the March pairwise ran
+it, medium exceeds minimal by 0.018 F1 (0.7842 against 0.7666), paired
+tile-swap permutation p = 0.0047 (re-swept, +0.015, p = 0.0067); the image
+comparison stays null (p = 0.1626). The difference is between two single
+runs, and the minimal verifier's own two runs differ by 0.007 F1, so it is
+consistent with a configuration effect but not "decisive": the thinking
+level is evidenced by items 1 and 2 (configuration and non-zero thought
+tokens), and whether the two configurations differ in performance is
+tracker W2.7's question (ruling D45). This entry's licence finding and
+protocol impact stand.
 
 ---
 
@@ -3474,6 +3504,13 @@ follows the register landing). The paper's citable temperature
 evidence is the preregistered Phase 2b sweep (text +0.072, FDR
 p=0.004; image +0.014, ns) — "T=1.0 is a poor default" is supported;
 a universal T=0.7 superiority is not.
+
+**Annotated 2026-10-06 (ruling D42; tracker C-26)**: as in E43's
+annotation, "FDR p=0.004" is the raw bootstrap p of T=0.7 > T=1.0 on the
+text track (permutation p = 0.0055, BH within track 0.011), and the image
++0.014 is p = 0.48 on the permutation test. "T=1.0 is a poor default"
+stands; cite H7's registered contrast (T=0.3 > T=1.0, +0.096, p = 0.0002)
+for it.
 
 ---
 
@@ -4702,6 +4739,14 @@ with E81 for exactly the reason this erratum gives for keeping E79, E80, and
 E81 separate: fixing it would move essentially every published confidence
 interval, and that delta must be attributable on its own. It needs its own
 erratum and its own PI decision.
+
+**Annotated 2026-10-06 by E90 (tracker C-06)**: in the first table above,
+the five `retest-phase2c::text-*` rows and `retest-phase2b::text-t0.0` are
+six runs of one transmitted configuration, not six conditions. A text-only
+request sends no exemplar, so the five library levels never reached the
+model (E90; `reports/manipulation-check-2026-10-05.md` § B.5, group 16). The
+undefined MCC this entry records is correct for each run; only the reading
+of the five Phase 2c rows as distinct library conditions changes.
 
 ---
 
@@ -5988,5 +6033,98 @@ had left empty.
 check that blocks X. The pre-holdout deposit stayed an unticked to-do in
 the session log (24 to-do entries, from Session 5 on) and was never verified on OSF,
 and an upload that did not attach was logged as done.
+
+---
+
+### E92: The Era-1 retest sent its Phase 2a-2d image examples in canonical-first order, not the configuration order the February programme used, and its `canonical-last` arm sent the null tiles first — no record says either
+
+| Field | Value |
+|-------|-------|
+| Date | 2026-10-06 (found 2026-10-05 by the Phase 2e ordering check, tracker W3; recorded under tracker W1, claims C-23 and C-24) |
+| Type | Correction of descriptions (an execution difference between the February 60-tile programme and the March 340-tile retest that no record states, and one condition sent in an order its study definition does not give); no cell re-scored |
+| Commit | This entry's commit |
+| Files | `studies/retest/phase2a-h1-modality.yaml:32-34`, `phase2b-h7-temperature.yaml:48-49`, `phase2c-h8-library.yaml:89-90`, `phase2c-exploratory-pure-positive-hp.yaml:56-57` and `phase2d-h5-negtext.yaml:51-52` (each `fixed: ordering: canonical-first`); `scripts/run_phase2.py` at `5a57f586e`, the commit every retest Phase 2 meta records (`_reorder_examples_for_batch` `:74-116`, its canonical-first and canonical-last returns `:101` and `:109`; the `fixed` section read for every non-target factor `:238-247`; the reorder applied before each batch unit is built `:1453-1461`), behaviour added by `ead94aa81` (2026-03-15 02:33 UTC); `studies/retest/phase2e-h4-ordering.yaml:8`, `:32`, `:38`; `scripts/lib_batch_api.py` at `d9361ea8e` (`patch_failed_tiles`); `reports/phase2e-ordering-check-2026-10-05.md` § W3.2 (discrepancies 1 and 2) and § W3.3; E29, E30, E70, E91 |
+| Impact | **Nil on every measured value**: each cell is a true measurement of what was sent. **Descriptions corrected**: the retest's Phase 2a-2d image cells did not use the order the February cells used, so "config-default … baseline used in all prior phases" and "reused from Phase 2c" describe the February programme only; the retest's `canonical-last` was sent in an order its study definition does not give. The registered contrast (canonical placement, H4) holds as sent |
+
+**Description**. Two facts about the order in which the March 2026 retest
+sent its few-shot examples, neither stated in any meta, study manifest or
+erratum. Both rest on the code at the recorded commit, replayed offline, and
+on the outputs; no surviving artefact shows the request bodies (the batch
+request files were deleted on 2026-03-18; § W3.1 of the report).
+
+1. **Phases 2a-2d ran canonical-first, not configuration order.** Every
+   retest study definition for Phases 2a-2d sets `fixed: ordering:
+   canonical-first` (the three text-only definitions too, where nothing is
+   sent to order; E90). From `ead94aa81` the batch runner reads the `fixed` section
+   for every factor not under test and reorders each unit's examples before
+   building it; every retest Phase 2 meta records the batch path at
+   `5a57f586e`, which carries that code. The batch canonical-first order is
+   canonical examples, then hard examples, then nulls, each group in
+   configuration order. For the 17-example configuration the February cells
+   sent `[C+×4, HP×4, C−×2, HN×4, null×3]`; the retest sent `[C+×4, C−×2,
+   HP×4, HN×4, null×3]`, and the 13-example `plus-hp` library likewise moved
+   its two canonical negatives ahead of the hard positives. Libraries with no
+   hard example are unchanged by the rule. So the order differed from
+   February in every retest image cell of Phases 2a (three cells), 2b (five)
+   and 2d (two), and in Phase 2c's `plus-hp`, `scale-4` and `scale-8`;
+   Phase 2c's `canonical` and `pure-positive-canon` and the three exploratory
+   cells sent their configuration order. The February programme ran on the
+   real-time path, whose metas record `ordering_override` when one is set:
+   none of its 290 Phase 2a-2d metas carries one (configuration order, as E29
+   and E91 item 4 say), and its 30 Phase 2e metas carry the three ordering
+   values. The outputs corroborate the retest's rule: the replay predicts
+   that Phase 2c `plus-hp` and Phase 2e `canonical-first` sent byte-identical
+   requests, and their outputs agree on 99.7 % of tiles (identical board F1,
+   0.598473), against 5 % for Phase 2c `plus-hp` and Phase 2e
+   `config-default`.
+2. **`canonical-last` was sent as nulls, hard positives, then canonical
+   examples.** The batch mirror returns `null + hard + canonical`
+   (`run_phase2.py:109`), so the 13-example arm went as `[null×3, HP×4,
+   C+×4, C−×2]`. The study definition gives `[HP, null, C+, C−]`
+   (`phase2e-h4-ordering.yaml:38`, also E30's table), which is what the
+   real-time function, and so the February arm, produces (hard and null
+   examples in configuration order, then the canonicals). The registration
+   fixes canonical placement: canonicals in the final positions, the hard
+   block before them (§ H4 table; § 8.4.1 "Ordering (for H4)",
+   `osf/preregistration.md:1554-1558`); it does not place the null tiles.
+   As sent, the canonicals occupied positions 8-13 against 1-6 in
+   `canonical-first`, so the registered contrast holds. The February and
+   March `canonical-last` arms differ in where the three null tiles sat.
+
+**Consequences for the records**. E30's rationale ("`config-default`
+preserves continuity with prior phases") and the Phase 2e study definition's
+"baseline (reused from Phase 2c)" (`phase2e-h4-ordering.yaml:8`) and
+"baseline used in all prior phases" (`:32`) hold for February, where the
+`config-default` arm was Phase 2c `plus-hp` reused by symlink. In the
+retest, `config-default` was a fresh run, and the arm continuous with the
+retest's prior phases is `canonical-first`. The study definitions and
+manifests are execution records and stay as written.
+
+**Scope note: tiles recovered out of band.** The 1-2 tiles per pass that
+`patch_failed_tiles()` re-ran on 2026-03-22 (E70) were rebuilt from the
+meta's configuration snapshot, whose examples are in configuration order,
+with no reorder (`lib_batch_api.py` at `d9361ea8e`, the last commit to the
+file before the patch; working-tree edits outside the record are
+unverified). Those tiles were therefore sent in configuration order: in
+Phase 2e, two tiles of `canonical-first` (`K-35-053-3_Elenovo_x3584_y896`,
+`K-35-078-1_Lesovo_x0_y1344`) and one of `random`; `canonical-last` had
+none. In Phases 2a-2d, 18 of the 34 image passes had one or two such tiles
+(`*.tiles.json` `patched`). This touches at most 2 of 340 tiles per pass and
+moves no reported value; it is recorded so that "sent in canonical-first
+order" is not read as true of every tile.
+
+**Resolution**. (i) This entry records both facts; the retest summary
+(`results/retest/retest-production-summary.md`) points here. (ii) The paper
+drafts describe `canonical-last` as sent and cite the ordering check
+(tracker C-17, C-24). (iii) No lodged passage is corrected, so
+`osf/errata-pointers.md` needs no row. (iv) An optional fingerprint replay
+that would pin the exact orders is listed for the PI under tracker W5
+(report § W3.4); it is not needed to show that the orders differed.
+
+**Lesson**. A study definition's `fixed` section is a manipulation even when
+no factor names it: a change to how the runner reads it (`ead94aa81`) changed
+what four phases sent, between two executions of the same design, with no
+record. Record what was sent per unit (here, the example order), not the
+configuration that should have produced it.
 
 ---

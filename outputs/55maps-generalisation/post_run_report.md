@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text, paired verifier
 
@@ -47,11 +47,12 @@
 | `detect_brief-text` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 3 | 3 | 2 |
 | `detect_brief-text` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 4 | 4 | 3 |
 
-### 3.2 Verifier passes (2)
+### 3.2 Verifier passes (3)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
-| `verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 10154 | 0 |
+| `verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 8916 | 0 |
+| `verified-cleanup-20260410` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 26 | 0 |
 | `verified-v2` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
@@ -60,17 +61,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 7 |
-| Input tokens (billed) | 16,005,669 |
+| Passes on file | 8 |
+| Input tokens (billed) | 16,052,261 |
 | Input tokens (cached) | 0 |
-| Output tokens | 1,487,990 |
+| Output tokens | 1,492,106 |
 | Thinking tokens | 58,724 |
-| Total tokens | 17,552,383 |
+| Total tokens | 17,603,091 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$6.3193 (5); audited-lower-bound US$0.0022 (1); unrecorded no figure (1) |
-| Run total (range) | at least US$6.3215; no ceiling (1 audited-lower-bound, 1 unrecorded pass(es)) |
+| `cost_usd` by basis | audited US$6.3371 (6); audited-lower-bound US$0.0022 (1); unrecorded no figure (1) |
+| Run total (range) | at least US$6.3393; no ceiling (1 audited-lower-bound, 1 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 1 |
-| Summed wall clock | 1.30 h over 7 pass(es) |
+| Summed wall clock | 1.31 h over 8 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -135,7 +136,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 |---|---|---|
 | `detect_brief-text` | text | `proposer/detect_brief-text` |
 
-2 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+3 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -144,7 +145,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

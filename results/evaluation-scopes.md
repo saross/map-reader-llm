@@ -1,8 +1,8 @@
 # Evaluation Tile Set Scopes
 
-> **Last revised**: 2026-08-02 (E72 instrument hardening — the 240-tile
-> validation pool registered as §12). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-10-05 (§ 5.1: Phase 1's hard examples, and its
+> registration as `phase1-library`, ruling D40). See [§ Changelog](#changelog)
+> for revision history.
 
 **Purpose**: Documents the test tile sets used across the experimental programme and their nesting relationships. Critical context for interpreting F1 comparisons across project phases and for the paper write-up.
 
@@ -90,10 +90,16 @@ uniform across all three scopes.
 
 The original 20-tile calibration set was used in Phase 1 (library
 construction) to build the canonical few-shot library (4 positive + 2
-negative legend-derived examples, 3 null tiles). These tiles were excluded
-from the evaluation set to prevent testing the model on the same map regions
-used to construct its few-shot prompt. The 20 calibration tiles plus 340 test
-tiles account for all 360 physical 512-px tiles.
+negative legend-derived examples, 3 null tiles). Phase 1's image-only
+baseline also ran over these tiles (5 passes, 2026-02-01), and its failures
+were mined for the hard examples the image-modality libraries still carry:
+hard positives 05-08 and hard negatives 11-14 (Decision 4), and the H9-C
+pool 18-29. That baseline is registered as run `phase1-library`, whose
+`test_set_id` is this set, `cal-20-512` (ruling D40, 2026-10-05). These
+tiles were excluded from the evaluation set to prevent testing the model on
+the same map regions used to construct its few-shot prompt. The 20
+calibration tiles plus 340 test tiles account for all 360 physical 512-px
+tiles.
 
 ### 5.2 Era 2 exclusion (same geographic area, re-projected)
 
@@ -330,6 +336,14 @@ the heuristic cannot see them). Per-pass detection GeoJSONs carry
 heuristic and the rule in §12.4 remains the primary control there.
 
 ## Changelog
+
+### 2026-10-05 — Phase 1's hard examples; `cal-20-512` as a test set (ruling D40)
+
+Trigger: the Session 160 register repair registered Phase 1's image-only
+baseline as run `phase1-library` (D40), the first run whose `test_set_id` is
+`cal-20-512`. § 5.1 named only the legend-derived library and omitted the
+hard examples, which were Phase 1's lasting product. Edited § 5.1 only; no
+tile set, count or nesting relation changed.
 
 ### 2026-08-02 — 240-tile validation pool registered (E72 instrument hardening)
 

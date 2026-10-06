@@ -226,7 +226,15 @@
           "ci_lower": 0.07466087742012739,
           "ci_upper": 0.15793529497407513
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.4209,
+          "precision_p": 0.5667,
+          "recall_p": 0.0,
+          "f1_bh_within_phase": 0.6487142857142858,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text",
@@ -246,7 +254,15 @@
           "ci_lower": 0.11261063703526432,
           "ci_upper": 0.22362987270066528
         },
-        "significant": true
+        "significant": true,
+        "permutation_retest": {
+          "f1_p": 0.0055,
+          "precision_p": 0.0878,
+          "recall_p": 0.0,
+          "f1_bh_within_phase": 0.03,
+          "significant_bh_within_phase": true,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text",
@@ -266,7 +282,15 @@
           "ci_lower": 0.026884912250807132,
           "ci_upper": 0.11835129733054092
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.1052,
+          "precision_p": 0.3187,
+          "recall_p": 0.0023,
+          "f1_bh_within_phase": 0.2104,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text",
@@ -286,7 +310,15 @@
           "ci_lower": 0.0538561264659892,
           "ci_upper": 0.17890417118664453
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.4541,
+          "precision_p": 0.6716,
+          "recall_p": 0.0004,
+          "f1_bh_within_phase": 0.6487142857142858,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text-image",
@@ -306,7 +338,15 @@
           "ci_lower": -0.0009784934842502408,
           "ci_upper": 0.10288662216778496
         },
-        "significant": true
+        "significant": true,
+        "permutation_retest": {
+          "f1_p": 0.009,
+          "precision_p": 0.0066,
+          "recall_p": 0.0653,
+          "f1_bh_within_phase": 0.03,
+          "significant_bh_within_phase": true,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text-image",
@@ -326,7 +366,15 @@
           "ci_lower": -0.09233239827019804,
           "ci_upper": 0.0016252664207639267
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.5597,
+          "precision_p": 0.1389,
+          "recall_p": 0.0481,
+          "f1_bh_within_phase": 0.6996249999999999,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "brief-text-image",
@@ -346,7 +394,15 @@
           "ci_lower": -0.053264332407508205,
           "ci_upper": 0.04961936371807194
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.9259,
+          "precision_p": 0.8841,
+          "recall_p": 1.0,
+          "f1_bh_within_phase": 0.9259000000000001,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "image-only",
@@ -366,7 +422,15 @@
           "ci_lower": -0.15152040989858764,
           "ci_upper": -0.04576275383791981
         },
-        "significant": true
+        "significant": true,
+        "permutation_retest": {
+          "f1_p": 0.0573,
+          "precision_p": 0.2499,
+          "recall_p": 0.0007,
+          "f1_bh_within_phase": 0.14325,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "image-only",
@@ -386,7 +450,15 @@
           "ci_lower": -0.10047661934870634,
           "ci_upper": -0.0010548542991556133
         },
-        "significant": true
+        "significant": true,
+        "permutation_retest": {
+          "f1_p": 0.0069,
+          "precision_p": 0.0052,
+          "recall_p": 0.0555,
+          "f1_bh_within_phase": 0.03,
+          "significant_bh_within_phase": true,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       },
       {
         "condition_a": "verbose-text",
@@ -406,8 +478,17 @@
           "ci_lower": -0.011659443207298281,
           "ci_upper": 0.10737922156162202
         },
-        "significant": false
+        "significant": false,
+        "permutation_retest": {
+          "f1_p": 0.6648,
+          "precision_p": 0.2051,
+          "recall_p": 0.1217,
+          "f1_bh_within_phase": 0.7386666666666666,
+          "significant_bh_within_phase": false,
+          "method": "paired tile-swap permutation, 10,000, seed 42, 20 m (D42)"
+        }
       }
-    ]
+    ],
+    "d42_annotation": "PI ruling D42 (2026-10-05): 'significant' in each pairwise row is the RETIRED reading (bootstrap CI excludes zero, uncorrected), kept as published. The authoritative test is permutation_retest: the paired tile-swap permutation test (10,000 permutations, seed 42, 20 m) with BH within the phase, computed 2026-10-05 by scripts/evaluate_retest_all.py at commit 7aef6d2ff on the input files as they now stand. Those inputs re-score within 0.0004 F1 of the values recorded here (evaluator changes since March); the recorded point estimates and CIs are left as published. See reports/d42-implementation-2026-10-05.md."
   }
 }

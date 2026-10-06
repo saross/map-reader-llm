@@ -1,0 +1,92 @@
+{
+  "version": "1.0",
+  "n_variants": 2,
+  "variants": [
+    {
+      "name": "h11-384-pv-diagnostic/pro-image-flash-verifier",
+      "dir": "/tmp/regen-b/h11-384-pv-diagnostic/pro-image-flash-verifier",
+      "optimal_threshold": 0.1,
+      "f1": 0.6196,
+      "precision": 0.5876,
+      "recall": 0.6552,
+      "n_accepted": 485,
+      "ci": {
+        "f1": {
+          "mean": 0.6199,
+          "lower": 0.5723,
+          "upper": 0.6645
+        },
+        "precision": {
+          "mean": 0.5874,
+          "lower": 0.5417,
+          "upper": 0.6343
+        },
+        "recall": {
+          "mean": 0.6567,
+          "lower": 0.5963,
+          "upper": 0.713
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json"
+    },
+    {
+      "name": "h11-384-pv-diagnostic/pro-image-pro-verifier",
+      "dir": "/tmp/regen-b/h11-384-pv-diagnostic/pro-image-pro-verifier",
+      "optimal_threshold": 0.05,
+      "f1": 0.6281,
+      "precision": 0.6091,
+      "recall": 0.6483,
+      "n_accepted": 463,
+      "ci": {
+        "f1": {
+          "mean": 0.6283,
+          "lower": 0.5804,
+          "upper": 0.6756
+        },
+        "precision": {
+          "mean": 0.6089,
+          "lower": 0.5612,
+          "upper": 0.6578
+        },
+        "recall": {
+          "mean": 0.6495,
+          "lower": 0.5903,
+          "upper": 0.7089
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json"
+    }
+  ],
+  "pairwise": [
+    {
+      "variant_a": "h11-384-pv-diagnostic/pro-image-flash-verifier",
+      "variant_b": "h11-384-pv-diagnostic/pro-image-pro-verifier",
+      "f1_difference": {
+        "mean": -0.008497575801162728,
+        "ci_lower": -0.02067539159527229,
+        "ci_upper": 0.0037888741380018276,
+        "method": "BCa",
+        "p_value": 0.1626,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      },
+      "precision_difference": {
+        "mean": -0.021642098536772854,
+        "ci_lower": -0.03713537037994985,
+        "ci_upper": -0.007339209816731555,
+        "method": "BCa",
+        "p_value": 0.0043,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      },
+      "recall_difference": {
+        "mean": 0.0072060047478576675,
+        "ci_lower": -0.005266731984704489,
+        "ci_upper": 0.023067333655575718,
+        "method": "BCa",
+        "p_value": 0.4052,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      }
+    }
+  ]
+}

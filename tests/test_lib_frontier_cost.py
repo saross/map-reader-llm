@@ -411,7 +411,7 @@ def committed():
 def test_every_board_family_prices_from_register_rows(committed):
     doc, coster, costs = committed
     assert doc["uniform_tier"] == "flex"
-    assert len(costs) == 23
+    assert len(costs) == 26  # 23, plus the TH7, T03 and TM oracle families (D33)
     for family, cost in costs.items():
         assert cost.usd > 0, family
         assert all(src in coster.rows for src in cost.sources), family
@@ -451,8 +451,9 @@ def test_im_is_priced_at_the_uniform_tier_not_as_billed(committed):
 def test_the_four_floors_are_completed_and_nothing_else_is(committed):
     _, _, costs = committed
     completed = {k for k, v in costs.items() if v.basis == "completed"}
+    # TM-oracle (D33) shares TM's floored verifier leg, so it is completed too.
     assert completed == {"A-N1", "A-N3", "A-N5", "A-N10", "FOURTH-N1", "FOURTH-N3",
-                         "FOURTH-N5", "FOURTH-N10", "TM", "IM"}
+                         "FOURTH-N5", "FOURTH-N10", "TM", "TM-oracle", "IM"}
 
 
 @pytest.mark.tier1
@@ -577,6 +578,25 @@ def test_a_configurations_sources_include_its_proposer_and_verifier_rows(repo):
         "proposer": [{"run_id": "r", "pool": "p"}],
         "verifier": {"leg": {"run_id": "r", "pool": "v"}}})
     assert cost.sources == ("r::p::run1", "r::p::run2", "r::v::run1")
+
+
+@pytest.mark.tier1
+def test_an_oracle_cell_adds_the_increment_it_drew_on(repo):
+    # D33 (X1): TH7's oracle cell (k3) uses the vote-3 increment's
+    # probabilities, so its configuration adds that leg; the carried cell
+    # (k4) never used it. SENTINEL: without "increments" the two cost the same.
+    repo.proposer("r", "p", 2)
+    repo.leg("r", "v", results=1000)
+    repo.leg("r", "vote3-increment", results=400)
+    coster = repo.coster()
+    carried = {"proposer": [{"run_id": "r", "pool": "p"}],
+               "verifier": {"leg": {"run_id": "r", "pool": "v"}}}
+    oracle = {**carried, "increments": [{"run_id": "r", "pool": "vote3-increment"}]}
+    c, o = coster.configuration_cost(carried), coster.configuration_cost(oracle)
+    assert c.usd == pytest.approx(3 * FLEX_USD)
+    assert o.usd == pytest.approx(c.usd + FLEX_USD)
+    assert o.sources == c.sources + ("r::vote3-increment::run1",)
+    assert o.basis == "measured"
 
 
 @pytest.mark.tier1

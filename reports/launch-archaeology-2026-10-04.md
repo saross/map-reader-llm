@@ -1,14 +1,16 @@
 # Launch-command archaeology: the billed tier of the 188 upper-bound passes
 
-> **Last revised**: 2026-10-04 (original publication, Session 159). See
+> **Last revised**: 2026-10-05 (§ 5 ruled as D34 and applied in the
+> Session 160 register repair; § 4 dispositions in § 6). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: a PROPOSAL for the PI. Nothing here is applied to the register.**
-The 69 draft attestations are in
-[`launch-archaeology-2026-10-04-proposed-attestations.json`](launch-archaeology-2026-10-04-proposed-attestations.json),
-in the schema of `data/pricing/tier-attestations.json` (ids A3 to A71 do not
-collide with A1 and A2). They go in with the register repair (D30), after the
-PI's rulings on § 5.
+**Status: RULED and APPLIED.** The PI ruled § 5 as recommended (D34,
+`planning/pi-decisions-2026-09-20.md`). The register now derives 84 of the 188
+rows from machine-readable evidence (D34 (1) and (8)), and the residue's 54
+attestations are in `data/pricing/tier-attestations.json`; all 188 re-extract
+as `audited` at the proposed US$510.12. The 69 drafts stay in
+[`launch-archaeology-2026-10-04-proposed-attestations.json`](launch-archaeology-2026-10-04-proposed-attestations.json)
+as proposed; see § 6.
 
 ## 1. The question
 
@@ -121,6 +123,33 @@ every launch and recovery, is in each draft attestation's `evidence` field.
    evidence code (read `*.txt` logs; treat the cached-token signature as
    machine evidence) so the register derives them itself?
 
+## 6. Disposition (Session 160, register repair)
+
+- **§ 5, ruled D34 as recommended.** (1) and (8): `scripts/derive_tier_evidence.py`
+  reads `*.txt` logs and records every explicit-cache size a log prints
+  (schema 5); `scripts/lib_pass_cost.py` reads the cached-token signature, but
+  only at a logged explicit-cache size, because implicit caching hit every
+  request of image-b's no-cache recoveries at 16,272 tokens (the pool's
+  explicit cache is 18,909). A fragment whose billed requests report no cached
+  token is exempt from a directory's logged cache (the n1-pro-rerun text
+  pools, D34 (2)). The 84 rows this resolves all agree with their drafts; the
+  other 15 drafts are superseded by the derivation and 54 are applied.
+- **§ 5 (7) could not be carried out as written.** Verifier metas record no
+  per-request times, so the 08-27 leg that crosses Pacific midnight (image-b's
+  HIGH union verifier, 06:12 to 07:34 UTC) cannot be split by request. Bounded
+  instead: billed flex holds the day if at most 56.8 % of that leg's output
+  fell before midnight; it spent 57.9 % of its wall time there. Consistent,
+  not decisive; no tier rests on it (D34 (6)).
+- **§ 4.** (2) fixed by the `*.txt` sweep. (3) the E71 rerun: about US$11.41
+  by the July invoice, three times its registered estimate, in the new
+  unmetered-executions ledger (`data/pricing/unmetered-executions.json` U1,
+  D35). (4) the two pro-medium baseline rows: a carried `batch_api` block no
+  longer pins a real-time resume (D36); image standard, text flex (A72), both
+  lower bounds. (5) image-t0.0 run 1's first launch: U2 (about US$5.39,
+  transcript-reconstructed); the e47 run 5 batch job, which completed and was
+  billed: U3, and its archive README corrected; the abandoned e47 jobs and the
+  3.7 flex attempt: exposure bounds U4 and U5.
+
 ## Provenance
 
 Investigation by an Opus subagent of Session 159, read-only over the
@@ -131,6 +160,18 @@ drafts (43 flex, 26 standard; no id collision), and the US$510.12 total
 from the simulation output (188 rows, all `audited`).
 
 ## Changelog
+
+### 2026-10-05 — Ruled and applied (Session 160)
+
+Trigger: the PI's rulings D34 (§ 5) and D35-D36 (§ 4), applied on branch
+`register-repair`. Status line and § 6 added; §§ 1-5 unchanged.
+
+| Claim | Before | After |
+|---|---|---|
+| Rows resolved | 0 of 188 (proposal) | 188 of 188 audited, 84 by derived evidence |
+| Attestations applied | 0 of 69 | 54 (15 superseded by derivation) |
+| As-billed total of the 188 | US$642.04 high | US$510.12 |
+| 08-27 check | linear split, 0.75 % over | bounded; per-request split impossible |
 
 ### 2026-10-04 — Original publication (Session 159)
 

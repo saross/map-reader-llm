@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-03T07:57:28Z",
+  "generated_at": "2026-10-05T05:33:46Z",
   "generator_version": "0.8.0",
   "runs": [
     {
@@ -1446,6 +1446,42 @@
           "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson"
         ],
         "last_extracted_at": "2026-10-03T07:57:28Z",
+        "extractor_version": "0.8.0"
+      }
+    },
+    {
+      "run_id": "phase1-library",
+      "directory_path": "archive/outputs-pre-retest-60-tile/phase1-library",
+      "primary_hypothesis": null,
+      "also_informs": [
+        "H8",
+        "H9"
+      ],
+      "purpose": "Library construction (prereg 8.4.1 Step 1): the image-only baseline whose calibration-tile failures were mined for the hard examples (HP 05-08, HN 11-14; HN 18-29 for H9-C) that the image-modality production libraries still carry.",
+      "run_type": null,
+      "tile_size_px": 512,
+      "corpus": "4-map-gs",
+      "gt_reference": "curator",
+      "scope": {
+        "test_set_id": "cal-20-512",
+        "bounds_path": "inputs/vectors/bounds/calibration_bounds.geojson",
+        "n_test_tiles": 20,
+        "calibration_set_id": null,
+        "n_calibration_tiles": null
+      },
+      "headline_condition_id": null,
+      "headline_rationale": null,
+      "post_run_report_path": "archive/outputs-pre-retest-60-tile/phase1-library/post_run_report.md",
+      "working_notes_obs": [],
+      "historical_aliases": [
+        "Phase 1"
+      ],
+      "provenance": {
+        "source_files": [
+          "results/run-facts.json",
+          "inputs/vectors/bounds/calibration_bounds.geojson"
+        ],
+        "last_extracted_at": "2026-10-05T05:33:46Z",
         "extractor_version": "0.8.0"
       }
     }

@@ -1,7 +1,9 @@
 # H13 — tile overlap: F1, cost-efficiency, and edge detection
 
-> **Last revised**: 2026-08-19 (bootstrap standardised to B = 10,000 per
-> erratum E82; the three per-arm evaluations re-scored at that count). See
+> **Last revised**: 2026-10-05 (p-values from the paired permutation test,
+> PI ruling D42; no verdict changes). 2026-08-19: bootstrap standardised to
+> B = 10,000 per erratum E82; the three per-arm evaluations re-scored at
+> that count. See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The registered three-arm H13 overlap contrast
@@ -41,21 +43,24 @@ within-pass deduplication. Pooled counts: A 397.0 TP / 488.3 FP /
 
 | Contrast | ΔF1 | **B = 10,000, CI95 (primary)** | B = 1,000, CI95 (superseded) | Excludes 0 |
 |---|---:|---|---|---|
-| A − B | +0.0380 | **[+0.0015, +0.0741], p = 0.0416** | [+0.0009, +0.0708], p = 0.0500 | yes, both |
-| A − C | +0.1554 | **[+0.1204, +0.1890], p = 0.0001 (floor)** | [+0.1214, +0.1889], p = 0.0010 (floor) | yes, both |
-| B − C | +0.1174 | **[+0.0919, +0.1422], p = 0.0001 (floor)** | [+0.0922, +0.1437], p = 0.0010 (floor) | yes, both |
+| A − B | +0.0380 | **[+0.0015, +0.0741], p = 0.0385** | [+0.0009, +0.0708], p = 0.0385 | yes, both |
+| A − C | +0.1554 | **[+0.1204, +0.1890], p < 0.0001** | [+0.1214, +0.1889], p < 0.0001 | yes, both |
+| B − C | +0.1174 | **[+0.0919, +0.1422], p < 0.0001** | [+0.0922, +0.1437], p < 0.0001 | yes, both |
 
 B = 10,000 is primary from 2026-08-19 (erratum E82); the 1,000-iteration
 column is retained because it is what Decision 10 pre-specified. Point
-estimates are identical under both, and no verdict changes.
+estimates are identical under both, and no verdict changes. The p-values
+are the paired tile-swap permutation test's (PI ruling D42, 2026-10-05),
+which does not depend on the bootstrap count, so both columns carry the
+same p.
 
 The A − B interval is the narrow one: its lower bound sits at +0.0015,
 i.e. the 12.5 %-vs-25 % step clears zero but only just. A − C and B − C
 are unambiguous. Read the A − B step as "directionally consistent,
 marginally resolved", not as a firm effect. The extra resampling effort
-resolves it slightly more comfortably than the registered count did
-(p 0.0500 → 0.0416), which is a gain in Monte Carlo precision, not
-evidence.
+resolved it slightly more comfortably than the registered count did
+(bootstrap p 0.0500 → 0.0416), a gain in Monte Carlo precision, not
+evidence; the permutation test now gives p = 0.0385.
 
 ## Analysis 2 — cost-efficiency per additional API dollar
 
@@ -232,8 +237,9 @@ not carry an overlap claim.**
 - **Contrasts**: `scripts/h13_overlap_analysis.py`. Per-tile TP/FP/FN
   averaged over the arm's three passes, then a paired tile bootstrap —
   one resampled index set applied to both arms of a contrast, seed 42,
-  percentile CI95, two-sided p = max(2 · min tail, 1/B), **B = 10,000
-  primary** (erratum E82, 2026-08-19), with the B = 1,000 count
+  percentile CI95, **B = 10,000 primary**; p-values from the paired
+  tile-swap permutation test (10,000 permutations, seed 42; PI ruling
+  D42 retired the bootstrap p = max(2 · min tail, 1/B)) (erratum E82, 2026-08-19), with the B = 1,000 count
   Decision 10 pre-specified retained alongside. This resampler is the
   analysis script's own and was never on the D15 defective path, so the
   change is Monte Carlo precision only.
@@ -331,6 +337,21 @@ Gate reproduced: validation V1's arm-A run_1 deduplication figure
   tile-level resampling, percentile CI95, B = 1,000.
 
 ## Changelog
+
+### 2026-10-05 — p-values from the permutation test (PI ruling D42)
+
+**Refresh trigger**: PI ruling D42 (`planning/pi-decisions-2026-09-20.md`).
+`h13_overlap_analysis.paired_bootstrap` keeps its CI and takes p from the
+paired tile-swap permutation test; `h13_overlap_analysis.json` regenerated
+on sapphire (`5986316b5`).
+
+| Contrast | Before (B = 10,000 / 1,000) | After |
+|---|---|---:|
+| A − B | 0.0416 / 0.0500 | 0.0385 |
+| A − C | 0.0001 / 0.0010 (floors) | < 0.0001 |
+| B − C | 0.0001 / 0.0010 (floors) | < 0.0001 |
+
+**What did NOT change**: every ΔF1, CI and verdict.
 
 ### 2026-08-19 — Bootstrap standardised to B = 10,000
 

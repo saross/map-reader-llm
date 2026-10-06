@@ -5,7 +5,9 @@
 > reverses the tile-size ranking and confirms the overlap reversal survives —
 > then same-day audit corrections restated the reversal against the
 > like-for-like K = 10 consensus baseline and repaired a stale B = 1,000
-> table). See [§ Changelog](#changelog) for revision history.
+> table). 2026-10-05: every p-value is now the paired permutation
+> test's (PI ruling D42); no verdict at 0.05 changes. See
+> [§ Changelog](#changelog) for revision history.
 
 **What this is.** A post-hoc (E41-class) 2 × 2 crossing tile size
 (384 px, 512 px) with tile overlap (12.5 %, 50 %), n = 10 proposer
@@ -64,8 +66,11 @@ Read as a 2 × 2 on F1:
 
 Per-tile TP/FP/FN averaged over each cell's ten passes, then a paired
 tile bootstrap — one resampled index set applied to both arms of a
-contrast, seed 42, percentile CI95, **B = 10,000**, two-sided
-p = max(2 · min tail, 1/B). The count follows the 2026-08-19 PI ruling
+contrast, seed 42, percentile CI95, **B = 10,000**. Since PI ruling
+D42 (2026-10-05) the p-values are the paired tile-swap permutation
+test's on the same per-tile counts (10,000 permutations, seed 42; for
+the interaction, each tile swaps the two factor-level pairs), not the
+bootstrap's p = max(2 · min tail, 1/B). The count follows the 2026-08-19 PI ruling
 (erratum E82), which standardises the study on 10,000 rather than the
 1,000 Decision 10 pre-specified. This resampler is the script's own and
 was never on the D15 defective path, so the change is a reduction in
@@ -74,11 +79,11 @@ places, every CI width moves by under 5 %, and no verdict changes.
 
 | Contrast | ΔF1 | CI95 | p | Excludes 0 |
 |---|---:|---|---:|---|
-| Overlap at 512 px (12.5 % − 50 %) | +0.1200 | [+0.0872, +0.1531] | 0.0001 (floor) | yes |
-| Overlap at 384 px (12.5 % − 50 %) | +0.1348 | [+0.1058, +0.1636] | 0.0001 (floor) | yes |
-| Tile size at 12.5 % (384 − 512) | −0.0824 | [−0.1243, −0.0429] | 0.0001 (floor) | yes |
-| Tile size at 50 % (384 − 512) | −0.0972 | [−0.1196, −0.0753] | 0.0001 (floor) | yes |
-| **Interaction** (overlap effect at 512 − at 384) | −0.0148 | [−0.0552, +0.0268] | 0.4902 | **no** |
+| Overlap at 512 px (12.5 % − 50 %) | +0.1200 | [+0.0872, +0.1531] | < 0.0001 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | +0.1348 | [+0.1058, +0.1636] | < 0.0001 | yes |
+| Tile size at 12.5 % (384 − 512) | −0.0824 | [−0.1243, −0.0429] | 0.0002 | yes |
+| Tile size at 50 % (384 − 512) | −0.0972 | [−0.1196, −0.0753] | < 0.0001 | yes |
+| **Interaction** (overlap effect at 512 − at 384) | −0.0148 | [−0.0552, +0.0268] | 0.4681 | **no** |
 
 **Both main effects are unambiguous; the interaction is not resolved.**
 On single-pass F1 the two factors are additive to within the
@@ -359,11 +364,11 @@ board).
 
 | Contrast | K10 consensus baseline | Post-verifier | Post excludes 0 |
 |---|---|---|---|
-| Tile size at 12.5 % (384 − 512) | −0.0284 [−0.0813, +0.0233], p = 0.281 | **+0.0366 [+0.0026, +0.0717], p = 0.034** | **yes** |
-| Tile size at 50 % (384 − 512) | −0.0312 [−0.0695, +0.0052], p = 0.089 | +0.0147 [−0.0093, +0.0393], p = 0.231 | no |
-| Overlap at 512 px (12.5 % − 50 %) | −0.0758 [−0.1204, −0.0310], p = 0.0004 | −0.0504 [−0.0781, −0.0224], p = 0.0004 | yes |
-| Overlap at 384 px (12.5 % − 50 %) | −0.0730 [−0.1185, −0.0284], p = 0.0026 | −0.0285 [−0.0530, −0.0045], p = 0.0208 | yes |
-| Interaction (post-verifier) | — | −0.0220 [−0.0581, +0.0141], p = 0.234 | no |
+| Tile size at 12.5 % (384 − 512) | −0.0284 [−0.0813, +0.0233], p = 0.298 | **+0.0366 [+0.0026, +0.0717], p = 0.037** | **yes** |
+| Tile size at 50 % (384 − 512) | −0.0312 [−0.0695, +0.0052], p = 0.094 | +0.0147 [−0.0093, +0.0393], p = 0.235 | no |
+| Overlap at 512 px (12.5 % − 50 %) | −0.0758 [−0.1204, −0.0310], p = 0.0008 | −0.0504 [−0.0781, −0.0224], p = 0.0003 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | −0.0730 [−0.1185, −0.0284], p = 0.0032 | −0.0285 [−0.0530, −0.0045], p = 0.0235 | yes |
+| Interaction (post-verifier) | — | −0.0220 [−0.0581, +0.0141], p = 0.226 | no |
 
 Read precisely, the reversal is: **a non-significant 512 px lead at
 the aggregated consensus stage (−0.028 / −0.031, both CIs spanning
@@ -388,8 +393,8 @@ sweep; the contrasts condition on that selection.
 
 **Question 2 — the overlap reversal survives.** 50 % overlap wins at
 both tile sizes under the full pipeline (−0.0504 at 512 px,
-p = 0.0004; −0.0285 at 384 px, p = 0.0208), and it already won at the
-K = 10 consensus baseline (−0.0758, p = 0.0004; −0.0730, p = 0.0026 —
+p = 0.0003; −0.0285 at 384 px, p = 0.0235), and it already won at the
+K = 10 consensus baseline (−0.0758, p = 0.0008; −0.0730, p = 0.0032 —
 table above). The margin roughly halves once the verifier runs, which
 is the partial-redundancy outcome § Unresolved predicted: the
 corroboration filter and the verifier overlap in function but are not
@@ -434,10 +439,10 @@ to the clip; `incumbents_common_footprint.json`, script
 | Set | F1@20 m | F1@30 m | Δ vs 384/50 @20 m (paired, B = 10,000) |
 |---|---:|---:|---|
 | **384 px / 50 % verified (this grid)** | **0.8961** | **0.9034** | — |
-| opmax (16-of-30 HIGH + n = 5 T0.3 verifier) | 0.8842 | 0.9031 | +0.0120 [−0.0135, +0.0371], p = 0.350 |
-| registered headline (16-of-30 HIGH + n = 1 verifier) | 0.8838 | 0.8958 | +0.0123 [−0.0117, +0.0358], p = 0.312 |
-| min11 (min-6of10 + verifier) | 0.8719 | 0.8892 | +0.0242 [−0.0035, +0.0519], p = 0.080 |
-| min6 (min-true-3of5 + verifier) | 0.8623 | 0.8743 | **+0.0339 [+0.0065, +0.0623], p = 0.015** |
+| opmax (16-of-30 HIGH + n = 5 T0.3 verifier) | 0.8842 | 0.9031 | +0.0120 [−0.0135, +0.0371], p = 0.352 |
+| registered headline (16-of-30 HIGH + n = 1 verifier) | 0.8838 | 0.8958 | +0.0123 [−0.0117, +0.0358], p = 0.313 |
+| min11 (min-6of10 + verifier) | 0.8719 | 0.8892 | +0.0242 [−0.0035, +0.0519], p = 0.089 |
+| min6 (min-true-3of5 + verifier) | 0.8623 | 0.8743 | **+0.0339 [+0.0065, +0.0623], p = 0.020** |
 
 On one evaluation, the grid's stride-192 cell is the point-estimate
 leader at both buffers and statistically clears min6, but its edge
@@ -612,6 +617,31 @@ pooled point estimate, and recovery of a constructed interaction).
   E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-10-05 — p-values from the permutation test (PI ruling D42)
+
+**Refresh trigger**: PI ruling D42 (`planning/pi-decisions-2026-09-20.md`):
+every contrast is tested by the paired tile-swap permutation test with BH,
+and no p-value is read from a bootstrap. `grid_analysis.py`,
+`grid_verifier_analysis.py` and `grid_incumbent_rescore.py` now take p from
+`scripts/lib_permutation.py`; the three JSONs were regenerated on sapphire
+(`5986316b5`). The CIs are the same bootstrap and did not move.
+
+| Contrast | Before (bootstrap) | After (permutation) |
+|---|---:|---:|
+| Proposer stage: overlap 512 / overlap 384 / tile size 50 % | 0.0001 (floor) | < 0.0001 |
+| Proposer stage: tile size 12.5 % | 0.0001 (floor) | 0.0002 |
+| Proposer stage: interaction | 0.4902 | 0.4681 |
+| Post-verifier: tile size 12.5 % / 50 % | 0.034 / 0.231 | 0.037 / 0.235 |
+| Post-verifier: overlap 512 / 384 | 0.0004 / 0.0208 | 0.0003 / 0.0235 |
+| Post-verifier: interaction | 0.234 | 0.226 |
+| K = 10 baseline: tile size 12.5 % / 50 % | 0.281 / 0.089 | 0.298 / 0.094 |
+| K = 10 baseline: overlap 512 / 384 | 0.0004 / 0.0026 | 0.0008 / 0.0032 |
+| Incumbents vs 384/50: opmax / headline / min11 / min6 | 0.350 / 0.312 / 0.080 / 0.015 | 0.352 / 0.313 / 0.089 / 0.020 |
+
+**What did NOT change**: every Δ, CI, F1 and verdict at 0.05; the tile-size
+reversal and the overlap result. Older changelog entries keep the figures
+they reported.
 
 ### 2026-08-24 (later still) — Stride-programme Phase A: the incumbents join the board
 

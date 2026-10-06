@@ -1648,6 +1648,15 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         ),
     }
 
+    # ---- retry_usage: concatenate the in-batch retry blocks ----
+    # Each block carries its own service tier (tracker W6.5), so blocks are
+    # kept whole rather than summed; the original's shallow copy above
+    # would otherwise drop the recovery's blocks.
+    retry_blocks = (list(original.get("retry_usage") or [])
+                    + list(recovery.get("retry_usage") or []))
+    if retry_blocks:
+        merged["retry_usage"] = retry_blocks
+
     # ---- usage_stats: sum tokens ----
     o_us = original.get("usage_stats", {})
     r_us = recovery.get("usage_stats", {})
@@ -1711,6 +1720,12 @@ def merge_meta(original: dict[str, Any], recovery: dict[str, Any]) -> dict[str, 
         "recovery_cost_usd": r_ce.get("total_cost_usd"),
         "recovery_duration_seconds": r_ts.get("duration_seconds"),
         "recovery_run_id": recovery.get("run_id"),
+        # The recovery's own usage and requested tier, kept apart from the
+        # summed usage_stats so the pass can be priced fragment by fragment
+        # (S160: the sync patch path recorded none, and the E71 rerun's spend
+        # reached no meta). None where the recovery recorded none.
+        "recovery_usage": dict(r_us) if r_us else None,
+        "recovery_service_tier": recovery.get("service_tier"),
     }
     if defensively_recovered_ids:
         entry["defensively_recovered_ids"] = sorted(set(defensively_recovered_ids))

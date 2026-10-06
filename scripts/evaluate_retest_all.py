@@ -5,7 +5,11 @@ Comprehensive evaluation of all completed retest phases.
 Evaluates every condition across Phases 2a–2e and 3a with:
   - F1, precision, recall (point estimates)
   - 95% bootstrap confidence intervals (1,000 iterations)
-  - Pairwise bootstrap effect size CIs between conditions within each phase
+  - Pairwise bootstrap effect size CIs between conditions within each phase,
+    each tested by the paired tile-swap permutation test with
+    Benjamini-Hochberg (BH) correction within the phase (PI ruling D42,
+    2026-10-05). ``significant`` used to mean "the bootstrap CI excludes
+    zero", uncorrected; it now means BH-adjusted permutation p <= 0.05.
 
 For Phase 3a (consensus voting with K=30 runs), evaluates individual runs
 and reports per-condition distributions.
@@ -43,6 +47,9 @@ from scripts.lib_advanced_metrics import (
     load_data,
 )
 from scripts.lib_detection_paths import PASS_GLOBS
+from scripts.lib_permutation import bh_adjust
+
+FDR_Q = 0.05  # BH level within each phase (D42)
 
 # ── Paths ──────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -206,7 +213,7 @@ def pairwise_effect_sizes(
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: float = 20,
 ) -> list[dict]:
-    """Compute pairwise bootstrap effect size CIs between conditions.
+    """Pairwise bootstrap effect-size CIs, tested by permutation with BH (D42).
 
     Args:
         condition_gdfs: Dictionary mapping condition name to its
@@ -231,21 +238,25 @@ def pairwise_effect_sizes(
             n_iterations=BOOTSTRAP_ITERATIONS,
             random_seed=RANDOM_SEED,
             buffer_metres=buffer_metres,
+            return_p_values=True,
         )
 
         f1_diff = effect.get("f1_difference", {})
-        significant = (
-            f1_diff.get("ci_lower", 0) > 0 or f1_diff.get("ci_upper", 0) < 0
-        )
-
         results.append({
             "condition_a": name_a,
             "condition_b": name_b,
             "f1_difference": f1_diff,
             "precision_difference": effect.get("precision_difference", {}),
             "recall_difference": effect.get("recall_difference", {}),
-            "significant": significant,
+            "ci_excludes_zero": (
+                f1_diff.get("ci_lower", 0) > 0 or f1_diff.get("ci_upper", 0) < 0),
         })
+
+    # BH over this phase's F1 permutation p-values (D42).
+    adjusted = bh_adjust([r["f1_difference"]["p_value"] for r in results])
+    for row, adj in zip(results, adjusted):
+        row["f1_bh_adjusted_p"] = adj
+        row["significant"] = adj <= FDR_Q
     return results
 
 

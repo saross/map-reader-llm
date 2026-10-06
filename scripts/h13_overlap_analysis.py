@@ -31,8 +31,11 @@ by ``scripts/prepare_h13_scoring.py``:
 Bootstrap conventions follow the project's registered instrument
 (Decision 10, ``decisions-log.md:337``; E54 for the narrow-effect
 sensitivity): tile-level resampling with replacement, seed 42,
-percentile CI95, B = 1,000 primary and B = 10,000 sensitivity,
-two-sided p = max(2 * min tail, 1/B).
+percentile CI95, B = 1,000 primary and B = 10,000 sensitivity. The
+p-value beside each CI is the paired tile-swap permutation test's on the
+same per-tile counts (``scripts/lib_permutation.py``, 10,000 permutations,
+seed 42; PI ruling D42, 2026-10-05). The bootstrap p = max(2 * min tail,
+1/B) this script first reported is retired.
 
 Usage::
 
@@ -72,6 +75,7 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from scripts.lib_permutation import paired_permutation_test  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
     get_map_name,
@@ -174,11 +178,13 @@ def paired_bootstrap(
     a: dict[str, np.ndarray], b: dict[str, np.ndarray],
     n_iter: int, seed: int = SEED,
 ) -> dict[str, Any]:
-    """Paired tile bootstrap of the micro-F1 difference between two arms.
+    """Paired tile bootstrap CI of the micro-F1 difference, with a permutation p.
 
     Each iteration draws one tile index sample with replacement and applies
     it to *both* arms, so the resampled difference isolates the arm effect
-    from between-tile heterogeneity.
+    from between-tile heterogeneity. The p-value is NOT read from these
+    draws: it is the paired tile-swap permutation test on the same arrays
+    (``lib_permutation.paired_permutation_test``), per PI ruling D42.
 
     Args:
         a: Per-tile count arrays for the first arm.
@@ -187,8 +193,9 @@ def paired_bootstrap(
         seed: Random seed.
 
     Returns:
-        Dict with the observed delta, percentile CI95, bootstrap mean, and
-        the two-sided p-value ``max(2 * min tail, 1/B)``.
+        Dict with the observed delta, percentile CI95, bootstrap mean, the
+        CI-excludes-zero reading, and the permutation p (``p_two_sided``,
+        ``p_method``, ``n_permutations``, ``n_discordant_tiles``).
     """
     n = len(a["tp"])
     rng = np.random.default_rng(seed)
@@ -202,16 +209,17 @@ def paired_bootstrap(
         fb = micro_f1(*(b[k][idx].sum() for k in ("tp", "fp", "fn")))[2]
         deltas[i] = fa - fb
 
-    below = float((deltas <= 0).sum()) / n_iter
-    above = float((deltas >= 0).sum()) / n_iter
-    p = max(2 * min(below, above), 1.0 / n_iter)
+    perm = paired_permutation_test(a, b)
 
     return {
         "delta": float(obs),
         "ci_lower": float(np.percentile(deltas, 2.5)),
         "ci_upper": float(np.percentile(deltas, 97.5)),
         "bootstrap_mean": float(deltas.mean()),
-        "p_two_sided": float(p),
+        "p_two_sided": perm["metrics"]["f1"]["p_value"],
+        "p_method": perm["method"],
+        "n_permutations": perm["n_permutations"],
+        "n_discordant_tiles": perm["n_discordant_tiles"],
         "n_iterations": n_iter,
         "seed": seed,
         "excludes_zero": bool(

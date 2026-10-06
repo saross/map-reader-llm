@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — retest-phase3a-high
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/retest/phase3a-high` · **Registry status**: active · **Purpose**: not supplied
 
@@ -132,21 +132,29 @@
 | `track2-text-t1.0` | 29 | gemini-3-flash | gemini-3-flash | text | high | 1.0 | ok | 340 | not supplied | 0 |
 | `track2-text-t1.0` | 30 | gemini-3-flash | gemini-3-flash | text | high | 1.0 | ok | 340 | not supplied | 0 |
 
+### 3.2 Verifier passes (1)
+
+| Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
+|---|---:|---|---|---|---:|---|---:|---:|
+| `verified-adv-text-high-t1.0-n30-23of30` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 442 | 16 |
+
+Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
+
 ## 4. Token load and audited cost
 
 | Field | Value |
 |---|---|
-| Passes on file | 90 |
-| Input tokens (billed) | 0 |
+| Passes on file | 91 |
+| Input tokens (billed) | 792,064 |
 | Input tokens (cached) | 0 |
-| Output tokens | 0 |
+| Output tokens | 75,669 |
 | Thinking tokens | 0 |
-| Total tokens | 0 |
+| Total tokens | 867,733 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | not supplied |
-| Run total (range) | not supplied |
+| `cost_usd` by basis | audited US$0.3115 (1); unrecorded no figure (90) |
+| Run total (range) | at least US$0.3115; no ceiling (90 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 90 |
-| Summed wall clock | 0.00 h over 90 pass(es) |
+| Summed wall clock | 0.06 h over 91 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -271,6 +279,8 @@ No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospecti
 | `track2-text-t0.7` | text | `track2-text/T0.7` |
 | `track2-text-t1.0` | text | `track2-text/T1.0` |
 
+1 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+
 ## 10. Provenance of this report
 
 This report is a projection. Every figure above is read from one of the committed inputs below; nothing is estimated, and a figure that is not on file is written **not supplied** with its reason.
@@ -278,7 +288,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

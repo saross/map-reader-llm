@@ -27,6 +27,18 @@
   "stride-55map-2026-08-25::g384_ov192_55map-union-k10-verify37::run1": {
    "basis": "audited-lower-bound",
    "source": "a pre-2026-09-14 cleanup leg overwrote this stage's run.meta.json, so the cited meta holds the cleanup's tokens only and no post-run report publishes the leg; results/tile-presence-2026-09-21/verifier-costs.json legs.FOURTH-N1 (auditor_complete false)"
+  },
+  "pv-diag-384::pro-medium-image-baseline-image-t0.0::run1": {
+   "basis": "audited-lower-bound",
+   "source": "the pass's 2026-03-23 Batch API execution (about 461 of 487 tiles) recorded no usage (usage_stats all zero at its first commit, 3d22184d6); the meta's tokens are only the 2026-06-03 real-time resume's 26 requests (c07c57766), so the figure is a floor (PI ruling D36, S160)"
+  },
+  "pv-diag-384::pro-medium-text-baseline-text-t0.0::run1": {
+   "basis": "audited-lower-bound",
+   "source": "the pass's 2026-03-23 Batch API execution (about 461 of 487 tiles) recorded no usage (usage_stats all zero at its first commit, 3d22184d6); the meta's tokens are only the 2026-06-03 real-time resume's 26 requests (c07c57766), so the figure is a floor (PI ruling D36, S160)"
+  },
+  "pv-diag-384::flash-high-image-n5-image-t0.0::run1": {
+   "basis": "audited-lower-bound",
+   "source": "the pass's first launch (2026-04-16T08:11Z, 454 of 487 tiles) left no meta: the 33-tile resume's meta replaced it before the first commit (2e8cc6481); its spend, about US$5.39 at standard, is reconstructed in data/pricing/unmetered-executions.json U2 (PI ruling D35, S160)"
   }
  },
  "preserved_main_legs": {
@@ -35,6 +47,12 @@
     "outputs/55maps-text-high-generalisation/verified/run.meta.json.pre-recovery-20260502T235106.backup"
    ],
    "source": "the main verifier leg (9,131 requests, run_id 3e7bb633..., 2026-04-18) that a 2026-05-02 recovery overwrote; with the live meta's 74 it covers the 9,205 probabilities.json results (token-load-audit-2026-06-12 § 4: disjoint call sets). Gitignored as *.pre-recovery-*.backup; force-added 2026-10-03 at the PI's instruction so the register can price a frontier incumbent's verifier."
+  },
+  "proposer-verifier-384::verified-adversarial-text-v1-prompt::run1": {
+   "metas": [
+    "outputs/h11/proposer-verifier-384/verified-adversarial-text-v1-prompt/run.meta.main-2026-04-10.json"
+   ],
+   "source": "the main verifier leg (623 requests, run_id 0e695515..., 2026-04-10) that the 2026-05-06 cleanup (6683952ac, 1 request) overwrote; restored byte for byte from git history (f33058f01:.../run.meta.json) at the PI's ruling D37 (S160), so the register prices the leg's whole spend rather than a floor."
   }
  }
 }

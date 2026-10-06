@@ -61,7 +61,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 # planning/cost-accounting-fix-plan-2026-09-21.md). The coster resolves each
 # fragment's service tier from committed evidence and prices it through the
 # one cost function, scripts/lib_cost.price_usage.
-from scripts.lib_pass_cost import PassCoster, fragment_usage  # noqa: E402
+from scripts.lib_pass_cost import PassCoster, fragment_usage, verifier_coverage  # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # Constants
@@ -419,24 +419,56 @@ def _span(stamps: list[dict | None]) -> dict | None:
             "end": max((t["end"] for t in present), key=instant)}
 
 
-def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
+def _verifier_candidates(fragments: list[tuple[dict, Path]], results: int | None = None) -> int:
     """Candidate crops a verifier leg completed, over all its metas.
 
-    The union of ``completed_items``; else the sum of ``items_processed``;
-    else the sum of the request counts (eras that left ``execution_stats``
-    empty, where requests equal completions when nothing was retried).
+    Per fragment, the best count it records: fragments that list
+    ``completed_items`` are unioned (a cleanup re-verifies candidates its
+    main leg may already hold); every other fragment adds its own
+    ``items_processed``, else its successful responses
+    (``finish_reason_counts.success``), else its request count (eras that
+    left ``execution_stats`` empty, where requests equal completions when
+    nothing failed or was retried). Until S160 one fragment with a list
+    made the union the whole answer, so a preserved main leg from before
+    ``completed_items`` (pv-384's v1-prompt, 571 successes, restored under
+    D37) counted for nothing beside its one-candidate cleanup.
+
+    A fragment without a list names no candidates, so its overlap with the
+    others cannot be subtracted: a main leg of 3 beside a cleanup that
+    re-verified one of those 3 sums to 4 (PR #24 review, finding 3). When
+    such a fragment sits beside another, the sum is capped at the leg's
+    distinct results, since every candidate the leg completed holds one.
+    The cap is an upper bound, not an exact count: on a carry-forward stage
+    the results also hold the candidates carried from the stage it extends.
+
+    Args:
+        fragments: ``(meta, path)`` for every meta of the leg.
+        results: The leg's distinct candidates in ``probabilities.json``
+            (``lib_pass_cost.verifier_coverage``), or None when it has none.
+
+    Returns:
+        The number of candidates the leg verified.
     """
-    completed = {c for m, _ in fragments
-                 for c in ((m.get("execution_stats") or {}).get("completed_items") or [])}
-    if completed:
-        return len(completed)
-    processed = sum(int((m.get("execution_stats") or {}).get("items_processed") or 0)
-                    for m, _ in fragments)
-    if processed:
-        return processed
-    return sum(int((((m.get("usage_stats") or {}).get("by_provider") or {})
-                    .get("google_gemini") or {}).get("request_count") or 0)
-               for m, _ in fragments)
+    completed: set = set()
+    rest = 0
+    unlisted = 0
+    for meta, _ in fragments:
+        es = meta.get("execution_stats") or {}
+        items = es.get("completed_items")
+        if isinstance(items, list) and items:
+            completed.update(items)
+            continue
+        success = (es.get("finish_reason_counts") or {}).get("success")
+        unlisted += 1
+        rest += int(es.get("items_processed") or success
+                    or (((meta.get("usage_stats") or {}).get("by_provider") or {})
+                        .get("google_gemini") or {}).get("request_count") or 0)
+    total = len(completed) + rest
+    # Only an unlisted fragment beside another can double-count; a union of
+    # listed fragments is exact and is left alone.
+    if results is not None and unlisted and len(fragments) > 1:
+        total = min(total, results)
+    return total
 
 
 def _preserved_main_legs(primary: dict, primary_path: Path,
@@ -553,6 +585,48 @@ def _pool_spec(value: Any) -> tuple[Any, str | None]:
     return value, None
 
 
+def _leg_root(spec: Any, run_dir: Path, run_id: str, vdir: str) -> Path:
+    """The directory a pass's ``path`` is resolved against.
+
+    Normally the run directory. A leg executed outside the run's own tree
+    (the S104 vote-3 increments, which live under
+    ``results/deployment-oracle-2026-06-06/vote3-verify/<run>/``, ruling
+    D32; h10's archived pool_160 mining passes, D41) names its root with
+    ``repo_path``, a repository-relative directory, and then must name
+    ``path`` beneath it too, so that the layout beneath it stays explicit
+    (both verifier meta forms; a proposer pool's ``run_N/``).
+
+    Args:
+        spec: the ``verifier_passes`` or ``proposer_pools`` entry (string or
+            dict form).
+        run_dir: the run's own directory (absolute).
+        run_id: the run, for error messages.
+        vdir: the pass key, for error messages.
+
+    Returns:
+        The absolute leg root.
+
+    Raises:
+        ValueError: ``repo_path`` is absolute, climbs out with ``..``, or
+            comes without ``path``.
+
+    Examples:
+        >>> _leg_root("text", Path("/r/outputs/x"), "x", "v")
+        PosixPath('/r/outputs/x')
+    """
+    repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
+    if not repo_path:
+        return run_dir
+    where = f"pass {run_id}::{vdir}"
+    if Path(repo_path).is_absolute() or ".." in Path(repo_path).parts:
+        raise ValueError(f"{where}: repo_path must be repository-relative, "
+                         f"without '..' (got {repo_path!r})")
+    if not spec.get("path"):
+        raise ValueError(f"{where}: repo_path needs a path beneath it "
+                         f"(e.g. 'verified', 'pool_160')")
+    return REPO_ROOT / repo_path
+
+
 def _effective_temperature(cfg: dict) -> Any:
     """Return the verifier/proposer temperature, preferring the E55-corrected value.
 
@@ -602,9 +676,23 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # meta is an unreliable template default (see below). Authored in the sidecar
         # from the study YAML; None for the normal case (trust the meta).
         model_of_record = spec.get("model_of_record") if isinstance(spec, dict) else None
-        pool_dir = run_dir / (path or f"proposer/{pool}")
-        for run_n_dir in sorted(pool_dir.glob("run_*")):
-            suffix = run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else ""
+        # A pool run outside the run's own tree (h10's pool_160 cold-start
+        # mining passes, archived under archive/intermediate-calibration/;
+        # ruling D41) names its root with ``repo_path``, as a verifier leg
+        # may (D32): the root stands in for the run directory for this pool.
+        pool_root = _leg_root(spec, run_dir, run_id, pool)
+        pool_dir = pool_root / (path or f"proposer/{pool}")
+        # A single-pass pool written flat, with no ``run_N/`` (the e47 text
+        # baseline; pv-384's proposer stub), declares ``single_pass``: its
+        # directory is pass 1 (D31, S160).
+        single_pass = isinstance(spec, dict) and bool(spec.get("single_pass"))
+        # A pool whose passes are not named run_N (Phase 1's pass_01..pass_05,
+        # D40) names its glob; the number after the first "_" is the pass.
+        pass_glob = (spec.get("pass_glob") if isinstance(spec, dict) else None) or "run_*"
+        pass_dirs = [pool_dir] if single_pass else sorted(pool_dir.glob(pass_glob))
+        for run_n_dir in pass_dirs:
+            suffix = ("1" if single_pass else
+                      run_n_dir.name.split("_", 1)[1] if "_" in run_n_dir.name else "")
             if not suffix.isdigit():
                 # ``run_N_recovery*`` fragments are consumed by their pass's row
                 # (completed-tile union below), so they are not "skipped".
@@ -734,11 +822,18 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             # audit lens A, 2026-10-03), and every recovery fragment: the metas
             # its provenance cites. Each is priced at its own tier and date.
             siblings = _sibling_metas(meta, meta_files[1:])
+            # A one-tile retry the runner wrote under ``run_N/retry/`` is
+            # this pass's spend, but never its coverage: the pass's own meta
+            # already counts the tile it retried (consensus-384-t1-0 run 4,
+            # whose 240 completed tiles include it; D31, S160).
+            retry_metas = _meta_files(run_n_dir / "retry")
             fragments = ([(meta, meta_path)] + [(_load_json(m), m) for m in siblings]
-                         + [(_load_json(m), m) for m in recovery_metas])
+                         + [(_load_json(m), m) for m in recovery_metas]
+                         + [(_load_json(m), m) for m in retry_metas])
             prov_sources = [_repo_rel(meta_path)]
             prov_sources.extend(_repo_rel(m) for m in siblings)
             prov_sources.extend(_repo_rel(m) for m in recovery_metas)
+            prov_sources.extend(_repo_rel(m) for m in retry_metas)
             if model_of_record:
                 prov_sources.append("results/run-conditions.json")
             failed = es.get("items_failed", 0)
@@ -771,7 +866,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                                        for m, _ in fragments]),
                 **_coster().cost_pass(
                     pass_id=f"{run_id}::{pool}::run{pass_n}", fragments=fragments,
-                    run_id=run_id, pool=pool, run_dir=run_dir, model=model_used,
+                    run_id=run_id, pool=pool, run_dir=pool_root, model=model_used,
                     fragment_models=[model_used] + [
                         _fragment_model(m, model_used, model_of_record)
                         for m, _ in fragments[1:]]),
@@ -784,6 +879,11 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
     # --- verifier passes ---
     for vdir, spec in facts.get("verifier_passes", {}).items():
         modality, path = _pool_spec(spec)
+        # A leg run outside the run's own tree (the S104 vote-3 increments,
+        # under results/; D32) names its leg root with ``repo_path``. The root
+        # stands in for the run directory for this pass only: the meta is
+        # found under it, and the coster's upward evidence walks stop there.
+        leg_root = _leg_root(spec, run_dir, run_id, vdir)
         # Two on-disk shapes for a verifier pass's run metadata:
         #   * dir form    — ``<base>/run.meta.json`` (gold-standard-v2, verifier-t-pilot);
         #   * sidecar form — ``<base>.meta.json`` next to the verified geojson
@@ -792,13 +892,20 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         # Prefer the dir form so the gold-standard-v2 extraction stays byte-identical,
         # then fall back to the sidecar.
         base = path or vdir
-        dir_meta = run_dir / base / "run.meta.json"
-        sidecar_meta = run_dir / f"{base}.meta.json"
+        dir_meta = leg_root / base / "run.meta.json"
+        sidecar_meta = leg_root / f"{base}.meta.json"
         if dir_meta.exists():
             meta_path = dir_meta
         elif sidecar_meta.exists():
             meta_path = sidecar_meta
         else:
+            # Never silent: a hint that resolves to no meta drops a leg's
+            # spend from the register. Eight verifier-robustness legs went
+            # unextracted for four months this way, their hints one
+            # directory short of ``…/verified/run.meta.json`` (D31, S160).
+            print(f"WARNING: verifier pass {run_id}::{vdir} resolves to no meta "
+                  f"(looked for {_repo_rel(dir_meta)} and {_repo_rel(sidecar_meta)})",
+                  file=sys.stderr)
             continue
         meta = _load_json(meta_path)
         cfg = meta.get("configuration", {})
@@ -845,11 +952,20 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         listed = _coster().main_legs.get(f"{run_id}::{vdir}::run1", {}).get("metas", [])
         main_legs = _preserved_main_legs(meta, meta_path, listed)
         v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
-        n_candidates = _verifier_candidates(v_fragments)
+        cover = verifier_coverage(v_fragments)
+        n_candidates = _verifier_candidates(v_fragments, results=cover[1] if cover else None)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.
         v_prov_sources = [_repo_rel(meta_path)] + [_repo_rel(m) for m in main_legs]
+        # Temperature of record (D40): a meta written before E55's correction
+        # path that records the wrong temperature, and has no run.log to read
+        # the override from, is corrected in the sidecar, never in the meta
+        # (D14); the sidecar is cited, as model_of_record cites it.
+        temperature_of_record = (spec.get("temperature_of_record")
+                                 if isinstance(spec, dict) else None)
+        if temperature_of_record is not None:
+            v_prov_sources.append("results/run-conditions.json")
         if cfg.get("temperature_effective") is not None:
             log_path = meta_path.parent / "run.log"
             if log_path.exists():
@@ -864,7 +980,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             "model_version": model_version,
             "modality": modality,
             "thinking_level": cfg.get("thinking_level"),
-            "temperature": _effective_temperature(cfg),
+            "temperature": (temperature_of_record if temperature_of_record is not None
+                            else _effective_temperature(cfg)),
             "instruction_hash": cfg.get("system_instruction_hash"),
             "library_hash": cfg.get("library_hash"),
             "status": "ok",
@@ -878,7 +995,7 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                                    for m, _ in v_fragments]),
             **_coster().cost_pass(
                 pass_id=f"{run_id}::{vdir}::run1", fragments=v_fragments,
-                run_id=run_id, pool=vdir, run_dir=run_dir, model=model_used,
+                run_id=run_id, pool=vdir, run_dir=leg_root, model=model_used,
                 stage="verifier"),
             # A leg with a preserved main meta ran twice (main, then cleanup):
             # its time, span and retries are both executions', as C3 derives them.

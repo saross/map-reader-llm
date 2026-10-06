@@ -2,9 +2,9 @@
 
 # Run registry
 
-> Generated 2026-05-30T08:03:46Z · 43 row(s) · schema v1.0 · rendered from `results/run-registry.json` at commit `7a41e8781`.
+> Generated 2026-05-30T08:03:46Z · 44 row(s) · schema v1.0 · rendered from `results/run-registry.json` at commit `111c2747d`.
 >
-> **Coverage**: all 43 runs (hand-verified input).
+> **Coverage**: all 44 runs (hand-verified input).
 
 | run_id | directory_path | status |
 |---|---|---|
@@ -51,3 +51,4 @@
 | gemini37-image-gs-2026-09-01 | outputs/gemini37-image-gs-2026-09-01 | active |
 | gemini37-image-55map-2026-09-13 | outputs/gemini37-image-55map-2026-09-13 | active |
 | gemini3-image-55map-2026-09-16 | outputs/gemini3-image-55map-2026-09-16 | active |
+| phase1-library | archive/outputs-pre-retest-60-tile/phase1-library | active |

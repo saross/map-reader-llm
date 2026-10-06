@@ -268,5 +268,6 @@
     },
     "det_a": 400,
     "det_b": 481
-  }
+  },
+  "d42_annotation": "NOT RE-TESTABLE under D42 (2026-10-06). The current per-tile scorer refuses this file's 512 px detections on the 384 px frame: only 72 of 558 in-frame detections carry a 384 px tile name (TileJoinRefusalError). In March the same mismatch was silent: the per-tile tables behind these CIs and p-values dropped the TP and FP of most 512 px detections, so they should not be cited. The contrasts are superseded by fair-384-vs-512.json, which reassigns 512 px detections to 384 px tiles."
 }

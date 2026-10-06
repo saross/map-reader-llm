@@ -1076,6 +1076,36 @@
     "K = 5 ARM 2 SPLIT LEDGER: that leg's twelve batch jobs are recorded across batch_jobs.json (chunks 0-3) and batch_jobs_relodged.json (chunks 4-11), because the first lodging of chunks 4-11 failed with a 429 FileStorageBytesPerProject against the File API's 20 GiB cap and they were re-lodged after the completed K = 1 and K = 3 verifier inputs were deleted. Both ledgers are committed; the recovered leg books 45,786 / 45,786.",
     "EXPLORATORY RUNGS: K = 3 is the declared primary rung of the image 2x2's five-test family; K = 1 and K = 5 are exploratory replicates (reports/image-2x2-tests-declaration-2026-09-19.md \u00a7 2), and the K = 1 and K = 5 test JSONs were being regenerated under a four-member BH family at the time this row was authored."
    ]
+  },
+  "phase1-library": {
+   "primary_hypothesis": null,
+   "also_informs": [
+    "H8",
+    "H9"
+   ],
+   "purpose": "Library construction (prereg 8.4.1 Step 1): the image-only baseline whose calibration-tile failures were mined for the hard examples (HP 05-08, HN 11-14; HN 18-29 for H9-C) that the image-modality production libraries still carry.",
+   "tile_size_px": 512,
+   "corpus": "4-map-gs",
+   "gt_reference": "curator",
+   "scope": {
+    "test_set_id": "cal-20-512",
+    "bounds_path": "inputs/vectors/bounds/calibration_bounds.geojson",
+    "n_test_tiles": 20,
+    "calibration_set_id": null,
+    "n_calibration_tiles": null
+   },
+   "headline_condition_id": null,
+   "headline_rationale": null,
+   "historical_aliases": [
+    "Phase 1"
+   ],
+   "_scope_confidence": "HIGH",
+   "_scope_source": "empirical: each pass's 20 per_item_metadata item_ids = inputs/tiles/calibration_manifest.json (20/20); the bounds file has 20 features",
+   "_flags": [
+    "construction run, not an evaluation: no condition; run_type stays null",
+    "cal-20-512 used as a test_set_id for the first time (results/evaluation-scopes.md)",
+    "gt_reference follows the 4-map convention; the reference vintage of 2026-02-01 predates the E87 standardisation"
+   ]
   }
  }
 }

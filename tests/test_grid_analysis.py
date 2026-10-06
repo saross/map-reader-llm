@@ -283,6 +283,10 @@ def test_paired_interaction_is_zero_when_effects_are_equal():
     assert res["ci_lower"] == 0.0
     assert res["ci_upper"] == 0.0
     assert not res["excludes_zero"]
+    # D42: the p-value is the interaction permutation test's; no
+    # interaction at all gives exactly 1.
+    assert res["p_two_sided"] == 1.0
+    assert "permutation" in res["p_method"]
 
 
 @pytest.mark.tier1
@@ -314,3 +318,4 @@ def test_paired_interaction_detects_a_real_interaction():
     res = paired_interaction(a, b, c, d, n_iter=300, seed=42)
     assert res["difference_of_differences"] > 0
     assert res["excludes_zero"]
+    assert res["p_two_sided"] < 0.01

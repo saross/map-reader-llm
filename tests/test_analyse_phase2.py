@@ -54,6 +54,7 @@ from scripts.analyse_phase2_results import apply_fdr_correction, load_condition_
 from scripts.lib_advanced_metrics import (
     aggregate_tile_metrics,
     bootstrap_ci,
+    bootstrap_effect_size_ci,
     bootstrap_multi_run_ci,
     bootstrap_multi_run_effect_size_ci,
     calculate_f1_internal,
@@ -65,307 +66,133 @@ pytestmark = pytest.mark.tier1
 
 @pytest.mark.tier1
 class TestApplyFdrCorrection:
-    """Tests for the Benjamini-Hochberg FDR correction function."""
+    """BH over permutation p-values (D42); the CI-position pseudo-p is gone."""
+
+    @staticmethod
+    def _cmp(p_value: float | None, ci: tuple[float, float] = (-0.01, 0.01)) -> dict:
+        diff = {"mean": 0.0, "ci_lower": ci[0], "ci_upper": ci[1]}
+        if p_value is not None:
+            diff["p_value"] = p_value
+        return {"condition_a": "A", "condition_b": "B", "f1_difference": diff}
 
     def test_empty_list_returns_empty(self) -> None:
         """Empty pairwise results should return empty list."""
-        result = apply_fdr_correction([])
-        assert result == []
+        assert apply_fdr_correction([]) == []
 
-    def test_single_significant_comparison(self) -> None:
-        """Single significant comparison should remain significant after FDR."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {
-                    "mean": 0.05,
-                    "ci_lower": 0.02,  # CI excludes zero
-                    "ci_upper": 0.08,
-                },
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        assert len(result) == 1
+    def test_single_small_p_is_significant(self) -> None:
+        """One comparison at p = 0.01 is significant raw and after BH."""
+        result = apply_fdr_correction([self._cmp(0.01)], q=0.05)
         assert result[0]["initially_significant"] is True
         assert result[0]["fdr_significant"] is True
+        assert result[0]["fdr_adjusted_p"] == pytest.approx(0.01)
 
-    def test_single_non_significant_comparison(self) -> None:
-        """Single non-significant comparison should remain non-significant."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {
-                    "mean": 0.01,
-                    "ci_lower": -0.02,  # CI includes zero
-                    "ci_upper": 0.04,
-                },
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        assert len(result) == 1
+    def test_single_large_p_is_not_significant(self) -> None:
+        """One comparison at p = 0.3 is not significant."""
+        result = apply_fdr_correction([self._cmp(0.3)], q=0.05)
         assert result[0]["initially_significant"] is False
         assert result[0]["fdr_significant"] is False
 
-    def test_negative_significant_effect(self) -> None:
-        """Negative significant effect (B better than A) should be detected."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {
-                    "mean": -0.05,
-                    "ci_lower": -0.08,  # CI entirely negative
-                    "ci_upper": -0.02,
-                },
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
+    def test_a_comparison_without_a_p_value_is_refused(self) -> None:
+        """No permutation p: refused, never scored from its CI."""
+        with pytest.raises(ValueError, match="pseudo-p"):
+            apply_fdr_correction([self._cmp(None, ci=(0.02, 0.08))])
 
-        assert result[0]["initially_significant"] is True
-        assert result[0]["fdr_significant"] is True
-
-    def test_multiple_all_significant_preserved(self) -> None:
-        """Multiple significant comparisons should mostly be preserved with FDR."""
-        # All comparisons are strongly significant (CI far from zero)
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.10, "ci_lower": 0.07, "ci_upper": 0.13},
-            },
-            {
-                "condition_a": "A",
-                "condition_b": "C",
-                "f1_difference": {"mean": 0.08, "ci_lower": 0.05, "ci_upper": 0.11},
-            },
-            {
-                "condition_a": "B",
-                "condition_b": "C",
-                "f1_difference": {"mean": 0.06, "ci_lower": 0.03, "ci_upper": 0.09},
-            },
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        # All should be initially significant
-        assert all(r["initially_significant"] for r in result)
-
-        # Most should survive FDR (at least the strongest ones)
-        n_fdr_sig = sum(1 for r in result if r["fdr_significant"])
-        assert n_fdr_sig >= 1, "At least one comparison should survive FDR"
-
-    def test_multiple_none_significant(self) -> None:
-        """Multiple non-significant comparisons should all remain non-significant."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.01, "ci_lower": -0.02, "ci_upper": 0.04},
-            },
-            {
-                "condition_a": "A",
-                "condition_b": "C",
-                "f1_difference": {"mean": -0.01, "ci_lower": -0.04, "ci_upper": 0.02},
-            },
-            {
-                "condition_a": "B",
-                "condition_b": "C",
-                "f1_difference": {"mean": 0.00, "ci_lower": -0.03, "ci_upper": 0.03},
-            },
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        # None should be significant
-        assert not any(r["initially_significant"] for r in result)
-        assert not any(r["fdr_significant"] for r in result)
-
-    def test_fdr_reduces_false_positives(self) -> None:
-        """FDR correction should reduce the number of significant results.
-
-        When many comparisons are borderline significant, FDR should
-        be more conservative than uncorrected significance.
-        """
-        # Create 10 comparisons, some borderline significant
-        pairwise = []
-        for i in range(10):
-            # Alternate between barely significant and barely non-significant
-            if i % 2 == 0:
-                # Barely significant (CI just excludes zero)
-                ci_lower = 0.001  # Just above zero
-            else:
-                # Barely non-significant
-                ci_lower = -0.001
-
-            pairwise.append({
-                "condition_a": f"A{i}",
-                "condition_b": f"B{i}",
-                "f1_difference": {
-                    "mean": 0.02,
-                    "ci_lower": ci_lower,
-                    "ci_upper": 0.04,
-                },
-            })
-
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        n_initially_sig = sum(1 for r in result if r["initially_significant"])
-        n_fdr_sig = sum(1 for r in result if r["fdr_significant"])
-
-        # FDR should be equal or more conservative
-        assert n_fdr_sig <= n_initially_sig, \
-            "FDR should not increase number of significant results"
+    def test_bh_step_up_on_a_known_example(self) -> None:
+        """p = (0.01, 0.04, 0.03, 0.5): BH keeps only the first at q = 0.05."""
+        result = apply_fdr_correction(
+            [self._cmp(p) for p in (0.01, 0.04, 0.03, 0.5)], q=0.05)
+        assert [r["initially_significant"] for r in result] == [True, True, True, False]
+        assert [r["fdr_significant"] for r in result] == [True, False, False, False]
+        assert [r["fdr_adjusted_p"] for r in result] == pytest.approx(
+            [0.04, 0.0533333, 0.0533333, 0.5], abs=1e-6)
 
     def test_q_value_affects_threshold(self) -> None:
-        """Higher q-value should allow more comparisons to pass FDR."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.03, "ci_lower": 0.001, "ci_upper": 0.06},
-            },
-            {
-                "condition_a": "A",
-                "condition_b": "C",
-                "f1_difference": {"mean": 0.02, "ci_lower": 0.001, "ci_upper": 0.04},
-            },
-        ]
+        """At q = 0.10 the same four comparisons give three discoveries."""
+        result = apply_fdr_correction(
+            [self._cmp(p) for p in (0.01, 0.04, 0.03, 0.5)], q=0.10)
+        assert sum(r["fdr_significant"] for r in result) == 3
 
-        result_strict = apply_fdr_correction(pairwise.copy(), q=0.01)
-        result_lenient = apply_fdr_correction(pairwise.copy(), q=0.10)
-
-        n_strict = sum(1 for r in result_strict if r["fdr_significant"])
-        n_lenient = sum(1 for r in result_lenient if r["fdr_significant"])
-
-        # Lenient q should allow at least as many
-        assert n_lenient >= n_strict
+    def test_ci_reading_is_descriptive_only(self) -> None:
+        """A CI excluding zero does not make a large p significant."""
+        result = apply_fdr_correction([self._cmp(0.4, ci=(0.001, 0.05))])
+        assert result[0]["ci_excludes_zero"] is True
+        assert result[0]["fdr_significant"] is False
 
     def test_preserves_original_fields(self) -> None:
-        """FDR correction should preserve all original fields in results."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.05, "ci_lower": 0.02, "ci_upper": 0.08},
-                "precision_difference": {"mean": 0.03, "ci_lower": 0.01, "ci_upper": 0.05},
-                "recall_difference": {"mean": 0.07, "ci_lower": 0.04, "ci_upper": 0.10},
-                "n_tiles": 60,
-                "n_iterations": 1000,
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        # All original fields should be preserved
+        """FDR correction preserves every field it was given."""
+        cmp = self._cmp(0.01, ci=(0.02, 0.08))
+        cmp.update({
+            "precision_difference": {"mean": 0.03, "ci_lower": 0.01, "ci_upper": 0.05},
+            "recall_difference": {"mean": 0.07, "ci_lower": 0.04, "ci_upper": 0.10},
+            "n_tiles": 60,
+            "n_iterations": 1000,
+        })
+        result = apply_fdr_correction([cmp], q=0.05)
         assert result[0]["condition_a"] == "A"
-        assert result[0]["condition_b"] == "B"
         assert result[0]["precision_difference"]["mean"] == 0.03
         assert result[0]["recall_difference"]["mean"] == 0.07
         assert result[0]["n_tiles"] == 60
         assert result[0]["n_iterations"] == 1000
 
     def test_adds_significance_fields(self) -> None:
-        """FDR correction should add initially_significant and fdr_significant fields."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.05, "ci_lower": 0.02, "ci_upper": 0.08},
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        assert "initially_significant" in result[0]
-        assert "fdr_significant" in result[0]
+        """The correction adds boolean flags and the adjusted p."""
+        result = apply_fdr_correction([self._cmp(0.02)], q=0.05)
         assert isinstance(result[0]["initially_significant"], bool)
         assert isinstance(result[0]["fdr_significant"], bool)
+        assert isinstance(result[0]["fdr_adjusted_p"], float)
 
+    def test_identical_multi_run_conditions_give_p_one(self) -> None:
+        """End to end: identical runs on both arms give a permutation p of 1."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=3, n_tiles=8, detections_per_tile=2, seed=5,
+        )
+        effect = bootstrap_multi_run_effect_size_ci(
+            run_gdfs, run_gdfs, gdf_ref, gdf_bounds,
+            n_iterations=50, random_seed=42, return_p_values=True,
+        )
+        assert effect["f1_difference"]["p_value"] == 1.0
+        assert effect["permutation"]["n_runs"] == 3
+        assert "run blocks swap" in effect["permutation"]["statistic"]
 
 @pytest.mark.tier1
 class TestApplyFdrCorrectionEdgeCases:
-    """Edge case tests for FDR correction."""
+    """Edge cases for the permutation-p FDR correction (D42)."""
 
-    def test_missing_f1_difference_key(self) -> None:
-        """Should handle missing f1_difference gracefully."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                # Missing f1_difference
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        # Should not crash, should be marked non-significant
-        assert len(result) == 1
-        assert result[0]["initially_significant"] is False
-        assert result[0]["fdr_significant"] is False
+    def test_missing_f1_difference_key_is_refused(self) -> None:
+        """A comparison with no f1_difference has no p: refused."""
+        with pytest.raises(ValueError):
+            apply_fdr_correction([{"condition_a": "A", "condition_b": "B"}], q=0.05)
 
     def test_missing_ci_bounds(self) -> None:
-        """Should handle missing CI bounds gracefully."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.05},  # Missing ci_lower/ci_upper
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
+        """A p-value without CI bounds is tested; the CI reading is False."""
+        result = apply_fdr_correction([{
+            "condition_a": "A", "condition_b": "B",
+            "f1_difference": {"mean": 0.05, "p_value": 0.001},
+        }], q=0.05)
+        assert result[0]["fdr_significant"] is True
+        assert result[0]["ci_excludes_zero"] is False
 
-        # Should not crash
-        assert len(result) == 1
-
-    def test_ci_exactly_at_zero(self) -> None:
-        """CI bound exactly at zero should not be significant."""
-        pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {
-                    "mean": 0.02,
-                    "ci_lower": 0.0,  # Exactly at zero
-                    "ci_upper": 0.04,
-                },
-            }
-        ]
-        result = apply_fdr_correction(pairwise, q=0.05)
-
-        # CI touching zero should not be significant
+    def test_p_exactly_at_alpha_is_not_initially_significant(self) -> None:
+        """The raw threshold is strict: p = 0.05 is not below 0.05."""
+        result = apply_fdr_correction([{
+            "condition_a": "A", "condition_b": "B",
+            "f1_difference": {"mean": 0.02, "p_value": 0.05},
+        }], q=0.05)
         assert result[0]["initially_significant"] is False
+        assert result[0]["fdr_significant"] is True  # BH uses adjusted <= q
 
     def test_very_large_number_of_comparisons(self) -> None:
-        """Should handle large number of comparisons efficiently."""
-        # 100 comparisons (e.g., 15 conditions = 105 pairwise)
-        pairwise = []
-        for i in range(100):
-            # Half significant, half not
-            if i < 50:
-                ci_lower = 0.01 + i * 0.001  # Increasingly significant
-            else:
-                ci_lower = -0.01  # Not significant
-
-            pairwise.append({
-                "condition_a": f"A{i}",
-                "condition_b": f"B{i}",
-                "f1_difference": {
-                    "mean": 0.03,
-                    "ci_lower": ci_lower,
-                    "ci_upper": 0.05,
-                },
-            })
-
+        """100 comparisons: BH never finds more than the raw threshold."""
+        pairwise = [{
+            "condition_a": f"A{i}", "condition_b": f"B{i}",
+            "f1_difference": {"mean": 0.03, "p_value": (i + 1) / 1000 if i < 50 else 0.5},
+        } for i in range(100)]
         result = apply_fdr_correction(pairwise, q=0.05)
-
         assert len(result) == 100
-        # FDR should be conservative - not more than initially significant
-        n_initially_sig = sum(1 for r in result if r["initially_significant"])
-        n_fdr_sig = sum(1 for r in result if r["fdr_significant"])
-        assert n_fdr_sig <= n_initially_sig, "FDR should not increase significant count"
-        # All results should have the significance fields
-        assert all("initially_significant" in r for r in result)
-        assert all("fdr_significant" in r for r in result)
-
+        n_raw = sum(r["initially_significant"] for r in result)
+        n_fdr = sum(r["fdr_significant"] for r in result)
+        assert n_fdr <= n_raw
+        assert n_raw == 49  # (i+1)/1000 < 0.05 for i < 49
 
 # Import check
 def test_import_apply_fdr_correction() -> None:
@@ -373,10 +200,6 @@ def test_import_apply_fdr_correction() -> None:
     from scripts.analyse_phase2_results import apply_fdr_correction as imported_fn
     assert callable(imported_fn)
 
-
-# ============================================================================
-# File Discovery and Per-Run Loading Tests
-# ============================================================================
 
 def _make_detection_geojson(features: list[dict]) -> dict:
     """Create a minimal GeoJSON FeatureCollection for testing.
@@ -952,3 +775,60 @@ class TestPerTileMetrics:
         assert f1_agg == pytest.approx(f1_pt, abs=1e-6)
         assert p_agg == pytest.approx(p_pt, abs=1e-6)
         assert r_agg == pytest.approx(r_pt, abs=1e-6)
+
+
+@pytest.mark.tier1
+class TestEffectSizePValuesArePermutation:
+    """bootstrap_effect_size_ci's p-values come from the permutation test (D42)."""
+
+    def test_identical_conditions_give_p_one(self) -> None:
+        """Identical detection sets: p = 1 on every metric, never a floor."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=42,
+        )
+        _n, gdf_det = run_gdfs[0]
+        res = bootstrap_effect_size_ci(
+            gdf_det, gdf_bounds, gdf_det, gdf_bounds, gdf_ref,
+            n_iterations=200, random_seed=42, return_p_values=True,
+        )
+        for key in ("f1_difference", "precision_difference", "recall_difference"):
+            assert res[key]["p_value"] == 1.0
+            assert "permutation" in res[key]["p_method"]
+        assert res["permutation"]["n_discordant_tiles"] == 0
+
+    def test_p_equals_the_kernel_on_sorted_tile_arrays(self) -> None:
+        """The p-value is the kernel's, on tiles in sorted order."""
+        from scripts.lib_advanced_metrics import _tile_count_arrays
+        from scripts.lib_permutation import paired_permutation_test
+
+        runs_a, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=1,
+        )
+        runs_b, _ref, _bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=10, detections_per_tile=2, seed=2,
+        )
+        det_a, det_b = runs_a[0][1], runs_b[0][1]
+        res = bootstrap_effect_size_ci(
+            det_a, gdf_bounds, det_b, gdf_bounds, gdf_ref,
+            n_iterations=100, random_seed=42, return_p_values=True,
+        )
+        tiles = sorted(gdf_bounds["tile_name"].unique())
+        want = paired_permutation_test(
+            _tile_count_arrays(compute_per_tile_tp_fp_fn(det_a, gdf_ref, gdf_bounds), tiles),
+            _tile_count_arrays(compute_per_tile_tp_fp_fn(det_b, gdf_ref, gdf_bounds), tiles),
+        )
+        assert res["f1_difference"]["p_value"] == want["metrics"]["f1"]["p_value"]
+        assert res["recall_difference"]["p_value"] == want["metrics"]["recall"]["p_value"]
+
+    def test_no_p_value_unless_asked(self) -> None:
+        """Without return_p_values the result carries CIs only."""
+        run_gdfs, gdf_ref, gdf_bounds = _make_synthetic_runs(
+            n_runs=1, n_tiles=6, detections_per_tile=2, seed=3,
+        )
+        _n, gdf_det = run_gdfs[0]
+        res = bootstrap_effect_size_ci(
+            gdf_det, gdf_bounds, gdf_det, gdf_bounds, gdf_ref,
+            n_iterations=50, random_seed=42,
+        )
+        assert "p_value" not in res["f1_difference"]
+        assert "permutation" not in res

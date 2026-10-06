@@ -1,6 +1,6 @@
 # Open questions and decisions — the PI's list
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
+> **Last revised**: 2026-10-06 (A.3 ruled and measured; B.8 opened; S162). See
 > [§ Changelog](#changelog) for revision history.
 
 Every open question and decision outside the items already handled in
@@ -22,6 +22,8 @@ wait**. Sources: the tracker `planning/text-track-transmission-2026-10-05.md`
    (`planning/w27-configuration-level-testing-2026-10-05.md`). Recommended:
    a replicate floor (95th percentile of replicate |ΔF1|) plus rewording,
    a two-level test only where the paper's argument rests on a claim.
+   RULED 2026-10-06 (D45-D47); the floors measured and the claims screened
+   the same day (`reports/w27-replicate-floors-2026-10-06.md`).
 4. **W7.5 / S-9** — see that item's result when it lands (this session).
 
 ## B. Has a default (proceeding unless you say otherwise)
@@ -54,7 +56,9 @@ wait**. Sources: the tracker `planning/text-track-transmission-2026-10-05.md`
    from D42's regeneration); the in-batch retries' tier and usage (W6.5).
 8. **The register-repair PR**: the branch now carries the register repair
    (D30-D41), D42 and E91. Default: open it as one pull request with a
-   section per piece, run a code review, merge on your word.
+   section per piece, run a code review, merge on your word. OPENED
+   2026-10-06 (S162), with the W2.7 report and the W1 and W4/W6 passes on
+   the same branch; merge on the PI's word.
 
 ## C. Can wait (your call, not urgent)
 
@@ -90,6 +94,12 @@ wait**. Sources: the tracker `planning/text-track-transmission-2026-10-05.md`
    personal-assistant (carried since S158).
 
 ## Changelog
+
+### 2026-10-06 — A.3 ruled and measured; B.8 opened (Session 162)
+
+D45-D47 recorded against A.3; the floors are in
+`reports/w27-replicate-floors-2026-10-06.md`. The register-repair PR of B.8
+was opened the same day.
 
 ### 2026-10-05 — Original publication (Session 161)
 

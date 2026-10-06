@@ -32,8 +32,11 @@ import pytest
 
 from scripts.generate_post_run_report import (
     PLANNED_STALE_DAYS,
+    REPO_ROOT,
     VERIFIER_N_TILES_NULL_REASON,
     _carry_timestamps,
+    _pool_spec,
+    _leg_root,
     _metrics_from_eval,
     _stabilise_timestamps,
     _strip_ts,
@@ -88,7 +91,9 @@ def test_validate_row_rejects_bad_slug(registry):
 @pytest.mark.tier1
 def test_gs_v2_passes_valid(registry):
     passes = extract_passes(extraction_context("gold-standard-v2"))
-    assert len(passes) == 6  # 5 detect_brief-text proposer + 1 verified-v1 verifier
+    # 5 detect_brief-text proposer + 1 verified-v1 verifier + the WBF fusion's
+    # verifier leg (outputs/wbf/gold-standard-v2-detect/verified-v1, D31, S160)
+    assert len(passes) == 7
     for p in passes:
         assert validate_row("passes", p, registry) == []
     # authoritative model identity, read from metadata not the directory name
@@ -158,6 +163,280 @@ def test_verifier_pass_sidecar_meta(registry):
     assert passes[0]["model_used"] == "gemini-3-flash-preview"  # per-item, not cfg.model
     assert passes[0]["model_version"] == "gemini-3-flash-preview"
     assert passes[0]["status"] == "ok"
+
+
+# ---------------------------------------------------------------------------
+# D31 / D32: legs outside the run's tree, and hints that resolve to nothing
+# ---------------------------------------------------------------------------
+
+VOTE3_TH7 = "results/deployment-oracle-2026-06-06/vote3-verify/55maps-text-high-generalisation"
+
+
+def _th7_context(verifier_passes: dict) -> dict:
+    """An extraction context for the TH7 55-map run with the given verifier hints."""
+    return {
+        "run_id": "55maps-text-high-generalisation",
+        "directory_path": "outputs/55maps-text-high-generalisation",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": verifier_passes,
+        "conditions": [],
+    }
+
+
+@pytest.mark.tier1
+def test_verifier_pass_outside_the_run_tree_resolves_by_repo_path(registry):
+    """D32: the S104 vote-3 increment, run under results/, is a row of its parent run.
+
+    The red sentinel is built in: without ``repo_path`` the same ``path``
+    resolves inside the run's own tree, to the run's MAIN verifier leg, so
+    the row would cite (and price) the wrong meta.
+    """
+    spec = {"modality": "text", "repo_path": VOTE3_TH7, "path": "verified"}
+    passes = extract_passes(_th7_context({"vote3-increment": spec}))
+    assert len(passes) == 1
+    row = passes[0]
+    assert validate_row("passes", row, registry) == []
+    assert row["pass_id"] == "55maps-text-high-generalisation::vote3-increment::run1"
+    assert row["provenance"]["source_files"] == [f"{VOTE3_TH7}/verified/run.meta.json"]
+    assert row["n_candidates_verified"] == 4367
+    assert row["cost_basis"] == "audited"
+    # Sentinel: the same hint without repo_path reads the main leg instead.
+    main = extract_passes(_th7_context(
+        {"vote3-increment": {"modality": "text", "path": "verified"}}))
+    assert main[0]["provenance"]["source_files"][0].startswith(
+        "outputs/55maps-text-high-generalisation/verified/")
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("spec, match", [
+    ({"modality": "text", "repo_path": "/abs/leg", "path": "verified"}, "repository-relative"),
+    ({"modality": "text", "repo_path": "results/../outputs", "path": "verified"},
+     "repository-relative"),
+    ({"modality": "text", "repo_path": VOTE3_TH7}, "needs a path"),
+])
+def test_repo_path_refuses_an_ambiguous_leg_root(spec, match):
+    """A leg root that is absolute, climbs out, or names no path beneath it is refused."""
+    with pytest.raises(ValueError, match=match):
+        extract_passes(_th7_context({"v": spec}))
+
+
+@pytest.mark.tier1
+def test_a_verifier_hint_that_resolves_to_no_meta_warns(capsys):
+    """D31: the extractor once skipped such a hint silently.
+
+    This is verifier-robustness's pre-repair hint, one directory short of
+    ``…/verified/run.meta.json``: eight legs (US$51.44) never reached the
+    register. A dropped leg must at least be said aloud.
+    """
+    ctx = {
+        "run_id": "verifier-robustness",
+        "directory_path": "outputs/verifier-robustness",
+        "scope": {},
+        "proposer_pools": {},
+        "verifier_passes": {"384-union-t0-0": {
+            "modality": "text", "path": "384-flash-high-text-1of5-union/T0.0"}},
+        "conditions": [],
+    }
+    assert extract_passes(ctx) == []
+    err = capsys.readouterr().err
+    assert "verifier pass verifier-robustness::384-union-t0-0 resolves to no meta" in err
+
+
+@pytest.mark.tier1
+def test_a_flat_single_pass_pool_is_pass_one(registry):
+    """D31: the e47 text baseline was written flat, with no ``run_N/``.
+
+    Without ``single_pass`` the pool's ``run_*`` glob finds nothing and the
+    pass (US$0.61) is silently absent: the red sentinel below.
+    """
+    def ctx(spec):
+        return {"run_id": "e47-propose-brief", "directory_path": "outputs/h11/e47-propose-brief",
+                "scope": {}, "proposer_pools": {"text-baseline": spec},
+                "verifier_passes": {}, "conditions": []}
+    rows = extract_passes(ctx({"modality": "text", "path": "text-baseline", "single_pass": True}))
+    assert [r["pass_id"] for r in rows] == ["e47-propose-brief::text-baseline::run1"]
+    assert validate_row("passes", rows[0], registry) == []
+    assert rows[0]["provenance"]["source_files"] == [
+        "outputs/h11/e47-propose-brief/text-baseline/"
+        "detections-propose_brief-text-3-flash-2026-04-08.meta.json"]
+    assert rows[0]["cost_usd"] > 0
+    assert extract_passes(ctx({"modality": "text", "path": "text-baseline"})) == []
+
+
+@pytest.mark.tier1
+def test_a_proposer_pool_outside_the_run_tree_resolves_by_repo_path(registry):
+    """D41: h10's pool_160 cold-start mining passes, archived under archive/.
+
+    Sentinel: without ``repo_path`` the same path resolves inside outputs/h10,
+    where no such pool exists, so the five passes vanish silently.
+    """
+    def ctx(spec):
+        return {"run_id": "h10", "directory_path": "outputs/h10", "scope": {},
+                "proposer_pools": {"coldstart-pool_160": spec}, "verifier_passes": {},
+                "conditions": []}
+    root = "archive/intermediate-calibration/h10-calibration-runs-v2"
+    rows = extract_passes(ctx({"modality": "image", "repo_path": root, "path": "pool_160"}))
+    assert [r["pass_n"] for r in rows] == [1, 2, 3, 4, 5]
+    for r in rows:
+        assert validate_row("passes", r, registry) == []
+        assert r["n_tiles_processed"] == 160 and r["status"] == "ok"
+        assert r["provenance"]["source_files"][0].startswith(f"{root}/pool_160/run_{r['pass_n']}/")
+    assert extract_passes(ctx({"modality": "image", "path": "pool_160"})) == []
+
+
+@pytest.mark.tier1
+def test_a_pool_names_its_pass_glob(registry):
+    """D40: Phase 1's passes are pass_01..pass_05, not run_N.
+
+    Sentinel: without ``pass_glob`` the default ``run_*`` finds nothing.
+    """
+    def ctx(spec):
+        return {"run_id": "phase1-library",
+                "directory_path": "archive/outputs-pre-retest-60-tile/phase1-library",
+                "scope": {}, "proposer_pools": {"image-only-baseline": spec},
+                "verifier_passes": {}, "conditions": []}
+    rows = extract_passes(ctx({"modality": "image", "path": ".", "pass_glob": "pass_*"}))
+    assert [r["pass_n"] for r in rows] == [1, 2, 3, 4, 5]
+    for r in rows:
+        assert validate_row("passes", r, registry) == []
+        assert r["n_tiles_processed"] == 20 and r["temperature"] == 1.0
+    assert extract_passes(ctx({"modality": "image", "path": "."})) == []
+
+
+@pytest.mark.tier1
+def test_a_temperature_of_record_corrects_the_row_not_the_meta():
+    """D40: the legacy PV N = 5 leg ran at T = 0.7 (its directory, its analysis
+    doc); its meta says 0.0 and no run.log survives. The sidecar's value wins
+    and is cited; the meta is left as written (D14). Sentinel: without it, 0.0.
+    """
+    def ctx(extra):
+        return {"run_id": "retest-phase2b", "directory_path": "outputs/retest/phase2b",
+                "scope": {}, "proposer_pools": {}, "conditions": [],
+                "verifier_passes": {"legacy-pv-adv-text-crop150-n5-t0-7": {
+                    "modality": "text",
+                    "repo_path": "archive/outputs-experimental-pilot/pv/results",
+                    "path": "adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal", **extra}}}
+    (row,) = extract_passes(ctx({"temperature_of_record": 0.7}))
+    assert row["temperature"] == 0.7
+    assert "results/run-conditions.json" in row["provenance"]["source_files"]
+    (plain,) = extract_passes(ctx({}))
+    assert plain["temperature"] == 0.0
+
+
+@pytest.mark.tier1
+def test_a_retry_under_run_n_is_spend_but_not_coverage():
+    """D31: consensus-384-t1-0 run 4's one-tile retry (``run_4/retry/``).
+
+    Its spend joins the pass and its meta is cited; its tile does not join
+    the count, because the pass's own meta already lists it among its 240.
+    """
+    ctx = extraction_context("consensus-384-t1-0")
+    row = next(r for r in extract_passes(ctx) if r["pass_n"] == 4)
+    retry = ("outputs/h11/consensus-384-UNINTENDED-T1.0/384/run_4/retry/"
+             "retry_K-35-078-1_Lesovo_x3360_y0.meta.json")
+    assert retry in row["provenance"]["source_files"]
+    assert row["n_tiles_processed"] == 240 and row["status"] == "ok"
+    assert row["cost_usd"] is not None and row["cost_usd"] > 0
+
+
+@pytest.mark.tier1
+def test_a_preserved_main_leg_counts_its_own_candidates():
+    """D37: pv-384's v1-prompt main leg (restored from f33058f01) predates
+    ``completed_items``; its 571 successful responses must count beside the
+    cleanup's one listed candidate (572 = its probabilities.json results).
+    Sentinel: the old rule, a union whenever any fragment lists items, gave 1.
+    """
+    row = next(r for r in extract_passes(extraction_context("proposer-verifier-384"))
+               if r["proposer_pool"] == "verified-adversarial-text-v1-prompt")
+    assert len(row["provenance"]["source_files"]) == 2
+    assert row["n_candidates_verified"] == 572
+    assert row["cost_basis"] == "audited"
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("results", "expected"), [
+    (3, 3),     # the cleanup re-verified a candidate the main leg holds: capped
+    (4, 4),     # the cleanup verified a candidate the main leg missed: counted
+    (None, 4),  # no probabilities.json to bound the leg: the sum, as before
+])
+def test_an_overlapping_cleanup_is_not_counted_twice(results, expected):
+    """PR #24 review, finding 3: a main leg that predates ``completed_items``
+    (3 successes, no list) beside a cleanup that lists one candidate. The
+    main leg names no candidates, so the overlap cannot be subtracted; the
+    leg's distinct results bound it instead. Sentinel: the uncapped sum
+    reported 4 candidates for a leg holding 3 results.
+    """
+    from scripts.generate_post_run_report import _verifier_candidates
+    p = Path("x")
+    main = ({"execution_stats": {"finish_reason_counts": {"success": 3}}}, p)
+    cleanup = ({"execution_stats": {"completed_items": ["candidate_00002"]}}, p)
+    assert _verifier_candidates([cleanup, main], results=results) == expected
+
+
+@pytest.mark.tier1
+def test_the_overlap_cap_reads_the_legs_distinct_candidates(tmp_path):
+    """The cap the extractor passes is ``verifier_coverage``'s results count,
+    which reduces per-iteration keys to candidates. The listed-only union is
+    exact and is never capped."""
+    from scripts.generate_post_run_report import _verifier_candidates
+    from scripts.lib_pass_cost import verifier_coverage
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    keys = [f"candidate_{i:05d}_iter{n}" for i in range(3) for n in (1, 2)]
+    (leg / "probabilities.json").write_text(json.dumps({"results": dict.fromkeys(keys, {}),
+                                                        "iterations": 2}))
+    main = ({"execution_stats": {"items_processed": 3}}, leg / "run.meta.main-x.json")
+    cleanup = ({"execution_stats": {"completed_items": ["candidate_00002"]}},
+               leg / "run.meta.json")
+    fragments = [cleanup, main]
+    cover = verifier_coverage(fragments)
+    assert cover is not None and cover[1] == 3
+    assert _verifier_candidates(fragments, results=cover[1]) == 3
+    listed = [({"execution_stats": {"completed_items": ["a", "b"]}}, leg / "run.meta.json")]
+    assert _verifier_candidates(listed, results=1) == 2
+
+
+@pytest.mark.tier1
+def test_a_leg_with_failed_requests_counts_successes_not_requests():
+    """T03's verifier meta records 10,539 requests and no completed items; its
+    successful responses are 9,910, exactly the leg's probabilities.json
+    results. The request count included failed and retried calls (S160)."""
+    row = next(r for r in extract_passes(extraction_context(
+        "55maps-text-high-t0-3-generalisation")) if r["proposer_pool"] == "verified")
+    results = json.loads((REPO_ROOT / "outputs/55maps-text-high-t0.3-generalisation/verified/"
+                          "probabilities.json").read_text())["results"]
+    assert row["n_candidates_verified"] == len(results) == 9_910
+
+
+#: Committed verifier hints allowed to resolve to no meta, each with its reason.
+DANGLING_VERIFIER_HINTS = {
+    ("pv-diag-384", "verified-text-1of5"): (
+        "archived in 8913cab2c to archive/superseded-unions/text-1of5-partial-coverage/: "
+        "a superseded stale union (D22's class), outside the register by design"),
+}
+
+
+@pytest.mark.tier1
+def test_every_committed_verifier_hint_resolves_to_a_meta():
+    """D31 drift guard over the committed decomposition.
+
+    Every ``verifier_passes`` hint of every registered run must find its
+    meta in one of the two forms, or be named above with a reason. A new
+    dangling hint is a leg silently missing from the register.
+    """
+    decomposition = load_run_conditions()
+    dangling = []
+    for entry in load_run_registry()["registry"]:
+        run_id = entry["run_id"]
+        hints = (decomposition.get(run_id) or {}).get("verifier_passes") or {}
+        for key, spec in hints.items():
+            root = _leg_root(spec, REPO_ROOT / entry["directory_path"], run_id, key)
+            base = _pool_spec(spec)[1] or key
+            if not ((root / base / "run.meta.json").exists()
+                    or (root / f"{base}.meta.json").exists()):
+                dangling.append((run_id, key))
+    assert sorted(dangling) == sorted(DANGLING_VERIFIER_HINTS)
 
 
 # ---------------------------------------------------------------------------
@@ -472,7 +751,9 @@ def test_run_registry_input_valid_and_in_sync(registry):
     # 43 since 2026-09-20: row B of the same image 2x2
     # (gemini3-image-55map-2026-09-16), registered with 18 conditions, six
     # verifier passes and one UNSIGNED analysis row.
-    assert len(reg["registry"]) == 43
+    # 44 since 2026-10-05: phase1-library, the Phase 1 library-construction
+    # step, registered from archive/ with no condition (ruling D40, S160).
+    assert len(reg["registry"]) == 44
     assert "generator_version" not in reg  # run-registry schema is closed; no generator_version
     # registry and facts must describe the same run set (the B1 drift guard)
     assert drift_check(reg["registry"], load_run_facts()) == []
@@ -507,7 +788,8 @@ def test_manifest_envelopes_valid(registry):
     # 41: +3 for the S149 Gemini 3.7 arc
     # 42: +gemini37-image-55map-2026-09-13 (the 3.7 image 55-map K = 3 campaign)
     # 43: +gemini3-image-55map-2026-09-16 (row B of the image 2x2)
-    assert len(run_rows) == 43
+    # 44: +phase1-library (the Phase 1 library-construction step, ruling D40)
+    assert len(run_rows) == 44
     assert warnings == []
 
     runs_obj = assemble_manifest("runs", run_rows, at)
@@ -525,8 +807,8 @@ def test_manifest_envelopes_valid(registry):
     passes_obj = assemble_manifest("passes", passes, at)
     assert validate_manifest("passes", passes_obj, registry) == []
     gs_passes = [p for p in passes if p["run_id"] == "gold-standard-v2"]
-    assert len(gs_passes) == 6
-    assert len(passes) >= 6
+    assert len(gs_passes) == 7  # 6, plus the WBF fusion's verifier leg (D31, S160)
+    assert len(passes) >= 7
 
     # Analyses (sub-step 3c): the assembled envelope validates, and every
     # conditions_compared id resolves to a built condition (the build_manifests FK

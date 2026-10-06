@@ -1,0 +1,453 @@
+{
+  "analysis": "Phase 3a-HIGH text track pairwise comparisons",
+  "bootstrap_iterations": 1000,
+  "bootstrap_seed": 42,
+  "minimal_best_thresholds": {
+    "5": {
+      "threshold": 4,
+      "f1": 0.662829
+    },
+    "10": {
+      "threshold": 7,
+      "f1": 0.675851
+    },
+    "30": {
+      "threshold": 24,
+      "f1": 0.690373
+    }
+  },
+  "comparisons": [
+    {
+      "comparison": "HIGH_T0.7_N5_best vs Minimal_T0.7_N5_best",
+      "condition_a": "HIGH T=0.7 N=5 thresh=4",
+      "condition_b": "Minimal T=0.7 N=5 thresh=4",
+      "point_estimates_a": {
+        "f1": 0.729981,
+        "precision": 0.73271,
+        "recall": 0.727273,
+        "n_detections": 535
+      },
+      "point_estimates_b": {
+        "f1": 0.662829,
+        "precision": 0.595273,
+        "recall": 0.747681,
+        "n_detections": 677
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.06829414692597166,
+          "ci_lower": 0.025944244639915293,
+          "ci_upper": 0.11770699903012394,
+          "method": "BCa",
+          "p_value": 0.0052,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": 0.13832790767190967,
+          "ci_lower": 0.07856282372501026,
+          "ci_upper": 0.1994630787770635,
+          "method": "BCa",
+          "p_value": 0.0,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": -0.019884765578774794,
+          "ci_lower": -0.0627310598856576,
+          "ci_upper": 0.02185566717658915,
+          "method": "BCa",
+          "p_value": 0.3833,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 186,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_run1 vs Minimal_T0.7_run1",
+      "condition_a": "HIGH T=0.7 run_1",
+      "condition_b": "Minimal T=0.7 run_1",
+      "point_estimates_a": {
+        "f1": 0.451971,
+        "precision": 0.322504,
+        "recall": 0.755102,
+        "n_detections": 1262
+      },
+      "point_estimates_b": {
+        "f1": 0.596416,
+        "precision": 0.485981,
+        "recall": 0.7718,
+        "n_detections": 856
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.1435340750941149,
+          "ci_lower": -0.19177623185194173,
+          "ci_upper": -0.09809722583367989,
+          "method": "BCa",
+          "p_value": 0.0,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": -0.16258585684031374,
+          "ci_lower": -0.21454986075442214,
+          "ci_upper": -0.11122926815802509,
+          "method": "BCa",
+          "p_value": 0.0,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": -0.016553028151985685,
+          "ci_lower": -0.06150115981201904,
+          "ci_upper": 0.027461776990560936,
+          "method": "BCa",
+          "p_value": 0.4942,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 242,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_N30_best vs Minimal_T0.7_N30_best",
+      "condition_a": "HIGH T=0.7 N=30 thresh=21",
+      "condition_b": "Minimal T=0.7 N=30 thresh=24",
+      "point_estimates_a": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "point_estimates_b": {
+        "f1": 0.690373,
+        "precision": 0.648208,
+        "recall": 0.738404,
+        "n_detections": 614
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.08517125912446377,
+          "ci_lower": 0.04627706118712406,
+          "ci_upper": 0.1300063107976769,
+          "method": "BCa",
+          "p_value": 0.0001,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": 0.1544689676883716,
+          "ci_lower": 0.10103027289817981,
+          "ci_upper": 0.20912610243412907,
+          "method": "BCa",
+          "p_value": 0.0,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": 0.011026089227795027,
+          "ci_lower": -0.03154144185525571,
+          "ci_upper": 0.05948038256820329,
+          "method": "BCa",
+          "p_value": 0.6515,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 177,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_T0.3_best vs HIGH_T0.7_best",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "HIGH T0.7 N=30 thresh=21",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.004228438714054035,
+          "ci_lower": -0.015844690179996616,
+          "ci_upper": 0.02718736393822619,
+          "method": "BCa",
+          "p_value": 0.7332,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": 0.01566094952747779,
+          "ci_lower": -0.015362189748379315,
+          "ci_upper": 0.043936364839450535,
+          "method": "BCa",
+          "p_value": 0.316,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": -0.0054007649224952345,
+          "ci_lower": -0.031736126578708126,
+          "ci_upper": 0.022861269903948066,
+          "method": "BCa",
+          "p_value": 0.7038,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 92,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_T0.7_best vs HIGH_T1.0_best",
+      "condition_a": "HIGH T0.7 N=30 thresh=21",
+      "condition_b": "HIGH T1.0 N=30 thresh=23",
+      "point_estimates_a": {
+        "f1": 0.774688,
+        "precision": 0.801587,
+        "recall": 0.749536,
+        "n_detections": 504
+      },
+      "point_estimates_b": {
+        "f1": 0.77472,
+        "precision": 0.859729,
+        "recall": 0.705009,
+        "n_detections": 442
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.0002653401875034028,
+          "ci_lower": -0.025345844689523552,
+          "ci_upper": 0.0209593641149637,
+          "method": "BCa",
+          "p_value": 0.9938,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": -0.05850699613560287,
+          "ci_lower": -0.08976147271744016,
+          "ci_upper": -0.027046382953329867,
+          "method": "BCa",
+          "p_value": 0.0,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": 0.044343043600204364,
+          "ci_lower": 0.01222032707248747,
+          "ci_upper": 0.07066203717868562,
+          "method": "BCa",
+          "p_value": 0.004,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 101,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_T0.3_best vs HIGH_T1.0_best",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "HIGH T1.0 N=30 thresh=23",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.77472,
+        "precision": 0.859729,
+        "recall": 0.705009,
+        "n_detections": 442
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": 0.003963098526550632,
+          "ci_lower": -0.022309261654386868,
+          "ci_upper": 0.02496244197077655,
+          "method": "BCa",
+          "p_value": 0.7285,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": -0.04284604660812507,
+          "ci_lower": -0.07922477344969855,
+          "ci_upper": -0.012909595367562811,
+          "method": "BCa",
+          "p_value": 0.0092,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": 0.03894227867770913,
+          "ci_lower": 0.011201178973166104,
+          "ci_upper": 0.06392757885147786,
+          "method": "BCa",
+          "p_value": 0.0057,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 92,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_best vs PV_text_5of10",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "PV text 5-of-10 (F1=0.831)",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.831373,
+        "precision": 0.881497,
+        "recall": 0.786642,
+        "n_detections": 481
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.05279100377685417,
+          "ci_lower": -0.08534108201398204,
+          "ci_upper": -0.01931395211962889,
+          "method": "BCa",
+          "p_value": 0.0026,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": -0.06515378088671522,
+          "ci_lower": -0.11338583244020095,
+          "ci_upper": -0.024604187974020787,
+          "method": "BCa",
+          "p_value": 0.003,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": -0.04219024953736772,
+          "ci_lower": -0.08477240673357135,
+          "ci_upper": 0.0033348175333650014,
+          "method": "BCa",
+          "p_value": 0.0588,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 140,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    },
+    {
+      "comparison": "HIGH_best vs PV_text_3of10",
+      "condition_a": "HIGH T0.3 N=30 thresh=23",
+      "condition_b": "PV text 3-of-10 (F1=0.823)",
+      "point_estimates_a": {
+        "f1": 0.778641,
+        "precision": 0.816701,
+        "recall": 0.74397,
+        "n_detections": 491
+      },
+      "point_estimates_b": {
+        "f1": 0.822749,
+        "precision": 0.841085,
+        "recall": 0.805195,
+        "n_detections": 516
+      },
+      "effect_size": {
+        "f1_difference": {
+          "mean": -0.044571676122253906,
+          "ci_lower": -0.07811890057556277,
+          "ci_upper": -0.011189935851590305,
+          "method": "BCa",
+          "p_value": 0.0118,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "precision_difference": {
+          "mean": -0.02549905069302622,
+          "ci_lower": -0.07097729386660662,
+          "ci_upper": 0.01704934931351545,
+          "method": "BCa",
+          "p_value": 0.2765,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "recall_difference": {
+          "mean": -0.060748361003847645,
+          "ci_lower": -0.10714654931054131,
+          "ci_upper": -0.014918515904925052,
+          "method": "BCa",
+          "p_value": 0.012,
+          "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+        },
+        "n_tiles": 340,
+        "n_iterations": 1000,
+        "bootstrap_method": "BCa",
+        "bootstrap_lib": "scipy.stats.bootstrap",
+        "permutation": {
+          "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+          "n_tiles": 340,
+          "n_discordant_tiles": 139,
+          "n_permutations": 10000,
+          "seed": 42
+        }
+      }
+    }
+  ]
+}

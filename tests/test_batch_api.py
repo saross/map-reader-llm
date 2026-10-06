@@ -2231,6 +2231,188 @@ class TestCompleteBatchUnit:
 
 
 # ═════════════════════════════════════════════════════════════════════
+# Tests: in-batch retry tier and usage (tracker W6.5, 2026-10-06)
+# ═════════════════════════════════════════════════════════════════════
+
+
+def _unparseable_response(tile_key: str) -> dict:
+    """A batch response line whose text cannot be parsed as detections."""
+    return {
+        "key": tile_key,
+        "response": {
+            "candidates": [{
+                "content": {"parts": [{"text": "NOT JSON {{{"}],
+                            "role": "model"},
+                "finish_reason": "STOP",
+            }],
+        },
+    }
+
+
+def _retry_response(tile_key: str, text: str, usage: dict | None) -> dict:
+    """What ``_retry_tile_sync`` returns: a batch-format line with usage."""
+    response: dict = {"candidates": [{
+        "content": {"parts": [{"text": text}], "role": "model"},
+        "finish_reason": "STOP",
+    }]}
+    if usage is not None:
+        response["usageMetadata"] = usage
+    return {"key": tile_key, "response": response}
+
+
+_RETRY_USAGE = {"promptTokenCount": 1502, "candidatesTokenCount": 40,
+                "thoughtsTokenCount": 300, "cachedContentTokenCount": 0,
+                "totalTokenCount": 1842}
+
+
+@pytest.mark.tier1
+class TestInBatchRetryTierAndUsage:
+    """The in-batch parse-failure retries ran at standard tier (no tier was
+    passed) and their usage reached no meta (tracker W6.5). They now run at
+    the unit's retry tier, and each call's usage lands in a ``retry_usage``
+    block at that tier, kept apart from the batch's ``usage_stats``."""
+
+    def _run(self, tmpdir: Path, retry_side_effect: list, tier: str | None,
+             ) -> tuple[MagicMock, dict]:
+        """Complete a two-tile unit (one tile unparseable) and read its meta.
+
+        Args:
+            tmpdir: Scratch directory for tiles and outputs.
+            retry_side_effect: Successive ``_retry_tile_sync`` returns.
+            tier: The context's ``retry_service_tier``.
+
+        Returns:
+            The ``_retry_tile_sync`` mock and the written meta.
+        """
+        tile_1 = _make_geotiff(tmpdir / "tile_001.png")
+        tile_2 = _make_geotiff(tmpdir / "tile_002.png")
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1", unit=_make_unit(),
+            output_file=tmpdir / "out" / "detections_cond_a_run01.geojson",
+            jsonl_path=tmpdir / "batch.jsonl",
+            submitted_keys=["tile_001.png", "tile_002.png"],
+            tile_paths=[tile_1, tile_2], prompt_config=_make_prompt_config(),
+            model_name="gemini-3-flash", system_instruction="Test",
+            config_version="test_v1", line_count=2, examples=[],
+            retry_service_tier=tier,
+        )
+        job = MagicMock()
+        job.state = JobState.JOB_STATE_SUCCEEDED
+        with patch("scripts.lib_batch_api.retrieve_batch_results",
+                   return_value=[_make_batch_response("tile_001.png"),
+                                 _unparseable_response("tile_002.png")]), \
+                patch("scripts.lib_batch_api._retry_tile_sync",
+                      side_effect=retry_side_effect) as mock_retry:
+            success, _msg, _cost = complete_batch_unit(ctx, MagicMock(), job)
+        assert success is True
+        meta = json.loads(ctx.output_file.with_suffix(".meta.json").read_text())
+        return mock_retry, meta
+
+    def test_the_tier_is_forwarded_and_the_usage_recorded(self, tmp_path) -> None:
+        """Two attempts (the first unparseable, the second good): both calls
+        were billed, so both enter the block, at the forwarded tier."""
+        mock_retry, meta = self._run(tmp_path, [
+            _retry_response("tile_002.png", "STILL NOT JSON", _RETRY_USAGE),
+            _retry_response("tile_002.png", json.dumps({"detections": []}),
+                            _RETRY_USAGE),
+        ], tier="flex")
+        assert mock_retry.call_count == 2
+        assert all(c.kwargs["service_tier"] == "flex"
+                   for c in mock_retry.call_args_list)
+        (block,) = meta["retry_usage"]
+        assert block["service_tier"] == "flex"
+        assert block["n_calls"] == 2 and block["n_attempts"] == 2
+        assert block["n_tiles_retried"] == 1 and block["n_tiles_recovered"] == 1
+        assert block["output_name"] == "detections_cond_a_run01.geojson"
+        assert block["usage_stats"]["total_input_tokens"] == 2 * 1502
+        assert block["usage_stats"]["total_thoughts_tokens"] == 2 * 300
+        assert block["usage_stats"]["n_responses_with_usage"] == 2
+        # SENTINEL: the batch's own usage_stats is the results file's alone:
+        # one response (tile_001's batch line) reported usage, under
+        # snake-case field names aggregate_batch_usage counts as zero tokens.
+        # A retry call or token leaking into usage_stats would show here.
+        assert meta["usage_stats"]["n_responses_with_usage"] == 1
+        assert meta["usage_stats"]["total_input_tokens"] == 0
+        assert meta["billing"]["service_tier"] == "batch"
+
+    def test_no_tier_is_recorded_as_standard(self, tmp_path) -> None:
+        """A None tier requests standard, and the block says so in words."""
+        mock_retry, meta = self._run(tmp_path, [
+            _retry_response("tile_002.png", json.dumps({"detections": []}),
+                            _RETRY_USAGE),
+        ], tier=None)
+        assert mock_retry.call_args.kwargs["service_tier"] is None
+        assert meta["retry_usage"][0]["service_tier"] == "standard"
+
+    def test_a_response_without_usage_is_a_call_with_no_tokens(self, tmp_path) -> None:
+        """A returned response with no usage is billed but unmeasured: it
+        counts as a call and adds no tokens, so the gap is visible."""
+        _mock, meta = self._run(tmp_path, [
+            _retry_response("tile_002.png", json.dumps({"detections": []}), None),
+        ], tier="flex")
+        block = meta["retry_usage"][0]
+        assert block["n_calls"] == 1
+        assert block["usage_stats"] == {}
+
+    def test_no_parse_failure_writes_no_block(self, tmp_path) -> None:
+        """A unit with nothing to retry carries no retry_usage at all."""
+        tile = _make_geotiff(tmp_path / "tile_001.png")
+        ctx = BatchUnitContext(
+            unit_key="cond_a/run_1", unit=_make_unit(),
+            output_file=tmp_path / "out.geojson",
+            jsonl_path=tmp_path / "batch.jsonl",
+            submitted_keys=["tile_001.png"], tile_paths=[tile],
+            prompt_config=_make_prompt_config(), model_name="gemini-3-flash",
+            system_instruction="Test", config_version="test_v1", line_count=1,
+        )
+        job = MagicMock()
+        job.state = JobState.JOB_STATE_SUCCEEDED
+        with patch("scripts.lib_batch_api.retrieve_batch_results",
+                   return_value=[_make_batch_response("tile_001.png")]):
+            complete_batch_unit(ctx, MagicMock(), job)
+        meta = json.loads((tmp_path / "out.meta.json").read_text())
+        assert "retry_usage" not in meta
+
+    def test_the_default_retry_tier_is_flex(self) -> None:
+        """The context, prepare and run defaults all match the patch path's
+        flex (standing PI instruction 2026-07-30)."""
+        import inspect
+        assert BatchUnitContext.__dataclass_fields__[
+            "retry_service_tier"].default == "flex"
+        for fn in (prepare_batch_unit, run_batch_unit):
+            assert inspect.signature(fn).parameters[
+                "retry_service_tier"].default == "flex"
+
+    def test_chunk_merge_concatenates_the_blocks(self, tmp_path) -> None:
+        """Chunk 0's meta was the merge base, so a top-level block would have
+        spoken for every chunk; the blocks are concatenated instead."""
+        metas = []
+        for i in range(2):
+            m = tmp_path / f"d_chunk{i}.meta.json"
+            m.write_text(json.dumps({
+                "configuration": {"model": "gemini-3-flash"},
+                "usage_stats": {"total_input_tokens": 10},
+                "cost_estimate": {},
+                "retry_usage": [{"service_tier": "flex", "n_calls": i + 1,
+                                 "output_name": f"d_chunk{i}.geojson"}]}))
+            metas.append(m)
+        merged = merge_chunk_metadata(
+            metas, [], tmp_path / "d.meta.json", tmp_path / "d.tiles.json")
+        assert [b["n_calls"] for b in merged["retry_usage"]] == [1, 2]
+
+    def test_resume_merge_keeps_both_blocks(self) -> None:
+        """merge_meta copied the original's top level, so a resumed unit's
+        fresh block would have been dropped; the lists concatenate."""
+        from scripts.lib_llm_metadata import merge_meta
+        original = {"retry_usage": [{"service_tier": "flex", "n_calls": 3}]}
+        recovery = {"retry_usage": [{"service_tier": "standard", "n_calls": 1}]}
+        merged = merge_meta(original, recovery)
+        assert [b["service_tier"] for b in merged["retry_usage"]] == [
+            "flex", "standard"]
+        assert "retry_usage" not in merge_meta({}, {})
+
+
+# ═════════════════════════════════════════════════════════════════════
 # Tests: _retry_tile_sync()
 # ═════════════════════════════════════════════════════════════════════
 
@@ -2271,6 +2453,31 @@ class TestRetryTileSync:
         detections = _parse_detections_from_response(result)
         assert len(detections) == 1
         assert detections[0]["label"] == "mound"
+
+    def test_the_retry_returns_its_usage(self) -> None:
+        """S160: the sync retry discarded usage, so the E71 rerun's spend
+        (about US$11.41) reached no meta. It now returns the call's usage in
+        the batch format's names."""
+        from types import SimpleNamespace
+        mock_client = MagicMock()
+        mock_response = MagicMock()
+        mock_response.text = '{"detections": []}'
+        mock_response.usage_metadata = SimpleNamespace(
+            prompt_token_count=1502, candidates_token_count=40,
+            thoughts_token_count=8178, cached_content_token_count=None,
+            total_token_count=9720)
+        mock_client.models.generate_content.return_value = mock_response
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tile_path = _make_geotiff(Path(tmpdir) / "tile.png")
+            result = _retry_tile_sync(
+                client=mock_client, tile_path=tile_path, model_name="gemini-3-flash",
+                system_instruction="Test", prompt_config=_make_prompt_config(),
+                examples=[],
+            )
+        assert result["response"]["usageMetadata"] == {
+            "promptTokenCount": 1502, "candidatesTokenCount": 40,
+            "thoughtsTokenCount": 8178, "cachedContentTokenCount": 0,
+            "totalTokenCount": 9720}
 
     def test_api_error_returns_none(self) -> None:
         """API exception during retry should return None, not raise."""

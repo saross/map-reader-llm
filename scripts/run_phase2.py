@@ -431,6 +431,46 @@ def validate_configs(conditions: list[dict]) -> tuple[list[dict], list[dict]]:
     return valid, missing
 
 
+def validate_condition_configs(
+    conditions: list[dict],
+    allow_inert_fields: bool = False,
+) -> list[str]:
+    """Refuse condition configurations that carry fields the model never sees.
+
+    Each distinct prompt configuration the study names is loaded and run
+    through :func:`scripts.lib_config_validation.validate_no_inert_fields`
+    (tracker W6.2, erratum E90: an example list under
+    ``include_example_images: false`` transmits nothing). Per-unit overrides
+    (temperature, thinking level, ordering) cannot change either field, so
+    the file is the effective configuration for this check.
+
+    Args:
+        conditions: Condition dicts carrying a ``config`` path relative to
+            the project root (already checked to exist).
+        allow_inert_fields: The historical-reproduction opt-out: findings
+            are logged loudly and not returned.
+
+    Returns:
+        One error message per refused configuration; empty when every
+        configuration is clean (or the opt-out is set).
+    """
+    from scripts.lib_config_validation import (
+        InertConfigurationError,
+        validate_no_inert_fields,
+    )
+
+    errors: list[str] = []
+    for config_rel in sorted({c["config"] for c in conditions}):
+        with open(PROJECT_ROOT / config_rel) as f:
+            prompt_config = json.load(f)
+        try:
+            validate_no_inert_fields(prompt_config, source=config_rel,
+                                     allow_inert_fields=allow_inert_fields)
+        except InertConfigurationError as exc:
+            errors.append(f"ERROR: {exc}")
+    return errors
+
+
 def validate_model_consistency(
     conditions: list[dict],
     model_override: str | None,
@@ -773,6 +813,7 @@ def run_execution_unit(
     model_override: str | None = None,
     log_file: Path | None = None,
     use_cache: bool = False,
+    allow_inert_fields: bool = False,
 ) -> tuple[bool, str, float]:
     """
     Execute a single (condition, run) unit via 4_detect_mounds_batch.py.
@@ -794,6 +835,9 @@ def run_execution_unit(
         log_file: If set, redirect subprocess output to this file
             instead of inheriting the terminal. Used in parallel mode
             to prevent interleaved output from concurrent units.
+        use_cache: Pass ``--use-cache`` to the detector.
+        allow_inert_fields: Pass ``--allow-inert-fields`` to the detector
+            (historical reproduction runs only; tracker W6.2).
 
     Returns:
         Tuple of (success, message, cost_usd)
@@ -852,6 +896,11 @@ def run_execution_unit(
     # Add context caching flag if specified
     if use_cache:
         cmd.append("--use-cache")
+
+    # The detector refuses a configuration with inert fields at launch; a
+    # study launched with the opt-out passes it through (tracker W6.2).
+    if allow_inert_fields:
+        cmd.append("--allow-inert-fields")
 
     # Add tile limit for sanity checks
     if limit and limit > 0:
@@ -953,6 +1002,7 @@ def run_phase2(
     max_poll_hours: float = 72.0,
     token_quota: int = DEFAULT_BATCH_TOKEN_QUOTA,
     use_cache: bool = False,
+    allow_inert_fields: bool = False,
 ) -> dict:
     """
     Execute a Phase 2 OFAT study from YAML definition.
@@ -985,6 +1035,11 @@ def run_phase2(
         max_poll_hours: Maximum hours to poll before timing out
             (default: 25). Pending jobs remain in checkpoint for
             future --resume.
+        use_cache: Enable context caching (real-time mode).
+        allow_inert_fields: Launch even when a condition's configuration
+            carries fields that cannot reach the model (an example list
+            with ``include_example_images: false``), logged loudly. For
+            historical reproduction runs only (tracker W6.2).
 
     Returns:
         Summary dictionary with results
@@ -1055,6 +1110,20 @@ def run_phase2(
             all_names = [c["name"] for c in extract_conditions(config)]
             print(f"Available conditions: {', '.join(all_names)}")
             return {"error": "condition_not_found"}
+
+    # An inert field is an error, not a no-op (tracker W6.2, erratum E90):
+    # every configuration that will RUN is checked before any unit runs.
+    # After the --condition filter, so a clean condition is not refused for
+    # an inert sibling it will never launch beside (PR #24 review, finding 7).
+    inert_errors = validate_condition_configs(conditions, allow_inert_fields)
+    if inert_errors:
+        print("=" * 70)
+        print("INERT CONFIGURATION FIELDS")
+        print("=" * 70)
+        for msg in inert_errors:
+            print(msg)
+        print()
+        return {"error": "inert_configuration_fields"}
 
     # Determine number of runs
     num_runs = runs if runs is not None else execution.get("runs", 10)
@@ -1201,6 +1270,7 @@ def run_phase2(
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
             use_cache=use_cache,
+            allow_inert_fields=allow_inert_fields,
         )
     else:
         results, running_cost = _execute_units_sequential(
@@ -1218,6 +1288,7 @@ def run_phase2(
             cost_warn_threshold=cost_warn_threshold,
             verbose=verbose,
             use_cache=use_cache,
+            allow_inert_fields=allow_inert_fields,
         )
 
     # Summary
@@ -1254,6 +1325,7 @@ def _execute_units_sequential(
     cost_warn_threshold: float,
     verbose: bool,
     use_cache: bool = False,
+    allow_inert_fields: bool = False,
 ) -> tuple[dict, float]:
     """
     Execute units one at a time (original behaviour).
@@ -1288,6 +1360,7 @@ def _execute_units_sequential(
             workers_override=workers_override,
             model_override=model_override,
             use_cache=use_cache,
+            allow_inert_fields=allow_inert_fields,
         )
 
         # A null cost (nothing priced, PI ruling D12) adds nothing; the run's own
@@ -1348,6 +1421,7 @@ def _execute_units_parallel(
     cost_warn_threshold: float,
     verbose: bool,
     use_cache: bool = False,
+    allow_inert_fields: bool = False,
 ) -> tuple[dict, float]:
     """
     Execute units concurrently via ThreadPoolExecutor.
@@ -1385,6 +1459,7 @@ def _execute_units_parallel(
             model_override=model_override,
             log_file=unit_log,
             use_cache=use_cache,
+            allow_inert_fields=allow_inert_fields,
         )
         return key, success, message, cost
 
@@ -2655,6 +2730,18 @@ Examples:
         ),
     )
     parser.add_argument(
+        "--allow-inert-fields",
+        action="store_true",
+        dest="allow_inert_fields",
+        help=(
+            "Launch even when a condition's configuration carries fields "
+            "that cannot reach the model (e.g. an example list with "
+            "include_example_images: false). For historical reproduction "
+            "runs only; logged loudly and passed through to the detector. "
+            "Without it such a study is refused at launch."
+        ),
+    )
+    parser.add_argument(
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
@@ -2717,6 +2804,7 @@ Examples:
         max_poll_hours=args.max_poll_hours,
         token_quota=args.token_quota,
         use_cache=args.use_cache,
+        allow_inert_fields=args.allow_inert_fields,
     )
 
     # Exit code based on results

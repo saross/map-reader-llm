@@ -296,17 +296,33 @@ def test_two_rows_claiming_one_stage_are_refused_when_it_is_asked_for(tmp_path) 
 
 def test_every_committed_leg_resolves_to_the_register_or_a_named_gap() -> None:
     """Drift guard over the committed register (D30): every stage of every
-    mapped leg is a register stage, except the three vote-3 increments the
-    register is to be repaired for. When the repair lands this test turns
-    red, which is the cue to price them through their rows."""
+    mapped leg is a register stage. The three vote-3 increments were the
+    named gap until the S160 repair extracted them (D32: rows of their
+    parent runs), so the gap is now empty; a new outside stage turns this
+    red."""
     index = tp.register_index()
     assert all(len(index[s]) == 1 for stages in tp.LEGS.values() for s in stages if s in index)
     outside = sorted(s for stages in tp.LEGS.values() for s in stages if s not in index)
-    assert outside == sorted(s for f in ("TH7", "T03", "TM") for s in tp.LEGS[f]
-                             if "vote3-verify" in s)
+    assert outside == []
     published = sorted(k for k, stages in tp.LEGS.items()
                        if not (index[stages[0]][0].get("cost_source") or {}).get("fragments"))
     assert published == sorted(tp.PUBLISHED_COMPARABLES)
+
+
+def test_the_vote3_increments_price_the_same_through_their_register_rows() -> None:
+    """D30's drift test: the increments priced through their new register
+    rows (D32) equal their own metas priced directly, as WP4 priced them
+    while they were outside the register (US$2.97, US$2.74, US$1.51)."""
+    coster = tp.FrontierCoster()
+    index = tp.register_index()
+    stages = [s for f in ("TH7", "T03", "TM") for s in tp.LEGS[f] if "vote3-verify" in s]
+    assert len(stages) == 3
+    for stage in stages:
+        (row,) = index[stage]
+        assert row["proposer_pool"] == "vote3-increment"
+        via_row = coster.leg_cost(row["run_id"], row["proposer_pool"], None).usd
+        direct = coster.stage_leg_cost(stage, complete=True).usd
+        assert via_row == pytest.approx(direct, abs=5e-7), stage
 
 
 def test_every_mapped_leg_is_a_repository_relative_path() -> None:
@@ -599,3 +615,35 @@ def test_an_unreadable_costs_file_is_drift_under_check(tmp_path, monkeypatch, ca
     (tmp_path / tp.COSTS).write_text("{}\n")
     with pytest.raises(SystemExit, match="unreadable"):
         tp.main(["--stage", "leaderboard"])
+
+
+def test_an_unpriced_leg_is_written_listed_and_reported(tmp_path, monkeypatch, caplog) -> None:
+    """PI ruling 2026-10-04: the write goes ahead, but an unpriced leg is listed
+    in the file and logged as an ERROR block, so it reaches the PI."""
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {
+        "X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80, "stages": ["outputs/x"],
+                 "configs": ["X-K3"]},
+        "Y-K1": {"basis": "unpriced", "usd": None, "candidates": None,
+                 "stages": ["outputs/y"], "configs": ["Y-K1"], "note": "no rule prices it"},
+    }
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 2, []))
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "costs"]) == 0          # kept as is: not blocked
+    written = json.loads((tmp_path / tp.COSTS).read_text())
+    assert written["unpriced_legs"] == [{"stages": ["outputs/y"], "configs": ["Y-K1"],
+                                         "note": "no rule prices it"}]
+    errors = [r.getMessage() for r in caplog.records if r.levelname == "ERROR"]
+    assert any("UNPRICED" in m and "WITH THE PI" in m for m in errors)
+    assert any("outputs/y" in m and "Y-K1" in m for m in errors)
+
+
+def test_a_fully_priced_run_reports_nothing_unpriced(tmp_path, monkeypatch, caplog) -> None:
+    monkeypatch.setattr(tp, "OUT", tmp_path)
+    records = {"X-K3": {"basis": "measured", "usd": 2.0, "candidates": 80,
+                        "stages": ["outputs/x"], "configs": ["X-K3"]}}
+    monkeypatch.setattr(tp, "collect_costs", lambda: (records, 1, []))
+    with caplog.at_level("ERROR"):
+        assert tp.main(["--stage", "costs"]) == 0
+    assert json.loads((tmp_path / tp.COSTS).read_text())["unpriced_legs"] == []
+    assert not any("UNPRICED" in r.getMessage() for r in caplog.records)

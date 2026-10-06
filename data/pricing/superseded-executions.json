@@ -46,9 +46,26 @@
    "tier": "flex",
    "cost_usd": null,
    "evidence": "killed within its first request on 2026-10-03; under US$0.01"
+  },
+  {
+   "meta": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/archive-wrong-instrument-5verifycrops/verify_k10.meta.json",
+   "superseded_by": "gemini37-screen-2026-08-28::g384_ov192_g37-union-k10-verify::run1",
+   "kind": "wrong instrument (5_verify_crops.py, not run_pv.py); the K = 10 union was re-verified with run_pv.py",
+   "model": "gemini-3-flash-preview",
+   "tier": "standard",
+   "cost_usd": 1.209725,
+   "evidence": "1,636,096 input / 130,559 output tokens, 913 requests, 2026-08-29 06:45-06:48 UTC (Pacific 2026-08-28). Tier standard on two counts: scripts/5_verify_crops.py at the recorded commit 8f0d6e033 has no service-tier option at all (it gained one in 9932dbe46, 2026-09-21), so its requests went at the default tier; and the 2026-08-28 day export (project filter documented) bills gemini-3-flash-preview at standard for exactly 1,636,096 input and 130,559 output tokens, this leg's usage to the token. The planning card's '~$0.60' (planning/gemini37-screen-2026-08-28.md) assumed flex. Found by the S160 register repair (D31); the WP4 sidecar had priced it as an upper bound."
+  },
+  {
+   "meta": "outputs/h11/proposer-verifier-384/verified-checklist-image-v2.meta.json",
+   "kind": "aborted: 570 of 572 verifier calls failed and the leg was never re-run",
+   "model": "gemini-3-flash",
+   "tier": "standard",
+   "cost_usd": 0.009416,
+   "evidence": "16,894 input / 323 output tokens, 572 requests, 2026-03-14 23:57-23:58 UTC; execution_stats items_processed 2, items_failed 570. Before flex existed (2a2cd81c7, 2026-04-09); no batch marker. Batch would price at US$0.004708: the pair is tier-indifferent at the register's half-cent rule, so the higher is kept. Not a register row: a row would read 'ok' with 2 candidates (D22's 'aborted' class; S160 register repair, D31)."
   }
  ],
- "priced_total_usd": 0.111514,
+ "priced_total_usd": 1.330655,
  "withdrawn": [
   {
    "meta": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.pre-rerun-1.json",

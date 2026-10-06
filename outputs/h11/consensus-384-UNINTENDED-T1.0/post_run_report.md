@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — consensus-384-t1-0
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/consensus-384-UNINTENDED-T1.0` · **Registry status**: active · **Purpose**: not supplied
 
@@ -77,15 +77,15 @@
 | Field | Value |
 |---|---|
 | Passes on file | 30 |
-| Input tokens (billed) | 0 |
+| Input tokens (billed) | 1,502 |
 | Input tokens (cached) | 0 |
-| Output tokens | 0 |
+| Output tokens | 75 |
 | Thinking tokens | 0 |
-| Total tokens | 0 |
+| Total tokens | 1,577 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | not supplied |
-| Run total (range) | not supplied |
-| Passes with no `cost_usd` | 30 |
+| `cost_usd` by basis | audited-lower-bound US$0.0010 (1); unrecorded no figure (29) |
+| Run total (range) | at least US$0.0010; no ceiling (1 audited-lower-bound, 29 unrecorded pass(es)) |
+| Passes with no `cost_usd` | 29 |
 | Summed wall clock | 0.00 h over 30 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
@@ -191,7 +191,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

@@ -1,6 +1,12 @@
 # Results claims-with-anchors inventory — `results-draft.md`, 2026-09-12
 
-> **Last revised**: 2026-10-04 (**cost rows re-anchored to the WP4b
+> **Last revised**: 2026-10-06 (**§ R2 rows annotated and three re-anchored,
+> drafted for PI review, W1; not finalised**: R2-01, R2-02, R2-04 and R2-07
+> carry the transmitted-configuration counts and the Phase 2e ordering
+> evidence, E90 and E92; R2-09 to R2-11 follow the D42 regeneration of the
+> family FDR, and R2-11's "FDR p = 0.004", a raw p, is replaced. No status
+> changes, so the census is unchanged.) Prior:
+> 2026-10-04 (**cost rows re-anchored to the WP4b
 > re-pricing** — PI ruling D19, amended 2026-10-04, one uniform discounted
 > tier from the passes register: R3-11, R6-01, R6-02, R6-04, R6-13, R6-14,
 > R6-16, R7.2-22, -24, -25, -26, -29, -32 and R7.3-26. **Two verdicts of
@@ -357,17 +363,17 @@ post-hoc.
 
 | # | claim | anchor | status | note |
 |---|---|---|---|---|
-| R2-01 | No single-pass configuration separates from the pack: on the Era-1 board (512 px, 340 tiles, curator GT, F1@20 m) the Tier-1 admissible set spans **15 of 36** cells. | `results/run-analyses.json` → `era1-single-pass-baseline-matrix`: `tie_set` length **15**; outcome "Was 20 condition(s), now 15" (E83) | VERIFIED; POST-HOC (`preregistered: post-hoc`, `manually_verified_at` 2026-06-09) | "Era 1" = the 512 px / 340-tile evaluation frame; needs a gloss. |
-| R2-02 | Led numerically by a few-shot-ordering variant (`canonical-last`, F1 0.631, MCC 0.213). | same row's outcome; `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json` rank 1: `observed_micro_f1` 0.63142, `mcc` 0.2132 | VERIFIED | — |
+| R2-01 | No single-pass configuration separates from the pack: on the Era-1 board (512 px, 340 tiles, curator GT, F1@20 m) the Tier-1 admissible set spans **15 of 36** cells. | `results/run-analyses.json` → `era1-single-pass-baseline-matrix`: `tie_set` length **15**; outcome "Was 20 condition(s), now 15" (E83) | VERIFIED; POST-HOC (`preregistered: post-hoc`, `manually_verified_at` 2026-06-09) | "Era 1" = the 512 px / 340-tile evaluation frame; needs a gloss. [2026-10-06, E90, C-04: by transmitted configuration the 36 cells are 26 and the 15 are 9, six Tier-1 cells being one text request (`reports/manipulation-check-2026-10-05.md` § B.5; the register row's C-05 amendment); the draft now says so.] |
+| R2-02 | Led numerically by a few-shot-ordering variant (`canonical-last`, F1 0.631, MCC 0.213). | same row's outcome; `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.json` rank 1: `observed_micro_f1` 0.63142, `mcc` 0.2132 | VERIFIED | [2026-10-06, C-17, C-24: one run, sharing Tier 1 with fourteen cells; sent as nulls, hard positives, then canonicals (E92); that the orderings reached the model is evidenced by `reports/phase2e-ordering-check-2026-10-05.md`. The draft now says so.] |
 | R2-03 | 227/630 pairs significant. | same `tiering_20m.json`: 227 of 630 pairwise rows `significant: true` (recounted this session) | VERIFIED | — |
-| R2-04 | The five registered single-factor manipulations (H1 modality/elaboration, H4 ordering, H5 negative text, H7 temperature, H8 library composition) all land inside or near the tie. | `results/hypothesis-outcome-table/hypothesis-outcome-table.md` rows H1, H4, H5, H7, H8 (all "executed", registered as confirmatory) | VERIFIED; REGISTERED | — |
+| R2-04 | The five registered single-factor manipulations (H1 modality/elaboration, H4 ordering, H5 negative text, H7 temperature, H8 library composition) all land inside or near the tie. | `results/hypothesis-outcome-table/hypothesis-outcome-table.md` rows H1, H4, H5, H7, H8 (all "executed", registered as confirmatory) | VERIFIED; REGISTERED | [2026-10-06, E90: on this board H8 is an image-track test only; the five Phase 2c text cells sent one request. The draft now says so.] |
 | R2-05 | Text-modality prompts dominate image-only prompts at the bottom of the board. | `tiering_20m.json` Tier 4 = `image-t1.3` 0.4920 and `image-only` 0.4696, the two lowest cells | VERIFIED | — |
 | R2-06 | Text-only cells reach F1 ≈ 0.60 with essentially no tile-level discrimination; image-bearing cells trade F1 for markedly better discrimination, **MCC 0.0665–0.291 across the twenty-one computable of twenty-two image-bearing cells** `[E88]`. | `results/modality-track-audit-2026-09-14/recomputation.md` § 3 and `recomputation.json` (over the same 36 `tiering_20m.json` cells, with modality derived from the transmitted configuration by `scripts/derive_condition_modality.py`): image-bearing **22** cells, **21** with a defined tile MCC, range **0.0665–0.2907**; text-only 14 cells, 6 defined, all at 0.0665. The register row's `[AMENDED 2026-09-14, E88]` clause carries the same figures | VERIFIED | Re-anchored 2026-09-14 under **E88**: the prior anchor (17 cells, 0.0942–0.2907) was right about its own group and the group was wrong — the four phase-2e exemplar-ordering cells are image-bearing and had been in neither group. Direction preserved: 20 of the 21 are strictly above every computable text cell and the twenty-first (`retest-phase2e::random`) ties at 0.0665 |
-| R2-07 | Eight of the fourteen text-only cells returned at least one detection on every one of the 340 evaluation tiles, emptying the predicted-negative column and leaving MCC undefined. | `docs/methodology/preregistration/protocol-errata.md` § E81, table at `:4247-4268` — nine conditions at confusion matrix TP 204 / TN 0 / FP 136 / FN 0, of which eight are text | VERIFIED (E81) | — |
+| R2-07 | Eight of the fourteen text-only cells returned at least one detection on every one of the 340 evaluation tiles, emptying the predicted-negative column and leaving MCC undefined. | `docs/methodology/preregistration/protocol-errata.md` § E81, table at `:4247-4268` — nine conditions at confusion matrix TP 204 / TN 0 / FP 136 / FN 0, of which eight are text | VERIFIED (E81) | [2026-10-06, E90: the eight are three transmitted configurations, and the fourteen text cells are eight (E81 annotated 2026-10-06). The draft now says so.] |
 | R2-08 | The six computable text cells all sit at 0.0665, the value of leaving exactly one of the **136 reference-empty tiles** alone. | E81 at `:4247` ("TN + FP is the count of reference-empty tiles, 136") and `:4271-4274` (the 0.0665 cells) | VERIFIED (E81) | — |
-| R2-09 | H1's registered pooled modality contrast returns a null: Δ = +0.0238, 95 % CI −0.0104 to +0.0585, two-sided paired bootstrap p = 0.1774, adjusted p = 0.248. | `results/family-fdr/h1_cmt0106_pooled_modality.json` via register row `h1-cmt0106-pooled-modality` (delta +0.0238, CI95 [−0.0104, +0.0585], p 0.1774); `results/family-fdr/family_fdr.json` H1 `adjusted_p` 0.24836 | VERIFIED; **SIGNED** (`confirmatory-with-deviation`, `manually_verified_at` 2026-08-14) | — |
-| R2-10 | H4, H5, H8 likewise not rejected (adjusted p = 0.217, 0.834, 0.834). | `results/family-fdr/family_fdr.json` — H4 0.217, H5 0.8344, H8 (Simes) 0.8344 | VERIFIED; SIGNED | — |
-| R2-11 | H7 rejects at adjusted p = 0.00233, from the registered five-level Phase 2b sweep (single-pass text track, F1, +0.072 at FDR p = 0.004). | `results/family-fdr/family_fdr.json` H7 `adjusted_p` 0.0023333; `docs/methodology/preregistration/protocol-errata.md:1268` and `:3458` ("the preregistered Phase 2b evidence (text +0.072, FDR p=0.004)") | VERIFIED; SIGNED | — |
+| R2-09 | H1's registered pooled modality contrast returns a null: Δ = +0.0238, 95 % CI −0.0104 to +0.0585, two-sided permutation p = 0.0715, adjusted p = 0.125. | `results/family-fdr/h1_cmt0106_pooled_modality.json` via register row `h1-cmt0106-pooled-modality` (delta +0.0238, CI95 [−0.0104, +0.0585], p 0.1774); `results/family-fdr/family_fdr.json` H1 `adjusted_p` 0.24836 [re-anchored 2026-10-06: both files were regenerated under D42 (`5986316b5`); `h1_cmt0106_pooled_modality.json` `permutation.p_value` 0.0715, `family_fdr.json` H1 `adjusted_p` 0.125125. The register row's outcome still quotes the bootstrap 0.1774] | VERIFIED; **SIGNED** (`confirmatory-with-deviation`, `manually_verified_at` 2026-08-14) | [2026-10-06, D42, C-25: claim text revised with the draft (p was 0.1774, adjusted 0.248).] |
+| R2-10 | H4, H5, H8 likewise not rejected (adjusted p = 0.191, 0.834, 0.834). | `results/family-fdr/family_fdr.json` — H4 0.19124 (0.217 before the D42 regeneration), H5 0.8344, H8 (Simes) 0.8344 | VERIFIED; SIGNED | [2026-10-06, D42, C-25: H4's adjusted p revised with the draft.] |
+| R2-11 | H7 rejects at adjusted p = 0.00047, from the registered five-level Phase 2b sweep (single-pass text track, F1, T = 0.3 above T = 1.0 by 0.096, permutation p = 0.0002). | `results/family-fdr/family_fdr.json` H7 `numeric_p` 0.0002, `adjusted_p` 0.00046667 (0.0023333 before the D42 regeneration); ΔF1 +0.0958 and the permutation p from `results/retest/pairwise-bootstrap-comparisons.json` `comparisons[25]`. Superseded anchor: `docs/methodology/preregistration/protocol-errata.md:1268` and `:3458` ("the preregistered Phase 2b evidence (text +0.072, FDR p=0.004)") | VERIFIED; SIGNED | [2026-10-06, C-26: "+0.072 at FDR p = 0.004" was the raw bootstrap p of T = 0.7 > T = 1.0 (`comparisons[27]`), not an adjusted p and not H7's registered row; E43 and E72 repeat it. Claim text revised with the draft.] |
 | R2-12 | H7 rejects *against its own registered expectation* — the registration predicted the vendor-recommended T = 1.0 would be optimal with lower temperatures degrading performance; the reverse held. | `results/run-analyses.json` → `n1-baseline-matrix-384` `predicted_outcome`; register outcome "T=0.0 beats T=0.7 … (H7)" | VERIFIED; REGISTERED | — |
 | R2-13 | At single-pass Pro 384 px this is a point-estimate ordering only: the four leading cells put T = 0.0 above T = 0.7 (0.804 and 0.792 against 0.755 and 0.745), the admissible set has three members at B = 10,000 and spans both temperatures, and only the trailing T = 0.7 cell is excluded. | `results/run-analyses.json` → `n1-baseline-matrix-384`: `tie_set` = 3 members {pro-text-high-t-0-0, pro-text-medium-t-0-0, pro-text-medium-t-0-7}; outcome's E83 correction block ("only pro-text-high-t-0-7 ruled out"; F1 0.804 / 0.792 / 0.755 / 0.745) | VERIFIED (E83) | The `exploratory`→`post-hoc` label on this row was *argued* and must not be bulk-overwritten (outline § D17). |
 | R2-14 | Temperature claims in this study do not generalise across metric or corpus, so each carries instrument, corpus, and metric. | `results/run-analyses.json` → `e43-matched-temperature` outcome (matched-scope effect does not survive; on tile-MCC the advantage runs the other way) | VERIFIED (E43/E72) | Satisfies the D8 drafting note. |
@@ -1539,6 +1545,27 @@ K-ladder row. These are additional to, not instead of, the three above.
 ---
 
 ## Changelog
+
+### 2026-10-06 — § R2 rows: drafted 2026-10-06 for PI review (W1); not finalised
+
+**Trigger.** Tracker `planning/text-track-transmission-2026-10-05.md`,
+workstream W1.5 (claims C-04, C-17/C-24, C-25, C-26), alongside the same
+day's revision of `results-draft.md` § R2.
+
+| Row | Before | After (draft) |
+|---|---|---|
+| R2-01, R2-02, R2-04, R2-07 | note "—" or a gloss | a dated note: 26 configurations and 9 in Tier 1 (E90); canonical-last a single run, sent nulls first, orderings shown to transmit (E92); H8 image-track only; the eight text cells are three configurations |
+| R2-09 | p = 0.1774 (bootstrap), adjusted 0.248 | p = 0.0715 (permutation, D42), adjusted 0.125 |
+| R2-10 | H4 adjusted 0.217 | 0.191 |
+| R2-11 | adjusted 0.00233; "+0.072 at FDR p = 0.004" | adjusted 0.00047; T = 0.3 above T = 1.0 by 0.096, p = 0.0002 |
+
+**What did NOT change**: every status and so the census (237 / 214 / 19 /
+1 / 3); every other row. Noticed, not changed: R2-09 to R2-11 say SIGNED,
+but `results/run-analyses.json` records `h1-cmt0106-pooled-modality` and
+`family-bh-fdr-confirmatory` as unsigned (the 2026-09-16 convention), and
+their register outcomes still quote the bootstrap figures.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-04 — Cost rows re-anchored to the WP4b re-pricing; two verdicts corrected
 

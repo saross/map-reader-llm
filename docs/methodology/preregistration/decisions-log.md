@@ -774,6 +774,16 @@ Receives a tailored subset of tests:
 | 2d | Negative guidance text | **Deferred** | If FP rate warrants it, ad hoc testing of additional negative text guidance (distinct from preregistered H5 which is about text attached to negative *images*) |
 | 2e | Prompt section ordering | **Deferred** | If pursued, tests ordering of major prompt sections (positive guidance, negative guidance, task description) — a different construct from preregistered H4 (example library ordering) |
 
+[NOTE 2026-10-06, E90 and D42: the Phase 2c skip held for the February
+programme, but the March 2026 Era-1 retest ran Phase 2c on Track 2 anyway
+(`studies/retest/phase2c-h8-library-text-only.yaml`). As this decision
+foresaw, the comparison is void: a text-only request sends no exemplar, so
+its five library arms sent identical requests (E90). Its one "significant"
+contrast (scale-4 > plus-hp, p = 0.001) was a false positive of the
+bootstrap p-value, which ruling D42 retired (paired tile-swap permutation
+p = 0.0588); the retest summary withdraws it (Obs 498). Track 2 also ran
+Phase 2d (Decision 17), in February and in the retest.]
+
 ### Independent optimisation
 
 Each track carries its own optimal parameters forward independently. If the

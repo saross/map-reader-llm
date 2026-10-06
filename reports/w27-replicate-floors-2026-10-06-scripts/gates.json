@@ -1,0 +1,38 @@
+{
+ "B (0, 1, 2, 3, 4) (0.15, k5)": {
+  "expected": 4736,
+  "got": 4736,
+  "pass": true
+ },
+ "A (0, 1, 2, 3, 4) (0.15, k4)": {
+  "expected": 4597,
+  "got": 4597,
+  "pass": true
+ },
+ "ARM1 (0, 1, 2) (0.1, k3)": {
+  "expected": 5482,
+  "got": 5482,
+  "pass": true
+ },
+ "ARM2 (0, 1, 2) (0.8, k3)": {
+  "expected": 5187,
+  "got": 5187,
+  "pass": true
+ },
+ "FOURTH (0, 1, 2, 3, 4) (0.98, k5)": {
+  "expected": 4431,
+  "got": 4431,
+  "pass": true
+ },
+ "FOURTH (0, 1, 2) (0.98, k3)": {
+  "expected": 4623,
+  "got": 4623,
+  "pass": true
+ },
+ "dedup_fast equality (g37 run_1)": {
+  "pass": true,
+  "n_raw": 17994,
+  "n_slow": 8511,
+  "n_fast": 8511
+ }
+}

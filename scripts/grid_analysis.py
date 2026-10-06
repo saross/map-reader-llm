@@ -31,12 +31,15 @@ throughout — and answers the four questions the grid was run to settle:
 4. **Cost-efficiency.** F1 per flex-discounted API dollar, and the marginal F1
    bought by each step in tiles or passes.
 
-**Bootstrap.** Contrasts use the project's registered instrument (Decision 10):
-per-tile resampling with replacement on the common carrier grid, seed 42,
-percentile CI95, two-sided ``p = max(2 * min tail, 1/B)``, B = 1,000. Draws are
-*paired* — one index sample applied to both arms of a contrast — which is what
-the shared footprint buys. The 2x2 interaction is a difference-of-differences
-on the same paired draw.
+**Bootstrap and test.** Contrasts use the project's registered instrument
+(Decision 10) for intervals: per-tile resampling with replacement on the common
+carrier grid, seed 42, percentile CI95, B = 1,000. Draws are *paired* — one
+index sample applied to both arms of a contrast — which is what the shared
+footprint buys. The 2x2 interaction is a difference-of-differences on the same
+paired draw. p-values come from permutation tests on the same per-tile counts
+(``scripts/lib_permutation.py``; PI ruling D42, 2026-10-05): the tile-swap test
+for a contrast, and for the interaction a per-tile swap of the two factor-level
+pairs. The bootstrap ``p = max(2 * min tail, 1/B)`` first reported is retired.
 
 **Consensus-only.** This is the proposer stage. A proposer-verifier board needs
 a verifier pass (API spend, separate gate); it is COSTED here, not run.
@@ -86,6 +89,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from scripts.grid_prepare_scoring import CELLS, GRID_ROOT, N_PASSES  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.h13_overlap_analysis import micro_f1, paired_bootstrap  # noqa: E402
+from scripts.lib_permutation import paired_interaction_permutation  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
@@ -369,11 +373,14 @@ def paired_interaction(
     c: dict[str, np.ndarray], d: dict[str, np.ndarray],
     n_iter: int = N_BOOTSTRAP, seed: int = SEED,
 ) -> dict[str, Any]:
-    """Paired difference-of-differences bootstrap for the 2x2 interaction.
+    """Paired difference-of-differences bootstrap CI, with a permutation p.
 
     Computes ``(F1(a) - F1(b)) - (F1(c) - F1(d))`` under one shared tile index
     draw per iteration, so all four cells are resampled together and the
-    contrast isolates the interaction from between-tile heterogeneity.
+    contrast isolates the interaction from between-tile heterogeneity. The
+    p-value comes from ``lib_permutation.paired_interaction_permutation``
+    (each tile swaps the pair (a, b) with the pair (c, d) with probability
+    0.5), not from these draws (PI ruling D42).
 
     Args:
         a: Per-tile counts, first factor level, first level of the second factor.
@@ -402,8 +409,7 @@ def paired_interaction(
         idx = rng.integers(0, n, n)
         dods[i] = (_f1(a, idx) - _f1(b, idx)) - (_f1(c, idx) - _f1(d, idx))
 
-    below = float((dods <= 0).sum()) / n_iter
-    above = float((dods >= 0).sum()) / n_iter
+    perm = paired_interaction_permutation(a, b, c, d, metric="f1")
     lower = float(np.percentile(dods, 2.5))
     upper = float(np.percentile(dods, 97.5))
     return {
@@ -411,7 +417,9 @@ def paired_interaction(
         "ci_lower": lower,
         "ci_upper": upper,
         "bootstrap_mean": float(dods.mean()),
-        "p_two_sided": float(max(2 * min(below, above), 1.0 / n_iter)),
+        "p_two_sided": perm["p_value"],
+        "p_method": perm["method"],
+        "n_permutations": perm["n_permutations"],
         "n_iterations": n_iter,
         "seed": seed,
         "excludes_zero": bool(lower > 0 or upper < 0),

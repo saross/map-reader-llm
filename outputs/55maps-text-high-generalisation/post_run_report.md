@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH
 
@@ -47,11 +47,12 @@
 | `detect_brief-text` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | 8541 | 1322 |
 | `detect_brief-text` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | high | 0.7 | ok | 8541 | 8541 | 1241 |
 
-### 3.2 Verifier passes (1)
+### 3.2 Verifier passes (2)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
 | `verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 9205 | 0 |
+| `vote3-increment` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4367 | 359 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -59,17 +60,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 6 |
-| Input tokens (billed) | 80,638,270 |
+| Passes on file | 7 |
+| Input tokens (billed) | 88,463,934 |
 | Input tokens (cached) | 0 |
-| Output tokens | 9,769,592 |
+| Output tokens | 10,445,463 |
 | Thinking tokens | 115,025,126 |
-| Total tokens | 205,432,988 |
+| Total tokens | 213,934,523 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$207.3516 (6) |
-| Run total (range) | US$207.3516 |
+| `cost_usd` by basis | audited US$210.3219 (7) |
+| Run total (range) | US$210.3219 |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 5.75 h over 6 pass(es) |
+| Summed wall clock | 6.45 h over 7 pass(es) |
 
 > **Audited token load.** `reports/token-load-audit-2026-06-12.md` § 3.2 recomputed this run's load from `per_item_metadata` and found its metas' `usage_stats` **2.0× inflated (factors 2.003–2.016 across axes)**; its `cost_manifest.json` is **2.0× inflated**. Since generator 0.8.0 (2026-10-03) the register reads the per-item sums of any meta the 2026-05-02 recovery merge double-counted, so the figures above are de-duplicated; the trustworthy source is `per_item_metadata`. Audited clean figures, quoted from § 3.2: 5 passes; clean flex cost US$40.19/pass (range US$39.92–40.45), of which thinking is ~US$34.51; clean per pass input 12,828,582, output mean 1,647,744, thinking mean 23,005,025 (2,693/tile). No run total is derived here: the audit's pass count and this manifest's need not agree, so multiplying would manufacture a figure no file carries.
 >
@@ -188,7 +189,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 |---|---|---|
 | `detect_brief-text` | text | `proposer/detect_brief-text` |
 
-1 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+2 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -197,7 +198,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

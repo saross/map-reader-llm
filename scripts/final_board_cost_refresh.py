@@ -59,6 +59,18 @@ import scripts.final_board_build as fbb  # noqa: E402
 OLD_SENTENCE = ("cannot. `cost` is the run's audited all-in flex spend (full",
                 "basis); a run's carried and oracle cells share it. See")
 
+#: The sentence WP4b wrote (2026-10-04), before the oracle cells' vote-3
+#: increments were priced (PI ruling D33, 2026-10-05).
+WP4B_SENTENCE = (
+    "cannot. `cost` is the run's own register tokens priced at one uniform",
+    "discounted tier (flex, which equals batch; PI ruling D19, amended",
+    "2026-10-04): proposer passes x N plus its verification, from",
+    "`data/pricing/frontier-configurations.json` via",
+    "`scripts/lib_frontier_cost.py`; a run's carried and oracle cells share",
+    "it, and `†` marks a verifier leg completed from comparable",
+    "legs (a floor). See",
+)
+
 EFFICIENCY_HEADING = "## Cost efficiency: what a dollar buys"
 
 
@@ -127,12 +139,14 @@ def refresh_markdown(md: str, board: dict, frontiers: dict[str, list[dict]]) -> 
         raise SystemExit(f"cost column: {replaced} ranked rows found for {len(labels)} cells")
     # 2. The cost sentence (two lines, replaced by the builder's current text).
     text = "\n".join(lines)
-    old = "\n".join(OLD_SENTENCE)
     new = "\n".join(fbb.COST_SENTENCE)
-    if text.count(old) == 1:
-        text = text.replace(old, new)
-    elif text.count(new) != 1:
-        raise SystemExit("the cost sentence was not found in either form")
+    for prior in (OLD_SENTENCE, WP4B_SENTENCE):
+        if text.count("\n".join(prior)) == 1:
+            text = text.replace("\n".join(prior), new)
+            break
+    else:
+        if text.count(new) != 1:
+            raise SystemExit("the cost sentence was not found in any of its forms")
     # 3. The efficiency section: its heading up to the next "## " heading.
     if text.count(EFFICIENCY_HEADING) != 1:
         raise SystemExit("the cost-efficiency section was not found exactly once")

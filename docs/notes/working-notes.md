@@ -36983,3 +36983,204 @@ API gate stand against, and the preview model may no longer be served.
 **Related.** S-9 and W7.5 (`planning/text-track-transmission-2026-10-05.md`),
 the W2.7 options note (`planning/w27-configuration-level-testing-2026-10-05.md`),
 E57, Obs 496, Obs 235.
+
+## Observation 498: The retest's Phase 2c text "library test" was six runs of one request, and the retired bootstrap found a difference between two of them (Session 162, 2026-10-06)
+
+**Context.** The manipulation check of 2026-10-05
+(`reports/manipulation-check-2026-10-05.md` § B.1; erratum E90) found that
+the five text-track arms of the registered Era-1 retest's Phase 2c
+(`retest-phase2c::text-{canonical, plus-hp, pure-positive-canon, scale-4,
+scale-8}`) sent identical requests: a text-only request transmits no
+exemplar, so the library levels never reached the model. The same request
+was also sent as Phase 2b's T0.0 text arm. The retest summary nonetheless
+reported one significant library contrast on that track, scale-4 > plus-hp
+(ΔF1 +0.013, p = 0.001). Tracker W1 (`planning/text-track-transmission-2026-10-05.md`)
+withdrew it on 2026-10-06; this entry records why it happened and what it
+touches.
+
+**What was established.**
+
+1. **Six runs of one configuration.** One instruction, T = 0.0, minimal
+   thinking, `gemini-3-flash`, one commit (`5a57f586e`), no example sent.
+   The outputs differ (881-897 detections, distinct coordinates), so their
+   F1 spread, 0.5969-0.6094, is run-to-run variance at T = 0 on 340 tiles.
+2. **The "significant" contrast was the bootstrap's artefact, not the
+   data's.** The two runs differ on 5 of 340 tiles, all in the same
+   direction (`plus-hp` 1-6 false positives more on each). Every bootstrap
+   resample that contains one of those tiles gives a difference below zero,
+   and every other resample gives exactly zero, which the retired p-value
+   (twice the minority tail of an uncentred bootstrap, floored at 1/B)
+   counted on the same side; so p sat at its floor, 0.001, whatever the
+   effect size. The exact tile-swap null for five discordant tiles is
+   2/32 = 0.0625, and the Monte Carlo permutation test gives 0.0588 (BH
+   within phase 0.588): no two-sided exact test can reach p < 0.05 on five
+   tiles (`reports/retest-bootstrap-check-2026-10-05.md` § W2.1). On 10,035
+   replicate pairs the bootstrap rejected 2.5 % against the permutation
+   test's 2.2 %, but 12.5 % against 6.2 % where the outputs differ on 50
+   tiles or fewer, the T = 0 regime this track sits in (§ W2.3). PI ruling
+   D42 retired the bootstrap p-value.
+3. **A known-meaningless test, run and read as a test.** Decision 16 had
+   called Phase 2c on the text track "meaningless" without example images,
+   and the February programme skipped it after a pre-flight check found
+   identical detection counts (Obs 129;
+   `results/phase2c-carry-forward-parameters.md`). The March retest's study
+   definitions ran it, and its summary reported it as a library test
+   (tracker S-5). The D17 audit then read the bootstrap's false positive the
+   other way: as evidence that the five arms were "not identical" and that
+   the rationale for skipping was "empirically falsified"
+   (`reports/d17-inventory/d17-inventory-h5-h8.md:905-919`). The rationale
+   was right; the test was wrong.
+
+**What it touches.**
+
+- **Withdrawn** (2026-10-06, with revision trails): the retest summary's
+  text-track library claim and "null on both tracks" (H8's null is the image
+  track's alone); E81's table annotated; the March pairwise file's ten text
+  rows annotated as replicate contrasts. H8's registered outcome is
+  unaffected: the family takes it from `h8-v2`, an image contrast.
+- **Obs 155** ("extended reasoning as liberaliser"): its own evidence, a
+  HIGH-thinking re-verification of 44 candidates (Session 45), is untouched;
+  but the support Experiment E's Finding 3 lent it on the proposer side
+  (E2 → E3, +0.021 F1) is one 60-tile run per arm, smaller than the 0.050 F1
+  that the experiment's accidental replicate E1/E2 spread (Obs 496), so the
+  generalisation to proposers is unsupported as stated.
+- **Obs 157** ("temperature dominates proposer performance"): the E3 → E4
+  step was a real manipulation, but its "44 % of the attribution" is a share
+  of a total whose second-largest part (32 %) was noise; its direction agrees
+  with the February 60-tile text sweep (T = 0.0 above T = 0.7 by 0.091 over
+  ten runs per arm, permutation p < 0.0001;
+  `results/d42-retest-2026-10-05/feb-60-tile/phase2b-track2.json`) but not
+  significantly with the 340-tile retest (+0.021, p = 0.22), so cite the
+  registered sweeps, not this step.
+- **Obs 158** ("recall-biased framing has zero effect on recall"): Finding
+  4 is a real prompt contrast, but "exactly the same recall" (76 true
+  positives in both arms) is one 60-tile run per arm, and two runs of one
+  identical request in the same experiment differed by 5 true positives
+  (66 against 71, raw); "no detectable effect at this n" is what it shows.
+- **Obs 280's table** labels `h4-canonical-last` "text" (Era 1 single-pass
+  F1 leader). It is a Phase 2e image arm that transmits 13 images (the
+  `plus-hp` library; tracker C-20). With that label corrected, the Era-1
+  single-pass stratum's F1 and MCC leaders are both image cells, so Obs
+  280's "in every Era-1 / Era-2 case the F1 winner is text-track and the MCC
+  winner is image-track" fails there; on the table's own labels the
+  text-F1 / image-MCC split holds in three of its five divergent strata
+  (Era-2 single-pass+PV's F1 leader was already an image cell). Obs 280's
+  mechanism (recall-heavy F1 against TN-weighted MCC) is not affected, and
+  Obs 280 stands as written.
+
+**Reading.** Two failures compounded: an inert configuration field looked
+like a factor (E90's lesson), and a test that floors its p-value whenever
+two outputs differ on a few tiles in one direction certified the
+non-difference as real. Each would have been caught alone by a check that
+asks what the arms sent, or by a test calibrated on replicates; neither
+check existed in March.
+
+**For the paper.** The Era-1 single-pass board's 36 cells are 26
+transmitted configurations, and its 15-cell Tier 1 is 9: six Tier-1 cells
+are this one text configuration (the C-05 amendments to both Era-1 boards
+say so). Do not present the Phase 2c text cells as library levels.
+
+**Related.** Obs 496 (Experiment E, the same mechanism), Obs 235 (the
+H10/H12 v1 probe, the same mechanism), Obs 129, Obs 155, Obs 157, Obs 158,
+Obs 280, Obs 497 (same request, different dates); E81, E90, E92; rulings D42
+and D45 (`planning/pi-decisions-2026-09-20.md`); tracker C-01 to C-03, C-08,
+C-20, S-1, S-5.
+
+## Observation 499: Three statistical records corrected under D42 — Obs 187's "+0.010" compared files from two runs, the February pseudo-p erred conservative, and B-16's per-tile tables dropped most 512 px detections (Session 162, 2026-10-06)
+
+**Context.** Implementing PI ruling D42 (every contrast by the paired
+tile-swap permutation test with Benjamini-Hochberg (BH) correction; no
+p-value from a bootstrap) re-tested the March pairwise files, the February
+60-tile instrument and the class B files whose inputs had moved
+(`reports/d42-implementation-2026-10-05.md` §§ 4.1 and 6.1; rulings D43 and
+D44). Three results correct earlier records; each is held here because
+working-notes entries are never edited.
+
+**1. Obs 187 (Flash MEDIUM verifier "helps", ΔF1 +0.010, p = 0.001 on
+text): the figure compared two files, and the re-test cannot say whether
+the configurations differ.** The March sweep and the March pairwise read
+two different versions of one `probabilities.json`. The minimal-verifier
+batch job was submitted twice and its file rewritten 33 s after the sweep
+loaded it (inferred from timestamps and mean probabilities, not observed
+directly; `reports/d42-implementation-2026-10-05-scripts/moved-inputs.md`
+§ 3). The sweep's optimum, F1 0.774 at threshold 0.20 (n 397), came from the
+overwritten first file; the pairwise read the second, which gives F1 0.7666
+at the same threshold. Obs 187's "+0.010" is 0.7842 (medium, threshold
+0.15) minus 0.774: a difference across runs, and it carries the wrong sign
+convention for the bootstrap mean it was quoted beside (−0.0175, minimal
+minus medium). Re-tested under D43 on the 487-tile, 384 px frame:
+
+| Version | Minimal F1 (threshold) | Medium F1 (threshold) | ΔF1, medium − minimal | Permutation p |
+|---|---|---|---|---|
+| As the March pairwise ran it | 0.7666 (0.20) | 0.7842 (0.15) | +0.018 | 0.0047 |
+| Re-swept current minimal file (sensitivity) | 0.7696 (0.15) | 0.7842 (0.15) | +0.015 | 0.0067 |
+
+(`results/d42-retest-2026-10-05/class-b/b17-text-as-is-comparison.json`
+and `b17-text-resweep-comparison.json`.) The direction stands and the gap is
+larger than Obs 187 said, and both versions reject. But the test compares
+two outputs, not two configurations (tracker S-10): the two runs of the
+minimal verifier differ from each other by 0.007 F1 (0.774 against 0.7666),
+against a 0.018 minimal-versus-medium gap, from one run each. Under D45 a
+configuration claim needs the test to reject AND the difference to clear the
+run-to-run floor for its corpus and aggregation; whether these two verifier
+configurations differ is tracker W2.7's question, not settled here. The
+image comparison (B-18, Obs 187's +0.009) stays null (p 0.166 → 0.1626).
+Consequence for E69: its provenance item 3 called Obs 187's result
+"decisive" behavioural evidence that the MEDIUM level ran; the level is
+shown by the configuration and the non-zero thought tokens (its items 1 and
+2), and a significant difference between two single runs is consistent with
+a configuration effect without proving one (E69 annotated 2026-10-06).
+
+**2. The February 60-tile "pseudo-p" erred conservative (tracker S-12).**
+The February Phase 2 instrument fed BH a "pseudo-p", 0.05 minus the bound of
+the confidence interval (Decision 10, `scripts/analyse_phase2_results.py`
+before `88edfd312`). Re-run on run-block permutation p
+(`results/d42-retest-2026-10-05/feb-60-tile/`), four contrasts pass BH that
+it never declared:
+
+| Phase | Contrast | ΔF1 | Permutation p | BH |
+|---|---|---:|---:|---:|
+| 2b text | T0.3 > T1.0 | +0.054 | 0.0132 | 0.022 |
+| 2b text | T1.0 > T1.3 | +0.041 | 0.0070 | 0.014 |
+| 2e | config-default > random | +0.077 | 0.0095 | 0.029 |
+| 2e | canonical-last > random | +0.079 | 0.0096 | 0.029 |
+
+So the pilot's text track has 6 of 10 BH-significant contrasts, not 4, and
+Phase 2e has 2 of 6, not 0. The retired retest bootstrap over-rejected at
+sparse discordance; the February construction under-rejected. No
+carry-forward rested on these verdicts (Decisions 16-18 carried the
+highest-F1 condition forward), and H4's primary, canonical-first against
+canonical-last, stays null at 60 tiles (p 0.333). Two readings follow. The
+February text track ranked T1.0 above T1.3 significantly, where the 340-tile
+retest ranks it below, not significantly (−0.036, p 0.25): two executions,
+two tile sets, opposite signs, which is what single-execution tests on
+small corpora allow (Obs 497). And prose that called these February
+contrasts null, or counted the pilot's significant contrasts as "6/10 and
+4/10", needs the qualification (the Phase 2b carry-forward note and analysis
+summary were corrected on 2026-10-06; § 4.3 of the methods draft carries a
+note).
+
+**3. B-16's March per-tile tables silently dropped most 512 px detections
+(`results/h11-384-pv-diagnostic/pairwise/pairwise-384px.json`).** The file
+compares 512 px detections against 384 px detections on the 384 px tile
+frame. Today's per-tile scorer refuses the join: only 72 of 558 in-frame
+512 px detections carry a 384 px tile name (`TileJoinRefusalError`). In
+March the same mismatch was silent, so the per-tile tables behind the file's
+CIs and p-values dropped the true and false positives of most 512 px
+detections. The file carries a `d42_annotation` saying so; its contrasts are
+superseded by `fair-384-vs-512.json`, which reassigns 512 px detections to
+384 px tiles and whose six contrasts stay significant (I4 0.006 → 0.007 on
+the March sweep, 0.0111 on the E39 sweep; D44). B-16 should not be cited,
+and no paper text cites it.
+
+**Reading.** The three share a shape: a figure that looked like a
+measurement of one thing measured something else (two files, a CI bound, a
+join that dropped rows), and nothing in the record said so until the test
+was re-run on its inputs. The re-test was cheap (minutes on sapphire, no
+API); finding the inputs was not (a read-only search of moved paths and
+archived sessions).
+
+**Related.** Obs 187 (stands as written; item 1 corrects it), Obs 185,
+Obs 496, Obs 497, Obs 498; E69 (annotated), E39; rulings D42-D46
+(`planning/pi-decisions-2026-09-20.md`); tracker S-10, S-12, C-25, W2.6,
+W2.7.

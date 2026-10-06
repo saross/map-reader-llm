@@ -1,6 +1,7 @@
 # E45 bootstrap pairings — registered instrument for the H2/H3 family contrasts
 
-> **Last revised**: 2026-08-17 (original publication). See
+> **Last revised**: 2026-10-05 (the bootstrap p-values are retired under PI
+> ruling D42; the permutation p is carried instead). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The family-level BH-FDR correction
@@ -32,10 +33,13 @@ is the paired disclosure.
 
 | Contrast | ΔF1 (micro, @20 m) | Registered bootstrap (B = 1,000) CI95 | E54 sensitivity (B = 10,000) CI95 | CI excludes 0 |
 |---|---:|---|---|---|
-| **H2** — PV 16-of-30 vs consensus 26-of-30 | +0.076083 | [+0.051787, +0.104642], p = 0.001 (floor) | [+0.050771, +0.103945], p = 0.0001 (floor) | yes, both |
-| **H3** — consensus 26-of-30 vs matched single-pass | +0.427340 | [+0.389640, +0.468082], p = 0.001 (floor) | [+0.385608, +0.469544], p = 0.0001 (floor) | yes, both |
+| **H2** — PV 16-of-30 vs consensus 26-of-30 | +0.076083 | [+0.051787, +0.104642] | [+0.050771, +0.103945] | yes, both |
+| **H3** — consensus 26-of-30 vs matched single-pass | +0.427340 | [+0.389640, +0.468082] | [+0.385608, +0.469544] | yes, both |
 
-Both intervals exclude zero at both iteration counts, in the
+The p-value beside each pair is now the paired tile-swap permutation
+test's (PI ruling D42, 2026-10-05): p < 0.0001 for both H2 and H3, the
+same test the family correction consumed. Both intervals exclude zero at
+both iteration counts, in the
 direction of the committed permutation results. The registered
 instrument therefore corroborates both family rejections: H2 (the
 falsified directional prediction — two-stage improves F1, against
@@ -49,13 +53,14 @@ methods-draft fill.
 Paired tile-resampling bootstrap of the micro-F1 difference: the same
 resampled 487-tile index set is applied to both arms, micro-F1 is
 recomputed per arm from summed per-tile TP/FP/FN, and the difference
-distribution yields the percentile CI95 and two-sided
-p = max(2 · min tail, 1/B), seed 42. The registered quantities are
+distribution yields the percentile CI95, seed 42. The two-sided
+p = max(2 · min tail, 1/B) this artefact first carried is retired (D42);
+the JSON now carries the permutation p on the same arrays. The registered quantities are
 the CI95 and the CI-excludes-zero significance reading (Decision 10
 registers "if the 95 % CI for a difference excludes zero, we treat
-this as significant"); the 2 · min-tail p is **not** registered — it
-is carried for comparability with the family-FDR H1 leg's
-convention (`scripts/compute_family_fdr.py`) only. B = 1,000 is the
+this as significant"); no p-value is registered (the 2 · min-tail p
+was carried only for comparability with the family-FDR H1 leg, and both
+are now permutation p-values under D42). B = 1,000 is the
 registered-convention primary (Decision 10); B = 10,000 is the E54
 narrow-effect sensitivity. Script:
 `scripts/e45_bootstrap_pairings.py` (eight tier1 tests, including a
@@ -96,6 +101,17 @@ passed at tolerance 1e-6):
   queued).
 
 ## Changelog
+
+### 2026-10-05 — Bootstrap p retired (PI ruling D42)
+
+**Refresh trigger**: PI ruling D42 (`planning/pi-decisions-2026-09-20.md`).
+The table's p-values (0.001 and 0.0001, the bootstrap floors) are removed;
+`e45_bootstrap_pairings.json` (regenerated on sapphire, `5986316b5`) carries
+the paired permutation p on the same arrays: p < 0.0001 for H2 and H3.
+
+**What did NOT change**: the registered quantities (the CIs and the
+CI-excludes-zero readings), ΔF1, and the corroboration of both family
+rejections.
 
 ### 2026-08-17 (later) — Verification round
 

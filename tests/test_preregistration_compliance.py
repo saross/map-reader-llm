@@ -187,22 +187,23 @@ class TestPhase2AnalysisCompliance:
         sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
         from analyse_phase2_results import apply_fdr_correction
 
-        # Create test data with one significant comparison
+        # Two comparisons with permutation p-values (D42). Under BH at
+        # q = 0.05 with m = 2: p = 0.02 -> adjusted 0.04 (significant);
+        # at q = 0.01 it would not be, so the default must be 0.05.
         pairwise = [
-            {
-                "condition_a": "A",
-                "condition_b": "B",
-                "f1_difference": {"mean": 0.05, "ci_lower": 0.02, "ci_upper": 0.08},
-            }
+            {"condition_a": "A", "condition_b": "B",
+             "f1_difference": {"mean": 0.05, "ci_lower": 0.02, "ci_upper": 0.08,
+                               "p_value": 0.02}},
+            {"condition_a": "A", "condition_b": "C",
+             "f1_difference": {"mean": 0.0, "ci_lower": -0.02, "ci_upper": 0.02,
+                               "p_value": 0.6}},
         ]
 
-        # Default call should use q=0.05
         result = apply_fdr_correction(pairwise)
 
-        # Function should work with default - we're testing it doesn't crash
-        # and that its default behaviour is consistent with preregistration
-        assert len(result) == 1
-        assert "fdr_significant" in result[0]
+        assert len(result) == 2
+        assert result[0]["fdr_significant"] is True
+        assert result[1]["fdr_significant"] is False
 
     def test_bootstrap_default_matches_preregistration(self) -> None:
         """Verify bootstrap iterations default matches preregistration (N=1000).

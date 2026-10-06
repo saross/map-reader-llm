@@ -276,6 +276,72 @@ def test_verifier_stage_modality_returns_none_for_an_unknown_stage():
     assert (modality, configs) == (None, [])
 
 
+def _verify_meta_file(path, version: str, n_examples: int) -> None:
+    """Write a minimal verifier ``*.meta.json`` (configuration block only)."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({"configuration": {
+        "version": version, "include_example_images": True,
+        "full_config_snapshot": {"version": version,
+                                 "examples": [{"path": "x.png"}] * n_examples}}}))
+
+
+@pytest.mark.tier1
+def test_a_sidecar_form_stage_resolves_from_the_passes_manifest(tmp_path, monkeypatch):
+    """A stage whose meta sits beside the pools (``verified-*.meta.json``)
+    has no stage directory; the passes manifest names its meta, and that is
+    the route that reads it (W4.4)."""
+    sidecar = tmp_path / "verified-brief-image.meta.json"
+    _verify_meta_file(sidecar, "verify_brief", 6)
+    monkeypatch.setattr(d, "_passes_index", lambda: {
+        ("run-x", "verified-brief-image"): [
+            {"provenance": {"source_files": [str(sidecar)]}}]})
+    res = d.resolve_verifier_stage("run-x", "verified-brief-image", "image")
+    assert res["resolved_by"] == ["passes-manifest"]
+    assert d.modality_of(res["metas"]) == "image"
+    assert res["unresolved_reason"] is None
+
+
+@pytest.mark.tier1
+def test_an_unresolvable_stage_carries_a_named_reason(tmp_path, monkeypatch):
+    """Nothing is skipped silently: a manifest source absent on this machine
+    (outputs on another host) is named in the reason."""
+    monkeypatch.setattr(d, "_passes_index", lambda: {
+        ("run-y", "verified"): [{"provenance": {"source_files": [
+            "outputs/no-such-run/verified/run.meta.json"]}}]})
+    monkeypatch.setattr(d, "git_renamed_to", lambda paths: ([], None))
+    res = d.resolve_verifier_stage("run-y", "verified", {"path": "verified"})
+    assert res["metas"] == [] and res["resolved_by"] == []
+    assert "absent on this machine" in res["unresolved_reason"]
+    assert "no git rename" in res["unresolved_reason"]
+
+
+@pytest.mark.tier1
+def test_git_renamed_to_follows_an_archived_leg(tmp_path, monkeypatch):
+    """An archived leg keeps its bytes under ``archive/``; the registered
+    path is followed through the commit that moved it (pv-diag-384
+    ``verified-text-1of5``, archived in 8913cab2c, is the live case)."""
+    import subprocess
+
+    def git(*args: str) -> None:
+        subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t",
+                        *args], cwd=tmp_path, check=True, capture_output=True)
+
+    git("init", "-q")
+    old = tmp_path / "outputs" / "run" / "verified" / "s" / "run.meta.json"
+    _verify_meta_file(old, "verify_adversarial-text", 0)
+    git("add", ".")
+    git("commit", "-q", "-m", "stage")
+    (tmp_path / "archive" / "superseded").mkdir(parents=True)
+    git("mv", "outputs/run/verified/s", "archive/superseded/s")
+    git("commit", "-q", "-m", "archive the stage")
+    monkeypatch.setattr(d, "BASE_DIR", tmp_path)
+    moved, commit = d.git_renamed_to(["outputs/run/verified/s"])
+    assert moved == ["archive/superseded/s/run.meta.json"]
+    assert commit
+    # SENTINEL: a path git never removed is not followed anywhere.
+    assert d.git_renamed_to(["outputs/never/existed"]) == ([], None)
+
+
 # ── tier 2: corpus-wide agreement ────────────────────────────────────────
 
 @pytest.mark.tier2
@@ -315,3 +381,37 @@ def test_register_verifier_modality_is_the_verifier_stages_own_modality():
     """
     plan = d.plan_verifier_modality_fix(d.verifier_pass_audit())
     assert [(e["run_id"], e["stage"], e["before"], e["after"]) for e in plan] == []
+
+
+#: Registered verifier stages the checker cannot resolve to their verify
+#: metadata, each for a stated reason. Until S160 ``outputs/gs/`` was among
+#: them unnamed, and a stage registered ``image`` that sent text labels
+#: (gold-standard-v2 verified-v1) went unchecked (tracker C-18). S160 named
+#: 17 more (13 + 2 sidecar-form metas under proposer-verifier-384/512, the
+#: ``t0.3`` directory of ``55maps-text-high-t0-3-generalisation``, and the
+#: archived pv-diag-384 ``verified-text-1of5``); W4.4 (2026-10-06) resolves
+#: them from the passes manifest's own source files and, for the archived
+#: leg, from git's record of where the files were moved. All 17 labels agree
+#: with what the verifier was sent. The set is now empty and must stay so:
+#: a stage added here needs a reason, as before.
+UNRESOLVED_VERIFIER_STAGES: dict[tuple[str, str], str] = {}
+
+
+@pytest.mark.tier2
+def test_every_unresolved_verifier_stage_is_named():
+    """A verifier stage the checker cannot read is out of its scope by
+    construction, so the set must be named: a new blind spot turns this red
+    rather than leaving a wrong label unchecked, as C-18 was."""
+    unresolved = {(r["run_id"], r["stage"]) for r in d.verifier_pass_audit()
+                  if r["verifier_reading"] is None}
+    assert unresolved == set(UNRESOLVED_VERIFIER_STAGES)
+
+
+@pytest.mark.tier2
+def test_no_pool_keyed_label_disagrees_with_its_derivation():
+    """Pool-keyed modality labels in generated outputs (the K-ladder unions
+    and ladders among them) match what the pool sent. The K-ladder Phase 2
+    unions carried a stale 'text' for an image pool until S160 (C-22), its
+    builder corrected on 2026-09-14 but its output never regenerated."""
+    _records, pool_records = d.derive()
+    assert [r for r in pool_records if r["mismatch"]] == []

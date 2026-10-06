@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -255,7 +255,7 @@
 | `text-n10-text-t0.7` | 9 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 487 | not supplied | 0 |
 | `text-n10-text-t0.7` | 10 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 487 | not supplied | 0 |
 
-### 3.2 Verifier passes (115)
+### 3.2 Verifier passes (119)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
@@ -280,10 +280,10 @@
 | `flash-high-image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4638 | 0 |
 | `flash-high-image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1887 | 90 |
 | `flash-high-image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
-| `flash-high-text-n5-text-t0.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1267 | 0 |
+| `flash-high-text-n5-text-t0.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1256 | 0 |
 | `flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1319 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1326 | 30 |
-| `flash-high-text-n5-text-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4413 | 0 |
+| `flash-high-text-n5-text-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 4313 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2201 | 0 |
 | `flash-high-text-n5-text-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2954 | 0 |
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
@@ -294,42 +294,42 @@
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 21 | 0 |
 | `flash-high-text-n5-text-t0.7-session-78-matrix-verified-comparative` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1370 | 0 |
-| `flash-high-text-n5-text-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 5953 | 0 |
+| `flash-high-text-n5-text-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 5866 | 0 |
 | `flash-high-text-n5-text-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2755 | 143 |
-| `flash-high-text-n5-text-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3737 | 0 |
+| `flash-high-text-n5-text-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3736 | 0 |
 | `flash-high-text-n5-text-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1495 | 0 |
-| `flash-high-text-n5-text-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 6105 | 0 |
+| `flash-high-text-n5-text-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 5920 | 0 |
 | `flash-high-text-n5-text-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2848 | 12 |
-| `flash-high-text-n5-text-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3942 | 0 |
-| `flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1108 | 0 |
+| `flash-high-text-n5-text-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 3760 | 0 |
+| `flash-minimal-text-n30-t07-text-t0.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1087 | 0 |
 | `flash-minimal-text-n30-t07-text-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 938 | 0 |
-| `flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1595 | 0 |
+| `flash-minimal-text-n30-t07-text-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1575 | 0 |
 | `flash-minimal-text-n30-t07-text-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1244 | 0 |
 | `flash-minimal-text-n30-t07-text-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1388 | 0 |
 | `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1012 | 0 |
-| `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1955 | 0 |
+| `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1953 | 0 |
 | `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1355 | 0 |
-| `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1594 | 0 |
+| `flash-minimal-text-n30-t07-text-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1593 | 0 |
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1022 | 0 |
-| `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2486 | 0 |
+| `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2472 | 0 |
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1588 | 70 |
 | `flash-minimal-text-n30-t07-text-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1926 | 0 |
 | `image-n5-image-t0.3-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 729 | 32 |
 | `image-n5-image-t0.3-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1114 | 0 |
 | `image-n5-image-t0.3-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 885 | 0 |
-| `image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1039 | 0 |
+| `image-n5-image-t0.3-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 987 | 0 |
 | `image-n5-image-t0.7-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 694 | 0 |
 | `image-n5-image-t0.7-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1450 | 0 |
 | `image-n5-image-t0.7-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 950 | 0 |
-| `image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1126 | 0 |
+| `image-n5-image-t0.7-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1123 | 0 |
 | `image-n5-image-t1.0-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 792 | 0 |
 | `image-n5-image-t1.0-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1975 | 0 |
 | `image-n5-image-t1.0-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1174 | 1 |
-| `image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1456 | 0 |
+| `image-n5-image-t1.0-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1443 | 0 |
 | `scale-4-optimal-487-verified-v1-n1` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 830 | 0 |
 | `scale-4-optimal-487-verified-v1-n10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 0 |
 | `scale-4-optimal-487-verified-v1-n3` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1586 | 0 |
-| `scale-4-optimal-487-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2218 | 0 |
+| `scale-4-optimal-487-verified-v1-n5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2198 | 0 |
 | `verified-flash-high-image-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of10` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-flash-high-text-1of30` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
@@ -337,6 +337,7 @@
 | `verified-flash-high-text-1of5-flash-high-verifier` | 1 | gemini-3-flash-preview | text | high | 0.0 | ok | 3736 | 0 |
 | `verified-flash-high-text-1of5-flash-medium-verifier` | 1 | gemini-3-flash-preview | text | medium | 0.0 | ok | 1 | 0 |
 | `verified-flash-high-text-1of5-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 0 | 0 |
+| `verified-flash-high-text-t03-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2954 | 18 |
 | `verified-flash-minimal-image-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-flash-minimal-text-medium-verifier` | 1 | gemini-3-flash | text | medium | 0.0 | ok | 0 | 0 |
 | `verified-flash-minimal-text-t07-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 0 | 0 |
@@ -374,6 +375,9 @@
 | `verified-text-9of10` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-text-baseline` | 1 | gemini-3-flash | text | minimal | 0.0 | ok | 0 | 0 |
 | `verified-text-baseline-pro-verifier` | 1 | gemini-3.1-pro-preview | text | medium | 0.0 | ok | 21 | 0 |
+| `verified-text-min-t07-true-1of5` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1586 | 6 |
+| `wbf-fh-text-n30-verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 5862 | 0 |
+| `wbf-fh-text-n5-verified` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 2724 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -381,17 +385,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 328 |
-| Input tokens (billed) | 806,804,300 |
+| Passes on file | 332 |
+| Input tokens (billed) | 830,326,092 |
 | Input tokens (cached) | 384,106,161 |
-| Output tokens | 26,823,624 |
+| Output tokens | 28,878,701 |
 | Thinking tokens | 70,273,756 |
-| Total tokens | 903,901,680 |
+| Total tokens | 929,478,549 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$95.0700 (40); audited-lower-bound US$0.8309 (16); audited-upper-bound US$363.8209 (127); unrecorded no figure (145) |
-| Run total (range) | at least US$288.4513; no ceiling (16 audited-lower-bound, 145 unrecorded pass(es)) |
+| `cost_usd` by basis | audited US$364.5924 (168); audited-lower-bound US$1.7176 (19); unrecorded no figure (145) |
+| Run total (range) | at least US$366.3101; no ceiling (19 audited-lower-bound, 145 unrecorded pass(es)) |
 | Passes with no `cost_usd` | 145 |
-| Summed wall clock | 15.86 h over 328 pass(es) |
+| Summed wall clock | 18.24 h over 332 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -1209,7 +1213,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 | `text-baseline-text-t0.0` | text | `text-baseline/text-t0.0` |
 | `text-n10-text-t0.7` | text | `text-n10/text-t0.7` |
 
-116 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+120 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -1218,7 +1222,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

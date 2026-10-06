@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — h10
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h10` · **Registry status**: active · **Purpose**: not supplied
 
@@ -37,10 +37,15 @@
 
 ## 3. Execution — passes on file
 
-### 3.1 Proposer passes (20)
+### 3.1 Proposer passes (25)
 
 | Pool | Pass | Model used | Model requested | Modality | Thinking | Temp | Status | Tiles done | Dispatched | Retries |
 |---|---:|---|---|---|---|---:|---|---:|---:|---:|
+| `coldstart-pool_160` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 160 | 160 | 6 |
+| `coldstart-pool_160` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 160 | 160 | 1 |
+| `coldstart-pool_160` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 160 | 160 | 4 |
+| `coldstart-pool_160` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 160 | 160 | 1 |
+| `coldstart-pool_160` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 160 | 160 | 4 |
 | `pool_020_hp4hn4` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 327 | 4 |
 | `pool_020_hp4hn4` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 327 | 10 |
 | `pool_020_hp4hn4` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | image | high | 0.7 | ok | 327 | 327 | 4 |
@@ -75,17 +80,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 22 |
-| Input tokens (billed) | 136,674,409 |
-| Input tokens (cached) | 123,650,145 |
-| Output tokens | 1,381,981 |
-| Thinking tokens | 12,931,282 |
-| Total tokens | 150,987,672 |
+| Passes on file | 27 |
+| Input tokens (billed) | 145,712,809 |
+| Input tokens (cached) | 129,999,492 |
+| Output tokens | 1,483,116 |
+| Thinking tokens | 14,581,114 |
+| Total tokens | 161,777,039 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$55.6344 (22) |
-| Run total (range) | US$55.6344 |
+| `cost_usd` by basis | audited US$62.5493 (27) |
+| Run total (range) | US$62.5493 |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 1.64 h over 22 pass(es) |
+| Summed wall clock | 1.79 h over 27 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -170,6 +175,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 
 | Proposer pool | Modality | Path within the run directory |
 |---|---|---|
+| `coldstart-pool_160` | image | `pool_160` |
 | `pool_020_hp4hn4` | image | `evaluation-v2/pool_020_hp4hn4` |
 | `pool_040_hp4hn4` | image | `evaluation-v2/pool_040_hp4hn4` |
 | `pool_080_hp4hn4` | image | `evaluation-v2/pool_080_hp4hn4` |
@@ -184,7 +190,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

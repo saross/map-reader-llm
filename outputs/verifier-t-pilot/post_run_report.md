@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — verifier-t-pilot
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/verifier-t-pilot` · **Registry status**: active · **Purpose**: Verifier sampling-temperature pilot (T0.0/0.5/1.0); recommended T=0.5 as production verifier default.
 
@@ -41,8 +41,8 @@
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
-| `t0-5` | 1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | 627 | 0 |
-| `t1-0` | 1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 614 | 0 |
+| `t0-5` | 1 | gemini-3-flash-preview | text | minimal | 0.5 | ok | 607 | 0 |
+| `t1-0` | 1 | gemini-3-flash-preview | text | minimal | 1.0 | ok | 607 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -168,7 +168,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — proposer-verifier-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/proposer-verifier-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -37,18 +37,30 @@
 
 ## 3. Execution — passes on file
 
-### 3.2 Verifier passes (8)
+### 3.1 Proposer passes (1)
+
+| Pool | Pass | Model used | Model requested | Modality | Thinking | Temp | Status | Tiles done | Dispatched | Retries |
+|---|---:|---|---|---|---|---:|---|---:|---:|---:|
+| `proposer` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.0 | ok | 1 | 1 | 0 |
+
+### 3.2 Verifier passes (14)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
 |---|---:|---|---|---|---:|---|---:|---:|
 | `verified-adversarial-image` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 572 | 0 |
+| `verified-adversarial-image-v2` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 572 | 0 |
 | `verified-adversarial-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
+| `verified-adversarial-text-v1-prompt` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
+| `verified-adversarial-text-v2` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
 | `verified-brief-image` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 572 | 0 |
+| `verified-brief-image-v2` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 572 | 0 |
 | `verified-brief-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
+| `verified-brief-text-v2` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
 | `verified-cascade-adversarial-checklist` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 271 | 0 |
 | `verified-cascade-checklist-adversarial` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 326 | 0 |
 | `verified-checklist-image` | 1 | gemini-3-flash-preview | image | minimal | 0.0 | ok | 572 | 0 |
 | `verified-checklist-text` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 572 | 0 |
+| `verified-checklist-text-v2` | 1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | 462 | 0 |
 
 Verifier rows report no tile count by design: verifier pass: operates on candidate crops, not tiles. The verifier meta records candidate ids (cand\_NNNN) in execution\_stats.completed\_items and candidate API items in per\_item\_metadata, so no tile-scale record exists to report. Completed crop count is in n\_candidates\_verified. (E71 Defect 2 / GAP-8, resolved E72 2026-08-02.)
 
@@ -56,17 +68,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 8 |
-| Input tokens (billed) | 27,066,363 |
+| Passes on file | 15 |
+| Input tokens (billed) | 40,279,965 |
 | Input tokens (cached) | 0 |
-| Output tokens | 563,081 |
+| Output tokens | 1,000,845 |
 | Thinking tokens | 0 |
-| Total tokens | 27,629,444 |
+| Total tokens | 41,280,810 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited-upper-bound US$15.2224 (8) |
-| Run total (range) | US$7.6112 to US$15.2224 |
+| `cost_usd` by basis | audited US$15.6204 (10); audited-upper-bound US$7.1252 (5) |
+| Run total (range) | US$19.1831 to US$22.7457 |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 0.55 h over 8 pass(es) |
+| Summed wall clock | 1.02 h over 15 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -133,7 +145,7 @@ These conditions are scored on a frame other than the run's nominal scope in § 
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> Batch A residual (H11 + pv-strategy). Verifier-strategy matrix over ONE shared proposer pool (detect\_brief-text, flash, single pass, 572 candidates at era-2-487). 8 canonical verified conditions = adversarial/brief/checklist x text/image (6) + 2 cascade orderings, each scored at its verifier-accepted operating point (Session 100, user-confirmed grain). proposer\_pools intentionally EMPTY: the on-disk proposer meta (proposer/detections-detect\_brief-text-3-flash-2026-03-15.meta.json) is a degenerate stub (items\_processed=1, items\_failed=1, 1 tile) although the geojson holds 572 features, so no faithful proposer PASS can be extracted; conditions reference the pool by string -&gt; benign pool-unresolved WARN (pv-diag-384 precedent). The 8 verifier\_passes are real sidecar metas (verified-&lt;strategy&gt;.meta.json, 572 items, 0 failures). The v2 / v1-prompt replicates (identical T=0.0 config re-runs, ~10h apart) and the n=572 pre-verifier 'full' scorings are deliberately excluded; they register in \_ignored\_evals at the deferred 3b close-out sweep. Cascade instruction\_file = the final stage the single sidecar meta records (stage 1 not separately captured). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the run's single proposer pass was written straight into proposer/ with no run\_N directory, so proposer\_pools is empty and the conditions name the pool by prompt string. source\_run records this run as the pool's home (pv-512 / pv-256 precedent). No metric, eval or detection changed.
+> Batch A residual (H11 + pv-strategy). Verifier-strategy matrix over ONE shared proposer pool (detect\_brief-text, flash, single pass, 572 candidates at era-2-487). 8 canonical verified conditions = adversarial/brief/checklist x text/image (6) + 2 cascade orderings, each scored at its verifier-accepted operating point (Session 100, user-confirmed grain). proposer\_pools intentionally EMPTY: the on-disk proposer meta (proposer/detections-detect\_brief-text-3-flash-2026-03-15.meta.json) is a degenerate stub (items\_processed=1, items\_failed=1, 1 tile) although the geojson holds 572 features, so no faithful proposer PASS can be extracted; conditions reference the pool by string -&gt; benign pool-unresolved WARN (pv-diag-384 precedent). The 8 verifier\_passes are real sidecar metas (verified-&lt;strategy&gt;.meta.json, 572 items, 0 failures). The v2 / v1-prompt replicates (identical T=0.0 config re-runs, ~10h apart) and the n=572 pre-verifier 'full' scorings are deliberately excluded; they register in \_ignored\_evals at the deferred 3b close-out sweep. Cascade instruction\_file = the final stage the single sidecar meta records (stage 1 not separately captured). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the run's single proposer pass was written straight into proposer/ with no run\_N directory, so proposer\_pools is empty and the conditions name the pool by prompt string. source\_run records this run as the pool's home (pv-512 / pv-256 precedent). No metric, eval or detection changed. AMENDED 2026-10-05 (S160, tracker C-19): the -v2 legs are NOT identical re-runs of the original legs. Their configurations differ in what was sent: the -v2 text configs add text\_only\_labels and crop\_label (six exemplar labels; 1,792 input tokens per request against the original adversarial-text's 1,727), and the -v2 image configs send six exemplar images where the originals sent nine (8,305 against 11,602 tokens). They were the corrected re-runs after the verifier-config drift (9b023aef8, cad5d3365; docs/notes/working-notes.md:3222). Both sets are registered as separate legs (D31); which set the conditions should cite is open (reports/manipulation-check-2026-10-05.md section B.4).
 
 ### 5.4 Waived evaluations (36, 10 distinct reason(s))
 
@@ -211,7 +223,11 @@ No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospecti
 
 ### 9.1 Registered pools
 
-8 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
+| Proposer pool | Modality | Path within the run directory |
+|---|---|---|
+| `proposer` | text | `proposer` |
+
+14 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
 
@@ -220,7 +236,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

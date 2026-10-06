@@ -1,0 +1,92 @@
+{
+  "version": "1.0",
+  "n_variants": 2,
+  "variants": [
+    {
+      "name": "resweep/pro-text-flash-verifier",
+      "dir": "/tmp/regen-b/resweep/pro-text-flash-verifier",
+      "optimal_threshold": 0.15,
+      "f1": 0.7696,
+      "precision": 0.8096,
+      "recall": 0.7333,
+      "n_accepted": 394,
+      "ci": {
+        "f1": {
+          "mean": 0.7685,
+          "lower": 0.7222,
+          "upper": 0.8131
+        },
+        "precision": {
+          "mean": 0.8087,
+          "lower": 0.755,
+          "upper": 0.8516
+        },
+        "recall": {
+          "mean": 0.7327,
+          "lower": 0.6679,
+          "upper": 0.7926
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    },
+    {
+      "name": "resweep/pro-text-pro-verifier",
+      "dir": "/tmp/regen-b/resweep/pro-text-pro-verifier",
+      "optimal_threshold": 0.15,
+      "f1": 0.7842,
+      "precision": 0.8195,
+      "recall": 0.7517,
+      "n_accepted": 399,
+      "ci": {
+        "f1": {
+          "mean": 0.7825,
+          "lower": 0.7366,
+          "upper": 0.8255
+        },
+        "precision": {
+          "mean": 0.8183,
+          "lower": 0.7721,
+          "upper": 0.8637
+        },
+        "recall": {
+          "mean": 0.7503,
+          "lower": 0.6869,
+          "upper": 0.813
+        }
+      },
+      "probabilities_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json",
+      "manifest_file": "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    }
+  ],
+  "pairwise": [
+    {
+      "variant_a": "resweep/pro-text-flash-verifier",
+      "variant_b": "resweep/pro-text-pro-verifier",
+      "f1_difference": {
+        "mean": -0.014475404825910084,
+        "ci_lower": -0.025886214509170707,
+        "ci_upper": -0.005563030145382191,
+        "method": "BCa",
+        "p_value": 0.0067,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      },
+      "precision_difference": {
+        "mean": -0.009809812322237299,
+        "ci_lower": -0.02449421696120471,
+        "ci_upper": 0.002027720401437127,
+        "method": "BCa",
+        "p_value": 0.1369,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      },
+      "recall_difference": {
+        "mean": -0.018319443989451654,
+        "ci_lower": -0.03592803612552223,
+        "ci_upper": -0.004241067783842238,
+        "method": "BCa",
+        "p_value": 0.0252,
+        "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)"
+      }
+    }
+  ]
+}

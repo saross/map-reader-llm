@@ -211,8 +211,10 @@ COST_SENTENCE = (
     "2026-10-04): proposer passes x N plus its verification, from",
     "`data/pricing/frontier-configurations.json` via",
     "`scripts/lib_frontier_cost.py`; a run's carried and oracle cells share",
-    f"it, and `{COMPLETED_MARK}` marks a verifier leg completed from comparable",
-    "legs (a floor). See",
+    "it, except that the TH7, T03 and TM oracle cells add the vote-3",
+    "increment their k3 operating point drew on (PI ruling D33), and",
+    f"`{COMPLETED_MARK}` marks a verifier leg completed from comparable legs (a",
+    "floor). See",
 )
 
 

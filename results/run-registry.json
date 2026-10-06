@@ -259,6 +259,12 @@
    "directory_path": "outputs/gemini3-image-55map-2026-09-16",
    "status": "active",
    "notes": "Gemini 3 image proposer at 55-map deployment scale \u2014 row B of the image proposer x verifier 2x2 whose row A is gemini37-image-55map-2026-09-13. One image proposer pool of five passes over the 24,561-tile g384_ov192_55map geometry (gemini-3-flash-preview, thinking minimal, T = 0.7), three first-N unions (K = 1 22,785 candidates, K = 3 36,389, K = 5 45,786) each verified by two arms (carried Gemini 3 MINIMAL on realtime flex; all-3.7 low on the Batch API), eighteen scored cells. Asks whether the proposer family, not the verifier seat, carries the image modality's deployment-scale advantage. Results tree is results/gemini3-image-55map-2026-09-16/. Its post_run_report.md is HAND-AUTHORED and on the generator's exclusion list."
+  },
+  {
+   "run_id": "phase1-library",
+   "directory_path": "archive/outputs-pre-retest-60-tile/phase1-library",
+   "status": "active",
+   "notes": "Registered library-construction step (prereg 8.4.1 Step 1; execution checklist 'Phase 1: Library + Text', 2026-02-01): image-only baseline (library_pure-positive-canon, 4 Canon+ and 3 null examples, detect_image-only.md, T=1.0, minimal thinking), 5 passes over the 20 calibration tiles (cal-20-512), 100 calls. Its FP/FN register (fp-fn-register.md) selected HP 05-08 and HN 11-14 (Decision 4) and the H9-C pool HN 18-29 (6e772b55a), which every image-modality library still transmits. Never re-run; archived in 276e4ca80 under a manifest line ('superseded by retest/phase2a') that D40 corrects. No condition: the calibration-set F1 is a selection diagnostic (D41 precedent). Passes are laid out pass_01..pass_05. Registered 2026-10-05 (S160, ruling D40)."
   }
  ]
 }

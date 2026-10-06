@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — grid-2026-08-18
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `7a41e8781`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/grid-2026-08-18` · **Registry status**: active · **Purpose**: Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.
 
@@ -37,6 +37,51 @@
 
 ## 3. Execution — passes on file
 
+### 3.1 Proposer passes (40)
+
+| Pool | Pass | Model used | Model requested | Modality | Thinking | Temp | Status | Tiles done | Dispatched | Retries |
+|---|---:|---|---|---|---|---:|---|---:|---:|---:|
+| `g384_ov048` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 35 |
+| `g384_ov048` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 2 |
+| `g384_ov048` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 0 |
+| `g384_ov048` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 4 |
+| `g384_ov048` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 4 |
+| `g384_ov048` | 6 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 8 |
+| `g384_ov048` | 7 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 7 |
+| `g384_ov048` | 8 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 4 |
+| `g384_ov048` | 9 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 12 |
+| `g384_ov048` | 10 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 487 | 487 | 0 |
+| `g384_ov192` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 163 |
+| `g384_ov192` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 8 |
+| `g384_ov192` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 1 |
+| `g384_ov192` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 6 |
+| `g384_ov192` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 5 |
+| `g384_ov192` | 6 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 9 |
+| `g384_ov192` | 7 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 2 |
+| `g384_ov192` | 8 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 21 |
+| `g384_ov192` | 9 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 7 |
+| `g384_ov192` | 10 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 1398 | 1398 | 11 |
+| `g512_ov064` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 13 |
+| `g512_ov064` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 6 |
+| `g512_ov064` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 8 |
+| `g512_ov064` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 12 |
+| `g512_ov064` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 1 |
+| `g512_ov064` | 6 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 5 |
+| `g512_ov064` | 7 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 0 |
+| `g512_ov064` | 8 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 3 |
+| `g512_ov064` | 9 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 0 |
+| `g512_ov064` | 10 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 296 | 296 | 4 |
+| `g512_ov256` | 1 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 72 |
+| `g512_ov256` | 2 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 8 |
+| `g512_ov256` | 3 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 8 |
+| `g512_ov256` | 4 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 8 |
+| `g512_ov256` | 5 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 19 |
+| `g512_ov256` | 6 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 7 |
+| `g512_ov256` | 7 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 0 |
+| `g512_ov256` | 8 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 5 |
+| `g512_ov256` | 9 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 4 |
+| `g512_ov256` | 10 | gemini-3-flash-preview | gemini-3-flash-preview | text | minimal | 0.7 | ok | 832 | 832 | 5 |
+
 ### 3.2 Verifier passes (8)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
@@ -56,17 +101,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 8 |
-| Input tokens (billed) | 29,340,416 |
+| Passes on file | 48 |
+| Input tokens (billed) | 74,604,688 |
 | Input tokens (cached) | 0 |
-| Output tokens | 2,597,685 |
+| Output tokens | 7,407,074 |
 | Thinking tokens | 120 |
-| Total tokens | 31,938,221 |
+| Total tokens | 82,011,882 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$11.2309 (7); audited-lower-bound US$0.0024 (1) |
-| Run total (range) | at least US$11.2333; no ceiling (1 audited-lower-bound pass(es)) |
+| `cost_usd` by basis | audited US$29.7611 (47); audited-lower-bound US$0.0024 (1) |
+| Run total (range) | at least US$29.7635; no ceiling (1 audited-lower-bound pass(es)) |
 | Passes with no `cost_usd` | 0 |
-| Summed wall clock | 1.61 h over 8 pass(es) |
+| Summed wall clock | 4.30 h over 48 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -133,7 +178,7 @@ These conditions are scored on a frame other than the run's nominal scope in § 
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> Pool annotation (2026-09-13, S153 Batch 1 item 2): the conditions name their proposer pool by PROMPT ('brief-text'); the physical passes are keyed by grid geometry (g384\_ov048 / g384\_ov192 / g512\_ov064 / g512\_ov256, each with run\_\*), which was never decomposed into proposer\_pools. source\_run records this run as the pool's home so the benign pool-unresolved WARN is machine-readable. No metric, eval or detection changed.
+> Pool annotation (2026-09-13, S153 Batch 1 item 2): the conditions name their proposer pool by PROMPT ('brief-text'); the physical passes are keyed by grid geometry (g384\_ov048 / g384\_ov192 / g512\_ov064 / g512\_ov256, each with run\_\*), which was never decomposed into proposer\_pools. source\_run records this run as the pool's home so the benign pool-unresolved WARN is machine-readable. No metric, eval or detection changed. AMENDED 2026-10-04 (S160, register repair, rulings D30/D31): the four geometry pools are now decomposed as proposer\_pools (keys = directories, as stride-phaseb-2026-08-25 does), so the register carries the 40 passes and their six run\_N\_recovery folds (46 metas, US$18.5302 at flex). The conditions keep naming 'brief-text'; re-pointing them to the geometry keys is a separate decision.
 
 ### 5.4 Waived evaluations (5, 3 distinct reason(s))
 
@@ -197,6 +242,13 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 
 ### 9.1 Registered pools
 
+| Proposer pool | Modality | Path within the run directory |
+|---|---|---|
+| `g384_ov048` | text | `g384_ov048` |
+| `g384_ov192` | text | `g384_ov192` |
+| `g512_ov064` | text | `g512_ov064` |
+| `g512_ov256` | text | `g512_ov256` |
+
 8 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
@@ -206,7 +258,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `7a41e8781` |
+| Source commit | `238606a15` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
