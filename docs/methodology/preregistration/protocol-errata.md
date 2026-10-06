@@ -3165,6 +3165,21 @@ unregistered exploratory, and Obs 187's medium-helps finding must be reported wi
 this licence status. Cross-references: E40 (and its 2026-07-30 clarification), E62,
 Obs 185, Obs 187.
 
+**Annotated 2026-10-06 (ruling D43; Observation 499)**: provenance item 3's
+figures are superseded. Obs 187's "ΔF1 = +0.010, p = 0.001" compared the
+medium verifier with a minimal-verifier file that was overwritten 33 s after
+its sweep loaded it (two runs of the minimal job; inferred from timestamps
+and mean probabilities). Re-tested under D42/D43 as the March pairwise ran
+it, medium exceeds minimal by 0.018 F1 (0.7842 against 0.7666), paired
+tile-swap permutation p = 0.0047 (re-swept, +0.015, p = 0.0067); the image
+comparison stays null (p = 0.1626). The difference is between two single
+runs, and the minimal verifier's own two runs differ by 0.007 F1, so it is
+consistent with a configuration effect but not "decisive": the thinking
+level is evidenced by items 1 and 2 (configuration and non-zero thought
+tokens), and whether the two configurations differ in performance is
+tracker W2.7's question (ruling D45). This entry's licence finding and
+protocol impact stand.
+
 ---
 
 ### E70: March 2026 out-of-band tile-recovery campaign (`--patch-tiles`) — 127 passes / 350 tiles recovered; sidecars updated, per-item meta lists left stale
