@@ -397,6 +397,25 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   If they did, correct E57, the register's model labels and every claim that
   reads those cells as Flash; if not, find what differed (serving drift
   between dates bears on every cross-date comparison).
+- [ ] W7.6 A REPLICATE ATLAS from the accidental re-runs (added 2026-10-06 at
+  the PI's question "is there anything else we can learn from these accidental
+  re-runs?"; offline, no API). The same-signature pairs span every time gap:
+  minutes (B-17's resubmitted minimal verifier, 2026-03-24), hours (`h8-v2`
+  scale-8 against `h10` pool_160_hp4hn4, 2026-04-15), 8 days on the 55-map
+  corpus (`55maps-generalisation` 04-10 against `55maps-text-high-generalisation`
+  04-18), 17 days on the text track (`gold-standard-v2` 04-10 against
+  `pv-diag-384` text T0.7 03-24) and 20 days on the image track (S-9). Tabulate
+  within- and cross-execution differences by time gap, track, stage and corpus
+  size: (1) where in time the drift appears (same-day pairs like within-run
+  pairs, or not), which separates serving drift from execution context
+  (Obs 497); (2) the cross-execution floor on the 55-map corpus itself, which
+  D46's floors for the board's cross-date comparisons need (W2.7); (3) a drift
+  timeline from every meta with fixed settings (per-request thought tokens,
+  output length, MAX_TOKENS and parse-failure rates by date), looking for change
+  points; (4) which tiles flip between replicates (intrinsic ambiguity), against
+  the ground-truth reviews and the FP classes; (5) a sentinel design for future
+  campaigns and map-reader-bench: one fixed configuration on a fixed tile set at
+  each run date, so drift is measured, not inferred.
 - [ ] W7.4 Each finding feeds W5: no run is designed until W7 says what can be
   verified offline.
 
