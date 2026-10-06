@@ -8,6 +8,102 @@ project state.
 
 ---
 
+## 🔍 S162 CLOSE (2026-10-06, Fable) — THE FLOORS MEASURED (W2.7, W7.6); THE W1 AND W4/W6 PASSES; PR #24 OPENED
+
+> Branch `register-repair` (pushed, level with origin at `098281066`; sapphire
+> level) now carries, on top of S161's work, the W2.7 report, the W1
+> documentation pass and the W4/W6 engineering pass; **PR #24** (register
+> repair + D42 + E91 + the floors) is open against `main`, to merge on the
+> PI's word. No model API spend; compute on sapphire only. Tier 1 at
+> `ea5cebeb7`: 3,772 passed, 1 failed (the registry rebuild check, fixed by
+> `3d8018315`); the run at the final head is in a PR comment. No process of
+> this session is running (`/tmp/w27/`, `/tmp/w76/` on sapphire are scratch).
+>
+> ### What happened
+>
+> - **W2.7 and W7.6 (1)-(3) DONE** (`reports/w27-replicate-floors-2026-10-06.md`,
+>   `c84cfa378`; scripts and raw outputs beside it). Floors without API
+>   calls: gold-standard consensus from disjoint pass subsets (95th
+>   percentile 0.02-0.06 at the boards' thresholds; consensus does not
+>   shrink the single-pass floor, unanimity widens it); 55-map
+>   proposer-stage floors with the verifier held fixed (0.001-0.005 at
+>   N = 5, about 0.008 at N = 1, Gemini 3 text; 0.017 for the Gemini 3 image
+>   pool at N = 1); the uplift's two executions 54 days apart differ by
+>   0.02-0.03 as proposer-only consensus and 0.003-0.006 through the fixed
+>   verifier. Gates: six committed rung cells and four committed consensus
+>   sweeps reproduced exactly. The paper's 103 configuration-level claims
+>   screened (report § 7): six board claims reworded as output differences
+>   or ties, two corrections of fact, lesson (i)'s verifier-date confound
+>   (k3 shells verified 2026-06-06, 40-49 days after the k4 legs).
+> - **W1 DONE except W1.1 and parts of C-25/C-26** (16 commits
+>   `e8f793c16`..`ea5cebeb7`, Opus agent): E92 (the retest's canonical-first
+>   order and `canonical-last` as sent); the retest summary with the Phase 2c
+>   text contrast withdrawn and every p the permutation p; Obs 498 and 499;
+>   E43/E68/E69/E72/E81 annotated; Decision 16 noted; methods, results § R2,
+>   claims rows R2-01..11 and discussion seeds drafted FOR THE PI'S REVIEW
+>   (each changelog says so). Open: the two register outcomes still quoting
+>   bootstrap p (`h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`);
+>   C-25/C-26 remaining sites (the D17 audit `:905-919`); the C-23 phrases
+>   live in `studies/retest/phase2e-h4-ordering.yaml` (an execution record,
+>   left as written).
+> - **W4.4, W6.1, W6.2, W6.3, W6.5 DONE** (`5ffb8836f`..`43c157425`, Opus
+>   agent; its commits carry Opus's own attribution line). In-batch retries
+>   pass the tier and book `retry_usage` (no auditor reads it yet); the
+>   modality checker resolves all 248 stages, `UNRESOLVED_VERIFIER_STAGES`
+>   empty; `lib_config_validation.py` refuses an example list under
+>   `include_example_images: false` unless `--allow-inert-fields` (22
+>   historical text-only configs now need the flag); `check_generated_currency.py`
+>   (first version: 2,518 of 3,030 outputs stale by commit time, 1,655 from
+>   one E82 metadata commit, so it cannot gate yet); `check_manipulation.py`
+>   (51 analyses pass, 5 refused = the known null manipulations, 15
+>   unverifiable: 43 arms the register ties to no meta).
+> - **Registry rebuilt** (`3d8018315`); planning ticked (`098281066`).
+>
+> ### Next session, in order
+>
+> 1. **PR #24**: read the review, merge on the PI's word; then `main` carries
+>    everything and the plumbing mirrors stop.
+> 2. **W1.5 for W2.7** (paper text for the PI's review): the § 7 rewordings
+>    and corrections in `results-draft.md`, the floors paragraph in § R0, run
+>    dates beside the board cells; W1.1 (the two register outcomes); the
+>    C-25/C-26 remainder; a D9 note on the signed 55-map analyses.
+> 3. **The PI's decisions**: replicate runs under D47 (a same-date
+>    re-verification of one k4 shell beside its k3 shell; a same-day bridging
+>    pair for the modality reversal; the sentinel) — each with its own cost;
+>    whether the 22 historical text-only configs get the opt-out flag in
+>    their study files; whether `check_generated_currency.py` moves to a
+>    content signal before it gates.
+> 4. **W7.6 (4)-(5)** (tile flips between replicates; the sentinel design),
+>    offline.
+>
+> ### Carry-forward the docs do not hold
+>
+> - **Commits to `main` from amd-tower:** plumbing (as S160/S161) until the
+>   PR merges.
+> - **Pass order:** the committed consensus sweeps were built in
+>   lexicographic run order (`run_1, run_10, run_11, …`); pin it before any
+>   committed union is regenerated (report § 2).
+> - **Mutation and race:** one tier-1 test raced the docs agent's commit on
+>   amd-tower (`test_build_generated_file_registry` reading HEAD mid-commit);
+>   passes alone.
+> - **Pending reviews (never silently discarded):** user-obs S150-S161
+>   candidates C1-C4; working-notes candidates (a)-(f) from S157-S159 and
+>   (g)-(h) from S161 (now Obs 499 covers (g) and (h)); this session's
+>   candidates: (i) consensus does not shrink the replicate floor and
+>   unanimity widens it; (j) the verifier absorbs most of the proposer
+>   drift (UPL 0.02-0.03 → 0.003-0.006); (k) the k3 shells are
+>   mixed-verifier-execution cells; (l) the April consensus sweeps' pass
+>   order; plus the W1 agent's twelve surprises in its report (notably: the
+>   February pilot re-tested has 6/10 BH-significant on both tracks against
+>   the retest's 5/10, reversing "the retest sharpened the pattern";
+>   claims rows R2-09..11 say SIGNED where the register has them unsigned;
+>   `manipulation-check-…-arms.json` still pairs group 19 with
+>   `config-default`); `scripts/bulk-archive.py` infra gate.
+> - **Housekeeping, unchanged:** untracked `ib.md`, `otel_m.md`; sapphire's
+>   untracked tile directories.
+
+---
+
 ## 🔍 S161 CLOSE (2026-10-05/06, Opus) — X1 SIGNED; OSF: NOTHING LOST, THE DEPOSIT NEVER MADE, NOW MADE; D42 IMPLEMENTED; SAME REQUEST, DIFFERENT DATES
 
 > Branch `register-repair` (pushed, level with origin; sapphire level) now
