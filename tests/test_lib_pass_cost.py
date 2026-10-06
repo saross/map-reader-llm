@@ -1084,6 +1084,35 @@ def test_a_carry_forward_stage_is_its_metas_whole_spend(evidence, tmp_path, unco
 
 
 @pytest.mark.tier1
+@pytest.mark.parametrize("meta_kwargs, basis", [
+    ({"usage": {k: 0 for k in USAGE}}, "unrecorded"),             # no tokens recorded
+    ({"start": None, "end": None, "duration": None}, "unpriceable"),  # no timestamp
+])
+def test_a_carry_note_never_replaces_a_null_basis_note(evidence, tmp_path, meta_kwargs,
+                                                       basis):
+    # PR #24 review, finding 5: the carry note ("the metas are this stage's
+    # whole spend") once ran for every basis but audited-lower-bound, so an
+    # unrecorded carry-forward stage lost its D12 "null, not zero" note and
+    # an unpriceable one gained a whole-spend claim it cannot price.
+    _write(tmp_path / "results" / "passes-manifest.json", {})
+    (tmp_path / "outputs" / "r" / "verifier" / "k1").mkdir(parents=True)
+    leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
+    _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
+    _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 8,
+                                            "uncovered": 2,
+                                            "extends_stage": "outputs/r/verifier/k1"})
+    meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},
+                 execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]},
+                 **meta_kwargs)
+    out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")
+    assert (out["cost_usd"], out["cost_basis"]) == (None, basis)
+    note = out["cost_source"].get("note", "")
+    assert "carried forward" not in note
+    if basis == "unrecorded":
+        assert note == "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
+
+
+@pytest.mark.tier1
 def test_a_carry_must_reach_the_results_with_the_meta(evidence, tmp_path):
     # WP4 re-audit mutant (accounted + carried >= results dropped): the meta
     # covers every uncovered result and the stage exists, but 5 carried + 2

@@ -1415,7 +1415,11 @@ class PassCoster:
             source["note"] = "usage_stats recorded no tokens; null, not zero (PI ruling D12)"
         if basis == "audited-lower-bound":
             source["note"] = "LOWER bound: " + "; ".join(partial_why)
-        elif carry_note:
+        elif carry_note and basis in ("audited", "audited-upper-bound"):
+            # The carry note says the metas are the stage's whole PRICED spend,
+            # so it belongs only on a priced basis. On an unrecorded basis it
+            # would overwrite the D12 "null, not zero" note; on an unpriceable
+            # one it would claim a whole spend nobody could price.
             source["note"] = carry_note
         return {"cost_usd": cost, "cost_basis": basis, "cost_source": source}
 
