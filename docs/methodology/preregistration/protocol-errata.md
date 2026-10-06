@@ -1281,6 +1281,15 @@ investigation. Identified by the C4 verification sweep (wave-4 blind
 triage, Session 125); matched figures re-derived from committed
 artefacts by two independent investigation passes.
 
+**Annotated 2026-10-06 (ruling D42; tracker C-26)**: "text +0.072, FDR
+p=0.004" above is the raw bootstrap p of Phase 2b's T=0.7 > T=1.0 text
+contrast (`results/retest/pairwise-bootstrap-comparisons.json`
+`comparisons[27]`), not an FDR-adjusted value, and not H7's registered row.
+On the paired tile-swap permutation test it is p = 0.0055 (BH within track
+0.011); the registered T=0.3 > T=1.0 contrast is +0.096 at p = 0.0002. The
+conclusion that the preregistered sweep is the citable temperature result
+stands.
+
 ---
 
 ### E44: single-pass-384 executed at T=1.0 instead of T=0.0
@@ -3091,6 +3100,12 @@ role. Approved by the PI 2026-07-30
 package § 3 item 6 recommendation (finding 10). Cross-references: E27, CMT-0109,
 `reports/verification/phase1-gate-package.md` § 2 finding 10.
 
+**Annotated 2026-10-06 (ruling D42; tracker C-25)**: the two p-values above
+are the retired bootstrap's. On the paired tile-swap permutation test,
+brief-text > image-only (`comparisons[1]`) is p = 0.0055 (BH within phase
+0.030) and brief-text vs brief-text-image (`comparisons[0]`) p = 0.42. This
+entry's basis and its retirement of the designation stand.
+
 ---
 
 ### E69: Unregistered Flash-verifier thinking levels in `pv-diag-384` (MEDIUM on six conditions, HIGH on one) — a deliberate exploratory verifier-variant matrix
@@ -3489,6 +3504,13 @@ follows the register landing). The paper's citable temperature
 evidence is the preregistered Phase 2b sweep (text +0.072, FDR
 p=0.004; image +0.014, ns) — "T=1.0 is a poor default" is supported;
 a universal T=0.7 superiority is not.
+
+**Annotated 2026-10-06 (ruling D42; tracker C-26)**: as in E43's
+annotation, "FDR p=0.004" is the raw bootstrap p of T=0.7 > T=1.0 on the
+text track (permutation p = 0.0055, BH within track 0.011), and the image
++0.014 is p = 0.48 on the permutation test. "T=1.0 is a poor default"
+stands; cite H7's registered contrast (T=0.3 > T=1.0, +0.096, p = 0.0002)
+for it.
 
 ---
 
