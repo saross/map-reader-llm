@@ -43,7 +43,7 @@ pytestmark = pytest.mark.tier1
 RUN = "run1"
 _CACHED = (cm._stage_dirs, cm._manifest_sources, cm._bindings, cm.meta_record,
            cm.stage_metas, cm.verifier_metas_for_source, cm.proposer_metas_for_source,
-           dcm.load_meta_json, dcm.pool_output_dir)
+           cm._incomplete_stages, dcm.load_meta_json, dcm.pool_output_dir)
 
 
 def _clear_caches() -> None:
@@ -546,6 +546,84 @@ def test_a_binding_inside_the_registers_stage_is_followed(repo) -> None:
     assert arm["verifier_stage"] == {"stage": f"{RUN}/pool-verify-d", "how": "binding:inside"}
     assert arm["verifier_route"] == "source-directory"
     assert arm["binding"] == "inside"
+
+
+# ── PR #25 review, finding 4: a stage whose meta covers part of it ──────
+
+_PARTIAL = "run.meta.json records only the 6-item cleanup leg of 38,713 requests"
+
+
+def test_an_incomplete_meta_binding_leaves_the_half_unverifiable(repo) -> None:
+    """A binding whose review found the stage's only meta to be a cleanup
+    leg: the meta is set aside, the half is UNVERIFIABLE with the binding's
+    reason, and a pair beside a transmitted arm of the same proposer
+    request is unverifiable. Without the flag the cleanup meta read as the
+    whole stage and the pair PASSED on it."""
+    entry = _entry("cleanup-only", ["cell-a"], verifier_sources=[
+        f"outputs/{RUN}/verifier/pool/verify_a/probabilities.json"])
+    repo["write_bindings"]([entry])
+    judgement, _arms = cm.check_conditions([f"{RUN}::cell-a", f"{RUN}::pool-verify-b-k5"])
+    assert judgement["verdict"] == cm.PASS  # the unflagged binding: the meta is evidence
+    repo["write_bindings"]([{**entry, "incomplete_meta": True,
+                             "incomplete_meta_reason": _PARTIAL}])
+    arm = cm.arm_for_condition(f"{RUN}::cell-a")
+    assert arm["verifier_basis"] == "unverifiable"
+    assert arm["verifier_unverifiable_reason"] == (
+        f"incomplete meta: {RUN}/pool-verify-a: binding cleanup-only: {_PARTIAL}")
+    assert arm["verifier_metas_set_aside"] == [repo["meta"]["a"]]
+    assert arm["binding"] == "cleanup-only"
+    judgement, _arms = cm.check_conditions([f"{RUN}::cell-a", f"{RUN}::pool-verify-b-k5"])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+    assert judgement["undetermined_pairs"]
+
+
+def test_an_incomplete_stage_is_unverifiable_by_every_route(repo) -> None:
+    """The flag is a fact about the stage: an arm that reaches the same
+    stage through the register's own route (its label) and another bound
+    to it by an unflagged binding are unverifiable too; two arms reading
+    the one stage are then judged on the proposer half (here, one request
+    and one configuration: no pair to judge)."""
+    repo["decomposition"][RUN]["conditions"].append(
+        {"label": "pool-verify-a-k3", "detections": "results/cells/a3/detections.geojson"})
+    repo["conditions"][f"{RUN}::pool-verify-a-k3"] = {
+        **repo["conditions"][f"{RUN}::cell-a"], "condition_id": f"{RUN}::pool-verify-a-k3",
+        "label": "pool-verify-a-k3"}
+    source = f"outputs/{RUN}/verifier/pool/verify_a/probabilities.json"
+    repo["write_bindings"]([
+        {**_entry("flagged", ["cell-a"], verifier_sources=[source]),
+         "incomplete_meta": True, "incomplete_meta_reason": _PARTIAL},
+        _entry("plain", ["cell-b"], verifier_sources=[source])])
+    arms = [cm.arm_for_condition(f"{RUN}::{lab}") for lab in ("pool-verify-a-k3", "cell-b")]
+    assert arms[0]["verifier_stage"] == {"stage": "pool-verify-a", "how": "label"}
+    for arm in arms:
+        assert arm["verifier_basis"] == "unverifiable"
+        assert arm["verifier_unverifiable_reason"] == (
+            f"incomplete meta: {RUN}/pool-verify-a: binding flagged: {_PARTIAL}")
+    judgement, _arms = cm.check_conditions([f"{RUN}::cell-a", f"{RUN}::cell-b",
+                                            f"{RUN}::pool-verify-a-k3"])
+    assert judgement["verdict"] == cm.PASS
+    assert len(judgement["unverifiable_halves"]) == 3
+
+
+@pytest.mark.parametrize(("extra", "problem"), [
+    ({"incomplete_meta": "yes"}, "incomplete_meta is str, not true or false"),
+    ({"incomplete_meta": True}, "incomplete_meta_reason is not a one-line reason"),
+    ({"incomplete_meta": True, "incomplete_meta_reason": " "},
+     "incomplete_meta_reason is not a one-line reason"),
+    ({"incomplete_meta": False, "incomplete_meta_reason": "x"},
+     "incomplete_meta_reason without incomplete_meta: true"),
+    ({"incomplete_meta": True, "incomplete_meta_reason": "x", "verifier_sources": [],
+      "proposer_sources": ["outputs/other-pool"]},
+     "incomplete_meta is true but the binding names no verifier source"),
+])
+def test_an_invalid_incomplete_meta_flag_is_named(repo, extra, problem) -> None:
+    """The flag is a boolean with a reason, on a binding with a verifier
+    source; anything else is a named problem (exit 1 through the gate)."""
+    entry = {**_entry("bad", ["cell-a"], verifier_sources=["outputs/loose"]), **extra}
+    problems = cm.validate_bindings({"schema_version": cm.BINDINGS_SCHEMA,
+                                     "bindings": [entry]}, repo["conditions"],
+                                    lambda c: f"results/cells/{c['label']}/detections.geojson")
+    assert any(problem in p for p in problems), problems
 
 
 # ── PR #25 review, finding 1: listed but unreadable verifier metas ──────

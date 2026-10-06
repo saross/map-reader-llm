@@ -134,6 +134,15 @@ to the proposer metas on disk under it. A malformed bindings file, or one
 naming an unregistered condition or a detections path the register does not
 record for it, stops the gate (exit 1) rather than binding silently.
 
+The gate never passes on evidence it does not have (PR #25 review). A
+verifier half whose listed metas are all unreadable, whose binding has a
+source that resolves nothing, whose binding contradicts the stage the
+register identifies, or whose stage a binding marks ``incomplete_meta``
+(the surviving meta covers only a cleanup, recovery or final-round leg) is
+UNVERIFIABLE, with the reason named: like a declared half, it separates a
+pair only through the proposer half (:func:`transmission_relation`). A
+proposer half with a dead binding source leaves the arm UNVERIFIABLE.
+
 Usage
 -----
     # Gate one registered analysis (exit 0 PASS, 2 REFUSE, 3 UNVERIFIABLE)
@@ -889,7 +898,9 @@ def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
     malformed file yields named problems rather than an exception, and an
     absent, null or empty ``bindings`` list is a problem, not a silent "no
     bindings" (PR #25 review, finding 8): to run without bindings, delete
-    the file.
+    the file. An ``incomplete_meta`` flag must be a boolean; when true it
+    needs a one-line ``incomplete_meta_reason`` and a verifier source
+    (finding 4: :func:`_incomplete_stages`).
 
     Args:
         doc: The parsed bindings file.
@@ -949,6 +960,18 @@ def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
         documents = _str_list(evidence, "documents", f"{where}: evidence", problems)
         if not (_is_text(evidence.get("script")) or documents):
             problems.append(f"{where}: evidence cites no script or document")
+        incomplete = entry.get("incomplete_meta")
+        if incomplete is not None and not isinstance(incomplete, bool):
+            problems.append(f"{where}: incomplete_meta is {type(incomplete).__name__}, "
+                            "not true or false")
+        elif incomplete and not _is_text(entry.get("incomplete_meta_reason")):
+            problems.append(f"{where}: incomplete_meta is true but incomplete_meta_reason "
+                            "is not a one-line reason")
+        elif incomplete and not fields["verifier_sources"]:
+            problems.append(f"{where}: incomplete_meta is true but the binding names no "
+                            "verifier source (it concerns the verifier stage's metas)")
+        elif not incomplete and "incomplete_meta_reason" in entry:
+            problems.append(f"{where}: incomplete_meta_reason without incomplete_meta: true")
         products = set(fields["detections"])
         if not products:
             problems.append(f"{where}: names no detections (the products it binds)")
@@ -1049,6 +1072,34 @@ def stages_containing(source: str) -> list[tuple[str, str]]:
         return []
     best = max(n for n, _run, _key in hits)
     return sorted({(run, key) for n, run, key in hits if n == best})
+
+
+@functools.lru_cache(maxsize=1)
+def _incomplete_stages() -> dict[tuple[str, str], str]:
+    """The registered stages whose surviving metas cover only part of their requests.
+
+    A binding marked ``incomplete_meta`` records, from its review, that the
+    only meta(s) left for its verifier stage cover a cleanup, recovery or
+    final-round leg, not the stage's main requests (e.g. a 6-item cleanup
+    meta for a 38,713-candidate stage). That is a fact about the STAGE, so
+    every arm whose verifier half reads it is unverifiable on that half,
+    whether it reaches the stage through a binding or through the
+    register's own route (PR #25 review, finding 4: the gate used to read
+    such a meta as the whole stage and pass on it).
+
+    Returns:
+        ``(run, key) -> "binding <id>: <incomplete_meta_reason>"`` for every
+        registered stage an ``incomplete_meta`` binding's verifier sources
+        lie in (the first such binding in file order names it).
+    """
+    out: dict[tuple[str, str], str] = {}
+    for entry in {e["id"]: e for e in _bindings().values()}.values():
+        if entry.get("incomplete_meta"):
+            for source in entry["verifier_sources"]:
+                for stage in stages_containing(source):
+                    out.setdefault(stage, f"binding {entry['id']}: "
+                                          f"{entry['incomplete_meta_reason']}")
+    return out
 
 
 def _rel(path: str | Path) -> str:
@@ -1314,7 +1365,10 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
     the verifier stage but reads no meta for it, a binding is followed only
     if every verifier source lies in that same stage; a binding naming any
     other stage leaves the half UNVERIFIABLE, with both stages named
-    (finding 7).
+    (finding 7). A verifier half read from a stage that an
+    ``incomplete_meta`` binding flags (:func:`_incomplete_stages`), by
+    either route, or through a binding that is itself flagged, is
+    UNVERIFIABLE with the binding's reason (finding 4).
 
     Args:
         condition_id: A ``run_id::label`` condition id.
@@ -1355,6 +1409,11 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
         stage, how = verifier_stage_of(cond)
         if stage:
             verifier = list(stage_metas(run, stage))
+        if verifier and (run, stage) in _incomplete_stages():
+            # The register reads the stage, but a reviewed binding records
+            # that its surviving meta covers only part of it (finding 4).
+            v_identity = f"{run}/{stage}"
+            v_reason = f"incomplete meta: {v_identity}: {_incomplete_stages()[(run, stage)]}"
         sources = (binding or {}).get("verifier_sources") or []
         bound = "|".join(dict.fromkeys(_source_stage_label(s) for s in sources))
         if not verifier and sources and stage and any(
@@ -1378,6 +1437,13 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
             elif found:
                 used = True
                 verifier, verifier_route = found, "|".join(routes)
+                flagged = [_incomplete_stages()[s] for src in sources
+                           for s in stages_containing(src) if s in _incomplete_stages()]
+                if binding.get("incomplete_meta"):
+                    flagged.insert(0, f"binding {binding['id']}: "
+                                      f"{binding['incomplete_meta_reason']}")
+                if flagged:
+                    v_reason, v_identity = f"incomplete meta: {bound}: {flagged[0]}", bound
         if not verifier and not v_reason:
             declared = cond.get("verifier_config") or None
     arm = arm_from_metas(condition_id, proposer, verifier, declared,
