@@ -184,6 +184,32 @@ POOL_KEYED_JSON = [
 # ── reading what was sent ────────────────────────────────────────────────
 
 @functools.lru_cache(maxsize=None)
+def load_meta_json(path: str | Path) -> Any:
+    """Parse one meta file, gzipped or not.
+
+    Some archived metas are gzipped in place under their ``.json`` name, and
+    the passes manifest cites one ``.meta.json.gz``; both are recognised by
+    the gzip magic bytes, not by the name. Shared with
+    ``lib_manipulation_signature.load_meta`` (PR #24 review, finding 6: the
+    manipulation gate read neither form and silently dropped the pass).
+
+    Args:
+        path: The meta's path.
+
+    Returns:
+        The parsed JSON value.
+
+    Raises:
+        OSError: The file cannot be read, or is a corrupt gzip stream.
+        EOFError: The gzip stream is truncated.
+        ValueError: The content is not valid UTF-8 JSON.
+    """
+    raw = Path(path).read_bytes()
+    if raw[:2] == b"\x1f\x8b":
+        raw = gzip.decompress(raw)
+    return json.loads(raw.decode("utf-8"))
+
+
 def read_meta(path: str | Path) -> dict[str, Any] | None:
     """Read one ``*.meta.json``'s exemplar-transmission state.
 
@@ -202,12 +228,9 @@ def read_meta(path: str | Path) -> dict[str, Any] | None:
     if not p.exists():
         return None
     try:
-        raw = p.read_bytes()
-        # Some archived metas are gzipped in place under their .json name.
-        if raw[:2] == b"\x1f\x8b":
-            raw = gzip.decompress(raw)
-        cfg = json.loads(raw.decode("utf-8")).get("configuration") or {}
-    except (OSError, ValueError, json.JSONDecodeError):
+        # Gzipped or not (load_meta_json).
+        cfg = load_meta_json(p).get("configuration") or {}
+    except (OSError, ValueError, EOFError):
         return None
     if not cfg:
         return None

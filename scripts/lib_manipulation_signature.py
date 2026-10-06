@@ -23,7 +23,8 @@ Provenance of the copies
   holds the parsed meta does not parse it again (PR #24 review, finding 9:
   the gate parsed each meta up to three times); the record gains
   ``max_output_tokens`` and ``dispatched_ids``, the two fields the gate
-  re-read the file for; and the reader is :func:`load_meta`.
+  re-read the file for; and the reader is :func:`load_meta`, which reads a
+  gzipped meta (finding 6).
 - :func:`signature`, :func:`model_of_record` and :func:`eff_temp` are
   ``signature()``, ``_model_of_record()`` and ``eff_temp()`` from
   ``arms.py`` there (same commit), as extended in ``check_manipulation.py``
@@ -57,6 +58,8 @@ import statistics
 from pathlib import Path
 from typing import Any
 
+from scripts.derive_condition_modality import load_meta_json
+
 #: The signature definition's version (see ``check_manipulation.py``).
 SIGNATURE_VERSION = "manipulation-signature/1"
 
@@ -68,7 +71,14 @@ SIGNATURE_FIELDS = ("stage", "model", "temperature_eff", "thinking", "sys_hash",
 # ── reading a meta ───────────────────────────────────────────────────────
 
 def load_meta(path: str | Path) -> Any:
-    """Parse one ``*.meta.json`` file.
+    """Parse one ``*.meta.json`` file, gzipped or not.
+
+    The reading is ``derive_condition_modality.load_meta_json``, the gzip
+    handling its ``read_meta`` already had. The 2026-10-05 harvester used a
+    plain ``open``, so a gzipped meta (one registered pass cites
+    ``run_3/....meta.json.gz``) came back as an error record and its pass
+    was silently dropped from every arm's signature (PR #24 review,
+    finding 6).
 
     Args:
         path: The meta's path.
@@ -77,12 +87,11 @@ def load_meta(path: str | Path) -> Any:
         The parsed JSON value (a dict for any meta the pipeline wrote).
 
     Raises:
-        OSError: The file cannot be read.
-        ValueError: The file is not valid JSON (``json.JSONDecodeError`` is
-            a ``ValueError``).
+        OSError: The file cannot be read, or is a corrupt gzip stream.
+        EOFError: The gzip stream is truncated.
+        ValueError: The content is not valid UTF-8 JSON.
     """
-    with open(path) as f:
-        return json.load(f)
+    return load_meta_json(path)
 
 
 # ── the harvester (copied from harvest.py; see the module docstring) ──────

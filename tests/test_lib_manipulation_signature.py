@@ -12,13 +12,16 @@ break the gate. These tests pin:
   (``max_output_tokens`` and ``dispatched_ids``), and that the gate now
   parses each meta once;
 - that ``check_manipulation`` takes the harvester from this library, not
-  from ``reports/``.
+  from ``reports/``;
+- that a gzipped meta, named ``.meta.json.gz`` or gzipped in place, is read
+  like a plain one (finding 6: its pass was silently dropped).
 
 Tier 1: synthetic metas in ``tmp_path``; no committed data is read.
 """
 
 from __future__ import annotations
 
+import gzip
 import importlib.util
 import json
 from pathlib import Path
@@ -118,3 +121,29 @@ def test_the_gate_takes_its_harvester_from_this_library() -> None:
     assert not hasattr(cm, "HARVEST_SCRIPT")
     source = (REPO / "scripts" / "check_manipulation.py").read_text()
     assert "importlib" not in source
+
+
+@pytest.mark.parametrize("name", ["g.meta.json.gz", "g.meta.json"])
+def test_a_gzipped_meta_is_read_like_a_plain_one(tmp_path, name) -> None:
+    """Finding 6: the passes manifest cites a ``.meta.json.gz``, and some
+    archived metas are gzipped in place under their ``.json`` name. Both
+    harvest exactly as the plain meta does, and the pass joins its arm."""
+    plain = _meta(tmp_path / "plain.meta.json")
+    gz = tmp_path / "gz" / name
+    gz.parent.mkdir()
+    gz.write_bytes(gzip.compress(plain.read_bytes()))
+    drop = {"path", "bytes"}
+    want = {k: v for k, v in sig.harvest(str(plain)).items() if k not in drop}
+    got = sig.harvest(str(gz))
+    assert "error" not in got
+    assert {k: v for k, v in got.items() if k not in drop} == want
+    arm = cm.arm_from_metas("A", [str(plain), str(gz)])
+    assert arm["unreadable"] == []
+    assert sorted(arm["meta_paths"]) == sorted([str(plain), str(gz)])
+
+
+def test_a_truncated_gzip_meta_is_an_error_record(tmp_path) -> None:
+    """A damaged gzip stream is recorded as unreadable, not raised."""
+    bad = tmp_path / "bad.meta.json.gz"
+    bad.write_bytes(gzip.compress(b'{"configuration": {}}')[:12])
+    assert "error" in sig.harvest(str(bad))
