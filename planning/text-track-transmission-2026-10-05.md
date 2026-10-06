@@ -325,7 +325,12 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   Done 2026-10-05.
 - [x] W4.3 DONE 2026-10-06 (Obs 498, `d427f55d9`). Was: Obs 280's label (C-20), by a new Obs (entries are never edited);
   fold into W1.4's Obs.
-- [ ] W4.4 The checker still cannot resolve 17 verifier stages (sidecar-form
+- [x] W4.4 DONE 2026-10-06 (W4/W6 pass, `35990bbf3`): stages now resolve from
+  the passes manifest's source files, then the stage directory, then git's
+  record of where an archived leg moved; all 248 registered stages resolve
+  (16 by the manifest alone, 1 by git rename), every one agrees with the
+  verifier reading, `--check` exits 0, and `UNRESOLVED_VERIFIER_STAGES` is
+  empty. Was: The checker still cannot resolve 17 verifier stages (sidecar-form
   metas, a `t0.3`/`t0-3` directory spelling, an archived leg), named in
   `tests/test_derive_condition_modality.py`. Resolve stages from the
   register's own paths, as the passes extractor does, so none is out of
@@ -345,18 +350,43 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 
 ### W6. Prevention (added 2026-10-05 at the PI's request)
 
-- [ ] W6.1 The manipulation check as a maintained guard: promote
+- [x] W6.1 DONE 2026-10-06 (W4/W6 pass, `61d8e0dca`):
+  `scripts/check_manipulation.py` REFUSES (exit 2) an analysis with two arms
+  that differ in configuration but share a transmitted signature
+  (`manipulation-signature/1`, now with output budget and dispatched inputs;
+  to share with map-reader-bench). Over the 71 registered analyses: 51 PASS,
+  5 REFUSE (the report's known groups: Phase 2c text, 2b image = 2c scale-8,
+  h8-v2 scale-8 = h10 pool_160), 15 UNVERIFIABLE (43 arms the register binds
+  to no pass meta). Was: The manipulation check as a maintained guard: promote
   `reports/manipulation-check-2026-10-05-scripts/` to a tested script that
   refuses an analysis whose arms differ in configuration but not in payload
   (map-reader-bench is designing the same gate; share the design).
-- [ ] W6.2 Configuration validation: an inert field is an error, not a no-op
+- [x] W6.2 DONE 2026-10-06 (W4/W6 pass, `ef9aa5cb2`):
+  `scripts/lib_config_validation.py`; `4_detect_mounds_batch.py` and
+  `run_phase2.py` refuse at launch an example list under
+  `include_example_images: false`, with `--allow-inert-fields` for historical
+  reproduction (logged loudly). The 22 committed historical text-only
+  configurations are now refused without it. Was: Configuration validation:
+  an inert field is an error, not a no-op
   (first, an example list in a text-only configuration).
-- [ ] W6.3 A currency guard for generated outputs: a committed output must
+- [x] W6.3 DONE 2026-10-06 (W4/W6 pass, `9d3f7dbfa`):
+  `scripts/check_generated_currency.py` flags a registry entry whose output
+  was last committed before a source or its generator. First run: 2,518 stale
+  candidates of 3,030 checked (1,699 with a newer source, 1,655 of them from
+  one E82 metadata commit, `70c550177`; 819 by a newer generator only);
+  nothing regenerated. The
+  registry covers Markdown only, so the K-ladder unions and
+  `grid_analysis.json` are outside it. Was: A currency guard for generated
+  outputs: a committed output must
   match its generator run on committed inputs. Two stale outputs surfaced on
   2026-10-05 (the analyses manifest after D25's note; the K-ladder unions after
   their builder's fix, C-22); `reports/verification/generated-file-registry.json`
   may already list what such a guard would cover.
-- [ ] W6.5 The in-batch parse-failure retries (`complete_batch_unit` in
+- [x] W6.5 DONE 2026-10-06 (W4/W6 pass, `5ffb8836f`): the retries now run at
+  the unit's retry tier (default flex; `--service-tier` reaches them in batch
+  mode) and book each call's usage in a `retry_usage` block at that tier,
+  apart from the batch's `usage_stats`; no cost auditor reads it yet. Was:
+  The in-batch parse-failure retries (`complete_batch_unit` in
   `scripts/lib_batch_api.py`) pass no service tier, so they ran at standard,
   and their usage enters no meta (found 2026-10-05 while fixing the sync patch
   path, `8ae31a585`, which now records its usage). Fix: pass the tier and
@@ -517,6 +547,13 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-06 — W4.4, W6.1-W6.3 and W6.5 done (code)
+
+The modality checker resolves every registered verifier stage; three
+guards land (manipulation, inert configuration fields, generated-output
+currency); the in-batch retries pass their tier and book their usage.
+Commits `5ffb8836f`, `35990bbf3`, `ef9aa5cb2`, `9d3f7dbfa`, `61d8e0dca`.
 
 ### 2026-10-06 (Session 162) — The W1 documentation pass
 
