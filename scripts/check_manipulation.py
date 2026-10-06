@@ -380,7 +380,7 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
         Returns:
             ``(readable records, unreadable paths)``.
         """
-        recs = [meta_record(p) for p in sorted(set(paths))]
+        recs = [meta_record(p) for p in sorted({_rel(p) for p in paths})]
         bad = [r["path"] for r in recs if "error" in r]
         good = [r for r in recs if "error" not in r]
         main = [r for r in good if "_chunk" not in Path(r["path"]).name] or good
@@ -639,16 +639,7 @@ def proposer_metas_of(run: str, pool: str) -> tuple[list[str], str | None]:
     pool_dir, _matched = dcm.pool_output_dir(run, pool, spec.get("path"))
     if pool_dir is None:
         return [], None
-    root = BASE_DIR / pool_dir
-    paths = []
-    for depth in ("*", "*/*", "*/*/*", "*/*/*/*"):
-        for f in sorted(root.glob(f"{depth}.meta.json")):
-            tail = str(f)[len(str(root)):]
-            if "/verified" in tail or "/crops" in tail:
-                continue
-            meta = dcm.read_meta(f)
-            if meta and dcm.is_proposer_meta(meta):
-                paths.append(str(f.relative_to(BASE_DIR)))
+    paths = _proposer_metas_under(pool_dir)
     return (paths, "pool-directory") if paths else ([], None)
 
 
@@ -1078,17 +1069,88 @@ def _is_verifier_meta(path: str) -> bool:
     """True for a readable meta that records a verifier pass.
 
     Args:
-        path: A meta path.
+        path: A meta path (normalised by :func:`_rel`, so a meta is
+            harvested once however it was reached).
 
     Returns:
         Whether :func:`meta_record` reads it and
         :func:`lib_manipulation_signature.is_verifier_record` holds.
     """
-    rec = meta_record(path)
+    rec = meta_record(_rel(path))
     return "error" not in rec and is_verifier_record(rec)
 
 
-def verifier_metas_for_source(source: str) -> tuple[list[str], str | None]:
+def _is_proposer_meta(path: str) -> bool:
+    """True for a readable pass meta that records a proposer pass.
+
+    The gate's one proposer test, on its own harvested record: a
+    configuration version (as :func:`derive_condition_modality.is_proposer_meta`
+    requires) that is not a verifier's (:func:`_is_verifier_meta`'s test).
+
+    Args:
+        path: A meta path (normalised by :func:`_rel`).
+
+    Returns:
+        Whether :func:`meta_record` reads it, it has a version, and it is
+        not a verifier record.
+    """
+    rec = meta_record(_rel(path))
+    return "error" not in rec and bool(rec.get("version")) and not is_verifier_record(rec)
+
+
+def _on_proposer_side(path: str, root: str) -> bool:
+    """True when no ``verified`` or ``crops`` subtree lies between root and path.
+
+    Args:
+        path: A repository-relative path at or below ``root``.
+        root: The directory the path was found under.
+
+    Returns:
+        Whether the part of ``path`` below ``root`` avoids ``/verified`` and
+        ``/crops`` (the verifier's subtrees of a pool).
+
+    Examples:
+        >>> _on_proposer_side("p/run_1/d.meta.json", "p")
+        True
+        >>> _on_proposer_side("p/verified/run.meta.json", "p")
+        False
+    """
+    tail = path[len(root.rstrip("/")):]
+    return "/verified" not in tail and "/crops" not in tail
+
+
+#: The depths below a pool or pass directory searched for proposer metas.
+_PROPOSER_DEPTHS = ("*", "*/*", "*/*/*", "*/*/*/*")
+
+
+def _proposer_metas_under(root: str) -> list[str]:
+    """The proposer metas on disk under a directory (four levels down).
+
+    The shared search of :func:`proposer_metas_of` and
+    :func:`proposer_metas_for_source`. The path filter (no ``verified`` or
+    ``crops`` subtree) runs BEFORE a meta is parsed, so the large verifier
+    metas of a pool's ``verified/`` tree are never read or cached here (PR
+    #25 review, finding 9).
+
+    Args:
+        root: A repository-relative directory.
+
+    Returns:
+        Repository-relative meta paths, in search order.
+    """
+    root = str(Path(root))
+    base = BASE_DIR / root
+    found = []
+    for depth in _PROPOSER_DEPTHS:
+        for f in sorted(base.glob(f"{depth}.meta.json")):
+            rel = _rel(f)
+            if _on_proposer_side(rel, root) and _is_proposer_meta(rel):
+                found.append(rel)
+    return found
+
+
+@functools.lru_cache(maxsize=None)
+def verifier_metas_for_source(source: str) -> tuple[tuple[str, ...], str | None]:
     """Follow one verifier source of a binding to the metas of its requests.
 
     Routes, in order:
@@ -1102,30 +1164,34 @@ def verifier_metas_for_source(source: str) -> tuple[list[str], str | None]:
     3. ``git-rename`` — the verifier metas among the files git moved away
        from the source (an archived leg).
 
+    Paths are repository-relative throughout, so each meta is harvested
+    once (PR #25 review, finding 9: route 2 harvested by absolute path and
+    returned relative ones, which :func:`arm_from_metas` harvested again).
+
     Args:
         source: A repository-relative path the derivation read.
 
     Returns:
-        ``(meta paths, route)``; ``([], None)`` when no route reads one.
+        ``(meta paths, route)``; ``((), None)`` when no route reads one.
     """
     stages = stages_containing(source)
     found = sorted({m for run, key in stages for m in stage_metas(run, key)})
     if found:
-        return found, "stage:" + ",".join(f"{run}/{key}" for run, key in stages)
+        return tuple(found), "stage:" + ",".join(f"{run}/{key}" for run, key in stages)
     path = BASE_DIR / source
     candidates: list[str] = []
     if path.is_dir():
-        candidates = dcm._metas_under(source)
+        candidates = [_rel(f) for f in dcm._metas_under(source)]
     elif path.is_file():
-        candidates = sorted(str(f) for f in path.parent.glob("*.meta.json"))
-    found = [_rel(f) for f in candidates if _is_verifier_meta(f)]
+        candidates = [_rel(f) for f in sorted(path.parent.glob("*.meta.json"))]
+    found = [f for f in candidates if _is_verifier_meta(f)]
     if found:
-        return found, "source-directory"
+        return tuple(found), "source-directory"
     moved, commit = dcm.git_renamed_to([source])
     found = [f for f in moved if f.endswith(".meta.json") and _is_verifier_meta(f)]
     if found:
-        return found, f"git-rename:{commit}"
-    return [], None
+        return tuple(found), f"git-rename:{commit}"
+    return (), None
 
 
 @functools.lru_cache(maxsize=1)
@@ -1139,53 +1205,56 @@ def _manifest_sources() -> tuple[tuple[str, str, str], ...]:
                  for p in passes for f in (p.get("provenance") or {}).get("source_files") or [])
 
 
-def proposer_metas_for_source(source: str) -> tuple[list[str], str | None]:
+@functools.lru_cache(maxsize=None)
+def proposer_metas_for_source(source: str) -> tuple[tuple[str, ...], str | None]:
     """Follow one proposer source of a binding to the metas of its passes.
 
     Routes, in order (a ``verified`` or ``crops`` subtree below the source is
-    the verifier's, never the proposer's):
+    the verifier's, never the proposer's: :func:`_on_proposer_side`):
 
-    1. ``passes-manifest`` — the source metas the passes manifest records
-       under the source path that are not verifier metas;
-    2. ``source-directory`` — the proposer metas on disk under the source
-       (four levels, as :func:`proposer_metas_of` searches a pool);
-    3. ``git-rename`` — the proposer metas git moved away from the source.
+    1. ``passes-manifest`` — the source files the passes manifest records
+       under the source path, when at least one is a readable proposer meta
+       (:func:`_is_proposer_meta`). Readable verifier metas and files that
+       are not metas (``run.log``, the register) are dropped; an unreadable
+       meta-named file is kept, so :func:`arm_from_metas` names it. Hits
+       none of which is a readable proposer meta do NOT stop the search
+       (PR #25 review, finding 5);
+    2. ``source-directory`` — for a directory, the proposer metas on disk
+       under it (:func:`_proposer_metas_under`, as :func:`proposer_metas_of`
+       searches a pool); for a single meta file, that file only if it is a
+       readable proposer meta (finding 5: it used to be accepted unread);
+    3. ``git-rename`` — the proposer metas git moved away from the source,
+       each judged by where it sat below the source (its OLD path; finding
+       6: the tail was sliced from the new path).
 
     Args:
         source: A repository-relative pass or pool directory (or one meta).
 
     Returns:
-        ``(meta paths, route)``; ``([], None)`` when no route reads one.
+        ``(meta paths, route)``; ``((), None)`` when no route reads one.
     """
-    def proposer_side(path: str) -> bool:
-        tail = path[len(source.rstrip("/")):]
-        return "/verified" not in tail and "/crops" not in tail
-
     hits = [(f, run, key) for f, run, key in _manifest_sources()
-            if _under(f, source) and proposer_side(f)
-            and not ("error" not in meta_record(f) and is_verifier_record(meta_record(f)))]
-    if hits:
-        keys = sorted({f"{run}/{key}" for _f, run, key in hits})
-        return sorted({f for f, _run, _key in hits}), "passes-manifest:" + ",".join(keys)
+            if _under(f, source) and _on_proposer_side(f, source) and not _is_verifier_meta(f)]
+    if any(_is_proposer_meta(f) for f, _run, _key in hits):
+        kept = [(f, run, key) for f, run, key in hits if _is_proposer_meta(f) or (
+            ".meta" in Path(f).name and "error" in meta_record(_rel(f)))]
+        keys = sorted({f"{run}/{key}" for _f, run, key in kept})
+        return (tuple(sorted({f for f, _run, _key in kept})),
+                "passes-manifest:" + ",".join(keys))
     root = BASE_DIR / source
-    found = []
-    if root.is_file() and source.endswith(".meta.json"):
-        found = [source]
+    found: list[str] = []
+    if root.is_file():
+        found = [source] if ".meta" in root.name and _is_proposer_meta(source) else []
     elif root.is_dir():
-        for depth in ("*", "*/*", "*/*/*", "*/*/*/*"):
-            for f in sorted(root.glob(f"{depth}.meta.json")):
-                rel = _rel(f)
-                meta = dcm.read_meta(f)
-                if proposer_side(rel) and meta and dcm.is_proposer_meta(meta):
-                    found.append(rel)
+        found = _proposer_metas_under(source)
     if found:
-        return found, "source-directory"
-    moved, commit = dcm.git_renamed_to([source])
-    found = [f for f in moved if f.endswith(".meta.json") and proposer_side(f)
-             and (meta := dcm.read_meta(f)) and dcm.is_proposer_meta(meta)]
+        return tuple(found), "source-directory"
+    renames, commit = dcm.git_renames([source])
+    found = [new for old, new in renames if new.endswith(".meta.json")
+             and _on_proposer_side(old, source) and _is_proposer_meta(new)]
     if found:
-        return found, f"git-rename:{commit}"
-    return [], None
+        return tuple(found), f"git-rename:{commit}"
+    return (), None
 
 
 def _from_sources(sources: list[str], follow: Any) -> tuple[list[str], list[str], list[str]]:

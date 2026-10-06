@@ -42,7 +42,8 @@ pytestmark = pytest.mark.tier1
 
 RUN = "run1"
 _CACHED = (cm._stage_dirs, cm._manifest_sources, cm._bindings, cm.meta_record,
-           cm.stage_metas, dcm.load_meta_json, dcm.pool_output_dir)
+           cm.stage_metas, cm.verifier_metas_for_source, cm.proposer_metas_for_source,
+           dcm.load_meta_json, dcm.pool_output_dir)
 
 
 def _clear_caches() -> None:
@@ -247,11 +248,14 @@ def test_the_longest_registered_stage_directory_wins(repo) -> None:
 def test_a_source_outside_every_stage_is_read_from_its_directory(repo) -> None:
     """An unregistered verifier directory: its own verify metas are read,
     from the directory or from beside an existing file; a source that does
-    not exist is never widened to its parent."""
-    expected = ([repo["meta"]["loose"]], "source-directory")
+    not exist is never widened to its parent. (The resolvers are memoised
+    over a tree that does not change during a run, so the test drops the
+    caches after writing.)"""
+    expected = ((repo["meta"]["loose"],), "source-directory")
     assert cm.verifier_metas_for_source("outputs/loose") == expected
-    assert cm.verifier_metas_for_source("outputs/loose/probabilities.json") == ([], None)
+    assert cm.verifier_metas_for_source("outputs/loose/probabilities.json") == ((), None)
     _write(repo["root"], "outputs/loose/probabilities.json", {})
+    _clear_caches()
     assert cm.verifier_metas_for_source("outputs/loose/probabilities.json") == expected
 
 
@@ -259,10 +263,102 @@ def test_a_proposer_source_resolves_by_manifest_then_disk(repo) -> None:
     """A pass directory the passes manifest records resolves through it; one
     it does not record is read from disk."""
     assert cm.proposer_metas_for_source(f"outputs/{RUN}/pool") == (
-        [repo["meta"]["pool"]], f"passes-manifest:{RUN}/pool")
+        (repo["meta"]["pool"],), f"passes-manifest:{RUN}/pool")
     assert cm.proposer_metas_for_source("outputs/other-pool") == (
-        [repo["meta"]["other"]], "source-directory")
-    assert cm.proposer_metas_for_source("outputs/absent") == ([], None)
+        (repo["meta"]["other"],), "source-directory")
+    assert cm.proposer_metas_for_source("outputs/absent") == ((), None)
+
+
+# ── PR #25 review, findings 5, 6 and 9: the proposer routes ──────────────
+
+def test_unreadable_manifest_hits_do_not_stop_the_disk_route(repo) -> None:
+    """The passes manifest records, under a pass directory, only a meta that
+    is absent here and a run.log: neither is a readable proposer meta, so the
+    disk route still runs and finds the pass meta that IS there (they used
+    to suppress it, leaving the arm with no proposer evidence)."""
+    disk = _write(repo["root"], "outputs/p2/run_1/d.meta.json", _proposer_meta("detect_z"))
+    _write(repo["root"], "outputs/p2/run_1/run.log", "log")
+    repo["passes"][(RUN, "pool2")] = [{"provenance": {"source_files": [
+        "outputs/p2/run_1/gone.meta.json", "outputs/p2/run_1/run.log"]}}]
+    _clear_caches()
+    assert cm.proposer_metas_for_source("outputs/p2") == ((disk,), "source-directory")
+
+
+def test_a_readable_manifest_hit_keeps_its_unreadable_sibling_visible(repo) -> None:
+    """With one readable proposer meta among the manifest's hits, the route
+    answers, and keeps an unreadable META beside it (named unreadable by the
+    arm) but drops a non-meta file."""
+    good = _write(repo["root"], "outputs/p3/run_1/d.meta.json", _proposer_meta("detect_z"))
+    repo["passes"][(RUN, "pool2")] = [{"provenance": {"source_files": [
+        good, "outputs/p3/run_2/gone.meta.json", "outputs/p3/run_1/run.log"]}}]
+    _clear_caches()
+    assert cm.proposer_metas_for_source("outputs/p3") == (
+        (good, "outputs/p3/run_2/gone.meta.json"), f"passes-manifest:{RUN}/pool2")
+
+
+def test_a_single_file_source_must_be_a_readable_proposer_meta(repo) -> None:
+    """A source naming one meta file is accepted only if it reads as a
+    proposer pass (it used to be accepted unread)."""
+    verifier = repo["meta"]["loose"]
+    corrupt = "outputs/p4/run_1/d.meta.json"
+    (repo["root"] / corrupt).parent.mkdir(parents=True)
+    (repo["root"] / corrupt).write_text("{")
+    assert cm.proposer_metas_for_source(verifier) == ((), None)
+    assert cm.proposer_metas_for_source(corrupt) == ((), None)
+    assert cm.proposer_metas_for_source(repo["meta"]["other"]) == (
+        (repo["meta"]["other"],), "source-directory")
+
+
+def test_the_disk_route_never_parses_a_verified_subtree(repo, monkeypatch) -> None:
+    """The path filter runs before a meta is read: a pool's ``verified/``
+    and ``crops/`` metas are never harvested (or cached) by the search."""
+    _write(repo["root"], "outputs/p5/run_1/d.meta.json", _proposer_meta("detect_z"))
+    _write(repo["root"], "outputs/p5/verified/run.meta.json", _verifier_meta())
+    _write(repo["root"], "outputs/p5/crops/x/run.meta.json", _verifier_meta())
+    read: list[str] = []
+    real = cm.meta_record
+
+    def spy(path: str) -> dict[str, Any]:
+        """Record which metas the search harvests.
+
+        Args:
+            path: The meta path.
+
+        Returns:
+            The real harvested record.
+        """
+        read.append(path)
+        return real(path)
+
+    monkeypatch.setattr(cm, "meta_record", spy)
+    assert cm._proposer_metas_under("outputs/p5") == ["outputs/p5/run_1/d.meta.json"]
+    assert read == ["outputs/p5/run_1/d.meta.json"]
+
+
+def test_a_git_renamed_meta_is_judged_by_where_it_sat(repo, monkeypatch) -> None:
+    """The git-rename route tests the OLD path's place below the source: a
+    pass meta moved from ``outputs/pp/run_1`` to ``archive/xy/verified/
+    run_1`` is a proposer meta, and a meta that sat in
+    ``outputs/pp/verified`` is not. The old code sliced the NEW path by the
+    source's length (``outputs/pp`` and ``archive/xy`` are both 10
+    characters), so it rejected the first and accepted the second."""
+    _write(repo["root"], "archive/xy/verified/run_1/d.meta.json", _proposer_meta("detect_z"))
+    _write(repo["root"], "archive/xy/run_v/d.meta.json", _proposer_meta("detect_w"))
+    renames = [("outputs/pp/run_1/d.meta.json", "archive/xy/verified/run_1/d.meta.json"),
+               ("outputs/pp/verified/d.meta.json", "archive/xy/run_v/d.meta.json")]
+    monkeypatch.setattr(dcm, "git_renames", lambda paths: (renames, "abc1234"))
+    monkeypatch.setattr(dcm, "git_renamed_to",
+                        lambda paths: ([new for _old, new in renames], "abc1234"))
+    assert cm.proposer_metas_for_source("outputs/pp") == (
+        ("archive/xy/verified/run_1/d.meta.json",), "git-rename:abc1234")
+
+
+def test_a_meta_reached_by_two_spellings_is_harvested_once(repo) -> None:
+    """An absolute and a relative path to one meta share one harvest."""
+    cm.meta_record.cache_clear()
+    rel = repo["meta"]["a"]
+    assert cm._is_verifier_meta(str(repo["root"] / rel)) and cm._is_verifier_meta(rel)
+    assert cm.meta_record.cache_info().currsize == 1
 
 
 def test_an_unbound_proposer_is_bound_by_its_sources(repo) -> None:
