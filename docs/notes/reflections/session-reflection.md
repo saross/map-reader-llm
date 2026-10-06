@@ -11867,3 +11867,81 @@ were worth more as a test oracle than as attestations.
 twice, buried both times in long messages with several decisions in them. A
 decision that needs his approval should arrive on its own, or at least first,
 not as point 1 of a list that runs on.*
+
+## Session 161 — 2026-10-05/06 — the session that found nothing was lost, two things never done, and one request that answered differently on different dates
+
+*Reflecting on session work in map-reader-llm, Session 161 (Opus 5.5),
+primary instance.*
+
+**What decision or trade-off made today will look arbitrary without this
+session's context?** The double bookkeeping in the March artefacts. A reader
+opening `pairwise-bootstrap-comparisons.json`, the nine retest phase
+evaluations or the six class B files will find two p-values on every row:
+the retired bootstrap value, kept as published, and a `permutation_retest`
+block beside it. That looks like indecision. It is a deliberate refusal to
+regenerate. Each of those files could have been rebuilt from its producer
+in minutes, and each rebuild would also have moved published numbers that
+D42 had no quarrel with: per-condition F1 by up to 0.006, because the
+evaluator changed after March, and every confidence interval, because the
+interval method became BCa in April and the March tile order followed the
+interpreter's hash seed. Regenerating would have made D42's effect
+unattributable, mixing a test change with three other changes. The same
+logic carried two blocks over unchanged in files that *were* regenerated (a
+grid cost block that would have picked up the WP4b re-pricing, and a
+verifier `conditions` block written by a different mode of its script), and
+it is why D43 and D44 both came out "do both": a record that changes only
+the test, and beside it the figure that is now right. Without this context
+the annotated files look untidy; with it they are the only form in which a
+reader can see what D42 alone did.
+
+**What would you do differently if you replayed this session?** Three
+things, all mine. First, I let a decision list scatter again. S160's
+relational note said a decision for the PI should arrive on its own; I put
+X1 first and alone, as asked, and then over the next day spread B-17, I4 and
+three W2.7 choices across long status messages, until the PI wrote that he
+could not find them in the transcript. The walk-through he asked for (each
+decision self-contained, answerable in one line) is the format I should
+have used from the start. Second, I offered a default that did not apply:
+"signature notes on the two Era-1 boards" went on the defaults list because
+the tracker called the boards signed, and only on reading the rows did I
+find both unsigned, which changes the instrument from a note to an in-place
+amendment. A default is a promise; check the premise before making it.
+Third, the W2.7 note's cross-execution row pooled within-execution pairs
+with cross-execution ones (0.013/0.054 where the cross pairs alone give
+0.037/0.061). It surfaced only because writing Obs 497 made me re-derive
+the number at source. The anti-confabulation rule did its job, but a day
+late: the row should have been checked when it was written, against W2's
+own "39 pairs, 67 %" figure, which it plainly contradicted.
+
+**What question emerged that wasn't pursued?** Whether the date matters to
+the board. W7.5 established, as far as offline evidence can, that the
+March and April executions sent byte-identical requests to the same
+preview model, rebuilt under both SDK versions, and still gave outputs that
+do not overlap: 746-753 against 793-821 detections per pass. The leading
+explanation is a change on the serving side. The 55-map board compares cells
+run in April, June and August; nobody yet knows how much of any cross-date
+difference on it is the date. The PI's question at the end (what else can
+the accidental re-runs tell us?) points at the answer: the project already
+holds same-request pairs minutes, hours, eight days, seventeen days and
+twenty days apart, including one on the 55-map corpus itself. Tracker W7.6
+is the atlas that would tabulate them. It is the most interesting thing the
+session left unopened, and it is cheap.
+
+The session's shape was unusual for this project: much of it faced outward.
+The OSF work was the first time in months that work here wrote to a public
+record under the PI's name: a late deposit, a registration update, a
+project made public. It came with an investigation that ended better than
+it began. The PI recalled uploading amendments that were not on OSF; the
+logs showed nothing had been deleted, the session log showed five files
+uploaded on 4 February, and the API showed an update whose file list was
+empty. His memory was right about the act and wrong only about its effect.
+The deviation itself (a registered pre-holdout deposit never made) could
+then be mitigated honestly, because five of the nine items had sat
+unchanged in a public repository at a commit the February update itself
+cites by hash.
+
+*Relational note: the PI approved public text quickly once it was in front
+of him whole, and asked for one sentence to be made plainer. The insider
+shorthand he could not parse ("recorded by no run") was mine, compressed for
+a reader who had lived through W3; a public text needs the reader who has
+not.*

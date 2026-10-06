@@ -2979,3 +2979,82 @@ the report that cites them) when a ruling is made on them, not at close.
 When a final regeneration replaces a trial, grep the session's own reports
 for the trial's figures. Check `ps` on sapphire for the session's watchers
 before closing.
+
+## claude-obs 141 — 2026-10-06: He asks what an error measures for free, and the answer is usually something the plan needed
+
+**Pattern.** Once W7.5 had explained the S-9 surprise, Shawn did not move on:
+"Is there anything else we can learn from these accidental re-runs of the
+same configuration? We've always tried to mine whatever information we can
+from our errors." The answer turned out to be more than a curiosity. The
+project already holds same-request pairs minutes, hours, eight, seventeen and
+twenty days apart, on both tracks and both stages, including one on the
+55-map corpus itself: exactly the cross-execution floor that ruling D46 needs
+for the board's cross-date comparisons, and a way to locate the drift in time.
+It became tracker W7.6.
+
+**Lesson.** An accidental replicate is a free measurement, and in this
+project it has twice been the measurement a planned analysis was missing
+(the run-to-run spread of B-17's double submission; the cross-date pairs for
+W2.7). The project guidance already says "the deviation is the data"; the PI
+applies it after resolution, not only at discovery.
+
+**How to apply.** When reporting that an error or accident is resolved, add
+one line: what it measured that we could not otherwise measure, and which
+open item that serves. Do not wait to be asked.
+
+## claude-obs 142 — 2026-10-06: He asks what a re-test is for before choosing how to run it
+
+**Pattern.** Offered two ways to re-test I4 (the March sweep or the E39
+sweep), Shawn answered with a question: "what's the goal of the re-test, to
+show what happened originally, or to settle the substance of something
+related to the current one?" Framed that way, the choice dissolved: the D42
+record needs everything held fixed but the test, and the substance needs the
+corrected sweep. Both are cheap, so both were run (D43, D44 follow the same
+pattern).
+
+**Lesson.** Options presented as alternative methods hide that they serve
+different goals. The PI resolves such choices fastest when the goal of each
+is named.
+
+**How to apply.** When laying out re-analysis options, label each with the
+question it answers (record of what happened, or the current best estimate).
+If both questions matter and the cost is small, say "both" is an option.
+
+## claude-obs 143 — 2026-10-06: Self-critique — decisions scattered again, one session after I wrote that they should not be
+
+**Pattern.** claude-obs 138 (S160) said a decision buried in a long message is
+a decision lost. This session I put X1 first and alone, as asked, and then
+spread B-17, I4 and three W2.7 choices across long status messages, each
+with its context in a different message. Shawn wrote: "I'm having trouble
+finding them in the terminal transcript." The walk-through he asked for (each
+decision self-contained, answerable in one line, "1: C, 2: C …") took him a
+minute to answer.
+
+**Lesson.** The fix in 138 was applied to the one decision that had already
+been lost, not to the class. Pending decisions accumulate across messages,
+and a reader of a terminal transcript cannot assemble them.
+
+**How to apply.** Whenever a message leaves a decision pending, end it with a
+single "decisions waiting" block that repeats every open decision in full
+(context, options, recommendation), not only the new one, and keep the same
+block in a committed file (`planning/open-questions-*.md`) so it survives the
+transcript.
+
+## claude-obs 144 — 2026-10-06: He reviews public text as an insider and knows it, so he asks for the outsider pass
+
+**Pattern.** Approving registration update 2, Shawn asked what one phrase
+meant ("recorded by no run") and then: "review the rest of the text for
+anything else that might need minor expansion (be conservative, it reads OK
+to me other than this one sentence, but I'm an insider)". Four more phrases
+needed a few words each (the February upload, the seeds, "permalink", "file
+field"). He approved the result in one line and asked for submission through
+the API.
+
+**Lesson.** My compressions are written for the reader who lived through the
+work, and so is his review. He discounts his own reading of public text
+because of that, and expects me to supply the outsider's.
+
+**How to apply.** Before showing the PI any outward-facing text, do an
+outsider pass: for every term, ask whether a reader who knows the study's
+design but not this project's history would parse it; expand where not, and
+say which phrases were expanded.
