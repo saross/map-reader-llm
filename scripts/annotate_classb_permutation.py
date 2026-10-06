@@ -156,7 +156,8 @@ def fair_384(data: dict) -> list[str]:
             # comparison. Without this a re-run, dry runs included, died on it.
             continue
         m = march[key]
-        check(f"fair {key}", row, m, ("f1_384", "f1_512", "det_384", "det_512_raw", "det_512_clipped"))
+        check(f"fair {key}", row, m,
+              ("f1_384", "f1_512", "det_384", "det_512_raw", "det_512_clipped"))
         row["result"]["permutation_retest"] = block(
             m["result"], "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-march-sweep.json")
         log.append(f"{key}: F1 p {row['result']['f1_difference']['p_value']} -> "
@@ -169,11 +170,13 @@ def fair_384(data: dict) -> list[str]:
         "f1_512": e["f1_512"], "det_512_raw": e["det_512_raw"],
         "det_512_clipped": e["det_512_clipped"],
         "f1_difference_bootstrap_mean": e["result"]["f1_difference"]["mean"],
-        "f1_ci": [e["result"]["f1_difference"]["ci_lower"], e["result"]["f1_difference"]["ci_upper"]],
-        "permutation_retest": block(e["result"],
-                                    "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-e39-sweep.json"),
+        "f1_ci": [e["result"]["f1_difference"]["ci_lower"],
+                  e["result"]["f1_difference"]["ci_upper"]],
+        "permutation_retest": block(
+            e["result"], "results/d42-retest-2026-10-05/class-b/fair-384-vs-512-e39-sweep.json"),
     }
-    log.append(f"I4 (E39 sweep): f1_512 {e['f1_512']}, F1 p {e['result']['f1_difference']['p_value']}")
+    log.append(f"I4 (E39 sweep): f1_512 {e['f1_512']}, "
+               f"F1 p {e['result']['f1_difference']['p_value']}")
     return log
 
 
@@ -224,7 +227,8 @@ def p3a(data: dict) -> list[str]:
         check(f"p3a {row['comparison']}", row["point_estimates_b"], rr["point_estimates_b"],
               ("f1", "n_detections"))
         row["permutation_retest"] = block(
-            rr["effect_size"], "results/d42-retest-2026-10-05/class-b/phase3a-high-text-pairwise.json")
+            rr["effect_size"],
+            "results/d42-retest-2026-10-05/class-b/phase3a-high-text-pairwise.json")
         log.append(f"{row['comparison']}: F1 p {row['effect_size']['f1_difference']['p_value']} -> "
                    f"{rr['effect_size']['f1_difference']['p_value']}")
     return log
@@ -251,8 +255,8 @@ def verifier_thinking(data: dict, rerun: str, resweep: str | None) -> list[str]:
         sw = load(RE / "b17-minimal-resweep-threshold-sweep.json")["optimal"]
         rsp = rs["pairwise"][0]
         row["resweep_sensitivity"] = {
-            "_note": ("D43: labelled sensitivity. The minimal-verifier probabilities were rewritten "
-                      "33 s after the March sweep read them (inferred from timestamps; "
+            "_note": ("D43: labelled sensitivity. The minimal-verifier probabilities were "
+                      "rewritten 33 s after the March sweep read them (inferred from timestamps; "
                       "moved-inputs.md § 3), so the 0.20 threshold was chosen on a file that no "
                       "longer exists. Re-swept on today's file, the optimum is "
                       f"{sw['threshold']}; this is the pairwise at that threshold."),

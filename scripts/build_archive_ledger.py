@@ -256,7 +256,8 @@ def assemble(entries: list[dict[str, Any]], metas: dict[str, dict], bearing: set
             "evidence resolves; several candidate tiers publish the highest, with bounds); a "
             "partial meta is a floor. DUPLICATE and SNAPSHOT metas are not separate spend; "
             "REAL metas are register rows, priced there. totals.SUPERSEDED.priced_usd and "
-            "totals.UNREGISTERED.priced_usd are what the project total adds; zero_usage_metas_by_subtree lists the metas that record "
+            "totals.UNREGISTERED.priced_usd are what the project total adds; "
+            "zero_usage_metas_by_subtree lists the metas that record "
             "no usage, whose spend is WP6's invoice residual (D39)."),
         "schema": "archive-executions/1",
         "generator": GENERATOR,

@@ -314,7 +314,8 @@ def test_a_temperature_of_record_corrects_the_row_not_the_meta():
         return {"run_id": "retest-phase2b", "directory_path": "outputs/retest/phase2b",
                 "scope": {}, "proposer_pools": {}, "conditions": [],
                 "verifier_passes": {"legacy-pv-adv-text-crop150-n5-t0-7": {
-                    "modality": "text", "repo_path": "archive/outputs-experimental-pilot/pv/results",
+                    "modality": "text",
+                    "repo_path": "archive/outputs-experimental-pilot/pv/results",
                     "path": "adversarial-text-150-n5-t0.7/text-n1-t0.0-minimal", **extra}}}
     (row,) = extract_passes(ctx({"temperature_of_record": 0.7}))
     assert row["temperature"] == 0.7

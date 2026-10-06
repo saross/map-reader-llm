@@ -1122,7 +1122,8 @@ def test_a_carry_must_reach_the_results_with_the_meta(evidence, tmp_path):
     leg = tmp_path / "outputs" / "r" / "verifier" / "k1_recovery-fixed"
     _write(leg / "probabilities.json", {"results": {f"candidate_{i:05d}": {} for i in range(10)}})
     _write(leg / "carry_provenance.json", {"schema": "verifier-stage-carry/1", "carried": 5,
-                                            "uncovered": 2, "extends_stage": "outputs/r/verifier/k1"})
+                                            "uncovered": 2,
+                                            "extends_stage": "outputs/r/verifier/k1"})
     meta = _meta(leg / "run.meta.json", batch_api={"job": "batches/x"},
                  execution_stats={"completed_items": ["candidate_00008", "candidate_00009"]})
     out = _cost(evidence(), [meta], tmp_path / "outputs" / "r", stage="verifier")

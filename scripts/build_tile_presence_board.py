@@ -811,7 +811,8 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
             "prices the leg whole, so nothing derived from it is priced. "
             "stages_outside_register = stages absent from the register, priced "
             "from their own metas (none since the S160 repair extracted the S104 "
-            "vote-3 increments as rows of their parent runs, D32). cross_check compares the campaign post-run report's "
+            "vote-3 increments as rows of their parent runs, D32). cross_check compares "
+            "the campaign post-run report's "
             "figure, which must agree over the same candidates and within "
             "agreement_tolerance_usd for the leg's basis. unpriced_legs lists "
             "every leg left unpriced, to be recovered by hand with the PI."),
