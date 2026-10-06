@@ -1101,19 +1101,47 @@ def _from_sources(sources: list[str], follow: Any) -> tuple[list[str], list[str]
     return sorted(metas), routes, dead
 
 
+def _source_stage_label(source: str) -> str:
+    """The verifier stage a binding source names, as the arm reports it.
+
+    Args:
+        source: A binding's verifier source (repository-relative).
+
+    Returns:
+        The registered stage(s) whose directory holds the source, as
+        ``run/key`` (joined by ``|`` when two runs register one directory);
+        else the source's directory, marked ``(unregistered)``. Always a
+        stage, never a route (PR #25 review, finding 7).
+    """
+    stages = stages_containing(source)
+    if stages:
+        return "|".join(f"{run}/{key}" for run, key in stages)
+    directory = source if (BASE_DIR / source).is_dir() or not Path(source).suffix \
+        else str(Path(source).parent)
+    return f"{directory} (unregistered)"
+
+
 def arm_for_condition(condition_id: str) -> dict[str, Any]:
     """Build the arm for one registered condition.
 
     The register's own routes are tried first (:func:`proposer_metas_for_condition`,
     :func:`verifier_stage_of`); a reviewed binding (:data:`BINDINGS`) is
-    consulted only for a half they leave unresolved.
+    consulted only for a half they leave unresolved. A binding is used
+    whole or not at all: when any of a half's sources resolves no meta, the
+    sources that did resolve are not a partial substitute (a missing pass
+    or stage changes the inputs fingerprint and the configuration set), so
+    that half is UNVERIFIABLE, with the dead sources named and a BINDING GAP
+    line printed (PR #25 review, finding 2).
 
     Args:
         condition_id: A ``run_id::label`` condition id.
 
     Returns:
-        The arm (:func:`arm_from_metas`), with ``verifier_stage``,
-        ``proposer_route`` and ``binding`` (the binding's id, or None) added.
+        The arm (:func:`arm_from_metas`), with ``verifier_stage``
+        (``{"stage", "how"}``: a stage, never a route), ``verifier_route``
+        (the binding's resolution routes, when one was followed),
+        ``proposer_route``, ``binding`` (the binding's id when it supplied
+        evidence, else None) and ``binding_notes`` added.
 
     Raises:
         KeyError: The condition is not registered.
@@ -1126,37 +1154,47 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
     notes = []
     proposer, proposer_route = proposer_metas_for_condition(cond)
     if not proposer and binding and binding.get("proposer_sources"):
-        proposer, routes, dead = _from_sources(binding["proposer_sources"],
-                                               proposer_metas_for_source)
-        if proposer:
-            used = True
-            proposer_route = f"binding:{binding['id']}:" + "|".join(routes)
+        found, routes, dead = _from_sources(binding["proposer_sources"],
+                                            proposer_metas_for_source)
         if dead:
             notes.append(f"binding {binding['id']}: proposer source(s) resolved no meta: "
-                         + ", ".join(dead))
+                         + ", ".join(dead) + (" (the other sources are not read as the "
+                                              "whole pass set)" if found else ""))
+        elif found:
+            used = True
+            proposer = found
+            proposer_route = f"binding:{binding['id']}:" + "|".join(routes)
     verifier: list[str] = []
     declared = None
-    stage, how = None, None
+    stage, how, verifier_route = None, None, None
+    v_reason = v_identity = None
     if cond.get("architecture") == "proposer-verifier":
         stage, how = verifier_stage_of(cond)
         if stage:
             verifier = list(stage_metas(run, stage))
         if not verifier and binding and binding.get("verifier_sources"):
-            verifier, routes, dead = _from_sources(binding["verifier_sources"],
-                                                   verifier_metas_for_source)
-            if verifier:
-                used = True
-                stage = "|".join(r.removeprefix("stage:") for r in routes)
-                how = f"binding:{binding['id']}"
+            sources = binding["verifier_sources"]
+            found, routes, dead = _from_sources(sources, verifier_metas_for_source)
+            stage = "|".join(dict.fromkeys(_source_stage_label(s) for s in sources))
+            how = f"binding:{binding['id']}"
             if dead:
-                notes.append(f"binding {binding['id']}: verifier source(s) resolved no "
-                             "meta: " + ", ".join(dead))
-        if not verifier:
+                note = (f"binding {binding['id']}: verifier source(s) resolved no meta: "
+                        + ", ".join(dead))
+                notes.append(note + (" (the other sources are not read as the whole "
+                                     "stage set)" if found else ""))
+                v_reason, v_identity = note, f"{stage} <- {'|'.join(sorted(sources))}"
+            elif found:
+                used = True
+                verifier, verifier_route = found, "|".join(routes)
+        if not verifier and not v_reason:
             declared = cond.get("verifier_config") or None
-    arm = arm_from_metas(condition_id, proposer, verifier, declared)
-    if not proposer and notes and arm["unverifiable_reason"]:
-        arm["unverifiable_reason"] += "; " + "; ".join(notes)
+    arm = arm_from_metas(condition_id, proposer, verifier, declared,
+                         verifier_reason=v_reason, verifier_identity=v_identity)
+    proposer_notes = [n for n in notes if ": proposer source(s)" in n]
+    if not proposer and proposer_notes and arm["unverifiable_reason"]:
+        arm["unverifiable_reason"] += "; " + "; ".join(proposer_notes)
     arm["verifier_stage"] = {"stage": stage, "how": how}
+    arm["verifier_route"] = verifier_route
     arm["proposer_route"] = proposer_route
     arm["binding"] = binding["id"] if binding and used else None
     arm["binding_notes"] = notes

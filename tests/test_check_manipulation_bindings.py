@@ -292,16 +292,59 @@ def test_the_register_outranks_a_binding(repo) -> None:
 
 
 def test_a_dead_source_is_named_not_silently_skipped(repo, capsys) -> None:
-    """A bound source that resolves nothing leaves the half declared and
-    prints a BINDING GAP line."""
+    """A bound source that resolves nothing leaves the half UNVERIFIABLE
+    (not declared: the reviewed binding says where the requests are, and
+    they cannot be read) and prints a BINDING GAP line."""
     repo["write_bindings"]([_entry("dead", ["cell-a"], verifier_sources=["outputs/nowhere"])])
     arm = cm.arm_for_condition(f"{RUN}::cell-a")
-    assert arm["verifier_basis"] == "declared"
+    assert arm["verifier_basis"] == "unverifiable"
+    assert arm["verifier_unverifiable_reason"] == (
+        "binding dead: verifier source(s) resolved no meta: outputs/nowhere")
+    assert arm["verifier_stage"] == {"stage": "outputs/nowhere (unregistered)",
+                                     "how": "binding:dead"}
     assert arm["binding"] is None
     assert arm["binding_notes"] == [
         "binding dead: verifier source(s) resolved no meta: outputs/nowhere"]
     out = cm.render("ad hoc", cm.judge([arm]), [arm], report=False)
     assert "BINDING GAP: run1::cell-a: binding dead" in out
+
+
+# ── PR #25 review, finding 2: a partly resolved binding is not used ─────
+
+def test_one_dead_verifier_source_voids_the_half(repo) -> None:
+    """Two verifier sources, one live (stage ``pool-verify-a``) and one
+    dead: the live stage's metas are NOT the arm's verifier half (they are
+    not all of its requests). The half is UNVERIFIABLE, the gap is named,
+    and the binding is not claimed; beside a transmitted arm of the same
+    proposer request the pair is unverifiable, where it used to PASS."""
+    repo["write_bindings"]([_entry("half", ["cell-a"], verifier_sources=[
+        f"outputs/{RUN}/verifier/pool/verify_a/probabilities.json", "outputs/nowhere"])])
+    arm = cm.arm_for_condition(f"{RUN}::cell-a")
+    assert arm["verifier_basis"] == "unverifiable"
+    assert repo["meta"]["a"] not in arm["meta_paths"]
+    assert arm["verifier_metas_set_aside"] == []
+    assert arm["verifier_stage"]["stage"] == (
+        f"{RUN}/pool-verify-a|outputs/nowhere (unregistered)")
+    assert arm["binding"] is None
+    assert arm["binding_notes"] == [
+        "binding half: verifier source(s) resolved no meta: outputs/nowhere (the other "
+        "sources are not read as the whole stage set)"]
+    judgement, _arms = cm.check_conditions([f"{RUN}::cell-a", f"{RUN}::pool-verify-b-k5"])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+    assert judgement["undetermined_pairs"]
+
+
+def test_one_dead_proposer_source_voids_the_arm(repo) -> None:
+    """A proposer half bound to two pass directories, one of which resolves
+    nothing: the arm is UNVERIFIABLE with the dead source named, not judged
+    on the one pass that was found."""
+    repo["write_bindings"]([_entry("union", ["orphan"], proposer_sources=[
+        "outputs/other-pool", "outputs/absent-pass"], verifier_sources=["outputs/loose"])])
+    arm = cm.arm_for_condition(f"{RUN}::orphan")
+    assert repo["meta"]["other"] not in arm["meta_paths"]
+    assert "binding union: proposer source(s) resolved no meta: outputs/absent-pass" in (
+        arm["unverifiable_reason"])
+    assert cm.judge([arm])["verdict"] == cm.UNVERIFIABLE
 
 
 # ── PR #25 review, finding 1: listed but unreadable verifier metas ──────
