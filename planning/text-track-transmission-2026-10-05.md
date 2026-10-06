@@ -56,7 +56,7 @@ in brackets (§ 4).
   configurations; the 15-cell Tier 1 is 9; six Tier-1 cells are one text
   configuration. (The "23 (7)" alternative is withdrawn: W3 showed the
   orderings transmitted.)
-- [ ] **C-05 (L, W1).** `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`;
+- [x] **C-05 (L, W1).** DONE 2026-10-06 (S161): both boards are UNSIGNED (not signed, as first written here), so each outcome was amended in place with PI-approved text (`planning/era1-c05-amendments-draft-2026-10-06.md`). Was: `results/paper-eval/n1/512px-14buf-mcc/tiering/tiering_20m.{md,json}`;
   analyses `era1-single-pass-baseline-matrix`, `era1-leaderboard`
   (`results/run-analyses.json`, both SIGNED): five Phase 2c text cells
   ranked as distinct configurations. No tier is driven by a replicate

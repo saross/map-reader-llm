@@ -1,9 +1,9 @@
 # C-05: amendments to the two Era-1 boards — draft for the PI
 
-> **Last revised**: 2026-10-06 (original publication, Session 161). See
+> **Last revised**: 2026-10-06 (approved and applied). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: DRAFT, awaiting the PI's approval.** Tracker C-05
+**Status: APPROVED by the PI as written (2026-10-06, about 06:50 UTC) and APPLIED** to both rows' `outcome` in `results/run-analyses.json`. Tracker C-05
 (`planning/text-track-transmission-2026-10-05.md`). The tracker called both
 boards SIGNED; they are not. Both rows in `results/run-analyses.json` are
 `unsigned` (their 2026-06-09 stamps are authoring stamps, queued for a first
@@ -50,6 +50,10 @@ text. The paragraphs below would be appended to each row's `outcome`.
   2026-10-06).
 
 ## Changelog
+
+### 2026-10-06 (later) — Approved and applied
+
+The PI approved both paragraphs as written; appended to each row's outcome.
 
 ### 2026-10-06 — Original publication (Session 161)
 
