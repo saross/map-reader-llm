@@ -291,8 +291,9 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
 - [x] W2.7 DONE 2026-10-06 (S162; `reports/w27-replicate-floors-2026-10-06.md`;
   rulings D45-D47): the floors measured without API calls. Gold-standard
   consensus floors from disjoint pass subsets (95th percentile of replicate
-  |ΔF1| 0.02-0.06 at the boards' operating thresholds; consensus does NOT
-  shrink the single-pass floor and unanimity widens it) and 55-map
+  |ΔF1| 0.02-0.06 at the boards' operating thresholds; consensus shrinks
+  the single-pass floor by about a third at 4-of-5 and widens it at
+  unanimity) and 55-map
   proposer-stage floors with the verifier held fixed (0.001-0.005 at N = 5,
   about 0.008 at N = 1 for the Gemini 3 text families; 0.017 for the Gemini 3
   image pool at N = 1). The paper's 103 configuration-level claims are

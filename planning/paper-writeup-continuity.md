@@ -109,8 +109,8 @@ project state.
 > - **Pending reviews (never silently discarded):** user-obs S150-S161
 >   candidates C1-C4; working-notes candidates (a)-(f) from S157-S159 and
 >   (g)-(h) from S161 (now Obs 499 covers (g) and (h)); this session's
->   candidates: (i) consensus does not shrink the replicate floor and
->   unanimity widens it; (j) the verifier absorbs most of the proposer
+>   candidates: (i) consensus shrinks the replicate floor only modestly
+>   (about a third at 4-of-5) and unanimity widens it; (j) the verifier absorbs most of the proposer
 >   drift (UPL 0.02-0.03 → 0.003-0.006); (k) the k3 shells are
 >   mixed-verifier-execution cells; (l) the April consensus sweeps' pass
 >   order; plus the W1 agent's twelve surprises in its report (notably: the

@@ -1,7 +1,8 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-06 (original publication, Session 162). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-06 (later: § 3's first reading corrected, consensus
+> shrinks the floor modestly at t = 4). See [§ Changelog](#changelog) for
+> revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
 configuration-level claims against them in § 7.** Rulings D45 to D47
@@ -134,18 +135,17 @@ W2 replicate member with at least six passes (the 10- and 30-pass pools of
 
 Reading:
 
-- **Consensus does not shrink the floor.** At the thresholds the boards use
-  (K = 5 at t = 4 or 5; K = 10 at t = 7 to 10; K = 3 at t = 2 or 3) the 95th
-  percentile of replicate |ΔF1| is 0.02 to 0.06, the same order as the
-  single-pass floor of about 0.03 (W2.7 note § 2), and at unanimity it is
-  WIDER: Era-1 K = 5 t = 5 0.040, K = 10 t = 10 0.058, against 0.020 to 0.024
-  at t = 4 or t = 7. A unanimity cell keeps few detections, so one pass's
-  disagreement moves its F1 more than it moves a looser cell's. The
-  registered consensus cells sit near the top of the lattice
-  (`results/run-conditions.json`, read 2026-10-06: of 60 K = 5 consensus
-  conditions, 34 use t = 4 and 13 use t = 5; of 28 K = 10 conditions, 11 use
-  t = 8 and 7 use t = 10), so the cells the paper compares sit where the
-  replicate floor is widest, not narrowest.
+- **Consensus shrinks the floor modestly at mid thresholds and widens it at
+  unanimity.** At K = 5 and t = 4 the 95th percentile of replicate |ΔF1| is
+  0.024 (Era-1) and 0.021 (384-px GS), about a third below the single-pass
+  floors of 0.034 and 0.030 (W2.7 note § 2); at unanimity it is wider than a
+  single pass (Era-1 K = 5 t = 5 0.040, K = 10 t = 10 0.058). A unanimity
+  cell keeps few detections, so one pass's disagreement moves its F1 more
+  than it moves a looser cell's. The registered consensus cells sit near the
+  top of the lattice (`results/run-conditions.json`, read 2026-10-06: of 60
+  K = 5 consensus conditions, 34 use t = 4 and 13 use t = 5; of 28 K = 10
+  conditions, 11 use t = 8 and 7 use t = 10), so the cells the paper
+  compares sit where the floor is near its single-pass size or wider.
 - **The tile-swap test rejects 5.0 % of the 2,216 within-execution
   consensus pairs at α = 0.05** (per (corpus, K, t) cell 0 to 33 %, median
   4 %, the 33 % on six-pair cells), against 1.6 to 3.5 % between single
@@ -503,6 +503,21 @@ its k3 shell (W5, API gate, D47).
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-06 (later) — § 3's first reading corrected
+
+The first bullet under § 3 said consensus "does not shrink" the floor. The
+table beneath it shows a modest shrink at the 4-of-5 threshold the boards
+mostly use and a widening only at unanimity; the bullet now says so.
+
+| | Before | After |
+|---|---|---|
+| § 3 headline | "Consensus does not shrink the floor" | shrinks it by about a third at t = 4 (0.021–0.024 against 0.030–0.034), widens it at unanimity |
+
+**What did NOT change**: every number in every table, the D46 floors listed
+at the end of § 3, and every verdict in § 7 (the § 7 screens use the
+measured floor at each claim's own operating point). Commit: see git log
+for this entry's date.
 
 ### 2026-10-06 — Original publication (Session 162)
 
