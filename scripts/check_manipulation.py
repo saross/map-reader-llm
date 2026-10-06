@@ -120,13 +120,25 @@ Usage
     # An ad hoc set of conditions
     python3 scripts/check_manipulation.py --conditions RUN::LABEL RUN::LABEL
 
-    # Every registered analysis, one line each (exit 2 if any refuses)
+    # Every registered analysis, one line each, then which refusals are
+    # documented (exit 2 only if a refusal is undocumented)
     python3 scripts/check_manipulation.py --all
 
 Exit codes: 0 PASS; 1 usage error (unknown analysis or condition); 2 REFUSE
 (a null manipulation); 3 UNVERIFIABLE (an arm with no readable pass metadata,
 or a pair that only a declared verifier configuration could separate, unless
 ``--allow-unverifiable``).
+
+Known null manipulations
+------------------------
+Some null manipulations are already documented findings: the analysis does
+compare replicates, and the document says so. :data:`KNOWN_NULL_MANIPULATIONS`
+lists them as groups of ``(run_id, proposer_pool)`` keys, each with the
+document that records it. Every null pair of registered arms is labelled
+KNOWN (with that document) or NEW. A single analysis still REFUSES on a
+known pair, because the comparison is still between replicates; ``--all``
+exits 2 only when some refusal rests on a NEW pair, so a sweep is clean once
+every refusal is documented (with ``--allow-unverifiable``, exit 0).
 """
 
 from __future__ import annotations
@@ -167,6 +179,37 @@ CONFIG_FIELDS = ("stage", "version", "instruction_file", "model", "temperature",
 #: Verdicts and their exit codes.
 PASS, REFUSE, UNVERIFIABLE = "PASS", "REFUSE", "UNVERIFIABLE"
 EXIT_CODES = {PASS: 0, REFUSE: 2, UNVERIFIABLE: 3}
+
+#: Documented null manipulations: groups of ``(run_id, proposer_pool)`` keys
+#: whose passes sent one configuration's requests under different names, each
+#: with the documents that record it (``documents``, the files; and
+#: ``documented_by``, where in them). A null pair whose two arms' keys lie in
+#: one group is KNOWN (see the module docstring). Add a group only with the
+#: document that establishes the replicate.
+KNOWN_NULL_MANIPULATIONS: tuple[dict[str, Any], ...] = (
+    {"pools": frozenset({("retest-phase2b", "track2-text-t0.0"),
+                         ("retest-phase2c", "track2-text-canonical"),
+                         ("retest-phase2c", "track2-text-plus-hp"),
+                         ("retest-phase2c", "track2-text-pure-positive-canon"),
+                         ("retest-phase2c", "track2-text-scale-4"),
+                         ("retest-phase2c", "track2-text-scale-8")}),
+     "documents": ("reports/manipulation-check-2026-10-05.md",),
+     "documented_by": ("reports/manipulation-check-2026-10-05.md § B.5 group 16 (null "
+                       "manipulation #1: five text-track libraries, one request, E90)")},
+    {"pools": frozenset({("retest-phase2b", "track1-image-t0.0"),
+                         ("retest-phase2c", "track1-image-scale-8")}),
+     "documents": ("reports/manipulation-check-2026-10-05.md",),
+     "documented_by": ("reports/manipulation-check-2026-10-05.md § B.5 group 15 (the same "
+                       "17 examples under two configuration names)")},
+    {"pools": frozenset({("h8-v2", "scale-8"), ("h10", "pool_160_hp4hn4"),
+                         ("h12-v2", "pool_160_hp4hn4")}),
+     "documents": ("reports/manipulation-check-2026-10-05.md",
+                   "results/h12-v2/analysis_summary.md"),
+     "documented_by": ("reports/manipulation-check-2026-10-05.md § B.5 group 10 (h8-v2 "
+                       "scale-8 and h10 pool_160_hp4hn4: one configuration, run twice on "
+                       "2026-04-15); results/h12-v2/analysis_summary.md lines 73-74 and 148 "
+                       "(h12-v2 R2 reuses the pool_160_hp4hn4 run)")},
+)
 
 
 @functools.lru_cache(maxsize=None)
@@ -621,6 +664,30 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
     return arm
 
 
+def documented_null_pair(arm_a: str, arm_b: str) -> str | None:
+    """Where a null-manipulation pair of registered arms is documented.
+
+    Args:
+        arm_a: A condition id.
+        arm_b: Another.
+
+    Returns:
+        The ``documented_by`` of the :data:`KNOWN_NULL_MANIPULATIONS` group
+        holding both arms' ``(run_id, proposer_pool)``, else None (including
+        for an arm that is not a registered condition).
+    """
+    keys = []
+    for arm in (arm_a, arm_b):
+        cond = _conditions().get(arm)
+        if cond is None:
+            return None
+        keys.append((cond["run_id"], cond.get("proposer_pool")))
+    for group in KNOWN_NULL_MANIPULATIONS:
+        if keys[0] in group["pools"] and keys[1] in group["pools"]:
+            return group["documented_by"]
+    return None
+
+
 def check_conditions(condition_ids: list[str], allow_unverifiable: bool = False
                      ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     """Judge a set of registered conditions as one analysis.
@@ -630,10 +697,76 @@ def check_conditions(condition_ids: list[str], allow_unverifiable: bool = False
         allow_unverifiable: See :func:`judge`.
 
     Returns:
-        ``(judgement, arms)``.
+        ``(judgement, arms)``. Each null pair carries ``documented_by``
+        (:func:`documented_null_pair`): the document, or None for a NEW pair.
     """
     arms = [arm_for_condition(c) for c in condition_ids]
-    return judge(arms, allow_unverifiable), arms
+    judgement = judge(arms, allow_unverifiable)
+    for pair in judgement["null_pairs"]:
+        pair["documented_by"] = documented_null_pair(*pair["arms"])
+    return judgement, arms
+
+
+def undocumented_pairs(judgement: dict[str, Any]) -> list[dict[str, Any]]:
+    """The null pairs of a judgement that no document records.
+
+    Args:
+        judgement: From :func:`judge` or :func:`check_conditions`.
+
+    Returns:
+        The NEW null pairs; a pair never labelled (an ad hoc arm outside the
+        register) counts as NEW.
+    """
+    return [p for p in judgement["null_pairs"] if not p.get("documented_by")]
+
+
+def all_exit_status(results: list[tuple[str, dict[str, Any], Any]]) -> int:
+    """The ``--all`` exit status: 2 only for a refusal on an undocumented pair.
+
+    Args:
+        results: ``(analysis, judgement, arms)`` for every analysis judged.
+
+    Returns:
+        2 if any analysis has a NEW null pair; else the worst exit code of
+        the analyses that do not refuse (a refusal on KNOWN pairs only
+        counts as 0).
+    """
+    if any(undocumented_pairs(j) for _, j, _ in results):
+        return EXIT_CODES[REFUSE]
+    return max((EXIT_CODES[j["verdict"]] for _, j, _ in results if j["verdict"] != REFUSE),
+               default=0)
+
+
+def all_summary(results: list[tuple[str, dict[str, Any], Any]]) -> str:
+    """The ``--all`` closing summary: which refusals are known, which new.
+
+    Args:
+        results: ``(analysis, judgement, arms)`` for every analysis judged.
+
+    Returns:
+        The text to print after the per-analysis lines.
+    """
+    refusing = [(name, j) for name, j, _ in results if j["verdict"] == REFUSE]
+    counts = {v: sum(1 for _, j, _ in results if j["verdict"] == v)
+              for v in (PASS, REFUSE, UNVERIFIABLE)}
+    out = ["", f"--all: {len(results)} analyses: {counts[PASS]} PASS, {counts[REFUSE]} REFUSE, "
+               f"{counts[UNVERIFIABLE]} UNVERIFIABLE"]
+    for name, j in refusing:
+        new = undocumented_pairs(j)
+        if new:
+            out.append(f"  NEW REFUSAL {name}: {len(new)} of {len(j['null_pairs'])} null pair(s) "
+                       "are documented nowhere")
+        else:
+            docs = sorted({p["documented_by"] for p in j["null_pairs"]})
+            out.append(f"  KNOWN REFUSAL {name}: all {len(j['null_pairs'])} null pair(s) "
+                       f"documented ({' | '.join(docs)})")
+    status = all_exit_status(results)
+    reason = {0: "every refusal is documented and nothing is unverifiable",
+              2: "a refusal rests on an undocumented null manipulation",
+              3: ("every refusal is documented, but some analyses are unverifiable "
+                  "(--allow-unverifiable treats them as out of scope)")}[status]
+    out.append(f"  exit {status}: {reason}")
+    return "\n".join(out)
 
 
 # ── reporting ────────────────────────────────────────────────────────────
@@ -673,14 +806,20 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
         The text to print.
     """
     undetermined = judgement.get("undetermined_pairs") or []
+    n_known = sum(1 for p in judgement["null_pairs"] if p.get("documented_by"))
+    known = f" ({n_known} documented)" if judgement["null_pairs"] else ""
     out = [f"{judgement['verdict']} {name}: {len(arms)} arm(s), "
-           f"{len(judgement['null_pairs'])} null-manipulation pair(s), "
+           f"{len(judgement['null_pairs'])} null-manipulation pair(s){known}, "
            f"{len(judgement['unverifiable'])} unverifiable arm(s), "
            f"{len(undetermined)} unverifiable pair(s) [{SIGNATURE_VERSION}]"]
     for pair in judgement["null_pairs"]:
+        label = ""
+        if "documented_by" in pair:
+            label = (f" [KNOWN: {pair['documented_by']}]" if pair["documented_by"]
+                     else " [NEW: documented nowhere]")
         out.append(f"  NULL MANIPULATION: {pair['arms'][0]} vs {pair['arms'][1]} differ in "
                    f"configuration ({', '.join(pair['config_fields_differing'])}) but "
-                   "transmitted identical requests")
+                   f"transmitted identical requests{label}")
     for u in judgement["unverifiable"]:
         out.append(f"  UNVERIFIABLE: {u['arm']}: {u['reason']}")
     for pair in undetermined:
@@ -749,14 +888,24 @@ def main(argv: list[str] | None = None) -> int:
         results.append((name, judgement, arms))
 
     if args.json:
-        print(json.dumps({"signature_version": SIGNATURE_VERSION, "analyses": [
+        doc: dict[str, Any] = {"signature_version": SIGNATURE_VERSION, "analyses": [
             {"analysis": name, **judgement,
              "arms": [{k: (sorted(v) if isinstance(v, frozenset) else v)
                        for k, v in a.items()} for a in arms] if args.report else None}
-            for name, judgement, arms in results]}, indent=1))
+            for name, judgement, arms in results]}
+        if args.all:
+            doc["exit_status"] = all_exit_status(results)
+            doc["new_refusals"] = [n for n, j, _ in results if undocumented_pairs(j)]
+        print(json.dumps(doc, indent=1))
     else:
         for name, judgement, arms in results:
             print(render(name, judgement, arms, args.report))
+        if args.all:
+            print(all_summary(results))
+    if args.all:
+        # A sweep fails on a NEW null manipulation; a documented one is a
+        # known finding, listed above with its document.
+        return all_exit_status(results)
     # REFUSE outranks UNVERIFIABLE: a null manipulation is a finding, an
     # unreadable arm an absence of one.
     if any(j["verdict"] == REFUSE for _, j, _ in results):

@@ -15,6 +15,10 @@ pairs of minimal pass metas and judge them:
 
 One test runs the CLI on a registered analysis and pins the 2026-10-05
 finding: the Era-1 single-pass matrix carries the Phase 2c text replicates.
+Another pins the replicate pair inside ``verifier-uplift-pairing``
+(h10 pool_160 and h8-v2 scale-8) as an expected, documented refusal, and
+synthetic tests pin the known-refusal allow-list and the ``--all`` exit rule
+(PR #24 review, finding 1).
 
 Tiers: the synthetic tests write their metas to ``tmp_path`` and run in
 well under a second, so they are tier 1 (the per-commit gate); the tests
@@ -282,3 +286,104 @@ def test_the_registered_era1_matrix_is_refused(capsys) -> None:
     assert out.startswith("REFUSE era1-single-pass-baseline-matrix")
     assert "retest-phase2c::text-canonical vs retest-phase2c::text-plus-hp" in out
     assert "retest-phase2b::image-t0.0 vs retest-phase2c::image-scale-8" in out
+
+
+# ── documented null manipulations and the --all exit rule (finding 1) ────
+
+REPO = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.tier1
+def test_every_known_null_manipulation_cites_documents_that_exist() -> None:
+    """Each allow-list group joins at least two pools and names committed
+    documents, the first of which leads its ``documented_by`` text."""
+    for group in cm.KNOWN_NULL_MANIPULATIONS:
+        assert len(group["pools"]) >= 2
+        assert all((REPO / doc).is_file() for doc in group["documents"])
+        assert group["documented_by"].startswith(group["documents"][0])
+
+
+def _registered(monkeypatch, tmp_path, analyses: dict[str, list[str]],
+                pools: dict[str, tuple[str, str]],
+                configs: dict[str, tuple[str, list, float]]) -> None:
+    """Stand in a synthetic register for the gate's register readers.
+
+    Args:
+        monkeypatch: pytest's fixture.
+        tmp_path: Where the arms' metas are written.
+        analyses: Analysis id -> condition ids.
+        pools: Condition id -> ``(run_id, proposer_pool)``.
+        configs: Condition id -> ``(version, examples, temperature)`` of a
+            text-only pass, or ``("absent", [], 0.0)`` for an arm with no
+            readable meta.
+    """
+    monkeypatch.setattr(cm, "_analyses", lambda: {
+        a: {"conditions_compared": c} for a, c in analyses.items()})
+    monkeypatch.setattr(cm, "_conditions", lambda: {
+        c: {"condition_id": c, "run_id": r, "proposer_pool": p}
+        for c, (r, p) in pools.items()})
+
+    def arm(cid: str) -> dict:
+        version, examples, temperature = configs[cid]
+        path = tmp_path / f"{cid.replace(':', '_')}.meta.json"
+        if version != "absent":
+            _meta(path, version, examples, include_images=False, temperature=temperature)
+        return cm.arm_from_metas(cid, [str(path)])
+
+    monkeypatch.setattr(cm, "arm_for_condition", arm)
+    monkeypatch.setattr(cm, "KNOWN_NULL_MANIPULATIONS", (
+        {"pools": frozenset({("r1", "lib-a"), ("r1", "lib-b")}),
+         "documents": ("reports/x.md",), "documented_by": "reports/x.md § 1"},))
+
+
+@pytest.mark.tier1
+def test_a_null_pair_is_known_only_inside_one_documented_group(monkeypatch, tmp_path) -> None:
+    """Both arms' pools in one group: KNOWN; otherwise, or unregistered: NEW."""
+    _registered(monkeypatch, tmp_path, {}, {"r1::a": ("r1", "lib-a"), "r1::b": ("r1", "lib-b"),
+                                            "r2::c": ("r2", "lib-c")}, {})
+    assert cm.documented_null_pair("r1::a", "r1::b") == "reports/x.md § 1"
+    assert cm.documented_null_pair("r1::a", "r2::c") is None
+    assert cm.documented_null_pair("r1::a", "ad-hoc::z") is None
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("extra", "flags", "status", "line"), [
+    ({}, [], 0, "  KNOWN REFUSAL known: all 1 null pair(s) documented (reports/x.md § 1)"),
+    ({"new": ["r2::c", "r2::d"]}, [], 2, "  NEW REFUSAL new: 1 of 1 null pair(s)"),
+    ({"gap": ["r2::c", "r9::absent"]}, [], 3, "  exit 3: every refusal is documented"),
+    ({"gap": ["r2::c", "r9::absent"]}, ["--allow-unverifiable"], 0, "  exit 0:"),
+])
+def test_all_fails_only_on_an_undocumented_refusal(monkeypatch, tmp_path, capsys, extra,
+                                                   flags, status, line) -> None:
+    """``--all`` lists each refusal as KNOWN or NEW and exits 2 only for a
+    NEW one; a documented refusal alone exits 0, or 3 beside an
+    unverifiable analysis unless that is allowed."""
+    analyses = {"known": ["r1::a", "r1::b"], "clean": ["r1::a", "r2::c"], **extra}
+    pools = {"r1::a": ("r1", "lib-a"), "r1::b": ("r1", "lib-b"), "r2::c": ("r2", "lib-c"),
+             "r2::d": ("r2", "lib-d"), "r9::absent": ("r9", "none")}
+    configs = {"r1::a": ("library_a-text", _LIBRARY_A, 0.0),
+               "r1::b": ("library_b-text", _LIBRARY_B, 0.0),
+               "r2::c": ("v-c", [], 0.7), "r2::d": ("v-d", [], 0.7),
+               "r9::absent": ("absent", [], 0.0)}
+    # r1::a and r1::b list different libraries with images off: the KNOWN
+    # pair. r2::c and r2::d differ only in a version name: a null pair no
+    # document records. r2's temperature separates "clean" in transmission.
+    _registered(monkeypatch, tmp_path, analyses, pools, configs)
+    assert cm.main(["--all", *flags]) == status
+    out = capsys.readouterr().out
+    assert "REFUSE known:" in out and "[KNOWN: reports/x.md § 1]" in out
+    assert any(o.startswith(line) for o in out.splitlines())
+
+
+@pytest.mark.tier2
+def test_the_h8_h10_replicate_pair_is_a_known_refusal(capsys) -> None:
+    """``verifier-uplift-pairing`` pairs h10::verified-pool-160 with
+    h8-v2::verified-wbf-scale-8: two executions of one configuration
+    (``reports/manipulation-check-2026-10-05.md`` § B.5 group 10). The gate
+    refuses the pair, as it should, and labels it documented."""
+    assert cm.main(["--conditions", "h10::verified-pool-160",
+                    "h8-v2::verified-wbf-scale-8"]) == 2
+    out = capsys.readouterr().out
+    assert ("NULL MANIPULATION: h10::verified-pool-160 vs h8-v2::verified-wbf-scale-8 "
+            "differ in configuration (version)") in out
+    assert "[KNOWN: reports/manipulation-check-2026-10-05.md § B.5 group 10" in out
