@@ -319,11 +319,26 @@ def _frozen(dicts: list[dict[str, Any]]) -> frozenset[str]:
 
 def arm_from_metas(arm_id: str, proposer_metas: list[str],
                    verifier_metas: list[str] | None = None,
-                   declared_verifier: dict[str, Any] | None = None) -> dict[str, Any]:
+                   declared_verifier: dict[str, Any] | None = None,
+                   verifier_reason: str | None = None,
+                   verifier_identity: str | None = None) -> dict[str, Any]:
     """Build one arm's configuration identity and transmitted signature.
 
     Chunk metas are set aside when the pass has a merged meta (as the
     2026-10-05 check did), so a chunked pass is not counted twice.
+
+    The verifier half is one of four kinds (``verifier_basis``):
+    ``"transmitted"`` (verifier metas were read), ``"declared"`` (only the
+    register's configuration is known), ``"unverifiable"`` (the half has a
+    verifier stage whose requests the gate cannot read in full) or None (no
+    verifier stage). A verifier half is UNVERIFIABLE when metas were listed
+    for it but none is a readable verifier meta (PR #25 review, finding 1:
+    until then such an arm read as having no verifier stage, and a pair
+    beside it passed as "differ in transmission"), or when the caller
+    supplies ``verifier_reason`` (a dead binding source, a stage whose
+    surviving meta covers only part of its requests, a binding that
+    contradicts the register). Its metas are then not evidence: they join
+    neither the configuration identity nor the signature.
 
     Args:
         arm_id: The arm's name (a condition id).
@@ -334,15 +349,37 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
             identity (what the arm SAID) but not the transmitted signature:
             it is not evidence of what a request carried (see
             :func:`transmission_relation`).
+        verifier_reason: Why the verifier half is unverifiable, when the
+            caller knows (see above); None to judge by the metas alone.
+        verifier_identity: What the unverifiable half read (its stage(s) or
+            sources), so two arms that read the same unverifiable stage are
+            recognised as one verifier configuration; defaults to the sorted
+            listed metas, else the reason.
 
     Returns:
         ``{"arm", "config", "signature", "proposer_signatures",
-        "verifier_basis", "declared_verifier", "meta_paths", "unreadable",
-        "unverifiable_reason"}``. ``signature`` holds transmitted evidence
-        only; ``declared_verifier`` is the declared configuration's sorted-key
-        JSON, or None.
+        "verifier_basis", "declared_verifier", "unverifiable_verifier",
+        "verifier_unverifiable_reason", "meta_paths",
+        "verifier_metas_set_aside", "unreadable", "unverifiable_reason"}``.
+        ``signature`` holds transmitted evidence only; ``declared_verifier``
+        is the declared configuration's sorted-key JSON, or None;
+        ``unverifiable_verifier`` the unverifiable half's identity marker
+        (sorted-key JSON), or None; ``verifier_metas_set_aside`` the readable
+        verifier metas of an unverifiable half (read, but not taken as
+        evidence). ``unverifiable_reason`` concerns the proposer half and
+        makes the whole arm unverifiable; ``verifier_unverifiable_reason``
+        concerns the verifier half only (:func:`transmission_relation`
+        decides each pair).
     """
     def readable(paths: list[str]) -> tuple[list[dict[str, Any]], list[str]]:
+        """Read metas, setting aside chunk metas beside a merged meta.
+
+        Args:
+            paths: Meta paths (duplicates are read once).
+
+        Returns:
+            ``(readable records, unreadable paths)``.
+        """
         recs = [meta_record(p) for p in sorted(set(paths))]
         bad = [r["path"] for r in recs if "error" in r]
         good = [r for r in recs if "error" not in r]
@@ -350,7 +387,17 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
         return main, bad
 
     prop, bad_p = readable(proposer_metas)
-    ver, bad_v = readable(verifier_metas or [])
+    ver_read, bad_v = readable(verifier_metas or [])
+    # A readable meta in a verifier list that records no verifier pass is
+    # not verifier evidence (it is named among the unreadable).
+    ver = [r for r in ver_read if is_verifier_record(r)]
+    bad_v += [r["path"] for r in ver_read if not is_verifier_record(r)]
+    if verifier_metas and not ver and not verifier_reason:
+        verifier_reason = (f"{len(set(verifier_metas))} verifier meta(s) listed, none readable "
+                           f"as a verifier pass (e.g. {sorted(bad_v)[0]})")
+    set_aside = []
+    if verifier_reason:
+        set_aside, ver = [r["path"] for r in ver], []
     config = [configuration_identity(r) for r in prop + ver]
     # Per-pass signatures WITHOUT their inputs, plus one inputs field per
     # stage over the UNION of what the arm's passes dispatched: a recovery
@@ -364,8 +411,18 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
                                 if r.get("manifest_path")})
             sigs.append({"stage": f"{stage}-inputs",
                          "inputs": inputs_fingerprint(ids, "|".join(manifests) or None)})
-    declared_json = None
-    if ver:
+    declared_json = unverifiable_json = None
+    if verifier_reason:
+        basis = "unverifiable"
+        # What the half read, not what it sent: two arms reading one
+        # unverifiable stage share it, so a pair of them is judged on the
+        # proposer half (as two equal declared configurations are).
+        marker = {"stage": "verifier-unverifiable",
+                  "of": verifier_identity or "|".join(sorted(set(verifier_metas or [])))
+                  or verifier_reason}
+        config.append(marker)
+        unverifiable_json = json.dumps(marker, sort_keys=True)
+    elif ver:
         basis = "transmitted"
     elif declared_verifier:
         basis = "declared"
@@ -388,7 +445,10 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
                                        for r in prop}),
         "verifier_basis": basis,
         "declared_verifier": declared_json,
+        "unverifiable_verifier": unverifiable_json,
+        "verifier_unverifiable_reason": verifier_reason,
         "meta_paths": [r["path"] for r in prop + ver],
+        "verifier_metas_set_aside": set_aside,
         "unreadable": bad_p + bad_v,
         "unverifiable_reason": reason,
     }
@@ -405,6 +465,14 @@ def differing_fields(a: dict[str, Any], b: dict[str, Any]) -> list[str]:
         Sorted field names whose value sets differ between the arms.
     """
     def values(arm: dict[str, Any]) -> dict[str, set[str]]:
+        """Each configuration field's set of encoded values across an arm.
+
+        Args:
+            arm: An arm from :func:`arm_from_metas`.
+
+        Returns:
+            Field name -> the JSON encodings of its values.
+        """
         out: dict[str, set[str]] = {}
         for enc in arm["config"]:
             for k, v in json.loads(enc).items():
@@ -439,10 +507,13 @@ def transmission_relation(a: dict[str, Any], b: dict[str, Any]) -> str:
     evidence only when both arms' verifier metas were read: a DECLARED
     verifier configuration says what the register recorded, not what a
     request carried, so it cannot show a difference (PR #24 review,
-    finding 2). Two equal declared configurations leave nothing configured
-    on the verifier half to separate the arms, so the proposer half decides.
-    An arm with no verifier stage beside one with a stage (declared or
-    transmitted) differs: only one of them sent verifier requests.
+    finding 2), and an UNVERIFIABLE half (metas listed but unreadable, a
+    dead binding source, a meta covering only part of the stage) shows
+    nothing at all (PR #25 review, findings 1, 2 and 4). Two equal declared
+    configurations, or two unverifiable halves that read the same stage,
+    leave nothing on the verifier half to separate the arms, so the
+    proposer half decides. An arm with no verifier stage beside one with a
+    stage (of any basis) differs: only one of them sent verifier requests.
 
     Args:
         a: An arm from :func:`arm_from_metas`.
@@ -451,14 +522,16 @@ def transmission_relation(a: dict[str, Any], b: dict[str, Any]) -> str:
     Returns:
         :data:`SAME`, :data:`DIFFER` or :data:`UNDETERMINED`.
     """
-    if "declared" not in (a["verifier_basis"], b["verifier_basis"]):
+    evidence = ("transmitted", None)
+    if a["verifier_basis"] in evidence and b["verifier_basis"] in evidence:
         return SAME if a["signature"] == b["signature"] else DIFFER
     if _proposer_half(a) != _proposer_half(b):
         return DIFFER
     if a["verifier_basis"] is None or b["verifier_basis"] is None:
         return DIFFER
-    if a["declared_verifier"] is not None and a["declared_verifier"] == b["declared_verifier"]:
-        return SAME
+    for field in ("declared_verifier", "unverifiable_verifier"):
+        if a.get(field) is not None and a.get(field) == b.get(field):
+            return SAME
     return UNDETERMINED
 
 
@@ -468,19 +541,26 @@ def judge(arms: list[dict[str, Any]], allow_unverifiable: bool = False) -> dict[
     Args:
         arms: Arms from :func:`arm_from_metas`.
         allow_unverifiable: Treat arms with no readable metadata, and pairs
-            only a declared verifier configuration could separate, as out of
-            scope rather than as a verdict.
+            only a declared or unverifiable verifier half could separate, as
+            out of scope rather than as a verdict.
 
     Returns:
-        ``{"verdict", "null_pairs", "undetermined_pairs", "unverifiable"}``.
-        ``null_pairs`` names each pair that differs in configuration but not
-        in transmission, with the differing fields; ``undetermined_pairs``
-        each pair that differs in configuration, sent identical proposer
-        requests, and has a verifier half that is declared, not transmitted.
+        ``{"verdict", "null_pairs", "undetermined_pairs", "unverifiable",
+        "unverifiable_halves"}``. ``null_pairs`` names each pair that
+        differs in configuration but not in transmission, with the differing
+        fields; ``undetermined_pairs`` each pair that differs in
+        configuration, sent identical proposer requests, and has a verifier
+        half that is declared or unverifiable, not transmitted;
+        ``unverifiable_halves`` each arm whose verifier half is unverifiable,
+        with the reason (it makes the verdict UNVERIFIABLE only through a
+        pair the proposer half cannot separate).
     """
     checkable = [a for a in arms if not a["unverifiable_reason"]]
     unverifiable = [{"arm": a["arm"], "reason": a["unverifiable_reason"]}
                     for a in arms if a["unverifiable_reason"]]
+    halves = [{"arm": a["arm"], "half": "verifier",
+               "reason": a.get("verifier_unverifiable_reason")}
+              for a in arms if a.get("verifier_basis") == "unverifiable"]
     null_pairs, undetermined_pairs = [], []
     for a, b in itertools.combinations(checkable, 2):
         if a["config"] == b["config"]:
@@ -500,7 +580,8 @@ def judge(arms: list[dict[str, Any]], allow_unverifiable: bool = False) -> dict[
     else:
         verdict = PASS
     return {"verdict": verdict, "null_pairs": null_pairs,
-            "undetermined_pairs": undetermined_pairs, "unverifiable": unverifiable}
+            "undetermined_pairs": undetermined_pairs, "unverifiable": unverifiable,
+            "unverifiable_halves": halves}
 
 
 # ── resolving registered conditions to their metas ───────────────────────
@@ -664,7 +745,8 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     return None, "no registered stage contains the condition's detections or prefixes its label"
 
 
-def stage_metas(run: str, key: str) -> list[str]:
+@functools.lru_cache(maxsize=None)
+def stage_metas(run: str, key: str) -> tuple[str, ...]:
     """A registered verifier stage's metas, by the W4.4 resolver's routes.
 
     Args:
@@ -672,16 +754,22 @@ def stage_metas(run: str, key: str) -> list[str]:
         key: The ``verifier_passes`` key.
 
     Returns:
-        The passes manifest's source metas for ``(run, key)``; when it
-        records none, the metas
+        The passes manifest's source metas for ``(run, key)`` when one of
+        them is a readable verifier meta; else the metas
         :func:`derive_condition_modality.resolve_verifier_stage` finds (stage
-        directory, then git's record of an archived leg).
+        directory, then git's record of an archived leg); else the
+        manifest's source files as recorded, so that
+        :func:`arm_from_metas` names them unreadable and the half
+        UNVERIFIABLE rather than reading the stage as absent (PR #25
+        review, finding 1: an absent or corrupt manifest meta used to stop
+        the resolver from being consulted at all).
     """
     found = _source_files(run, key)
-    if found:
-        return found
+    if any(_is_verifier_meta(f) for f in found):
+        return tuple(found)
     spec = (dcm._decomposition().get(run) or {}).get("verifier_passes", {}).get(key)
-    return [m["meta_path"] for m in dcm.resolve_verifier_stage(run, key, spec)["metas"]]
+    resolved = [m["meta_path"] for m in dcm.resolve_verifier_stage(run, key, spec)["metas"]]
+    return tuple(resolved or found)
 
 
 # ── reviewed bindings: derived products followed to their sources ────────
@@ -1052,7 +1140,7 @@ def arm_for_condition(condition_id: str) -> dict[str, Any]:
     if cond.get("architecture") == "proposer-verifier":
         stage, how = verifier_stage_of(cond)
         if stage:
-            verifier = stage_metas(run, stage)
+            verifier = list(stage_metas(run, stage))
         if not verifier and binding and binding.get("verifier_sources"):
             verifier, routes, dead = _from_sources(binding["verifier_sources"],
                                                    verifier_metas_for_source)
@@ -1219,10 +1307,12 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
     undetermined = judgement.get("undetermined_pairs") or []
     n_known = sum(1 for p in judgement["null_pairs"] if p.get("documented_by"))
     known = f" ({n_known} documented)" if judgement["null_pairs"] else ""
+    halves = judgement.get("unverifiable_halves") or []
+    n_halves = f", {len(halves)} unverifiable verifier half(s)" if halves else ""
     out = [f"{judgement['verdict']} {name}: {len(arms)} arm(s), "
            f"{len(judgement['null_pairs'])} null-manipulation pair(s){known}, "
            f"{len(judgement['unverifiable'])} unverifiable arm(s), "
-           f"{len(undetermined)} unverifiable pair(s) [{SIGNATURE_VERSION}]"]
+           f"{len(undetermined)} unverifiable pair(s){n_halves} [{SIGNATURE_VERSION}]"]
     for pair in judgement["null_pairs"]:
         label = ""
         if "documented_by" in pair:
@@ -1233,11 +1323,14 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
                    f"transmitted identical requests{label}")
     for u in judgement["unverifiable"]:
         out.append(f"  UNVERIFIABLE: {u['arm']}: {u['reason']}")
+    for h in halves:
+        out.append(f"  UNVERIFIABLE VERIFIER HALF: {h['arm']}: {h['reason']}")
     for pair in undetermined:
         out.append(f"  UNVERIFIABLE PAIR: {pair['arms'][0]} vs {pair['arms'][1]} sent identical "
                    "proposer requests and differ in configuration "
                    f"({', '.join(pair['config_fields_differing'])}), but a verifier half is "
-                   "DECLARED, so whether the difference reached the model is unknown")
+                   "DECLARED or UNVERIFIABLE, so whether the difference reached the model is "
+                   "unknown")
     bound = sorted({a["binding"] for a in arms if a.get("binding")})
     if bound:
         n_bound = sum(1 for a in arms if a.get("binding"))

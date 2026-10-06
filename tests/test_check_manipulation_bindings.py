@@ -42,7 +42,13 @@ pytestmark = pytest.mark.tier1
 
 RUN = "run1"
 _CACHED = (cm._stage_dirs, cm._manifest_sources, cm._bindings, cm.meta_record,
-           dcm.load_meta_json, dcm.pool_output_dir)
+           cm.stage_metas, dcm.load_meta_json, dcm.pool_output_dir)
+
+
+def _clear_caches() -> None:
+    """Drop every cache the gate keeps over the synthetic repository."""
+    for fn in _CACHED:
+        fn.cache_clear()
 
 
 def _write(root: Path, rel: str, doc: Any) -> str:
@@ -112,23 +118,29 @@ _DECLARED = {"variant": "v1", "instruction_file": "verify_adversarial.md",
 
 @pytest.fixture
 def repo(tmp_path, monkeypatch):
-    """A synthetic repository with one run, one pool and three verifier stages.
+    """A synthetic repository with one run, one pool and four verifier stages.
 
     Layout: the pool ``pool`` (one pass, in the passes manifest), stages
-    ``pool-verify-a`` and ``pool-verify-b`` (in the passes manifest) and
-    ``pool-verify-a-deep`` (a sub-directory of ``verify_a``, on disk only),
-    an unregistered verifier directory ``loose/``, an unregistered proposer
-    pass directory ``other-pool/run_1``, and four conditions whose
-    detections are derived products under ``results/cells/``.
+    ``pool-verify-a`` and ``pool-verify-b`` (in the passes manifest),
+    ``pool-verify-a-deep`` (a sub-directory of ``verify_a``, on disk only)
+    and ``pool-verify-c`` (in the passes manifest, but its one meta on disk
+    is corrupt and the other is absent), an unregistered verifier directory
+    ``loose/``, an unregistered proposer pass directory ``other-pool/run_1``,
+    and four conditions whose detections are derived products under
+    ``results/cells/``.
 
     Returns:
-        A namespace dict: ``root``, ``conditions``, ``decomposition`` and
-        ``write_bindings`` (a function writing the bindings file).
+        A namespace dict: ``root``, ``meta``, ``conditions``,
+        ``decomposition``, ``passes`` (the passes-manifest index; mutate it
+        and call :func:`_clear_caches`) and ``write_bindings`` (a function
+        writing the bindings file).
     """
-    for fn in _CACHED:
-        fn.cache_clear()
+    _clear_caches()
     monkeypatch.setattr(cm, "BASE_DIR", tmp_path)
     monkeypatch.setattr(dcm, "BASE_DIR", tmp_path)
+    corrupt = f"outputs/{RUN}/verifier/pool/verify_c/run.meta.json"
+    (tmp_path / corrupt).parent.mkdir(parents=True)
+    (tmp_path / corrupt).write_text("{not json")
     meta = {
         "pool": _write(tmp_path, f"outputs/{RUN}/pool/run_1/d.meta.json", _proposer_meta()),
         "a": _write(tmp_path, f"outputs/{RUN}/verifier/pool/verify_a/run.meta.json",
@@ -146,15 +158,18 @@ def repo(tmp_path, monkeypatch):
         "proposer_pools": {"pool": {"path": "pool"}, "pool2": {"path": "pool2"}},
         "verifier_passes": {"pool-verify-a": {"path": "verifier/pool/verify_a"},
                             "pool-verify-b": {"path": "verifier/pool/verify_b"},
-                            "pool-verify-a-deep": {"path": "verifier/pool/verify_a/deep"}},
+                            "pool-verify-a-deep": {"path": "verifier/pool/verify_a/deep"},
+                            "pool-verify-c": {"path": "verifier/pool/verify_c"}},
         "conditions": [{"label": lab, "detections": f"results/cells/{lab}/detections.geojson"}
                        for lab in ("cell-a", "cell-b", "cell-c", "single")]
         + [{"label": "pool-verify-b-k5", "detections": "results/cells/x/detections.geojson"},
+           {"label": "pool-verify-c-k5", "detections": "results/cells/y/detections.geojson"},
            {"label": "orphan", "detections": "results/cells/orphan/detections.geojson"}]}}
     conditions = {f"{RUN}::{lab}": {"condition_id": f"{RUN}::{lab}", "run_id": RUN, "label": lab,
                                     "architecture": "proposer-verifier", "proposer_pool": "pool",
                                     "verifier_config": _DECLARED}
-                  for lab in ("cell-a", "cell-b", "cell-c", "pool-verify-b-k5")}
+                  for lab in ("cell-a", "cell-b", "cell-c", "pool-verify-b-k5",
+                              "pool-verify-c-k5")}
     conditions[f"{RUN}::single"] = {"condition_id": f"{RUN}::single", "run_id": RUN,
                                     "label": "single", "architecture": "single-pass",
                                     "proposer_pool": "pool"}
@@ -164,7 +179,9 @@ def repo(tmp_path, monkeypatch):
                                     "verifier_config": _DECLARED}
     passes = {(RUN, "pool"): [{"provenance": {"source_files": [meta["pool"]]}}],
               (RUN, "pool-verify-a"): [{"provenance": {"source_files": [meta["a"]]}}],
-              (RUN, "pool-verify-b"): [{"provenance": {"source_files": [meta["b"]]}}]}
+              (RUN, "pool-verify-b"): [{"provenance": {"source_files": [meta["b"]]}}],
+              (RUN, "pool-verify-c"): [{"provenance": {"source_files": [
+                  corrupt, f"outputs/{RUN}/verifier/pool/verify_c/absent.meta.json"]}}]}
     monkeypatch.setattr(cm, "_conditions", lambda: conditions)
     monkeypatch.setattr(dcm, "_decomposition", lambda: decomposition)
     monkeypatch.setattr(dcm, "_passes_index", lambda: passes)
@@ -177,12 +194,12 @@ def repo(tmp_path, monkeypatch):
         """
         _write(tmp_path, cm.BINDINGS, {"schema_version": cm.BINDINGS_SCHEMA,
                                        "bindings": entries})
-        cm._bindings.cache_clear()
+        _clear_caches()
 
     yield {"root": tmp_path, "meta": meta, "conditions": conditions,
+           "decomposition": decomposition, "passes": passes,
            "write_bindings": write_bindings}
-    for fn in _CACHED:
-        fn.cache_clear()
+    _clear_caches()
 
 
 def _entry(name: str, labels: list[str], **sources: list[str]) -> dict[str, Any]:
@@ -285,6 +302,62 @@ def test_a_dead_source_is_named_not_silently_skipped(repo, capsys) -> None:
         "binding dead: verifier source(s) resolved no meta: outputs/nowhere"]
     out = cm.render("ad hoc", cm.judge([arm]), [arm], report=False)
     assert "BINDING GAP: run1::cell-a: binding dead" in out
+
+
+# ── PR #25 review, finding 1: listed but unreadable verifier metas ──────
+
+def test_a_register_stage_with_no_readable_meta_is_unverifiable_not_absent(repo) -> None:
+    """The label names stage ``pool-verify-c``, whose manifest metas are one
+    corrupt and one absent. The verifier half is UNVERIFIABLE (named), not
+    "no verifier stage"; beside a transmitted arm of the same proposer
+    request the pair is unverifiable, where it used to PASS as "differ in
+    transmission"."""
+    arm = cm.arm_for_condition(f"{RUN}::pool-verify-c-k5")
+    assert arm["verifier_stage"] == {"stage": "pool-verify-c", "how": "label"}
+    assert arm["verifier_basis"] == "unverifiable"
+    assert "2 verifier meta(s) listed, none readable" in arm["verifier_unverifiable_reason"]
+    assert arm["unverifiable_reason"] is None  # the proposer half is readable
+    judgement, _arms = cm.check_conditions([f"{RUN}::pool-verify-b-k5",
+                                            f"{RUN}::pool-verify-c-k5"])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+    assert [p["arms"] for p in judgement["undetermined_pairs"]] == [
+        [f"{RUN}::pool-verify-b-k5", f"{RUN}::pool-verify-c-k5"]]
+    assert judgement["unverifiable_halves"][0]["arm"] == f"{RUN}::pool-verify-c-k5"
+    out = cm.render("ad hoc", judgement, _arms, report=False)
+    assert "UNVERIFIABLE VERIFIER HALF: run1::pool-verify-c-k5: 2 verifier meta(s)" in out
+
+
+def test_a_bound_stage_with_no_readable_meta_is_unverifiable_not_absent(repo) -> None:
+    """The same hole through a binding: the bound source lies in stage
+    ``pool-verify-c``, whose metas cannot be read."""
+    repo["write_bindings"]([_entry("dark", ["cell-a"], verifier_sources=[
+        f"outputs/{RUN}/verifier/pool/verify_c/probabilities.json"])])
+    arm = cm.arm_for_condition(f"{RUN}::cell-a")
+    assert arm["verifier_basis"] == "unverifiable"
+    assert "none readable as a verifier pass" in arm["verifier_unverifiable_reason"]
+    judgement, _arms = cm.check_conditions([f"{RUN}::cell-a", f"{RUN}::pool-verify-b-k5"])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+
+
+def test_a_stage_listing_only_a_proposer_meta_is_unverifiable(repo) -> None:
+    """A readable meta that records no verifier pass is not verifier
+    evidence, and is named among the unreadable."""
+    arm = cm.arm_from_metas("A", [repo["meta"]["pool"]], verifier_metas=[repo["meta"]["other"]])
+    assert arm["verifier_basis"] == "unverifiable"
+    assert repo["meta"]["other"] in arm["unreadable"]
+
+
+def test_two_arms_reading_one_unverifiable_stage_are_judged_on_the_proposer(repo) -> None:
+    """Two arms whose verifier halves read the SAME unreadable stage send
+    the same verifier requests, whatever they were: the proposer half
+    decides (here a null manipulation: two listed libraries, images off)."""
+    root = repo["root"]
+    a = cm.arm_from_metas("A", [_write(root, "p/a.meta.json", _proposer_meta("detect_a", 3))],
+                          verifier_metas=["outputs/gone.meta.json"])
+    b = cm.arm_from_metas("B", [_write(root, "p/b.meta.json", _proposer_meta("detect_b", 5))],
+                          verifier_metas=["outputs/gone.meta.json"])
+    assert cm.transmission_relation(a, b) == cm.SAME
+    assert cm.judge([a, b])["verdict"] == cm.REFUSE
 
 
 @pytest.mark.parametrize(("mutate", "problem"), [
