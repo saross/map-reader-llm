@@ -48,7 +48,9 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 RE = ROOT / "results/d42-retest-2026-10-05/class-b"
@@ -62,12 +64,48 @@ NOTE = ("PI ruling D42: the p_value fields inside f1/precision/recall_difference
         "report: reports/d42-implementation-2026-10-05.md.")
 
 
-def load(p: Path):
+def load(p: Path) -> Any:
+    """Read one JSON file.
+
+    Args:
+        p: The file.
+
+    Returns:
+        The parsed JSON value.
+    """
     return json.loads(p.read_text(encoding="utf-8"))
 
 
+def write_like(path: Path, raw: str, data: Any) -> None:
+    """Write ``data`` back to ``path`` in the layout its committed text had.
+
+    The indent (2, 1 or none) is read from the committed text's first key,
+    and a trailing newline is kept only if the committed text had one, so
+    an annotation changes the fields it adds and nothing else.
+
+    Args:
+        path: The artefact to write.
+        raw: Its committed text, as read before annotating.
+        data: The annotated JSON value.
+    """
+    indent = 2 if raw.startswith('{\n  "') else (1 if raw.startswith('{\n "') else None)
+    path.write_text(json.dumps(data, indent=indent) + ("\n" if raw.endswith("\n") else ""),
+                    encoding="utf-8")
+
+
 def block(result: dict, source: str) -> dict:
-    """The permutation_retest block from a re-run result dict."""
+    """The permutation_retest block from a re-run result dict.
+
+    Args:
+        result: A re-run comparison holding ``f1_difference``,
+            ``precision_difference`` and ``recall_difference`` (and, when
+            recorded, ``permutation.n_discordant_tiles``).
+        source: The re-run file, repository-relative.
+
+    Returns:
+        ``{"f1_p", "precision_p", "recall_p", "method", "source"}``, plus
+        ``n_discordant_tiles`` when the re-run recorded it.
+    """
     out = {"f1_p": result["f1_difference"]["p_value"],
            "precision_p": result["precision_difference"]["p_value"],
            "recall_p": result["recall_difference"]["p_value"],
@@ -79,6 +117,18 @@ def block(result: dict, source: str) -> dict:
 
 
 def check(label: str, a: dict, b: dict, keys: tuple[str, ...]) -> None:
+    """Refuse to annotate a row whose point estimates differ from its re-run.
+
+    Args:
+        label: The row, for the message.
+        a: The committed row.
+        b: The re-run row.
+        keys: The fields that must be equal.
+
+    Raises:
+        SystemExit: A field differs, so the re-test would describe
+            different data.
+    """
     for k in keys:
         if a.get(k) != b.get(k):
             raise SystemExit(f"{label}: {k} differs (committed {a.get(k)} vs re-run {b.get(k)}); "
@@ -86,6 +136,17 @@ def check(label: str, a: dict, b: dict, keys: tuple[str, ...]) -> None:
 
 
 def fair_384(data: dict) -> list[str]:
+    """Annotate ``fair-384-vs-512.json`` (D44).
+
+    Each comparison gains the March-sweep re-test; ``I4:deterministic`` also
+    gains the E39 sweep (threshold 0.15), the figure to cite.
+
+    Args:
+        data: The committed artefact, annotated in place.
+
+    Returns:
+        Log lines, one per comparison plus one for the E39 sweep.
+    """
     march = load(RE / "fair-384-vs-512-march-sweep.json")
     e39 = load(RE / "fair-384-vs-512-e39-sweep.json")
     log = []
@@ -113,6 +174,17 @@ def fair_384(data: dict) -> list[str]:
 
 
 def pes(data: dict, rerun: str, twins: dict[str, str]) -> list[str]:
+    """Annotate a ``pairwise-effect-sizes`` artefact.
+
+    Args:
+        data: The committed artefact, annotated in place.
+        rerun: The re-run file under :data:`RE`.
+        twins: Row key -> the row whose re-test it shares (a duplicate of
+            the same two arms under another group letter).
+
+    Returns:
+        A count line, then one line per comparison whose F1 p crosses 0.05.
+    """
     r = load(RE / rerun)["comparisons"]
     log, flips = [], 0
     for key, row in data["comparisons"].items():
@@ -130,6 +202,15 @@ def pes(data: dict, rerun: str, twins: dict[str, str]) -> list[str]:
 
 
 def p3a(data: dict) -> list[str]:
+    """Annotate the Phase 3a-high text pairwise artefact.
+
+    Args:
+        data: The committed artefact, annotated in place; each row's point
+            estimates are checked against the re-run first.
+
+    Returns:
+        Log lines, one per comparison.
+    """
     r = {c["comparison"]: c for c in load(RE / "phase3a-high-text-pairwise.json")["comparisons"]}
     log = []
     for row in data["comparisons"]:
@@ -146,6 +227,17 @@ def p3a(data: dict) -> list[str]:
 
 
 def verifier_thinking(data: dict, rerun: str, resweep: str | None) -> list[str]:
+    """Annotate a pro-proposer verifier-thinking comparison (D43 for text).
+
+    Args:
+        data: The committed artefact, annotated in place.
+        rerun: The as-is re-run file under :data:`RE`.
+        resweep: The re-swept re-run (B-17, text) to add as a labelled
+            sensitivity with the stale-variant note, or None.
+
+    Returns:
+        Log lines.
+    """
     rr = load(RE / rerun)["pairwise"][0]
     row = data["pairwise"][0]
     row["permutation_retest"] = block(rr, f"results/d42-retest-2026-10-05/class-b/{rerun}")
@@ -179,28 +271,37 @@ def verifier_thinking(data: dict, rerun: str, resweep: str | None) -> list[str]:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Command-line entry point: annotate (or, without ``--write``, preview).
+
+    Args:
+        argv: Arguments (defaults to ``sys.argv[1:]``).
+
+    Returns:
+        0; a row whose point estimates disagree with its re-run stops the
+        run through :func:`check` before anything is written.
+    """
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("--write", action="store_true")
     args = ap.parse_args(argv)
 
-    jobs = [
-        (PW / "fair-384-vs-512.json", fair_384, 2),
+    jobs: list[tuple[Path, Callable[[Any], list[str]]]] = [
+        (PW / "fair-384-vs-512.json", fair_384),
         (ROOT / "results/pv/pairwise-effects/pairwise-effect-sizes.json",
          lambda d: pes(d, "pairwise-effect-sizes-v1-inputs.json",
                        {"H:pv-08-text-3of10_vs_consensus-high-25of30":
                         "D:pv-08-text-3of10_vs_consensus-high-25of30",
                         "H:pv-09-text-5of10_vs_consensus-high-25of30":
-                        "B:pv-09-text-5of10_vs_consensus-high-25of30"}), 2),
+                        "B:pv-09-text-5of10_vs_consensus-high-25of30"})),
         (ROOT / "results/pv/pairwise-effects/pairwise-effect-sizes-v2.json",
-         lambda d: pes(d, "pairwise-effect-sizes-v2.json", {}), 2),
-        (ROOT / "results/retest/phase3a-high-text/phase3a-high-text-pairwise.json", p3a, 2),
+         lambda d: pes(d, "pairwise-effect-sizes-v2.json", {})),
+        (ROOT / "results/retest/phase3a-high-text/phase3a-high-text-pairwise.json", p3a),
         (PW / "pro-proposer-verifier-thinking-text/comparison.json",
          lambda d: verifier_thinking(d, "b17-text-as-is-comparison.json",
-                                     "b17-text-resweep-comparison.json"), 2),
+                                     "b17-text-resweep-comparison.json")),
         (PW / "pro-proposer-verifier-thinking-image/comparison.json",
-         lambda d: verifier_thinking(d, "b18-image-as-is-comparison.json", None), 2),
+         lambda d: verifier_thinking(d, "b18-image-as-is-comparison.json", None)),
     ]
-    for path, fn, _ in jobs:
+    for path, fn in jobs:
         raw = path.read_text(encoding="utf-8")
         data = json.loads(raw)
         print(f"== {path.relative_to(ROOT)}")
@@ -209,9 +310,7 @@ def main(argv: list[str] | None = None) -> int:
         if isinstance(data, dict):
             data["d42_annotation"] = NOTE
         if args.write:
-            indent = 2 if raw.startswith('{\n  "') else (1 if raw.startswith('{\n "') else None)
-            path.write_text(json.dumps(data, indent=indent) + ("\n" if raw.endswith("\n") else ""),
-                            encoding="utf-8")
+            write_like(path, raw, data)
 
     b16 = PW / "pairwise-384px.json"
     raw = b16.read_text(encoding="utf-8")
@@ -225,9 +324,7 @@ def main(argv: list[str] | None = None) -> int:
         "by fair-384-vs-512.json, which reassigns 512 px detections to 384 px tiles.")
     print(f"== {b16.relative_to(ROOT)}: note added (not re-testable)")
     if args.write:
-        indent = 2 if raw.startswith('{\n  "') else (1 if raw.startswith('{\n "') else None)
-        b16.write_text(json.dumps(data, indent=indent) + ("\n" if raw.endswith("\n") else ""),
-                       encoding="utf-8")
+        write_like(b16, raw, data)
     if not args.write:
         print("(dry run: nothing written; --write applies it)")
     return 0
