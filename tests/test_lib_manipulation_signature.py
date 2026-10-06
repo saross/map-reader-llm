@@ -81,7 +81,21 @@ def test_the_copy_harvests_what_the_original_harvested(tmp_path) -> None:
     path = str(_meta(tmp_path / "a.meta.json"))
     original, copy = module.harvest(path), sig.harvest(path)
     assert {k: copy[k] for k in original} == original
-    assert set(copy) - set(original) == {"max_output_tokens", "dispatched_ids"}
+    assert set(copy) - set(original) == {"max_output_tokens", "dispatched_ids",
+                                         "has_configuration"}
+
+
+def test_a_document_without_a_configuration_is_not_a_meta(tmp_path) -> None:
+    """The passes manifest cites results/run-conditions.json beside some
+    passes' metas: it parses, but records no request, so the gate's reader
+    marks it unreadable instead of harvesting an all-empty signature."""
+    register = tmp_path / "run-conditions.json"
+    register.write_text(json.dumps({"decomposition": {}}))
+    assert sig.harvest(str(register))["has_configuration"] is False
+    assert sig.harvest(str(_meta(tmp_path / "a.meta.json")))["has_configuration"] is True
+    cm.meta_record.cache_clear()
+    assert cm.meta_record(str(register))["error"] == "no configuration block: not a pass meta"
+    cm.meta_record.cache_clear()
 
 
 def test_the_harvest_carries_the_fields_the_gate_reread(tmp_path) -> None:

@@ -254,7 +254,10 @@ def meta_record(path: str) -> dict[str, Any]:
         path: Repository-relative or absolute ``*.meta.json`` path.
 
     Returns:
-        The harvester's record (``error`` set when unreadable), with
+        The harvester's record (``error`` set when unreadable, or when the
+        file is JSON with no ``configuration`` block: the passes manifest
+        cites ``results/run-conditions.json`` and ``run.log`` files beside
+        some passes' metas, and neither records a request), with
         ``input_ids`` (the dispatched ids, a frozenset) and ``inputs`` (their
         fingerprint, see the module docstring).
     """
@@ -262,6 +265,8 @@ def meta_record(path: str) -> dict[str, Any]:
     full = p if p.is_absolute() else BASE_DIR / p
     rec = harvest(str(full))
     rec["path"] = path
+    if "error" not in rec and not rec.get("has_configuration"):
+        rec["error"] = "no configuration block: not a pass meta"
     if "error" not in rec:
         rec["input_ids"] = frozenset(rec.pop("dispatched_ids"))
         rec["inputs"] = inputs_fingerprint(rec["input_ids"], rec.get("manifest_path"))
