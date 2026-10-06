@@ -325,6 +325,14 @@ def _registered(monkeypatch, tmp_path, analyses: dict[str, list[str]],
         for c, (r, p) in pools.items()})
 
     def arm(cid: str) -> dict:
+        """Build a synthetic arm from the case's configuration table.
+
+        Args:
+            cid: The condition id.
+
+        Returns:
+            The arm (an ``absent`` version writes no meta).
+        """
         version, examples, temperature = configs[cid]
         path = tmp_path / f"{cid.replace(':', '_')}.meta.json"
         if version != "absent":

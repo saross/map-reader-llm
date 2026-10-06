@@ -695,6 +695,13 @@ def harvest_recorded() -> dict[str, dict[str, str]]:
     out: dict[str, dict[str, str]] = {}
 
     def add(key: str, cid: str | None, value: Any) -> None:
+        """Record one artefact's modality claim for a condition.
+
+        Args:
+            key: ``"<path>::<field>"`` of the claim.
+            cid: The condition it concerns (skipped when None).
+            value: The claimed modality (skipped unless comparable).
+        """
         if cid and comparable(value):
             out.setdefault(key, {})[cid] = value
 
@@ -1324,6 +1331,12 @@ def artefact_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     summary: dict[str, dict[str, int]] = {}
 
     def bump(artefact: str, key: str) -> None:
+        """Count one event against an artefact's summary row.
+
+        Args:
+            artefact: The artefact's name.
+            key: The counter to increment.
+        """
         summary.setdefault(artefact, {"records_carrying_a_modality": 0,
                                       "checked_against_a_derivation": 0,
                                       "mismatches": 0})[key] += 1
