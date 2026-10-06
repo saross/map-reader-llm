@@ -371,6 +371,46 @@ def _add_stage_condition(repo: dict[str, Any], stage: str, path: str, label: str
     return cid
 
 
+# ── PR #25 review, finding 3: no stage is a run's whole tree ────────────
+
+def test_a_dot_path_stage_is_not_a_catch_all(repo) -> None:
+    """A stage registered at path ``.`` (as 55maps-generalisation's
+    verified-cleanup-20260410 is, with a ``repo_path``) used to make the
+    run's whole output tree its directory, so any source no deeper stage
+    claimed, and any condition's detections under the run, resolved to it.
+    Without a repo_path its run-tree candidates are dropped; with one it
+    lives at its repo_path only."""
+    passes = repo["decomposition"][RUN]["verifier_passes"]
+    passes["cleanup"] = {"path": "."}
+    _clear_caches()
+    stray = f"outputs/{RUN}/elsewhere/probabilities.json"
+    assert cm.stages_containing(stray) == []
+    assert all(d not in cm._run_roots(RUN) for d, _run, _key in cm._stage_dirs())
+    passes["cleanup"] = {"path": ".", "repo_path": "archive/staging/cleanup"}
+    _clear_caches()
+    assert cm._stage_homes(RUN, "cleanup", passes["cleanup"]) == ["archive/staging/cleanup"]
+    assert cm.stages_containing(stray) == []
+    assert cm.stages_containing("archive/staging/cleanup/probabilities.json") == [
+        (RUN, "cleanup")]
+    # The register's own route: detections under the run tree but in no
+    # stage's directory name no stage (they used to name the catch-all).
+    cid = _add_stage_condition(repo, "unused-stage", "verifier/unused", "elsewhere-cell")
+    repo["decomposition"][RUN]["conditions"][-1]["detections"] = (
+        f"outputs/{RUN}/elsewhere/detections.geojson")
+    assert cm.verifier_stage_of(repo["conditions"][cid])[0] is None
+
+
+def test_a_repo_path_stage_does_not_claim_the_run_tree(repo) -> None:
+    """A stage that names its own root (repo_path, ruling D32) does not
+    also occupy ``outputs/<run>/<path>``, which may be another stage's."""
+    passes = repo["decomposition"][RUN]["verifier_passes"]
+    passes["moved"] = {"path": "verifier/pool/verify_b", "repo_path": "archive/legs"}
+    _clear_caches()
+    assert cm.stages_containing(f"outputs/{RUN}/verifier/pool/verify_b/probabilities.json") == [
+        (RUN, "pool-verify-b")]
+    assert cm.stages_containing("archive/legs/verifier/pool/verify_b/x.json") == [(RUN, "moved")]
+
+
 # ── PR #25 review, finding 7: a binding against the register's stage ────
 
 def test_a_binding_to_another_stage_does_not_override_the_register(repo) -> None:

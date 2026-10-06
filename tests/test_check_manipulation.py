@@ -399,8 +399,18 @@ def test_the_committed_bindings_agree_with_the_register() -> None:
     registered stage's directory unless its entry says the stage is
     unregistered, and each entry's recorded ``resolves_to`` is still the
     stage the gate maps its sources to (so a register edit that moves a
-    stage shows up here, not as a silent re-binding)."""
+    stage shows up here, not as a silent re-binding).
+
+    No stage's directory may be a run's whole output tree: until PR #25
+    review finding 3, 55maps-generalisation's ``verified-cleanup-20260410``
+    (registered path ``.``) made ``outputs/55maps-generalisation`` a stage
+    directory, so any source in that run that no deeper stage claimed
+    would have mapped to it. Each source must also lie strictly below its
+    stage's matched directory's run root."""
     cm._bindings.cache_clear()
+    cm._stage_dirs.cache_clear()
+    catch_alls = [(run, key, d) for d, run, key in cm._stage_dirs() if d in cm._run_roots(run)]
+    assert catch_alls == [], catch_alls
     bindings = cm._bindings()
     assert bindings, "the bindings file is missing or empty"
     for entry in {e["id"]: e for e in bindings.values()}.values():
@@ -408,5 +418,10 @@ def test_the_committed_bindings_agree_with_the_register() -> None:
                   for run, key in cm.stages_containing(source)]
         if not entry.get("unregistered_stage"):
             for source in entry.get("verifier_sources") or []:
-                assert cm.stages_containing(source), (entry["id"], source)
+                stages = cm.stages_containing(source)
+                assert stages, (entry["id"], source)
+                homes = [(d, run) for d, run, key in cm._stage_dirs()
+                         if (run, key) in stages and cm._under(source, d)]
+                assert homes and all(d not in cm._run_roots(run) for d, run in homes), (
+                    entry["id"], source, homes)
             assert list(dict.fromkeys(mapped)) == (entry.get("resolves_to") or []), entry["id"]

@@ -714,6 +714,64 @@ def proposer_metas_for_condition(condition: dict[str, Any]) -> tuple[list[str], 
     return [], None
 
 
+def _run_roots(run: str) -> frozenset[str]:
+    """The directories that hold a run's whole output tree.
+
+    Args:
+        run: Run id.
+
+    Returns:
+        ``<root>/<run>`` for every :data:`derive_condition_modality.POOL_ROOTS`
+        root, and ``outputs/retest/<phase>`` for a ``retest-<phase>`` run.
+    """
+    roots = {f"{root}/{run}" for root in dcm.POOL_ROOTS}
+    if run.startswith("retest-"):
+        roots.add(f"outputs/retest/{run[len('retest-'):]}")
+    return frozenset(roots)
+
+
+def _stage_homes(run: str, key: str, spec: Any) -> list[str]:
+    """The directories a registered verifier stage may occupy, for containment.
+
+    A stage that names its own root (``repo_path``, ruling D32) lives at
+    ``<repo_path>/<path>`` and nowhere else: the run-tree candidates
+    :func:`derive_condition_modality.stage_path_candidates` adds for it are
+    another stage's ground. Any candidate that is a run's whole tree (a
+    registered path of ``.``, as ``55maps-generalisation``'s
+    ``verified-cleanup-20260410`` has) is dropped: it would make the stage
+    the home of every source in the run that no deeper stage claims (PR #25
+    review, finding 3).
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict).
+
+    Returns:
+        Repository-relative directories, normalised (no trailing ``/`` or
+        ``/.``), most specific first.
+
+    Examples:
+        >>> _stage_homes("r", "k", {"path": "x", "repo_path": "archive/y"})
+        ['archive/y/x']
+    """
+    def norm(path: str) -> str:
+        """A candidate without its trailing ``/`` or ``/.``.
+
+        Args:
+            path: A candidate directory.
+
+        Returns:
+            The normalised directory.
+        """
+        return path.rstrip("/").removesuffix("/.").rstrip("/")
+
+    if isinstance(spec, dict) and spec.get("repo_path") and spec.get("path"):
+        return [norm(f"{spec['repo_path']}/{spec['path']}")]
+    roots = _run_roots(run)
+    return [c for c in map(norm, dcm.stage_path_candidates(run, key, spec)) if c not in roots]
+
+
 def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     """Which registered verifier stage a proposer-verifier condition used.
 
@@ -722,9 +780,10 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
 
     Returns:
         ``(stage_key, how)``: the stage, found by the register's detections
-        path lying under the stage's directory (longest match), else by the
-        label naming the stage (``label == key`` or ``label`` starting
-        ``key-``; longest key); ``(None, reason)`` otherwise.
+        path lying under one of the stage's homes (:func:`_stage_homes`;
+        longest match), else by the label naming the stage (``label ==
+        key`` or ``label`` starting ``key-``; longest key); ``(None,
+        reason)`` otherwise.
     """
     run = condition["run_id"]
     entry = dcm._decomposition().get(run) or {}
@@ -732,8 +791,7 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     det = _register_entry(condition).get("detections") or ""
     best: tuple[str, int] | None = None
     for key, spec in stages.items():
-        for cand in dcm.stage_path_candidates(run, key, spec):
-            cand = cand.rstrip("/").removesuffix("/.")
+        for cand in _stage_homes(run, key, spec):
             if det.startswith(cand + "/") and (best is None or len(cand) > best[1]):
                 best = (key, len(cand))
     if best:
@@ -922,14 +980,14 @@ def _stage_dirs() -> tuple[tuple[str, str, str], ...]:
     """Every directory a registered verifier stage may occupy, with its stage.
 
     Returns:
-        ``(directory, run, key)`` for each
-        :func:`derive_condition_modality.stage_path_candidates` of every
-        stage in every run.
+        ``(directory, run, key)`` for each of :func:`_stage_homes` of every
+        stage in every run (never a run's whole tree; PR #25 review,
+        finding 3).
     """
-    return tuple((cand.rstrip("/").removesuffix("/."), run, key)
+    return tuple((cand, run, key)
                  for run, entry in dcm._decomposition().items()
                  for key, spec in (entry.get("verifier_passes") or {}).items()
-                 for cand in dcm.stage_path_candidates(run, key, spec))
+                 for cand in _stage_homes(run, key, spec))
 
 
 def stages_containing(source: str) -> list[tuple[str, str]]:
