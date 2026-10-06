@@ -1,5 +1,5 @@
 {
- "_README": "Reviewed bindings for the manipulation gate (scripts/check_manipulation.py). Each entry ties registered conditions whose detections are a DERIVED product (a re-score against another reference, an operating point materialised from a stage's verified probabilities, a K-ladder rung, a union of passes) to the SOURCES the product's documented derivation read: verifier_sources (a registered stage's output; the gate maps each to the registered stage whose directory holds it, recorded here as resolves_to) and proposer_sources (pass or pool directories; the gate reads the passes-manifest metas under each, else the metas on disk). The gate consults an entry only where the register's own routes find nothing. Every entry carries its evidence: the deriving script and lines, the commit that added the product, and documents; caveats say what a reviewer must know (e.g. a stage meta overwritten by a cleanup leg, so the transmitted signature reflects that leg's configuration). Built 2026-10-06 (gate-coverage-2026-10-06) from six read-only provenance investigations; each binding was reproduced against the data where the evidence field says so. Do not add an entry without evidence; tests/test_check_manipulation.py (tier 2) checks the file against the register.",
+ "_README": "Reviewed bindings for the manipulation gate (scripts/check_manipulation.py). Each entry ties registered conditions whose detections are a DERIVED product (a re-score against another reference, an operating point materialised from a stage's verified probabilities, a K-ladder rung, a union of passes) to the SOURCES the product's documented derivation read: verifier_sources (a registered stage's output; the gate maps each to the registered stage whose directory holds it, recorded here as resolves_to) and proposer_sources (pass or pool directories; the gate reads the passes-manifest metas under each, else the metas on disk). The gate consults an entry only where the register's own routes find nothing. Every entry carries its evidence: the deriving script and lines, the commit that added the product, and documents; caveats say what a reviewer must know. An entry whose caveats record that the stage's only surviving meta covers part of its requests (a cleanup, recovery, resumed or final-round leg) carries incomplete_meta: true with a one-line incomplete_meta_reason; the gate then treats the verifier half of every arm that reads that stage as UNVERIFIABLE rather than taking the partial meta as the whole stage (PR #25 review, finding 4; 28 entries flagged 2026-10-07). Built 2026-10-06 (gate-coverage-2026-10-06) from six read-only provenance investigations; each binding was reproduced against the data where the evidence field says so. Do not add an entry without evidence; tests/test_check_manipulation.py (tier 2) checks the file against the register.",
  "schema_version": "manipulation-gate-bindings/1",
  "generated_for": "gate-coverage-2026-10-06",
  "bindings": [
@@ -57,7 +57,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire 2026-10-06; cost_audit.json too), BUT it records only the 6-item CLEANUP leg: execution_stats.items_processed 6, timestamp.start 2026-08-26T21:14:19. probabilities.json.pre-cleanup-20260826T211418.backup sits beside it. find shows no meta for the main 38,713-candidate leg anywhere under the stage dir. The stride post_run_report.md:69 row for this stage also shows 6 items.",
-   "caveats": "Data check (sapphire): 4,475/4,475 features' mound_probability equal verify/probabilities.json by candidate_id. The stage's only meta is the 6-item cleanup leg (see meta_beside_source)."
+   "caveats": "Data check (sapphire): 4,475/4,475 features' mound_probability equal verify/probabilities.json by candidate_id. The stage's only meta is the 6-item cleanup leg (see meta_beside_source).",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 6-item cleanup leg (2026-08-26); no meta survives for the main 38,713-candidate leg"
   },
   {
    "id": "stride-a-k10-oracle-canonical",
@@ -82,7 +84,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present, but it holds the 6-item cleanup leg only. Details are in entry stride-a-k10-primary-canonical.",
-   "caveats": "Data check (sapphire): 4,639/4,639 features match verify/probabilities.json by candidate_id. It is the same subset as board cell A-N10-oracle (entry stride-a-final-board-cells) but a separate file with a different sha256."
+   "caveats": "Data check (sapphire): 4,639/4,639 features match verify/probabilities.json by candidate_id. It is the same subset as board cell A-N10-oracle (entry stride-a-final-board-cells) but a separate file with a different sha256.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 6-item cleanup leg (2026-08-26); no meta survives for the main 38,713-candidate leg"
   },
   {
    "id": "stride-a-final-board-cells",
@@ -132,7 +136,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present, but it holds the 6-item cleanup leg only. Details are in entry stride-a-k10-primary-canonical.",
-   "caveats": "The N = 1/3/5 rungs were NOT separately verified. Each rung re-clusters the first N pin-gated proposer passes (cluster_first_n, c = 1). Every cluster takes the mound_probability of its nearest union candidate in this one stage within INHERIT_TOL_M = 10 m; unmatched clusters are dropped. So the rung's verifier evidence is a SUBSET of the single K = 10 stage, and the stage meta reports the union's request count, not the rung's. Data check (sapphire, read-only): for the N10 cells, matched by candidate_id, A-N10-carried 4,475/4,475 and A-N10-oracle 4,639/4,639 match verify. For the rung cells, matched to the nearest union candidate, A-N1-oracle 4,879/4,879, A-N3-oracle 4,796/4,796 and A-N5-oracle 4,597/4,597 match verify (max NN 9.98 m). A-N5-oracle and A-N5-carried are the same point (0.15, k4) and byte-identical. The rungs' proposer passes are outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1..run_N (pool g384_ov128_55map). The stage meta is the 6-item cleanup leg only."
+   "caveats": "The N = 1/3/5 rungs were NOT separately verified. Each rung re-clusters the first N pin-gated proposer passes (cluster_first_n, c = 1). Every cluster takes the mound_probability of its nearest union candidate in this one stage within INHERIT_TOL_M = 10 m; unmatched clusters are dropped. So the rung's verifier evidence is a SUBSET of the single K = 10 stage, and the stage meta reports the union's request count, not the rung's. Data check (sapphire, read-only): for the N10 cells, matched by candidate_id, A-N10-carried 4,475/4,475 and A-N10-oracle 4,639/4,639 match verify. For the rung cells, matched to the nearest union candidate, A-N1-oracle 4,879/4,879, A-N3-oracle 4,796/4,796 and A-N5-oracle 4,597/4,597 match verify (max NN 9.98 m). A-N5-oracle and A-N5-carried are the same point (0.15, k4) and byte-identical. The rungs' proposer passes are outputs/stride-55map-2026-08-25/g384_ov128_55map/run_1..run_N (pool g384_ov128_55map). The stage meta is the 6-item cleanup leg only.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 6-item cleanup leg (2026-08-26); no meta survives for the main 38,713-candidate leg"
   },
   {
    "id": "stride-a-n3-carried-posthoc",
@@ -160,7 +166,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present, but it holds the 6-item cleanup leg only. Details are in entry stride-a-k10-primary-canonical.",
-   "caveats": "This is an inherited-verification rung: it is a subset of the K = 10 stage and was not verified separately (see entry stride-a-final-board-cells). Data check: A-N3-carried 4,400/4,400 features match the nearest union candidate's verify probability. The stage meta is the 6-item cleanup leg only."
+   "caveats": "This is an inherited-verification rung: it is a subset of the K = 10 stage and was not verified separately (see entry stride-a-final-board-cells). Data check: A-N3-carried 4,400/4,400 features match the nearest union candidate's verify probability. The stage meta is the 6-item cleanup leg only.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 6-item cleanup leg (2026-08-26); no meta survives for the main 38,713-candidate leg"
   },
   {
    "id": "stride-b-k10-primary-canonical",
@@ -318,7 +326,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire 2026-10-06; cost_audit.json too), BUT it records only the FINAL driver round: execution_stats.items_processed 29, timestamp.start 2026-09-01T03:57:08, model gemini-3.7-flash, thinking low. The body of commit a73d64346 says 'driver rounds overwrote run.meta.json per round - only round 7 usage survives'. post_run_report.md:71 also shows 29 items. No meta survives for the earlier rounds that verified the bulk of the 57,482 candidates.",
-   "caveats": "Data check (sapphire): 4,246/4,246 features match verify_37/probabilities.json by candidate_id. Only 240/4,246 would match the sibling stage verify, which covers the same union. verify_37 is a SECOND verifier stage over the same 57,482 candidates as g384_ov192_55map-union-k10-verify; the product reads verify_37 only. The stage's driver and logs (fourth-cell-verify.log, fourth-cell-driver*.sh) are under outputs/gemini37-55map-2026-08-29/, although the stage dir and its registration belong to stride-55map-2026-08-25. The stage meta covers only the final 29-item round."
+   "caveats": "Data check (sapphire): 4,246/4,246 features match verify_37/probabilities.json by candidate_id. Only 240/4,246 would match the sibling stage verify, which covers the same union. verify_37 is a SECOND verifier stage over the same 57,482 candidates as g384_ov192_55map-union-k10-verify; the product reads verify_37 only. The stage's driver and logs (fourth-cell-verify.log, fourth-cell-driver*.sh) are under outputs/gemini37-55map-2026-08-29/, although the stage dir and its registration belong to stride-55map-2026-08-25. The stage meta covers only the final 29-item round.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the final 29-item driver round (gemini-3.7-flash, low); the earlier rounds that verified the bulk of 57,482 candidates overwrote theirs (a73d64346)"
   },
   {
    "id": "fourth-r2-board-cells",
@@ -350,7 +360,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present, but it holds the final 29-item round only. Details are in entry fourth-cell-k10-primary.",
-   "caveats": "The N = 1/3 rungs were NOT separately verified; they inherit verify_37 probabilities from the K = 10 union. Data check (sapphire, read-only): FOURTH-N10-carried 4,246/4,246 and FOURTH-N10-oracle 4,495/4,495 match verify_37 by candidate_id (240 and 250 would match verify). For the rungs, matched to the nearest union candidate, FOURTH-N1-oracle 5,337/5,337 and FOURTH-N3-oracle 4,626/4,626 match verify_37 (289 and 256 would match verify; max NN at most 10.00 m). The rung passes are stride B's pin-gated passes (stride55_ladder.load_deduped_passes('g384_ov192_55map') -> outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1..run_N, pool g384_ov192_55map), the same proposer rungs as B-N1/B-N3. FOURTH-N10-carried is the same subset as the fourth primary but a separate file. The stage meta covers only the final 29-item round."
+   "caveats": "The N = 1/3 rungs were NOT separately verified; they inherit verify_37 probabilities from the K = 10 union. Data check (sapphire, read-only): FOURTH-N10-carried 4,246/4,246 and FOURTH-N10-oracle 4,495/4,495 match verify_37 by candidate_id (240 and 250 would match verify). For the rungs, matched to the nearest union candidate, FOURTH-N1-oracle 5,337/5,337 and FOURTH-N3-oracle 4,626/4,626 match verify_37 (289 and 256 would match verify; max NN at most 10.00 m). The rung passes are stride B's pin-gated passes (stride55_ladder.load_deduped_passes('g384_ov192_55map') -> outputs/stride-55map-2026-08-25/g384_ov192_55map/run_1..run_N, pool g384_ov192_55map), the same proposer rungs as B-N1/B-N3. FOURTH-N10-carried is the same subset as the fourth primary but a separate file. The stage meta covers only the final 29-item round.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the final 29-item driver round (gemini-3.7-flash, low); the earlier rounds that verified the bulk of 57,482 candidates overwrote theirs (a73d64346)"
   },
   {
    "id": "arm1-k5-primary",
@@ -534,7 +546,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (ls on sapphire; tracked since b9d4032bb) BUT it records only the run_pv.py cleanup pass: items_processed 13, timestamp 2026-09-13T22:59:16Z to 23:02:45Z. probabilities.json holds all 6,985 plus cleanup_history (initial_missing 13, recovered 13). The main pass meta (6,972 items) was run.meta.json.pre-cleanup-20260913T225915.backup, excluded by .gitignore:140 and NOT found on sapphire (find over ~/Code and ~/worktrees, depth 12) or in the local checkout.",
-   "caveats": "RECOVERY LEG: main realtime pass (6,972 verified, 13 failed under a 503 storm) plus one run_pv.py cleanup pass (13 recovered). The meta beside the source covers only the 13 cleanup requests; the meta for the 6,972 main-pass requests is not on disk where searched, so a gate that binds this stage's run.meta.json sees about 0.2 % of the requests (configuration stated byte-identical in post_run_report section 3.1). cost_audit.json books this leg on cost_basis 'published' with no fragment metas. Cleanup finished 23:02:45Z on 2026-09-13, before the 2026-09-14 materialisation."
+   "caveats": "RECOVERY LEG: main realtime pass (6,972 verified, 13 failed under a 503 storm) plus one run_pv.py cleanup pass (13 recovered). The meta beside the source covers only the 13 cleanup requests; the meta for the 6,972 main-pass requests is not on disk where searched, so a gate that binds this stage's run.meta.json sees about 0.2 % of the requests (configuration stated byte-identical in post_run_report section 3.1). cost_audit.json books this leg on cost_basis 'published' with no fragment metas. Cleanup finished 23:02:45Z on 2026-09-13, before the 2026-09-14 materialisation.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 13-item run_pv.py cleanup pass; the 6,972-item main pass's meta (a gitignored .pre-cleanup backup) was not found"
   },
   {
    "id": "g37img-k3-arm1",
@@ -596,7 +610,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (ls on sapphire; tracked since b9d4032bb) BUT it records only the cleanup pass: items_processed 1, timestamp 2026-09-14T02:15:04Z to 02:15:11Z. probabilities.json holds all 8,337 plus cleanup_history (initial_missing 1, recovered 1). The main pass meta (8,336 items) was a .pre-cleanup-*.backup, gitignored (.gitignore:140) and NOT found on sapphire or locally (find for *pre-cleanup-20260914*).",
-   "caveats": "RECOVERY LEG: main realtime pass (8,336) plus one cleanup (1 candidate). The meta beside the source covers 1 of 8,337 requests; the main-pass meta is not on disk where searched. The MCC condition's detections were MOVED, not re-derived, on 2026-09-20 (2645e499c), and re-scored in place by 67e7b8a12; the derivation is the 2026-09-14 one. The path cells/IMG-ARM2-K3-mcc-oracle/ now holds the re-pointed carried-k cell (0.90, k3), registered as a SEPARATE condition (gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt, not in this stream; same source stage)."
+   "caveats": "RECOVERY LEG: main realtime pass (8,336) plus one cleanup (1 candidate). The meta beside the source covers 1 of 8,337 requests; the main-pass meta is not on disk where searched. The MCC condition's detections were MOVED, not re-derived, on 2026-09-20 (2645e499c), and re-scored in place by 67e7b8a12; the derivation is the 2026-09-14 one. The path cells/IMG-ARM2-K3-mcc-oracle/ now holds the re-pointed carried-k cell (0.90, k3), registered as a SEPARATE condition (gemini37-image-55map-2026-09-13::img-arm2-k3-mcc-oracle-p0.90-k3-r2-gt, not in this stream; same source stage).",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 1-item cleanup pass; the 8,336-item main pass's meta (a gitignored .pre-cleanup backup) was not found"
   },
   {
    "id": "g37img-k5-arm1",
@@ -922,7 +938,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present in verify_swap37/ on sapphire, BUT it records only the cleanup pass: items_processed 2 (candidate_00720, candidate_00778) of 791; model gemini-3.7-flash. No main-run meta survives (only probabilities.json.pre-cleanup-20260829T130930.backup).",
-   "caveats": "Meta under-coverage: the stage's 789 main-run requests have no surviving meta; a gate reading run.meta.json alone sees 2 requests. -era2b row reads the same file (score-commands.sh lines 44-45). Sweep argmax tie 0.80/0.85 noted in the register."
+   "caveats": "Meta under-coverage: the stage's 789 main-run requests have no surviving meta; a gate reading run.meta.json alone sees 2 requests. -era2b row reads the same file (score-commands.sh lines 44-45). Sweep argmax tie 0.80/0.85 noted in the register.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 2-item cleanup pass of 791 requests; no main-run meta survives"
   },
   {
    "id": "g37-screen-k5-swap38-armV",
@@ -1211,7 +1229,9 @@
     ]
    },
    "meta_beside_source": "verify_37/run.meta.json present on sapphire BUT it records only a cleanup pass: items_processed 1 (candidate_02623) of 3319, model gemini-3.7-flash; no main-run meta found (find over verifier/g384_ov192 shows none; only probabilities.json.pre-cleanup-20260831T061353.backup). Proposer: every run_1..run_10 and run_4/8/10_recovery dir holds a .meta.json.",
-   "caveats": "Meta under-coverage on verify_37 (cleanup overwrite, 1 of 3,319 requests recorded). Proposer passes here INCLUDE run_4/8/10_recovery (grid_prepare_scoring merge), unlike the tier-E rungs' pre-fix merge_passes unions. Same union as the Gemini-3 g384-ov192-k10-verified-p0.15-k10 condition but a different stage (verify vs verify_37), so no shared-source conflict. -era2b row reads the same file (score-commands.sh lines 60-61)."
+   "caveats": "Meta under-coverage on verify_37 (cleanup overwrite, 1 of 3,319 requests recorded). Proposer passes here INCLUDE run_4/8/10_recovery (grid_prepare_scoring merge), unlike the tier-E rungs' pre-fix merge_passes unions. Same union as the Gemini-3 g384-ov192-k10-verified-p0.15-k10 condition but a different stage (verify vs verify_37), so no shared-source conflict. -era2b row reads the same file (score-commands.sh lines 60-61).",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "verify_37/run.meta.json records only a 1-item cleanup pass of 3,319 requests; no main-run meta was found"
   },
   {
    "id": "grid-g384ov048-k10-verify",
@@ -2757,7 +2777,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, 5cee158bc 2026-04-25; probabilities.json holds 3736 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 21); the earlier leg's meta survives only in the commit history (5cee158bc meta: 7,188,678 input tokens (4,551 requests)). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_checklist-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_checklist-text\" with instruction_file \"verify_checklist.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-checklist-text of the text pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_checklist-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_checklist-text\" with instruction_file \"verify_checklist.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-checklist-text of the text pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (21 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (5cee158bc)"
   },
   {
    "id": "pv-archived-pv-high-text-t0.7-n5",
@@ -2865,7 +2887,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, 96a6ac235 2026-04-25; probabilities.json holds 3736 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 41); the earlier leg's meta survives only in the commit history (96a6ac235 meta: 6,626,816 input tokens = 3,698 x 1,792 (4,627 requests); with the 41-item last leg that is 3,739 against 3,736 results, so about 3 candidates appear to have been requested in both legs). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Do NOT bind this to the pool's verified-v1-n5 stage although its verifier config is the same: f8d755790 patched the materialiser so the canonical adversarial-text cell reads session-78-matrix/verified-adversarial-text (shared crops) instead of verified-v1-n5. Registered verifier_config.instruction_file \"verify_adversarial-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_adversarial-text\" with instruction_file \"verify_adversarial.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-adversarial-text of the text pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Do NOT bind this to the pool's verified-v1-n5 stage although its verifier config is the same: f8d755790 patched the materialiser so the canonical adversarial-text cell reads session-78-matrix/verified-adversarial-text (shared crops) instead of verified-v1-n5. Registered verifier_config.instruction_file \"verify_adversarial-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_adversarial-text\" with instruction_file \"verify_adversarial.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-adversarial-text of the text pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (41 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (96a6ac235)"
   },
   {
    "id": "s78-text-brief-text",
@@ -2893,7 +2917,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, bd0a4d091 2026-04-25; probabilities.json holds 3736 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 27); the earlier leg's meta survives only in the commit history (bd0a4d091 meta: 5,812,003 input tokens (4,527 requests)). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_brief-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_brief-text\" with instruction_file \"verify_brief.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-brief-text of the text pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_brief-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_brief-text\" with instruction_file \"verify_brief.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-brief-text of the text pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (27 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (bd0a4d091)"
   },
   {
    "id": "pv-archived-pv-high-text-t0.0-n3",
@@ -2973,7 +2999,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits c6b5e6b10 2026-05-06, b8961e56f 2026-04-17; probabilities.json holds 2017 results. MULTI-LEG: the current run.meta.json is only the LAST leg (c6b5e6b10 2026-05-06, execution_stats.items_processed 1); the earlier leg's meta survives only in the commit history (b8961e56f meta: 3,612,672 input tokens = 2,016 x 1,792 (2,212 requests); 2,016 + 1 = 2,017 results). Both metas are needed to cover the requests.",
-   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it."
+   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (1 item(s), c6b5e6b10); the earlier leg's meta survives only in git history (b8961e56f)"
   },
   {
    "id": "s78-image-adversarial",
@@ -3057,7 +3085,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, f36e7bef9 2026-04-25; probabilities.json holds 2017 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 19); the earlier leg's meta survives only in the commit history (f36e7bef9 meta: 3,866,066 input tokens (2,515 requests)). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_checklist-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_checklist-text\" with instruction_file \"verify_checklist.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-checklist-text of the image pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_checklist-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_checklist-text\" with instruction_file \"verify_checklist.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-checklist-text of the image pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (19 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (f36e7bef9)"
   },
   {
    "id": "s78-image-brief",
@@ -3113,7 +3143,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits c6b5e6b10 2026-05-06, 400e6fbcb 2026-04-25; probabilities.json holds 2017 results. MULTI-LEG: the current run.meta.json is only the LAST leg (c6b5e6b10 2026-05-06, execution_stats.items_processed 1); the earlier leg's meta survives only in the commit history (400e6fbcb meta: 17,064,588 input tokens (2,022 requests)). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Stage meta records example_count 6 (image examples); the same instruction_file string is registered for the text-only v1 stages (example_count 0), so only verifier_config.variant distinguishes them. The stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) AFTER the product was written; that commit re-ran the materialiser and reports no diff, and check.json reproduces 436 from today's probabilities. Each of the 14 session-78 cells has its own stage directory (verified-checklist of the image pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Stage meta records example_count 6 (image examples); the same instruction_file string is registered for the text-only v1 stages (example_count 0), so only verifier_config.variant distinguishes them. The stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) AFTER the product was written; that commit re-ran the materialiser and reports no diff, and check.json reproduces 436 from today's probabilities. Each of the 14 session-78 cells has its own stage directory (verified-checklist of the image pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (1 item(s), c6b5e6b10); the earlier leg's meta survives only in git history (400e6fbcb)"
   },
   {
    "id": "pv-archived-pv-min-image-t0.3-n10",
@@ -3167,7 +3199,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, e85c62902 2026-04-25; probabilities.json holds 2017 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 19); the earlier leg's meta survives only in the commit history (e85c62902 meta: 3,130,866 input tokens (2,468 requests)). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_brief-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_brief-text\" with instruction_file \"verify_brief.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-brief-text of the image pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Registered verifier_config.instruction_file \"verify_brief-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_brief-text\" with instruction_file \"verify_brief.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-brief-text of the image pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (19 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (e85c62902)"
   },
   {
    "id": "pv-archived-pv-min-image-t0.3-n5",
@@ -3275,7 +3309,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits 414ee8a4b 2026-05-03, 35b380a6d 2026-04-25; probabilities.json holds 2017 results. MULTI-LEG: the current run.meta.json is only the LAST leg (414ee8a4b 2026-05-03, execution_stats.items_processed 26); the earlier leg's meta survives only in the commit history (35b380a6d meta: 3,567,872 input tokens = 1,991 x 1,792 (2,515 requests); 1,991 + 26 = 2,017 results). Both metas are needed to cover the requests.",
-   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Do NOT bind this to the pool's verified-v1-n5 stage although its verifier config is the same: f8d755790 patched the materialiser so the canonical adversarial-text cell reads session-78-matrix/verified-adversarial-text (shared crops) instead of verified-v1-n5. Registered verifier_config.instruction_file \"verify_adversarial-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_adversarial-text\" with instruction_file \"verify_adversarial.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-adversarial-text of the image pool); all are N = 5."
+   "caveats": "Candidate universe is the pool's session-78-matrix/shared-crops/candidate_manifest.json (the seven variants share one crop set), not a consensus-nN union. Do NOT bind this to the pool's verified-v1-n5 stage although its verifier config is the same: f8d755790 patched the materialiser so the canonical adversarial-text cell reads session-78-matrix/verified-adversarial-text (shared crops) instead of verified-v1-n5. Registered verifier_config.instruction_file \"verify_adversarial-text.md\" does not exist in prompts/system-instructions/; the stage meta records configuration.version \"verify_adversarial-text\" with instruction_file \"verify_adversarial.md\" and example_count 0. The stage was completed by cleanup leg 414ee8a4b (2026-05-03) and the product re-materialised the same day (b3ed509e6). Each of the 14 session-78 cells has its own stage directory (verified-adversarial-text of the image pool); all are N = 5.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (26 item(s), 414ee8a4b); the earlier leg's meta survives only in git history (35b380a6d)"
   },
   {
    "id": "opmax-rebuilt-pv-high-image-t0.3-n10",
@@ -3329,7 +3365,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits c6b5e6b10 2026-05-06, b8961e56f 2026-04-17; probabilities.json holds 3601 results. MULTI-LEG: the current run.meta.json is only the LAST leg (c6b5e6b10 2026-05-06, execution_stats.items_processed 1); the earlier leg's meta survives only in the commit history (b8961e56f meta: 6,451,200 input tokens = 3,600 x 1,792 (3,659 requests); 3,600 + 1 = 3,601 results). Both metas are needed to cover the requests.",
-   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 10 has its own stage directory (verified-v1-n10); no other N rung of this pool reads it."
+   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 10 has its own stage directory (verified-v1-n10); no other N rung of this pool reads it.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (1 item(s), c6b5e6b10); the earlier leg's meta survives only in git history (b8961e56f)"
   },
   {
    "id": "pv-archived-pv-n1-image-t0-n3",
@@ -3435,7 +3473,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits c6b5e6b10 2026-05-06, b8961e56f 2026-04-17; probabilities.json holds 2190 results. MULTI-LEG: the current run.meta.json is only the LAST leg (c6b5e6b10 2026-05-06, execution_stats.items_processed 11); the earlier leg's meta survives only in the commit history (b8961e56f meta: 3,904,768 input tokens = 2,179 x 1,792 (2,527 requests); 2,179 + 11 = 2,190 results). Both metas are needed to cover the requests.",
-   "caveats": "Vintage \"probabilities-grew\" (gap 11): the file was re-materialised at d6cdb648b to 373 features from the completed 2,190-candidate stage; membership.json still marks registry_vs_archived \"differs\" (registry n 372 from the pre-cleanup sweep) and it was NOT rebuilt on 2026-09-10. check.json computes 373 from today's inputs. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it."
+   "caveats": "Vintage \"probabilities-grew\" (gap 11): the file was re-materialised at d6cdb648b to 373 features from the completed 2,190-candidate stage; membership.json still marks registry_vs_archived \"differs\" (registry n 372 from the pre-cleanup sweep) and it was NOT rebuilt on 2026-09-10. check.json computes 373 from today's inputs. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (11 item(s), c6b5e6b10); the earlier leg's meta survives only in git history (b8961e56f)"
   },
   {
    "id": "opmax-rebuilt-pv-min-image-t1.0-n10",
@@ -3515,7 +3555,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present beside probabilities.json (ls on sapphire ~/Code/map-reader-llm, 2026-10-06); tracked, commits c6b5e6b10 2026-05-06, b8961e56f 2026-04-17; probabilities.json holds 2840 results. MULTI-LEG: the current run.meta.json is only the LAST leg (c6b5e6b10 2026-05-06, execution_stats.items_processed 1); the earlier leg's meta survives only in the commit history (b8961e56f meta: 5,087,488 input tokens = 2,839 x 1,792 (3,102 requests); 2,839 + 1 = 2,840 results). Both metas are needed to cover the requests.",
-   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it."
+   "caveats": "Vintage \"probabilities-grew\": the stage gained 1 candidate in cleanup leg c6b5e6b10 (2026-05-06) and the file was re-materialised at d6cdb648b from the completed probabilities; the registered sweep (sweep_2d.json) predates the leg by one candidate. N = 5 has its own stage directory (verified-v1-n5); no other N rung of this pool reads it.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json is only the last leg (1 item(s), c6b5e6b10); the earlier leg's meta survives only in git history (b8961e56f)"
   },
   {
    "id": "current-vintage-pv-high-text-t0.0-n3-recovery",
@@ -3770,7 +3812,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (verify_adversarial-text, gemini-3.1-pro-preview, medium, T 0.0) but it records only a CLEANUP leg: start 2026-05-06T09:24Z, items_processed 21, 37,632 input tokens; probabilities.json.pre-cleanup-20260503T152240.backup and cost_audit.json beside it",
-   "caveats": "The original verify leg's meta was overwritten by the 21-candidate cleanup leg; the sweep read the post-cleanup probabilities. Product 463 features."
+   "caveats": "The original verify leg's meta was overwritten by the 21-candidate cleanup leg; the sweep read the post-cleanup probabilities. Product 463 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only a 21-candidate cleanup leg (2026-05-06); the original verify leg's meta was overwritten"
   },
   {
    "id": "sweep-pro-text-medium-vf-3of5",
@@ -3823,7 +3867,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (verify_adversarial-text, gemini-3.1-pro-preview, medium, T 0.0) but it records only a CLEANUP leg: start 2026-05-06T09:25Z, items_processed 8, 14,336 input tokens; pre-cleanup backup + cost_audit.json beside it",
-   "caveats": "Original leg's meta overwritten by the 8-candidate cleanup leg. Product 434 features."
+   "caveats": "Original leg's meta overwritten by the 8-candidate cleanup leg. Product 434 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only a 8-candidate cleanup leg (2026-05-06); the original verify leg's meta was overwritten"
   },
   {
    "id": "sweep-pro-text-baseline",
@@ -3979,7 +4025,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (verify_adversarial-text, gemini-3.1-pro-preview, medium, T 0.0) but it records only a CLEANUP leg: start 2026-05-06T09:25Z, items_processed 10, 17,920 input tokens; pre-cleanup backup + cost_audit.json beside it",
-   "caveats": "Original leg's meta overwritten by the 10-candidate cleanup leg. Product 465 features."
+   "caveats": "Original leg's meta overwritten by the 10-candidate cleanup leg. Product 465 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only a 10-candidate cleanup leg (2026-05-06); the original verify leg's meta was overwritten"
   },
   {
    "id": "cset-image-3of5",
@@ -4072,7 +4120,9 @@
     ]
    },
    "meta_beside_source": "NO meta beside the read dir (candidate_manifest.json + probabilities.json only); its probabilities.json header names source outputs/h11/pv-diag-384/verified/flash-high-text-1of5-flash-medium-verifier/probabilities.json (vote_threshold 1). That registered stage dir has run.meta.json (gemini-3-flash-preview, medium, T 0.0) recording only a CLEANUP leg (start 2026-05-06T08:59Z, items_processed 1, 1,792 input tokens; pre-cleanup backup 20260503T152807 beside it).",
-   "caveats": "Read directory is NOT a registered stage. Re-checked this session on sapphire: 3,736 of 3,736 probabilities equal the registered stage's value for value. prob_t chosen by sweep (registered 0.25). Product 424 features."
+   "caveats": "Read directory is NOT a registered stage. Re-checked this session on sapphire: 3,736 of 3,736 probabilities equal the registered stage's value for value. prob_t chosen by sweep (registered 0.25). Product 424 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "the registered stage's run.meta.json records only a 1-item cleanup leg (2026-05-06); the original leg's meta was overwritten"
   },
   {
    "id": "cset-pro-flash-vf-3of5",
@@ -4249,7 +4299,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (gemini-3-flash-preview, minimal, start 2026-06-09T11:40Z) but items_processed 2,775 while probabilities.json total_results is 4,275 (= 855 x 5): the meta covers only the last (resumed) segment; configuration.temperature reads 0.0, no temperature_effective",
-   "caveats": "Meta cannot confirm the registered T 0.3 (directory namespace + driver only) and under-counts requests. Product 398 features."
+   "caveats": "Meta cannot confirm the registered T 0.3 (directory namespace + driver only) and under-counts requests. Product 398 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json covers only the last (resumed) segment: items_processed 2,775 against 4,275 results"
   },
   {
    "id": "matrix-min-T0.7",
@@ -4747,7 +4799,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (verify_adversarial-text, gemini-3-flash-preview, minimal, T 0.0) but it records only the CLEANUP leg: start 2026-06-10T18:40Z, items_processed 1, 1,792 input tokens. tranche-full.log:6364-6365 shows the original leg's meta written, then :6382-6383 the cleanup overwriting it (backup probabilities.json.pre-cleanup-20260610T184044.backup).",
-   "caveats": "Meta beside the stage covers 1 of 1,132 requests; the original V1 leg's meta survives only as log lines. Product 374 features."
+   "caveats": "Meta beside the stage covers 1 of 1,132 requests; the original V1 leg's meta survives only as log lines. Product 374 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only the 1-item cleanup leg of 1,132 requests; the original V1 leg's meta was overwritten (tranche-full.log:6382-6383)"
   },
   {
    "id": "flash35-f3prop-f35vf",
@@ -4816,7 +4870,9 @@
     ]
    },
    "meta_beside_source": "run.meta.json present (verify_adversarial-text, gemini-3-flash-preview, minimal, T 0.0) but it records a CLEANUP leg dated after the product: start 2026-05-03T02:06Z, items_processed 0, 19,712 input tokens; probabilities.json cleanup_history (2026-05-03) recovered 11 missing candidates, now 608 results. cost_audit.json and verified_detections_full-scope.geojson also beside it.",
-   "caveats": "At the product commit the source probabilities.json held 597 results (file as committed at b9f73bbfb under outputs/h11/gold-standard-v2/verified-v1/); the current file holds 608 after the 2026-05-03 cleanup, and the original request leg's meta was overwritten by the cleanup leg's. Modality: the source ran verify_adversarial-text, so the verifier-t-pilot _note's 'the T0.0 baseline is gs-v2's IMAGE verifier' (and its temperature/modality-confound caveat) is stale; gold-standard-v2's own _note, amended 2026-10-05, already relabels verified-v1 text. Product 369 features."
+   "caveats": "At the product commit the source probabilities.json held 597 results (file as committed at b9f73bbfb under outputs/h11/gold-standard-v2/verified-v1/); the current file holds 608 after the 2026-05-03 cleanup, and the original request leg's meta was overwritten by the cleanup leg's. Modality: the source ran verify_adversarial-text, so the verifier-t-pilot _note's 'the T0.0 baseline is gs-v2's IMAGE verifier' (and its temperature/modality-confound caveat) is stale; gold-standard-v2's own _note, amended 2026-10-05, already relabels verified-v1 text. Product 369 features.",
+   "incomplete_meta": true,
+   "incomplete_meta_reason": "run.meta.json records only a 2026-05-03 cleanup leg, after the product; the original request leg's meta was overwritten"
   },
   {
    "id": "phase3c-image-a-diversity-union",

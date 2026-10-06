@@ -28,6 +28,7 @@ that read the committed register and metas are tier 2.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -425,3 +426,32 @@ def test_the_committed_bindings_agree_with_the_register() -> None:
                 assert homes and all(d not in cm._run_roots(run) for d, run in homes), (
                     entry["id"], source, homes)
             assert list(dict.fromkeys(mapped)) == (entry.get("resolves_to") or []), entry["id"]
+
+
+#: Wording in ``meta_beside_source`` that says the stage's surviving meta
+#: covers only part of its requests (PR #25 review, finding 4).
+_PARTIAL_META_WORDING = re.compile(
+    r"\b(records|recording|holds|covers|is) (only|a cleanup)\b|\b(leg|round|pass) only\b",
+    re.IGNORECASE)
+
+#: Entries whose wording matches but whose stage IS covered in full: the
+#: gate reads both of verify_swap38's metas (the passes manifest lists the
+#: cleanup meta and run.meta.main-2026-09-04.json).
+_COMPLETE_DESPITE_WORDING = frozenset({"g37-screen-k5-swap38-armV"})
+
+
+@pytest.mark.tier2
+def test_every_binding_with_a_partial_meta_is_flagged() -> None:
+    """A binding whose recorded review says the stage's only meta covers a
+    cleanup, recovery, resumed or final-round leg carries ``incomplete_meta``
+    (so the gate does not read that meta as the whole stage), and a flagged
+    binding says so in its own words. The 28 entries flagged on 2026-10-07
+    were chosen by reading every entry; this pins the wording so a new
+    entry cannot record a partial meta and omit the flag."""
+    doc = json.loads((cm.BASE_DIR / cm.BINDINGS).read_text(encoding="utf-8"))
+    worded = {e["id"] for e in doc["bindings"]
+              if _PARTIAL_META_WORDING.search(e["meta_beside_source"])}
+    flagged = {e["id"] for e in doc["bindings"] if e.get("incomplete_meta")}
+    assert worded - _COMPLETE_DESPITE_WORDING - flagged == set()
+    assert flagged - worded == set()
+    assert len(flagged) == 28
