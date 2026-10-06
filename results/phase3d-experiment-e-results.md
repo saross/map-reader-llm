@@ -1,5 +1,9 @@
 # Experiment E — High-Recall Text Proposer (Negative Result)
 
+> **Last revised**: 2026-10-06 (Finding 2 void: the example levers never
+> reached the model, so E1 → E2 was an accidental replicate; erratum E90,
+> Obs 496, Obs 498). See [§ Changelog](#changelog) for revision history.
+
 ## Summary
 
 Experiment E tested whether a recall-biased text proposer could push
@@ -15,6 +19,16 @@ incrementally, ultimately attributing the degradation to all four
 levers. Even with only the prompt changes remaining, F1 reached only
 0.779 — below baseline — with identical recall (0.784) and slightly
 worse precision.
+
+[NOTE 2026-10-06: every configuration here is text-only, and a text-only
+request transmits no exemplar: all four passes sent exactly 1,672 input
+tokens on every one of their 60 tiles, whether they listed 10 examples or
+13 (E90; Obs 496). So the example levers (lever 5, the E1 → E2 null
+restoration and the E4 → Baseline hard-negative restoration) were never
+pulled. Finding 2 is void; the E4 → Baseline step changed the prompt only.
+The thinking and temperature steps were real, but each is one 60-tile run
+per arm, inside the 0.050 F1 that the accidental replicate E1/E2 spread
+(Obs 498). Experiment E is unregistered (ruling D40).]
 
 **Conclusion:** The baseline configuration (T=0.0, minimal thinking,
 17 examples, standard prompt) is near the model's capability frontier
@@ -98,10 +112,10 @@ suspected impact, with each ablation building on the previous:
 
 | Ablation step | ΔF1 recovered | % of total | Cumulative F1 |
 |---|---|---|---|
-| E1→E2: Restore null examples | +0.050 | 32% | 0.690 |
+| E1→E2: Restore null examples [VOID 2026-10-06: nothing sent changed; run-to-run variance, E90] | +0.050 | 32% | 0.690 |
 | E2→E3: HIGH → minimal thinking | +0.021 | 13% | 0.711 |
 | E3→E4: T=0.7 → T=0.0 | +0.068 | 44% | 0.779 |
-| E4→Baseline: Restore hard negatives | +0.017 | 11% | 0.796 |
+| E4→Baseline: Restore hard negatives [2026-10-06: no example is sent; this step changed the prompt only, E90] | +0.017 | 11% | 0.796 |
 | **Total degradation** | **−0.156** | **100%** | |
 
 ## Findings
@@ -119,16 +133,25 @@ Only 3 additional true positives were gained (73→76) at the cost of
 (T=0.0) where the model commits to its best interpretation. Sampling
 diversity produces noise, not useful recall.
 
-### Finding 2: Null examples are structurally necessary
+### Finding 2: Null examples are structurally necessary [VOID 2026-10-06]
 
-Removing the 3 null tile examples caused the second-largest degradation
+~~Removing the 3 null tile examples caused the second-largest degradation
 (32% of total). Without nulls, the model appears compelled to find
 *something* on every tile, inflating false positives from 75 to 146
 while paradoxically losing true positives (76→66). Null examples anchor
-the model's understanding that "no detections" is a valid output.
+the model's understanding that "no detections" is a valid output.~~
 
-**Implication**: Null examples are not optional negative examples — they
-are structural constraints that prevent hallucinated detections.
+~~**Implication**: Null examples are not optional negative examples — they
+are structural constraints that prevent hallucinated detections.~~
+
+[VOID 2026-10-06: E1 and E2 sent identical requests. Both configurations
+are text-only, so neither transmitted any example, and their transmitted
+signature is the same: instruction hash `d85c843902`, HIGH thinking,
+T = 0.7, 1,672 input tokens on every tile (E90; Obs 496; ruling D40). The
++0.050 F1 between them is run-to-run variance at 60 tiles, and so are the
+detection and true-positive counts this finding interprets. The experiment
+carries no evidence about null examples. Obs 156, which drew on this
+finding, stands as written and is corrected by Obs 496.]
 
 ### Finding 3: HIGH thinking liberalises proposer decisions
 
@@ -160,7 +183,9 @@ rejects.
 
 The ablation series demonstrates that the baseline configuration
 (T=0.0, minimal thinking, 17 examples with hard negatives and nulls,
-standard prompt) is near-optimal for this model and task. Every
+standard prompt) is near-optimal for this model and task. [2026-10-06: the
+17 examples are listed in the configuration but not sent; a text-only
+request carries none (E90).] Every
 perturbation away from baseline degraded performance, and the
 maximum residual gap after restoring all parameters except the prompt
 was only ΔF1=−0.017. There is no meaningful performance left on the
@@ -190,7 +215,8 @@ table via prompt engineering or parameter tuning.
 3. **The diversity taxonomy is now comprehensively tested**: parametric
    (T), cognitive-scaffolding (thinking level), prompt-engineering
    (recall-bias framing), and example-set composition all fail to
-   improve on the baseline. Only structural diversity (task
+   improve on the baseline. [2026-10-06: example-set composition was not
+   tested here, since no example was sent (E90).] Only structural diversity (task
    decomposition into proposer→verifier) has produced meaningful gains.
 
 4. **Ablation methodology works**: The "go/no-go then disambiguate"
@@ -223,3 +249,32 @@ table via prompt engineering or parameter tuning.
 | `outputs/phase3d-experiment-e/` | Candidates, probabilities, results JSON (last run) |
 | `scripts/run_experiment_e.py` | Evaluation pipeline script |
 | `tests/test_experiment_e.py` | 12 tier1 unit tests |
+
+## Changelog
+
+### 2026-10-06 — Finding 2 void; the example levers never reached the model
+
+**Trigger**: erratum E90 and Obs 496 (Session 160): a text-only request
+transmits no exemplar, and every Experiment E pass sent 1,672 input tokens
+on every tile whatever its configuration listed. Tracker
+`planning/text-track-transmission-2026-10-05.md`, claim C-07 (W1).
+
+| Claim | Before | After |
+|---|---|---|
+| Finding 2, "null examples are structurally necessary" (E1 → E2, +0.050 F1, 32 % of the attribution) | a finding | **void**: E1 and E2 are an accidental replicate |
+| E4 → Baseline, "restore hard negatives" (+0.017, 11 %) | an example effect | a prompt effect (the examples were not sent) |
+| Finding 5 and implication 3 (17 examples; "example-set composition" tested) | as written | bracketed: no example is sent |
+
+**What did NOT change**: every F1, precision, recall, count and threshold in
+the tables; Findings 1, 3 and 4 as measured (each a real manipulation, but
+one 60-tile run per arm, inside the replicate's 0.050 spread; Obs 498 says
+how far each is weakened). The withdrawn text is struck through, not
+deleted.
+
+**Commit**: see `git log` for this entry's date.
+
+### 2026-03-11 — Original publication
+
+Written in Session 48 from the Experiment E ablation series
+(`e252ef2f2`). This banner and changelog were added on 2026-10-06, the
+document's first revision under the revision policy.
