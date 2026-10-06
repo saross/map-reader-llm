@@ -98,8 +98,14 @@ the proposer pool's passes, and for a proposer-verifier condition its
 verifier stage's passes. A condition's stage
 is found from the register's own detections path, else from its label; a
 stage that cannot be found leaves the verifier part DECLARED (the
-condition's registered ``verifier_config``), which can distinguish arms but
-never refuse them.
+condition's registered ``verifier_config``). A declared configuration is
+what the register SAYS, not what a request carried, so it never makes two
+arms differ in transmission: a pair whose proposer requests are identical
+and whose verifier halves are not both transmitted is UNVERIFIABLE (PR #24
+review, finding 2; until then a declared difference passed by assumption).
+Two arms that declare the SAME verifier configuration are judged on their
+proposer requests, since nothing configured on the verifier half separates
+them.
 
 Usage
 -----
@@ -117,7 +123,8 @@ Usage
 
 Exit codes: 0 PASS; 1 usage error (unknown analysis or condition); 2 REFUSE
 (a null manipulation); 3 UNVERIFIABLE (an arm with no readable pass metadata,
-unless ``--allow-unverifiable``).
+or a pair that only a declared verifier configuration could separate, unless
+``--allow-unverifiable``).
 """
 
 from __future__ import annotations
@@ -410,13 +417,18 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
         arm_id: The arm's name (a condition id).
         proposer_metas: The proposer passes' meta paths.
         verifier_metas: The verifier stage's meta paths, when resolved.
-        declared_verifier: The registered verifier configuration, used as
-            both identity and signature when the stage's metas are unknown
-            (it can distinguish arms but never make them look identical).
+        declared_verifier: The registered verifier configuration, used when
+            the stage's metas are unknown. It joins the configuration
+            identity (what the arm SAID) but not the transmitted signature:
+            it is not evidence of what a request carried (see
+            :func:`transmission_relation`).
 
     Returns:
         ``{"arm", "config", "signature", "proposer_signatures",
-        "verifier_basis", "meta_paths", "unreadable", "unverifiable_reason"}``.
+        "verifier_basis", "declared_verifier", "meta_paths", "unreadable",
+        "unverifiable_reason"}``. ``signature`` holds transmitted evidence
+        only; ``declared_verifier`` is the declared configuration's sorted-key
+        JSON, or None.
     """
     def readable(paths: list[str]) -> tuple[list[dict[str, Any]], list[str]]:
         recs = [meta_record(p) for p in sorted(set(paths))]
@@ -440,13 +452,14 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
                                 if r.get("manifest_path")})
             sigs.append({"stage": f"{stage}-inputs",
                          "inputs": inputs_fingerprint(ids, "|".join(manifests) or None)})
+    declared_json = None
     if ver:
         basis = "transmitted"
     elif declared_verifier:
         basis = "declared"
         declared = {"stage": "verifier-declared", **declared_verifier}
         config.append(declared)
-        sigs.append(declared)
+        declared_json = json.dumps(declared, sort_keys=True)
     else:
         basis = None
     reason = None
@@ -462,6 +475,7 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
         "proposer_signatures": sorted({json.dumps(signature(r), sort_keys=True)
                                        for r in prop}),
         "verifier_basis": basis,
+        "declared_verifier": declared_json,
         "meta_paths": [r["path"] for r in prop + ver],
         "unreadable": bad_p + bad_v,
         "unverifiable_reason": reason,
@@ -489,35 +503,92 @@ def differing_fields(a: dict[str, Any], b: dict[str, Any]) -> list[str]:
     return sorted(k for k in set(va) | set(vb) if va.get(k) != vb.get(k))
 
 
+#: How two arms' transmitted requests relate (:func:`transmission_relation`).
+SAME, DIFFER, UNDETERMINED = "same", "differ", "undetermined"
+
+
+def _proposer_half(arm: dict[str, Any]) -> frozenset[str]:
+    """The proposer entries of an arm's transmitted signature.
+
+    Args:
+        arm: An arm from :func:`arm_from_metas`.
+
+    Returns:
+        The encoded ``proposer`` and ``proposer-inputs`` entries.
+    """
+    return frozenset(enc for enc in arm["signature"]
+                     if json.loads(enc)["stage"] in ("proposer", "proposer-inputs"))
+
+
+def transmission_relation(a: dict[str, Any], b: dict[str, Any]) -> str:
+    """Whether two arms sent the same requests, different ones, or cannot be told.
+
+    The proposer half is always transmitted evidence. The verifier half is
+    evidence only when both arms' verifier metas were read: a DECLARED
+    verifier configuration says what the register recorded, not what a
+    request carried, so it cannot show a difference (PR #24 review,
+    finding 2). Two equal declared configurations leave nothing configured
+    on the verifier half to separate the arms, so the proposer half decides.
+    An arm with no verifier stage beside one with a stage (declared or
+    transmitted) differs: only one of them sent verifier requests.
+
+    Args:
+        a: An arm from :func:`arm_from_metas`.
+        b: Another.
+
+    Returns:
+        :data:`SAME`, :data:`DIFFER` or :data:`UNDETERMINED`.
+    """
+    if "declared" not in (a["verifier_basis"], b["verifier_basis"]):
+        return SAME if a["signature"] == b["signature"] else DIFFER
+    if _proposer_half(a) != _proposer_half(b):
+        return DIFFER
+    if a["verifier_basis"] is None or b["verifier_basis"] is None:
+        return DIFFER
+    if a["declared_verifier"] is not None and a["declared_verifier"] == b["declared_verifier"]:
+        return SAME
+    return UNDETERMINED
+
+
 def judge(arms: list[dict[str, Any]], allow_unverifiable: bool = False) -> dict[str, Any]:
     """Apply the rule to a set of arms.
 
     Args:
         arms: Arms from :func:`arm_from_metas`.
-        allow_unverifiable: Treat arms with no readable metadata as out of
+        allow_unverifiable: Treat arms with no readable metadata, and pairs
+            only a declared verifier configuration could separate, as out of
             scope rather than as a verdict.
 
     Returns:
-        ``{"verdict", "null_pairs", "unverifiable"}``. ``null_pairs`` names
-        each pair that differs in configuration but not in signature, with
-        the differing fields.
+        ``{"verdict", "null_pairs", "undetermined_pairs", "unverifiable"}``.
+        ``null_pairs`` names each pair that differs in configuration but not
+        in transmission, with the differing fields; ``undetermined_pairs``
+        each pair that differs in configuration, sent identical proposer
+        requests, and has a verifier half that is declared, not transmitted.
     """
     checkable = [a for a in arms if not a["unverifiable_reason"]]
     unverifiable = [{"arm": a["arm"], "reason": a["unverifiable_reason"]}
                     for a in arms if a["unverifiable_reason"]]
-    null_pairs = []
+    null_pairs, undetermined_pairs = [], []
     for a, b in itertools.combinations(checkable, 2):
-        if a["config"] != b["config"] and a["signature"] == b["signature"]:
+        if a["config"] == b["config"]:
+            continue
+        relation = transmission_relation(a, b)
+        if relation == SAME:
             null_pairs.append({"arms": [a["arm"], b["arm"]],
                                "config_fields_differing": differing_fields(a, b),
                                "shared_signature": sorted(a["signature"])})
+        elif relation == UNDETERMINED:
+            undetermined_pairs.append({"arms": [a["arm"], b["arm"]],
+                                       "config_fields_differing": differing_fields(a, b)})
     if null_pairs:
         verdict = REFUSE
-    elif unverifiable and not allow_unverifiable:
+    elif (unverifiable or undetermined_pairs) and not allow_unverifiable:
         verdict = UNVERIFIABLE
     else:
         verdict = PASS
-    return {"verdict": verdict, "null_pairs": null_pairs, "unverifiable": unverifiable}
+    return {"verdict": verdict, "null_pairs": null_pairs,
+            "undetermined_pairs": undetermined_pairs, "unverifiable": unverifiable}
 
 
 # ── resolving registered conditions to their metas ───────────────────────
@@ -767,21 +838,29 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
     Returns:
         The text to print.
     """
+    undetermined = judgement.get("undetermined_pairs") or []
     out = [f"{judgement['verdict']} {name}: {len(arms)} arm(s), "
            f"{len(judgement['null_pairs'])} null-manipulation pair(s), "
-           f"{len(judgement['unverifiable'])} unverifiable arm(s) "
-           f"[{SIGNATURE_VERSION}]"]
+           f"{len(judgement['unverifiable'])} unverifiable arm(s), "
+           f"{len(undetermined)} unverifiable pair(s) [{SIGNATURE_VERSION}]"]
     for pair in judgement["null_pairs"]:
         out.append(f"  NULL MANIPULATION: {pair['arms'][0]} vs {pair['arms'][1]} differ in "
                    f"configuration ({', '.join(pair['config_fields_differing'])}) but "
                    "transmitted identical requests")
     for u in judgement["unverifiable"]:
         out.append(f"  UNVERIFIABLE: {u['arm']}: {u['reason']}")
+    for pair in undetermined:
+        out.append(f"  UNVERIFIABLE PAIR: {pair['arms'][0]} vs {pair['arms'][1]} sent identical "
+                   "proposer requests and differ in configuration "
+                   f"({', '.join(pair['config_fields_differing'])}), but a verifier half is "
+                   "DECLARED, so whether the difference reached the model is unknown")
     declared = [a["arm"] for a in arms if a["verifier_basis"] == "declared"]
     if declared:
-        out.append(f"  note: {len(declared)} arm(s) carry a DECLARED verifier configuration "
-                   "(their stage's metas could not be located); it can separate arms "
-                   "but cannot show a verifier-side null manipulation")
+        out.append(f"  note: {len(declared)} arm(s) carry only a DECLARED verifier "
+                   "configuration (their stage's metas could not be located). It is not "
+                   "transmitted evidence, so it separated no pair; "
+                   f"{len(undetermined)} pair(s) whose proposer requests matched are left "
+                   "unverifiable above")
     if report:
         out += ["", signature_table(arms)]
     return "\n".join(out)

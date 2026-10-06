@@ -157,6 +157,111 @@ def test_an_arm_without_metadata_is_unverifiable_not_passed(tmp_path) -> None:
     assert cm.judge([a, b], allow_unverifiable=True)["verdict"] == cm.PASS
 
 
+_VERIFIER_V1 = {"variant": "v1", "instruction_file": "verify_adversarial.md",
+                "model": "gemini-3-flash-preview", "thinking_level": "minimal",
+                "temperature": 0.0}
+_VERIFIER_V2 = {**_VERIFIER_V1, "variant": "v2", "instruction_file": "verify_v2.md"}
+
+
+def _verifier_meta(path: Path, candidates: list[str]) -> str:
+    """Write a minimal verifier stage meta (``run_pv.py``) in the pipeline's shape.
+
+    Args:
+        path: Where to write it.
+        candidates: The verified candidate ids (completed items).
+
+    Returns:
+        The path, as a string.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({
+        "environment": {"script": "run_pv.py", "git_commit": "abc"},
+        "configuration": {
+            "version": "verify_adversarial", "model": "gemini-3-flash-preview",
+            "system_instruction_hash": "2518d5298d9bffff", "temperature": 0.0,
+            "thinking_level": "minimal", "max_output_tokens": 8192,
+            "full_config_snapshot": {"version": "verify_adversarial",
+                                     "text_only_labels": ["a", "b"]},
+        },
+        "execution_stats": {"completed_items": candidates, "failed_items": []},
+        "usage_stats": {},
+    }))
+    return str(path)
+
+
+@pytest.mark.tier1
+def test_a_declared_verifier_difference_is_not_a_transmitted_one(tmp_path) -> None:
+    """PR #24 review, finding 2: two arms of one proposer request whose only
+    difference is a DECLARED verifier configuration did not pass as
+    "differ in transmission"; they are an unverifiable pair."""
+    a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A, True)],
+                          declared_verifier=_VERIFIER_V1)
+    b = cm.arm_from_metas("B", [_meta(tmp_path / "b.meta.json", "v", _LIBRARY_A, True)],
+                          declared_verifier=_VERIFIER_V2)
+    assert a["config"] != b["config"]
+    assert a["signature"] == b["signature"]  # the declared dict is not transmitted
+    assert cm.transmission_relation(a, b) == cm.UNDETERMINED
+    judgement = cm.judge([a, b])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+    assert judgement["null_pairs"] == []
+    (pair,) = judgement["undetermined_pairs"]
+    assert pair["arms"] == ["A", "B"]
+    assert pair["config_fields_differing"] == ["instruction_file", "variant"]
+    assert cm.judge([a, b], allow_unverifiable=True)["verdict"] == cm.PASS
+
+
+@pytest.mark.tier1
+def test_a_declared_and_a_transmitted_verifier_cannot_be_compared(tmp_path) -> None:
+    """One arm's verifier metas were read, the other's only declared: the
+    verifier half cannot show a difference either way."""
+    a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A, True)],
+                          verifier_metas=[_verifier_meta(tmp_path / "av" / "run.meta.json",
+                                                         ["c1", "c2"])])
+    b = cm.arm_from_metas("B", [_meta(tmp_path / "b.meta.json", "v", _LIBRARY_A, True)],
+                          declared_verifier=_VERIFIER_V1)
+    assert (a["verifier_basis"], b["verifier_basis"]) == ("transmitted", "declared")
+    judgement = cm.judge([a, b])
+    assert judgement["verdict"] == cm.UNVERIFIABLE
+    assert [p["arms"] for p in judgement["undetermined_pairs"]] == [["A", "B"]]
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize(("images", "verifiers", "verdict"), [
+    (False, (_VERIFIER_V1, _VERIFIER_V1), cm.REFUSE),  # equal declared: the proposer decides
+    (True, (_VERIFIER_V1, _VERIFIER_V2), cm.PASS),     # the proposer requests differ
+    (False, (_VERIFIER_V1, None), cm.PASS),            # only one arm has a verifier stage
+])
+def test_the_proposer_half_decides_beside_a_declared_verifier(tmp_path, images, verifiers,
+                                                              verdict) -> None:
+    """Two listed libraries (sent only with images on) beside declared
+    verifiers: identical declared configurations leave the text-track null
+    manipulation refused; transmitted proposer differences still pass; a
+    proposer-verifier arm and a single-pass arm sent different requests."""
+    a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "library_a", _LIBRARY_A,
+                                      images)], declared_verifier=verifiers[0])
+    b = cm.arm_from_metas("B", [_meta(tmp_path / "b.meta.json", "library_b", _LIBRARY_B,
+                                      images)], declared_verifier=verifiers[1])
+    judgement = cm.judge([a, b])
+    assert judgement["verdict"] == verdict
+    assert judgement["undetermined_pairs"] == []
+
+
+@pytest.mark.tier1
+def test_the_render_note_says_what_the_declared_configuration_did(tmp_path) -> None:
+    """The note no longer claims a declared configuration can separate arms."""
+    a = cm.arm_from_metas("A", [_meta(tmp_path / "a.meta.json", "v", _LIBRARY_A, True)],
+                          declared_verifier=_VERIFIER_V1)
+    b = cm.arm_from_metas("B", [_meta(tmp_path / "b.meta.json", "v", _LIBRARY_A, True)],
+                          declared_verifier=_VERIFIER_V2)
+    out = cm.render("ad hoc", cm.judge([a, b]), [a, b], report=False)
+    assert out.startswith("UNVERIFIABLE ad hoc: 2 arm(s), 0 null-manipulation pair(s), "
+                          "0 unverifiable arm(s), 1 unverifiable pair(s)")
+    assert "UNVERIFIABLE PAIR: A vs B sent identical proposer requests" in out
+    assert "2 arm(s) carry only a DECLARED verifier configuration" in out
+    assert "separated no pair" in out
+    assert "can separate arms" not in out
+
+
 @pytest.mark.tier1
 def test_the_signature_carries_exactly_the_shared_fields(tmp_path) -> None:
     """The signature is the definition shared with map-reader-bench:
