@@ -1,11 +1,17 @@
 # Phase 2b Retest — H7 Temperature Analysis Summary
 
+> **Last revised**: 2026-10-06 (the pairwise tables' "p (FDR-adj)" column
+> held raw bootstrap p-values; restated as the permutation p with its BH
+> value within track, D42; Track 1 is five, not six, BH-significant
+> contrasts). See [§ Changelog](#changelog) for revision history.
+
 **Study**: Phase 2b retest — H7 Temperature (5 T × 2 tracks × K=3 × 340 tiles)
 **Date**: 2026-03-16 (evaluation at `scripts/evaluate_retest_all.py` git hash `e038bfe8`, generation timestamp 2026-03-16T22:53 UTC)
 **Protocol-errata**: E27 (dual-track carry-forward from Phase 2a), E43 (distinguished but not active in this retest — see §"Preregistered T=1.0 vs E43 UNINTENDED-T1.0")
 **Primary aggregation**: greedy consensus (K=3 runs pooled tile-level)
 **Evaluation**: 340-tile retest test set, 20 m buffer, 1,000 bootstrap iterations, seed=42, tile-level-multi-run resampling
 **FDR correction**: Benjamini–Hochberg at q=0.05, applied within each track independently (tracks represent independent OFAT chains)
+**Pairwise test** (added 2026-10-06): the paired tile-swap permutation test, 10,000 permutations, seed 42, on the first run of each condition (PI ruling D42; the `permutation_retest` blocks of `results/retest/pairwise-bootstrap-comparisons.json`). The p-values first published here were the retired bootstrap's.
 
 ## Headline result — T=0.0 optimal on both tracks; T=1.0 (Gemini default) significantly worse
 
@@ -14,7 +20,7 @@ T=0.0 to T=1.3. T=0.0 is the optimum and is significantly better than
 T=0.7, T=1.0, and T=1.3 after FDR correction.
 
 **Track 2 (text-only, `brief-text`)**: T=0.0 and T=0.3 are essentially
-tied at the top (ΔF1 = −0.002, p = 0.862); both are significantly
+tied at the top (ΔF1 = −0.002, p = 0.916); both are significantly
 better than T=1.0 and T=1.3. The text-track optimum is T=0.0–T=0.3.
 
 | Track | Best T | F1 [95 % CI] | Worst T | F1 [95 % CI] | ΔF1 optimum vs worst |
@@ -87,21 +93,24 @@ are near-identical by construction.
 
 ### Track 1 — FDR-significant pairwise contrasts
 
-Six of ten pairwise contrasts are significant after BH-FDR at q=0.05:
+Five of ten pairwise contrasts are significant after BH-FDR at q=0.05
+[corrected 2026-10-06: first written "Six of ten". The sixth, T=0.7 >
+T=1.3, passed only at raw α on the bootstrap (p 0.042, BH 0.070), and the
+column then headed "p (FDR-adj)" held raw bootstrap p-values]:
 
-| Comparison | ΔF1 | p (FDR-adj) |
-|------------|:---:|:-----------:|
-| T=0.0 > T=0.7 | +0.050 | 0.002 |
-| T=0.0 > T=1.0 | +0.064 | 0.001 |
-| T=0.0 > T=1.3 | +0.085 | 0.001 |
-| T=0.3 > T=1.0 | +0.050 | 0.006 |
-| T=0.3 > T=1.3 | +0.071 | 0.001 |
-| T=0.7 > T=1.3 | +0.035 | 0.042 |
+| Comparison | ΔF1 | p | BH within track | p, retired bootstrap |
+|------------|:---:|:-:|:---------------:|:--------------------:|
+| T=0.0 > T=0.7 | +0.050 | 0.0026 | 0.0065 | 0.002 |
+| T=0.0 > T=1.0 | +0.064 | 0.0008 | 0.0027 | 0.001 |
+| T=0.0 > T=1.3 | +0.085 | < 0.0001 | < 0.0001 | 0.001 |
+| T=0.3 > T=1.0 | +0.050 | 0.0083 | 0.017 | 0.006 |
+| T=0.3 > T=1.3 | +0.071 | 0.0006 | 0.0027 | 0.001 |
 
-Non-significant contrasts: T=0.0 vs T=0.3 (ΔF1 = +0.015, p = 0.30 —
+Non-significant contrasts: T=0.0 vs T=0.3 (ΔF1 = +0.015, p = 0.32 —
 the two lowest temperatures are statistically tied at this power);
-T=0.3 vs T=0.7 (+0.036, p ≈ 0.06); T=0.7 vs T=1.0 (+0.014); T=1.0 vs
-T=1.3 (+0.020).
+T=0.3 vs T=0.7 (+0.036, p = 0.066); T=0.7 vs T=1.0 (+0.014, p = 0.48);
+T=0.7 vs T=1.3 (+0.035, p = 0.0588, BH 0.094; listed as significant until
+2026-10-06); T=1.0 vs T=1.3 (+0.020, p = 0.30).
 
 ### Track 2 (Text) — full results
 
@@ -115,25 +124,29 @@ T=1.3 (+0.020).
 
 Note the **T=1.0 < T=1.3 inversion on the text track** (point-estimate
 ΔF1 = −0.011 from the table; bootstrap-mean ΔF1 = −0.036 from
-`pairwise-bootstrap-comparisons.json`; p = 0.204, non-significant).
+`pairwise-bootstrap-comparisons.json`; p = 0.247, non-significant).
 This is a reminder that between-temperature
 differences at the top of the range are small and noise-dominated.
 
 ### Track 2 — FDR-significant pairwise contrasts
 
-Five of ten pairwise contrasts are significant after BH-FDR at q=0.05:
+Five of ten pairwise contrasts are significant after BH-FDR at q=0.05
+[2026-10-06: the column first headed "p (FDR-adj)" held raw bootstrap
+p-values; the registered H7 row is T=0.3 > T=1.0, and "+0.072 at FDR
+p = 0.004", cited elsewhere from this table, is T=0.7 > T=1.0 at its raw
+p]:
 
-| Comparison | ΔF1 | p (FDR-adj) |
-|------------|:---:|:-----------:|
-| T=0.0 > T=1.0 | +0.093 | 0.001 |
-| T=0.0 > T=1.3 | +0.057 | 0.004 |
-| T=0.3 > T=1.0 | +0.096 | 0.001 |
-| T=0.3 > T=1.3 | +0.060 | 0.006 |
-| T=0.7 > T=1.0 | +0.072 | 0.004 |
+| Comparison | ΔF1 | p | BH within track | p, retired bootstrap |
+|------------|:---:|:-:|:---------------:|:--------------------:|
+| T=0.0 > T=1.0 | +0.093 | 0.0008 | 0.004 | 0.001 |
+| T=0.0 > T=1.3 | +0.057 | 0.0034 | 0.0085 | 0.004 |
+| T=0.3 > T=1.0 | +0.096 | 0.0002 | 0.002 | 0.001 |
+| T=0.3 > T=1.3 | +0.060 | 0.0018 | 0.006 | 0.006 |
+| T=0.7 > T=1.0 | +0.072 | 0.0055 | 0.011 | 0.004 |
 
-Non-significant contrasts: T=0.0 vs T=0.3 (ΔF1 = −0.002, p = 0.862);
-T=0.0 vs T=0.7 (+0.021, n.s.); T=0.3 vs T=0.7 (+0.023, n.s.);
-T=0.7 vs T=1.3 (+0.037, n.s.); T=1.0 vs T=1.3 (−0.011, n.s.).
+Non-significant contrasts: T=0.0 vs T=0.3 (ΔF1 = −0.002, p = 0.916);
+T=0.0 vs T=0.7 (+0.021, p = 0.22); T=0.3 vs T=0.7 (+0.023, p = 0.16);
+T=0.7 vs T=1.3 (+0.037, p = 0.054); T=1.0 vs T=1.3 (−0.011, p = 0.25).
 
 ### Retention at higher temperatures
 
@@ -226,8 +239,12 @@ archived file, and in scorecard §3.15 + §6 Step-4 item 3.
    finding (T=0.0 optimal, T=1.0 significantly worse) holds at both
    K values; the FDR-significant contrast list is more confident at
    the 340-tile K=3 retest because the larger n-tiles more than
-   compensates for the smaller K.
-2. **Track 2 T=0.0 vs T=0.3 is non-significant (p = 0.862).** The
+   compensates for the smaller K. [2026-10-06: not by count. Re-tested
+   with the permutation test under D42, the 60-tile pilot has 6 of 10
+   BH-significant contrasts on each track (its retired "pseudo-p" had
+   declared 6 and 4, and under-rejected; tracker S-12), against 5 and 5
+   here (`results/d42-retest-2026-10-05/feb-60-tile/`).]
+2. **Track 2 T=0.0 vs T=0.3 is non-significant (p = 0.916).** The
    carry-forward rule selects T=0.0 because ΔF1 is essentially zero
    and T=0.0 is the simpler default. A reader wishing to argue for
    T=0.3 on the text track has no statistical objection from this
@@ -361,3 +378,37 @@ archived file, and in scorecard §3.15 + §6 Step-4 item 3.
 paper-citation target, and supersedes the 60-tile K=10 pilot at
 `archive/outputs-pre-retest-60-tile/phase2b/` (retained for
 historical record per the archive-never-delete policy).
+
+## Changelog
+
+### 2026-10-06 — Pairwise p-values restated (D42); Track 1 is five BH-significant contrasts, not six
+
+**Trigger**: PI ruling D42 (no p-value is read from the bootstrap; the
+paired tile-swap permutation test with BH for every contrast) and the
+reporting defects found by the W2 inventory
+(`reports/retest-bootstrap-check-2026-10-05.md` § W2.2): the column headed
+"p (FDR-adj)" held raw p-values, so "Six of ten … after BH-FDR" counted a
+contrast that BH rejects, and "+0.072 at FDR p = 0.004" (cited from this
+table) is a raw p. Tracker C-25, C-26 and S-12 (W1).
+
+| Claim | Before | After |
+|---|---|---|
+| Track 1 BH-significant contrasts | 6 / 10 | **5 / 10** (T=0.7 > T=1.3: p 0.0588, BH 0.094) |
+| Track 2 BH-significant contrasts | 5 / 10 | 5 / 10 (unchanged) |
+| Pairwise p column | raw bootstrap p, headed "FDR-adj" | permutation p, BH within track, and the retired bootstrap p kept beside them |
+| T=0.0 vs T=0.3, text | p = 0.862 | p = 0.916 |
+| T=1.0 vs T=1.3, text | p = 0.204 | p = 0.247 |
+| Caveat 1's comparison with the 60-tile pilot | more confident here | by count, the pilot (6 and 6 on the permutation test) has more BH-significant contrasts than the retest (5 and 5) |
+
+**What did NOT change**: every F1, CI, precision and recall; the carry-forward
+(T=0.0 on both tracks); the headline (T=0.0 optimal, T=1.0 significantly
+worse on both tracks); every ΔF1.
+
+**Commit**: see `git log` for this entry's date.
+
+### 2026-04-23 — Original publication
+
+Synthesised in Session 75 from the retest's evaluation JSONs (`e8c46809d`);
+script attributions corrected on 2026-07-28 (`25feba238`). This banner and
+changelog were added on 2026-10-06, the document's first revision under the
+revision policy.

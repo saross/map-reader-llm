@@ -1,5 +1,10 @@
 # Phase 2b Carry-Forward Parameters (Retest-Era)
 
+> **Last revised**: 2026-10-06 (Track 1 is 5/10 BH-significant contrasts,
+> not 6/10; p-values restated on the permutation test, D42; the comparison
+> with the 60-tile pilot corrected, S-12). See [§ Changelog](#changelog)
+> for revision history.
+
 **Created**: 2026-04-24 (Session 75, Step 4 item 3 — Option B residual)
 **Source**: Phase 2b retest (340-tile K=3; Track 1 image + Track 2 text)
 **Primary analysis**: `results/retest/phase2b/analysis_summary.md`
@@ -24,7 +29,12 @@ whose headline finding was qualitatively identical (T=0.0 optimal on both
 tracks, T=1.0 / T=1.3 worse) but with less statistical power. The retest
 at 340 tiles × K=3 sharpens the pairwise significance pattern (6/10 Track 1
 and 5/10 Track 2 pairwise contrasts FDR-significant, vs 6/10 and 4/10 in
-the pilot).
+the pilot). [Corrected 2026-10-06: the retest's counts are 5/10 and 5/10
+(the sixth Track 1 contrast, T=0.7 > T=1.3, never passed BH), and the
+pilot's, re-tested with the permutation test under D42, are 6/10 and 6/10:
+its "pseudo-p" under-rejected (tracker S-12;
+`results/d42-retest-2026-10-05/feb-60-tile/`). By this count the retest
+does not sharpen the pattern; its gain is in tiles, not in rejections.]
 
 ## Results summary
 
@@ -38,11 +48,14 @@ the pilot).
 | T=1.0 | 0.527 | [0.474, 0.561] | 0.440 | 0.657 |
 | T=1.3 | 0.490 | [0.459, 0.540] | 0.406 | 0.618 |
 
-**FDR-significant comparisons**: 6/10. T=0.0 significantly better than
-T=0.7 (ΔF1 = +0.050, p = 0.002), T=1.0 (+0.064, p = 0.001), and T=1.3
-(+0.085, p = 0.001). T=0.3 also significantly better than T=1.0 and T=1.3.
-T=0.7 significantly better than T=1.3. T=0.0 vs T=0.3 not significant
-(ΔF1 = +0.015, p = 0.30).
+**FDR-significant comparisons**: 5/10 [corrected 2026-10-06 from 6/10].
+T=0.0 significantly better than T=0.7 (ΔF1 = +0.050, p = 0.0026), T=1.0
+(+0.064, p = 0.0008), and T=1.3 (+0.085, p < 0.0001). T=0.3 also
+significantly better than T=1.0 and T=1.3. ~~T=0.7 significantly better
+than T=1.3.~~ [Not after BH: p = 0.0588 on the permutation test, BH 0.094;
+the bootstrap's raw 0.042 was BH 0.070.] T=0.0 vs T=0.3 not significant
+(ΔF1 = +0.015, p = 0.32). p-values: the paired tile-swap permutation test
+(D42), from `results/retest/pairwise-bootstrap-comparisons.json`.
 
 ### Track 2: Text-Only (brief-text)
 
@@ -55,10 +68,10 @@ T=0.7 significantly better than T=1.3. T=0.0 vs T=0.3 not significant
 | T=1.0 | 0.533 | [0.432, 0.583] | 0.415 | 0.748 |
 
 **FDR-significant comparisons**: 5/10. T=0.0 significantly better than
-T=1.0 (ΔF1 = +0.093, p = 0.001) and T=1.3 (+0.057, p = 0.004). T=0.3
+T=1.0 (ΔF1 = +0.093, p = 0.0008) and T=1.3 (+0.057, p = 0.0034). T=0.3
 also significantly better than T=1.0 and T=1.3. T=0.7 significantly
-better than T=1.0 (+0.072, p = 0.004). T=0.0 vs T=0.3 not significant
-(ΔF1 = −0.002, p = 0.862, essentially tied).
+better than T=1.0 (+0.072, p = 0.0055; BH within track 0.011). T=0.0 vs
+T=0.3 not significant (ΔF1 = −0.002, p = 0.916, essentially tied).
 
 ## Carry-forward decision
 
@@ -154,3 +167,31 @@ temperature finding.
 - Pre-retest pilot (archived): `archive/outputs-pre-retest-60-tile/phase2b/`
 - E43 UNINTENDED distinction: `docs/methodology/preregistration/protocol-errata.md` §E43
 - Dual-track carry-forward decision (from Phase 2a): `docs/methodology/preregistration/protocol-errata.md` §E27
+
+## Changelog
+
+### 2026-10-06 — Track 1 count corrected; p-values restated (D42); the pilot comparison corrected (S-12)
+
+**Trigger**: PI ruling D42 and the W2 inventory's reporting defects
+(`reports/retest-bootstrap-check-2026-10-05.md` § W2.2: "6/10
+FDR-significant" is 5/10 on its own numbers), and the February re-test
+(`reports/d42-implementation-2026-10-05.md` § 4.1). Tracker C-26 and S-12
+(W1).
+
+| Claim | Before | After |
+|---|---|---|
+| Track 1 BH-significant | 6/10 | **5/10** |
+| Pilot BH-significant (Track 1, Track 2) | 6/10, 4/10 | **6/10, 6/10** (permutation re-test) |
+| Track 1 p-values (T=0.0 against T=0.7, T=1.0, T=1.3; T=0.0 vs T=0.3) | 0.002, 0.001, 0.001; 0.30 | 0.0026, 0.0008, < 0.0001; 0.32 |
+| Track 2 p-values (T=0.0 against T=1.0, T=1.3; T=0.7 vs T=1.0; T=0.0 vs T=0.3) | 0.001, 0.004; 0.004; 0.862 | 0.0008, 0.0034; 0.0055; 0.916 |
+
+**What did NOT change**: the carry-forward (T=0.0 on both tracks), its
+decision rule, every F1, CI, precision and recall.
+
+**Commit**: see `git log` for this entry's date.
+
+### 2026-04-24 — Original publication
+
+Written in Session 75 (Step 4 item 3, Option B residual) beside the Phase 2b
+analysis summary (`e8c46809d`); carry-forward chain corrected 2026-07-28
+(`25feba238`). This changelog was added on 2026-10-06.
