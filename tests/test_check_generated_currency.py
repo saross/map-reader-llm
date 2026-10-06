@@ -145,6 +145,20 @@ def test_an_unreadable_registry_exits_two(tmp_path, capsys) -> None:
     assert "cannot read the registry" in capsys.readouterr().err
 
 
+def test_a_repo_that_is_not_a_git_work_tree_exits_two(tmp_path, capsys,
+                                                       monkeypatch) -> None:
+    """PR #24 review, finding 10: a readable registry in a directory git does
+    not know died with an uncaught CalledProcessError; it is a usage error,
+    reported as the unreadable registry is."""
+    # Stop git searching above tmp_path, wherever the temporary root sits.
+    monkeypatch.setenv("GIT_CEILING_DIRECTORIES", str(tmp_path.parent))
+    (tmp_path / "registry.json").write_text(json.dumps({"files": []}))
+    assert cgc.main(["--repo", str(tmp_path), "--registry", "registry.json"]) == 2
+    err = capsys.readouterr().err
+    assert err.startswith(f"ERROR: cannot read the git history of {tmp_path}")
+    assert "Traceback" not in err
+
+
 def test_a_path_the_walk_missed_falls_back_to_one_git_call(repo) -> None:
     """The bulk walk records every committed path; anything else costs one
     cached git call, and an uncommitted path reads as never committed."""

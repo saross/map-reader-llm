@@ -64,7 +64,8 @@ Usage
     python3 scripts/check_generated_currency.py --sources-only
 
 Exit codes: 0 no stale candidate (or ``--warn-only``); 1 at least one stale
-candidate; 2 the registry could not be read.
+candidate; 2 the registry could not be read, or ``--repo`` is not a git work
+tree.
 """
 
 from __future__ import annotations
@@ -404,7 +405,18 @@ def main(argv: list[str] | None = None) -> int:
         return 2
 
     clock = GitClock(repo)
-    clock.prefill()
+    try:
+        clock.prefill()
+    except subprocess.CalledProcessError as exc:
+        # Not a git work tree (git exits 128): a usage error, like an
+        # unreadable registry (PR #24 review, finding 10).
+        detail = (exc.stderr or "").strip() or f"git exited {exc.returncode}"
+        print(f"ERROR: cannot read the git history of {repo}: {detail}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        # git is not installed, or --repo is not a directory.
+        print(f"ERROR: cannot read the git history of {repo}: {exc}", file=sys.stderr)
+        return 2
     summary = check_registry(entries, clock, sources_only=args.sources_only)
     summary["n_git_fallback_calls"] = clock.n_fallback_calls
 
