@@ -4703,6 +4703,14 @@ E81 separate: fixing it would move essentially every published confidence
 interval, and that delta must be attributable on its own. It needs its own
 erratum and its own PI decision.
 
+**Annotated 2026-10-06 by E90 (tracker C-06)**: in the first table above,
+the five `retest-phase2c::text-*` rows and `retest-phase2b::text-t0.0` are
+six runs of one transmitted configuration, not six conditions. A text-only
+request sends no exemplar, so the five library levels never reached the
+model (E90; `reports/manipulation-check-2026-10-05.md` § B.5, group 16). The
+undefined MCC this entry records is correct for each run; only the reading
+of the five Phase 2c rows as distinct library conditions changes.
+
 ---
 
 ### E82: Bootstrap confidence intervals depart from Decision 10 on both method and iteration count — BCa replaced the registered percentile method undisclosed, its vectorised adapter transposed its axes until 2026-08-19, and the corpus runs at 10 000 iterations where E54 records 1 000
