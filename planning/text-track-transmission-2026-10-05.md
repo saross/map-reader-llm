@@ -1,7 +1,9 @@
 # Text-track transmission gap: claims, surprises and work plan
 
-> **Last revised**: 2026-10-05 (Session 161: X1 approved and recorded). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-06 (Session 162: the W1 documentation pass;
+> W1.3-W1.5 done, paper text drafted for the PI's review). Prior: 2026-10-05
+> (Session 161: X1 approved and recorded). See [§ Changelog](#changelog) for
+> revision history.
 
 **Status: OPEN.** The PI's working document for the finding of 2026-10-05:
 "a major issue, I'm happy you uncovered it now". Every affected claim, every
@@ -41,16 +43,16 @@ in brackets (§ 4).
 
 ### Null manipulations
 
-- [ ] **C-01 (D, W1).** `results/retest/retest-production-summary.md:23`,
+- [x] **C-01 (D, W1).** DONE 2026-10-06 (W1 pass, `5fef977a2`): withdrawn in place in §§ 1, 5.2 and 11.4 (struck through, bracketed note, changelog). Was: `results/retest/retest-production-summary.md:23`,
   `:94-104` (§ 5.2), `:240-244` (§ 11.4): "scale-4 > plus-hp on text
   (ΔF1 = +0.013, p = 0.001)". The Phase 2c text arms are identical
   requests; withdraw.
-- [ ] **C-02 (L, W1).** Same file `:30`, `:302`, `:316`, `:320`: "null on
+- [x] **C-02 (L, W1).** DONE 2026-10-06 (W1 pass, `5fef977a2`): every site now says the image track (also `:23`). Was: Same file `:30`, `:302`, `:316`, `:320`: "null on
   both tracks". Only the image track tested H8; drop "both tracks".
-- [ ] **C-03 (D, W1/W2).** `results/retest/pairwise-bootstrap-comparisons.json`
+- [x] **C-03 (D, W1/W2).** DONE 2026-10-06 (W1 pass, `aafdea374`): D42's annotation did not mention replicates, so a top-level `_annotation_2026-10-06` says rows 40-49 are replicate contrasts and [45] a bootstrap false positive; no value changed. Was: `results/retest/pairwise-bootstrap-comparisons.json`
   `comparisons[40-49]` (Phase 2c T2): ten replicate contrasts reported as
   library tests; `[45]` significant (p 0.001) between identical requests.
-- [ ] **C-04 (L, W1).** `docs/paper/results-draft.md:192-215` and
+- [x] **C-04 (L, W1).** DONE 2026-10-06 (W1 pass, `e03b67522`, `4f7f850c8`; drafted for the PI's review): § R2 and rows R2-01/04/07 give the counts; also, the 14 text cells are 8 configurations and the 8 undefined-MCC text cells are 3. Was: `docs/paper/results-draft.md:192-215` and
   `docs/paper/results-claims-inventory-2026-09-12.md:360/363/366` (R2-01,
   R2-04, R2-07): the 36 Era-1 single-pass cells are 26 transmitted
   configurations; the 15-cell Tier 1 is 9; six Tier-1 cells are one text
@@ -61,11 +63,11 @@ in brackets (§ 4).
   (`results/run-analyses.json`, both SIGNED): five Phase 2c text cells
   ranked as distinct configurations. No tier is driven by a replicate
   difference on that instrument (none of 20 replicate pairs significant).
-- [ ] **C-06 (L, W1).** `protocol-errata.md:4262-4275` (E81 table): five
+- [x] **C-06 (L, W1).** DONE 2026-10-06 (W1 pass, `2d01bddc8`): annotated after E81 (six runs of one configuration with Phase 2b text T0.0). Was: `protocol-errata.md:4262-4275` (E81 table): five
   Phase 2c text conditions listed separately.
-- [ ] **C-07 (D, W1).** Experiment E: `results/phase3d-experiment-e-results.md:101`,
+- [x] **C-07 (D, W1).** DONE 2026-10-06 (W1 pass, `992f6e901`): Finding 2 struck through and marked VOID, the E4 → Baseline step re-attributed to the prompt, banner and changelog added. Was: Experiment E: `results/phase3d-experiment-e-results.md:101`,
   `:122` (Finding 2) void; Obs 156 void (Obs 496 corrects it).
-- [ ] **C-08 (S, W1/W5).** Obs 155 (`working-notes.md:2757`) and Obs 157
+- [x] **C-08 (S, W1/W5).** W1 half DONE 2026-10-06 (W1 pass, `d427f55d9`): Obs 498 gives one sentence each (Obs 155's own verifier evidence untouched, its proposer generalisation unsupported; Obs 157 to be cited from the registered sweeps; Obs 158 "no detectable effect at this n"); adequate-n re-runs stay with W5.1. Was: Obs 155 (`working-notes.md:2757`) and Obs 157
   (`:2877`): real manipulations, each one 60-tile run inside a 0.050
   replicate spread; unsupported as stated. Obs 158 (`:2917`) weakened.
 - [x] **C-09 (S/D, W1).** DONE 2026-10-05: dated notes added at both. `docs/paper/discussion-seeds.md:528-531`
@@ -76,14 +78,14 @@ in brackets (§ 4).
 
 ### Descriptions of what the text condition sends
 
-- [ ] **C-11 (L, W1).** `docs/paper/methods-draft.md:524-530`: "presented
+- [x] **C-11 (L, W1).** DONE 2026-10-06 (W1 pass, `c99e74cbb`; drafted for the PI's review): § M.10 rewritten from report § E's correction, plus the "above Reference Examples" sentence. Was: `docs/paper/methods-draft.md:524-530`: "presented
   as images, text descriptions, or both". Text-only sends none; only the
   verifier's `-text` configs send text (six labels). Correction drafted in
   the report § E.
-- [ ] **C-12 (L, W1).** `methods-draft.md:497-502` and `:756`: "the
+- [x] **C-12 (L, W1).** DONE 2026-10-06 (W1 pass, `c99e74cbb`; drafted for the PI's review): § M.9 corrected; the `:756` changelog line bracketed, not rewritten. Was: `methods-draft.md:497-502` and `:756`: "the
   twenty-two text-only configurations carry them as labels alone" should
   read "transmit no exemplar at all".
-- [ ] **C-13 (L, W1).** `methods-draft.md:577-588`: says Track 2 skipped
+- [x] **C-13 (L, W1).** DONE 2026-10-06 (W1 pass, `c99e74cbb`; drafted for the PI's review): Track 2 ran 2b and 2d (in February too: `archive/outputs-pre-retest-60-tile/phase2d/track2-text/`), and the retest also ran 2c as five identical requests. Was: `methods-draft.md:577-588`: says Track 2 skipped
   Phase 2c; the Era-1 retest ran it (five inert arms) and Phase 2d.
 - [ ] **C-14a (L, W1).** `scripts/analyse_null_exemplar_sensitivity.py:485`
   still writes "sent the labels only" into its `analysis.json` note; correct
@@ -96,11 +98,11 @@ in brackets (§ 4).
   `reports/null-exemplar-errata-2026-09-13.md:98`;
   `reports/modality-track-audit-2026-09-14.md:367`;
   `decisions-log.md:1159` (Decision 25).
-- [ ] **C-15 (L, W1).** `docs/paper/discussion-seeds.md:466-475`: "few-shot
+- [x] **C-15 (L, W1).** DONE 2026-10-06 (W1 pass, `112a0d052`; drafted for the PI's review): Seed 8's text-only variant named zero-shot. Was: `docs/paper/discussion-seeds.md:466-475`: "few-shot
   foundation-model extraction … TEXT-ONLY variant": the text variant is
   zero-shot. (`:492-501` "text specification beats few-shot image
   examples" is correct as worded; its E48 citation is wrong, C-16.)
-- [ ] **C-16 (L, W1).** `discussion-seeds.md:499-501`: cites E48 (an HN-count
+- [x] **C-16 (L, W1).** DONE 2026-10-06 (W1 pass, `112a0d052`; drafted for the PI's review): the boundary now cites the v2 runs (Obs 236, 239, 240) and Obs 235. Was: `discussion-seeds.md:499-501`: cites E48 (an HN-count
   correction) for H10/H12 "not executed as intended"; the v2 runs did
   transmit; the retraction is Obs 235.
 
@@ -121,13 +123,13 @@ in brackets (§ 4).
   `family-bh-fdr-confirmatory`): the ordering is inferred from code at the
   recorded commit, not shown by any artefact.
 
-- [ ] **C-23 (L, W1).** The Era-1 retest's Phase 2b, 2c and 2d ran their image
+- [x] **C-23 (L, W1).** DONE 2026-10-06 (W1 pass): erratum **E92** (`e8f793c16`), which found Phase 2a reordered too (its YAML sets the same `fixed` ordering) and E70's patched tiles sent in config order; the retest summary points to it (`5fef977a2`). The two quoted phrases are in `studies/retest/phase2e-h4-ordering.yaml:8`, `:32`, not in the retest summary; they stay as execution records. Was: The Era-1 retest's Phase 2b, 2c and 2d ran their image
   arms in canonical-first order (their study YAMLs set `fixed: ordering:
   canonical-first`, honoured by the batch runner since `ead94aa81`), where the
   February 60-tile runs used config order. No erratum records it; the retest
   summary's "baseline used in all prior phases" and "reused from Phase 2c" are
   wrong (W3.2).
-- [ ] **C-25 (D, W1/W2).** Re-tested with the paired tile-swap permutation
+- [ ] **C-25 (D, W1/W2).** PARTLY DONE 2026-10-06 (W1 pass): the retest summary's every p and verdict (`5fef977a2`), the Phase 2b summary and carry-forward note (`6ffc4ff3e`), results § R2, methods § M.x and a phase-table note, claims rows R2-09..11 (`e03b67522`, `1499c1051`, `c99e74cbb`, `4f7f850c8`), E43/E68/E72 annotated (`9ed9a8d05`), E69 annotated (`11da05d77`). OPEN: the rest of W2's ~740 sites (the D17 audit `:905-919` among them) and the register outcomes of `h1-cmt0106-pooled-modality` and `family-bh-fdr-confirmatory` (W1.1). Was: Re-tested with the paired tile-swap permutation
   test (`reports/retest-bootstrap-check-2026-10-05.md`): A[45] (2c text
   scale-4 > plus-hp) 0.001 → 0.0588, the only verdict that flips after
   within-phase BH; at raw α also A[18] 0.042 → 0.0588 and A[60] (2e
@@ -139,7 +141,7 @@ in brackets (§ 4).
   grid/stride/H13 rows, the verifier-thinking contrast (Obs 187, E69).
   Not re-tested: the 384-vs-512 and PV pairwise files (inputs moved), H1,
   the E45 companions.
-- [ ] **C-26 (L, W1).** Reporting errors whatever the test: "FDR p = 0.004" is
+- [ ] **C-26 (L, W1).** PARTLY DONE 2026-10-06 (W1 pass): the origin, `results/retest/phase2b/analysis_summary.md` (its "p (FDR-adj)" column held raw p; "Six of ten" → five), the carry-forward note, factor analysis § 9, `results-draft.md:231`, R2-11, E43 and E72 (`6ffc4ff3e`, `e03b67522`, `4f7f850c8`, `9ed9a8d05`). OPEN: `results/e43-matched-temperature/findings.md:40`, `:336`; `results/paper-tables/leaderboard-20m-annotated.md:288`, `:418`; `results/h11/analysis_summary.md:146`; `reports/e43-coverage-confound-remediation-2026-08-02.md:36`; the E72 `_note` in `results/run-analyses.json`. Was: Reporting errors whatever the test: "FDR p = 0.004" is
   a raw p (`results-draft.md:231` and 24 other sites); "6/10 significant" is
   5/10.
 - [x] **C-27 (D, W6).** DONE 2026-10-05 (S161, D42 implemented; `reports/d42-implementation-2026-10-05.md`): no live path reads p from a bootstrap, and the floor-pinning tests now assert p = 1 for identical arms. Was: the bootstrap p-value (2 × min(P(d ≤ 0), P(d > 0)),
@@ -148,7 +150,7 @@ in brackets (§ 4).
   `tests/test_e45_bootstrap_pairings.py:71-89` pins identical arms at the
   floor. It also depends on which arm is labelled A (0.001 one way, 0.012
   the other on the same data).
-- [ ] **C-24 (L, W1).** `canonical-last` was sent as null×3, hard positives,
+- [x] **C-24 (L, W1).** DONE 2026-10-06 (W1 pass): erratum E92 (`e8f793c16`); the retest summary, results § R2 and R2-02 describe the arm as sent. Was: `canonical-last` was sent as null×3, hard positives,
   then canonical examples last, not the study YAML's [HP, null, C+, C−].
   Canonical placement, what the registration fixes, holds.
 
@@ -162,9 +164,9 @@ in brackets (§ 4).
   note) and `reports/register-repair-2026-10-05.md:22` call the `-v2` and
   `v1-prompt` legs "identical re-runs"; they sent different exemplars
   (text 1,727 vs 1,792 tokens; image 9 vs 6 images). Same for pv-512.
-- [ ] **C-20 (L, W4).** Obs 280's table (`working-notes.md:13683`) labels
+- [x] **C-20 (L, W4).** DONE 2026-10-06 (W1 pass, `d427f55d9`): Obs 498 records it; with the label corrected, Obs 280's "every Era-1 / Era-2 case" text-F1 claim fails for that stratum. Was: Obs 280's table (`working-notes.md:13683`) labels
   `h4-canonical-last` "text"; it transmits 13 images.
-- [ ] **C-21 (L, W1).** `retest-production-summary.md:320` says "Gemini 2.0
+- [x] **C-21 (L, W1).** Retest-summary half DONE 2026-10-06 (W1 pass, `5fef977a2`: § 14.5 corrected, which the 2026-06-05 model fix had missed). Was: `retest-production-summary.md:320` says "Gemini 2.0
   Flash"; every retest meta records `gemini-3-flash` (with the retest
   summary's W2 revision). E51 (`protocol-errata.md:1629-1636`) said the
   scale-8 run was "not re-launched"; its metas show a fresh run. E51 half
@@ -242,13 +244,13 @@ Order: metadata and register → low-level records → intermediate documents
   recording the Phase 2c text null; OSF pointer updated. Done 2026-10-05:
   **E90** (`dbc59c046` on main). For the PI: re-upload
   `osf/errata-pointers.md` if it is on OSF.
-- [ ] W1.3 Low-level records: withdraw C-01/C-02 in the retest summary
+- [x] W1.3 DONE 2026-10-06 (W1 pass): C-01, C-02, C-03, C-06, C-07, C-21, C-23, C-24 and E92. Was: Low-level records: withdraw C-01/C-02 in the retest summary
   under the revision policy; annotate `pairwise-bootstrap-comparisons.json`
   (C-03); the "labels only" sentences (C-14); E51 and "Gemini 2.0" (C-21).
-- [ ] W1.4 Intermediate: a new Obs for the Phase 2c null and the bootstrap's
+- [x] W1.4 DONE 2026-10-06 (W1 pass): Obs 498 and Obs 499 (`d427f55d9`); E69 annotated (`11da05d77`); the decisions-log note sits at Decision 16, where the "meaningless" ruling is (`eec66505f`), since Decision 25 already carries its E90 note and cites no Phase 2c or bootstrap p. Was: Intermediate: a new Obs for the Phase 2c null and the bootstrap's
   false positive; decisions-log note (Decision 25); signature notes on the
   two signed Era-1 analyses if their outcome text needs one (C-05).
-- [ ] W1.5 Paper: methods C-11/C-12/C-13; results C-04/C-17; discussion
+- [x] W1.5 DONE 2026-10-06 (W1 pass), DRAFTED FOR THE PI'S REVIEW, not finalised: methods (`c99e74cbb`, `1499c1051`), results § R2 (`e03b67522`), claims rows (`4f7f850c8`), discussion seeds (`112a0d052`). Was: Paper: methods C-11/C-12/C-13; results C-04/C-17; discussion
   seeds C-09/C-15/C-16; claims inventory rows. Drafted for the PI's review.
 
 ### W2. The retest-era bootstrap — W2.1-W2.3 DONE 2026-10-05; W2.4 for the PI
@@ -321,7 +323,7 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   2026-10-05.
 - [x] W4.2 The proposer-verifier-384/512 note and the repair report (C-19).
   Done 2026-10-05.
-- [ ] W4.3 Obs 280's label (C-20), by a new Obs (entries are never edited);
+- [x] W4.3 DONE 2026-10-06 (Obs 498, `d427f55d9`). Was: Obs 280's label (C-20), by a new Obs (entries are never edited);
   fold into W1.4's Obs.
 - [ ] W4.4 The checker still cannot resolve 17 verifier stages (sidecar-form
   metas, a `t0.3`/`t0-3` directory spelling, an archived leg), named in
@@ -515,6 +517,17 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
   guard (map-reader-bench is designing the same gate).
 
 ## Changelog
+
+### 2026-10-06 (Session 162) — The W1 documentation pass
+
+W1.3-W1.5 done (paper text drafted for the PI's review); C-01 to C-04,
+C-06 to C-08 (W1 half), C-11 to C-13, C-15, C-16, C-20, C-21, C-23 and
+C-24 ticked; C-25 and C-26 partly done, with their open sites listed;
+W1.1 still open (register outcomes quote bootstrap p). New: erratum E92
+(the retest's example orders), Obs 498 and Obs 499, annotations on E43,
+E68, E69, E72 and E81. Found on the way: Phase 2a also ran canonical-first;
+E70's patched tiles went in config order; Track 2 ran Phase 2d in February
+too; the C-26 errors originate in the Phase 2b analysis summary.
 
 ### 2026-10-05 (Session 161, late) — W7.5 resolved as far as offline evidence goes
 
