@@ -1,9 +1,9 @@
 # OSF state check: project h9x4g and registration tybgq
 
-> **Last revised**: 2026-10-05 (original publication, Session 161). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-05 (later: resolved; the options of § 5
+> carried out). See [§ Changelog](#changelog) for revision history.
 
-**Status: for the PI's check.** W8.3 of
+**Status: RESOLVED 2026-10-05.** The PI confirmed this picture, made the project public, and approved erratum E91, a late deposit (`late-deposit-2026-10-05/`) and registration update 2 (submitted and approved 2026-10-05 11:30 UTC); see the changelog. Original status: for the PI's check. W8.3 of
 `planning/text-track-transmission-2026-10-05.md`: investigate the Open
 Science Framework (OSF) project before any upload. Read-only: GET requests
 to the OSF Application Programming Interface (API) v2 with the project
@@ -144,6 +144,16 @@ v4.7. The commit `f037a9d8d` bumped the date but not that field.
    the lodged documents.
 
 ## Changelog
+
+### 2026-10-05 (later) — Resolved
+
+§ 5's options, as ruled: (1) the PI made the project public, and a second
+registration update (text approved by the PI) points to the corrections; (2)
+erratum E91 records the omission, and the registered materials were deposited
+late, each from its git commit (`osf/late-deposit/deposit-index.md`); (3) the
+January README was superseded by a new version (OSF keeps the old one); (4)
+the update re-attaches the three lodged documents. The five files the
+February session log records as uploaded were found never to have attached.
 
 ### 2026-10-05 — Original publication (Session 161)
 
