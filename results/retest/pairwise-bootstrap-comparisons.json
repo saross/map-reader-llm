@@ -1,4 +1,5 @@
 {
+  "_annotation_2026-10-06": "Annotation 2026-10-06 (erratum E90; tracker C-03, W1): comparisons[40] to comparisons[49] ('Phase 2c T2: H8 Library (Text)') are not library contrasts. A text-only request transmits no exemplar, so the five Phase 2c text arms (canonical, plus-hp, pure-positive-canon, scale-4, scale-8) sent identical requests and these ten rows compare replicates of one configuration (reports/manipulation-check-2026-10-05.md section B.1; Obs 496, Obs 498). comparisons[45] (plus-hp vs scale-4), f1_p_value 0.001 and significant_raw true, is a false positive of the retired bootstrap between identical requests: the two runs differ on 5 of 340 tiles, all in one direction; the paired tile-swap permutation test gives p = 0.0588 (BH within phase 0.588; its permutation_retest block; reports/retest-bootstrap-check-2026-10-05.md section W2.1). No value in this file is changed.",
   "metadata": {
     "n_comparisons": 70,
     "bootstrap_iterations": 1000,
