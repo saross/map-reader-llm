@@ -10,9 +10,11 @@
 > register-vs-old-table disagreements flagged in place); one [DRAFT
 > NOTE] item gates finalisation: the § 6.3 session-count refresh.
 >
-> **Last revised**: 2026-09-13 (corpus size corrected to 340/360 and the
-> clean-holdout claim qualified, under errata E86 and E87).
-> See [§ Changelog](#changelog).
+> **Last revised**: 2026-10-06 (drafted for PI review, W1; not finalised:
+> what a text-only request sends, E90; Track 2's executed phases; a note on
+> the phase table's p-values, D42, and on the 60-tile stage, S-12). Prior:
+> 2026-09-13 (corpus size corrected to 340/360 and the clean-holdout claim
+> qualified, under errata E86 and E87). See [§ Changelog](#changelog).
 
 ## M.x Preregistration, amendments, and analysis status
 
@@ -497,7 +499,7 @@ falls inside a null window, so no precision, recall, F1 or MCC value is
 computed over leaked positives. It is confined to the **image
 modality** — of the forty-one configurations that transmit example
 images, thirty-seven include the nulls, while the twenty-two text-only
-configurations carry them as labels alone and the verifier's
+configurations transmit no exemplar at all and the verifier's
 six-example library contains none — so text cells, every verifier stage
 and all 55-map deployment cells are unaffected. And its direction is
 conservative: what the model saw, labelled "no mounds here", is ground
@@ -522,14 +524,20 @@ comparisons (Gemini 3 Flash 3.5 role permutations and a Gemini Pro
 described here.
 
 **Prompt architecture.** Each request assembles a system instruction
-(task definition, target-symbol description, and output-format
-specification), a configurable library of few-shot examples, and the
-target tile as a 512 × 512 px PNG. Examples are drawn from labelled
-calibration tiles in positive, negative, and null categories, and are
-presented as images, text descriptions, or both, according to the
-modality condition. (The three null exemplars are the exception to
-"calibration tiles": see the qualification on the exclusion in § M.9
-and erratum E86.) Content is assembled as sequential `types.Part`
+(task definition, verbal target-symbol description, and output-format
+specification), an optional few-shot library, and the target tile as a
+512 × 512 px PNG. In image-bearing conditions each example is sent as a
+short label followed by its image; in text-only conditions no example is
+sent, neither image nor label, so the symbol is specified by the
+instruction's description alone (zero-shot), as the registration's
+Brief-text and Verbose-text levels define it (erratum E90). A fixed sentence before the tile asks the
+model to match "the above Reference Examples" in both kinds of request,
+including text-only requests, which contain none. The verifier's text
+variant, by contrast, sends six example labels as text. Examples are
+drawn from labelled calibration tiles in positive, negative, and null
+categories. (The three null exemplars are the exception to "calibration
+tiles": see the qualification on the exclusion in § M.9 and erratum
+E86.) Content is assembled as sequential `types.Part`
 objects via the google-genai SDK (v1alpha), with JSON output forced
 through `response_mime_type="application/json"` and an 8,192-token
 output ceiling that accommodates thinking tokens alongside the
@@ -582,9 +590,15 @@ image examples. Rather than truncate the registered pipeline, we
 carried both winners forward as independent tracks (erratum E27):
 Track 1 (`brief-text-image`) ran the full registered sequence
 2b → 2c → 2d → 2e, preserving the preregistered pipeline intact, and
-Track 2 (`brief-text`) ran temperature testing and passed directly to
-the Phase 3a voting study, the image-dependent phases being
-inapplicable rather than skipped. The extension is additive — Track 1
+Track 2 (`brief-text`) ran temperature testing (2b) and the
+negative-text treatment (2d, whose wording a text request does carry)
+before the Phase 3a voting study; library composition (2c) and example
+ordering (2e) act on exemplars that a text-only request does not send,
+so they were inapplicable rather than skipped. The 340-tile
+re-execution described below nonetheless ran Track 2 through Phase 2c:
+its five library arms sent identical requests, because no exemplar is
+transmitted, and are reported as five runs of the T = 0.0 text
+configuration, not as library levels (erratum E90). The extension is additive — Track 1
 is the registered design, executed with three documented scope
 reductions (H5's 3 × 3 factorial collapsed to OFAT, E28; the H8
 scale-16/32 cells deferred under E11 and later re-run under E51; H2's
@@ -636,6 +650,27 @@ pre-re-scoring value at a different scope, and it also survives at
 "+0.09–0.14 F1" does not reproduce — the registered instrument gives
 +0.076, and the progression report's Flash-range figure is +0.05 to
 +0.09.]
+
+[DRAFT NOTE 2026-10-06 (W1), for the PI. (i) The register outcomes this
+table quotes predate ruling D42, which retired the bootstrap p-value: on
+the paired tile-swap permutation test the 2a pooled contrast is p = 0.0715
+(BH-adjusted 0.125) and brief-text > image-only p = 0.0055; H7's input is
+p = 0.0002 (adjusted 0.00047); H5's p = 0.726; H4's p = 0.137 (adjusted
+0.191) (`results/family-fdr/family_fdr.md`). No verdict changes. The
+register rows `h1-cmt0106-pooled-modality` and `family-bh-fdr-confirmatory`
+still carry the old figures; refresh the table from them when they move.
+(ii) "One where it found none": the 60-tile stage's verdicts came from a
+"pseudo-p" that under-rejected. Re-tested under D42, its Phase 2e has two
+significant contrasts (config-default and canonical-last each above
+random; p 0.0095 and 0.0096, BH 0.029), though not H4's primary
+(canonical-first against canonical-last, p 0.333), and its Phase 2b text
+track has six of ten, not four (tracker S-12; Obs 499). The replication
+choice stands as made, but "found none" should read "found no effect on
+the registered contrast". (iii) The 2c row's "5 × 2 tracks": the five
+text cells are one transmitted configuration (E90), so H8 was tested on
+the image track only; and in the 340-tile retest, Phase 2c `plus-hp` was
+run in canonical-first order and Phase 2e's baseline was re-run, not
+reused (erratum E92).]
 
 **Errata affecting execution.** Two implementation errors affected
 data collection and analysis method respectively, both detected and
@@ -720,6 +755,28 @@ planned as a separate contribution.
 
 ## Changelog
 
+### 2026-10-06 — Drafted 2026-10-06 for PI review (W1); not finalised
+
+**Trigger**: erratum E90 and the manipulation check
+(`reports/manipulation-check-2026-10-05.md` § E): a text-only request
+sends no exemplar at all; and rulings D42 (permutation p-values) and the
+February re-test (S-12). Tracker `planning/text-track-transmission-2026-10-05.md`
+claims C-11, C-12 and C-13, workstream W1.5. Every change below is
+drafted for the PI's review and is not finalised.
+
+| Passage | Before | After (draft) |
+|---|---|---|
+| § M.10 prompt architecture (C-11) | examples "presented as images, text descriptions, or both, according to the modality condition" | image conditions send label + image; text-only conditions send no example (zero-shot, as the registration's text levels define it); only the verifier's text variant sends labels as text; the fixed "above Reference Examples" sentence named |
+| § M.9 null-exemplar exposure (C-12) | the 22 text configurations "carry them as labels alone" | "transmit no exemplar at all" (the 2026-09-13 changelog's same phrase bracketed, not rewritten) |
+| § M.11 dual-track paragraph (C-13) | Track 2 ran temperature testing, then Phase 3a | Track 2 also ran Phase 2d (February and retest); the retest also ran Phase 2c on Track 2, as five identical requests |
+| § M.11 phase table | as regenerated from the register | unchanged; a DRAFT NOTE gives the D42 p-values, the S-12 re-test of the 60-tile stage, and E90/E92 |
+
+**What did NOT change**: every number in the phase table and the rest of
+the draft; the conclusion that text cells never saw the null pixels; the
+dual-track design.
+
+**Commit**: see `git log` for this entry's date.
+
 ### 2026-09-13 (later) — corpus size corrected to 340/360, and the clean-holdout claim qualified (E86, E87)
 
 **Trigger**: errata **E86** and **E87**, filed the same day from the
@@ -753,7 +810,8 @@ the per-frame overlap (25 of 340 at Era 1, 3 of the registered
 60-tile holdout, 20 of 487 at Era 2, 13 of 327 at Era 3) and the three
 bounds on it: no reference symbol lies in a null window, the exposure
 is the image modality only (37 of 41 image configurations carry the
-nulls; the 22 text configurations carry labels alone and the verifier's
+nulls; the 22 text configurations carry labels alone [corrected
+2026-10-06: transmit no exemplar at all, E90] and the verifier's
 library carries none), and the direction is conservative. § M.10's
 "Examples are drawn from labelled calibration tiles … null categories"
 takes a cross-reference to it.
