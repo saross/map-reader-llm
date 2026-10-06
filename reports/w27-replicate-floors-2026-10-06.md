@@ -1,8 +1,8 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-06 (later: § 3's first reading corrected, consensus
-> shrinks the floor modestly at t = 4). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-10-06 (latest: § 6a added, the verifier-date
+> confound checked free on text MIN; the cross-execution floor widened to
+> 0.011–0.013). See [§ Changelog](#changelog) for revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
 configuration-level claims against them in § 7.** Rulings D45 to D47
@@ -397,8 +397,61 @@ Reading:
   therefore the proposer floor at the rung plus 0.001: **about 0.005 at
   N = 5, 0.007 at N = 3, 0.009 at N = 1** for the Gemini 3 text families;
   for a cross-execution claim add the one measured cross-execution
-  proposer-verifier difference, 0.006 at N = 5, giving **about 0.011**.
+  proposer-verifier difference, 0.006 at N = 5, and the verifier-vintage
+  effect of § 6a, 0.004 to 0.007, giving **about 0.011 to 0.013**.
   Where a claim compares an image family at N = 1 the floor is 0.018.
+
+## 6a. The verifier-date confound, checked free on text MIN (added 2026-10-06)
+
+The 3-of-5 cells of the Gemini 3 board (TH7, T03, TM at k3) add a vote-3
+shell whose candidates were verified on 2026-06-06, 40 to 49 days after the
+4-of-5 sets (§ 7.2, lesson (i)). For text MIN a free test exists: the
+uplift run re-verified, on 2026-06-11, every candidate with three or more
+votes of ten passes, and its passes 1 to 5 are TM's. Matched by centroid,
+TM's April-verified 4-of-5 set and its June-6 shell both have June-11
+near-replicates: 76 % and 67 % of candidates within 2 m, 98 % and 94 %
+within 5 m; of the 4-of-5 pairs within 5 m, 6,985 have byte-identical crops
+(the same request). The same verifier configuration ran each time
+(`gemini-3-flash-preview`, minimal, T = 0, `verify_adversarial` text). Agent
+record, scripts and results: `verifier-date-tm-check.md`, `vdate_*.py`,
+`vdate-results*.json` beside this report (they ran on sapphire with
+`/tmp/vdate/` as scratch). The committed mixed-date probabilities reproduce
+the board exactly (TM-k4 0.7826, TM-oracle 0.8103) before anything is
+swapped.
+
+| quantity (50 m, r2) | mixed dates (board) | one date (all June-11, 2 m match) | difference |
+|---|---:|---:|---:|
+| TM k3 − k4 at 0.15 | +0.0275 | +0.0264 | −0.0011 |
+| TM-oracle (0.20, k3) − TM-k4 (0.15, k4) | +0.0277 | +0.0255 | −0.0022 |
+| TM-k4 itself (same candidates, April → June probabilities) | 0.7826 | 0.7867 | +0.0041, p = 0.038 |
+
+Reading:
+
+- **Lesson (i)'s threshold effect is not a verifier-date artefact on text
+  MIN.** Under one verifier date k3 still beats k4 by +0.025 to +0.027 in
+  every variant (2 m, 5 m, identical crops only, k4 set only), all
+  p < 0.0001; mixing dates inflated it by 0.001 to 0.002.
+- **The verifier itself drifted between April and June, a little.** On
+  identical candidates the June verifier flips 3.8 to 4.1 % of decisions at
+  0.15 against 2.4 to 2.5 % in the same-week control (June 6 against June
+  11), balanced in direction (148 up, 146 down), and the cell it scores
+  moves by +0.0036 to +0.0069 F1 depending on the match rule (true
+  positives 3,476 → 3,495, false positives 389 → 372). That is the first
+  measured cross-date verifier floor on this corpus: five to nine times the
+  same-week re-invocation band of § 1. The p-values are not corrected for
+  the several variants tested.
+- **What it does not settle.** TH7 and T03 have no later re-verification of
+  their 4-of-5 sets, so their k3 − k4 contrasts are checked only by
+  analogy: a date effect of the size measured here (0.001 to 0.002 on the
+  contrast) cannot overturn TH7's +0.022, and leaves T03's +0.009 standing
+  but no longer by a wide margin. A paid same-date re-verification of T03's
+  full vote-3-and-above set (13,945 candidates, about US$10 at the
+  register's US$0.0007 a candidate) would settle T03 directly, if
+  `gemini-3-flash-preview` is still served.
+- **For every cross-date comparison on the board**, the April-verified cells
+  (TH7-k4, T03-k4, TM-k4, IM) carry a verifier-vintage component of a few
+  thousandths of F1 against cells verified later; § 6's cross-execution
+  floor now includes it.
 
 ## 7. The paper's configuration-level claims against the floors
 
@@ -431,14 +484,15 @@ come from different executions the cross-execution floor applies.
 ### 7.2 The 55-map board (floors of § 6)
 
 Floors used: within-execution 0.005 (N = 5), 0.007 (N = 3), 0.009 (N = 1);
-cross-execution 0.011 (N = 5; one measured pair). Differences are the r2
+cross-execution 0.011 to 0.013 (N = 5; one measured proposer pair plus the
+verifier-vintage effect of § 6a). Differences are the r2
 board's tile-swap results (`final_board_50m.json` → `pairwise`, read
 2026-10-06), or the campaign's own per-sheet test where the draft quotes
 it.
 
 | claim | difference, test | executions | floor | verdict under D45 |
 |---|---|---|---|---|
-| R7.1-05/08, lesson (i): the carried T0.7 × 4-of-5 left +0.022 on the table against the joint oracle T0.3 × 3-of-5 (L565–572, L595–599) | +0.0225, p < 0.0001 | CROSS 8 days (proposers 04-18 against 04-26/27); the k3 shell's candidates verified 2026-06-06, 40–49 days after the k4 legs | 0.011 | **Clears the floor twice over.** Add the caveat that the k3 cells are mixed-verifier-execution cells (every k3-against-k4 contrast in § R7.1 is also a verifier-date contrast; the measured verifier re-invocation band is 0.001, its cross-date drift unmeasured). |
+| R7.1-05/08, lesson (i): the carried T0.7 × 4-of-5 left +0.022 on the table against the joint oracle T0.3 × 3-of-5 (L565–572, L595–599) | +0.0225, p < 0.0001 | CROSS 8 days (proposers 04-18 against 04-26/27); the k3 shell's candidates verified 2026-06-06, 40–49 days after the k4 legs | 0.011–0.013 | **Clears the floor.** The k3 cells are mixed-verifier-execution cells; on text MIN the threshold effect survives a one-date reading (§ 6a: +0.0275 → +0.0264), so say so, and name the date mix. |
 | R7.1-09a: T0.3, 3-of-5 beats 4-of-5 by +0.009 (L599–601) | +0.0092, BH 0.0005 | nested passes; verifier dates differ (04-26/27 against 06-06) | nested contrast: the proposer floor does not apply; the verifier-date component does | **Reword as an output difference** unless the k4 shell is re-verified beside the k3 shell. |
 | R7.1-09b/c: the same for T0.7 (+0.022) and MIN (+0.028) | BH < 0.0001 | as above | as above | **Stand on margin** (twenty times the verifier band); same caveat. |
 | R7.1-11, lesson (ii): HIGH beats MIN at K = 5, +0.028 to +0.034 (L605–606); R6-06 (L505–511) | p < 0.0001 | SAME-DAY proposers (2026-04-18), same-day k3 shells | 0.005 | **Stands**; the cleanest configuration claim on the board. |
@@ -448,21 +502,21 @@ it.
 | R7.2-15: "its sign held at every rung tested" (L679–680) | A-N1-oracle beats B-N1-oracle +0.0214, p < 0.0001 | ADJACENT | 0.009 | **Correct the sentence**: the sign reverses at N = 1 (a resolved difference, above the floor). |
 | R7.2-16a, P7: N = 5 within noise of N = 10 (L682–683) | A −0.0009, p = 0.55; B +0.0006, p = 0.72 | SAME (nested) | 0.005 | **A tie consistent with the floor.** |
 | R7.2-16b: the oracles keep a residue (−0.004, −0.005; per-sheet BH-significant) | canonical −0.0040 / −0.0053; r2 tile-swap +0.0036 (BH 0.0096) / +0.0043 (BH 0.0038), N = 10 above N = 5 | SAME (nested) | 0.005 | **Inside the floor: not a configuration difference.** Reword. |
-| R7.2-04/05/11/12/30/32b: A and B against the April incumbents (+0.023 to +0.034 carried; +0.016 geometry gap on r2) | p ≤ 0.0001 | CROSS about 4 months, with thinking, K and geometry also changed | 0.011 | **Clear the floor**, but they are not single-factor claims: say "run A/B against run TH7" rather than "geometry" or "thinking". The P5 decomposition is chain-dependent (r2: incumbent tax +0.0237, gap +0.0161, not +0.0324 and +0.0027), so L745–749's "no verdict depends on the chain" needs correcting. |
-| R7.2-30: B-N5-carried above T03-oracle, +0.0104 (L725–727) | p = 0.0177 | CROSS about 4 months | 0.011 | **At the cross-execution floor:** state as "above by 0.010, inside the cross-date band". |
+| R7.2-04/05/11/12/30/32b: A and B against the April incumbents (+0.023 to +0.034 carried; +0.016 geometry gap on r2) | p ≤ 0.0001 | CROSS about 4 months, with thinking, K and geometry also changed | 0.011–0.013 | **Clear the floor**, but they are not single-factor claims: say "run A/B against run TH7" rather than "geometry" or "thinking". The P5 decomposition is chain-dependent (r2: incumbent tax +0.0237, gap +0.0161, not +0.0324 and +0.0027), so L745–749's "no verdict depends on the chain" needs correcting. |
+| R7.2-30: B-N5-carried above T03-oracle, +0.0104 (L725–727) | p = 0.0177 | CROSS about 4 months | 0.011–0.013 | **Inside the cross-execution floor:** state as "above by 0.010, inside the cross-date band". |
 | R7.2-31: the image cell holds the highest Gemini 3 tile-MCC (0.711) (L727–729) | untested; B-N3-oracle 0.713 and B-N10-oracle 0.712 exceed it | CROSS | — | **Restrict to carried cells.** |
 | R7.2-32a: B at N = 5 "above" its own N = 10 carried point (L729–733) | +0.0006, p = 0.72 | SAME | 0.005 | **A tie**: say "equal to". |
-| R7.3-04, D1: arm 1 against B N = 5, +0.0056, p = 0.35 (L768–772) | r2 +0.0048, p = 0.27 | CROSS 3–6 days | 0.011 | **Tie, inside the floor** (as the draft reads it). |
-| R7.3-05a/15: arm 2 above the incumbent stack +0.0325; above B's N = 10 oracle +0.0267 / +0.0311 (L772, L805–810) | p < 0.0001 | CROSS 3–6 days | 0.011 | **Stand** (three times the floor); the headline survives. |
+| R7.3-04, D1: arm 1 against B N = 5, +0.0056, p = 0.35 (L768–772) | r2 +0.0048, p = 0.27 | CROSS 3–6 days | 0.011–0.013 | **Tie, inside the floor** (as the draft reads it). |
+| R7.3-05a/15: arm 2 above the incumbent stack +0.0325; above B's N = 10 oracle +0.0267 / +0.0311 (L772, L805–810) | p < 0.0001 | CROSS 3–6 days | 0.011–0.013 | **Stand** (about twice the floor); the headline survives. |
 | R7.3-05b/06: the verifier axis, +0.0234 (fourth against B K = 10) and +0.0270 (arm 2 against arm 1) | p < 0.0001 | same proposer; verifiers 4–5 days apart / same day | 0.001 (verifier band) + 0.005 | **Stand.** |
-| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days; K = 5 against K = 10 | 0.011 | **Test-dependent and at the floor:** report both tests and call it unresolved, not null. |
+| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days; K = 5 against K = 10 | 0.011–0.013 | **Test-dependent and inside the floor:** report both tests and call it unresolved, not null. |
 | R7.3-07: the 3.7 verifier's transfer tax "only +0.0043" (L779–781) | canonical adjusted p = 0.000162; r2 tile-swap +0.0044, p < 0.0001 | SAME (nested) | 0.005 | **Inside the floor**: say "a tax of 0.004, the size of run-to-run noise". |
 | R7.3-18a/b: saturation by N = 3 for the all-3.7 stack (−0.0023) but not for arm 1 (+0.0076) (L818–821) | p = 0.12; adjusted p = 0.000162 | SAME (nested) | 0.007 (N = 3) | **18a a tie; 18b at the floor** (0.0076 against 0.007): "replicates" overstates it. |
-| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS | 0.011 | **At the cross-execution floor.** |
-| R6-12a: doubling MIN passes, UPL above TM-k3 by +0.017 (L536–538) | p < 0.0001 | MIXED: the gain is carried by passes 6–10, 54 days later | 0.011 | **Clears the floor, but is confounded with execution**: the proposer-only consensus of the June passes alone scores 0.02 to 0.03 above the April passes (§ 4). Say "ten passes from two executions". |
-| R6-12b: UPL significantly below HIGH, −0.0106, "closing about half the gap" (L535–542) | r2 −0.0106, p = 0.0165, BH 0.021 | MIXED against SAME-DAY | 0.011 | **At the floor**: "a priced trade, not a tie" is not resolved. |
+| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS | 0.011–0.013 | **Inside the cross-execution floor.** |
+| R6-12a: doubling MIN passes, UPL above TM-k3 by +0.017 (L536–538) | p < 0.0001 | MIXED: the gain is carried by passes 6–10, 54 days later | 0.011–0.013 | **Clears the floor, but is confounded with execution**: the proposer-only consensus of the June passes alone scores 0.02 to 0.03 above the April passes (§ 4). Say "ten passes from two executions". |
+| R6-12b: UPL significantly below HIGH, −0.0106, "closing about half the gap" (L535–542) | r2 −0.0106, p = 0.0165, BH 0.021 | MIXED against SAME-DAY | 0.011–0.013 | **Inside the floor**: "a priced trade, not a tie" is not resolved. |
 | R9-03: the vote-threshold direction reversed between GS and deployment (L968–972) | GS p = 0.11–0.43 against 55-map BH ≤ 0.001 | CROSS corpora and dates; the 55-map k3 arms are the 06-06 shells | — | **Stands as stated** (a resolved difference on deployment against a tie on GS), with the verifier-date caveat. |
-| R9-08/09: TH7-k3 tied with T03-k3, +0.0006, p = 0.855 (L997–1004) | tie | CROSS 8 days | 0.011 | **A tie consistent with the floor.** |
+| R9-08/09: TH7-k3 tied with T03-k3, +0.0006, p = 0.855 (L997–1004) | tie | CROSS 8 days | 0.011–0.013 | **A tie consistent with the floor.** |
 
 **What this changes.** Of the 50 board claims, the headline (all-3.7 above
 every Gemini 3 cell), the verifier-axis result, lesson (ii), the A-against-B
@@ -474,9 +528,11 @@ arm 1's non-saturation (R7.3-18b), the proposer-axis null (R7.3-06b, which
 is also test-dependent), and the uplift "half the gap" (R6-12b). Two need
 a correction of fact (R7.2-15's sign at N = 1; R7.2-11/12's chain
 dependence) and one a restriction (R7.2-31). Lesson (i) and every
-3-of-5-against-4-of-5 contrast carry a verifier-date confound no floor
-covers; the honest fix is a same-date re-verification of one k4 shell beside
-its k3 shell (W5, API gate, D47).
+3-of-5-against-4-of-5 contrast mix verifier dates; on text MIN a one-date
+reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the claims
+stand with the date mix named. Only T03's +0.009 is close enough to need a
+paid same-date re-verification if the paper leans on it (about US$10; W5,
+API gate, D47).
 
 ## 8. What follows
 
@@ -488,9 +544,10 @@ its k3 shell (W5, API gate, D47).
 2. **For the boards:** a D9 note on the signed 55-map analyses recording the
    floors of § 6 and the verifier-date confound of the k3 cells; no tier
    changes (the floors change how differences are read, not the tests).
-3. **Replicate runs (D47, each with its own API gate):** (a) a same-date
-   re-verification of one k4 shell beside its 2026-06-06 k3 shell, which
-   settles lesson (i)'s confound; (b) a same-day bridging pair for the
+3. **Replicate runs (D47, each with its own API gate):** (a) optional
+   since § 6a: a same-date re-verification of T03's vote-3-and-above set
+   (about US$10), the one family whose k3 − k4 margin (+0.009) a date effect
+   of the measured size could approach; (b) a same-day bridging pair for the
    modality reversal on the 487-tile corpus; (c) a sentinel configuration
    on a fixed tile set at every future run date (W7.6 item 5), so drift is
    measured and not inferred. Nothing else in § 7 needs a run.
@@ -503,6 +560,24 @@ its k3 shell (W5, API gate, D47).
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-06 (latest) — § 6a: the verifier-date confound checked on text MIN
+
+**Trigger**: the PI asked how much the k3 shells' June verification matters.
+A free test existed (the uplift run re-verified TM's candidates on
+2026-06-11); an agent ran it read-only on sapphire. § 6a added; § 6's
+cross-execution floor and § 7.2's floors line updated.
+
+| | Before | After |
+|---|---|---|
+| Cross-execution floor (55-map, N = 5) | about 0.011 | about 0.011 to 0.013 (verifier vintage 0.004 to 0.007 added) |
+| R7.2-30, R7.3-06b, R7.3-19, R6-12b | at the floor | inside the floor |
+| R7.3-05a/15 | three times the floor | about twice the floor |
+| Lesson (i), verifier-date caveat | cross-date drift unmeasured | measured on TM: contrast moves 0.001 to 0.002 |
+
+**What did NOT change**: every verdict of a claim that cleared its floor;
+every within-execution floor; the gold-standard sections. Commit: see git
+log for this entry's date.
 
 ### 2026-10-06 (later) — § 3's first reading corrected
 
