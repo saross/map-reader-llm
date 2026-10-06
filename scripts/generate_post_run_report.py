@@ -61,7 +61,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 # planning/cost-accounting-fix-plan-2026-09-21.md). The coster resolves each
 # fragment's service tier from committed evidence and prices it through the
 # one cost function, scripts/lib_cost.price_usage.
-from scripts.lib_pass_cost import PassCoster, fragment_usage  # noqa: E402
+from scripts.lib_pass_cost import PassCoster, fragment_usage, verifier_coverage  # noqa: E402
 
 # --------------------------------------------------------------------------- #
 # Constants
@@ -419,7 +419,7 @@ def _span(stamps: list[dict | None]) -> dict | None:
             "end": max((t["end"] for t in present), key=instant)}
 
 
-def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
+def _verifier_candidates(fragments: list[tuple[dict, Path]], results: int | None = None) -> int:
     """Candidate crops a verifier leg completed, over all its metas.
 
     Per fragment, the best count it records: fragments that list
@@ -432,9 +432,26 @@ def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
     made the union the whole answer, so a preserved main leg from before
     ``completed_items`` (pv-384's v1-prompt, 571 successes, restored under
     D37) counted for nothing beside its one-candidate cleanup.
+
+    A fragment without a list names no candidates, so its overlap with the
+    others cannot be subtracted: a main leg of 3 beside a cleanup that
+    re-verified one of those 3 sums to 4 (PR #24 review, finding 3). When
+    such a fragment sits beside another, the sum is capped at the leg's
+    distinct results, since every candidate the leg completed holds one.
+    The cap is an upper bound, not an exact count: on a carry-forward stage
+    the results also hold the candidates carried from the stage it extends.
+
+    Args:
+        fragments: ``(meta, path)`` for every meta of the leg.
+        results: The leg's distinct candidates in ``probabilities.json``
+            (``lib_pass_cost.verifier_coverage``), or None when it has none.
+
+    Returns:
+        The number of candidates the leg verified.
     """
     completed: set = set()
     rest = 0
+    unlisted = 0
     for meta, _ in fragments:
         es = meta.get("execution_stats") or {}
         items = es.get("completed_items")
@@ -442,10 +459,16 @@ def _verifier_candidates(fragments: list[tuple[dict, Path]]) -> int:
             completed.update(items)
             continue
         success = (es.get("finish_reason_counts") or {}).get("success")
+        unlisted += 1
         rest += int(es.get("items_processed") or success
                     or (((meta.get("usage_stats") or {}).get("by_provider") or {})
                         .get("google_gemini") or {}).get("request_count") or 0)
-    return len(completed) + rest
+    total = len(completed) + rest
+    # Only an unlisted fragment beside another can double-count; a union of
+    # listed fragments is exact and is left alone.
+    if results is not None and unlisted and len(fragments) > 1:
+        total = min(total, results)
+    return total
 
 
 def _preserved_main_legs(primary: dict, primary_path: Path,
@@ -929,7 +952,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
         listed = _coster().main_legs.get(f"{run_id}::{vdir}::run1", {}).get("metas", [])
         main_legs = _preserved_main_legs(meta, meta_path, listed)
         v_fragments = [(meta, meta_path)] + [(_load_json(m), m) for m in main_legs]
-        n_candidates = _verifier_candidates(v_fragments)
+        cover = verifier_coverage(v_fragments)
+        n_candidates = _verifier_candidates(v_fragments, results=cover[1] if cover else None)
         # E55 correction (2026-07-30): where the meta's temperature was corrected from
         # the run.log CLI override (configuration.temperature_effective), the log is
         # part of the value's provenance and is listed as E55 promised.

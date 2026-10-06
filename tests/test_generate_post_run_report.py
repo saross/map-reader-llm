@@ -354,6 +354,49 @@ def test_a_preserved_main_leg_counts_its_own_candidates():
 
 
 @pytest.mark.tier1
+@pytest.mark.parametrize(("results", "expected"), [
+    (3, 3),     # the cleanup re-verified a candidate the main leg holds: capped
+    (4, 4),     # the cleanup verified a candidate the main leg missed: counted
+    (None, 4),  # no probabilities.json to bound the leg: the sum, as before
+])
+def test_an_overlapping_cleanup_is_not_counted_twice(results, expected):
+    """PR #24 review, finding 3: a main leg that predates ``completed_items``
+    (3 successes, no list) beside a cleanup that lists one candidate. The
+    main leg names no candidates, so the overlap cannot be subtracted; the
+    leg's distinct results bound it instead. Sentinel: the uncapped sum
+    reported 4 candidates for a leg holding 3 results.
+    """
+    from scripts.generate_post_run_report import _verifier_candidates
+    p = Path("x")
+    main = ({"execution_stats": {"finish_reason_counts": {"success": 3}}}, p)
+    cleanup = ({"execution_stats": {"completed_items": ["candidate_00002"]}}, p)
+    assert _verifier_candidates([cleanup, main], results=results) == expected
+
+
+@pytest.mark.tier1
+def test_the_overlap_cap_reads_the_legs_distinct_candidates(tmp_path):
+    """The cap the extractor passes is ``verifier_coverage``'s results count,
+    which reduces per-iteration keys to candidates. The listed-only union is
+    exact and is never capped."""
+    from scripts.generate_post_run_report import _verifier_candidates
+    from scripts.lib_pass_cost import verifier_coverage
+    leg = tmp_path / "leg"
+    leg.mkdir()
+    keys = [f"candidate_{i:05d}_iter{n}" for i in range(3) for n in (1, 2)]
+    (leg / "probabilities.json").write_text(json.dumps({"results": dict.fromkeys(keys, {}),
+                                                        "iterations": 2}))
+    main = ({"execution_stats": {"items_processed": 3}}, leg / "run.meta.main-x.json")
+    cleanup = ({"execution_stats": {"completed_items": ["candidate_00002"]}},
+               leg / "run.meta.json")
+    fragments = [cleanup, main]
+    cover = verifier_coverage(fragments)
+    assert cover is not None and cover[1] == 3
+    assert _verifier_candidates(fragments, results=cover[1]) == 3
+    listed = [({"execution_stats": {"completed_items": ["a", "b"]}}, leg / "run.meta.json")]
+    assert _verifier_candidates(listed, results=1) == 2
+
+
+@pytest.mark.tier1
 def test_a_leg_with_failed_requests_counts_successes_not_requests():
     """T03's verifier meta records 10,539 requests and no completed items; its
     successful responses are 9,910, exactly the leg's probabilities.json
