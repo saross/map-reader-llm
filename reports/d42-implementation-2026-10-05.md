@@ -1,7 +1,7 @@
 # D42 implemented: every contrast by permutation
 
-> **Last revised**: 2026-10-05 (the batch signature note approved and
-> recorded). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-06 (class B re-tested under D43/D44). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status: code, regeneration and findings DONE; the batch signature note
 APPROVED by the PI 2026-10-05T11:34:51Z and recorded on the four analyses;
@@ -151,7 +151,22 @@ Unsigned: `h1-cmt0106-pooled-modality` (outcome quotes p = 0.1774, now
 
 ## 6. Not yet done
 
-1. **Class B (needs the PI).** The PV pairwise files, `fair-384-vs-512.json`,
+1. **Class B: DONE 2026-10-06** under rulings D43 and D44 (`e7b32de0b`;
+   re-run records `results/d42-retest-2026-10-05/class-b/`; script
+   `scripts/annotate_classb_permutation.py`). Every committed file is
+   annotated in place after a point-estimate check. Results: the six
+   384-vs-512 contrasts stay significant (I4 0.006 → 0.007 on the March
+   sweep; 0.0111 on the E39 sweep, 512 px F1 0.7701, the figure to cite);
+   the PV pairwise files have one raw-α flip (checklist-text vs brief-text,
+   0.034 / 0.046 → 0.0527, which now agrees with "the three strategies are
+   statistically equivalent"); the Phase 3a HIGH-text pairs keep every
+   verdict; B-17 stays significant as run (0.001 → 0.0047) and re-swept
+   (minimal threshold 0.15, p 0.0067), with the stale variant summary
+   flagged; B-18 stays null (0.166 → 0.1626). B-16 (`pairwise-384px.json`)
+   is NOT re-testable: the current per-tile scorer refuses its 512 px
+   detections on the 384 px frame (72 of 558 credited), the defect its
+   March tables carried silently; it carries a note and should not be
+   cited. Was: **Class B (needs the PI).** The PV pairwise files, `fair-384-vs-512.json`,
    `phase3a-high-text-pairwise.json` and the two Pro-thinking comparisons.
    Their inputs were found (`reports/d42-implementation-2026-10-05-scripts/moved-inputs.md`,
    a read-only agent's search, spot-checked), but two choices are the PI's:
@@ -191,6 +206,11 @@ pattern; the analysis-specific CHANGED clause is § 4.2's rows for it:
 > this note. Walkthrough: `reports/d42-implementation-2026-10-05.md`.
 
 ## Changelog
+
+### 2026-10-06 — Class B re-tested (D43, D44)
+
+§ 6.1 records the class B re-test and its results; B-16 is not
+re-testable and is flagged.
 
 ### 2026-10-05 (later) — Batch signature note approved
 

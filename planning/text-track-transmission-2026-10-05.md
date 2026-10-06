@@ -279,9 +279,9 @@ T = 0 case). The re-test took under 30 minutes on sapphire.
   uncorrected CI flag); eight analyses regenerated, the March pairwise file
   and nine retest evaluations annotated, the February 60-tile instrument
   re-tested; five findings documents updated; tier 1 green (3,750). STILL
-  OPEN: the batch signature note on four signed analyses (report § 7, PI);
-  class B (two PI choices: B-17's two-file mix, I4's sweep; report § 6);
-  the C-25 documentation sites (W1). Was: replace the bootstrap p-value in
+  OPEN: the C-25 documentation sites (W1). DONE since: the batch signature
+  note (approved 2026-10-05T11:34:51Z, `eb2581eba`); class B under D43/D44
+  (2026-10-06, `e7b32de0b`; report § 6.1). Was: replace the bootstrap p-value in
   live code (C-27: `scripts/lib_advanced_metrics.py:1945-1955` and four
   other paths; retire the test that pins the floor), apply the re-test
   results (C-25) to every inventoried site, and re-test what W2 could not
