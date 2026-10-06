@@ -1,8 +1,10 @@
 # Discussion — seed paragraphs
 
-> **Last revised**: 2026-08-25, twice (Seed 12 and its rider: the
-> efficiency-frontier framing, the PI's three directed threads, and
-> the simulated-workflow sharpenings). See [§ Changelog](#changelog)
+> **Last revised**: 2026-10-06 (drafted for PI review, W1; not finalised:
+> Seed 8's text-only variant is zero-shot, E90; Seed 9's boundary cites
+> the right retraction, Obs 235). Prior: 2026-08-25, twice (Seed 12 and its
+> rider: the efficiency-frontier framing, the PI's three directed threads,
+> and the simulated-workflow sharpenings). See [§ Changelog](#changelog)
 > for revision history.
 
 **Status**: seed paragraphs only — draft prose for the Discussion
@@ -470,9 +472,12 @@ SAM's localisation; GPT-4 only classifies the resulting masks —
 segmentation F1 ≈ 0.87 five-shot, classification 0.86), so the
 strand claims must always carry their qualifiers — instance-level
 POINT detection, DEGRADED HISTORICAL maps, across the MAP FACE,
-with the TEXT-ONLY variant as the distinctive result — and never
-drift toward an unqualified "first few-shot foundation-model symbol
-extraction". (iv) **Metric-hygiene inoculation**: adjacent-
+with the TEXT-ONLY variant as the distinctive result — a ZERO-SHOT
+request, the symbol described in the instruction and no exemplar sent
+(E90), so that the study's distinctive result is that a verbal
+description beat few-shot image exemplars, not a better few-shot
+method — and never drift toward an unqualified "first few-shot
+foundation-model symbol extraction". (iv) **Metric-hygiene inoculation**: adjacent-
 literature headlines are not always the target-class metric
 (O'Hara) nor the same pipeline stage (GMFS's 0.86 classification vs
 0.87 segmentation); every figure involved is real — the hazard is
@@ -497,10 +502,12 @@ every number keeps its Results home). Four characteristics:
    a text configuration at corrected-F1 0.848 on the canonical
    reference). For a visual detection task this inverts the obvious
    prior. Boundary: the registered few-shot-library manipulations
-   (H10 pool size, H12 HP:HN ratio) were not executed as intended
-   (E48), so *why* image examples underperform is only partially
-   characterised — the finding is the robust ordering, not a
-   mechanism.
+   (H10 pool size, H12 HP:HN ratio) reached the model only in their v2
+   image-track runs, which found no effect (Obs 236, 239, 240); a first
+   probe, run text-only, transmitted no exemplar at all and was
+   retracted (Obs 235; E90), so *why* image examples underperform is
+   only partially characterised — the finding is the robust ordering,
+   not a mechanism.
 2. **Diversity helps only in specific forms.** The diversity
    taxonomy (built across Phases 2–3d) found parametric diversity
    (prompt variants, scaffolding, ensemble verifiers) generates
@@ -721,6 +728,27 @@ representative sheets, and the portfolio's transfer results measure
 what 4 sheets buy.
 
 ## Changelog
+
+### 2026-10-06 — Seeds 8 and 9: drafted 2026-10-06 for PI review (W1); not finalised
+
+**Trigger**: erratum E90 and the manipulation check
+(`reports/manipulation-check-2026-10-05.md` § C.3, § E quotes 4 and 5).
+Tracker `planning/text-track-transmission-2026-10-05.md`, claims C-15 and
+C-16 (W1.5).
+
+| Passage | Before | After (draft) |
+|---|---|---|
+| Seed 8 rider (iii), GMFS novelty qualifiers (C-15) | "the TEXT-ONLY variant as the distinctive result" under a few-shot framing | the text-only variant named as zero-shot: no exemplar is sent, so the distinctive result is a verbal description beating few-shot image exemplars |
+| Seed 9 item 1 boundary (C-16) | H10/H12 "not executed as intended (E48)" | the v2 image-track runs did transmit and found no effect (Obs 236, 239, 240); the retracted text-only probe is Obs 235. E48 is an unrelated correction of the HN count |
+
+Also recorded here: the two dated notes of 2026-10-05 (S160, tracker C-09)
+on Seed 9's Experiment E citations, which were added without a changelog
+entry.
+
+**What did NOT change**: Seed 9 item 1's claim ("text specification beats
+few-shot image examples"), correct as worded; every other seed.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-08-25 (later) — Seed 12 rider: simulated-workflow framing
 
