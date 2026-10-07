@@ -448,7 +448,24 @@ for arm, k, ver in ((a, int(k), v) for a, k, v in table):
             # here would race the resumed chunk for the same tiles.
             print(f"{arm} run_{run}: NOT LANDED — resume with `lodge {arm}:{run}`")
             continue
-        frags = glob.glob(f"{out}/{arm}/recovery_rd*/{ver}/run_{run}/*.tiles.json")
+        # A recovery fragment counts only through its merged sidecar. One
+        # with chunk sidecars but no merged sidecar has not landed (a chunked
+        # g37-image fragment that lost a chunk): resume it from its own
+        # residual manifest, which must therefore not be rewritten (Stage 2
+        # audit A8).
+        frags, pending = [], None
+        for fd in sorted(glob.glob(f"{out}/{arm}/recovery_rd*/{ver}/run_{run}")):
+            sidecars = glob.glob(f"{fd}/*.tiles.json")
+            merged_f = [t for t in sidecars if "_chunk" not in t]
+            if sidecars and not merged_f:
+                pending = fd
+                break
+            frags.extend(merged_f)
+        if pending:
+            print(f"{arm} run_{run}: FRAGMENT NOT LANDED ({pending}) - resume it "
+                  f"with the same ROUND and its residual manifest; no new "
+                  f"residual written")
+            continue
         for t in merged + frags:
             done |= set(json.load(open(t)).get("completed", []))
         resid = [t for t in pinned if t not in done]
