@@ -8,10 +8,11 @@
 was changed, and no committed result, evaluation, register row, sweep, ladder file
 or paper draft was rewritten. Every re-score below ran on sapphire in scratch
 (`~/scratch/scorer-frames-d50-d51-2026-10-08/`), importing the scorer from a
-disposable worktree of the branch at `bddbee0a1` and reading data from the `main`
-checkout. No API call was made. Scripts and their small outputs are beside this file
-in `scorer-frames-d50-d51-2026-10-08-scripts/` (outputs under `out/`); the per-cell
-row file (`new_evaluations.jsonl`, 2,800 rows) stays on sapphire in that scratch
+disposable worktree of the branch at `bddbee0a1` (`4fd64e8a8` on the pushed
+branch, § 7 item 3) and reading data from the `main` checkout. No API call was
+made. Scripts and their small outputs are beside this file in
+`scorer-frames-d50-d51-2026-10-08-scripts/` (outputs under `out/`); the per-cell row
+file (`new_evaluations.jsonl`, 2,800 rows) stays on sapphire in that scratch
 directory, beside the superseded runs § 7 describes.
 
 Abbreviations, first use: PI is the principal investigator; F1 is the point-matched
@@ -38,7 +39,7 @@ register.
 | Tier E K-ladder under D51 (K = 1/3/5/10) | 0.8604 / 0.8902 / 0.8968 / 0.8886 | same |
 | Sweeps re-run whose argmax moves | 0 of 12 | `sweeps_new.json`, `stride55_new.json` |
 | Phase 2 ladders the D51 gate passes as they stand | 0 of 14 (5 refused, 9 undetermined) | `ladders_new.json` → `phase2_gate_survey` |
-| Tier-1 suite at `bddbee0a1` | 4,016 passed, 1 failed (inherited from `main`) | `tier1_summary.txt` |
+| Tier-1 suite at the final head `9a3c7b038` | 4,024 passed, 0 failed | `tier1_summary.txt` |
 
 1. **D50 reproduces the frames report exactly where it predicted.** All 70 cells with
    out-of-frame detections read the report's ON values to 1e-9, MCC included, and all
@@ -254,12 +255,14 @@ The two ladder-builder wiring tests are deselected in the copy, because importin
 builder computes the whole passes register, which reads artefacts across `outputs/`. They pass
 in the full worktree.
 
-The tier-1 suite on sapphire at `bddbee0a1` reads 4,016 passed, 1 failed, 5 skipped,
-3 xfailed, 54 deselected. The failure,
+The tier-1 suite on sapphire at the final head, `9a3c7b038` (the branch rebased onto
+`main` at `d76be2814`), reads **4,024 passed, 0 failed**, 5 skipped, 3 xfailed and
+54 deselected (`tier1_summary.txt`). At the measurement head, `bddbee0a1`, it read
+4,016 passed and 1 failed. That failure,
 `test_lib_detection_paths.py::test_no_bare_convention_a_glob_outside_this_module`,
-names `delete_landed_caches.py` and `modality_bridge_union.py`, the concurrent Run B
-session's new files; it fails identically on a clean copy of `origin/main` at
-`2956c4250`, and this branch does not touch those files.
+named `delete_landed_caches.py` and `modality_bridge_union.py`, the concurrent Run B
+session's new files; it failed identically on a clean copy of `origin/main` at
+`2956c4250`, and `main` has since fixed it (`01bdbc53d`).
 
 ### 4.4 Union builders and cost
 
@@ -473,20 +476,26 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
    → `first_origin_vs_any_member_cells_differing_ge_0.001`), all tier E cells and
    copies whose origins the second run could not parse (371 to 397 unrecognised
    each). Everywhere both runs read the origin, the two rules agree to 0.001, so the
-   choice rests on the sorted list, not on effect size. **Correction:** the message of commit
-   `bddbee0a1` attributes the 701 cells the second rule moved to its privileging the
+   choice rests on the sorted list, not on effect size. **Correction:** the message
+   of commit `4fd64e8a8` attributes the 701 cells the second rule moved to its privileging the
    first member; those moves come from the evaluator's spatial-join re-key (§ 5.2),
    which both rules restore. The rejected rule's summary is kept in
    `out/rejected-first-origin/`.
 2. **The tile confusion briefly dropped unattributed rows.** The first full tier-1
    run failed 28 tests: 26 tile-confusion tests, the golden test of § 4.3 and the
-   inherited one (commit `b935cdb0e`'s message says 27). D50 removes exactly the
+   inherited one (commit `fe32793ca`'s message says 27). D50 removes exactly the
    out-of-frame rows, so `DetectionScope.retained` keeps everything else for the
    confusion; this was fixed before any number here was produced.
 3. **Superseded runs are preserved, not deleted**, on sapphire under
    `out/first-run-any-member-origin/`, `out/superseded-pre-retained-fix/`,
    `out/superseded-6b25cb9cf-array-parse/` and
-   `out/superseded-c9c3d5035-first-origin-partial/`.
+   `out/superseded-c9c3d5035-first-origin-partial/`. The branch was rebased onto
+   `main` while the work ran, so runs carry the hash they ran at. On the pushed
+   branch, measurement head `bddbee0a1` is `4fd64e8a8` (the scorer and every other
+   file the branch changes are identical, apart from the comment corrected in
+   `a84451667`); `6b25cb9cf`, also `b935cdb0e` before an earlier rebase, is
+   `fe32793ca`; `c9c3d5035` is `31706629a`; `c4867e7a2` is `30d871371`; and the
+   rejected first-origin commit `6b642faaf` is `6e858c0cb`.
 4. **Tier E stores `source_tiles` as the `repr` of a NumPy array**
    (`"['K-35-…' 'K-35-…'\n …]"`), a string geopandas reads back wrapped in a
    one-element array. `parse_tile_list` now expands it; a test writes and reads a real
@@ -508,7 +517,7 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
 8. **Not wired to the gate:** the Phase 1 builder, the ladder inventory, tier E's
    tiering step and the K-ladder consumer analyses. They read finished rungs; the gate
    sits where rungs are swept and assembled.
-9. **The inherited failing test** is described in § 4.3.
+9. **The test that failed on `main` during the work** (now fixed there) is in § 4.3.
 
 ## 8. Limits
 
