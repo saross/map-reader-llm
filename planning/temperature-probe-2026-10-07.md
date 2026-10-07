@@ -1,6 +1,6 @@
 # Temperature probe, 2026-10-07: does Gemini 3.7 Flash ignore `temperature`?
 
-> **Last revised**: 2026-10-07 (result added, § 7). See
+> **Last revised**: 2026-10-07 (follow-up design, § 8). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: DONE (2026-10-07). Verdict under the fixed rule: Gemini 3.7
@@ -143,7 +143,77 @@ differed for another reason. A second T 2.0 leg (about US$0.33) would
 separate them. It does not change the reading for Run B: the 3.7 arms ran,
 and will run, at or near the default 1.0.
 
+## 8. Follow-up: does the § 7 residual replicate? (written before launch)
+
+**Approved by the PI, 2026-10-07** ("Go ahead and run: 'A second T 2.0 leg
+(about US$0.33) would settle it' — I approve the minor cost (up to $1)").
+
+### 8.1 Design
+
+Two new Gemini 3.7 legs on the same 300 candidates, configuration and path as
+§ 2, **lodged together**:
+
+| Leg | Temperature | Why |
+|---|---|---|
+| `g37-tmax2` | 2.0 | the second T max leg the PI approved |
+| `g37-t0c` | 0.0 | a same-time T 0.0 partner for it |
+
+The T 0.0 partner is an addition to what the PI approved, inside the US$1 cap.
+Without it, `g37-tmax2` would be lodged hours after the three original legs.
+Any extra disagreement it showed could then be the lodging time, not the
+temperature. With it, the new pair matches the original `t0a`/`t0b` pair: two
+legs lodged together.
+
+### 8.2 Statistics and decision rule
+
+The statistic is mean |Δp| (per-candidate absolute probability difference),
+the measure on which § 7's residual appeared. Contrasts use a paired bootstrap
+over candidates (10,000 resamples, seed 42). Within each family of leg pairs,
+the mean is taken per candidate first.
+
+- **Primary (same-time replication):** |Δp|(`t0c`, `tmax2`) − |Δp|(`t0a`,
+  `t0b`). Each side is a pair lodged together.
+- **Pooled:** the mean over the six T 0.0 × T max pairs (`t0a`, `t0b`, `t0c` ×
+  `tmax`, `tmax2`), minus the mean over the three T 0.0 × T 0.0 pairs. Both
+  families hold the same share of cross-time pairs (two in three).
+- **Residual effect** if both 95 % intervals lie above 0.
+- **No residual effect** if both intervals include 0. In that case § 7's +0.017
+  is read as job-to-job variation, and Google's "no effect" stands for these
+  requests.
+- **Inconclusive** otherwise.
+
+Reported but outside the rule: the same pooled contrast on exact disagreement,
+and the T max × T max pair against the T 0.0 × T 0.0 pairs.
+
+**Power, stated in advance:** a single new pair is noisier than § 7's average
+of two. A true residual of +0.017 might well leave the primary interval
+crossing 0, which gives "inconclusive", not "no effect". The probe is sized to
+the cap, not to this effect.
+
+### 8.3 Calls and cost
+
+600 verifier calls on `gemini-3.7-flash`, Batch API, n = 1, thinking low.
+§ 7's 3.7 legs cost US$0.329 to US$0.331 each (audited, `run.meta.json` →
+`cost_estimate.total_cost_usd`). Estimate **US$0.66; cap US$1** (PI).
+
+### 8.4 Commands (sapphire)
+
+```bash
+P=outputs/temperature-probe-2026-10-07
+.venv/bin/python scripts/run_pv.py verify --crops-dir $P/crops \
+  --verifier-config prompts/configs/verify_adversarial-text.json \
+  --output-dir $P/g37-tmax2 --mode batch --model gemini-3.7-flash \
+  --thinking-level low --temperature 2.0 --allow-stale-manifest
+# and the same with --output-dir $P/g37-t0c --temperature 0.0
+.venv/bin/python scripts/temperature_probe_2026_10_07.py followup \
+  --root $P --out $P/followup.json
+```
+
 ## Changelog
+
+### 2026-10-07 — Follow-up design added (Session 163)
+
+§ 8 added before the follow-up legs were lodged; §§ 1–7 unchanged.
 
 ### 2026-10-07 — Result added (Session 163)
 

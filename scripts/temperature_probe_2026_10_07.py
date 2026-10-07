@@ -23,6 +23,9 @@ Subcommands:
               chance-corrected agreement, mean |Δp|, decision flips, and a
               paired bootstrap of (T0/T0 agreement − T0/Tmax agreement).
               Offline.
+    followup  Gemini 3.7 only: add a third T 0.0 leg and a second T max leg
+              (lodged together) and test whether the exploratory mean |Δp|
+              residual of the card's § 7 replicates (card § 8). Offline.
 
 Usage (from the repository root on sapphire):
     .venv/bin/python scripts/temperature_probe_2026_10_07.py prepare \\
@@ -254,6 +257,128 @@ def analyse(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
     print(json.dumps(record, indent=2))
 
 
+# Follow-up (card § 8): a third T 0.0 leg and a second T max leg for Gemini 3.7,
+# lodged together, to test the exploratory mean |Δp| residual of § 7.
+FOLLOWUP_T0: tuple[str, ...] = ("t0a", "t0b", "t0c")
+FOLLOWUP_TMAX: tuple[str, ...] = ("tmax", "tmax2")
+
+
+def _abs_diffs(a: list[float], b: list[float]) -> list[float]:
+    """Per-candidate absolute probability difference between two legs."""
+    return [abs(x - y) for x, y in zip(a, b)]
+
+
+def _bootstrap_contrast(
+    minuend: list[list[float]], subtrahend: list[list[float]], reps: int, seed: int,
+) -> dict[str, float]:
+    """Paired bootstrap of a difference between two families of leg pairs.
+
+    Each family is a list of per-candidate vectors (one vector per leg pair,
+    e.g. |Δp| between T 0.0 and T max). For every candidate the family mean is
+    taken first, then the subtrahend's mean is subtracted from the minuend's;
+    candidates are resampled with replacement.
+
+    Args:
+        minuend: Per-candidate vectors for the pairs expected to differ more.
+        subtrahend: Per-candidate vectors for the baseline pairs.
+        reps: Bootstrap replicates.
+        seed: Random seed.
+
+    Returns:
+        Point estimate and percentile 95 % interval of the contrast.
+    """
+    n = len(minuend[0])
+    per_cand = [
+        sum(v[i] for v in minuend) / len(minuend)
+        - sum(v[i] for v in subtrahend) / len(subtrahend)
+        for i in range(n)
+    ]
+    rng = random.Random(seed)
+    draws = sorted(
+        sum(per_cand[rng.randrange(n)] for _ in range(n)) / n for _ in range(reps)
+    )
+    return {
+        "contrast": sum(per_cand) / n,
+        "ci_low": draws[int(0.025 * reps)],
+        "ci_high": draws[int(0.975 * reps) - 1],
+        "reps": reps,
+    }
+
+
+def _followup_verdict(primary: dict[str, float], pooled: dict[str, float]) -> str:
+    """Apply the follow-up decision rule fixed before launch (card § 8.2).
+
+    Args:
+        primary: Same-time contrast, |Δp|(t0c, tmax2) − |Δp|(t0a, t0b).
+        pooled: All T 0.0 × T max pairs against all T 0.0 × T 0.0 pairs.
+
+    Returns:
+        ``"residual effect"``, ``"no residual effect"`` or ``"inconclusive"``.
+    """
+    def excludes_zero_above(stat: dict[str, float]) -> bool:
+        return stat["ci_low"] > 0
+
+    def includes_zero(stat: dict[str, float]) -> bool:
+        return stat["ci_low"] <= 0 <= stat["ci_high"]
+
+    if excludes_zero_above(primary) and excludes_zero_above(pooled):
+        return "residual effect"
+    if includes_zero(primary) and includes_zero(pooled):
+        return "no residual effect"
+    return "inconclusive"
+
+
+def followup(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
+    """Analyse the Gemini 3.7 follow-up legs against the original three.
+
+    Args:
+        root: Probe root holding ``g37-<leg>/probabilities.json`` for the
+            legs in ``FOLLOWUP_T0`` and ``FOLLOWUP_TMAX``.
+        out: JSON file to write.
+        reps: Bootstrap replicates.
+        seed: Bootstrap seed.
+    """
+    names = (*FOLLOWUP_T0, *FOLLOWUP_TMAX)
+    legs = {leg: _load_probs(root / f"g37-{leg}" / "probabilities.json") for leg in names}
+    common = sorted(set.intersection(*(set(v) for v in legs.values())))
+    vec = {leg: [legs[leg][c] for c in common] for leg in names}
+
+    # Every pair's descriptive agreement, so the full matrix is on record.
+    pairs = {
+        f"{a}_vs_{b}": _agreement(vec[a], vec[b])
+        for i, a in enumerate(names) for b in names[i + 1:]
+    }
+    t0_t0 = [(a, b) for i, a in enumerate(FOLLOWUP_T0) for b in FOLLOWUP_T0[i + 1:]]
+    t0_tmax = [(a, b) for a in FOLLOWUP_T0 for b in FOLLOWUP_TMAX]
+
+    def diffs(pair_list: list[tuple[str, str]]) -> list[list[float]]:
+        return [_abs_diffs(vec[a], vec[b]) for a, b in pair_list]
+
+    def disagree(pair_list: list[tuple[str, str]]) -> list[list[float]]:
+        return [[float(x != y) for x, y in zip(vec[a], vec[b])] for a, b in pair_list]
+
+    primary = _bootstrap_contrast(diffs([("t0c", "tmax2")]), diffs([("t0a", "t0b")]), reps, seed)
+    pooled = _bootstrap_contrast(diffs(t0_tmax), diffs(t0_t0), reps, seed)
+    record: dict[str, Any] = {
+        "root": str(root),
+        "model": MODELS["g37"],
+        "n_per_leg": {leg: len(v) for leg, v in legs.items()},
+        "n_common": len(common),
+        "pairs": pairs,
+        "primary_mad_contrast_same_time": primary,
+        "pooled_mad_contrast": pooled,
+        "pooled_disagreement_contrast": _bootstrap_contrast(
+            disagree(t0_tmax), disagree(t0_t0), reps, seed,
+        ),
+        "tmax_vs_tmax2_minus_t0_pairs_mad": _bootstrap_contrast(
+            diffs([("tmax", "tmax2")]), diffs(t0_t0), reps, seed,
+        ),
+        "verdict": _followup_verdict(primary, pooled),
+    }
+    out.write_text(json.dumps(record, indent=2) + "\n")
+    print(json.dumps(record, indent=2))
+
+
 def main() -> None:
     """Parse arguments and dispatch the subcommand."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
@@ -269,12 +394,18 @@ def main() -> None:
     a.add_argument("--root", type=Path, required=True)
     a.add_argument("--out", type=Path, required=True)
     a.add_argument("--reps", type=int, default=10000)
+    f = sub.add_parser("followup")
+    f.add_argument("--root", type=Path, required=True)
+    f.add_argument("--out", type=Path, required=True)
+    f.add_argument("--reps", type=int, default=10000)
     args = parser.parse_args()
 
     if args.cmd == "prepare":
         prepare(args.source_crops, args.out, args.n, args.seed)
     elif args.cmd == "models":
         models(args.out)
+    elif args.cmd == "followup":
+        followup(args.root, args.out, args.reps)
     else:
         analyse(args.root, args.out, args.reps)
 

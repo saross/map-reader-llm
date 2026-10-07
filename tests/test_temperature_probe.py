@@ -95,3 +95,59 @@ def test_prepare_refuses_to_overwrite(tmp_path: Path) -> None:
     tp.prepare(src, tmp_path / "out", n=3, seed=1)
     with pytest.raises(FileExistsError):
         tp.prepare(src, tmp_path / "out", n=3, seed=1)
+
+
+def test_contrast_zero_for_identical_families() -> None:
+    """Two families with the same per-candidate values contrast to exactly 0."""
+    v = [0.0, 0.1, 0.5, 0.0] * 25
+    stat = tp._bootstrap_contrast([v], [list(v)], reps=500, seed=1)
+    assert stat["contrast"] == 0.0
+    assert stat["ci_low"] == 0.0 and stat["ci_high"] == 0.0
+
+
+def test_contrast_averages_within_family_first() -> None:
+    """Family means are taken per candidate before subtracting."""
+    stat = tp._bootstrap_contrast([[0.2] * 4, [0.4] * 4], [[0.1] * 4], reps=200, seed=1)
+    assert stat["contrast"] == pytest.approx(0.2)
+
+
+def test_followup_verdict_rule() -> None:
+    """The fixed rule: both above 0 → effect; both straddle 0 → none; else inconclusive."""
+    above = {"ci_low": 0.01, "ci_high": 0.03}
+    straddle = {"ci_low": -0.01, "ci_high": 0.02}
+    assert tp._followup_verdict(above, above) == "residual effect"
+    assert tp._followup_verdict(straddle, straddle) == "no residual effect"
+    assert tp._followup_verdict(above, straddle) == "inconclusive"
+    assert tp._followup_verdict(straddle, above) == "inconclusive"
+
+
+def _write_leg(root: Path, leg: str, probs: list[float]) -> None:
+    """Write a minimal ``g37-<leg>/probabilities.json``."""
+    d = root / f"g37-{leg}"
+    d.mkdir(parents=True)
+    results = {str(i): {"mound_probability": p} for i, p in enumerate(probs)}
+    (d / "probabilities.json").write_text(json.dumps({"results": results}))
+
+
+def test_followup_detects_a_temperature_effect(tmp_path: Path) -> None:
+    """T max legs that move every candidate give a positive verdict."""
+    base = [0.1, 0.2, 0.3, 0.9] * 25
+    for leg in tp.FOLLOWUP_T0:
+        _write_leg(tmp_path, leg, base)
+    for leg in tp.FOLLOWUP_TMAX:
+        _write_leg(tmp_path, leg, [p + 0.05 for p in base])
+    tp.followup(tmp_path, tmp_path / "f.json", reps=200, seed=1)
+    rec = json.loads((tmp_path / "f.json").read_text())
+    assert rec["n_common"] == 100
+    assert rec["pooled_mad_contrast"]["contrast"] == pytest.approx(0.05)
+    assert rec["verdict"] == "residual effect"
+
+
+def test_followup_null_when_legs_exchangeable(tmp_path: Path) -> None:
+    """Five identical legs give a zero contrast and the null verdict."""
+    base = [0.1, 0.2, 0.3, 0.9] * 25
+    for leg in (*tp.FOLLOWUP_T0, *tp.FOLLOWUP_TMAX):
+        _write_leg(tmp_path, leg, base)
+    tp.followup(tmp_path, tmp_path / "f.json", reps=200, seed=1)
+    rec = json.loads((tmp_path / "f.json").read_text())
+    assert rec["verdict"] == "no residual effect"
