@@ -156,9 +156,18 @@ BISECTED = {"pv-high-image-t0.3-n5": {"archived_f1_20": 0.746, "expected_f1_20":
                                              "file re-materialised to 373 features at d6cdb648b"}}
 V1_CONFIG = {"variant": "v1", "instruction_file": "verify_adversarial.md", "model": "gemini-3-flash-preview",
              "thinking_level": "minimal", "temperature": 0.0, "iterations": 1}
-S78_VARIANT_FILES = {"adversarial": "verify_adversarial.md", "adversarial-text": "verify_adversarial-text.md",
-                     "brief": "verify_brief.md", "brief-text": "verify_brief-text.md",
-                     "checklist": "verify_checklist.md", "checklist-text": "verify_checklist-text.md",
+# The instruction file each session-78 variant's stage recorded. A "-text"
+# variant is the text-only configuration of the same instruction file
+# (configuration.version "verify_<x>-text", example_count 0), so it maps to
+# verify_<x>.md and only verifier_config.variant tells the two apart. Until
+# 2026-10-07 the three "-text" entries named verify_<x>-text.md, a file that
+# never existed in prompts/system-instructions/; the six stages' run.meta.json,
+# both legs each, record verify_<x>.md (PR #25 bindings s78-*-text).
+S78_VARIANT_FILES = {"adversarial": "verify_adversarial.md",
+                     "adversarial-text": "verify_adversarial.md",
+                     "brief": "verify_brief.md", "brief-text": "verify_brief.md",
+                     "checklist": "verify_checklist.md",
+                     "checklist-text": "verify_checklist.md",
                      "comparative": "verify_comparative.md"}
 S78_POOLS = {"text": ("flash-high-text-n5-text-t0.7", "flash-high-text-n5-text-t0.7-session-78-matrix-verified-"),
              "image": ("flash-high-image-n5-image-t0.7", "flash-high-image-n5-image-t0.7-session-78-matrix-verified-")}
