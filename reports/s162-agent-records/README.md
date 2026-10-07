@@ -1,6 +1,6 @@
 # Session 162 agent records
 
-> **Last revised**: 2026-10-07 (original publication, Session 162). See
+> **Last revised**: 2026-10-07 (Run B configuration report added). See
 > [§ Changelog](#changelog) for revision history.
 
 The final reports of agents that did work in Session 162 (2026-10-06/07),
@@ -16,8 +16,15 @@ finding was later corrected, the correcting document says so.
 | `gate-coverage-report.md` | the manipulation gate's coverage work (PR #25): the inventory of unverifiable arms and the bindings' provenance |
 | `pr25-fixes-report.md` | the ten PR #25 review findings, their fixes and the verdict changes they caused |
 | `w15-drafts-report.md` | the W1.5 paper drafts on branch `w15-floors-drafts`, with every edit's source |
+| `run-b-config-report.md` | Run B's configuration, Stage 1 gate and audit (no API), on branch `modality-bridge-2026-10-07` |
 
 ## Changelog
+
+### 2026-10-07 — Run B configuration report added
+
+The Run B configuration agent finished after the handoff; its report
+was copied here from the session's scratch folder so the next
+session's Stage 1 gate reads a committed copy.
 
 ### 2026-10-07 — Original publication (Session 162)
 
