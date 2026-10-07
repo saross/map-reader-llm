@@ -1,0 +1,179 @@
+=== 2026-10-07T14:51:36+00:00 LODGE g3-text-temp1-run1: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --model gemini-3-flash-preview --thinking-level minimal --tile-size 384 --allow-inert-fields --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 1.0 --mode batch --service-tier flex --run 1 --output-dir outputs/modality-bridge-2026-10-07/g3-text-temp1 --skip-intent-check
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-text-temp1
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_1/batch_working/detections_detect_brief-text_run01.jsonl)
+  Submitted batch job: batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+=== 2026-10-07T14:54:06+00:00 SUBMITTED g3-text-temp1-run1 batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_RUNNING
+  Polling batches/3irfmhd6t6qm5jwsd7pdyyt7ijinyhx5m3ml: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-052-4_32635_x1728_y768.png: Extra data: line 15 column 1 (char 173)
+Failed to parse detections for K-35-052-4_32635_x2496_y1152.png: Extra data: line 15 column 1 (char 173)
+Failed to parse detections for K-35-052-4_32635_x2880_y3072.png: Extra data: line 16 column 1 (char 180)
+Malformed box_2d in K-35-053-3_Elenovo_x192_y1728.png: [725, 368, 38, 761, 406]
+Failed to parse detections for K-35-053-3_Elenovo_x2880_y1920.png: Extra data: line 31 column 1 (char 432)
+Failed to parse detections for K-35-053-3_Elenovo_x3648_y2112.png: Extra data: line 19 column 89 (char 434)
+Failed to parse detections for K-35-053-3_Elenovo_x768_y2304.png: Extra data: line 72 column 1 (char 1093)
+Failed to parse detections for K-35-078-1_Lesovo_x1920_y192.png: Extra data: line 15 column 1 (char 173)
+Failed to parse detections for K-35-078-1_Lesovo_x192_y576.png: Extra data: line 156 column 1 (char 2231)
+Failed to parse detections for K-35-078-1_Lesovo_x576_y0.png: Extra data: line 33 column 1 (char 446)
+Sync retry failed for K-35-052-4_32635_x1728_y768.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2496_y1152.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2880_y3072.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x2880_y1920.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2112.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x768_y2304.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x1920_y192.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x192_y576.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x576_y0.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x1728_y768.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2496_y1152.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2880_y3072.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x2880_y1920.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2112.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x768_y2304.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x1920_y192.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x192_y576.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x576_y0.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x1728_y768.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2496_y1152.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-052-4_32635_x2880_y3072.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x2880_y1920.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2112.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x768_y2304.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x1920_y192.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x192_y576.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-078-1_Lesovo_x576_y0.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+
+  ────────────────────────────────────────────────────────
+  Tile Failure Report: 9 tile(s) failed all 3 retry attempts
+    K-35-052-4_32635_x1728_y768.png
+    K-35-052-4_32635_x2496_y1152.png
+    K-35-052-4_32635_x2880_y3072.png
+    K-35-053-3_Elenovo_x2880_y1920.png
+    K-35-053-3_Elenovo_x3648_y2112.png
+    K-35-053-3_Elenovo_x768_y2304.png
+    K-35-078-1_Lesovo_x1920_y192.png
+    K-35-078-1_Lesovo_x192_y576.png
+    K-35-078-1_Lesovo_x576_y0.png
+
+  These tiles likely hit output truncation (thinking tokens exhaust max_output_tokens).
+  To patch later with reduced output budget:
+    python scripts/run_phase2.py <study.yaml> --patch-tiles
+  ────────────────────────────────────────────────────────
+  Batch complete: 1389 tiles, 3275 detections, 9 failed, $0.8470
+  Accepting partial result: 9 tile(s) failed (≤ 279 threshold = 20% of 1398)
+  Released request file files/m4jvgc0m0cwf (job terminal)
+
+Batch complete. Estimated cost: $0.8470
+Tiles processed: 1389
+Tiles failed: 9

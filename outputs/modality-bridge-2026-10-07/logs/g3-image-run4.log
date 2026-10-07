@@ -1,0 +1,41 @@
+=== 2026-10-07T13:15:33+00:00 LODGE g3-image-run4: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 4 --output-dir outputs/modality-bridge-2026-10-07/g3-image --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_4/batch_working/detections_detect_brief-text-image_run04.jsonl)
+  Submitted batch job: batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+=== 2026-10-07T13:18:03+00:00 SUBMITTED g3-image-run4 batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_RUNNING
+  Polling batches/om48g41g68rmn68q6ocb5jvpoik0prm6ix50: JOB_STATE_SUCCEEDED
+Malformed box_2d in K-35-053-3_Elenovo_x1728_y3072.png: [729, 485, 771, 542, 'mound', 'triangulation_mound']
+Malformed box_2d in K-35-053-3_Elenovo_x1728_y3072.png: [819, 456, 859, 503, 'mound', 'burial_mound']
+Failed to parse detections for K-35-078-1_Lesovo_x2496_y2304.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+  Retried 1/1 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2387 detections, 0 failed, $1.9557
+  Released request file files/9e0yfrcnn0vt (job terminal)
+
+Batch complete. Estimated cost: $1.9557
+Tiles processed: 1398

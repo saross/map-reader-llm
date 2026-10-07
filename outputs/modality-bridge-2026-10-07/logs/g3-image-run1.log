@@ -1,0 +1,79 @@
+=== 2026-10-07T12:00:49+00:00 LODGE g3-image-run1: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 1 --output-dir outputs/modality-bridge-2026-10-07/g3-image --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_1/batch_working/detections_detect_brief-text-image_run01.jsonl)
+  Submitted batch job: batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+=== 2026-10-07T12:03:19+00:00 SUBMITTED g3-image-run1 batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_RUNNING
+  Polling batches/0c2r24q8dahn5th31r6000zi34nia85y1oc1: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-053-3_Elenovo_x1728_y3072.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+  Retried 1/1 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2332 detections, 0 failed, $1.9502
+  Released request file files/qk0yzg5igbb0 (job terminal)
+
+Batch complete. Estimated cost: $1.9502
+Tiles processed: 1398

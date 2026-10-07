@@ -1,0 +1,74 @@
+=== 2026-10-07T14:04:20+00:00 LODGE g3-text-run8: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --model gemini-3-flash-preview --thinking-level minimal --tile-size 384 --allow-inert-fields --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 8 --output-dir outputs/modality-bridge-2026-10-07/g3-text --skip-intent-check
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-text
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-text/detect_brief-text/run_8/batch_working/detections_detect_brief-text_run08.jsonl)
+  Submitted batch job: batches/uslkss8utpow34su359i4rmtjblfv86gbs23
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+=== 2026-10-07T14:06:50+00:00 SUBMITTED g3-text-run8 batches/uslkss8utpow34su359i4rmtjblfv86gbs23
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_RUNNING
+  Polling batches/uslkss8utpow34su359i4rmtjblfv86gbs23: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-053-3_Elenovo_x3648_y2688.png: Extra data: line 56 column 1 (char 768)
+Failed to parse detections for K-35-062-2_Rakovski_x576_y960.png: Extra data: line 26 column 1 (char 320)
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2688.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-062-2_Rakovski_x576_y960.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2688.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-062-2_Rakovski_x576_y960.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-053-3_Elenovo_x3648_y2688.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+Sync retry failed for K-35-062-2_Rakovski_x576_y960.png: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+
+  ────────────────────────────────────────────────────────
+  Tile Failure Report: 2 tile(s) failed all 3 retry attempts
+    K-35-053-3_Elenovo_x3648_y2688.png
+    K-35-062-2_Rakovski_x576_y960.png
+
+  These tiles likely hit output truncation (thinking tokens exhaust max_output_tokens).
+  To patch later with reduced output budget:
+    python scripts/run_phase2.py <study.yaml> --patch-tiles
+  ────────────────────────────────────────────────────────
+  Batch complete: 1396 tiles, 3168 detections, 2 failed, $0.8359
+  Accepting partial result: 2 tile(s) failed (≤ 279 threshold = 20% of 1398)
+  Released request file files/8fnkirydsul5 (job terminal)
+
+Batch complete. Estimated cost: $0.8359
+Tiles processed: 1396
+Tiles failed: 2

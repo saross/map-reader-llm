@@ -1,0 +1,34 @@
+=== 2026-10-07T13:26:04+00:00 LODGE g3-image-run7: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 7 --output-dir outputs/modality-bridge-2026-10-07/g3-image --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_7/batch_working/detections_detect_brief-text-image_run07.jsonl)
+  Submitted batch job: batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q
+=== 2026-10-07T13:28:34+00:00 SUBMITTED g3-image-run7 batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_RUNNING
+  Polling batches/2gqhm2mt9c4fqfomecltcdfmab2pypv0me3q: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-062-2_Rakovski_x3072_y1344.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+Malformed box_2d in K-35-078-1_Lesovo_x4032_y2496.png: [297, 129, 315, 146, 'mound', 'burial_mound']
+  Retried 1/1 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2292 detections, 0 failed, $1.9467
+  Released request file files/e7qt7ulxhqf1 (job terminal)
+
+Batch complete. Estimated cost: $1.9467
+Tiles processed: 1398
