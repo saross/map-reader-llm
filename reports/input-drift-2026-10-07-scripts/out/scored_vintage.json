@@ -1,0 +1,4931 @@
+{
+ "repo_head": "d93678303",
+ "n_rows": 54,
+ "n_reproduced": 53,
+ "rows": [
+  {
+   "eval": "archive/superseded-evals/n1-outstanding-384/paper-eval-384px-outstanding/pro-image-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "commit": "c3852ebad",
+      "n_features": 692,
+      "committed_n": 692,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "commit": "c3852ebad",
+      "n_features": 681,
+      "committed_n": 681,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "commit": "c3852ebad",
+      "n_features": 677,
+      "committed_n": 677,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.5901626048199233,
+      "precision": 0.48294111018545216,
+      "recall": 0.7586206896551725
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/superseded-evals/n1-outstanding-384/paper-eval-384px-outstanding/pro-text-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1026,
+      "committed_n": 1026,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1028,
+      "committed_n": 1028,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1004,
+      "committed_n": 1004,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.5147829317382501,
+      "precision": 0.36724557790359436,
+      "recall": 0.860536398467433
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/superseded-evals/n1-baseline-384px-30m-only/pro-image-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 519,
+      "committed_n": 519,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.7337526205450735,
+      "precision": 0.674373795761079,
+      "recall": 0.8045977011494253
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/superseded-evals/n1-baseline-384px-30m-only/pro-text-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 430,
+      "committed_n": 430,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.783815028901734,
+      "precision": 0.7883720930232558,
+      "recall": 0.7793103448275862
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/per-run/55maps-image-generalisation/mcc/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "baf1497a7",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "commit": "8699f456b",
+      "n_features": 4680,
+      "committed_n": 4680,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "50": {
+      "f1": 0.7745358090185677,
+      "precision": 0.7799145299145299,
+      "recall": 0.7692307692307693
+     },
+     "75": {
+      "f1": 0.7912997347480106,
+      "precision": 0.7967948717948717,
+      "recall": 0.7858798735511064
+     },
+     "100": {
+      "f1": 0.7959681697612733,
+      "precision": 0.8014957264957265,
+      "recall": 0.7905163329820865
+     },
+     "125": {
+      "f1": 0.7985145888594164,
+      "precision": 0.8040598290598291,
+      "recall": 0.79304531085353
+     },
+     "150": {
+      "f1": 0.7997877984084881,
+      "precision": 0.8053418803418804,
+      "recall": 0.7943097997892519
+     }
+    },
+    "mcc": 0.6924100493865313,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-generalisation/mcc/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "dea1155fa",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "commit": "d7f85978d",
+      "n_features": 4164,
+      "committed_n": 4164,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "50": {
+      "f1": 0.7918724741805119,
+      "precision": 0.8470220941402498,
+      "recall": 0.7434654300168634
+     },
+     "75": {
+      "f1": 0.7941176470588235,
+      "precision": 0.8494236311239193,
+      "recall": 0.7455733558178752
+     },
+     "100": {
+      "f1": 0.7954647507858106,
+      "precision": 0.850864553314121,
+      "recall": 0.7468381112984823
+     },
+     "125": {
+      "f1": 0.7965873372249663,
+      "precision": 0.8520653218059558,
+      "recall": 0.7478920741989882
+     },
+     "150": {
+      "f1": 0.7977099236641222,
+      "precision": 0.8532660902977905,
+      "recall": 0.7489460370994941
+     }
+    },
+    "mcc": 0.6476180806115399,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/per-run/55maps-text-min-generalisation/mcc/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "baf1497a7",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+      "commit": "c1ea6df3c",
+      "n_features": 3865,
+      "committed_n": 3865,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "50": {
+      "f1": 0.761904761904762,
+      "precision": 0.8486416558861578,
+      "recall": 0.6912539515279241
+     },
+     "75": {
+      "f1": 0.7646922183507548,
+      "precision": 0.8517464424320828,
+      "recall": 0.6937829293993678
+     },
+     "100": {
+      "f1": 0.7653890824622531,
+      "precision": 0.8525226390685641,
+      "recall": 0.6944151738672286
+     },
+     "125": {
+      "f1": 0.7665505226480837,
+      "precision": 0.8538163001293662,
+      "recall": 0.6954689146469969
+     },
+     "150": {
+      "f1": 0.7674796747967481,
+      "precision": 0.8548512289780078,
+      "recall": 0.6963119072708114
+     }
+    },
+    "mcc": 0.6260080567823586,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/per-run/55maps-text-high-t0.3-generalisation/mcc/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "dea1155fa",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+      "commit": "548604d95",
+      "n_features": 4350,
+      "committed_n": 4350,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "50": {
+      "f1": 0.8044864745986364,
+      "precision": 0.840919540229885,
+      "recall": 0.771079258010118
+     },
+     "75": {
+      "f1": 0.8075654277545634,
+      "precision": 0.8441379310344828,
+      "recall": 0.7740303541315345
+     },
+     "100": {
+      "f1": 0.8084451286562568,
+      "precision": 0.8450574712643678,
+      "recall": 0.7748735244519392
+     },
+     "125": {
+      "f1": 0.8093248295579504,
+      "precision": 0.8459770114942529,
+      "recall": 0.7757166947723441
+     },
+     "150": {
+      "f1": 0.810424455685067,
+      "precision": 0.8471264367816091,
+      "recall": 0.7767706576728499
+     }
+    },
+    "mcc": 0.6537614160969837,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/image/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "dea1155fa",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+      "commit": "4c147af65",
+      "n_features": 4665,
+      "committed_n": 4665,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.5069614199171006,
+      "precision": 0.5112540192926045,
+      "recall": 0.5027403035413154
+     },
+     "30": {
+      "f1": 0.6872143692209587,
+      "precision": 0.6930332261521972,
+      "recall": 0.6814924114671164
+     },
+     "40": {
+      "f1": 0.7501328515251355,
+      "precision": 0.7564844587352626,
+      "recall": 0.7438870151770658
+     },
+     "50": {
+      "f1": 0.7728770326283346,
+      "precision": 0.7794212218649518,
+      "recall": 0.7664418212478921
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "dea1155fa",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+      "commit": "f0f7158e7",
+      "n_features": 3861,
+      "committed_n": 3861,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.6198721673445672,
+      "precision": 0.6907536907536908,
+      "recall": 0.5621838111298483
+     },
+     "30": {
+      "f1": 0.7295758280069726,
+      "precision": 0.813001813001813,
+      "recall": 0.6616779089376054
+     },
+     "40": {
+      "f1": 0.7560720511330622,
+      "precision": 0.8425278425278425,
+      "recall": 0.68570826306914
+     },
+     "50": {
+      "f1": 0.7614177803602556,
+      "precision": 0.8484848484848485,
+      "recall": 0.6905564924114671
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-high/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+     "commit": "dea1155fa",
+     "head_commit": "2e075eb99"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+     "commit": "301b51128",
+     "head_commit": "301b51128"
+    },
+    "detections": [
+     {
+      "path": "outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+      "commit": "4e5c5e5a3",
+      "n_features": 4143,
+      "committed_n": 4143,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.6247327557105885,
+      "precision": 0.6700458604875694,
+      "recall": 0.5851602023608768
+     },
+     "30": {
+      "f1": 0.7554855406773939,
+      "precision": 0.8102824040550326,
+      "recall": 0.7076306913996627
+     },
+     "40": {
+      "f1": 0.7851918532688197,
+      "precision": 0.8421433743664012,
+      "recall": 0.7354553119730185
+     },
+     "50": {
+      "f1": 0.7905930010127151,
+      "precision": 0.8479362780593772,
+      "recall": 0.7405143338954469
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+     "commit": "f9b87da22",
+     "head_commit": "f9b87da22"
+    },
+    "detections": [
+     {
+      "path": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+      "commit": "326181bcd",
+      "n_features": 494,
+      "committed_n": 494,
+      "n_out_of_frame": 27,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": false,
+   "misses": [
+    "mcc: committed 0.1337 vintage None"
+   ],
+   "n_out_of_frame_total": 27,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.5296017222820237,
+      "precision": 0.4979757085020243,
+      "recall": 0.5655172413793104
+     },
+     "10": {
+      "f1": 0.8245425188374597,
+      "precision": 0.7753036437246964,
+      "recall": 0.8804597701149425
+     },
+     "15": {
+      "f1": 0.876210979547901,
+      "precision": 0.8238866396761133,
+      "recall": 0.9356321839080459
+     },
+     "20": {
+      "f1": 0.8869752421959097,
+      "precision": 0.8340080971659919,
+      "recall": 0.9471264367816092
+     },
+     "25": {
+      "f1": 0.8934337997847147,
+      "precision": 0.840080971659919,
+      "recall": 0.9540229885057471
+     },
+     "30": {
+      "f1": 0.8955866523143164,
+      "precision": 0.8421052631578947,
+      "recall": 0.9563218390804598
+     },
+     "35": {
+      "f1": 0.8998923573735199,
+      "precision": 0.8461538461538461,
+      "recall": 0.960919540229885
+     },
+     "40": {
+      "f1": 0.8998923573735199,
+      "precision": 0.8461538461538461,
+      "recall": 0.960919540229885
+     },
+     "45": {
+      "f1": 0.8998923573735199,
+      "precision": 0.8461538461538461,
+      "recall": 0.960919540229885
+     },
+     "50": {
+      "f1": 0.9020452099031215,
+      "precision": 0.8481781376518218,
+      "recall": 0.9632183908045977
+     },
+     "75": {
+      "f1": 0.9041980624327234,
+      "precision": 0.8502024291497976,
+      "recall": 0.9655172413793104
+     },
+     "100": {
+      "f1": 0.9085037674919267,
+      "precision": 0.854251012145749,
+      "recall": 0.9701149425287356
+     },
+     "125": {
+      "f1": 0.9085037674919267,
+      "precision": 0.854251012145749,
+      "recall": 0.9701149425287356
+     },
+     "150": {
+      "f1": 0.9085037674919267,
+      "precision": 0.854251012145749,
+      "recall": 0.9701149425287356
+     }
+    },
+    "mcc": null,
+    "mcc_refused": "tile_join_detection_shortfall"
+   }
+  },
+  {
+   "eval": "results/h12-v2/greedy/r3-hp-heavy/t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson",
+      "commit": "2e84d4a65",
+      "n_features": 1518,
+      "committed_n": 1518,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.268305171530978,
+      "precision": 0.1725955204216074,
+      "recall": 0.6022988505747127
+     },
+     "30": {
+      "f1": 0.2980030721966206,
+      "precision": 0.191699604743083,
+      "recall": 0.6689655172413793
+     },
+     "40": {
+      "f1": 0.3041474654377881,
+      "precision": 0.1956521739130435,
+      "recall": 0.6827586206896552
+     },
+     "50": {
+      "f1": 0.3072196620583717,
+      "precision": 0.1976284584980237,
+      "recall": 0.6896551724137931
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/h12-v2/wbf/r3-hp-heavy/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h12-v2/wbf/r3-hp-heavy/wbf_candidates.geojson",
+      "commit": "2e84d4a65",
+      "n_features": 1097,
+      "committed_n": 1097,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.3054830287206266,
+      "precision": 0.21330902461257975,
+      "recall": 0.5379310344827586
+     },
+     "30": {
+      "f1": 0.3629242819843342,
+      "precision": 0.2534184138559708,
+      "recall": 0.639080459770115
+     },
+     "40": {
+      "f1": 0.3798955613577024,
+      "precision": 0.2652689152233364,
+      "recall": 0.6689655172413793
+     },
+     "50": {
+      "f1": 0.38642297650130547,
+      "precision": 0.2698268003646308,
+      "recall": 0.6804597701149425
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/mcc/384px/pro-image-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 692,
+      "committed_n": 692,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 681,
+      "committed_n": 681,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 677,
+      "committed_n": 677,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.5901626048199233,
+      "precision": 0.48294111018545216,
+      "recall": 0.7586206896551725
+     }
+    },
+    "mcc": 0.6062069552892442,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/mcc/384px/pro-text-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1026,
+      "committed_n": 1026,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1028,
+      "committed_n": 1028,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1004,
+      "committed_n": 1004,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.5147829317382501,
+      "precision": 0.36724557790359436,
+      "recall": 0.860536398467433
+     }
+    },
+    "mcc": 0.3808304540814591,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/mcc/384px/pro-image-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 519,
+      "committed_n": 519,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.7337526205450735,
+      "precision": 0.674373795761079,
+      "recall": 0.8045977011494253
+     }
+    },
+    "mcc": 0.733581060550457,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/mcc/384px/pro-text-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 430,
+      "committed_n": 430,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    30
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "30": {
+      "f1": 0.783815028901734,
+      "precision": 0.7883720930232558,
+      "recall": 0.7793103448275862
+     }
+    },
+    "mcc": 0.7515185306305657,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 692,
+      "committed_n": 692,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 681,
+      "committed_n": 681,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 677,
+      "committed_n": 677,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.0900095048328055,
+      "precision": 0.07365381292168932,
+      "recall": 0.1157088122605364
+     },
+     "10": {
+      "f1": 0.2920959775481367,
+      "precision": 0.2390251704205585,
+      "recall": 0.37547892720306514
+     },
+     "15": {
+      "f1": 0.43754628682967317,
+      "precision": 0.3580478316698157,
+      "recall": 0.5624521072796934
+     },
+     "20": {
+      "f1": 0.5275616222633804,
+      "precision": 0.43170942528350564,
+      "recall": 0.6781609195402298
+     },
+     "25": {
+      "f1": 0.5597592452986118,
+      "precision": 0.4580609281406213,
+      "recall": 0.7195402298850575
+     },
+     "30": {
+      "f1": 0.5901626048199233,
+      "precision": 0.48294111018545216,
+      "recall": 0.7586206896551725
+     },
+     "35": {
+      "f1": 0.6128010511036649,
+      "precision": 0.5014592020736631,
+      "recall": 0.7877394636015325
+     },
+     "40": {
+      "f1": 0.6265111428426979,
+      "precision": 0.5126780467755352,
+      "recall": 0.8053639846743295
+     },
+     "45": {
+      "f1": 0.6336648744947712,
+      "precision": 0.5185322072566718,
+      "recall": 0.8145593869731801
+     },
+     "50": {
+      "f1": 0.6336648744947712,
+      "precision": 0.5185322072566718,
+      "recall": 0.8145593869731801
+     },
+     "75": {
+      "f1": 0.6408186061468445,
+      "precision": 0.5243863677378086,
+      "recall": 0.8237547892720306
+     },
+     "100": {
+      "f1": 0.6437981004077676,
+      "precision": 0.5268239717179756,
+      "recall": 0.8275862068965517
+     },
+     "125": {
+      "f1": 0.6491633991468225,
+      "precision": 0.531214592078828,
+      "recall": 0.8344827586206897
+     },
+     "150": {
+      "f1": 0.6521428934077457,
+      "precision": 0.5336521960589949,
+      "recall": 0.8383141762452108
+     }
+    },
+    "mcc": 0.6062069552892442,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1026,
+      "committed_n": 1026,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1028,
+      "committed_n": 1028,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1004,
+      "committed_n": 1004,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.17189702254553976,
+      "precision": 0.12263025325296005,
+      "recall": 0.28735632183908044
+     },
+     "10": {
+      "f1": 0.38411696267056666,
+      "precision": 0.27402185515163324,
+      "recall": 0.6421455938697318
+     },
+     "15": {
+      "f1": 0.4675747774440406,
+      "precision": 0.3335694849261716,
+      "recall": 0.7816091954022989
+     },
+     "20": {
+      "f1": 0.4941619882711805,
+      "precision": 0.35253677381704285,
+      "recall": 0.8260536398467434
+     },
+     "25": {
+      "f1": 0.5037813329831687,
+      "precision": 0.35939704344058127,
+      "recall": 0.8421455938697319
+     },
+     "30": {
+      "f1": 0.5147829317382501,
+      "precision": 0.36724557790359436,
+      "recall": 0.860536398467433
+     },
+     "35": {
+      "f1": 0.5193720498842134,
+      "precision": 0.37052102066724446,
+      "recall": 0.8681992337164751
+     },
+     "40": {
+      "f1": 0.5234978833417355,
+      "precision": 0.3734644581188095,
+      "recall": 0.875095785440613
+     },
+     "45": {
+      "f1": 0.5239611680301764,
+      "precision": 0.3737964634308945,
+      "recall": 0.8758620689655171
+     },
+     "50": {
+      "f1": 0.5248731611609094,
+      "precision": 0.37444560393599785,
+      "recall": 0.8773946360153256
+     },
+     "75": {
+      "f1": 0.5308305809021276,
+      "precision": 0.37869507349454984,
+      "recall": 0.8873563218390804
+     },
+     "100": {
+      "f1": 0.5322058587213018,
+      "precision": 0.3796762193117383,
+      "recall": 0.8896551724137932
+     },
+     "125": {
+      "f1": 0.5335811365404758,
+      "precision": 0.3806573651289266,
+      "recall": 0.8919540229885058
+     },
+     "150": {
+      "f1": 0.5345007296934389,
+      "precision": 0.38131425673081015,
+      "recall": 0.8934865900383141
+     }
+    },
+    "mcc": 0.3808304540814591,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-all-buffers/pro-image-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 692,
+      "committed_n": 692,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 681,
+      "committed_n": 681,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 677,
+      "committed_n": 677,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.5275616222633804,
+      "precision": 0.43170942528350564,
+      "recall": 0.6781609195402298
+     },
+     "30": {
+      "f1": 0.5901626048199233,
+      "precision": 0.48294111018545216,
+      "recall": 0.7586206896551725
+     },
+     "40": {
+      "f1": 0.6265111428426979,
+      "precision": 0.5126780467755352,
+      "recall": 0.8053639846743295
+     },
+     "50": {
+      "f1": 0.6336648744947712,
+      "precision": 0.5185322072566718,
+      "recall": 0.8145593869731801
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-all-buffers/pro-text-high-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1026,
+      "committed_n": 1026,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1028,
+      "committed_n": 1028,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     },
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1004,
+      "committed_n": 1004,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.4941619882711805,
+      "precision": 0.35253677381704285,
+      "recall": 0.8260536398467434
+     },
+     "30": {
+      "f1": 0.5147829317382501,
+      "precision": 0.36724557790359436,
+      "recall": 0.860536398467433
+     },
+     "40": {
+      "f1": 0.5234978833417355,
+      "precision": 0.3734644581188095,
+      "recall": 0.875095785440613
+     },
+     "50": {
+      "f1": 0.5248731611609094,
+      "precision": 0.37444560393599785,
+      "recall": 0.8773946360153256
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-all-buffers/pro-text-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-text-baseline/text-t0.0/run_1/detections_text-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 430,
+      "committed_n": 430,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.7630057803468209,
+      "precision": 0.7674418604651163,
+      "recall": 0.7586206896551724
+     },
+     "30": {
+      "f1": 0.783815028901734,
+      "precision": 0.7883720930232558,
+      "recall": 0.7793103448275862
+     },
+     "40": {
+      "f1": 0.7953757225433528,
+      "precision": 0.8,
+      "recall": 0.7908045977011494
+     },
+     "50": {
+      "f1": 0.8023121387283236,
+      "precision": 0.8069767441860465,
+      "recall": 0.7977011494252874
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/paper-eval/n1/384px-all-buffers/pro-image-medium-t-0-0/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/pro-medium-image-baseline/image-t0.0/run_1/detections_image-t0.0_run01.geojson",
+      "commit": "3d22184d6",
+      "n_features": 519,
+      "committed_n": 519,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.6058700209643606,
+      "precision": 0.5568400770712909,
+      "recall": 0.664367816091954
+     },
+     "30": {
+      "f1": 0.7337526205450735,
+      "precision": 0.674373795761079,
+      "recall": 0.8045977011494253
+     },
+     "40": {
+      "f1": 0.7631027253668763,
+      "precision": 0.7013487475915221,
+      "recall": 0.8367816091954023
+     },
+     "50": {
+      "f1": 0.7777777777777778,
+      "precision": 0.7148362235067437,
+      "recall": 0.8528735632183908
+     }
+    },
+    "mcc": null,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-2of10/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t2.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 736,
+      "committed_n": 736,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.4594363791631084,
+      "precision": 0.3654891304347826,
+      "recall": 0.6183908045977011
+     },
+     "30": {
+      "f1": 0.5175064047822374,
+      "precision": 0.4116847826086957,
+      "recall": 0.696551724137931
+     },
+     "40": {
+      "f1": 0.5499573014517507,
+      "precision": 0.4375,
+      "recall": 0.7402298850574712
+     },
+     "50": {
+      "f1": 0.5653287788215201,
+      "precision": 0.44972826086956524,
+      "recall": 0.7609195402298851
+     }
+    },
+    "mcc": 0.4744853699699687,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-3of10/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 718,
+      "committed_n": 718,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.46660884648742407,
+      "precision": 0.3746518105849582,
+      "recall": 0.6183908045977011
+     },
+     "30": {
+      "f1": 0.5221162185602776,
+      "precision": 0.4192200557103064,
+      "recall": 0.6919540229885057
+     },
+     "40": {
+      "f1": 0.5550737207285343,
+      "precision": 0.4456824512534819,
+      "recall": 0.735632183908046
+     },
+     "50": {
+      "f1": 0.5689505637467475,
+      "precision": 0.4568245125348189,
+      "recall": 0.7540229885057471
+     }
+    },
+    "mcc": 0.4861891673869119,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-image-matrix/high-t0.0/n10/high-t0-0-1of10/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 802,
+      "committed_n": 802,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.48827809215844786,
+      "precision": 0.3765586034912718,
+      "recall": 0.6942528735632184
+     },
+     "30": {
+      "f1": 0.5497170573969281,
+      "precision": 0.4239401496259352,
+      "recall": 0.7816091954022989
+     },
+     "40": {
+      "f1": 0.5804365400161681,
+      "precision": 0.4476309226932668,
+      "recall": 0.825287356321839
+     },
+     "50": {
+      "f1": 0.5933710590137429,
+      "precision": 0.45760598503740646,
+      "recall": 0.8436781609195402
+     }
+    },
+    "mcc": 0.484752687940486,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-3of3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 745,
+      "committed_n": 745,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.6050847457627119,
+      "precision": 0.4791946308724832,
+      "recall": 0.8206896551724138
+     },
+     "30": {
+      "f1": 0.6271186440677966,
+      "precision": 0.4966442953020134,
+      "recall": 0.8505747126436781
+     },
+     "40": {
+      "f1": 0.6322033898305084,
+      "precision": 0.5006711409395973,
+      "recall": 0.8574712643678161
+     },
+     "50": {
+      "f1": 0.6322033898305084,
+      "precision": 0.5006711409395973,
+      "recall": 0.8574712643678161
+     }
+    },
+    "mcc": 0.45002597184138565,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-2of3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 985,
+      "committed_n": 985,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.5098591549295773,
+      "precision": 0.36751269035532996,
+      "recall": 0.832183908045977
+     },
+     "30": {
+      "f1": 0.5309859154929577,
+      "precision": 0.38274111675126904,
+      "recall": 0.8666666666666667
+     },
+     "40": {
+      "f1": 0.5394366197183098,
+      "precision": 0.38883248730964465,
+      "recall": 0.8804597701149425
+     },
+     "50": {
+      "f1": 0.5394366197183098,
+      "precision": 0.38883248730964465,
+      "recall": 0.8804597701149425
+     }
+    },
+    "mcc": 0.28271918815081226,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/phase3a-text-matrix/high-t0.0/n3/high-t0-0-1of3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 1256,
+      "committed_n": 1256,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    20,
+    30,
+    40,
+    50
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "20": {
+      "f1": 0.4364281490242461,
+      "precision": 0.29378980891719747,
+      "recall": 0.8482758620689655
+     },
+     "30": {
+      "f1": 0.45416913069189835,
+      "precision": 0.3057324840764331,
+      "recall": 0.8827586206896552
+     },
+     "40": {
+      "f1": 0.4600827912477824,
+      "precision": 0.30971337579617836,
+      "recall": 0.8942528735632184
+     },
+     "50": {
+      "f1": 0.4600827912477824,
+      "precision": 0.30971337579617836,
+      "recall": 0.8942528735632184
+     }
+    },
+    "mcc": 0.20696725532605842,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t4.geojson",
+      "commit": "1f443fd69",
+      "n_features": 738,
+      "committed_n": 738,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.2540494458653026,
+      "precision": 0.2018970189701897,
+      "recall": 0.3425287356321839
+     },
+     "10": {
+      "f1": 0.5098039215686275,
+      "precision": 0.4051490514905149,
+      "recall": 0.6873563218390805
+     },
+     "15": {
+      "f1": 0.6035805626598465,
+      "precision": 0.4796747967479675,
+      "recall": 0.8137931034482758
+     },
+     "20": {
+      "f1": 0.639386189258312,
+      "precision": 0.508130081300813,
+      "recall": 0.8620689655172413
+     },
+     "25": {
+      "f1": 0.6496163682864449,
+      "precision": 0.516260162601626,
+      "recall": 0.8758620689655172
+     },
+     "30": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "35": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "40": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "45": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "50": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "75": {
+      "f1": 0.6564364876385337,
+      "precision": 0.521680216802168,
+      "recall": 0.8850574712643678
+     },
+     "100": {
+      "f1": 0.6581415174765558,
+      "precision": 0.5230352303523035,
+      "recall": 0.8873563218390804
+     },
+     "125": {
+      "f1": 0.6581415174765558,
+      "precision": 0.5230352303523035,
+      "recall": 0.8873563218390804
+     },
+     "150": {
+      "f1": 0.6581415174765558,
+      "precision": 0.5230352303523035,
+      "recall": 0.8873563218390804
+     }
+    },
+    "mcc": 0.3879432251094251,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t3.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1080,
+      "committed_n": 1080,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.2006600660066007,
+      "precision": 0.14074074074074075,
+      "recall": 0.34942528735632183
+     },
+     "10": {
+      "f1": 0.4132013201320132,
+      "precision": 0.2898148148148148,
+      "recall": 0.7195402298850575
+     },
+     "15": {
+      "f1": 0.4910891089108911,
+      "precision": 0.34444444444444444,
+      "recall": 0.8551724137931035
+     },
+     "20": {
+      "f1": 0.5188118811881188,
+      "precision": 0.3638888888888889,
+      "recall": 0.903448275862069
+     },
+     "25": {
+      "f1": 0.5306930693069306,
+      "precision": 0.37222222222222223,
+      "recall": 0.9241379310344827
+     },
+     "30": {
+      "f1": 0.535973597359736,
+      "precision": 0.37592592592592594,
+      "recall": 0.9333333333333333
+     },
+     "35": {
+      "f1": 0.535973597359736,
+      "precision": 0.37592592592592594,
+      "recall": 0.9333333333333333
+     },
+     "40": {
+      "f1": 0.5372937293729373,
+      "precision": 0.3768518518518518,
+      "recall": 0.9356321839080459
+     },
+     "45": {
+      "f1": 0.5386138613861385,
+      "precision": 0.37777777777777777,
+      "recall": 0.9379310344827586
+     },
+     "50": {
+      "f1": 0.53993399339934,
+      "precision": 0.3787037037037037,
+      "recall": 0.9402298850574713
+     },
+     "75": {
+      "f1": 0.53993399339934,
+      "precision": 0.3787037037037037,
+      "recall": 0.9402298850574713
+     },
+     "100": {
+      "f1": 0.5425742574257426,
+      "precision": 0.38055555555555554,
+      "recall": 0.9448275862068966
+     },
+     "125": {
+      "f1": 0.5425742574257426,
+      "precision": 0.38055555555555554,
+      "recall": 0.9448275862068966
+     },
+     "150": {
+      "f1": 0.5425742574257426,
+      "precision": 0.38055555555555554,
+      "recall": 0.9448275862068966
+     }
+    },
+    "mcc": 0.30806007497964855,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t5.geojson",
+      "commit": "1f443fd69",
+      "n_features": 461,
+      "committed_n": 461,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.3080357142857143,
+      "precision": 0.2993492407809111,
+      "recall": 0.31724137931034485
+     },
+     "10": {
+      "f1": 0.5915178571428572,
+      "precision": 0.5748373101952278,
+      "recall": 0.6091954022988506
+     },
+     "15": {
+      "f1": 0.6808035714285715,
+      "precision": 0.6616052060737527,
+      "recall": 0.7011494252873564
+     },
+     "20": {
+      "f1": 0.7142857142857142,
+      "precision": 0.6941431670281996,
+      "recall": 0.735632183908046
+     },
+     "25": {
+      "f1": 0.7254464285714285,
+      "precision": 0.7049891540130152,
+      "recall": 0.7471264367816092
+     },
+     "30": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "35": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "40": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "45": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "50": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "75": {
+      "f1": 0.7299107142857143,
+      "precision": 0.7093275488069414,
+      "recall": 0.7517241379310344
+     },
+     "100": {
+      "f1": 0.7321428571428571,
+      "precision": 0.7114967462039046,
+      "recall": 0.7540229885057471
+     },
+     "125": {
+      "f1": 0.7321428571428571,
+      "precision": 0.7114967462039046,
+      "recall": 0.7540229885057471
+     },
+     "150": {
+      "f1": 0.7321428571428571,
+      "precision": 0.7114967462039046,
+      "recall": 0.7540229885057471
+     }
+    },
+    "mcc": 0.5027552628079137,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t2.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1659,
+      "committed_n": 1659,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.14708691499522444,
+      "precision": 0.09282700421940929,
+      "recall": 0.35402298850574715
+     },
+     "10": {
+      "f1": 0.30754536771728747,
+      "precision": 0.1940928270042194,
+      "recall": 0.7402298850574712
+     },
+     "15": {
+      "f1": 0.3648519579751672,
+      "precision": 0.23025919228450875,
+      "recall": 0.8781609195402299
+     },
+     "20": {
+      "f1": 0.38681948424068774,
+      "precision": 0.244122965641953,
+      "recall": 0.9310344827586207
+     },
+     "25": {
+      "f1": 0.3954154727793696,
+      "precision": 0.24954792043399637,
+      "recall": 0.9517241379310345
+     },
+     "30": {
+      "f1": 0.39923591212989495,
+      "precision": 0.25195901145268235,
+      "recall": 0.960919540229885
+     },
+     "35": {
+      "f1": 0.40019102196752626,
+      "precision": 0.2525617842073538,
+      "recall": 0.9632183908045977
+     },
+     "40": {
+      "f1": 0.40019102196752626,
+      "precision": 0.2525617842073538,
+      "recall": 0.9632183908045977
+     },
+     "45": {
+      "f1": 0.40114613180515757,
+      "precision": 0.25316455696202533,
+      "recall": 0.9655172413793104
+     },
+     "50": {
+      "f1": 0.40210124164278893,
+      "precision": 0.2537673297166968,
+      "recall": 0.967816091954023
+     },
+     "75": {
+      "f1": 0.4030563514804203,
+      "precision": 0.2543701024713683,
+      "recall": 0.9701149425287356
+     },
+     "100": {
+      "f1": 0.40496657115568285,
+      "precision": 0.25557564798071125,
+      "recall": 0.9747126436781609
+     },
+     "125": {
+      "f1": 0.40496657115568285,
+      "precision": 0.25557564798071125,
+      "recall": 0.9747126436781609
+     },
+     "150": {
+      "f1": 0.40496657115568285,
+      "precision": 0.25557564798071125,
+      "recall": 0.9747126436781609
+     }
+    },
+    "mcc": 0.17275213258322922,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+      "commit": "52b0215a6",
+      "n_features": 1619,
+      "committed_n": 1619,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.13437195715676728,
+      "precision": 0.0852378011117974,
+      "recall": 0.31724137931034485
+     },
+     "10": {
+      "f1": 0.2697176241480039,
+      "precision": 0.17109326744904263,
+      "recall": 0.6367816091954023
+     },
+     "15": {
+      "f1": 0.3281402142161636,
+      "precision": 0.20815318097591107,
+      "recall": 0.774712643678161
+     },
+     "20": {
+      "f1": 0.35443037974683544,
+      "precision": 0.22483014206300186,
+      "recall": 0.8367816091954023
+     },
+     "25": {
+      "f1": 0.36708860759493667,
+      "precision": 0.23285978999382334,
+      "recall": 0.8666666666666667
+     },
+     "30": {
+      "f1": 0.3748782862706913,
+      "precision": 0.23780111179740582,
+      "recall": 0.8850574712643678
+     },
+     "35": {
+      "f1": 0.37974683544303794,
+      "precision": 0.24088943792464484,
+      "recall": 0.896551724137931
+     },
+     "40": {
+      "f1": 0.38364167478091526,
+      "precision": 0.24336009882643608,
+      "recall": 0.9057471264367816
+     },
+     "45": {
+      "f1": 0.3855890944498539,
+      "precision": 0.2445954292773317,
+      "recall": 0.9103448275862069
+     },
+     "50": {
+      "f1": 0.3855890944498539,
+      "precision": 0.2445954292773317,
+      "recall": 0.9103448275862069
+     },
+     "75": {
+      "f1": 0.38851022395326196,
+      "precision": 0.2464484249536751,
+      "recall": 0.9172413793103448
+     },
+     "100": {
+      "f1": 0.3904576436222006,
+      "precision": 0.24768375540457072,
+      "recall": 0.9218390804597701
+     },
+     "125": {
+      "f1": 0.3904576436222006,
+      "precision": 0.24768375540457072,
+      "recall": 0.9218390804597701
+     },
+     "150": {
+      "f1": 0.3904576436222006,
+      "precision": 0.24768375540457072,
+      "recall": 0.9218390804597701
+     }
+    },
+    "mcc": 0.2287141645129618,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t3.geojson",
+      "commit": "1f443fd69",
+      "n_features": 604,
+      "committed_n": 604,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.07699711260827719,
+      "precision": 0.06622516556291391,
+      "recall": 0.09195402298850575
+     },
+     "10": {
+      "f1": 0.2964388835418672,
+      "precision": 0.25496688741721857,
+      "recall": 0.35402298850574715
+     },
+     "15": {
+      "f1": 0.4542829643888354,
+      "precision": 0.39072847682119205,
+      "recall": 0.542528735632184
+     },
+     "20": {
+      "f1": 0.5524542829643889,
+      "precision": 0.47516556291390727,
+      "recall": 0.6597701149425287
+     },
+     "25": {
+      "f1": 0.5851780558229066,
+      "precision": 0.5033112582781457,
+      "recall": 0.6988505747126437
+     },
+     "30": {
+      "f1": 0.6179018286814245,
+      "precision": 0.5314569536423841,
+      "recall": 0.7379310344827587
+     },
+     "35": {
+      "f1": 0.6390760346487008,
+      "precision": 0.5496688741721855,
+      "recall": 0.7632183908045977
+     },
+     "40": {
+      "f1": 0.6525505293551492,
+      "precision": 0.5612582781456954,
+      "recall": 0.7793103448275862
+     },
+     "45": {
+      "f1": 0.6602502406159768,
+      "precision": 0.5678807947019867,
+      "recall": 0.7885057471264367
+     },
+     "50": {
+      "f1": 0.6602502406159768,
+      "precision": 0.5678807947019867,
+      "recall": 0.7885057471264367
+     },
+     "75": {
+      "f1": 0.6679499518768046,
+      "precision": 0.5745033112582781,
+      "recall": 0.7977011494252874
+     },
+     "100": {
+      "f1": 0.6698748796920115,
+      "precision": 0.5761589403973509,
+      "recall": 0.8
+     },
+     "125": {
+      "f1": 0.6756496631376324,
+      "precision": 0.5811258278145696,
+      "recall": 0.8068965517241379
+     },
+     "150": {
+      "f1": 0.6775745909528393,
+      "precision": 0.5827814569536424,
+      "recall": 0.8091954022988506
+     }
+    },
+    "mcc": 0.5664082954184168,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+      "commit": "c3852ebad",
+      "n_features": 677,
+      "committed_n": 677,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.09172661870503596,
+      "precision": 0.07533234859675036,
+      "recall": 0.11724137931034483
+     },
+     "10": {
+      "f1": 0.289568345323741,
+      "precision": 0.2378138847858198,
+      "recall": 0.3701149425287356
+     },
+     "15": {
+      "f1": 0.43165467625899284,
+      "precision": 0.35450516986706054,
+      "recall": 0.5517241379310345
+     },
+     "20": {
+      "f1": 0.5233812949640289,
+      "precision": 0.4298375184638109,
+      "recall": 0.6689655172413793
+     },
+     "25": {
+      "f1": 0.5557553956834532,
+      "precision": 0.4564254062038405,
+      "recall": 0.7103448275862069
+     },
+     "30": {
+      "f1": 0.5863309352517986,
+      "precision": 0.4815361890694239,
+      "recall": 0.7494252873563219
+     },
+     "35": {
+      "f1": 0.6079136690647483,
+      "precision": 0.49926144756277696,
+      "recall": 0.7770114942528735
+     },
+     "40": {
+      "f1": 0.6223021582733813,
+      "precision": 0.5110782865583456,
+      "recall": 0.7954022988505747
+     },
+     "45": {
+      "f1": 0.6294964028776978,
+      "precision": 0.51698670605613,
+      "recall": 0.8045977011494253
+     },
+     "50": {
+      "f1": 0.6294964028776978,
+      "precision": 0.51698670605613,
+      "recall": 0.8045977011494253
+     },
+     "75": {
+      "f1": 0.6366906474820144,
+      "precision": 0.5228951255539144,
+      "recall": 0.8137931034482758
+     },
+     "100": {
+      "f1": 0.6402877697841727,
+      "precision": 0.5258493353028065,
+      "recall": 0.8183908045977012
+     },
+     "125": {
+      "f1": 0.64568345323741,
+      "precision": 0.5302806499261448,
+      "recall": 0.825287356321839
+     },
+     "150": {
+      "f1": 0.6492805755395683,
+      "precision": 0.5332348596750369,
+      "recall": 0.8298850574712644
+     }
+    },
+    "mcc": 0.6020750869669966,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+      "commit": "c3852ebad",
+      "n_features": 681,
+      "committed_n": 681,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.0860215053763441,
+      "precision": 0.07048458149779736,
+      "recall": 0.1103448275862069
+     },
+     "10": {
+      "f1": 0.2939068100358423,
+      "precision": 0.24082232011747431,
+      "recall": 0.37701149425287356
+     },
+     "15": {
+      "f1": 0.44265232974910396,
+      "precision": 0.36270190895741555,
+      "recall": 0.5678160919540229
+     },
+     "20": {
+      "f1": 0.5304659498207885,
+      "precision": 0.434654919236417,
+      "recall": 0.6804597701149425
+     },
+     "25": {
+      "f1": 0.564516129032258,
+      "precision": 0.46255506607929514,
+      "recall": 0.7241379310344828
+     },
+     "30": {
+      "f1": 0.5949820788530467,
+      "precision": 0.48751835535976507,
+      "recall": 0.7632183908045977
+     },
+     "35": {
+      "f1": 0.6146953405017922,
+      "precision": 0.5036710719530103,
+      "recall": 0.7885057471264367
+     },
+     "40": {
+      "f1": 0.6272401433691756,
+      "precision": 0.5139500734214391,
+      "recall": 0.8045977011494253
+     },
+     "45": {
+      "f1": 0.6344086021505377,
+      "precision": 0.5198237885462555,
+      "recall": 0.8137931034482758
+     },
+     "50": {
+      "f1": 0.6344086021505377,
+      "precision": 0.5198237885462555,
+      "recall": 0.8137931034482758
+     },
+     "75": {
+      "f1": 0.6415770609318996,
+      "precision": 0.5256975036710719,
+      "recall": 0.8229885057471265
+     },
+     "100": {
+      "f1": 0.6433691756272402,
+      "precision": 0.527165932452276,
+      "recall": 0.825287356321839
+     },
+     "125": {
+      "f1": 0.6487455197132617,
+      "precision": 0.5315712187958884,
+      "recall": 0.832183908045977
+     },
+     "150": {
+      "f1": 0.6505376344086021,
+      "precision": 0.5330396475770925,
+      "recall": 0.8344827586206897
+     }
+    },
+    "mcc": 0.6072941400102718,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t1.geojson",
+      "commit": "1f443fd69",
+      "n_features": 665,
+      "committed_n": 665,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.07818181818181819,
+      "precision": 0.06466165413533835,
+      "recall": 0.09885057471264368
+     },
+     "10": {
+      "f1": 0.2909090909090909,
+      "precision": 0.24060150375939848,
+      "recall": 0.367816091954023
+     },
+     "15": {
+      "f1": 0.45454545454545453,
+      "precision": 0.37593984962406013,
+      "recall": 0.5747126436781609
+     },
+     "20": {
+      "f1": 0.5509090909090909,
+      "precision": 0.4556390977443609,
+      "recall": 0.696551724137931
+     },
+     "25": {
+      "f1": 0.5818181818181818,
+      "precision": 0.48120300751879697,
+      "recall": 0.735632183908046
+     },
+     "30": {
+      "f1": 0.6127272727272728,
+      "precision": 0.5067669172932331,
+      "recall": 0.774712643678161
+     },
+     "35": {
+      "f1": 0.6399999999999999,
+      "precision": 0.5293233082706766,
+      "recall": 0.8091954022988506
+     },
+     "40": {
+      "f1": 0.6527272727272727,
+      "precision": 0.5398496240601504,
+      "recall": 0.825287356321839
+     },
+     "45": {
+      "f1": 0.66,
+      "precision": 0.5458646616541354,
+      "recall": 0.8344827586206897
+     },
+     "50": {
+      "f1": 0.66,
+      "precision": 0.5458646616541354,
+      "recall": 0.8344827586206897
+     },
+     "75": {
+      "f1": 0.6672727272727272,
+      "precision": 0.5518796992481203,
+      "recall": 0.8436781609195402
+     },
+     "100": {
+      "f1": 0.6690909090909091,
+      "precision": 0.5533834586466165,
+      "recall": 0.8459770114942529
+     },
+     "125": {
+      "f1": 0.6745454545454546,
+      "precision": 0.5578947368421052,
+      "recall": 0.8528735632183908
+     },
+     "150": {
+      "f1": 0.6763636363636363,
+      "precision": 0.5593984962406015,
+      "recall": 0.8551724137931035
+     }
+    },
+    "mcc": 0.5446442480861439,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus/consensus_t2.geojson",
+      "commit": "1f443fd69",
+      "n_features": 627,
+      "committed_n": 627,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.07532956685499059,
+      "precision": 0.06379585326953748,
+      "recall": 0.09195402298850575
+     },
+     "10": {
+      "f1": 0.2919020715630885,
+      "precision": 0.24720893141945774,
+      "recall": 0.3563218390804598
+     },
+     "15": {
+      "f1": 0.4519774011299435,
+      "precision": 0.3827751196172249,
+      "recall": 0.5517241379310345
+     },
+     "20": {
+      "f1": 0.5499058380414312,
+      "precision": 0.46570972886762363,
+      "recall": 0.671264367816092
+     },
+     "25": {
+      "f1": 0.5819209039548022,
+      "precision": 0.49282296650717705,
+      "recall": 0.7103448275862069
+     },
+     "30": {
+      "f1": 0.6139359698681732,
+      "precision": 0.5199362041467305,
+      "recall": 0.7494252873563219
+     },
+     "35": {
+      "f1": 0.64030131826742,
+      "precision": 0.5422647527910686,
+      "recall": 0.7816091954022989
+     },
+     "40": {
+      "f1": 0.6534839924670433,
+      "precision": 0.5534290271132376,
+      "recall": 0.7977011494252874
+     },
+     "45": {
+      "f1": 0.6610169491525424,
+      "precision": 0.5598086124401914,
+      "recall": 0.8068965517241379
+     },
+     "50": {
+      "f1": 0.6610169491525424,
+      "precision": 0.5598086124401914,
+      "recall": 0.8068965517241379
+     },
+     "75": {
+      "f1": 0.6685499058380415,
+      "precision": 0.5661881977671451,
+      "recall": 0.8160919540229885
+     },
+     "100": {
+      "f1": 0.672316384180791,
+      "precision": 0.569377990430622,
+      "recall": 0.8206896551724138
+     },
+     "125": {
+      "f1": 0.6779661016949152,
+      "precision": 0.5741626794258373,
+      "recall": 0.8275862068965517
+     },
+     "150": {
+      "f1": 0.6817325800376648,
+      "precision": 0.5773524720893142,
+      "recall": 0.832183908045977
+     }
+    },
+    "mcc": 0.5536717166782573,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+      "commit": "c3852ebad",
+      "n_features": 692,
+      "committed_n": 692,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.09228039041703638,
+      "precision": 0.07514450867052024,
+      "recall": 0.11954022988505747
+     },
+     "10": {
+      "f1": 0.29281277728482696,
+      "precision": 0.2384393063583815,
+      "recall": 0.3793103448275862
+     },
+     "15": {
+      "f1": 0.43833185448092277,
+      "precision": 0.3569364161849711,
+      "recall": 0.5678160919540229
+     },
+     "20": {
+      "f1": 0.5288376220053238,
+      "precision": 0.430635838150289,
+      "recall": 0.6850574712643678
+     },
+     "25": {
+      "f1": 0.5590062111801242,
+      "precision": 0.4552023121387283,
+      "recall": 0.7241379310344828
+     },
+     "30": {
+      "f1": 0.5891748003549246,
+      "precision": 0.4797687861271676,
+      "recall": 0.7632183908045977
+     },
+     "35": {
+      "f1": 0.6157941437444542,
+      "precision": 0.5014450867052023,
+      "recall": 0.7977011494252874
+     },
+     "40": {
+      "f1": 0.6299911268855368,
+      "precision": 0.5130057803468208,
+      "recall": 0.8160919540229885
+     },
+     "45": {
+      "f1": 0.637089618456078,
+      "precision": 0.5187861271676301,
+      "recall": 0.825287356321839
+     },
+     "50": {
+      "f1": 0.637089618456078,
+      "precision": 0.5187861271676301,
+      "recall": 0.825287356321839
+     },
+     "75": {
+      "f1": 0.6441881100266192,
+      "precision": 0.5245664739884393,
+      "recall": 0.8344827586206897
+     },
+     "100": {
+      "f1": 0.64773735581189,
+      "precision": 0.5274566473988439,
+      "recall": 0.8390804597701149
+     },
+     "125": {
+      "f1": 0.6530612244897959,
+      "precision": 0.5317919075144508,
+      "recall": 0.8459770114942529
+     },
+     "150": {
+      "f1": 0.6566104702750666,
+      "precision": 0.5346820809248555,
+      "recall": 0.8505747126436781
+     }
+    },
+    "mcc": 0.6092516388904641,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t1.geojson",
+      "commit": "1f443fd69",
+      "n_features": 1118,
+      "committed_n": 1118,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.14810045074050224,
+      "precision": 0.10286225402504472,
+      "recall": 0.26436781609195403
+     },
+     "10": {
+      "f1": 0.36316806181584027,
+      "precision": 0.2522361359570662,
+      "recall": 0.6482758620689655
+     },
+     "15": {
+      "f1": 0.4494526722472634,
+      "precision": 0.31216457960644006,
+      "recall": 0.8022988505747126
+     },
+     "20": {
+      "f1": 0.472633612363168,
+      "precision": 0.3282647584973166,
+      "recall": 0.8436781609195402
+     },
+     "25": {
+      "f1": 0.48551191242755953,
+      "precision": 0.3372093023255814,
+      "recall": 0.8666666666666667
+     },
+     "30": {
+      "f1": 0.4945267224726335,
+      "precision": 0.3434704830053667,
+      "recall": 0.8827586206896552
+     },
+     "35": {
+      "f1": 0.49839021249195103,
+      "precision": 0.34615384615384615,
+      "recall": 0.8896551724137931
+     },
+     "40": {
+      "f1": 0.5035415325177077,
+      "precision": 0.34973166368515207,
+      "recall": 0.8988505747126436
+     },
+     "45": {
+      "f1": 0.5035415325177077,
+      "precision": 0.34973166368515207,
+      "recall": 0.8988505747126436
+     },
+     "50": {
+      "f1": 0.5035415325177077,
+      "precision": 0.34973166368515207,
+      "recall": 0.8988505747126436
+     },
+     "75": {
+      "f1": 0.5099806825499035,
+      "precision": 0.3542039355992844,
+      "recall": 0.9103448275862069
+     },
+     "100": {
+      "f1": 0.5112685125563425,
+      "precision": 0.3550983899821109,
+      "recall": 0.9126436781609195
+     },
+     "125": {
+      "f1": 0.5125563425627816,
+      "precision": 0.3559928443649374,
+      "recall": 0.9149425287356322
+     },
+     "150": {
+      "f1": 0.5138441725692209,
+      "precision": 0.35688729874776387,
+      "recall": 0.9172413793103448
+     }
+    },
+    "mcc": 0.270634707209483,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1004,
+      "committed_n": 1004,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.17095205003474634,
+      "precision": 0.12250996015936255,
+      "recall": 0.2827586206896552
+     },
+     "10": {
+      "f1": 0.37943015983321754,
+      "precision": 0.27191235059760954,
+      "recall": 0.6275862068965518
+     },
+     "15": {
+      "f1": 0.46838082001389847,
+      "precision": 0.33565737051792827,
+      "recall": 0.774712643678161
+     },
+     "20": {
+      "f1": 0.4947880472550383,
+      "precision": 0.3545816733067729,
+      "recall": 0.8183908045977012
+     },
+     "25": {
+      "f1": 0.5031271716469772,
+      "precision": 0.3605577689243028,
+      "recall": 0.832183908045977
+     },
+     "30": {
+      "f1": 0.5142460041695622,
+      "precision": 0.36852589641434264,
+      "recall": 0.8505747126436781
+     },
+     "35": {
+      "f1": 0.5198054204308549,
+      "precision": 0.37250996015936255,
+      "recall": 0.8597701149425288
+     },
+     "40": {
+      "f1": 0.5239749826268242,
+      "precision": 0.3754980079681275,
+      "recall": 0.8666666666666667
+     },
+     "45": {
+      "f1": 0.5253648366921473,
+      "precision": 0.37649402390438247,
+      "recall": 0.8689655172413793
+     },
+     "50": {
+      "f1": 0.5253648366921473,
+      "precision": 0.37649402390438247,
+      "recall": 0.8689655172413793
+     },
+     "75": {
+      "f1": 0.5309242529534398,
+      "precision": 0.3804780876494024,
+      "recall": 0.8781609195402299
+     },
+     "100": {
+      "f1": 0.532314107018763,
+      "precision": 0.38147410358565736,
+      "recall": 0.8804597701149425
+     },
+     "125": {
+      "f1": 0.5337039610840861,
+      "precision": 0.38247011952191234,
+      "recall": 0.8827586206896552
+     },
+     "150": {
+      "f1": 0.5350938151494093,
+      "precision": 0.3834661354581673,
+      "recall": 0.8850574712643678
+     }
+    },
+    "mcc": 0.3805206810224994,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1028,
+      "committed_n": 1028,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.16814764183185238,
+      "precision": 0.11964980544747082,
+      "recall": 0.2827586206896552
+     },
+     "10": {
+      "f1": 0.381408065618592,
+      "precision": 0.2714007782101167,
+      "recall": 0.6413793103448275
+     },
+     "15": {
+      "f1": 0.4620642515379357,
+      "precision": 0.32879377431906615,
+      "recall": 0.7770114942528735
+     },
+     "20": {
+      "f1": 0.4866712235133288,
+      "precision": 0.3463035019455253,
+      "recall": 0.8183908045977012
+     },
+     "25": {
+      "f1": 0.49760765550239233,
+      "precision": 0.3540856031128405,
+      "recall": 0.8367816091954023
+     },
+     "30": {
+      "f1": 0.5099111414900889,
+      "precision": 0.36284046692607,
+      "recall": 0.8574712643678161
+     },
+     "35": {
+      "f1": 0.5140123034859877,
+      "precision": 0.3657587548638132,
+      "recall": 0.864367816091954
+     },
+     "40": {
+      "f1": 0.5181134654818866,
+      "precision": 0.36867704280155644,
+      "recall": 0.871264367816092
+     },
+     "45": {
+      "f1": 0.5181134654818866,
+      "precision": 0.36867704280155644,
+      "recall": 0.871264367816092
+     },
+     "50": {
+      "f1": 0.5194805194805195,
+      "precision": 0.36964980544747084,
+      "recall": 0.8735632183908046
+     },
+     "75": {
+      "f1": 0.5249487354750513,
+      "precision": 0.3735408560311284,
+      "recall": 0.8827586206896552
+     },
+     "100": {
+      "f1": 0.5263157894736843,
+      "precision": 0.3745136186770428,
+      "recall": 0.8850574712643678
+     },
+     "125": {
+      "f1": 0.5276828434723172,
+      "precision": 0.3754863813229572,
+      "recall": 0.8873563218390804
+     },
+     "150": {
+      "f1": 0.5276828434723172,
+      "precision": 0.3754863813229572,
+      "recall": 0.8873563218390804
+     }
+    },
+    "mcc": 0.3703542991381629,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t3.geojson",
+      "commit": "1f443fd69",
+      "n_features": 783,
+      "committed_n": 783,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.17569786535303777,
+      "precision": 0.13665389527458494,
+      "recall": 0.24597701149425288
+     },
+     "10": {
+      "f1": 0.43678160919540227,
+      "precision": 0.3397190293742018,
+      "recall": 0.6114942528735632
+     },
+     "15": {
+      "f1": 0.5385878489326765,
+      "precision": 0.41890166028097064,
+      "recall": 0.7540229885057471
+     },
+     "20": {
+      "f1": 0.5665024630541872,
+      "precision": 0.44061302681992337,
+      "recall": 0.7931034482758621
+     },
+     "25": {
+      "f1": 0.5796387520525451,
+      "precision": 0.4508301404853129,
+      "recall": 0.8114942528735632
+     },
+     "30": {
+      "f1": 0.5927750410509031,
+      "precision": 0.4610472541507024,
+      "recall": 0.8298850574712644
+     },
+     "35": {
+      "f1": 0.5977011494252874,
+      "precision": 0.4648786717752235,
+      "recall": 0.8367816091954023
+     },
+     "40": {
+      "f1": 0.6026272577996715,
+      "precision": 0.46871008939974457,
+      "recall": 0.8436781609195402
+     },
+     "45": {
+      "f1": 0.6026272577996715,
+      "precision": 0.46871008939974457,
+      "recall": 0.8436781609195402
+     },
+     "50": {
+      "f1": 0.6026272577996715,
+      "precision": 0.46871008939974457,
+      "recall": 0.8436781609195402
+     },
+     "75": {
+      "f1": 0.6075533661740558,
+      "precision": 0.4725415070242657,
+      "recall": 0.8505747126436781
+     },
+     "100": {
+      "f1": 0.6075533661740558,
+      "precision": 0.4725415070242657,
+      "recall": 0.8505747126436781
+     },
+     "125": {
+      "f1": 0.6091954022988506,
+      "precision": 0.47381864623243936,
+      "recall": 0.8528735632183908
+     },
+     "150": {
+      "f1": 0.6091954022988506,
+      "precision": 0.47381864623243936,
+      "recall": 0.8528735632183908
+     }
+    },
+    "mcc": 0.39407506995547403,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus/consensus_t1.geojson",
+      "commit": "1f443fd69",
+      "n_features": 4491,
+      "committed_n": 4491,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.0633373934226553,
+      "precision": 0.03473613894455578,
+      "recall": 0.3586206896551724
+     },
+     "10": {
+      "f1": 0.13235891189606172,
+      "precision": 0.0725896236918281,
+      "recall": 0.7494252873563219
+     },
+     "15": {
+      "f1": 0.15712545676004874,
+      "precision": 0.08617234468937876,
+      "recall": 0.8896551724137931
+     },
+     "20": {
+      "f1": 0.16686967113276494,
+      "precision": 0.09151636606546426,
+      "recall": 0.9448275862068966
+     },
+     "25": {
+      "f1": 0.17092976045473,
+      "precision": 0.09374304163883322,
+      "recall": 0.967816091954023
+     },
+     "30": {
+      "f1": 0.17214778725131952,
+      "precision": 0.0944110443108439,
+      "recall": 0.9747126436781609
+     },
+     "35": {
+      "f1": 0.17255379618351602,
+      "precision": 0.0946337118681808,
+      "recall": 0.9770114942528736
+     },
+     "40": {
+      "f1": 0.17255379618351602,
+      "precision": 0.0946337118681808,
+      "recall": 0.9770114942528736
+     },
+     "45": {
+      "f1": 0.17295980511571254,
+      "precision": 0.09485637942551771,
+      "recall": 0.9793103448275862
+     },
+     "50": {
+      "f1": 0.17295980511571254,
+      "precision": 0.09485637942551771,
+      "recall": 0.9793103448275862
+     },
+     "75": {
+      "f1": 0.17336581404790907,
+      "precision": 0.0950790469828546,
+      "recall": 0.9816091954022989
+     },
+     "100": {
+      "f1": 0.17377182298010554,
+      "precision": 0.0953017145401915,
+      "recall": 0.9839080459770115
+     },
+     "125": {
+      "f1": 0.17377182298010554,
+      "precision": 0.0953017145401915,
+      "recall": 0.9839080459770115
+     },
+     "150": {
+      "f1": 0.17417783191230207,
+      "precision": 0.09552438209752839,
+      "recall": 0.9862068965517241
+     }
+    },
+    "mcc": 0.08822125852465039,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus/consensus_t2.geojson",
+      "commit": "1f443fd69",
+      "n_features": 946,
+      "committed_n": 946,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.16364952932657495,
+      "precision": 0.11945031712473574,
+      "recall": 0.2597701149425287
+     },
+     "10": {
+      "f1": 0.39826212889210716,
+      "precision": 0.29069767441860467,
+      "recall": 0.632183908045977
+     },
+     "15": {
+      "f1": 0.4938450398262128,
+      "precision": 0.36046511627906974,
+      "recall": 0.7839080459770115
+     },
+     "20": {
+      "f1": 0.5199131064446054,
+      "precision": 0.379492600422833,
+      "recall": 0.825287356321839
+     },
+     "25": {
+      "f1": 0.5329471397538017,
+      "precision": 0.3890063424947146,
+      "recall": 0.8459770114942529
+     },
+     "30": {
+      "f1": 0.5430847212165097,
+      "precision": 0.3964059196617336,
+      "recall": 0.8620689655172413
+     },
+     "35": {
+      "f1": 0.5474293989862419,
+      "precision": 0.39957716701902746,
+      "recall": 0.8689655172413793
+     },
+     "40": {
+      "f1": 0.551774076755974,
+      "precision": 0.40274841437632136,
+      "recall": 0.8758620689655172
+     },
+     "45": {
+      "f1": 0.551774076755974,
+      "precision": 0.40274841437632136,
+      "recall": 0.8758620689655172
+     },
+     "50": {
+      "f1": 0.5532223026792179,
+      "precision": 0.40380549682875266,
+      "recall": 0.8781609195402299
+     },
+     "75": {
+      "f1": 0.559015206372194,
+      "precision": 0.4080338266384778,
+      "recall": 0.8873563218390804
+     },
+     "100": {
+      "f1": 0.559015206372194,
+      "precision": 0.4080338266384778,
+      "recall": 0.8873563218390804
+     },
+     "125": {
+      "f1": 0.560463432295438,
+      "precision": 0.4090909090909091,
+      "recall": 0.8896551724137931
+     },
+     "150": {
+      "f1": 0.5619116582186822,
+      "precision": 0.41014799154334036,
+      "recall": 0.8919540229885058
+     }
+    },
+    "mcc": 0.3479831840449589,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+      "commit": "c3852ebad",
+      "n_features": 1026,
+      "committed_n": 1026,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.17659137577002054,
+      "precision": 0.12573099415204678,
+      "recall": 0.296551724137931
+     },
+     "10": {
+      "f1": 0.3915126625598905,
+      "precision": 0.2787524366471735,
+      "recall": 0.6574712643678161
+     },
+     "15": {
+      "f1": 0.4722792607802875,
+      "precision": 0.3362573099415205,
+      "recall": 0.7931034482758621
+     },
+     "20": {
+      "f1": 0.5010266940451745,
+      "precision": 0.3567251461988304,
+      "recall": 0.8413793103448276
+     },
+     "25": {
+      "f1": 0.5106091718001369,
+      "precision": 0.3635477582846004,
+      "recall": 0.8574712643678161
+     },
+     "30": {
+      "f1": 0.5201916495550992,
+      "precision": 0.37037037037037035,
+      "recall": 0.8735632183908046
+     },
+     "35": {
+      "f1": 0.5242984257357974,
+      "precision": 0.3732943469785575,
+      "recall": 0.8804597701149425
+     },
+     "40": {
+      "f1": 0.5284052019164955,
+      "precision": 0.3762183235867446,
+      "recall": 0.8873563218390804
+     },
+     "45": {
+      "f1": 0.5284052019164955,
+      "precision": 0.3762183235867446,
+      "recall": 0.8873563218390804
+     },
+     "50": {
+      "f1": 0.5297741273100616,
+      "precision": 0.37719298245614036,
+      "recall": 0.8896551724137931
+     },
+     "75": {
+      "f1": 0.5366187542778917,
+      "precision": 0.3820662768031189,
+      "recall": 0.9011494252873563
+     },
+     "100": {
+      "f1": 0.5379876796714579,
+      "precision": 0.3830409356725146,
+      "recall": 0.903448275862069
+     },
+     "125": {
+      "f1": 0.5393566050650239,
+      "precision": 0.3840155945419103,
+      "recall": 0.9057471264367816
+     },
+     "150": {
+      "f1": 0.5407255304585901,
+      "precision": 0.38499025341130605,
+      "recall": 0.9080459770114943
+     }
+    },
+    "mcc": 0.391616382083715,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t3.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 718,
+      "committed_n": 718,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.08846487424111014,
+      "precision": 0.07103064066852367,
+      "recall": 0.11724137931034483
+     },
+     "10": {
+      "f1": 0.2567215958369471,
+      "precision": 0.20612813370473537,
+      "recall": 0.34022988505747126
+     },
+     "15": {
+      "f1": 0.3816131830008673,
+      "precision": 0.3064066852367688,
+      "recall": 0.5057471264367817
+     },
+     "20": {
+      "f1": 0.46660884648742407,
+      "precision": 0.3746518105849582,
+      "recall": 0.6183908045977011
+     },
+     "25": {
+      "f1": 0.5099739809193408,
+      "precision": 0.40947075208913647,
+      "recall": 0.6758620689655173
+     },
+     "30": {
+      "f1": 0.5221162185602776,
+      "precision": 0.4192200557103064,
+      "recall": 0.6919540229885057
+     },
+     "35": {
+      "f1": 0.5411968777103209,
+      "precision": 0.43454038997214484,
+      "recall": 0.7172413793103448
+     },
+     "40": {
+      "f1": 0.5550737207285343,
+      "precision": 0.4456824512534819,
+      "recall": 0.735632183908046
+     },
+     "45": {
+      "f1": 0.5637467476149176,
+      "precision": 0.45264623955431754,
+      "recall": 0.7471264367816092
+     },
+     "50": {
+      "f1": 0.5689505637467475,
+      "precision": 0.4568245125348189,
+      "recall": 0.7540229885057471
+     },
+     "75": {
+      "f1": 0.5758889852558543,
+      "precision": 0.4623955431754875,
+      "recall": 0.7632183908045977
+     },
+     "100": {
+      "f1": 0.5793581960104076,
+      "precision": 0.46518105849582175,
+      "recall": 0.767816091954023
+     },
+     "125": {
+      "f1": 0.5862966175195142,
+      "precision": 0.47075208913649025,
+      "recall": 0.7770114942528735
+     },
+     "150": {
+      "f1": 0.5862966175195142,
+      "precision": 0.47075208913649025,
+      "recall": 0.7770114942528735
+     }
+    },
+    "mcc": 0.4861891673869119,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t2.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 736,
+      "committed_n": 736,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.08710503842869342,
+      "precision": 0.06929347826086957,
+      "recall": 0.11724137931034483
+     },
+     "10": {
+      "f1": 0.2527754056362083,
+      "precision": 0.20108695652173914,
+      "recall": 0.34022988505747126
+     },
+     "15": {
+      "f1": 0.3757472245943638,
+      "precision": 0.29891304347826086,
+      "recall": 0.5057471264367817
+     },
+     "20": {
+      "f1": 0.4594363791631084,
+      "precision": 0.3654891304347826,
+      "recall": 0.6183908045977011
+     },
+     "25": {
+      "f1": 0.5038428693424424,
+      "precision": 0.4008152173913043,
+      "recall": 0.6781609195402298
+     },
+     "30": {
+      "f1": 0.5175064047822374,
+      "precision": 0.4116847826086957,
+      "recall": 0.696551724137931
+     },
+     "35": {
+      "f1": 0.5362937660119556,
+      "precision": 0.4266304347826087,
+      "recall": 0.7218390804597701
+     },
+     "40": {
+      "f1": 0.5499573014517507,
+      "precision": 0.4375,
+      "recall": 0.7402298850574712
+     },
+     "45": {
+      "f1": 0.560204953031597,
+      "precision": 0.44565217391304346,
+      "recall": 0.7540229885057471
+     },
+     "50": {
+      "f1": 0.5653287788215201,
+      "precision": 0.44972826086956524,
+      "recall": 0.7609195402298851
+     },
+     "75": {
+      "f1": 0.5704526046114432,
+      "precision": 0.453804347826087,
+      "recall": 0.767816091954023
+     },
+     "100": {
+      "f1": 0.5738684884713919,
+      "precision": 0.45652173913043476,
+      "recall": 0.7724137931034483
+     },
+     "125": {
+      "f1": 0.5807002561912895,
+      "precision": 0.46195652173913043,
+      "recall": 0.7816091954022989
+     },
+     "150": {
+      "f1": 0.5807002561912895,
+      "precision": 0.46195652173913043,
+      "recall": 0.7816091954022989
+     }
+    },
+    "mcc": 0.4744853699699687,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-image-n5__image-t0.0__consensus__t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus/consensus_t1.geojson",
+      "commit": "2e8cc6481",
+      "n_features": 802,
+      "committed_n": 802,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.09539207760711399,
+      "precision": 0.07356608478802992,
+      "recall": 0.135632183908046
+     },
+     "10": {
+      "f1": 0.2716248989490704,
+      "precision": 0.20947630922693267,
+      "recall": 0.38620689655172413
+     },
+     "15": {
+      "f1": 0.3961196443007276,
+      "precision": 0.3054862842892768,
+      "recall": 0.5632183908045977
+     },
+     "20": {
+      "f1": 0.48827809215844786,
+      "precision": 0.3765586034912718,
+      "recall": 0.6942528735632184
+     },
+     "25": {
+      "f1": 0.5351657235246565,
+      "precision": 0.41271820448877805,
+      "recall": 0.7609195402298851
+     },
+     "30": {
+      "f1": 0.5497170573969281,
+      "precision": 0.4239401496259352,
+      "recall": 0.7816091954022989
+     },
+     "35": {
+      "f1": 0.5658852061438966,
+      "precision": 0.43640897755610975,
+      "recall": 0.8045977011494253
+     },
+     "40": {
+      "f1": 0.5804365400161681,
+      "precision": 0.4476309226932668,
+      "recall": 0.825287356321839
+     },
+     "45": {
+      "f1": 0.5885206143896524,
+      "precision": 0.4538653366583541,
+      "recall": 0.8367816091954023
+     },
+     "50": {
+      "f1": 0.5933710590137429,
+      "precision": 0.45760598503740646,
+      "recall": 0.8436781609195402
+     },
+     "75": {
+      "f1": 0.5982215036378336,
+      "precision": 0.4613466334164589,
+      "recall": 0.8505747126436781
+     },
+     "100": {
+      "f1": 0.6014551333872271,
+      "precision": 0.46384039900249374,
+      "recall": 0.8551724137931035
+     },
+     "125": {
+      "f1": 0.6095392077607114,
+      "precision": 0.470074812967581,
+      "recall": 0.8666666666666667
+     },
+     "150": {
+      "f1": 0.6095392077607114,
+      "precision": 0.470074812967581,
+      "recall": 0.8666666666666667
+     }
+    },
+    "mcc": 0.484752687940486,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t3/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t3.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 745,
+      "committed_n": 745,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.2016949152542373,
+      "precision": 0.1597315436241611,
+      "recall": 0.2735632183908046
+     },
+     "10": {
+      "f1": 0.45593220338983054,
+      "precision": 0.3610738255033557,
+      "recall": 0.6183908045977011
+     },
+     "15": {
+      "f1": 0.5627118644067797,
+      "precision": 0.44563758389261743,
+      "recall": 0.7632183908045977
+     },
+     "20": {
+      "f1": 0.6050847457627119,
+      "precision": 0.4791946308724832,
+      "recall": 0.8206896551724138
+     },
+     "25": {
+      "f1": 0.6203389830508476,
+      "precision": 0.4912751677852349,
+      "recall": 0.8413793103448276
+     },
+     "30": {
+      "f1": 0.6271186440677966,
+      "precision": 0.4966442953020134,
+      "recall": 0.8505747126436781
+     },
+     "35": {
+      "f1": 0.628813559322034,
+      "precision": 0.49798657718120803,
+      "recall": 0.8528735632183908
+     },
+     "40": {
+      "f1": 0.6322033898305084,
+      "precision": 0.5006711409395973,
+      "recall": 0.8574712643678161
+     },
+     "45": {
+      "f1": 0.6322033898305084,
+      "precision": 0.5006711409395973,
+      "recall": 0.8574712643678161
+     },
+     "50": {
+      "f1": 0.6322033898305084,
+      "precision": 0.5006711409395973,
+      "recall": 0.8574712643678161
+     },
+     "75": {
+      "f1": 0.6355932203389831,
+      "precision": 0.5033557046979866,
+      "recall": 0.8620689655172413
+     },
+     "100": {
+      "f1": 0.6355932203389831,
+      "precision": 0.5033557046979866,
+      "recall": 0.8620689655172413
+     },
+     "125": {
+      "f1": 0.6372881355932204,
+      "precision": 0.5046979865771812,
+      "recall": 0.864367816091954
+     },
+     "150": {
+      "f1": 0.6372881355932204,
+      "precision": 0.5046979865771812,
+      "recall": 0.864367816091954
+     }
+    },
+    "mcc": 0.45002597184138565,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 985,
+      "committed_n": 985,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.16901408450704225,
+      "precision": 0.1218274111675127,
+      "recall": 0.27586206896551724
+     },
+     "10": {
+      "f1": 0.38309859154929576,
+      "precision": 0.27614213197969545,
+      "recall": 0.6252873563218391
+     },
+     "15": {
+      "f1": 0.47464788732394364,
+      "precision": 0.34213197969543147,
+      "recall": 0.774712643678161
+     },
+     "20": {
+      "f1": 0.5098591549295773,
+      "precision": 0.36751269035532996,
+      "recall": 0.832183908045977
+     },
+     "25": {
+      "f1": 0.5225352112676057,
+      "precision": 0.3766497461928934,
+      "recall": 0.8528735632183908
+     },
+     "30": {
+      "f1": 0.5309859154929577,
+      "precision": 0.38274111675126904,
+      "recall": 0.8666666666666667
+     },
+     "35": {
+      "f1": 0.5352112676056338,
+      "precision": 0.38578680203045684,
+      "recall": 0.8735632183908046
+     },
+     "40": {
+      "f1": 0.5394366197183098,
+      "precision": 0.38883248730964465,
+      "recall": 0.8804597701149425
+     },
+     "45": {
+      "f1": 0.5394366197183098,
+      "precision": 0.38883248730964465,
+      "recall": 0.8804597701149425
+     },
+     "50": {
+      "f1": 0.5394366197183098,
+      "precision": 0.38883248730964465,
+      "recall": 0.8804597701149425
+     },
+     "75": {
+      "f1": 0.5450704225352113,
+      "precision": 0.3928934010152284,
+      "recall": 0.8896551724137931
+     },
+     "100": {
+      "f1": 0.5450704225352113,
+      "precision": 0.3928934010152284,
+      "recall": 0.8896551724137931
+     },
+     "125": {
+      "f1": 0.5450704225352113,
+      "precision": 0.3928934010152284,
+      "recall": 0.8896551724137931
+     },
+     "150": {
+      "f1": 0.5450704225352113,
+      "precision": 0.3928934010152284,
+      "recall": 0.8896551724137931
+     }
+    },
+    "mcc": 0.28271918815081226,
+    "mcc_refused": null
+   }
+  },
+  {
+   "eval": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t1/evaluation.json",
+   "inputs": {
+    "ground_truth": {
+     "path": "inputs/vectors/references/mounds-reference.geojson",
+     "commit": "cfc10c133",
+     "head_commit": "cfc10c133"
+    },
+    "bounds": {
+     "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+     "commit": "8b52ab63b",
+     "head_commit": "8b52ab63b"
+    },
+    "detections": [
+     {
+      "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t1.geojson",
+      "commit": "09fe46a7f",
+      "n_features": 1256,
+      "committed_n": 1256,
+      "n_out_of_frame": 0,
+      "n_null_source_tile": 0
+     }
+    ]
+   },
+   "status": "scored",
+   "buffers": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    35,
+    40,
+    45,
+    50,
+    75,
+    100,
+    125,
+    150
+   ],
+   "reproduced": true,
+   "misses": [],
+   "n_out_of_frame_total": 0,
+   "vintage_off": {
+    "per_buffer": {
+     "5": {
+      "f1": 0.14547604967474867,
+      "precision": 0.09792993630573249,
+      "recall": 0.2827586206896552
+     },
+     "10": {
+      "f1": 0.3287995269071555,
+      "precision": 0.2213375796178344,
+      "recall": 0.639080459770115
+     },
+     "15": {
+      "f1": 0.4068598462448255,
+      "precision": 0.27388535031847133,
+      "recall": 0.7908045977011494
+     },
+     "20": {
+      "f1": 0.4364281490242461,
+      "precision": 0.29378980891719747,
+      "recall": 0.8482758620689655
+     },
+     "25": {
+      "f1": 0.44943820224719094,
+      "precision": 0.30254777070063693,
+      "recall": 0.8735632183908046
+     },
+     "30": {
+      "f1": 0.45416913069189835,
+      "precision": 0.3057324840764331,
+      "recall": 0.8827586206896552
+     },
+     "35": {
+      "f1": 0.45653459491425186,
+      "precision": 0.3073248407643312,
+      "recall": 0.8873563218390804
+     },
+     "40": {
+      "f1": 0.4600827912477824,
+      "precision": 0.30971337579617836,
+      "recall": 0.8942528735632184
+     },
+     "45": {
+      "f1": 0.4600827912477824,
+      "precision": 0.30971337579617836,
+      "recall": 0.8942528735632184
+     },
+     "50": {
+      "f1": 0.4600827912477824,
+      "precision": 0.30971337579617836,
+      "recall": 0.8942528735632184
+     },
+     "75": {
+      "f1": 0.4636309875813128,
+      "precision": 0.31210191082802546,
+      "recall": 0.9011494252873563
+     },
+     "100": {
+      "f1": 0.4636309875813128,
+      "precision": 0.31210191082802546,
+      "recall": 0.9011494252873563
+     },
+     "125": {
+      "f1": 0.4636309875813128,
+      "precision": 0.31210191082802546,
+      "recall": 0.9011494252873563
+     },
+     "150": {
+      "f1": 0.4636309875813128,
+      "precision": 0.31210191082802546,
+      "recall": 0.9011494252873563
+     }
+    },
+    "mcc": 0.20696725532605842,
+    "mcc_refused": null
+   }
+  }
+ ]
+}
