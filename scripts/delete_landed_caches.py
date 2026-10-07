@@ -63,6 +63,9 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lib_detection_paths import find_pass_geojsons  # noqa: E402
+
 #: The display name ``create_shared_context_cache`` gives every cache.
 DETECTOR_CACHE_DISPLAY_NAME = "batch-detect-shared-prefix"
 
@@ -157,8 +160,9 @@ def pass_states(out: Path) -> list[PassState]:
         root = out / arm / f"recovery_rd{rd}" if rd else out / arm
         pass_dirs = list(root.glob(f"*/run_{run}"))
         seen, cache = request_cache(pass_dirs[0]) if len(pass_dirs) == 1 else (False, None)
+        # Landed = a merged pass file exists (chunk files alone are not a pass).
         landed = bool(pass_dirs) and any(
-            p for p in pass_dirs[0].glob("detections_*.geojson") if "_chunk" not in p.name
+            "_chunk" not in p.name for p in find_pass_geojsons(pass_dirs[0])
         )
         live = pid_alive(out / "pids" / f"{name}.pid")
         in_flight = submitted_since_latest_lodge(log.read_text(errors="replace"), name)
