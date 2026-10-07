@@ -69,6 +69,10 @@ Usage::
     python scripts/modality_bridge_union.py --validate-originals /scratch/v \\
         --json-out /scratch/v/validation.json
 
+    # Is a built union still current (no pass re-landed since)?
+    python scripts/modality_bridge_union.py --check-record \\
+        outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.geojson
+
 Zero API. Run on sapphire beside the outputs.
 
 Created: 2026-10-07
@@ -518,6 +522,45 @@ def build_union(cell_dir: Path, k: int, layout: str, out_root: Path,
     return record
 
 
+def check_build_record(union_path: Path) -> list[str]:
+    """Check that a union still matches the passes it was built from.
+
+    A pass re-landed or a fragment added after the union was built (a late
+    recovery round, a resumed chunk) would leave the union, and everything
+    cut from it, describing passes that no longer exist on disk. The build
+    record beside the union (``union_k<K>.build.json``) holds the union's
+    digest and every pass file's path and digest; this re-resolves the
+    passes with the same layout and compares.
+
+    Args:
+        union_path: The union GeoJSON.
+
+    Returns:
+        Problems found (empty when the union is current).
+    """
+    build = union_path.with_name(union_path.stem + ".build.json")
+    if not build.exists():
+        return [f"{build}: no build record"]
+    rec = json.loads(build.read_text())
+    problems = []
+    if sha256_file(union_path) != rec.get("union_sha256"):
+        problems.append(f"{union_path}: bytes differ from the build record")
+    cell_dir = PROJECT_ROOT / rec["cell_dir"]
+    resolver = RESOLVERS[rec["layout"]]
+    for p in rec["passes"]:
+        try:
+            paths = resolver(cell_dir, p["run"])
+        except LayoutError as exc:
+            problems.append(f"{p['run']}: {exc}")
+            continue
+        if [_rel(x) for x in paths] != p["files"]:
+            problems.append(f"{p['run']}: pass files now {[_rel(x) for x in paths]}, "
+                            f"built from {p['files']}")
+        elif [sha256_file(x) for x in paths] != p["file_sha256"]:
+            problems.append(f"{p['run']}: a pass file's content changed since the build")
+    return problems
+
+
 def compare_union_files(built: Path, committed: Path,
                         tol_deg: float = COORD_TOL_DEG) -> dict[str, Any]:
     """Compare two union GeoJSONs feature by feature, in order.
@@ -717,6 +760,17 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     if argv is None:
         argv = sys.argv[1:]
+    if argv[:1] == ["--check-record"]:
+        # python modality_bridge_union.py --check-record UNION.geojson
+        if len(argv) != 2:
+            logger.error("usage: --check-record UNION.geojson")
+            return 2
+        problems = check_build_record(Path(argv[1]))
+        for p in problems:
+            logger.error("STALE: %s", p)
+        if not problems:
+            logger.info("build record current: %s", argv[1])
+        return 1 if problems else 0
     if argv[:1] == ["--validate-originals"]:
         # The validation gate: python modality_bridge_union.py
         #   --validate-originals SCRATCH [--json-out PATH] [LABEL ...]

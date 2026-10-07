@@ -30,6 +30,7 @@ from scripts.modality_bridge_union import (  # noqa: E402
     OverlapError,
     build_union,
     check_batch_run_dirs,
+    check_build_record,
     compare_union_files,
     gate_passes,
     main,
@@ -367,6 +368,33 @@ def test_batch_replica_with_decoy_chunks_rebuilds_the_legacy_union(tmp_path: Pat
         tmp_path / "out_b" / "verifier" / VERSION / f"union_k{k}.geojson",
         tmp_path / "out_l" / "verifier" / "cell_x" / f"union_k{k}.geojson")
     assert cmp["equal"] and rec_l["union_features"] == rec_b["union_features"]
+
+
+def test_build_record_detects_a_pass_changed_after_the_build(tmp_path: Path) -> None:
+    passes = _passes(1)
+    tiles = sorted({t for p in passes for _, ts in p for t in ts})
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps(tiles))
+    arm = tmp_path / "arm"
+    cell = arm / VERSION
+    main_file = _write(cell / "run_1" / _main_name(1), _fc(*passes[0][0]))
+    build_union(cell, 1, "batch", tmp_path / "out", manifest, write=True)
+    union = tmp_path / "out" / "verifier" / VERSION / "union_k1.geojson"
+    assert check_build_record(union) == []
+    assert main(["--check-record", str(union)]) == 0
+    # A late recovery round adds a fragment to the pass.
+    frag = _write(arm / "recovery_rd1" / VERSION / "run_1" / _main_name(1))
+    assert any("pass files now" in p for p in check_build_record(union))
+    frag.unlink()
+    frag.parent.rmdir()
+    # A pass file rewritten in place.
+    main_file.write_text(json.dumps(_fc([], tiles)))
+    assert any("content changed" in p for p in check_build_record(union))
+    assert main(["--check-record", str(union)]) == 1
+    # The union itself edited.
+    main_file.write_text(json.dumps(_fc(*passes[0][0])))
+    union.write_text(union.read_text().replace("vote_count", "vote_count "))
+    assert any("bytes differ" in p for p in check_build_record(union))
 
 
 def test_existing_union_is_not_overwritten(tmp_path: Path) -> None:
