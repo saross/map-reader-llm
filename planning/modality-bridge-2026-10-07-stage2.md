@@ -534,9 +534,9 @@ Stage 2.
    - Stage 1's File API uploads deleted;
    - the launcher's `status` shows every pass gone, with no live recovery
      fragment.
-2. **The code is current.** Run `git pull`. HEAD must include `2f805f3a9`
+2. **The code is current.** Run `git pull`. HEAD must include `c3864092f`
    (the launcher with the audit's fixes); check with
-   `git merge-base --is-ancestor 2f805f3a9 HEAD`.
+   `git merge-base --is-ancestor c3864092f HEAD`.
 3. **`bash scripts/modality-bridge-2026-10-07-stage2.sh validate-chain`**
    exits 0, with all four originals EQUAL. A failure means the chain or its
    inputs changed: stop.
