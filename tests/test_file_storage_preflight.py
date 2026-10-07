@@ -1183,3 +1183,91 @@ def test_run_batch_unit_sweeps_before_it_refuses(tmp_path, monkeypatch):
     assert message == "submit_error: reached the submit step"
     assert FILE_STORAGE_QUOTA_METRIC not in message
     assert client.files.deleted == ["files/finished"]
+
+
+# ── The detector releases a terminal job's request file (Run B audit F1) ──
+
+
+def _terminal_job(name: str, src: str | None = None) -> object:
+    """A batch job in a terminal state, optionally naming its source file."""
+    from types import SimpleNamespace
+
+    return SimpleNamespace(
+        name=name, state="JOB_STATE_SUCCEEDED",
+        src=SimpleNamespace(file_name=src) if src else None,
+    )
+
+
+def _released_unit(tmp_path, monkeypatch, *, resume=None, poll_job=None,
+                   complete=None):
+    """Run one stubbed ``run_batch_unit`` and return the released names."""
+    import scripts.lib_batch_api as lba
+
+    client = _FakeClient([])
+    ctx = lba.BatchUnitContext(
+        unit_key="T1.0/run_1", unit={}, output_file=tmp_path / "unit.geojson",
+        jsonl_path=_chunk(tmp_path, "unit.jsonl", 4096),
+        submitted_keys=["tile_001.png"], tile_paths=[tmp_path / "tile_001.png"],
+        prompt_config={}, model_name="gemini-3-flash", system_instruction="sys",
+        config_version="v1", line_count=1,
+    )
+    released: list[str] = []
+    monkeypatch.setattr(lba, "prepare_batch_unit", lambda **kwargs: ctx)
+    monkeypatch.setattr(lba, "submit_batch_unit",
+                        lambda *a, **k: ("batches/j1", "files/req1"))
+    monkeypatch.setattr(lba, "poll_batch_job",
+                        lambda *a, **k: poll_job or _terminal_job("batches/j1"))
+    monkeypatch.setattr(lba, "complete_batch_unit",
+                        complete or (lambda *a, **k: (True, "ok", 1.0)))
+    monkeypatch.setattr(lba, "deregister_upload",
+                        lambda name, **k: released.append(name))
+    result = None
+    try:
+        result = lba.run_batch_unit(
+            unit={}, config={}, output_dir=tmp_path / "out", client=client,
+            model_name="gemini-3-flash", system_instruction="sys", examples=[],
+            config_version="v1", resume_job_name=resume,
+        )
+    except RuntimeError:
+        pass
+    return released, result
+
+
+def test_run_batch_unit_releases_its_upload_once_terminal(tmp_path, monkeypatch):
+    """The upload this process made is deregistered after completion."""
+    released, result = _released_unit(tmp_path, monkeypatch)
+    assert result == (True, "ok", 1.0)
+    assert released == ["files/req1"]
+
+
+def test_a_resumed_unit_releases_its_jobs_source(tmp_path, monkeypatch):
+    """A resumed job's upload name is read from the job's own ``src``."""
+    released, _ = _released_unit(
+        tmp_path, monkeypatch, resume="batches/old",
+        poll_job=_terminal_job("batches/old", src="files/req2"),
+    )
+    assert released == ["files/req2"]
+
+
+def test_a_failed_completion_still_releases(tmp_path, monkeypatch):
+    """The job is terminal either way, so the release is in a ``finally``."""
+    def _boom(*a, **k):
+        raise RuntimeError("download failed")
+
+    released, result = _released_unit(tmp_path, monkeypatch, complete=_boom)
+    assert result is None
+    assert released == ["files/req1"]
+
+
+def test_a_live_jobs_input_is_never_released(monkeypatch):
+    """A non-terminal job keeps its registry protection."""
+    from types import SimpleNamespace
+
+    import scripts.lib_batch_api as lba
+
+    released: list[str] = []
+    monkeypatch.setattr(lba, "deregister_upload",
+                        lambda name, **k: released.append(name))
+    live = SimpleNamespace(name="batches/j", state="JOB_STATE_RUNNING", src=None)
+    assert lba.release_terminal_job_input(live, "files/x") is None
+    assert released == []

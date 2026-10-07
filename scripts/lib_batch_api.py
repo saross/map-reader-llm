@@ -621,6 +621,43 @@ def deregister_upload(
         )
 
 
+def release_terminal_job_input(job: Any, uploaded_name: str | None = None) -> str | None:
+    """Deregister a terminal batch job's request file from the shared registry.
+
+    The file itself is left for :func:`sweep_stale_files_safe` (called by
+    the pre-lodge storage preflight) to delete when space is needed; the
+    sweep never touches the input of a non-terminal job, whatever the
+    registry says. A resumed job's upload name is read from the job's own
+    ``src``.
+
+    Args:
+        job: The batch job, in a terminal state.
+        uploaded_name: The name returned at upload, when this process
+            uploaded it.
+
+    Returns:
+        The file name released, or ``None`` when none could be determined
+        or the job is not terminal (then nothing is released).
+    """
+    if _get_state_name(getattr(job, "state", "")) not in _TERMINAL_STATES:
+        logger.warning("Not releasing the input of %s: job not terminal",
+                       getattr(job, "name", "?"))
+        return None
+    name = uploaded_name
+    if not name:
+        src = getattr(job, "src", None)
+        name = src if isinstance(src, str) else getattr(src, "file_name", None)
+    if not name:
+        return None
+    try:
+        deregister_upload(str(name))
+    except Exception as exc:  # noqa: BLE001 - release is best-effort
+        logger.warning("Could not release %s from the registry: %s", name, exc)
+        return None
+    print(f"  Released request file {name} (job terminal)", flush=True)
+    return str(name)
+
+
 def cleanup_batch_files(
     client: Any,
     file_names: list[str],
@@ -3447,6 +3484,7 @@ def run_batch_unit(
     print(f"  Built JSONL: {ctx.line_count} lines ({ctx.jsonl_path})")
 
     # Phase 2: Submit (or resume existing job)
+    uploaded_name: str | None = None
     if resume_job_name:
         job_name = resume_job_name
         print(f"  Resuming batch job: {job_name}")
@@ -3464,7 +3502,7 @@ def run_batch_unit(
             preflight_file_storage(
                 client, [ctx.jsonl_path], sweep=make_safe_sweep(client),
             )
-            job_name, _uploaded_name = submit_batch_unit(
+            job_name, uploaded_name = submit_batch_unit(
                 ctx, client, on_submit,
             )
         except Exception as e:
@@ -3487,8 +3525,17 @@ def run_batch_unit(
     except Exception as e:
         return False, f"poll_error: {e}", 0.0
 
-    # Phase 3: Complete
-    return complete_batch_unit(ctx, client, completed_job)
+    # Phase 3: Complete. The job is terminal here whatever happens next, so
+    # its request file is no longer in use: release it from the shared
+    # registry afterwards so a later preflight's safe sweep can reclaim the
+    # space, as run_pv does since audit finding M6. Until 2026-10-07 the
+    # detector never released its uploads, so a campaign's request files
+    # stayed protected for the registry's 48 h and a multi-pass launch ran
+    # into the File API cap (Run B pre-launch audit, finding F1).
+    try:
+        return complete_batch_unit(ctx, client, completed_job)
+    finally:
+        release_terminal_job_input(completed_job, uploaded_name)
 
 
 # ─────────────────────────────────────────────────────────────────────
