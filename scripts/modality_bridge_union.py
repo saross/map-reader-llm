@@ -161,8 +161,12 @@ def _merged_pass_file(run_dir: Path, version: str, number: int) -> Path | None:
             (a chunk has not landed, so the detector withheld the merge), or
             a non-chunk detections file under any other name.
     """
+    from scripts.lib_detection_paths import find_pass_geojsons
+
     expected = f"detections_{version}_run{number:02d}.geojson"
-    found = sorted(run_dir.glob("detections_*.geojson"))
+    # The project's one resolver (both naming conventions, and the fine
+    # filter that ignores derived files such as detections_dedup.geojson).
+    found = find_pass_geojsons(run_dir)
     chunks = [p for p in found if "_chunk" in p.name]
     merged = [p for p in found if "_chunk" not in p.name]
     if not merged:
