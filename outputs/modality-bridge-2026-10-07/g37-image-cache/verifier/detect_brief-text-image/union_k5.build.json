@@ -1,6 +1,6 @@
 {
  "script": "scripts/modality_bridge_union.py",
- "git_head": "a3ea389c257be3233a565ccd3c962099529330e1",
+ "git_head": "60aceebdd225e6061e36bd2a045ff615a0f79f9b",
  "layout": "batch",
  "cell_dir": "outputs/modality-bridge-2026-10-07/g37-image-cache/detect_brief-text-image",
  "k": 5,
@@ -23,7 +23,8 @@
    ],
    "processed_tiles": 1398,
    "raw_detections": 1649,
-   "dedup_detections": 582
+   "dedup_detections": 582,
+   "common_scope_detections": 536
   },
   {
    "run": "run_2",
@@ -38,7 +39,8 @@
    ],
    "processed_tiles": 1398,
    "raw_detections": 1668,
-   "dedup_detections": 605
+   "dedup_detections": 605,
+   "common_scope_detections": 564
   },
   {
    "run": "run_3",
@@ -53,7 +55,8 @@
    ],
    "processed_tiles": 1398,
    "raw_detections": 1673,
-   "dedup_detections": 584
+   "dedup_detections": 584,
+   "common_scope_detections": 539
   },
   {
    "run": "run_4",
@@ -68,7 +71,8 @@
    ],
    "processed_tiles": 1398,
    "raw_detections": 1656,
-   "dedup_detections": 592
+   "dedup_detections": 592,
+   "common_scope_detections": 546
   },
   {
    "run": "run_5",
@@ -83,8 +87,19 @@
    ],
    "processed_tiles": 1398,
    "raw_detections": 1659,
-   "dedup_detections": 596
+   "dedup_detections": 596,
+   "common_scope_detections": 552
   }
  ],
- "written": false
+ "written": true,
+ "union": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/union_k5.geojson",
+ "union_sha256": "43e6a9544134d5e7b96f53ad9540555bd7295cf4c594b62c3c9811b3209665ef",
+ "union_features": 644,
+ "vote_histogram": {
+  "1": 91,
+  "2": 34,
+  "3": 31,
+  "4": 33,
+  "5": 455
+ }
 }
