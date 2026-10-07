@@ -1,7 +1,7 @@
 # Legacy-signature review queue
 
-> **Last revised**: 2026-09-16 (PI ruling: all 50 legacy-stamped rows go
-> to the queue, not just the 23 that drifted). See
+> **Last revised**: 2026-10-07 (Part B's checkboxes corrected: they were
+> ticked in error by the Part A commit; Part B is unsigned). See
 > [§ Changelog](#changelog) for revision history.
 
 Until 2026-09-16 one field, `manually_verified_at`, served both authoring and
@@ -150,8 +150,8 @@ from the diff at that commit. **CLAIM** marks a batch that altered a finding;
 
 Fields moved: `_note` x1, `outcome` x1
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `family-bh-fdr-confirmatory`
 - `phase3c-diversity-calibration`
@@ -162,8 +162,8 @@ Fields moved: `_note` x1, `outcome` x1
 
 Fields moved: `_prereg_rationale` x7, `deviations` x4, `preregistered` x7
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `e43-matched-temperature`
 - `h1-cmt0106-pooled-modality`
@@ -179,8 +179,8 @@ Fields moved: `_prereg_rationale` x7, `deviations` x4, `preregistered` x7
 
 Fields moved: `outcome` x4
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `55map-canonical-leaderboard-50m`
 - `55map-canonical-leaderboard-mcc-50m`
@@ -193,8 +193,8 @@ Fields moved: `outcome` x4
 
 Fields moved: `outcome` x1, `tie_set` x1
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `diversity-dividend-384`
 
@@ -204,8 +204,8 @@ Fields moved: `outcome` x1, `tie_set` x1
 
 Fields moved: `outcome` x4, `tie_set` x4
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `flash35-model-roles`
 - `h12-v2-hp-hn-ratio`
@@ -218,8 +218,8 @@ Fields moved: `outcome` x4, `tie_set` x4
 
 Fields moved: `outcome` x3, `tie_set` x1
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `era1-leaderboard`
 - `n1-baseline-matrix-384`
@@ -231,8 +231,8 @@ Fields moved: `outcome` x3, `tie_set` x1
 
 Fields moved: `_conditions_note` x1, `conditions_compared` x1
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `sensitivity-mde-r2`
 
@@ -242,8 +242,8 @@ Fields moved: `_conditions_note` x1, `conditions_compared` x1
 
 Fields moved: `outcome` x1
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `estimated-correction-r2`
 
@@ -253,8 +253,8 @@ Fields moved: `outcome` x1
 
 Fields moved: see the diff
 
-- [x] Walkthrough prepared
-- [x] PI signed
+- [ ] Walkthrough prepared
+- [ ] PI signed
 
 - `era1-single-pass-baseline-matrix`
 - `tile-size-sweep`
@@ -273,6 +273,16 @@ disagree:
 1. **Anything that looks wrong, weak or over-stated.**
 
 ## Changelog
+
+### 2026-10-07 — Part B unticked: never walked through, never signed
+
+Commit `f307c1932` ("the PI signs Part A of the legacy queue, 24 of 25")
+ticked "Walkthrough prepared" and "PI signed" on 17 groups: the eight Part A
+groups it signed and, in error, all nine Part B groups (B1–B9, 25 rows). The
+register was right throughout: `results/run-analyses.json` records all 25
+Part B rows as `unsigned`, and no commit or changelog entry records a Part B
+walkthrough. The boxes are reset to unticked. Found in Session 163 while
+listing the rows awaiting the PI's signature.
 
 ### 2026-09-17 — A8 signed after separate review; Part A complete
 
