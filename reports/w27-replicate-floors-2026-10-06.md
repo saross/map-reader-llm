@@ -573,13 +573,13 @@ it.
 | R7.2-30: B-N5-carried above T03-oracle, +0.0104 (L725–727) | p = 0.0177 | CROSS about 4 months | 0.011–0.013 | **Inside the cross-execution floor:** state as "above by 0.010, inside the cross-date band". |
 | R7.2-31: the image cell holds the highest Gemini 3 tile-MCC (0.711) (L727–729) | untested; B-N3-oracle 0.713 and B-N10-oracle 0.712 exceed it | CROSS | — | **Restrict to carried cells.** |
 | R7.2-32a: B at N = 5 "above" its own N = 10 carried point (L729–733) | +0.0006, p = 0.72 | SAME | 0.005 | **A tie**: say "equal to". |
-| R7.3-04, D1: arm 1 against B N = 5, +0.0056, p = 0.35 (L768–772) | r2 +0.0048, p = 0.27 | CROSS 3–6 days | 0.011–0.013 | **Tie, inside the floor** (as the draft reads it). |
+| R7.3-04, D1: arm 1 against B N = 5, +0.0056, p = 0.35 (L768–772) | r2 +0.0048, p = 0.27 | CROSS 3–6 days (D48: within floor) | 0.0063 | **Tie, inside the floor** (as the draft reads it). |
 | R7.3-05a/15: arm 2 above the incumbent stack +0.0325; above B's N = 10 oracle +0.0267 / +0.0311 (L772, L805–810) | p < 0.0001 | CROSS 3–6 days | 0.011–0.013 | **Stand** (about twice the floor); the headline survives. |
 | R7.3-05b/06: the verifier axis, +0.0234 (fourth against B K = 10) and +0.0270 (arm 2 against arm 1) | p < 0.0001 | same proposer; verifiers 4–5 days apart / same day | 0.001 (verifier band) + 0.005 | **Stand.** |
-| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days; K = 5 against K = 10 | 0.011–0.013 | **Test-dependent and inside the floor:** report both tests and call it unresolved, not null. |
+| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days (D48: within floor); K = 5 against K = 10 | 0.0072 | **D48: clears narrowly (1.4 times) and is test-dependent:** the "not significant" reading does not hold on D42's test; report both tests and call it a small proposer-axis difference, not a null. |
 | R7.3-07: the 3.7 verifier's transfer tax "only +0.0043" (L779–781) | canonical adjusted p = 0.000162; r2 tile-swap +0.0044, p < 0.0001 | SAME (nested threshold) | own floor 0.0020 (upper 0.0033) | **§ 6b: a small real effect**, 2.1 times its own floor; the earlier screen applied an independent-run floor to a contrast that shares its passes. Keep "small", drop "only". |
 | R7.3-18a/b: saturation by N = 3 for the all-3.7 stack (−0.0023) but not for arm 1 (+0.0076) (L818–821) | p = 0.12; adjusted p = 0.000162 | SAME (nested) | 0.007 (N = 3) | **18a a tie; 18b at the floor** (0.0076 against 0.007): "replicates" overstates it. |
-| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS | 0.011–0.013 | **Inside the cross-execution floor.** |
+| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS 3–6 days (D48: within floor) | 0.0055 | **D48: clears (1.9 times).** |
 | R6-12a: doubling MIN passes, UPL above TM-k3 by +0.017 (L536–538) | p < 0.0001 | MIXED: the gain is carried by passes 6–10, 54 days later | 0.011–0.013 | **Clears the floor, but is confounded with execution**: the proposer-only consensus of the June passes alone scores 0.02 to 0.03 above the April passes (§ 4). Say "ten passes from two executions". |
 | R6-12b: UPL significantly below HIGH, −0.0106, "closing about half the gap" (L535–542) | r2 −0.0106, p = 0.0165, BH 0.021 | MIXED against SAME-DAY | 0.011–0.013 | **Inside the floor**: "a priced trade, not a tie" is not resolved. |
 | R9-03: the vote-threshold direction reversed between GS and deployment (L968–972) | GS p = 0.11–0.43 against 55-map BH ≤ 0.001 | CROSS corpora and dates; the 55-map k3 arms are the 06-06 shells | — | **Stands as stated** (a resolved difference on deployment against a tie on GS), with the verifier-date caveat. |
@@ -592,22 +592,19 @@ floors, on the § 6b floors by about 1.7 to 3 times. Under § 6b one verdict
 reverses: the 3.7 verifier's "+0.0043" tax (R7.3-07) is a small real effect
 against its own nested floor, not noise. Two hold only narrowly: B beats A at
 the carried primaries (R7.2-13a, at the floor's upper bound) and T03's
-3-of-5 over 4-of-5 (R7.1-09a, 1.3 times a borrowed floor). Five sit at or
+3-of-5 over 4-of-5 (R7.1-09a, 1.3 times a borrowed floor). Four sit at or
 inside a floor and need rewording as output differences or ties: the oracle
 saturation residue (R7.2-16b), B N = 5 "above" N = 10 (R7.2-32a), arm 1's
-non-saturation (R7.3-18b, inside its upper bound), the proposer-axis null
-(R7.3-06b, which is also test-dependent) and the uplift "half the gap"
-(R6-12b). Two need a correction of fact (R7.2-15's sign at N = 1;
+non-saturation (R7.3-18b, inside its upper bound) and the uplift "half the
+gap" (R6-12b). The proposer-axis "null" (R7.3-06b) is reworded the other way:
+under D42's test and D48's floor it is a small difference, not a null. Two need a correction of fact (R7.2-15's sign at N = 1;
 R7.2-11/12's chain dependence) and one a restriction (R7.2-31). Lesson (i)
 and every 3-of-5-against-4-of-5 contrast mix verifier dates; on text MIN a
 one-date reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the
 claims stand with the date mix named; Run A (T03, about US$10) settles the
-narrowest of them. **Open, for the PI:** three claims compare runs 3 to 6
-days apart (R7.3-04, R7.3-06b, R7.3-19). If § 6a's same-week control (June
-6 against June 11, flips at the re-invocation rate) governs such gaps,
-R7.3-06b and R7.3-19 clear their within floors (1.4 and 1.9 times) and
-R7.3-04 stays a tie; if the 54-day vintage term applies, all three stay
-inside.
+narrowest of them. **Ruled (D48, 2026-10-07):** runs at most seven days apart take the
+same-week floor, so R7.3-06b and R7.3-19 clear their within floors (1.4 and
+1.9 times) and R7.3-04 stays a tie.
 
 ## 8. What follows
 
@@ -635,6 +632,13 @@ inside.
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-07 (latest) — D48 applied to the three short-gap claims
+
+PI ruling D48: runs at most seven days apart take the same-week floor.
+R7.3-04 stays a tie; R7.3-06b and R7.3-19 clear (1.4 and 1.9 times); § 7.2's
+open question becomes the ruling. No other row changes. Commit: see git log
+for this entry's date.
 
 ### 2026-10-07 (later) — § 6b: the 55-map floors from every pass subset
 

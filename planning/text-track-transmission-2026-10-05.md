@@ -238,7 +238,7 @@ in brackets (§ 4).
 Order: metadata and register → low-level records → intermediate documents
 → paper text, so each layer cites a corrected one.
 
-- [ ] W1.1 Metadata and register labels (W4's fixes land here first).
+- [x] W1.1 DONE 2026-10-07 (S162): the two register rows that quoted retired bootstrap p-values (`h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`) now quote the D42 permutation values, and `era1-leaderboard` carries the replicate group 21 note, all as approved by the PI (`69df3b5d4`; draft `planning/w11-register-amendments-draft-2026-10-06.md`); manifests regenerated (`c117cd012`). Was: Metadata and register labels (W4's fixes land here first).
 - [x] W1.2 A new erratum stating what a text-only request sends, correcting
   E86's and E88's descriptions (the originals stay as written) and
   recording the Phase 2c text null; OSF pointer updated. Done 2026-10-05:

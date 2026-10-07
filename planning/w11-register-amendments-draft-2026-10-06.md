@@ -3,7 +3,7 @@
 > **Last revised**: 2026-10-07 (§ 3 added: era1-leaderboard, replicate group 21). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: DRAFT, awaiting the PI's approval of the exact text.** Tracker
+**Status: APPROVED by the PI on 2026-10-07 (all three texts, as shown in full in the session) and WRITTEN (`69df3b5d4`; manifests `c117cd012`).** Tracker
 item W1.1 (`planning/text-track-transmission-2026-10-05.md`). Both rows are
 UNSIGNED in `results/run-analyses.json` (`signature.status: unsigned`), so,
 as for C-05 (`planning/era1-c05-amendments-draft-2026-10-06.md`), each
