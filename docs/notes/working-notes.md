@@ -37511,3 +37511,222 @@ per tool, because nothing makes a new generator inherit it.
 **Related.** Obs 383, Obs 394, Obs 502 (another check that passed for
 reasons it did not test); the S159 close's carry-forward, "Generators must
 read committed inputs only".
+
+## Observation 505: Consensus shrinks the gold-standard replicate floor only modestly — by about 30 % at 4-of-5 — and not at all at unanimity (Session 162, 2026-10-06)
+
+**Context.** Candidate (i) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07. Rulings D45 and D46 require a configuration claim
+to clear a run-to-run floor, the 95th percentile of replicate |ΔF1|. W2's
+single-pass floors were 0.034 on Era-1 (340 tiles) and 0.030 on the
+384 px gold standard (487 tiles)
+(`planning/w27-configuration-level-testing-2026-10-05.md` § 2). Most of
+the paper's cells are consensus cells, so W2.7 measured consensus floors
+from disjoint K-subsets of existing 10- and 30-pass pools, with no API
+call (`reports/w27-replicate-floors-2026-10-06.md` § 3;
+`gs_consensus_pairs.csv` in its scripts directory).
+
+**What was established.**
+
+1. **A modest shrink below unanimity.** At K = 5, t = 4 the floor is
+   0.024 on Era-1 (105 pairs) and 0.021 on the 384 px corpus (34 pairs),
+   about 30 % below the single-pass floors. Of the 30 (corpus, K, t) cells
+   below unanimity, 29 sit under their single-pass floor; Era-1 K = 10,
+   t = 9 (0.038) is the exception (§ 3 table).
+2. **No shrink at unanimity.** At t = K the floor is at the single-pass
+   size or above it in five of six (corpus, K) cells: Era-1 K = 3 0.032,
+   K = 5 0.040, K = 10 0.058; 384 px K = 3 0.047, K = 5 0.030. The sixth,
+   384 px K = 10 (0.025), rests on six pairs. A unanimity cell keeps few
+   detections, so one pass's disagreement moves its F1 more than it moves
+   a looser cell's (§ 3 reading).
+3. **The tile-swap test runs at its nominal rate on consensus
+   replicates.** It rejects 111 of the 2,216 within-execution pairs
+   (5.0 %) at α = 0.05, against 1.6 to 3.5 % between single passes, so a
+   significant p between two consensus cells is still not, alone, evidence
+   that their configurations differ.
+4. **The first reading said the opposite.** The report's first § 3 bullet
+   said consensus "does not shrink" the floor, and was corrected the same
+   day (report § Changelog, "§ 3's first reading corrected"). The S162
+   close block's summary of the work still carries the first wording
+   ("consensus does not shrink the single-pass floor, unanimity widens
+   it").
+
+**Reading.** Pooling passes buys less stability than intuition suggests.
+At the 4-of-5 and unanimity thresholds the boards mostly use, a consensus
+cell is at best about 30 % quieter than a single pass, and at unanimity no
+quieter. Obs 362's working figure for the gold standard's resolving power,
+about ±0.03 F1, is now a measured floor at most of those operating points.
+
+**What follows.**
+
+1. **Quote the floor at the claim's own (K, t)**, not the single-pass
+   figure. D46's gold-standard floors (report § 3): Era-1 K = 5 t = 4
+   0.024, t = 5 0.040; K = 10 t = 8 0.030, t = 10 0.058; 384 px K = 5
+   t = 4 0.021, t = 5 0.030.
+2. **Do not cite "consensus does not shrink the floor"** from the S162
+   close block; cite § 3 as corrected.
+3. **These are within-execution floors.** Pairs from different dates on
+   the same corpora can be wider (Obs 497; report § 4), and the 55-map
+   board has floors of its own (Obs 506).
+
+**Related.** Obs 362 (the gold standard resolves about ±0.03), Obs 498
+(the retired bootstrap over-rejected on replicate pairs), Obs 499 (D45's
+two-part test, applied), Obs 497, Obs 506; rulings D45-D47
+(`planning/pi-decisions-2026-09-20.md`).
+
+## Observation 506: On the 55-map corpus the verifier absorbs most of the proposer's cross-date drift and drifts a little itself — the 3-of-5 cells mix verifier dates, and a one-date reading moves their contrast by 0.001–0.002 (Session 162, 2026-10-06)
+
+**Context.** Candidates (j) and (k) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07 and written as one entry because together they split
+the board's execution component into its two stages. Obs 497 showed that
+the same request sent on two dates can give systematically different
+outputs. W2.7 asked how much of that reaches the 55-map board's
+proposer-verifier cells (`reports/w27-replicate-floors-2026-10-06.md`
+§§ 4, 6 and 6a; scripts and raw outputs in its scripts directory). Two
+free natural experiments exist. The uplift family (UPL) is TM's five
+passes of 2026-04-18 plus five of 2026-06-11, with every candidate of three
+or more votes of the ten re-verified on 2026-06-11. And the board's 3-of-5
+cells (TH7, T03 and TM at k3) add a vote-3 shell verified on 2026-06-06,
+40 to 49 days after their 4-of-5 legs (§ 7.2).
+
+**What was established.**
+
+1. **The proposer drifted.** As proposer-only consensus at 50 m, UPL's two
+   halves differ at K = 5 by 0.018 (t = 3), 0.025 (t = 4) and 0.030
+   (t = 5), all p ≤ 0.0001, the June half scoring higher with about 700
+   to 940 fewer detections (§ 4 table; `gs_consensus_pairs.csv`, group
+   12). The within-execution single-pass median on that corpus is 0.003.
+2. **Through a fixed verifier most of it vanishes.** Rebuilt with the
+   board's rung mechanism, both halves inheriting the June-11 verifier
+   probabilities, the same halves differ by 0.003 (k3), 0.004 (k4) and
+   0.006 (k5), none significant (p 0.32, 0.35, 0.24), the June cells
+   holding 53 to 89 fewer detections; the sign changes between thresholds
+   (§ 6; `subset_pairs.csv`, family UPL). The verifier re-scores each
+   candidate on its crop, so a candidate one execution proposes and the
+   other does not changes the cell only if the verifier also accepts it.
+3. **The verifier drifted too, a little.** Re-read with their June-11
+   probabilities (matched within 2 m), TM's April-verified 4-of-5
+   candidates move TM-k4 from 0.7826 to 0.7867, +0.0041, tile-swap
+   p = 0.038 (+0.0036 on byte-identical crops, +0.0069 at a 5 m match);
+   true positives 3,476 → 3,495, false positives 389 → 372 (§ 6a;
+   `vdate-results.json`). At 0.15, 3.8 to 4.1 % of decisions flip across
+   the dates against 2.4 to 2.5 % in the same-week control, balanced in
+   direction (148 up, 146 down). Re-weighted for the two sets' different
+   probability mix, the excess shrinks to about 0.4 to 0.9 percentage
+   points (`verifier-date-tm-check.md` § 2). The p-values are not
+   corrected for the several variants tested.
+4. **The mixed-date contrast survives a one-date reading on TM.** With
+   every TM candidate read at its June-11 probability, k3 − k4 at 0.15
+   moves from +0.0275 to +0.0264 and oracle against carried from +0.0277
+   to +0.0255, both still p < 0.0001: mixing dates inflated them by 0.001
+   to 0.002 (§ 6a).
+5. **Drift is not uniform across configurations.** On the gold standard,
+   17 to 23 days apart, the image track and text MIN at T = 0.0 drifted;
+   text HIGH T0.7, text MIN T0.3 and text HIGH T0.0 did not (§ 4, groups
+   1, 2 and 4 to 7). Obs 497's serving-drift reading applies to some
+   settings, not to all.
+
+**Reading.** The two-stage architecture is more robust to execution drift
+than its proposer: on the one 54-day pair available, the verifier turns a
+0.018-0.030 proposer gap into a 0.003-0.006 cell gap. But the verifier is a
+hosted preview model too, and it moved by a few thousandths of F1 between
+April and June on identical requests. The cross-execution floor for a
+55-map board claim at N = 5 therefore has a proposer part (0.006, measured
+on the one pair), a verifier-vintage part (0.004 to 0.007) and the
+same-week re-invocation band (about 0.001); the report puts the total at
+about 0.011 to 0.013 (§ 6).
+
+**What follows.**
+
+1. **The k3 cells are mixed-verifier-execution cells**; name the date mix
+   wherever a 3-of-5 against 4-of-5 contrast is quoted. TM is checked; TH7
+   and T03 have no later re-verification of their 4-of-5 sets. TH7's
+   +0.022 is far above a 0.001-0.002 date effect. T03's +0.009 is the one
+   contrast close enough that a same-date re-verification of its
+   vote-3-and-above set (13,945 candidates, about US$10; optional under
+   D47) would settle it.
+2. **April-verified cells (TH7-k4, T03-k4, TM-k4, IM) carry a vintage
+   component** of a few thousandths of F1 against cells verified later
+   (§ 6a).
+3. **A range in the report overstates its own table.** §§ 4 and 6 give
+   UPL's proposer-only gap as 0.020 to 0.030 "at every threshold, all
+   p < 0.0001". The § 4 table supports that at t = 4 and 5 at 50 m; at
+   t = 3 the gap is 0.018 at 50 m and 0.011 at 20 m (p = 0.0013), and at
+   K = 5, t = 2 it is 0.001 at 20 m (p = 0.70; `gs_consensus_pairs.csv`).
+   The conclusion stands; the range should read 0.018 to 0.030 at 50 m.
+4. **One flagged pattern is unexamined.** Cross-date up-flips lie nearer
+   reference mounds than down-flips (56 % against 43 % within 50 m of an
+   r2 point), while the same-week control runs the other way on only 18
+   and 17 flips (`verifier-date-tm-check.md` § 2). If it holds, the June
+   verifier was slightly better, not merely different.
+
+**Related.** Obs 497 (same request, different dates), Obs 354 (the T = 0
+verifier flips about 3 % of candidates per re-invocation, negligibly at
+F1), Obs 364 (the uplift; § 7.2 rows R6-12a and R6-12b now read its gain as
+confounded with execution and its "half the gap" as inside the floor),
+Obs 505; rulings D45-D47 (`planning/pi-decisions-2026-09-20.md`).
+
+## Observation 507: The April 2026 consensus sweeps were built in lexicographic pass order, and greedy clustering makes order matter — a numeric-order rebuild of the same passes moves feature counts by up to about 1 % (Session 162, 2026-10-06)
+
+**Context.** Candidate (l) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07. Before reading any floor, W2.7 required its
+in-memory consensus builder to reproduce four committed
+`consensus/consensus_t<t>.geojson` sweeps
+(`reports/w27-replicate-floors-2026-10-06.md` § 2; `gs_gates.json` and
+`gs_run.log` in its scripts directory).
+
+**What was established.**
+
+1. **Exact reproduction needs the original order.** The two three-pass
+   pools reproduce at every threshold in numeric order (for three passes
+   the two orders coincide). The 30-pass and 10-pass pools
+   (`pv-diag-384::flash-high-text-n5-text-t0.7`,
+   `pv-diag-384::flash-minimal-text-n30-t07-text-t0.3`) reproduce at all
+   30 and 10 thresholds only with the passes in lexicographic run order
+   (`run_1, run_10, run_11, …, run_2, …`), which is how the April 2026
+   builds iterated `run_*` directories (§ 2; `gs_run.log` lines 1 and 3).
+2. **The current builder orders numerically.** `resolve_pass_files` in
+   `scripts/merge_passes.py` returns the passes `for pass_num in
+   sorted(pass_ids)`.
+3. **The effect is small but not nil.** Greedy star clustering seeds
+   clusters in pass order, so a numeric-order rebuild moves feature counts
+   by about 0.3 to 1 % at most thresholds; for the 30-pass T0.7 HIGH pool,
+   11,771 → 11,731 at t = 1 and 1,991 → 2,006 at t = 5 (§ 2; the rebuilt
+   counts are recorded in the report's prose, not in a committed output).
+   The builder's own docstring calls the order effect "minimal at the
+   20 m tolerance" (`cluster_across_passes`); this is its first
+   measurement.
+4. **The provenance record cannot recover the order.**
+   `build_pass_provenance` stores each pass file's path and blob hash
+   sorted by `(pass_id, path)`, so it pins the input set, not the order the
+   clustering consumed it in.
+5. **Nothing committed moves; a regeneration would.** No committed result
+   is affected, and the order should be pinned before any committed union
+   is rebuilt (§ 2; § 8 item 4).
+
+**Reading.** This is Obs 426's mechanism one layer down. There, E82's
+batch scoring had consumed passes lexicographically and the replay
+numerically, and gates comparing per-run lists or rounded means failed
+correct data. Here the order enters the geometry itself: which detection
+seeds a cluster decides which neighbours join it. In both cases the
+divergence starts at ten passes, where lexicographic and numeric order
+first differ. Replay fidelity needs the consumption order recorded, not
+only the input set.
+
+**What follows.**
+
+1. **Pin the order before regenerating a committed union** (report § 8
+   item 4; the S162 close's carry-forward): record the consumption order
+   beside the pass provenance, and have the builder replay it.
+2. **The effect on F1 is not measured.** A change of 0.3 to 1 % in
+   feature count at fixed passes is a third source of variation within a
+   configuration, beside pass sampling and execution date; whether it is
+   small against the floors of Obs 505 is untested, and one re-scored
+   numeric-order rebuild would say.
+3. **The docstring's "minimal" should cite this measurement.**
+
+**Related.** Obs 426 (the E82 pass-order and rounding-boundary family),
+Obs 419 (the D6 resolver audit; Obs 426 traces numeric replay to that
+resolver), Obs 505, Obs 502 (a rounding path as a source of error).
