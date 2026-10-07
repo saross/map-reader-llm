@@ -241,3 +241,60 @@ def test_launch_leg_refuses_while_the_previous_attempt_is_alive(tmp_path: Path) 
         assert not (out / "stage2" / "logs" / "verify-g37-text-g3.log").exists()
     finally:
         live.kill()
+
+
+# ---------------------------------------------------------------------------
+# Re-check R1 and nits: per-leg band override, no-union message, repair all
+# ---------------------------------------------------------------------------
+
+
+def _build_record(out: Path, arm: str, version: str, k: int, n: int) -> None:
+    d = out / arm / "verifier" / version
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"union_k{k}.build.json").write_text(json.dumps({"union_features": n}))
+
+
+def test_verify_without_a_union_says_so(tmp_path: Path) -> None:
+    proc = _run("verify", "g37-text:g3", out=tmp_path)
+    assert proc.returncode == 1
+    assert "no union built yet" in proc.stdout
+    assert "outside the review band" not in proc.stdout
+
+
+def test_a_blanket_band_ok_is_refused(tmp_path: Path) -> None:
+    _build_record(tmp_path, "g37-text", "detect_brief-text", 5, 950)  # out of band
+    env_run = lambda band_ok, leg: subprocess.run(  # noqa: E731
+        ["bash", str(SCRIPT), "verify", leg], capture_output=True, text=True,
+        cwd=PROJECT_ROOT, timeout=120,
+        env=dict(os.environ, PY=sys.executable, OUT=str(tmp_path), BAND_OK=band_ok,
+                 SCRATCH=str(tmp_path / "scratch")))
+    proc = env_run("1", "g37-text:g3")
+    assert proc.returncode == 1 and "BAND_OK must name legs" in proc.stdout
+    # Naming another leg does not let this one through.
+    proc = env_run("g37-text:g37", "g37-text:g3")
+    assert proc.returncode == 1 and "BAND_OK=g37-text:g3 overrides" in proc.stdout
+    assert not (tmp_path / "stage2" / "logs" / "verify-g37-text-g3.log").exists()
+
+
+def _repair_leg_dir(out: Path, v: str, text: str) -> Path:
+    leg = out / "g37-text" / "verifier" / "detect_brief-text" / f"verify_{v}"
+    leg.mkdir(parents=True)
+    results = {"candidate_00000": {"mound_probability": 0.0, "reasoning": "PARSE_ERROR: x"}}
+    (leg / "probabilities.json").write_text(json.dumps({"results": results}))
+    row = {"key": "candidate_00000",
+           "response": {"candidates": [{"content": {"parts": [{"text": text}]}}]}}
+    (leg / "batch_results.jsonl").write_text(json.dumps(row) + "\n")
+    (leg / "run.meta.json").write_text("{}")
+    return leg
+
+
+def test_repair_all_goes_on_past_a_leg_it_cannot_finish(tmp_path: Path) -> None:
+    _repair_leg_dir(tmp_path, "g3", "not JSON")                     # unrecoverable
+    _repair_leg_dir(tmp_path, "g37", '{"mound_probability": 0.3}\n}')  # recoverable
+    proc = _run("repair", "g37-text:g3", "g37-text:g37", out=tmp_path)
+    assert proc.returncode == 1
+    assert "REPAIR INCOMPLETE for: g37-text:g3" in proc.stdout
+    repaired = (tmp_path / "g37-text" / "verifier" / "detect_brief-text"
+                / "verify_g37_repaired" / "probabilities.json")
+    assert json.loads(repaired.read_text())["results"]["candidate_00000"][
+        "mound_probability"] == 0.3

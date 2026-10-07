@@ -41,10 +41,11 @@
 #                 batch_results.jsonl with the real-time path's repair, into
 #                 <leg>_repaired/ (the leg directory is not written).
 #
-# Operator overrides, each named in the refusal it lifts: BAND_OK=1 (a union
-# outside its band), IMPLICIT_SHARE_OK=1 (g37-image's implicit cached share
-# under 0.5; cost only), FORCE=1 (re-lodge a leg whose earlier jobs are
-# recorded in batch_jobs.json; read the refusal first).
+# Operator overrides, each named in the refusal it lifts: BAND_OK=<leg>[,<leg>]
+# (those legs' unions outside their band; per leg, never blanket),
+# IMPLICIT_SHARE_OK=1 (g37-image's implicit cached share under 0.5; cost
+# only), FORCE=1 (re-lodge a leg whose earlier jobs are recorded in
+# batch_jobs.json; read the refusal first).
 #
 #   arm              K   version                  verifier legs
 #   g3-text          10  detect_brief-text        g3
@@ -392,15 +393,19 @@ verify_one() {
     return 1
   fi
   # The union-size review band (card § 3; audit A6): a union outside it is a
-  # finding for the PI before any spend; the operator then decides.
-  if ! "$PY" scripts/modality_bridge_stage2_checks.py band "$arm:$v" --out "$OUT"; then
-    if [ "${BAND_OK:-0}" = 1 ]; then
-      echo "$name: BAND_OK=1 — proceeding outside the band, as the operator decided"
-    else
-      echo "$name: REFUSED — outside the review band (BAND_OK=1 overrides)"
-      return 1
-    fi
-  fi
+  # finding for the PI before any spend; the operator then decides, PER LEG
+  # (BAND_OK=<leg>[,<leg>]; re-check R1: a blanket waiver is refused).
+  "$PY" scripts/modality_bridge_stage2_checks.py band "$arm:$v" --out "$OUT" \
+    --band-ok "${BAND_OK:-}"
+  case $? in
+    0) ;;
+    3) echo "$name: REFUSED — no union built yet; run \`prepare $arm\` first"
+       return 1 ;;
+    2) echo "$name: REFUSED — BAND_OK must name legs (e.g. BAND_OK=$arm:$v)"
+       return 1 ;;
+    *) echo "$name: REFUSED — outside the review band (BAND_OK=$arm:$v overrides)"
+       return 1 ;;
+  esac
   # The rehearsal is the gate: coverage and the pass metas, a current union,
   # AGREES, one request per candidate, no client, the rehearsed signatures.
   rehearse "$arm" "$v" || return 1
@@ -536,9 +541,8 @@ wait_leg() {
 # unless BAND_OK=1 (audit A6). No API.
 # -----------------------------------------------------------------------------
 estimate() {
-  local -a extra=()
-  [ "${BAND_OK:-0}" = 1 ] && extra=(--band-ok)
-  "$PY" scripts/modality_bridge_stage2_checks.py estimate --out "$OUT" "${extra[@]}"
+  "$PY" scripts/modality_bridge_stage2_checks.py estimate --out "$OUT" \
+    --band-ok "${BAND_OK:-}"
 }
 
 # -----------------------------------------------------------------------------
@@ -632,10 +636,20 @@ case "$cmd" in
     [ $# -gt 0 ] || { echo "$cmd needs: all | ARM:V ..." >&2; exit 2; }
     legs=$(expand_legs "$@") || exit 2
     fn=$cmd; [ "$cmd" = verify ] && fn=verify_one
+    failed=""
     for leg in $legs; do
       read -r arm v < <(leg_parts "$leg")
-      "$fn" "$arm" "$v" || exit 1
+      if ! "$fn" "$arm" "$v"; then
+        # `repair` goes on to the other legs and reports them all at the
+        # end; rehearse and verify stop at the first failure.
+        [ "$cmd" = repair ] || exit 1
+        failed="$failed $leg"
+      fi
     done
+    if [ -n "$failed" ]; then
+      echo "REPAIR INCOMPLETE for:$failed (read each above)"
+      exit 1
+    fi
     if [ "$cmd" = verify ]; then echo "LODGING DONE $(date -Is)"; fi ;;
   status) status ;;
   wait) [ $# -eq 1 ] || { echo "wait needs one ARM:V" >&2; exit 2; }; wait_leg "$1" ;;
