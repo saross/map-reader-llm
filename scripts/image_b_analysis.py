@@ -27,6 +27,23 @@ Usage::
 
     python scripts/image_b_analysis.py
 
+Parameterised entry point (Run B, ``planning/modality-bridge-2026-10-07-stage2.md``;
+added 2026-10-07). The roots were already flags; the anchor and the
+operating point now are too, and ``--six-cell-gate`` refuses to write
+anything until the six original cells reproduce
+(``scripts/modality_bridge_anchors.py``)::
+
+    python scripts/image_b_analysis.py --six-cell-gate \\
+        --outputs-root outputs/modality-bridge-2026-10-07/g3-image \\
+        --cell detect_brief-text-image --k 10 \\
+        --union-name union_k10.geojson --verify-dir verify_g3 \\
+        --operating-point 0.15,9 \\
+        --anchor-set results/modality-bridge-2026-10-07/g3-text-g3v/verified_best_20m.geojson \\
+        --anchor-f1 <that cell's best F1> \\
+        --out-dir results/modality-bridge-2026-10-07/g3-image-g3v
+
+With no new flag the behaviour is the original's, byte for byte.
+
 Zero API. Run on sapphire.
 
 Created: 2026-08-28 (Session 143)
@@ -133,7 +150,31 @@ def sweep(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
     return rows
 
 
-def main() -> int:
+def parse_operating_point(text: str) -> tuple[float, int]:
+    """Parse ``--operating-point PROB_T,K`` (e.g. ``0.15,9``).
+
+    Args:
+        text: ``"<prob_t>,<min_votes>"``.
+
+    Returns:
+        ``(prob_t, min_votes)``.
+
+    Raises:
+        ValueError: If the text is not two comma-separated numbers with an
+            integer vote threshold of at least 1.
+
+    Examples:
+        >>> parse_operating_point("0.15,9")
+        (0.15, 9)
+    """
+    prob, _, votes = text.partition(",")
+    point = (float(prob), int(votes))
+    if point[1] < 1:
+        raise ValueError(f"vote threshold must be >= 1: {text!r}")
+    return point
+
+
+def main(argv: list[str] | None = None) -> int:
     import argparse
     global CELL, VROOT, OUT, SCORING
     ap = argparse.ArgumentParser(description=__doc__)
@@ -153,12 +194,32 @@ def main() -> int:
     ap.add_argument("--verify-dir", default="verify",
                     help="Verify-stage directory under verifier/<cell>/ "
                          "holding probabilities.json (default: verify).")
-    args = ap.parse_args()
+    ap.add_argument("--anchor-set", default=None,
+                    help="Detections the anchor gate re-scores and the "
+                         "head-to-head pairs this cell against (default: the "
+                         "registered text-B set, "
+                         "results/grid-2026-08-18/conditions-verified/"
+                         "g384_ov192/detections.geojson).")
+    ap.add_argument("--anchor-f1", type=float, default=ANCHOR_F1_20,
+                    help=f"The anchor set's F1@20 (default {ANCHOR_F1_20}).")
+    ap.add_argument("--operating-point", type=parse_operating_point, default=None,
+                    metavar="PROB_T,K",
+                    help="Also score the cell at this fixed point (e.g. the "
+                         "original cell's 0.15,9); written as operating_point.")
+    ap.add_argument("--write-rung-sets", action="store_true",
+                    help="Write each ladder rung's best set as "
+                         "verified_ladder_n<N>_20m.geojson (for K-matched gaps).")
+    ap.add_argument("--six-cell-gate", action="store_true",
+                    help="Refuse to write anything unless the six original "
+                         "cells reproduce (scripts/modality_bridge_anchors.py).")
+    args = ap.parse_args(argv)
     CELL = args.cell
     VROOT = PROJECT_ROOT / args.outputs_root / "verifier" / CELL
     SCORING = PROJECT_ROOT / args.outputs_root / "scoring"
     if args.out_dir:
         OUT = PROJECT_ROOT / args.out_dir
+    anchor_path = (PROJECT_ROOT / args.anchor_set if args.anchor_set
+                   else ANCHOR_DIR / "detections.geojson")
 
     bounds = gpd.read_file(COMMON_BOUNDS)
     gdf_ref = gpd.read_file(GROUND_TRUTH).to_crs(CRS)
@@ -170,15 +231,24 @@ def main() -> int:
                 len(union))
 
     # ---- Anchor gate: text-B registered set through this path. ----
-    anchor = gpd.read_file(ANCHOR_DIR / "detections.geojson").to_crs(CRS)
+    anchor = gpd.read_file(anchor_path).to_crs(CRS)
     anchor["source_tile"] = assign_primary_tiles(anchor, bounds)
     a20 = score(anchor, gdf_ref, bounds)
-    if abs(a20["f1"] - ANCHOR_F1_20) > 0.0005:
+    if abs(a20["f1"] - args.anchor_f1) > 0.0005:
         raise JoinGateError(
             f"anchor gate FAILED: {a20['f1']:.4f} vs registered "
-            f"{ANCHOR_F1_20}")
+            f"{args.anchor_f1}")
     logger.info("anchor gate OK: text-B rescored %.4f (registered %.4f)",
-                a20["f1"], ANCHOR_F1_20)
+                a20["f1"], args.anchor_f1)
+
+    gate_record = None
+    if args.six_cell_gate:
+        # After the cheap input gates, before anything is written: the six
+        # original cells must still score as registered through this path.
+        from scripts.modality_bridge_anchors import run_six_cell_gate
+        gate_record = run_six_cell_gate()
+        logger.info("six-cell anchor gate PASSED (%d cells, %d gaps)",
+                    len(gate_record["cells"]), len(gate_record["gaps"]))
 
     OUT.mkdir(parents=True, exist_ok=True)
 
@@ -195,6 +265,29 @@ def main() -> int:
     best_set = verified_subset(union, best["prob_t"], best["min_votes"])
     best_set.to_crs("EPSG:4326").to_file(
         OUT / "verified_best_20m.geojson", driver="GeoJSON")
+
+    # ---- A fixed operating point (Run B § 9 item 2), when asked. ----
+    extra: dict = {}
+    if args.operating_point is not None:
+        op_t, op_k = args.operating_point
+        op_set = verified_subset(union, op_t, op_k)
+        op_row = score(op_set, gdf_ref, bounds)
+        op_row.update({"prob_t": op_t, "min_votes": op_k,
+                       "n_detections": int(len(op_set))})
+        op_set.to_crs("EPSG:4326").to_file(
+            OUT / "verified_op_20m.geojson", driver="GeoJSON")
+        extra["operating_point"] = op_row
+        logger.info("operating point (%.2f, k%d): F1=%.4f P=%.4f R=%.4f",
+                    op_t, op_k, op_row["f1"], op_row["precision"],
+                    op_row["recall"])
+    if args.anchor_set:
+        extra["anchor_set"] = args.anchor_set
+    if gate_record is not None:
+        extra["six_cell_gate"] = {
+            "passed": gate_record["passed"],
+            "cells": {k: v["reproduced_f1"] for k, v in gate_record["cells"].items()},
+            "gaps": {k: v["reproduced"] for k, v in gate_record["gaps"].items()},
+        }
 
     # ---- Buffer curves (IP1 / IP2). ----
     curves = {"image": {}, "text": {}}
@@ -221,11 +314,12 @@ def main() -> int:
         payload = {
             "cell": CELL, "buffer_primary_m": BUFFER_PRIMARY,
             "image_best": best,
-            "anchor": {"f1_20": a20["f1"], "registered": ANCHOR_F1_20,
+            "anchor": {"f1_20": a20["f1"], "registered": args.anchor_f1,
                        "n": int(len(anchor))},
             "buffer_curves": curves,
             "head_to_head_20m": head,
         }
+        payload.update(extra)
         (OUT / "analysis.json").write_text(
             json.dumps(payload, indent=2, default=float) + "\n")
         logger.info("ANALYSIS COMPLETE (no ladder) -> %s",
@@ -252,6 +346,11 @@ def main() -> int:
         rbest = max(rrows, key=lambda r: r["f1"])
         rung_sets[n] = verified_subset(gdf, rbest["prob_t"],
                                        rbest["min_votes"])
+        if args.write_rung_sets:
+            # The inherited rung's best set, for K-matched gap tests (Run B
+            # § 9 item 5: the Gemini 3 K = 5 rung is inherited, D2).
+            rung_sets[n].to_crs("EPSG:4326").to_file(
+                OUT / f"verified_ladder_n{n}_20m.geojson", driver="GeoJSON")
         ladder[n] = {"union_n": int(len(gdf)) + int((~matched).sum()),
                      "unmatched": int((~matched).sum()),
                      "best": rbest}
@@ -268,13 +367,14 @@ def main() -> int:
     payload = {
         "cell": CELL, "buffer_primary_m": BUFFER_PRIMARY,
         "image_best": best,
-        "anchor": {"f1_20": a20["f1"], "registered": ANCHOR_F1_20,
+        "anchor": {"f1_20": a20["f1"], "registered": args.anchor_f1,
                    "n": int(len(anchor))},
         "buffer_curves": curves,
         "head_to_head_20m": head,
         "ladder": ladder,
         "saturation_N5_vs_N10": sat,
     }
+    payload.update(extra)
     (OUT / "analysis.json").write_text(
         json.dumps(payload, indent=2, default=float) + "\n")
     logger.info("IMAGE-B ANALYSIS COMPLETE -> %s",

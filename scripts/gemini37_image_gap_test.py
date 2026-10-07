@@ -26,6 +26,26 @@ Usage::
 
     python scripts/gemini37_image_gap_test.py
 
+Parameterised entry point (Run B, ``planning/modality-bridge-2026-10-07-stage2.md``;
+added 2026-10-07). ``--pair LABEL TEXT_DIR IMAGE_DIR`` (repeatable)
+replaces the hard-coded pairs: each directory is an
+``image_b_analysis.py`` output holding ``verified_best_20m.geojson`` and
+``analysis.json``, whose ``image_best.f1`` is the value the replication gate
+checks (``--set-name`` picks another set, e.g. ``verified_op_20m`` with
+``operating_point.f1``). ``--reference-pair LABEL`` takes the gap change
+against a pair computed in the same run instead of the committed Gemini 3
+gap; ``--six-cell-gate`` refuses to write until the six original cells
+reproduce (``scripts/modality_bridge_anchors.py``)::
+
+    python scripts/gemini37_image_gap_test.py --six-cell-gate \\
+        --pair g3 results/modality-bridge-2026-10-07/g3-text-g3v \\
+                  results/modality-bridge-2026-10-07/g3-image-g3v \\
+        --pair carried-verifier results/modality-bridge-2026-10-07/g37-text-g3v \\
+                  results/modality-bridge-2026-10-07/g37-image-g3v \\
+        --reference-pair g3 --out-dir results/modality-bridge-2026-10-07
+
+With no new flag the behaviour is the original's.
+
 Zero API, seconds. Run where the verified sets live (sapphire).
 
 Created: 2026-09-02 (Session 145)
@@ -77,13 +97,79 @@ G3_GAP = {"delta_f1": 0.0549, "p": 0.001,
           "source": "results/image-b-gs-2026-08-28/analysis.json"}
 
 
-def main() -> int:
+#: Where an image_b_analysis.py output keeps each set and its F1.
+SET_F1_KEY = {"verified_best_20m": ("image_best", "f1"),
+              "verified_op_20m": ("operating_point", "f1")}
+
+
+def pairs_from_dirs(specs: list[list[str]], set_name: str = "verified_best_20m",
+                    ) -> list[tuple[str, Path, float, Path, float]]:
+    """Build gap-test pairs from image_b_analysis.py output directories.
+
+    Args:
+        specs: ``[label, text_dir, image_dir]`` triples (repository-relative
+            or absolute directories).
+        set_name: Which verified set to pair (``verified_best_20m`` or
+            ``verified_op_20m``); its committed F1 is read from the same
+            directory's ``analysis.json``.
+
+    Returns:
+        Tuples in the shape of :data:`PAIRS`.
+
+    Raises:
+        KeyError: If ``set_name`` is unknown or ``analysis.json`` lacks it.
+    """
+    section, key = SET_F1_KEY[set_name]
+    out = []
+    for label, text_dir, image_dir in specs:
+        sides = []
+        for d in (text_dir, image_dir):
+            root = PROJECT_ROOT / d
+            f1 = json.loads((root / "analysis.json").read_text())[section][key]
+            sides.extend([root / f"{set_name}.geojson", float(f1)])
+        out.append((label, sides[0], sides[1], sides[2], sides[3]))
+    return out
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+
     import geopandas as _g
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--pair", nargs=3, action="append", default=None,
+                    metavar=("LABEL", "TEXT_DIR", "IMAGE_DIR"),
+                    help="A text/image pair of image_b_analysis.py outputs "
+                         "(repeatable; replaces the original pairs).")
+    ap.add_argument("--set-name", default="verified_best_20m",
+                    choices=sorted(SET_F1_KEY),
+                    help="Which verified set each --pair directory supplies.")
+    ap.add_argument("--reference-pair", default=None,
+                    help="Gap change against this --pair's gap (default: the "
+                         "committed Gemini 3 gap, +0.0549).")
+    ap.add_argument("--out-dir", default=None,
+                    help="Where gap_test.json is written (default: the "
+                         "original results/gemini37-image-gs-2026-09-01).")
+    ap.add_argument("--six-cell-gate", action="store_true",
+                    help="Refuse to write unless the six original cells reproduce.")
+    args = ap.parse_args(argv)
+    pairs = PAIRS if not args.pair else pairs_from_dirs(args.pair, args.set_name)
+    out_dir = PROJECT_ROOT / args.out_dir if args.out_dir else OUT
+    labels = [p[0] for p in pairs]
+    if args.reference_pair is not None and args.reference_pair not in labels:
+        ap.error(f"--reference-pair {args.reference_pair!r} is not a --pair label")
+    if args.six_cell_gate:
+        from scripts.modality_bridge_anchors import run_six_cell_gate
+        run_six_cell_gate()
+        logger.info("six-cell anchor gate PASSED")
     bounds = _g.read_file(COMMON_BOUNDS)
     gdf_ref = _g.read_file(GROUND_TRUTH).to_crs(CRS)
     payload: dict = {"buffer_m": 20, "g3_gap_committed": G3_GAP,
                      "pairs": {}}
-    for label, text_path, text_f1, img_path, img_f1 in PAIRS:
+    if args.pair:
+        payload["pair_sources"] = {lab: [t, i] for lab, t, i in args.pair}
+        payload["set_name"] = args.set_name
+    for label, text_path, text_f1, img_path, img_f1 in pairs:
         sides = {}
         for side, path, committed in (("text", text_path, text_f1),
                                       ("image", img_path, img_f1)):
@@ -108,9 +194,18 @@ def main() -> int:
                     res["observed_diff"], res["p_value"],
                     res["observed_diff"] - G3_GAP["delta_f1"])
 
-    (OUT / "gap_test.json").write_text(
+    if args.reference_pair is not None:
+        ref = payload["pairs"][args.reference_pair]["observed_diff"]
+        payload["gap_change_reference"] = args.reference_pair
+        payload["gap_change"] = {
+            lab: res["observed_diff"] - ref for lab, res in payload["pairs"].items()
+            if lab != args.reference_pair}
+        logger.info("gap change vs %s: %s", args.reference_pair,
+                    {k: round(v, 4) for k, v in payload["gap_change"].items()})
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "gap_test.json").write_text(
         json.dumps(payload, indent=2, default=float) + "\n")
-    logger.info("GAP TEST COMPLETE -> %s", OUT.relative_to(PROJECT_ROOT))
+    logger.info("GAP TEST COMPLETE -> %s", out_dir.relative_to(PROJECT_ROOT))
     return 0
 
 
