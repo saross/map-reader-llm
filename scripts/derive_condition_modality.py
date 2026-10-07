@@ -695,6 +695,13 @@ def harvest_recorded() -> dict[str, dict[str, str]]:
     out: dict[str, dict[str, str]] = {}
 
     def add(key: str, cid: str | None, value: Any) -> None:
+        """Record one artefact's modality claim for a condition.
+
+        Args:
+            key: ``"<path>::<field>"`` of the claim.
+            cid: The condition it concerns (skipped when None).
+            value: The claimed modality (skipped unless comparable).
+        """
         if cid and comparable(value):
             out.setdefault(key, {})[cid] = value
 
@@ -1019,6 +1026,27 @@ def git_renamed_to(paths: list[str]) -> tuple[list[str], str | None]:
         any of them, and that commit's abbreviated hash; ``([], None)`` when
         none was moved, or when git is unavailable.
     """
+    renames, commit = git_renames(paths)
+    return [new for _old, new in renames], commit
+
+
+def git_renames(paths: list[str]) -> tuple[list[tuple[str, str]], str | None]:
+    """:func:`git_renamed_to`, keeping each destination's original path.
+
+    A caller that filters a moved file by where it sat below the registered
+    path (e.g. outside a ``verified/`` subtree) must test the OLD path: the
+    new one lies under a different root, so a tail sliced from it by the
+    registered path's length is an arbitrary substring (PR #25 review,
+    finding 6).
+
+    Args:
+        paths: Repository-relative files or directories.
+
+    Returns:
+        ``([(old_path, current_path), ...], commit)``, with the same
+        selection and the same ``([], None)`` cases as
+        :func:`git_renamed_to`.
+    """
     if not paths:
         return [], None
     try:
@@ -1032,7 +1060,7 @@ def git_renamed_to(paths: list[str]) -> tuple[list[str], str | None]:
             cwd=BASE_DIR, capture_output=True, text=True, check=True).stdout
     except (OSError, subprocess.CalledProcessError):
         return [], None
-    moved: list[str] = []
+    moved: list[tuple[str, str]] = []
     for line in show.splitlines():
         parts = line.split("\t")
         if len(parts) != 3 or not parts[0].startswith("R"):
@@ -1040,7 +1068,7 @@ def git_renamed_to(paths: list[str]) -> tuple[list[str], str | None]:
         old, new = parts[1], parts[2]
         if any(old == q or old.startswith(q.rstrip("/") + "/") for q in paths) \
                 and (BASE_DIR / new).exists():
-            moved.append(new)
+            moved.append((old, new))
     return moved, log
 
 
@@ -1303,6 +1331,12 @@ def artefact_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     summary: dict[str, dict[str, int]] = {}
 
     def bump(artefact: str, key: str) -> None:
+        """Count one event against an artefact's summary row.
+
+        Args:
+            artefact: The artefact's name.
+            key: The counter to increment.
+        """
         summary.setdefault(artefact, {"records_carrying_a_modality": 0,
                                       "checked_against_a_derivation": 0,
                                       "mismatches": 0})[key] += 1

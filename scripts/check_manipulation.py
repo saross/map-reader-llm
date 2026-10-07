@@ -109,6 +109,40 @@ Two arms that declare the SAME verifier configuration are judged on their
 proposer requests, since nothing configured on the verifier half separates
 them.
 
+Reviewed bindings (what the register does not record)
+-----------------------------------------------------
+Many registered conditions score a DERIVED product: a re-score of one
+detection set against another reference, a threshold or operating point
+materialised from a stage's verified probabilities, a K-ladder rung, a
+union of passes. The register names the product, not the stage whose
+requests produced it, so until 2026-10-06 the gate left 298 arms with a
+DECLARED verifier half and 43 with no proposer metas at all. Those links are
+not guessed here from names: ``results/manipulation-gate-bindings.json``
+(:data:`BINDINGS`) records each one as a reviewable entry — the conditions,
+their registered detections, the SOURCES the documented derivation read
+(the stage's output for the verifier half, the pass or pool directories for
+the proposer half) and the evidence (the deriving script and lines, the
+commit that added the product, the documents). The gate consults a binding
+only where the register's own routes find nothing, and resolves each source
+mechanically (:func:`verifier_metas_for_source`,
+:func:`proposer_metas_for_source`): a verifier source to the registered
+stage whose directory contains it (longest match, any run), whose metas the
+W4.4 resolver (``derive_condition_modality.resolve_verifier_stage``)
+locates, else to the verify metas beside it, else to where git moved it; a
+proposer source to the passes-manifest source metas that lie under it, else
+to the proposer metas on disk under it. A malformed bindings file, or one
+naming an unregistered condition or a detections path the register does not
+record for it, stops the gate (exit 1) rather than binding silently.
+
+The gate never passes on evidence it does not have (PR #25 review). A
+verifier half whose listed metas are all unreadable, whose binding has a
+source that resolves nothing, whose binding contradicts the stage the
+register identifies, or whose stage a binding marks ``incomplete_meta``
+(the surviving meta covers only a cleanup, recovery or final-round leg) is
+UNVERIFIABLE, with the reason named: like a declared half, it separates a
+pair only through the proposer half (:func:`transmission_relation`). A
+proposer half with a dead binding source leaves the arm UNVERIFIABLE.
+
 Usage
 -----
     # Gate one registered analysis (exit 0 PASS, 2 REFUSE, 3 UNVERIFIABLE)
@@ -124,7 +158,8 @@ Usage
     # documented (exit 2 only if a refusal is undocumented)
     python3 scripts/check_manipulation.py --all
 
-Exit codes: 0 PASS; 1 usage error (unknown analysis or condition); 2 REFUSE
+Exit codes: 0 PASS; 1 usage error (unknown analysis or condition, or an
+invalid bindings file); 2 REFUSE
 (a null manipulation); 3 UNVERIFIABLE (an arm with no readable pass metadata,
 or a pair that only a declared verifier configuration could separate, unless
 ``--allow-unverifiable``).
@@ -170,6 +205,10 @@ from scripts.lib_manipulation_signature import (  # noqa: E402,F401 - re-exporte
 
 RUN_ANALYSES = "results/run-analyses.json"
 CONDITIONS_MANIFEST = "results/conditions-manifest.json"
+
+#: Reviewed bindings for links the register does not record (module docstring).
+BINDINGS = "results/manipulation-gate-bindings.json"
+BINDINGS_SCHEMA = "manipulation-gate-bindings/1"
 
 #: The fields of a configuration identity, in order.
 CONFIG_FIELDS = ("stage", "version", "instruction_file", "model", "temperature",
@@ -224,7 +263,10 @@ def meta_record(path: str) -> dict[str, Any]:
         path: Repository-relative or absolute ``*.meta.json`` path.
 
     Returns:
-        The harvester's record (``error`` set when unreadable), with
+        The harvester's record (``error`` set when unreadable, or when the
+        file is JSON with no ``configuration`` block: the passes manifest
+        cites ``results/run-conditions.json`` and ``run.log`` files beside
+        some passes' metas, and neither records a request), with
         ``input_ids`` (the dispatched ids, a frozenset) and ``inputs`` (their
         fingerprint, see the module docstring).
     """
@@ -232,6 +274,8 @@ def meta_record(path: str) -> dict[str, Any]:
     full = p if p.is_absolute() else BASE_DIR / p
     rec = harvest(str(full))
     rec["path"] = path
+    if "error" not in rec and not rec.get("has_configuration"):
+        rec["error"] = "no configuration block: not a pass meta"
     if "error" not in rec:
         rec["input_ids"] = frozenset(rec.pop("dispatched_ids"))
         rec["inputs"] = inputs_fingerprint(rec["input_ids"], rec.get("manifest_path"))
@@ -284,11 +328,26 @@ def _frozen(dicts: list[dict[str, Any]]) -> frozenset[str]:
 
 def arm_from_metas(arm_id: str, proposer_metas: list[str],
                    verifier_metas: list[str] | None = None,
-                   declared_verifier: dict[str, Any] | None = None) -> dict[str, Any]:
+                   declared_verifier: dict[str, Any] | None = None,
+                   verifier_reason: str | None = None,
+                   verifier_identity: str | None = None) -> dict[str, Any]:
     """Build one arm's configuration identity and transmitted signature.
 
     Chunk metas are set aside when the pass has a merged meta (as the
     2026-10-05 check did), so a chunked pass is not counted twice.
+
+    The verifier half is one of four kinds (``verifier_basis``):
+    ``"transmitted"`` (verifier metas were read), ``"declared"`` (only the
+    register's configuration is known), ``"unverifiable"`` (the half has a
+    verifier stage whose requests the gate cannot read in full) or None (no
+    verifier stage). A verifier half is UNVERIFIABLE when metas were listed
+    for it but none is a readable verifier meta (PR #25 review, finding 1:
+    until then such an arm read as having no verifier stage, and a pair
+    beside it passed as "differ in transmission"), or when the caller
+    supplies ``verifier_reason`` (a dead binding source, a stage whose
+    surviving meta covers only part of its requests, a binding that
+    contradicts the register). Its metas are then not evidence: they join
+    neither the configuration identity nor the signature.
 
     Args:
         arm_id: The arm's name (a condition id).
@@ -299,23 +358,55 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
             identity (what the arm SAID) but not the transmitted signature:
             it is not evidence of what a request carried (see
             :func:`transmission_relation`).
+        verifier_reason: Why the verifier half is unverifiable, when the
+            caller knows (see above); None to judge by the metas alone.
+        verifier_identity: What the unverifiable half read (its stage(s) or
+            sources), so two arms that read the same unverifiable stage are
+            recognised as one verifier configuration; defaults to the sorted
+            listed metas, else the reason.
 
     Returns:
         ``{"arm", "config", "signature", "proposer_signatures",
-        "verifier_basis", "declared_verifier", "meta_paths", "unreadable",
-        "unverifiable_reason"}``. ``signature`` holds transmitted evidence
-        only; ``declared_verifier`` is the declared configuration's sorted-key
-        JSON, or None.
+        "verifier_basis", "declared_verifier", "unverifiable_verifier",
+        "verifier_unverifiable_reason", "meta_paths",
+        "verifier_metas_set_aside", "unreadable", "unverifiable_reason"}``.
+        ``signature`` holds transmitted evidence only; ``declared_verifier``
+        is the declared configuration's sorted-key JSON, or None;
+        ``unverifiable_verifier`` the unverifiable half's identity marker
+        (sorted-key JSON), or None; ``verifier_metas_set_aside`` the readable
+        verifier metas of an unverifiable half (read, but not taken as
+        evidence). ``unverifiable_reason`` concerns the proposer half and
+        makes the whole arm unverifiable; ``verifier_unverifiable_reason``
+        concerns the verifier half only (:func:`transmission_relation`
+        decides each pair).
     """
     def readable(paths: list[str]) -> tuple[list[dict[str, Any]], list[str]]:
-        recs = [meta_record(p) for p in sorted(set(paths))]
+        """Read metas, setting aside chunk metas beside a merged meta.
+
+        Args:
+            paths: Meta paths (duplicates are read once).
+
+        Returns:
+            ``(readable records, unreadable paths)``.
+        """
+        recs = [meta_record(p) for p in sorted({_rel(p) for p in paths})]
         bad = [r["path"] for r in recs if "error" in r]
         good = [r for r in recs if "error" not in r]
         main = [r for r in good if "_chunk" not in Path(r["path"]).name] or good
         return main, bad
 
     prop, bad_p = readable(proposer_metas)
-    ver, bad_v = readable(verifier_metas or [])
+    ver_read, bad_v = readable(verifier_metas or [])
+    # A readable meta in a verifier list that records no verifier pass is
+    # not verifier evidence (it is named among the unreadable).
+    ver = [r for r in ver_read if is_verifier_record(r)]
+    bad_v += [r["path"] for r in ver_read if not is_verifier_record(r)]
+    if verifier_metas and not ver and not verifier_reason:
+        verifier_reason = (f"{len(set(verifier_metas))} verifier meta(s) listed, none readable "
+                           f"as a verifier pass (e.g. {sorted(bad_v)[0]})")
+    set_aside = []
+    if verifier_reason:
+        set_aside, ver = [r["path"] for r in ver], []
     config = [configuration_identity(r) for r in prop + ver]
     # Per-pass signatures WITHOUT their inputs, plus one inputs field per
     # stage over the UNION of what the arm's passes dispatched: a recovery
@@ -329,8 +420,18 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
                                 if r.get("manifest_path")})
             sigs.append({"stage": f"{stage}-inputs",
                          "inputs": inputs_fingerprint(ids, "|".join(manifests) or None)})
-    declared_json = None
-    if ver:
+    declared_json = unverifiable_json = None
+    if verifier_reason:
+        basis = "unverifiable"
+        # What the half read, not what it sent: two arms reading one
+        # unverifiable stage share it, so a pair of them is judged on the
+        # proposer half (as two equal declared configurations are).
+        marker = {"stage": "verifier-unverifiable",
+                  "of": verifier_identity or "|".join(sorted(set(verifier_metas or [])))
+                  or verifier_reason}
+        config.append(marker)
+        unverifiable_json = json.dumps(marker, sort_keys=True)
+    elif ver:
         basis = "transmitted"
     elif declared_verifier:
         basis = "declared"
@@ -353,7 +454,10 @@ def arm_from_metas(arm_id: str, proposer_metas: list[str],
                                        for r in prop}),
         "verifier_basis": basis,
         "declared_verifier": declared_json,
+        "unverifiable_verifier": unverifiable_json,
+        "verifier_unverifiable_reason": verifier_reason,
         "meta_paths": [r["path"] for r in prop + ver],
+        "verifier_metas_set_aside": set_aside,
         "unreadable": bad_p + bad_v,
         "unverifiable_reason": reason,
     }
@@ -370,6 +474,14 @@ def differing_fields(a: dict[str, Any], b: dict[str, Any]) -> list[str]:
         Sorted field names whose value sets differ between the arms.
     """
     def values(arm: dict[str, Any]) -> dict[str, set[str]]:
+        """Each configuration field's set of encoded values across an arm.
+
+        Args:
+            arm: An arm from :func:`arm_from_metas`.
+
+        Returns:
+            Field name -> the JSON encodings of its values.
+        """
         out: dict[str, set[str]] = {}
         for enc in arm["config"]:
             for k, v in json.loads(enc).items():
@@ -404,10 +516,13 @@ def transmission_relation(a: dict[str, Any], b: dict[str, Any]) -> str:
     evidence only when both arms' verifier metas were read: a DECLARED
     verifier configuration says what the register recorded, not what a
     request carried, so it cannot show a difference (PR #24 review,
-    finding 2). Two equal declared configurations leave nothing configured
-    on the verifier half to separate the arms, so the proposer half decides.
-    An arm with no verifier stage beside one with a stage (declared or
-    transmitted) differs: only one of them sent verifier requests.
+    finding 2), and an UNVERIFIABLE half (metas listed but unreadable, a
+    dead binding source, a meta covering only part of the stage) shows
+    nothing at all (PR #25 review, findings 1, 2 and 4). Two equal declared
+    configurations, or two unverifiable halves that read the same stage,
+    leave nothing on the verifier half to separate the arms, so the
+    proposer half decides. An arm with no verifier stage beside one with a
+    stage (of any basis) differs: only one of them sent verifier requests.
 
     Args:
         a: An arm from :func:`arm_from_metas`.
@@ -416,14 +531,16 @@ def transmission_relation(a: dict[str, Any], b: dict[str, Any]) -> str:
     Returns:
         :data:`SAME`, :data:`DIFFER` or :data:`UNDETERMINED`.
     """
-    if "declared" not in (a["verifier_basis"], b["verifier_basis"]):
+    evidence = ("transmitted", None)
+    if a["verifier_basis"] in evidence and b["verifier_basis"] in evidence:
         return SAME if a["signature"] == b["signature"] else DIFFER
     if _proposer_half(a) != _proposer_half(b):
         return DIFFER
     if a["verifier_basis"] is None or b["verifier_basis"] is None:
         return DIFFER
-    if a["declared_verifier"] is not None and a["declared_verifier"] == b["declared_verifier"]:
-        return SAME
+    for field in ("declared_verifier", "unverifiable_verifier"):
+        if a.get(field) is not None and a.get(field) == b.get(field):
+            return SAME
     return UNDETERMINED
 
 
@@ -433,19 +550,26 @@ def judge(arms: list[dict[str, Any]], allow_unverifiable: bool = False) -> dict[
     Args:
         arms: Arms from :func:`arm_from_metas`.
         allow_unverifiable: Treat arms with no readable metadata, and pairs
-            only a declared verifier configuration could separate, as out of
-            scope rather than as a verdict.
+            only a declared or unverifiable verifier half could separate, as
+            out of scope rather than as a verdict.
 
     Returns:
-        ``{"verdict", "null_pairs", "undetermined_pairs", "unverifiable"}``.
-        ``null_pairs`` names each pair that differs in configuration but not
-        in transmission, with the differing fields; ``undetermined_pairs``
-        each pair that differs in configuration, sent identical proposer
-        requests, and has a verifier half that is declared, not transmitted.
+        ``{"verdict", "null_pairs", "undetermined_pairs", "unverifiable",
+        "unverifiable_halves"}``. ``null_pairs`` names each pair that
+        differs in configuration but not in transmission, with the differing
+        fields; ``undetermined_pairs`` each pair that differs in
+        configuration, sent identical proposer requests, and has a verifier
+        half that is declared or unverifiable, not transmitted;
+        ``unverifiable_halves`` each arm whose verifier half is unverifiable,
+        with the reason (it makes the verdict UNVERIFIABLE only through a
+        pair the proposer half cannot separate).
     """
     checkable = [a for a in arms if not a["unverifiable_reason"]]
     unverifiable = [{"arm": a["arm"], "reason": a["unverifiable_reason"]}
                     for a in arms if a["unverifiable_reason"]]
+    halves = [{"arm": a["arm"], "half": "verifier",
+               "reason": a.get("verifier_unverifiable_reason")}
+              for a in arms if a.get("verifier_basis") == "unverifiable"]
     null_pairs, undetermined_pairs = [], []
     for a, b in itertools.combinations(checkable, 2):
         if a["config"] == b["config"]:
@@ -465,7 +589,8 @@ def judge(arms: list[dict[str, Any]], allow_unverifiable: bool = False) -> dict[
     else:
         verdict = PASS
     return {"verdict": verdict, "null_pairs": null_pairs,
-            "undetermined_pairs": undetermined_pairs, "unverifiable": unverifiable}
+            "undetermined_pairs": undetermined_pairs, "unverifiable": unverifiable,
+            "unverifiable_halves": halves}
 
 
 # ── resolving registered conditions to their metas ───────────────────────
@@ -523,16 +648,7 @@ def proposer_metas_of(run: str, pool: str) -> tuple[list[str], str | None]:
     pool_dir, _matched = dcm.pool_output_dir(run, pool, spec.get("path"))
     if pool_dir is None:
         return [], None
-    root = BASE_DIR / pool_dir
-    paths = []
-    for depth in ("*", "*/*", "*/*/*", "*/*/*/*"):
-        for f in sorted(root.glob(f"{depth}.meta.json")):
-            tail = str(f)[len(str(root)):]
-            if "/verified" in tail or "/crops" in tail:
-                continue
-            meta = dcm.read_meta(f)
-            if meta and dcm.is_proposer_meta(meta):
-                paths.append(str(f.relative_to(BASE_DIR)))
+    paths = _proposer_metas_under(pool_dir)
     return (paths, "pool-directory") if paths else ([], None)
 
 
@@ -598,6 +714,64 @@ def proposer_metas_for_condition(condition: dict[str, Any]) -> tuple[list[str], 
     return [], None
 
 
+def _run_roots(run: str) -> frozenset[str]:
+    """The directories that hold a run's whole output tree.
+
+    Args:
+        run: Run id.
+
+    Returns:
+        ``<root>/<run>`` for every :data:`derive_condition_modality.POOL_ROOTS`
+        root, and ``outputs/retest/<phase>`` for a ``retest-<phase>`` run.
+    """
+    roots = {f"{root}/{run}" for root in dcm.POOL_ROOTS}
+    if run.startswith("retest-"):
+        roots.add(f"outputs/retest/{run[len('retest-'):]}")
+    return frozenset(roots)
+
+
+def _stage_homes(run: str, key: str, spec: Any) -> list[str]:
+    """The directories a registered verifier stage may occupy, for containment.
+
+    A stage that names its own root (``repo_path``, ruling D32) lives at
+    ``<repo_path>/<path>`` and nowhere else: the run-tree candidates
+    :func:`derive_condition_modality.stage_path_candidates` adds for it are
+    another stage's ground. Any candidate that is a run's whole tree (a
+    registered path of ``.``, as ``55maps-generalisation``'s
+    ``verified-cleanup-20260410`` has) is dropped: it would make the stage
+    the home of every source in the run that no deeper stage claims (PR #25
+    review, finding 3).
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+        spec: Its recorded spec (a bare modality string or a dict).
+
+    Returns:
+        Repository-relative directories, normalised (no trailing ``/`` or
+        ``/.``), most specific first.
+
+    Examples:
+        >>> _stage_homes("r", "k", {"path": "x", "repo_path": "archive/y"})
+        ['archive/y/x']
+    """
+    def norm(path: str) -> str:
+        """A candidate without its trailing ``/`` or ``/.``.
+
+        Args:
+            path: A candidate directory.
+
+        Returns:
+            The normalised directory.
+        """
+        return path.rstrip("/").removesuffix("/.").rstrip("/")
+
+    if isinstance(spec, dict) and spec.get("repo_path") and spec.get("path"):
+        return [norm(f"{spec['repo_path']}/{spec['path']}")]
+    roots = _run_roots(run)
+    return [c for c in map(norm, dcm.stage_path_candidates(run, key, spec)) if c not in roots]
+
+
 def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     """Which registered verifier stage a proposer-verifier condition used.
 
@@ -606,9 +780,10 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
 
     Returns:
         ``(stage_key, how)``: the stage, found by the register's detections
-        path lying under the stage's directory (longest match), else by the
-        label naming the stage (``label == key`` or ``label`` starting
-        ``key-``; longest key); ``(None, reason)`` otherwise.
+        path lying under one of the stage's homes (:func:`_stage_homes`;
+        longest match), else by the label naming the stage (``label ==
+        key`` or ``label`` starting ``key-``; longest key); ``(None,
+        reason)`` otherwise.
     """
     run = condition["run_id"]
     entry = dcm._decomposition().get(run) or {}
@@ -616,8 +791,7 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     det = _register_entry(condition).get("detections") or ""
     best: tuple[str, int] | None = None
     for key, spec in stages.items():
-        for cand in dcm.stage_path_candidates(run, key, spec):
-            cand = cand.rstrip("/").removesuffix("/.")
+        for cand in _stage_homes(run, key, spec):
             if det.startswith(cand + "/") and (best is None or len(cand) > best[1]):
                 best = (key, len(cand))
     if best:
@@ -629,38 +803,659 @@ def verifier_stage_of(condition: dict[str, Any]) -> tuple[str | None, str]:
     return None, "no registered stage contains the condition's detections or prefixes its label"
 
 
+@functools.lru_cache(maxsize=None)
+def stage_metas(run: str, key: str) -> tuple[str, ...]:
+    """A registered verifier stage's metas, by the W4.4 resolver's routes.
+
+    Args:
+        run: Run id.
+        key: The ``verifier_passes`` key.
+
+    Returns:
+        The passes manifest's source metas for ``(run, key)`` when one of
+        them is a readable verifier meta; else the metas
+        :func:`derive_condition_modality.resolve_verifier_stage` finds (stage
+        directory, then git's record of an archived leg); else the
+        manifest's source files as recorded, so that
+        :func:`arm_from_metas` names them unreadable and the half
+        UNVERIFIABLE rather than reading the stage as absent (PR #25
+        review, finding 1: an absent or corrupt manifest meta used to stop
+        the resolver from being consulted at all).
+    """
+    found = _source_files(run, key)
+    if any(_is_verifier_meta(f) for f in found):
+        return tuple(found)
+    spec = (dcm._decomposition().get(run) or {}).get("verifier_passes", {}).get(key)
+    resolved = [m["meta_path"] for m in dcm.resolve_verifier_stage(run, key, spec)["metas"]]
+    return tuple(resolved or found)
+
+
+# ── reviewed bindings: derived products followed to their sources ────────
+
+class BindingError(ValueError):
+    """The bindings file is malformed, or names what the register does not hold."""
+
+
+def _is_relative_path(value: Any) -> bool:
+    """True for a non-empty repository-relative path string.
+
+    Args:
+        value: A candidate path.
+
+    Returns:
+        Whether it is a string that is neither absolute nor climbs out of
+        the repository.
+    """
+    return (isinstance(value, str) and bool(value) and not value.startswith("/")
+            and ".." not in Path(value).parts)
+
+
+def _is_text(value: Any) -> bool:
+    """True for a non-empty string.
+
+    Args:
+        value: A candidate value.
+
+    Returns:
+        Whether it is a ``str`` with at least one non-space character.
+    """
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _str_list(entry: dict[str, Any], field: str, where: str,
+              problems: list[str]) -> list[str]:
+    """One list-of-strings field of a binding, its type checked.
+
+    Args:
+        entry: The binding entry.
+        field: The field name.
+        where: The entry's name, for messages.
+        problems: Collects a problem when the field is present but not a
+            list of strings.
+
+    Returns:
+        The field's value, or ``[]`` when it is absent, null or malformed.
+    """
+    value = entry.get(field)
+    if value is None:
+        return []
+    if not isinstance(value, list) or not all(isinstance(v, str) for v in value):
+        problems.append(f"{where}: {field} is {type(value).__name__}, not a list of strings")
+        return []
+    return value
+
+
+def validate_bindings(doc: Any, conditions: dict[str, dict[str, Any]],
+                      registered_detections: Any) -> list[str]:
+    """Check a bindings document against the register; name every problem.
+
+    Each binding must name its conditions, the registered detections they
+    score (every listed condition's registered detections path must be
+    among them, so an entry cannot drift from the product it was reviewed
+    for), at least one source, and evidence: a derivation and a script or
+    document. A condition may be bound once; a verifier source binds only a
+    proposer-verifier condition. Every field is type-checked, so a
+    malformed file yields named problems rather than an exception, and an
+    absent, null or empty ``bindings`` list is a problem, not a silent "no
+    bindings" (PR #25 review, finding 8): to run without bindings, delete
+    the file. An ``incomplete_meta`` flag must be a boolean; when true it
+    needs a one-line ``incomplete_meta_reason`` and a verifier source
+    (finding 4: :func:`_incomplete_stages`).
+
+    Args:
+        doc: The parsed bindings file.
+        conditions: The conditions manifest, by condition id.
+        registered_detections: ``condition record -> detections path``
+            (:func:`_register_entry`'s ``detections``).
+
+    Returns:
+        Problem descriptions; empty when the document is valid.
+
+    Examples:
+        >>> validate_bindings({"schema_version": "x", "bindings": []}, {}, dict.get)[0]
+        "schema_version is 'x', expected 'manipulation-gate-bindings/1'"
+    """
+    if not isinstance(doc, dict):
+        return [f"the bindings file is a JSON {type(doc).__name__}, not an object"]
+    problems = []
+    if doc.get("schema_version") != BINDINGS_SCHEMA:
+        problems.append(f"schema_version is {doc.get('schema_version')!r}, "
+                        f"expected {BINDINGS_SCHEMA!r}")
+    entries = doc.get("bindings")
+    if not isinstance(entries, list) or not entries:
+        state = ("absent" if "bindings" not in doc else "null" if entries is None
+                 else "empty" if entries == [] else f"a {type(entries).__name__}, not a list")
+        problems.append(f"bindings is {state} (a bindings file must bind something; delete "
+                        "it to run without bindings)")
+        return problems
+    ids: set[str] = set()
+    bound: dict[str, str] = {}
+    for i, entry in enumerate(entries):
+        if not isinstance(entry, dict):
+            problems.append(f"binding #{i}: a {type(entry).__name__}, not an object")
+            continue
+        name = entry.get("id") if _is_text(entry.get("id")) else None
+        where = f"binding {name or f'#{i}'}"
+        if name is None:
+            problems.append(f"{where}: no id (a non-empty string)")
+        elif name in ids:
+            problems.append(f"{where}: duplicate id")
+        ids.add(name or "")
+        fields = {f: _str_list(entry, f, where, problems)
+                  for f in ("conditions", "detections", "verifier_sources", "proposer_sources",
+                            "resolves_to")}
+        if not (fields["verifier_sources"] or fields["proposer_sources"]):
+            problems.append(f"{where}: names no verifier or proposer source")
+        for field in ("detections", "verifier_sources", "proposer_sources"):
+            for path in fields[field]:
+                if not _is_relative_path(path):
+                    problems.append(f"{where}: {field} entry {path!r} is not a "
+                                    "repository-relative path")
+        evidence = entry.get("evidence")
+        if not isinstance(evidence, dict):
+            problems.append(f"{where}: evidence is {type(evidence).__name__}, not an object")
+            evidence = {}
+        if not _is_text(evidence.get("derivation")):
+            problems.append(f"{where}: evidence has no derivation")
+        documents = _str_list(evidence, "documents", f"{where}: evidence", problems)
+        if not (_is_text(evidence.get("script")) or documents):
+            problems.append(f"{where}: evidence cites no script or document")
+        incomplete = entry.get("incomplete_meta")
+        if incomplete is not None and not isinstance(incomplete, bool):
+            problems.append(f"{where}: incomplete_meta is {type(incomplete).__name__}, "
+                            "not true or false")
+        elif incomplete and not _is_text(entry.get("incomplete_meta_reason")):
+            problems.append(f"{where}: incomplete_meta is true but incomplete_meta_reason "
+                            "is not a one-line reason")
+        elif incomplete and not fields["verifier_sources"]:
+            problems.append(f"{where}: incomplete_meta is true but the binding names no "
+                            "verifier source (it concerns the verifier stage's metas)")
+        elif not incomplete and "incomplete_meta_reason" in entry:
+            problems.append(f"{where}: incomplete_meta_reason without incomplete_meta: true")
+        products = set(fields["detections"])
+        if not products:
+            problems.append(f"{where}: names no detections (the products it binds)")
+        if not fields["conditions"]:
+            problems.append(f"{where}: binds no conditions")
+        for cid in fields["conditions"]:
+            cond = conditions.get(cid)
+            if cond is None:
+                problems.append(f"{where}: {cid} is not a registered condition")
+                continue
+            if cid in bound:
+                problems.append(f"{where}: {cid} is already bound by {bound[cid]}")
+            bound[cid] = name or where
+            det = registered_detections(cond)
+            if products and det not in products:
+                problems.append(f"{where}: {cid}'s registered detections {det!r} are not "
+                                "among the binding's detections")
+            if fields["verifier_sources"] and cond.get("architecture") != "proposer-verifier":
+                problems.append(f"{where}: {cid} is not proposer-verifier, but the binding "
+                                "names verifier sources")
+    return problems
+
+
+@functools.lru_cache(maxsize=1)
+def _bindings() -> dict[str, dict[str, Any]]:
+    """The reviewed bindings, by condition id (empty when there is no file).
+
+    Returns:
+        Condition id -> its binding entry.
+
+    Raises:
+        BindingError: The file cannot be read, is not valid UTF-8 JSON, or
+            :func:`validate_bindings` finds a problem.
+    """
+    path = BASE_DIR / BINDINGS
+    if not path.exists():
+        return {}
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise BindingError(f"{BINDINGS} cannot be read as JSON: {exc}") from exc
+    problems = validate_bindings(doc, _conditions(),
+                                 lambda cond: _register_entry(cond).get("detections"))
+    if problems:
+        raise BindingError(f"{BINDINGS}: " + "; ".join(problems))
+    return {cid: entry for entry in doc["bindings"] for cid in entry["conditions"]}
+
+
+def _under(path: str, root: str) -> bool:
+    """True when ``path`` is ``root`` or lies beneath it.
+
+    Args:
+        path: A repository-relative path.
+        root: A repository-relative directory.
+
+    Returns:
+        Whether ``path`` equals ``root`` or starts with ``root + "/"``.
+
+    Examples:
+        >>> _under("outputs/r/verify/probabilities.json", "outputs/r/verify")
+        True
+        >>> _under("outputs/r/verify_k3", "outputs/r/verify")
+        False
+    """
+    path = path.rstrip("/")
+    root = root.rstrip("/").removesuffix("/.")
+    return path == root or path.startswith(root + "/")
+
+
+@functools.lru_cache(maxsize=1)
+def _stage_dirs() -> tuple[tuple[str, str, str], ...]:
+    """Every directory a registered verifier stage may occupy, with its stage.
+
+    Returns:
+        ``(directory, run, key)`` for each of :func:`_stage_homes` of every
+        stage in every run (never a run's whole tree; PR #25 review,
+        finding 3).
+    """
+    return tuple((cand, run, key)
+                 for run, entry in dcm._decomposition().items()
+                 for key, spec in (entry.get("verifier_passes") or {}).items()
+                 for cand in _stage_homes(run, key, spec))
+
+
+def stages_containing(source: str) -> list[tuple[str, str]]:
+    """The registered verifier stage(s) whose directory holds a source path.
+
+    Args:
+        source: A repository-relative path a derivation read (a stage's
+            ``probabilities.json``, its ``verified/`` directory, ...).
+
+    Returns:
+        The ``(run, key)`` stages with the LONGEST directory containing the
+        source (several when two runs register one directory), else ``[]``.
+    """
+    hits = [(len(d), run, key) for d, run, key in _stage_dirs() if _under(source, d)]
+    if not hits:
+        return []
+    best = max(n for n, _run, _key in hits)
+    return sorted({(run, key) for n, run, key in hits if n == best})
+
+
+@functools.lru_cache(maxsize=1)
+def _incomplete_stages() -> dict[tuple[str, str], str]:
+    """The registered stages whose surviving metas cover only part of their requests.
+
+    A binding marked ``incomplete_meta`` records, from its review, that the
+    only meta(s) left for its verifier stage cover a cleanup, recovery or
+    final-round leg, not the stage's main requests (e.g. a 6-item cleanup
+    meta for a 38,713-candidate stage). That is a fact about the STAGE, so
+    every arm whose verifier half reads it is unverifiable on that half,
+    whether it reaches the stage through a binding or through the
+    register's own route (PR #25 review, finding 4: the gate used to read
+    such a meta as the whole stage and pass on it).
+
+    Returns:
+        ``(run, key) -> "binding <id>: <incomplete_meta_reason>"`` for every
+        registered stage an ``incomplete_meta`` binding's verifier sources
+        lie in (the first such binding in file order names it).
+    """
+    out: dict[tuple[str, str], str] = {}
+    for entry in {e["id"]: e for e in _bindings().values()}.values():
+        if entry.get("incomplete_meta"):
+            for source in entry["verifier_sources"]:
+                for stage in stages_containing(source):
+                    out.setdefault(stage, f"binding {entry['id']}: "
+                                          f"{entry['incomplete_meta_reason']}")
+    return out
+
+
+def _rel(path: str | Path) -> str:
+    """A path relative to the repository when it lies inside it.
+
+    Args:
+        path: An absolute or repository-relative path.
+
+    Returns:
+        The repository-relative form, else the path unchanged.
+    """
+    p = Path(path)
+    return str(p.relative_to(BASE_DIR)) if p.is_absolute() and p.is_relative_to(BASE_DIR) \
+        else str(path)
+
+
+def _is_verifier_meta(path: str) -> bool:
+    """True for a readable meta that records a verifier pass.
+
+    Args:
+        path: A meta path (normalised by :func:`_rel`, so a meta is
+            harvested once however it was reached).
+
+    Returns:
+        Whether :func:`meta_record` reads it and
+        :func:`lib_manipulation_signature.is_verifier_record` holds.
+    """
+    rec = meta_record(_rel(path))
+    return "error" not in rec and is_verifier_record(rec)
+
+
+def _is_proposer_meta(path: str) -> bool:
+    """True for a readable pass meta that records a proposer pass.
+
+    The gate's one proposer test, on its own harvested record: a
+    configuration version (as :func:`derive_condition_modality.is_proposer_meta`
+    requires) that is not a verifier's (:func:`_is_verifier_meta`'s test).
+
+    Args:
+        path: A meta path (normalised by :func:`_rel`).
+
+    Returns:
+        Whether :func:`meta_record` reads it, it has a version, and it is
+        not a verifier record.
+    """
+    rec = meta_record(_rel(path))
+    return "error" not in rec and bool(rec.get("version")) and not is_verifier_record(rec)
+
+
+def _on_proposer_side(path: str, root: str) -> bool:
+    """True when no ``verified`` or ``crops`` subtree lies between root and path.
+
+    Args:
+        path: A repository-relative path at or below ``root``.
+        root: The directory the path was found under.
+
+    Returns:
+        Whether the part of ``path`` below ``root`` avoids ``/verified`` and
+        ``/crops`` (the verifier's subtrees of a pool).
+
+    Examples:
+        >>> _on_proposer_side("p/run_1/d.meta.json", "p")
+        True
+        >>> _on_proposer_side("p/verified/run.meta.json", "p")
+        False
+    """
+    tail = path[len(root.rstrip("/")):]
+    return "/verified" not in tail and "/crops" not in tail
+
+
+#: The depths below a pool or pass directory searched for proposer metas.
+_PROPOSER_DEPTHS = ("*", "*/*", "*/*/*", "*/*/*/*")
+
+
+def _proposer_metas_under(root: str) -> list[str]:
+    """The proposer metas on disk under a directory (four levels down).
+
+    The shared search of :func:`proposer_metas_of` and
+    :func:`proposer_metas_for_source`. The path filter (no ``verified`` or
+    ``crops`` subtree) runs BEFORE a meta is parsed, so the large verifier
+    metas of a pool's ``verified/`` tree are never read or cached here (PR
+    #25 review, finding 9).
+
+    Args:
+        root: A repository-relative directory.
+
+    Returns:
+        Repository-relative meta paths, in search order.
+    """
+    root = str(Path(root))
+    base = BASE_DIR / root
+    found = []
+    for depth in _PROPOSER_DEPTHS:
+        for f in sorted(base.glob(f"{depth}.meta.json")):
+            rel = _rel(f)
+            if _on_proposer_side(rel, root) and _is_proposer_meta(rel):
+                found.append(rel)
+    return found
+
+
+@functools.lru_cache(maxsize=None)
+def verifier_metas_for_source(source: str) -> tuple[tuple[str, ...], str | None]:
+    """Follow one verifier source of a binding to the metas of its requests.
+
+    Routes, in order:
+
+    1. ``stage`` — the registered stage(s) whose directory contains the
+       source (:func:`stages_containing`), read by :func:`stage_metas`;
+    2. ``source-directory`` — for an existing directory, the verifier metas
+       in it or one level below; for an existing file (a
+       ``probabilities.json``), the verifier metas beside it. A source that
+       does not exist is never widened to its parent;
+    3. ``git-rename`` — the verifier metas among the files git moved away
+       from the source (an archived leg).
+
+    Paths are repository-relative throughout, so each meta is harvested
+    once (PR #25 review, finding 9: route 2 harvested by absolute path and
+    returned relative ones, which :func:`arm_from_metas` harvested again).
+
+    Args:
+        source: A repository-relative path the derivation read.
+
+    Returns:
+        ``(meta paths, route)``; ``((), None)`` when no route reads one.
+    """
+    stages = stages_containing(source)
+    found = sorted({m for run, key in stages for m in stage_metas(run, key)})
+    if found:
+        return tuple(found), "stage:" + ",".join(f"{run}/{key}" for run, key in stages)
+    path = BASE_DIR / source
+    candidates: list[str] = []
+    if path.is_dir():
+        candidates = [_rel(f) for f in dcm._metas_under(source)]
+    elif path.is_file():
+        candidates = [_rel(f) for f in sorted(path.parent.glob("*.meta.json"))]
+    found = [f for f in candidates if _is_verifier_meta(f)]
+    if found:
+        return tuple(found), "source-directory"
+    moved, commit = dcm.git_renamed_to([source])
+    found = [f for f in moved if f.endswith(".meta.json") and _is_verifier_meta(f)]
+    if found:
+        return tuple(found), f"git-rename:{commit}"
+    return (), None
+
+
+@functools.lru_cache(maxsize=1)
+def _manifest_sources() -> tuple[tuple[str, str, str], ...]:
+    """Every source meta the passes manifest records, with its pass key.
+
+    Returns:
+        ``(meta path, run, pool or stage key)`` per recorded source file.
+    """
+    return tuple((f, run, key) for (run, key), passes in dcm._passes_index().items()
+                 for p in passes for f in (p.get("provenance") or {}).get("source_files") or [])
+
+
+@functools.lru_cache(maxsize=None)
+def proposer_metas_for_source(source: str) -> tuple[tuple[str, ...], str | None]:
+    """Follow one proposer source of a binding to the metas of its passes.
+
+    Routes, in order (a ``verified`` or ``crops`` subtree below the source is
+    the verifier's, never the proposer's: :func:`_on_proposer_side`):
+
+    1. ``passes-manifest`` — the source files the passes manifest records
+       under the source path, when at least one is a readable proposer meta
+       (:func:`_is_proposer_meta`). Readable verifier metas and files that
+       are not metas (``run.log``, the register) are dropped; an unreadable
+       meta-named file is kept, so :func:`arm_from_metas` names it. Hits
+       none of which is a readable proposer meta do NOT stop the search
+       (PR #25 review, finding 5);
+    2. ``source-directory`` — for a directory, the proposer metas on disk
+       under it (:func:`_proposer_metas_under`, as :func:`proposer_metas_of`
+       searches a pool); for a single meta file, that file only if it is a
+       readable proposer meta (finding 5: it used to be accepted unread);
+    3. ``git-rename`` — the proposer metas git moved away from the source,
+       each judged by where it sat below the source (its OLD path; finding
+       6: the tail was sliced from the new path).
+
+    Args:
+        source: A repository-relative pass or pool directory (or one meta).
+
+    Returns:
+        ``(meta paths, route)``; ``((), None)`` when no route reads one.
+    """
+    hits = [(f, run, key) for f, run, key in _manifest_sources()
+            if _under(f, source) and _on_proposer_side(f, source) and not _is_verifier_meta(f)]
+    if any(_is_proposer_meta(f) for f, _run, _key in hits):
+        kept = [(f, run, key) for f, run, key in hits if _is_proposer_meta(f) or (
+            ".meta" in Path(f).name and "error" in meta_record(_rel(f)))]
+        keys = sorted({f"{run}/{key}" for _f, run, key in kept})
+        return (tuple(sorted({f for f, _run, _key in kept})),
+                "passes-manifest:" + ",".join(keys))
+    root = BASE_DIR / source
+    found: list[str] = []
+    if root.is_file():
+        found = [source] if ".meta" in root.name and _is_proposer_meta(source) else []
+    elif root.is_dir():
+        found = _proposer_metas_under(source)
+    if found:
+        return tuple(found), "source-directory"
+    renames, commit = dcm.git_renames([source])
+    found = [new for old, new in renames if new.endswith(".meta.json")
+             and _on_proposer_side(old, source) and _is_proposer_meta(new)]
+    if found:
+        return tuple(found), f"git-rename:{commit}"
+    return (), None
+
+
+def _from_sources(sources: list[str], follow: Any) -> tuple[list[str], list[str], list[str]]:
+    """Follow every source of one half of a binding.
+
+    Args:
+        sources: The binding's sources for one stage.
+        follow: :func:`verifier_metas_for_source` or
+            :func:`proposer_metas_for_source`.
+
+    Returns:
+        ``(meta paths, routes, sources that resolved nothing)``.
+    """
+    metas: set[str] = set()
+    routes, dead = [], []
+    for source in sources:
+        found, route = follow(source)
+        if found:
+            metas.update(found)
+            routes.append(route)
+        else:
+            dead.append(source)
+    return sorted(metas), routes, dead
+
+
+def _source_stage_label(source: str) -> str:
+    """The verifier stage a binding source names, as the arm reports it.
+
+    Args:
+        source: A binding's verifier source (repository-relative).
+
+    Returns:
+        The registered stage(s) whose directory holds the source, as
+        ``run/key`` (joined by ``|`` when two runs register one directory);
+        else the source's directory, marked ``(unregistered)``. Always a
+        stage, never a route (PR #25 review, finding 7).
+    """
+    stages = stages_containing(source)
+    if stages:
+        return "|".join(f"{run}/{key}" for run, key in stages)
+    directory = source if (BASE_DIR / source).is_dir() or not Path(source).suffix \
+        else str(Path(source).parent)
+    return f"{directory} (unregistered)"
+
+
 def arm_for_condition(condition_id: str) -> dict[str, Any]:
     """Build the arm for one registered condition.
+
+    The register's own routes are tried first (:func:`proposer_metas_for_condition`,
+    :func:`verifier_stage_of`); a reviewed binding (:data:`BINDINGS`) is
+    consulted only for a half they leave unresolved. A binding is used
+    whole or not at all: when any of a half's sources resolves no meta, the
+    sources that did resolve are not a partial substitute (a missing pass
+    or stage changes the inputs fingerprint and the configuration set), so
+    that half is UNVERIFIABLE, with the dead sources named and a BINDING GAP
+    line printed (PR #25 review, finding 2). When the register identifies
+    the verifier stage but reads no meta for it, a binding is followed only
+    if every verifier source lies in that same stage; a binding naming any
+    other stage leaves the half UNVERIFIABLE, with both stages named
+    (finding 7). A verifier half read from a stage that an
+    ``incomplete_meta`` binding flags (:func:`_incomplete_stages`), by
+    either route, or through a binding that is itself flagged, is
+    UNVERIFIABLE with the binding's reason (finding 4).
 
     Args:
         condition_id: A ``run_id::label`` condition id.
 
     Returns:
-        The arm (:func:`arm_from_metas`), with ``verifier_stage`` added.
+        The arm (:func:`arm_from_metas`), with ``verifier_stage``
+        (``{"stage", "how"}``: a stage, never a route), ``verifier_route``
+        (the binding's resolution routes, when one was followed),
+        ``proposer_route``, ``binding`` (the binding's id when it supplied
+        evidence, else None) and ``binding_notes`` added.
 
     Raises:
         KeyError: The condition is not registered.
+        BindingError: The bindings file is invalid.
     """
     cond = _conditions()[condition_id]
     run = cond["run_id"]
+    binding = _bindings().get(condition_id)
+    used = False
+    notes = []
     proposer, proposer_route = proposer_metas_for_condition(cond)
+    if not proposer and binding and binding.get("proposer_sources"):
+        found, routes, dead = _from_sources(binding["proposer_sources"],
+                                            proposer_metas_for_source)
+        if dead:
+            notes.append(f"binding {binding['id']}: proposer source(s) resolved no meta: "
+                         + ", ".join(dead) + (" (the other sources are not read as the "
+                                              "whole pass set)" if found else ""))
+        elif found:
+            used = True
+            proposer = found
+            proposer_route = f"binding:{binding['id']}:" + "|".join(routes)
     verifier: list[str] = []
     declared = None
-    stage, how = None, None
+    stage, how, verifier_route = None, None, None
+    v_reason = v_identity = None
     if cond.get("architecture") == "proposer-verifier":
         stage, how = verifier_stage_of(cond)
         if stage:
-            verifier = _source_files(run, stage)
-            if not verifier:
-                spec = (dcm._decomposition().get(run) or {}).get(
-                    "verifier_passes", {}).get(stage)
-                verifier = [m["meta_path"] for m in
-                            dcm.resolve_verifier_stage(run, stage, spec)["metas"]]
-        if not verifier:
+            verifier = list(stage_metas(run, stage))
+        if verifier and (run, stage) in _incomplete_stages():
+            # The register reads the stage, but a reviewed binding records
+            # that its surviving meta covers only part of it (finding 4).
+            v_identity = f"{run}/{stage}"
+            v_reason = f"incomplete meta: {v_identity}: {_incomplete_stages()[(run, stage)]}"
+        sources = (binding or {}).get("verifier_sources") or []
+        bound = "|".join(dict.fromkeys(_source_stage_label(s) for s in sources))
+        if not verifier and sources and stage and any(
+                stages_containing(s) != [(run, stage)] for s in sources):
+            # The register identified a stage (whose metas it could not
+            # read) and the binding names another: neither silently wins,
+            # and the stage field keeps the register's stage (PR #25
+            # review, finding 7).
+            v_reason = (f"binding {binding['id']} names stage(s) {bound}, but the register "
+                        f"identifies stage {run}/{stage} (by {how}); the binding is not used")
+            v_identity = f"{run}/{stage} vs {bound}"
+        elif not verifier and sources:
+            found, routes, dead = _from_sources(sources, verifier_metas_for_source)
+            stage, how = bound, f"binding:{binding['id']}"
+            if dead:
+                note = (f"binding {binding['id']}: verifier source(s) resolved no meta: "
+                        + ", ".join(dead))
+                notes.append(note + (" (the other sources are not read as the whole "
+                                     "stage set)" if found else ""))
+                v_reason, v_identity = note, f"{stage} <- {'|'.join(sorted(sources))}"
+            elif found:
+                used = True
+                verifier, verifier_route = found, "|".join(routes)
+                flagged = [_incomplete_stages()[s] for src in sources
+                           for s in stages_containing(src) if s in _incomplete_stages()]
+                if binding.get("incomplete_meta"):
+                    flagged.insert(0, f"binding {binding['id']}: "
+                                      f"{binding['incomplete_meta_reason']}")
+                if flagged:
+                    v_reason, v_identity = f"incomplete meta: {bound}: {flagged[0]}", bound
+        if not verifier and not v_reason:
             declared = cond.get("verifier_config") or None
-    arm = arm_from_metas(condition_id, proposer, verifier, declared)
+    arm = arm_from_metas(condition_id, proposer, verifier, declared,
+                         verifier_reason=v_reason, verifier_identity=v_identity)
+    proposer_notes = [n for n in notes if ": proposer source(s)" in n]
+    if not proposer and proposer_notes and arm["unverifiable_reason"]:
+        arm["unverifiable_reason"] += "; " + "; ".join(proposer_notes)
     arm["verifier_stage"] = {"stage": stage, "how": how}
+    arm["verifier_route"] = verifier_route
     arm["proposer_route"] = proposer_route
+    arm["binding"] = binding["id"] if binding and used else None
+    arm["binding_notes"] = notes
     return arm
 
 
@@ -808,10 +1603,12 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
     undetermined = judgement.get("undetermined_pairs") or []
     n_known = sum(1 for p in judgement["null_pairs"] if p.get("documented_by"))
     known = f" ({n_known} documented)" if judgement["null_pairs"] else ""
+    halves = judgement.get("unverifiable_halves") or []
+    n_halves = f", {len(halves)} unverifiable verifier half(s)" if halves else ""
     out = [f"{judgement['verdict']} {name}: {len(arms)} arm(s), "
            f"{len(judgement['null_pairs'])} null-manipulation pair(s){known}, "
            f"{len(judgement['unverifiable'])} unverifiable arm(s), "
-           f"{len(undetermined)} unverifiable pair(s) [{SIGNATURE_VERSION}]"]
+           f"{len(undetermined)} unverifiable pair(s){n_halves} [{SIGNATURE_VERSION}]"]
     for pair in judgement["null_pairs"]:
         label = ""
         if "documented_by" in pair:
@@ -822,11 +1619,22 @@ def render(name: str, judgement: dict[str, Any], arms: list[dict[str, Any]],
                    f"transmitted identical requests{label}")
     for u in judgement["unverifiable"]:
         out.append(f"  UNVERIFIABLE: {u['arm']}: {u['reason']}")
+    for h in halves:
+        out.append(f"  UNVERIFIABLE VERIFIER HALF: {h['arm']}: {h['reason']}")
     for pair in undetermined:
         out.append(f"  UNVERIFIABLE PAIR: {pair['arms'][0]} vs {pair['arms'][1]} sent identical "
                    "proposer requests and differ in configuration "
                    f"({', '.join(pair['config_fields_differing'])}), but a verifier half is "
-                   "DECLARED, so whether the difference reached the model is unknown")
+                   "DECLARED or UNVERIFIABLE, so whether the difference reached the model is "
+                   "unknown")
+    bound = sorted({a["binding"] for a in arms if a.get("binding")})
+    if bound:
+        n_bound = sum(1 for a in arms if a.get("binding"))
+        out.append(f"  note: {n_bound} arm(s) resolved through reviewed bindings in "
+                   f"{BINDINGS} ({', '.join(bound)})")
+    for a in arms:
+        for note in a.get("binding_notes") or []:
+            out.append(f"  BINDING GAP: {a['arm']}: {note}")
     declared = [a["arm"] for a in arms if a["verifier_basis"] == "declared"]
     if declared:
         out.append(f"  note: {len(declared)} arm(s) carry only a DECLARED verifier "
@@ -882,10 +1690,14 @@ def main(argv: list[str] | None = None) -> int:
 
     results = []
     worst = 0
-    for name, cids in targets:
-        judgement, arms = check_conditions(cids, args.allow_unverifiable)
-        worst = max(worst, EXIT_CODES[judgement["verdict"]])
-        results.append((name, judgement, arms))
+    try:
+        for name, cids in targets:
+            judgement, arms = check_conditions(cids, args.allow_unverifiable)
+            worst = max(worst, EXIT_CODES[judgement["verdict"]])
+            results.append((name, judgement, arms))
+    except BindingError as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        return 1
 
     if args.json:
         doc: dict[str, Any] = {"signature_version": SIGNATURE_VERSION, "analyses": [

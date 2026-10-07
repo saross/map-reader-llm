@@ -323,6 +323,11 @@ def test_git_renamed_to_follows_an_archived_leg(tmp_path, monkeypatch):
     import subprocess
 
     def git(*args: str) -> None:
+        """Run git in the synthetic repository with a throwaway identity.
+
+        Args:
+            *args: The git subcommand and its arguments.
+        """
         subprocess.run(["git", "-c", "user.name=t", "-c", "user.email=t@t",
                         *args], cwd=tmp_path, check=True, capture_output=True)
 
@@ -338,8 +343,14 @@ def test_git_renamed_to_follows_an_archived_leg(tmp_path, monkeypatch):
     moved, commit = d.git_renamed_to(["outputs/run/verified/s"])
     assert moved == ["archive/superseded/s/run.meta.json"]
     assert commit
+    # git_renames keeps each destination's original path (PR #25 review,
+    # finding 6: a filter on where a file sat must read the OLD path).
+    assert d.git_renames(["outputs/run/verified/s"]) == (
+        [("outputs/run/verified/s/run.meta.json", "archive/superseded/s/run.meta.json")],
+        commit)
     # SENTINEL: a path git never removed is not followed anywhere.
     assert d.git_renamed_to(["outputs/never/existed"]) == ([], None)
+    assert d.git_renames(["outputs/never/existed"]) == ([], None)
 
 
 # ── tier 2: corpus-wide agreement ────────────────────────────────────────

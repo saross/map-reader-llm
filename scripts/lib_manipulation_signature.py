@@ -183,14 +183,20 @@ def harvest_meta(m: Any, path: str) -> dict[str, Any]:
     Returns:
         The harvested record; ``error`` is set when ``m`` is not a dict.
         Beyond the 2026-10-05 harvester's fields: ``max_output_tokens``
-        (from ``configuration`` or its snapshot) and ``dispatched_ids``
-        (:func:`dispatched_ids`, sorted).
+        (from ``configuration`` or its snapshot), ``dispatched_ids``
+        (:func:`dispatched_ids`, sorted) and ``has_configuration`` (False
+        for a JSON document with no ``configuration`` block, i.e. not a pass
+        meta; added 2026-10-06).
     """
     rec: dict = {"path": path}
     if not isinstance(m, dict):
         rec["error"] = "not a dict"
         return rec
     cfg = m.get("configuration") or {}
+    # A pass meta records its configuration; a JSON document without one
+    # (the passes manifest cites results/run-conditions.json as a source
+    # for some passes) is not a meta, and the gate must not read it as one.
+    rec["has_configuration"] = isinstance(cfg, dict) and bool(cfg)
     snap = cfg.get("full_config_snapshot") or {}
     env = m.get("environment") or {}
     rec["script"] = env.get("script")

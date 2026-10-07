@@ -28,6 +28,7 @@ that read the committed register and metas are tier 2.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -324,6 +325,14 @@ def _registered(monkeypatch, tmp_path, analyses: dict[str, list[str]],
         for c, (r, p) in pools.items()})
 
     def arm(cid: str) -> dict:
+        """Build a synthetic arm from the case's configuration table.
+
+        Args:
+            cid: The condition id.
+
+        Returns:
+            The arm (an ``absent`` version writes no meta).
+        """
         version, examples, temperature = configs[cid]
         path = tmp_path / f"{cid.replace(':', '_')}.meta.json"
         if version != "absent":
@@ -387,3 +396,70 @@ def test_the_h8_h10_replicate_pair_is_a_known_refusal(capsys) -> None:
     assert ("NULL MANIPULATION: h10::verified-pool-160 vs h8-v2::verified-wbf-scale-8 "
             "differ in configuration (version)") in out
     assert "[KNOWN: reports/manipulation-check-2026-10-05.md § B.5 group 10" in out
+
+
+# ── the committed reviewed bindings (gate coverage, 2026-10-06) ──────────
+
+@pytest.mark.tier2
+def test_the_committed_bindings_agree_with_the_register() -> None:
+    """``results/manipulation-gate-bindings.json`` validates against the
+    register (every condition registered and bound once, its registered
+    detections listed, evidence present), every verifier source lies in a
+    registered stage's directory unless its entry says the stage is
+    unregistered, and each entry's recorded ``resolves_to`` is still the
+    stage the gate maps its sources to (so a register edit that moves a
+    stage shows up here, not as a silent re-binding).
+
+    No stage's directory may be a run's whole output tree: until PR #25
+    review finding 3, 55maps-generalisation's ``verified-cleanup-20260410``
+    (registered path ``.``) made ``outputs/55maps-generalisation`` a stage
+    directory, so any source in that run that no deeper stage claimed
+    would have mapped to it. Each source must also lie strictly below its
+    stage's matched directory's run root."""
+    cm._bindings.cache_clear()
+    cm._stage_dirs.cache_clear()
+    catch_alls = [(run, key, d) for d, run, key in cm._stage_dirs() if d in cm._run_roots(run)]
+    assert catch_alls == [], catch_alls
+    bindings = cm._bindings()
+    assert bindings, "the bindings file is missing or empty"
+    for entry in {e["id"]: e for e in bindings.values()}.values():
+        mapped = [f"{run}/{key}" for source in entry.get("verifier_sources") or []
+                  for run, key in cm.stages_containing(source)]
+        if not entry.get("unregistered_stage"):
+            for source in entry.get("verifier_sources") or []:
+                stages = cm.stages_containing(source)
+                assert stages, (entry["id"], source)
+                homes = [(d, run) for d, run, key in cm._stage_dirs()
+                         if (run, key) in stages and cm._under(source, d)]
+                assert homes and all(d not in cm._run_roots(run) for d, run in homes), (
+                    entry["id"], source, homes)
+            assert list(dict.fromkeys(mapped)) == (entry.get("resolves_to") or []), entry["id"]
+
+
+#: Wording in ``meta_beside_source`` that says the stage's surviving meta
+#: covers only part of its requests (PR #25 review, finding 4).
+_PARTIAL_META_WORDING = re.compile(
+    r"\b(records|recording|holds|covers|is) (only|a cleanup)\b|\b(leg|round|pass) only\b",
+    re.IGNORECASE)
+
+#: Entries whose wording matches but whose stage IS covered in full: the
+#: gate reads both of verify_swap38's metas (the passes manifest lists the
+#: cleanup meta and run.meta.main-2026-09-04.json).
+_COMPLETE_DESPITE_WORDING = frozenset({"g37-screen-k5-swap38-armV"})
+
+
+@pytest.mark.tier2
+def test_every_binding_with_a_partial_meta_is_flagged() -> None:
+    """A binding whose recorded review says the stage's only meta covers a
+    cleanup, recovery, resumed or final-round leg carries ``incomplete_meta``
+    (so the gate does not read that meta as the whole stage), and a flagged
+    binding says so in its own words. The 28 entries flagged on 2026-10-07
+    were chosen by reading every entry; this pins the wording so a new
+    entry cannot record a partial meta and omit the flag."""
+    doc = json.loads((cm.BASE_DIR / cm.BINDINGS).read_text(encoding="utf-8"))
+    worded = {e["id"] for e in doc["bindings"]
+              if _PARTIAL_META_WORDING.search(e["meta_beside_source"])}
+    flagged = {e["id"] for e in doc["bindings"] if e.get("incomplete_meta")}
+    assert worded - _COMPLETE_DESPITE_WORDING - flagged == set()
+    assert flagged - worded == set()
+    assert len(flagged) == 28
