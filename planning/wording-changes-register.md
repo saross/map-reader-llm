@@ -1,6 +1,6 @@
 # Wording-changes register
 
-> **Last revised**: 2026-10-07 (original publication, Session 163). See
+> **Last revised**: 2026-10-07 (probe follow-up cited, Session 163). See
 > [§ Changelog](#changelog) for revision history.
 
 **Purpose.** One list of every wording change the paper drafts and the
@@ -20,10 +20,11 @@ branch, awaiting merge), **DONE**. Anchors are `file:line` as read on
 ## A. Temperature (Google's notice of 2026-10-07 and the probe)
 
 Sources: `reports/google-temperature-notice-2026-10-07.md` (§ 2 claim table,
-§ 7 questions), `planning/temperature-probe-2026-10-07.md` § 7. Facts now
+§ 7 questions), `planning/temperature-probe-2026-10-07.md` §§ 7 and 8.5. Facts now
 established: Gemini 3.6 Flash and later apply the model default whatever is
-sent (Google; the probe confirms it for 3.7, with a small exploratory
-residual); the default is 1.0 for `gemini-3.7-flash`, `gemini-3.8-flash` and
+sent (Google; the probe confirms it for 3.7, and its pre-registered follow-up
+finds no residual effect, a residual up to about 0.02 in mean |Δp| not
+excluded; § 7's exploratory residual traces to one batch job); the default is 1.0 for `gemini-3.7-flash`, `gemini-3.8-flash` and
 `gemini-3-flash-preview` (`outputs/temperature-probe-2026-10-07/models-get.json`).
 
 | ID | Where | What must change | Status |
@@ -83,6 +84,11 @@ between the scorer fix and per-analysis clipping, and two prior rulings
 | K4 | `data/pricing/gemini-rate-card.json`, `gemini-3.7-flash` batch `input_cached` 0.0375 | September batch invoices bill 3.7 cache reads at USD 0.075/M (`planning/cost-accounting-fix-plan-2026-09-21.md` § 8 item 10); the register will under-price Run B's 3.7 image arm. | OPEN |
 
 ## Changelog
+
+### 2026-10-07 — Probe follow-up (Session 163)
+
+Section A's preamble now cites the follow-up (`planning/temperature-probe-2026-10-07.md`
+§ 8.5, `36497fec2`): no residual temperature effect on 3.7. No row changed.
 
 ### 2026-10-07 — Original publication (Session 163)
 
