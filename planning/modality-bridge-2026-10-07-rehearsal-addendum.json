@@ -1,0 +1,4213 @@
+{
+ "_README": "Addendum to planning/modality-bridge-2026-10-07-rehearsal.json, made 2026-10-07 on sapphire from a disposable worktree at main d93678303 (after the Run B branch merge, the verifier and detector temperature-fallback changes and the three added arms). All 45 passes of the seven arms ran the launcher's exact arguments plus --dry-run under scripts/bridge_dryrun_harness.py (stub client, sockets blocked); pass 1 of each arm also had its complete request file built and summarised, then deleted. 'signature_check' compares each original arm's pass-1 elided request signature with the original record; 'twin_diff' lists the request fields in which each added arm differs from its twin.",
+ "worktree_head": "d93678303",
+ "passes": {
+  "g3-image:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:10": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "10",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 10,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:6": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "6",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 6,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:7": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "7",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 7,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:8": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "8",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 8,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image:9": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "9",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 9,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image-temp1:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image-temp1:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image-temp1:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image-temp1:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-image-temp1:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-image-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:10": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "10",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 10,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:6": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "6",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 6,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:7": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "7",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 7,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:8": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "8",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 8,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text:9": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "9",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 9,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text-temp1:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text-temp1:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text-temp1:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text-temp1:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g3-text-temp1:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3-flash-preview",
+    "--thinking-level",
+    "minimal",
+    "--tile-size",
+    "384",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "1.0",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3-flash-preview",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 1.0,
+      "thinking_level": "minimal"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--max-batch-tiles",
+    "466",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 466,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 932,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--max-batch-tiles",
+    "466",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 466,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 932,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--max-batch-tiles",
+    "466",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 466,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 932,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--max-batch-tiles",
+    "466",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 466,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 932,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--max-batch-tiles",
+    "466",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 466,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    },
+    {
+     "offset": 932,
+     "limit": 466,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image-cache:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image-cache",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image-cache:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image-cache",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image-cache:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image-cache",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image-cache:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image-cache",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-image-cache:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text-image.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--use-cache",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-image-cache",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": true,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text-image",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text-image.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-text:1": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "1",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 1,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-text:2": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "2",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 2,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-text:3": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "3",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 3,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-text:4": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "4",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 4,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  },
+  "g37-text:5": {
+   "argv": [
+    "--config",
+    "prompts/configs/detect_brief-text.json",
+    "--model",
+    "gemini-3.7-flash",
+    "--thinking-level",
+    "low",
+    "--allow-inert-fields",
+    "--manifest",
+    "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+    "--tiles-dir",
+    "inputs/tiles_384_ov192",
+    "--temperature",
+    "0.7",
+    "--mode",
+    "batch",
+    "--service-tier",
+    "flex",
+    "--run",
+    "5",
+    "--output-dir",
+    "outputs/modality-bridge-2026-10-07/g37-text",
+    "--skip-intent-check"
+   ],
+   "exit_status": 0,
+   "breaches": [],
+   "stub_client_instances": 1,
+   "chunks": [
+    {
+     "offset": 0,
+     "limit": 1398,
+     "model_name": "gemini-3.7-flash",
+     "use_context_cache": false,
+     "cache_ttl_seconds": 86400,
+     "dry_run": true,
+     "tile_size": 384,
+     "retry_service_tier": "flex",
+     "unit": {
+      "condition_name": "detect_brief-text",
+      "run": 5,
+      "config": "prompts/configs/detect_brief-text.json",
+      "temperature": 0.7,
+      "thinking_level": "low"
+     },
+     "dry_run_result": [
+      true,
+      "dry_run",
+      0.0
+     ]
+    }
+   ]
+  }
+ },
+ "full_build": {
+  "g3-image": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": [
+    {
+     "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+       "Here are the Reference Symbols you must find:"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+      ]
+     ]
+    }
+   ],
+   "builds": [
+    {
+     "jsonl_bytes": 461610778,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "167b1c950e5aeb592f05f227338fcc71ddef4bf1499c3c4839a54a3f3dea26d0": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": null,
+      "cached_content": "cachedContents/DRY-RUN-PLACEHOLDER",
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "MINIMAL",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "cached_content",
+       "contents",
+       "generation_config"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  },
+  "g3-image-temp1": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": [
+    {
+     "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+       "Here are the Reference Symbols you must find:"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+      ]
+     ]
+    }
+   ],
+   "builds": [
+    {
+     "jsonl_bytes": 461610778,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "167eb35218d3228869ed28f52cd15ce7e1df1076160bbb1fef183df9cdda60d3": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": null,
+      "cached_content": "cachedContents/DRY-RUN-PLACEHOLDER",
+      "temperature": 1.0,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "MINIMAL",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "cached_content",
+       "contents",
+       "generation_config"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  },
+  "g3-text": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": null,
+   "builds": [
+    {
+     "jsonl_bytes": 463984582,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "58cf1f1f84cdca02f5e5859471fb4d94f38ec68247bd86aead2989fc394eb289": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "MINIMAL",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  },
+  "g3-text-temp1": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": null,
+   "builds": [
+    {
+     "jsonl_bytes": 463984582,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "8414d742a0184d01f6ad3d56ef865cc28200be5b282c685a0ec0761443beeb99": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 1.0,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "MINIMAL",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  },
+  "g37-image": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": null,
+   "builds": [
+    {
+     "jsonl_bytes": 1256420106,
+     "n_lines": 466,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3": 466
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "LOW",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 0
+    },
+    {
+     "jsonl_bytes": 1250523568,
+     "n_lines": 466,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3": 466
+     },
+     "first_line": {
+      "key": "K-35-053-3_Elenovo_x2304_y192.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "fe12412820fb433ad3cfd9dbb16b7bed99ced26fb6106a93b945c94c153b2092"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "LOW",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 466
+    },
+    {
+     "jsonl_bytes": 1263382206,
+     "n_lines": 466,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3": 466
+     },
+     "first_line": {
+      "key": "K-35-062-2_Rakovski_x3264_y3456.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+       ],
+       [
+        "text",
+        "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+        "Positive"
+       ],
+       [
+        "image",
+        "image/png",
+        "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+       ],
+       [
+        "text",
+        "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+        "Negative"
+       ],
+       [
+        "image",
+        "image/png",
+        "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "61c0e768f8d150e3622c300fc4bf27a93fda2a7f993d18bd39d15d3a8ede7a4c"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "LOW",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 932
+    }
+   ]
+  },
+  "g37-image-cache": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": [
+    {
+     "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+       "Here are the Reference Symbols you must find:"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+      ],
+      [
+       "text",
+       "14e9f4e33cfe528659fd19eb54f49e70abc9232c0439e52e8ecbc0a160f8285f",
+       "Positive"
+      ],
+      [
+       "image",
+       "image/png",
+       "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+      ],
+      [
+       "text",
+       "9f7bdabb344db3f84c06366f045184d9a2ae82b8bf97c4b2ee6e413fe4ee5e68",
+       "Negative"
+      ],
+      [
+       "image",
+       "image/png",
+       "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+      ]
+     ]
+    }
+   ],
+   "builds": [
+    {
+     "jsonl_bytes": 461605186,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "3f33b348aa8a18002f87287a33dea8f20d101f4bcba11d9c3d1ac244aef9029f": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": null,
+      "cached_content": "cachedContents/DRY-RUN-PLACEHOLDER",
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "LOW",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "cached_content",
+       "contents",
+       "generation_config"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  },
+  "g37-text": {
+   "n_requests": 1398,
+   "tile_set_sha256": "ecc20ef388c010bbf22378420f11322e74b25faad5e2ac0a6ee1cb1cbbe925ff",
+   "batch_cache": null,
+   "builds": [
+    {
+     "jsonl_bytes": 463978990,
+     "n_lines": 1398,
+     "keys_match_manifest_slice": true,
+     "elided_signatures": {
+      "6d34960004c02837e9654d6b2a65fb2223cda99b977994a26ba4311c66a6e8a9": 1398
+     },
+     "first_line": {
+      "key": "K-35-052-4_32635_x0_y0.png",
+      "n_contents": 1,
+      "roles": [
+       "user"
+      ],
+      "parts": [
+       [
+        "text",
+        "fd3d0ce762b42252add3dd850f25652da1b6493d4dd232365c2d950e50463df1",
+        "Here are the Reference Symbols you must find:"
+       ],
+       [
+        "text",
+        "5b00fa4ed836ad66f75651d87d591ee0636acaa9aa32e0a7fc4ffaa755330fd5",
+        "Now, find detection instances that visually match ANY of the"
+       ],
+       [
+        "image",
+        "image/png",
+        "91347803799272d3c24c8358793014bfcd087b16e81481dae42329bc449faf47"
+       ]
+      ],
+      "system_instruction_sha256": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "cached_content": null,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "response_mime_type": "application/json",
+      "thinking_level": "LOW",
+      "safety_settings": null,
+      "service_tier": null,
+      "request_keys": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ]
+     },
+     "chunk_offset": 0
+    }
+   ]
+  }
+ },
+ "signature_check": {
+  "g3-image": {
+   "now": [
+    [
+     "167b1c950e5aeb592f05f227338fcc71ddef4bf1499c3c4839a54a3f3dea26d0"
+    ]
+   ],
+   "record": [
+    [
+     "167b1c950e5aeb592f05f227338fcc71ddef4bf1499c3c4839a54a3f3dea26d0"
+    ]
+   ],
+   "same": true
+  },
+  "g3-text": {
+   "now": [
+    [
+     "58cf1f1f84cdca02f5e5859471fb4d94f38ec68247bd86aead2989fc394eb289"
+    ]
+   ],
+   "record": [
+    [
+     "58cf1f1f84cdca02f5e5859471fb4d94f38ec68247bd86aead2989fc394eb289"
+    ]
+   ],
+   "same": true
+  },
+  "g37-image": {
+   "now": [
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ],
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ],
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ]
+   ],
+   "record": [
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ],
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ],
+    [
+     "4eef5736644f71255d63196041ffc58aab1b976b53c4b4b862e41a4445811ce3"
+    ]
+   ],
+   "same": true
+  },
+  "g37-text": {
+   "now": [
+    [
+     "6d34960004c02837e9654d6b2a65fb2223cda99b977994a26ba4311c66a6e8a9"
+    ]
+   ],
+   "record": [
+    [
+     "6d34960004c02837e9654d6b2a65fb2223cda99b977994a26ba4311c66a6e8a9"
+    ]
+   ],
+   "same": true
+  }
+ },
+ "twin_diff": {
+  "g3-image-temp1 vs g3-image": [
+   "temperature"
+  ],
+  "g3-text-temp1 vs g3-text": [
+   "temperature"
+  ],
+  "g37-image-cache vs g3-image": [
+   "_chunk_models",
+   "thinking_level"
+  ],
+  "g37-image-cache vs g37-image": [
+   "_batch_cache",
+   "cached_content",
+   "parts",
+   "request_keys",
+   "system_instruction_sha256"
+  ]
+ }
+}

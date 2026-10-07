@@ -146,6 +146,20 @@ uses_cache() {
 }
 
 # -----------------------------------------------------------------------------
+# cache_referenced PASSDIR — 0 when the newest request file the pass wrote
+# (PASSDIR/batch_working/*.jsonl) sends its first request through a context
+# cache, i.e. carries a top-level "cached_content".
+# -----------------------------------------------------------------------------
+cache_referenced() {
+  local req
+  req=$(ls -t "$1"/batch_working/*.jsonl 2>/dev/null | head -1)
+  [ -n "$req" ] || return 1
+  "$PY" -c 'import json, sys
+line = json.loads(open(sys.argv[1]).readline())
+sys.exit(0 if line.get("request", {}).get("cached_content") else 1)' "$req"
+}
+
+# -----------------------------------------------------------------------------
 # arm_table — one line per arm: name, K, config version. The status and
 # residuals readers take it, so they never hard-code the arm list.
 # -----------------------------------------------------------------------------
@@ -275,13 +289,15 @@ lodge_one() {
       echo "=== $(date -Is) SUBMITTED $name $job" >> "$log"
       echo "$name: submitted ($job)"
       # A cached arm whose cache did not engage has fallen back to inline
-      # requests, a different request shape: stop before lodging more.
-      # (tac + sed reads back to this pass's latest LODGE line only.)
-      if uses_cache "$arm" && ! tac "$log" | sed "/=== .* LODGE $name:/q" \
-          | grep -q "batch unit will reference cache"; then
-        echo "$name: CACHE NOT ENGAGED (no 'batch unit will reference" \
-             "cache' line since this lodge) — lodging stops; discard this" \
-             "pass and read $log"
+      # requests, a different request shape: stop before lodging more. The
+      # evidence is the request file just uploaded (batch_working/ keeps
+      # it), not the log: lib_batch_api's INFO lines, including "batch
+      # unit will reference cache", never reach a detector log (no handler
+      # below WARNING; 0 INFO lines in every detector batch log checked).
+      if uses_cache "$arm" && ! cache_referenced "$d"; then
+        echo "$name: CACHE NOT ENGAGED (the newest request file under" \
+             "$d/batch_working has no cached_content) — lodging stops;" \
+             "discard this pass and read $log"
         return 1
       fi
       sleep "$LODGE_GAP"

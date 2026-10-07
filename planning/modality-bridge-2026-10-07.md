@@ -1,10 +1,11 @@
 # Run B, the modality bridging pair: configuration, Stage 1 launch plan, and audit
 
-> **Last revised**: 2026-10-07 (original publication, Session 162). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (PI rulings, three added arms, rehearsal
+> addendum; Session 163). See [§ Changelog](#changelog) for revision history.
 
-**Status: Stage 1 PREPARED and AUDITED, not launched. Awaiting the PI's
-approval of the commands, the cost ceiling (§ 5) and the decisions in § 10.**
+**Status: Stage 1 APPROVED by the PI (2026-10-07, § 10) with three added arms
+(§ 4.8); the 45 passes rehearsed API-free (§ 6.1); addendum audit in § 7.1.
+Not yet lodged.**
 No Application Programming Interface (API) call was made to prepare this
 card: every rehearsal ran under a stub client with network sockets blocked
 (§ 6). Design: PI ruling D49 (`planning/pi-decisions-2026-09-20.md`), gate
@@ -246,9 +247,18 @@ polling pass**: its job keeps running and is orphaned.
   `.venv/bin/python scripts/wait_for_run.py --log outputs/modality-bridge-2026-10-07/logs/<arm>-run<N>.log --pidfile outputs/modality-bridge-2026-10-07/pids/<arm>-run<N>.pid --stale-seconds 3600`
   (exit 0 success, 2 partial, 3 crashed, 4 stale, 5 stopped). A polling batch
   pass writes a line every 30 s, so an hour of silence is a hang.
-- `g3-image` passes must each log `batch unit will reference cache`; a
-  `context cache creation failed` line means that pass fell back to inline
-  requests (a different request shape) and must be discarded and re-lodged.
+- A cached arm's pass (`g3-image`, `g37-image-cache`, `g3-image-temp1`) must
+  send its requests through the cache. **Corrected 2026-10-07:** this bullet
+  first said each pass "must log `batch unit will reference cache`", but that
+  is an INFO line of `lib_batch_api`'s logger, and no handler below WARNING is
+  set in a detector process: every detector batch log checked on sapphire
+  holds 0 INFO lines, so the check would have flagged every cached pass. The
+  evidence is the request file the pass uploaded: the first line of
+  `<pass>/batch_working/*.jsonl` must carry a top-level `cached_content`. The
+  launcher checks this after each cached pass's submission and stops lodging
+  if it is missing (§ 4.8). A `context cache creation failed` line (a WARNING,
+  so visible) means that pass fell back to inline requests (a different
+  request shape) and must be discarded and re-lodged.
 
 ### 4.6 Recovery to exact coverage
 
@@ -277,6 +287,70 @@ with `ROUND=2` until `residuals` reports none. Keep recovery on the same day.
    API uploads once committed, and the `batch_working/` request files on
    sapphire (about 30 GB, trivially rebuilt). The ten `g3-image` caches expire
    after 24 h.
+
+### 4.8 Added arms (PI, 2026-10-07; outside D49)
+
+The PI approved two additions on 2026-10-07 (§ 10): the fifth leg of § 10
+item 3 ("add fifth leg, extra cost approved, include a margin (I'm ok up to
+double that cost)") and a temperature-matched Gemini 3 pair ("I agree with the
+temperature-matched gemini 3 pair and approve the cost"). Gemini 3.7 samples
+at its default temperature, 1.0, whatever is sent
+(`planning/temperature-probe-2026-10-07.md` § 7), so the D49 arms compare
+Gemini 3 at T 0.7 with Gemini 3.7 at T 1.0. The additions remove that and the
+request-structure asymmetry of § 2.2:
+
+| Arm | Passes | Twin | Differs from its twin in |
+|---|---:|---|---|
+| `g37-image-cache` | 1–5 | `g37-image` | `--use-cache`: examples and system instruction in an explicit context cache, as `g3-image`; one 1,398-tile job per pass (no `--max-batch-tiles`) |
+| `g3-text-temp1` | 1–5 | `g3-text` | `--temperature 1.0` (the config's own value); K = 5 |
+| `g3-image-temp1` | 1–5 | `g3-image` | `--temperature 1.0`; K = 5 |
+
+Against each other: `g37-image-cache` differs from `g3-image-temp1` in model
+and thinking level only (rehearsal, § 6.1), and `g3-text-temp1` from
+`g37-text` likewise. Gemini 3 at T 1.0 can then be set against Gemini 3.7 on
+both modalities, matched on temperature, request structure, tier (batch), K
+and day.
+
+**Commands.** `plan` prints all 45 passes; `lodge all` lodges the D49 arms
+first and the additions after them (`g37-image-cache`, `g3-image-temp1`,
+`g3-text-temp1`), so a storage refusal can only delay an addition.
+
+**File API.** Request files per pass (rehearsal): `g37-image-cache`
+461,605,186 bytes, `g3-image-temp1` 461,610,778, `g3-text-temp1` 463,984,582;
+6.94 GB for the 15 passes, 37.37 GB for all 45. The additions lodge after the
+D49 passes, when the preflight's safe sweep (§ 4.3) can reclaim completed
+jobs' inputs. If a preflight refuses, that pass exits before uploading and
+`lodge` stops; re-run `lodge all` later.
+
+**Cache guard.** After each cached pass is submitted, the launcher reads the
+first line of the newest request file in that pass's `batch_working/` and
+stops lodging unless it carries `cached_content` (`cache_referenced`). This is
+the first explicit cache on Gemini 3.7 in this project; the guard bounds a
+failed cache to one pass. Its prefix (18,909 tokens on Gemini 3) is far above
+the 1,024-token explicit-cache minimum (`lib_batch_api.py`,
+`create_shared_context_cache`).
+
+**Cost** (rates and per-call profiles as § 5; the 3.7 cached prefix assumed
+equal to Gemini 3's 18,909 tokens, the rest of 3.7 image's 20,018 fresh):
+
+| Arm | Calls | Basis | Estimated cost |
+|---|---:|---|---:|
+| `g37-image-cache` | 6,990 | 18,909 cached at US$0.0375/M (US$0.075/M if the invoice rate applies to explicit reads), 1,109 fresh at US$0.375/M, 258.8 out at US$1.875/M; five 24 h caches at US$0.50/M·h | US$12.39 (US$17.35), incl. US$1.13 storage |
+| `g3-text-temp1` | 6,990 | as `g3-text` | US$4.19 |
+| `g3-image-temp1` | 6,990 | as `g3-image`; five 24 h caches at US$1.00/M·h | US$12.07, incl. US$2.27 storage |
+| **Additions** | **20,970** | | **US$28.65 (up to US$33.61)** |
+
+Stage 1 with the additions: 62,910 calls; likely US$92.3, range US$88.2–130.6.
+Against the PI's ceilings: the fifth leg's US$12–17 plus about US$1.2 of
+Stage 2 verification sits inside "up to double" the US$18 quoted; the pair's
+US$16.3 plus about US$4 of verification sits inside the US$21 quoted. Output
+lengths at T 1.0 may differ a little from the T 0.7 profiles.
+
+**Stage 2 additions** (for Stage 2's own gate, § 8): K = 5 unions of the three
+added arms; `g37-image-cache` verified by both verifiers, as `g37-image`
+(about US$1.2 at its original union's 674 candidates); the two `temp1` unions
+by the Gemini 3 verifier (about US$4.1 at the T 0.7 K = 5 unions' 2,932 and
+2,788).
 
 ## 5. Calls and cost
 
@@ -354,6 +428,29 @@ has one signature; tile digest `ecc20ef3…`. Model, cache use, temperature 0.7,
 thinking level and tile size 384 are as § 4.2 on every pass. Negative control:
 `g3-text` pass 1 without `--allow-inert-fields` is refused
 (`InertConfigurationError`, exit 1) before any client is created.
+
+### 6.1 Addendum rehearsal (2026-10-07, after the PI's rulings)
+
+Same harness, from a disposable sapphire worktree at `d93678303` (main after
+the branch merge, the verifier and detector temperature-fallback changes, and
+the three added arms; the later cache-guard change touches only the lodging
+loop). All 45 passes ran with the launcher's exact arguments plus `--dry-run`;
+pass 1 of every arm had its full request file built, summarised and deleted.
+Record: `planning/modality-bridge-2026-10-07-rehearsal-addendum.json`.
+
+- **45 of 45 passes exit 0, 0 breaches, one stub client each.** Every pass
+  dispatches 1,398 tiles (3 × 466 for `g37-image`).
+- **The four D49 arms are unchanged**: each pass-1 request signature equals
+  the original record's (`58cf1f1f…`, `167b1c95…`, `6d349600…`,
+  `4eef5736…`), so the day's code changes left their requests byte-identical
+  (tile elided); their argument lists equal the record's on all 30 passes.
+- **Each added arm differs from its twin only as designed** (`twin_diff`):
+  `g3-image-temp1` and `g3-text-temp1` in `temperature` (1.0 against 0.7)
+  alone; `g37-image-cache` from `g3-image` in model and thinking level alone,
+  with identical cache contents (system instruction, roles and parts); and
+  from `g37-image` only in moving the examples and system instruction into
+  the cache. Signatures: `g37-image-cache` `3f33b348…`, `g3-image-temp1`
+  `167eb352…`, `g3-text-temp1` `8414d742…`.
 
 ## 7. Pre-launch audit (`/audit-config`, adapted to a replication)
 
@@ -527,6 +624,21 @@ permutation with 10,000 permutations and seed 42.
 5. **The model pin** for the Gemini 3 image arm (`gemini-3-flash-preview`
    instead of the config's alias): recommended.
 
+**PI rulings, 2026-10-07 (Session 163):**
+
+1. Cost: "approved". The § 4.4 first-chunk gate on `g37-image-run1` is kept
+   (it costs nothing).
+2. Batch request differences: "acknowledged".
+3. Fifth leg: "add fifth leg, extra cost approved, include a margin (I'm ok up
+   to double that cost)" (§ 4.8).
+4. Gemini 3 K = 5 rung: inherited from the K = 10 verification, the
+   project's ladder method (PI ruling D2, `planning/pi-decisions-2026-09-20.md`).
+5. Model pin: "yes, pin model".
+6. Added: the temperature-matched Gemini 3 pair, "approve the cost" (§ 4.8).
+
+The D49 arms keep sending T 0.7, as the originals did; Gemini 3.7 ignores it,
+and keeping it keeps the 3.7 requests identical to the originals'.
+
 Hazards found on the way, not fixed here (each wants its own small change):
 the detector's `--dry-run` is not API-free (§ 6), and with `--use-cache` in
 real-time mode it leaves a billable cache; `run_batch_unit` passes
@@ -537,6 +649,17 @@ the cache); the batch path never deletes its caches; and a dead polling
 process orphans its job, whose name survives only in the log.
 
 ## Changelog
+
+### 2026-10-07 — PI rulings, three added arms, rehearsal addendum (Session 163)
+
+Recorded the PI's rulings on § 10's five items and the added
+temperature-matched Gemini 3 pair (§ 10); added § 4.8 (the fifth leg and the
+pair: commands, File API, cache guard, cost) and § 6.1 (the 45-pass addendum
+rehearsal); corrected § 4.5's cached-pass check, which named a log line that
+never reaches a detector log. Stage 1 estimate: likely US$63.6 → US$92.3,
+range US$59.5–97.0 → US$88.2–130.6, calls 41,940 → 62,910. Unchanged: the
+D49 arms' commands and requests (signatures equal the original record), and
+§§ 2–3.
 
 ### 2026-10-07 — Original publication (Session 162)
 
