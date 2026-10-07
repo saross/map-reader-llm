@@ -20,10 +20,15 @@ replaces it.
   `w15-floors-drafts` (`planning/d9-notes-55map-floors-draft-2026-10-07.md`).
   Three signed rows still carry a stale "UNSIGNED" `_note`
   (`planning/wording-changes-register.md` row K2).
-- [ ] **Universe rule for the K-ladders** (frames ruling (b)), to settle with
-  the PI: `reports/frames-blast-radius-2026-10-07.md` § 6 item 2. Rulings
-  already given 2026-10-07: option (A), the scorer fix, and (a), never re-key
-  across sheets.
+- [x] **Universe rule for the K-ladders** (frames ruling (b)): RULED
+  2026-10-07, option 1 generalised (D51); scorer fix and never re-key (D50).
+- [ ] **PR #26 review** (D50 and D51 implemented, not merged; report
+  `reports/scorer-frames-d50-d51-2026-10-08.md` on the branch). Four PI
+  rulings: (1) as ruled, D50's origin restoration moves 707 cells beyond the
+  frames report's 70, all upward (a spatial-join re-key across sheet edges);
+  (2) the four `pv-diag-384` ladders the D51 gate refuses; (3) the nine
+  ladders whose area is undetermined (no pass provenance); (4) the re-score
+  itself, after merge.
 - [ ] **Run B Stage 1**: card `planning/modality-bridge-2026-10-07.md` (PI
   rulings in § 10, added arms in § 4.8); addendum audit pending; then
   `lodge g37-image:1`, the first-chunk gate, `lodge all`.
