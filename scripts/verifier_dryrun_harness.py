@@ -163,6 +163,31 @@ def _install_guards(h: Any, served: list[str], capture: list | None) -> type:
     return stub
 
 
+def full_elided_signature(line: dict) -> str:
+    """SHA-256 of a whole batch request line with only its key and crop bytes removed.
+
+    The Stage 1 signature (``bridge_dryrun_harness.elide_tile`` over
+    ``summarise_jsonl_line``) hashes five named generation-config fields, so a
+    field added to the request builder would not move it (Stage 2 audit,
+    nit). This one hashes everything else in the request (every
+    ``generation_config`` key and value, the system instruction, roles,
+    request keys, every text part, the crop's MIME type), so any change to
+    the request moves it, while every candidate of one leg still shares it.
+
+    Args:
+        line: A parsed JSONL line (``{"key": ..., "request": {...}}``).
+
+    Returns:
+        Hex digest of the canonical JSON of the request with the last
+        part's ``inline_data.data`` replaced by a placeholder.
+    """
+    req = json.loads(json.dumps(line["request"]))
+    last = req["contents"][-1]["parts"][-1]
+    if "inline_data" in last:
+        last["inline_data"]["data"] = "<crop>"
+    return _sha(json.dumps(req, sort_keys=True).encode())
+
+
 def summarise_batch_dir(h: Any, out_dir: Path, manifest: dict, first: int,
                         keep: bool = False) -> dict[str, Any]:
     """Summarise a dry run's request file(s), then delete them.
@@ -186,14 +211,21 @@ def summarise_batch_dir(h: Any, out_dir: Path, manifest: dict, first: int,
     files = sorted(out_dir.glob("verifier_requests*.jsonl"), key=order)
     keys: list[str] = []
     sigs: dict[str, int] = {}
+    full: dict[str, int] = {}
+    gen_keys: dict[str, int] = {}
     head: list[dict] = []
     for f in files:
         with open(f) as fh:
             for raw in fh:
-                s = h.summarise_jsonl_line(json.loads(raw))
+                line = json.loads(raw)
+                s = h.summarise_jsonl_line(line)
                 keys.append(s["key"])
                 sig = h.elide_tile(s)
                 sigs[sig] = sigs.get(sig, 0) + 1
+                fsig = full_elided_signature(line)
+                full[fsig] = full.get(fsig, 0) + 1
+                gk = ",".join(sorted(line["request"].get("generation_config", {})))
+                gen_keys[gk] = gen_keys.get(gk, 0) + 1
                 if len(head) < first:
                     head.append(s)
     expected = [f"candidate_{c['candidate_id']:05d}" for c in manifest["candidates"]]
@@ -204,6 +236,8 @@ def summarise_batch_dir(h: Any, out_dir: Path, manifest: dict, first: int,
         "n_candidates": len(expected),
         "keys_match_manifest": keys == expected,
         "elided_signatures": sigs,
+        "full_elided_signatures": full,
+        "generation_config_keys": gen_keys,
         "first_requests": head,
     }
     if not keep:
@@ -319,7 +353,8 @@ def main() -> int:
                                                args.keep_requests)
         ok = (status == 0 and stub.instances == 0 and not h.BREACHES
               and summary["batch"]["keys_match_manifest"]
-              and len(summary["batch"]["elided_signatures"]) == 1)
+              and len(summary["batch"]["elided_signatures"]) == 1
+              and len(summary["batch"]["full_elided_signatures"]) == 1)
     else:
         capture: list = []
         stub = _install_guards(h, served=args.served, capture=capture)

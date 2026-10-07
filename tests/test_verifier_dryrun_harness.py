@@ -119,3 +119,46 @@ def test_compare_flags_a_temperature_difference() -> None:
     result = compare_requests(batch, realtime)
     assert result["content_diff_fields"] == ["temperature"]
     assert result["representation_diff_fields"] == ["roles"]
+
+
+@pytest.mark.parametrize("flags, pin", [
+    (["--model", "gemini-3-flash-preview"], "SIGF_G3"),
+    (["--model", "gemini-3.7-flash", "--thinking-level", "low"], "SIGF_G37"),
+])
+def test_full_request_signature_matches_the_launcher_pin(tmp_path: Path, flags: list[str],
+                                                          pin: str) -> None:
+    """The full signature hashes every request field but the key and crop bytes.
+
+    It is crop-independent by construction, so synthetic crops give the value
+    the launcher pins (Stage 2 audit nit: the five-field signature would not
+    see a generation-config field added to the builder).
+    """
+    import re
+
+    crops = _crops(tmp_path)
+    summary = tmp_path / "b.json"
+    proc = _run(["batch", "--summary-json", str(summary), "--first", "1", "--"]
+                + _verify_args(crops, tmp_path / "out", "batch") + ["--dry-run"] + flags)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    b = json.loads(summary.read_text())["batch"]
+    assert b["generation_config_keys"] == {
+        "max_output_tokens,response_mime_type,temperature,thinking_config": 2}
+    launcher = (PROJECT_ROOT / "scripts" / "modality-bridge-2026-10-07-stage2.sh").read_text()
+    pinned = re.search(rf"^{pin}=([0-9a-f]{{64}})$", launcher, re.M).group(1)
+    assert list(b["full_elided_signatures"]) == [pinned]
+
+
+def test_full_signature_moves_when_a_request_field_is_added() -> None:
+    from scripts.verifier_dryrun_harness import full_elided_signature
+
+    line = {"key": "candidate_00000", "request": {
+        "contents": [{"role": "user", "parts": [
+            {"text": "label"}, {"inline_data": {"mime_type": "image/png", "data": "AAA"}}]}],
+        "generation_config": {"temperature": 0.0}}}
+    other_crop = json.loads(json.dumps(line))
+    other_crop["request"]["contents"][0]["parts"][1]["inline_data"]["data"] = "BBB"
+    other_crop["key"] = "candidate_00001"
+    assert full_elided_signature(line) == full_elided_signature(other_crop)
+    extra = json.loads(json.dumps(line))
+    extra["request"]["generation_config"]["top_p"] = 0.9
+    assert full_elided_signature(line) != full_elided_signature(extra)
