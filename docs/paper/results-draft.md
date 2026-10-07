@@ -427,10 +427,10 @@ pairs, 1,845 are significant at BH q = 0.05, giving seven tiers. The
 greedy Tier 1 holds five Gemini 3.7 and 3.8 cells (image under the 3.7
 verifier 0.9233, text under the 3.7 verifier 0.9190, text under the 3.8
 verifier 0.9182, image under the carried Gemini 3 verifier 0.9179, text
-at K = 10 under the carried verifier 0. That two of the five are image cells is the modality result of
-§ R7.3: the text advantage of § R2 belongs to the Gemini 3 family, not
-to the task (Obs 447).9068); the Hsu MCB admissible set
-holds 28 of the 79 cells. Every Gemini 3 cell sits in Tier 2 or below at
+at K = 10 under the carried verifier 0.9068); the Hsu MCB admissible set
+holds 28 of the 79 cells. That two of the five are image cells is the
+modality result of § R7.3: the text advantage of § R2 belongs to the
+Gemini 3 family, not to the task (Obs 447). Every Gemini 3 cell sits in Tier 2 or below at
 either level: the best committed incumbent is the 16-of-30 cell at
 0.8951 and the best sweep optimum the HIGH text T0.3 K = 5 cell at
 0.8873 (rank 11); 30 of the 40 sweep optima are significantly below the
