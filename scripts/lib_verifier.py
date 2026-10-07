@@ -190,6 +190,61 @@ def content_items_to_sdk_parts(items: ContentItems) -> list:
 # =========================================================================
 
 
+#: Fallback for a single verifier pass when neither ``--temperature`` nor the
+#: verifier config sets one: the production verifier runs at T 0.0.
+SINGLE_PASS_DEFAULT_TEMPERATURE = 0.0
+
+#: Fallback for a consensus verifier (``--iterations`` > 1) when
+#: ``--temperature`` is not given: passes at T 0.0 would repeat each other, so
+#: consensus defaults to 0.7, the value the module's usage example documents.
+CONSENSUS_DEFAULT_TEMPERATURE = 0.7
+
+
+def resolve_verifier_temperature(
+    config: dict,
+    override: float | None,
+    iterations: int,
+) -> float:
+    """Return the temperature a verifier leg will send, on every path.
+
+    One rule for the real-time and batch paths (they diverged before
+    2026-10-07: with no ``--temperature``, batch consensus sent 0.7 while
+    real-time consensus sent the config's value, and batch consensus
+    recorded the config's value in its metadata while sending 0.7).
+
+    - An explicit ``--temperature`` always wins.
+    - Consensus (``iterations`` > 1) falls back to
+      :data:`CONSENSUS_DEFAULT_TEMPERATURE`, whatever the config says.
+    - A single pass falls back to the config's ``temperature``, then to
+      :data:`SINGLE_PASS_DEFAULT_TEMPERATURE`.
+
+    Note: Google states that from Gemini 3.6 Flash on the value has no
+    effect (the model default applies) and that upcoming models will reject
+    it (notice of 2026-10-07; ``reports/google-temperature-notice-2026-10-07.md``).
+
+    Args:
+        config: Verifier config dict.
+        override: ``--temperature`` from the command line, or None.
+        iterations: Verifier passes per candidate.
+
+    Returns:
+        The temperature to build requests with and to record in metadata.
+
+    Examples:
+        >>> resolve_verifier_temperature({"temperature": 0.0}, None, 1)
+        0.0
+        >>> resolve_verifier_temperature({"temperature": 0.0}, None, 5)
+        0.7
+        >>> resolve_verifier_temperature({}, 0.3, 5)
+        0.3
+    """
+    if override is not None:
+        return float(override)
+    if iterations > 1:
+        return CONSENSUS_DEFAULT_TEMPERATURE
+    return float(config.get("temperature", SINGLE_PASS_DEFAULT_TEMPERATURE))
+
+
 def build_generation_config(
     config: dict,
     temperature_override: float | None = None,
@@ -211,7 +266,7 @@ def build_generation_config(
     temperature = (
         temperature_override
         if temperature_override is not None
-        else config.get("temperature", 0.0)
+        else config.get("temperature", SINGLE_PASS_DEFAULT_TEMPERATURE)
     )
 
     gen_config: dict[str, Any] = {
@@ -539,7 +594,7 @@ def build_verifier_jsonl_consensus(
     output_path: Path,
     crops_base_dir: Path,
     iterations: int = 5,
-    temperature: float = 0.7,
+    temperature: float = CONSENSUS_DEFAULT_TEMPERATURE,
 ) -> int:
     """Build JSONL with N copies per candidate for consensus voting.
 

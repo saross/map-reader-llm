@@ -82,6 +82,7 @@ from scripts.lib_verifier import (
     gen_config_to_sdk,
     load_system_instruction,
     parse_verifier_results,
+    resolve_verifier_temperature,
     system_instruction_path,
     verify_candidate_realtime,
 )
@@ -1062,6 +1063,9 @@ def _verify_batch(
     per_job = max(1, int(max_batch_candidates or 0) // max(1, iterations)) \
         if max_batch_candidates else None
     chunks = chunk_manifest(manifest, per_job)
+    # One rule for both paths (lib_verifier.resolve_verifier_temperature): the
+    # value the JSONL is built with is the value recorded in the metadata.
+    temperature = resolve_verifier_temperature(config, temperature, iterations)
     jsonl_paths: list[Path] = []
     n_lines = 0
     for i, chunk in enumerate(chunks):
@@ -1069,14 +1073,13 @@ def _verify_batch(
                                    else f"verifier_requests_chunk{i}.jsonl")
         # Build JSONL
         if iterations > 1:
-            temp = temperature if temperature is not None else 0.7
             n = build_verifier_jsonl_consensus(
                 manifest=chunk,
                 config=config,
                 output_path=jsonl_path,
                 crops_base_dir=crops_base_dir,
                 iterations=iterations,
-                temperature=temp,
+                temperature=temperature,
             )
         else:
             n = build_verifier_jsonl(
@@ -1952,6 +1955,9 @@ def _verify_realtime(
     # Build shared prompt components once
     system_instruction = load_system_instruction(config)
     reference_items = build_reference_items(config)
+    # One rule for both paths (lib_verifier.resolve_verifier_temperature): the
+    # value sent is the value recorded below.
+    temperature = resolve_verifier_temperature(config, temperature, iterations)
     gen_config_dict = build_generation_config(config, temperature)
     sdk_gen_config = gen_config_to_sdk(
         gen_config_dict, system_instruction, service_tier=service_tier,
@@ -2653,7 +2659,8 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     recover_parser.add_argument("--crops-dir", type=Path, required=True)
     recover_parser.add_argument("--output-dir", type=Path, required=True,
-                                help="The leg's stage directory (batch_jobs.json, batch_results.jsonl)")
+                                help="The leg's stage directory "
+                                     "(batch_jobs.json, batch_results.jsonl)")
     recover_parser.add_argument("--verifier-config", type=Path, required=True)
     recover_parser.add_argument("--job", action="append", default=[],
                                 help="Batch job name to retrieve (repeatable); "

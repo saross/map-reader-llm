@@ -36,6 +36,7 @@ from scripts.lib_verifier import (
     gen_config_to_sdk,
     load_system_instruction,
     parse_verifier_results,
+    resolve_verifier_temperature,
 )
 
 
@@ -1272,3 +1273,33 @@ class TestCallVerifierApi:
         # The retry happened — confirm the client was called twice
         # (i.e. the guarded log_retry branch did not short-circuit).
         assert client.models.generate_content.call_count == 2
+
+
+@pytest.mark.tier1
+class TestResolveVerifierTemperature:
+    """One temperature rule for the real-time and batch verifier paths.
+
+    Before 2026-10-07 the paths diverged with no ``--temperature``: batch
+    consensus sent 0.7 (and recorded the config value), real-time consensus
+    sent the config value.
+    """
+
+    def test_explicit_override_wins_on_both_shapes(self):
+        assert resolve_verifier_temperature({"temperature": 0.0}, 0.3, 1) == 0.3
+        assert resolve_verifier_temperature({"temperature": 0.0}, 0.3, 5) == 0.3
+
+    def test_explicit_zero_is_respected_for_consensus(self):
+        """A deliberate T 0.0 consensus (the determinism study) stays at 0.0."""
+        assert resolve_verifier_temperature({}, 0.0, 5) == 0.0
+
+    def test_single_pass_takes_config_then_zero(self):
+        assert resolve_verifier_temperature({"temperature": 0.2}, None, 1) == 0.2
+        assert resolve_verifier_temperature({}, None, 1) == 0.0
+
+    def test_consensus_defaults_to_0_7_whatever_the_config(self):
+        assert resolve_verifier_temperature({"temperature": 0.0}, None, 5) == 0.7
+        assert resolve_verifier_temperature({}, None, 2) == 0.7
+
+    def test_build_generation_config_fallback_is_zero(self):
+        assert build_generation_config({})["temperature"] == 0.0
+

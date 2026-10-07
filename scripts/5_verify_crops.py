@@ -563,7 +563,9 @@ def run_verification(
         logging.info("Thinking level: %s", prompt_cfg["thinking_level"])
 
     gen_config = types.GenerateContentConfig(
-        temperature=prompt_cfg.get("temperature", 0.1),
+        # Verifier fallback 0.0, as lib_verifier.SINGLE_PASS_DEFAULT_TEMPERATURE
+        # (was 0.1 until 2026-10-07; every verifier config sets its own).
+        temperature=prompt_cfg.get("temperature", 0.0),
         max_output_tokens=prompt_cfg.get("max_output_tokens", 8192),
         response_mime_type="application/json",
         thinking_config=thinking_config,
