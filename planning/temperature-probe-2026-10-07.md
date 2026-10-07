@@ -1,10 +1,11 @@
 # Temperature probe, 2026-10-07: does Gemini 3.7 Flash ignore `temperature`?
 
-> **Last revised**: 2026-10-07 (follow-up design, § 8). See
+> **Last revised**: 2026-10-07 (follow-up result, § 8.5). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: DONE (2026-10-07). Verdict under the fixed rule: Gemini 3.7
-ignores temperature; control valid (§ 7). Approved by the PI ("happy to let
+ignores temperature; control valid (§ 7). Follow-up (§ 8.5): no residual
+effect under its own fixed rule. Approved by the PI ("happy to let
 you test it, up to $5"); §§ 1–6 were written before launch.** Script:
 `scripts/temperature_probe_2026_10_07.py` (tests:
 `tests/test_temperature_probe.py`). Background:
@@ -209,7 +210,41 @@ P=outputs/temperature-probe-2026-10-07
   --root $P --out $P/followup.json
 ```
 
+### 8.5 Result (2026-10-07, after the run)
+
+Data: `outputs/temperature-probe-2026-10-07/` (`9f19110b0`): `g37-tmax2` and
+`g37-t0c`, 300 of 300 candidates each, no failed items, no safety blocks;
+audited US$0.331 and US$0.329 (US$0.66 of the US$1 cap). Analysis:
+`followup.json`.
+
+| Contrast (mean \|Δp\|) | Point | 95 % CI |
+|---|---:|---|
+| **Primary**: (`t0c`, `tmax2`) − (`t0a`, `t0b`) | +0.0068 | −0.0059 to +0.0205 |
+| **Pooled**: six T 0.0 × T 2.0 pairs − three T 0.0 × T 0.0 pairs | +0.0083 | −0.0002 to +0.0190 |
+| Pooled, on exact disagreement (outside the rule) | +0.0267 | −0.0083 to +0.0622 |
+| (`tmax`, `tmax2`) − three T 0.0 × T 0.0 pairs (outside the rule) | +0.0058 | −0.0039 to +0.0169 |
+
+**Verdict under § 8.2's rule: no residual effect** (both intervals include 0).
+The pooled interval only just does (lower bound −0.0002), and both point
+estimates are positive at about half of § 7's +0.017. So a residual of up to
+about 0.02 in mean |Δp| is not excluded, and none is shown.
+
+**Where § 7's residual came from.** Pair by pair (`followup.json` → `pairs`),
+every pair that includes the first T 2.0 leg, `tmax`, has the largest mean
+|Δp|: 0.0307, 0.0318 and 0.0248 against the three T 0.0 legs, and 0.0218
+against `tmax2`. Every other pair falls between 0.0144 and 0.0212, and that
+includes the new T 2.0 leg against each T 0.0 leg (0.0180, 0.0190, 0.0212).
+Moves above 0.5 follow the same pattern: 9, 9, 6 and 5 of 300 for `tmax`'s
+pairs, 2 to 5 for the rest. § 7's +0.017 is mostly that one batch job, not
+T 2.0 as such. Google's "no effect" holds for these requests to within the
+interval above.
+
 ## Changelog
+
+### 2026-10-07 — Follow-up result added (Session 163)
+
+§ 8.5 added after the follow-up legs ran; §§ 1–8.4 unchanged. Data commit
+`9f19110b0`.
 
 ### 2026-10-07 — Follow-up design added (Session 163)
 
