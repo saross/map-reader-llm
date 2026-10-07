@@ -1,6 +1,7 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-10-04 (later: § 1's "six of the eight" corrected to
+> **Last revised**: 2026-10-07 (a stale cell in `phase2/operating-points.json`
+> recorded in the changelog; no number in this document moves). Prior: 2026-10-04 (later: § 1's "six of the eight" corrected to
 > five, and § 7.4's Phase 2 gain-share ceiling to 91 %, after the builder's
 > double rounding was fixed under PI ruling D27). Earlier the same day:
 > (**every cost re-priced** from the passes
@@ -1448,6 +1449,37 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-07 — A stale cell in `phase2/operating-points.json`, recorded, not regenerated
+
+**Trigger**: the stale-register-notes pass (PI request, 2026-10-07; record
+`reports/stale-register-notes-2026-10-07.md` § 4, commits
+`6da52378c`..`84c75f184`) found that row 28 of
+`phase2/operating-points.json` (Gemini 3.7 text, GS B geometry, K = 3)
+still names the original verifier stage. The live cell reads the recovery
+stage: its materialised file `phase2/materialised/g37-text-k3-verified-opmax.geojson`
+has 495 features (installed by `987534c03`), resolved by the manipulation
+gate's binding `g37-kladder-k3-verify-k3-recovery-fixed` to
+`verify_k3_recovery-fixed` over the rebuilt 759-feature `consensus-n3`.
+
+| field (row 28) | file says | the live cell |
+|---|---|---|
+| `verifier_stage` | `g384_ov192_g37-union-k3-verify` | `g384_ov192_g37-union-k3-verify-recovery-fixed` |
+| `candidates` | 757 | 759 |
+| opmax `sweep_n` / `n_detections` | 494 | 495 |
+| opmax `sweep_f1_20` | 0.887 | 0.886 |
+
+**Why not regenerated** (PI ruling 2026-10-07): the file's builder,
+`scripts/score_k_ladder_phase2_rungs.py prepare`, reads its stage table
+from a table shared with the verifier launcher and the spend-ledger
+recompute, so pointing it at the recovery stage would also change what
+those book; a clean regeneration needs a scoring-only override, not
+worth building for one detection. A regeneration with the table patched
+was tried in scratch and changed only this row and the timestamp.
+
+**What did NOT change**: every number and verdict in this document
+(none quotes this cell's sweep figures), the cell's committed evaluation,
+and row 27 (K = 1), which still reads its own `verify_k1`.
 
 ### 2026-10-04 (later) — Two share figures corrected after the builder fix (D27)
 
