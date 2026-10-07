@@ -1241,17 +1241,24 @@ class DetectionScope:
     """Detections scoped to a frame under ruling D50, with the counts that show it.
 
     Attributes:
-        detections: The in-scope detections — the input's own rows, original
-            index and original order, minus those the rule removes.
+        detections: The in-scope detections the per-sheet matchers score —
+            the input's own rows, original index and original order, each
+            attributed to a frame sheet and inside one of its tiles.
         sheets: The sheet each in-scope detection is scored on (its origin
             sheet), aligned row for row with ``detections``.
         diagnostics: The counts written into ``evaluation.json`` as
             ``detection_scope`` (see :func:`scope_detections_to_frame`).
+        retained: The input minus EXACTLY the rows the rule removes (those
+            attributed to a frame sheet but outside its tiles); rows on no
+            frame sheet are kept. This is what the tile confusion books: it
+            never needed a sheet, and the ruling changes it only by the
+            out-of-frame rows.
     """
 
     detections: gpd.GeoDataFrame
     sheets: np.ndarray
     diagnostics: dict[str, Any] = field(default_factory=dict)
+    retained: gpd.GeoDataFrame | None = None
 
     def on_sheet(self, sheet: str) -> gpd.GeoDataFrame:
         """Return the in-scope detections attributed to one sheet.
@@ -1375,7 +1382,7 @@ def scope_detections_to_frame(
     n = len(gdf_det)
     diag = _empty_scope_diagnostics(n)
     if n == 0:
-        return DetectionScope(gdf_det, np.array([], dtype=object), diag)
+        return DetectionScope(gdf_det, np.array([], dtype=object), diag, gdf_det)
 
     origin_columns = [c for c in ORIGIN_TILE_COLUMNS if c in gdf_det.columns]
     diag["origin_columns"] = origin_columns
@@ -1394,7 +1401,9 @@ def scope_detections_to_frame(
         diag["not_applied_reason"] = (
             "detections carry no source_tile or origin column"
         )
-        return DetectionScope(gdf_det, np.full(n, None, dtype=object), diag)
+        return DetectionScope(
+            gdf_det, np.full(n, None, dtype=object), diag, gdf_det,
+        )
 
     sheets = frame_sheets(gdf_bounds)
     frame_set = set(sheets)
@@ -1432,6 +1441,7 @@ def scope_detections_to_frame(
 
     attributed: list[str | None] = [None] * n
     keep = np.zeros(n, dtype=bool)
+    out_of_frame = np.zeros(n, dtype=bool)
     counts = {
         "n_out_of_frame": 0, "n_out_of_frame_cross_sheet": 0,
         "n_origin_restored": 0, "n_origin_only": 0,
@@ -1485,6 +1495,7 @@ def scope_detections_to_frame(
         if sheet in sheets_hit[pos]:
             keep[pos] = True
         else:
+            out_of_frame[pos] = True
             counts["n_out_of_frame"] += 1
             if sheets_hit[pos]:
                 counts["n_out_of_frame_cross_sheet"] += 1
@@ -1494,7 +1505,10 @@ def scope_detections_to_frame(
     kept_sheets = np.array(
         [attributed[pos] for pos in range(n) if keep[pos]], dtype=object,
     )
-    return DetectionScope(gdf_det.iloc[np.flatnonzero(keep)], kept_sheets, diag)
+    return DetectionScope(
+        gdf_det.iloc[np.flatnonzero(keep)], kept_sheets, diag,
+        gdf_det.iloc[np.flatnonzero(~out_of_frame)],
+    )
 
 
 def reference_map_column(gdf_ref: gpd.GeoDataFrame) -> str:
@@ -1853,9 +1867,11 @@ def compute_per_tile_tp_fp_fn(
     # estimate describe the same detections. Before the ruling an
     # out-of-frame detection still took part in the per-sheet matching here
     # but was booked to no tile (``reports/frames-blast-radius-2026-10-07.md``
-    # § 2.1).
+    # § 2.1). The matching below reads the attributed in-scope rows
+    # (``scope``); the booking diagnostics read every row but the removed
+    # out-of-frame ones (``scope.retained``), as they always read every row.
     scope = scope_detections_to_frame(gdf_det, gdf_bounds)
-    gdf_det = scope.detections
+    gdf_det = scope.retained
     # Pre-book detections geometrically when asked to. ``booked_tiles``
     # maps a detection's GeoDataFrame index to the tile name(s) its
     # outcome should be credited to; the ``id`` rule keeps the legacy
@@ -3546,10 +3562,11 @@ def describe_tile_join_refusal(
     if len(gdf_bounds) == 0:
         return None
     # Ruling D50: ask the question of the detections the confusion will
-    # actually book — the frame-scoped set (see calculate_tile_classification).
+    # actually book — every row but the out-of-frame ones the rule removes
+    # (see calculate_tile_classification).
     gdf_det = scope_detections_to_frame(
         gdf_det, gdf_bounds, require_attribution=False,
-    ).detections
+    ).retained
     reference_join = (
         TILE_JOIN_GEOMETRIC_CONTAINS
         if tile_join == TILE_JOIN_ID
@@ -3665,16 +3682,19 @@ def calculate_tile_classification(
     if n_tiles == 0:
         return {"error": "No tiles in bounds", "reason": TILE_JOIN_REASON_NO_TILES}
 
-    # Ruling D50: the confusion is built from the same frame-scoped
-    # detections as the F1 point estimate. Before the ruling an out-of-frame
-    # detection whose name collided with a frame tile was booked to it under
-    # the ``id`` join (and padded the invariant's booked count). A set with
-    # no sheet attribution at all is left unscoped: the geometric joins can
-    # book it by position, and the ``id`` join refuses it by name below.
+    # Ruling D50: the confusion drops exactly the detections the F1 point
+    # estimate drops as out of frame — attributed to a frame sheet but
+    # outside its tiles. Before the ruling such a detection whose name
+    # collided with a frame tile was booked to it under the ``id`` join (and
+    # padded the invariant's booked count). Rows on no frame sheet (a null
+    # or foreign ``source_tile``, or a frame whose tile names carry no
+    # parseable sheet) are kept as they always were: the confusion never
+    # needed a sheet, the geometric joins book them by position, and the
+    # ``id`` join treats them by name below.
     scope = scope_detections_to_frame(
         gdf_det, gdf_bounds, require_attribution=False,
     )
-    gdf_det = scope.detections
+    gdf_det = scope.retained
 
     # Book detections and references to tiles once, up front, instead of
     # re-scanning both frames inside the per-tile loop. The reference rule

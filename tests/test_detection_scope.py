@@ -240,6 +240,24 @@ def test_tile_confusion_does_not_book_an_out_of_frame_name_collision(frame, refs
     assert result["detection_scope"]["n_out_of_frame"] == 1
 
 
+def test_tile_confusion_keeps_rows_on_no_frame_sheet(refs):
+    """The rule removes out-of-frame rows only; it never needed a sheet here.
+
+    On a frame whose tile names carry no parseable sheet, and for a null
+    name under a geometric join, the confusion books exactly what it booked
+    before the ruling.
+    """
+    bare = gpd.GeoDataFrame({"tile_name": ["t1", "t2"]},
+                            geometry=[box(0, 0, 100, 100), box(100, 0, 200, 100)], crs=CRS)
+    d = dets([("t1", 50, 50), (None, 150, 50)])
+    scope = lam.scope_detections_to_frame(d, bare, require_attribution=False)
+    assert len(scope.retained) == 2 and len(scope.detections) == 0
+    result = lam.calculate_tile_classification(
+        d, refs, bare, tile_join=lam.TILE_JOIN_GEOMETRIC_CONTAINS)
+    booked = {t["tile_name"] for t in result["tile_details"] if t["has_detections"]}
+    assert booked == {"t1", "t2"}
+
+
 def test_corrected_f1_engine_uses_the_library_scope(frame, refs):
     """The 55-map engine's per-sheet counts come from the shared loop now."""
     from scripts.compute_corrected_f1_multi_buffer import compute_counts_at_r
