@@ -1474,9 +1474,9 @@ def scope_detections_to_frame(
         # attribution to a sheet it was never seen on is (h13's and tier E's
         # re-keyed rows were all seen on one sheet and keyed to the other).
         # No member is privileged: ``merge_passes.py`` sorts ``source_tiles``,
-        # so its first entry is alphabetical, not first-seen. Measured during
-        # this ruling's implementation, privileging it moved 701 further
-        # cells (reports/scorer-frames-d50-d51-2026-10-08.md § 7).
+        # so its first entry is alphabetical, not first-seen. (Measured, the
+        # two rules differ on few cells; the choice rests on that principle —
+        # reports/scorer-frames-d50-d51-2026-10-08.md § 7.)
         origin_frame = {
             sheet for sheet in (
                 _sheet_of_tile_name(name, longest_first) for name in origin_names
