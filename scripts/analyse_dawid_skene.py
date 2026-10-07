@@ -41,9 +41,8 @@ _SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402
-    get_map_name,
+    iter_sheet_scopes,
     match_detections_to_references,
-    scope_references_to_tiles,
 )
 
 logger = logging.getLogger(__name__)
@@ -281,27 +280,13 @@ def build_shared_item_set(
             f"Columns: {list(gdf_ref.columns)}"
         )
 
-    # Get maps from bounds
-    processed_maps = {
-        get_map_name(n) for n in gdf_bounds["tile_name"].unique()
-    }
-
-    for map_name in sorted(processed_maps):
-        if map_name == "Unknown":
-            continue
-
-        map_bounds = gdf_bounds[
-            gdf_bounds["tile_name"].str.startswith(map_name)
-        ]
-
-        ref_scope = gdf_ref[gdf_ref[ref_map_col] == map_name]
-        if not ref_scope.empty:
-            ref_scope = scope_references_to_tiles(ref_scope, map_bounds)
-
-        det_scope = gdf_det[
-            gdf_det["source_tile"].str.startswith(map_name)
-        ]
-
+    # The library's per-sheet loop: references and detections scoped to each
+    # sheet's tiles by the same rule (PI ruling D50; detections on their
+    # origin sheet). Until that ruling this was a copy of the name-prefix
+    # detection scope.
+    for map_name, det_scope, ref_scope, _bounds in iter_sheet_scopes(
+        gdf_det, gdf_ref, gdf_bounds, ref_map_col=ref_map_col,
+    ):
         if det_scope.empty and ref_scope.empty:
             continue
 

@@ -95,9 +95,8 @@ from lib_advanced_metrics import (  # noqa: E402  (import after sys.path tweak)
     bootstrap_tile_classification_ci,
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
-    get_map_name,
+    iter_sheet_scopes,
     match_detections_to_references,
-    scope_references_to_tiles,
 )
 
 DEFAULT_CRS = "EPSG:32635"
@@ -510,9 +509,12 @@ def compute_counts_at_r(
 ) -> tuple[int, int, int, int]:
     """Per-map Hungarian matching at max_distance=R; return aggregate counts.
 
-    Mirrors the scoping + matching logic of
-    ``lib_advanced_metrics.calculate_f1_internal`` but also returns the
-    scoped-reference count so the recall denominator is explicit.
+    Uses the scoping of ``lib_advanced_metrics.calculate_f1_internal``
+    through the library's own per-sheet loop (``iter_sheet_scopes``), so
+    detections are scoped per sheet by tile geometry on their origin sheet
+    exactly as references are (PI ruling D50). Until that ruling this was a
+    copy of the library's name-prefix detection rule. It additionally
+    returns the scoped-reference count so the recall denominator is explicit.
 
     Args:
         gdf_det: Accepted detections with ``source_tile``.
@@ -525,20 +527,9 @@ def compute_counts_at_r(
     """
     tp = fp = fn = n_ref_scoped = 0
 
-    processed_maps = {get_map_name(n) for n in gdf_bounds["tile_name"].unique()}
-    processed_maps.discard("Unknown")
-
-    for map_name in processed_maps:
-        map_bounds = gdf_bounds[gdf_bounds["tile_name"].str.startswith(map_name)]
-
-        ref_for_map = gdf_ext_gt[gdf_ext_gt[REF_MAP_COL] == map_name]
-        if not ref_for_map.empty:
-            ref_scope = scope_references_to_tiles(ref_for_map, map_bounds)
-        else:
-            ref_scope = ref_for_map.iloc[0:0]
-
-        det_scope = gdf_det[gdf_det["source_tile"].str.startswith(map_name)]
-
+    for _sheet, det_scope, ref_scope, _bounds in iter_sheet_scopes(
+        gdf_det, gdf_ext_gt, gdf_bounds, ref_map_col=REF_MAP_COL,
+    ):
         n_ref_scoped += len(ref_scope)
 
         if det_scope.empty and ref_scope.empty:

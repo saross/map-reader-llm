@@ -63,8 +63,8 @@ sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_advanced_metrics import (  # noqa: E402
     get_map_name,
+    iter_sheet_scopes,
     match_detections_to_references,
-    scope_references_to_tiles,
 )
 from lib_consensus import ensure_utm_crs  # noqa: E402
 
@@ -462,32 +462,22 @@ def load_candidates(
     gdf_bounds = gpd.read_file(bounds_path)
     gdf_bounds = ensure_utm_crs(gdf_bounds, source_label=bounds_path)
 
-    # Per-map Hungarian matching (same logic as calculate_f1_internal)
+    # Per-map Hungarian matching through the library's own per-sheet loop,
+    # so both sides are scoped as calculate_f1_internal scopes them (PI
+    # ruling D50: detections per sheet by tile geometry, on their origin
+    # sheet). An out-of-frame candidate is therefore neither a TP nor an FP
+    # here, as it is neither in the F1 this review supports.
     ref_map_col = (
         "source_map" if "source_map" in gdf_ref.columns else "Map"
     )
-    processed_maps = {
-        get_map_name(n) for n in gdf_bounds["tile_name"].unique()
-    }
-    processed_maps.discard("Unknown")
 
     fp_indices: set[int] = set()
     tp_indices: set[int] = set()
     ref_count = 0  # Total scoped reference mounds
 
-    for map_name in sorted(processed_maps):
-        map_bounds = gdf_bounds[
-            gdf_bounds["tile_name"].str.startswith(map_name)
-        ]
-        ref_scope = gdf_ref[gdf_ref[ref_map_col] == map_name]
-        if not ref_scope.empty:
-            ref_scope = scope_references_to_tiles(
-                ref_scope, map_bounds,
-            )
-        det_scope = gdf_det[
-            gdf_det["source_tile"].str.startswith(map_name)
-        ]
-
+    for _map_name, det_scope, ref_scope, _bounds in iter_sheet_scopes(
+        gdf_det, gdf_ref, gdf_bounds, ref_map_col=ref_map_col,
+    ):
         ref_count += len(ref_scope)
 
         if det_scope.empty:

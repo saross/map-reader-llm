@@ -86,7 +86,6 @@ import json
 import logging
 import subprocess
 import sys
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -96,6 +95,9 @@ from shapely.geometry import Point, mapping
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    assign_primary_tiles_on_origin_sheet,
+)
 from scripts.merge_passes import (  # noqa: E402
     DISTANCE_THRESHOLD_METRES,
     deduplicate_within_pass,
@@ -114,6 +116,11 @@ CRS_EPSG = 32635
 #: units that can hold no detection.
 MIN_CLIPPED_TILE_AREA_M2 = 1.0
 
+#: Directories and file name shared by the arms' pass paths below.
+_RETEST_BRIEF = PROJECT_ROOT / "outputs/retest/phase2a/brief-text"
+_H13_OUT = PROJECT_ROOT / "outputs/h13"
+_H13_PASS = "detections-detect_brief-text-3-flash-2026-08-17.geojson"
+
 #: The three arms: label -> (overlap px, stride px, tiles dir, manifest).
 #: Arm A predates the H13 tile trees; its bounds ship in inputs/vectors.
 ARMS: dict[str, dict[str, Any]] = {
@@ -125,9 +132,9 @@ ARMS: dict[str, dict[str, Any]] = {
         "manifest": None,
         "bounds": PROJECT_ROOT / "inputs/vectors/bounds/full_evaluation_bounds.geojson",
         "runs": {
-            "run_1": [PROJECT_ROOT / "outputs/retest/phase2a/brief-text/run_1/detections_brief-text_run01.geojson"],
-            "run_2": [PROJECT_ROOT / "outputs/retest/phase2a/brief-text/run_2/detections_brief-text_run02.geojson"],
-            "run_3": [PROJECT_ROOT / "outputs/retest/phase2a/brief-text/run_3/detections_brief-text_run03.geojson"],
+            "run_1": [_RETEST_BRIEF / "run_1/detections_brief-text_run01.geojson"],
+            "run_2": [_RETEST_BRIEF / "run_2/detections_brief-text_run02.geojson"],
+            "run_3": [_RETEST_BRIEF / "run_3/detections_brief-text_run03.geojson"],
         },
     },
     "armB": {
@@ -142,11 +149,11 @@ ARMS: dict[str, dict[str, Any]] = {
             # both files are concatenated before deduplication so the pass
             # covers the full 430-tile manifest.
             "run_1": [
-                PROJECT_ROOT / "outputs/h13/armB/run_1/detections-detect_brief-text-3-flash-2026-08-17.geojson",
-                PROJECT_ROOT / "outputs/h13/armB/run_1_recovery/detections-detect_brief-text-3-flash-2026-08-17.geojson",
+                _H13_OUT / "armB/run_1" / _H13_PASS,
+                _H13_OUT / "armB/run_1_recovery" / _H13_PASS,
             ],
-            "run_2": [PROJECT_ROOT / "outputs/h13/armB/run_2/detections-detect_brief-text-3-flash-2026-08-17.geojson"],
-            "run_3": [PROJECT_ROOT / "outputs/h13/armB/run_3/detections-detect_brief-text-3-flash-2026-08-17.geojson"],
+            "run_2": [_H13_OUT / "armB/run_2" / _H13_PASS],
+            "run_3": [_H13_OUT / "armB/run_3" / _H13_PASS],
         },
     },
     "armC": {
@@ -157,9 +164,9 @@ ARMS: dict[str, dict[str, Any]] = {
         "manifest": PROJECT_ROOT / "inputs/tiles_512_ov256/h13_armC_manifest.json",
         "bounds": None,
         "runs": {
-            "run_1": [PROJECT_ROOT / "outputs/h13/armC/run_1/detections-detect_brief-text-3-flash-2026-08-17.geojson"],
-            "run_2": [PROJECT_ROOT / "outputs/h13/armC/run_2/detections-detect_brief-text-3-flash-2026-08-17.geojson"],
-            "run_3": [PROJECT_ROOT / "outputs/h13/armC/run_3/detections-detect_brief-text-3-flash-2026-08-17.geojson"],
+            "run_1": [_H13_OUT / "armC/run_1" / _H13_PASS],
+            "run_2": [_H13_OUT / "armC/run_2" / _H13_PASS],
+            "run_3": [_H13_OUT / "armC/run_3" / _H13_PASS],
         },
     },
 }
@@ -285,9 +292,11 @@ def build_common_bounds(
 
 
 def assign_primary_tiles(
-    gdf_det: gpd.GeoDataFrame, gdf_bounds: gpd.GeoDataFrame,
+    gdf_det: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    origin: list[list[str]] | None = None,
 ) -> list[str | None]:
-    """Assign each detection to exactly one scoring tile.
+    """Assign each detection to exactly one scoring tile, on its own sheet.
 
     Mirrors the evaluator's reference-assignment rule: among the tiles a
     detection intersects, take the one whose centroid is nearest. Keeping
@@ -295,40 +304,48 @@ def assign_primary_tiles(
     bootstrap resamples the per-tile TP/FP/FN table, where TPs and FPs are
     booked to the detection's tile and FNs to the reference's tile.
 
+    **Never across a sheet edge (PI ruling D50).** Until 2026-10-07 the
+    nearest tile was chosen among ALL frame tiles, so where two sheets'
+    padded tiles overlap a detection could be re-keyed to the neighbouring
+    sheet and matched against the wrong sheet's references
+    (``reports/frames-blast-radius-2026-10-07.md`` § 5.4). The choice is
+    now delegated to
+    :func:`lib_advanced_metrics.assign_primary_tiles_on_origin_sheet`, which
+    restricts it to the detection's origin sheet — read from ``origin`` or,
+    when that is ``None``, from the rows' own ``origin_source_tile`` /
+    ``origin_tiles`` / ``source_tiles`` / ``source_tile`` columns. A
+    detection with no recorded origin (bare cluster centroids) keeps the
+    legacy unrestricted rule; the count is logged.
+
     Args:
         gdf_det: Detections (point geometries) in the project CRS.
         gdf_bounds: Scoring tile bounds with a ``tile_name`` column.
+        origin: Optional per-row origin tile names.
 
     Returns:
         List of tile names aligned with ``gdf_det``'s row order; ``None``
-        for a detection intersecting no tile (only possible in the native
-        scope, where detections are not clipped).
+        for a detection intersecting no tile of its own sheet (only possible
+        in the native scope, where detections are not clipped).
     """
     if gdf_det.empty:
         return []
-
-    joined = gpd.sjoin(
-        gdf_det, gdf_bounds[["tile_name", "geometry"]],
-        how="inner", predicate="intersects",
+    assigned, diag = assign_primary_tiles_on_origin_sheet(
+        gdf_det, gdf_bounds, origin=origin,
     )
-    centroids = {
-        row["tile_name"]: row.geometry.centroid
-        for _, row in gdf_bounds.iterrows()
-    }
-
-    candidates: dict[Any, list[str]] = defaultdict(list)
-    for idx, tile_name in zip(joined.index, joined["tile_name"]):
-        candidates[idx].append(tile_name)
-
-    assigned: list[str | None] = []
-    for idx, geom in zip(gdf_det.index, gdf_det.geometry):
-        names = candidates.get(idx)
-        if not names:
-            assigned.append(None)
-        elif len(names) == 1:
-            assigned.append(names[0])
-        else:
-            assigned.append(min(names, key=lambda t: geom.distance(centroids[t])))
+    if diag["n_cross_sheet_avoided"] or diag["n_outside_origin_sheet"]:
+        logger.info(
+            "primary tiles: %d of %d points kept on their origin sheet where "
+            "the legacy rule would have re-keyed them to a neighbour; %d lie "
+            "on no tile of their own sheet (left unassigned)",
+            diag["n_cross_sheet_avoided"], diag["n_points"],
+            diag["n_outside_origin_sheet"],
+        )
+    if diag["n_no_origin"]:
+        logger.debug(
+            "primary tiles: %d of %d points carry no recorded origin; "
+            "assigned by the unrestricted nearest-centroid rule",
+            diag["n_no_origin"], diag["n_points"],
+        )
     return assigned
 
 
