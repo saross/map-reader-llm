@@ -104,6 +104,26 @@ project state.
 >   the claims-inventory census: freeze it as the 2026-09-12 snapshot with
 >   dated notes until the Results re-draft, or re-classify the 18 rows and
 >   recount now (the decision is which; no further assessment needed).
+> - **Google notice, 2026-10-07 (read after handoff; email "[Action
+>   Required] Update thinking_budget and sampling parameters").** Google
+>   states that from Gemini 3.6 Flash on, temperature, top_p and top_k are
+>   held at defaults and custom values have had no effect; upcoming models
+>   will reject them, and `thinking_budget`, with 400 INVALID_ARGUMENT.
+>   We send no `thinking_budget`, but every path sends a temperature
+>   (`4_detect_mounds_batch.py` defaults it to 0.1; the verifier and batch
+>   builders likewise). Consequences to assess, offline: (a) every Gemini
+>   3.7 and 3.8 proposer arm logged "T 0.7" ran at the default, so the
+>   cross-generation contrasts (R7.3-22/23's Gemini 3 vs 3.7 gap, the
+>   screens) were matched on temperature in name only, while within-3.7
+>   contrasts are unaffected; (b) the 3.7/3.8 verifier legs logged "T 0.0"
+>   ran at the default, so the verifier-swap contrasts carry the same
+>   caveat; (c) Run B's gate should say its 3.7 arms' temperature is
+>   nominal (the re-run still reproduces the original arms); (d) the
+>   project's own Gemini 3 Flash T 0.7 vs 1.0 cells (E43) bound the size
+>   of a 0.7 → default shift, if the default is 1.0 (unverified); (e)
+>   before any newer model is used, the request builders must omit
+>   temperature for it. Google's claim is unverified by us; flag it to the
+>   PI as a possible methods correction, not a settled one.
 > - **Worktree hygiene:** each agent worktree is about 9 GB; remove it as
 >   soon as its branch is pushed and merged (the disk filled once this
 >   session).
