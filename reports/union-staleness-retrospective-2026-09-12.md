@@ -1,9 +1,10 @@
 # Union-staleness retrospective — is any committed consensus union stale against its pool?
 
-> **Last revised**: 2026-09-12 (later — the PI's rulings on § 3.3 and § 4.1
-> executed: the five stale T = 1.0 unions relabelled N = 5 with an erratum, and
-> the § 4.1 near-miss's two stale h10 siblings archived and rebuilt. Before that:
-> original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (§ 5 corrected: the pv-diag-256 pool this report
+> called non-existent is archived and tracked, and a read-only reproduction from
+> it matches the UNRESOLVED union exactly. Before that: 2026-09-12 (later), the
+> PI's rulings on § 3.3 and § 4.1 executed; and the original publication). See
+> [§ Changelog](#changelog) for revision history.
 
 **Verdict in one line.** Of the **106** consensus unions that a registered
 condition reads, **64 REPRODUCE**, **36 are SUBPOOL-CONSISTENT**, **1 is
@@ -11,7 +12,9 @@ UNRESOLVED**, and **5 are STALE** — all five in
 `outputs/h11/consensus-384-UNINTENDED-T1.0/voting/`, where the union reflects
 the **first 5 of the pool's 30 passes** while the register describes the
 conditions that read it as `consensus-1of30` … `consensus-5of30` with
-`n_passes: 30`.
+`n_passes: 30`. The UNRESOLVED union's pool has since been found under
+`archive/`, and a read-only reproduction from it matches the union exactly
+(§ 5, corrected 2026-10-07); the sweep's own classification is unchanged.
 
 ## 1. Why this check exists
 
@@ -354,28 +357,52 @@ of those two files knows, and so the near-miss is not mistaken for noise.
 One union: `outputs/h11/pv-diag-256/consensus/text-5of5.geojson` (1,165
 features), read by `pv-diag-256::text-consensus-5of5`.
 
-It cannot be re-derived because **the pool does not exist**. The register says
-so in terms: "Proposer passes were NOT materialised as `run_*` dirs (only
-consensus + crops), so `proposer_pools` is empty and conditions reference the
-pool by string (benign pool-unresolved; pv-384/512 precedent)"
-(`results/run-conditions.json`, `decomposition.pv-diag-256._note`). Confirmed on
-disk: `outputs/h11/pv-diag-256/` contains only `consensus/`, whose seven files
-are `text-{1..5}of5.geojson`, `text-ge3of5.geojson`, and `text-baseline.geojson`
-— no `run_*` or `pass_*` directory anywhere under it.
+The sweep could not re-derive it because **its pool is not where the checker
+looks, and it is not registered**. The checker takes a union's pool to be the
+union's parent directory unless an override names another, and
+`outputs/h11/pv-diag-256/` contains only `consensus/`, whose seven files are
+`text-{1..5}of5.geojson`, `text-ge3of5.geojson`, and `text-baseline.geojson` —
+no `run_*` or `pass_*` directory anywhere under it. The register's note for the
+run said the passes were never materialised ("Proposer passes were NOT
+materialised as `run_*` dirs (only consensus + crops)",
+`results/run-conditions.json`, `decomposition.pv-diag-256._note`), and this
+section, as first published, took that at its word: the pool "does not exist",
+and the passes "may not exist anywhere".
 
-This is UNRESOLVED rather than STALE: with no pool, there is nothing the union
-can be stale *against*, and no evidence either way. The condition is the 256 px
-anchor of the tile-size comparison (F1 @ 20 m orders 256 < 512 < 384 = 0.46 /
-0.69 / 0.79 per the register note), and it is also flagged there as an
-"unregistered exploratory extension of the registered H11 two-level design
-(E62)". If that anchor is ever cited in a way that depends on the union's
-provenance, the passes would have to be recovered first — and they may not
-exist anywhere.
+**That was wrong (corrected 2026-10-07).** The passes were materialised, and
+they are tracked, with their metas, under
+`archive/outputs-non-production-tile-sizes/`, where `276e4ca80` (2026-04-16)
+archived the run's detection data: the five N = 5, T = 0.7 passes at
+`text-n5/text-t0.7/run_1` … `run_5` (1,843 / 1,859 / 1,829 / 1,838 / 1,856
+detections, 1,032 tiles each) and the N = 1, T = 0.0 baseline pass at
+`text-baseline/text-t0.0/run_1`. Pull request #25's reviewed binding
+`pv-diag-256-text-5of5-union` (`results/manipulation-gate-bindings.json`)
+records a read-only, in-memory reproduction on sapphire with
+`scripts/merge_passes.py`'s own functions over those five passes: 2,558 /
+1,909 / 1,645 / 1,423 / 1,165 clusters at ≥ 1 … 5 votes, exactly the feature
+counts of `text-1of5` … `text-5of5`, with the 1,165 vote-5 centroids equal to
+`text-5of5.geojson`'s coordinates. That is § 2's REPRODUCES test in substance,
+run outside this checker.
+
+The classification in § 6 and in
+`results/union-staleness-retrospective-2026-09-12.json` stays UNRESOLVED,
+because that is what the 2026-09-12 sweep returned; the checker still returns
+it, since no registered pool reaches `archive/` and its `POOL_OVERRIDES` table
+maps only registered pools (`scripts/check_union_provenance.py`,
+`UNRESOLVABLE`, reason restated 2026-10-07). Registering the archived passes as
+a pool, which would let the checker reproduce the union itself, is a separate
+decision. The condition is the 256 px anchor of the tile-size comparison
+(F1 @ 20 m orders 256 < 512 < 384 = 0.46 / 0.69 / 0.79 per the register note),
+and `results/run-facts.json` (`pv-diag-256.purpose`) flags it as an
+"Unregistered exploratory extension of the registered H11 two-level design
+(E62)". Its union's provenance no longer rests on passes that cannot be found.
 
 `outputs/h11/pv-diag-256/consensus/text-baseline.geojson` was excluded from the
 audit rather than marked UNRESOLVED: its condition `pv-diag-256::text-baseline`
 has `architecture: single-pass`, `aggregation: none`, `n_passes: 1`, so it is
-not a union.
+not a union. It is byte-identical (sha256 `bf44bc7b11e3…`) to the archived
+baseline pass's `detections_text-t0.0_run01.geojson` (binding
+`pv-diag-256-text-baseline`).
 
 ## 6. Classification table
 
@@ -397,7 +424,7 @@ threshold, but only these are in scope).
 | `outputs/h11/n1-outstanding-384/image-t03/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
-| `outputs/h11/pv-diag-256/consensus` | 1 | 5 | — | — | UNRESOLVED |
+| `outputs/h11/pv-diag-256/consensus` | 1 | 5 | — | — | UNRESOLVED (pool since found; § 5) |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus` | 2 | 1,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus` | 1 | 9 | 10 | 10 of 10 | REPRODUCES |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5` | 1 | 5 | 10 | 5 of 10 | SUBPOOL-CONSISTENT |
@@ -512,6 +539,35 @@ threshold, but only these are in scope).
   result this report tabulates.
 
 ## Changelog
+
+### 2026-10-07 — § 5 corrected: the pv-diag-256 pool exists
+
+**Trigger**: pull request #25 (manipulation-gate coverage, merged `439ffd7ac`)
+bound `pv-diag-256::text-consensus-5of5` to its proposer passes and found them
+under `archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/run_1..5`,
+tracked with their metas since `276e4ca80` (2026-04-16). Its reviewed binding
+`pv-diag-256-text-5of5-union` records a read-only reproduction on sapphire that
+matches all five vote thresholds' feature counts and `text-5of5`'s coordinates
+exactly. The PI approved resolving the stale records on 2026-10-07.
+
+| claim | before | after |
+|---|---|---|
+| § 5, the union's pool | "does not exist"; the passes "may not exist anywhere" | five N = 5, T = 0.7 passes, tracked with metas, under `archive/` |
+| § 5, why the sweep could not re-derive it | no pool | pool outside the union's run and unregistered; the checker maps only registered pools |
+| § 5, evidence about the union | "no evidence either way" | an exact read-only reproduction (2,558 / 1,909 / 1,645 / 1,423 / 1,165 at ≥ 1 … 5 votes) |
+| § 5, source of the "(E62)" flag | "flagged there" (the register note) | `results/run-facts.json`, `pv-diag-256.purpose` |
+| § 6, the pv-diag-256 row | UNRESOLVED | UNRESOLVED (pool since found; § 5) |
+
+**What did NOT change**: the sweep's counts (64 / 36 / 5 / 1) and every class
+in § 6; `results/union-staleness-retrospective-2026-09-12.json`, which is the
+2026-09-12 sweep's verbatim output and keeps its original `detail` string; the
+checker's behaviour (its `UNRESOLVABLE` entry stays, with a restated reason).
+The verdict paragraph gained one sentence pointing here. The same correction
+landed in `results/run-conditions.json` (`pv-diag-256._note` and both
+conditions' `_source_run_basis`) and `scripts/check_union_provenance.py`.
+
+**Landed in**: the commit that adds this entry, on branch
+`stale-notes-2026-10-07`.
 
 ### 2026-09-12 (later) — the PI's rulings on § 3.3 and § 4.1 executed
 
