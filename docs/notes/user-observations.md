@@ -1510,3 +1510,33 @@ discard / replace; an unanswered gate holds over.*
   then asked for a conservative outsider pass over the rest. Should every
   outward-facing draft come to him already with that pass done and the
   expanded phrases named (claude-obs 144)?
+
+## S162 candidates (pending review, 2026-10-07, drafted at handoff) — silence never discards
+
+Things Shawn may have observed about how Claude worked in Session 162. For
+accept / edit / discard / replace.
+
+- **C1 — Re-presenting text in full when he could not find it.** He had
+  "approved the register" but then wrote that he could not find the D42 text
+  and asked for it again. I showed all three amendments verbatim and wrote
+  them only after his explicit yes on the text he had seen. Is "present in
+  full, then write" the right default for any register or signature text,
+  even after a general approval?
+- **C2 — Saying "I can't confirm that" instead of the answer asked for.**
+  Asked to confirm there was no principled way to recover the 19 "cannot
+  check" verdicts, I checked and reported that one route remains (run logs
+  plus the verified-candidate lists) and that two did not work. Was the
+  refusal-to-confirm useful, or would he have preferred the shorter "no"
+  with the caveat?
+- **C3 — My headlines outran my tables.** Four of my summary claims this
+  session were stronger than the data under them (consensus "does not
+  shrink" the floor; a range "at every threshold"; floors from one pair; a
+  wide cross-date allowance), each corrected after a side review or his
+  "what happened?". Was the cost of those corrections (his attention,
+  repeated reports) noticeable, and would he want a standing rule that every
+  summary sentence states its pair counts? (claude-obs 147 is my side.)
+- **C4 — Running out of disk and hanging a launch.** Agent worktrees filled
+  amd-tower's disk and two agent launches failed; a launch line hung its ssh
+  call. Both were recovered within minutes without loss, but were they
+  visible to him as disruption, and does he want such incidents reported as
+  they happen or only at close? (claude-obs 148 is my side.)

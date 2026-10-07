@@ -3124,3 +3124,18 @@ both failures were mine, not the agents'.
 merged; check free space before spawning worktree agents; launch remote jobs
 as `cd …; nohup bash -c 'echo $$ > pid; exec …' > log 2>&1 < /dev/null &`
 with a `timeout` on the ssh call.
+
+## claude-obs 149 — 2026-10-07: He closes a decision round with "Anything else I missed?"
+
+**Pattern.** After answering a long list of open items in one message,
+Shawn ended with "Anything else I missed?". The answer surfaced four things
+his list had not covered: the pv-diag-256 registration question, the log
+reconstruction for the "cannot check" verdicts, Obs 506's lead, and the
+sentinel design.
+
+**Lesson.** He treats completeness as my job to check after his answers,
+not his to guarantee in them.
+
+**How to apply.** After applying a batch of his decisions, list what is
+still open that his message did not touch, each with the one-line choice it
+needs, before moving on.
