@@ -4,8 +4,9 @@
 > addendum; Session 163). See [§ Changelog](#changelog) for revision history.
 
 **Status: Stage 1 APPROVED by the PI (2026-10-07, § 10) with three added arms
-(§ 4.8); the 45 passes rehearsed API-free (§ 6.1); addendum audit in § 7.1.
-Not yet lodged.**
+(§ 4.8); the 45 passes rehearsed API-free (§ 6.1); addendum audit
+`reports/s163-agent-records/run-b-addendum-audit.md`, GO WITH FIXES, fixes in
+§ 4.9. Launch delegated by the PI for the night of 2026-10-07 (D52).**
 No Application Programming Interface (API) call was made to prepare this
 card: every rehearsal ran under a stub client with network sockets blocked
 (§ 6). Design: PI ruling D49 (`planning/pi-decisions-2026-09-20.md`), gate
@@ -149,9 +150,9 @@ SDK-serialised).
 2. **Met.** Run A's legs are done and committed (`f13f7b308`) and their File
    API uploads deleted, 9 of 9 (gate status, `b56300cdc`), so Stage 1 has its
    headroom (§ 4.3), provided no other leg is lodged meanwhile.
-3. **Open.** The PI approves this card: the commands, the ceiling of § 5 and
+3. **Met (2026-10-07, D52).** The PI approves this card: the commands, the ceiling of § 5 and
    the decisions of § 10.
-4. **Open.** This branch is merged and pulled into sapphire's main checkout,
+4. **Met (2026-10-07, `f3e35afa7`).** This branch is merged and pulled into sapphire's main checkout,
    which holds `.env`, `.venv` and the untracked `inputs/tiles_384_ov192`.
 
 ### 4.2 Commands
@@ -216,12 +217,17 @@ resumes a chunked pass at its first unlanded chunk.
 
 ```bash
 cd ~/Code/map-reader-llm
-bash scripts/modality-bridge-2026-10-07-stage1.sh lodge g37-image:1
+bash scripts/modality-bridge-2026-10-07-stage1.sh lodge g37-image:1 g3-image:1
 ```
 
-Then the recommended cost gate (§ 10 item 1): when `status` shows the first
-chunk of `g37-image-run1` landed, read its `cached` share. At 0.5 or above,
-continue; below, stop and return to the PI.
+Then the cost gates (§ 10 item 1, widened by audit F2): when `status` shows
+the first chunk of `g37-image-run1` landed, read its `cached` share; at 0.5 or
+above, continue. When `g3-image-run1` lands (the project's first batch
+explicit cache on `gemini-3-flash-preview`; 3.7's ran on 2026-09-17), its
+cached share must be about 0.94 (18,909 of about 20,028 input tokens per
+call); otherwise stop. Either gate failing returns to the PI. Exposure (audit
+F5): the detector moves on to a pass's next chunk by itself, so the 3.7 gate
+caps exposure at one whole pass (about US$11.17 if uncached), not one chunk.
 
 ```bash
 bash scripts/modality-bridge-2026-10-07-stage1.sh status
@@ -308,25 +314,36 @@ request-structure asymmetry of § 2.2:
 Against each other: `g37-image-cache` differs from `g3-image-temp1` in model
 and thinking level only (rehearsal, § 6.1), and `g3-text-temp1` from
 `g37-text` likewise. Gemini 3 at T 1.0 can then be set against Gemini 3.7 on
-both modalities, matched on temperature, request structure, tier (batch), K
-and day.
+both modalities, matched in effect on temperature, and on request structure,
+tier (batch), K and day. The temperature match is inferred, not sent: the 3.7
+arms send 0.7 (as the originals did) and sample at their default 1.0
+(`planning/temperature-probe-2026-10-07.md` §§ 7, 8.5); the rehearsal compared
+each added arm with its twin, not the matched pairs field by field (audit F7).
+Known residual asymmetry (audit F8): tiles retried after a parse failure are
+sent synchronously and inline, without the cache, on every cached arm; count
+them per pass after landing.
 
 **Commands.** `plan` prints all 45 passes; `lodge all` lodges the D49 arms
 first and the additions after them (`g37-image-cache`, `g3-image-temp1`,
-`g3-text-temp1`), so a storage refusal can only delay an addition.
+`g3-text-temp1`). A storage refusal stops `lodge`; re-run `lodge all` later
+(audit F1 showed the original "can only delay an addition" was wrong while the
+detector never released its uploads; § 4.9).
 
 **File API.** Request files per pass (rehearsal): `g37-image-cache`
 461,605,186 bytes, `g3-image-temp1` 461,610,778, `g3-text-temp1` 463,984,582;
-6.94 GB for the 15 passes, 37.37 GB for all 45. The additions lodge after the
+6.94 GB for the 15 passes, 37.36 GB for all 45. The additions lodge after the
 D49 passes, when the preflight's safe sweep (§ 4.3) can reclaim completed
 jobs' inputs. If a preflight refuses, that pass exits before uploading and
 `lodge` stops; re-run `lodge all` later.
 
 **Cache guard.** After each cached pass is submitted, the launcher reads the
 first line of the newest request file in that pass's `batch_working/` and
-stops lodging unless it carries `cached_content` (`cache_referenced`). This is
-the first explicit cache on Gemini 3.7 in this project; the guard bounds a
-failed cache to one pass. Its prefix (18,909 tokens on Gemini 3) is far above
+stops lodging unless it carries `cached_content` (`cache_referenced`); the
+guard bounds a failed cache to one pass. **Corrected (audit F2):** this said
+`g37-image-cache` was the project's first explicit cache on Gemini 3.7, but
+3.7's batch explicit cache ran on 2026-09-17 (55-map passes 4 and 5, 0.945
+cached share, `outputs/gemini37-image-55map-2026-09-13/post_run_report.md`);
+the untried case is `gemini-3-flash-preview`'s, gated in § 4.4. Its prefix (18,909 tokens on Gemini 3) is far above
 the 1,024-token explicit-cache minimum (`lib_batch_api.py`,
 `create_shared_context_cache`).
 
@@ -335,12 +352,14 @@ equal to Gemini 3's 18,909 tokens, the rest of 3.7 image's 20,018 fresh):
 
 | Arm | Calls | Basis | Estimated cost |
 |---|---:|---|---:|
-| `g37-image-cache` | 6,990 | 18,909 cached at US$0.0375/M (US$0.075/M if the invoice rate applies to explicit reads), 1,109 fresh at US$0.375/M, 258.8 out at US$1.875/M; five 24 h caches at US$0.50/M·h | US$12.39 (US$17.35), incl. US$1.13 storage |
+| `g37-image-cache` | 6,990 | 18,909 cached at US$0.075/M (the rate the September invoices show for 3.7 cache reads; US$0.0375/M on the rate card gives US$12.39), 1,109 fresh at US$0.375/M, 258.8 out at US$1.875/M; five 24 h caches at US$0.50/M·h | US$17.35, incl. US$1.13 storage |
 | `g3-text-temp1` | 6,990 | as `g3-text` | US$4.19 |
 | `g3-image-temp1` | 6,990 | as `g3-image`; five 24 h caches at US$1.00/M·h | US$12.07, incl. US$2.27 storage |
-| **Additions** | **20,970** | | **US$28.65 (up to US$33.61)** |
+| **Additions** | **20,970** | | **US$33.61 (US$28.65 at the rate card's cache rate)** |
 
-Stage 1 with the additions: 62,910 calls; likely US$92.3, range US$88.2–130.6.
+Stage 1 with the additions: 62,910 calls; likely about US$97.2 (audit F3:
+headline at the invoiced 3.7 cache rate), range US$88.2–130.6. Deleting each
+cache once its pass lands (D52, § 4.9) saves most of the storage lines.
 Against the PI's ceilings: the fifth leg's US$12–17 plus about US$1.2 of
 Stage 2 verification sits inside "up to double" the US$18 quoted; the pair's
 US$16.3 plus about US$4 of verification sits inside the US$21 quoted. Output
@@ -349,8 +368,34 @@ lengths at T 1.0 may differ a little from the T 0.7 profiles.
 **Stage 2 additions** (for Stage 2's own gate, § 8): K = 5 unions of the three
 added arms; `g37-image-cache` verified by both verifiers, as `g37-image`
 (about US$1.2 at its original union's 674 candidates); the two `temp1` unions
-by the Gemini 3 verifier (about US$4.1 at the T 0.7 K = 5 unions' 2,932 and
-2,788).
+by the Gemini 3 verifier (about US$3.93 at the T 0.7 K = 5 unions' 2,932 and
+2,788, as § 5).
+
+### 4.9 Audit fixes before launch (2026-10-07)
+
+The addendum audit (`reports/s163-agent-records/run-b-addendum-audit.md`,
+`90dc51416`) returned GO WITH FIXES. Done before launch:
+
+- **F1 (high), File API storage.** The detector's batch path registered every
+  upload and never released it, so the preflight's safe sweep could reclaim
+  nothing for the registry's 48 h and Stage 1 (37.36 GB against a 19.47 GB
+  budget) would have stalled part-way. `run_batch_unit` now releases a
+  terminal job's request file from the registry
+  (`lib_batch_api.release_terminal_job_input`, as `run_pv.py` does since audit
+  finding M6), so the sweep can delete it when a later lodge needs room. The
+  sweep still never touches a non-terminal job's input. Tests in
+  `tests/test_file_storage_preflight.py`; a red sentinel confirmed them.
+- **F2 (medium).** The gate covers `g3-image-run1` as well (§ 4.4).
+- **F4 and D52, caches.** `scripts/delete_landed_caches.py` deletes the
+  detector's caches created since the launch once no live or in-flight pass
+  names them and they are over 90 minutes old (landed passes and lodges that
+  exited without submitting free theirs). Run periodically through the night.
+- **F6.** `lodge` refuses an unknown arm or a run outside the arm's K before
+  lodging anything.
+- **F9.** Passes start with `PYTHONUNBUFFERED=1`, so a `Submitted batch job`
+  line cannot be lost to buffering.
+- **F3, F5, F7, F8 and the document nits** are corrected in §§ 4.1, 4.4, 4.8
+  and 5 in place.
 
 ## 5. Calls and cost
 
@@ -369,8 +414,9 @@ Against the gate: its Gemini 3 image figure (US$25.96) was the original's
 standard-tier cost; on batch it is US$19.60 plus storage. The 3.7 image figure
 (US$18.33) assumed the original cache share at the card's cache rate; the
 ceiling is US$37.5 higher. Stage 1 can therefore exceed the gate's "about
-US$61" by up to US$36; the cost gate of § 4.4 caps that exposure at the first
-chunk of one pass (about US$3.7 if uncached).
+US$61" by up to US$36; the cost gate of § 4.4 caps that exposure at one
+whole `g37-image` pass (about US$11.17 if uncached; first written here as
+"the first chunk … about US$3.7", corrected after audit F5).
 
 **Stage 2 (for its own gate)**, batch, at the original union sizes and the
 register's per-candidate rates:
@@ -649,6 +695,17 @@ the cache); the batch path never deletes its caches; and a dead polling
 process orphans its job, whose name survives only in the log.
 
 ## Changelog
+
+### 2026-10-07 — Addendum audit fixes (Session 163)
+
+The addendum audit's findings acted on (§ 4.9): the detector now releases its
+uploads (F1), the gate covers `g3-image-run1` (F2), caches are deleted once
+landed (F4, D52), `lodge` validates its specs (F6) and passes run unbuffered
+(F9). Corrected in place: the fifth leg's headline cost at the invoiced cache
+rate (US$12.39 → US$17.35; Stage 1 likely US$92.3 → about US$97.2), the gate's
+exposure (one chunk → one pass), the "first explicit cache on 3.7" claim (3.7's
+ran on 2026-09-17), the temperature-match wording, 37.37 → 37.36 GB, and § 4.1
+items 3 and 4 (met).
 
 ### 2026-10-07 — PI rulings, three added arms, rehearsal addendum (Session 163)
 

@@ -275,7 +275,11 @@ lodge_one() {
   base=$(grep -c "Submitted batch job" "$log" 2>/dev/null)
   base=${base:-0}
   echo "=== $(date -Is) LODGE $name: $PY scripts/4_detect_mounds_batch.py ${ARGS[*]}" >> "$log"
-  nohup "$PY" scripts/4_detect_mounds_batch.py "${ARGS[@]}" >> "$log" 2>&1 < /dev/null &
+  # Unbuffered, so "Submitted batch job" reaches the log the moment the job
+  # exists: a buffered line lost to an early kill would let `lodge` lodge a
+  # second, billed job for the same pass (audit F9).
+  PYTHONUNBUFFERED=1 nohup "$PY" scripts/4_detect_mounds_batch.py "${ARGS[@]}" \
+    >> "$log" 2>&1 < /dev/null &
   echo $! > "$pidf"
   echo "$name: started pid $(cat "$pidf"), log $log"
 
@@ -297,7 +301,8 @@ lodge_one() {
       if uses_cache "$arm" && ! cache_referenced "$d"; then
         echo "$name: CACHE NOT ENGAGED (the newest request file under" \
              "$d/batch_working has no cached_content) — lodging stops;" \
-             "discard this pass and read $log"
+             "read $log; the pass's job runs inline and must be" \
+             "discarded: move $d to archive/ and re-lodge it"
         return 1
       fi
       sleep "$LODGE_GAP"
@@ -327,8 +332,19 @@ expand() {
     case "$spec" in
       all) for arm in $ARMS; do for run in $(passes_for "$arm"); do
              echo "$arm $run"; done; done ;;
-      *:*) echo "${spec%%:*} ${spec##*:}" ;;
-      *) for run in $(passes_for "$spec"); do echo "$spec $run"; done ;;
+      *:*)
+        arm=${spec%%:*}; run=${spec##*:}
+        # Only a planned pass may be lodged: an unknown arm or a run
+        # outside the arm's K is refused before anything starts (audit F6).
+        if ! passes_for "$arm" >/dev/null 2>&1 \
+            || ! passes_for "$arm" | tr ' ' '\n' | grep -qx "$run"; then
+          echo "REFUSED: $spec is not a planned pass" >&2; return 1
+        fi
+        echo "$arm $run" ;;
+      *)
+        passes_for "$spec" >/dev/null 2>&1 \
+          || { echo "REFUSED: unknown arm $spec" >&2; return 1; }
+        for run in $(passes_for "$spec"); do echo "$spec $run"; done ;;
     esac
   done
 }
@@ -482,9 +498,12 @@ case "$cmd" in
   recover) recover ;;
   lodge)
     [ $# -gt 0 ] || { echo "lodge needs: all | ARM | ARM:RUN ..." >&2; exit 2; }
+    # Expand (and validate) every spec before the first lodge, so a bad
+    # spec stops the whole command rather than part-way through it.
+    specs=$(expand "$@") || exit 2
     while read -r arm run; do
       lodge_one "$arm" "$run" || exit 1
-    done < <(expand "$@")
+    done <<< "$specs"
     echo "LODGING DONE $(date -Is)" ;;
   *)
     sed -n '2,60p' "$0"
