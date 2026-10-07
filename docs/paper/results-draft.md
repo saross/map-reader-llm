@@ -665,7 +665,8 @@ oracle (+0.022) as its upper bound:
 | 8 | text MIN, vote 4-of-5 | 5 | 0.7826 | 0.640 | 04-18; 04-18 |
 
 Run dates are UTC, from the passes register (`results/passes-manifest.json`,
-`timestamps`); "(to 05-02)" marks a recovery top-up. The text MIN and
+`timestamps`). A date range in parentheses, such as "(to 05-02)", marks a
+recovery top-up. The text MIN and
 image verifier legs' main dates come from their post-run reports
 (`outputs/55maps-text-min-generalisation/post_run_report.md`,
 `outputs/55maps-image-generalisation/post_run_report.md`), because the
@@ -700,8 +701,9 @@ votes in a separate leg on 2026-06-06, 40–49 days later (table, ‡).
 Re-verifying every candidate of T0.3 and text MIN on one date
 (2026-10-07) moves T0.3's 3-of-5 advantage from +0.0092 to +0.0084
 (p = 0.0013) and text MIN's from +0.0275 to +0.0264, the value a June
-re-verification of text MIN also gives, while neither 4-of-5 cell moves
-significantly (+0.0021 and +0.0020, p = 0.36 and 0.38). T0.3's +0.008 is
+re-verification of text MIN also gives. Neither 4-of-5 cell moves
+significantly between dates (+0.0021 and +0.0020, p = 0.36 and 0.38).
+T0.3's +0.008 is
 1.2 times its replicate floor (0.0069) and inside the floor's upper bound
 (0.0111), so it is a small threshold effect that holds narrowly. T0.7's
 +0.022 has no one-date reading, but the date shifts measured on the other
@@ -789,10 +791,11 @@ decomposition depends on the chain. On r2 the margin is +0.0336, and it
 splits into the incumbent's tax (+0.0237), an oracle-to-oracle gap of
 +0.0161 (B's N = 10 oracle 0.8560 against T0.3's 3-of-5 oracle 0.8399,
 tile-swap p = 0.0001), and B's own tax (−0.0062), so on r2 the oracle gap
-and the protected tax are of similar size. That gap compares run B with
-run T0.3, which differ in thinking level, pass count, tiling, and date as
-well as in overlap, so it is a difference between two runs rather than a
-geometry effect, although it clears the cross-execution floor. [DRAFT
+and the protected tax are of similar size. That gap clears the
+cross-execution floor, but it compares run B with run T0.3, which differ
+in thinking level, pass count, tiling, and date as well as in overlap. It
+therefore measures a difference between two runs, of which overlap is one
+component. [DRAFT
 NOTE, W2.7, 2026-10-07: correction of fact for PI review (claims
 R7.2-11/12); not finalised. Was "The geometry therefore found few
 additional mounds. The calibration transferred instead. On this reading,
@@ -820,8 +823,8 @@ contrasts (−0.0141 and −0.0120 on r2, 2.0 and 1.7 times the floor) carry
 geometries had tied (§ R1b, Obs 435). A GS tie is bounded ignorance at
 roughly ±0.03 resolution (Obs 362), and a real effect of about 0.01
 sat inside the bound. The effect is one overlap step on one corpus. Its
-sign held at N = 3, 5, and 10 on the r2 board and reversed at N = 1,
-where A's single-pass oracle cell beats B's by +0.0214 (0.8227 against
+sign held at N = 3, 5, and 10 on the r2 board and reversed at N = 1.
+There A's single-pass oracle cell beats B's by +0.0214 (0.8227 against
 0.8013, tile-swap p < 0.0001), above the single-pass floor of 0.008–0.010.
 [DRAFT NOTE, W2.7, 2026-10-07: for PI review; not finalised. (a) R7.2-13a
 reworded: "B beats A at the carried primaries" holds narrowly; floor
@@ -838,10 +841,9 @@ permutation as extreme in 10,000); at N = 3, A − B −0.0186 (oracles) and
 Pass count saturates at the carried points (P7), where N = 5 is within
 noise of N = 10 for both runs (p = 0.82 and 0.32). At the oracles N = 5
 sits below N = 10 by 0.004 and 0.005, which the per-sheet test finds
-BH-significant, but both differences lie inside the replicate floor of a
+BH-significant. Both differences lie inside the replicate floor of a
 pass-count step on the same passes (0.0069 for A and 0.0058 for B), so
-they are differences between these outputs and do not show that the
-tenth pass helps. [DRAFT NOTE, W2.7, 2026-10-07: R7.2-16b reworded for
+they do not show that the tenth pass helps. [DRAFT NOTE, W2.7, 2026-10-07: R7.2-16b reworded for
 PI review; not finalised. Was "The oracles keep a small BH-significant
 residue (−0.004 and −0.005), so saturation is real but not complete."
 On r2 the residues are +0.0036 (tile-swap BH p = 0.0096) and +0.0043
@@ -983,9 +985,10 @@ the 3.7 pool, +0.0234 on the Gemini 3 pool) with BH at q = 0.05 over the
 declared five-test family. On that family's per-sheet test neither
 proposer-axis contrast is (+0.0056 and +0.0107, p = 0.35 and 0.074). On
 the tile-swap test of ruling D42, applied on the r2 board, the second one
-is: arm 2 stands above the fourth cell by +0.0099 (p = 0.0198, BH
-p = 0.024), 1.4 times its within-execution floor (0.0072), which applies
-because the two runs are at most seven days apart (ruling D48). Arm 1
+is significant, with arm 2 above the fourth cell by +0.0099 (p = 0.0198,
+BH p = 0.024). That is 1.4 times its within-execution floor (0.0072),
+which applies because the two runs are at most seven days apart (ruling
+D48). Arm 1
 against B N = 5 stays a tie on both tests (+0.0048 on r2, p = 0.27).
 The proposer axis under the 3.7 verifier is therefore a small
 difference rather than a null, measured between pools of five and ten
