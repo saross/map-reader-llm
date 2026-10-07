@@ -8,6 +8,34 @@ project state.
 
 ---
 
+## 🔍 S163 OPEN (2026-10-07, Opus) — RUN B PREPARED WITH THREE ADDED ARMS; TEMPERATURE PROBE DONE; OPEN ITEMS
+
+Written mid-session so the to-do list survives a context reset; the close block
+replaces it.
+
+- [ ] **Signature walkthrough with the PI, 2026-10-08** (PI: "We'll walk
+  through the rows needing signing tomorrow, keep it on the to-do list"): the
+  25 Part B rows in nine groups (`planning/legacy-signature-queue-2026-09-16.md`
+  Part B; ticks corrected in `7200aaebe`) and the six D9 notes on branch
+  `w15-floors-drafts` (`planning/d9-notes-55map-floors-draft-2026-10-07.md`).
+  Three signed rows still carry a stale "UNSIGNED" `_note`
+  (`planning/wording-changes-register.md` row K2).
+- [ ] **Universe rule for the K-ladders** (frames ruling (b)), to settle with
+  the PI: `reports/frames-blast-radius-2026-10-07.md` § 6 item 2. Rulings
+  already given 2026-10-07: option (A), the scorer fix, and (a), never re-key
+  across sheets.
+- [ ] **Run B Stage 1**: card `planning/modality-bridge-2026-10-07.md` (PI
+  rulings in § 10, added arms in § 4.8); addendum audit pending; then
+  `lodge g37-image:1`, the first-chunk gate, `lodge all`.
+- [ ] **Input drift**: nine registered cells whose detection files no longer
+  match the scored feature counts (`reports/frames-blast-radius-2026-10-07.md`
+  § 3.1); a trace is in progress (`reports/input-drift-2026-10-07.md`).
+- [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
+  temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
+  §§ 7, 8.5).
+- [x] Verifier and detector temperature fallbacks standardised (2026-10-07,
+  `af53b0491`, `36a8243ac`).
+
 ## 🔍 S162 CLOSE (2026-10-06/07, Fable → Opus) — FLOORS MEASURED AND RE-MEASURED; PRs #24 AND #25 MERGED; RUN A DONE; THE SCORER'S FRAME ASYMMETRY FOUND
 
 > Everything is on `main` (level with origin; sapphire level). The model
