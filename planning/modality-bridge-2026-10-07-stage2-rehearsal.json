@@ -2129,5 +2129,66 @@
  },
  "anchor_gate_git_head": "2956c4250 (sapphire worktree; via the launcher's anchor-gate)",
  "verifier_rehearsal_git_head": "5d868f032 (sapphire worktree) plus scripts/verifier_dryrun_harness.py as committed in 06e15d304",
- "crop_reextraction_git_head": "5d868f032 (sapphire worktree)"
+ "crop_reextraction_git_head": "5d868f032 (sapphire worktree)",
+ "verifier_full_signatures": {
+  "g3": "5e9bb517e77f6ac2a19cdffa4c844c44485c69f82bd3a0e825617cfa7bc05c99",
+  "g37": "38834432d7fdd5dfcb2e440a501b4c175e0fcffe2bd343053b14a5cb07b5ed8e"
+ },
+ "audit_fixes_2026_10_08": {
+  "_what": "Evidence for the fixes to reports/s163-agent-records/run-b-stage2-audit.md (A1-A7, nits), from a disposable `git clone --shared` on sapphire at 01bdbc53d plus the uncommitted fixes; no API call; sapphire's main checkout and outputs/modality-bridge-2026-10-07/ only read.",
+  "full_signature": {
+   "definition": "scripts/verifier_dryrun_harness.full_elided_signature: SHA-256 of the whole request with the key and the crop's bytes removed",
+   "synthetic_crops": {
+    "g3": "5e9bb517e77f6ac2\u2026",
+    "g37": "38834432d7fdd5df\u2026"
+   },
+   "original_crops_stand_in_rehearsal": {
+    "g3-text:g3": "5e9bb517e77f6ac2\u2026",
+    "g37-text:g37": "38834432d7fdd5df\u2026",
+    "g37-image:g3": "5e9bb517e77f6ac2\u2026"
+   },
+   "generation_config_keys": "max_output_tokens,response_mime_type,temperature,thinking_config on every line",
+   "old_signatures_unchanged": true
+  },
+  "a5_metas_on_real_stage1_passes": {
+   "g3-image": "10 of 10 passes landed: gemini-3-flash-preview, T 0.7, thinking minimal, cached share 0.9445 on each pass: metas OK",
+   "other_arms": "not landed at the time; refused as not landed"
+  },
+  "a5_metas_on_the_stand_in_tree": {
+   "g3-text": "OK (cache none)",
+   "g37-text": "OK (cache none)",
+   "g37-image": "OK (implicit pass shares 0.7854, 0.7918, 0.8057, 0.7982, 0.793)",
+   "g3-image": "REFUSED: the original arm's recovery fragments (runs 1, 3, 6, 8, 9) record 16,272 cached of 20,018 input tokens per call (share 0.8129), the implicit pattern, not the explicit cache's 18,909: those six original tiles were sent inline. A finding about the original leg.",
+   "g37-image-cache": "REFUSED: stand-in passes are inline (share 0.788), not cached",
+   "g3-text-temp1": "REFUSED: temperature 0.7, want 1.0",
+   "g3-image-temp1": "REFUSED: temperature 0.7, want 1.0"
+  },
+  "a6_band": {
+   "estimate_with_g37_text_at_950": "OUT OF BAND (672-910); exit 1; BAND_OK=1 exit 0",
+   "verify_g37_text_g3": "REFUSED before rehearsal, no launch log; with BAND_OK=1 it proceeded and the provenance gate then refused the tampered record (count differs from the union's)"
+  },
+  "a2_repair": {
+   "committed_batch_legs_scanned": 20,
+   "rows": 157256,
+   "parse_error_rows": 9,
+   "recovered": {
+    "verify_k5_arm1_replicate-batch-2026-09-20": {
+     "candidate_06537": [
+      0.0,
+      0.2
+     ],
+     "candidate_08272": [
+      0.0,
+      0.05
+     ]
+    }
+   },
+   "unrecovered": 7,
+   "unrecovered_where": "gemini3-image-55map-2026-09-16 verify_k1_arm2 (1), verify_k3_arm2 (3), verify_k5_arm2 (3)",
+   "unrecovered_why": "an unescaped double quote inside a string (e.g. candidate_24301: Expecting ',' delimiter at char 252, \"marks ('\"'), but\"); finishReason STOP; none of the three repair tiers parses it",
+   "launcher_repair_on_a_copy_of_the_audit_leg": "2 recovered (0.2, 0.05), 0 removed; leg files' SHA-256 unchanged"
+  },
+  "a1_red_sentinel": "real copy, rotation and pid removal deleted from launch_leg: the three relaunch tests turned red (3 failed); intact copy 3 passed",
+  "a4_red_sentinel": "real copy, `9>&-` removed from the launch line: test_a_launched_leg_does_not_hold_the_lock and the wrapper test turned red (2 failed)"
+ }
 }

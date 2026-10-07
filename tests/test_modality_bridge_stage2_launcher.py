@@ -87,7 +87,7 @@ def test_launch_wrapper_captures_the_exit_status_first() -> None:
     text = SCRIPT.read_text()
     assert "rc=$?; echo \"=== $(date -Is) EXIT $rc\"" in text
     assert "echo $$ > \"$0\"" in text  # the pid is written from inside the job
-    assert "< /dev/null &" in text
+    assert "< /dev/null 9>&- &" in text  # the launched leg drops the lock
 
 
 def test_logs_stay_out_of_the_stage1_log_directory() -> None:
@@ -98,5 +98,146 @@ def test_signatures_match_the_rehearsal_record() -> None:
     text = SCRIPT.read_text()
     sig = {v: re.search(rf"^SIG_{v.upper()}=([0-9a-f]{{64}})$", text, re.M).group(1)
            for v in ("g3", "g37")}
+    full = {v: re.search(rf"^SIGF_{v.upper()}=([0-9a-f]{{64}})$", text, re.M).group(1)
+            for v in ("g3", "g37")}
     record = json.loads(RECORD.read_text())
     assert record["verifier_signatures"] == sig
+    assert record["verifier_full_signatures"] == full
+
+
+# ---------------------------------------------------------------------------
+# A1 and A4 (Stage 2 audit): relaunch and locking, through a test double
+# ---------------------------------------------------------------------------
+
+FAKE_PY = """#!/usr/bin/env bash
+# Test double: a live `scripts/run_pv.py verify` is simulated (no API);
+# every other call goes to the real interpreter.
+if [ "${1:-}" = scripts/run_pv.py ] && [ "${2:-}" = verify ]; then
+  sleep "${FAKE_DELAY:-2}"
+  for i in $(seq 1 "${FAKE_CHUNKS:-1}"); do
+    echo "INFO - Submitted batch job $i/${FAKE_CHUNKS:-1}: batches/new-$$-$i"
+  done
+  sleep "${FAKE_SLEEP:-3}"
+  exit "${FAKE_RC:-0}"
+fi
+exec "$REAL_PY" "$@"
+"""
+
+
+def _double(tmp_path: Path) -> Path:
+    fake = tmp_path / "fakepy.sh"
+    fake.write_text(FAKE_PY)
+    fake.chmod(0o755)
+    return fake
+
+
+def _sourced(script: str, out: Path, fake: Path, **env: str) -> subprocess.CompletedProcess:
+    """Run *script* in a shell that has sourced the launcher (no dispatch)."""
+    full = dict(os.environ, OUT=str(out), PY=str(fake), REAL_PY=sys.executable,
+                LODGE_GAP="0", LODGE_POLL="1", WAIT_POLL="1", SCRATCH=str(out / "scratch"),
+                **env)
+    return subprocess.run(["bash", "-c", f'source "{SCRIPT}"\n{script}'],
+                          capture_output=True, text=True, cwd=PROJECT_ROOT, env=full,
+                          timeout=120)
+
+
+def _stale_attempt(out: Path, name: str, lines: list[str]) -> Path:
+    """A previous attempt's log and a dead pid in its pid file."""
+    (out / "stage2" / "logs").mkdir(parents=True)
+    (out / "stage2" / "pids").mkdir(parents=True)
+    log = out / "stage2" / "logs" / f"{name}.log"
+    log.write_text("\n".join(lines) + "\n")
+    dead = subprocess.Popen(["true"])
+    dead.wait()
+    (out / "stage2" / "pids" / f"{name}.pid").write_text(f"{dead.pid}\n")
+    return log
+
+
+def test_relaunch_after_a_storage_refusal_reads_only_its_own_attempt(tmp_path: Path) -> None:
+    """Audit A1, test T1: the first attempt refused at the storage preflight."""
+    out = tmp_path / "out"
+    name = "verify-g37-text-g3"
+    _stale_attempt(out, name, [
+        "=== 2026-10-08T00:00:00+00:00 LAUNCH verify-g37-text-g3: ...",
+        "ERROR - Batch verification failed: FileStorageCapExceeded (fake)",
+        "=== 2026-10-08T00:00:05+00:00 EXIT 1"])
+    proc = _sourced("launch_leg g37-text g3 791 && wait_leg g37-text:g3", out,
+                    _double(tmp_path), FAKE_DELAY="2", FAKE_SLEEP="2")
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "LODGING FAILED" not in proc.stdout
+    assert re.search(r"submitted \(batches/new-\d+-1 \)", proc.stdout)
+    logs = sorted((out / "stage2" / "logs").glob(f"{name}.log*"))
+    assert len(logs) == 2  # the earlier attempt's log is kept, renamed
+    current = (out / "stage2" / "logs" / f"{name}.log").read_text()
+    assert "Batch verification failed" not in current
+    assert re.search(r"^=== .* EXIT 0$", current, re.M)
+    old = next(p for p in logs if p.name != f"{name}.log").read_text()
+    assert "Batch verification failed" in old and "EXIT 1" in old
+
+
+def test_relaunch_waits_for_its_own_submissions(tmp_path: Path) -> None:
+    """A two-chunk leg's earlier Submitted lines must not satisfy the new count."""
+    out = tmp_path / "out"
+    _stale_attempt(out, "verify-g3-image-g3", [
+        "INFO - Submitted batch job 1/2: batches/old-1",
+        "INFO - Submitted batch job 2/2: batches/old-2",
+        "=== 2026-10-08T00:00:05+00:00 EXIT 1"])
+    proc = _sourced("launch_leg g3-image g3 4065", out, _double(tmp_path),
+                    FAKE_CHUNKS="2", FAKE_DELAY="2", FAKE_SLEEP="1")
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert "batches/old" not in proc.stdout
+    assert re.search(r"submitted \(batches/new-\d+-1 batches/new-\d+-2 \)", proc.stdout)
+    # The started pid is the new attempt's, not the dead one.
+    assert re.search(r"started pid \d+", proc.stdout)
+
+
+def test_wait_is_not_fooled_by_an_earlier_exit_line(tmp_path: Path) -> None:
+    out = tmp_path / "out"
+    _stale_attempt(out, "verify-g37-text-g37", ["=== 2026-10-08T00:00:05+00:00 EXIT 1"])
+    proc = _sourced("launch_leg g37-text g37 791 && wait_leg g37-text:g37; echo WAIT=$?",
+                    out, _double(tmp_path), FAKE_DELAY="1", FAKE_SLEEP="3")
+    assert "WAIT=0" in proc.stdout, proc.stdout + proc.stderr
+
+
+def test_wait_uses_an_hour_staleness_window() -> None:
+    assert "--stale-seconds 3600" in SCRIPT.read_text()
+    assert "--stale-seconds 90000" not in SCRIPT.read_text()
+
+
+def test_a_second_writing_command_is_refused_while_one_holds_the_lock(tmp_path: Path) -> None:
+    import fcntl
+
+    out = tmp_path / "out"
+    (out / "stage2").mkdir(parents=True)
+    with open(out / "stage2" / "stage2.lock", "w") as fh:
+        fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        for cmd in (["verify", "g37-text:g3"], ["prepare", "g37-text"],
+                    ["rehearse", "g37-text:g3"]):
+            proc = _run(*cmd, out=out)
+            assert proc.returncode == 1 and "holds" in proc.stderr, (cmd, proc.stderr)
+    # Read-only subcommands do not take the lock.
+    with open(out / "stage2" / "stage2.lock", "w") as fh:
+        fcntl.flock(fh, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        assert _run("plan", out=out).returncode == 0
+
+
+def test_a_launched_leg_does_not_hold_the_lock(tmp_path: Path) -> None:
+    out = tmp_path / "out"
+    script = ('mkdir -p "$OUT/stage2"; exec 9> "$OUT/stage2/stage2.lock"; flock -n 9; '
+              'launch_leg g37-text g3 791; exec 9>&-; '
+              'flock -n "$OUT/stage2/stage2.lock" true && echo LOCK=free || echo LOCK=held')
+    proc = _sourced(script, out, _double(tmp_path), FAKE_DELAY="1", FAKE_SLEEP="5")
+    assert "LOCK=free" in proc.stdout, proc.stdout + proc.stderr
+
+
+def test_launch_leg_refuses_while_the_previous_attempt_is_alive(tmp_path: Path) -> None:
+    out = tmp_path / "out"
+    (out / "stage2" / "pids").mkdir(parents=True)
+    live = subprocess.Popen(["sleep", "30"])
+    try:
+        (out / "stage2" / "pids" / "verify-g37-text-g3.pid").write_text(f"{live.pid}\n")
+        proc = _sourced("launch_leg g37-text g3 791", out, _double(tmp_path))
+        assert proc.returncode == 1 and "still running" in proc.stdout
+        assert not (out / "stage2" / "logs" / "verify-g37-text-g3.log").exists()
+    finally:
+        live.kill()
