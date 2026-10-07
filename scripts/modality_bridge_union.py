@@ -64,6 +64,11 @@ Usage::
         --out-root /scratch/g3-text --write \\
         --compare-to outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson
 
+    # The validation gate: all four original unions, from their own layout
+    # and from a batch-layout replica with decoy chunk files
+    python scripts/modality_bridge_union.py --validate-originals /scratch/v \\
+        --json-out /scratch/v/validation.json
+
 Zero API. Run on sapphire beside the outputs.
 
 Created: 2026-10-07
@@ -564,6 +569,139 @@ def compare_union_files(built: Path, committed: Path,
     return out
 
 
+#: The four original legs' unions (card § 2.2): label -> (cell directory,
+#: K, config version the batch detector would name the files with,
+#: committed union). The validation gate rebuilds each with this chain.
+ORIGINAL_UNIONS: dict[str, tuple[str, int, str, str]] = {
+    "g3-text": ("outputs/grid-2026-08-18/g384_ov192", 10, "detect_brief-text",
+                "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson"),
+    "g3-image": ("outputs/image-b-gs-2026-08-28/g384_ov192_image", 10,
+                 "detect_brief-text-image",
+                 "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/"
+                 "union_k10.geojson"),
+    "g37-text": ("outputs/gemini37-screen-2026-08-28/g384_ov192_g37", 5,
+                 "detect_brief-text",
+                 "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/"
+                 "union_k5.geojson"),
+    "g37-image": ("outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img", 5,
+                  "detect_brief-text-image",
+                  "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/"
+                  "union_k5.geojson"),
+}
+
+#: Decoy chunk files written beside each replica pass's merged file.
+REPLICA_CHUNKS = 3
+
+
+def make_batch_replica(cell_dir: Path, k: int, version: str, arm_dir: Path,
+                       n_chunks: int = REPLICA_CHUNKS) -> dict[str, Any]:
+    """Lay a legacy cell's passes out the way the batch detector would.
+
+    Each pass's main file is copied (a real copy, never a link) to
+    ``<arm>/<version>/run_<N>/detections_<version>_run<NN>.geojson`` and its
+    recovery fragment(s) to ``<arm>/recovery_rd<j>/<version>/run_<N>/``.
+    Beside every merged main file, ``n_chunks`` decoy chunk files split the
+    pass's features and coverage by tile, as a chunked batch pass leaves
+    them: a resolver that read the chunks as well as the merged file would
+    double every detection, and the rebuilt union would differ.
+
+    Args:
+        cell_dir: The legacy cell directory.
+        k: Passes to lay out.
+        version: Config version for the batch filenames.
+        arm_dir: Destination arm directory (created).
+        n_chunks: Decoy chunk files per pass (0 for none).
+
+    Returns:
+        Counts of files laid out (main, fragments, chunks).
+    """
+    import shutil
+
+    counts = {"main": 0, "fragments": 0, "chunks": 0}
+    for i in range(1, k + 1):
+        run = f"run_{i}"
+        paths = resolve_legacy_pass_paths(cell_dir, run)
+        name = f"detections_{version}_run{i:02d}.geojson"
+        dest = arm_dir / version / run
+        dest.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(paths[0], dest / name)
+        counts["main"] += 1
+        if n_chunks:
+            data = json.loads(paths[0].read_text())
+            tiles = sorted(data.get("processed_tiles") or [])
+            for c in range(n_chunks):
+                part = set(tiles[c::n_chunks])
+                chunk = dict(data, processed_tiles=sorted(part), features=[
+                    f for f in data["features"]
+                    if (f.get("properties") or {}).get("source_tile") in part])
+                (dest / name.replace(".geojson", f"_chunk{c}.geojson")).write_text(
+                    json.dumps(chunk))
+                counts["chunks"] += 1
+        for j, frag in enumerate(paths[1:], start=1):
+            fdest = arm_dir / f"recovery_rd{j}" / version / run
+            fdest.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(frag, fdest / name)
+            counts["fragments"] += 1
+    return counts
+
+
+def validate_originals(scratch: Path, labels: list[str] | None = None) -> dict[str, Any]:
+    """Rebuild the original legs' unions with this chain and compare (the gate).
+
+    Two rebuilds per original, both into ``scratch`` (nothing committed is
+    written): from the cell's own legacy layout, and from a batch-layout
+    replica with decoy chunk files (:func:`make_batch_replica`), which runs
+    the adapter Stage 2 will use on real passes.
+
+    Args:
+        scratch: Scratch root (created).
+        labels: Subset of :data:`ORIGINAL_UNIONS` (default: all four).
+
+    Returns:
+        Per original, both rebuilds' build records and comparisons, and
+        ``all_equal``.
+    """
+    out: dict[str, Any] = {"git_head": _git_head(), "originals": {}}
+    ok = True
+    for label in labels or list(ORIGINAL_UNIONS):
+        cell_rel, k, version, committed_rel = ORIGINAL_UNIONS[label]
+        cell_dir, committed = PROJECT_ROOT / cell_rel, PROJECT_ROOT / committed_rel
+        entry: dict[str, Any] = {"cell_dir": cell_rel, "k": k,
+                                 "committed_union": committed_rel}
+        legacy_root = scratch / "legacy" / label
+        rec = build_union(cell_dir, k, "legacy", legacy_root, write=True,
+                          overwrite=True)
+        entry["legacy"] = {
+            "passes": [{x: p[x] for x in ("run", "tiles_per_file", "raw_detections",
+                                          "dedup_detections")} for p in rec["passes"]],
+            "union_features": rec["union_features"],
+            "comparison": compare_union_files(
+                legacy_root / "verifier" / cell_dir.name / f"union_k{k}.geojson",
+                committed),
+        }
+        arm = scratch / "replica" / label
+        entry["replica_layout"] = make_batch_replica(cell_dir, k, version, arm)
+        rec_b = build_union(arm / version, k, "batch", scratch / "batch" / label,
+                            write=True, overwrite=True)
+        entry["batch"] = {
+            "files_per_pass": [len(p["files"]) for p in rec_b["passes"]],
+            "union_features": rec_b["union_features"],
+            "comparison": compare_union_files(
+                scratch / "batch" / label / "verifier" / version / f"union_k{k}.geojson",
+                committed),
+        }
+        entry["equal"] = (entry["legacy"]["comparison"]["equal"]
+                          and entry["batch"]["comparison"]["equal"])
+        ok = ok and entry["equal"]
+        logger.info("VALIDATE %s: legacy %d, batch %d, committed %d -> %s", label,
+                    rec["union_features"], rec_b["union_features"],
+                    entry["legacy"]["comparison"]["n_committed"],
+                    "EQUAL" if entry["equal"] else "DIFFERENT")
+        out["originals"][label] = entry
+    out["all_equal"] = ok
+    return out
+
+
 def main(argv: list[str] | None = None) -> int:
     """Gate, build and optionally compare one union.
 
@@ -577,6 +715,25 @@ def main(argv: list[str] | None = None) -> int:
     from scripts.grid_prepare_scoring import CoverageError
 
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+    if argv is None:
+        argv = sys.argv[1:]
+    if argv[:1] == ["--validate-originals"]:
+        # The validation gate: python modality_bridge_union.py
+        #   --validate-originals SCRATCH [--json-out PATH] [LABEL ...]
+        vp = argparse.ArgumentParser(prog="modality_bridge_union.py --validate-originals")
+        vp.add_argument("--validate-originals", type=Path, required=True)
+        vp.add_argument("--json-out", type=Path, default=None)
+        vp.add_argument("labels", nargs="*",
+                        help=f"Subset of {', '.join(ORIGINAL_UNIONS)} (default: all)")
+        va = vp.parse_args(argv)
+        unknown = sorted(set(va.labels) - set(ORIGINAL_UNIONS))
+        if unknown:
+            vp.error(f"unknown original(s): {unknown}")
+        result = validate_originals(va.validate_originals, va.labels or None)
+        if va.json_out is not None:
+            va.json_out.parent.mkdir(parents=True, exist_ok=True)
+            va.json_out.write_text(json.dumps(result, indent=1) + "\n")
+        return 0 if result["all_equal"] else 1
     ap = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--layout", choices=sorted(RESOLVERS), required=True,

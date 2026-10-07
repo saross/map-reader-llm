@@ -33,6 +33,7 @@ from scripts.modality_bridge_union import (  # noqa: E402
     compare_union_files,
     gate_passes,
     main,
+    make_batch_replica,
     overlapping_tiles,
     resolve_batch_pass_paths,
 )
@@ -332,6 +333,40 @@ def test_legacy_and_batch_layouts_build_identical_unions(tmp_path: Path) -> None
     rec = json.loads(u_b.with_name(f"union_k{k}.build.json").read_text())
     assert rec["layout"] == "batch" and len(rec["passes"]) == k
     assert all(len(p["file_sha256"]) == len(p["files"]) for p in rec["passes"])
+
+
+def test_batch_replica_with_decoy_chunks_rebuilds_the_legacy_union(tmp_path: Path) -> None:
+    """The validation gate's replica: real copies, decoy chunks, same union."""
+    k = 3
+    passes = _passes(k)
+    tiles = sorted({t for p in passes for _, ts in p for t in ts})
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps(tiles))
+    legacy = tmp_path / "legacy" / "cell_x"
+    for run, parts in enumerate(passes, start=1):
+        real = [p for p in parts if p[1]]
+        _write(legacy / f"run_{run}" / "detections-x.geojson", _fc(*real[0]))
+        if len(real) > 1:
+            _write(legacy / f"run_{run}_recovery" / "detections-x.geojson",
+                   _fc(*real[1]))
+    arm = tmp_path / "replica" / "arm"
+    counts = make_batch_replica(legacy, k, VERSION, arm, n_chunks=2)
+    assert counts == {"main": 3, "fragments": 2, "chunks": 6}
+    assert not any(p.is_symlink() for p in arm.rglob("*"))
+    # The decoys partition the pass: read with the merged file, every
+    # detection would be doubled.
+    chunks = sorted((arm / VERSION / "run_1").glob("*_chunk*.geojson"))
+    merged = json.loads((arm / VERSION / "run_1" / _main_name(1)).read_text())
+    assert sum(len(json.loads(c.read_text())["features"]) for c in chunks) == len(
+        merged["features"])
+    rec_l = build_union(legacy, k, "legacy", tmp_path / "out_l", manifest, write=True)
+    rec_b = build_union(arm / VERSION, k, "batch", tmp_path / "out_b", manifest,
+                        write=True)
+    assert [len(p["files"]) for p in rec_b["passes"]] == [1, 2, 2]
+    cmp = compare_union_files(
+        tmp_path / "out_b" / "verifier" / VERSION / f"union_k{k}.geojson",
+        tmp_path / "out_l" / "verifier" / "cell_x" / f"union_k{k}.geojson")
+    assert cmp["equal"] and rec_l["union_features"] == rec_b["union_features"]
 
 
 def test_existing_union_is_not_overwritten(tmp_path: Path) -> None:
