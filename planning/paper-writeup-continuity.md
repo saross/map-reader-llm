@@ -58,6 +58,13 @@ replaces it.
   `repair` scan (`planning/modality-bridge-2026-10-07-stage2.md`). PI
   decision: re-verify the seven, and whether the batch parser should repair
   as the real-time path does (re-booking would move committed rows).
+- [ ] **Copy or link the bench's null-tile history report** (PI decision,
+  raised by the map-reader-bench session 2026-10-08): bench repository,
+  `reports/2026-10-08-no-mound-signal-history.md` on branch
+  `claude/no-mound-history-2026-10-08` (bench PR #45). A case study of the
+  "output nothing" signal for the text arm, found (Obs 14) and lost
+  repeatedly. If copied: `reports/` with a provenance banner (source
+  repository, path, commit). Reply to the bench session when settled.
 - [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
   temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
   §§ 7, 8.5).
