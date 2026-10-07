@@ -1,0 +1,33 @@
+families loaded 4s
+GATE cluster A (0, 1, 2): True (26245 clusters)
+GATE cluster ARM1 (1, 3): True (9981 clusters)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+GATE scorer B (0, 1, 2, 3, 4) (0.15,k5): True n=4736 totals=[4147, 589, 871]
+GATE scorer A (2,) (0.2,k1): True n=4829 totals=[4022, 807, 996]
+GATE scorer ARM2 (0, 1, 2) (0.95,k3): True n=5097 totals=[4475, 622, 543]
+GATE scorer G3IMG-ARM1 (0, 4) (0.15,k1): True n=10275 totals=[4566, 5709, 452]
+GATE scorer FOURTH (5, 6, 7) (0.96,k2): True n=5123 totals=[4331, 792, 687]
+GATE scorer ARM1 (3,) (0.1,k1): True n=6564 totals=[4540, 2024, 478]
+GATE B (0, 1, 2, 3, 4) (0.15,k5): expected 4736 got 4736
+GATE A (0, 1, 2, 3, 4) (0.15,k4): expected 4597 got 4597
+GATE ARM1 (0, 1, 2) (0.1,k3): expected 5482 got 5482
+GATE ARM2 (0, 1, 2) (0.8,k3): expected 5187 got 5187
+GATE FOURTH (0, 1, 2, 3, 4) (0.98,k5): expected 4431 got 4431
+GATE FOURTH (0, 1, 2) (0.98,k3): expected 4623 got 4623
+gates 1-3 passed 52s
+1364 subset jobs over 5 pass sets
+16260 subset cells scored 228s
+GATE W2.7 cells: checked 460, mismatches 0
+GATE top A (0.15,k8): expected 4475 got 4475
+GATE top A (0.15,k7): expected 4639 got 4639
+GATE top B (0.15,k10): expected 4505 got 4505
+GATE top B (0.2,k9): expected 4639 got 4639
+GATE top FOURTH (0.98,k10): expected 4246 got 4246
+GATE top FOURTH (0.96,k9): expected 4495 got 4495
+GATE top ARM1 (0.1,k5): expected 5229 got 5229
+GATE top ARM1 (0.15,k5): expected 4616 got 4616
+GATE top ARM2 (0.8,k5): expected 5003 got 5003
+GATE top ARM2 (0.95,k5): expected 4924 got 4924
+12036 simulation jobs
+57576 simulated cells 367s
+done 367s

@@ -1,8 +1,8 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-07 (§§ 4 and 6: the uplift's cross-execution
-> range stated by threshold, not as "every threshold"). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (§ 6b added: the 55-map floors from every
+> pass subset; three § 7.2 verdicts move). See [§ Changelog](#changelog) for
+> revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
 configuration-level claims against them in § 7.** Rulings D45 to D47
@@ -458,6 +458,64 @@ Reading:
   thousandths of F1 against cells verified later; § 6's cross-execution
   floor now includes it.
 
+## 6b. The 55-map floors from every pass subset (added 2026-10-07)
+
+§ 6's floors at N = 5 rested on ONE disjoint pair of five-pass rungs per
+ten-pass family, at N = 3 on three pairs, and at N = 10 on none, so its
+"95th percentiles" were typical differences, not floors. A second analysis
+(`floors-v2/` beside this report: method, scripts, gates, results; agent
+record `floors-v2/floors-v2.md`) rebuilt every family's rung from EVERY
+K-subset of its passes with the § 6 mechanism (verifier held fixed):
+16,260 cells. It reproduces every § 2 gate count, all 460 W2.7 subset
+cells and 486 matching gold-standard cells exactly.
+
+**Method.** The run-to-run SD of a K-pass rung is estimated from the
+variance of F1 over all K-subsets, corrected for the subsets' overlap:
+SD_run = sqrt(V_sub · N / (N − K)), which is unbiased for a mean and
+conservative in expectation for consensus F1; the floor is
+1.96 · √2 · SD_run. **Validation:** on the 30-pass gold-standard pools, the
+estimate from one 10-pass slice is 1.08 times the disjoint-subset truth on
+Era-1 (seven pools) and 1.15 times on the 384-px corpus (two pools), pooled
+over K and t: conservative, as expected. A single family's floor carries
+about ±15 to 40 % (jackknife).
+
+| family, rung (point) | new floor | § 6 floor (pairs) |
+|---|---:|---:|
+| A, N5 carried = oracle (0.15, k4) | 0.0068 | 0.0027 (1) |
+| B, N5 carried (0.15, k5) | 0.0056 | 0.0023 (1) |
+| FOURTH, N5 carried (0.98, k5) | 0.0054 | 0.0020 (1) |
+| A, N3 carried (0.15, k3) | 0.0093 | 0.0051 (3) |
+| B, N3 carried (0.15, k3) | 0.0051 | 0.0049 (3) |
+| A / B / FOURTH, N10 carried (extrapolated) | 0.0068 / 0.0056 / 0.0054 (high ends 0.0083–0.0107) | — (0.005 used) |
+| A / B / FOURTH, N1 | 0.0090 / 0.0080 / 0.0069 | 0.0082 / 0.0069 / 0.0060 (45) |
+
+Reading:
+
+- **The five-pass floors were 2.4 to 3.9 times too small.** The full
+  within-execution floors (adding the verifier's 0.001 re-invocation band)
+  are about **0.007 at N = 5, 0.006 to 0.010 at N = 3, 0.008 to 0.010 at
+  N = 1 and 0.006 to 0.008 at N = 10** (up to 0.012); the Gemini 3 image
+  pool 0.017 to 0.021. The five-pass families' N = 5 floors (ARM1 0.0050,
+  ARM2 0.0069–0.0072) rest on subsets of at most four passes and are the
+  weakest numbers here.
+- **The floor barely shrinks with K.** The fitted exponents of SD on K run
+  from −0.13 to −0.30, not the −0.5 of a mean: through the verifier, what
+  varies from run to run is which borderline candidates cross the vote
+  threshold, not how many passes vote.
+- **Nested contrasts have their own, smaller floors.** A threshold or rung
+  contrast on the same passes is measured on each subset and its spread
+  taken (`floors-v2/results/nested_*.csv`); the shared passes cancel most of
+  the run-to-run variance (ARM2's carried-to-oracle tax: 0.0020).
+- **The PI's between-pass model understates the floor.** Simulating fresh
+  rungs from each candidate's per-pass vote rate, as if candidates voted
+  independently, gives floors 21 to 32 % too small (median) on the text and
+  3.7 families and three times too small on the Gemini 3 image pool,
+  because one pass moves many candidates together; a pass bootstrap
+  overstates it 1.3 to 3.3 times. The pass, not the candidate, is the unit
+  to resample, which is what the subset method does.
+
+The § 7.2 screen below now uses these floors.
+
 ## 7. The paper's configuration-level claims against the floors
 
 A read-only inventory of `docs/paper/results-draft.md` (agent record
@@ -488,9 +546,13 @@ come from different executions the cross-execution floor applies.
 
 ### 7.2 The 55-map board (floors of § 6)
 
-Floors used: within-execution 0.005 (N = 5), 0.007 (N = 3), 0.009 (N = 1);
-cross-execution 0.011 to 0.013 (N = 5; one measured proposer pair plus the
-verifier-vintage effect of § 6a). Differences are the r2
+Floors used (§ 6b, 2026-10-07): within-execution about 0.007 (N = 5),
+0.006–0.010 (N = 3), 0.008–0.010 (N = 1), 0.006–0.008 (N = 10), each
+family's own where measured; nested contrasts their own (§ 6b);
+cross-execution the within floor plus 0.004–0.007 of verifier vintage
+(§ 6a), about 0.010–0.018. Rows below marked "§ 6b" changed verdict on
+2026-10-07; every other verdict holds on a thinner margin
+(`floors-v2/results/rescreen.csv`). Differences are the r2
 board's tile-swap results (`final_board_50m.json` → `pairwise`, read
 2026-10-06), or the campaign's own per-sheet test where the draft quotes
 it.
@@ -498,12 +560,12 @@ it.
 | claim | difference, test | executions | floor | verdict under D45 |
 |---|---|---|---|---|
 | R7.1-05/08, lesson (i): the carried T0.7 × 4-of-5 left +0.022 on the table against the joint oracle T0.3 × 3-of-5 (L565–572, L595–599) | +0.0225, p < 0.0001 | CROSS 8 days (proposers 04-18 against 04-26/27); the k3 shell's candidates verified 2026-06-06, 40–49 days after the k4 legs | 0.011–0.013 | **Clears the floor.** The k3 cells are mixed-verifier-execution cells; on text MIN the threshold effect survives a one-date reading (§ 6a: +0.0275 → +0.0264), so say so, and name the date mix. |
-| R7.1-09a: T0.3, 3-of-5 beats 4-of-5 by +0.009 (L599–601) | +0.0092, BH 0.0005 | nested passes; verifier dates differ (04-26/27 against 06-06) | nested contrast: the proposer floor does not apply; the verifier-date component does | **Reword as an output difference** unless the k4 shell is re-verified beside the k3 shell. |
+| R7.1-09a: T0.3, 3-of-5 beats 4-of-5 by +0.009 (L599–601) | +0.0092, BH 0.0005 | nested passes; verifier dates differ (04-26/27 against 06-06) | 0.0069 (upper 0.0111), borrowed from A and B | **§ 6b: clears narrowly** (1.3 times), with the verifier-date caveat of § 6a; Run A (the T03 re-verification) settles it directly. |
 | R7.1-09b/c: the same for T0.7 (+0.022) and MIN (+0.028) | BH < 0.0001 | as above | as above | **Stand on margin** (twenty times the verifier band); same caveat. |
 | R7.1-11, lesson (ii): HIGH beats MIN at K = 5, +0.028 to +0.034 (L605–606); R6-06 (L505–511) | p < 0.0001 | SAME-DAY proposers (2026-04-18), same-day k3 shells | 0.005 | **Stands**; the cleanest configuration claim on the board. |
 | R7.1-12/15, lesson (iii): the image cell is the sole Tier-1 cell on tile-MCC, +0.022 MCC (L606–615) | MCC BH 0.0020 | CROSS 8 days, k3 shells 06-06 | no MCC floor measured | **Stands on F1 reasoning only**; an MCC floor is not measured (W2.5). |
-| R7.2-13a: B beats A at the carried primaries, −0.0096 (L671–672) | per-sheet p = 0.0147; r2 tile-swap −0.0106, p = 0.0075 | ADJACENT (same day) | 0.005 (N = 10, within) | **Stands.** |
-| R7.2-13b/c: at the oracles −0.0141; at N = 5 −0.0116 | p = 0.0001; r2 −0.0120, p = 0.0024 | ADJACENT | 0.005 | **Stand.** |
+| R7.2-13a: B beats A at the carried primaries, −0.0096 (L671–672) | per-sheet p = 0.0147; r2 tile-swap −0.0106, p = 0.0075 | ADJACENT (same day) | 0.0072 (upper 0.0106) | **§ 6b: stands narrowly**, exactly at the floor's upper bound; 13b and 13c carry "B beats A". |
+| R7.2-13b/c: at the oracles −0.0141; at N = 5 −0.0116 | p = 0.0001; r2 −0.0120, p = 0.0024 | ADJACENT | 0.0072 | **Stand** (2.0 and 1.7 times the floor). |
 | R7.2-15: "its sign held at every rung tested" (L679–680) | A-N1-oracle beats B-N1-oracle +0.0214, p < 0.0001 | ADJACENT | 0.009 | **Correct the sentence**: the sign reverses at N = 1 (a resolved difference, above the floor). |
 | R7.2-16a, P7: N = 5 within noise of N = 10 (L682–683) | A −0.0009, p = 0.55; B +0.0006, p = 0.72 | SAME (nested) | 0.005 | **A tie consistent with the floor.** |
 | R7.2-16b: the oracles keep a residue (−0.004, −0.005; per-sheet BH-significant) | canonical −0.0040 / −0.0053; r2 tile-swap +0.0036 (BH 0.0096) / +0.0043 (BH 0.0038), N = 10 above N = 5 | SAME (nested) | 0.005 | **Inside the floor: not a configuration difference.** Reword. |
@@ -515,7 +577,7 @@ it.
 | R7.3-05a/15: arm 2 above the incumbent stack +0.0325; above B's N = 10 oracle +0.0267 / +0.0311 (L772, L805–810) | p < 0.0001 | CROSS 3–6 days | 0.011–0.013 | **Stand** (about twice the floor); the headline survives. |
 | R7.3-05b/06: the verifier axis, +0.0234 (fourth against B K = 10) and +0.0270 (arm 2 against arm 1) | p < 0.0001 | same proposer; verifiers 4–5 days apart / same day | 0.001 (verifier band) + 0.005 | **Stand.** |
 | R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days; K = 5 against K = 10 | 0.011–0.013 | **Test-dependent and inside the floor:** report both tests and call it unresolved, not null. |
-| R7.3-07: the 3.7 verifier's transfer tax "only +0.0043" (L779–781) | canonical adjusted p = 0.000162; r2 tile-swap +0.0044, p < 0.0001 | SAME (nested) | 0.005 | **Inside the floor**: say "a tax of 0.004, the size of run-to-run noise". |
+| R7.3-07: the 3.7 verifier's transfer tax "only +0.0043" (L779–781) | canonical adjusted p = 0.000162; r2 tile-swap +0.0044, p < 0.0001 | SAME (nested threshold) | own floor 0.0020 (upper 0.0033) | **§ 6b: a small real effect**, 2.1 times its own floor; the earlier screen applied an independent-run floor to a contrast that shares its passes. Keep "small", drop "only". |
 | R7.3-18a/b: saturation by N = 3 for the all-3.7 stack (−0.0023) but not for arm 1 (+0.0076) (L818–821) | p = 0.12; adjusted p = 0.000162 | SAME (nested) | 0.007 (N = 3) | **18a a tie; 18b at the floor** (0.0076 against 0.007): "replicates" overstates it. |
 | R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS | 0.011–0.013 | **Inside the cross-execution floor.** |
 | R6-12a: doubling MIN passes, UPL above TM-k3 by +0.017 (L536–538) | p < 0.0001 | MIXED: the gain is carried by passes 6–10, 54 days later | 0.011–0.013 | **Clears the floor, but is confounded with execution**: the proposer-only consensus of the June passes alone scores 0.02 to 0.03 above the April passes (§ 4). Say "ten passes from two executions". |
@@ -524,20 +586,28 @@ it.
 | R9-08/09: TH7-k3 tied with T03-k3, +0.0006, p = 0.855 (L997–1004) | tie | CROSS 8 days | 0.011–0.013 | **A tie consistent with the floor.** |
 
 **What this changes.** Of the 50 board claims, the headline (all-3.7 above
-every Gemini 3 cell), the verifier-axis result, lesson (ii), the A-against-B
-results and the April-to-August transfer all clear their floors by two to
-six times. Six claims sit at or inside a floor and need rewording as output
-differences or ties: the oracle saturation residue (R7.2-16b), B N = 5
-"above" N = 10 (R7.2-32a), the 3.7 verifier's "only +0.0043" tax (R7.3-07),
-arm 1's non-saturation (R7.3-18b), the proposer-axis null (R7.3-06b, which
-is also test-dependent), and the uplift "half the gap" (R6-12b). Two need
-a correction of fact (R7.2-15's sign at N = 1; R7.2-11/12's chain
-dependence) and one a restriction (R7.2-31). Lesson (i) and every
-3-of-5-against-4-of-5 contrast mix verifier dates; on text MIN a one-date
-reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the claims
-stand with the date mix named. Only T03's +0.009 is close enough to need a
-paid same-date re-verification if the paper leans on it (about US$10; W5,
-API gate, D47).
+every Gemini 3 cell), the verifier-axis result, lesson (ii), the April-to-
+August transfer and "B beats A" at the oracles and at N = 5 clear their
+floors, on the § 6b floors by about 1.7 to 3 times. Under § 6b one verdict
+reverses: the 3.7 verifier's "+0.0043" tax (R7.3-07) is a small real effect
+against its own nested floor, not noise. Two hold only narrowly: B beats A at
+the carried primaries (R7.2-13a, at the floor's upper bound) and T03's
+3-of-5 over 4-of-5 (R7.1-09a, 1.3 times a borrowed floor). Five sit at or
+inside a floor and need rewording as output differences or ties: the oracle
+saturation residue (R7.2-16b), B N = 5 "above" N = 10 (R7.2-32a), arm 1's
+non-saturation (R7.3-18b, inside its upper bound), the proposer-axis null
+(R7.3-06b, which is also test-dependent) and the uplift "half the gap"
+(R6-12b). Two need a correction of fact (R7.2-15's sign at N = 1;
+R7.2-11/12's chain dependence) and one a restriction (R7.2-31). Lesson (i)
+and every 3-of-5-against-4-of-5 contrast mix verifier dates; on text MIN a
+one-date reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the
+claims stand with the date mix named; Run A (T03, about US$10) settles the
+narrowest of them. **Open, for the PI:** three claims compare runs 3 to 6
+days apart (R7.3-04, R7.3-06b, R7.3-19). If § 6a's same-week control (June
+6 against June 11, flips at the re-invocation rate) governs such gaps,
+R7.3-06b and R7.3-19 clear their within floors (1.4 and 1.9 times) and
+R7.3-04 stays a tie; if the 54-day vintage term applies, all three stay
+inside.
 
 ## 8. What follows
 
@@ -565,6 +635,25 @@ API gate, D47).
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-07 (later) — § 6b: the 55-map floors from every pass subset
+
+**Trigger**: a side review noted that § 6's floors rested on one to three
+replicate pairs; the PI asked for a more precise method. § 6b added from
+`floors-v2/` (every K-subset of each family's passes, overlap-corrected,
+validated on the 30-pass gold-standard pools); § 7.2's floors line, three
+rows and its summary updated.
+
+| | Before | After |
+|---|---|---|
+| 55-map within floor, N = 5 | 0.005 (one pair) | about 0.007 (252 subsets per family) |
+| R7.3-07 (3.7 verifier's tax) | inside the floor, "noise-sized" | a small real effect against its own nested floor (0.0020) |
+| R7.2-13a (B beats A, carried) | stands | stands narrowly (at the floor's upper bound) |
+| R7.1-09a (T03 k3 over k4) | reword | clears narrowly (1.3 times), date caveat kept |
+
+**What did NOT change**: the gold-standard floors (§ 3), § 6a, and every
+other § 7 verdict (on thinner margins). Commit: see git log for this
+entry's date.
 
 ### 2026-10-07 — §§ 4 and 6: the uplift's cross-execution range corrected
 

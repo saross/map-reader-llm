@@ -1,0 +1,27 @@
+{
+ "consensus_fast == gs.consensus (pv-diag-384::flash-high-text-n5-text-t0.7)": {
+  "pass": true,
+  "n": 3736
+ },
+ "consensus_fast == gs.consensus (pv-diag-384::flash-minimal-text-n30-t07-text-t0.7)": {
+  "pass": true,
+  "n": 1593
+ },
+ "FastScorer == _per_tile_one_set (pv-diag-384::flash-high-text-n5-text-t0.7, t2)": {
+  "pass": true,
+  "n_det": 948
+ },
+ "FastScorer == _per_tile_one_set (pv-diag-384::flash-minimal-text-n30-t07-text-t0.7, t2)": {
+  "pass": true,
+  "n_det": 966
+ },
+ "FastScorer == _per_tile_one_set (retest-phase3a::track2-text-t1.0, t2)": {
+  "pass": true,
+  "n_det": 788
+ },
+ "W2.7 gs_consensus_cells.csv reproduced": {
+  "checked": 486,
+  "mismatches": [],
+  "pass": true
+ }
+}
