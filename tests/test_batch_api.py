@@ -130,6 +130,55 @@ def _make_batch_response(
 class TestJSONLConstruction:
     """Tests for build_jsonl_file() output format."""
 
+    @pytest.mark.tier1
+    def test_detector_temperature_resolution(self) -> None:
+        """The config's value wins, 0.0 included; a missing or null one gives 1.0."""
+        from scripts.lib_batch_api import DETECTOR_DEFAULT_TEMPERATURE, detector_temperature
+        assert DETECTOR_DEFAULT_TEMPERATURE == 1.0
+        assert detector_temperature({"temperature": 0.7}) == 0.7
+        assert detector_temperature({"temperature": 0.0}) == 0.0
+        assert detector_temperature({}) == 1.0
+        assert detector_temperature({"temperature": None}) == 1.0
+
+    @pytest.mark.tier1
+    @pytest.mark.parametrize(("configured", "sent"), [(None, 1.0), (0.0, 0.0), (0.7, 0.7)])
+    def test_jsonl_sends_the_resolved_temperature(
+        self, tmp_path: Path, configured: float | None, sent: float,
+    ) -> None:
+        """A config without a temperature is sent at the detector default."""
+        config = _make_prompt_config()
+        config["include_example_images"] = False
+        config.pop("temperature", None)
+        if configured is not None:
+            config["temperature"] = configured
+        tile = _make_tile_image(tmp_path, "tile_001.png")
+        output = tmp_path / "batch.jsonl"
+        build_jsonl_file(
+            tile_paths=[tile], config=config, system_instruction="x",
+            examples=[], output_path=output,
+        )
+        line = json.loads(output.read_text().splitlines()[0])
+        assert line["request"]["generation_config"]["temperature"] == sent
+
+    @pytest.mark.tier1
+    def test_no_detector_builder_keeps_its_own_fallback(self) -> None:
+        """Batch build, in-batch retry and patch must share one fallback.
+
+        Before 2026-10-07 the batch and retry builders fell back to 0.1 and
+        the patch path to 0.0, so a retry or patch of a config without a
+        temperature would have been sent at a different value from its batch.
+        """
+        import inspect
+        from scripts import lib_batch_api as lba
+        for fn in (lba.build_jsonl_file, lba._retry_tile_sync, lba.patch_failed_tiles):
+            body = inspect.getsource(fn)
+            assert 'get("temperature",' not in body, fn.__name__
+            assert "detector_temperature(" in body, fn.__name__
+        realtime = (Path(__file__).parent.parent / "scripts" / "4_detect_mounds_batch.py")
+        text = realtime.read_text()
+        assert "get('temperature', 0.1)" not in text
+        assert 'get("temperature", 0.1)' not in text
+
     def test_jsonl_line_format(self) -> None:
         """Each JSONL line should have 'key' and 'request' top-level keys."""
         config = _make_prompt_config()

@@ -69,6 +69,44 @@ from scripts.lib_llm_metadata import (  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
+# Proposer (detector) temperature used when a prompt config carries none.
+# 1.0 is what every production detector config sets (the ``detect_*`` and
+# ``propose_*`` files in prompts/configs/) and every current Gemini Flash
+# model's own default (outputs/temperature-probe-2026-10-07/models-get.json);
+# Gemini 3.6 Flash and later ignore the field and sample at that default
+# whatever is sent. Every detector request builder reads it through
+# ``detector_temperature``, so an in-batch retry or a later patch can never be
+# sent at a different temperature from the batch it repairs. It replaced 0.1
+# (three builders) and 0.0 (the patch path) on 2026-10-07; no recorded run had
+# relied on either (all 2,847 run metas on sapphire that carry a
+# configuration record a temperature).
+DETECTOR_DEFAULT_TEMPERATURE = 1.0
+
+
+def detector_temperature(config: dict[str, Any]) -> float:
+    """Return the temperature a detector request is sent at.
+
+    The config's own value wins (CLI overrides are written into the config
+    before this is called); a missing or null value falls back to
+    ``DETECTOR_DEFAULT_TEMPERATURE``.
+
+    Args:
+        config: A detector prompt config, or a run meta's ``configuration``
+            section.
+
+    Returns:
+        The temperature to send.
+
+    Example:
+        >>> detector_temperature({"temperature": 0.7})
+        0.7
+        >>> detector_temperature({})
+        1.0
+    """
+    value = config.get("temperature")
+    return float(value) if value is not None else DETECTOR_DEFAULT_TEMPERATURE
+
+
 # The ONE terminal state that means the whole chunk ran. Every other
 # terminal state below is a failure even when it returns rows — see
 # run_pv.run_batch_jobs (audit finding m7, 2026-09-20).
@@ -1215,7 +1253,7 @@ def build_jsonl_file(
 
     # Build generation config matching the concurrent pipeline's settings
     generation_config: dict[str, Any] = {
-        "temperature": config.get("temperature", 0.1),
+        "temperature": detector_temperature(config),
         "max_output_tokens": config.get("max_output_tokens", 8192),
         "response_mime_type": "application/json",
     }
@@ -2507,7 +2545,7 @@ def _retry_tile_sync(
         # Generation config — mirror batch JSONL settings including
         # thinking_config when present (Finding 1 from debug audit)
         gen_config_kwargs: dict[str, Any] = {
-            "temperature": prompt_config.get("temperature", 0.1),
+            "temperature": detector_temperature(prompt_config),
             "max_output_tokens": max_output_tokens_override or (
                 prompt_config.get("max_output_tokens", 8192)
             ),
@@ -2882,6 +2920,8 @@ def prepare_batch_unit(
     # Apply overrides from the execution unit
     if unit.get("temperature") is not None:
         prompt_config["temperature"] = unit["temperature"]
+    # Resolved here so the run meta records the temperature actually sent.
+    prompt_config["temperature"] = detector_temperature(prompt_config)
     if unit.get("thinking_level") is not None:
         prompt_config["thinking_level"] = unit["thinking_level"]
     # The RESOLVED model, not the config file's default. Without this the
@@ -3551,9 +3591,16 @@ def patch_failed_tiles(
     except Exception as e:
         logger.warning("Could not resolve model name: %s", e)
 
-    # Reconstruct prompt_config from snapshot
+    # Reconstruct prompt_config from snapshot. A patch must be sent at the
+    # run's own temperature; a meta without one is warned about, not guessed
+    # silently.
+    if config_section.get("temperature") is None:
+        logger.warning(
+            "Run meta %s records no temperature; patching at the detector "
+            "default %.1f", meta_path, DETECTOR_DEFAULT_TEMPERATURE,
+        )
     prompt_config = {
-        "temperature": config_section.get("temperature", 0.0),
+        "temperature": detector_temperature(config_section),
         "max_output_tokens": config_section.get(
             "max_output_tokens", 8192,
         ),

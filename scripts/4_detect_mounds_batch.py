@@ -72,7 +72,7 @@ from scripts.lib_token_bucket import TokenBucketGovernor
 # Import three-tier JSON repair pipeline shared with the batch parser.
 # Recovers ~92 % of historical realtime proposer parse failures
 # (Tier 1 trailing-comma, Tier 2 json5, Tier 3 longest-valid-prefix).
-from scripts.lib_batch_api import parse_response_with_repair
+from scripts.lib_batch_api import detector_temperature, parse_response_with_repair
 from scripts.lib_config_validation import (  # noqa: E402
     InertConfigurationError,
     validate_no_inert_fields,
@@ -662,10 +662,12 @@ def process_single_tile(
                 continue
             box_coords = det["box_2d"]
             if not isinstance(box_coords, (list, tuple)) or len(box_coords) != 4:
+                box_len = (
+                    len(box_coords) if isinstance(box_coords, (list, tuple)) else "N/A"
+                )
                 print(
                     f"  Skipping detection with malformed box_2d "
-                    f"(length={len(box_coords) if isinstance(box_coords, (list, tuple)) else 'N/A'})"
-                    f" in {tile_filename}"
+                    f"(length={box_len}) in {tile_filename}"
                 )
                 skipped_detections += 1
                 continue
@@ -843,10 +845,12 @@ def detect_mounds_versioned(
     # Apply Temperature Override
     if temperature_override is not None:
         print(
-            f"Overriding Config Temperature ({config.get('temperature', 0.1)}) "
+            f"Overriding Config Temperature ({detector_temperature(config)}) "
             f"with CLI Argument: {temperature_override}"
         )
         config["temperature"] = temperature_override
+    # Resolved once, so the request and the run meta carry the same value.
+    config["temperature"] = detector_temperature(config)
 
     # Apply Thinking Level Override
     if thinking_level_override is not None:
@@ -1000,7 +1004,7 @@ def detect_mounds_versioned(
                 print(f"\n  NOTE: {advice}\n")
 
     gen_config_kwargs = {
-        "temperature": config.get("temperature", 0.1),
+        "temperature": detector_temperature(config),
         "max_output_tokens": config.get("max_output_tokens", 8192),
         "response_mime_type": "application/json",
         "thinking_config": thinking_config,
@@ -1834,7 +1838,8 @@ def _detect_mounds_batch(args: argparse.Namespace) -> dict | None:
                     print(
                         f"Merged {len(chunk_metas)} chunk metas: "
                         f"{u.get('total_input_tokens', 0):,} input tokens"
-                        + (f" ({share:.1%} cached)" if share is not None else " (cache share unknown)")
+                        + (f" ({share:.1%} cached)"
+                           if share is not None else " (cache share unknown)")
                     )
                 except ValueError as exc:
                     print(f"\n  ! chunk metadata NOT merged: {exc}")
