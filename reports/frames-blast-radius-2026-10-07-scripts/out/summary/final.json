@@ -1,0 +1,289 @@
+{
+ "evaluations_committed": 2800,
+ "status": {
+  "scored": 2727,
+  "diagnostics-only (non-direct scorer)": 24,
+  "missing-input": 13,
+  "unresolved-metadata": 36
+ },
+ "cells_scored_off_and_on": 2727,
+ "cells_with_out_of_frame_diagnostics": 2751,
+ "cells_with_any_out_of_frame": 70,
+ "cells_with_any_out_of_frame_by_status": {
+  "archive": 3,
+  "registered": 3,
+  "other": 21,
+  "waived": 43
+ },
+ "cells_with_null_source_tile": 12,
+ "cells_with_null_in_frame": 0,
+ "moved": {
+  "0.001": 55,
+  "0.005": 23,
+  "0.01": 22
+ },
+ "moved_by_status": {
+  "0.001": {
+   "archive": 3,
+   "registered": 3,
+   "other": 8,
+   "waived": 41
+  },
+  "0.005": {
+   "archive": 3,
+   "registered": 3,
+   "other": 3,
+   "waived": 14
+  },
+  "0.01": {
+   "archive": 3,
+   "registered": 3,
+   "other": 3,
+   "waived": 13
+  }
+ },
+ "registered_cells_scored": 634,
+ "registered_cells_with_out_of_frame": 3,
+ "gate_i_by_family": {
+  "55-map": {
+   "scored": 285,
+   "not_reproduced:unexplained": 9,
+   "all_reproduced": 226,
+   "f1pr_reproduced_mcc_refused_now": 50
+  },
+  "GS h13 (h13_armA)": {
+   "scored": 1,
+   "all_reproduced": 1
+  },
+  "GS h13 (h13_armB)": {
+   "scored": 1,
+   "all_reproduced": 1
+  },
+  "GS h13 (h13_armC)": {
+   "scored": 1,
+   "all_reproduced": 1
+  },
+  "GS h13 (h13_common)": {
+   "scored": 3,
+   "all_reproduced": 3
+  },
+  "GS-1032 (256 px)": {
+   "scored": 16,
+   "all_reproduced": 16
+  },
+  "GS-327 Era-3 (h10_test)": {
+   "scored": 40,
+   "all_reproduced": 40
+  },
+  "GS-340 Era-1 (512 px)": {
+   "scored": 739,
+   "all_reproduced": 739
+  },
+  "GS-487 Era-2 (full_evaluation)": {
+   "scored": 1076,
+   "all_reproduced": 1034,
+   "not_reproduced:input-drift-count": 42
+  },
+  "GS-487 board (era2_b)": {
+   "scored": 213,
+   "all_reproduced": 211,
+   "f1pr_reproduced_mcc_refused_now": 2
+  },
+  "GS-487 grid-common": {
+   "scored": 63,
+   "all_reproduced": 55,
+   "f1pr_reproduced_mcc_refused_now": 8
+  },
+  "[archive] 55-map": {
+   "scored": 10,
+   "not_reproduced:input-newer-than-eval": 3,
+   "all_reproduced": 4,
+   "not_reproduced:input-drift-count": 3
+  },
+  "[archive] GS-487 Era-2 (full_evaluation)": {
+   "scored": 30,
+   "all_reproduced": 23,
+   "not_reproduced:input-drift-count": 4,
+   "not_reproduced:unexplained": 3
+  },
+  "[archive] GS-487 board (era2_b)": {
+   "scored": 13,
+   "all_reproduced": 10,
+   "f1pr_reproduced_mcc_refused_now": 2,
+   "not_reproduced:input-drift-blob": 1
+  },
+  "[archive] other:/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson": {
+   "scored": 1,
+   "not_reproduced:input-newer-than-eval": 1
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson": {
+   "scored": 82,
+   "all_reproduced": 82
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson": {
+   "scored": 153,
+   "all_reproduced": 153
+  }
+ },
+ "gate_i_totals": {
+  "live": {
+   "scored": 2673,
+   "not_reproduced:unexplained": 9,
+   "all_reproduced": 2562,
+   "f1pr_reproduced_mcc_refused_now": 60,
+   "not_reproduced:input-drift-count": 42,
+   "f1pr_reproduced_total": 2622
+  },
+  "archive": {
+   "scored": 54,
+   "all_reproduced": 37,
+   "not_reproduced:input-drift-count": 7,
+   "not_reproduced:unexplained": 3,
+   "f1pr_reproduced_mcc_refused_now": 2,
+   "not_reproduced:input-drift-blob": 1,
+   "not_reproduced:input-newer-than-eval": 4,
+   "f1pr_reproduced_total": 39
+  }
+ },
+ "gate_i_named_cells": [
+  {
+   "eval": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json",
+   "committed_f1_20": "0.9068",
+   "off_f1_20": "0.9068",
+   "committed_mcc": "0.7675",
+   "off_mcc": "0.7675",
+   "reproduced": "True",
+   "repro_notes": ""
+  },
+  {
+   "eval": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json",
+   "committed_f1_20": "0.9066",
+   "off_f1_20": "0.9066",
+   "committed_mcc": "0.7651",
+   "off_mcc": "0.7651",
+   "reproduced": "True",
+   "repro_notes": ""
+  },
+  {
+   "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+   "committed_f1_20": "0.886",
+   "off_f1_20": "0.8860",
+   "committed_mcc": "withheld",
+   "off_mcc": "",
+   "reproduced": "True",
+   "repro_notes": ""
+  },
+  {
+   "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+   "committed_f1_20": "0.8495",
+   "off_f1_20": "0.8495",
+   "committed_mcc": "0.1337",
+   "off_mcc": "",
+   "reproduced": "False",
+   "repro_notes": "mcc: committed 0.1337 off None (tile_join_detection_shortfall)"
+  },
+  {
+   "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+   "committed_f1_20": "0.8338",
+   "off_f1_20": "0.8338",
+   "committed_mcc": "0.1422",
+   "off_mcc": "",
+   "reproduced": "False",
+   "repro_notes": "mcc: committed 0.1422 off None (tile_join_detection_shortfall)"
+  }
+ ],
+ "moved_groups": {
+  "3.7 GS K-ladder rungs": {
+   "n": 3,
+   "registered": 3,
+   "waived": 0,
+   "archive": 0,
+   "other": 0,
+   "max_abs_delta": 0.0509,
+   "min_abs_delta": 0.0461,
+   "oof_range": [
+    27,
+    32
+   ]
+  },
+  "512 px cells scored on the 384 px Era-2 frame": {
+   "n": 5,
+   "registered": 0,
+   "waived": 5,
+   "archive": 0,
+   "other": 0,
+   "max_abs_delta": 0.0962,
+   "min_abs_delta": 0.0797,
+   "oof_range": [
+    137,
+    409
+   ]
+  },
+  "55-map stride K = 1 gap-fill": {
+   "n": 27,
+   "registered": 0,
+   "waived": 27,
+   "archive": 0,
+   "other": 0,
+   "max_abs_delta": 0.0015,
+   "min_abs_delta": 0.0011,
+   "oof_range": [
+    138,
+    252
+   ]
+  },
+  "55-map stride pairing twins": {
+   "n": 5,
+   "registered": 0,
+   "waived": 0,
+   "archive": 0,
+   "other": 5,
+   "max_abs_delta": 0.0033,
+   "min_abs_delta": 0.0024,
+   "oof_range": [
+    145,
+    317
+   ]
+  },
+  "GS grid-common K = 1 gap-fill": {
+   "n": 9,
+   "registered": 0,
+   "waived": 9,
+   "archive": 0,
+   "other": 0,
+   "max_abs_delta": 0.0208,
+   "min_abs_delta": 0.0079,
+   "oof_range": [
+    88,
+    337
+   ]
+  },
+  "archived copies": {
+   "n": 3,
+   "registered": 0,
+   "waived": 0,
+   "archive": 3,
+   "other": 0,
+   "max_abs_delta": 0.0509,
+   "min_abs_delta": 0.0461,
+   "oof_range": [
+    27,
+    32
+   ]
+  },
+  "null-exemplar reduced-frame re-scores": {
+   "n": 3,
+   "registered": 0,
+   "waived": 0,
+   "archive": 0,
+   "other": 3,
+   "max_abs_delta": 0.0636,
+   "min_abs_delta": 0.0577,
+   "oof_range": [
+    34,
+    40
+   ]
+  }
+ },
+ "oof_but_not_moved": 15
+}

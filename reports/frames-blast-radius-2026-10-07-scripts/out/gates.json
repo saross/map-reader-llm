@@ -1,0 +1,72 @@
+{
+ "gate_ii": [
+  {
+   "row": 27,
+   "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson",
+   "n": 502,
+   "off": 0.8495197438633938,
+   "on_board": 0.8747252747252747,
+   "clip_grid_common_scored_on_board": 0.868217054263566,
+   "patched_path_on_board": 0.8747252747252747,
+   "patched_calls": 1,
+   "dropped_board": 27,
+   "dropped_grid": 34,
+   "expected": {
+    "off": 0.8495,
+    "board": 0.8747,
+    "grid_common": 0.8682
+   },
+   "pass": true
+  },
+  {
+   "row": 28,
+   "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+   "n": 495,
+   "off": 0.886021505376344,
+   "on_board": 0.9135254988913526,
+   "clip_grid_common_scored_on_board": 0.9072625698324023,
+   "patched_path_on_board": 0.9135254988913526,
+   "patched_calls": 1,
+   "dropped_board": 28,
+   "dropped_grid": 35,
+   "expected": {
+    "off": 0.886,
+    "board": 0.9135,
+    "grid_common": 0.9073
+   },
+   "pass": true
+  }
+ ],
+ "gate_iii": [
+  {
+   "cell": "row27",
+   "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson",
+   "on": 0.8747252747252747,
+   "sentinel_direct": 0.0,
+   "n_after_sentinel": 0,
+   "sentinel_patched": 0.0,
+   "outputs_changed": true
+  },
+  {
+   "cell": "row28",
+   "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+   "on": 0.9135254988913526,
+   "sentinel_direct": 0.0,
+   "n_after_sentinel": 0,
+   "sentinel_patched": 0.0,
+   "outputs_changed": true
+  },
+  {
+   "cell": "control",
+   "detections": "results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t1.0-n3-opmax.geojson",
+   "on": 0.8646706586826347,
+   "sentinel_direct": 0.0,
+   "n_after_sentinel": 0,
+   "sentinel_patched": 0.0,
+   "outputs_changed": true
+  }
+ ],
+ "gate_ii_pass": true,
+ "restored_after_patch": 0.8495197438633938,
+ "gate_iii_pass": true
+}

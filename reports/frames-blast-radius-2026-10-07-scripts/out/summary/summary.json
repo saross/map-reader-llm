@@ -1,0 +1,160 @@
+{
+ "n_evaluations": 2800,
+ "status": {
+  "scored": 2727,
+  "diagnostics-only (non-direct scorer)": 24,
+  "missing-input": 13,
+  "unresolved-metadata": 36
+ },
+ "n_scored": 2727,
+ "n_with_diagnostics": 2751,
+ "n_cells_any_out_of_frame": 70,
+ "n_cells_any_null_source_tile": 12,
+ "n_cells_null_in_frame": 0,
+ "n_moved_ge": {
+  "0.001": 55,
+  "0.005": 23,
+  "0.01": 22
+ },
+ "gate_i_by_family": {
+  "55-map": {
+   "scored": 285,
+   "not-reproduced": 59,
+   "reproduced": 226
+  },
+  "GS h13 (h13_armA)": {
+   "scored": 1,
+   "reproduced": 1
+  },
+  "GS h13 (h13_armB)": {
+   "scored": 1,
+   "reproduced": 1
+  },
+  "GS h13 (h13_armC)": {
+   "scored": 1,
+   "reproduced": 1
+  },
+  "GS h13 (h13_common)": {
+   "scored": 3,
+   "reproduced": 3
+  },
+  "GS-1032 (256 px)": {
+   "scored": 16,
+   "reproduced": 16
+  },
+  "GS-327 Era-3 (h10_test)": {
+   "scored": 40,
+   "reproduced": 40
+  },
+  "GS-340 Era-1 (512 px)": {
+   "scored": 739,
+   "reproduced": 739
+  },
+  "GS-487 Era-2 (full_evaluation)": {
+   "scored": 1076,
+   "reproduced": 1034,
+   "not-reproduced": 42
+  },
+  "GS-487 board (era2_b)": {
+   "scored": 213,
+   "reproduced": 211,
+   "not-reproduced": 2
+  },
+  "GS-487 grid-common": {
+   "scored": 63,
+   "reproduced": 55,
+   "not-reproduced": 8
+  },
+  "[archive] 55-map": {
+   "scored": 10,
+   "not-reproduced": 6,
+   "reproduced": 4
+  },
+  "[archive] GS-487 Era-2 (full_evaluation)": {
+   "scored": 30,
+   "reproduced": 23,
+   "not-reproduced": 7
+  },
+  "[archive] GS-487 board (era2_b)": {
+   "scored": 13,
+   "reproduced": 10,
+   "not-reproduced": 3
+  },
+  "[archive] other:/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson": {
+   "scored": 1,
+   "not-reproduced": 1
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson": {
+   "scored": 82,
+   "reproduced": 82
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson": {
+   "scored": 153,
+   "reproduced": 153
+  }
+ },
+ "drops_by_family": {
+  "55-map": {
+   "cells_with_diagnostics": 309,
+   "cells_with_out_of_frame": 47
+  },
+  "GS h13 (h13_armA)": {
+   "cells_with_diagnostics": 1
+  },
+  "GS h13 (h13_armB)": {
+   "cells_with_diagnostics": 1
+  },
+  "GS h13 (h13_armC)": {
+   "cells_with_diagnostics": 1
+  },
+  "GS h13 (h13_common)": {
+   "cells_with_diagnostics": 3
+  },
+  "GS-1032 (256 px)": {
+   "cells_with_diagnostics": 16
+  },
+  "GS-327 Era-3 (h10_test)": {
+   "cells_with_diagnostics": 40
+  },
+  "GS-340 Era-1 (512 px)": {
+   "cells_with_diagnostics": 739
+  },
+  "GS-487 Era-2 (full_evaluation)": {
+   "cells_with_diagnostics": 1076,
+   "cells_with_out_of_frame": 5
+  },
+  "GS-487 board (era2_b)": {
+   "cells_with_diagnostics": 213,
+   "cells_with_null_source_tile": 5,
+   "cells_with_out_of_frame": 3
+  },
+  "GS-487 grid-common": {
+   "cells_with_diagnostics": 63,
+   "cells_with_out_of_frame": 9
+  },
+  "[archive] 55-map": {
+   "cells_with_diagnostics": 10,
+   "cells_with_null_source_tile": 1
+  },
+  "[archive] GS-487 Era-2 (full_evaluation)": {
+   "cells_with_diagnostics": 30,
+   "cells_with_null_source_tile": 1
+  },
+  "[archive] GS-487 board (era2_b)": {
+   "cells_with_diagnostics": 13,
+   "cells_with_null_source_tile": 1,
+   "cells_with_out_of_frame": 3
+  },
+  "[archive] other:/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson": {
+   "cells_with_diagnostics": 1
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era1-full-340_minus_null_overlap.geojson": {
+   "cells_with_diagnostics": 82
+  },
+  "other:results/null-exemplar-sensitivity-2026-09-13/bounds/era2-b-487_minus_null_overlap.geojson": {
+   "cells_with_diagnostics": 153,
+   "cells_with_out_of_frame": 3,
+   "cells_with_null_source_tile": 4
+  }
+ }
+}
