@@ -13,11 +13,12 @@ project state.
 > Everything is on `main` (level with origin; sapphire level). The model
 > changed mid-session at the PI's `/model` (Fable 5.1 → Opus 5.5); commits
 > from then on carry the Opus 5.5 line. Model API: one model listing and
-> Run A (US$18.17 audited). **In flight at close:** Run B's configuration
-> agent (no API) on branch `modality-bridge-2026-10-07` (not yet pushed at
-> close), its worktree `.claude/worktrees/agent-a8b302a0b242f8b62`, its
-> report `/tmp/claude-1000/-home-shawn-Code-map-reader-llm/efba6aeb-0fcf-4126-91f1-0e10ca25f39d/scratchpad/w27/bridge-config-report.md`.
-> No other process running on either machine.
+> Run A (US$18.17 audited). **Run B's configuration agent (no API)
+> finished after the handoff:** branch `modality-bridge-2026-10-07` is
+> pushed (head `9a27eb13a`, unmerged, no PR), its worktree is removed, and
+> its report is committed as
+> `reports/s162-agent-records/run-b-config-report.md`. No process running
+> on either machine.
 >
 > ### What happened
 >
@@ -73,10 +74,25 @@ project state.
 >
 > ### Next session, in order
 >
-> 1. **Run B:** read the configuration agent's report (path above) and its
->    branch; present the Stage 1 gate (about US$61, four proposer arms
->    together, Batch API) with the audit verdict; remove its worktree once
->    pushed.
+> 1. **Run B:** verify the agent's report (path above) against the card
+>    `planning/modality-bridge-2026-10-07.md` on its branch, then present
+>    the Stage 1 gate. The agent's claims, unverified by the main session:
+>    41,940 calls on the Batch API, likely US$63.6 (range US$59.5–97.0,
+>    the top end if batch gets no implicit cache hits on the 3.7 image
+>    arm); Run B in all likely US$71–75 against D49's approved US$69–71,
+>    ceiling about US$109; audit READY TO LAUNCH. The gate must name: the
+>    overrun; that batch sends no safety settings (the originals sent four
+>    categories OFF), which needs the PI's explicit acknowledgement; that
+>    the 3.7 arms' temperature is nominal (Google notice, below); and the
+>    agent's finding that the original G3 image arm used an explicit cache
+>    on the standard tier while the 3.7 image arm sent one inline turn on
+>    flex, so the original gap change carries that asymmetry (optional
+>    fifth leg, about US$16). Agent's recommendations: lodge `g37-image`
+>    pass 1 alone first and continue only if at least half its input was
+>    cached; reuse the K = 10 verification for the G3 K = 5 rungs (US$0,
+>    against US$3.93 dedicated). Stage 2 needs code first (a tested layout
+>    adapter for batch output names; analysis scripts with an anchor gate
+>    reproducing the six original cells to 0.001).
 > 2. **The frames blast radius** (offline), then the PI's choice.
 > 3. **The PI's review of `w15-floors-drafts`**, the six D9 notes, the
 >    claims-inventory census ruling (see below), merge on his word.
