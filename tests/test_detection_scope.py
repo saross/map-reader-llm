@@ -176,6 +176,23 @@ def test_a_rekeyed_detection_is_scored_on_its_origin_sheet(frame, refs, column, 
     assert (round(p, 4), round(r, 4)) == (0.6667, 0.6667)
 
 
+def test_a_cluster_seen_on_both_sheets_is_scored_on_its_first_origin(frame, refs):
+    """Members on A and B; the first (the candidate's own tile) is on A.
+
+    A re-key onto B must not stand merely because one member was seen on B:
+    the candidate's tile before the re-key was its first member's, on A.
+    """
+    d = dets([("B_x0_y0.png", 196, 50)],
+             source_tiles=["['A_x100_y0.png' 'B_x0_y0.png']"])
+    scope = lam.scope_detections_to_frame(d, frame)
+    assert list(scope.sheets) == ["A"]
+    assert scope.diagnostics["n_origin_restored"] == 1
+    p, r, f = lam.calculate_f1_internal(d, refs, frame, 20)
+    assert (p, round(r, 4)) == (1.0, 0.3333)
+    names, _diag = lam.assign_primary_tiles_on_origin_sheet(d, frame)
+    assert names == ["A_x100_y0.png"]
+
+
 def test_origin_naming_no_frame_sheet_falls_back_to_source_tile(frame):
     """An unrecognised origin is a naming difference, not a reason to drop."""
     d = dets([("A_x0_y0.png", 51, 50)], origin_tiles=["Q-99_x0_y0.png"])
