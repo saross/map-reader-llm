@@ -1,0 +1,165 @@
+{
+ "script": "scripts/modality_bridge_union.py",
+ "git_head": "fd07fd61bb4e4b108b43b85a69cec4f02a76b5a8",
+ "layout": "batch",
+ "cell_dir": "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image",
+ "k": 10,
+ "manifest": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+ "manifest_sha256": "484e00cbec355080f83c9f13bf72c84ce55f9397a6c113d85a92cc8bb2dc6c76",
+ "manifest_tiles": 1398,
+ "common_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+ "dedup_metres": 20.0,
+ "passes": [
+  {
+   "run": "run_1",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01.geojson"
+   ],
+   "file_sha256": [
+    "1e78a9b114e9343a943704bb77b141c6dffc2baf032bf49ef17260fc3a03962c"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2332,
+   "dedup_detections": 1456
+  },
+  {
+   "run": "run_2",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_2/detections_detect_brief-text-image_run02.geojson"
+   ],
+   "file_sha256": [
+    "5bf339bfc0527e5ff82902c82adaec36274585408b35f33a6a2d6b860a66d9a0"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2356,
+   "dedup_detections": 1465
+  },
+  {
+   "run": "run_3",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_3/detections_detect_brief-text-image_run03.geojson"
+   ],
+   "file_sha256": [
+    "8b73e718f47f8bc46ebb4ca0422427c1435b2fbcdbc1f4e0f69f1f08a4ba3659"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2305,
+   "dedup_detections": 1440
+  },
+  {
+   "run": "run_4",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_4/detections_detect_brief-text-image_run04.geojson"
+   ],
+   "file_sha256": [
+    "c36da8e907b0ea61a251f179a347c1ed42cf54af47e762e6ba23fc845b2ab3c9"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2385,
+   "dedup_detections": 1499
+  },
+  {
+   "run": "run_5",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_5/detections_detect_brief-text-image_run05.geojson"
+   ],
+   "file_sha256": [
+    "b9a757a9c6e27c455e7f3aaa685ed7d131ab382d7a844e024af87d2a681fd051"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2360,
+   "dedup_detections": 1472
+  },
+  {
+   "run": "run_6",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_6/detections_detect_brief-text-image_run06.geojson"
+   ],
+   "file_sha256": [
+    "717ee9e0c5fe8225a0bf18207481a123913df273c99b854ee25dcec7d1e5a089"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2347,
+   "dedup_detections": 1445
+  },
+  {
+   "run": "run_7",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_7/detections_detect_brief-text-image_run07.geojson"
+   ],
+   "file_sha256": [
+    "555104342e63e179f74635852e2d497397b5180882a39c81fec483556deacb51"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2291,
+   "dedup_detections": 1408
+  },
+  {
+   "run": "run_8",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_8/detections_detect_brief-text-image_run08.geojson"
+   ],
+   "file_sha256": [
+    "296248add8653ac9075c8464e3dd1310d0a28650e5dc768b166509d8df425c49"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2323,
+   "dedup_detections": 1437
+  },
+  {
+   "run": "run_9",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_9/detections_detect_brief-text-image_run09.geojson"
+   ],
+   "file_sha256": [
+    "ecd5962dc0138e0ee6dad5e78f89089210f906121af02520ba028df5d2ea0cf8"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2335,
+   "dedup_detections": 1477
+  },
+  {
+   "run": "run_10",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_10/detections_detect_brief-text-image_run10.geojson"
+   ],
+   "file_sha256": [
+    "91ac3d93ebeeacffdbdb4fe526c073824b6c3cc7e80272df1b493934d746e84d"
+   ],
+   "tiles_per_file": [
+    1398
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 2327,
+   "dedup_detections": 1444
+  }
+ ],
+ "written": false
+}

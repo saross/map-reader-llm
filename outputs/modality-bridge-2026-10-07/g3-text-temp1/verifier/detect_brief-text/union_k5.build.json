@@ -1,0 +1,120 @@
+{
+ "script": "scripts/modality_bridge_union.py",
+ "git_head": "92b151058e385f3412f9143baa78cf93ddaa7b42",
+ "layout": "batch",
+ "cell_dir": "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text",
+ "k": 5,
+ "manifest": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+ "manifest_sha256": "484e00cbec355080f83c9f13bf72c84ce55f9397a6c113d85a92cc8bb2dc6c76",
+ "manifest_tiles": 1398,
+ "common_bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+ "dedup_metres": 20.0,
+ "passes": [
+  {
+   "run": "run_1",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson"
+   ],
+   "file_sha256": [
+    "61eff6d61195ee18e0199f447a34e8cbc2c419701c750e6a8cdb0331cfa56191",
+    "16a6b279a813673f2b478b611a903ae26821b85cac7c6dea7b35875de5ef890e"
+   ],
+   "tiles_per_file": [
+    1389,
+    9
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 3308,
+   "dedup_detections": 1989,
+   "common_scope_detections": 1838
+  },
+  {
+   "run": "run_2",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson"
+   ],
+   "file_sha256": [
+    "5f448d1b36b3fe79bf8c7af6249a29afe0ea2cb7df86e8a1915bbaa81b7291e0",
+    "169816f144cb894d61ce45e9dc9117fee70ac34911ed3ac55f8747869796f250"
+   ],
+   "tiles_per_file": [
+    1395,
+    3
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 3309,
+   "dedup_detections": 1997,
+   "common_scope_detections": 1846
+  },
+  {
+   "run": "run_3",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson"
+   ],
+   "file_sha256": [
+    "4dbfd08052ade1c63c68ae57f14695124b9d12d0f4e3ebc70cc355107eed2cb5",
+    "ab5bee195bd809f320bfe959c3cb8ffa0b9293f5b36c7677d6d340b83ceb2319"
+   ],
+   "tiles_per_file": [
+    1389,
+    9
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 3334,
+   "dedup_detections": 1981,
+   "common_scope_detections": 1837
+  },
+  {
+   "run": "run_4",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson"
+   ],
+   "file_sha256": [
+    "abd994add331ba877bf8e6bd932ec9411fc47737ccf8403be32f8e3e5744ce77",
+    "479aeb454af8b4491c6ca67240d7ca430adcd032de032ae2387587aea4d22a6e"
+   ],
+   "tiles_per_file": [
+    1394,
+    4
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 3288,
+   "dedup_detections": 1995,
+   "common_scope_detections": 1848
+  },
+  {
+   "run": "run_5",
+   "files": [
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson",
+    "outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson"
+   ],
+   "file_sha256": [
+    "8326d372cea1e4ba3f528e20421d8829a1fe41424b8e40105c0b85192f8b2dd9",
+    "b3d2e2bea5b8fb52f912fbbbe70b9b64f953413f495a4ba4ab03853876fdfcf8"
+   ],
+   "tiles_per_file": [
+    1392,
+    6
+   ],
+   "processed_tiles": 1398,
+   "raw_detections": 3297,
+   "dedup_detections": 1949,
+   "common_scope_detections": 1801
+  }
+ ],
+ "written": true,
+ "union": "outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/union_k5.geojson",
+ "union_sha256": "33f90a741801a88074bdfea32580ce625356eabc34d6bbf3eee51cbe2e3299e7",
+ "union_features": 3179,
+ "vote_histogram": {
+  "1": 1219,
+  "2": 417,
+  "3": 265,
+  "4": 260,
+  "5": 1018
+ }
+}

@@ -1,0 +1,26 @@
+{
+ "script": "scripts/modality_bridge_stage2_checks.py repair",
+ "method": "lib_batch_api.parse_response_with_repair after Markdown-fence stripping, then lib_verifier._unwrap_verdict_payload: the real-time path's parse (lib_verifier._call_verifier_api)",
+ "leg_dir": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3",
+ "source_probabilities_sha256": "e5713ccc0b9a932ed481ce4da743d50256491928c73c7766312dae6dbd595308",
+ "source_batch_results_sha256": "9631e1dd048219e2bab6e81e72122d1adc6761457a572b2aa34982e99429dd2e",
+ "n_results": 3085,
+ "n_results_written": 3085,
+ "n_parse_error_rows": 1,
+ "changed": [
+  {
+   "key": "candidate_02479",
+   "before": 0.0,
+   "after": 0.0,
+   "before_reasoning": "PARSE_ERROR: Extra data: line 7 column 1 (char 606)",
+   "text_sha256": "c0281a3cc9e2de61390aea12daa12b1f05a7f5cbf2a86bf9d5a017863a817b65"
+  }
+ ],
+ "unrecovered": [],
+ "run_meta_copied_from": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3/run.meta.json",
+ "source_run_meta_sha256": "b07063641b769d0e17af956c1507f049f76bd6859a426c85d6ad509d3b870a4b",
+ "written": {
+  "probabilities.json": "a8df2d00175e864ca5d8cce6b52da642037ac7d502f7053260394282cd9d115d",
+  "run.meta.json": "b07063641b769d0e17af956c1507f049f76bd6859a426c85d6ad509d3b870a4b"
+ }
+}
