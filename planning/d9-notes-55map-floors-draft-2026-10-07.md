@@ -72,7 +72,7 @@ Signed 2026-09-17T07:01:26Z; notes of 2026-10-04 (D19) and 2026-10-05
 > steps of A and B (0.0036, 0.0043) are inside their nested floors (0.0069,
 > 0.0058); ARM2-N5-carried over FOURTH-N10-carried (+0.0099) and
 > ARM2-N1-oracle over B-N5-carried (+0.0107) clear their within floors
-> under D48 (1.4 and 1.9 times). UNCHANGED: the 35-cell tiering, its
+> under D48 (1.4 and 1.9 times), assuming little proposer drift within a week. UNCHANGED: the 35-cell tiering, its
 > 595-pair family, every F1, MCC, tier, group and cost, the addendum, and
 > both efficiency frontiers. The signature of 2026-09-17 stands for the
 > tiering; the PI approves this reading of it as of this note.
@@ -167,7 +167,7 @@ verifier-axis tests are BH-significant … and neither proposer-axis test is
 > declared per-sheet test. On D42's tile-swap test on the r2 final board,
 > arm 2 over the fourth cell is +0.0099 (p = 0.0198, BH 0.024), 1.4 times
 > its within-execution floor (0.0072), which D48 applies because the runs
-> are at most seven days apart; arm 1 over B N = 5 stays a tie on both
+> are at most seven days apart, assuming little proposer drift within a week; arm 1 over B N = 5 stays a tie on both
 > tests (+0.0048, p = 0.27; floor 0.0063)
 > (reports/w27-replicate-floors-2026-10-06.md sections 6b and 7.2). The
 > proposer axis under the 3.7 verifier is therefore a small difference
@@ -199,7 +199,7 @@ ORACLE statement …"
 > upper bound (0.0127), so arm 1's non-saturation is narrow; arm 2's
 > N3-to-N5 tie stands (floor 0.0066). The N = 1 economy's oracle cell
 > clears its within floor under D48: on r2, ARM2-N1-oracle over
-> B-N5-carried is +0.0107 (p = 0.0125), 1.9 times 0.0055. UNCHANGED: the
+> B-N5-carried is +0.0107 (p = 0.0125), 1.9 times 0.0055, assuming little proposer drift within a week. UNCHANGED: the
 > 120-pair family, the six tiers and every figure. The signature of
 > 2026-09-12 stands.
 

@@ -988,7 +988,7 @@ the tile-swap test of ruling D42, applied on the r2 board, the second one
 is significant, with arm 2 above the fourth cell by +0.0099 (p = 0.0198,
 BH p = 0.024). That is 1.4 times its within-execution floor (0.0072),
 which applies because the two runs are at most seven days apart (ruling
-D48). Arm 1
+D48), assuming little proposer drift within a week. Arm 1
 against B N = 5 stays a tie on both tests (+0.0048 on r2, p = 0.27).
 The proposer axis under the 3.7 verifier is therefore a small
 difference rather than a null, measured between pools of five and ten
@@ -1059,13 +1059,14 @@ outputs that a second run could erase. A single 3.7 pass under the 3.7
 verifier reaches 0.8563 at its rung oracle on the canonical chain,
 above the Gemini 3 five-pass incumbent (on r2 0.8610 against 0.8503,
 +0.0107, tile-swap p = 0.0125, 1.9 times its within-execution floor of
-0.0055 under ruling D48), but only 0.8421 at the carried
+0.0055 under ruling D48, assuming little proposer drift within a week), but only 0.8421 at the carried
 threshold. [DRAFT NOTE, W2.7, 2026-10-07: for PI review; not finalised.
 (a) R7.3-18b: was "It does not replicate for arm 1 (+0.0076 at the
 carried points, significant)"; adjusted p from the signed register row
 `gemini37-55map-gridboard-2026-08-31`; floor
 `reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`.
-(b) R7.3-19: r2 figures and the floor added; it clears under D48.
+(b) R7.3-19: r2 figures and the floor added; it clears under D48,
+assuming little proposer drift within a week (D48's caveat: the same-week control re-ran only the verifier).
 Sources: `results/55map-final-board-r2-2026-09-06/final_board_50m.json`
 → `pairwise` (ARM2-N1-oracle − B-N5-carried +0.010724, p = 0.0125, BH
 0.015367); rescreen.csv (within part 0.0055).] The one-pass economy therefore requires a rung-tuned
@@ -1293,10 +1294,10 @@ sources.
 | R7.2-31 | "the highest tile-MCC among Gemini 3 cells (0.711)" | among Gemini 3 carried and as-shipped cells; two oracle cells exceed it (0.713, 0.712) |
 | R7.2-32a | B N = 5 "above" its N = 10 carried point | equal to it (+0.0006, p = 0.72) |
 | "no verdict depends on the chain" | stated for the whole block | true for A versus B; the incumbent's cells move differently (0.8476 → 0.8399), so P5 depends on the chain |
-| R7.3-06b | "both proposer-axis contrasts are not" significant; gain "lives in the verifier seat" | the per-sheet null and the r2 tile-swap result both reported (+0.0099, BH 0.024, 1.4 times its floor under D48); "lives mostly in the verifier seat" (needs a PI ruling) |
+| R7.3-06b | "both proposer-axis contrasts are not" significant; gain "lives in the verifier seat" | the per-sheet null and the r2 tile-swap result both reported (+0.0099, BH 0.024, 1.4 times its floor under D48, assuming little proposer drift within a week); "lives mostly in the verifier seat" (needs a PI ruling) |
 | R7.3-07 | "a tax of only +0.0043" | a small but real tax, twice its nested floor (0.0020) |
 | R7.3-18b | arm 1 non-saturation "significant" | above the point floor (0.0053), inside its upper bound (0.0127) |
-| R7.3-19 | one 3.7 pass above the incumbent at its rung oracle | the same, with r2's +0.0107 at 1.9 times its floor under D48 |
+| R7.3-19 | one 3.7 pass above the incumbent at its rung oracle | the same, with r2's +0.0107 at 1.9 times its floor under D48, assuming little proposer drift within a week |
 
 **What did NOT change**: every F1, MCC, tier, cost and p-value already in
 the draft (new figures are added beside them); every registered verdict;
