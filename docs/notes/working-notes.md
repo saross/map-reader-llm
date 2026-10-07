@@ -37184,3 +37184,549 @@ archived sessions).
 Obs 496, Obs 497, Obs 498; E69 (annotated), E39; rulings D42-D46
 (`planning/pi-decisions-2026-09-20.md`); tracker S-10, S-12, C-25, W2.6,
 W2.7.
+
+## Observation 500: The audited cost basis was a method, not an authority — the auditors that exposed the register's error carried a wrong rate of their own, and only the invoice could tell (Session 157, 2026-09-21)
+
+**Context.** Held over without a verdict at the S157 close
+(`planning/paper-writeup-continuity.md`, "S157 CLOSE" block, "A
+working-notes candidate is held over"), approved by the PI on 2026-10-07
+and written then. On 2026-09-21 the passes register booked the 3.7 image
+campaign at US$1,061 against an audited US$415
+(`planning/cost-accounting-fix-plan-2026-09-21.md` § 3.3), while the live
+audited figures printed during runs had matched their estimates for a
+week, and two billing reconciliations had already been done (2026-08-29
+and 09-11; plan § 1.4). The PI paused other work for four read-only lenses
+on which figure was right and why.
+
+**What was established.**
+
+1. **Both figures were right about different things.** The live figures
+   were the auditors re-pricing each leg's own tokens; the register copied
+   the meta's `cost_estimate`, written by five call sites with no cache
+   rate and, on the verifier path, no tier (S157 close block). Every fix
+   since June had landed one layer downstream of the register, and the C3
+   re-derivation ledger reported `cost_usd` MATCH on 1,132 of 1,132 rows
+   because it defined correctness as agreement with the meta (plan § 1.4,
+   citing `scripts/rederive_manifest_fields.py:347-352`).
+2. **The audited method was itself wrong on one component.** The
+   capability scan, sent to ask whether Google exposes billed cost,
+   checked the auditors' rates against the invoice CSV. The auditors
+   priced the 3.7 Flash cache read at the standard US$0.075 per million;
+   the August invoice bills it on flex at US$0.0378, half. On the 3.7
+   image proposer pool that overstated the audited total by US$79.61
+   (US$369.44 cited; US$289.83 re-audited on sapphire under WP1; plan
+   § 1.1). The hand-typed card had then been wrong twice, on the 3.7 rates
+   in August and on the 3.7 cache tier in September (abductive entry "The
+   audited basis was a method, not an authority",
+   `docs/notes/reflections/abductive-reasoning.md`, Session 157).
+3. **The design followed the distinction** (rulings D11-D18,
+   `planning/pi-decisions-2026-09-20.md`). The rate card became data with
+   an invoice confirmation per row (`data/pricing/gemini-rate-card.json`);
+   D18 makes it the authority only as validated against invoices, and
+   `scripts/check_published_rates.py` compares it with Google's published
+   page and flags a difference for the PI rather than editing the card;
+   D15 sets the monthly invoice gate to fail at 5 % on any SKU family, so
+   a wrong rate on one component cannot hide in a total. WP1 and WP2
+   merged as PR #20 (`be03b00a4`).
+
+**Reading.** "Audited" names a method: three token classes, a tier and a
+card. A method can be right on every leg it was checked against (legs
+without cached tokens reproduce to the cent under the new card) and wrong
+on a component none of those legs exercised. A check that compares a
+record with its own source, as C3 compared the register with the meta,
+certifies consistency, not truth; a reconciliation of totals cannot see a
+wrong rate on one SKU. Only the bill stands outside the chain.
+
+**What follows.**
+
+1. **Every committed dollar should name its basis**, and a basis is not a
+   verdict: an audited figure is checkable only against the invoice.
+2. **The per-SKU invoice gate is still the open piece.** At `3a1ce64eb`
+   there is no `scripts/reconcile_invoice.py` (the WP6 script the S157
+   close names); the S159 close lists WP5-WP7 as queued, and no later
+   close block reports WP6 done.
+3. **The shape recurred within two weeks.** Obs 495 found the run logs and
+   the metas' tier labels to be methods that the invoice overruled, and its
+   Related line names this candidate.
+
+**Related.** Obs 495 (the invoices read per SKU and per day; "agreeing
+totals are not evidence"), Obs 380 (metas overwritten in place), Obs 503 (a
+ledger built for honesty that double counted); plan §§ 1.1-1.4 and 3.3;
+rulings D11-D18.
+
+## Observation 501: A cost frontier was drawn around a hole — the 3.7 runs had not been beaten on cost, they had never been priced, and a re-pricing that moved prices by under 1 % replaced four of the five frontier rows (Session 158, 2026-10-04)
+
+**Context.** Held over at the S158 close as candidate (a)
+(`planning/paper-writeup-continuity.md`, "S158 CLOSE" block), approved by
+the PI on 2026-10-07 and written then. WP4b (PR #22, merged 2026-10-04 as
+`562ff6a96`) re-priced the cost axis of the signed r2 final board from the
+passes register at one uniform discounted tier (D19 as amended
+2026-10-04). Walkthrough: `reports/wp4b-frontier-repricing-2026-10-04.md`.
+
+**What was established.**
+
+1. **The prices barely moved.** Stride A and B families moved within
+   0.7 %, TH7, T03 and UPL within 0.1 %; TM and IM rose because their old
+   figures had omitted a floored verifier leg (walkthrough § 2).
+2. **The frontier changed almost completely.** Before: A N1 → A N3 → A N5
+   → B N3 → B N5. After: A N1 → 3.7 arm 1 N1 → 3.7 arm 2 N1 → fourth cell
+   N3 → 3.7 arm 2 N3 (walkthrough § 2; PR #22 description).
+3. **The mechanism was an exclusion, not a ranking.** The 3.7 families
+   had no cost in the old hand-typed table, and the efficiency builder
+   skips a row whose cost is `None` (`scripts/final_board_build.py`,
+   `efficiency_rows`; at `e0e656ca8`, 2026-09-07, the line read
+   `continue  # unaudited family: no $/mound claim`). In the rendered board
+   the gap was a dash, and the frontier simply did not list those rows.
+4. **The new frontier is an oracle-basis finding.** All five new steps are
+   oracle cells, where four of the old five were carried. On the carried
+   basis, with the addendum's post-hoc carried-analogues, the frontier
+   runs A N1 → ARM2-N1-carried → B-N3-carried → FOURTH-N3-carried →
+   ARM2-N3-carried → ARM2-N5-carried; ruling D24 put both frontiers on the
+   one signed board.
+5. **The first carried frontier had a hole of its own.** As recommended at
+   the S158 close it omitted B-N3-carried, which beats ARM2-N1-carried by
+   0.0018 F1. S159 found it by recomputing with the board's own row
+   selection before the decision went to the PI (walkthrough § Changelog,
+   2026-10-04 Session 159; D24).
+
+**Reading.** The published frontier had been read as a finding about which
+configurations buy detection most cheaply; it was a finding about which
+configurations had a typed-in cost (abductive entry "A frontier drawn
+around a hole", `docs/notes/reflections/abductive-reasoning.md`, Session
+158). The stride rows really were the cheapest *priced* runs, which is why
+the old frontier looked plausible, and the hole left no trace in the
+artefact.
+
+**What follows.**
+
+1. **A ranking fed by a filter should count what the filter dropped**, and
+   name the rows. A line reading "left out: unpriced rows" under the table
+   would have shown the hole in September. The rebuilt board has none to
+   skip.
+2. **For the paper:** the 3.7 runs' cost-efficiency dominance is an oracle
+   result, and its deployment reading rests on post-hoc carried-analogues.
+   Quote either frontier with its basis.
+3. **A set recommended to the PI is recomputed with the artefact's own
+   selection code first**; item 5's omission surfaced only when that was
+   done.
+
+**Related.** Obs 493 (an optimum is not a configuration; the oracle cell
+as a different kind of object), Obs 494 (the 3.7 image pool), Obs 495,
+Obs 500, Obs 502 (the same day's K-ladder corrections); ruling D24
+(`planning/pi-decisions-2026-09-20.md`); session reflection, Session 158
+(`docs/notes/reflections/session-reflection.md`).
+
+## Observation 502: One signed K-ladder row carried three errors that checks on its figures could not see — a 1,000× units slip, a universal false on 6 of 23 ladders, and a double-rounded share — and each was found only by re-deriving what the prose asserted (Sessions 158–159, 2026-10-04)
+
+**Context.** Three candidates held over at the S159 close, S158 (b) and
+S159 (d) and (f) (`planning/paper-writeup-continuity.md`, "S159 CLOSE"
+block), approved by the PI on 2026-10-07 and written then as one entry,
+because they share a row and a lesson. `k-ladder-2026-09-12` was signed on
+2026-09-13T06:58:12Z (S153; `results/run-analyses.json`, the row's
+`signature`). Its SHAPE clause read: "the last step is the worst buy on
+every ladder, at US$1,100 to US$43,000 per 0.001 F1 (the 3.7 family's
+K = 5 -> K = 10 step buys +0.0002 F1@20 for US$8.65)", with K = 3 taking
+"31 % to 64 %" of the top rung's cost. On 2026-10-04 two signature notes
+in the D9 pattern (the signature stands, a dated note is appended, the
+outcome text is not edited) recorded three errors in it.
+
+**What was established.**
+
+1. **Units (found in S158, preparing the re-pricing note).** "US$1,100 to
+   US$43,000 per 0.001 F1" are per unit of F1; per 0.001 F1 the last steps
+   cost about US$0.2 to US$43 (first note, approved
+   2026-10-04T02:49:10Z, commit `7a41e8781`;
+   `reports/wp4b-frontier-repricing-2026-10-04.md` § 4). The clause
+   carried its own refutation: +0.0002 F1 for US$8.65 is about US$43 per
+   0.001 F1. The slip had passed the original signing, the findings
+   (§§ 5 and 7.4, where stride B's last step read "US$17,400" for about
+   US$17), and the claims inventory, whose rows R3-11 and R6-16 quoted it
+   (`docs/paper/results-claims-inventory-2026-09-12.md` § Changelog
+   2026-10-04). It was found because the signature policy requires
+   re-deriving a row's quoted figures before a sign-off; neither audit lens
+   had been asked to read the row's prose
+   (`docs/notes/reflections/llm-observations.md`, Session 158).
+2. **A universal (found in S159, refreshing the findings).** Computing
+   every ladder's step costs to quote a range showed the last step to be
+   the dearest per 0.001 F1 on 17 of 23 ladders. The exceptions are GS
+   stride A, both stride B ladders, the fourth cell, MINIMAL image T 0.3
+   and HIGH image T 1.0. Recomputed from the pre-WP4b tables (`git show
+   0f484491c^`), both Phase 2 exceptions held, so the claim had been false
+   since publication (abductive entry "A universal that survived a
+   signature", Session 159). The same refresh found § 5's "always by the
+   smallest margin" false on stride B and § 1's "six of the eight" to be
+   five (`479bcb895`, `393dc1b2a`). Second note: ruling D25, approved
+   2026-10-04T03:46:42Z, commit `1c5e8fb84`.
+3. **A double rounding (found in S159).** The first note had moved the
+   low end of K = 3's cost share to "32 %", read from the generated Phase 2
+   table. Builder v1.2.0 rounded each share to three decimals and then
+   formatted a whole percentage, so 31.49 % rendered as 32 % (ruling D27;
+   fix `9cab57ad9`, regeneration on sapphire `32d0c6445`, committed-output
+   test `518b59d0f`). The second note restored 31 %. Rounding once also
+   moved two gain shares (92 to 91 % and 76 to 75 %).
+
+**Reading.** Each error passed a check that compared figures with their
+anchors without re-deriving what the sentence claimed: the unit (divide
+the row's own two numbers), the quantifier (recompute it over the whole
+table, not over the cases quoted), and the precision path (one rounding
+from the raw quotient). The signing re-derived the figures; nobody
+re-derived the universal the figures were offered as evidence for. The
+third error is the sharpest: a correction note introduced it, because a
+display artefact of a generated table was quoted as a number.
+
+**What follows.**
+
+1. **At a sign-off and at every refresh, re-derive the prose as well as
+   the figures**: units by division, every "every", "always" and "never"
+   over the full table, and any percentage from the raw ratio.
+2. **The signed outcome still reads as published.** Under D9 and D25 the
+   corrections live in the `attests` notes. A reader of the `outcome` field
+   alone still meets "the worst buy on every ladder" and "US$1,100 to
+   US$43,000 per 0.001 F1" (read 2026-10-07). Anything that quotes the
+   outcome should quote the notes with it.
+3. **For the paper:** quote the corrected forms that claims rows R3-11 and
+   R6-16 now carry: about US$17 per 0.001 F1 for stride B's last step,
+   about US$43 for the 3.7 family's, and "dearest on 17 of the 23
+   ladders".
+
+**Related.** Obs 501 (the same day's frontier hole), Obs 499 (records
+corrected once their inputs were re-tested), Obs 426 (rounding at a
+four-decimal half-boundary, the E82 family); rulings D9, D25 and D27
+(`planning/pi-decisions-2026-09-20.md`); session reflection, Session 159
+(`docs/notes/reflections/session-reflection.md`).
+
+## Observation 503: A pre-rerun sidecar is a snapshot of the same jobs, not superseded spend — the ledger built to make the project total more honest first booked US$27.85 twice (Session 158, 2026-10-03)
+
+**Context.** Held over at the S158 close as candidate (c)
+(`planning/paper-writeup-continuity.md`, "S158 CLOSE" block), approved by
+the PI on 2026-10-07 and written then. Ruling D22 (2026-10-03) keeps
+superseded and aborted executions out of every pass and configuration
+cost and counts them in the project total. WP3 (PR #21, merged 2026-10-03
+as `d79876f21`) created their ledger,
+`data/pricing/superseded-executions.json`. Its first version listed the
+`run.meta.pre-rerun-1.json` sidecars of the Gemini 3 image row's K = 1 and
+K = 5 arm 2 verifier legs
+(`outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/`,
+`verify_k1_arm2/` and `verify_k5_arm2/`) as superseded executions, priced
+at US$15.08 and US$12.77.
+
+**What was established.**
+
+1. **The sidecar is the batch path's preservation record.** Batch mode
+   rebuilds the request set for the whole manifest, so its meta describes
+   only itself; since the overwrite fix of 2026-09-14 the predecessor meta
+   is kept as `run.meta.pre-rerun-N.json` rather than summed
+   (`reports/cleanup-meta-fix-2026-09-14.md` § 2.1).
+2. **After a batch-recover the live meta already contains it.** The K = 1
+   live meta holds 22,785 results from `batch_results.jsonl`, the
+   sidecar's 18,785 plus 4,000 recovered rows, at 1,792 input tokens per
+   request in both (33,662,720 = 18,785 × 1,792; 40,830,720 = 22,785 ×
+   1,792). The K = 5 sidecar's 16,000 results are inside the live meta's
+   45,786. No request was billed twice (the ledger's `withdrawn` entries
+   give both derivations).
+3. **Found before merge.** The round-7 re-audit's implementation lens
+   caught it. Both entries were withdrawn and kept with their reasons, and
+   the ledger's priced total at merge was US$0.11
+   (`planning/cost-accounting-fix-plan-2026-09-21.md` § 8 item 15; PR #21
+   description). The entries had also named the wrong model
+   (`gemini-3-flash-preview`, where the metas record `gemini-3.7-flash`).
+
+**Reading.** A file named for the past looks like past spend. The sidecar
+exists because the lesson of Obs 380 (metas are last-writer-wins) was
+taken: the fix keeps every state a meta has held. A ledger then read the
+preservation artefact as an execution. The double count sat in the one
+structure built to make the total more honest, and the session reflection
+counts it among the session's most consequential findings, beside Obs
+502's units slip (`docs/notes/reflections/session-reflection.md`, Session
+158).
+
+**What follows.**
+
+1. **Before booking a file as spend, test containment at the level of
+   results**: count its results and its tokens per request against the live
+   record, and book it only if its requests are absent there. The ledger's
+   `_README` now says so: a pre-rerun sidecar "is not by itself a
+   superseded execution", so check the results file before listing one.
+2. **A preservation mechanism needs its consumers told.** The fix of
+   2026-09-14 documented the sidecar where its writer is described; the
+   ledger written nineteen days later booked it as spend.
+
+**Related.** Obs 380 (`run.meta.json` is last-writer-wins), Obs 495,
+Obs 500 (a check that compares a record with its own source), Obs 502;
+ruling D22 (`planning/pi-decisions-2026-09-20.md`).
+
+## Observation 504: A generator's committed output is only as machine-independent as its inputs — the sidecar drift check failed on sapphire alone, the third instance of a class each tool has had to learn separately (Session 159, 2026-10-04)
+
+**Context.** Held over at the S159 close as candidate (e)
+(`planning/paper-writeup-continuity.md`, "S159 CLOSE" block), approved by
+the PI on 2026-10-07 and written then. WP4 (PR #23) back-filled audited
+`cost_audit.json` sidecars beside committed metas
+(`scripts/backfill_cost_audit_sidecars.py`; ruling D28). Its tier-2 drift
+test, which rebuilds the plan and compares it with the committed sidecars,
+passed on amd-tower and failed on sapphire at the same commit with "2
+missing" (abductive entry "Drift on one machine only",
+`docs/notes/reflections/abductive-reasoning.md`, Session 159).
+
+**What was established.**
+
+1. **The difference was untracked files.** The two missing sidecars
+   belonged to merged batch-staging metas for runs 4 and 5 of the 3.7
+   image campaign: on sapphire they existed, untracked and not ignored; on
+   amd-tower they did not. The back-fill enumerated whatever `*.meta.json`
+   the disc held. The register did not depend on them; its run 4 and run 5
+   rows cite the committed merged metas under `run_4/` and `run_5/`.
+2. **The fix scoped the input to git.** `c1c79d083` makes the git-tracked
+   metas the default scope, with a test on a real checkout that holds one
+   tracked and one untracked meta; the final re-audit found the plan
+   identical on both machines (1,545 metas, 729 sidecars; abductive
+   entry).
+3. **The class is not new.** Obs 383 (2026-08-02: one recompute, two
+   machines, two mismatch counts), Obs 394 (2026-08-04: a validator
+   returned 128/128 valid on one host and 3 failures on the other, all from
+   untracked anchors), and `8649b0758` (2026-09-16: the generated-file
+   registry had recorded 93 gitignored files, so its drift guard "could
+   only pass on the machine that built it"; enumeration now goes through
+   `git ls-files`). Each fix was local to its tool. At `3a1ce64eb` seven
+   scripts define their own tracked-file helper (`grep "def .*tracked"
+   scripts/*.py`), and there is no shared one.
+
+**Reading.** "The committed sidecars are current" read as a property of a
+commit; it was a property of the commit plus each machine's untracked
+files. A drift check on a generator that reads the filesystem certifies
+the machine it runs on. The lesson has now been learned three times, once
+per tool, because nothing makes a new generator inherit it.
+
+**What follows.**
+
+1. **A generator whose output is committed reads only committed inputs**
+   by default, with any wider scope named on its command line, as
+   `c1c79d083` allows for a named directory.
+2. **A shared enumeration helper** (one tracked-file function in a `lib_`
+   module, keeping `8649b0758`'s rule that outside a repository the filter
+   is skipped rather than emptied) would let the next generator inherit
+   the rule. Not built; a proposal.
+3. **Obs 394's rule stands**: run drift checks on both hosts, and read a
+   divergence as a finding about the inputs, not the environment.
+
+**Related.** Obs 383, Obs 394, Obs 502 (another check that passed for
+reasons it did not test); the S159 close's carry-forward, "Generators must
+read committed inputs only".
+
+## Observation 505: Consensus shrinks the gold-standard replicate floor only modestly — by about 30 % at 4-of-5 — and not at all at unanimity (Session 162, 2026-10-06)
+
+**Context.** Candidate (i) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07. Rulings D45 and D46 require a configuration claim
+to clear a run-to-run floor, the 95th percentile of replicate |ΔF1|. W2's
+single-pass floors were 0.034 on Era-1 (340 tiles) and 0.030 on the
+384 px gold standard (487 tiles)
+(`planning/w27-configuration-level-testing-2026-10-05.md` § 2). Most of
+the paper's cells are consensus cells, so W2.7 measured consensus floors
+from disjoint K-subsets of existing 10- and 30-pass pools, with no API
+call (`reports/w27-replicate-floors-2026-10-06.md` § 3;
+`gs_consensus_pairs.csv` in its scripts directory).
+
+**What was established.**
+
+1. **A modest shrink below unanimity.** At K = 5, t = 4 the floor is
+   0.024 on Era-1 (105 pairs) and 0.021 on the 384 px corpus (34 pairs),
+   about 30 % below the single-pass floors. Of the 30 (corpus, K, t) cells
+   below unanimity, 29 sit under their single-pass floor; Era-1 K = 10,
+   t = 9 (0.038) is the exception (§ 3 table).
+2. **No shrink at unanimity.** At t = K the floor is at the single-pass
+   size or above it in five of six (corpus, K) cells: Era-1 K = 3 0.032,
+   K = 5 0.040, K = 10 0.058; 384 px K = 3 0.047, K = 5 0.030. The sixth,
+   384 px K = 10 (0.025), rests on six pairs. A unanimity cell keeps few
+   detections, so one pass's disagreement moves its F1 more than it moves
+   a looser cell's (§ 3 reading).
+3. **The tile-swap test runs at its nominal rate on consensus
+   replicates.** It rejects 111 of the 2,216 within-execution pairs
+   (5.0 %) at α = 0.05, against 1.6 to 3.5 % between single passes, so a
+   significant p between two consensus cells is still not, alone, evidence
+   that their configurations differ.
+4. **The first reading said the opposite.** The report's first § 3 bullet
+   said consensus "does not shrink" the floor, and was corrected the same
+   day (report § Changelog, "§ 3's first reading corrected"). The S162
+   close block's summary of the work still carries the first wording
+   ("consensus does not shrink the single-pass floor, unanimity widens
+   it").
+
+**Reading.** Pooling passes buys less stability than intuition suggests.
+At the 4-of-5 and unanimity thresholds the boards mostly use, a consensus
+cell is at best about 30 % quieter than a single pass, and at unanimity no
+quieter. Obs 362's working figure for the gold standard's resolving power,
+about ±0.03 F1, is now a measured floor at most of those operating points.
+
+**What follows.**
+
+1. **Quote the floor at the claim's own (K, t)**, not the single-pass
+   figure. D46's gold-standard floors (report § 3): Era-1 K = 5 t = 4
+   0.024, t = 5 0.040; K = 10 t = 8 0.030, t = 10 0.058; 384 px K = 5
+   t = 4 0.021, t = 5 0.030.
+2. **Do not cite "consensus does not shrink the floor"** from the S162
+   close block; cite § 3 as corrected.
+3. **These are within-execution floors.** Pairs from different dates on
+   the same corpora can be wider (Obs 497; report § 4), and the 55-map
+   board has floors of its own (Obs 506).
+
+**Related.** Obs 362 (the gold standard resolves about ±0.03), Obs 498
+(the retired bootstrap over-rejected on replicate pairs), Obs 499 (D45's
+two-part test, applied), Obs 497, Obs 506; rulings D45-D47
+(`planning/pi-decisions-2026-09-20.md`).
+
+## Observation 506: On the 55-map corpus the verifier absorbs most of the proposer's cross-date drift and drifts a little itself — the 3-of-5 cells mix verifier dates, and a one-date reading moves their contrast by 0.001–0.002 (Session 162, 2026-10-06)
+
+**Context.** Candidates (j) and (k) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07 and written as one entry because together they split
+the board's execution component into its two stages. Obs 497 showed that
+the same request sent on two dates can give systematically different
+outputs. W2.7 asked how much of that reaches the 55-map board's
+proposer-verifier cells (`reports/w27-replicate-floors-2026-10-06.md`
+§§ 4, 6 and 6a; scripts and raw outputs in its scripts directory). Two
+free natural experiments exist. The uplift family (UPL) is TM's five
+passes of 2026-04-18 plus five of 2026-06-11, with every candidate of three
+or more votes of the ten re-verified on 2026-06-11. And the board's 3-of-5
+cells (TH7, T03 and TM at k3) add a vote-3 shell verified on 2026-06-06,
+40 to 49 days after their 4-of-5 legs (§ 7.2).
+
+**What was established.**
+
+1. **The proposer drifted.** As proposer-only consensus at 50 m, UPL's two
+   halves differ at K = 5 by 0.018 (t = 3), 0.025 (t = 4) and 0.030
+   (t = 5), all p ≤ 0.0001, the June half scoring higher with about 700
+   to 940 fewer detections (§ 4 table; `gs_consensus_pairs.csv`, group
+   12). The within-execution single-pass median on that corpus is 0.003.
+2. **Through a fixed verifier most of it vanishes.** Rebuilt with the
+   board's rung mechanism, both halves inheriting the June-11 verifier
+   probabilities, the same halves differ by 0.003 (k3), 0.004 (k4) and
+   0.006 (k5), none significant (p 0.32, 0.35, 0.24), the June cells
+   holding 53 to 89 fewer detections; the sign changes between thresholds
+   (§ 6; `subset_pairs.csv`, family UPL). The verifier re-scores each
+   candidate on its crop, so a candidate one execution proposes and the
+   other does not changes the cell only if the verifier also accepts it.
+3. **The verifier drifted too, a little.** Re-read with their June-11
+   probabilities (matched within 2 m), TM's April-verified 4-of-5
+   candidates move TM-k4 from 0.7826 to 0.7867, +0.0041, tile-swap
+   p = 0.038 (+0.0036 on byte-identical crops, +0.0069 at a 5 m match);
+   true positives 3,476 → 3,495, false positives 389 → 372 (§ 6a;
+   `vdate-results.json`). At 0.15, 3.8 to 4.1 % of decisions flip across
+   the dates against 2.4 to 2.5 % in the same-week control, balanced in
+   direction (148 up, 146 down). Re-weighted for the two sets' different
+   probability mix, the excess shrinks to about 0.4 to 0.9 percentage
+   points (`verifier-date-tm-check.md` § 2). The p-values are not
+   corrected for the several variants tested.
+4. **The mixed-date contrast survives a one-date reading on TM.** With
+   every TM candidate read at its June-11 probability, k3 − k4 at 0.15
+   moves from +0.0275 to +0.0264 and oracle against carried from +0.0277
+   to +0.0255, both still p < 0.0001: mixing dates inflated them by 0.001
+   to 0.002 (§ 6a).
+5. **Drift is not uniform across configurations.** On the gold standard,
+   17 to 23 days apart, the image track and text MIN at T = 0.0 drifted;
+   text HIGH T0.7, text MIN T0.3 and text HIGH T0.0 did not (§ 4, groups
+   1, 2 and 4 to 7). Obs 497's serving-drift reading applies to some
+   settings, not to all.
+
+**Reading.** The two-stage architecture is more robust to execution drift
+than its proposer: on the one 54-day pair available, the verifier turns a
+0.018-0.030 proposer gap into a 0.003-0.006 cell gap. But the verifier is a
+hosted preview model too, and it moved by a few thousandths of F1 between
+April and June on identical requests. The cross-execution floor for a
+55-map board claim at N = 5 therefore has a proposer part (0.006, measured
+on the one pair), a verifier-vintage part (0.004 to 0.007) and the
+same-week re-invocation band (about 0.001); the report puts the total at
+about 0.011 to 0.013 (§ 6).
+
+**What follows.**
+
+1. **The k3 cells are mixed-verifier-execution cells**; name the date mix
+   wherever a 3-of-5 against 4-of-5 contrast is quoted. TM is checked; TH7
+   and T03 have no later re-verification of their 4-of-5 sets. TH7's
+   +0.022 is far above a 0.001-0.002 date effect. T03's +0.009 is the one
+   contrast close enough that a same-date re-verification of its
+   vote-3-and-above set (13,945 candidates, about US$10; optional under
+   D47) would settle it.
+2. **April-verified cells (TH7-k4, T03-k4, TM-k4, IM) carry a vintage
+   component** of a few thousandths of F1 against cells verified later
+   (§ 6a).
+3. **A range in the report overstates its own table.** §§ 4 and 6 give
+   UPL's proposer-only gap as 0.020 to 0.030 "at every threshold, all
+   p < 0.0001". The § 4 table supports that at t = 4 and 5 at 50 m; at
+   t = 3 the gap is 0.018 at 50 m and 0.011 at 20 m (p = 0.0013), and at
+   K = 5, t = 2 it is 0.001 at 20 m (p = 0.70; `gs_consensus_pairs.csv`).
+   The conclusion stands; the range should read 0.018 to 0.030 at 50 m.
+4. **One flagged pattern is unexamined.** Cross-date up-flips lie nearer
+   reference mounds than down-flips (56 % against 43 % within 50 m of an
+   r2 point), while the same-week control runs the other way on only 18
+   and 17 flips (`verifier-date-tm-check.md` § 2). If it holds, the June
+   verifier was slightly better, not merely different.
+
+**Related.** Obs 497 (same request, different dates), Obs 354 (the T = 0
+verifier flips about 3 % of candidates per re-invocation, negligibly at
+F1), Obs 364 (the uplift; § 7.2 rows R6-12a and R6-12b now read its gain as
+confounded with execution and its "half the gap" as inside the floor),
+Obs 505; rulings D45-D47 (`planning/pi-decisions-2026-09-20.md`).
+
+## Observation 507: The April 2026 consensus sweeps were built in lexicographic pass order, and greedy clustering makes order matter — a numeric-order rebuild of the same passes moves feature counts by up to about 1 % (Session 162, 2026-10-06)
+
+**Context.** Candidate (l) of the S162 close
+(`planning/paper-writeup-continuity.md`, "S162 CLOSE" block), approved by
+the PI on 2026-10-07. Before reading any floor, W2.7 required its
+in-memory consensus builder to reproduce four committed
+`consensus/consensus_t<t>.geojson` sweeps
+(`reports/w27-replicate-floors-2026-10-06.md` § 2; `gs_gates.json` and
+`gs_run.log` in its scripts directory).
+
+**What was established.**
+
+1. **Exact reproduction needs the original order.** The two three-pass
+   pools reproduce at every threshold in numeric order (for three passes
+   the two orders coincide). The 30-pass and 10-pass pools
+   (`pv-diag-384::flash-high-text-n5-text-t0.7`,
+   `pv-diag-384::flash-minimal-text-n30-t07-text-t0.3`) reproduce at all
+   30 and 10 thresholds only with the passes in lexicographic run order
+   (`run_1, run_10, run_11, …, run_2, …`), which is how the April 2026
+   builds iterated `run_*` directories (§ 2; `gs_run.log` lines 1 and 3).
+2. **The current builder orders numerically.** `resolve_pass_files` in
+   `scripts/merge_passes.py` returns the passes `for pass_num in
+   sorted(pass_ids)`.
+3. **The effect is small but not nil.** Greedy star clustering seeds
+   clusters in pass order, so a numeric-order rebuild moves feature counts
+   by about 0.3 to 1 % at most thresholds; for the 30-pass T0.7 HIGH pool,
+   11,771 → 11,731 at t = 1 and 1,991 → 2,006 at t = 5 (§ 2; the rebuilt
+   counts are recorded in the report's prose, not in a committed output).
+   The builder's own docstring calls the order effect "minimal at the
+   20 m tolerance" (`cluster_across_passes`); this is its first
+   measurement.
+4. **The provenance record cannot recover the order.**
+   `build_pass_provenance` stores each pass file's path and blob hash
+   sorted by `(pass_id, path)`, so it pins the input set, not the order the
+   clustering consumed it in.
+5. **Nothing committed moves; a regeneration would.** No committed result
+   is affected, and the order should be pinned before any committed union
+   is rebuilt (§ 2; § 8 item 4).
+
+**Reading.** This is Obs 426's mechanism one layer down. There, E82's
+batch scoring had consumed passes lexicographically and the replay
+numerically, and gates comparing per-run lists or rounded means failed
+correct data. Here the order enters the geometry itself: which detection
+seeds a cluster decides which neighbours join it. In both cases the
+divergence starts at ten passes, where lexicographic and numeric order
+first differ. Replay fidelity needs the consumption order recorded, not
+only the input set.
+
+**What follows.**
+
+1. **Pin the order before regenerating a committed union** (report § 8
+   item 4; the S162 close's carry-forward): record the consumption order
+   beside the pass provenance, and have the builder replay it.
+2. **The effect on F1 is not measured.** A change of 0.3 to 1 % in
+   feature count at fixed passes is a third source of variation within a
+   configuration, beside pass sampling and execution date; whether it is
+   small against the floors of Obs 505 is untested, and one re-scored
+   numeric-order rebuild would say.
+3. **The docstring's "minimal" should cite this measurement.**
+
+**Related.** Obs 426 (the E82 pass-order and rounding-boundary family),
+Obs 419 (the D6 resolver audit; Obs 426 traces numeric replay to that
+resolver), Obs 505, Obs 502 (a rounding path as a source of error).
