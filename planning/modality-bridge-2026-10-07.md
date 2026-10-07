@@ -143,16 +143,15 @@ SDK-serialised).
 
 ### 4.1 Preconditions
 
-1. Stage 0 (gate § 2) shows both `gemini-3-flash-preview` and
-   `gemini-3.7-flash` in the served-model listing. Its result is not recorded
-   in the repository as of `443ae9877`.
-2. Run A's legs are terminal and committed, and their File API uploads are
-   deleted (agent guidance § Compute Location), so Stage 1 has its headroom
-   (§ 4.3).
-3. The PI approves this card: the commands, the ceiling of § 5 and the
-   decisions of § 10.
-4. This branch is merged and pulled into sapphire's main checkout, which holds
-   `.env`, `.venv` and the untracked `inputs/tiles_384_ov192`.
+1. **Met.** Stage 0 (gate § 2) found both `gemini-3-flash-preview` and
+   `gemini-3.7-flash` served on 2026-10-07 (gate status, `b56300cdc`).
+2. **Met.** Run A's legs are done and committed (`f13f7b308`) and their File
+   API uploads deleted, 9 of 9 (gate status, `b56300cdc`), so Stage 1 has its
+   headroom (§ 4.3), provided no other leg is lodged meanwhile.
+3. **Open.** The PI approves this card: the commands, the ceiling of § 5 and
+   the decisions of § 10.
+4. **Open.** This branch is merged and pulled into sapphire's main checkout,
+   which holds `.env`, `.venv` and the untracked `inputs/tiles_384_ov192`.
 
 ### 4.2 Commands
 
@@ -337,7 +336,10 @@ deletes it. Tier-1 tests: `tests/test_bridge_dryrun_harness.py` (a deliberate
 breakage of the connect guard turns the socket test red).
 
 **Results** (sapphire, disposable worktree at `443ae9877` plus this branch's
-files, 2026-10-07; full record in the rehearsal JSON):
+files, 2026-10-07; full record in the rehearsal JSON). The branch was then
+rebased onto `930456695`; no script, prompt, input, `config.py` or lock-file
+change lies between the two (only `.gitignore` gained a verifier-chunk rule),
+so the rehearsal stands for the rebased branch:
 
 | Arm | Passes | Requests per pass (jobs) | Dispatched tiles: bridge / original | Exit; breaches; stub clients | Request file per pass | Signature (tile elided) |
 |---|---:|---|---|---|---:|---|
@@ -399,7 +401,7 @@ preregistration does not govern this post-hoc replication (D47, D49).
    Image flag              PASS     PASS      PASS      PASS
    Temperature shadowed    PASS     PASS      PASS      PASS
    Thinking level          PASS     PASS      PASS      PASS
-   Model version drift     PASS     PASS      PASS      PASS   (pinned; Stage 0 confirms)
+   Model version drift     PASS     PASS      PASS      PASS   (pinned; both served, Stage 0)
    Tile size               PASS     PASS      PASS      PASS
    Wrong tile set          PASS     PASS      PASS      PASS
    Wrong instruction       PASS     PASS      PASS      PASS
@@ -425,8 +427,8 @@ preregistration does not govern this post-hoc replication (D47, D49).
 
 7. COMPLETENESS — not checkable offline: the model snapshot behind each name;
    Batch API safety defaults; 3.7 image implicit-cache hits under batch (cost
-   only); the SDK version of the original runs; Run A's File API usage at
-   launch; the Stage 0 listing (not recorded in the repository)
+   only); the SDK version of the original runs; File API usage at launch
+   time (Run A's uploads are deleted; anything lodged later is not known)
 
 BLOCKERS: none outstanding. Found and fixed in the launcher: the 3.7 image
   pass's single request file (3.77 GB) exceeded the 2 GB per-file limit
@@ -436,12 +438,12 @@ WARNINGS:
   2. Safety settings are not sent in batch (originals: OFF x 4; 0 blocks)
   3. 3.7 image cost depends on unmeasured implicit caching (US$18–56)
   4. File API: 30.4 GB of requests against a 19.47 GB budget; lodging is
-     staged and Run A's uploads must be cleared first
+     staged (peak 17.86 GB), so nothing else may be lodged meanwhile
   5. Parse-failure retries are synchronous inline calls (for G3 image they
      bypass the cache for the few retried tiles)
-  6. Stage 0 result not recorded
 
-OVERALL: READY TO LAUNCH, once the four preconditions of § 4.1 hold
+OVERALL: READY TO LAUNCH, once § 4.1's two open preconditions hold
+  (PI approval of this card; the branch merged on sapphire)
 ```
 
 ## 8. Stage 2: plan, and what its own gate must check
