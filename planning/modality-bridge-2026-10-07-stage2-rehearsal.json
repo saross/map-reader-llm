@@ -1,0 +1,2133 @@
+{
+ "_README": "API-free validation of Run B Stage 2 (planning/modality-bridge-2026-10-07-stage2.md), made 2026-10-07/08 on sapphire from a disposable worktree at origin/main (git_head fields) plus the uncommitted Stage 2 launcher, and from sparse worktrees at the original verifier legs' commits. No API call was made: the verifier rehearsal ran under scripts/verifier_dryrun_harness.py (sockets blocked, SDK client stubbed); no API key was reachable from the worktree. Sections: union_validation (the four original unions rebuilt by scripts/modality_bridge_union.py from their own layout and from a batch-layout replica with decoy chunks, compared with the committed unions), crop_reextraction (run_pv.py extract of each committed union against the original crops; provenance), verifier_rehearsal (per original leg: the Stage 2 batch dry run at HEAD on the full original crop manifest, the original commit's real-time request captured on candidates 0-2, and the field-by-field comparison), verifier_signatures (tile-elided request signature per verifier, enforced by the launcher), anchor_gate (scripts/modality_bridge_anchors.py via the launcher), disjoint_k5_spread, and launcher_tests (stand-in Stage 1 tree built from the original passes).",
+ "union_validation": {
+  "git_head": "5d868f032a44f4075a586ef7df601ff2528771fa",
+  "all_equal": true,
+  "originals": {
+   "g3-text": {
+    "cell_dir": "outputs/grid-2026-08-18/g384_ov192",
+    "k": 10,
+    "committed_union": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+    "passes": [
+     [
+      "run_1",
+      [
+       1398
+      ],
+      3198,
+      1844
+     ],
+     [
+      "run_2",
+      [
+       1398
+      ],
+      3202,
+      1831
+     ],
+     [
+      "run_3",
+      [
+       1398
+      ],
+      3182,
+      1882
+     ],
+     [
+      "run_4",
+      [
+       1397,
+       1
+      ],
+      3208,
+      1898
+     ],
+     [
+      "run_5",
+      [
+       1398
+      ],
+      3168,
+      1868
+     ],
+     [
+      "run_6",
+      [
+       1398
+      ],
+      3169,
+      1846
+     ],
+     [
+      "run_7",
+      [
+       1398
+      ],
+      3213,
+      1884
+     ],
+     [
+      "run_8",
+      [
+       1397,
+       1
+      ],
+      3217,
+      1900
+     ],
+     [
+      "run_9",
+      [
+       1398
+      ],
+      3246,
+      1918
+     ],
+     [
+      "run_10",
+      [
+       1397,
+       1
+      ],
+      3176,
+      1874
+     ]
+    ],
+    "passes_columns": [
+     "run",
+     "tiles per file",
+     "raw detections",
+     "after 20 m dedup"
+    ],
+    "legacy": {
+     "n_built": 3319,
+     "n_committed": 3319,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "a61bdb3ef726cc853e523e388b45ef4e1b8aa5e22aca9fd64bbe870d9ec12845"
+    },
+    "batch_replica": {
+     "n_built": 3319,
+     "n_committed": 3319,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "a61bdb3ef726cc853e523e388b45ef4e1b8aa5e22aca9fd64bbe870d9ec12845"
+    },
+    "replica_layout": {
+     "main": 10,
+     "fragments": 3,
+     "chunks": 30
+    },
+    "replica_files_per_pass": [
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     2,
+     1,
+     2
+    ]
+   },
+   "g3-image": {
+    "cell_dir": "outputs/image-b-gs-2026-08-28/g384_ov192_image",
+    "k": 10,
+    "committed_union": "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/union_k10.geojson",
+    "passes": [
+     [
+      "run_1",
+      [
+       1397,
+       1
+      ],
+      2431,
+      1531
+     ],
+     [
+      "run_2",
+      [
+       1398
+      ],
+      2392,
+      1470
+     ],
+     [
+      "run_3",
+      [
+       1397,
+       1
+      ],
+      2367,
+      1463
+     ],
+     [
+      "run_4",
+      [
+       1398
+      ],
+      2394,
+      1482
+     ],
+     [
+      "run_5",
+      [
+       1398
+      ],
+      2441,
+      1549
+     ],
+     [
+      "run_6",
+      [
+       1397,
+       1
+      ],
+      2485,
+      1560
+     ],
+     [
+      "run_7",
+      [
+       1398
+      ],
+      2429,
+      1484
+     ],
+     [
+      "run_8",
+      [
+       1397,
+       1
+      ],
+      2412,
+      1544
+     ],
+     [
+      "run_9",
+      [
+       1396,
+       2
+      ],
+      2440,
+      1541
+     ],
+     [
+      "run_10",
+      [
+       1398
+      ],
+      2459,
+      1537
+     ]
+    ],
+    "passes_columns": [
+     "run",
+     "tiles per file",
+     "raw detections",
+     "after 20 m dedup"
+    ],
+    "legacy": {
+     "n_built": 4065,
+     "n_committed": 4065,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "2bd6008decd68f9058baab2d0b48c74e926c4ddce1be37f491760afe7110ea9f"
+    },
+    "batch_replica": {
+     "n_built": 4065,
+     "n_committed": 4065,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "2bd6008decd68f9058baab2d0b48c74e926c4ddce1be37f491760afe7110ea9f"
+    },
+    "replica_layout": {
+     "main": 10,
+     "fragments": 5,
+     "chunks": 30
+    },
+    "replica_files_per_pass": [
+     2,
+     1,
+     2,
+     1,
+     1,
+     2,
+     1,
+     2,
+     2,
+     1
+    ]
+   },
+   "g37-text": {
+    "cell_dir": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37",
+    "k": 5,
+    "committed_union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+    "passes": [
+     [
+      "run_1",
+      [
+       1392,
+       6
+      ],
+      1590,
+      644
+     ],
+     [
+      "run_2",
+      [
+       1389,
+       9
+      ],
+      1566,
+      628
+     ],
+     [
+      "run_3",
+      [
+       1391,
+       7
+      ],
+      1582,
+      646
+     ],
+     [
+      "run_4",
+      [
+       1396,
+       2
+      ],
+      1600,
+      651
+     ],
+     [
+      "run_5",
+      [
+       1398
+      ],
+      1607,
+      655
+     ]
+    ],
+    "passes_columns": [
+     "run",
+     "tiles per file",
+     "raw detections",
+     "after 20 m dedup"
+    ],
+    "legacy": {
+     "n_built": 791,
+     "n_committed": 791,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "3d315de606525941969c71e713c1cc6932803556b1096858b865767d82682550"
+    },
+    "batch_replica": {
+     "n_built": 791,
+     "n_committed": 791,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "3d315de606525941969c71e713c1cc6932803556b1096858b865767d82682550"
+    },
+    "replica_layout": {
+     "main": 5,
+     "fragments": 4,
+     "chunks": 15
+    },
+    "replica_files_per_pass": [
+     2,
+     2,
+     2,
+     2,
+     1
+    ]
+   },
+   "g37-image": {
+    "cell_dir": "outputs/gemini37-image-gs-2026-09-01/g384_ov192_g37img",
+    "k": 5,
+    "committed_union": "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/union_k5.geojson",
+    "passes": [
+     [
+      "run_1",
+      [
+       1292,
+       106
+      ],
+      1653,
+      590
+     ],
+     [
+      "run_2",
+      [
+       4,
+       1394
+      ],
+      1659,
+      608
+     ],
+     [
+      "run_3",
+      [
+       1,
+       1397
+      ],
+      1663,
+      590
+     ],
+     [
+      "run_4",
+      [
+       132,
+       1266
+      ],
+      1654,
+      589
+     ],
+     [
+      "run_5",
+      [
+       1273,
+       125
+      ],
+      1668,
+      609
+     ]
+    ],
+    "passes_columns": [
+     "run",
+     "tiles per file",
+     "raw detections",
+     "after 20 m dedup"
+    ],
+    "legacy": {
+     "n_built": 674,
+     "n_committed": 674,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "0382b2c9b5ed86168df19bdfbb086aea139a1184533fb8a184f7ff67ceb1cc05"
+    },
+    "batch_replica": {
+     "n_built": 674,
+     "n_committed": 674,
+     "equal": true,
+     "bytes_identical": true,
+     "max_coord_diff_deg": 0.0,
+     "coord_mismatches": 0,
+     "vote_mismatches": 0,
+     "source_tile_mismatches": 0,
+     "committed_sha256": "0382b2c9b5ed86168df19bdfbb086aea139a1184533fb8a184f7ff67ceb1cc05"
+    },
+    "replica_layout": {
+     "main": 5,
+     "fragments": 5,
+     "chunks": 15
+    },
+    "replica_files_per_pass": [
+     2,
+     2,
+     2,
+     2,
+     2
+    ]
+   }
+  },
+  "rerun_via_launcher": {
+   "git_head": "2956c4250bc7ef63d5cb471de69e5f7cab50e62e",
+   "all_equal": true,
+   "bytes_identical": {
+    "g3-text": [
+     true,
+     true
+    ],
+    "g3-image": [
+     true,
+     true
+    ],
+    "g37-text": [
+     true,
+     true
+    ],
+    "g37-image": [
+     true,
+     true
+    ]
+   }
+  },
+  "rerun_after_resolver_fix": {
+   "git_head": "dadf935b4472972518355fb04ad94f3b0b9dc06c",
+   "all_equal": true,
+   "bytes_identical": {
+    "g3-text": [
+     true,
+     true
+    ],
+    "g3-image": [
+     true,
+     true
+    ],
+    "g37-text": [
+     true,
+     true
+    ],
+    "g37-image": [
+     true,
+     true
+    ]
+   }
+  },
+  "red_sentinels": {
+   "method": "real copies of scripts/ and tests/ (no symlinks); one breakage each",
+   "chunk_exclusion_removed": {
+    "db21944eb": "4 of 23 tests red",
+    "dadf935b4": "5 of 25 tests red"
+   },
+   "recovery_rounds_sorted_lexicographically": {
+    "db21944eb": "1 of 23 tests red"
+   }
+  }
+ },
+ "crop_reextraction": {
+  "g3-text": {
+   "original_crops": "outputs/grid-2026-08-18/verifier/g384_ov192/crops",
+   "n": 3319,
+   "candidates_identical": true,
+   "crop_png_byte_differences": 0,
+   "header_differences": {
+    "rasters_dir": [
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2/inputs/rasters",
+     "inputs/rasters"
+    ]
+   },
+   "provenance": "AGREES",
+   "provenance_detail": "3319 candidates against 3319 union features, paired by candidate-id-index. Every vote_count agrees."
+  },
+  "g3-image": {
+   "original_crops": "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/crops",
+   "n": 4065,
+   "candidates_identical": true,
+   "crop_png_byte_differences": 0,
+   "header_differences": {
+    "rasters_dir": [
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2/inputs/rasters",
+     "inputs/rasters"
+    ]
+   },
+   "provenance": "AGREES",
+   "provenance_detail": "4065 candidates against 4065 union features, paired by candidate-id-index. Every vote_count agrees."
+  },
+  "g37-text": {
+   "original_crops": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops",
+   "n": 791,
+   "candidates_identical": true,
+   "crop_png_byte_differences": 0,
+   "header_differences": {
+    "rasters_dir": [
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2/inputs/rasters",
+     "inputs/rasters"
+    ]
+   },
+   "provenance": "AGREES",
+   "provenance_detail": "791 candidates against 791 union features, paired by candidate-id-index. Every vote_count agrees."
+  },
+  "g37-image": {
+   "original_crops": "outputs/gemini37-image-gs-2026-09-01/verifier/g384_ov192_g37img/crops",
+   "n": 674,
+   "candidates_identical": true,
+   "crop_png_byte_differences": 0,
+   "header_differences": {
+    "rasters_dir": [
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2/inputs/rasters",
+     "inputs/rasters"
+    ]
+   },
+   "provenance": "AGREES",
+   "provenance_detail": "674 candidates against 674 union features, paired by candidate-id-index. Every vote_count agrees."
+  },
+  "g37-image_with_rasters_dir_flag": {
+   "command": "run_pv.py extract --proposer <union> --output-dir <scratch> --tiles-dir inputs/tiles_384_ov192 --rasters-dir inputs/rasters",
+   "manifest_identical_to_original": true
+  }
+ },
+ "verifier_rehearsal": {
+  "g3-text-g3v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g3-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g3-text-g3v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3-flash-preview"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 3319,
+    "n_candidates": 3319,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 3319
+    },
+    "request_files": [
+     "verifier_requests.jsonl"
+    ],
+    "request_bytes": [
+     201126773
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "8c6c9be412b83dd15394a60fdfe8de54a9a35d604216928eaeace188ee7c7b66"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "7f13952ac",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g3-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g3-text-g3v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1"
+    ],
+    "model_sent": [
+     "gemini-3-flash-preview"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "8c6c9be412b83dd15394a60fdfe8de54a9a35d604216928eaeace188ee7c7b66"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  },
+  "g3-image-g3v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g3-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g3-image-g3v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3-flash-preview"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 4065,
+    "n_candidates": 4065,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 4065
+    },
+    "request_files": [
+     "verifier_requests_chunk0.jsonl",
+     "verifier_requests_chunk1.jsonl"
+    ],
+    "request_bytes": [
+     235871520,
+     4065903
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "fcd94bd6aae8d892d2345c475946690eae48379e3611ffcb490ec9c2f24708fc"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "2ccf1b334",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g3-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g3-image-g3v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1"
+    ],
+    "model_sent": [
+     "gemini-3-flash-preview"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "fcd94bd6aae8d892d2345c475946690eae48379e3611ffcb490ec9c2f24708fc"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  },
+  "g37-text-g3v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g37-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-text-g3v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3-flash-preview"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 791,
+    "n_candidates": 791,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 791
+    },
+    "request_files": [
+     "verifier_requests.jsonl"
+    ],
+    "request_bytes": [
+     46357605
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e6f575d3ee7fa4157c098427fdde7e3116dea785a74762cf37e24c03a37022a"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "b8e130fd3",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g37-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-text-g3v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1"
+    ],
+    "model_sent": [
+     "gemini-3-flash-preview"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e6f575d3ee7fa4157c098427fdde7e3116dea785a74762cf37e24c03a37022a"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  },
+  "g37-text-g37v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g37-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-text-g37v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3.7-flash",
+     "--thinking-level",
+     "low"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 791,
+    "n_candidates": 791,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "51567e8e54f8fa3cb85262431460020de5e57ff8ea3e1d63f0523d19beb34c1e": 791
+    },
+    "request_files": [
+     "verifier_requests.jsonl"
+    ],
+    "request_bytes": [
+     46354441
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e6f575d3ee7fa4157c098427fdde7e3116dea785a74762cf37e24c03a37022a"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "LOW",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "5bd514542",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g37-text",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-text-g37v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1",
+     "--model",
+     "gemini-3.7-flash",
+     "--thinking-level",
+     "low"
+    ],
+    "model_sent": [
+     "gemini-3.7-flash"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2e6f575d3ee7fa4157c098427fdde7e3116dea785a74762cf37e24c03a37022a"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "LOW",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  },
+  "g37-image-g3v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g37-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-image-g3v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3-flash-preview"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 674,
+    "n_candidates": 674,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 674
+    },
+    "request_files": [
+     "verifier_requests.jsonl"
+    ],
+    "request_bytes": [
+     38777858
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2b7d6a0a552c7516f664c51ab2aa81d8706912255fe0035e7ba9d566a6b97241"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "1c46243d2",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g37-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-image-g3v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1"
+    ],
+    "model_sent": [
+     "gemini-3-flash-preview"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2b7d6a0a552c7516f664c51ab2aa81d8706912255fe0035e7ba9d566a6b97241"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "MINIMAL",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  },
+  "g37-image-g37v": {
+   "batch_dry_run": {
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/crops/g37-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-image-g37v-batch",
+     "--mode",
+     "batch",
+     "--dry-run",
+     "--temperature",
+     "0.0",
+     "--model",
+     "gemini-3.7-flash",
+     "--thinking-level",
+     "low"
+    ],
+    "exit_status": 0,
+    "stub_client_instances": 0,
+    "breaches": [],
+    "n_lines": 674,
+    "n_candidates": 674,
+    "keys_match_manifest": true,
+    "elided_signatures": {
+     "51567e8e54f8fa3cb85262431460020de5e57ff8ea3e1d63f0523d19beb34c1e": 674
+    },
+    "request_files": [
+     "verifier_requests.jsonl"
+    ],
+    "request_bytes": [
+     38775162
+    ],
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      "user"
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2b7d6a0a552c7516f664c51ab2aa81d8706912255fe0035e7ba9d566a6b97241"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "LOW",
+     "safety_settings": null,
+     "service_tier": null,
+     "request_keys": [
+      "contents",
+      "generation_config",
+      "system_instruction"
+     ]
+    }
+   },
+   "original_realtime_capture": {
+    "commit": "1c46243d2",
+    "argv": [
+     "--crops-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/subset/g37-image",
+     "--verifier-config",
+     "prompts/configs/verify_adversarial-text.json",
+     "--output-dir",
+     "/home/shawn/worktrees/map-reader-llm/claude-runb-stage2-scratch/rehearse/out/g37-image-g37v-rt",
+     "--mode",
+     "realtime",
+     "--workers",
+     "1",
+     "--model",
+     "gemini-3.7-flash",
+     "--thinking-level",
+     "low"
+    ],
+    "model_sent": [
+     "gemini-3.7-flash"
+    ],
+    "stub_client_instances": 1,
+    "breaches": [],
+    "attempts_per_candidate": {
+     "candidate_00000": 2,
+     "candidate_00001": 2,
+     "candidate_00002": 2
+    },
+    "first_request": {
+     "key": "candidate_00000",
+     "n_contents": 1,
+     "roles": [
+      null
+     ],
+     "parts": [
+      [
+       "text",
+       "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+       "Reference examples (text descriptions only):\n- Positive: Bur"
+      ],
+      [
+       "text",
+       "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+       "Now classify the candidate symbol at the centre of this crop"
+      ],
+      [
+       "image",
+       "image/png",
+       "2b7d6a0a552c7516f664c51ab2aa81d8706912255fe0035e7ba9d566a6b97241"
+      ]
+     ],
+     "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+     "cached_content": null,
+     "temperature": 0.0,
+     "max_output_tokens": 8192,
+     "response_mime_type": "application/json",
+     "thinking_level": "LOW",
+     "safety_settings": [
+      [
+       "HARM_CATEGORY_HARASSMENT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_HATE_SPEECH",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+       "OFF"
+      ],
+      [
+       "HARM_CATEGORY_DANGEROUS_CONTENT",
+       "OFF"
+      ]
+     ],
+     "service_tier": "flex",
+     "request_keys": null
+    }
+   },
+   "comparison": {
+    "content_diff_fields": [
+     "safety_settings",
+     "service_tier"
+    ],
+    "representation_diff_fields": [
+     "request_keys",
+     "roles"
+    ],
+    "candidates_compared": [
+     "candidate_00000",
+     "candidate_00001",
+     "candidate_00002"
+    ],
+    "first_candidate_same_fields": [
+     "cached_content",
+     "key",
+     "max_output_tokens",
+     "n_contents",
+     "parts",
+     "response_mime_type",
+     "system_instruction_sha256",
+     "temperature",
+     "thinking_level"
+    ],
+    "first_candidate_diff": {
+     "request_keys": {
+      "batch": [
+       "contents",
+       "generation_config",
+       "system_instruction"
+      ],
+      "realtime": null
+     },
+     "roles": {
+      "batch": [
+       "user"
+      ],
+      "realtime": [
+       null
+      ]
+     },
+     "safety_settings": {
+      "batch": null,
+      "realtime": [
+       [
+        "HARM_CATEGORY_HARASSMENT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_HATE_SPEECH",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        "OFF"
+       ],
+       [
+        "HARM_CATEGORY_DANGEROUS_CONTENT",
+        "OFF"
+       ]
+      ]
+     },
+     "service_tier": {
+      "batch": null,
+      "realtime": "flex"
+     }
+    }
+   }
+  }
+ },
+ "verifier_signatures": {
+  "g3": "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04",
+  "g37": "51567e8e54f8fa3cb85262431460020de5e57ff8ea3e1d63f0523d19beb34c1e"
+ },
+ "anchor_gate": {
+  "tolerance": 0.001,
+  "cells": {
+   "g3-text": {
+    "label": "g3-text",
+    "outputs_root": "outputs/grid-2026-08-18",
+    "cell": "g384_ov192",
+    "union_name": "union_k10.geojson",
+    "verify_dir": "verify",
+    "k": 10,
+    "f1": 0.8961,
+    "prob_t": 0.15,
+    "min_votes": 10,
+    "reproduced_f1": 0.8961352657004831,
+    "reproduced_micro_f1": 0.8961352657004831,
+    "reproduced_point": [
+     0.15,
+     10
+    ],
+    "precision": 0.9275,
+    "recall": 0.866822429906542,
+    "mcc": 0.7964527580096148,
+    "n_detections": 400,
+    "union_n": 3319,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   },
+   "g3-image": {
+    "label": "g3-image",
+    "outputs_root": "outputs/image-b-gs-2026-08-28",
+    "cell": "g384_ov192_image",
+    "union_name": "union_k10.geojson",
+    "verify_dir": "verify",
+    "k": 10,
+    "f1": 0.8412,
+    "prob_t": 0.15,
+    "min_votes": 9,
+    "reproduced_f1": 0.8412121212121211,
+    "reproduced_micro_f1": 0.8412121212121211,
+    "reproduced_point": [
+     0.15,
+     9
+    ],
+    "precision": 0.8740554156171285,
+    "recall": 0.8107476635514018,
+    "mcc": 0.7985238948380223,
+    "n_detections": 397,
+    "union_n": 4065,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   },
+   "g37-text-g3v": {
+    "label": "g37-text-g3v",
+    "outputs_root": "outputs/gemini37-screen-2026-08-28",
+    "cell": "g384_ov192_g37",
+    "union_name": "union_k5.geojson",
+    "verify_dir": "verify",
+    "k": 5,
+    "f1": 0.9139,
+    "prob_t": 0.1,
+    "min_votes": 5,
+    "reproduced_f1": 0.9138920780711826,
+    "reproduced_micro_f1": 0.9138920780711826,
+    "reproduced_point": [
+     0.1,
+     5
+    ],
+    "precision": 0.8984198645598194,
+    "recall": 0.9299065420560748,
+    "mcc": 0.779695835162132,
+    "n_detections": 443,
+    "union_n": 791,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   },
+   "g37-text-g37v": {
+    "label": "g37-text-g37v",
+    "outputs_root": "outputs/gemini37-screen-2026-08-28",
+    "cell": "g384_ov192_g37",
+    "union_name": "union_k5.geojson",
+    "verify_dir": "verify_swap37",
+    "k": 5,
+    "f1": 0.9265,
+    "prob_t": 0.8,
+    "min_votes": 5,
+    "reproduced_f1": 0.9264877479579929,
+    "reproduced_micro_f1": 0.9264877479579929,
+    "reproduced_point": [
+     0.8,
+     5
+    ],
+    "precision": 0.9254079254079254,
+    "recall": 0.927570093457944,
+    "mcc": 0.807772216747559,
+    "n_detections": 429,
+    "union_n": 791,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   },
+   "g37-image-g3v": {
+    "label": "g37-image-g3v",
+    "outputs_root": "outputs/gemini37-image-gs-2026-09-01",
+    "cell": "g384_ov192_g37img",
+    "union_name": "union_k5.geojson",
+    "verify_dir": "verify_arm1",
+    "k": 5,
+    "f1": 0.9254,
+    "prob_t": 0.1,
+    "min_votes": 5,
+    "reproduced_f1": 0.9254079254079255,
+    "reproduced_micro_f1": 0.9254079254079255,
+    "reproduced_point": [
+     0.1,
+     5
+    ],
+    "precision": 0.9232558139534883,
+    "recall": 0.927570093457944,
+    "mcc": 0.8191733427830541,
+    "n_detections": 430,
+    "union_n": 674,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   },
+   "g37-image-g37v": {
+    "label": "g37-image-g37v",
+    "outputs_root": "outputs/gemini37-image-gs-2026-09-01",
+    "cell": "g384_ov192_g37img",
+    "union_name": "union_k5.geojson",
+    "verify_dir": "verify_arm2",
+    "k": 5,
+    "f1": 0.9308,
+    "prob_t": 0.9,
+    "min_votes": 5,
+    "reproduced_f1": 0.9308323563892146,
+    "reproduced_micro_f1": 0.9308323563892146,
+    "reproduced_point": [
+     0.9,
+     5
+    ],
+    "precision": 0.9341176470588235,
+    "recall": 0.927570093457944,
+    "mcc": 0.8322056510501451,
+    "n_detections": 425,
+    "union_n": 674,
+    "f1_ok": true,
+    "micro_f1_ok": true,
+    "point_ok": true
+   }
+  },
+  "gaps": {
+   "g3-text - g3-image": {
+    "registered": 0.0549,
+    "reproduced": 0.054923,
+    "p_value": 0.001,
+    "ok": 1.0
+   },
+   "g37-text-g3v - g37-image-g3v": {
+    "registered": -0.0115,
+    "reproduced": -0.011516,
+    "p_value": 0.2533,
+    "ok": 1.0
+   },
+   "g37-text-g37v - g37-image-g37v": {
+    "registered": -0.0043,
+    "reproduced": -0.004345,
+    "p_value": 0.6767,
+    "ok": 1.0
+   }
+  },
+  "passed": true,
+  "failures": []
+ },
+ "disjoint_k5_spread": {
+  "what": "K = 5 unions through this chain from passes 1-5 and 6-10 of the ten-pass original cells (one execution each)",
+  "g3-text": [
+   2714,
+   2687
+  ],
+  "g3-image": [
+   2788,
+   2875
+  ],
+  "g37-text": [
+   791,
+   773
+  ]
+ },
+ "launcher_tests": {
+  "stand_in_tree": "scratch-out/fake-runb: each arm laid out from original passes in batch layout (make_batch_replica, 3 decoy chunks per pass); g37-image-cache = 3.7 image passes 1-5; g3-text-temp1 / g3-image-temp1 = Gemini 3 text / image passes 1-5",
+  "prepare_all_union_sizes": {
+   "g3-text": 3319,
+   "g3-image": 4065,
+   "g37-text": 791,
+   "g37-image": 674,
+   "g37-image-cache": 674,
+   "g3-text-temp1": 2714,
+   "g3-image-temp1": 2788
+  },
+  "refusal_and_mechanics_log": [
+   "PASS  rehearse exits 0 (rc 0): verify-g37-text-g3: rehearsed \u2014 791 requests, 0 clients, signature 3b48d7193dcf\u2026",
+   "PASS  live Stage 1 process refuses (rc 1): g37-text: REFUSED \u2014 Stage 1 process 547491 (scratch-out/fake-runb/pids/g37-text-run1.pid) is still running",
+   "PASS  outstanding residual refuses (rc 1): g37-text: REFUSED \u2014 residual file(s) outstanding: scratch-out/fake-runb/g37-text/residual_run_2.json (run Stage 1 `residuals` after recove",
+   "PASS  missing fragment (short coverage) refuses (rc 1): g37-text: REFUSED \u2014 coverage gate failed (above)",
+   "PASS  unmerged chunked pass refuses (rc 1): g37-text: REFUSED \u2014 coverage gate failed (above)",
+   "PASS  pass changed after the union (stale record) refuses (rc 1): ERROR: STALE: run_2: a pass file's content changed since the build",
+   "PASS  restored pass rehearses again (rc 0): verify-g37-text-g3: rehearsed \u2014 791 requests, 0 clients, signature 3b48d7193dcf\u2026",
+   "PASS  lodged-earlier leg (batch_jobs.json) refuses (rc 1): verify-g37-text-g3: REFUSED \u2014 scratch-out/fake-runb/g37-text/verifier/detect_brief-text/verify_g3/batch_jobs.json records job(s) lodged ea",
+   "PASS  refused leg left no launch log",
+   "PASS  unplanned leg refuses (rc 2): REFUSED: g3-text:g37 is not a planned leg (g3-text:g3 g3-image:g3 g37-text:g3 g37-text:g37 g37-image:g3 g37-image:g37 g37-image-cache:g3 g37",
+   "PASS  unknown arm refuses (rc 2): ",
+   "PASS  fake leg lodges and is submitted (rc 0): LODGING DONE 2026-10-07T13:08:30+00:00",
+   "wait (direct) on EXIT 0 leg -> 0 (want 0)",
+   "wait subcommand on EXIT 0 leg -> 0 (want 0)",
+   "PASS  fake leg (will exit 1) lodges (rc 0): LODGING DONE 2026-10-07T13:08:39+00:00",
+   "wait on EXIT 1 leg -> 2 (want 2)",
+   "PASS  two-chunk leg waits for both submissions (rc 0): LODGING DONE 2026-10-07T13:08:57+00:00",
+   "PASS  leg dying before submission stops lodging (rc 1): verify-g37-image-cache-g3: EXITED before every chunk was submitted \u2014 read scratch-out/fake-runb/stage2/logs/verify-g37-image-cache-g3.log;",
+   "PASS  relaunch of a lodged leg refuses (rc 1): verify-g37-image-g3: REFUSED \u2014 scratch-out/fake-runb/g37-image/verifier/detect_brief-text-image/verify_g3/batch_jobs.json records job(s) l",
+   "pid file written by the wrapper itself: 548427; log lines:",
+   "=== 2026-10-07T13:08:28+00:00 LAUNCH verify-g37-image-g3: /home/shawn/worktrees/map-reader-llm/claude-runb-stage2/scratc",
+   "=== 2026-10-07T13:08:29+00:00 SUBMITTED verify-g37-image-g3",
+   "=== 2026-10-07T13:08:31+00:00 EXIT 0",
+   "verify-g3-text-g3            not launched; union yes, crops yes",
+   "verify-g3-image-g3           gone  age      5s exit 0  submitted 2 results - fail-lines 0",
+   "verify-g37-text-g3           not launched; union yes, crops yes",
+   "verify-g37-text-g37          not launched; union yes, crops yes",
+   "verify-g37-image-g3          gone  age     32s exit 0  submitted 1 results - fail-lines 0",
+   "verify-g37-image-g37         gone  age     23s exit 1  submitted 1 results - fail-lines 0",
+   "verify-g37-image-cache-g3    gone  age      1s exit 9  submitted 0 results - fail-lines 0",
+   "verify-g37-image-cache-g37   not launched; union yes, crops yes",
+   "verify-g3-text-temp1-g3      not launched; union yes, crops yes",
+   "verify-g3-image-temp1-g3     not launched; union yes, crops yes"
+  ],
+  "git_head": "1421f3dc0 (sapphire worktree) plus the launcher as committed with this record"
+ },
+ "anchor_gate_git_head": "2956c4250 (sapphire worktree; via the launcher's anchor-gate)",
+ "verifier_rehearsal_git_head": "5d868f032 (sapphire worktree) plus scripts/verifier_dryrun_harness.py as committed in 06e15d304",
+ "crop_reextraction_git_head": "5d868f032 (sapphire worktree)"
+}
