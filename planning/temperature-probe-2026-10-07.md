@@ -32,7 +32,7 @@ Stage 1 is lodged (its 3.7 arms send T 0.7).
 - **Verifier:** `prompts/configs/verify_adversarial-text.json`, n = 1, on the
   Batch API — the path Run B will use, so the probe also shows whether 3.7
   still accepts a `temperature` field.
-- **Legs**, all lodged together on one day:
+- **Legs**, all lodged together on one day (table below).
 
 | Leg | Model | Thinking | Temperature |
 |---|---|---|---|
@@ -41,8 +41,9 @@ Stage 1 is lodged (its 3.7 arms send T 0.7).
 | `g3-t0a`, `g3-t0b` | `gemini-3-flash-preview` | minimal (config) | 0.0, twice |
 | `g3-tmax` | `gemini-3-flash-preview` | minimal | its `max_temperature` |
 
-  Gemini 3 Flash predates 3.6, so it should honour temperature: it is the
-  positive control that shows the probe can see an effect.
+Gemini 3 Flash predates 3.6, so it should honour temperature: it is the
+positive control that shows the probe can see an effect.
+
 - **Model defaults:** one `models.get` per model (`gemini-3-flash-preview`,
   `gemini-3.7-flash`, `gemini-3.8-flash`), saved to `models-get.json`. No
   tokens, no charge.
