@@ -4377,7 +4377,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-checklist-text",
-      "instruction_file": "verify_checklist-text.md",
+      "instruction_file": "verify_checklist.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4385,7 +4385,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8639) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8639) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-checklist-text): verifier_config.instruction_file read 'verify_checklist-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_checklist.md' with configuration.version 'verify_checklist-text' and example_count 0, so the field now reads 'verify_checklist.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4486,7 +4486,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-adversarial-text",
-      "instruction_file": "verify_adversarial-text.md",
+      "instruction_file": "verify_adversarial.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4494,7 +4494,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8603) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8603) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-adversarial-text): verifier_config.instruction_file read 'verify_adversarial-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_adversarial.md' with configuration.version 'verify_adversarial-text' and example_count 0, so the field now reads 'verify_adversarial.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4514,7 +4514,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-brief-text",
-      "instruction_file": "verify_brief-text.md",
+      "instruction_file": "verify_brief.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4522,7 +4522,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-brief-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8519) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8519) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-brief-text): verifier_config.instruction_file read 'verify_brief-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_brief.md' with configuration.version 'verify_brief-text' and example_count 0, so the field now reads 'verify_brief.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4679,7 +4679,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-checklist-text",
-      "instruction_file": "verify_checklist-text.md",
+      "instruction_file": "verify_checklist.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4687,7 +4687,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7852) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7852) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-checklist-text): verifier_config.instruction_file read 'verify_checklist-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_checklist.md' with configuration.version 'verify_checklist-text' and example_count 0, so the field now reads 'verify_checklist.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4790,7 +4790,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-brief-text",
-      "instruction_file": "verify_brief-text.md",
+      "instruction_file": "verify_brief.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4798,7 +4798,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-brief-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7782) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7782) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-brief-text): verifier_config.instruction_file read 'verify_brief-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_brief.md' with configuration.version 'verify_brief-text' and example_count 0, so the field now reads 'verify_brief.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4899,7 +4899,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-adversarial-text",
-      "instruction_file": "verify_adversarial-text.md",
+      "instruction_file": "verify_adversarial.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4907,7 +4907,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7718) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7718) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-adversarial-text): verifier_config.instruction_file read 'verify_adversarial-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_adversarial.md' with configuration.version 'verify_adversarial-text' and example_count 0, so the field now reads 'verify_adversarial.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
