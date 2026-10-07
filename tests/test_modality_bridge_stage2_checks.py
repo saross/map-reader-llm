@@ -98,6 +98,9 @@ def _leg(tmp_path: Path) -> Path:
             _row("candidate_00001", TEXT_06537), _row("candidate_00002", TEXT_08272),
             _row("candidate_00003", "this is not JSON at all")]
     (leg / "batch_results.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
+    (leg / "run.meta.json").write_text(json.dumps(
+        {"configuration": {"model": "gemini-3-flash-preview", "temperature": 0.0,
+                           "thinking_level": "minimal"}}))
     return leg
 
 
@@ -248,6 +251,12 @@ def test_band_bounds() -> None:
     assert c2.band_for("g3-image") == (3455, 4675)
     assert c2.band_for("g37-text") == (672, 910)
     assert c2.band_for("g37-image") == (573, 775)
+    # R1: the temp1 guides are their T 0.7 twins' x 1.2 (measured T 1.0 effect).
+    assert c2.T10_FACTOR == 1.2
+    assert c2.ARMS["g3-text-temp1"].guide == round(2714 * c2.T10_FACTOR) == 3257
+    assert c2.ARMS["g3-image-temp1"].guide == round(2788 * c2.T10_FACTOR) == 3346
+    assert c2.band_for("g3-text-temp1") == (2768, 3746)
+    assert c2.band_for("g3-image-temp1") == (2844, 3848)
     assert c2.in_band("g37-image", 573) and c2.in_band("g37-image", 775)
     assert not c2.in_band("g37-image", 572) and not c2.in_band("g37-image", 776)
 
@@ -255,9 +264,30 @@ def test_band_bounds() -> None:
 def test_band_refuses_out_of_band_and_names_the_override(tmp_path: Path, capsys) -> None:
     _union(tmp_path, "g37-text", 950)
     assert c2.main(["band", "g37-text:g3", "--out", str(tmp_path)]) == 1
-    assert "BAND_OK=1" in capsys.readouterr().out
+    assert "BAND_OK=g37-text:g3" in capsys.readouterr().out
     _union(tmp_path, "g37-image", 700)
     assert c2.main(["band", "g37-image:g37", "--out", str(tmp_path)]) == 0
+
+
+def test_band_override_is_per_leg(tmp_path: Path, capsys) -> None:
+    """R1: BAND_OK names legs; it never waives the band for any other leg."""
+    _union(tmp_path, "g37-text", 950)
+    out = ["--out", str(tmp_path)]
+    assert c2.main(["band", "g37-text:g3", *out, "--band-ok", "g37-text:g3"]) == 0
+    assert c2.main(["band", "g37-text:g37", *out, "--band-ok", "g37-text:g3"]) == 1
+    assert c2.main(["band", "g37-text:g37", *out,
+                    "--band-ok", "g37-text:g3, g37-text:g37"]) == 0
+    for blanket in ("1", "all", "yes"):
+        assert c2.main(["band", "g37-text:g3", *out, "--band-ok", blanket]) == 2
+    assert "blanket waiver is not accepted" in capsys.readouterr().out
+    with pytest.raises(ValueError):
+        c2.parse_band_ok("1")
+    assert c2.parse_band_ok("") == set()
+
+
+def test_band_without_a_union_says_so(tmp_path: Path, capsys) -> None:
+    assert c2.main(["band", "g3-text:g3", "--out", str(tmp_path)]) == 3
+    assert "no union built yet" in capsys.readouterr().out
 
 
 def test_estimate_flags_and_refuses_until_band_ok(tmp_path: Path, capsys) -> None:
@@ -265,8 +295,10 @@ def test_estimate_flags_and_refuses_until_band_ok(tmp_path: Path, capsys) -> Non
     _union(tmp_path, "g3-image", 5000)
     assert c2.main(["estimate", "--out", str(tmp_path)]) == 1
     printed = capsys.readouterr().out
-    assert "OUT OF BAND" in printed and "BAND_OK=1" in printed
-    assert c2.main(["estimate", "--out", str(tmp_path), "--band-ok"]) == 0
+    assert "OUT OF BAND" in printed and "BAND_OK=g3-image:g3" in printed
+    assert c2.main(["estimate", "--out", str(tmp_path), "--band-ok", "g3-image:g3"]) == 0
+    assert c2.main(["estimate", "--out", str(tmp_path), "--band-ok", "g3-text:g3"]) == 1
+    assert c2.main(["estimate", "--out", str(tmp_path), "--band-ok", "1"]) == 2
     est = c2.estimate(tmp_path)
     row = next(r for r in est["rows"] if r["leg"] == "g3-image:g3")
     assert row["n"] == 5000 and row["source"] == "union" and row["out_of_band"]
@@ -274,7 +306,7 @@ def test_estimate_flags_and_refuses_until_band_ok(tmp_path: Path, capsys) -> Non
 
 def test_estimate_at_guide_sizes_matches_the_card() -> None:
     lo, hi = c2.estimate(Path("/nonexistent"))["total"]
-    assert (round(lo, 2), round(hi, 2)) == (12.62, 13.01)
+    assert (round(lo, 2), round(hi, 2)) == (13.37, 13.79)
 
 
 def test_arm_table_agrees_with_the_launcher() -> None:
@@ -284,3 +316,78 @@ def test_arm_table_agrees_with_the_launcher() -> None:
     legs = text.split('LEGS="', 1)[1].split('"', 1)[0].split()
     legs += text.split('LEGS="$LEGS ', 1)[1].split('"', 1)[0].split()
     assert tuple(legs) == c2.LEGS
+
+
+# ---------------------------------------------------------------------------
+# Re-check R2-R4: repair's probability, overwrite guard and meta copy
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("text", [
+    '{"reasoning": "contour artefact"}\n}',          # no probability at all
+    '{"mound_probability": 1.5, "reasoning": "x"}',   # out of range
+    '{"mound_probability": "0.2", "reasoning": "x"}',  # not a number
+    '{"mound_probability": true, "reasoning": "x"}',  # a bool is not a number
+    '{"mound_probability": null}',
+])
+def test_repair_requires_a_probability_in_the_unit_interval(text: str) -> None:
+    """R2: a payload without a usable probability is unrepairable, not 0.0."""
+    with pytest.raises(ValueError, match="mound_probability"):
+        c2.repair_text(text)
+
+
+def test_repair_accepts_the_interval_ends() -> None:
+    assert c2.repair_text('{"mound_probability": 0}')["mound_probability"] == 0.0
+    assert c2.repair_text('{"mound_probability": 1}\n}')["mound_probability"] == 1.0
+
+
+def test_a_row_without_probability_is_removed_not_recovered(tmp_path: Path) -> None:
+    leg = _leg(tmp_path)
+    rows = (leg / "batch_results.jsonl").read_text().splitlines()
+    rows[1] = json.dumps(_row("candidate_00001", '{"reasoning": "contour artefact"}\n}'))
+    (leg / "batch_results.jsonl").write_text("\n".join(rows) + "\n")
+    rec = c2.repair_leg(leg)
+    assert "candidate_00001" in [u["key"] for u in rec["unrecovered"]]
+    assert "candidate_00001" not in [c["key"] for c in rec["changed"]]
+
+
+def test_repair_copies_the_leg_meta_and_records_what_it_wrote(tmp_path: Path) -> None:
+    """R4: the clean-up's configuration gate needs the leg's run.meta.json."""
+    leg = _leg(tmp_path)
+    rec = c2.repair_leg(leg)
+    out = tmp_path / "verify_g3_repaired"
+    assert (out / "run.meta.json").read_bytes() == (leg / "run.meta.json").read_bytes()
+    assert rec["source_run_meta_sha256"] == rec["written"]["run.meta.json"]
+    assert rec["written"]["probabilities.json"] == hashlib.sha256(
+        (out / "probabilities.json").read_bytes()).hexdigest()
+
+
+def test_repair_runs_again_over_its_own_untouched_copy(tmp_path: Path) -> None:
+    leg = _leg(tmp_path)
+    c2.repair_leg(leg)
+    c2.repair_leg(leg)  # idempotent while nothing else has written there
+
+
+@pytest.mark.parametrize("touched", ["probabilities.json", "run.meta.json"])
+def test_repair_refuses_a_copy_a_cleanup_has_written(tmp_path: Path, touched: str) -> None:
+    """R3: a clean-up merged into the copy; a second repair must not discard it."""
+    leg = _leg(tmp_path)
+    c2.repair_leg(leg)
+    out = tmp_path / "verify_g3_repaired"
+    data = json.loads((out / touched).read_text())
+    data["cleanup_passes"] = [{"recovered": 1}]
+    (out / touched).write_text(json.dumps(data))
+    before = (out / touched).read_bytes()
+    with pytest.raises(c2.RepairRefused):
+        c2.repair_leg(leg)
+    assert (out / touched).read_bytes() == before
+    assert c2.main(["repair", str(leg)]) == 3
+
+
+def test_repair_refuses_a_copy_it_never_wrote(tmp_path: Path) -> None:
+    leg = _leg(tmp_path)
+    out = tmp_path / "verify_g3_repaired"
+    out.mkdir()
+    (out / "run.meta.json").write_text("{}")
+    with pytest.raises(c2.RepairRefused):
+        c2.repair_leg(leg)
