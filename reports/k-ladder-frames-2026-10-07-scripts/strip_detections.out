@@ -1,0 +1,42 @@
+row run K cands in_strip outside_era2 | at-opmax: n in_strip outside_era2
+1 pv-diag-384 1 938 0 0 | 409 0 0
+   recompute row 1 (1,0.15) board: n=409 P/R/F1=(0.8826, 0.8299, 0.8555)  [clipped-to-geometry n=409 F1=0.8555]
+   recompute row 1 (1,0.15) era2: n=409 P/R/F1=(0.8826, 0.8299, 0.8555)  [clipped-to-geometry n=409 F1=0.8555]
+   recompute row 1 (1,0.0) board: n=938 P/R/F1=(0.3966, 0.8552, 0.5419)  [clipped-to-geometry n=938 F1=0.5419]
+   recompute row 1 (1,0.0) era2: n=938 P/R/F1=(0.3966, 0.8552, 0.5419)  [clipped-to-geometry n=938 F1=0.5419]
+   committed sweep row (1,0.15) @20: {'config': 'flash-minimal-text-n30-t07-text-t0.3-n1', 'vote_t': 1, 'prob_t': 0.15, 'n': 409, 'p': 0.8826, 'r': 0.8299, 'f1': 0.8555, 'buffer_m': 20}
+   committed sweep row (1,0.0) @20: {'config': 'flash-minimal-text-n30-t07-text-t0.3-n1', 'vote_t': 1, 'prob_t': 0.0, 'n': 938, 'p': 0.3966, 'r': 0.8552, 'f1': 0.5419, 'buffer_m': 20}
+2 pv-diag-384 3 1244 0 0 | 401 0 0
+3 pv-diag-384 1 1012 0 0 | 414 0 0
+4 pv-diag-384 3 1355 0 0 | 404 0 0
+5 pv-diag-384 1 1022 0 0 | 415 0 0
+6 pv-diag-384 3 1588 0 0 | 400 0 0
+7 pv-diag-384 1 1326 0 0 | 443 0 0
+8 pv-diag-384 3 2201 0 0 | 387 0 0
+9 pv-diag-384 1 1370 0 0 | 464 0 0
+10 pv-diag-384 3 2755 0 0 | 427 0 0
+11 pv-diag-384 1 1495 0 0 | 451 0 0
+12 pv-diag-384 3 2848 0 0 | 422 0 0
+13 pv-diag-384 1 729 0 0 | 440 0 0
+14 pv-diag-384 3 885 0 0 | 396 0 0
+15 pv-diag-384 1 694 0 0 | 453 0 0
+16 pv-diag-384 3 950 0 0 | 423 0 0
+17 pv-diag-384 1 792 0 0 | 465 0 0
+18 pv-diag-384 3 1174 0 0 | 424 0 0
+19 pv-diag-384 1 872 0 0 | 469 0 0
+20 pv-diag-384 3 1619 0 0 | 441 0 0
+21 pv-diag-384 1 771 0 0 | 474 0 0
+22 pv-diag-384 3 1522 0 0 | 426 0 0
+23 pv-diag-384 1 982 0 0 | 490 0 0
+24 pv-diag-384 3 1887 0 0 | 418 0 0
+25 pv-diag-384 1 830 0 0 | 484 0 0
+26 pv-diag-384 3 1586 0 0 | 412 0 0
+27 gemini37-scree 1 640 0 38 | 502 0 27
+   recompute row 27 (1,0.15) board: n=502 P/R/F1=(0.7928, 0.9149, 0.8495)  [clipped-to-geometry n=475 F1=0.8747]
+   recompute row 27 (1,0.15) era2: n=502 P/R/F1=(0.7928, 0.9149, 0.8495)  [clipped-to-geometry n=475 F1=0.8747]
+   recompute row 27 (1,0.0) board: n=640 P/R/F1=(0.6531, 0.9609, 0.7777)  [clipped-to-geometry n=602 F1=0.8062]
+   recompute row 27 (1,0.0) era2: n=640 P/R/F1=(0.6531, 0.9609, 0.7777)  [clipped-to-geometry n=602 F1=0.8062]
+   committed sweep row (1,0.15) @20: {'config': 'g384_ov192_g37-n1', 'vote_t': 1, 'prob_t': 0.15, 'n': 502, 'p': 0.7928, 'r': 0.9149, 'f1': 0.8495, 'buffer_m': 20}
+   committed sweep row (1,0.0) @20: {'config': 'g384_ov192_g37-n1', 'vote_t': 1, 'prob_t': 0.0, 'n': 640, 'p': 0.6531, 'r': 0.9609, 'f1': 0.7777, 'buffer_m': 20}
+28 gemini37-scree 3 757 0 45 | 494 0 27
+total candidates in strip, all rungs: 0 ; at opmax: 0
