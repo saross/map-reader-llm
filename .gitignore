@@ -27,6 +27,8 @@ archive/cc-sessions/*.jsonl
 
 # Large verifier request payloads (contain base64-encoded images, >100 MB)
 **/verifier_requests.jsonl
+# Chunked batch request files (rebuildable from the crops by a dry run; never committed)
+**/verifier_requests_chunk*.jsonl
 
 # ─────────────────────────────────────────────────
 # H11 PV-diag and retest: track detection GeoJSON + verifier results,
