@@ -12259,7 +12259,7 @@
    ]
   },
   "pv-diag-256": {
-   "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable \u2014 source_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into _ignored_evals with reasons. No metric, eval or detection changed.",
+   "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable \u2014 source_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into _ignored_evals with reasons. No metric, eval or detection changed. | Corrected 2026-10-07 (stale register notes, PI-approved; reviewed bindings pv-diag-256-text-baseline and pv-diag-256-text-5of5-union in results/manipulation-gate-bindings.json): 'Proposer passes were NOT materialised as run_* dirs' above is wrong. They were materialised, and they are tracked with their metas under archive/outputs-non-production-tile-sizes/, where 276e4ca80 (2026-04-16) archived them from outputs/h11/pv-diag-256/: the N=1 T=0.0 baseline pass at text-baseline/text-t0.0/run_1 and the five N=5 T=0.7 passes at text-n5/text-t0.7/run_1..run_5 (detect_brief-text, gemini-3-flash, MINIMAL, 1,032 tiles each). consensus/text-baseline.geojson is byte-identical to the baseline pass's detections (sha256 bf44bc7b11e3...), and a read-only reproduction from the five T=0.7 passes gives the feature counts of text-1of5..text-5of5 and the coordinates of text-5of5 exactly. proposer_pools stays empty only because no registered pool spec reaches archive/; registering one is a separate decision. No metric, eval or detection changed.",
    "proposer_pools": {},
    "verifier_passes": {
     "verified-adv-text-consensus-5of5": {
@@ -12281,7 +12281,7 @@
      "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json",
      "detections": "outputs/h11/pv-diag-256/consensus/text-baseline.geojson",
      "source_run": "pv-diag-256",
-     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note"
+     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note. Corrected 2026-10-07: the passes were materialised as run_* dirs; they are tracked, with their metas, under archive/outputs-non-production-tile-sizes/ (text-baseline/text-t0.0/run_1; text-n5/text-t0.7/run_1..run_5), archived there by 276e4ca80. source_run pv-diag-256 is unchanged; see the run's _note."
     },
     {
      "label": "text-consensus-5of5",
@@ -12295,7 +12295,7 @@
      "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json",
      "detections": "outputs/h11/pv-diag-256/consensus/text-5of5.geojson",
      "source_run": "pv-diag-256",
-     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note"
+     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note. Corrected 2026-10-07: the passes were materialised as run_* dirs; they are tracked, with their metas, under archive/outputs-non-production-tile-sizes/ (text-baseline/text-t0.0/run_1; text-n5/text-t0.7/run_1..run_5), archived there by 276e4ca80. source_run pv-diag-256 is unchanged; see the run's _note."
     },
     {
      "label": "verified-adv-text-consensus-5of5",
