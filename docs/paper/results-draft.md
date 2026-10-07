@@ -10,7 +10,15 @@
 
 ---
 
-> **Last revised**: 2026-10-06 (**§ R2 drafted for PI review, W1; not
+> **Last revised**: 2026-10-07 (**§§ R0, R6 and R7 drafted 2026-10-07 for
+> PI review (W1.5, W2.7); not finalised**: a replicate-floor paragraph and
+> table in § R0; run dates in both § R7 tables; six claims reworded as
+> output differences or ties, three upgraded, two facts corrected (the
+> A-versus-B sign reverses at N = 1; the P5 decomposition depends on the
+> chain), one restricted, and lesson (i)'s verifier-date mix named with
+> Run A's one-date reading. Every edit carries a
+> `[DRAFT NOTE, W2.7, 2026-10-07: …]`. See [§ Changelog](#changelog).)
+> Prior: 2026-10-06 (**§ R2 drafted for PI review, W1; not
 > finalised**: the Era-1 board's 36 single-pass cells are 26 transmitted
 > configurations and its Tier 1 is 9, six Tier-1 cells being one text
 > request, E90; `canonical-last` described as a single run, sent nulls
@@ -121,6 +129,42 @@ statistical separation. Tile sets differ by instrument and tile
 size (GS 512 px: 340 tiles; GS 384 px: 487; GS 256 px: 1,032; 55-map:
 8,541), so cross-era comparison is descriptive while within-era tiers carry
 the statistics.
+
+A significant tile-swap result separates two outputs, not two
+configurations. The test holds each output fixed and asks whether the two
+differ on these tiles, so it cannot see how far a configuration's output
+moves from one run to the next. Between two outputs of one configuration
+it rejects at about its nominal rate on the gold-standard corpora, but on
+the 55-map corpus it rejects 11 to 24 % of pairs of single verified passes
+from one run. A configuration claim therefore needs the test to reject
+and the difference to exceed the replicate floor for its corpus,
+aggregation, and run dates, the 95th percentile of |ΔF1| between outputs
+of one configuration (PI rulings D45 and D46). Below its floor a
+difference is reported as a difference between outputs. Runs of one
+transmitted signature on different dates are not replicates (Obs 497), so
+runs more than seven days apart take the cross-execution floor (ruling
+D48). Table [N+1] gives the floors and the § R7 tables give each cell's
+run dates. The measurements and the claim-by-claim screen are in
+`reports/w27-replicate-floors-2026-10-06.md`.
+
+| Floor | Applies to | 55-map board, F1 at 50 m | Gold standard, F1 at 20 m |
+|---|---|---|---|
+| Within-execution | outputs of one run, or runs at most 7 days apart (D48) | about 0.007 at N = 5, 0.006–0.010 at N = 3, 0.008–0.010 at N = 1 † | single pass 0.034 (340 tiles) and 0.030 (487); consensus 0.019–0.058 by K and vote threshold |
+| Nested | a threshold or pass-count contrast on the same passes | the contrast's own, 0.002 (a probability-threshold step) to about 0.007 (a pass-count step) | not measured |
+| Cross-execution | runs more than 7 days apart | about 0.010–0.018 (the within floor plus 0.004–0.007 of verifier drift between dates) | none detected 0–2 days apart; medians of 0.03–0.07 on three of six configurations 17–23 days apart |
+
+† Measured with the verifier's probabilities held fixed, plus its
+same-week re-invocation band (about 0.001). The Gemini 3 image pool's
+floor is 0.017–0.021.
+
+[DRAFT NOTE, W2.7, 2026-10-07: new paragraph and table for PI review (W1.5,
+W2.7); not finalised. Sources, all in `reports/w27-replicate-floors-2026-10-06.md`:
+the tile-swap rejection rates § 3 and § 6; the 55-map within floors and the
+image pool § 6b; the nested floors `floors-v2/results/rescreen.csv`
+(R7.3-07 0.0020; R7.2-16b, R7.2-32a, R7.3-18a/b 0.0053–0.0069); the
+cross-execution band § 7.2; the gold-standard floors § 3; the
+gold-standard cross-execution groups § 4 (groups 4, 5 and 7 drifted,
+groups 1, 2 and 6 did not).]
 
 [DRAFT NOTE: cross-reference the Methods subsections for GT construction,
 the matching algorithm (Hungarian, per map), and bootstrap CIs once Methods
@@ -553,14 +597,31 @@ Two consequences follow. First, the cost meta-rule (Obs 357) is
 **scope-qualified**: it holds only where the tie's instrument could have
 detected a difference of consequence — the 487-tile GS instrument cannot
 resolve ±0.03, and deployment evidence overrides characterisation ties.
-Second, the gap is partly *buyable*: doubling the minimal pass count
-(Run B; as-run ≈ $35 at audited flex rates) closes about half of it. The
-10-minimal-pass uplift cell scores 0.8279 at 50 m — significantly above
-the 5-pass minimal deployment (+0.0170, p < 10⁻⁴) and significantly below
-the HIGH-thinking cell (−0.0108, BH p = 0.018) — converting the thinking
-choice at deployment into a priced cost/quality trade (~$58 for 0.828 vs
-~$207 for 0.839 at the uniform production tier) rather than a tie (Obs 364;
-run `55maps-text-min-n10-uplift`). The confusion-matrix decomposition of
+Second, part of the gap may be *buyable*. Doubling the minimal pass
+count (Run B; as-run ≈ $35 at audited flex rates) added five passes run
+on 2026-06-11, 54 days after the first five, so the uplift cell is ten
+passes from two executions. It scores 0.8279 at 50 m, above the 5-pass
+minimal deployment (+0.0170, p < 10⁻⁴) by more than the cross-execution
+floor (about 0.012; § R0), although the gain cannot be separated from
+the change of date. It sits below the HIGH-thinking cell (−0.0108, BH
+p = 0.018) by less than that floor, so whether the uplift closes half
+the gap or more is not resolved. The thinking choice at deployment is
+priced (~$58 for 0.828 against ~$207 for 0.839 at the uniform production
+tier), but whether it is a trade or a tie is open at the floor (Obs 364;
+run `55maps-text-min-n10-uplift`). [DRAFT NOTE, W2.7, 2026-10-07: R6-12
+reworded for PI review; not finalised. Was "closes about half of it …
+significantly below the HIGH-thinking cell … converting the thinking
+choice at deployment into a priced cost/quality trade … rather than a
+tie". On r2 the uplift is +0.0172 above TM-k3 and −0.0106 below TH7-k3
+(BH p = 0.021); the floor for this mixed-date pair is 0.0117 (upper
+0.0177), which +0.0172 clears (1.5 times) and −0.0106 does not (0.9
+times) (`reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`,
+rows R6-12a and R6-12b). As proposer-only consensus, the June passes
+score 0.018 to 0.030 F1 above the April passes at 50 m (report § 4),
+though through the fixed verifier the two halves differ by only 0.003
+to 0.006 (report § 6). The figures in the text stay on the standardised
+vintage, pending the ruling-1 re-pointing of § R6 (claims inventory
+row R6-12).] The confusion-matrix decomposition of
 the frontier steps (Obs 365, re-measured on the standardised reference
 with Obs 365's own endpoints) shows the two purchases differ in kind:
 the pass-count step (min5 → min10) is a strict improvement (+113 mounds
@@ -592,16 +653,29 @@ achieved performance but as the measured deployment gap — what better
 calibration transfer would have bought (lesson i below), with the joint
 oracle (+0.022) as its upper bound:
 
-| rank | cell | tier | F1@50 | tile-MCC |
-|---:|---|---:|---:|---:|
-| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8387 | 0.689 |
-| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8380 | 0.679 |
-| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8294 | 0.669 |
-| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8274 | 0.669 |
-| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8162 | 0.665 |
-| 6 | text MIN, vote 3-of-5 | 3 | 0.8102 | 0.656 |
-| 7 | image, vote 3-of-5 | 4 | 0.8008 | **0.711** |
-| 8 | text MIN, vote 4-of-5 | 5 | 0.7826 | 0.640 |
+| rank | cell | tier | F1@50 | tile-MCC | run dates, 2026 (proposer; verifier) |
+|---:|---|---:|---:|---:|---|
+| 1 | text HIGH T0.3, vote 3-of-5 (oracle) | 1 | 0.8387 | 0.689 | 04-26–27; 04-26–27 + 06-06 ‡ |
+| 2 | text HIGH T0.7, vote 3-of-5 | 1 | 0.8380 | 0.679 | 04-18 (to 05-02); 04-18 (to 05-02) + 06-06 ‡ |
+| 3 | text HIGH T0.3, vote 4-of-5 | 2 | 0.8294 | 0.669 | 04-26–27; 04-26–27 |
+| 4 | text MIN, 10 passes, vote 5-of-10 (uplift) | 2 | 0.8274 | 0.669 | 04-18 (passes 1–5) and 06-11 (6–10); 06-11 |
+| 5 | text HIGH T0.7, vote 4-of-5 (carry-forward) | 3 | 0.8162 | 0.665 | 04-18 (to 05-02); 04-18 (to 05-02) |
+| 6 | text MIN, vote 3-of-5 | 3 | 0.8102 | 0.656 | 04-18; 04-18 + 06-06 ‡ |
+| 7 | image, vote 3-of-5 | 4 | 0.8008 | **0.711** | 04-18 (to 05-03); 04-18 |
+| 8 | text MIN, vote 4-of-5 | 5 | 0.7826 | 0.640 | 04-18; 04-18 |
+
+Run dates are UTC, from the passes register (`results/passes-manifest.json`,
+`timestamps`); "(to 05-02)" marks a recovery top-up. The text MIN and
+image verifier legs' main dates come from their post-run reports
+(`outputs/55maps-text-min-generalisation/post_run_report.md`,
+`outputs/55maps-image-generalisation/post_run_report.md`), because the
+register keeps only their 2026-05-03 cleanups. ‡ A 3-of-5 cell adds the
+candidates with exactly three votes, verified in a separate leg on
+2026-06-06, 40–49 days after its 4-of-5 candidates. [DRAFT NOTE, W2.7,
+2026-10-07: run-date column and note added for PI review; dates re-read
+from the register and checked against
+`reports/w27-replicate-floors-2026-10-06-scripts/claims-inventory-2026-10-06.md`
+§ "Execution dates used".]
 
 Every figure in this table also carries the reference's residual error:
 the estimated correction (§ M.3; E84) puts F1̂ within 0.0007 of each r2
@@ -619,7 +693,30 @@ configuration carried forward from GS calibration (T0.7 × 4-of-5) left
 +0.022 F1 on the table against the joint oracle (T0.3 × 3-of-5, 0.8387,
 p < 0.001), and the threshold axis alone accounts for most of it — vote
 3-of-5 beats the carried 4-of-5 for all three text configurations
-(+0.009 to +0.028, all BH p ≤ 0.001). On the GS sheets those thresholds
+(+0.009 to +0.028, all BH p ≤ 0.001). Each of these contrasts is also a
+contrast between verifier dates. A 3-of-5 cell's 4-of-5 candidates were
+verified with its run in April, and its candidates with exactly three
+votes in a separate leg on 2026-06-06, 40–49 days later (table, ‡).
+Re-verifying every candidate of T0.3 and text MIN on one date
+(2026-10-07) moves T0.3's 3-of-5 advantage from +0.0092 to +0.0084
+(p = 0.0013) and text MIN's from +0.0275 to +0.0264, the value a June
+re-verification of text MIN also gives, while neither 4-of-5 cell moves
+significantly (+0.0021 and +0.0020, p = 0.36 and 0.38). T0.3's +0.008 is
+1.2 times its replicate floor (0.0069) and inside the floor's upper bound
+(0.0111), so it is a small threshold effect that holds narrowly. T0.7's
++0.022 has no one-date reading, but the date shifts measured on the other
+two contrasts (at most about 0.002) are too small to overturn it. [DRAFT NOTE,
+W2.7, 2026-10-07: date mix and one-date readings added for PI review;
+not finalised. R7.1-09a (T0.3's +0.009) was first marked "pending Run A,
+the T03 same-date re-verification" (approved under D49); Run A ran on
+2026-10-07 (outputs `f13f7b308`) and settles it as written here.
+Sources: `reports/w27-replicate-floors-2026-10-06.md` § 6a (text MIN on
+2026-06-11: k3 − k4 +0.0275 → +0.0264; oracle − carried +0.0277 →
++0.0255) and § 6c (October: T03 k3 − k4 +0.0092 → +0.0084, oracle −
+carried +0.0105 → +0.0113; text MIN k3 − k4 +0.0275 → +0.0264, oracle −
+carried +0.0277 → +0.0265; the 4-of-5 shifts); the floor
+`floors-v2/results/rescreen.csv`, row R7.1-09a (borrowed from stride runs
+A and B).] On the GS sheets those thresholds
 had sat on a statistical plateau; at deployment scale the plateau
 resolves, and it resolves *looser* — a pattern that recurred when the
 uplift cell's best deployment threshold (5-of-10) again sat looser than
@@ -681,29 +778,78 @@ the board by about 0.12). Finally, the frozen configuration axis left
 no temperature loss to pay. Each committed evaluation was reproduced to
 1e-6 by the sweep before any oracle was read.
 
-The P5 overshoot, B's +0.0270 margin over the incumbent's carried
-point, decomposes additively into the incumbent's transfer tax
-(+0.0324), the oracle-to-oracle geometry gap (+0.0027), and B's own
-tax (−0.0081). The geometry therefore found few additional mounds. The calibration
-transferred instead. On this reading, what GS calibration
-could not see was worth about 0.010 and what it protected was worth
-about 0.03.
+On the canonical chain, where the bets were assessed, the P5 overshoot,
+B's +0.0270 margin over the incumbent's carried point, decomposes
+additively into the incumbent's transfer tax (+0.0324), the
+oracle-to-oracle gap (+0.0027), and B's own tax (−0.0081). On that chain
+the geometry found few additional mounds and the calibration transferred
+instead. On this reading, what GS calibration could not see (the A-versus-B effect) was
+worth about 0.010 and what it protected was worth about 0.03. The
+decomposition depends on the chain. On r2 the margin is +0.0336, and it
+splits into the incumbent's tax (+0.0237), an oracle-to-oracle gap of
++0.0161 (B's N = 10 oracle 0.8560 against T0.3's 3-of-5 oracle 0.8399,
+tile-swap p = 0.0001), and B's own tax (−0.0062), so on r2 the oracle gap
+and the protected tax are of similar size. That gap compares run B with
+run T0.3, which differ in thinking level, pass count, tiling, and date as
+well as in overlap, so it is a difference between two runs rather than a
+geometry effect, although it clears the cross-execution floor. [DRAFT
+NOTE, W2.7, 2026-10-07: correction of fact for PI review (claims
+R7.2-11/12); not finalised. Was "The geometry therefore found few
+additional mounds. The calibration transferred instead. On this reading,
+…", stated without a chain. r2 figures from
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` →
+`pairwise` (B-N10-carried − TH7-k4 +0.033570; T03-oracle − TH7-k4
++0.023715, p < 0.0001; B-N10-oracle − T03-oracle +0.016082, p = 0.0001;
+B-N10-carried − B-N10-oracle −0.006227, p = 0.0033); canonical figures
+and the "about 0.010 / about 0.03" reading from
+`results/stride55-2026-08-27/findings.md` § "The P5 overshoot,
+decomposed". The floor verdict is `reports/w27-replicate-floors-2026-10-06.md`
+§ 7.2, row R7.2-04/05/11/12/30/32b (0.011–0.013; § 6b keeps it on a
+thinner margin).]
 
 P6 failed, as its pre-naming allowed for. B beats A at the carried
 primaries (ΔF1 −0.0096, p = 0.0147, per-sheet sign-swap permutation,
 10,000 draws), at the oracles (−0.0141, p = 0.0001), and at the N = 5
 rung (−0.0116, p = 0.0042, a post-hoc test outside the declared
 family). Every non-tie result survives Benjamini–Hochberg at q = 0.05
-over the seven tests. On the GS geometry grid the two
+over the seven tests. Against the replicate floor for two same-day runs
+(0.0072), the carried-primary contrast holds only narrowly (−0.0106 on
+r2, at the floor's upper bound of 0.0106), and the oracle and N = 5
+contrasts (−0.0141 and −0.0120 on r2, 2.0 and 1.7 times the floor) carry
+"B beats A". On the GS geometry grid the two
 geometries had tied (§ R1b, Obs 435). A GS tie is bounded ignorance at
 roughly ±0.03 resolution (Obs 362), and a real effect of about 0.01
-sat inside the bound. The effect is one overlap step on one corpus,
-although its sign held at every rung tested.
+sat inside the bound. The effect is one overlap step on one corpus. Its
+sign held at N = 3, 5, and 10 on the r2 board and reversed at N = 1,
+where A's single-pass oracle cell beats B's by +0.0214 (0.8227 against
+0.8013, tile-swap p < 0.0001), above the single-pass floor of 0.008–0.010.
+[DRAFT NOTE, W2.7, 2026-10-07: for PI review; not finalised. (a) R7.2-13a
+reworded: "B beats A at the carried primaries" holds narrowly; floor
+0.0072 (upper 0.0106) from `reports/w27-replicate-floors-2026-10-06.md`
+§ 7.2 and `floors-v2/results/rescreen.csv`. (b) R7.2-15 corrected: was
+"although its sign held at every rung tested", true only of the P6
+family's rungs (N = 5 and 10). r2 figures from
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` →
+`pairwise`: A-N1-oracle − B-N1-oracle +0.021399, p < 0.0001 (no
+permutation as extreme in 10,000); at N = 3, A − B −0.0186 (oracles) and
+−0.0170 (carried), both p ≤ 0.0001. The N = 1 floor is the report's
+§ 6b (A 0.0090, B 0.0080, plus the 0.001 verifier band).]
 
 Pass count saturates at the carried points (P7), where N = 5 is within
-noise of N = 10 for both runs (p = 0.82 and 0.32). The oracles keep a
-small BH-significant residue (−0.004 and −0.005), so saturation is
-real but not complete. The N = 3 carried cells are emergent post-hoc
+noise of N = 10 for both runs (p = 0.82 and 0.32). At the oracles N = 5
+sits below N = 10 by 0.004 and 0.005, which the per-sheet test finds
+BH-significant, but both differences lie inside the replicate floor of a
+pass-count step on the same passes (0.0069 for A and 0.0058 for B), so
+they are differences between these outputs and do not show that the
+tenth pass helps. [DRAFT NOTE, W2.7, 2026-10-07: R7.2-16b reworded for
+PI review; not finalised. Was "The oracles keep a small BH-significant
+residue (−0.004 and −0.005), so saturation is real but not complete."
+On r2 the residues are +0.0036 (tile-swap BH p = 0.0096) and +0.0043
+(BH p = 0.0038), N = 10 above N = 5
+(`results/55map-final-board-r2-2026-09-06/final_board_50m.json` →
+`pairwise`); nested floors from
+`reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`
+(upper bounds 0.0122 and 0.0091).] The N = 3 carried cells are emergent post-hoc
 nominations. The GS ladder had selected (0.15, k3) for both geometries
 before launch, but the decision to evaluate that rung at deployment
 was taken afterwards (2026-08-28), motivated by the N = 3 oracle's
@@ -713,18 +859,29 @@ The final board scores every run on reference r2 (35 cells, 512 of 595
 pairs significant, 12 tiers, in `results/55map-final-board-r2-2026-09-06/`).
 One row per run family, its best carried and its best oracle cell:
 
-| run family | carried: F1@50 (tier) | tile-MCC | cost (uniform tier, full) | oracle: F1@50 (tier) at (prob, k) | note |
-|---|---:|---:|---:|---|---|
-| Gemini 3 text HIGH T0.7, K = 5 (the carry-forward) | 0.8162 (T9) | 0.665 | $207 | 0.8380 (T7) at (0.15, k3) |  |
-| Gemini 3 text HIGH T0.3, K = 5 | 0.8294 (T8) | 0.669 | $261 | 0.8399 (T6) at (0.20, k3) |  |
-| Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $30 † | 0.8103 (T10) at (0.20, k3) |  |
-| Gemini 3 text MIN uplift, K = 10 | none | none | $58 | 0.8274 (T8) at (0.15, k5) | no carried point was registered at this rung, so the cost is the oracle cell's |
-| Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $201 † | 0.8008 (T10) at (0.15, k3) | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
-| A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $103 † | 0.8419 (T6) at (0.15, k7) |  |
-| B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) |  |
-| 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | $153 | 0.8727 (T3) at (0.15, k5) | shares its proposer with arm 2 |
-| 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | $159 | 0.8871 (T1) at (0.95, k5) | shares its proposer with arm 1 |
-| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | $198 † | 0.8813 (T2) at (0.96, k9) | proposer $133.50 (B's ten passes) + 3.7 verifier $64.67, completed at arm 2's per-candidate unit (its `run.meta.json` records only the cleanup pass); the invoice isolates the verifier at about $58 on its billing day, about $191.50 all-in (`reports/billing-reconciliation-2026-09-11.md` § 3.1) |
+| run family | carried: F1@50 (tier) | tile-MCC | cost (uniform tier, full) | oracle: F1@50 (tier) at (prob, k) | run dates, 2026 (proposer; verifier) | note |
+|---|---:|---:|---:|---|---|---|
+| Gemini 3 text HIGH T0.7, K = 5 (the carry-forward) | 0.8162 (T9) | 0.665 | $207 | 0.8380 (T7) at (0.15, k3) | 04-18 (to 05-02); 04-18 (to 05-02), oracle + 06-06 ‡ |  |
+| Gemini 3 text HIGH T0.3, K = 5 | 0.8294 (T8) | 0.669 | $261 | 0.8399 (T6) at (0.20, k3) | 04-26–27; 04-26–27, oracle + 06-06 ‡ |  |
+| Gemini 3 text MIN, K = 5 | 0.7826 (T11) | 0.640 | $30 † | 0.8103 (T10) at (0.20, k3) | 04-18; 04-18, oracle + 06-06 ‡ |  |
+| Gemini 3 text MIN uplift, K = 10 | none | none | $58 | 0.8274 (T8) at (0.15, k5) | 04-18 (passes 1–5) and 06-11 (6–10); 06-11 | no carried point was registered at this rung, so the cost is the oracle cell's |
+| Gemini 3 image HIGH, K = 5 | 0.8008 (T10) | 0.711 | $201 † | 0.8008 (T10) at (0.15, k3) | 04-18 (to 05-03); 04-18 | as shipped (k3); the E82 k4 comparability cell (0.7398, T12) is not tabled |
+| A: Gemini 3 text MIN, 384 px / 33 % overlap, K = 10 | 0.8391 (T7) | 0.693 | $103 † | 0.8419 (T6) at (0.15, k7) | 08-25; by 08-26 (see note) |  |
+| B: Gemini 3 text MIN, 384 px / 50 % overlap, K = 10 | 0.8503 (T5) | 0.701 | $97 | 0.8560 (T4) at (0.20, k9) | 08-25–26; 08-26–27 |  |
+| 3.7 arm 1: 3.7 proposer + Gemini 3 verifier, K = 5 | 0.8551 (T4) | 0.665 | $153 | 0.8727 (T3) at (0.15, k5) | 08-29–31; 08-31 | shares its proposer with arm 2 |
+| 3.7 arm 2: all-3.7 stack, K = 5 | 0.8827 (T2) | 0.706 | $159 | 0.8871 (T1) at (0.95, k5) | 08-29–31; 08-31 | shares its proposer with arm 1 |
+| fourth cell: B K = 10 union + 3.7 verifier | 0.8728 (T3) | 0.726 | $198 † | 0.8813 (T2) at (0.96, k9) | 08-25–26 (B's passes); 08-31 to 09-01 | proposer $133.50 (B's ten passes) + 3.7 verifier $64.67, completed at arm 2's per-candidate unit (its `run.meta.json` records only the cleanup pass); the invoice isolates the verifier at about $58 on its billing day, about $191.50 all-in (`reports/billing-reconciliation-2026-09-11.md` § 3.1) |
+
+Run dates are UTC and come from the passes register, as in § R7.1's
+table, whose ‡ note applies to the three oracle cells marked here.
+Stride run A's main verifier leg is not in the register, which keeps only
+a six-candidate cleanup run at 2026-08-26T21:14 UTC, so the main leg
+finished by then. The fourth cell's verifier ran in seven rounds that
+completed at 2026-09-01T04:07 UTC (`results/gemini37-55map-2026-08-31/findings.md`,
+changelog entry of 2026-09-01), and the register keeps only the last.
+[DRAFT NOTE, W2.7, 2026-10-07: run-date column and note added for PI
+review; not finalised. A's main-leg date is bounded, not established:
+its start is unsourced in the register and in the stride findings.]
 
 Costs are the board's (`results/55map-final-board-r2-2026-09-06/`): each
 family's own register tokens at one uniform discounted tier (PI ruling
@@ -745,14 +902,34 @@ cell does not use (`reports/wp4b-frontier-repricing-2026-10-04.md`
 
 Among the Gemini 3 families B holds the top, B N = 10 oracle 0.8560
 (T4) and B N = 5 carried 0.8503 (T5), above every incumbent cell,
-whose carried points sit in tiers 8–11. The image cell keeps the
-highest tile-MCC among Gemini 3 cells (0.711) but the board's MCC
-crown now belongs to the fourth cell of § R7.3. The practitioner
+whose carried points sit in tiers 8–11. B N = 5 carried stands above the
+best incumbent cell, T0.3's 3-of-5 oracle (0.8399), by 0.010 (tile-swap
+p = 0.018), inside the cross-date floor for runs four months apart
+(0.0106), while B's N = 10 oracle clears it (+0.0161). The image cell
+keeps the highest tile-MCC among the Gemini 3 carried and as-shipped
+cells (0.711), although two Gemini 3 oracle cells exceed it (B N = 3
+oracle 0.713, B N = 10 oracle 0.712), and the board's MCC crown now
+belongs to the fourth cell of § R7.3. The practitioner
 recommendation (pre-declared question 4) is B at N = 5 with the
 GS-carried (0.15, k5). That cell scores 0.8503 on r2 (0.8438 on the
-canonical chain) for about $97 full or $77 lean-deploy over 55 sheets,
-above its own N = 10 carried point (0.8497, $173) and the HIGH
-incumbent (0.8162, $207). A budget floor exists at A with N = 3–5 ($35–48 lean),
+canonical chain) for about $97 full or $77 lean-deploy over 55 sheets.
+It equals its own N = 10 carried point (0.8497, $173; +0.0006, tile-swap
+p = 0.72, inside the 0.0059 floor of a pass-count step) and sits above
+the HIGH incumbent (0.8162, $207). [DRAFT NOTE, W2.7, 2026-10-07: for PI
+review; not finalised. (a) R7.2-30: the B N = 5 margin over T0.3's
+oracle reworded as inside the cross-date band; was "above every
+incumbent cell" without qualification. The N = 10 oracle's +0.0161
+clears the report's § 7.2 verdict for this group (0.011–0.013) but sits
+at the upper bound re-screened for the N = 5 pair (0.016). (b) R7.2-31 restricted: was "the
+highest tile-MCC among Gemini 3 cells (0.711)"; on the board B-N3-oracle
+0.7128 and B-N10-oracle 0.7123 exceed IM's 0.7110, untested at the
+third decimal. (c) R7.2-32a: was "above its own N = 10 carried point".
+Sources: `results/55map-final-board-r2-2026-09-06/final_board_50m.json`
+→ `cells` (MCC) and `pairwise` (B-N5-carried − T03-oracle +0.010441,
+p = 0.0177; B-N10-oracle − T03-oracle +0.016082, p = 0.0001;
+B-N5-carried − B-N10-carried +0.000586, p = 0.7161); floors
+`reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`
+(R7.2-30 0.0106, upper 0.016; R7.2-32a 0.0059, upper 0.0092).] A budget floor exists at A with N = 3–5 ($35–48 lean),
 holding 0.827–0.832 on the canonical chain. Costs are register tokens at
 the uniform discounted tier rather than billing figures. Because the
 N < 10 rungs' passes ran inside the K = 10 campaign, each rung is
@@ -764,10 +941,19 @@ at it for one, and marginally above it for the two lowest-recall cells
 re-tiers nothing.
 
 The bets were assessed on the canonical chain, and the board is scored
-on r2. The offset between the two is roughly uniform for these cells
-(B N = 5 carried 0.8438 → 0.8503, B N = 10 carried 0.8422 → 0.8497,
-A N = 10 carried 0.8326 → 0.8391), and no verdict depends on the
-chain.
+on r2. For the A and B cells the offset between the two is roughly
+uniform (B N = 5 carried 0.8438 → 0.8503, B N = 10 carried
+0.8422 → 0.8497, A N = 10 carried 0.8326 → 0.8391), so no A-versus-B
+verdict depends on the chain. The incumbent's cells move differently
+(T0.7 carried 0.8152 → 0.8162; T0.3's 3-of-5 oracle 0.8476 → 0.8399),
+which is why the P5 decomposition above depends on it. [DRAFT NOTE,
+W2.7, 2026-10-07: correction of fact for PI review; not finalised. Was
+"and no verdict depends on the chain", which had been checked on the A
+and B cells only. Canonical figures 0.8152 and 0.8476 from
+`results/stride55-2026-08-27/findings.md` (headlines and § "The P5
+overshoot, decomposed"); r2 figures from
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` → `cells`
+(TH7-k4 0.8162, T03-oracle 0.8399).]
 
 ### R7.3 The model-generation leg: Gemini 3.7 Flash in the proposer and verifier seats
 
@@ -793,13 +979,36 @@ because the GS proposer gain of +0.018 did not transfer as a resolvable
 deployment win. Arm 2 scored 0.8763 (+0.0325 over the incumbent, p = 0.0001) and
 the fourth cell 0.8656 against B K = 10's 0.8422 (+0.0234,
 p = 0.0001). Both verifier-axis contrasts are significant (+0.0270 on
-the 3.7 pool, +0.0234 on the Gemini 3 pool), and both proposer-axis
-contrasts are not (+0.0056 and +0.0107, p = 0.35 and 0.074), with BH
-at q = 0.05 over the declared five-test family. The family gain
-therefore lives in the verifier seat (Obs 444). Two mechanisms are visible in
+the 3.7 pool, +0.0234 on the Gemini 3 pool) with BH at q = 0.05 over the
+declared five-test family. On that family's per-sheet test neither
+proposer-axis contrast is (+0.0056 and +0.0107, p = 0.35 and 0.074). On
+the tile-swap test of ruling D42, applied on the r2 board, the second one
+is: arm 2 stands above the fourth cell by +0.0099 (p = 0.0198, BH
+p = 0.024), 1.4 times its within-execution floor (0.0072), which applies
+because the two runs are at most seven days apart (ruling D48). Arm 1
+against B N = 5 stays a tie on both tests (+0.0048 on r2, p = 0.27).
+The proposer axis under the 3.7 verifier is therefore a small
+difference rather than a null, measured between pools of five and ten
+passes, and the family gain lives mostly in the verifier seat
+(Obs 444). Two mechanisms are visible in
 the sweeps. The 3.7 verifier's probability scale sits at the top of
 the lattice (D7 confirmed, oracle at (0.95, k5)), and its carried
-threshold transferred with a tax of only +0.0043. The 3.7 proposer
+threshold transferred with a small tax of +0.0043 (adjusted
+p = 0.000162), about twice the replicate floor of a threshold step on the
+same passes (0.0020), so the tax is small but real. [DRAFT NOTE, W2.7,
+2026-10-07: for PI review; not finalised. (a) R7.3-06b: was "both
+proposer-axis contrasts are not (+0.0056 and +0.0107, p = 0.35 and
+0.074)" and "The family gain therefore lives in the verifier seat";
+"mostly" is new and changes the Obs 444 synthesis, so it needs the PI's
+ruling. r2 figures from
+`results/55map-final-board-r2-2026-09-06/final_board_50m.json` →
+`pairwise` (ARM2-N5-carried − FOURTH-N10-carried +0.009905, p = 0.0198,
+BH 0.023704; ARM1-N5-carried − B-N5-carried +0.004762, p = 0.2723);
+floors `reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`
+(within part 0.0072 and 0.0063). (b) R7.3-07: was "a tax of only
++0.0043"; adjusted p from the signed register row
+`gemini37-55map-gridboard-2026-08-31`; on r2 +0.0044, p < 0.0001; nested
+floor 0.0020 (upper 0.0033), report § 6b.] The 3.7 proposer
 proposes about 3.5 × tighter (12,715 candidates in the K = 5 union
 against roughly 44,000 projected from the Gemini 3 profile) and
 recall-led (D2 confirmed, recall 0.855 against 0.809). The proposer
@@ -807,7 +1016,8 @@ seat's gain partly exists, since arm 1's oracle 0.8662 would have
 cleared the incumbent by +0.0224, but its GS-selected threshold
 re-opened a transfer tax of +0.0168 that the all-3.7 arm did not pay.
 
-Because the family gain sits in the verifier seat, a follow-up screen
+Because most of the family gain sits in the verifier seat, a follow-up
+screen
 asked whether the next release moved it: Gemini 3.8 Flash, published
 2026-09-02 at 3.7's list price, re-verified the identical 791-candidate
 union at its lowest thinking level, so the two verifiers differ in model
@@ -838,11 +1048,24 @@ and recall 0.806, the discriminating verifier on the noisier Gemini 3
 pool trading recall for precision. Arm 1 carried sits at 0.8551 (T4).
 Saturation by N = 3 replicates for the all-3.7 stack, whose N = 3
 oracle 0.8848 is within 0.0023 of N = 5 on r2 and whose canonical
-N = 3 → 5 step is not significant. It does not replicate for arm 1
-(+0.0076 at the carried points, significant). A single 3.7 pass under the 3.7
+N = 3 → 5 step is not significant. For arm 1 the carried N = 3 → 5 step
+is +0.0076 (adjusted p = 0.000162), above the replicate floor of a
+pass-count step on the same passes (0.0053) but inside that floor's upper
+bound (0.0127), so arm 1's non-saturation is a difference between these
+outputs that a second run could erase. A single 3.7 pass under the 3.7
 verifier reaches 0.8563 at its rung oracle on the canonical chain,
-above the Gemini 3 five-pass incumbent, but only 0.8421 at the carried
-threshold. The one-pass economy therefore requires a rung-tuned
+above the Gemini 3 five-pass incumbent (on r2 0.8610 against 0.8503,
++0.0107, tile-swap p = 0.0125, 1.9 times its within-execution floor of
+0.0055 under ruling D48), but only 0.8421 at the carried
+threshold. [DRAFT NOTE, W2.7, 2026-10-07: for PI review; not finalised.
+(a) R7.3-18b: was "It does not replicate for arm 1 (+0.0076 at the
+carried points, significant)"; adjusted p from the signed register row
+`gemini37-55map-gridboard-2026-08-31`; floor
+`reports/w27-replicate-floors-2026-10-06-scripts/floors-v2/results/rescreen.csv`.
+(b) R7.3-19: r2 figures and the floor added; it clears under D48.
+Sources: `results/55map-final-board-r2-2026-09-06/final_board_50m.json`
+→ `pairwise` (ARM2-N1-oracle − B-N5-carried +0.010724, p = 0.0125, BH
+0.015367); rescreen.csv (within part 0.0055).] The one-pass economy therefore requires a rung-tuned
 threshold that the carry-forward discipline does not supply. The
 gold-standard instrument had already recorded the same step: on the
 Era-2 verified board of § R4 all five Tier-1 cells are Gemini 3.7 or
@@ -1039,6 +1262,47 @@ and density diagnostics) is specified in the findings document, § 5.
 ---
 
 ## Changelog
+
+### 2026-10-07 — Drafted 2026-10-07 for PI review (W1.5, W2.7); not finalised
+
+**Trigger.** The replicate-floor report
+`reports/w27-replicate-floors-2026-10-06.md` (§ 6b's floors from every
+pass subset, § 6c's Run A, and the claim-by-claim screen of § 7.2), under
+PI rulings D45 and D46 (a configuration claim needs the tile-swap test to
+reject and the difference to exceed a replicate floor), D48 (runs at most
+seven days apart take the within-execution floor) and D49 (Run A, the
+same-date re-verification of T0.3 and text MIN). Every edit below is
+drafted for the PI's review, is not finalised, and is marked in place
+with `[DRAFT NOTE, W2.7, 2026-10-07: …]`, which also gives each edit's
+sources.
+
+| Claim | Before | After (draft) |
+|---|---|---|
+| § R0 | no statement of what the tile-swap test cannot see | a paragraph and Table [N+1]: within-execution, nested and cross-execution floors; same-signature runs on different dates are not replicates (Obs 497) |
+| § R7.1 and § R7.2 tables | no run dates | a column of proposer and verifier dates; ‡ marks the 3-of-5 cells' 2026-06-06 vote-3 legs |
+| R6-12 | "closes about half of it"; "significantly below"; "a priced trade rather than a tie" | ten passes from two executions; −0.0106 on r2 sits inside its floor (0.0117), so "half" and "trade, not tie" are not resolved |
+| R7.1-05/08/09, lesson (i) | threshold contrasts stated without dates | the verifier-date mix named; one date (Run A): T0.3 +0.0092 → +0.0084, text MIN +0.0275 → +0.0264; T0.3's effect holds narrowly (1.2 times its floor) |
+| R7.2-11/12 | geometry gap +0.0027, "the geometry found few additional mounds" | canonical as before; on r2 +0.0161 (p = 0.0001) with the incumbent's tax +0.0237: chain-dependent |
+| R7.2-13a | B beats A at the carried primaries | holds narrowly (−0.0106 on r2, at its floor's upper bound); the oracle and N = 5 contrasts carry it |
+| R7.2-15 | "its sign held at every rung tested" | held at N = 3, 5 and 10; reversed at N = 1 (A +0.0214, p < 0.0001) |
+| R7.2-16b | "a small BH-significant residue … saturation is real but not complete" | inside the nested floor (0.0069 and 0.0058): not evidence that the tenth pass helps |
+| R7.2-30 | B above every incumbent cell | B N = 5 carried above T0.3's oracle by 0.010, inside the cross-date floor (0.0106) |
+| R7.2-31 | "the highest tile-MCC among Gemini 3 cells (0.711)" | among Gemini 3 carried and as-shipped cells; two oracle cells exceed it (0.713, 0.712) |
+| R7.2-32a | B N = 5 "above" its N = 10 carried point | equal to it (+0.0006, p = 0.72) |
+| "no verdict depends on the chain" | stated for the whole block | true for A versus B; the incumbent's cells move differently (0.8476 → 0.8399), so P5 depends on the chain |
+| R7.3-06b | "both proposer-axis contrasts are not" significant; gain "lives in the verifier seat" | the per-sheet null and the r2 tile-swap result both reported (+0.0099, BH 0.024, 1.4 times its floor under D48); "lives mostly in the verifier seat" (needs a PI ruling) |
+| R7.3-07 | "a tax of only +0.0043" | a small but real tax, twice its nested floor (0.0020) |
+| R7.3-18b | arm 1 non-saturation "significant" | above the point floor (0.0053), inside its upper bound (0.0127) |
+| R7.3-19 | one 3.7 pass above the incumbent at its rung oracle | the same, with r2's +0.0107 at 1.9 times its floor under D48 |
+
+**What did NOT change**: every F1, MCC, tier, cost and p-value already in
+the draft (new figures are added beside them); every registered verdict;
+§§ R1 to R5, R8 and R9 (R9-03 and R9-08/09 stand under the floors, the
+first with the same verifier-date caveat as lesson (i)); and the
+standardised-vintage figures of § R6, whose re-pointing to r2 under
+ruling 1 is still pending.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-06 — § R2 drafted 2026-10-06 for PI review (W1); not finalised
 
