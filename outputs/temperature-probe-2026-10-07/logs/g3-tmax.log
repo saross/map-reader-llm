@@ -1,0 +1,43 @@
+2026-10-07T07:26:07Z SUBMITTED g3-tmax
+2026-10-07 07:26:08,039 - WARNING - --allow-stale-manifest: verifying over a manifest that DISAGREES with its union (outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson). 300 candidates against 791 union features, paired by candidate-id-index. 491 union feature(s) have no candidate: index 1, 4, 5, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24, 26, 28, 33, 34, ... and 471 more
+2026-10-07 07:26:08,039 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-07 07:26:08,039 - INFO - Candidates: 300
+2026-10-07 07:26:08,039 - INFO - Mode: batch
+2026-10-07 07:26:08,039 - INFO - Iterations: 1
+2026-10-07 07:26:08,039 - INFO - Temperature override: 2.00
+2026-10-07 07:26:08,039 - WARNING - Output directory contains 'pro' but model is 'gemini-3-flash-preview'. Check for model/directory mismatch.
+2026-10-07 07:26:08,089 - INFO - Built verifier JSONL: 300 lines (outputs/temperature-probe-2026-10-07/g3-tmax/verifier_requests.jsonl)
+2026-10-07 07:26:08,089 - INFO - Built JSONL chunk 1/1: 300 lines → outputs/temperature-probe-2026-10-07/g3-tmax/verifier_requests.jsonl
+2026-10-07 07:26:08,089 - INFO - Built JSONL: 300 lines in 1 chunk(s)
+2026-10-07 07:26:08,798 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,474 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=Ch9tb2RlbHMvdmVvLTMuMS1nZW5lcmF0ZS1wcmV2aWV3 "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,820 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,820 - INFO - File storage preflight: 0 file(s) stored (0.00 GB) + 1 chunk(s) to upload (0.02 GB) = 0.02 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+2026-10-07 07:26:10,417 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-10-07 07:26:13,918 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU80qZ83beY-mhHVoyJoWhBEG7DARmeDR3l5trGFSc0J7EaveaFqVDaT_wlGEn2U2oR8ld67_XZ1Emj6QrT4CGlIeqeGuipIhFG-yrbDospk&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:16,811 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU80qZ83beY-mhHVoyJoWhBEG7DARmeDR3l5trGFSc0J7EaveaFqVDaT_wlGEn2U2oR8ld67_XZ1Emj6QrT4CGlIeqeGuipIhFG-yrbDospk&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:19,507 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU80qZ83beY-mhHVoyJoWhBEG7DARmeDR3l5trGFSc0J7EaveaFqVDaT_wlGEn2U2oR8ld67_XZ1Emj6QrT4CGlIeqeGuipIhFG-yrbDospk&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:19,507 - INFO - Uploaded JSONL as: files/n8twkcxiueih
+2026-10-07 07:26:19,509 - INFO - Uploaded chunk 1/1: files/n8twkcxiueih
+2026-10-07 07:26:29,146 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:batchGenerateContent "HTTP/1.1 200 OK"
+2026-10-07 07:26:29,146 - INFO - Submitted batch job: batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro
+2026-10-07 07:26:29,146 - INFO - Submitted batch job 1/1: batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro
+2026-10-07 07:26:29,667 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:27:00,326 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:27:30,982 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:28:01,634 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:28:32,255 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:29:02,902 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:29:33,550 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:30:04,231 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:30:34,879 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:31:05,535 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:31:36,247 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro "HTTP/1.1 200 OK"
+2026-10-07 07:31:36,248 - INFO - Batch job batches/h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro reached terminal state: JOB_STATE_SUCCEEDED
+2026-10-07 07:31:36,248 - INFO - Batch job 1/1 finished polling: JOB_STATE_SUCCEEDED
+2026-10-07 07:31:37,209 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-h5ecq5n5s83ohd26si1gj6yxzvb09zn8qaro:download?alt=media "HTTP/1.1 200 OK"
+2026-10-07 07:31:37,815 - INFO - Retrieved 300 result lines from batch job
+2026-10-07 07:31:37,818 - INFO - Batch usage booked from 300/300 responses: 537,600 input tokens (0 cached), 52,604 output; raw results -> outputs/temperature-probe-2026-10-07/g3-tmax/batch_results.jsonl
+2026-10-07 07:31:37,821 - INFO - Probabilities written: outputs/temperature-probe-2026-10-07/g3-tmax/probabilities.json
+2026-10-07 07:31:37,821 - INFO - Metadata written: outputs/temperature-probe-2026-10-07/g3-tmax/run.meta.json
+2026-10-07 07:31:37,821 - INFO - Score summary: mean=0.565, above threshold (0.5): 163/300 (54.3%)

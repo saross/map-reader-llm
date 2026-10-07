@@ -1,0 +1,45 @@
+2026-10-07T07:26:07Z SUBMITTED g37-tmax
+2026-10-07 07:26:08,009 - WARNING - --allow-stale-manifest: verifying over a manifest that DISAGREES with its union (outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson). 300 candidates against 791 union features, paired by candidate-id-index. 491 union feature(s) have no candidate: index 1, 4, 5, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24, 26, 28, 33, 34, ... and 471 more
+2026-10-07 07:26:08,009 - INFO - Thinking level override: low
+2026-10-07 07:26:08,010 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-07 07:26:08,010 - INFO - Candidates: 300
+2026-10-07 07:26:08,010 - INFO - Mode: batch
+2026-10-07 07:26:08,010 - INFO - Iterations: 1
+2026-10-07 07:26:08,010 - INFO - Temperature override: 2.00
+2026-10-07 07:26:08,010 - WARNING - Output directory contains 'pro' but model is 'gemini-3.7-flash'. Check for model/directory mismatch.
+2026-10-07 07:26:08,060 - INFO - Built verifier JSONL: 300 lines (outputs/temperature-probe-2026-10-07/g37-tmax/verifier_requests.jsonl)
+2026-10-07 07:26:08,060 - INFO - Built JSONL chunk 1/1: 300 lines → outputs/temperature-probe-2026-10-07/g37-tmax/verifier_requests.jsonl
+2026-10-07 07:26:08,060 - INFO - Built JSONL: 300 lines in 1 chunk(s)
+2026-10-07 07:26:08,788 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,457 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=Ch9tb2RlbHMvdmVvLTMuMS1nZW5lcmF0ZS1wcmV2aWV3 "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,704 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+2026-10-07 07:26:09,705 - INFO - File storage preflight: 0 file(s) stored (0.00 GB) + 1 chunk(s) to upload (0.02 GB) = 0.02 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+2026-10-07 07:26:10,426 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-10-07 07:26:15,048 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU82hg8DOJKY2tWnKZKysNzNDwvh1mAk3RT-Np2A5Ue70FzUZILxUOqa8FXzgzXGcT1H7WoyYt2NsK6QsZk0QkRK2IJb7Nw7Byrr8mTi6gg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:18,724 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU82hg8DOJKY2tWnKZKysNzNDwvh1mAk3RT-Np2A5Ue70FzUZILxUOqa8FXzgzXGcT1H7WoyYt2NsK6QsZk0QkRK2IJb7Nw7Byrr8mTi6gg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:21,400 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU82hg8DOJKY2tWnKZKysNzNDwvh1mAk3RT-Np2A5Ue70FzUZILxUOqa8FXzgzXGcT1H7WoyYt2NsK6QsZk0QkRK2IJb7Nw7Byrr8mTi6gg&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 07:26:21,400 - INFO - Uploaded JSONL as: files/jhu2nh9onfiz
+2026-10-07 07:26:21,404 - INFO - Uploaded chunk 1/1: files/jhu2nh9onfiz
+2026-10-07 07:26:31,660 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.7-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-10-07 07:26:31,660 - INFO - Submitted batch job: batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9
+2026-10-07 07:26:31,660 - INFO - Submitted batch job 1/1: batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9
+2026-10-07 07:26:32,202 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:27:02,803 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:27:33,424 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:28:04,077 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:28:34,731 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:29:05,357 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:29:35,993 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:30:06,611 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:30:37,232 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:31:07,844 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:31:38,467 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:32:09,122 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 "HTTP/1.1 200 OK"
+2026-10-07 07:32:09,122 - INFO - Batch job batches/tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9 reached terminal state: JOB_STATE_SUCCEEDED
+2026-10-07 07:32:09,125 - INFO - Batch job 1/1 finished polling: JOB_STATE_SUCCEEDED
+2026-10-07 07:32:10,321 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-tgkje73jl1wh61oxrzajdx12v9wkwqwhbxu9:download?alt=media "HTTP/1.1 200 OK"
+2026-10-07 07:32:11,001 - INFO - Retrieved 300 result lines from batch job
+2026-10-07 07:32:11,004 - INFO - Batch usage booked from 300/300 responses: 537,600 input tokens (0 cached), 37,170 output; raw results -> outputs/temperature-probe-2026-10-07/g37-tmax/batch_results.jsonl
+2026-10-07 07:32:11,006 - INFO - Probabilities written: outputs/temperature-probe-2026-10-07/g37-tmax/probabilities.json
+2026-10-07 07:32:11,007 - INFO - Metadata written: outputs/temperature-probe-2026-10-07/g37-tmax/run.meta.json
+2026-10-07 07:32:11,007 - INFO - Score summary: mean=0.689, above threshold (0.5): 208/300 (69.3%)
