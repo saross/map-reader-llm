@@ -624,10 +624,10 @@ it.
 | R7.3-04, D1: arm 1 against B N = 5, +0.0056, p = 0.35 (L768–772) | r2 +0.0048, p = 0.27 | CROSS 3–6 days (D48: within floor) | 0.0063 | **Tie, inside the floor** (as the draft reads it). |
 | R7.3-05a/15: arm 2 above the incumbent stack +0.0325; above B's N = 10 oracle +0.0267 / +0.0311 (L772, L805–810) | p < 0.0001 | CROSS 3–6 days | 0.011–0.013 | **Stand** (about twice the floor); the headline survives. |
 | R7.3-05b/06: the verifier axis, +0.0234 (fourth against B K = 10) and +0.0270 (arm 2 against arm 1) | p < 0.0001 | same proposer; verifiers 4–5 days apart / same day | 0.001 (verifier band) + 0.005 | **Stand.** |
-| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days (D48: within floor); K = 5 against K = 10 | 0.0072 | **D48: clears narrowly (1.4 times) and is test-dependent:** the "not significant" reading does not hold on D42's test; report both tests and call it a small proposer-axis difference, not a null. |
+| R7.3-06b: the proposer axis under the 3.7 verifier is not significant (+0.0107, per-sheet p = 0.074) (L776–777) | r2 tile-swap +0.0099, p = 0.0198, BH 0.024 | CROSS 3–6 days (D48: within floor); K = 5 against K = 10 | 0.0072 | **D48: clears narrowly (1.4 times), assuming little proposer drift within a week, and is test-dependent:** the "not significant" reading does not hold on D42's test; report both tests and call it a small proposer-axis difference, not a null. |
 | R7.3-07: the 3.7 verifier's transfer tax "only +0.0043" (L779–781) | canonical adjusted p = 0.000162; r2 tile-swap +0.0044, p < 0.0001 | SAME (nested threshold) | own floor 0.0020 (upper 0.0033) | **§ 6b: a small real effect**, 2.1 times its own floor; the earlier screen applied an independent-run floor to a contrast that shares its passes. Keep "small", drop "only". |
 | R7.3-18a/b: saturation by N = 3 for the all-3.7 stack (−0.0023) but not for arm 1 (+0.0076) (L818–821) | p = 0.12; adjusted p = 0.000162 | SAME (nested) | 0.007 (N = 3) | **18a a tie; 18b at the floor** (0.0076 against 0.007): "replicates" overstates it. |
-| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS 3–6 days (D48: within floor) | 0.0055 | **D48: clears (1.9 times).** |
+| R7.3-19: a single 3.7 pass at its rung oracle above the five-pass incumbent (+0.0107 on r2) (L821–825) | p = 0.0125, BH 0.015 | CROSS 3–6 days (D48: within floor) | 0.0055 | **D48: clears (1.9 times), assuming little proposer drift within a week.** |
 | R6-12a: doubling MIN passes, UPL above TM-k3 by +0.017 (L536–538) | p < 0.0001 | MIXED: the gain is carried by passes 6–10, 54 days later | 0.011–0.013 | **Clears the floor, but is confounded with execution**: the proposer-only consensus of the June passes alone scores 0.02 to 0.03 above the April passes (§ 4). Say "ten passes from two executions". |
 | R6-12b: UPL significantly below HIGH, −0.0106, "closing about half the gap" (L535–542) | r2 −0.0106, p = 0.0165, BH 0.021 | MIXED against SAME-DAY | 0.011–0.013 | **Inside the floor**: "a priced trade, not a tie" is not resolved. |
 | R9-03: the vote-threshold direction reversed between GS and deployment (L968–972) | GS p = 0.11–0.43 against 55-map BH ≤ 0.001 | CROSS corpora and dates; the 55-map k3 arms are the 06-06 shells | — | **Stands as stated** (a resolved difference on deployment against a tie on GS), with the verifier-date caveat. |
@@ -653,7 +653,11 @@ one-date reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the
 claims stand with the date mix named; Run A (§ 6c) confirms it on T03 and
 text MIN. **Ruled (D48, 2026-10-07):** runs at most seven days apart take the
 same-week floor, so R7.3-06b and R7.3-19 clear their within floors (1.4 and
-1.9 times) and R7.3-04 stays a tie.
+1.9 times) and R7.3-04 stays a tie. **Caveat:** the same-week control re-ran only the
+verifier, so D48 assumes little proposer drift within a week, which nothing
+yet measures on this corpus; a free check exists (the 8-day text-HIGH pair,
+`55maps-generalisation` 2026-04-10 against `55maps-text-high-generalisation`
+2026-04-18, each with its own verified set).
 
 ## 8. What follows
 
@@ -681,6 +685,13 @@ same-week floor, so R7.3-06b and R7.3-19 clear their within floors (1.4 and
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-07 (last) — D48's proposer caveat
+
+A side review noted that § 6a's same-week control re-ran only the verifier.
+R7.3-06b and R7.3-19 now read "clears, assuming little proposer drift within
+a week"; the § 7.2 ruling paragraph names the free check that would settle
+it. No other row changes. Commit: see git log for this entry's date.
 
 ### 2026-10-07 (latest) — § 6c: Run A, T03 and text MIN re-verified on one date
 
