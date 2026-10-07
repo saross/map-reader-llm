@@ -1,0 +1,452 @@
+[
+ {
+  "name": "g37-k1 board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/phase2/operating-points.json row 27",
+  "n_candidates": 640,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 640,
+   "n_in_scope": 602,
+   "n_out_of_frame": 38,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 80,
+  "n_rows_moved_ge_0.001_vs_committed": 80,
+  "argmax_committed": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8495,
+   "n": 502
+  },
+  "argmax_new": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747,
+   "n": 502
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.8747,
+  "blast_on_argmax": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747
+  },
+  "blast_on_f1_at_committed_argmax": 0.8747,
+  "blast_n_rows_moved": 80,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "g37-k1 era2",
+  "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/phase2/operating-points.json row 27",
+  "n_candidates": 640,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 640,
+   "n_in_scope": 602,
+   "n_out_of_frame": 38,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 80,
+  "n_rows_moved_ge_0.001_vs_committed": 80,
+  "argmax_committed": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8495,
+   "n": 502
+  },
+  "argmax_new": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747,
+   "n": 502
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.8747,
+  "blast_on_argmax": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747
+  },
+  "blast_on_f1_at_committed_argmax": 0.8747,
+  "blast_n_rows_moved": 80,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "g37-k3 board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/phase2/operating-points.json row 28",
+  "n_candidates": 757,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 757,
+   "n_in_scope": 712,
+   "n_out_of_frame": 45,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 240,
+  "n_rows_moved_ge_0.001_vs_committed": 240,
+  "argmax_committed": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.887,
+   "n": 494
+  },
+  "argmax_new": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.9135,
+   "n": 494
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.9135,
+  "blast_on_argmax": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.9135
+  },
+  "blast_on_f1_at_committed_argmax": 0.9135,
+  "blast_n_rows_moved": 240,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "g37-k1 recovery-fixed board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json k1-opmax",
+  "n_candidates": 640,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 640,
+   "n_in_scope": 602,
+   "n_out_of_frame": 38,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 80,
+  "n_rows_moved_ge_0.001_vs_committed": 80,
+  "argmax_committed": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8495,
+   "n": 502
+  },
+  "argmax_new": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747,
+   "n": 502
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.8747,
+  "blast_on_argmax": {
+   "vote_t": 1,
+   "prob_t": 0.15,
+   "f1": 0.8747
+  },
+  "blast_on_f1_at_committed_argmax": 0.8747,
+  "blast_n_rows_moved": 80,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "g37-k3 recovery-fixed board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json k3-opmax",
+  "n_candidates": 759,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 759,
+   "n_in_scope": 714,
+   "n_out_of_frame": 45,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 240,
+  "n_rows_moved_ge_0.001_vs_committed": 240,
+  "argmax_committed": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.886,
+   "n": 495
+  },
+  "argmax_new": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.9135,
+   "n": 495
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.9135,
+  "blast_on_argmax": {
+   "vote_t": 3,
+   "prob_t": 0.1,
+   "f1": 0.9135
+  },
+  "blast_on_f1_at_committed_argmax": 0.9135,
+  "blast_n_rows_moved": 240,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "g37-k5 board (control, 0 out-of-frame)",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "scripts/derive_g37_gs_opmax_rungs.py:198-201",
+  "n_candidates": 791,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 791,
+   "n_in_scope": 791,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 400,
+  "n_rows_moved_ge_0.001_vs_committed": 0,
+  "argmax_committed": {
+   "vote_t": 5,
+   "prob_t": 0.1,
+   "f1": 0.9066,
+   "n": 443
+  },
+  "argmax_new": {
+   "vote_t": 5,
+   "prob_t": 0.1,
+   "f1": 0.9066,
+   "n": 443
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.9066,
+  "blast_on_argmax": {
+   "vote_t": 5,
+   "prob_t": 0.1,
+   "f1": 0.9066
+  },
+  "blast_on_f1_at_committed_argmax": 0.9066,
+  "blast_n_rows_moved": 0,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "tierE-k1 board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/tier-e/operating-points.json row 1",
+  "n_candidates": 1826,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 1826,
+   "n_in_scope": 1730,
+   "n_out_of_frame": 96,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 80,
+  "n_rows_moved_ge_0.001_vs_committed": 80,
+  "argmax_committed": {
+   "vote_t": 1,
+   "prob_t": 0.2,
+   "f1": 0.8462,
+   "n": 482
+  },
+  "argmax_new": {
+   "vote_t": 1,
+   "prob_t": 0.2,
+   "f1": 0.868,
+   "n": 482
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.868,
+  "blast_on_argmax": {
+   "vote_t": 1,
+   "prob_t": 0.2,
+   "f1": 0.868
+  },
+  "blast_on_f1_at_committed_argmax": 0.868,
+  "blast_n_rows_moved": 80,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "tierE-k3 board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/tier-e/operating-points.json row 2",
+  "n_candidates": 2481,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 2481,
+   "n_in_scope": 2356,
+   "n_out_of_frame": 125,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 240,
+  "n_rows_moved_ge_0.001_vs_committed": 240,
+  "argmax_committed": {
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "f1": 0.8746,
+   "n": 450
+  },
+  "argmax_new": {
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "f1": 0.8979,
+   "n": 450
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.8979,
+  "blast_on_argmax": {
+   "vote_t": 3,
+   "prob_t": 0.15,
+   "f1": 0.8979
+  },
+  "blast_on_f1_at_committed_argmax": 0.8979,
+  "blast_n_rows_moved": 240,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "tierE-k5 board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/tier-e/operating-points.json row 3",
+  "n_candidates": 2932,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 2932,
+   "n_in_scope": 2784,
+   "n_out_of_frame": 148,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 400,
+  "n_rows_moved_ge_0.001_vs_committed": 400,
+  "argmax_committed": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.8828,
+   "n": 435
+  },
+  "argmax_new": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.9046,
+   "n": 435
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.9046,
+  "blast_on_argmax": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.9046
+  },
+  "blast_on_f1_at_committed_argmax": 0.9046,
+  "blast_n_rows_moved": 400,
+  "agrees_with_blast_on": true
+ },
+ {
+  "name": "tierE-k5 recovery-fixed board",
+  "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "anchor": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json k5",
+  "n_candidates": 2932,
+  "universe_scope": {
+   "rule": "origin-sheet-geometric",
+   "applied": true,
+   "n_detections": 2932,
+   "n_in_scope": 2784,
+   "n_out_of_frame": 148,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_origin_restored": 0,
+   "n_origin_only": 0,
+   "n_origin_unrecognised": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "n_rows": 400,
+  "n_rows_moved_ge_0.001_vs_committed": 400,
+  "argmax_committed": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.8828,
+   "n": 435
+  },
+  "argmax_new": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.9046,
+   "n": 435
+  },
+  "argmax_moved_vs_committed": false,
+  "new_f1_at_committed_argmax": 0.9046,
+  "blast_on_argmax": {
+   "vote_t": 5,
+   "prob_t": 0.15,
+   "f1": 0.9046
+  },
+  "blast_on_f1_at_committed_argmax": 0.9046,
+  "blast_n_rows_moved": 400,
+  "agrees_with_blast_on": true
+ }
+]
