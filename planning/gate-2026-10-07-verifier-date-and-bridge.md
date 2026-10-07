@@ -1,10 +1,16 @@
 # API gate, 2026-10-07: T03 same-date re-verification and the modality bridging pair
 
-> **Last revised**: 2026-10-07 (original publication, Session 162). See
+> **Last revised**: 2026-10-07 (status: Run A done; Run B Stage 0 done). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: AWAITING THE PI's APPROVAL, stage by stage.** Nothing has been
-submitted. Costs use the passes register's uniform discounted tier (flex
+**Status: Run A APPROVED (D49) and DONE 2026-10-07** (with the text-MIN
+add-on): 26,335 candidates on the Batch API, none failed, audited US$18.17
+against the US$18.19 estimate; outputs `f13f7b308`; uploads deleted (9 of
+9); results in `reports/w27-replicate-floors-2026-10-06.md` § 6c. **Run B
+APPROVED (D49): design and Stage 0 done** (both models served on
+2026-10-07); Stages 1 and 2 return to the PI with their final
+configurations and audit. Originally: AWAITING THE PI's APPROVAL, stage by
+stage. Costs use the passes register's uniform discounted tier (flex
 equals batch; PI ruling D19), per candidate or per tile from the original
 legs (`results/passes-manifest.json`, read 2026-10-07). Context:
 `reports/w27-replicate-floors-2026-10-06.md` § 6a (the verifier-date check
@@ -99,6 +105,10 @@ the same route for Gemini 3). The swap37 leg's cost is estimated at the
    to the PI with their final configurations and the audit verdict.
 
 ## Changelog
+
+### 2026-10-07 (later) — Status updated
+
+Run A completed; Run B's Stage 0 done.
 
 ### 2026-10-07 — Original publication (Session 162)
 

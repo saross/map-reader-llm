@@ -1,7 +1,7 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-07 (§ 6b added: the 55-map floors from every
-> pass subset; three § 7.2 verdicts move). See [§ Changelog](#changelog) for
+> **Last revised**: 2026-10-07 (latest: § 6c added, Run A's same-date
+> re-verification of T03 and text MIN). See [§ Changelog](#changelog) for
 > revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
@@ -516,6 +516,54 @@ Reading:
 
 The § 7.2 screen below now uses these floors.
 
+## 6c. Run A: T03 and text MIN re-verified on one date (added 2026-10-07)
+
+PI ruling D49 approved a same-date re-verification of the two families'
+4-of-5 sets (first verified 2026-04-18 and 2026-04-26/27) and their vote-3
+shells (first verified 2026-06-06), on the Batch API on 2026-10-07, with
+the same verifier configuration on the same crops (gate
+`planning/gate-2026-10-07-verifier-date-and-bridge.md`; outputs
+`outputs/verifier-date-2026-10-07/`, `f13f7b308`; 26,335 candidates, none
+failed, audited US$18.17). The candidate ids are identical, so no matching
+is needed. Scored on the board's own path (`runA/runA_score.py`,
+`runA/runA_results.json`); the committed mixed-date probabilities reproduce
+the board at all four gated cells (T03 0.8294 and 0.8399; TM 0.7826 and
+0.8103).
+
+| contrast (50 m, r2) | mixed dates (the board) | one date (all October) |
+|---|---:|---:|
+| T03 k3 − k4 at 0.15 | +0.0092, p = 0.0003 | +0.0084, p = 0.0013 |
+| T03 oracle (0.20, k3) − carried (0.15, k4) | +0.0105 | +0.0113, p = 0.0001 |
+| TM k3 − k4 at 0.15 | +0.0275 | +0.0264, p < 0.0001 |
+| TM oracle (0.20, k3) − carried (0.15, k4) | +0.0277 | +0.0265, p < 0.0001 |
+
+| same candidates, two dates | decisions flipped at 0.15 (Wilson 95 %) | up / down | cell shift |
+|---|---|---|---|
+| T03 4-of-5 set, April → October | 442 of 9,910, 4.46 % [4.07, 4.88] | 221 / 221 | k4 cell +0.0021 (p = 0.36) |
+| TM 4-of-5 set, April → October | 412 of 10,170, 4.05 % [3.68, 4.45] | 206 / 206 | k4 cell +0.0020 (p = 0.38) |
+| T03 shell, June 6 → October | 132 of 4,035, 3.27 % [2.77, 3.87] | 69 / 63 | k3 cell −0.0005 (p = 0.64) |
+| TM shell, June 6 → October | 69 of 2,220, 3.11 % [2.46, 3.91] | 37 / 32 | k3 cell −0.0009 (p = 0.27) |
+
+Reading:
+
+- **The 3-of-5 advantage survives a one-date reading for both families.**
+  T03's +0.009 becomes +0.008 under October probabilities, 1.2 times its
+  (borrowed) § 6b floor of 0.0069 and inside its upper bound: a small, real
+  but narrow threshold effect. Text MIN's +0.0264 matches § 6a's June-only
+  reading exactly. Lesson (i) stands with the date mix named.
+- **The verifier drifts a little between dates, and the drift barely moves
+  the cells.** On identical requests 4 % of decisions flip between April
+  and October and 3 % between June and October, against 2.4 % between runs a
+  week apart (§ 6a, D4/D8); the flips are balanced in direction, and no cell
+  moves significantly (at most +0.0021). The April-to-June shift of § 6a
+  (TM-k4 +0.0041 on near-replicates) did not recur from April to October,
+  so the cross-date verifier term is of order 0.002 to 0.004, at the low end
+  of § 6a's allowance.
+- **For the date floor**, these are three more dated verifier pairs for two
+  families (April–October, June–October, and for TM June–June); the
+  cross-execution floor of § 7.2 (within floor plus 0.004 to 0.007) is on
+  the conservative side of what they show.
+
 ## 7. The paper's configuration-level claims against the floors
 
 A read-only inventory of `docs/paper/results-draft.md` (agent record
@@ -560,7 +608,7 @@ it.
 | claim | difference, test | executions | floor | verdict under D45 |
 |---|---|---|---|---|
 | R7.1-05/08, lesson (i): the carried T0.7 × 4-of-5 left +0.022 on the table against the joint oracle T0.3 × 3-of-5 (L565–572, L595–599) | +0.0225, p < 0.0001 | CROSS 8 days (proposers 04-18 against 04-26/27); the k3 shell's candidates verified 2026-06-06, 40–49 days after the k4 legs | 0.011–0.013 | **Clears the floor.** The k3 cells are mixed-verifier-execution cells; on text MIN the threshold effect survives a one-date reading (§ 6a: +0.0275 → +0.0264), so say so, and name the date mix. |
-| R7.1-09a: T0.3, 3-of-5 beats 4-of-5 by +0.009 (L599–601) | +0.0092, BH 0.0005 | nested passes; verifier dates differ (04-26/27 against 06-06) | 0.0069 (upper 0.0111), borrowed from A and B | **§ 6b: clears narrowly** (1.3 times), with the verifier-date caveat of § 6a; Run A (the T03 re-verification) settles it directly. |
+| R7.1-09a: T0.3, 3-of-5 beats 4-of-5 by +0.009 (L599–601) | +0.0092, BH 0.0005; one-date (§ 6c) +0.0084, p = 0.0013 | nested passes; one-date reading available (§ 6c) | 0.0069 (upper 0.0111), borrowed from A and B | **§ 6c: survives a one-date reading, narrowly** (1.2 times its floor): a small real threshold effect. |
 | R7.1-09b/c: the same for T0.7 (+0.022) and MIN (+0.028) | BH < 0.0001 | as above | as above | **Stand on margin** (twenty times the verifier band); same caveat. |
 | R7.1-11, lesson (ii): HIGH beats MIN at K = 5, +0.028 to +0.034 (L605–606); R6-06 (L505–511) | p < 0.0001 | SAME-DAY proposers (2026-04-18), same-day k3 shells | 0.005 | **Stands**; the cleanest configuration claim on the board. |
 | R7.1-12/15, lesson (iii): the image cell is the sole Tier-1 cell on tile-MCC, +0.022 MCC (L606–615) | MCC BH 0.0020 | CROSS 8 days, k3 shells 06-06 | no MCC floor measured | **Stands on F1 reasoning only**; an MCC floor is not measured (W2.5). |
@@ -592,7 +640,8 @@ floors, on the § 6b floors by about 1.7 to 3 times. Under § 6b one verdict
 reverses: the 3.7 verifier's "+0.0043" tax (R7.3-07) is a small real effect
 against its own nested floor, not noise. Two hold only narrowly: B beats A at
 the carried primaries (R7.2-13a, at the floor's upper bound) and T03's
-3-of-5 over 4-of-5 (R7.1-09a, 1.3 times a borrowed floor). Four sit at or
+3-of-5 over 4-of-5 (R7.1-09a: under one verifier date, § 6c, +0.0084, 1.2
+times a borrowed floor). Four sit at or
 inside a floor and need rewording as output differences or ties: the oracle
 saturation residue (R7.2-16b), B N = 5 "above" N = 10 (R7.2-32a), arm 1's
 non-saturation (R7.3-18b, inside its upper bound) and the uplift "half the
@@ -601,8 +650,8 @@ under D42's test and D48's floor it is a small difference, not a null. Two need 
 R7.2-11/12's chain dependence) and one a restriction (R7.2-31). Lesson (i)
 and every 3-of-5-against-4-of-5 contrast mix verifier dates; on text MIN a
 one-date reading moves the contrast by only 0.001 to 0.002 (§ 6a), so the
-claims stand with the date mix named; Run A (T03, about US$10) settles the
-narrowest of them. **Ruled (D48, 2026-10-07):** runs at most seven days apart take the
+claims stand with the date mix named; Run A (§ 6c) confirms it on T03 and
+text MIN. **Ruled (D48, 2026-10-07):** runs at most seven days apart take the
 same-week floor, so R7.3-06b and R7.3-19 clear their within floors (1.4 and
 1.9 times) and R7.3-04 stays a tie.
 
@@ -632,6 +681,19 @@ same-week floor, so R7.3-06b and R7.3-19 clear their within floors (1.4 and
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-07 (latest) — § 6c: Run A, T03 and text MIN re-verified on one date
+
+Run A (PI ruling D49) completed; § 6c added and R7.1-09a's verdict settled
+(survives a one-date reading, +0.0084, narrowly above its floor).
+
+| | Before | After |
+|---|---|---|
+| R7.1-09a | clears narrowly, pending Run A | survives a one-date reading (+0.0084, p = 0.0013), 1.2 times its floor |
+| Cross-date verifier term | 0.004–0.007 (one April–June pair) | of order 0.002–0.004 (April–October and June–October on identical requests) |
+
+**What did NOT change**: every other § 7 verdict, and the floors of § 6b.
+Commit: see git log for this entry's date.
 
 ### 2026-10-07 (latest) — D48 applied to the three short-gap claims
 
