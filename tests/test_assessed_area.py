@@ -244,7 +244,8 @@ def passes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> dict[str, Path]:
     manifest.write_text(json.dumps([f"S_x{x}_y0.png" for x in range(4)]))
     recovery_manifest = tmp_path / "recovery.json"
     recovery_manifest.write_text(json.dumps(["S_x3_y0.png"]))
-    monkeypatch.setitem(laa.KNOWN_TILINGS, str(manifest), str(tiling))
+    # Hermetic: only the synthetic tiling is registered.
+    monkeypatch.setattr(laa, "KNOWN_TILINGS", {str(manifest): str(tiling)})
 
     def write_pass(name: str, tiles: list[int], man: Path) -> Path:
         path = tmp_path / name / "detections.geojson"
@@ -291,6 +292,25 @@ def test_pass_provenance_unions_the_processed_tiles(passes):
     assert any("subset manifest" in line for line in a_full.evidence)
     with pytest.raises(laa.AssessedAreaMismatchError):
         laa.compare_assessed_areas([a_full, a_part])
+
+
+def test_an_unregistered_tiling_is_undetermined(passes, monkeypatch):
+    """A pass on a tiling with no registered polygons: undetermined, not guessed."""
+    monkeypatch.setattr(laa, "KNOWN_TILINGS", {})
+    union = consensus(passes["tmp"], "k2", [passes["run_2"]], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="k2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "no tile polygons are registered" in area.reason or \
+        "no registered tiling" in area.reason
+
+
+def test_a_missing_polygon_file_is_undetermined(world, tmp_path):
+    """A record whose footprint file is gone reads as undetermined, not a crash."""
+    union = write_points(tmp_path / "gone.geojson", [(500, 500)])
+    write_record(union, tmp_path / "no-such-tiling.geojson")
+    area = laa.determine_assessed_area(union, label="gone")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "missing" in area.reason
 
 
 def test_a_pass_without_processed_tiles_is_undetermined(passes):

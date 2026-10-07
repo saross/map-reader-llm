@@ -239,7 +239,14 @@ def _abs(path: str | Path) -> Path:
 
 @functools.lru_cache(maxsize=64)
 def _read_bounds(path: str) -> gpd.GeoDataFrame:
-    """Read a tile-polygon GeoJSON once, in :data:`AREA_CRS`."""
+    """Read a tile-polygon GeoJSON once, in :data:`AREA_CRS`.
+
+    Raises:
+        AssessedAreaUndeterminedError: If the file does not exist, so a
+            missing polygon file reads as an undetermined area, not a crash.
+    """
+    if not _abs(path).exists():
+        raise AssessedAreaUndeterminedError(f"polygon file missing: {path}")
     gdf = gpd.read_file(_abs(path))
     if gdf.crs is None:
         gdf = gdf.set_crs(AREA_CRS)
@@ -308,6 +315,8 @@ def tiling_polygons(manifest: str) -> tuple[gpd.GeoDataFrame, str]:
     wanted = _manifest_names(manifest)
     matches = []
     for key in KNOWN_TILINGS:
+        if not _abs(KNOWN_TILINGS[key]).exists() or not _abs(key).exists():
+            continue  # a registered tiling absent from this checkout cannot match
         gdf, names = _verified_tiling(key)
         if wanted <= names:
             matches.append((key, gdf[gdf["tile_name"].astype(str).isin(wanted)]))
