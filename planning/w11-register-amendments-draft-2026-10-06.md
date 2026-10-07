@@ -1,6 +1,6 @@
 # W1.1: register amendments for D42 — draft for the PI
 
-> **Last revised**: 2026-10-06 (original publication, Session 162). See
+> **Last revised**: 2026-10-07 (§ 3 added: era1-leaderboard, replicate group 21). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: DRAFT, awaiting the PI's approval of the exact text.** Tracker
@@ -73,13 +73,51 @@ carried unchanged; its artefact
 (`results/pairwise/20m/fdr/pairwise_results_fdr.json`, 2026-03-28) is a
 permutation result and outside D42's re-test.
 
-## 3. On approval
+## 3. `era1-leaderboard`: replicate group 21 (added 2026-10-07)
 
-Write both outcomes into `results/run-analyses.json` in place, regenerate
+The manipulation gate (`scripts/check_manipulation.py`, PR #25) refused
+`era1-leaderboard` on six pairs of replicate group 21 (manipulation-check
+report § B.5: Phase 3c H9-A ≡ Phase 3a-high text T0.7, by design; the two
+instruction files are byte-identical). The PI approved listing the group as
+known (`5fac69fc5`) and a C-05-style note where a write-up treats the cells
+as different configurations. The board's own ranking does
+(`results/era1-leaderboard/tiering_20m.json`, re-read 2026-10-07): three
+cells of one configuration at one aggregation sit in two tiers. The row is
+UNSIGNED, so the note is appended to its outcome after the C-05 amendment.
+
+**Proposed (appended to the outcome):**
+
+> [AMENDED 2026-10-07, replicate group 21; manipulation gate] Three more
+> cells are one transmitted configuration at one aggregation (text, HIGH
+> thinking, T = 0.7, five passes, 4-of-5):
+> retest-phase3a-high::text-high-t0.7-n5-4of5 (rank 13, tier 3, F1 0.730),
+> retest-phase3c::text-h9-a-diversity-4of5 (rank 16, tier 4, F1 0.717; H9-A
+> is the Phase 3a optimum carried forward by design) and
+> retest-phase3a-replication::text-high-t0.7-n5-4of5 (rank 17, tier 4,
+> F1 0.713). The tier boundary between rank 13 and ranks 16-17 separates
+> replicates: their 0.013-0.017 F1 spread is inside the Era-1 five-pass
+> replicate floor at 4-of-5 (0.024; reports/w27-replicate-floors-2026-10-06.md
+> § 3). The 10- and 30-pass cells of the two Phase 3a runs (ranks 4, 6, 9
+> and 10) are likewise replicates of one configuration, each at its own
+> sweep-selected threshold.
+
+**Not amended:** `null-exemplar-sensitivity-2026-09-13` and
+`uplift-supplement-flatten` (both SIGNED) hold the same cells, but neither
+contrasts them with each other: the first measures each cell against its
+own null-exemplar variant, the second pairs each verified cell with its own
+unverified anchor. Their refusals are table membership, not a claim.
+
+## 4. On approval
+
+Write the three outcomes into `results/run-analyses.json` in place (§ 1 and § 2 replace; § 3 appends), regenerate
 the analyses manifest, tick W1.1 in the tracker, and record the approval
 time here.
 
 ## Changelog
+
+### 2026-10-07 — § 3 added
+
+The era1-leaderboard note for replicate group 21, at the PI's request.
 
 ### 2026-10-06 — Original publication (Session 162)
 
