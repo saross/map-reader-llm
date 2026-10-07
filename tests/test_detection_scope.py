@@ -177,21 +177,22 @@ def test_a_rekeyed_detection_is_scored_on_its_origin_sheet(frame, refs, column, 
     assert (round(p, 4), round(r, 4)) == (0.6667, 0.6667)
 
 
-def test_a_cluster_seen_on_both_sheets_is_scored_on_its_first_origin(frame, refs):
-    """Members on A and B; the first (the candidate's own tile) is on A.
+def test_a_cluster_seen_on_both_sheets_keeps_its_scoring_sheet(frame):
+    """Members on A and B, scored on B: seen on B, so not a re-key.
 
-    A re-key onto B must not stand merely because one member was seen on B:
-    the candidate's tile before the re-key was its first member's, on A.
+    ``merge_passes.py`` sorts ``source_tiles``, so the first entry (A here)
+    is alphabetical, not first-seen; privileging it would re-attribute the
+    cluster arbitrarily. Only a sheet the detection was never seen on is a
+    re-key.
     """
     d = dets([("B_x0_y0.png", 196, 50)],
              source_tiles=["['A_x100_y0.png' 'B_x0_y0.png']"])
     scope = lam.scope_detections_to_frame(d, frame)
-    assert list(scope.sheets) == ["A"]
-    assert scope.diagnostics["n_origin_restored"] == 1
-    p, r, f = lam.calculate_f1_internal(d, refs, frame, 20)
-    assert (p, round(r, 4)) == (1.0, 0.3333)
-    names, _diag = lam.assign_primary_tiles_on_origin_sheet(d, frame)
-    assert names == ["A_x100_y0.png"]
+    assert list(scope.sheets) == ["B"]
+    assert scope.diagnostics["n_origin_restored"] == 0
+    names, diag = lam.assign_primary_tiles_on_origin_sheet(d, frame)
+    assert names == ["B_x0_y0.png"]
+    assert diag["n_cross_sheet_avoided"] == 0
 
 
 def test_a_repr_origin_survives_a_geojson_round_trip(frame, refs, tmp_path):
@@ -204,10 +205,10 @@ def test_a_repr_origin_survives_a_geojson_round_trip(frame, refs, tmp_path):
     path.write_text(json.dumps({"type": "FeatureCollection", "features": [{
         "type": "Feature", "geometry": {"type": "Point", "coordinates": [196, 50]},
         "properties": {"source_tile": "B_x0_y0.png",
-                       "source_tiles": "['A_x100_y0.png' 'A_x0_y0.png'\n 'B_x0_y0.png']"},
+                       "source_tiles": "['A_x0_y0.png' 'A_x100_y0.png'\n 'A_x100_y0.png']"},
     }]}))
     d = gpd.read_file(path).set_crs(CRS, allow_override=True)
-    assert lam.parse_tile_list(d["source_tiles"].iloc[0])[0] == "A_x100_y0.png"
+    assert lam.parse_tile_list(d["source_tiles"].iloc[0])[0] == "A_x0_y0.png"
     scope = lam.scope_detections_to_frame(d, frame)
     assert scope.diagnostics["n_origin_restored"] == 1
     assert list(scope.sheets) == ["A"]

@@ -1313,12 +1313,16 @@ def scope_detections_to_frame(
 
     * when the row records the proposer's own tile(s) in one of
       :data:`ORIGIN_TILE_COLUMNS` (the first column with a parseable value
-      wins), the origin is the sheet of the FIRST recorded tile that lies on
-      a frame sheet — the tile the pipeline has always taken as the
-      candidate's own (``source_tiles[0]``), i.e. its ``source_tile`` before
-      any re-key. A row whose ``source_tile`` names a different frame sheet
-      was re-keyed across a sheet edge; it is scored on its origin and
-      counted in ``n_origin_restored``;
+      wins), its origin sheets are the frame sheets those tiles lie on — the
+      sheets it was SEEN on. If ``source_tile``'s sheet is one of them,
+      ``source_tile`` stands: nothing was re-keyed. A row whose
+      ``source_tile`` names a sheet it was never seen on was re-keyed across
+      a sheet edge; it is scored on an origin sheet instead (the one whose
+      tiles hold the point, sorted first on a tie) and counted in
+      ``n_origin_restored``. No single member tile is privileged:
+      ``merge_passes.py`` stores ``source_tiles`` SORTED, so its first entry
+      is the alphabetically first member, not the first seen, and choosing
+      it would re-attribute a cluster seen on two sheets arbitrarily;
     * otherwise the sheet ``source_tile`` names by the scorers' prefix rule
       (:func:`_sheet_of_tile_name`).
 
@@ -1463,28 +1467,32 @@ def scope_detections_to_frame(
             origin_names = parse_tile_list(values[pos])
             if origin_names:
                 break
-        # The origin sheet: that of the FIRST recorded origin tile on a frame
-        # sheet. A consensus cluster lists every member's tile, and near a
-        # sheet edge those can lie on both sheets; the pipeline's own tile for
-        # the candidate has always been the first
-        # (``materialise_pv_geojson.py`` promotes ``source_tiles[0]``, and the
-        # crop manifest carries it), so restoring the first is restoring the
-        # ``source_tile`` the detection had before any re-key. Accepting ANY
-        # member's sheet would let a re-key onto the neighbour stand whenever
-        # one member had been seen there (tier E's case).
-        origin_sheet = next(
-            (sheet for sheet in (
+        # The sheets the detection was SEEN on. A consensus cluster lists
+        # every member's tile, and near a sheet edge, where padded tiles
+        # overlap, they can lie on two sheets; the detection was then seen on
+        # both, and an attribution to either is not a re-key. Only an
+        # attribution to a sheet it was never seen on is (h13's and tier E's
+        # re-keyed rows were all seen on one sheet and keyed to the other).
+        # No member is privileged: ``merge_passes.py`` sorts ``source_tiles``,
+        # so its first entry is alphabetical, not first-seen. Measured during
+        # this ruling's implementation, privileging it moved 701 further
+        # cells (reports/scorer-frames-d50-d51-2026-10-08.md § 7).
+        origin_frame = {
+            sheet for sheet in (
                 _sheet_of_tile_name(name, longest_first) for name in origin_names
-            ) if sheet is not None),
-            None,
-        )
+            ) if sheet is not None
+        }
 
-        if origin_sheet is not None:
-            sheet = origin_sheet
-            if source_sheet is None:
-                counts["n_origin_only"] += 1
-            elif source_sheet != origin_sheet:
-                counts["n_origin_restored"] += 1
+        if origin_frame:
+            if source_sheet is not None and source_sheet in origin_frame:
+                sheet = source_sheet
+            else:
+                holding = sorted(origin_frame & sheets_hit[pos])
+                sheet = holding[0] if holding else sorted(origin_frame)[0]
+                if source_sheet is not None:
+                    counts["n_origin_restored"] += 1
+                else:
+                    counts["n_origin_only"] += 1
         else:
             # No recorded origin, or one naming no frame sheet. The latter is
             # far more likely a naming-convention difference than a detection
@@ -1636,9 +1644,9 @@ def assign_primary_tiles_on_origin_sheet(
     h13 three-pass cell).
 
     This keeps the nearest-centroid rule but restricts the candidates to the
-    point's ORIGIN sheet — the sheet of its first recorded origin tile on the
-    frame, the same rule :func:`scope_detections_to_frame` attributes by —
-    so a point whose origin sheet's tiles it does not
+    point's ORIGIN sheets — the frame sheets its recorded tiles lie on, the
+    sets :func:`scope_detections_to_frame` attributes by — so a point whose
+    origin sheets' tiles it does not
     intersect gets ``None`` (it is outside the frame for its own sheet)
     rather than a neighbour's tile. A point with no recorded origin keeps
     the unrestricted legacy rule — there is nothing to re-key from — and is
@@ -1707,30 +1715,29 @@ def assign_primary_tiles_on_origin_sheet(
             )
 
         legacy = nearest(names)
-        # The first recorded origin tile on a frame sheet decides, exactly as
-        # in scope_detections_to_frame, so a freshly written source_tile is
-        # never re-attributed at scoring time.
-        origin_sheet = next(
-            (s for s in (
+        # The sheets the point was seen on, the same set
+        # scope_detections_to_frame attributes by, so a freshly written
+        # source_tile is never re-attributed at scoring time.
+        origin_sheets = {
+            s for s in (
                 _sheet_of_tile_name(t, longest_first) for t in origin[pos]
-            ) if s is not None),
-            None,
-        )
-        if origin_sheet is None:
+            ) if s is not None
+        }
+        if not origin_sheets:
             diag["n_no_origin"] += 1
             assigned.append(legacy)
             diag["n_assigned"] += 1
             continue
         own = [
             t for t in names
-            if _sheet_of_tile_name(str(t), longest_first) == origin_sheet
+            if _sheet_of_tile_name(str(t), longest_first) in origin_sheets
         ]
         if not own:
             diag["n_outside_origin_sheet"] += 1
             assigned.append(None)
             continue
         choice = nearest(own)
-        if _sheet_of_tile_name(str(legacy), longest_first) != origin_sheet:
+        if _sheet_of_tile_name(str(legacy), longest_first) not in origin_sheets:
             diag["n_cross_sheet_avoided"] += 1
         assigned.append(choice)
         diag["n_assigned"] += 1
