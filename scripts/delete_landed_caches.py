@@ -76,32 +76,38 @@ class PassState:
         cache: The cache its newest request file names, if any.
         protects: True when the pass is live or in flight.
         why: A short reason, for the report.
+        request_seen: True when the pass has written a request file, so
+            ``cache`` is known (``None`` then means an inline pass that
+            reads no cache, not an unknown one).
     """
 
     name: str
     cache: str | None
     protects: bool
     why: str
+    request_seen: bool = True
 
 
-def request_cache(pass_dir: Path) -> str | None:
-    """Return the cache named by the newest request file of a pass.
+def request_cache(pass_dir: Path) -> tuple[bool, str | None]:
+    """Return whether a pass has a readable request file, and its cache.
 
     Args:
         pass_dir: ``…/<version>/run_<N>`` (holds ``batch_working/``).
 
     Returns:
-        The ``cached_content`` of the first request line, or ``None``.
+        ``(seen, cache)``: ``seen`` is False when no request file (or no
+        complete first line) exists yet; ``cache`` is the first request's
+        ``cached_content``, ``None`` for an inline request.
     """
     files = sorted((pass_dir / "batch_working").glob("*.jsonl"),
                    key=lambda p: p.stat().st_mtime)
     if not files:
-        return None
+        return False, None
     with open(files[-1]) as fh:
         first = fh.readline()
-    if not first.strip():
-        return None
-    return json.loads(first).get("request", {}).get("cached_content")
+    if not first.endswith("\n"):
+        return False, None
+    return True, json.loads(first).get("request", {}).get("cached_content")
 
 
 def pid_alive(pid_file: Path) -> bool:
@@ -150,19 +156,19 @@ def pass_states(out: Path) -> list[PassState]:
         run, _, rd = rest.partition("_rd")
         root = out / arm / f"recovery_rd{rd}" if rd else out / arm
         pass_dirs = list(root.glob(f"*/run_{run}"))
-        cache = request_cache(pass_dirs[0]) if len(pass_dirs) == 1 else None
+        seen, cache = request_cache(pass_dirs[0]) if len(pass_dirs) == 1 else (False, None)
         landed = bool(pass_dirs) and any(
             p for p in pass_dirs[0].glob("detections_*.geojson") if "_chunk" not in p.name
         )
         live = pid_alive(out / "pids" / f"{name}.pid")
         in_flight = submitted_since_latest_lodge(log.read_text(errors="replace"), name)
         if live:
-            states.append(PassState(name, cache, True, "process live"))
+            states.append(PassState(name, cache, True, "process live", seen))
         elif in_flight and not landed:
-            states.append(PassState(name, cache, True, "job submitted, not landed"))
+            states.append(PassState(name, cache, True, "job submitted, not landed", seen))
         else:
             why = "landed" if landed else "exited without submitting"
-            states.append(PassState(name, cache, False, why))
+            states.append(PassState(name, cache, False, why, seen))
     return states
 
 
@@ -195,7 +201,9 @@ def select_deletable(
     protected = {s.cache for s in states if s.protects and s.cache}
     # Allow-list: only a cache a finished pass names may go (rule 3).
     owned = {s.cache for s in states if not s.protects and s.cache}
-    unknown_live = any(s.protects and not s.cache for s in states)
+    # A live pass that has not yet written its request file could be about
+    # to use any cache; an inline pass (request seen, no cache) reads none.
+    unknown_live = any(s.protects and not s.request_seen for s in states)
     out = []
     for c in caches:
         if c.get("display_name") != DETECTOR_CACHE_DISPLAY_NAME:

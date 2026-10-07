@@ -61,11 +61,21 @@ def test_young_foreign_and_old_caches_are_never_touched() -> None:
     assert got == []
 
 
-def test_a_live_pass_without_a_readable_cache_blocks_everything() -> None:
+def test_a_live_pass_without_a_request_file_blocks_everything() -> None:
     caches = [_cache("c/a", 3)]
-    got = dlc.select_deletable(caches, [_state(None, True)], T0,
+    unseen = dlc.PassState("p", None, True, "test", request_seen=False)
+    got = dlc.select_deletable(caches, [_state("c/a", False), unseen], T0,
                                T0 + timedelta(hours=6), GRACE)
     assert got == []
+
+
+def test_a_live_inline_pass_does_not_block() -> None:
+    """An inline pass's request names no cache; it cannot be reading one."""
+    caches = [_cache("c/a", 3)]
+    inline = dlc.PassState("p", None, True, "test", request_seen=True)
+    got = dlc.select_deletable(caches, [_state("c/a", False), inline], T0,
+                               T0 + timedelta(hours=6), GRACE)
+    assert got == ["c/a"]
 
 
 def test_submission_is_read_after_the_latest_lodge_only() -> None:
