@@ -17,16 +17,23 @@ The rule
 A cache is deleted only when ALL of these hold:
 
 1. its display name is the detector's (``batch-detect-shared-prefix``) and
-   it was created at or after ``--since`` (so caches from other work are
-   never touched);
+   it was created at or after ``--since``;
 2. it is older than ``--grace-minutes`` (default 90): a lodge creates its
    cache before it writes and uploads the request file, so a young cache
    may belong to a lodge still in progress;
-3. no pass under ``--out`` that is still live or in flight names it in its
-   request file. A pass is live when its pid file names a running process,
-   and in flight when its log shows a submitted job since its latest lodge
-   but its final GeoJSON has not landed. A landed pass, or a lodge that
-   exited before submitting, protects nothing.
+3. a pass under ``--out`` that is FINISHED with it names it in its newest
+   request file: the pass has landed, or its latest lodge exited without
+   submitting a job; and
+4. no pass that is still live or in flight names it. A pass is live when
+   its pid file names a running process, and in flight when its log shows a
+   submitted job since its latest lodge but its final GeoJSON has not
+   landed.
+
+Rule 3 is an allow-list, not a default (pre-launch re-check, finding R1): a
+cache no finished pass names is never deleted. That covers an orphaned job
+whose pass was re-lodged (the new request file names a new cache, but the
+old job may still be reading the old one) and any other work's detector
+caches, which share the display name.
 
 ``--dry-run`` lists what would be deleted. It still lists the account's
 caches (a metadata call, no tokens), but deletes nothing.
@@ -180,10 +187,14 @@ def select_deletable(
         >>> t = datetime(2026, 10, 7, 12, tzinfo=timezone.utc)
         >>> c = [{"name": "cachedContents/a", "display_name":
         ...       DETECTOR_CACHE_DISPLAY_NAME, "create_time": t}]
-        >>> select_deletable(c, [], t, t + timedelta(hours=3), timedelta(minutes=90))
+        >>> done = PassState("g3-image-run1", "cachedContents/a", False, "landed")
+        >>> select_deletable(c, [done], t, t + timedelta(hours=3),
+        ...                  timedelta(minutes=90))
         ['cachedContents/a']
     """
     protected = {s.cache for s in states if s.protects and s.cache}
+    # Allow-list: only a cache a finished pass names may go (rule 3).
+    owned = {s.cache for s in states if not s.protects and s.cache}
     unknown_live = any(s.protects and not s.cache for s in states)
     out = []
     for c in caches:
@@ -192,7 +203,7 @@ def select_deletable(
         created = c.get("create_time")
         if created is None or created < since or now - created < grace:
             continue
-        if c["name"] in protected:
+        if c["name"] in protected or c["name"] not in owned:
             continue
         if unknown_live:
             # A live pass whose request file is not readable yet could be

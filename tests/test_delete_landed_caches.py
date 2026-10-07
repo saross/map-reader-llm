@@ -37,11 +37,21 @@ def _state(cache: str | None, protects: bool) -> dlc.PassState:
     return dlc.PassState("p", cache, protects, "test")
 
 
-def test_landed_and_failed_caches_are_deleted_protected_ones_kept() -> None:
+def test_only_caches_finished_passes_name_are_deleted() -> None:
     caches = [_cache("c/landed", 3), _cache("c/live", 3), _cache("c/orphan", 3)]
     states = [_state("c/landed", False), _state("c/live", True)]
     got = dlc.select_deletable(caches, states, T0, T0 + timedelta(hours=6), GRACE)
-    assert got == ["c/landed", "c/orphan"]
+    # c/orphan is named by no pass: it may be another job's, so it stays.
+    assert got == ["c/landed"]
+
+
+def test_a_relodged_passes_old_cache_is_kept() -> None:
+    """An orphaned job may still read the cache its re-lodge no longer names."""
+    caches = [_cache("c/old", 3), _cache("c/new", 3), _cache("c/refused", 3),
+              _cache("c/foreign", 3)]
+    states = [_state("c/new", True), _state("c/refused", False)]
+    got = dlc.select_deletable(caches, states, T0, T0 + timedelta(hours=6), GRACE)
+    assert got == ["c/refused"]
 
 
 def test_young_foreign_and_old_caches_are_never_touched() -> None:
