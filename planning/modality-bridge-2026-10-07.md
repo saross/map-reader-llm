@@ -264,7 +264,10 @@ polling pass**: its job keeps running and is orphaned.
   launcher checks this after each cached pass's submission and stops lodging
   if it is missing (§ 4.8). A `context cache creation failed` line (a WARNING,
   so visible) means that pass fell back to inline requests (a different
-  request shape) and must be discarded and re-lodged.
+  request shape) and must be discarded and re-lodged: wait until `status`
+  shows the pass gone with a terminal state (its job rewrites the pass
+  directory when it lands), then move the directory, log and pid file to
+  `archive/` and re-lodge (`FORCE=1` if the log stays; re-check finding R2).
 
 ### 4.6 Recovery to exact coverage
 
@@ -311,9 +314,10 @@ request-structure asymmetry of § 2.2:
 | `g3-text-temp1` | 1–5 | `g3-text` | `--temperature 1.0` (the config's own value); K = 5 |
 | `g3-image-temp1` | 1–5 | `g3-image` | `--temperature 1.0`; K = 5 |
 
-Against each other: `g37-image-cache` differs from `g3-image-temp1` in model
-and thinking level only (rehearsal, § 6.1), and `g3-text-temp1` from
-`g37-text` likewise. Gemini 3 at T 1.0 can then be set against Gemini 3.7 on
+Against each other: `g37-image-cache` differs from `g3-image-temp1` in model,
+thinking level and the temperature value sent (0.7 against 1.0), and
+`g3-text-temp1` from `g37-text` likewise (re-check finding R4; the rehearsal,
+§ 6.1, compared each added arm with its twin). Gemini 3 at T 1.0 can then be set against Gemini 3.7 on
 both modalities, matched in effect on temperature, and on request structure,
 tier (batch), K and day. The temperature match is inferred, not sent: the 3.7
 arms send 0.7 (as the originals did) and sample at their default 1.0
@@ -695,6 +699,14 @@ the cache); the batch path never deletes its caches; and a dead polling
 process orphans its job, whose name survives only in the log.
 
 ## Changelog
+
+### 2026-10-07 — Re-check fixes (Session 163)
+
+The auditor's re-check (`6490ca879`): the fixes hold except the cache
+deleter, which could delete a cache an orphaned job still reads (R1); it now
+deletes only caches a finished pass names. § 4.5's and the launcher's discard
+instructions say to wait for the inline job to land first (R2); § 4.8's
+matched-pair sentence names the temperature value sent (R4).
 
 ### 2026-10-07 — Addendum audit fixes (Session 163)
 

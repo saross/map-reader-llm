@@ -301,8 +301,11 @@ lodge_one() {
       if uses_cache "$arm" && ! cache_referenced "$d"; then
         echo "$name: CACHE NOT ENGAGED (the newest request file under" \
              "$d/batch_working has no cached_content) — lodging stops;" \
-             "read $log; the pass's job runs inline and must be" \
-             "discarded: move $d to archive/ and re-lodge it"
+             "read $log. The pass's job runs inline and must be" \
+             "discarded: wait until \`status\` shows it gone with a" \
+             "terminal state (the detector rewrites $d when its job" \
+             "lands), then move $d, its log and its pid file to" \
+             "archive/ and re-lodge it (FORCE=1 if the log stays)"
         return 1
       fi
       sleep "$LODGE_GAP"
