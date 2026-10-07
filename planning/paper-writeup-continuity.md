@@ -27,9 +27,12 @@ replaces it.
 - [ ] **Run B Stage 1**: card `planning/modality-bridge-2026-10-07.md` (PI
   rulings in § 10, added arms in § 4.8); addendum audit pending; then
   `lodge g37-image:1`, the first-chunk gate, `lodge all`.
-- [ ] **Input drift**: nine registered cells whose detection files no longer
-  match the scored feature counts (`reports/frames-blast-radius-2026-10-07.md`
-  § 3.1); a trace is in progress (`reports/input-drift-2026-10-07.md`).
+- [x] **Input drift** (2026-10-07): traced, false alarm
+  (`reports/input-drift-2026-10-07.md`, `abe87128f`): documented recoveries,
+  inputs pinned by `e82_input_vintage`, 53 of 54 reproduce at their scored
+  inputs. Small follow-ups in its "Other flags" (two unlisted pv-diag
+  evaluations; the uplift supplement's missing pin column; teach the next
+  corpus-wide reproduction check to read the pins).
 - [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
   temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
   §§ 7, 8.5).

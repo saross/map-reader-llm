@@ -1,6 +1,6 @@
 # Frames blast radius: detections scoped like references, every committed cell re-scored, 2026-10-07
 
-> **Last revised**: 2026-10-07 (original publication, Session 163). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (the input-drift flag of § 3.1 withdrawn after its trace; Session 163). See [§ Changelog](#changelog) for revision history.
 
 **Status: FOR THE PI.** Read-only measurement commissioned by the PI's ruling of
 2026-10-07 on `reports/k-ladder-frames-2026-10-07.md` § 4: "measure the blast
@@ -145,9 +145,17 @@ anything drops), tolerance 1e-4 against the four-decimal committed values
   the carried rung's 0.1422 are two of them. Their F1, P and R reproduce.
 - **Input drift (42)**: the detection files on sapphire no longer match the committed
   feature counts. Nine are registered conditions (`n1-outstanding-384` Pro HIGH T 0
-  cells, superseded under E57, and `e47-propose-brief::single-pass-run_4`). None has an
-  out-of-frame detection in its current input. **Flagged as surprising**: registered
-  numbers whose inputs have since changed on disk.
+  cells, and `e47-propose-brief::single-pass-run_4`). None has an out-of-frame
+  detection in its current input. **Traced, and the flag withdrawn**
+  (`reports/input-drift-2026-10-07.md`): every drifted cell, live and archived, was
+  rewritten by a recorded recovery campaign after the version it scored (mostly the
+  E71 dead-tile rerun of 2026-07-30 and the consensus rebuilds after it). 29 of the
+  42 live cells are pinned to their scored inputs by `_metadata.e82_input_vintage`,
+  which this report's classifier did not read. Rebuilt at the scored inputs, 53 of the
+  54 drifted cells reproduce F1, P, R and MCC to 1e-4; the 54th reproduces F1, P and R
+  (its old MCC is refused under the tile-join rule). The nine registered cells are kept
+  as historical records under ruling 3a, each with a `-post-e71` twin. They drifted
+  under E71, not E57: E57 concerns which model they ran on.
 - **Unexplained (9)**: older 55-map evaluations under `outputs/55maps-*-generalisation/`,
   off by at most 0.0004 in F1, P, R or MCC, with 0 out-of-frame detections.
 - **Sweeps reproduce row for row**: 80/80, 240/240 or 400/400 rows on all ten GS sweeps,
@@ -544,6 +552,14 @@ Rule separately, and before either option is executed, on:
   anchors cited here were re-read, the remaining grouping was not.
 
 ## Changelog
+
+### 2026-10-07 — Input-drift flag withdrawn (Session 163)
+
+§ 3.1's "flagged as surprising" input drift was traced
+(`reports/input-drift-2026-10-07.md`, `abe87128f`): documented recoveries, inputs
+pinned by `e82_input_vintage`, 53 of 54 cells reproduced at their scored inputs. The
+bullet is rewritten and "superseded under E57" corrected to E71. No number in this
+report changed; the gate table's counts stand (they compare against today's files).
 
 ### 2026-10-07 — Original publication (Session 163)
 
