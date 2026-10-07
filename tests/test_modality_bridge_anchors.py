@@ -174,13 +174,18 @@ def test_pairs_from_dirs(tmp_path: Path) -> None:
         d = tmp_path / name
         d.mkdir()
         (d / "analysis.json").write_text(json.dumps(
-            {"image_best": {"f1": best}, "operating_point": {"f1": op}}))
+            {"image_best": {"f1": best}, "operating_point": {"f1": op},
+             "ladder": {"5": {"best": {"f1": op - 0.01}}}}))
     pairs = pairs_from_dirs([["p", str(tmp_path / "text"), str(tmp_path / "image")]])
     assert pairs == [("p", tmp_path / "text" / "verified_best_20m.geojson", 0.91,
                       tmp_path / "image" / "verified_best_20m.geojson", 0.93)]
     op = pairs_from_dirs([["p", str(tmp_path / "text"), str(tmp_path / "image")]],
                          "verified_op_20m")
     assert op[0][2] == 0.90 and op[0][1].name == "verified_op_20m.geojson"
+    k5 = pairs_from_dirs([["p", str(tmp_path / "text"), str(tmp_path / "image")]],
+                         "verified_ladder_n5_20m")
+    assert k5[0][2] == pytest.approx(0.89) and k5[0][4] == pytest.approx(0.91)
+    assert k5[0][3].name == "verified_ladder_n5_20m.geojson"
 
 
 @pytest.mark.tier2

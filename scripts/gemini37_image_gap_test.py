@@ -97,9 +97,12 @@ G3_GAP = {"delta_f1": 0.0549, "p": 0.001,
           "source": "results/image-b-gs-2026-08-28/analysis.json"}
 
 
-#: Where an image_b_analysis.py output keeps each set and its F1.
+#: Where an image_b_analysis.py output keeps each set's F1 (a key path into
+#: its analysis.json). ``verified_ladder_n5_20m`` is the inherited K = 5 rung
+#: written by ``--write-rung-sets`` (Run B § 9 item 5).
 SET_F1_KEY = {"verified_best_20m": ("image_best", "f1"),
-              "verified_op_20m": ("operating_point", "f1")}
+              "verified_op_20m": ("operating_point", "f1"),
+              "verified_ladder_n5_20m": ("ladder", "5", "best", "f1")}
 
 
 def pairs_from_dirs(specs: list[list[str]], set_name: str = "verified_best_20m",
@@ -109,9 +112,9 @@ def pairs_from_dirs(specs: list[list[str]], set_name: str = "verified_best_20m",
     Args:
         specs: ``[label, text_dir, image_dir]`` triples (repository-relative
             or absolute directories).
-        set_name: Which verified set to pair (``verified_best_20m`` or
-            ``verified_op_20m``); its committed F1 is read from the same
-            directory's ``analysis.json``.
+        set_name: Which verified set to pair (a key of :data:`SET_F1_KEY`);
+            its committed F1 is read from the same directory's
+            ``analysis.json``.
 
     Returns:
         Tuples in the shape of :data:`PAIRS`.
@@ -119,14 +122,16 @@ def pairs_from_dirs(specs: list[list[str]], set_name: str = "verified_best_20m",
     Raises:
         KeyError: If ``set_name`` is unknown or ``analysis.json`` lacks it.
     """
-    section, key = SET_F1_KEY[set_name]
+    path = SET_F1_KEY[set_name]
     out = []
     for label, text_dir, image_dir in specs:
         sides = []
         for d in (text_dir, image_dir):
             root = PROJECT_ROOT / d
-            f1 = json.loads((root / "analysis.json").read_text())[section][key]
-            sides.extend([root / f"{set_name}.geojson", float(f1)])
+            node = json.loads((root / "analysis.json").read_text())
+            for key in path:
+                node = node[key]
+            sides.extend([root / f"{set_name}.geojson", float(node)])
         out.append((label, sides[0], sides[1], sides[2], sides[3]))
     return out
 
