@@ -29,9 +29,21 @@ replaces it.
   (2) the four `pv-diag-384` ladders the D51 gate refuses; (3) the nine
   ladders whose area is undetermined (no pass provenance); (4) the re-score
   itself, after merge.
-- [ ] **Run B Stage 1**: card `planning/modality-bridge-2026-10-07.md` (PI
-  rulings in § 10, added arms in § 4.8); addendum audit pending; then
-  `lodge g37-image:1`, the first-chunk gate, `lodge all`.
+- [ ] **Run B** (state at 2026-10-07 19:00 UTC; launch delegated by the PI
+  overnight, D52). Stage 1 (card `planning/modality-bridge-2026-10-07.md`):
+  all 45 passes lodged (gates passed: 3.7 implicit share 0.807, Gemini 3
+  explicit 0.9445); the 30 Gemini 3 passes landed to exact coverage (42
+  tiles recovered in round 1) and are committed (`92b151058`); the 15 3.7
+  passes are still on the service (slow batch queue), then
+  `residuals`/`recover`, commit, File API clean-up. Stage 2 (card
+  `planning/modality-bridge-2026-10-07-stage2.md`): the four Gemini 3
+  verifier legs ran and are committed (`2b6edde9a`, US$8.92); the six 3.7
+  legs wait for their arms. Preliminary (scratch, not committed): Gemini 3
+  text bridge 0.8916 vs 0.8961 original, image 0.8331 vs 0.8412, gap
+  +0.0585 vs +0.0549. Flag for the PI: the Gemini 3 image K = 10 union is
+  15.0 % smaller than the original (F-cal, Stage 2 card § 8). Cache deleter
+  loop running on sapphire (`driver/cache-deleter.pid`; stop file
+  `driver/STOP-cache-deleter`).
 - [x] **Input drift** (2026-10-07): traced, false alarm
   (`reports/input-drift-2026-10-07.md`, `abe87128f`): documented recoveries,
   inputs pinned by `e82_input_vintage`, 53 of 54 reproduce at their scored
