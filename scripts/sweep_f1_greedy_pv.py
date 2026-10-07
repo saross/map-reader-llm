@@ -25,13 +25,27 @@ Ground truth (defaults):
     inputs/vectors/references/mounds-reference.geojson       — 569 GT mounds
     inputs/vectors/bounds/384/h10_test_bounds.geojson        — 327 test tiles
 
+Scoring scope (PI ruling D50, 2026-10-07): ``calculate_f1_internal`` scopes
+candidates per sheet by tile geometry, on their origin sheet, exactly as it
+scopes references, so a candidate outside the frame is neither a true nor a
+false positive. The sweep prints the universe's scope counts once so a log
+shows whether the rule fired.
+
+Assessed area (PI ruling D51): a K-ladder's rungs must be swept on the area
+every rung searched. ``scripts/check_assessed_areas.py`` confirms that and,
+when the rungs differ, writes the common area; ``--clip-area`` then clips
+this rung's candidates to it before sweeping, and every output row names the
+clip and how many candidates it removed. Without ``--clip-area`` the output
+is unchanged.
+
 Usage::
 
     python scripts/sweep_f1_greedy_pv.py \\
         --config scale-4 \\
         --crops-dir outputs/h8-v2/scale-4/crops \\
         --verified-dir outputs/h8-v2/scale-4/verified \\
-        --output results/h8-v2/verifier-sweep/scale-4/sweep_2d_greedy_pv.json
+        --output results/h8-v2/verifier-sweep/scale-4/sweep_2d_greedy_pv.json \\
+        [--clip-area common-area.geojson]
 """
 
 from __future__ import annotations
@@ -49,7 +63,11 @@ from scripts.sweep_f1_wbf import (
     load_ground_truth,
 )
 import geopandas as gpd
-from scripts.lib_advanced_metrics import calculate_f1_internal
+from scripts.lib_advanced_metrics import (
+    calculate_f1_internal,
+    scope_detections_to_frame,
+)
+from scripts.lib_assessed_area import clip_points_to_area, read_area_geojson
 
 DEFAULT_BOUNDS = (
     BASE_DIR / "inputs" / "vectors" / "bounds" / "384" / "h10_test_bounds.geojson"
@@ -135,6 +153,10 @@ def main() -> int:
                         help="Buffer distance(s) in metres (default: 20)")
     parser.add_argument("--vote-thresholds", type=int, nargs="+", default=None,
                         help="Vote thresholds to sweep (default: auto-detect from manifest)")
+    parser.add_argument("--clip-area", type=Path, default=None,
+                        help="Clip the candidates to this common assessed area "
+                             "(written by check_assessed_areas.py --clip-to-common) "
+                             "before sweeping; PI ruling D51")
     args = parser.parse_args()
 
     manifest = args.crops_dir / "candidate_manifest.json"
@@ -151,6 +173,24 @@ def main() -> int:
     gt = load_ground_truth()
     bounds = gpd.read_file(args.bounds).to_crs("EPSG:32635")
     print(f"  {len(gt)} GT mounds, {len(bounds)} bounds tiles")
+
+    # D51: clip the universe to the common assessed area, and say so.
+    clip_tag: dict[str, object] = {}
+    if args.clip_area is not None:
+        area, clip_name = read_area_geojson(args.clip_area)
+        cands, n_clipped = clip_points_to_area(cands, area)
+        clip_tag = {"clip_area": clip_name, "clip_area_file": str(args.clip_area),
+                    "clip_n_removed": n_clipped}
+        print(f"  CLIP {clip_name} ({args.clip_area}): {n_clipped} candidate(s) "
+              f"outside the common assessed area removed, {len(cands)} kept")
+
+    # D50: report what the scorer's detection scope will do to this universe.
+    scope = scope_detections_to_frame(cands, bounds).diagnostics
+    print(f"  detection scope ({scope['rule']}): {scope['n_in_scope']} of "
+          f"{scope['n_detections']} candidates in scope; out of frame "
+          f"{scope['n_out_of_frame']} (in another sheet's tiles "
+          f"{scope['n_out_of_frame_cross_sheet']}); unattributed "
+          f"{scope['n_unattributed']}")
 
     # Auto-detect vote thresholds from manifest if not specified
     vote_thresholds = args.vote_thresholds
@@ -170,14 +210,16 @@ def main() -> int:
     all_rows: list[dict] = []
 
     for buffer_m in buffers:
-        print(f"\nRunning 2D sweep: {len(vote_thresholds)} vote × {len(PROB_THRESHOLDS)} prob @ {buffer_m}m")
+        print(f"\nRunning 2D sweep: {len(vote_thresholds)} vote × "
+              f"{len(PROB_THRESHOLDS)} prob @ {buffer_m}m")
         rows = run_sweep(
             args.config, cands, gt, bounds,
             buffer_m=buffer_m, vote_thresholds=vote_thresholds,
         )
-        # Tag rows with buffer
+        # Tag rows with buffer (and, when clipped, with the clip — D51)
         for r in rows:
             r["buffer_m"] = buffer_m
+            r.update(clip_tag)
         all_rows.extend(rows)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)

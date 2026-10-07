@@ -106,6 +106,12 @@ import geopandas as gpd
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.lib_assessed_area import (  # noqa: E402
+    COMMON_AREA_CLIP_NAME,
+    add_area_gate_arguments,
+    clip_geojson_file,
+    run_area_gate,
+)
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 from scripts.run_k_ladder_phase2_verifier import (  # noqa: E402
     PADDING_PX,
@@ -883,8 +889,21 @@ def condition_labels(rung: dict[str, Any]) -> dict[str, str]:
     }
 
 
-def run_sweep(rung: dict[str, Any], *, bounds: str, out_name: str) -> Path:
-    """Run ``sweep_f1_greedy_pv.py`` for one rung on one frame."""
+def run_sweep(
+    rung: dict[str, Any], *, bounds: str, out_name: str, clip_area: str | None = None,
+) -> Path:
+    """Run ``sweep_f1_greedy_pv.py`` for one rung on one frame.
+
+    Args:
+        rung: The rung.
+        bounds: The frame.
+        out_name: The sweep file's name in the rung's verify directory.
+        clip_area: The D51 common assessed area to clip the candidates to,
+            when the gate clipped (``None`` otherwise).
+
+    Returns:
+        The sweep path.
+    """
     output = BASE_DIR / rung["verify_dir"] / out_name
     command = [
         sys.executable,
@@ -901,6 +920,7 @@ def run_sweep(rung: dict[str, Any], *, bounds: str, out_name: str) -> Path:
         bounds,
         "--buffer-m",
         *[str(buffer) for buffer in SWEEP_BUFFERS],
+        *(["--clip-area", clip_area] if clip_area else []),
     ]
     completed = subprocess.run(
         command, cwd=BASE_DIR, capture_output=True, text=True, check=False
@@ -974,6 +994,19 @@ def reassign_carrier_tiles(path: Path) -> int:
     detections, and the scorer counts them in ``n_outside_union``) with a null
     ``source_tile``.
 
+    **Never across a sheet edge (PI ruling D50).** The re-key now keeps every
+    detection on the sheet whose tile the proposer was shown: the nearest
+    board tile is chosen among the ORIGIN sheet's tiles only
+    (``assign_primary_tiles`` reads the origin from the file's own
+    ``source_tiles`` / ``source_tile``), and a detection on none of its own
+    sheet's tiles gets a null rather than a neighbour's tile. Before the
+    ruling 6 or 7 detections per cell were re-keyed onto the neighbouring
+    sheet, where they could not match their own sheet's reference
+    (``reports/frames-blast-radius-2026-10-07.md`` § 5.4). The proposer's
+    tile is written to ``origin_source_tile`` before ``source_tile`` is
+    overwritten, so the scorer can always attribute the detection to its
+    origin sheet, and a second re-key of the same file cannot lose it.
+
     Args:
         path: The materialised detections GeoJSON, rewritten in place.
 
@@ -985,6 +1018,8 @@ def reassign_carrier_tiles(path: Path) -> int:
     if gdf.crs is None:
         gdf = gdf.set_crs("EPSG:4326")
     before = len(gdf)
+    if "source_tile" in gdf.columns and "origin_source_tile" not in gdf.columns:
+        gdf["origin_source_tile"] = gdf["source_tile"]
     projected = gdf.to_crs(bounds.crs)
     projected["source_tile"] = assign_primary_tiles(projected, bounds)
     gdf["source_tile"] = projected["source_tile"].to_numpy()
@@ -1037,14 +1072,35 @@ def cmd_prepare(args: argparse.Namespace) -> None:
         logger.error("no rung has a probabilities.json yet")
         sys.exit(7)
 
+    # PI ruling D51: the rungs being swept and their committed K = 10 sibling
+    # must have searched the same area of the board frame. The committed
+    # K = 10 union was clipped to the grid-common footprint upstream and these
+    # merge_passes unions were not, so this refuses unless the caller asks to
+    # clip every rung to the common area (then every sweep and every
+    # materialised cell is clipped, and the points file names the clip).
+    pools = {f"K = {rung['n_passes']}": rung["crops_dir"] for rung in selected}
+    pools["K = 10 (committed)"] = COMMITTED_K10["union"]
+    comparison = run_area_gate(
+        pools,
+        frame=BOARD_BOUNDS,
+        tolerance_km2=args.area_tolerance_km2,
+        clip_to_common=args.clip_to_common_area,
+        allow_undetermined=args.allow_undetermined_area,
+        clip_geojson=TIER_E_DIR / "common-assessed-area.geojson",
+        what="tier E ladder",
+    )
+    clip_area = comparison.record.get("clip_geojson")
+
     points: list[dict[str, Any]] = []
     jobs: list[str] = []
     for rung in selected:
         board = argmax_at_headline(
-            run_sweep(rung, bounds=BOARD_BOUNDS, out_name="sweep_board.json")
+            run_sweep(rung, bounds=BOARD_BOUNDS, out_name="sweep_board.json",
+                      clip_area=clip_area)
         )
         era2 = argmax_at_headline(
-            run_sweep(rung, bounds=ERA2_BOUNDS, out_name="sweep_era2.json")
+            run_sweep(rung, bounds=ERA2_BOUNDS, out_name="sweep_era2.json",
+                      clip_area=clip_area)
         )
         labels = condition_labels(rung)
         k = rung["n_passes"]
@@ -1101,6 +1157,15 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 prob_t=entry[basis]["prob_t"],
                 output=detections,
             )
+            if clip_area is not None:
+                removed = clip_geojson_file(
+                    detections, comparison.common, name=COMMON_AREA_CLIP_NAME,
+                )
+                count -= removed
+                entry[basis]["clip"] = {
+                    "name": COMMON_AREA_CLIP_NAME, "area": clip_area,
+                    "n_removed": removed,
+                }
             entry[basis]["detections"] = str(
                 detections.relative_to(BASE_DIR)
             )
@@ -1130,6 +1195,7 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 "ground_truth": GROUND_TRUTH,
                 "headline_buffer_m": HEADLINE_BUFFER,
                 "carried_prob": CARRIED_PROB,
+                "assessed_area": comparison.record,
                 "n_rungs": len(points),
                 "n_cells": len({p[b]["cell"] for p in points
                                 for b in ("opmax", "carried")}),
@@ -1298,6 +1364,7 @@ def main() -> None:
     p_prepare = subparsers.add_parser(
         "prepare", help="Sweep, choose operating points, materialise, jobs"
     )
+    add_area_gate_arguments(p_prepare)
     p_prepare.set_defaults(func=cmd_prepare)
 
     p_collect = subparsers.add_parser(

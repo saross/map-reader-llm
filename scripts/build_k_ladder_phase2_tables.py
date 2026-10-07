@@ -63,9 +63,23 @@ Description:
     about 7 % below their GS neighbours; the pass rate is still constant
     within a family, so each ladder's cost RATIO between rungs is exact.
 
+    **Same assessed area (PI ruling D51, 2026-10-07).** A ladder compares
+    rungs meant to differ in K alone, so before anything is written every
+    ladder's rungs must be shown to have searched the same area: each rung's
+    candidate pool has its assessed area determined from provenance
+    (``scripts/lib_assessed_area.py``) and compared on the ladder's frame.
+    The build REFUSES (exit 3) when they differ, and refuses (exit 4) when a
+    pool's area cannot be determined — unless ``--clip-to-common-area``
+    (every reported point is re-scored with its detections clipped to the
+    common area, named in the output) or ``--allow-undetermined-area`` is
+    given. The 3.7 GS ladder's committed K = 5 and K = 10 unions were clipped
+    to the grid-common footprint upstream and its K = 1 and K = 3 unions were
+    not (37.94 km² of the board frame between them), which is the case the
+    gate exists for.
+
 Usage::
 
-    python scripts/build_k_ladder_phase2_tables.py
+    python scripts/build_k_ladder_phase2_tables.py [--clip-to-common-area]
 
 Outputs:
     results/k-ladder-2026-09-12/phase2/ladders.json
@@ -90,11 +104,28 @@ from typing import Any
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.lib_assessed_area import (  # noqa: E402
+    COMMON_AREA_CLIP_NAME,
+    DEFAULT_TOLERANCE_KM2,
+    EXIT_AREA_MISMATCH,
+    EXIT_AREA_UNDETERMINED,
+    METHOD_UNDETERMINED,
+    STATUS_CLIPPED,
+    AssessedArea,
+    AssessedAreaMismatchError,
+    AssessedAreaUndeterminedError,
+    add_area_gate_arguments,
+    compare_assessed_areas,
+    determine_assessed_area,
+    rescore_clipped_evaluation,
+)
 from scripts.lib_frontier_cost import gs_units, phase2_pass_units  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.2.1"  # 2026-10-04: shares rounded once (D27); 1.2.0 costs from the register
+#: 1.3.0 (2026-10-07): the D51 assessed-area gate; 1.2.1: shares rounded once
+#: (D27); 1.2.0: costs from the register.
+__version__ = "1.3.0"
 
 #: Which of the two readings of "the carried point" the tables REPORT, settled
 #: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
@@ -285,6 +316,68 @@ def headline(eval_path: Path) -> dict[str, Any] | None:
     }
 
 
+#: Where the 3.7 GS family's committed K = 5 and K = 10 unions sit.
+G37_UNION = (
+    "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k{k}.geojson"
+)
+
+
+def _r1_board_members() -> dict[tuple[str, int], dict[str, Any]]:
+    """The signed board's R1 (v1, adversarial) members, keyed by (pool, K)."""
+    membership = load(BOARD / "opmax" / "membership.json")
+    return {
+        (member["proposer_pool"], member["k"]): member
+        for member in membership["members"]
+        if (member.get("verifier_config") or {}).get("variant") == "v1"
+        and (member.get("verifier_config") or {}).get("instruction_file")
+        == "verify_adversarial.md"
+    }
+
+
+def committed_sibling_pools(pool: str) -> dict[int, str]:
+    """The candidate pools of a family's committed K = 5 and K = 10 rungs.
+
+    Used by the D51 assessed-area gate here and by the sweeps that buy the
+    K = 1 and K = 3 rungs (``score_k_ladder_phase2_rungs.py``), so both
+    compare against the same siblings.
+
+    Args:
+        pool: The family's proposer pool slug (a key of :data:`FAMILIES`).
+
+    Returns:
+        ``{K: union path}`` for whichever committed rungs record a union.
+    """
+    if pool == "g384_ov192_g37":
+        return {k: G37_UNION.format(k=k) for k in (5, 10)}
+    members = _r1_board_members()
+    out: dict[int, str] = {}
+    for k in (5, 10):
+        union = ((members.get((pool, k)) or {}).get("vintage") or {}).get("union")
+        if union:
+            out[k] = union
+    return out
+
+
+def new_rung_pools(pool: str) -> dict[int, str]:
+    """The candidate pools of a family's Phase 2 K = 1 and K = 3 rungs.
+
+    Args:
+        pool: The family's proposer pool slug.
+
+    Returns:
+        ``{K: union path}`` from ``phase2/operating-points.json`` (empty when
+        the rungs have not been prepared).
+    """
+    points_path = PHASE2 / "operating-points.json"
+    if not points_path.exists():
+        return {}
+    return {
+        entry["n_passes"]: entry["union"]
+        for entry in load(points_path)["rungs"]
+        if entry["pool_slug"] == pool and entry.get("union")
+    }
+
+
 def build() -> dict[str, Any]:
     """Assemble the fourteen ladders from every committed and new source."""
     new_scores = load(PHASE2 / "scores.json")
@@ -350,6 +443,8 @@ def build() -> dict[str, Any]:
                 },
                 "carried_readings_coincide": True,
                 "labels": record["labels"],
+                # The candidate pool, for the D51 assessed-area gate in main().
+                "pool": new_rung_pools(pool).get(record["n_passes"]),
             }
             rungs.append(rung)
 
@@ -381,11 +476,8 @@ def build() -> dict[str, Any]:
                             "eval_path": stage["eval_path"],
                             **(opmax_metrics or {}),
                         }
+                union = BASE_DIR / G37_UNION.format(k=k)
                 if candidates is None:
-                    union = BASE_DIR / (
-                        "outputs/gemini37-screen-2026-08-28/verifier/"
-                        f"g384_ov192_g37/union_k{k}.geojson"
-                    )
                     candidates = (
                         len(load(union).get("features", []))
                         if union.exists()
@@ -411,7 +503,10 @@ def build() -> dict[str, Any]:
                             if candidates
                             else None
                         ),
-                        "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
+                        "verifier_usd_basis": (
+                            f"priced at VF_CALL_USD {VF_CALL_USD:.7f} "
+                            "(register, D19)"
+                        ),
                         "opmax": opmax_point,
                         "carried": {
                             "k-equals-K": carried_point,
@@ -422,6 +517,7 @@ def build() -> dict[str, Any]:
                             "this family's committed carried point is "
                             "(prob_t 0.10, k = K), its own convention"
                         ),
+                        "pool": str(union.relative_to(BASE_DIR)),
                     }
                 )
                 continue
@@ -469,7 +565,10 @@ def build() -> dict[str, Any]:
                         if candidates
                         else None
                     ),
-                    "verifier_usd_basis": f"priced at VF_CALL_USD {VF_CALL_USD:.7f} (register, D19)",
+                    "verifier_usd_basis": (
+                        f"priced at VF_CALL_USD {VF_CALL_USD:.7f} "
+                        "(register, D19)"
+                    ),
                     "verifier_stage": member["stage_id"],
                     "condition_id": member["condition_id"],
                     "opmax": (
@@ -488,6 +587,7 @@ def build() -> dict[str, Any]:
                     ),
                     "carried": carried_readings,
                     "carried_readings_coincide": False,
+                    "pool": committed_sibling_pools(pool).get(k),
                 }
             )
 
@@ -610,6 +710,85 @@ def build() -> dict[str, Any]:
         "n_ladders": len(ladders),
         "ladders": ladders,
     }
+
+
+def _rung_points(rung: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every operating point a rung reports (opmax and each carried reading)."""
+    points = [rung["opmax"]] if rung.get("opmax") else []
+    seen: set[int] = {id(p) for p in points}
+    for values in (rung.get("carried") or {}).values():
+        if values and id(values) not in seen:
+            points.append(values)
+            seen.add(id(values))
+    return points
+
+
+def apply_area_gate(
+    payload: dict[str, Any],
+    *,
+    tolerance_km2: float = DEFAULT_TOLERANCE_KM2,
+    clip_to_common: bool = False,
+    allow_undetermined: bool = False,
+) -> list[str]:
+    """Confirm each ladder's rungs searched the same area (PI ruling D51).
+
+    For every ladder, each rung's candidate pool (``rung["pool"]``) has its
+    assessed area determined from provenance and compared, within the
+    ladder's scoring frame, against its siblings'. The ladder gains an
+    ``assessed_area`` record either way. Where the areas differ and
+    ``clip_to_common`` is set, every reported operating point that names its
+    evaluation gains a ``clipped_to_common_area`` block: its F1@20 point
+    estimate with the detections outside the common area removed and the
+    frame's reference set kept (option 1 of the ruling), at the rung's own
+    operating point.
+
+    Args:
+        payload: The output of :func:`build` (mutated).
+        tolerance_km2: The gate's tolerance.
+        clip_to_common: Clip instead of refusing a mismatch.
+        allow_undetermined: Record an undetermined pool instead of refusing.
+
+    Returns:
+        One refusal message per refused ladder (empty when none refused).
+        The caller must not publish a payload with refusals.
+    """
+    refusals: list[str] = []
+    for ladder in payload["ladders"]:
+        areas = []
+        for rung in ladder["rungs"]:
+            label = f"K = {rung['K']}"
+            if rung.get("pool"):
+                areas.append(determine_assessed_area(rung["pool"], label=label))
+            else:
+                areas.append(AssessedArea(
+                    label, "", None, None, METHOD_UNDETERMINED,
+                    reason="the ladder records no candidate pool for this rung"))
+        try:
+            comparison = compare_assessed_areas(
+                areas, frame=ladder["frame_file"], tolerance_km2=tolerance_km2,
+                clip_to_common=clip_to_common, allow_undetermined=allow_undetermined,
+            )
+        except AssessedAreaMismatchError as exc:
+            ladder["assessed_area"] = exc.comparison
+            refusals.append(f"{ladder['family']}: {exc}")
+            continue
+        except AssessedAreaUndeterminedError as exc:
+            refusals.append(f"{ladder['family']}: {exc}")
+            continue
+        ladder["assessed_area"] = comparison.record
+        if comparison.status != STATUS_CLIPPED:
+            continue
+        for rung in ladder["rungs"]:
+            for point in _rung_points(rung):
+                if point.get("eval_path"):
+                    clipped = rescore_clipped_evaluation(
+                        point["eval_path"], comparison.common, buffer_m=HEADLINE_BUFFER,
+                    )
+                    if clipped is not None:
+                        clipped["clip"] = COMMON_AREA_CLIP_NAME
+                        clipped["at"] = "the rung's own (unclipped) operating point"
+                        point["clipped_to_common_area"] = clipped
+    return refusals
 
 
 def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
@@ -748,7 +927,9 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
             continue
         ladders.append(
             {
-                "slug": f"phase2-{ladder['proposer_pool'].replace('.', '-').replace('_', '-').lower()}",
+                "slug": "phase2-" + (
+                    ladder["proposer_pool"].replace(".", "-").replace("_", "-").lower()
+                ),
                 "family": f"{ladder['family']} [{basis}]",
                 "family_base": ladder["family"],
                 "operating_point_basis": basis,
@@ -1051,12 +1232,30 @@ def main() -> None:
     )
     parser.add_argument("--version", action="version", version=__version__)
     parser.add_argument("--no-figure", action="store_true")
+    add_area_gate_arguments(parser)
     args = parser.parse_args()
     logging.basicConfig(
         level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s"
     )
 
     payload = build()
+    # PI ruling D51: a ladder compares rungs meant to differ in K alone, so
+    # its rungs must have searched the same area. Refuse before anything is
+    # written unless the caller asked to clip (or to record undetermined
+    # pools as such).
+    refusals = apply_area_gate(
+        payload,
+        tolerance_km2=args.area_tolerance_km2,
+        clip_to_common=args.clip_to_common_area,
+        allow_undetermined=args.allow_undetermined_area,
+    )
+    if refusals:
+        for message in refusals:
+            logger.error("D51 gate REFUSED %s", message)
+        undetermined_only = all("UNDETERMINED" in m for m in refusals)
+        raise SystemExit(
+            EXIT_AREA_UNDETERMINED if undetermined_only else EXIT_AREA_MISMATCH
+        )
     markdown = tables(payload)
     PHASE2.mkdir(parents=True, exist_ok=True)
     with open(PHASE2 / "ladders.json", "w") as handle:
