@@ -1,7 +1,8 @@
 # Run B addendum: pre-launch audit of the three added arms
 
-> **Last revised**: 2026-10-07 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (re-check of the fixes; see
+> [§ Re-check of the fixes](#re-check-of-the-fixes-2026-10-07-later)).
+> See [§ Changelog](#changelog) for revision history.
 
 - **Auditor**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), as the independent pre-launch auditor of Session 163.
@@ -350,7 +351,160 @@ line 278.
 - **Sapphire state.** No `outputs/modality-bridge-2026-10-07/` exists yet,
   `google-genai` is at 1.71.0, and 346 GB of disk is free.
 
+## Re-check of the fixes (2026-10-07, later)
+
+- **Auditor**: as above (Claude, Opus 5.5 lane).
+- **Commits re-checked**: `a0488a440` (F1), `580c7c494` (F4, D52) and
+  `fdc0624ed` (F6, F9, card § 4.9 and in-place corrections). Sapphire's
+  checkout is at `fdc0624ed`.
+- **How**: read-only and API-free. The tests ran in a `git archive` copy of
+  `fdc0624ed` (`scripts/`, `tests/`, `config.py`) in my scratch directory.
+  The launcher ran there with the fake detector of the first audit. The
+  deleter's selection functions ran offline on a synthetic campaign tree.
+  On sapphire I read files only.
+
+### Verdict
+
+**Fixes sound, with one exception.** `lodge all` may proceed after the
+§ 4.4 gates. **Do not run `scripts/delete_landed_caches.py` as written.**
+In two reachable cases it deletes a cache that a running batch job can
+still be reading, and a one-line change closes both (R1).
+
+The guard's new discard message needs one more clause (R2). R3 and R4 are
+minor.
+
+### Fix by fix
+
+- **F1: sound.**
+  - `release_terminal_job_input` (`lib_batch_api.py:624`) does nothing
+    unless the job is terminal. `run_batch_unit` calls it in a `finally`
+    only after `poll_batch_job` has returned a terminal job. `poll_error`
+    and `poll_timeout` return earlier and keep the registry protection.
+  - Resumed jobs release `job.src`, and the sweep still protects every
+    non-terminal job's `src`.
+  - A chunked `g37-image` pass releases chunk k before chunk k+1's
+    preflight, so the sweep can reclaim chunk k's input.
+  - The four new tests pass (48 of 48 in `tests/test_file_storage_preflight.py`
+    and `tests/test_delete_landed_caches.py`).
+- **F2, F3, F5 and the nits: sound.** Card § 4.4 gates `g3-image-run1`. The
+  fifth leg's headline is US$17.35, the gate's exposure reads one pass at
+  about US$11.17, and 37.36 GB, § 4.1 and the US$3.93 figure are corrected.
+- **F6: sound.** In the copy, `lodge g3-text-temp1:7`,
+  `lodge g37-image-cached:1`, `lodge g37-image-cache:0`, `lodge nosuch` and
+  the mixed `lodge g3-image:1 g37-image-cached:1` each exit 2 with nothing
+  started and no log written. A valid spec still lodges.
+- **F9: sound.** The fake detector saw `PYTHONUNBUFFERED=1` in its
+  environment.
+- **F7 and F8: mostly sound.** See R4 for the one sentence left over.
+- **F4 (`580c7c494`): not safe as written.** See R1.
+
+### R1 (medium): the cache deleter can delete a cache that a running job still reads
+
+`select_deletable` protects only the cache named by each live or in-flight
+pass's **newest** request file (`delete_landed_caches.py:186–195`). Every
+other detector-named cache created since `--since` and older than 90
+minutes is deleted. Two cases reachable tonight lose a running job's cache.
+
+**Case 1: re-lodge over an orphan.** A cached pass's process dies while
+its job runs. A 10-minute run of poll errors does this: `poll_error`, and
+the 2026-09-17 55-map pass 5 hit one. The operator then re-lodges with
+`FORCE=1`, which the launcher's REFUSED message offers and the new guard
+message implies. The re-lodge rewrites `batch_working/…_runNN.jsonl` with a
+new cache name. The orphan's cache is then named by nothing, so it is
+deleted while the orphan may still be running.
+
+**Case 2: other work's caches.** `--since` does not scope the deleter to
+this campaign. Any other detector batch cache on the project, created after
+`--since` (from any machine, same display name
+`batch-detect-shared-prefix`), is deleted after 90 minutes. The docstring's
+"caches from other work are never touched" (line 20) holds only for work
+started before `--since`.
+
+A latent third case: a chunked cached pass whose chunk k ends in
+`poll_error` moves on to chunk k+1, and chunk k's cache stops being the
+newest. No Run B cached pass is chunked (1,398 or fewer tiles against the
+default 4,000), so this cannot happen tonight.
+
+Evidence, offline, on a synthetic tree under the launcher's layout, with
+the module's own `pass_states` and `select_deletable`:
+
+```text
+g3-image-run1        landed                     c/landed
+g3-image-run2        process live (re-lodged)   c/new   (orphan job on c/old)
+g37-image-cache-run1 exited without submitting  c/refused
+caches: c/old, c/new, c/landed, c/refused, c/foreign (all past the grace)
+current rule deletes:           ['c/old', 'c/landed', 'c/refused', 'c/foreign']
+positive-ownership rule deletes: ['c/landed', 'c/refused']
+```
+
+**Fix (one line, plus a test):** delete only caches this campaign provably
+owns and has finished with. In `select_deletable`, add
+`owned = {s.cache for s in states if not s.protects and s.cache}` and skip
+any cache not in `owned`. That set holds the caches named by a landed
+pass's request file or by a lodge that exited without submitting. It closes
+all three cases and still deletes what D52 asks for: landed passes' caches
+and refused lodges' caches. The only cost is that a refused lodge whose
+request file a re-lodge later overwrote keeps its cache until the 24 h
+expiry (US$0.23–0.45).
+
+`tests/test_delete_landed_caches.py:41–44` currently asserts that
+`c/orphan`, a cache no pass names, *is* deleted. That assertion encodes the
+hole, so it should flip to "kept", and a new test should cover the
+overwritten-orphan case. Until the patch lands, run the deleter only with
+`--dry-run`, and delete by hand only the caches it lists that a landed
+pass's request file names.
+
+### R2 (low): "move $d to archive/" must wait for the pass to exit
+
+The guard's new message (launcher line 305) says to move the pass
+directory to `archive/` and re-lodge. But the inline job's process is still
+polling. When the job lands, `write_batch_outputs` recreates the directory
+(`output_file.parent.mkdir(parents=True, exist_ok=True)`,
+`lib_batch_api.py:2703`) and writes the inline-shape pass there.
+`lodge` then calls the pass "already landed" and skips it, and the wrong
+shape silently enters the arm. If the operator re-lodged in between, the
+two processes race for the same files.
+
+**Fix:** "when `status` shows the pass `gone` with a terminal state, move
+`$d` (and the pass's log and pid file) to `archive/`, then `lodge ARM:RUN`".
+If the log stays in place, `FORCE=1` is needed. Say the same in card § 4.5,
+line 267.
+
+### R3 (low): an upload whose submission fails is never released
+
+If `client.batches.create` fails after the upload succeeded, `run_batch_unit`
+returns `submit_error` (`lib_batch_api.py:3508–3509`). The uploaded name
+never reached the caller, so the file stays registered for 48 h, holding
+0.46–1.26 GB of the budget per occurrence.
+
+**Fix (later):** have `submit_batch_unit` deregister its own upload when
+`submit_batch_job` raises. This is rare and not a blocker.
+
+### R4 (nit): one sentence still says the opposite
+
+Card lines 314–315 still read "`g37-image-cache` differs from
+`g3-image-temp1` in model and thinking level only (rehearsal, § 6.1)", and
+the new text that follows contradicts it. Change it to "in model, thinking
+level and the temperature value sent".
+
+### Seen on sapphire (read only)
+
+`g37-image-run1` was lodged at 11:55:33 UTC under `fdc0624ed`. Its chunk 0
+of 3 (466 tiles) was submitted at 11:59:49 as
+`batches/lhz0bogn15x372skpdyzqbgxwxvfu6odq4u8`, and its pid was alive and
+polling when read. For the deleter, set `--since` before the first cached
+lodge (`g3-image:1`). An early `--since` is harmless under the
+positive-ownership rule.
+
 ## Changelog
+
+### 2026-10-07 — Re-check of the fixes
+
+Appended § Re-check of the fixes, after `a0488a440`, `580c7c494` and
+`fdc0624ed`. F1, F2, F3, F5, F6 and F9 are sound. The cache deleter
+(F4) can delete a cache a running job reads (R1; one-line fix given).
+The guard's discard message must wait for the pass to exit (R2). R3
+and R4 are minor. Nothing in the original findings changed.
 
 ### 2026-10-07 — Original publication
 
