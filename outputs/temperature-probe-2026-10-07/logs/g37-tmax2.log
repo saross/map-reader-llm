@@ -1,0 +1,62 @@
+2026-10-07T11:06:06Z SUBMITTED g37-tmax2
+2026-10-07 11:06:06,353 - WARNING - --allow-stale-manifest: verifying over a manifest that DISAGREES with its union (outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson). 300 candidates against 791 union features, paired by candidate-id-index. 491 union feature(s) have no candidate: index 1, 4, 5, 8, 9, 10, 12, 13, 14, 16, 17, 18, 20, 22, 23, 24, 26, 28, 33, 34, ... and 471 more
+2026-10-07 11:06:06,353 - INFO - Thinking level override: low
+2026-10-07 11:06:06,353 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-07 11:06:06,353 - INFO - Candidates: 300
+2026-10-07 11:06:06,353 - INFO - Mode: batch
+2026-10-07 11:06:06,353 - INFO - Iterations: 1
+2026-10-07 11:06:06,353 - INFO - Temperature override: 2.00
+2026-10-07 11:06:06,353 - WARNING - Output directory contains 'pro' but model is 'gemini-3.7-flash'. Check for model/directory mismatch.
+2026-10-07 11:06:06,402 - INFO - Built verifier JSONL: 300 lines (outputs/temperature-probe-2026-10-07/g37-tmax2/verifier_requests.jsonl)
+2026-10-07 11:06:06,403 - INFO - Built JSONL chunk 1/1: 300 lines → outputs/temperature-probe-2026-10-07/g37-tmax2/verifier_requests.jsonl
+2026-10-07 11:06:06,403 - INFO - Built JSONL: 300 lines in 1 chunk(s)
+2026-10-07 11:06:07,157 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-10-07 11:06:07,695 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=Ch9tb2RlbHMvdmVvLTMuMS1nZW5lcmF0ZS1wcmV2aWV3 "HTTP/1.1 200 OK"
+2026-10-07 11:06:08,375 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+2026-10-07 11:06:08,375 - INFO - File storage preflight: 6 file(s) stored (0.10 GB) + 1 chunk(s) to upload (0.02 GB) = 0.12 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+2026-10-07 11:06:08,979 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-10-07 11:06:11,149 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU83lZ7FSET3HOscv3R7Xk_Yuh3pzzJ83tQXnaaUnjwEtcMnm72mS9cWCDKAhpOos14-TrZcWXv86M1WFizEw8l054QzjTpV7rAn-eJ6IldU&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 11:06:12,546 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU83lZ7FSET3HOscv3R7Xk_Yuh3pzzJ83tQXnaaUnjwEtcMnm72mS9cWCDKAhpOos14-TrZcWXv86M1WFizEw8l054QzjTpV7rAn-eJ6IldU&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 11:06:15,018 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU83lZ7FSET3HOscv3R7Xk_Yuh3pzzJ83tQXnaaUnjwEtcMnm72mS9cWCDKAhpOos14-TrZcWXv86M1WFizEw8l054QzjTpV7rAn-eJ6IldU&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-07 11:06:15,018 - INFO - Uploaded JSONL as: files/bl6h4mv35bgv
+2026-10-07 11:06:15,020 - INFO - Uploaded chunk 1/1: files/bl6h4mv35bgv
+2026-10-07 11:06:25,325 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.7-flash:batchGenerateContent "HTTP/1.1 200 OK"
+2026-10-07 11:06:25,326 - INFO - Submitted batch job: batches/0d7e577bxwvqrse13imifhizniavp6qh18rt
+2026-10-07 11:06:25,326 - INFO - Submitted batch job 1/1: batches/0d7e577bxwvqrse13imifhizniavp6qh18rt
+2026-10-07 11:06:25,865 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:06:56,508 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:07:27,147 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:07:57,778 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:08:28,430 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:08:59,045 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:09:29,672 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:10:00,312 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:10:30,951 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:11:01,583 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:11:32,224 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:12:02,842 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:12:33,478 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:13:04,152 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:13:34,794 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:14:05,465 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:14:36,111 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:15:06,749 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:15:37,367 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:16:08,001 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:16:38,677 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:17:09,353 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:17:39,995 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:18:11,319 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:18:41,926 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:19:12,555 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:19:43,182 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:20:13,815 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:20:44,471 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/0d7e577bxwvqrse13imifhizniavp6qh18rt "HTTP/1.1 200 OK"
+2026-10-07 11:20:44,471 - INFO - Batch job batches/0d7e577bxwvqrse13imifhizniavp6qh18rt reached terminal state: JOB_STATE_SUCCEEDED
+2026-10-07 11:20:44,471 - INFO - Batch job 1/1 finished polling: JOB_STATE_SUCCEEDED
+2026-10-07 11:20:45,543 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-0d7e577bxwvqrse13imifhizniavp6qh18rt:download?alt=media "HTTP/1.1 200 OK"
+2026-10-07 11:20:46,150 - INFO - Retrieved 300 result lines from batch job
+2026-10-07 11:20:46,152 - INFO - Batch usage booked from 300/300 responses: 537,600 input tokens (0 cached), 37,239 output; raw results -> outputs/temperature-probe-2026-10-07/g37-tmax2/batch_results.jsonl
+2026-10-07 11:20:46,154 - INFO - Probabilities written: outputs/temperature-probe-2026-10-07/g37-tmax2/probabilities.json
+2026-10-07 11:20:46,155 - INFO - Metadata written: outputs/temperature-probe-2026-10-07/g37-tmax2/run.meta.json
+2026-10-07 11:20:46,155 - INFO - Score summary: mean=0.695, above threshold (0.5): 211/300 (70.3%)
