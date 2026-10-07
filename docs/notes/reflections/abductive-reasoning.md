@@ -9103,3 +9103,101 @@ every test the paper relies on.
 None of the four new verdicts was a carry-forward input (those took the
 highest F1), but prose that called those February contrasts null needs
 checking (tracker S-12, W1).
+
+---
+
+## Entry — 2026-10-07 (Session 162, map-reader-llm): Two frames that could never disagree
+
+**Session:** efba6aeb-0fcf-4126-91f1-0e10ca25f39d
+**Instance:** primary (model switched from Fable 5.1 to Opus 5.5 mid-session at the PI's `/model`; this episode ran under Opus 5.5)
+
+### Surprising fact
+
+The stale-register-notes agent reported that on all 28 K-ladder rungs the
+sweeps over two 487-tile evaluation frames were byte-identical, although
+the frames' bounds differ by 13.4 km² (about 1 %). The K-ladder findings,
+two deltas reports and 31 generated condition notes cite "the frames agree
+on the argmax" as a robustness check.
+
+### Probe
+
+Two explanations were live: a wiring bug (both sweeps scored against one
+bounds file), or a footprint difference containing nothing to score. A
+read-only agent checked the producing commit's wiring (correct), measured
+the difference (34 clipped tiles, almost all empty padding beyond the map
+rasters; no reference mound within 1,550 m; no candidate from any rung),
+re-scored two rungs under each file (both reproduced exactly), and read the
+shared scoring function, `calculate_f1_internal`.
+
+### Belief revision
+
+Neither explanation, or rather both were beside the point. The scorer
+scopes reference mounds to a frame by tile geometry but keeps detections by
+map name. Frames with the same 487 tile names and the same 435 in-scope
+references cannot score anything differently: the check could not have
+failed, so its passing was no evidence. The same asymmetry has a cost the
+"agreement" hid: a detection on a real mound outside the frame counts as a
+false positive. The Gemini 3.7 GS ladder's K = 1 and K = 3 unions were not
+clipped to the frame while K = 5 and K = 10 were, so its signed K = 1 to
+K = 10 gain (+0.0573) falls to about +0.0386 on a common area, and K = 3 sits
+level with K = 5 and K = 10.
+
+### What would change this belief
+
+A committed evaluation whose two frames differ in tile names, not only in
+polygons, scoring differently would show the scorer can see frames after
+all; the blast-radius re-score the PI approved would find it.
+
+### Implications for practice
+
+Before reading agreement between two instruments as robustness, ask what
+input would have made them disagree, and check that the instrument can see
+it. An identical result is the cheapest place to ask.
+
+---
+
+## Entry — 2026-10-07 (Session 162, map-reader-llm): The floor that would not shrink with more passes
+
+**Session:** efba6aeb-0fcf-4126-91f1-0e10ca25f39d
+**Instance:** primary (the W2.7 run under Fable 5.1; the all-subsets re-estimate under Opus 5.5)
+
+### Surprising fact
+
+I expected consensus to tame run-to-run noise roughly as averaging does,
+with the floor falling like 1/√K. On the gold-standard corpora two disjoint
+five-pass consensus cells of one run differed about as much as two single
+passes, and more at unanimity. On the 55-map board, rebuilding every
+five-of-ten subset gave floors 2.4 to 3.9 times the one-pair values the
+first screen used, and the fitted exponent of SD on K was −0.13 to −0.30,
+not −0.5.
+
+### Probe
+
+The all-subsets estimate was validated where truth was available (one
+10-pass slice of each 30-pass pool against its disjoint 5-pass pairs: 1.08
+and 1.15 times the truth). A candidate-level model built from per-pass vote
+rates, the PI's suggestion, was run beside it and understated the floor by a
+fifth to a third.
+
+### Belief revision
+
+Through the verifier, what varies between runs is not how many passes vote
+for a candidate but which borderline candidates cross the vote threshold,
+and one pass moves many of them together. Consensus therefore buys accuracy
+more than it buys stability, and the stability it buys comes mostly from the
+verifier, which absorbed the proposer's 54-day drift (0.011 to 0.030 F1 as
+proposer-only consensus at the boards' thresholds) down to 0.003 to 0.006.
+The unit of replication is the pass, and a floor estimated from one pair is
+a typical difference, not a 95th percentile.
+
+### What would change this belief
+
+A family whose subset SD falls like 1/√K through the verifier, or a
+corpus where consensus cells vary much less than single passes at mid
+thresholds.
+
+### Implications for practice
+
+State how many replicate pairs stand under every floor, and prefer an
+estimator that uses every subset with the overlap correction to any
+statistic of one or three pairs.

@@ -3058,3 +3058,69 @@ because of that, and expects me to supply the outsider's.
 outsider pass: for every term, ask whether a reader who knows the study's
 design but not this project's history would parse it; expand where not, and
 say which phrases were expanded.
+
+## claude-obs 145 — 2026-10-07: He routes side notes to me as prompts to re-derive, and they caught what I wrote too strongly
+
+**Pattern.** Three times in Session 162 Shawn pasted a side agent's note
+with a short question: that the 55-map floors rested on one to three pairs
+("Do you have any ideas for specifying the floors more precisely?"), that
+the cross-date floor could not be firmed up by re-slicing, and that D48's
+seven-day rule assumed no proposer drift ("Do we need more tests … or just
+to update the text?"). Each note was right, and each turned into a measured
+correction (the all-subsets floors, Run A's dated pairs, the D48 caveat)
+rather than a debate.
+
+**Lesson.** He uses the side reviews as a second reader for my numbers, and
+asks the question that turns a warning into work. The value is in the
+re-derivation, not in agreeing with the note.
+
+**How to apply.** When he forwards a side note, re-derive the number it
+questions at source before answering, say what it changes in one line, and
+propose the cheapest measurement that would settle it.
+
+## claude-obs 146 — 2026-10-07: He answers a decision list in one pass and amends while typing, so I read the whole message before acting
+
+**Pattern.** Shawn answered about fifteen open items in one message, in his
+own order ("Working backward to your prior responses"), with two amendments
+written mid-way ("I am happy for the narrower same-date re-verification of
+T03 alone … amend my prior answer"; the text-MIN add-on "if it's
+warranted"). Acting item by item from the top would have launched the
+three-family run he had just narrowed.
+
+**Lesson.** His batched answers are reliable but not linear: a later line
+can amend an earlier one.
+
+**How to apply.** Read the whole message, build the resolved list, state it
+back where it governs spend (the gate, the ruling text), and only then act.
+
+## claude-obs 147 — 2026-10-07: Self-critique — I wrote headlines stronger than their tables, four times in one session
+
+**Pattern.** "Consensus does not shrink the floor" (the table showed a third
+off at 4-of-5); the uplift's two executions differing "at every threshold"
+(true at two thresholds of five); a five-pass floor of 0.005 from one pair
+(0.007 from all subsets); a cross-date verifier allowance of 0.004–0.007
+from one pair (Run A put it nearer 0.002). Each was corrected the same day,
+but by a second reader, never at the time of writing.
+
+**Lesson.** When I summarise a table into a sentence I generalise past it,
+and the anti-confabulation re-read does not catch it, because the number is
+right and the scope is wrong.
+
+**How to apply.** For every summary sentence over a table, check its
+quantifier ("every", "does not", "all") against the table's weakest row,
+and state how many pairs or replicates stand under any floor or percentile.
+
+## claude-obs 148 — 2026-10-07: Self-critique — resource hygiene with parallel agents
+
+**Pattern.** Agent worktrees (about 9 GB each in this repository) were left
+after their branches merged until the disk on amd-tower filled and two agent
+launches failed; and a launch line built as `cd … && OUT=… && nohup … &`
+backgrounded the whole chain, so the ssh call hung while the job ran.
+
+**Lesson.** Parallel agents multiply the cost of small hygiene lapses, and
+both failures were mine, not the agents'.
+
+**How to apply.** Remove each worktree as soon as its branch is pushed and
+merged; check free space before spawning worktree agents; launch remote jobs
+as `cd …; nohup bash -c 'echo $$ > pid; exec …' > log 2>&1 < /dev/null &`
+with a `timeout` on the ssh call.

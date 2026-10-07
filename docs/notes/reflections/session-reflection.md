@@ -11945,3 +11945,83 @@ of him whole, and asked for one sentence to be made plainer. The insider
 shorthand he could not parse ("recorded by no run") was mine, compressed for
 a reader who had lived through W3; a public text needs the reader who has
 not.*
+
+---
+
+## Session 162 — 2026-10-06/07 — the session that measured the floors, and had them corrected four times by second readers
+
+*Reflecting on session work in map-reader-llm, Session 162. Primary instance,
+no compaction, but the model changed mid-session at the PI's `/model`: the
+W2.7 floors, the W1 and W4/W6 passes and PR #24 ran under Fable 5.1; the
+re-check of the floors, PR #25, Run A and this reflection under Opus 5.5,
+with the earlier work in context (not reconstructed from a summary).*
+
+**Where did you and the human disagree, and who was right?** Three times,
+quietly, and the disagreements were mostly about where the evidence was,
+not what it said. He asked me to add the inert-fields flag to the files
+that would now need it; I argued that the 22 configurations and their
+launchers are execution records whose hashes sit in the metas, and recorded
+the change in the prompts README instead. He took that. He asked me to
+confirm that no principled route recovered the 19 "cannot check" verdicts;
+I could not, and the check that said so (git history holds only launch
+snapshots, the probabilities file names the prompt but not the model, the
+run logs and the verified-candidate lists remain) is the more useful
+answer. And when he proposed modelling the floor from the variation
+between individual passes, the agent that tested it found the
+candidate-level model understates the floor by a fifth to a third, because
+one pass moves many candidates together. He was right that the passes are
+the raw material; the unit has to be the pass. None of these were
+disagreements he lost. Each was a request that, read literally, would have
+done less than he wanted.
+
+The disagreement that mattered more was with myself. I wrote "consensus
+does not shrink the floor" in the report's headline and in the close block.
+The table under it showed a third off at 4-of-5. I wrote that the uplift's
+two executions differ by "0.020 to 0.030 at every threshold"; the pairs
+file supports that at two thresholds of five, and at 1-of-5 the sign
+reverses. I set the 55-map five-pass floor at 0.005 from one disjoint pair,
+and the all-subsets estimate put it at 0.007, two and a half to four times
+the per-family values. I gave a cross-date verifier allowance of 0.004 to
+0.007 from one April-June pair, and Run A, on identical requests, put it
+nearer 0.002. Every one of these was caught by a second reader: the
+obs-writer agent re-deriving a figure for Obs 506, a side review counting
+the pairs under a percentile, my own re-reading when the PI asked "what
+happened?". None was caught by the instance that wrote it, at the time of
+writing. The anti-confabulation rule says re-read before citing; the
+practice that worked here was stronger: have someone else re-derive the
+number for a different purpose.
+
+**What context from this session will be hardest to reconstruct in six
+months?** Which floor applies to which claim, and why there are so many.
+A reader of the W2.7 report will meet within-execution floors (single
+pass, consensus, proposer-verifier with the verifier fixed), nested floors
+(a threshold or rung contrast on the same passes, measured on each subset),
+and cross-execution floors (the within floor plus a verifier-vintage term,
+plus an unmeasured proposer term for short gaps that D48 now names as an
+assumption). Each was introduced by a finding, not a plan: the nested floor
+because the old screen had applied an independent-run floor to ARM2's tax,
+which shares its passes and so turned out real; the vintage term because
+§ 6a showed the verifier drifting between April and June; D48's caveat
+because a side review noticed that the same-week control re-ran only the
+verifier. The report's changelog holds the order of events; the reasons
+live in the PI's questions and the side notes, which are in this
+transcript and nowhere else.
+
+**What felt uncertain or unresolved at the end?** The scorer. The frames
+investigation found that the canonical F1 path keeps detections by map name
+but scopes reference mounds by tile geometry, so two frames that share tile
+names always agree, and a detection on a real mound outside the frame
+counts as a false positive. It changes one signed result (the Gemini 3.7
+text ladder's K = 1 to K = 10 gain, +0.0573 to about +0.0386) and makes a
+whole family of "the frames agree" sentences vacuous. How far it reaches
+is unknown until the blast radius is measured, which the PI approved and
+the next session inherits. Run B's configuration was still being built at
+close, and the 55-map corpus still has no measurement of proposer drift
+over a few days. The session leaves the floors better measured than it
+found them and the instrument underneath them less trusted.
+
+*Relational note: the PI answered a long list of decisions in one message,
+amended two answers while typing, and asked "anything else I missed?". The
+amendments ("T03 alone ... amend my prior answer") were easy to misread;
+reading the whole message before acting, and stating the reading back in
+the gate, kept the run inside what he approved.*

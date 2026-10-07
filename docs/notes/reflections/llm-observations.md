@@ -8486,3 +8486,66 @@ compaction summary.*
   was to annotate, not regenerate: the published value stays, the change's
   own effect sits beside it, and anything else that moved is named rather
   than absorbed.
+
+---
+
+## Session 162 — 2026-10-06/07 (W2.7 floors measured and revised; W1 and W4/W6 passes; PRs #24 and #25 merged; Run A; the frames explained)
+
+- **A fast re-implementation of a committed function needs a bit-equality
+  gate, and Python's own `sum` is part of the function.** The W2.7 subset
+  builder vectorised `merge_passes.deduplicate_within_pass` (minutes per
+  55-map pass in pure Python). The gate (identical centroids, tiles and
+  cluster sizes on a real pass) failed twice on last-bit differences: first
+  with `numpy.mean`, then with a plain accumulation loop. Python ≥ 3.12's
+  built-in `sum` over floats is Neumaier-compensated, so only `sum(...) / n`
+  in member order reproduces the committed centroid. Without the gate the
+  subset cells would have differed from the board's in the last bit of a
+  few centroids, and the board-reproduction gates downstream would have
+  been the first to notice, far from the cause.
+- **Seed-order clustering makes directory listing order part of the
+  result.** The April consensus sweeps reproduce only with `run_*`
+  directories taken in lexicographic order (`run_1, run_10, run_11, …`);
+  today's loader sorts numerically. Greedy star clustering keeps the first
+  seed, so a rebuild moves feature counts by up to about 1 %. Any rebuild of
+  a committed union must pin the order it was built with.
+- **For a floor from overlapping subsets, resample the unit that varies
+  together.** The variance of F1 over all K-subsets of N passes understates
+  the run-to-run variance of independent K-pass runs; the correction for a
+  mean is `sqrt(N / (N − K))`, not `sqrt((N − 1) / (N − K))`. A
+  candidate-level simulation (each candidate votes independently at its
+  per-pass rate) understates the floor by 21–32 % because one pass shifts
+  many candidates together; a pass bootstrap with replacement overstates it
+  because a duplicated pass votes twice for its own detections. Validated
+  where truth exists: a single 10-pass slice of a 30-pass pool estimated the
+  disjoint-subset floor at 1.08 and 1.15 times the truth.
+- **A contrast that shares its passes needs its own floor.** A threshold or
+  rung contrast on the same passes cancels most run-to-run variance; screening
+  it against an independent-run floor called ARM2's +0.0043 tax noise when
+  its own floor is 0.0020.
+- **`a && b && nohup c > log 2>&1 < /dev/null &` backgrounds the whole
+  chain.** The redirections apply to `c` only; the subshell running the `&&`
+  list keeps the ssh session's descriptors, so the launch "times out" while
+  the job runs normally. Use `cd …; nohup … &` (a `;` before the launch),
+  write the pid from inside the job (`bash -c 'echo $$ > pid; exec …'`), and
+  give each launch call a `timeout`.
+- **Worktree isolation costs a full checkout.** In a repository that commits
+  its outputs, each agent worktree is about 9 GB; four finished worktrees
+  filled amd-tower's disk and the next two failed to create. Remove a
+  worktree as soon as its branch is pushed and merged.
+- **A guard's refusal can carry a known cause.** The union-provenance guard
+  refused both 4-of-5 manifests (15 and 88 vote counts one low). The
+  disagreement was the documented April extractor defect, all 4 → 5, which
+  changes no crop, candidate id or 3-of-5/4-of-5 cell; the override was put
+  to the PI as part of the gate rather than taken.
+- **A record that names the prompt is not a record of the request.** Every
+  verifier's `probabilities.json` stores `verifier_config:
+  "verify_adversarial-text"`, the same string for the Gemini 3 and the 3.7
+  verifier. Earlier committed versions of overwritten metas were launch
+  snapshots with nothing processed. Neither can stand in for a lost main
+  leg's meta; the launch logs and the verified-candidate list can.
+- **An agreement check can be vacuous by construction.** The canonical F1
+  path scopes reference mounds to a frame by tile geometry but keeps
+  detections by map name. Two frames with the same tile names therefore
+  give byte-identical sweeps (all 32 pairs), and a detection on a real mound
+  outside the frame is a false positive. Before reading "the two agree" as
+  evidence, ask whether the instrument could have disagreed.

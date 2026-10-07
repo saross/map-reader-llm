@@ -10085,3 +10085,62 @@ word for word. Annotating rather than regenerating was chosen wherever a
 re-run would also move published values for reasons other than D42. Items 1-4
 of the end list (W2.7 floors and inventory, the W1 pass, W4/W6 fixes, the
 register-repair PR) were left for a fresh session at the PI's suggestion.
+
+---
+
+## Session 162
+
+*2026-10-06/07; amd-tower + sapphire; Fable 5.1 driving until the PI's
+`/model` switch, Opus 5.5 after; Opus subagents throughout (claims
+inventory, drift timeline, W1, W4/W6, two code reviews and their fixes, gate
+coverage and its fixes, the TM verifier-date check, the floors re-estimate,
+working notes, stale register notes, the frames investigation, the W1.5
+drafts, Run B's configuration). Model API: one model listing and Run A
+(US$18.17 audited). Primary instance, no compaction.*
+
+**Branch to main.** PR #24 (register repair D30–D41, D42, E91, the floors,
+W1, W4/W6) reviewed (12 findings, fixed in 13 commits), merged after a
+`main`-into-branch merge on sapphire that resolved six plumbing-mirror
+conflicts to the branch version (every `main` path equal to an earlier
+branch version; merged tree identical to the branch): `51b49deca`. The
+eCryptfs phantoms no longer show on amd-tower; ordinary commits to `main`
+work. PR #25 (manipulation-gate coverage, 181 reviewed bindings) reviewed
+(10 findings incl. three false-PASS paths), fixed, merged: `439ffd7ac`.
+
+**W2.7 / W7.6 (`reports/w27-replicate-floors-2026-10-06.md`).** Floors
+measured without API calls: gold-standard consensus floors from disjoint
+subsets (§ 3; 4-of-5 about a third below single-pass, unanimity wider);
+the replicate atlas by time gap (§ 4); the metas' drift timeline (§ 5);
+55-map proposer-stage floors with the verifier fixed (§ 6), superseded by
+the all-subsets re-estimate (§ 6b: five-pass floors about 0.007, 2.4–3.9
+times the one-pair values); the TM verifier-date check from the uplift's
+June re-verification (§ 6a); Run A (§ 6c); 103 configuration-level claims
+screened (§ 7). Corrections made the same day: the consensus headline, the
+uplift range by threshold, the § 7.2 verdicts under § 6b, D48 and Run A.
+
+**Rulings.** D48 (runs ≤ 7 days apart take the same-week floor; caveat
+added: assumes little proposer drift within a week); D49 (Runs A and B).
+Register text for `h1-cmt0106-pooled-modality`, `family-bh-fdr-confirmatory`
+(D42 permutation values) and `era1-leaderboard` (replicate group 21)
+approved and written (`69df3b5d4`, manifests `c117cd012`); W1.1 closed.
+
+**Run A.** T03 and text-MIN 4-of-5 sets and vote-3 shells re-verified on
+2026-10-07 (Batch API, `gemini-3-flash-preview`, minimal, T = 0; 26,335
+candidates, 0 failed; outputs `f13f7b308`; 9 uploads deleted). One-date
+readings: T03 k3 − k4 +0.0084 (p = 0.0013; mixed +0.0092), TM +0.0264
+(mixed +0.0275); April → October shift on the 4-of-5 cells +0.0020/+0.0021
+(n.s.); 4 % of decisions flip April → October, 3 % June → October.
+
+**Other work.** W1 pass (E92, Obs 498–499, retest summary withdrawn and
+re-tested, paper drafts for review); W4.4, W6.1–W6.3, W6.5; ruff
+consolidated on `ruff.toml` with E501 at 100 (`79dac1f34`); prompts README
+records the 22 refused text-only configs; stale register notes resolved
+(five of six; the K-ladder cell recorded in its findings' changelog);
+working notes Obs 500–507; the frames investigation
+(`reports/k-ladder-frames-2026-10-07.md`); W1.5 drafts and six D9 notes on
+branch `w15-floors-drafts` (unmerged, for the PI).
+
+**Contextual assumptions.** The disk on amd-tower filled when agent
+worktrees (about 9 GB each) accumulated; four merged worktrees were removed
+and later worktrees removed as soon as pushed. Run B's configuration agent
+was still running at close (branch `modality-bridge-2026-10-07`).
