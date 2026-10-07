@@ -304,6 +304,24 @@ def test_every_known_null_manipulation_cites_documents_that_exist() -> None:
         assert group["documented_by"].startswith(group["documents"][0])
 
 
+@pytest.mark.tier1
+def test_phase3c_h9a_and_phase3a_high_pairs_are_known(monkeypatch) -> None:
+    """The H9-A diversity pool against the Phase 3a-high and replication
+    text T0.7 pools is replicate group 21, documented as by design
+    (manipulation-check report § B.5): the gate labels it KNOWN, while a
+    pair outside every group stays NEW."""
+    monkeypatch.setattr(cm, "_conditions", lambda: {
+        "h9a": {"run_id": "retest-phase3c", "proposer_pool": "track2-text-h9-a-diversity"},
+        "p3a": {"run_id": "retest-phase3a-high", "proposer_pool": "track2-text-t0.7"},
+        "rep": {"run_id": "retest-phase3a-replication", "proposer_pool": "high"},
+        "other": {"run_id": "retest-phase3a-high", "proposer_pool": "track2-text-t1.0"},
+    })
+    for partner in ("p3a", "rep"):
+        doc = cm.documented_null_pair("h9a", partner)
+        assert doc is not None and "group 21" in doc
+    assert cm.documented_null_pair("h9a", "other") is None
+
+
 def _registered(monkeypatch, tmp_path, analyses: dict[str, list[str]],
                 pools: dict[str, tuple[str, str]],
                 configs: dict[str, tuple[str, list, float]]) -> None:

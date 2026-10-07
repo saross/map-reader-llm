@@ -248,6 +248,22 @@ KNOWN_NULL_MANIPULATIONS: tuple[dict[str, Any], ...] = (
                        "scale-8 and h10 pool_160_hp4hn4: one configuration, run twice on "
                        "2026-04-15); results/h12-v2/analysis_summary.md lines 73-74 and 148 "
                        "(h12-v2 R2 reuses the pool_160_hp4hn4 run)")},
+    {"pools": frozenset({("retest-phase3a-high", "track2-text-t0.7"),
+                         ("retest-phase3a-replication", "high"),
+                         ("retest-phase3c", "track2-text-h9-a-diversity"),
+                         ("retest-phase3c", "track2-text-h9-a-p1"),
+                         ("retest-phase3c", "track2-text-h9-a-p2"),
+                         ("retest-phase3c", "track2-text-h9-a-p3"),
+                         ("retest-phase3c", "track2-text-h9-a-p4"),
+                         ("retest-phase3c", "track2-text-h9-a-p5"),
+                         ("retest-phase3c", "track2-text-h9-d-t3")}),
+     "documents": ("reports/manipulation-check-2026-10-05.md",
+                   "studies/retest/phase3c-h9-diversity-track2.yaml"),
+     "documented_by": ("reports/manipulation-check-2026-10-05.md § B.5 group 21 (Phase 3c "
+                       "H9-A and D-t3 = Phase 3a-high text T0.7, by design; the two "
+                       "instruction files are byte-identical); "
+                       "studies/retest/phase3c-h9-diversity-track2.yaml lines 18-19 "
+                       "(T = 0.7, the Phase 3a optimum)")},
 )
 
 
