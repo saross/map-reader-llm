@@ -1,10 +1,11 @@
 # Temperature probe, 2026-10-07: does Gemini 3.7 Flash ignore `temperature`?
 
-> **Last revised**: 2026-10-07 (original publication, Session 163). See
+> **Last revised**: 2026-10-07 (result added, § 7). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: APPROVED by the PI (2026-10-07, "happy to let you test it, up to
-$5"); written before launch.** Script:
+**Status: DONE (2026-10-07). Verdict under the fixed rule: Gemini 3.7
+ignores temperature; control valid (§ 7). Approved by the PI ("happy to let
+you test it, up to $5"); §§ 1–6 were written before launch.** Script:
 `scripts/temperature_probe_2026_10_07.py` (tests:
 `tests/test_temperature_probe.py`). Background:
 `reports/google-temperature-notice-2026-10-07.md`.
@@ -107,7 +108,46 @@ returns before any client is created, `scripts/run_pv.py:1102` against
 - `models.get` gives the default's value, not proof that it was applied.
 - It says nothing about 3.8 beyond its listed default.
 
+## 7. Result (2026-10-07, after the run)
+
+Data: `outputs/temperature-probe-2026-10-07/` (`a79e960f4`): six legs,
+300 of 300 candidates each, no failed items; audited cost **US$1.62**.
+
+**Model defaults** (`models-get.json`): `gemini-3-flash-preview`,
+`gemini-3.7-flash` and `gemini-3.8-flash` all list temperature 1.0 (maximum
+2.0), top_p 0.95, top_k 64.
+
+| Statistic | Gemini 3 Flash | Gemini 3.7 Flash |
+|---|---:|---:|
+| Exact agreement, T 0.0 against T 0.0 | 0.797 | 0.637 |
+| Exact agreement, T 0.0 against T 2.0 (mean of two) | 0.385 | 0.613 |
+| **Agreement drop** (95 % CI) | **+0.412 (+0.350, +0.475)** | **+0.023 (−0.030, +0.078)** |
+| Mean \|Δp\|, T 0.0 / T 0.0 → T 0.0 / T 2.0 | 0.047 → 0.134 | 0.014 → 0.031 |
+| Moves above 0.5, T 0.0 / T 0.0 → T 0.0 / T 2.0 (of 300) | 12 → 36–37 | 2 → 9 |
+
+**Verdict under § 3's rule:** the control is valid (Gemini 3's interval
+excludes 0), and Gemini 3.7's interval includes 0 with an upper bound below
+0.10: **Gemini 3.7 ignores temperature on these requests.** Its T 0.0 legs
+already disagree with each other on 36 % of candidates, as the 55-map
+replicate found (63.5 % exact agreement), which fits a model sampling at its
+default whatever is sent. 3.7 accepted T 2.0 without error.
+
+**Exploratory, outside the fixed rule (flagged as a surprise).** On the
+continuous measure, Gemini 3.7's mean |Δp| rises by +0.017 (paired bootstrap
+95 % CI +0.004 to +0.032) from T 0.0 / T 0.0 to T 0.0 / T 2.0, about a fifth
+of Gemini 3's rise (+0.087); 8 of the 10 large movers are candidates both
+T 0.0 legs agreed on. This is one of several secondary statistics, chosen
+after seeing the data. Two readings remain: temperature has a small residual
+effect on 3.7 (Google's "no effect" overstates it), or the T 2.0 batch job
+differed for another reason. A second T 2.0 leg (about US$0.33) would
+separate them. It does not change the reading for Run B: the 3.7 arms ran,
+and will run, at or near the default 1.0.
+
 ## Changelog
+
+### 2026-10-07 — Result added (Session 163)
+
+§ 7 added after the run; §§ 1–6 unchanged. Data commit `a79e960f4`.
 
 ### 2026-10-07 — Original publication (Session 163)
 
