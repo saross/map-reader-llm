@@ -29,7 +29,20 @@
 #              make each request about 2.7 MB, so a pass is cut into three
 #              466-tile batch jobs to stay under the 2 GB per-file limit)
 #
-# All arms: T = 0.7 (CLI override of the config's 1.0, as every original
+# Three further arms, approved by the PI on 2026-10-07 (card § 4.8; outside
+# D49). Each differs from an original arm in the named levers only:
+#
+#   arm              like       differs in
+#   g37-image-cache  g37-image  --use-cache (the explicit cache, two user
+#                               turns, as g3-image), so no 466-tile chunking
+#   g3-text-temp1    g3-text    T = 1.0 (the config's own value), K = 5
+#   g3-image-temp1   g3-image   T = 1.0 (the config's own value), K = 5
+#
+# The two temp1 arms and g37-image-cache are temperature-, structure- and
+# K-matched to the 3.7 arms (Gemini 3.7 samples at its default 1.0 whatever
+# is sent: planning/temperature-probe-2026-10-07.md § 7).
+#
+# Original arms: T = 0.7 (CLI override of the config's 1.0, as every original
 # leg), inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1,398 tiles),
 # inputs/tiles_384_ov192. Text arms pass --allow-inert-fields: their config
 # lists 17 examples under include_example_images: false, which transmits
@@ -82,7 +95,9 @@ LODGE_GAP=${LODGE_GAP:-60}
 # upload) before the loop stops and asks for a look.
 LODGE_TIMEOUT=${LODGE_TIMEOUT:-2400}
 
-ARMS="g37-image g37-text g3-image g3-text"
+# Lodging order: the D49 arms first (largest requests first), then the
+# three added arms, so a storage refusal can only delay an addition.
+ARMS="g37-image g37-text g3-image g3-text g37-image-cache g3-image-temp1 g3-text-temp1"
 
 # -----------------------------------------------------------------------------
 # passes_for ARM — the pass numbers of one arm (K = 10 or K = 5).
@@ -90,7 +105,8 @@ ARMS="g37-image g37-text g3-image g3-text"
 passes_for() {
   case "$1" in
     g3-text|g3-image) echo "1 2 3 4 5 6 7 8 9 10" ;;
-    g37-text|g37-image) echo "1 2 3 4 5" ;;
+    g37-text|g37-image|g37-image-cache|g3-text-temp1|g3-image-temp1)
+      echo "1 2 3 4 5" ;;
     *) echo "unknown arm: $1" >&2; return 1 ;;
   esac
 }
@@ -100,10 +116,44 @@ passes_for() {
 # -----------------------------------------------------------------------------
 version_for() {
   case "$1" in
-    g3-text|g37-text) echo "detect_brief-text" ;;
-    g3-image|g37-image) echo "detect_brief-text-image" ;;
+    g3-text|g37-text|g3-text-temp1) echo "detect_brief-text" ;;
+    g3-image|g37-image|g37-image-cache|g3-image-temp1)
+      echo "detect_brief-text-image" ;;
     *) echo "unknown arm: $1" >&2; return 1 ;;
   esac
+}
+
+# -----------------------------------------------------------------------------
+# temperature_for ARM — the temperature sent (0.7 on the D49 arms, as the
+# originals; 1.0 on the matched Gemini 3 pair).
+# -----------------------------------------------------------------------------
+temperature_for() {
+  case "$1" in
+    g3-text-temp1|g3-image-temp1) echo "1.0" ;;
+    *) echo "0.7" ;;
+  esac
+}
+
+# -----------------------------------------------------------------------------
+# uses_cache ARM — 0 when the arm sends its examples through an explicit
+# context cache.
+# -----------------------------------------------------------------------------
+uses_cache() {
+  case "$1" in
+    g3-image|g37-image-cache|g3-image-temp1) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
+# -----------------------------------------------------------------------------
+# arm_table — one line per arm: name, K, config version. The status and
+# residuals readers take it, so they never hard-code the arm list.
+# -----------------------------------------------------------------------------
+arm_table() {
+  local arm
+  for arm in $ARMS; do
+    echo "$arm $(passes_for "$arm" | wc -w) $(version_for "$arm")"
+  done
 }
 
 # -----------------------------------------------------------------------------
@@ -130,9 +180,21 @@ print_args() {
     g37-image)
       a=(--config "$IMAGE_CONFIG" --model gemini-3.7-flash
          --thinking-level low --max-batch-tiles 466) ;;
+    g37-image-cache)
+      # As g37-image, but through the explicit cache; a cached request
+      # carries only the tile (about 0.33 MB), so one job per pass.
+      a=(--config "$IMAGE_CONFIG" --model gemini-3.7-flash
+         --thinking-level low --use-cache) ;;
+    g3-text-temp1)
+      a=(--config "$TEXT_CONFIG" --model gemini-3-flash-preview
+         --thinking-level minimal --tile-size 384 --allow-inert-fields) ;;
+    g3-image-temp1)
+      a=(--config "$IMAGE_CONFIG" --model gemini-3-flash-preview
+         --use-cache) ;;
     *) echo "unknown arm: $arm" >&2; return 1 ;;
   esac
-  a+=(--manifest "$manifest" --tiles-dir "$TILES" --temperature 0.7
+  a+=(--manifest "$manifest" --tiles-dir "$TILES"
+      --temperature "$(temperature_for "$arm")"
       --mode batch --service-tier flex --run "$run" --output-dir "$outdir"
       --skip-intent-check)
   printf '%s\n' "${a[@]}"
@@ -212,6 +274,16 @@ lodge_one() {
       # from this stamp and the pass meta's write time.
       echo "=== $(date -Is) SUBMITTED $name $job" >> "$log"
       echo "$name: submitted ($job)"
+      # A cached arm whose cache did not engage has fallen back to inline
+      # requests, a different request shape: stop before lodging more.
+      # (tac + sed reads back to this pass's latest LODGE line only.)
+      if uses_cache "$arm" && ! tac "$log" | sed "/=== .* LODGE $name:/q" \
+          | grep -q "batch unit will reference cache"; then
+        echo "$name: CACHE NOT ENGAGED (no 'batch unit will reference" \
+             "cache' line since this lodge) — lodging stops; discard this" \
+             "pass and read $log"
+        return 1
+      fi
       sleep "$LODGE_GAP"
       return 0
     fi
@@ -251,7 +323,7 @@ expand() {
 # No API call.
 # -----------------------------------------------------------------------------
 status() {
-  "$PY" - "$OUT" "$MANIFEST" <<'EOF'
+  "$PY" - "$OUT" "$MANIFEST" "$(arm_table)" <<'EOF'
 import glob
 import json
 import os
@@ -263,6 +335,7 @@ sys.path.insert(0, "scripts")
 from wait_for_run import classify_log  # noqa: E402
 
 out, manifest = sys.argv[1], sys.argv[2]
+versions = {ln.split()[0]: ln.split()[2] for ln in sys.argv[3].splitlines()}
 want = len(json.load(open(manifest)))
 fail = re.compile(r"failed|lost|partial|completeness gap|traceback|error|"
                   r"cache creation failed|refused", re.IGNORECASE)
@@ -285,7 +358,7 @@ for log in sorted(glob.glob(f"{out}/logs/*.log")):
     bad = [ln for ln in text.splitlines() if fail.search(ln) and not benign.search(ln)]
     arm, rest = name.split("-run")[0], name.split("-run")[1]
     run, _, rd = rest.partition("_")
-    ver = "detect_brief-text-image" if arm.endswith("image") else "detect_brief-text"
+    ver = versions[arm]
     # A recovery fragment's log (…_rd<R>) reports the fragment's own files.
     root = f"{out}/{arm}/recovery_{rd}" if rd else f"{out}/{arm}"
     tiles = glob.glob(f"{root}/{ver}/run_{run}/*.tiles.json")
@@ -319,7 +392,7 @@ EOF
 # non-empty. No API call.
 # -----------------------------------------------------------------------------
 residuals() {
-  "$PY" - "$OUT" "$MANIFEST" <<'EOF'
+  "$PY" - "$OUT" "$MANIFEST" "$(arm_table)" <<'EOF'
 import glob
 import json
 import os
@@ -327,9 +400,8 @@ import sys
 
 out, manifest = sys.argv[1], sys.argv[2]
 pinned = json.load(open(manifest))
-arms = {"g3-text": 10, "g3-image": 10, "g37-text": 5, "g37-image": 5}
-for arm, k in arms.items():
-    ver = "detect_brief-text-image" if arm.endswith("image") else "detect_brief-text"
+table = [ln.split() for ln in sys.argv[3].splitlines()]
+for arm, k, ver in ((a, int(k), v) for a, k, v in table):
     for run in range(1, k + 1):
         done = set()
         main = glob.glob(f"{out}/{arm}/{ver}/run_{run}/*.tiles.json")
