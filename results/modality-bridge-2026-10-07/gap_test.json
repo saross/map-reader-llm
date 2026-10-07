@@ -1,0 +1,63 @@
+{
+  "buffer_m": 20,
+  "g3_gap_committed": {
+    "delta_f1": 0.0549,
+    "p": 0.001,
+    "source": "results/image-b-gs-2026-08-28/analysis.json"
+  },
+  "pairs": {
+    "g3": {
+      "f1_a": 0.891596,
+      "f1_b": 0.839264,
+      "observed_diff": 0.052332,
+      "p_value": 0.0029,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000192,
+      "null_std": 0.018279,
+      "convention": "delta = text - image @20m"
+    },
+    "carried-verifier": {
+      "f1_a": 0.915411,
+      "f1_b": 0.915995,
+      "observed_diff": -0.000584,
+      "p_value": 0.9467,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5.1e-05,
+      "null_std": 0.007551,
+      "convention": "delta = text - image @20m"
+    },
+    "all-3.7": {
+      "f1_a": 0.926488,
+      "f1_b": 0.928821,
+      "observed_diff": -0.002334,
+      "p_value": 0.7477,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 9.6e-05,
+      "null_std": 0.006233,
+      "convention": "delta = text - image @20m"
+    }
+  },
+  "pair_sources": {
+    "g3": [
+      "results/modality-bridge-2026-10-07/g3-text-g3v",
+      "results/modality-bridge-2026-10-07/g3-image-g3v"
+    ],
+    "carried-verifier": [
+      "results/modality-bridge-2026-10-07/g37-text-g3v",
+      "results/modality-bridge-2026-10-07/g37-image-g3v"
+    ],
+    "all-3.7": [
+      "results/modality-bridge-2026-10-07/g37-text-g37v",
+      "results/modality-bridge-2026-10-07/g37-image-g37v"
+    ]
+  },
+  "set_name": "verified_best_20m",
+  "gap_change_reference": "g3",
+  "gap_change": {
+    "carried-verifier": -0.052916,
+    "all-3.7": -0.054666
+  }
+}

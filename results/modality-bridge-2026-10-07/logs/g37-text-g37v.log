@@ -1,0 +1,22 @@
+INFO: detect_brief-text: union 789 joined and reassignment-gated
+INFO: anchor gate OK: text-B rescored 0.8961 (registered 0.8961)
+INFO: anchor g3-text         F1 0.8961 (registered 0.8961) micro 0.8961 point (0.15, k10) OK
+INFO: anchor g3-image        F1 0.8412 (registered 0.8412) micro 0.8412 point (0.15, k9) OK
+INFO: anchor g37-text-g3v    F1 0.9139 (registered 0.9139) micro 0.9139 point (0.10, k5) OK
+INFO: anchor g37-text-g37v   F1 0.9265 (registered 0.9265) micro 0.9265 point (0.80, k5) OK
+INFO: anchor g37-image-g3v   F1 0.9254 (registered 0.9254) micro 0.9254 point (0.10, k5) OK
+INFO: anchor g37-image-g37v  F1 0.9308 (registered 0.9308) micro 0.9308 point (0.90, k5) OK
+INFO: anchor gap g3-text - g3-image: +0.0549 (registered +0.0549) p=0.0010 OK
+INFO: anchor gap g37-text-g3v - g37-image-g3v: -0.0115 (registered -0.0115) p=0.2533 OK
+INFO: anchor gap g37-text-g37v - g37-image-g37v: -0.0043 (registered -0.0043) p=0.6767 OK
+INFO: six-cell anchor gate PASSED (6 cells, 3 gaps)
+INFO: IMAGE best @20m: F1=0.9265 at (0.75, k5) P=0.9254 R=0.9276
+INFO: Created 429 records
+INFO: Created 429 records
+INFO: operating point (0.80, k5): F1=0.9265 P=0.9254 R=0.9276
+INFO: buffer  20m: text 0.8961 vs image 0.9265 (d -0.0304)
+INFO: buffer  30m: text 0.9034 vs image 0.9358 (d -0.0324)
+INFO: buffer  50m: text 0.9058 vs image 0.9358 (d -0.0300)
+INFO: buffer  75m: text 0.9058 vs image 0.9358 (d -0.0300)
+INFO: text - image @20m: dF1=-0.0304 p=0.0117
+INFO: ANALYSIS COMPLETE (no ladder) -> results/modality-bridge-2026-10-07/g37-text-g37v/analysis.json

@@ -1,0 +1,28 @@
+{
+  "buffer_m": 20,
+  "g3_gap_committed": {
+    "delta_f1": 0.0549,
+    "p": 0.001,
+    "source": "results/image-b-gs-2026-08-28/analysis.json"
+  },
+  "pairs": {
+    "g3-k5": {
+      "f1_a": 0.884892,
+      "f1_b": 0.823944,
+      "observed_diff": 0.060948,
+      "p_value": 0.0002,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000199,
+      "null_std": 0.017824,
+      "convention": "delta = text - image @20m"
+    }
+  },
+  "pair_sources": {
+    "g3-k5": [
+      "results/modality-bridge-2026-10-07/g3-text-g3v",
+      "results/modality-bridge-2026-10-07/g3-image-g3v"
+    ]
+  },
+  "set_name": "verified_ladder_n5_20m"
+}
