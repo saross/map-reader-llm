@@ -13764,7 +13764,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n1): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k1/probabilities.json over union_k1.geojson (register stage g384_ov128-union-k1-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     },
     {
      "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
@@ -13783,7 +13783,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n3): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k3/probabilities.json over union_k3.geojson (register stage g384_ov128-union-k3-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     },
     {
      "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
@@ -13802,7 +13802,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n5): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k5/probabilities.json over union_k5.geojson (register stage g384_ov128-union-k5-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     }
    ],
    "_ignored_evals": [
