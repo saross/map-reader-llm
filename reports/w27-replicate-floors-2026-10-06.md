@@ -1,8 +1,8 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-06 (latest: § 6a added, the verifier-date
-> confound checked free on text MIN; the cross-execution floor widened to
-> 0.011–0.013). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (§§ 4 and 6: the uplift's cross-execution
+> range stated by threshold, not as "every threshold"). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
 configuration-level claims against them in § 7.** Rulings D45 to D47
@@ -213,9 +213,13 @@ Reading:
   rejections) and the five-pass consensus differs by 0.002 to 0.011
   (significant at K = 5 t = 3 only). Fifty-four days apart (group 12, text
   MIN T0.7, the uplift's two halves) the five-pass consensus differs by
-  **0.020 to 0.022 F1 at 20 m and 0.025 to 0.030 at 50 m at every threshold,
-  all p < 0.0001**, the later execution scoring higher with fewer detections,
-  where the within-execution single-pass spread is 0.003. That is the
+  **0.011 to 0.022 F1 at 20 m and 0.018 to 0.030 at 50 m at the boards'
+  thresholds (3, 4 and 5 of 5; all p ≤ 0.0013)**, the later execution
+  scoring higher with fewer detections, where the within-execution
+  single-pass spread is 0.003. The gap depends on the threshold: at 2 of 5
+  it is 0.001 at 20 m (p = 0.70) and 0.007 at 50 m, and at 1 of 5 it
+  reverses (the earlier execution 0.009 to 0.010 higher, p ≤ 0.0003); the
+  three-pass consensus at 3 of 3 differs by 0.023 and 0.029. That is the
   cross-execution consensus floor on the paper's main corpus, with one pair
   of executions to measure it.
 
@@ -373,8 +377,9 @@ Reading:
   points of two- and three-pass subsets, which no board cell uses, reach
   0.01 to 0.03.
 - **The verifier absorbs most of the proposer drift.** UPL's first five
-  passes (2026-04-18) and last five (2026-06-11) differ by 0.020 to 0.030
-  F1 as proposer-only consensus at every threshold (§ 4, all p < 0.0001);
+  passes (2026-04-18) and last five (2026-06-11) differ by 0.011 to 0.030
+  F1 as proposer-only consensus at the board's thresholds (§ 4,
+  p ≤ 0.0013);
   through the fixed verifier at the board's band they differ by 0.003
   (k3), 0.004 (k4) and 0.006 (k5), with the later execution's cells
   holding 50 to 90 fewer detections. The verifier re-scores each candidate
@@ -560,6 +565,23 @@ API gate, D47).
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-07 — §§ 4 and 6: the uplift's cross-execution range corrected
+
+Found by the agent writing Obs 506, which re-read `gs_consensus_pairs.csv`.
+§ 4 said the uplift's two executions differ by "0.020 to 0.022 F1 at 20 m
+and 0.025 to 0.030 at 50 m at every threshold, all p < 0.0001", and § 6
+repeated it. The table supports that range only at 4 and 5 of 5.
+
+| | Before | After |
+|---|---|---|
+| Range, boards' thresholds | 0.020–0.022 (20 m), 0.025–0.030 (50 m) "at every threshold" | 0.011–0.022 (20 m), 0.018–0.030 (50 m) at 3–5 of 5, p ≤ 0.0013 |
+| Lower thresholds | not stated | 2 of 5: 0.001 (20 m, p = 0.70), 0.007 (50 m); 1 of 5: reversed, earlier execution 0.009–0.010 higher |
+
+**What did NOT change**: the 55-map within-execution floors, § 6a, and every
+§ 7 verdict (the cross-execution floor uses the proposer-verifier
+difference, 0.003–0.006, not this proposer-only range). Commit: see git log
+for this entry's date.
 
 ### 2026-10-06 (latest) — § 6a: the verifier-date confound checked on text MIN
 

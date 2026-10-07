@@ -449,8 +449,9 @@ The orderings transmitted (C-17 resolved; C-23 and C-24 found). Report:
 - [x] W7.6 items (1)-(3) DONE 2026-10-06 (S162; same report § 4-5): no
   execution component at 0-2 days; at 17-23 days one on the image track and
   on text MIN T0.0 but not on text HIGH; on the 55-map corpus the uplift's two
-  executions 54 days apart differ by 0.02-0.03 F1 as proposer-only consensus
-  (all p < 0.0001) and by 0.003-0.006 through the fixed verifier. The metas'
+  executions 54 days apart differ by 0.011-0.030 F1 as proposer-only
+  consensus at the boards' thresholds (p ≤ 0.0013; less, or reversed, at 1-2
+  of 5) and by 0.003-0.006 through the fixed verifier. The metas'
   drift timeline shows one change point (image HIGH T0.0, 2026-03-27 →
   04-16: thought tokens +21 %, detections per 1,000 items +43 %); the March
   batch metas booked no usage. Items (4) and (5) stay open. Was: A REPLICATE

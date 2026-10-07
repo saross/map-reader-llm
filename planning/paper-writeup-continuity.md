@@ -24,13 +24,13 @@ project state.
 > - **W2.7 and W7.6 (1)-(3) DONE** (`reports/w27-replicate-floors-2026-10-06.md`,
 >   `c84cfa378`; scripts and raw outputs beside it). Floors without API
 >   calls: gold-standard consensus from disjoint pass subsets (95th
->   percentile 0.02-0.06 at the boards' thresholds; consensus does not
->   shrink the single-pass floor, unanimity widens it); 55-map
+>   percentile 0.02-0.06 at the boards' thresholds; consensus shrinks the
+>   single-pass floor by about a third at 4-of-5, unanimity widens it); 55-map
 >   proposer-stage floors with the verifier held fixed (0.001-0.005 at
 >   N = 5, about 0.008 at N = 1, Gemini 3 text; 0.017 for the Gemini 3 image
 >   pool at N = 1); the uplift's two executions 54 days apart differ by
->   0.02-0.03 as proposer-only consensus and 0.003-0.006 through the fixed
->   verifier. Gates: six committed rung cells and four committed consensus
+>   0.011-0.030 as proposer-only consensus at 3-5 of 5 and 0.003-0.006
+>   through the fixed verifier. Gates: six committed rung cells and four committed consensus
 >   sweeps reproduced exactly. The paper's 103 configuration-level claims
 >   screened (report § 7): six board claims reworded as output differences
 >   or ties, two corrections of fact, lesson (i)'s verifier-date confound
@@ -111,7 +111,7 @@ project state.
 >   (g)-(h) from S161 (now Obs 499 covers (g) and (h)); this session's
 >   candidates: (i) consensus shrinks the replicate floor only modestly
 >   (about a third at 4-of-5) and unanimity widens it; (j) the verifier absorbs most of the proposer
->   drift (UPL 0.02-0.03 → 0.003-0.006); (k) the k3 shells are
+>   drift (UPL 0.011-0.030 at 3-5 of 5 → 0.003-0.006); (k) the k3 shells are
 >   mixed-verifier-execution cells; (l) the April consensus sweeps' pass
 >   order; plus the W1 agent's twelve surprises in its report (notably: the
 >   February pilot re-tested has 6/10 BH-significant on both tracks against
