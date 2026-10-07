@@ -166,14 +166,23 @@ POOL_OVERRIDES: dict[str, str] = {
     "outputs/h12-v2/greedy/r2-balanced": "outputs/h10/evaluation-v2/pool_160_hp4hn4",
 }
 
-#: union directory -> why its parameters are not recoverable.
+#: union directory -> why this checker does not re-derive it.
 UNRESOLVABLE: dict[str, str] = {
-    # Anchor: results/run-conditions.json, decomposition.pv-diag-256._note —
-    # "Proposer passes were NOT materialised as run_* dirs (only consensus +
-    # crops), so proposer_pools is empty".
+    # Anchor: results/manipulation-gate-bindings.json, binding
+    # pv-diag-256-text-5of5-union (PR #25), and the correction appended to
+    # results/run-conditions.json, decomposition.pv-diag-256._note, on
+    # 2026-10-07. Until then this entry said the proposer passes were never
+    # materialised. They were: 276e4ca80 archived the five N = 5, T = 0.7
+    # passes, tracked with their metas, at
+    # archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/run_1..5.
+    # The entry stays because no registered pool reaches archive/ and
+    # POOL_OVERRIDES maps only registered pools. The binding records a
+    # read-only reproduction from those passes that matches the union exactly.
     "outputs/h11/pv-diag-256/consensus":
-        "proposer passes were never materialised as run_*/pass_* directories "
-        "(results/run-conditions.json, decomposition.pv-diag-256._note)",
+        "pool not registered: its five passes sit outside the union's run, at "
+        "archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/run_1..5 "
+        "(archived by 276e4ca80); provenance settled by binding "
+        "pv-diag-256-text-5of5-union (results/manipulation-gate-bindings.json)",
 }
 
 #: Union filenames, and how to read the vote threshold out of them.

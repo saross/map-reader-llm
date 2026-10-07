@@ -1780,7 +1780,7 @@
    ]
   },
   "pv-diag-384": {
-   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above \u2014 no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below. | Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): the two text-only adversarial v1 stages on the t0.0 pools (image verified-v1-n10, text verified-v1-n3) were re-run on candidate sets rebuilt from the E71-recovered passes (889 and 1,319 candidates) into the '-recovery-2026-09-08' directories registered here as inventory rows beside the originals, which stay as the pre-recovery record. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md \u00a7 6.1. | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable. The ten N1 baseline conditions that name their pool by relative path-string, and the verifier-stage selection bands (each a real directory under verified/), all carry source_run 'pv-diag-384'. The same band names are registered with source_run 'pv-diag-384' from the verifier-robustness run, which settles pool ownership independently. No metric, eval or detection changed.",
+   "_note": "GAP-7 (Session 102): proposer_pools (24 = pool x temp) + verifier_passes (88 metas across the pools' verified-v1-nN / session-78-matrix subdirs) now populated. The 10 N1 single-pass baseline conditions (Session 96) are kept verbatim; they reference their pool by relative path-string (benign pool-unresolved). Era-2 487-tile, 384px. Consensus operating-point conditions + the consensus 3c analysis (the buffer-harmonised sweep at results/rescore-2026-06-05/pv-diag-384/consensus-sweep/) are the next authoring step. Model of record: gemini-3-flash (flash pools) / gemini-3.1-pro (pro pools). | E72 remediation (2026-08-02): the four MATCHED-temperature consensus cells (text-t0.7 / text-t1.0 x N=5/N=10, both arms 487/487 tiles) are filed as the 'e43-matched-temperature' analysis over the EXISTING conditions listed above \u2014 no parallel 'matched-temp-*' conditions were minted, because that would duplicate them (same GeoJSONs, same 14-buffer + MCC metrics). Their independent house-grain re-score lives at results/e43-matched-temperature/paper-eval/ and is waived into _ignored_evals below. | Verifier-stage refresh (2026-09-08, S151; card planning/verifier-stage-refresh-2026-09-08.md): the two text-only adversarial v1 stages on the t0.0 pools (image verified-v1-n10, text verified-v1-n3) were re-run on candidate sets rebuilt from the E71-recovered passes (889 and 1,319 candidates) into the '-recovery-2026-09-08' directories registered here as inventory rows beside the originals, which stay as the pre-recovery record. No condition cites either. Comparison: reports/recovery-consistency-audit-2026-09-08.md \u00a7 6.1. | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable. The ten N1 baseline conditions that name their pool by relative path-string, and the verifier-stage selection bands (each a real directory under verified/), all carry source_run 'pv-diag-384'. The same band names are registered with source_run 'pv-diag-384' from the verifier-robustness run, which settles pool ownership independently. No metric, eval or detection changed. | Corrected 2026-10-07 (stale register notes, PI-approved): 'No condition cites either' in the verifier-stage refresh entry above is out of date for the text stage. Since 2026-09-12, flash-high-text-n5-text-t0.0-verified-v1-n3-recovery-2026-09-08 is read by two conditions of this run: pv-high-text-t0.0-n3-recovery-2026-09-08-opmax (registered at 5d860ede3; PI rulings B2 and R4, planning/k-ladder-review-2026-09-11.md section 4) and its board cell pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b (added at 7ea38de6e); reviewed binding current-vintage-pv-high-text-t0.0-n3-recovery in results/manipulation-gate-bindings.json. The image stage flash-high-image-n5-image-t0.0-verified-v1-n10-recovery-2026-09-08 is still cited by no condition.",
    "proposer_pools": {
     "flash-high-image-n5-image-t0.0": {
      "modality": "image",
@@ -4377,7 +4377,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-checklist-text",
-      "instruction_file": "verify_checklist-text.md",
+      "instruction_file": "verify_checklist.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4385,7 +4385,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-checklist-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-checklist-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8639) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8639) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-checklist-text): verifier_config.instruction_file read 'verify_checklist-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_checklist.md' with configuration.version 'verify_checklist-text' and example_count 0, so the field now reads 'verify_checklist.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4486,7 +4486,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-adversarial-text",
-      "instruction_file": "verify_adversarial-text.md",
+      "instruction_file": "verify_adversarial.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4494,7 +4494,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-adversarial-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-adversarial-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8603) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8603) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-adversarial-text): verifier_config.instruction_file read 'verify_adversarial-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_adversarial.md' with configuration.version 'verify_adversarial-text' and example_count 0, so the field now reads 'verify_adversarial.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4514,7 +4514,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-brief-text",
-      "instruction_file": "verify_brief-text.md",
+      "instruction_file": "verify_brief.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4522,7 +4522,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-text-brief-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-text-brief-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8519) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-text-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-text-n5-text-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 4, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.8519) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-text-brief-text): verifier_config.instruction_file read 'verify_brief-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_brief.md' with configuration.version 'verify_brief-text' and example_count 0, so the field now reads 'verify_brief.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 3736,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4679,7 +4679,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-checklist-text",
-      "instruction_file": "verify_checklist-text.md",
+      "instruction_file": "verify_checklist.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4687,7 +4687,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-checklist-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-checklist-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7852) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-checklist-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-checklist-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7852) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-checklist-text): verifier_config.instruction_file read 'verify_checklist-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_checklist.md' with configuration.version 'verify_checklist-text' and example_count 0, so the field now reads 'verify_checklist.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4790,7 +4790,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-brief-text",
-      "instruction_file": "verify_brief-text.md",
+      "instruction_file": "verify_brief.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4798,7 +4798,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-brief-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-brief-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7782) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-brief-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-brief-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7782) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-brief-text): verifier_config.instruction_file read 'verify_brief-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_brief.md' with configuration.version 'verify_brief-text' and example_count 0, so the field now reads 'verify_brief.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -4899,7 +4899,7 @@
      "prob_threshold": 0.15,
      "verifier_config": {
       "variant": "session-78-adversarial-text",
-      "instruction_file": "verify_adversarial-text.md",
+      "instruction_file": "verify_adversarial.md",
       "model": "gemini-3-flash-preview",
       "thinking_level": "minimal",
       "temperature": 0.0,
@@ -4907,7 +4907,7 @@
      },
      "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__session-78-image-adversarial-text-opmax/evaluation.json",
      "detections": "archive/superseded-leaderboards/leaderboard/era2/pv-materialised/session-78-image-adversarial-text.geojson",
-     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7718) is the waived opmax/g2 evaluation.",
+     "_note": "IN-SAMPLE OPTIMUM (E56 class): the archived per-architecture Era-2 PV board's sweep-optimal cell session-78-image-adversarial-text (archived at 005e6c71, retired instrument build_tiered_leaderboard.py; archive/superseded-leaderboards/leaderboard/per-architecture/era2/pv/leaderboard_tiers_20m.json; materialised from stage flash-high-image-n5-image-t0.7-session-78-matrix-verified-adversarial-text at the F1@20-argmax (vote_t 3, prob_t 0.15) of its sweep on the evaluation set). Registered 2026-09-10 for the GS Era-2 board's symmetry fix (planning/gs-era2-verified-board-2026-09-08.md, changelog 2026-09-10 later): the Gemini 3 family at its sweep-optimal level, beside the 3.7 / 3.8 screen cells which are sweep-best points too. The row's evaluation is the board-frame score (era2-b-487); its Era-2-frame reproduction of the archived F1 (0.7718) is the waived opmax/g2 evaluation. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding s78-image-adversarial-text): verifier_config.instruction_file read 'verify_adversarial-text.md', a file that does not exist in prompts/system-instructions/. Both legs' run.meta.json for the stage record instruction_file 'verify_adversarial.md' with configuration.version 'verify_adversarial-text' and example_count 0, so the field now reads 'verify_adversarial.md'; verifier_config.variant keeps the text-only configuration distinct from the image one.",
      "n_candidates": 2017,
      "scope_override": {
       "test_set_id": "era2-b-487",
@@ -9747,7 +9747,7 @@
    ]
   },
   "verifier-t-pilot": {
-   "_note": "Batch E (tractable part). H2 verifier-TEMPERATURE pilot at era-2-487 (exploratory, revisits Phase 3d; Obs 286/287). 3 verified conditions = verifier T=0.0 / 0.5 / 1.0 at the chosen vote4 / prob0.20 operating point, scored 14-buffer+MCC. E55/GAP-10: the swept temperature lives in configuration.temperature_effective (cfg.temperature reads 0.0); the verifier_config.temperature here is the EFFECTIVE value. Condition labels are slug-safe (verified-t0-0 etc.); the real cell dirs are T0.0/T0.5/T1.0. T0.5/T1.0 are local dir-form verifier passes (slug keys t0-5/t1-0 -> real paths T0.5/T1.0); the T0.0 verifier baseline has NO local meta and reuses gold-standard-v2's verified-v1. proposer_pools EMPTY: the proposer is cross-run from gs-v2 (detect_brief-text, 5-pass consensus 4of5); conditions reference it by string -> benign pool-unresolved WARN. CAVEATS (run-facts flag): self-eval-bias (GT partly built from T=0.0 verified output); the T0.0 baseline is gs-v2's IMAGE verifier whereas T0.5/T1.0 use the text verifier (verify_adversarial-text) -> temperature/modality partly confounded; interpret per Obs 286/287. The verifier prob sweep (prob0.05..0.50) + other vote points collapse to vote4/prob0.20 per Q2 -> deferred _ignored_evals close-out sweep.",
+   "_note": "Batch E (tractable part). H2 verifier-TEMPERATURE pilot at era-2-487 (exploratory, revisits Phase 3d; Obs 286/287). 3 verified conditions = verifier T=0.0 / 0.5 / 1.0 at the chosen vote4 / prob0.20 operating point, scored 14-buffer+MCC. E55/GAP-10: the swept temperature lives in configuration.temperature_effective (cfg.temperature reads 0.0); the verifier_config.temperature here is the EFFECTIVE value. Condition labels are slug-safe (verified-t0-0 etc.); the real cell dirs are T0.0/T0.5/T1.0. T0.5/T1.0 are local dir-form verifier passes (slug keys t0-5/t1-0 -> real paths T0.5/T1.0); the T0.0 verifier baseline has NO local meta and reuses gold-standard-v2's verified-v1. proposer_pools EMPTY: the proposer is cross-run from gs-v2 (detect_brief-text, 5-pass consensus 4of5); conditions reference it by string -> benign pool-unresolved WARN. CAVEATS (run-facts flag): self-eval-bias (GT partly built from T=0.0 verified output); the T0.0 baseline is gs-v2's IMAGE verifier whereas T0.5/T1.0 use the text verifier (verify_adversarial-text) -> temperature/modality partly confounded; interpret per Obs 286/287. The verifier prob sweep (prob0.05..0.50) + other vote points collapse to vote4/prob0.20 per Q2 -> deferred _ignored_evals close-out sweep. | Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding vtpilot-t0-0 in results/manipulation-gate-bindings.json): the CAVEATS clause above is wrong on modality. The T0.0 baseline, gold-standard-v2's verified-v1, ran the TEXT verifier: its run.meta.json records configuration.version verify_adversarial-text, instruction_file verify_adversarial.md and example_count 0, in both the request leg (started 2026-04-10, as committed at a01858e53; 1,069,824 input tokens = 597 x 1,792) and the 2026-05-03 cleanup leg. T0.5 and T1.0 record the same version, instruction file and example_count (1,087,744 input tokens = 607 x 1,792 each). The three arms share one verifier configuration except temperature, so temperature is NOT confounded with modality. (They do differ in coverage: T0.0's probabilities held 597 results when its product was materialised, T0.5 and T1.0 hold 607.) The self-eval-bias caveat stands. gold-standard-v2's own _note (AMENDED 2026-10-05, tracker C-18) relabels verified-v1 text.",
    "proposer_pools": {},
    "verifier_passes": {
     "t0-5": {
@@ -12259,7 +12259,7 @@
    ]
   },
   "pv-diag-256": {
-   "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable \u2014 source_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into _ignored_evals with reasons. No metric, eval or detection changed.",
+   "_note": "256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -> _ignored_evals. Proposer passes were NOT materialised as run_* dirs (only consensus + crops), so proposer_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 < 512 < 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable \u2014 source_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into _ignored_evals with reasons. No metric, eval or detection changed. | Corrected 2026-10-07 (stale register notes, PI-approved; reviewed bindings pv-diag-256-text-baseline and pv-diag-256-text-5of5-union in results/manipulation-gate-bindings.json): 'Proposer passes were NOT materialised as run_* dirs' above is wrong. They were materialised, and they are tracked with their metas under archive/outputs-non-production-tile-sizes/, where 276e4ca80 (2026-04-16) archived them from outputs/h11/pv-diag-256/: the N=1 T=0.0 baseline pass at text-baseline/text-t0.0/run_1 and the five N=5 T=0.7 passes at text-n5/text-t0.7/run_1..run_5 (detect_brief-text, gemini-3-flash, MINIMAL, 1,032 tiles each). consensus/text-baseline.geojson is byte-identical to the baseline pass's detections (sha256 bf44bc7b11e3...), and a read-only reproduction from the five T=0.7 passes gives the feature counts of text-1of5..text-5of5 and the coordinates of text-5of5 exactly. proposer_pools stays empty only because no registered pool spec reaches archive/; registering one is a separate decision. No metric, eval or detection changed.",
    "proposer_pools": {},
    "verifier_passes": {
     "verified-adv-text-consensus-5of5": {
@@ -12281,7 +12281,7 @@
      "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-baseline/evaluation.json",
      "detections": "outputs/h11/pv-diag-256/consensus/text-baseline.geojson",
      "source_run": "pv-diag-256",
-     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note"
+     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note. Corrected 2026-10-07: the passes were materialised as run_* dirs; they are tracked, with their metas, under archive/outputs-non-production-tile-sizes/ (text-baseline/text-t0.0/run_1; text-n5/text-t0.7/run_1..run_5), archived there by 276e4ca80. source_run pv-diag-256 is unchanged; see the run's _note."
     },
     {
      "label": "text-consensus-5of5",
@@ -12295,7 +12295,7 @@
      "eval_path": "results/rescore-2026-06-08/pv-diag-256/text-5of5/evaluation.json",
      "detections": "outputs/h11/pv-diag-256/consensus/text-5of5.geojson",
      "source_run": "pv-diag-256",
-     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note"
+     "_source_run_basis": "proposer passes not materialised as run_* dirs; only outputs/h11/pv-diag-256/consensus/ exists \u2014 stated in the run's _note. Corrected 2026-10-07: the passes were materialised as run_* dirs; they are tracked, with their metas, under archive/outputs-non-production-tile-sizes/ (text-baseline/text-t0.0/run_1; text-n5/text-t0.7/run_1..run_5), archived there by 276e4ca80. source_run pv-diag-256 is unchanged; see the run's _note."
     },
     {
      "label": "verified-adv-text-consensus-5of5",
@@ -13764,7 +13764,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n1): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k1/probabilities.json over union_k1.geojson (register stage g384_ov128-union-k1-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     },
     {
      "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
@@ -13783,7 +13783,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n3): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k3/probabilities.json over union_k3.geojson (register stage g384_ov128-union-k3-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     },
     {
      "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
@@ -13802,7 +13802,7 @@
      },
      "eval_path": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/eval/evaluation.json",
      "detections": "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/detections.geojson",
-     "_note": "Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union."
+     "_note": "Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n5): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384_ov128/verify_k5/probabilities.json over union_k5.geojson (register stage g384_ov128-union-k5-verify; scripts/register_pass1_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one."
     }
    ],
    "_ignored_evals": [

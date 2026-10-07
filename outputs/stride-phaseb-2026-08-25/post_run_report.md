@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — stride-phaseb-2026-08-25
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3b537582b`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/stride-phaseb-2026-08-25` · **Registry status**: active · **Purpose**: Stride programme Phase B (post-hoc, E41-class): four iso-stride geometry cells (512/34.4, 384/33.3, 256/25, 512/62.5) at K=10, one configuration, testing whether geometry is a plateau or a winner and where the interior stride optimum sits. Includes the union-k10 verifications and the winner-ladder exact re-verifications (k1/k3/k5).
 
@@ -149,11 +149,11 @@ Grouped by identical text: a caveat written once for a family of sibling cells i
 - `g384-ov128-k10-verified-p0.15-k8`
   Stride-programme verified best point (13-cell board member, F1@20 0.8982). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union.
 - `g384-ov128-ladder-n1-verified-p0.15-k1`
-  Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union.
+  Winner-ladder exact rung (first-1 passes, exact re-verification; F1@20 0.8677, union 1290). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n1): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384\_ov128/verify\_k1/probabilities.json over union\_k1.geojson (register stage g384\_ov128-union-k1-verify; scripts/register\_pass1\_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one.
 - `g384-ov128-ladder-n3-verified-p0.15-k3`
-  Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union.
+  Winner-ladder exact rung (first-3 passes, exact re-verification; F1@20 0.8911, union 1700). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n3): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384\_ov128/verify\_k3/probabilities.json over union\_k3.geojson (register stage g384\_ov128-union-k3-verify; scripts/register\_pass1\_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one.
 - `g384-ov128-ladder-n5-verified-p0.15-k4`
-  Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union.
+  Winner-ladder exact rung (first-5 passes, exact re-verification; F1@20 0.8856, union 1968). Carry-forward verifier (verify\_adversarial-text, T=0.0, MINIMAL, n=1) over the full K=10 union. Corrected 2026-10-07 (stale register notes, PI-approved; reviewed binding stride-g384ov128-ladder-n5): 'over the full K=10 union' is wrong for this rung. It read its own exact re-verification, verifier/g384\_ov128/verify\_k5/probabilities.json over union\_k5.geojson (register stage g384\_ov128-union-k5-verify; scripts/register\_pass1\_materialise.py rung()), not the K=10 union's verify stage. The verifier configuration is the same carry-forward one.
 
 ### 5.3 Decomposition note
 
@@ -234,7 +234,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3b537582b` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
