@@ -253,9 +253,12 @@ PASS_ANCHORS: dict[str, str] = {
 #: Cells whose ``source_tile`` vocabulary does not match the scoring frame's
 #: tile names have a MEANINGLESS tile-MCC, because
 #: ``lib_advanced_metrics.calculate_tile_classification`` matches detections to
-#: tiles by that string rather than geometrically. Their F1 is unaffected (point
-#: matching is geometric). This file records the per-cell verdict; any cell that
-#: is not ``MATCH`` has its tile-MCC withheld rather than printed.
+#: tiles by that string rather than geometrically. Their F1 is unaffected BY THE
+#: VOCABULARY (point matching is geometric) — though until ruling D50 it was
+#: affected by the separate per-sheet detection SCOPE, which kept out-of-frame
+#: detections as false positives (``reports/frames-blast-radius-2026-10-07.md``
+#: § 5.1). This file records the per-cell verdict; any cell that is not
+#: ``MATCH`` has its tile-MCC withheld rather than printed.
 TILE_VOCAB_JSON = PHASE2 / "tile-vocabulary-match.json"
 
 

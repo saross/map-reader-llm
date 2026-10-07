@@ -1192,7 +1192,15 @@ def parse_tile_list(value: Any) -> list[str]:
     if isinstance(value, float) and value != value:  # NaN
         return []
     if isinstance(value, (list, tuple, np.ndarray)):
-        return [str(v) for v in value if v is not None and str(v)]
+        # Each element is parsed as text too: reading a GeoJSON whose
+        # property is the STRING repr of a NumPy array (tier E's materialised
+        # cells) returns a one-element array holding that whole repr, which
+        # must expand to its names. A plain tile name parses to itself.
+        names: list[str] = []
+        for v in value:
+            if v is not None and str(v):
+                names.extend(_parse_tile_list_text(str(v)))
+        return names
     return list(_parse_tile_list_text(str(value)))
 
 

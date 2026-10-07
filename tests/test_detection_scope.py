@@ -27,6 +27,7 @@ overlap by 10 m):
 
 from __future__ import annotations
 
+import json
 import sys
 from pathlib import Path
 
@@ -191,6 +192,25 @@ def test_a_cluster_seen_on_both_sheets_is_scored_on_its_first_origin(frame, refs
     assert (p, round(r, 4)) == (1.0, 0.3333)
     names, _diag = lam.assign_primary_tiles_on_origin_sheet(d, frame)
     assert names == ["A_x100_y0.png"]
+
+
+def test_a_repr_origin_survives_a_geojson_round_trip(frame, refs, tmp_path):
+    """Tier E's case end to end: the repr STRING property, written and read back.
+
+    geopandas returns such a property as a one-element array holding the
+    whole repr; the origin must still be parsed out of it.
+    """
+    path = tmp_path / "cell.geojson"
+    path.write_text(json.dumps({"type": "FeatureCollection", "features": [{
+        "type": "Feature", "geometry": {"type": "Point", "coordinates": [196, 50]},
+        "properties": {"source_tile": "B_x0_y0.png",
+                       "source_tiles": "['A_x100_y0.png' 'A_x0_y0.png'\n 'B_x0_y0.png']"},
+    }]}))
+    d = gpd.read_file(path).set_crs(CRS, allow_override=True)
+    assert lam.parse_tile_list(d["source_tiles"].iloc[0])[0] == "A_x100_y0.png"
+    scope = lam.scope_detections_to_frame(d, frame)
+    assert scope.diagnostics["n_origin_restored"] == 1
+    assert list(scope.sheets) == ["A"]
 
 
 def test_origin_naming_no_frame_sheet_falls_back_to_source_tile(frame):
