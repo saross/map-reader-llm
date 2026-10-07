@@ -38,6 +38,14 @@ replaces it.
   inputs. Small follow-ups in its "Other flags" (two unlisted pv-diag
   evaluations; the uplift supplement's missing pin column; teach the next
   corpus-wide reproduction check to read the pins).
+- [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
+  (`gemini3-image-55map-2026-09-16`, `verify_k1_arm2`, `verify_k3_arm2`,
+  `verify_k5_arm2`: an unescaped quote inside a string; the originals'
+  real-time path would have retried them), plus two repairable rows (0.0
+  booked where the response says 0.2 and 0.05). Found by the Run B Stage 2
+  `repair` scan (`planning/modality-bridge-2026-10-07-stage2.md`). PI
+  decision: re-verify the seven, and whether the batch parser should repair
+  as the real-time path does (re-booking would move committed rows).
 - [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
   temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
   §§ 7, 8.5).
