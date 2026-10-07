@@ -1,9 +1,24 @@
 # Run B Stage 2: unions, crops and verifier legs — commands, gates, validation
 
-> **Last revised**: 2026-10-08 (the audit re-check's fixes R1–R4, and the
-> F-cal finding; Session 163). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-07 (the Gemini 3 legs launched; Session 163). See
+> [§ Changelog](#changelog) for revision history.
 
-**Status: READY, NOT LAUNCHED.** Everything Stage 2 needs that can be
+**Status, 2026-10-07 18:45 UTC: the four Gemini 3 legs LAUNCHED; the 3.7
+legs wait for their Stage 1 arms.** Basis: the PI's overnight delegation of
+2026-10-07, "please do launch any runs that pass checks" (D52), which this
+session reads as the § 7 item 9 go for legs that pass every other item; the
+costs sit inside Run B's approved total (D49, D52). Sequencing, a deliberate
+per-arm application of § 7: item 1 (Stage 1 complete) was met per arm. The
+four Gemini 3 arms landed to exact coverage on 2026-10-07 and were
+committed (`92b151058`) while the 3.7 arms were still running, so their
+verifier legs run on the same UTC day as their proposer passes. Items 2–8
+passed for them: `c3864092f` in HEAD; `validate-chain` four EQUAL;
+`anchor-gate` six cells and three gaps OK; `prepare` AGREES on all four
+(unions 3,258 / 3,456 / 3,179 / 3,085); `estimate` inside every band
+(US$8.88–9.21 for the four); `rehearse` 0 clients, signature `3b48d719…`;
+File API headroom is enforced by `verify`'s own pre-upload preflight.
+
+**Earlier status: READY, NOT LAUNCHED.** Everything Stage 2 needs that can be
 built and checked without an Application Programming Interface (API) call is
 built and checked. The pre-launch audit
 (`reports/s163-agent-records/run-b-stage2-audit.md`, `d76be2814`) returned
@@ -797,6 +812,12 @@ Stage 2's tier-1 tests now number 94: union 25, harness 7, anchors 12,
 launcher 17 and checks 33.
 
 ## Changelog
+
+### 2026-10-07 — The Gemini 3 legs launched (Session 163)
+
+The four Gemini 3 verifier legs launched under the PI's overnight delegation
+(D52) after § 7 items 1–8 passed per arm; status block above. The 3.7 legs
+follow when their Stage 1 arms land.
 
 ### 2026-10-08 — The re-check's fixes (Session 163)
 
