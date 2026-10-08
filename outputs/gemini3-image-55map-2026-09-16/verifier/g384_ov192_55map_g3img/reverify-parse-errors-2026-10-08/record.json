@@ -1,0 +1,633 @@
+{
+ "script": "scripts/reverify_unparseable_rows.py book",
+ "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+ "booked_at": "2026-10-08T11:00:41.914664+00:00",
+ "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+ "job_state": "JOB_STATE_SUCCEEDED",
+ "model": "gemini-3.7-flash",
+ "tier": "batch",
+ "priced_at": "2026-10-08",
+ "batch_results_sha256": "48cd5603ca407bcbe10e5a0e42fb576d81c0d41207ccea487557fa944ec2ed04",
+ "n_rows": 7,
+ "n_booked": 7,
+ "n_unparseable_again": 0,
+ "total_cost_usd": 0.007672,
+ "estimate_usd": 0.007809,
+ "rows": [
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2",
+   "key": "candidate_14666",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 118 (char 235)",
+   "original_response_text": "{\n    \"best_alternative\": \"Vegetation symbol or well/spring circle among contour lines and land-cover boundary dots\",\n    \"alternative_evidence\": \"The centre contains standard topographic elements including meadow/grass tick marks ('\" \"'), a dotted vegetation boundary around a green patch, and a small open circle denoting a well or spring. There is no trace of outward-radiating rays or a hachured mound symbol.\",\n    \"reasoning\": \"The features at the centre are standard map symbology (vegetation, contour line, well/small circle) with completely absent burial mound sunburst hachures.\",\n    \"mound_probability\": 0.01\n}",
+   "new_response_text": "{\n  \"best_alternative\": \"A small circular topographic symbol (such as a spring, well, or sinkhole) or vegetation marking\",\n  \"alternative_evidence\": \"The feature near the center is a tiny hollow grey circle situated between contour lines, accompanied by meadow/grass symbol tick marks and dotted vegetation boundaries. There are no outward-radiating hachures or sunburst rays.\",\n  \"reasoning\": \"A burial mound requires outward-radiating rays indicating an elevated relief feature. This symbol lacks any radiating hachures and is simply an isolated small point symbol/hollow ring among terrain markings.\",\n  \"mound_probability\": 0.05\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 143,
+    "totalTokenCount": 2036,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 101,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.001129,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000458,
+    "total_cost_usd": 0.001129,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.000915,
+    "list_total_cost_usd": 0.002259,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 143,
+     "thinking": 101
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 101,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.05,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.05,
+    "reasoning": "A burial mound requires outward-radiating rays indicating an elevated relief feature. This symbol lacks any radiating hachures and is simply an isolated small point symbol/hollow ring among terrain markings.",
+    "best_alternative": "A small circular topographic symbol (such as a spring, well, or sinkhole) or vegetation marking",
+    "alternative_evidence": "The feature near the center is a tiny hollow grey circle situated between contour lines, accompanied by meadow/grass symbol tick marks and dotted vegetation boundaries. There are no outward-radiating hachures or sunburst rays."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_24301",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 155 (char 252)",
+   "original_response_text": "{\n    \"best_alternative\": \"Natural shoreline / terrain contour with text and vegetation symbols\",\n    \"alternative_evidence\": \"The center contains blue elevation text '166,6', brown contour lines, a stream/lake shoreline, and small vegetation marks ('\"'), but no central mound symbol with outward radiating sunburst rays.\",\n    \"reasoning\": \"There is no mound symbol (kurgan) present at the centre of this crop; the detector picked up overlapping contours, stream bends, or text characters.\",\n    \"mound_probability\": 0.0\n}",
+   "new_response_text": "{\n    \"best_alternative\": \"Vegetation symbol, cliff/embankment hachures, or contour ticks near the shoreline\",\n    \"alternative_evidence\": \"The center contains two tiny vertical parallel strokes next to a contour/shoreline near water, adjacent to the elevation text '166,6'. There is completely no circular sunburst pattern, no radial hachures, and no central dot, triangle, or mound circle.\",\n    \"reasoning\": \"The feature completely lacks any diagnostic attributes of a kurgan or burial mound. It appears to be minor shoreline, vegetation, or relief detailing.\",\n    \"mound_probability\": 0.0\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 142,
+    "totalTokenCount": 2088,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     },
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     }
+    ],
+    "thoughtsTokenCount": 154,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.001227,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000555,
+    "total_cost_usd": 0.001227,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.00111,
+    "list_total_cost_usd": 0.002454,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 142,
+     "thinking": 154
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 154,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.0,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.0,
+    "reasoning": "The feature completely lacks any diagnostic attributes of a kurgan or burial mound. It appears to be minor shoreline, vegetation, or relief detailing.",
+    "best_alternative": "Vegetation symbol, cliff/embankment hachures, or contour ticks near the shoreline",
+    "alternative_evidence": "The center contains two tiny vertical parallel strokes next to a contour/shoreline near water, adjacent to the elevation text '166,6'. There is completely no circular sunburst pattern, no radial hachures, and no central dot, triangle, or mound circle."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_25096",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 202 (char 310)",
+   "original_response_text": "{\n    \"best_alternative\": \"Karst sinkhole, small depression, or isolated tree marker along contour/terrain\",\n    \"alternative_evidence\": \"The symbol at the centre is a tiny hollow black circle without any outward-radiating rays or sunburst hachures. It is surrounded by contour lines, vegetation tick marks ('\"'), and boundary dots.\",\n    \"reasoning\": \"Burial mounds are characterized by distinct radial hachures forming a sunburst/gear pattern around a central feature. This is simply a small plain circle marker with zero radiating lines.\",\n    \"mound_probability\": 0.01\n}",
+   "new_response_text": "{\n    \"best_alternative\": \"A small isolated circular depression symbol or solitary tree / vegetation symbol on a contour line\",\n    \"alternative_evidence\": \"The feature at the exact center is a small black hollow circle intersecting an orange-brown contour line, alongside scattered vegetation symbols (double tick marks / pasture / scrub). There are absolutely no outward radiating hachures or rays forming a mound sunburst.\",\n    \"reasoning\": \"The symbol lacks radiating hachures/rays entirely. It is a simple hollow circle, possibly representing a karst sinkhole/depression without hachures, a solitary tree symbol, or another topographic point marker.\",\n    \"mound_probability\": 0.01\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 148,
+    "totalTokenCount": 1940,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     },
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     }
+    ],
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.00095,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000278,
+    "total_cost_usd": 0.00095,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.000555,
+    "list_total_cost_usd": 0.001899,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 148,
+     "thinking": 0
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 0,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.01,
+    "reasoning": "The symbol lacks radiating hachures/rays entirely. It is a simple hollow circle, possibly representing a karst sinkhole/depression without hachures, a solitary tree symbol, or another topographic point marker.",
+    "best_alternative": "A small isolated circular depression symbol or solitary tree / vegetation symbol on a contour line",
+    "alternative_evidence": "The feature at the exact center is a small black hollow circle intersecting an orange-brown contour line, alongside scattered vegetation symbols (double tick marks / pasture / scrub). There are absolutely no outward radiating hachures or rays forming a mound sunburst."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_35486",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 113 (char 216)",
+   "original_response_text": "{\n    \"best_alternative\": \"Contour lines with vegetation or pit/tree circle symbols along a grid line\",\n    \"alternative_evidence\": \"The center contains wavy brown contour lines, standard vegetation/scrub markers ('\"'), and small hollow circle symbols. There is no central point or shape with outward-radiating sunburst rays.\",\n    \"reasoning\": \"There is completely no mound or sunburst feature in the center; the area consists solely of standard terrain contours and vegetation markers.\",\n    \"mound_probability\": 0.01\n}",
+   "new_response_text": "{\n    \"best_alternative\": \"Contour lines and vegetation symbols\",\n    \"alternative_evidence\": \"The centre contains continuous undulating brown contour lines, standard meadow/grassland double-tick vegetation markers, and small hollow circular symbols (pits/sinkholes or solitary trees) lower down, but completely lacks any radiating sunburst/gear pattern of a kurgan.\",\n    \"reasoning\": \"There is no mound symbol present at the center. The lines are ordinary topographic contours intersected by standard cartographic land cover markers.\",\n    \"mound_probability\": 0.01\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 123,
+    "totalTokenCount": 1987,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 72,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.001038,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000366,
+    "total_cost_usd": 0.001038,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.000731,
+    "list_total_cost_usd": 0.002075,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 123,
+     "thinking": 72
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 72,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.01,
+    "reasoning": "There is no mound symbol present at the center. The lines are ordinary topographic contours intersected by standard cartographic land cover markers.",
+    "best_alternative": "Contour lines and vegetation symbols",
+    "alternative_evidence": "The centre contains continuous undulating brown contour lines, standard meadow/grassland double-tick vegetation markers, and small hollow circular symbols (pits/sinkholes or solitary trees) lower down, but completely lacks any radiating sunburst/gear pattern of a kurgan."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_21916",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 96 (char 184)",
+   "original_response_text": "{\n    \"best_alternative\": \"Vegetation symbols, dotted boundary line, and contour loops\",\n    \"alternative_evidence\": \"The center contains standard topographic vegetation tick marks ('\"'\"'11'\"'\"'), dotted boundary/clearing lines, and a small closed contour or spot circle without any radiating hachures or sunburst rays.\",\n    \"reasoning\": \"There is no sunburst pattern or radiating rays typical of a burial mound (kurgan). The marks present are clearly standard vegetation indicators and contour lines.\",\n    \"mound_probability\": 0.05\n}",
+   "new_response_text": "{\n  \"best_alternative\": \"Vegetation symbol or spot elevation / contour numeral artefact\",\n  \"alternative_evidence\": \"The center contains standard topographic vegetation markings (double tick marks for grass/scrub), dotted boundary/feature lines, and faint contour numbers or a tiny circle with no radiating rays or hachures whatsoever.\",\n  \"reasoning\": \"There is completely no sunburst or radiating ray pattern characteristic of a burial mound (kurgan). The marks in the center are typical Soviet topographic vegetation symbols, contour lines, and boundary dots.\",\n  \"mound_probability\": 0.01\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 129,
+    "totalTokenCount": 2096,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 175,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.001242,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.00057,
+    "total_cost_usd": 0.001242,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.00114,
+    "list_total_cost_usd": 0.002484,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 129,
+     "thinking": 175
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 175,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.01,
+    "reasoning": "There is completely no sunburst or radiating ray pattern characteristic of a burial mound (kurgan). The marks in the center are typical Soviet topographic vegetation symbols, contour lines, and boundary dots.",
+    "best_alternative": "Vegetation symbol or spot elevation / contour numeral artefact",
+    "alternative_evidence": "The center contains standard topographic vegetation markings (double tick marks for grass/scrub), dotted boundary/feature lines, and faint contour numbers or a tiny circle with no radiating rays or hachures whatsoever."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_26911",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 179 (char 253)",
+   "original_response_text": "{\n  \"best_alternative\": \"Vegetation/land-use boundary with grass symbols\",\n  \"alternative_evidence\": \"The center of the crop contains brown contour lines, a series of black dots forming boundary markers, and a Soviet grass/pasture vegetation symbol ('\" + \"||\" + \"'). There is no circular ring or outward-radiating sunburst pattern.\",\n  \"reasoning\": \"The features at the center represent topographic contours and standard land-cover dotted boundaries with pasture vegetation symbols, completely lacking any hachured mound structure.\",\n  \"mound_probability\": 0.01\n}",
+   "new_response_text": "{\n  \"best_alternative\": \"Vegetation symbol (grass/sparse brush) amidst terrain dots and contour lines\",\n  \"alternative_evidence\": \"The center features a pair of small vertical parallel ticks (standard Soviet grassland/pasture symbol) encircled loosely by scattered black dots. There is no central circle, triangle, or square, and completely lacks outward-radiating rays or sunburst patterns.\",\n  \"reasoning\": \"The visual pattern consists solely of standard topographical vegetation markings and dotted lines/stippling on contour slopes. There are zero features characteristic of a burial mound.\",\n  \"mound_probability\": 0.01\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 136,
+    "totalTokenCount": 2062,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 134,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.001178,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000506,
+    "total_cost_usd": 0.001178,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.001012,
+    "list_total_cost_usd": 0.002357,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 136,
+     "thinking": 134
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 134,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.01,
+    "reasoning": "The visual pattern consists solely of standard topographical vegetation markings and dotted lines/stippling on contour slopes. There are zero features characteristic of a burial mound.",
+    "best_alternative": "Vegetation symbol (grass/sparse brush) amidst terrain dots and contour lines",
+    "alternative_evidence": "The center features a pair of small vertical parallel ticks (standard Soviet grassland/pasture symbol) encircled loosely by scattered black dots. There is no central circle, triangle, or square, and completely lacks outward-radiating rays or sunburst patterns."
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_35350",
+   "old_probability": 0.0,
+   "old_reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 140 (char 216)",
+   "original_response_text": "{\n    \"best_alternative\": \"Natural terrain features and vegetation symbols\",\n    \"alternative_evidence\": \"The centre contains standard contour lines, a thin stream line, and grassland/shrub vegetation tick marks ('\" + \"||\" + \"') with no circular hachured mound structure or survey marker symbol.\",\n    \"reasoning\": \"There is no mound symbol (kurgan sunburst) present at or near the image centre. The area consists of open terrain lines, standard contour lines, and vegetation marks.\",\n    \"mound_probability\": 0.01\n}",
+   "new_response_text": "{\n  \"best_alternative\": \"Stream line and slope hachure / relief feature\",\n  \"alternative_evidence\": \"The center of the crop contains a blue stream line, a black slope shading/drainage line with tick marks, and contour lines with vegetation grass tick marks ('11'), with no distinct round burial mound symbol with radiating rays.\",\n  \"reasoning\": \"There is completely no kurgan/burial mound symbol at the exact center of this crop; it is simply open terrain with a stream and topographic lines.\",\n  \"mound_probability\": 0.0\n}",
+   "new_finish_reason": "STOP",
+   "usage_metadata": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 126,
+    "totalTokenCount": 1918,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     },
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     }
+    ],
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "cost_usd": 0.000908,
+   "cost": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.000672,
+    "cached_input_cost_usd": 0.0,
+    "output_cost_usd": 0.000236,
+    "total_cost_usd": 0.000908,
+    "list_input_cost_usd": 0.001344,
+    "list_output_cost_usd": 0.000472,
+    "list_total_cost_usd": 0.001816,
+    "tokens_billed": {
+     "input_fresh": 1792,
+     "input_cached": 0,
+     "output": 126,
+     "thinking": 0
+    },
+    "pricing_used": {
+     "model": "gemini-3.7-flash",
+     "model_recorded": "gemini-3.7-flash",
+     "tier": "batch",
+     "tier_source": "batch-api (reverify_unparseable_rows.py lodge)",
+     "priced_at": "2026-10-08",
+     "input_per_1m": 0.375,
+     "cached_input_per_1m": 0.0375,
+     "output_per_1m": 1.875,
+     "thinking_tokens_billed_as_output": 0,
+     "discount": 0.5,
+     "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+     "rate_card": {
+      "path": "data/pricing/gemini-rate-card.json",
+      "version": "2026-09-21.2",
+      "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+      "row_valid_from": "2026-08-01",
+      "row_valid_to": "2026-12-31",
+      "invoice_confirmed": true
+     }
+    }
+   },
+   "new_probability": 0.0,
+   "parse_method": "json.loads",
+   "booked": true,
+   "verdict": {
+    "mound_probability": 0.0,
+    "reasoning": "There is completely no kurgan/burial mound symbol at the exact center of this crop; it is simply open terrain with a stream and topographic lines.",
+    "best_alternative": "Stream line and slope hachure / relief feature",
+    "alternative_evidence": "The center of the crop contains a blue stream line, a black slope shading/drainage line with tick marks, and contour lines with vegetation grass tick marks ('11'), with no distinct round burial mound symbol with radiating rays."
+   }
+  }
+ ],
+ "legs": [
+  {
+   "script": "scripts/reverify_unparseable_rows.py book",
+   "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+   "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2",
+   "run_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08",
+   "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+   "model": "gemini-3.7-flash",
+   "tier": "batch",
+   "probabilities_sha256_before": "86dce4c0eee60de224c9c3515682bed25380d8a5ca555d522d0d8d96144abcc7",
+   "probabilities_sha256_after": "584c326478a3934cefa0e41d60a7da73eed43a0316b9500fcb780d89e96aba78",
+   "complete": true,
+   "rows": [
+    {
+     "key": "candidate_14666",
+     "old_probability": 0.0,
+     "new_probability": 0.05,
+     "parse_method": "json.loads",
+     "cost_usd": 0.001129
+    }
+   ],
+   "not_booked": [],
+   "note": "run.meta.json here is still the leg's byte copy; the calls' usage and cost are in the run directory's record.json"
+  },
+  {
+   "script": "scripts/reverify_unparseable_rows.py book",
+   "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+   "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "run_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08",
+   "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+   "model": "gemini-3.7-flash",
+   "tier": "batch",
+   "probabilities_sha256_before": "c79a6c1a9458a731c184ddbd2f6a6b0592e676d217355bb305efd6fad3b5db6e",
+   "probabilities_sha256_after": "75ea48320c014a4bde93794da1ead8c387f964f4635dcad1225b3e1ffdc78bc0",
+   "complete": true,
+   "rows": [
+    {
+     "key": "candidate_24301",
+     "old_probability": 0.0,
+     "new_probability": 0.0,
+     "parse_method": "json.loads",
+     "cost_usd": 0.001227
+    },
+    {
+     "key": "candidate_25096",
+     "old_probability": 0.0,
+     "new_probability": 0.01,
+     "parse_method": "json.loads",
+     "cost_usd": 0.00095
+    },
+    {
+     "key": "candidate_35486",
+     "old_probability": 0.0,
+     "new_probability": 0.01,
+     "parse_method": "json.loads",
+     "cost_usd": 0.001038
+    }
+   ],
+   "not_booked": [],
+   "note": "run.meta.json here is still the leg's byte copy; the calls' usage and cost are in the run directory's record.json"
+  },
+  {
+   "script": "scripts/reverify_unparseable_rows.py book",
+   "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+   "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "run_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08",
+   "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+   "model": "gemini-3.7-flash",
+   "tier": "batch",
+   "probabilities_sha256_before": "d2148ebd8f18d5f2904cbe401cfd4e9161cce4e0a91556320de5127c3bc3dde6",
+   "probabilities_sha256_after": "9e184a59e403364da529620c8386515bd49c36f2d8c4adab3f9133839273668d",
+   "complete": true,
+   "rows": [
+    {
+     "key": "candidate_21916",
+     "old_probability": 0.0,
+     "new_probability": 0.01,
+     "parse_method": "json.loads",
+     "cost_usd": 0.001242
+    },
+    {
+     "key": "candidate_26911",
+     "old_probability": 0.0,
+     "new_probability": 0.01,
+     "parse_method": "json.loads",
+     "cost_usd": 0.001178
+    },
+    {
+     "key": "candidate_35350",
+     "old_probability": 0.0,
+     "new_probability": 0.0,
+     "parse_method": "json.loads",
+     "cost_usd": 0.000908
+    }
+   ],
+   "not_booked": [],
+   "note": "run.meta.json here is still the leg's byte copy; the calls' usage and cost are in the run directory's record.json"
+  }
+ ]
+}

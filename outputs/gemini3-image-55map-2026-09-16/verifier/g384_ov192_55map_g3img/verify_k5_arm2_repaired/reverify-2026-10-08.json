@@ -1,0 +1,37 @@
+{
+ "script": "scripts/reverify_unparseable_rows.py book",
+ "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+ "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+ "run_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08",
+ "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+ "model": "gemini-3.7-flash",
+ "tier": "batch",
+ "probabilities_sha256_before": "d2148ebd8f18d5f2904cbe401cfd4e9161cce4e0a91556320de5127c3bc3dde6",
+ "probabilities_sha256_after": "9e184a59e403364da529620c8386515bd49c36f2d8c4adab3f9133839273668d",
+ "complete": true,
+ "rows": [
+  {
+   "key": "candidate_21916",
+   "old_probability": 0.0,
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "cost_usd": 0.001242
+  },
+  {
+   "key": "candidate_26911",
+   "old_probability": 0.0,
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "cost_usd": 0.001178
+  },
+  {
+   "key": "candidate_35350",
+   "old_probability": 0.0,
+   "new_probability": 0.0,
+   "parse_method": "json.loads",
+   "cost_usd": 0.000908
+  }
+ ],
+ "not_booked": [],
+ "note": "run.meta.json here is still the leg's byte copy; the calls' usage and cost are in the run directory's record.json"
+}

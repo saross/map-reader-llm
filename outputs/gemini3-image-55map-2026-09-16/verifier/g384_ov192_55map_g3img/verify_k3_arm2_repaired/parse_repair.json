@@ -1,0 +1,37 @@
+{
+ "script": "scripts/modality_bridge_stage2_checks.py repair",
+ "method": "lib_batch_api.parse_response_with_repair after Markdown-fence stripping, then lib_verifier._unwrap_verdict_payload: the real-time path's parse (lib_verifier._call_verifier_api)",
+ "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+ "source_probabilities_sha256": "13c6db562f4254ff0e1d5a3c899eae18db478d39bfa7adb920a60b04057ad139",
+ "source_batch_results_sha256": "a41e1770a35881cafb85e31e51a8719fe3db9f551ed2aaed1e3585f0bb5575cb",
+ "n_results": 36389,
+ "n_results_written": 36386,
+ "n_parse_error_rows": 3,
+ "changed": [],
+ "unrecovered": [
+  {
+   "key": "candidate_24301",
+   "why": "repair failed: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 155 (char 252)",
+   "text_sha256": "783440823aa507f0e78d9f5e5e440964aa6a4cd0f077524fbbda3723d583ebf6"
+  },
+  {
+   "key": "candidate_25096",
+   "why": "repair failed: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 202 (char 310)",
+   "text_sha256": "da9b5e4fd30eafdabaf4bac2c3372fbdd1d18b0aaf4131be8429fb7c2ca2135d"
+  },
+  {
+   "key": "candidate_35486",
+   "why": "repair failed: Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 113 (char 216)",
+   "text_sha256": "eb4a08644da0be0074b880b36ec2a500f80ec72d54c901ea3f946e9f9038401e"
+  }
+ ],
+ "run_meta_copied_from": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/run.meta.json",
+ "source_run_meta_sha256": "6d2278712489d9fa8ca4db12b091da4ff797f1d03b35e7d10aca70f6d64965a2",
+ "written": {
+  "probabilities.json": "c79a6c1a9458a731c184ddbd2f6a6b0592e676d217355bb305efd6fad3b5db6e",
+  "run.meta.json": "6d2278712489d9fa8ca4db12b091da4ff797f1d03b35e7d10aca70f6d64965a2"
+ }
+}
