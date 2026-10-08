@@ -73,6 +73,41 @@ replaces it.
   `source_tile` and drops the member list. Harmless today (every
   out-of-frame sweep candidate was seen on one sheet only); a future
   pool over overlapping sheet content could be hit.
+- [x] **D55 Q4 executed** (2026-10-08, merged `c92409f77`): one Batch
+  API job, 7 `gemini-3.7-flash` calls, US$0.007672
+  (`outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08/record.json`);
+  all seven parsed; two rows re-booked. Booked into the legs'
+  `_repaired/` copies only; no committed leg or evaluation changed.
+  Gemini 3 image arm 2: none of 13 cells moves. The 3.7 K = 5 arm 1
+  replicate's two cells would move (F1 0.9135 → 0.9134, MCC 0.7530 →
+  0.7527; drift test (a) tile-MCC +0.000145 → −0.000132, n.s. either
+  way; flips 221 → 220).
+- [ ] **Adopt the Q4 corrections in the D57 (4) re-score**: the 55-map
+  scorers read `verify_k{k}_{arm}` by fixed name, not `_repaired`;
+  point them at the repaired copy where one exists (Stage 2's
+  convention), then update the replicate's citing documents once
+  (list in the Q4 agent's hand-back: replicate findings, the 2×2 tests
+  declaration, the temperature notice, both inheritance findings,
+  tile-presence, D8, the analyses registers).
+- [ ] **Hard-coded repository roots** (`Path("/home/shawn/Code/map-reader-llm")`):
+  `results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py:88`
+  and `…/inheritance-2026-09-20/inheritance_ladder.py:114` made a
+  scratch run write six tracked files in sapphire's shared checkout
+  (content byte-identical; found by the Q4 agent). `git grep` finds
+  five more (`replicate_k5_arm2.py:56`, two
+  `inputs/student-baseline-2023/scripts/` stages, two
+  `reports/*-2026-10-05-scripts/`). Derive the root from `__file__`.
+- [ ] **D57 (3) evidence under cross-vendor review**: branch
+  `d51-ladder-provenance` at `1fc1f72df`
+  (`reports/d51-ladder-provenance-2026-10-08.md`); review request to
+  Astra by agent mail 2026-10-08
+  (`~/agent-mail/claude/outbox/codex/20261008T113959.092914Z-claude-d51-ladder-provenance-review.md`).
+  Gate after: 7 refused, 7 same, 0 undetermined (MINIMAL image T 0.7
+  and T 0.3 newly refused). Clip cost measured: HIGH text T 1.0 −0.0040
+  on K = 3/5/10, MINIMAL image T 0.7 about −0.003, others 0. Open for
+  the PI: partial coverage inside a pool (image T 1.0's gap tile seen
+  by 2 of 10 passes, below every vote threshold) is invisible to a
+  union-area gate.
 - [ ] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
   so the Q4 deltas are not computed across two scorer versions; the
   tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
