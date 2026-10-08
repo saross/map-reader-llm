@@ -9,6 +9,11 @@ have not landed, the launch wrapper's exit capture (``$?`` taken before
 request signatures the launcher enforces are the ones the rehearsal record
 holds. The full refusal and launch-mechanics run against stand-in passes
 is recorded in the Stage 2 card (it needs the original passes and crops).
+
+Run C (2026-10-08) adds replicates (``REP=<n>``): the unset path keeps every
+name; a replicate writes only ``verify_<v>_rep<n>`` and ``-rep<n>`` names,
+refuses an unlanded leg and the build steps, and its rehearsal requires the
+original leg's requests line for line (fail-closed without them).
 """
 
 from __future__ import annotations
@@ -298,3 +303,208 @@ def test_repair_all_goes_on_past_a_leg_it_cannot_finish(tmp_path: Path) -> None:
                 / "verify_g37_repaired" / "probabilities.json")
     assert json.loads(repaired.read_text())["results"]["candidate_00000"][
         "mound_probability"] == 0.3
+
+
+# ---------------------------------------------------------------------------
+# Run C (2026-10-08): replicates, REP=<n>
+# ---------------------------------------------------------------------------
+
+
+def _run_rep(rep: str, *args: str, out: Path) -> subprocess.CompletedProcess:
+    env = dict(os.environ, PY=sys.executable, OUT=str(out), SCRATCH=str(out / "scratch"),
+               REP=rep)
+    return subprocess.run(["bash", str(SCRIPT), *args], capture_output=True, text=True,
+                          cwd=PROJECT_ROOT, env=env, timeout=120)
+
+
+def test_rep_unset_leaves_every_name_unchanged(tmp_path: Path) -> None:
+    script = ('for x in "g37-text g3" "g3-image g3"; do set -- $x; '
+              'echo "$(leg_dir "$1" "$2") $(leg_name "$1" "$2") [$(sfx)]"; done')
+    proc = _sourced(script, tmp_path, _double(tmp_path))
+    assert proc.returncode == 0, proc.stderr
+    lines = proc.stdout.splitlines()
+    assert lines[0].endswith("/g37-text/verifier/detect_brief-text/verify_g3 "
+                             "verify-g37-text-g3 []")
+    assert lines[1].endswith("/verify_g3 verify-g3-image-g3 []")
+    proc = _sourced(script, tmp_path, _double(tmp_path), REP="3")
+    lines = proc.stdout.splitlines()
+    assert lines[0].endswith("/verify_g3_rep3 verify-g37-text-g3-rep3 [-rep3]")
+
+
+def test_rep_plan_sends_each_leg_to_its_replicate_directory(tmp_path: Path) -> None:
+    proc = _run_rep("2", "plan", out=tmp_path)
+    assert proc.returncode == 0, proc.stderr
+    verify = [ln for ln in proc.stdout.splitlines() if "run_pv.py verify" in ln]
+    assert len(verify) == 10
+    seen = set()
+    for ln in verify:
+        arm = re.search(r"--crops-dir \S+/([^/]+)/verifier/", ln).group(1)
+        v = re.search(r"/verify_(g3|g37)_rep2 ", ln).group(1)
+        seen.add(f"{arm}:{v}")
+        # The same crops, config, mode and temperature as the original legs.
+        assert ln.split("--crops-dir ", 1)[1].split()[0].endswith("/crops")
+        assert "--mode batch" in ln and "--temperature 0.0" in ln
+        assert "--verifier-config prompts/configs/verify_adversarial-text.json" in ln
+    assert seen == LEGS
+    # Unset, the original directories (the existing plan test pins the rest).
+    assert not re.search(r"/verify_g37?_rep\d", _run("plan", out=tmp_path).stdout)
+
+
+@pytest.mark.parametrize("rep", ["1", "0", "x", "2a", "-2"])
+def test_rep_must_be_an_integer_of_two_or_more(tmp_path: Path, rep: str) -> None:
+    proc = _run_rep(rep, "plan", out=tmp_path)
+    assert proc.returncode == 2 and f"REFUSED: REP={rep}" in proc.stderr
+
+
+@pytest.mark.parametrize("cmd", [["union", "g37-text"], ["extract", "g37-text"],
+                                 ["prepare", "all"], ["validate-chain"], ["anchor-gate"]])
+def test_rep_refuses_the_build_steps(tmp_path: Path, cmd: list[str]) -> None:
+    proc = _run_rep("2", *cmd, out=tmp_path)
+    assert proc.returncode == 2 and "REP applies to verifier legs" in proc.stderr
+    assert not (tmp_path / "stage2").exists()
+
+
+def test_replicate_launch_and_wait_use_only_their_own_names(tmp_path: Path) -> None:
+    """A replicate never rotates, reads or overwrites the original leg's log or pid."""
+    out = tmp_path / "out"
+    orig = _stale_attempt(out, "verify-g37-text-g3", [
+        "INFO - Submitted batch job 1/1: batches/original-1",
+        "=== 2026-10-07T20:07:37+00:00 EXIT 0"])
+    before = orig.read_text()
+    orig_pid = (out / "stage2" / "pids" / "verify-g37-text-g3.pid").read_text()
+    proc = _sourced("launch_leg g37-text g3 789 && wait_leg g37-text:g3; echo WAIT=$?", out,
+                    _double(tmp_path), REP="2", FAKE_DELAY="1", FAKE_SLEEP="2")
+    assert "WAIT=0" in proc.stdout, proc.stdout + proc.stderr
+    assert "batches/original" not in proc.stdout
+    logs = out / "stage2" / "logs"
+    assert orig.read_text() == before
+    assert sorted(p.name for p in logs.iterdir()) == ["verify-g37-text-g3-rep2.log",
+                                                      "verify-g37-text-g3.log"]
+    rep_log = (logs / "verify-g37-text-g3-rep2.log").read_text()
+    assert "/verify_g3_rep2 " in rep_log
+    assert re.search(r"^=== .* EXIT 0$", rep_log, re.M)
+    assert (out / "stage2" / "pids" / "verify-g37-text-g3-rep2.pid").exists()
+    assert (out / "stage2" / "pids" / "verify-g37-text-g3.pid").read_text() == orig_pid
+
+
+def test_replicate_verify_refuses_a_leg_that_has_not_landed(tmp_path: Path) -> None:
+    _build_record(tmp_path, "g37-text", "detect_brief-text", 5, 789)  # in band
+    proc = _run_rep("2", "verify", "g37-text:g3", out=tmp_path)
+    assert proc.returncode == 1 and "re-verifies a landed leg" in proc.stdout
+    assert not (tmp_path / "stage2" / "logs" / "verify-g37-text-g3-rep2.log").exists()
+    # A replicate that has itself landed is skipped, never re-lodged.
+    rep = tmp_path / "g37-text" / "verifier" / "detect_brief-text" / "verify_g3_rep2"
+    rep.mkdir(parents=True)
+    (rep / "probabilities.json").write_text("{}")
+    proc = _run_rep("2", "verify", "g37-text:g3", out=tmp_path)
+    assert proc.returncode == 0 and "already verified" in proc.stdout
+
+
+def test_replicate_repair_writes_its_own_copy(tmp_path: Path) -> None:
+    leg = _repair_leg_dir(tmp_path, "g37", '{"mound_probability": 0.4}\n}')
+    leg.rename(leg.with_name("verify_g37_rep2"))
+    proc = _run_rep("2", "repair", "g37-text:g37", out=tmp_path)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    vroot = tmp_path / "g37-text" / "verifier" / "detect_brief-text"
+    assert (vroot / "verify_g37_rep2_repaired" / "probabilities.json").exists()
+    assert not (vroot / "verify_g37_repaired").exists()
+
+
+def test_replicate_status_names_the_replicate_legs(tmp_path: Path) -> None:
+    proc = _run_rep("3", "status", out=tmp_path)
+    assert proc.returncode == 0
+    assert "verify-g3-text-g3-rep3" in proc.stdout
+    assert "verify-g3-text-g3 " not in proc.stdout
+
+
+def test_estimate_labels_a_replicate_and_keeps_the_cost(tmp_path: Path) -> None:
+    rep = _run_rep("2", "estimate", out=tmp_path)
+    orig = _run("estimate", out=tmp_path)
+    assert rep.returncode == orig.returncode == 0
+    assert "g37-text:g37 rep2" in rep.stdout and "total, replicate 2" in rep.stdout
+    total = [ln.split("US$")[1] for ln in rep.stdout.splitlines() if ln.startswith("total")]
+    assert total == [ln.split("US$")[1] for ln in orig.stdout.splitlines()
+                     if ln.startswith("total")]
+
+
+# The rehearsal under REP, with the harness and the union check replaced by a
+# double: it must compare the replicate's requests with the original leg's,
+# refuse a difference, fail closed without the original's file, and delete
+# its own scratch request file on every path.
+FAKE_HARNESS_PY = """#!/usr/bin/env bash
+case "${1:-}" in
+  scripts/modality_bridge_union.py) exit 0 ;;
+  scripts/verifier_dryrun_harness.py)
+    rec=""; od=""; prev=""
+    for a in "$@"; do
+      [ "$prev" = --summary-json ] && rec=$a
+      [ "$prev" = --output-dir ] && od=$a
+      prev=$a
+    done
+    mkdir -p "$od" "$(dirname "$rec")"
+    cp "$FAKE_REQ" "$od/verifier_requests.jsonl"
+    printf '{"batch": {"n_lines": 2, "elided_signatures": {"%s": 2},' "$FAKE_SIG" > "$rec"
+    printf ' "full_elided_signatures": {"%s": 2}, "generation_config_keys": {}}}' \\
+      "$FAKE_SIGF" >> "$rec"
+    exit 0 ;;
+esac
+exec "$REAL_PY" "$@"
+"""
+
+
+def _request_line(key: str, temperature: float) -> str:
+    return json.dumps({"key": key, "request": {
+        "contents": [{"role": "user", "parts": [{"text": "x"},
+                                                {"inline_data": {"data": "AAAA"}}]}],
+        "generation_config": {"temperature": temperature}}})
+
+
+def _rehearse_rep(tmp_path: Path, replicate_temp: float,
+                  original: bool = True) -> tuple[subprocess.CompletedProcess, Path]:
+    out = tmp_path / "out"
+    leg = out / "g37-text" / "verifier" / "detect_brief-text" / "verify_g3"
+    leg.mkdir(parents=True)
+    if original:
+        (leg / "verifier_requests.jsonl").write_text(
+            "\n".join(_request_line(f"candidate_0000{i}", 0.0) for i in range(2)) + "\n")
+    fake_req = tmp_path / "replicate.jsonl"
+    fake_req.write_text("\n".join(_request_line(f"candidate_0000{i}", replicate_temp)
+                                  for i in range(2)) + "\n")
+    double = tmp_path / "fakeharness.sh"
+    double.write_text(FAKE_HARNESS_PY)
+    double.chmod(0o755)
+    text = SCRIPT.read_text()
+    sig = re.search(r"^SIG_G3=([0-9a-f]{64})$", text, re.M).group(1)
+    sigf = re.search(r"^SIGF_G3=([0-9a-f]{64})$", text, re.M).group(1)
+    proc = _sourced("check() { return 0; }; provenance() { return 0; }; "
+                    "rehearse g37-text g3; echo RC=$?", out, double, REP="2",
+                    FAKE_REQ=str(fake_req), FAKE_SIG=sig, FAKE_SIGF=sigf)
+    return proc, out
+
+
+def test_replicate_rehearsal_passes_on_identical_requests(tmp_path: Path) -> None:
+    proc, out = _rehearse_rep(tmp_path, 0.0)
+    assert "RC=0" in proc.stdout, proc.stdout + proc.stderr
+    assert "requests IDENTICAL — 2 of 2" in proc.stdout
+    rec = json.loads((out / "stage2" / "checks"
+                      / "request-identity-g37-text-g3-rep2.json").read_text())
+    assert rec["identical"] and rec["differing_fields"] == {}
+    assert (out / "stage2" / "checks" / "rehearse-g37-text-g3-rep2.json").exists()
+    assert not (out / "stage2" / "checks" / "rehearse-g37-text-g3.json").exists()
+    assert not list((out / "scratch").rglob("verifier_requests*.jsonl"))
+
+
+def test_replicate_rehearsal_refuses_a_changed_request(tmp_path: Path) -> None:
+    proc, out = _rehearse_rep(tmp_path, 1.0)
+    assert "RC=1" in proc.stdout and "are not the original leg's" in proc.stdout
+    rec = json.loads((out / "stage2" / "checks"
+                      / "request-identity-g37-text-g3-rep2.json").read_text())
+    assert rec["differing_fields"] == {"request.generation_config.temperature": 2}
+    assert not list((out / "scratch").rglob("verifier_requests*.jsonl"))
+
+
+def test_replicate_rehearsal_fails_closed_without_the_original_requests(
+        tmp_path: Path) -> None:
+    proc, out = _rehearse_rep(tmp_path, 0.0, original=False)
+    assert "RC=1" in proc.stdout and "no request file" in proc.stdout
+    assert not list((out / "scratch").rglob("verifier_requests*.jsonl"))

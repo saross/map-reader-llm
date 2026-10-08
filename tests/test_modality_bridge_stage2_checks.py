@@ -13,6 +13,9 @@ Tests for ``scripts/modality_bridge_stage2_checks.py`` — Stage 2 audit fixes A
   stray ``}``) are recovered by the real-time path's repair as 0.2 and 0.05;
   the leg directory is left untouched and the repaired leg is written beside
   it with a record of what changed.
+- **Run C** (replicates, 2026-10-08): ``compare-requests`` passes only
+  byte-identical request streams and names every differing field;
+  ``estimate --rep`` relabels the rows and keeps the cost.
 """
 
 from __future__ import annotations
@@ -391,3 +394,100 @@ def test_repair_refuses_a_copy_it_never_wrote(tmp_path: Path) -> None:
     (out / "run.meta.json").write_text("{}")
     with pytest.raises(c2.RepairRefused):
         c2.repair_leg(leg)
+
+
+# ---------------------------------------------------------------------------
+# Run C (2026-10-08): replicate request identity, and the replicate estimate
+# ---------------------------------------------------------------------------
+
+
+def _req(key: str, temperature: float = 0.0, crop: str = "AAAA") -> dict:
+    return {"key": key, "request": {
+        "system_instruction": {"parts": [{"text": "sys"}]},
+        "contents": [{"role": "user", "parts": [{"text": "brief"},
+                                                {"inline_data": {"mime_type": "image/png",
+                                                                 "data": crop}}]}],
+        "generation_config": {"temperature": temperature, "response_mime_type": "x"}}}
+
+
+def _write_requests(d: Path, rows: list[dict], name: str = "verifier_requests.jsonl") -> Path:
+    d.mkdir(parents=True, exist_ok=True)
+    path = d / name
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    return path
+
+
+def test_diff_paths_names_leaves_and_shape_changes() -> None:
+    assert c2.diff_paths(_req("a"), _req("a")) == []
+    assert c2.diff_paths(_req("a"), _req("b")) == ["key"]
+    assert c2.diff_paths(_req("a", 0.0), _req("a", 1.0)) == [
+        "request.generation_config.temperature"]
+    assert c2.diff_paths(_req("a", crop="AAAA"), _req("a", crop="BBBB")) == [
+        "request.contents[0].parts[1].inline_data.data"]
+    assert c2.diff_paths({"x": [1, 2]}, {"x": [1]}) == ["x[len]"]
+    assert c2.diff_paths(1, 2) == ["<root>"]
+
+
+def test_identical_requests_compare_identical(tmp_path: Path) -> None:
+    rows = [_req(f"candidate_{i:05d}") for i in range(3)]
+    a = _write_requests(tmp_path / "orig", rows)
+    b = _write_requests(tmp_path / "rep", rows)
+    res = c2.compare_request_files([a], [b])
+    assert res["identical"] and res["n_identical"] == 3 and res["n_differing"] == 0
+    assert res["original_files"][0]["sha256"] == res["replicate_files"][0]["sha256"]
+    assert c2.main(["compare-requests", str(a.parent), str(b.parent)]) == 0
+
+
+def test_changed_requests_name_the_fields(tmp_path: Path) -> None:
+    a = _write_requests(tmp_path / "orig", [_req(f"candidate_{i:05d}") for i in range(3)])
+    b = _write_requests(tmp_path / "rep", [
+        _req("candidate_00000"), _req("candidate_00001", temperature=1.0),
+        _req("candidate_00002", crop="ZZZZ")])
+    res = c2.compare_request_files([a], [b])
+    assert not res["identical"] and res["n_identical"] == 1 and res["n_differing"] == 2
+    assert res["differing_fields"] == {
+        "request.contents[0].parts[1].inline_data.data": 1,
+        "request.generation_config.temperature": 1}
+    assert res["first_differing_keys"] == ["candidate_00001", "candidate_00002"]
+    rec = tmp_path / "rec.json"
+    assert c2.main(["compare-requests", str(a.parent), str(b.parent),
+                    "--json-out", str(rec)]) == 1
+    assert json.loads(rec.read_text())["n_differing"] == 2
+
+
+def test_a_short_replicate_is_not_identical(tmp_path: Path) -> None:
+    rows = [_req(f"candidate_{i:05d}") for i in range(3)]
+    a = _write_requests(tmp_path / "orig", rows)
+    b = _write_requests(tmp_path / "rep", rows[:2])
+    res = c2.compare_request_files([a], [b])
+    assert not res["identical"] and res["n_lines_original"] == 3
+    assert res["n_lines_replicate"] == 2 and res["n_differing"] == 0
+
+
+def test_chunked_requests_compare_in_lodging_order(tmp_path: Path) -> None:
+    rows = [_req(f"candidate_{i:05d}") for i in range(4)]
+    orig = tmp_path / "orig"
+    _write_requests(orig, rows[2:], "verifier_requests_chunk1.jsonl")
+    _write_requests(orig, rows[:2], "verifier_requests_chunk0.jsonl")
+    _write_requests(tmp_path / "rep", rows)
+    assert [p.name for p in c2.request_files(orig)] == [
+        "verifier_requests_chunk0.jsonl", "verifier_requests_chunk1.jsonl"]
+    assert c2.main(["compare-requests", str(orig), str(tmp_path / "rep")]) == 0
+
+
+def test_compare_requests_fails_closed_without_a_file(tmp_path: Path, capsys) -> None:
+    b = _write_requests(tmp_path / "rep", [_req("candidate_00000")])
+    (tmp_path / "orig").mkdir()
+    assert c2.main(["compare-requests", str(tmp_path / "orig"), str(b.parent)]) == 3
+    assert "no request file" in capsys.readouterr().out
+    assert c2.main(["compare-requests", str(b.parent), str(tmp_path / "orig")]) == 3
+
+
+def test_estimate_for_a_replicate_labels_rows_and_keeps_costs(tmp_path: Path,
+                                                              capsys) -> None:
+    orig, rep = c2.estimate(tmp_path), c2.estimate(tmp_path, rep=2)
+    assert rep["total"] == orig["total"] and rep["rep"] == 2 and orig["rep"] is None
+    assert [r["label"] for r in rep["rows"]] == [f"{leg} rep2" for leg in c2.LEGS]
+    assert [r["label"] for r in orig["rows"]] == list(c2.LEGS)
+    assert c2.main(["estimate", "--out", str(tmp_path), "--rep", "3"]) == 0
+    assert "g3-text:g3 rep3" in capsys.readouterr().out

@@ -47,6 +47,19 @@
 # only), FORCE=1 (re-lodge a leg whose earlier jobs are recorded in
 # batch_jobs.json; read the refusal first).
 #
+# Replicates (Run C, 2026-10-08; card planning/run-c-verifier-reinvocation-
+# 2026-10-08.md). REP=<n>, n >= 2, re-verifies a landed leg's crops with the
+# same request into verify_<v>_rep<n>, to measure verifier re-invocation;
+# the committed legs are replicate 1, and REP unset runs them exactly as
+# before. Under REP every name a leg writes carries -rep<n> (log, pid file,
+# rehearsal, coverage, metas and provenance records, scratch), so no
+# committed Stage 2 record is rewritten. `verify` also refuses a replicate
+# of a leg that has not landed, and `rehearse` requires the replicate's
+# request file to equal the original leg's verifier_requests.jsonl line for
+# line (record checks/request-identity-<leg>-rep<n>.json). The arm-level
+# build steps (union, extract, prepare) refuse REP. Every other gate, the
+# lock and the relaunch rules are unchanged.
+#
 #   arm              K   version                  verifier legs
 #   g3-text          10  detect_brief-text        g3
 #   g3-image         10  detect_brief-text-image  g3
@@ -73,6 +86,8 @@
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh estimate
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh wait g37-image:g3
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh repair all
+#   REP=2 bash scripts/modality-bridge-2026-10-07-stage2.sh rehearse all
+#   REP=2 bash scripts/modality-bridge-2026-10-07-stage2.sh verify all
 #
 # Launch hygiene (docs/agent-guidance.md § Compute Location). A verifier leg
 # starts detached under a wrapper shell that writes its OWN pid to the pid
@@ -125,6 +140,22 @@ ARMS="g3-text g3-image g37-text g37-image g37-image-cache g3-text-temp1 g3-image
 LEGS="g3-text:g3 g3-image:g3 g37-text:g3 g37-text:g37 g37-image:g3 g37-image:g37"
 LEGS="$LEGS g37-image-cache:g3 g37-image-cache:g37 g3-text-temp1:g3 g3-image-temp1:g3"
 
+# The replicate number (Run C; header). Empty: the original legs.
+REP=${REP:-}
+
+# sfx — the name suffix of the current replicate ("-rep<n>"), empty without.
+sfx() { if [ -n "$REP" ]; then printf -- '-rep%s' "$REP"; fi; }
+
+# check_rep — refuse a REP that is not an integer of 2 or more.
+check_rep() {
+  [ -z "$REP" ] && return 0
+  if ! [[ "$REP" =~ ^[1-9][0-9]*$ ]] || [ "$REP" -lt 2 ]; then
+    echo "REFUSED: REP=$REP — a replicate is an integer of 2 or more (the committed" \
+         "legs are replicate 1: leave REP unset for them)" >&2
+    return 1
+  fi
+}
+
 # Tile-elided request signatures rehearsed against the original legs'
 # real-time requests (card § 4; planning/modality-bridge-2026-10-07-stage2-
 # rehearsal.json): identical for every union under one verifier.
@@ -168,7 +199,13 @@ leg_parts() {
   esac
 }
 
-leg_dir() { echo "$(vroot "$1")/verify_$2"; }
+# leg_dir ARM V — the leg's directory: verify_<v>, or verify_<v>_rep<n> under
+# REP. orig_leg_dir is always the original (replicate 1) directory.
+leg_dir() { echo "$(vroot "$1")/verify_$2${REP:+_rep$REP}"; }
+orig_leg_dir() { echo "$(vroot "$1")/verify_$2"; }
+
+# leg_name ARM V — the leg's log, pid and scratch name.
+leg_name() { echo "verify-$1-$2$(sfx)"; }
 
 vflags() {
   case "$1" in
@@ -218,7 +255,9 @@ check() {
     return 1
   fi
   mkdir -p "$ST2/checks"
-  rec="$ST2/checks/$arm-coverage.json"
+  # Under REP the records carry the replicate's suffix, so a replicate's
+  # rehearsal never rewrites the committed original records.
+  rec="$ST2/checks/$arm-coverage$(sfx).json"
   if ! "$PY" scripts/modality_bridge_union.py --layout batch --cell-dir "$OUT/$arm/$v" \
       --k "$k" --out-root "$OUT/$arm" --manifest "$MANIFEST" --json-out "$rec"; then
     echo "$arm: REFUSED — coverage gate failed (above)"
@@ -237,7 +276,7 @@ check() {
   local -a extra=()
   [ "${IMPLICIT_SHARE_OK:-0}" = 1 ] && extra=(--allow-low-implicit-share)
   if ! "$PY" scripts/modality_bridge_stage2_checks.py metas "$arm" --out "$OUT" \
-      --json-out "$ST2/checks/$arm-metas.json" "${extra[@]}"; then
+      --json-out "$ST2/checks/$arm-metas$(sfx).json" "${extra[@]}"; then
     echo "$arm: REFUSED — a pass meta does not record what the arm sends (above)"
     return 1
   fi
@@ -297,7 +336,7 @@ provenance() {
   local arm=$1 man rec cls
   man="$(crops_dir "$arm")/candidate_manifest.json"
   [ -f "$man" ] || { echo "$arm: REFUSED — no crop manifest ($man)"; return 1; }
-  rec="$ST2/checks/$arm-provenance.json"
+  rec="$ST2/checks/$arm-provenance$(sfx).json"
   mkdir -p "$ST2/checks"
   "$PY" scripts/check_union_provenance.py --manifest "$man" --json-out "$rec" > /dev/null 2>&1
   cls=$(json_field "$rec" 'd["manifest_results"][0]["classification"]' 2>/dev/null)
@@ -337,19 +376,40 @@ prepare_one() {
 # rehearse LEG — the leg's batch request built API-free and checked.
 # -----------------------------------------------------------------------------
 rehearse() {
-  local arm=$1 v=$2 name rec
-  name="verify-$arm-$v"
+  local arm=$1 v=$2 name rec rlog idrec rc
+  name=$(leg_name "$arm" "$v")
   check "$arm" || return 1
   "$PY" scripts/modality_bridge_union.py --check-record "$(union_path "$arm")" || return 1
   provenance "$arm" || return 1
-  rec="$ST2/checks/rehearse-$arm-$v.json"
+  rec="$ST2/checks/rehearse-$arm-$v$(sfx).json"
+  rlog="$ST2/logs/rehearse-$arm-$v$(sfx).log"
   # The dry run writes its request files under SCRATCH, not the leg dir.
   mapfile -t ARGS < <(verify_args "$arm" "$v" "$SCRATCH/$name")
-  mkdir -p "$SCRATCH"
+  mkdir -p "$SCRATCH" "$ST2/logs"
+  # A replicate keeps its dry-run request file for the identity check below,
+  # then deletes it (scratch; about 60 KB per candidate).
+  local -a keep=()
+  [ -n "$REP" ] && keep=(--keep-requests)
   if ! "$PY" scripts/verifier_dryrun_harness.py batch --summary-json "$rec" --first 3 \
-      -- "${ARGS[@]}" --dry-run > "$ST2/logs/rehearse-$arm-$v.log" 2>&1; then
-    echo "$name: REHEARSAL FAILED — read $ST2/logs/rehearse-$arm-$v.log and $rec"
+      "${keep[@]}" -- "${ARGS[@]}" --dry-run > "$rlog" 2>&1; then
+    rm -f "$SCRATCH/$name"/verifier_requests*.jsonl
+    echo "$name: REHEARSAL FAILED — read $rlog and $rec"
     return 1
+  fi
+  if [ -n "$REP" ]; then
+    # Run C: the replicate must send what the original leg sent, line for
+    # line, so that only the invocation differs. Fails closed when the
+    # original's request file is not on disc.
+    idrec="$ST2/checks/request-identity-$arm-$v$(sfx).json"
+    "$PY" scripts/modality_bridge_stage2_checks.py compare-requests \
+      "$(orig_leg_dir "$arm" "$v")" "$SCRATCH/$name" --json-out "$idrec"
+    rc=$?
+    rm -f "$SCRATCH/$name"/verifier_requests*.jsonl
+    if [ $rc -ne 0 ]; then
+      echo "$name: REFUSED — the replicate's requests are not the original leg's" \
+           "(exit $rc); read $idrec"
+      return 1
+    fi
   fi
   if [ "$(json_field "$rec" 'list(d["batch"]["elided_signatures"])')" != "['$(sig_for "$v")']" ]; then
     echo "$name: REFUSED — request signature $(json_field "$rec" 'list(d["batch"]["elided_signatures"])')" \
@@ -372,7 +432,7 @@ rehearse() {
 # -----------------------------------------------------------------------------
 verify_one() {
   local arm=$1 v=$2 name pidf ld n rec
-  name="verify-$arm-$v"
+  name=$(leg_name "$arm" "$v")
   pidf="$ST2/pids/$name.pid"; ld=$(leg_dir "$arm" "$v")
   mkdir -p "$ST2/logs" "$ST2/pids"
   if alive "$pidf"; then
@@ -380,6 +440,12 @@ verify_one() {
   fi
   if [ -f "$ld/probabilities.json" ]; then
     echo "$name: already verified ($ld/probabilities.json) — skipped"; return 0
+  fi
+  # A replicate re-verifies a leg that has landed (Run C).
+  if [ -n "$REP" ] && [ ! -f "$(orig_leg_dir "$arm" "$v")/probabilities.json" ]; then
+    echo "$name: REFUSED — replicate $REP re-verifies a landed leg, and" \
+         "$(orig_leg_dir "$arm" "$v")/probabilities.json is missing"
+    return 1
   fi
   if [ -f "$ld/batch_jobs.json" ] && [ "${FORCE:-0}" != 1 ]; then
     echo "$name: REFUSED — $ld/batch_jobs.json records job(s) lodged by an earlier" \
@@ -409,7 +475,7 @@ verify_one() {
   # The rehearsal is the gate: coverage and the pass metas, a current union,
   # AGREES, one request per candidate, no client, the rehearsed signatures.
   rehearse "$arm" "$v" || return 1
-  rec="$ST2/checks/rehearse-$arm-$v.json"
+  rec="$ST2/checks/rehearse-$arm-$v$(sfx).json"
   n=$(json_field "$rec" 'd["batch"]["n_lines"]')
   launch_leg "$arm" "$v" "$n"
 }
@@ -424,7 +490,7 @@ verify_one() {
 # -----------------------------------------------------------------------------
 launch_leg() {
   local arm=$1 v=$2 n=$3 name log pidf chunks waited=0 old
-  name="verify-$arm-$v"
+  name=$(leg_name "$arm" "$v")
   log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
   chunks=$(( (n + PER_JOB - 1) / PER_JOB ))
   mkdir -p "$ST2/logs" "$ST2/pids"
@@ -490,7 +556,7 @@ status() {
   local leg arm v name log pidf live ld res perr exitl fails
   for leg in $LEGS; do
     read -r arm v < <(leg_parts "$leg")
-    name="verify-$arm-$v"; log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
+    name=$(leg_name "$arm" "$v"); log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
     ld=$(leg_dir "$arm" "$v")
     if [ ! -f "$log" ]; then
       printf '%-28s not launched; union %s, crops %s\n' "$name" \
@@ -524,7 +590,7 @@ status() {
 wait_leg() {
   local arm v name
   read -r arm v < <(leg_parts "$1") || return 1
-  name="verify-$arm-$v"
+  name=$(leg_name "$arm" "$v")
   # A polling leg logs an HTTP GET for its job about every 30 s (run_pv.py
   # sets the root logger to INFO), so an hour of silence is a hang (audit A3;
   # first written here as "silent", with a 25 h window, which was wrong).
@@ -538,11 +604,14 @@ wait_leg() {
 # estimate — per leg: candidates (the built union, else the guide), the
 # review band and cost at the original legs' audited per-candidate rates
 # (card § 3). Refuses (exit 1) when a built union lies outside its band,
-# unless BAND_OK=1 (audit A6). No API.
+# unless BAND_OK names its leg (audit A6). Under REP the rows are that
+# replicate's legs (the same unions, so the same cost). No API.
 # -----------------------------------------------------------------------------
 estimate() {
+  local -a r=()
+  [ -n "$REP" ] && r=(--rep "$REP")
   "$PY" scripts/modality_bridge_stage2_checks.py estimate --out "$OUT" \
-    --band-ok "${BAND_OK:-}"
+    --band-ok "${BAND_OK:-}" "${r[@]}"
 }
 
 # -----------------------------------------------------------------------------
@@ -554,7 +623,7 @@ repair() {
   local arm=$1 v=$2 ld
   ld=$(leg_dir "$arm" "$v")
   [ -f "$ld/probabilities.json" ] && [ -f "$ld/batch_results.jsonl" ] ||
-    { echo "verify-$arm-$v: REFUSED — no probabilities.json and batch_results.jsonl in $ld"; return 1; }
+    { echo "$(leg_name "$arm" "$v"): REFUSED — no probabilities.json and batch_results.jsonl in $ld"; return 1; }
   "$PY" scripts/modality_bridge_stage2_checks.py repair "$ld"
 }
 
@@ -612,6 +681,16 @@ take_lock() {
 
 cmd=${1:-}
 shift || true
+check_rep || exit 2
+# A replicate re-verifies existing crops: the arm-level build steps (and the
+# original legs' validations) run without REP.
+if [ -n "$REP" ]; then
+  case "$cmd" in
+    union|extract|prepare|validate-chain|anchor-gate)
+      echo "REFUSED: REP applies to verifier legs; run \`$cmd\` without REP" >&2
+      exit 2 ;;
+  esac
+fi
 case "$cmd" in
   union|extract|provenance|prepare|rehearse|verify|repair) take_lock ;;
 esac
@@ -654,6 +733,6 @@ case "$cmd" in
   status) status ;;
   wait) [ $# -eq 1 ] || { echo "wait needs one ARM:V" >&2; exit 2; }; wait_leg "$1" ;;
   *)
-    sed -n '2,102p' "$0"
+    sed -n '2,118p' "$0"
     exit 2 ;;
 esac

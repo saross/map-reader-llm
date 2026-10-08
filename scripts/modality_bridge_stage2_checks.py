@@ -53,14 +53,24 @@ be, so they live here, beside that table, and the launcher
     silently scoring a 0.0. Of the nine PARSE_ERROR rows in the twenty
     committed batch legs, two repair (an extra closing brace) and seven do
     not (an unescaped quote inside a string).
+``compare-requests ORIGINAL_LEG REPLICATE_DIR`` (Run C, 2026-10-08)
+    A replicate re-verifies a landed leg to measure verifier re-invocation
+    (``planning/run-c-verifier-reinvocation-2026-10-08.md``), so it must
+    send exactly what the original leg sent. This compares the two legs'
+    request files (``verifier_requests*.jsonl``, in lodging order) line for
+    line: byte-identical lines are counted, and a differing line is parsed
+    and its differing fields named (e.g. ``request.generation_config.
+    temperature``). Exit 0 only when every line is identical.
 
 Usage::
 
     python scripts/modality_bridge_stage2_checks.py metas g3-image --out OUT
     python scripts/modality_bridge_stage2_checks.py band g37-text:g3 --out OUT
-    python scripts/modality_bridge_stage2_checks.py estimate --out OUT
+    python scripts/modality_bridge_stage2_checks.py estimate --out OUT [--rep 2]
     python scripts/modality_bridge_stage2_checks.py repair \\
         OUT/g37-text/verifier/detect_brief-text/verify_g3
+    python scripts/modality_bridge_stage2_checks.py compare-requests \\
+        OUT/g37-text/verifier/detect_brief-text/verify_g3 SCRATCH/verify-g37-text-g3-rep2
 
 Zero API.
 
@@ -300,8 +310,18 @@ def parse_band_ok(value: str | None) -> set[str]:
     return legs
 
 
-def estimate(out: Path) -> dict[str, Any]:
-    """Per leg: candidates (built union, else guide), band, flag and cost."""
+def estimate(out: Path, rep: int | None = None) -> dict[str, Any]:
+    """Per leg: candidates (built union, else guide), band, flag and cost.
+
+    Args:
+        out: The campaign output root.
+        rep: A replicate number (Run C), or None for the original legs. A
+            replicate re-verifies the same union, so only the row labels
+            (``"<leg> rep<n>"``) change.
+
+    Returns:
+        ``{"rows": [...], "total": (low, high)}``.
+    """
     rows = []
     lo_t = hi_t = 0.0
     for leg in LEGS:
@@ -311,11 +331,130 @@ def estimate(out: Path) -> dict[str, Any]:
         lo, hi = sorted(n * r for r in RATES[v])
         lo_t += lo
         hi_t += hi
-        rows.append({"leg": leg, "n": n, "source": "union" if built is not None else "guide",
+        rows.append({"leg": leg, "label": leg if rep is None else f"{leg} rep{rep}",
+                     "n": n, "source": "union" if built is not None else "guide",
                      "band": band_for(arm),
                      "out_of_band": built is not None and not in_band(arm, built),
                      "cost": (lo, hi)})
-    return {"rows": rows, "total": (lo_t, hi_t)}
+    return {"rows": rows, "total": (lo_t, hi_t), "rep": rep}
+
+
+# ---------------------------------------------------------------------------
+# Run C: a replicate's request file against the original leg's
+# ---------------------------------------------------------------------------
+
+
+def request_files(leg_dir: Path) -> list[Path]:
+    """A leg's request file(s) in lodging order: unchunked first, then chunks.
+
+    Args:
+        leg_dir: A verifier leg (or dry-run) directory.
+
+    Returns:
+        ``verifier_requests.jsonl`` and ``verifier_requests_chunk<i>.jsonl``,
+        chunks in numeric order.
+    """
+    def order(p: Path) -> int:
+        """The unchunked file first, then chunks by index."""
+        tail = p.stem.removeprefix("verifier_requests").removeprefix("_chunk")
+        return int(tail) if tail.isdigit() else -1
+
+    return sorted(leg_dir.glob("verifier_requests*.jsonl"), key=order)
+
+
+def diff_paths(a: Any, b: Any, prefix: str = "") -> list[str]:
+    """Leaf paths at which two parsed JSON values differ.
+
+    Args:
+        a: One value.
+        b: The other.
+        prefix: The path so far (dotted keys, ``[i]`` list indices).
+
+    Returns:
+        The differing paths; a key present on one side only, or a list of
+        another length, is reported at its own path.
+
+    Examples:
+        >>> diff_paths({"x": 1, "y": [1, 2]}, {"x": 1, "y": [1, 3]})
+        ['y[1]']
+        >>> diff_paths({"x": 1}, {"x": 1, "z": 0})
+        ['z']
+    """
+    if isinstance(a, dict) and isinstance(b, dict):
+        out: list[str] = []
+        for k in sorted(set(a) | set(b)):
+            path = f"{prefix}.{k}" if prefix else str(k)
+            if k not in a or k not in b:
+                out.append(path)
+            else:
+                out.extend(diff_paths(a[k], b[k], path))
+        return out
+    if isinstance(a, list) and isinstance(b, list):
+        if len(a) != len(b):
+            return [f"{prefix}[len]"]
+        out = []
+        for i, (x, y) in enumerate(zip(a, b)):
+            out.extend(diff_paths(x, y, f"{prefix}[{i}]"))
+        return out
+    return [] if a == b else [prefix or "<root>"]
+
+
+def _file_record(path: Path) -> dict[str, Any]:
+    """Name, size and SHA-256 of a request file."""
+    return {"path": str(path), "bytes": path.stat().st_size, "sha256": _digest(path)}
+
+
+def compare_request_files(original: list[Path], replicate: list[Path]) -> dict[str, Any]:
+    """Compare two legs' request streams line for line.
+
+    The files of each side are read in the order given (lodging order), as
+    one stream of lines. A byte-identical line is counted; a differing line
+    is parsed and its differing field paths are tallied (list indices kept,
+    so ``request.contents[0].parts[1].inline_data.data`` names the crop).
+
+    Args:
+        original: The original leg's request file(s).
+        replicate: The replicate's request file(s).
+
+    Returns:
+        ``identical`` (every line equal and the same count), line counts,
+        ``n_identical``, ``n_differing``, ``differing_fields`` (path ->
+        lines), the first differing keys, and each file's size and digest.
+    """
+    import itertools
+
+    def lines(files: list[Path]):
+        """Every line of the files, in order, without its newline."""
+        for f in files:
+            with open(f, "rb") as fh:
+                for raw in fh:
+                    yield raw.rstrip(b"\n")
+
+    n_orig = n_rep = n_same = 0
+    fields: dict[str, int] = {}
+    first_keys: list[str] = []
+    for a, b in itertools.zip_longest(lines(original), lines(replicate)):
+        n_orig += a is not None
+        n_rep += b is not None
+        if a is None or b is None:
+            continue
+        if a == b:
+            n_same += 1
+            continue
+        ja, jb = json.loads(a), json.loads(b)
+        for path in diff_paths(ja, jb):
+            fields[path] = fields.get(path, 0) + 1
+        if len(first_keys) < 5:
+            first_keys.append(str(ja.get("key")))
+    return {
+        "identical": n_orig == n_rep == n_same and n_orig > 0,
+        "n_lines_original": n_orig, "n_lines_replicate": n_rep,
+        "n_identical": n_same, "n_differing": min(n_orig, n_rep) - n_same,
+        "differing_fields": dict(sorted(fields.items())),
+        "first_differing_keys": first_keys,
+        "original_files": [_file_record(f) for f in original],
+        "replicate_files": [_file_record(f) for f in replicate],
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -514,9 +653,10 @@ def main(argv: list[str] | None = None) -> int:
 
     Returns:
         0 when the check passed (``repair``: when no PARSE_ERROR row remains
-        unrecovered), 1 when it refused, 2 on a bad ``BAND_OK``, 3 when there
-        is nothing to check yet (``band``: no union) or ``repair`` refuses to
-        overwrite a repaired copy.
+        unrecovered; ``compare-requests``: every line identical), 1 when it
+        refused, 2 on a bad ``BAND_OK``, 3 when there is nothing to check yet
+        (``band``: no union; ``compare-requests``: a side has no request
+        file) or ``repair`` refuses to overwrite a repaired copy.
     """
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
     ap = argparse.ArgumentParser(description=__doc__,
@@ -534,10 +674,36 @@ def main(argv: list[str] | None = None) -> int:
     e = sub.add_parser("estimate")
     e.add_argument("--out", type=Path, required=True)
     e.add_argument("--band-ok", default="", help="BAND_OK: legs let past the band")
+    e.add_argument("--rep", type=int, default=None,
+                   help="Replicate number (Run C): labels the rows as that replicate's legs")
     r = sub.add_parser("repair")
     r.add_argument("leg_dir", type=Path)
     r.add_argument("--out-dir", type=Path, default=None)
+    q = sub.add_parser("compare-requests")
+    q.add_argument("original", type=Path, help="The original leg's directory")
+    q.add_argument("replicate", type=Path, help="The replicate's (dry-run or leg) directory")
+    q.add_argument("--json-out", type=Path, default=None)
     args = ap.parse_args(argv)
+
+    if args.cmd == "compare-requests":
+        orig, rep = request_files(args.original), request_files(args.replicate)
+        if not orig or not rep:
+            print(f"REFUSED: no request file in "
+                  f"{args.original if not orig else args.replicate} (verifier_requests*.jsonl); "
+                  "the identity check needs both legs' requests on disc")
+            return 3
+        res = compare_request_files(orig, rep)
+        if args.json_out is not None:
+            args.json_out.parent.mkdir(parents=True, exist_ok=True)
+            args.json_out.write_text(json.dumps(res, indent=1) + "\n")
+        if res["identical"]:
+            print(f"requests IDENTICAL — {res['n_identical']} of {res['n_lines_original']} "
+                  "lines byte for byte")
+            return 0
+        print(f"requests DIFFER — {res['n_identical']} identical, {res['n_differing']} "
+              f"differing; lines {res['n_lines_original']} (original) against "
+              f"{res['n_lines_replicate']} (replicate); fields {res['differing_fields']}")
+        return 1
 
     if args.cmd == "metas":
         res = check_metas(args.arm, args.out, args.allow_low_implicit_share)
@@ -579,7 +745,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0
         return 1
     if args.cmd == "estimate":
-        est = estimate(args.out)
+        est = estimate(args.out, args.rep)
         refused = []
         for row in est["rows"]:
             lo, hi = row["cost"]
@@ -588,10 +754,11 @@ def main(argv: list[str] | None = None) -> int:
                 flag = ("OUT OF BAND (BAND_OK)" if row["leg"] in waived else "OUT OF BAND")
                 if row["leg"] not in waived:
                     refused.append(row["leg"])
-            print(f"{row['leg']:22s} {row['n']:6d} ({row['source']:5s})  band "
+            print(f"{row['label']:27s} {row['n']:6d} ({row['source']:5s})  band "
                   f"{row['band'][0]:5d}-{row['band'][1]:<5d}  US${lo:6.2f} - {hi:6.2f}  {flag}")
         lo, hi = est["total"]
-        print(f"{'total':22s} {'':34s}  US${lo:6.2f} - {hi:6.2f}")
+        total = "total" if args.rep is None else f"total, replicate {args.rep}"
+        print(f"{total:27s} {'':34s}  US${lo:6.2f} - {hi:6.2f}")
         if refused:
             print(f"REFUSED: outside the review band (Stage 2 card § 3): {refused}; raise "
                   f"it with the PI, then BAND_OK={','.join(refused)}")
