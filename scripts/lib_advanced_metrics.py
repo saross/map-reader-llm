@@ -1137,6 +1137,31 @@ ORIGIN_TILE_COLUMNS: tuple[str, ...] = (
 #: Quoted tokens inside a list-like string: ``'a'`` or ``"a"``.
 _QUOTED_TOKEN_RE = re.compile(r"'([^']*)'|\"([^\"]*)\"")
 
+#: What a list-like string holding no name may consist of (``"['']"``,
+#: ``"[ ]"``): brackets, quotes, commas and white space.
+_EMPTY_LIST_TEXT_RE = re.compile(r"[\[\]'\",\s]*")
+
+#: The forms :func:`parse_tile_list` accepts, quoted in its errors.
+_TILE_LIST_FORMS = (
+    "a str (bare name, ';'-joined list, JSON list, or NumPy-array repr), "
+    "a list, tuple or NumPy array of such strings, or a missing value "
+    "(None, NaN, pd.NA)"
+)
+
+
+def _is_missing(value: Any) -> bool:
+    """Whether a cell or list element records nothing (None, NaN, pd.NA, NaT).
+
+    Args:
+        value: A scalar from a GeoDataFrame cell or a list element.
+
+    Returns:
+        ``True`` for ``None``, a float or NumPy NaN, ``pd.NA`` and ``pd.NaT``.
+    """
+    if value is None or value is pd.NA or value is pd.NaT:
+        return True
+    return isinstance(value, (float, np.floating)) and bool(np.isnan(value))
+
 
 @functools.lru_cache(maxsize=65536)
 def _parse_tile_list_text(text: str) -> tuple[str, ...]:
@@ -1148,6 +1173,12 @@ def _parse_tile_list_text(text: str) -> tuple[str, ...]:
 
     Returns:
         The non-empty tile names, in their recorded order.
+
+    Raises:
+        ValueError: If a ``[``-string is neither JSON nor holds a quoted
+            name (``"[A.png, B.png]"``), or a JSON list holds anything but
+            names and nulls. Before 2026-10-08 the first gave an empty list
+            and the second a bogus name, silently (PR #26 review, finding 2).
     """
     text = text.strip()
     if not text:
@@ -1158,12 +1189,26 @@ def _parse_tile_list_text(text: str) -> tuple[str, ...]:
         except json.JSONDecodeError:
             # The repr of a NumPy array of strings: space-separated quoted
             # tokens, possibly wrapped over several lines. Not JSON.
-            return tuple(
+            names = tuple(
                 a or b for a, b in _QUOTED_TOKEN_RE.findall(text) if (a or b)
             )
-        if isinstance(parsed, list):
-            return tuple(str(v) for v in parsed if v)
-        return (str(parsed),)
+            if not names and not _EMPTY_LIST_TEXT_RE.fullmatch(text):
+                raise ValueError(
+                    f"unparseable tile list {text[:120]!r}: it starts with '[' but "
+                    f"is not JSON and holds no quoted tile name"
+                ) from None
+            return names
+        names_json: list[str] = []
+        for v in parsed:  # a JSON text starting with '[' is always a list
+            if _is_missing(v) or v == "":
+                continue
+            if not isinstance(v, str):
+                raise ValueError(
+                    f"unparseable tile list {text[:120]!r}: element {v!r} is a "
+                    f"{type(v).__name__}, not a tile name"
+                )
+            names_json.append(v)
+        return tuple(names_json)
     return tuple(part.strip() for part in text.split(";") if part.strip())
 
 
@@ -1173,7 +1218,15 @@ def parse_tile_list(value: Any) -> list[str]:
     Every serialisation the corpus holds is accepted: a Python list or
     tuple, a NumPy array, a JSON list string, the ``repr`` of a NumPy array
     (``"['a.png' 'b.png'\\n 'c.png']"``), a ``;``-joined string (h13's
-    ``origin_tiles``) and a bare name. Missing values give an empty list.
+    ``origin_tiles``) and a bare name. Missing values (``None``, NaN,
+    ``pd.NA``) give an empty list, so a caller searching several columns
+    moves on to the next; missing elements inside a list are dropped.
+
+    Anything else raises rather than becoming a name or an empty list
+    (PR #26 review, finding 2): before 2026-10-08 a set, dict or number
+    became one bogus name, ``pd.NA`` became ``'<NA>'`` (which stopped the
+    search at that column), a NaN element became ``'nan'``, and an unquoted
+    ``[``-string became ``[]`` without trace.
 
     Args:
         value: The property value as read from a GeoDataFrame cell.
@@ -1181,16 +1234,20 @@ def parse_tile_list(value: Any) -> list[str]:
     Returns:
         Tile names, in their recorded order, empties dropped.
 
+    Raises:
+        TypeError: If the value, or an element of a list, is of a type no
+            serialisation produces (a set, dict, number, bytes, ...).
+        ValueError: If a string is list-like but unparseable
+            (see :func:`_parse_tile_list_text`).
+
     Example:
         >>> parse_tile_list("['K-1_x0_y0.png' 'K-1_x0_y192.png']")
         ['K-1_x0_y0.png', 'K-1_x0_y192.png']
         >>> parse_tile_list("K-1_x0_y0.png;K-2_x0_y0.png")
         ['K-1_x0_y0.png', 'K-2_x0_y0.png']
     """
-    if value is None:
-        return []
-    if isinstance(value, float) and value != value:  # NaN
-        return []
+    if isinstance(value, str):  # np.str_ included
+        return list(_parse_tile_list_text(str(value)))
     if isinstance(value, (list, tuple, np.ndarray)):
         # Each element is parsed as text too: reading a GeoJSON whose
         # property is the STRING repr of a NumPy array (tier E's materialised
@@ -1198,10 +1255,42 @@ def parse_tile_list(value: Any) -> list[str]:
         # must expand to its names. A plain tile name parses to itself.
         names: list[str] = []
         for v in value:
-            if v is not None and str(v):
-                names.extend(_parse_tile_list_text(str(v)))
+            if _is_missing(v):
+                continue
+            if not isinstance(v, str):
+                raise TypeError(
+                    f"unsupported tile-list element {v!r} "
+                    f"({type(v).__name__}) in {value!r:.120}; expected {_TILE_LIST_FORMS}"
+                )
+            names.extend(_parse_tile_list_text(str(v)))
         return names
-    return list(_parse_tile_list_text(str(value)))
+    if _is_missing(value):
+        return []
+    raise TypeError(
+        f"unsupported tile-list value {value!r:.120} ({type(value).__name__}); "
+        f"expected {_TILE_LIST_FORMS}"
+    )
+
+
+def _parse_origin_cell(value: Any, column: str, pos: int) -> list[str]:
+    """:func:`parse_tile_list` on one cell, naming the column and row on failure.
+
+    Args:
+        value: The cell's value.
+        column: Its column (an origin column or ``source_tile``).
+        pos: Its row position.
+
+    Returns:
+        The tile names.
+
+    Raises:
+        TypeError, ValueError: As :func:`parse_tile_list`, prefixed with the
+            column and row, so a refused file says where to look.
+    """
+    try:
+        return parse_tile_list(value)
+    except (TypeError, ValueError) as exc:
+        raise type(exc)(f"column {column!r}, row {pos}: {exc}") from exc
 
 
 def frame_sheets(gdf_bounds: gpd.GeoDataFrame) -> list[str]:
@@ -1449,7 +1538,7 @@ def scope_detections_to_frame(
         [_sheet_of_tile_name(v, longest_first) for v in gdf_det["source_tile"]]
         if has_source_tile else [None] * n
     )
-    origin_values = [gdf_det[c].tolist() for c in origin_columns]
+    origin_values = [(c, gdf_det[c].tolist()) for c in origin_columns]
 
     attributed: list[str | None] = [None] * n
     keep = np.zeros(n, dtype=bool)
@@ -1463,8 +1552,8 @@ def scope_detections_to_frame(
     for pos in range(n):
         source_sheet = named[pos]
         origin_names: list[str] = []
-        for values in origin_values:
-            origin_names = parse_tile_list(values[pos])
+        for column, values in origin_values:
+            origin_names = _parse_origin_cell(values[pos], column, pos)
             if origin_names:
                 break
         # The sheets the detection was SEEN on. A consensus cluster lists
@@ -1614,12 +1703,12 @@ def origin_tiles_of(gdf_points: gpd.GeoDataFrame) -> list[list[str]]:
     columns = [c for c in ORIGIN_TILE_COLUMNS if c in gdf_points.columns]
     if "source_tile" in gdf_points.columns:
         columns.append("source_tile")
-    values = [gdf_points[c].tolist() for c in columns]
+    values = [(c, gdf_points[c].tolist()) for c in columns]
     out: list[list[str]] = []
     for pos in range(len(gdf_points)):
         names: list[str] = []
-        for column_values in values:
-            names = parse_tile_list(column_values[pos])
+        for column, column_values in values:
+            names = _parse_origin_cell(column_values[pos], column, pos)
             if names:
                 break
         out.append(names)

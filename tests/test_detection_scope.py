@@ -233,10 +233,60 @@ def test_origin_naming_no_frame_sheet_falls_back_to_source_tile(frame):
     (float("nan"), []),
     (None, []),
     ("", []),
+    # Missing values of every spelling (PR #26 review, finding 2): pd.NA
+    # used to read as the name '<NA>' and a NaN element as 'nan'.
+    (pd.NA, []),
+    (np.float64("nan"), []),
+    (["a", float("nan"), pd.NA, "b"], ["a", "b"]),
+    (np.array(["a", None, np.nan], dtype=object), ["a"]),
+    ('["a", null, NaN]', ["a"]),
+    ("[]", []),
+    ("['']", []),
 ])
 def test_parse_tile_list_reads_every_serialisation(value, expected):
     """Lists, JSON, NumPy repr, ';'-joined, bare names and missing values."""
     assert lam.parse_tile_list(value) == expected
+
+
+@pytest.mark.parametrize("value, error", [
+    ({"A_x0_y0.png"}, TypeError),                  # a set
+    ({"a": "A_x0_y0.png"}, TypeError),             # a dict
+    (7, TypeError),                                # a number
+    (b"A_x0_y0.png", TypeError),                   # bytes
+    (["A_x0_y0.png", 7], TypeError),               # a number inside a list
+    ("[A_x0_y0.png, A_x100_y0.png]", ValueError),  # list text, unquoted
+    ("[1, 2]", ValueError),                        # JSON, but not names
+])
+def test_parse_tile_list_refuses_what_no_serialisation_produces(value, error):
+    """Never a bogus name, never a silent empty list (PR #26 review, finding 2)."""
+    with pytest.raises(error, match="tile[- ]list"):
+        lam.parse_tile_list(value)
+
+
+def test_a_missing_origin_moves_the_search_to_the_next_column(frame, refs):
+    """pd.NA in the first origin column is missing: the next column decides.
+
+    Before the hardening it parsed as the name '<NA>', the search stopped
+    there, the row counted as an unrecognised origin, and the re-key to B
+    stood: one TP became an FP on B and an FN on A.
+    """
+    d = dets([("A_x0_y0.png", 51, 50), ("B_x0_y0.png", 196, 50),
+              ("B_x100_y0.png", 301, 50)])
+    d["origin_source_tile"] = pd.array([pd.NA, pd.NA, pd.NA], dtype="string")
+    d["source_tiles"] = ['["A_x0_y0.png"]', '["A_x100_y0.png"]', '["B_x100_y0.png"]']
+    diag = lam.scope_detections_to_frame(d, frame).diagnostics
+    assert (diag["n_origin_restored"], diag["n_origin_unrecognised"]) == (1, 0)
+    assert lam.calculate_f1_internal(d, refs, frame, 20) == (1.0, 1.0, 1.0)
+
+
+def test_an_unparseable_origin_refuses_and_names_the_column_and_row(frame):
+    """The scorer refuses a file it cannot read, and says where to look."""
+    d = dets([("A_x0_y0.png", 51, 50), ("A_x0_y0.png", 52, 50)],
+             origin_tiles=["A_x0_y0.png", "[A_x0_y0.png, A_x100_y0.png]"])
+    with pytest.raises(ValueError, match="column 'origin_tiles', row 1"):
+        lam.scope_detections_to_frame(d, frame)
+    with pytest.raises(ValueError, match="column 'origin_tiles', row 1"):
+        lam.origin_tiles_of(d)
 
 
 # ── One scope everywhere: per-tile table, tile confusion, engine ──────────
