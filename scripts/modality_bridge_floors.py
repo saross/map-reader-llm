@@ -44,6 +44,9 @@ gaps with their tile-swap p-values. Three items of the card's § 9 remained:
   linearly). The committed § 3 floors (proposer-only consensus on the
   487-tile corpus) are reported beside them, translated to per-cell SDs
   (SD = floor / (1.96 · √2)) where a contrast has more than two cells.
+  Sensitivity (``floor_direct``): the ten-pass arms are subsampled up to
+  K' = 9, so their K = 10 SD is also read as the largest DIRECT estimate
+  from K' = 5 to 9, which shows how far § 6b's fitted carry moves a floor.
 
 Gates (nothing is written unless every one passes)
 --------------------------------------------------
@@ -398,6 +401,28 @@ def full_rung_sd(n: int, sd_by_k: Mapping[int, float], se_by_k: Mapping[int, flo
         rule = (f"K = {n} of {n} passes: max(fits on K' = 1..{n - 1}, direct K' = {n - 2}, "
                 f"K' = {n - 1}); upper adds 1.96 jackknife SE at K' = {n - 2}")
     return {"sd": point, "sd_upper": upper, "rule": rule}
+
+
+def direct_max_sd(sd_by_k: Mapping[int, float], n: int) -> float:
+    """Sensitivity SD at K = N: the largest direct FPC SD from K' = FIT_KMAX to N − 1.
+
+    § 6b carries the SD to K = N by fits on K' <= 5 because its ten-pass
+    families were not subsampled above K' = 5. Where the direct estimates
+    exist, they show whether the carry over- or under-shoots (a fit to an
+    SD that rises with K extrapolates upward).
+
+    Args:
+        sd_by_k: Direct FPC SD at each K' < N.
+        n: Passes.
+
+    Returns:
+        ``max(sd_by_k[k] for FIT_KMAX <= k < n)``.
+
+    Examples:
+        >>> direct_max_sd({5: 0.012, 6: 0.013, 9: 0.011}, 10)
+        0.013
+    """
+    return float(max(v for k, v in sd_by_k.items() if FIT_KMAX <= k < n))
 
 
 def contrast_floor(sds: Sequence[float], n_contrasts: int,
@@ -954,9 +979,13 @@ def cell_sds(rows: list[dict]) -> dict[tuple[str, str, float, float], dict[str, 
         out[key] = {"n": n, "sd_by_k": sd_by_k, "se_by_k": se_by_k, "sd_dp_by_k": dp_by_k,
                     "fit": fit, "fit_se": fit_se,
                     "full": full_rung_sd(n, sd_by_k, se_by_k, fit, fit_se)}
-        if n > 5:
-            out[key]["direct5"] = {"sd": sd_by_k[5],
-                                   "sd_upper": sd_by_k[5] + Z * se_by_k[5]}
+        if n > FIT_KMAX:
+            out[key]["direct5"] = {"sd": sd_by_k[FIT_KMAX],
+                                   "sd_upper": sd_by_k[FIT_KMAX] + Z * se_by_k[FIT_KMAX]}
+            # Sensitivity: the ten-pass arms also have DIRECT estimates at
+            # K' = 6..9, which § 6b's 55-map families did not compute; the
+            # largest direct value from K' = 5 up stands in for the carry.
+            out[key]["direct_max"] = direct_max_sd(sd_by_k, n)
     return out
 
 
@@ -981,10 +1010,10 @@ def sd_of(cell: str, kind: str, sets: Mapping[tuple[str, str], Any],
     if big_k == rec["n"]:
         sd = rec["full"]
         return {"sd": sd["sd"], "sd_upper": sd["sd_upper"], "rule": sd["rule"],
-                "path": list(path), "K": big_k}
+                "sd_direct": rec.get("direct_max", sd["sd"]), "path": list(path), "K": big_k}
     return {"sd": rec["direct5"]["sd"], "sd_upper": rec["direct5"]["sd_upper"],
             "rule": f"direct, all C({rec['n']}, 5) subsets; upper adds 1.96 jackknife SE",
-            "path": list(path), "K": big_k}
+            "sd_direct": rec["direct5"]["sd"], "path": list(path), "K": big_k}
 
 
 def flip_yardstick(counts: Mapping[tuple, Any], arm: str, leg: str, prob_t: float,
@@ -1067,29 +1096,34 @@ def floors_report(sets: Mapping[tuple[str, str], Any], sds: Mapping[tuple, Any],
         est = sets[(text, kind)]["f1"] - sets[(image, kind)]["f1"]
         fl = contrast_floor([st["sd"], si["sd"]], 1)
         fu = contrast_floor([st["sd_upper"], si["sd_upper"]], 1)
+        fd = contrast_floor([st["sd_direct"], si["sd_direct"]], 1)
         s3f = Z * np.sqrt(s3_floor_as_sd(s3_of(text, kind)) ** 2
                           + s3_floor_as_sd(s3_of(image, kind)) ** 2)
         gaps[gap] = {"estimate": est, "floor": fl, "floor_upper": fu,
                      "ratio": abs(est) / fl, "ratio_upper": abs(est) / fu,
+                     "floor_direct": fd, "ratio_direct": abs(est) / fd,
                      "s3_floor": float(s3f), "s3_ratio": abs(est) / float(s3f),
                      "sds": [st["sd"], si["sd"]]}
     gcs = {}
     for label, g37, g3, tier in GAP_CHANGES:
         rec = gap_changes[label]
-        sd_list, up_list, s3_list = [], [], []
+        sd_list, up_list, dir_list, s3_list = [], [], [], []
         for role in ("T37", "I37", "T3", "I3"):
             cell, kind = rec["cells"][role]
             s = sd_of(cell, kind, sets, sds)
             sd_list.append(s["sd"])
             up_list.append(s["sd_upper"])
+            dir_list.append(s["sd_direct"])
             s3_list.append(s3_floor_as_sd(s3_of(cell, kind)))
         fl = contrast_floor(sd_list, 2)
         fu = contrast_floor(up_list, 2)
+        fd = contrast_floor(dir_list, 2)
         s3f = float(Z * np.sqrt(np.sum(np.square(s3_list))))
         est = rec["gap_change"]
         gcs[label] = {"tier": tier, "estimate": est, "p_modality_swap": rec["p_modality_swap"],
                       "floor": fl, "floor_upper": fu, "ratio": abs(est) / fl,
-                      "ratio_upper": abs(est) / fu, "s3_floor": s3f,
+                      "ratio_upper": abs(est) / fu, "floor_direct": fd,
+                      "ratio_direct": abs(est) / fd, "s3_floor": s3f,
                       "s3_ratio": abs(est) / s3f, "sds": sd_list}
     dcs = {}
     for cell, rec in dates.items():
@@ -1101,10 +1135,12 @@ def floors_report(sets: Mapping[tuple[str, str], Any], sds: Mapping[tuple, Any],
             # configuration); the § 3 floor is a pairwise floor already.
             fl = contrast_floor([s["sd"], s["sd"]], 1)
             fu = contrast_floor([s["sd_upper"], s["sd_upper"]], 1)
+            fd = contrast_floor([s["sd_direct"], s["sd_direct"]], 1)
             arm, leg, prob_t, frac = cell_path(cell, kind, sets)[0]
             dcs[cell][name] = {
                 "estimate": est, "p_tile_swap": rec[name]["p_tile_swap"], "floor": fl,
                 "floor_upper": fu, "ratio": abs(est) / fl, "ratio_upper": abs(est) / fu,
+                "floor_direct": fd, "ratio_direct": abs(est) / fd,
                 "s3_floor": s3_of(cell, kind), "s3_ratio": abs(est) / s3_of(cell, kind),
                 "flips": rec[name]["flips"],
                 "within_execution_flips": flip_yardstick(counts, arm, leg, prob_t, frac)}
@@ -1115,7 +1151,7 @@ def write_summary(path: Path, report: Mapping[str, Any], gap_changes: Mapping[st
                   committed_p: Mapping[str, float]) -> None:
     """The short CSV: one row per gap, gap change and date component."""
     fields = ["kind", "label", "estimate", "p", "floor", "floor_upper", "ratio",
-              "ratio_upper", "s3_floor", "s3_ratio"]
+              "ratio_upper", "floor_direct", "ratio_direct", "s3_floor", "s3_ratio"]
     with path.open("w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=fields)
         w.writeheader()

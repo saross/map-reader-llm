@@ -28,6 +28,7 @@ from scripts.modality_bridge_floors import (  # noqa: E402
     VERIFIER_BAND,
     Z,
     contrast_floor,
+    direct_max_sd,
     disjoint_pairs,
     fit_extrapolate,
     fpc_sd,
@@ -120,6 +121,12 @@ def test_fit_extrapolate_power_undefined_on_a_zero_sd():
     fit = fit_extrapolate([1, 2, 3], [0.0, 0.002, 0.003], 5)
     assert math.isnan(fit["power"])
     assert math.isfinite(fit["hyper"])
+
+
+def test_direct_max_sd_reads_only_from_fit_kmax_up():
+    """The sensitivity ignores K' below FIT_KMAX and the undefined K' = N."""
+    sd_by_k = {1: 0.05, 4: 0.04, 5: 0.012, 6: 0.013, 9: 0.011}
+    assert direct_max_sd(sd_by_k, 10) == pytest.approx(0.013)
 
 
 def test_full_rung_sd_ten_passes_takes_the_largest_of_fits_and_flat():
