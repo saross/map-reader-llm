@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-256
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3b537582b`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `a710152d1`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-256` · **Registry status**: active · **Purpose**: 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT): the small-tile anchor for the tile-size comparison, where F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). Unregistered exploratory extension of the registered H11 two-level design (E62); populated 2026-07-30 per the PI ruling at reports/verification/phase2-rulings-2026-07-30.md S 1b.
 
@@ -37,6 +37,17 @@
 
 ## 3. Execution — passes on file
 
+### 3.1 Proposer passes (6)
+
+| Pool | Pass | Model used | Model requested | Modality | Thinking | Temp | Status | Tiles done | Dispatched | Retries |
+|---|---:|---|---|---|---|---:|---|---:|---:|---:|
+| `text-baseline-text-t0.0` | 1 | gemini-3-flash | gemini-3-flash | text | minimal | 0.0 | ok | 1032 | not supplied | 0 |
+| `text-n5-text-t0.7` | 1 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | not supplied | 0 |
+| `text-n5-text-t0.7` | 2 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | not supplied | 0 |
+| `text-n5-text-t0.7` | 3 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | not supplied | 0 |
+| `text-n5-text-t0.7` | 4 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | not supplied | 0 |
+| `text-n5-text-t0.7` | 5 | gemini-3-flash | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | not supplied | 0 |
+
 ### 3.2 Verifier passes (1)
 
 | Pool | Pass | Model used | Modality | Thinking | Temp | Status | Candidates verified | Retries |
@@ -49,17 +60,17 @@ Verifier rows report no tile count by design: verifier pass: operates on candida
 
 | Field | Value |
 |---|---|
-| Passes on file | 1 |
+| Passes on file | 7 |
 | Input tokens (billed) | 2,087,680 |
 | Input tokens (cached) | 0 |
 | Output tokens | 184,732 |
 | Thinking tokens | 0 |
 | Total tokens | 2,272,412 |
 | Passes with no token record | 0 |
-| `cost_usd` by basis | audited US$0.7990 (1) |
-| Run total (range) | US$0.7990 |
-| Passes with no `cost_usd` | 0 |
-| Summed wall clock | 0.15 h over 1 pass(es) |
+| `cost_usd` by basis | audited US$0.7990 (1); unrecorded no figure (6) |
+| Run total (range) | at least US$0.7990; no ceiling (6 unrecorded pass(es)) |
+| Passes with no `cost_usd` | 6 |
+| Summed wall clock | 0.15 h over 7 pass(es) |
 
 > **The cost above is on the audited basis, labelled per pass.** Since generator 0.8.0 (2026-10-03; PI ruling D11) each `cost_usd` is the pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the service tier the evidence supports; the pass's `cost_basis` says whether that is `audited`, an `audited-upper-bound` (tier unresolved, priced at the highest candidate), an `audited-lower-bound` (part of the pass is not in its metas: a cleanup overwrote one, or a fragment recorded nothing), `published`, `unrecorded`, or `unpriceable` (no date, or a model the rate card lacks), and its `cost_source` cites the evidence. It is no longer the pass meta's own `cost_estimate`, which priced at standard rates and omitted thinking tokens (`reports/token-load-audit-2026-06-12.md` § 1, § 2). A sum mixing upper and lower bounds is neither, so the run total is given as a range.
 
@@ -85,7 +96,7 @@ Tile-level MCC is on file for 3 of 3 condition(s).
 
 Verbatim from `results/run-conditions.json` — the hand-authored record of how this run was decomposed and what was adjudicated:
 
-> 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -&gt; \_ignored\_evals. Proposer passes were NOT materialised as run\_\* dirs (only consensus + crops), so proposer\_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable — source\_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into \_ignored\_evals with reasons. No metric, eval or detection changed. | Corrected 2026-10-07 (stale register notes, PI-approved; reviewed bindings pv-diag-256-text-baseline and pv-diag-256-text-5of5-union in results/manipulation-gate-bindings.json): 'Proposer passes were NOT materialised as run\_\* dirs' above is wrong. They were materialised, and they are tracked with their metas under archive/outputs-non-production-tile-sizes/, where 276e4ca80 (2026-04-16) archived them from outputs/h11/pv-diag-256/: the N=1 T=0.0 baseline pass at text-baseline/text-t0.0/run\_1 and the five N=5 T=0.7 passes at text-n5/text-t0.7/run\_1..run\_5 (detect\_brief-text, gemini-3-flash, MINIMAL, 1,032 tiles each). consensus/text-baseline.geojson is byte-identical to the baseline pass's detections (sha256 bf44bc7b11e3...), and a read-only reproduction from the five T=0.7 passes gives the feature counts of text-1of5..text-5of5 and the coordinates of text-5of5 exactly. proposer\_pools stays empty only because no registered pool spec reaches archive/; registering one is a separate decision. No metric, eval or detection changed.
+> 256px H11 tile-size diagnostic (px256-1032 scope, 1032 tiles, curator GT). Re-scored at 14-buf+MCC (Session 106) from the 6 on-disk consensus geojsons. text-baseline = single-pass; text-{1..5}of5 = 5-pass consensus vote sweep. One citable single-pass + the best-F1@20m consensus champion (text-5of5, F1 0.460); non-headline thresholds -&gt; \_ignored\_evals. Proposer passes were NOT materialised as run\_\* dirs (only consensus + crops), so proposer\_pools is empty and conditions reference the pool by string (benign pool-unresolved; pv-384/512 precedent). 256px is the small-tile anchor for the tile-size comparison: F1@20m orders 256 &lt; 512 &lt; 384 (0.46 / 0.69 / 0.79). | Pool annotation (2026-09-13, S153 Batch 1 item 2): the 'benign pool-unresolved' adjudication stated above is now machine-readable — source\_run 'pv-diag-256' on both conditions. Two uplift-supplement verifier-pairing evaluations of this run's text-5of5 detections, which belong to the cross-run verifier-robustness 256 conditions, are waived into \_ignored\_evals with reasons. No metric, eval or detection changed. | Corrected 2026-10-07 (stale register notes, PI-approved; reviewed bindings pv-diag-256-text-baseline and pv-diag-256-text-5of5-union in results/manipulation-gate-bindings.json): 'Proposer passes were NOT materialised as run\_\* dirs' above is wrong. They were materialised, and they are tracked with their metas under archive/outputs-non-production-tile-sizes/, where 276e4ca80 (2026-04-16) archived them from outputs/h11/pv-diag-256/: the N=1 T=0.0 baseline pass at text-baseline/text-t0.0/run\_1 and the five N=5 T=0.7 passes at text-n5/text-t0.7/run\_1..run\_5 (detect\_brief-text, gemini-3-flash, MINIMAL, 1,032 tiles each). consensus/text-baseline.geojson is byte-identical to the baseline pass's detections (sha256 bf44bc7b11e3...), and a read-only reproduction from the five T=0.7 passes gives the feature counts of text-1of5..text-5of5 and the coordinates of text-5of5 exactly. proposer\_pools stays empty only because no registered pool spec reaches archive/; registering one is a separate decision. No metric, eval or detection changed. | Registered in place 2026-10-08 (PI ruling 2026-10-08, approving the Session 162 close's recommendation 'register pv-diag-256 in place', planning/paper-writeup-continuity.md; record: reports/stale-register-notes-2026-10-07.md section 10): 'proposer\_pools stays empty' in the 2026-10-07 correction above is superseded. The six archived passes are registered where they lie, and no file moved: proposer\_pools text-baseline-text-t0.0 (the N=1 T=0.0 baseline pass) and text-n5-text-t0.7 (the five N=5 T=0.7 passes) name repo\_path archive/outputs-non-production-tile-sizes, the mechanism h10's coldstart-pool\_160 uses (ruling D41); the keys follow pv-diag-384's names for the same layout. Their metas record no token usage (Batch API), so their passes-manifest rows carry cost\_usd null with basis unrecorded (ruling D12). The conditions are unchanged: both still name proposer\_pool 'text' with source\_run pv-diag-256, as pv-diag-384's baseline conditions name theirs beside registered pools. scripts/check\_union\_provenance.py now re-derives consensus/ from text-n5-text-t0.7 (POOL\_OVERRIDES) and reproduces text-1of5..text-5of5 exactly (2,558 / 1,909 / 1,645 / 1,423 / 1,165 features). No metric, eval or detection changed.
 
 ### 5.4 Waived evaluations (6, 3 distinct reason(s))
 
@@ -135,6 +146,11 @@ No `experiment_intent.md`, `evaluation.md`, `pre_launch_audit.md` or retrospecti
 
 ### 9.1 Registered pools
 
+| Proposer pool | Modality | Path within the run directory |
+|---|---|---|
+| `text-baseline-text-t0.0` | text | none: outside the run directory, at `archive/outputs-non-production-tile-sizes/text-baseline/text-t0.0` (`repo_path`) |
+| `text-n5-text-t0.7` | text | none: outside the run directory, at `archive/outputs-non-production-tile-sizes/text-n5/text-t0.7` (`repo_path`) |
+
 1 registered verifier-pass directory/directories; see `results/run-conditions.json` for the full list.
 
 ## 10. Provenance of this report
@@ -144,7 +160,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `3b537582b` |
+| Source commit | `a710152d1` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
