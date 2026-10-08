@@ -31,8 +31,10 @@ directly, on Run B's own unions and crops.
 
 ## 2. Approval and hard limits
 
-Approval: the Principal Investigator (PI), 2026-10-08, relayed in the main
-session's brief. The PI approved the "full option", up to US$50 in all:
+Approval: the Principal Investigator (PI), 2026-10-08, ruling D56
+(`planning/pi-decisions-2026-09-20.md`): "I approve the 3.7 verifier
+repeat-run noise run, full option, up to $50." The terms, as relayed in the
+main session's brief and recorded in D56:
 
 - **What:** two further verifications, replicates 2 and 3, of each of Run
   B's ten Stage 2 legs (the committed legs are replicate 1). Twenty legs.
