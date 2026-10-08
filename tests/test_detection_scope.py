@@ -195,6 +195,43 @@ def test_a_cluster_seen_on_both_sheets_keeps_its_scoring_sheet(frame):
     assert diag["n_cross_sheet_avoided"] == 0
 
 
+def test_a_cluster_named_on_a_sheet_that_does_not_hold_it_is_scored_where_it_lies(frame):
+    """Members on A and B, named on A (first, alphabetical), lying only in B's tiles.
+
+    ``materialise_pv_geojson.py`` writes ``source_tiles[0]`` into
+    ``source_tile``. The cluster was seen on B and lies in B's tiles, so it
+    is scored on B: neither out of frame nor a re-key.
+    """
+    d = dets([("A_x100_y0.png", 205, 50)],
+             source_tiles=[["A_x100_y0.png", "B_x0_y0.png"]])
+    scope = lam.scope_detections_to_frame(d, frame)
+    assert list(scope.sheets) == ["B"]
+    diag = scope.diagnostics
+    assert (diag["n_origin_switched"], diag["n_out_of_frame"],
+            diag["n_origin_restored"]) == (1, 0, 0)
+    ref_b = gpd.GeoDataFrame({"Map": ["B"]}, geometry=[Point(206, 50)], crs=CRS)
+    assert lam.calculate_f1_internal(d, ref_b, frame, 20) == (1.0, 1.0, 1.0)
+    # The tile confusion keeps the row (it removes only out-of-frame rows).
+    assert len(scope.retained) == 1
+
+
+def test_a_single_origin_sheet_outside_its_tiles_is_not_switched(frame):
+    """Seen only on A, lying only in B's tiles: out of frame, never moved to B."""
+    d = dets([("A_x100_y0.png", 250, 50)], source_tiles=[["A_x100_y0.png"]])
+    diag = lam.scope_detections_to_frame(d, frame).diagnostics
+    assert (diag["n_origin_switched"], diag["n_out_of_frame"],
+            diag["n_out_of_frame_cross_sheet"]) == (0, 1, 1)
+
+
+def test_a_cluster_in_both_sheets_tiles_keeps_its_named_sheet(frame):
+    """In the overlap band both origin sheets hold it: ``source_tile`` stands."""
+    d = dets([("A_x100_y0.png", 195, 50)],
+             source_tiles=[["A_x100_y0.png", "B_x0_y0.png"]])
+    scope = lam.scope_detections_to_frame(d, frame)
+    assert list(scope.sheets) == ["A"]
+    assert scope.diagnostics["n_origin_switched"] == 0
+
+
 def test_a_repr_origin_survives_a_geojson_round_trip(frame, refs, tmp_path):
     """Tier E's case end to end: the repr STRING property, written and read back.
 
@@ -428,6 +465,9 @@ def test_evaluation_records_the_detection_scope(frame, refs):
     summary = evaluate_multi_run_mean([run, run], label="x")
     assert summary["detection_scope"]["n_out_of_frame"] == 2
     assert summary["detection_scope"]["n_passes"] == 2
+    # The switch counter is written per pass and summed like the others.
+    assert block["n_origin_switched"] == 0
+    assert summary["detection_scope"]["n_origin_switched"] == 0
 
 
 def test_scope_columns_are_not_required_beyond_the_attribution(frame, refs):

@@ -1,6 +1,6 @@
 # Scorer frames: rulings D50 and D51 implemented and measured, 2026-10-08
 
-> **Last revised**: 2026-10-08 (§ 5.7 addendum: the materialised `source_tile` gap counted, none in committed cells; tier-1 at the merged head). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (§ 5.7: the draft fix applied after PR #26 merged). See [§ Changelog](#changelog) for revision history.
 
 **Status: FOR THE PI.** Implementation of two PI rulings of 2026-10-07
 (`planning/pi-decisions-2026-09-20.md`, entries D50 and D51) on branch
@@ -530,6 +530,11 @@ materialisers instead would need the frame at materialisation time, would have t
 be repeated in each writer that promotes the first member (at least the two above
 and `fuse_detections_wbf.py` line 340), and would change committed files.
 
+**Applied after PR #26 merged** (`fefb73f2b`), on branch `fix/origin-switch-d50`, as a
+small follow-up before the D57 (4) re-score, so re-scored evaluations carry
+`n_origin_switched`. The draft diff applied unchanged. It moves no committed number
+(the counts above).
+
 ## 6. What the PI would approve next (nothing below has been changed)
 
 **Code.** Merging the branch changes the scorer every script imports. From then on, a
@@ -657,6 +662,13 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
   scorer on that checkout equals `origin/main`'s.
 
 ## Changelog
+
+### 2026-10-08 — The `source_tile` gap fix applied
+
+**Trigger.** PR #26 merged (`fefb73f2b`); the § 5.7 draft fix was applied unchanged on
+branch `fix/origin-switch-d50` before the D57 (4) re-score. No measured value in this
+report moves: § 5.7 found 0 affected cells and a full re-score with the fix differing
+by 0.0. Only the banner and § 5.7's closing paragraph changed.
 
 ### 2026-10-08 — Addendum: the materialised `source_tile` gap counted
 
