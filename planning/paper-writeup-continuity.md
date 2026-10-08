@@ -60,6 +60,24 @@ replaces it.
   `outputs/modality-bridge-2026-10-07/` on sapphire (3.05 GB, untracked;
   originals under D55 Q3, the replicates' as byte-identical copies, one
   SHA-256 per leg across its three replicates).
+- [x] **PR #26's older `source_tile` gap counted** (D57 context,
+  2026-10-08; branch `scorer-frames-d50-d51` at `e504f921f`, report
+  § 5.7): 0 affected cells and 0 detections over 2,751 classified cells;
+  a full re-score with the draft fix differs from the branch by 0.0.
+  The draft fix (`n_origin_switched`; diff in the report's
+  `out/source-tile-gap/draft-fix.diff`) goes in a small follow-up PR
+  after #26 merges and before the re-score, so re-scored evaluations
+  carry its counter; it changes no committed number.
+- [ ] **Sweep candidates cannot be reached by a scorer fix**
+  (`e504f921f`, report § 5.7 item 3): the sweep loader keeps
+  `source_tile` and drops the member list. Harmless today (every
+  out-of-frame sweep candidate was seen on one sheet only); a future
+  pool over overlapping sheet content could be hit.
+- [ ] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
+  so the Q4 deltas are not computed across two scorer versions; the
+  tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
+  whose later commits touch no code. Refresh the PR description (it
+  still says 54 tests and gives no basis for 696) before merging.
 - [ ] **After PR #26 merges, re-score Run B and Run C together.** Their
   cells are not in the D50/D51 measurement's 2,727, and the 487-tile frame
   is where origin restoration moves cells (median +0.0018, about the size
