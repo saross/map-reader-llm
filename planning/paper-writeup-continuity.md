@@ -48,13 +48,30 @@ replaces it.
   `repair` scan (`planning/modality-bridge-2026-10-07-stage2.md`). PI
   decision: re-verify the seven, and whether the batch parser should repair
   as the real-time path does (re-booking would move committed rows).
-- [ ] **Copy or link the bench's null-tile history report** (PI decision,
+- [x] **Copy or link the bench's null-tile history report** (PI decision,
   raised by the map-reader-bench session 2026-10-08): bench repository,
   `reports/2026-10-08-no-mound-signal-history.md` on branch
   `claude/no-mound-history-2026-10-08` (bench PR #45). A case study of the
   "output nothing" signal for the text arm, found (Obs 14) and lost
   repeatedly. If copied: `reports/` with a provenance banner (source
   repository, path, commit). Reply to the bench session when settled.
+  DONE 2026-10-08: PI ruled master copy here, bench links; copied as
+  `reports/no-mound-signal-history-2026-10-08.md` (`8309790d1`); bench PR
+  #45 branch now a pointer (`4b4fca7`); the bench session told.
+- [x] **Obs 508, same-model drift over time** (2026-10-08, `a9c5d4ef3`).
+  PI: observational only; later instances go in as new entries in the
+  working notes, not a new file.
+- [ ] **Paper framing corrections (PI agreed 2026-10-08):** "text" means
+  zero-shot (E90) wherever the drafts describe the text arm or the
+  modality contrast; the temperature caveat (3.7 ignores temperature, so
+  "configuration carries across versions" did not carry temperature);
+  the null-tile asymmetry between arms (being checked); why the 3.7
+  headline is text when Run B's cached 3.7 image cell scored 0.9352
+  against 0.9265 (n.s.); the signed K-ladder outcome still reads "worst
+  buy on every ladder" (Obs 502).
+- [ ] **Triage the open items** into blocks submission / improves the
+  paper / after submission, then a dedicated planning session for a
+  submitted paper in about 30 days (PI agreed 2026-10-08).
 - [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
   temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
   §§ 7, 8.5).
