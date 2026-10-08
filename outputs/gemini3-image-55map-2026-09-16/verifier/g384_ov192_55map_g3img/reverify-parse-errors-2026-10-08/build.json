@@ -1,0 +1,402 @@
+{
+ "script": "scripts/reverify_unparseable_rows.py build",
+ "built_at": "2026-10-08T10:55:47.517122+00:00",
+ "model": "gemini-3.7-flash",
+ "tier": "batch",
+ "n_rows": 7,
+ "requests": {
+  "path": "requests.jsonl",
+  "sha256": "1e85c08b8019ae5dbd4cdca0fc92226e1a3b10d22dd65d47b2acd37751a2c886",
+  "bytes": 418093,
+  "note": "each line is the leg's original request line, byte for byte (key included)"
+ },
+ "estimate": {
+  "schema": "cost/2",
+  "cost_basis": "audited",
+  "input_cost_usd": 0.004704,
+  "cached_input_cost_usd": 0.0,
+  "output_cost_usd": 0.003105,
+  "total_cost_usd": 0.007809,
+  "list_input_cost_usd": 0.009408,
+  "list_output_cost_usd": 0.00621,
+  "list_total_cost_usd": 0.015618,
+  "tokens_billed": {
+   "input_fresh": 12544,
+   "input_cached": 0,
+   "output": 887,
+   "thinking": 769
+  },
+  "pricing_used": {
+   "model": "gemini-3.7-flash",
+   "model_recorded": "gemini-3.7-flash",
+   "tier": "batch",
+   "tier_source": "estimate: each leg's mean usage per call",
+   "priced_at": "2026-10-08",
+   "input_per_1m": 0.375,
+   "cached_input_per_1m": 0.0375,
+   "output_per_1m": 1.875,
+   "thinking_tokens_billed_as_output": 769,
+   "discount": 0.5,
+   "discount_reason": "batch tier, billed total over standard-tier total, from the rate card row valid from 2026-08-01",
+   "rate_card": {
+    "path": "data/pricing/gemini-rate-card.json",
+    "version": "2026-09-21.2",
+    "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+    "row_valid_from": "2026-08-01",
+    "row_valid_to": "2026-12-31",
+    "invoice_confirmed": true
+   }
+  }
+ },
+ "max_cost_usd": 0.05,
+ "legs": [
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2",
+   "model": "gemini-3.7-flash",
+   "thinking_level": "low",
+   "temperature": 0.0,
+   "max_output_tokens": 8192,
+   "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+   "n_results": 22785,
+   "n_parse_error_rows": 1,
+   "n_rows": 1,
+   "keys": [
+    "candidate_14666"
+   ],
+   "request_files": [
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk0.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk1.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk2.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk3.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk4.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk5.jsonl"
+   ]
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "model": "gemini-3.7-flash",
+   "thinking_level": "low",
+   "temperature": 0.0,
+   "max_output_tokens": 8192,
+   "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+   "n_results": 36389,
+   "n_parse_error_rows": 3,
+   "n_rows": 3,
+   "keys": [
+    "candidate_24301",
+    "candidate_25096",
+    "candidate_35486"
+   ],
+   "request_files": [
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk0.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk1.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk2.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk3.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk4.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk5.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk6.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk7.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk8.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk9.jsonl"
+   ]
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "model": "gemini-3.7-flash",
+   "thinking_level": "low",
+   "temperature": 0.0,
+   "max_output_tokens": 8192,
+   "system_instruction_hash": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+   "n_results": 45786,
+   "n_parse_error_rows": 3,
+   "n_rows": 3,
+   "keys": [
+    "candidate_21916",
+    "candidate_26911",
+    "candidate_35350"
+   ],
+   "request_files": [
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk0.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk1.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk2.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk3.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk4.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk5.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk6.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk7.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk8.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk9.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk10.jsonl",
+    "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk11.jsonl"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2",
+   "key": "candidate_14666",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 118 (char 235)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Vegetation symbol or well/spring circle among contour lines and land-cover boundary dots\",\n    \"alternative_evidence\": \"The centre contains standard topographic elements including meadow/grass tick marks ('\" \"'), a dotted vegetation boundary around a green patch, and a small open circle denoting a well or spring. There is no trace of outward-radiating rays or a hachured mound symbol.\",\n    \"reasoning\": \"The features at the centre are standard map symbology (vegetation, contour line, well/small circle) with completely absent burial mound sunburst hachures.\",\n    \"mound_probability\": 0.01\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 144,
+    "totalTokenCount": 2051,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 115,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/verifier_requests_chunk3.jsonl",
+   "request_line_sha256": "e58369d73220fc2ac109331deacd309b1a2cea6f66e1ee189662c4cea1559673",
+   "request_line_bytes": 60550,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_24301",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 155 (char 252)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Natural shoreline / terrain contour with text and vegetation symbols\",\n    \"alternative_evidence\": \"The center contains blue elevation text '166,6', brown contour lines, a stream/lake shoreline, and small vegetation marks ('\"'), but no central mound symbol with outward radiating sunburst rays.\",\n    \"reasoning\": \"There is no mound symbol (kurgan) present at the centre of this crop; the detector picked up overlapping contours, stream bends, or text characters.\",\n    \"mound_probability\": 0.0\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 122,
+    "totalTokenCount": 1914,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk6.jsonl",
+   "request_line_sha256": "5075b53539bc12c76c58387927edcef7cf7812e4551aa0a2bc70c8780cac8760",
+   "request_line_bytes": 58030,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_25096",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 202 (char 310)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Karst sinkhole, small depression, or isolated tree marker along contour/terrain\",\n    \"alternative_evidence\": \"The symbol at the centre is a tiny hollow black circle without any outward-radiating rays or sunburst hachures. It is surrounded by contour lines, vegetation tick marks ('\"'), and boundary dots.\",\n    \"reasoning\": \"Burial mounds are characterized by distinct radial hachures forming a sunburst/gear pattern around a central feature. This is simply a small plain circle marker with zero radiating lines.\",\n    \"mound_probability\": 0.01\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 134,
+    "totalTokenCount": 2036,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 110,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk6.jsonl",
+   "request_line_sha256": "83b595b5cee59a528f517783a1d3a35fb7187423d7cf18f52c320ce437aacfe5",
+   "request_line_bytes": 63334,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2",
+   "key": "candidate_35486",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 113 (char 216)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Contour lines with vegetation or pit/tree circle symbols along a grid line\",\n    \"alternative_evidence\": \"The center contains wavy brown contour lines, standard vegetation/scrub markers ('\"'), and small hollow circle symbols. There is no central point or shape with outward-radiating sunburst rays.\",\n    \"reasoning\": \"There is completely no mound or sunburst feature in the center; the area consists solely of standard terrain contours and vegetation markers.\",\n    \"mound_probability\": 0.01\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 119,
+    "totalTokenCount": 1977,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 66,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/verifier_requests_chunk8.jsonl",
+   "request_line_sha256": "9027bd5c5084fc489f718c9d8ff1f4d58c391217fc73116bd1603fd9d97b5850",
+   "request_line_bytes": 41482,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_21916",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 96 (char 184)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Vegetation symbols, dotted boundary line, and contour loops\",\n    \"alternative_evidence\": \"The center contains standard topographic vegetation tick marks ('\"'\"'11'\"'\"'), dotted boundary/clearing lines, and a small closed contour or spot circle without any radiating hachures or sunburst rays.\",\n    \"reasoning\": \"There is no sunburst pattern or radiating rays typical of a burial mound (kurgan). The marks present are clearly standard vegetation indicators and contour lines.\",\n    \"mound_probability\": 0.05\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 124,
+    "totalTokenCount": 2056,
+    "promptTokensDetails": [
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     },
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     }
+    ],
+    "thoughtsTokenCount": 140,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk5.jsonl",
+   "request_line_sha256": "eb47af92a71f6d5b93824cee9d6434f8de6355daed29a05d2d82c259a3fa9e06",
+   "request_line_bytes": 65462,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_26911",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 179 (char 253)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n  \"best_alternative\": \"Vegetation/land-use boundary with grass symbols\",\n  \"alternative_evidence\": \"The center of the crop contains brown contour lines, a series of black dots forming boundary markers, and a Soviet grass/pasture vegetation symbol ('\" + \"||\" + \"'). There is no circular ring or outward-radiating sunburst pattern.\",\n  \"reasoning\": \"The features at the center represent topographic contours and standard land-cover dotted boundaries with pasture vegetation symbols, completely lacking any hachured mound structure.\",\n  \"mound_probability\": 0.01\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 130,
+    "totalTokenCount": 1993,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 71,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk6.jsonl",
+   "request_line_sha256": "88a2ea914fd3fe30f871e8e1afd95cfa87143bc9497666507955da3453ac0a50",
+   "request_line_bytes": 59946,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  },
+  {
+   "leg": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2",
+   "key": "candidate_35350",
+   "booked": {
+    "mound_probability": 0.0,
+    "reasoning": "PARSE_ERROR: Expecting ',' delimiter: line 3 column 140 (char 216)",
+    "best_alternative": "",
+    "alternative_evidence": ""
+   },
+   "original_response_text": "{\n    \"best_alternative\": \"Natural terrain features and vegetation symbols\",\n    \"alternative_evidence\": \"The centre contains standard contour lines, a thin stream line, and grassland/shrub vegetation tick marks ('\" + \"||\" + \"') with no circular hachured mound structure or survey marker symbol.\",\n    \"reasoning\": \"There is no mound symbol (kurgan sunburst) present at or near the image centre. The area consists of open terrain lines, standard contour lines, and vegetation marks.\",\n    \"mound_probability\": 0.01\n}",
+   "original_usage": {
+    "promptTokenCount": 1792,
+    "candidatesTokenCount": 123,
+    "totalTokenCount": 2046,
+    "promptTokensDetails": [
+     {
+      "modality": "IMAGE",
+      "tokenCount": 1089
+     },
+     {
+      "modality": "TEXT",
+      "tokenCount": 703
+     }
+    ],
+    "thoughtsTokenCount": 131,
+    "serviceTier": "SERVICE_TIER_STANDARD"
+   },
+   "repair_error": "Could not parse response after Tier 1 (trailing-comma), Tier 2 (json5), or Tier 3 (longest-valid-prefix) repair",
+   "request_file": "/home/shawn/Code/map-reader-llm/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/verifier_requests_chunk8.jsonl",
+   "request_line_sha256": "fbdb69885df68fb92c66b6951d3e82a4ec72b967cdcdb5bd657579fdeac3037c",
+   "request_line_bytes": 69282,
+   "rebuild_cross_check": {
+    "checked": true,
+    "identical_parsed": true,
+    "identical_bytes": true,
+    "differing_paths": []
+   }
+  }
+ ],
+ "repairable_not_sent": []
+}

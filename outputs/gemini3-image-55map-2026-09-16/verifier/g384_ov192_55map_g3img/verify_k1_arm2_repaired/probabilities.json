@@ -3,7 +3,7 @@
   "mode": "batch",
   "verifier_config": "verify_adversarial-text",
   "iterations": 1,
-  "total_results": 22784,
+  "total_results": 22785,
   "results": {
     "candidate_00000": {
       "mound_probability": 0.01,
@@ -136708,6 +136708,12 @@
       "reasoning": "The symbol is a classic, perfectly formed orange-brown kurgan/burial mound symbol with radiating outward hachures/rays forming a sunburst/gear shape, accompanied by relative mound height notation '3' in the same brown ink. There is no plausible alternative interpretation.",
       "best_alternative": "Contour line irregularity or text artefact near elevation marker",
       "alternative_evidence": "The symbol sits adjacent to an elevation label '83,8' and a brown number '3', potentially being a contour feature or spot marker."
+    },
+    "candidate_14666": {
+      "mound_probability": 0.05,
+      "reasoning": "A burial mound requires outward-radiating rays indicating an elevated relief feature. This symbol lacks any radiating hachures and is simply an isolated small point symbol/hollow ring among terrain markings.",
+      "best_alternative": "A small circular topographic symbol (such as a spring, well, or sinkhole) or vegetation marking",
+      "alternative_evidence": "The feature near the center is a tiny hollow grey circle situated between contour lines, accompanied by meadow/grass symbol tick marks and dotted vegetation boundaries. There are no outward-radiating hachures or sunburst rays."
     }
   },
   "parse_repair": {
@@ -136717,5 +136723,14 @@
     "removed_keys": [
       "candidate_14666"
     ]
+  },
+  "reverify": {
+    "record": "reverify-2026-10-08.json",
+    "n_merged": 1,
+    "keys": [
+      "candidate_14666"
+    ],
+    "not_booked": [],
+    "source": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08"
   }
 }
