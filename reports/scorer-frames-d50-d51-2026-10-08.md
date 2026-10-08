@@ -1,6 +1,6 @@
 # Scorer frames: rulings D50 and D51 implemented and measured, 2026-10-08
 
-> **Last revised**: 2026-10-08 (original publication, Session 163). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (review fixes and merge with `main`; § 5.2's count named). See [§ Changelog](#changelog) for revision history.
 
 **Status: FOR THE PI.** Implementation of two PI rulings of 2026-10-07
 (`planning/pi-decisions-2026-09-20.md`, entries D50 and D51) on branch
@@ -51,7 +51,8 @@ register.
    the overlap of two sheets' padded tiles that can be the neighbouring sheet's tile,
    though every member of the cluster was seen on the other sheet. That is the
    re-key ruling D50 forbids, made by the evaluator itself. Restoring the origin
-   moves 696 cells at 20 m, **all upward** (median +0.0018, largest +0.0245; 680 of
+   moves 696 cells by at least 0.001 at 20 m in F1, precision or recall (629 in F1@20
+   alone), and F1@20 rises in **every one** (median +0.0018, largest +0.0245; 680 of
    the 696 have a synthesised `source_tile`). The frames report's census could not see this,
    because its parser turns a NumPy array of names, which is how geopandas reads a
    JSON-array property, into one unparseable string (§ 5.2).
@@ -110,7 +111,7 @@ map sheet and kept only if it intersects one of that sheet's frame tiles, by the
 | `analyse_dawid_skene.py`, `review_candidates.py`, `discover_hard_cases.py`, `h13_overlap_analysis.py`, `analyse_55maps_heterogeneity.py` | Their copies replaced by the library's loop or scope |
 | `evaluate_detections.py` | Every evaluation records a `detection_scope` block, per pass and summed |
 | `sweep_f1_greedy_pv.py` | Inherits the scope; prints the universe's scope counts |
-| `prepare_h13_scoring.assign_primary_tiles` (twelve call sites), tier E's `reassign_carrier_tiles` | `assign_primary_tiles_on_origin_sheet`: the nearest tile on an origin sheet, or none; tier E also writes `origin_source_tile` before overwriting |
+| `prepare_h13_scoring.assign_primary_tiles` (twelve call sites), tier E's `reassign_carrier_tiles` | `assign_primary_tiles_on_origin_sheet`: the nearest tile on an origin sheet, or none; before overwriting, tier E keeps a row's single origin tile in `origin_source_tile` where the row records no member list (§ Changelog, review fixes) |
 
 The `detection_scope` block holds `n_detections`, `n_in_scope`, `n_out_of_frame`,
 `n_out_of_frame_cross_sheet` (out of frame but inside another sheet's tiles),
@@ -165,7 +166,10 @@ the common area by more than the tolerance is a mismatch. The comparison **refus
 (exit 3) unless the caller asks to clip to the common area; then the output names the
 clip (`clip-to-common-assessed-area`) and the area each pool loses. An undetermined
 pool **refuses** (exit 4) unless the caller explicitly allows it, and even then the
-status reads `undetermined`, never `same`. Because the common area is the
+status reads `undetermined`, never `same`. With both options, a mismatch among the
+determined pools clips every pool, undetermined ones included, to the area common to
+the determined pools. The status then reads `clipped-to-common-area-with-undetermined`,
+never a bare `undetermined` (§ Changelog, review fixes). Because the common area is the
 intersection, two areas of equal size in different places are refused too.
 
 **Tolerance.** 0.01 km² (`DEFAULT_TOLERANCE_KM2`) is a 100 m square, far below the
@@ -234,7 +238,8 @@ committed argmax and the count of moving rows all match the frames report's ON s
 
 ### 4.3 Tests and red sentinels
 
-Two new tier-1 modules hold 54 tests, `tests/test_detection_scope.py` for D50 and
+Two new tier-1 modules held 54 tests at the measurement head (77 after the review
+fixes, § Changelog), `tests/test_detection_scope.py` for D50 and
 `tests/test_assessed_area.py` for D51 (refusal, clip, undetermined pools, pass
 provenance, recovery fragments, declarations, the builder's gate and the sweep's
 clip). The
@@ -289,7 +294,8 @@ rest of this section is what that report did not measure.
 
 | Measure | Value |
 |---|---|
-| Cells moving by ≥ 0.001 at 20 m through origin restoration | 696 |
+| Cells moving by ≥ 0.001 at 20 m through origin restoration, by the largest of the F1, precision and recall changes | 696 |
+| … moving by ≥ 0.001 in F1@20 alone | 629 |
 | … F1@20 rises / falls | 696 / 0 |
 | … median and largest rise | +0.0018 and +0.0245 |
 | … rising by ≥ 0.01 | 50 |
@@ -303,7 +309,7 @@ frame, keeping the first tile in join order (`_evaluate_condition`). In the band
 two sheets' padded tiles overlap, that first tile can belong to the neighbouring
 sheet, though the cluster was seen only on its own sheet's tiles; the per-sheet matcher
 then cannot match it to its own sheet's reference, and one true positive becomes a
-false positive and a false negative. That every one of the 696 moves is upward is what
+false positive and a false negative. That F1@20 rises in every one of the 696 is what
 that mechanism predicts. The join's first-tile choice also depends on the frame file's
 row order, which § 5.5 shows matters.
 
@@ -456,7 +462,10 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
    re-key in place.
 2. **The four refused `pv-diag-384` ladders.** Clip their larger rungs to the K = 1
    rung's area (option 1 of D51, applied to them), or accept the gap (two of the four
-   gaps hold no reference mound).
+   gaps hold no reference mound). Their K = 5 and K = 10 pools are undetermined, so the
+   clip also needs `--allow-undetermined-area`, or Q3's declarations. With both
+   options, the builder clips all four rungs to the common area of K = 1 and K = 3 and
+   says so (§ Changelog, review fixes).
 3. **The nine undetermined ladders.** Declare their pools' provenance (the passes
    may be recoverable from the pools' directory layout, which the gate deliberately
    does not infer), or have the builder run with `--allow-undetermined-area`, which
@@ -534,6 +543,62 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
   scorer on that checkout equals `origin/main`'s.
 
 ## Changelog
+
+### 2026-10-08 — Review fixes and merge with `main`
+
+**Trigger.** The independent review of the pull request (Claude, Opus 5.5, read-only;
+verdict MERGE AFTER FIXES), recorded with how each finding was applied in
+`reports/s163-agent-records/pr26-review.md`. Each finding was re-verified at source
+before it was fixed. The fixes:
+
+- **D51 with both options** (finding 1, `16a49438f`). With `--clip-to-common-area`
+  and `--allow-undetermined-area`, a mismatch among the determined rungs took the
+  `undetermined` branch: no clip was recorded, and the drivers swept unclipped. That
+  is the combination § 6 Q2 and Q3 lead to for the four refused `pv-diag-384`
+  ladders. Now every rung, undetermined ones included, is clipped to the area common
+  to the determined rungs, with the frame's reference set kept. The status is
+  `clipped-to-common-area-with-undetermined`, and the record names the undetermined
+  rungs. With no rung determined, or with the determined rungs agreeing, behaviour is
+  unchanged (§§ 3.2 and 6 updated).
+- **A direct test that a clip never removes references** (`ef37504a3`). Before it,
+  only the ladder builder's data-bound test caught that mutation.
+- **`parse_tile_list` fails loudly** (finding 2, `b904ff936`). Missing values
+  (`None`, NaN, `pd.NA`) move the origin search on to the next column. Unsupported
+  types and unparseable `[`-strings raise, naming the column and the row. Every form
+  in the corpus parses as before: old and new parsers agree on all 110,334 checks
+  over the 2,043 tracked GeoJSON files that carry an origin column.
+- **Tier E regeneration keeps every member's sheet** (finding 3, `fd50cd133`).
+  `reassign_carrier_tiles` no longer copies the materialiser's first, alphabetical,
+  member into `origin_source_tile` where a member list exists, which had brought
+  back the rule § 7 item 1 rejected (§ 2.2 updated).
+- **Merge with `main`** (finding 4, `7a7a40e36`), at `e29baf0f5`. The one conflict,
+  `reports/verification/generated-file-registry.json`, was rebuilt with
+  `scripts/build_generated_file_registry.py`.
+- **§ 5.2's count named** (the review's informational note). The 696 cells count the
+  largest of the F1, precision and recall changes; by F1@20 alone the count is 629
+  (`origin_restored_analysis.json` → `rows`, and `summary/moved_new.csv`). F1@20
+  rises in all 696, and the smallest rise is +0.00016 (§§ 1 and 5.2 updated).
+
+| Claim | Before | After |
+|---|---|---|
+| Cells moving by ≥ 0.001 at 20 m through origin restoration | 696, basis unstated | 696 by the largest of the F1, precision and recall changes; 629 by F1@20 alone |
+| Tests in the two new tier-1 modules | 54 | 77 (28 for D51, 49 for D50) |
+
+**What did not change.** No measured result in §§ 1–8 moved. After the parser and
+tier E fixes, the cells the review recomputed read as before: the t26 consensus cell
+F1@20 0.816471, `gs-v2-consensus-5of5` 0.767251, `h11` `eval-t1` 0.305181, and tier E
+K = 1 / 3 / 5 0.8680 / 0.8979 / 0.9046, the last also when regenerated through the
+fixed function. The gate survey of § 5.6 ran without a clip, which the D51 fix does
+not touch.
+
+**Found while fixing, not changed.** In a materialised cell that is not re-keyed, the
+scorer keeps a `source_tile` that names one of the detection's origin sheets.
+`materialise_pv_geojson.py` writes the first, alphabetical, member there. A cluster
+seen on two sheets but lying only in the second sheet's frame tiles is therefore
+still out of frame for such a cell (a synthetic probe). This predates the branch, and
+how often it occurs in committed cells was not measured.
+
+**Remaining.** The full tier-1 suite on the merged head, to be run on sapphire.
 
 ### 2026-10-08 — Original publication (Session 163)
 
