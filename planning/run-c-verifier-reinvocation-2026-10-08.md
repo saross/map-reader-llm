@@ -1,12 +1,13 @@
 # Run C: verifier re-invocation on Run B's unions — card
 
-> **Last revised**: 2026-10-08 (original publication, before the first
-> lodge). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (the run record, § 9: all twenty legs landed,
+> committed and audited; uploads deleted). See [§ Changelog](#changelog) for
+> revision history.
 
-**Status: READY TO LODGE.** The tooling is on `main` (`88103aef1`), all
-twenty rehearsals are API-free and pass, and the estimate is inside the
-approval. Results go to `results/modality-bridge-2026-10-07/findings.md`
-(a new section after § 7) and `results/modality-bridge-2026-10-07/verifier-sd/`.
+**Status: DONE.** All twenty legs landed complete (34,332 of 34,332
+candidates), were committed (`6c1e82014`, `9793307a5`) and audited at
+US$25.32 (§ 9). Results: `results/modality-bridge-2026-10-07/findings.md`
+§ 7a and `results/modality-bridge-2026-10-07/verifier-sd/`.
 
 ## 1. Why
 
@@ -206,10 +207,61 @@ source of a non-terminal job, and record the deletions here.
 
 ## 9. Record
 
-To be filled as the run proceeds: request identity, lodging, landing,
-repairs, audited cost, uploads deleted.
+**Request identity:** § 6 (34,332 of 34,332 lines byte for byte).
+
+**Lodging.** Replicate 2's `verify all` launched its first leg at 08:18:11
+UTC and logged `LODGING DONE` at 08:37:02; replicate 3's first leg launched
+at 08:38:34 and its `LODGING DONE` came at 08:57:26. Each ran
+detached (launcher logs `stage2/logs/run-c-verify-rep<n>.log`), one leg at a
+time, every gate passing again on every leg (band, rehearsal, signatures,
+identity). One job per leg (every leg under 4,000 candidates). No leg was
+lodged twice, no `FORCE=1`, no `batch-recover` was needed.
+
+**Landing.** Every leg ended `EXIT 0` with `JOB_STATE_SUCCEEDED` and all its
+candidates booked. The Gemini 3 legs took 5 to 14 minutes from submission;
+the Gemini 3.7 legs 36 to 99 minutes (the last, replicate 3's 3.7 legs,
+ended 10:19–10:27 UTC). Times per leg are in each
+`stage2/logs/verify-<leg>-rep<n>.log`.
+
+**Repairs.** One `PARSE_ERROR` in twenty legs: `g3-image-temp1`, replicate
+3, `candidate_02479` ("Extra data", a stray closing brace), repaired to 0.0,
+the value the batch parser booked. Its response text is byte-identical to
+replicate 1's, which failed at the same position. Every other repaired copy
+changed nothing.
+
+**Audited cost** (`scripts/audit_verifier_cost.py`; record
+`stage2/checks/run-c-cost-audit.json`): replicate 2 US$12.6573, replicate 3
+US$12.6603, **US$25.3176** in all, against the estimate of US$25.20–25.98
+and the US$50 cap. Per candidate: Gemini 3 US$0.000684–0.000710, Gemini 3.7
+US$0.001072–0.001088.
+
+**Uploads deleted** (2026-10-08, after both commits): the twenty request
+files these legs uploaded, one per leg, each named in its leg's
+`batch_jobs.json` and each the source of a `JOB_STATE_SUCCEEDED` job; none
+was the source of a live job. The File API then held 0 files. Record:
+`stage2/checks/run-c-uploads-deleted.json`.
+
+**Not done here.** The original legs' untracked `verifier_requests.jsonl`
+files on sapphire (about 1 GB) are left for the main session to delete
+under D55 (Q3), as agreed. The replicates' own request files (the same
+bytes, about 2 GB, untracked and gitignored) are also still on sapphire.
+
+**Launch-hygiene notes.** (1) The first launch line, `cd … && nohup … &`,
+backgrounded the whole `&&` list as a subshell that held ssh's descriptors,
+so the ssh call blocked until its timeout; the driver had started once and
+nothing followed the launch on the line. The second used `cd … || exit 1;
+nohup … &` and returned at once. (2) One of my own waits printed "all twenty
+exited" when its outer `timeout` expired, because the message followed the
+loop with `;`; the status read before acting showed three legs still
+polling, and the launcher's `wait` (terminal state) was used from then on.
 
 ## Changelog
+
+### 2026-10-08 — The run record
+
+§ 9 filled: lodging, landing, the one repair, the audited cost
+(US$25.3176), the deleted uploads and two launch-hygiene notes. Status
+READY TO LODGE → DONE. § 2 quotes the PI's approval from D56.
 
 ### 2026-10-08 — Original publication
 
