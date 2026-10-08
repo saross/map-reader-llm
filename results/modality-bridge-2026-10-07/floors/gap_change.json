@@ -1,0 +1,392 @@
+{
+ "carried-verifier minus g3": {
+  "tier": "primary",
+  "gap_37": "carried-verifier",
+  "gap_3": "g3",
+  "cells": {
+   "T37": [
+    "g37-text-g3v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g3v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.0005840412722499799,
+  "gap_3_value": 0.05233181142255072,
+  "gap_change": -0.0529158526948007,
+  "ci95": [
+   -0.08874216445326732,
+   -0.01976109372791879
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.05296634992174204,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0047,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0031,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0047
+ },
+ "all-3.7 minus g3": {
+  "tier": "primary",
+  "gap_37": "all-3.7",
+  "gap_3": "g3",
+  "cells": {
+   "T37": [
+    "g37-text-g37v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g37v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.002333722287047868,
+  "gap_3_value": 0.05233181142255072,
+  "gap_change": -0.05466553370959859,
+  "ci95": [
+   -0.09090252037374055,
+   -0.019477568129204675
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.054934146068129366,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.004,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0029,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0044444444444444444
+ },
+ "carried-verifier minus g3-k5": {
+  "tier": "secondary: K-matched",
+  "gap_37": "carried-verifier",
+  "gap_3": "g3-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g3v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g3v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "ladder5"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "ladder5"
+   ]
+  },
+  "gap_37_value": -0.0005840412722499799,
+  "gap_3_value": 0.060948424359104414,
+  "gap_change": -0.061532465631354394,
+  "ci95": [
+   -0.09699538198545465,
+   -0.027451077628521368
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.06181788211276385,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0004,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0004,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0008
+ },
+ "all-3.7 minus g3-k5": {
+  "tier": "secondary: K-matched",
+  "gap_37": "all-3.7",
+  "gap_3": "g3-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g37v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g37v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "ladder5"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "ladder5"
+   ]
+  },
+  "gap_37_value": -0.002333722287047868,
+  "gap_3_value": 0.060948424359104414,
+  "gap_change": -0.06328214664615228,
+  "ci95": [
+   -0.10028735788625831,
+   -0.02766989859294932
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.06378567825915119,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0002,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0002,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0006666666666666666
+ },
+ "carried-verifier minus g3-t1-k5": {
+  "tier": "secondary: Gemini 3 at T 1.0",
+  "gap_37": "carried-verifier",
+  "gap_3": "g3-t1-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g3v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g3v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-temp1-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-temp1-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.0005840412722499799,
+  "gap_3_value": 0.05818181818181822,
+  "gap_change": -0.0587658594540682,
+  "ci95": [
+   -0.09167870681585413,
+   -0.02556582659801769
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.05779270337725258,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0006,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0005,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0009999999999999998
+ },
+ "all-3.7 minus g3-t1-k5": {
+  "tier": "secondary: Gemini 3 at T 1.0",
+  "gap_37": "all-3.7",
+  "gap_3": "g3-t1-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g37v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-g37v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-temp1-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-temp1-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.002333722287047868,
+  "gap_3_value": 0.05818181818181822,
+  "gap_change": -0.06051554046886609,
+  "ci95": [
+   -0.09551474141111406,
+   -0.028811145410949108
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.05976049952363991,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0004,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0002,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0008
+ },
+ "fifth-leg-g3v minus g3": {
+  "tier": "secondary: fifth leg",
+  "gap_37": "fifth-leg-g3v",
+  "gap_3": "g3",
+  "cells": {
+   "T37": [
+    "g37-text-g3v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-cache-g3v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.016380551778645613,
+  "gap_3_value": 0.05233181142255072,
+  "gap_change": -0.06871236320119634,
+  "ci95": [
+   -0.10716781558800555,
+   -0.031564016310388764
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.06868627965851266,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0008,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0005,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.001142857142857143
+ },
+ "fifth-leg-g37v minus g3": {
+  "tier": "secondary: fifth leg",
+  "gap_37": "fifth-leg-g37v",
+  "gap_3": "g3",
+  "cells": {
+   "T37": [
+    "g37-text-g37v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-cache-g37v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.009781081705969918,
+  "gap_3_value": 0.05233181142255072,
+  "gap_change": -0.06211289312852064,
+  "ci95": [
+   -0.09781680076903798,
+   -0.026953407429597304
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.062356298617388124,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0011,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0009,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0013750000000000001
+ },
+ "fifth-leg-g3v minus g3-t1-k5": {
+  "tier": "secondary: fifth leg, fully matched",
+  "gap_37": "fifth-leg-g3v",
+  "gap_3": "g3-t1-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g3v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-cache-g3v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-temp1-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-temp1-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.016380551778645613,
+  "gap_3_value": 0.05818181818181822,
+  "gap_change": -0.07456236996046384,
+  "ci95": [
+   -0.10979602403528257,
+   -0.04155568764157668
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.0735126331140232,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0
+ },
+ "fifth-leg-g37v minus g3-t1-k5": {
+  "tier": "secondary: fifth leg, fully matched",
+  "gap_37": "fifth-leg-g37v",
+  "gap_3": "g3-t1-k5",
+  "cells": {
+   "T37": [
+    "g37-text-g37v",
+    "best"
+   ],
+   "I37": [
+    "g37-image-cache-g37v",
+    "best"
+   ],
+   "T3": [
+    "g3-text-temp1-g3v",
+    "best"
+   ],
+   "I3": [
+    "g3-image-temp1-g3v",
+    "best"
+   ]
+  },
+  "gap_37_value": -0.009781081705969918,
+  "gap_3_value": 0.05818181818181822,
+  "gap_change": -0.06796289988778814,
+  "ci95": [
+   -0.10079311152398221,
+   -0.03586081360136064
+  ],
+  "excludes_zero": true,
+  "bootstrap_mean": -0.06718265207289868,
+  "n_bootstrap": 1000,
+  "p_modality_swap": 0.0,
+  "p_method": "paired interaction permutation test (PI ruling D42): per tile the pairs (a, b) and (c, d) swap with probability 0.5; two-sided p = mean(|null| >= |observed|)",
+  "p_family_swap": 0.0,
+  "n_permutations": 10000,
+  "seed": 42,
+  "p_bh_all_ten": 0.0
+ }
+}
