@@ -35,6 +35,14 @@ Description:
     — the least-thresholded of the tied points, so a tie resolves towards
     recall rather than towards whichever row the file happens to end on.
 
+    **Same assessed area (PI ruling D51, 2026-10-07).** Before any sweep,
+    each family's rungs here are compared with its committed K = 5 and
+    K = 10 siblings (``scripts/lib_assessed_area.py``). The run REFUSES when
+    their assessed areas differ (exit 3) or one cannot be determined from
+    provenance (exit 4), unless ``--clip-to-common-area`` (sweeps and cells
+    clipped to the family's common area, written under
+    ``phase2/assessed-area/``) or ``--allow-undetermined-area`` is given.
+
 Usage::
 
     # Sweep + materialise + write the evaluation jobs file
@@ -66,6 +74,13 @@ from typing import Any
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.build_k_ladder_phase2_tables import committed_sibling_pools  # noqa: E402
+from scripts.lib_assessed_area import (  # noqa: E402
+    COMMON_AREA_CLIP_NAME,
+    add_area_gate_arguments,
+    clip_geojson_file,
+    run_area_gate,
+)
 from scripts.run_k_ladder_phase2_verifier import (  # noqa: E402
     LEDGER_JSON,
     UNIONS_JSON,
@@ -171,13 +186,17 @@ def selected_rungs(
     return kept
 
 
-def run_sweep(rung: dict[str, Any], *, bounds: str, out_name: str) -> Path:
+def run_sweep(
+    rung: dict[str, Any], *, bounds: str, out_name: str, clip_area: str | None = None,
+) -> Path:
     """Run ``sweep_f1_greedy_pv.py`` for one rung on one frame.
 
     Args:
         rung: A rung with its resolved ``paths``.
         bounds: Evaluation bounds GeoJSON, relative to the repository root.
         out_name: Filename for the sweep inside the verify directory.
+        clip_area: The family's D51 common assessed area, when the gate
+            clipped (``None`` otherwise).
 
     Returns:
         Path to the written sweep JSON.
@@ -202,6 +221,7 @@ def run_sweep(rung: dict[str, Any], *, bounds: str, out_name: str) -> Path:
         bounds,
         "--buffer-m",
         *[str(buffer) for buffer in SWEEP_BUFFERS],
+        *(["--clip-area", clip_area] if clip_area else []),
     ]
     completed = subprocess.run(
         command, cwd=BASE_DIR, capture_output=True, text=True, check=False
@@ -311,10 +331,53 @@ def eval_command(detections: Path, cell: str, label: str) -> str:
     )
 
 
+def gate_families(
+    rungs: list[dict[str, Any]], args: argparse.Namespace,
+) -> dict[str, Any]:
+    """Run the D51 assessed-area gate once per family, before any sweep.
+
+    Each family's rungs being swept here (K = 1, 3) are compared with the
+    family's committed siblings (K = 5, 10;
+    ``build_k_ladder_phase2_tables.committed_sibling_pools``) on the board
+    frame. A refusal exits (3 mismatch, 4 undetermined); with
+    ``--clip-to-common-area`` the family's common area is written under
+    ``phase2/assessed-area/`` and its rungs are swept and materialised
+    clipped to it.
+
+    Args:
+        rungs: The rungs selected for this run.
+        args: Parsed arguments (the gate's three options).
+
+    Returns:
+        ``{pool slug: AreaComparison}``.
+    """
+    comparisons: dict[str, Any] = {}
+    for pool in sorted({rung["pool_slug"] for rung in rungs}):
+        pools = {
+            f"K = {rung['n_passes']}": rung["paths"]["crops_dir"]
+            for rung in rungs if rung["pool_slug"] == pool
+        }
+        for k, union in committed_sibling_pools(pool).items():
+            pools.setdefault(f"K = {k}", union)
+        comparisons[pool] = run_area_gate(
+            pools,
+            frame=BOARD_BOUNDS,
+            tolerance_km2=args.area_tolerance_km2,
+            clip_to_common=args.clip_to_common_area,
+            allow_undetermined=args.allow_undetermined_area,
+            clip_geojson=PHASE2_DIR / "assessed-area" / f"{pool}.geojson",
+            what=f"family {pool}",
+        )
+    return comparisons
+
+
 def cmd_prepare(args: argparse.Namespace) -> None:
     """Sweep, choose operating points, materialise, and write the jobs file."""
     rungs = selected_rungs(args.tier, args.row)
     logger.info("%d rung(s) with a verifier output", len(rungs))
+    # PI ruling D51: refuse (or clip) before sweeping a family whose rungs
+    # did not search the same area.
+    comparisons = gate_families(rungs, args)
 
     points: list[dict[str, Any]] = []
     jobs: list[str] = []
@@ -343,8 +406,10 @@ def cmd_prepare(args: argparse.Namespace) -> None:
             max_workers=args.sweep_workers
         ) as pool:
             futures = {
-                pool.submit(run_sweep, rung, bounds=bounds, out_name=out_name):
-                    (rung["row"], out_name)
+                pool.submit(
+                    run_sweep, rung, bounds=bounds, out_name=out_name,
+                    clip_area=comparisons[rung["pool_slug"]].record.get("clip_geojson"),
+                ): (rung["row"], out_name)
                 for rung, bounds, out_name in sweep_specs
             }
             for future in concurrent.futures.as_completed(futures):
@@ -398,7 +463,11 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 "prob_t": carried_prob,
             },
             "labels": labels,
+            # D51: the family's assessed-area comparison (and its clip, if any).
+            "assessed_area": comparisons[rung["pool_slug"]].record,
         }
+        comparison = comparisons[rung["pool_slug"]]
+        clip_area = comparison.record.get("clip_geojson")
 
         # At K = 1 the vote axis is degenerate (vote_t can only be 1), so the
         # sweep-optimal point can coincide with the carried point exactly. When
@@ -438,6 +507,15 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 prob_t=entry[point]["prob_t"],
                 output=detections,
             )
+            if clip_area is not None:
+                removed = clip_geojson_file(
+                    detections, comparison.common, name=COMMON_AREA_CLIP_NAME,
+                )
+                count -= removed
+                entry[point]["clip"] = {
+                    "name": COMMON_AREA_CLIP_NAME, "area": clip_area,
+                    "n_removed": removed,
+                }
             cell = cell_dir_name(rung["run_id"], label)
             entry[point]["detections"] = str(detections.relative_to(BASE_DIR))
             entry[point]["n_detections"] = count
@@ -671,6 +749,7 @@ def main() -> None:
         action="store_true",
         help="Discard operating points from previous invocations",
     )
+    add_area_gate_arguments(prepare)
     prepare.set_defaults(func=cmd_prepare)
 
     collect = subparsers.add_parser(

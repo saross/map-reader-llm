@@ -1,0 +1,27 @@
+head bddbee0a1; symlinks in copy: 0
+== green control
+======================= 52 passed, 2 deselected in 1.10s =======================
+== sentinel 1: D50 scope disabled
+1511:        if True:  # RED SENTINEL
+FAILED tests/test_detection_scope.py::test_out_of_frame_detection_is_dropped_not_a_false_positive
+FAILED tests/test_detection_scope.py::test_cross_sheet_point_is_dropped_and_counted
+FAILED tests/test_detection_scope.py::test_non_unique_index_is_handled_by_position
+FAILED tests/test_detection_scope.py::test_detection_scope_keeps_exactly_what_the_reference_rule_keeps
+FAILED tests/test_detection_scope.py::test_per_tile_table_and_point_estimate_describe_the_same_detections
+FAILED tests/test_detection_scope.py::test_tile_confusion_does_not_book_an_out_of_frame_name_collision
+FAILED tests/test_detection_scope.py::test_corrected_f1_engine_uses_the_library_scope
+FAILED tests/test_detection_scope.py::test_evaluation_records_the_detection_scope
+================== 8 failed, 44 passed, 2 deselected in 1.16s ==================
+== restored
+======================= 52 passed, 2 deselected in 1.10s =======================
+== sentinel 2: D51 refusal disabled
+810:    mismatch = False  # RED SENTINEL
+FAILED tests/test_assessed_area.py::test_different_areas_are_refused
+FAILED tests/test_assessed_area.py::test_equal_sizes_in_different_places_are_still_refused
+FAILED tests/test_assessed_area.py::test_clip_names_the_clip_and_the_area_removed
+FAILED tests/test_assessed_area.py::test_the_gate_exits_4_on_undetermined_and_3_on_mismatch
+FAILED tests/test_assessed_area.py::test_the_cli_writes_the_common_area_when_asked_to_clip
+FAILED tests/test_assessed_area.py::test_pass_provenance_unions_the_processed_tiles
+================== 6 failed, 46 passed, 2 deselected in 1.15s ==================
+== restored
+======================= 52 passed, 2 deselected in 1.11s =======================

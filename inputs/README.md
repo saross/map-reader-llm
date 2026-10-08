@@ -34,7 +34,11 @@ Place your source Soviet Topographic Maps and vector data here.
 *   `provenance/`: `manifest-dependencies.json` — the registry of manifests that
     declare provenance from another set, with each source's blob hash at
     declaration time. Checked by `scripts/check_manifest_provenance.py`
-    (erratum **E86**).
+    (erratum **E86**). `assessed-area-declarations.json` — assessed-area
+    records declared after the fact, with their evidence, for legacy candidate
+    pools whose builders recorded neither footprint nor clip (the 3.7 GS
+    K = 5 and K = 10 unions and the grid K = 10 union). Read by
+    `scripts/lib_assessed_area.py`, the same-area check of PI ruling **D51**.
 *   `examples/`: Few-shot example images for prompts.
     *   `neutral-naming/MANIFEST.md`: the neutral-filename mapping and the
         provenance of every example crop

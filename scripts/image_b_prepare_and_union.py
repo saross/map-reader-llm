@@ -36,6 +36,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.grid_prepare_scoring import CoverageError, load_pass  # noqa: E402
+from scripts.lib_assessed_area import KNOWN_TILINGS, write_area_record  # noqa: E402
 from scripts.materialise_grid_unions import union_with_votes  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
 from scripts.prepare_h13_scoring import write_dedup_geojson  # noqa: E402
@@ -76,10 +77,12 @@ def main() -> int:
     manifest = set(json.loads(MANIFEST.read_text()))
     cell_dir = root / CELL
     scoring = root / "scoring"
+    pass_files: list[str] = []
 
     for i in range(1, k_total + 1):
         run = f"run_{i}"
         paths = resolve_pass_paths(cell_dir, run)
+        pass_files.extend(str(Path(p).relative_to(PROJECT_ROOT)) for p in paths)
         raw, processed = load_pass(paths)
         missing = manifest - processed
         extra = processed - manifest
@@ -128,6 +131,28 @@ def main() -> int:
     logger.info("%s: union n=%d, votes %s | verifier flex est $%.2f -> %s",
                 CELL, len(gdf), votes, len(gdf) * VF_CALL_USD,
                 dest.relative_to(PROJECT_ROOT))
+    # PI ruling D51: record the area this union assessed — the pinned
+    # manifest's footprint (every pass covered it exactly, gated above)
+    # clipped to the common carrier footprint — so a ladder comparing it
+    # with an unclipped sibling can see the difference instead of having to
+    # read this script.
+    manifest_rel = str(MANIFEST.relative_to(PROJECT_ROOT))
+    footprint = KNOWN_TILINGS.get(manifest_rel)
+    if footprint is None:
+        raise CoverageError(
+            f"no tile polygons registered for {manifest_rel} in "
+            f"lib_assessed_area.KNOWN_TILINGS; register them so this union's "
+            f"assessed area can be recorded")
+    write_area_record(
+        dest,
+        builder=f"scripts/image_b_prepare_and_union.py --root "
+                f"{root.relative_to(PROJECT_ROOT)} --cell {CELL} --k {k_total}",
+        footprint_bounds=footprint,
+        footprint_manifest=manifest_rel,
+        clip_name="grid-common (the grid study's common 487-tile carrier footprint)",
+        clip_bounds=str(Path(COMMON_BOUNDS).relative_to(PROJECT_ROOT)),
+        passes=pass_files,
+    )
     return 0
 
 

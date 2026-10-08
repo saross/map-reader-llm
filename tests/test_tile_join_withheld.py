@@ -487,6 +487,13 @@ def test_sound_cell_reproduces_the_pre_change_golden(tmp_path):
         (GOLDEN_DIR / "matched-cell-summary.json").read_text(),
     )
     written = json.loads((tmp_path / "evaluation.json").read_text())
+    # PI ruling D50 (2026-10-07) adds one block to every evaluation: the
+    # detection-scope counts. It is the ONLY difference from the golden, and
+    # on this in-frame cell it must record that the rule removed nothing.
+    scope = written["summary"].pop("detection_scope")
+    assert scope["rule"] == "origin-sheet-geometric"
+    assert scope["n_in_scope"] == scope["n_detections"]
+    assert scope["n_out_of_frame"] == 0
     assert written["summary"] == expected_summary
 
     assert (tmp_path / "evaluation.csv").read_text() == (

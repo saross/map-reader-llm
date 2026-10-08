@@ -1,0 +1,67 @@
+{
+  "schema": "assessed-area-declarations/1",
+  "created": "2026-10-07",
+  "ruling": "D51 (planning/pi-decisions-2026-09-20.md)",
+  "purpose": "Assessed-area records DECLARED after the fact for legacy candidate pools whose builders recorded neither their footprint nor the clip they applied. Read by scripts/lib_assessed_area.determine_assessed_area (method 'declared'), which also checks that every candidate of the pool lies inside the declared area. A pool built after 2026-10-07 by a builder that calls write_area_record carries its own record beside the union and needs no entry here. Each entry cites the evidence it was reconstructed from; none is inferred from a path or a naming convention alone.",
+  "declarations": [
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+      "status": "declared-retrospectively",
+      "builder": "scripts/image_b_prepare_and_union.py --root outputs/gemini37-screen-2026-08-28 --cell g384_ov192_g37 --k 5",
+      "footprint": {
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+        "manifest": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json"
+      },
+      "clip": {
+        "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+      },
+      "evidence": [
+        "builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 and :161-166 (the script's --root help names this run; it writes root/verifier/<cell>/union_k<k>.geojson, where this union sits); planning/modality-bridge-2026-10-07.md:73",
+        "footprint: scripts/image_b_prepare_and_union.py:84-90 raises CoverageError unless each pass's processed tiles equal the pinned manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json exactly",
+        "clip: scripts/image_b_prepare_and_union.py:91-95 writes each pass with clip_geom = the grid_common_bounds union (:75), and :120 unions on the grid_common carrier tiles (scripts/materialise_grid_unions.py:94-95 drops off-carrier clusters)",
+        "committed in b8e130fd3 (2026-08-28 23:17 UTC), after the --root/--k flags (4cc079f95) and the K-aware pass loading fix (bb6274e7c)"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+      "status": "declared-retrospectively",
+      "builder": "scripts/image_b_prepare_and_union.py --root outputs/gemini37-screen-2026-08-28 --cell g384_ov192_g37 --k 10",
+      "footprint": {
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+        "manifest": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json"
+      },
+      "clip": {
+        "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+      },
+      "evidence": [
+        "builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 (union_k{5,10}: the same image_b_prepare_and_union.py chain)",
+        "footprint and clip: as for union_k5 (scripts/image_b_prepare_and_union.py:84-95, :120)",
+        "committed in b9516c26f (2026-08-29, escalation passes 6-10, K=10 union)"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+      "status": "declared-retrospectively",
+      "builder": "scripts/materialise_grid_unions.py over scripts/grid_prepare_scoring.py's common-scope passes",
+      "footprint": {
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+        "manifest": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json"
+      },
+      "clip": {
+        "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+        "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+      },
+      "evidence": [
+        "builder identity: reports/recovery-fragment-drop-2026-09-13.md:128; scripts/run_k_ladder_tier_e.py module docstring (the committed K = 10 rung's union was built by materialise_grid_unions.py and filtered to the common 487-tile carrier footprint); results/k-ladder-2026-09-12/tier-e/unions.json committed_k10_sibling.footprint",
+        "footprint: scripts/grid_prepare_scoring.py:515-524 raises CoverageError unless each pass's processed tiles equal the pinned manifest exactly",
+        "clip: scripts/grid_prepare_scoring.py:535-540 writes the common-scope passes with clip_geom = the grid_common union; scripts/materialise_grid_unions.py:108 reads grid_common_bounds and :94-95 drops off-carrier clusters",
+        "committed in 3c5d87b9f (2026-08-24, the four K=10 union candidate sets)"
+      ]
+    }
+  ]
+}

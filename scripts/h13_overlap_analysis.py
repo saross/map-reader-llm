@@ -79,6 +79,7 @@ from scripts.lib_permutation import paired_permutation_test  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
     get_map_name,
+    iter_sheet_scopes,
     match_detections_to_references,
     scope_references_to_tiles,
 )
@@ -331,9 +332,15 @@ def edge_analysis(
             gdf_det = gpd.read_file(
                 scoring_dir / "common" / arm / run / "detections_dedup.geojson")
             matched_global: set[Any] = set()
-            for map_name in sorted({get_map_name(n) for n in common_bounds["tile_name"]}):
-                r_scope = refs[refs["Map"] == map_name]
-                d_scope = gdf_det[gdf_det["source_tile"].str.startswith(map_name)]
+            # The library's per-sheet loop (PI ruling D50): detections scoped
+            # per sheet by tile geometry on their ORIGIN sheet — these files'
+            # ``source_tile`` was re-keyed across sheet edges, and their
+            # ``origin_tiles`` record where each detection was seen.
+            # ``refs`` is already in the common scope, so re-scoping it is a
+            # no-op.
+            for _map, d_scope, r_scope, _mb in iter_sheet_scopes(
+                gdf_det, refs, common_bounds, ref_map_col="Map",
+            ):
                 if r_scope.empty or d_scope.empty:
                     continue
                 _, m_ref, _, _ = match_detections_to_references(

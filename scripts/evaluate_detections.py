@@ -79,6 +79,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     describe_tile_join_refusal,
     measured_exclusion,
     read_processed_tiles,
+    scope_detections_to_frame,
 )
 
 #: Coverage statuses ordered worst-last, for the "worst case wins" rollups
@@ -1022,6 +1023,92 @@ def _withheld_buffer_row(
     }
 
 
+#: Integer counts of the ``detection_scope`` block that sum across passes.
+_DETECTION_SCOPE_COUNTS: tuple[str, ...] = (
+    "n_detections",
+    "n_in_scope",
+    "n_out_of_frame",
+    "n_out_of_frame_cross_sheet",
+    "n_origin_restored",
+    "n_origin_only",
+    "n_origin_unrecognised",
+    "n_unattributed",
+    "n_unattributed_in_frame",
+)
+
+
+def describe_detection_scope(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> dict[str, Any]:
+    """Record what the D50 detection scope did to one pass, and say so if it fired.
+
+    The scorer's F1, its per-tile table and its tile confusion all score
+    the frame-scoped detections
+    (``lib_advanced_metrics.scope_detections_to_frame``). This writes the
+    counts beside the tile-join diagnostics in ``evaluation.json`` so a
+    reader can see that the rule fired: how many detections lay outside
+    their own sheet's tiles (and of those, how many inside another
+    sheet's), and how many were scored on a recorded origin sheet rather
+    than on a re-keyed ``source_tile``.
+
+    Args:
+        gdf_det: One pass's detections, as scored.
+        gdf_bounds: The evaluation frame.
+
+    Returns:
+        The ``detection_scope`` diagnostics block.
+    """
+    diagnostics = scope_detections_to_frame(
+        gdf_det, gdf_bounds, require_attribution=False,
+    ).diagnostics
+    fired = {
+        key: diagnostics[key]
+        for key in (
+            "n_out_of_frame", "n_out_of_frame_cross_sheet",
+            "n_origin_restored", "n_origin_only", "n_unattributed_in_frame",
+        )
+        if diagnostics.get(key)
+    }
+    if fired:
+        logger.warning(
+            "  DETECTION SCOPE (%s) fired: %s of %d detections scored "
+            "(%s). Ruling D50: detections are scoped per sheet by tile "
+            "geometry, as references are, on their origin sheet.",
+            diagnostics["rule"], diagnostics["n_in_scope"],
+            diagnostics["n_detections"],
+            ", ".join(f"{k} {v}" for k, v in fired.items()),
+        )
+    return diagnostics
+
+
+def aggregate_detection_scope(run_results: list[dict]) -> dict[str, Any] | None:
+    """Sum the per-pass ``detection_scope`` blocks for an aggregated cell.
+
+    Args:
+        run_results: Per-pass results from :func:`evaluate_single_run`.
+
+    Returns:
+        A block with the same keys, counts summed over the passes that
+        carry one, plus ``n_passes``; ``None`` when no pass carries one.
+    """
+    blocks = [r["detection_scope"] for r in run_results if r.get("detection_scope")]
+    if not blocks:
+        return None
+    rollup: dict[str, Any] = {
+        "rule": blocks[0].get("rule"),
+        "applied": all(b.get("applied", True) for b in blocks),
+        "n_passes": len(blocks),
+    }
+    for key in _DETECTION_SCOPE_COUNTS:
+        rollup[key] = int(sum(int(b.get(key) or 0) for b in blocks))
+    rollup["origin_columns"] = sorted({
+        c for b in blocks for c in (b.get("origin_columns") or [])
+    })
+    rollup["ruling"] = blocks[0].get("ruling")
+    return rollup
+
+
 def evaluate_single_run(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
@@ -1304,6 +1391,12 @@ def evaluate_single_run(
         "ci_unreliable_any_buffer": cell_ci_unreliable,
         "coverage_status": cell_coverage_status,
     }
+
+    # Ruling D50: the detection scope's counts, beside the tile-join record,
+    # so the artefact shows whether (and how far) the scope rule fired.
+    # ``n_detections`` above stays the file's own feature count.
+    if n_det > 0:
+        result["detection_scope"] = describe_detection_scope(gdf_det, gdf_bounds)
 
     # The cell-level record of the refusal. It sits beside the metrics
     # rather than inside any one of them, because it governs which of them
@@ -1605,6 +1698,13 @@ def evaluate_multi_run_mean(
         "ci_unreliable_any_buffer": cell_ci_unreliable,
         "coverage_status": cell_coverage_status,
     }
+
+    # Ruling D50: the passes' detection-scope counts, summed, so the
+    # aggregated cell shows the rule fired without a reader opening
+    # ``per_run``.
+    scope_rollup = aggregate_detection_scope(run_results)
+    if scope_rollup is not None:
+        result["detection_scope"] = scope_rollup
 
     # Carry the refusal record up to the aggregated cell. A reader who
     # meets a null interval on an averaged row needs the reason in the same
@@ -2112,7 +2212,8 @@ def write_outputs(
                 "Numeric bounds remain in `evaluation.json` and "
                 "`evaluation.csv` for downstream tooling. The point "
                 "estimate (F1, P, R, MCC) is unaffected. See "
-                "`archive/planning-completed-session-81-82/pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
+                "`archive/planning-completed-session-81-82/"
+                "pairwise-bootstrap-ci-fix-plan-2026-04-29.md` "
                 "for the underlying methodology decision.\n",
             )
 

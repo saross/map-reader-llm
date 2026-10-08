@@ -47,6 +47,7 @@ sys.path.insert(0, str(_SCRIPT_DIR))
 from lib_advanced_metrics import (  # noqa: E402
     get_map_name,
     match_detections_to_references,
+    scope_detections_to_frame,
     scope_references_to_tiles,
 )
 from lib_calibration import (  # noqa: E402
@@ -181,16 +182,18 @@ def analyse_detections(
         # Deduplicate within pass (consistent with consensus pipeline)
         deduped = deduplicate_within_pass(features)
 
-        # Convert to GeoDataFrame for per-map matching
+        # Convert to GeoDataFrame for per-map matching, then scope it with
+        # the library's detection rule (PI ruling D50: per sheet by tile
+        # geometry, on the origin sheet), so an out-of-frame detection is no
+        # longer harvested as a hard-negative false positive.
         gdf_det = _deduped_to_gdf(deduped, gdf_bounds.crs)
+        det_scoped = scope_detections_to_frame(gdf_det, gdf_bounds)
 
         for map_name, ref_scope in scoped_refs.items():
             if ref_scope.empty:
                 continue
 
-            det_scope = gdf_det[
-                gdf_det["source_tile"].str.startswith(map_name)
-            ]
+            det_scope = det_scoped.on_sheet(map_name)
 
             if det_scope.empty:
                 # All refs in this map are FNs for this pass

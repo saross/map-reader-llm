@@ -22,9 +22,17 @@ Description:
     carried Gemini 3 verifier, not by a 3.7 one (the ``verify_swap37`` and
     ``verify_swap38`` stages beside them are the swaps, and are excluded).
 
+    **Same assessed area (PI ruling D51, 2026-10-07).** These two stages'
+    unions were clipped to the grid-common footprint upstream; the family's
+    K = 1 and K = 3 rungs were not. Before sweeping, the four rungs' assessed
+    areas are compared on the board frame (``scripts/lib_assessed_area.py``),
+    and the run REFUSES unless ``--clip-to-common-area`` is given (then the
+    sweeps and cells are clipped to the common area, which removes nothing
+    from these two stages, and the output names the clip).
+
 Usage::
 
-    python scripts/derive_g37_gs_opmax_rungs.py prepare
+    python scripts/derive_g37_gs_opmax_rungs.py prepare [--clip-to-common-area]
     xargs -P 4 -I CMD bash -c CMD < \
         results/k-ladder-2026-09-12/phase2/g37-opmax-jobs.txt
     python scripts/derive_g37_gs_opmax_rungs.py collect
@@ -47,6 +55,13 @@ from typing import Any
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.build_k_ladder_phase2_tables import new_rung_pools  # noqa: E402
+from scripts.lib_assessed_area import (  # noqa: E402
+    COMMON_AREA_CLIP_NAME,
+    add_area_gate_arguments,
+    clip_geojson_file,
+    run_area_gate,
+)
 from scripts.score_k_ladder_phase2_rungs import (  # noqa: E402
     BOARD_BOUNDS,
     BOOTSTRAP,
@@ -122,8 +137,10 @@ STAGES: list[dict[str, Any]] = [
 ]
 
 
-def sweep(stage: dict[str, Any], *, bounds: str, out_name: str) -> Path:
-    """Sweep one committed stage on one frame."""
+def sweep(
+    stage: dict[str, Any], *, bounds: str, out_name: str, clip_area: str | None = None,
+) -> Path:
+    """Sweep one committed stage on one frame (clipped to ``clip_area`` if given)."""
     output = BASE_DIR / stage["verify_dir"] / out_name
     command = [
         sys.executable,
@@ -140,6 +157,7 @@ def sweep(stage: dict[str, Any], *, bounds: str, out_name: str) -> Path:
         bounds,
         "--buffer-m",
         *[str(buffer) for buffer in SWEEP_BUFFERS],
+        *(["--clip-area", clip_area] if clip_area else []),
     ]
     completed = subprocess.run(
         command, cwd=BASE_DIR, capture_output=True, text=True, check=False
@@ -159,6 +177,21 @@ def cmd_prepare(args: argparse.Namespace) -> None:
     """Sweep, pick the board-frame argmax, materialise, write the eval jobs."""
     entries: list[dict[str, Any]] = []
     jobs: list[str] = []
+
+    # PI ruling D51: these stages and the family's K = 1 and K = 3 rungs must
+    # have searched the same area of the board frame before they are compared.
+    pools = {f"K = {k}": union for k, union in new_rung_pools("g384_ov192_g37").items()}
+    pools.update({f"K = {stage['k']}": stage["crops_dir"] for stage in STAGES})
+    comparison = run_area_gate(
+        pools,
+        frame=BOARD_BOUNDS,
+        tolerance_km2=args.area_tolerance_km2,
+        clip_to_common=args.clip_to_common_area,
+        allow_undetermined=args.allow_undetermined_area,
+        clip_geojson=OUT_DIR / "common-assessed-area.geojson",
+        what="the 3.7 GS ladder",
+    )
+    clip_area = comparison.record.get("clip_geojson")
 
     for stage in STAGES:
         # Before trusting the join, reproduce a point whose feature count is
@@ -195,10 +228,12 @@ def cmd_prepare(args: argparse.Namespace) -> None:
             )
 
         board = argmax_at_headline(
-            sweep(stage, bounds=BOARD_BOUNDS, out_name="sweep_2d_era2b.json")
+            sweep(stage, bounds=BOARD_BOUNDS, out_name="sweep_2d_era2b.json",
+                  clip_area=clip_area)
         )
         era2 = argmax_at_headline(
-            sweep(stage, bounds=ERA2_BOUNDS, out_name="sweep_2d.json")
+            sweep(stage, bounds=ERA2_BOUNDS, out_name="sweep_2d.json",
+                  clip_area=clip_area)
         )
         agree = (board["vote_t"], board["prob_t"]) == (
             era2["vote_t"],
@@ -213,6 +248,10 @@ def cmd_prepare(args: argparse.Namespace) -> None:
             prob_t=board["prob_t"],
             output=detections,
         )
+        if clip_area is not None:
+            count -= clip_geojson_file(
+                detections, comparison.common, name=COMMON_AREA_CLIP_NAME,
+            )
         cell = cell_dir_name(RUN_ID, label)
         jobs.append(
             eval_command(detections, cell, label).replace(
@@ -272,6 +311,7 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 "script_version": __version__,
                 "api_calls": 0,
                 "registered": False,
+                "assessed_area": comparison.record,
                 "stages": entries,
             },
             handle,
@@ -386,6 +426,7 @@ def main() -> None:
     parser.add_argument("--version", action="version", version=__version__)
     subparsers = parser.add_subparsers(dest="command", required=True)
     prepare = subparsers.add_parser("prepare")
+    add_area_gate_arguments(prepare)
     prepare.set_defaults(func=cmd_prepare)
     collect = subparsers.add_parser("collect")
     collect.set_defaults(func=cmd_collect)

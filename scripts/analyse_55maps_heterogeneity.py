@@ -56,6 +56,7 @@ from evaluate_detections import load_geojson  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
     calculate_f1_internal,
     get_map_name,
+    scope_detections_to_frame,
 )
 
 __version__ = "1.0.0"
@@ -215,19 +216,36 @@ def count_per_map(
     gdf_dets: gpd.GeoDataFrame,
     gdf_refs: gpd.GeoDataFrame,
     ref_map_col: str,
+    tiles: gpd.GeoDataFrame | None = None,
 ) -> tuple[int, int]:
     """Return ``(n_dets, n_refs)`` attributed to ``map_name``.
 
-    Uses the SAME filters that ``calculate_f1_internal`` applies
-    internally (string prefix on ``source_tile`` for detections;
-    map-column match for references), so the counts reported by this
-    script agree exactly with the counts that feed the F1 calculation.
-    Spatial pre-filtering was removed (see /audit 2026-04-18).
+    The detection count is the one ``calculate_f1_internal`` matches: the
+    library's own detection scope (PI ruling D50: on the origin sheet,
+    inside one of the sheet's tiles), computed against ``tiles``. Until that
+    ruling it was a ``source_tile`` prefix count, which included detections
+    outside the sheet's tiles. The reference count stays the map-column
+    match it has always been (a reporting count, not F1's scoped
+    denominator). Spatial pre-filtering of the inputs was removed (see
+    /audit 2026-04-18).
+
+    Args:
+        map_name: The sheet.
+        gdf_dets: All detections.
+        gdf_refs: All references.
+        ref_map_col: The references' sheet column.
+        tiles: The sheet's tile polygons. ``None`` falls back to the
+            pre-D50 prefix count (kept for callers without the tiles).
+
+    Returns:
+        ``(n_dets, n_refs)``.
     """
-    n_dets = (
-        int(gdf_dets["source_tile"].str.startswith(map_name).sum())
-        if "source_tile" in gdf_dets.columns else 0
-    )
+    if "source_tile" not in gdf_dets.columns:
+        n_dets = 0
+    elif tiles is None:
+        n_dets = int(gdf_dets["source_tile"].str.startswith(map_name).sum())
+    else:
+        n_dets = len(scope_detections_to_frame(gdf_dets, tiles).on_sheet(map_name))
     n_refs = int((gdf_refs[ref_map_col] == map_name).sum())
     return n_dets, n_refs
 
@@ -254,7 +272,7 @@ def evaluate_per_map(
     results: list[MapMetrics] = []
     for i, (map_name, tiles) in enumerate(sorted(by_map.items()), 1):
         n_dets, n_refs = count_per_map(
-            map_name, gdf_dets, gdf_refs, ref_map_col,
+            map_name, gdf_dets, gdf_refs, ref_map_col, tiles=tiles,
         )
         logger.info(
             "[%d/%d] %s: tiles=%d, refs=%d, dets=%d",

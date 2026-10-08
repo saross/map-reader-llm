@@ -1,0 +1,1344 @@
+{
+ "g37_gs": {
+  "ladder": "g37",
+  "assessed_area": {
+   "check": "assessed-area/1 (PI ruling D51)",
+   "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+   "frame_area_km2": 1402.4067,
+   "tolerance_km2": 0.01,
+   "common_area_km2": 1364.4713,
+   "max_excess_km2": 37.9354,
+   "pools": [
+    {
+     "label": "K = 1",
+     "source": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+     "union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+     "method": "pass-provenance",
+     "area_km2": 1508.2145,
+     "clip": null,
+     "evidence": [
+      "pass provenance outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/voting_summary.json (2 file(s))",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1392 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 6 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_1.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+      "merge_passes applies no clip",
+      "consistency: 640 of 640 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354
+    },
+    {
+     "label": "K = 3",
+     "source": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+     "union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+     "method": "pass-provenance",
+     "area_km2": 1508.2145,
+     "clip": null,
+     "evidence": [
+      "pass provenance outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/voting_summary.json (6 file(s))",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1392 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 6 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_1.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1389 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 9 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_2.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1391 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 7 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_3.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+      "merge_passes applies no clip",
+      "consistency: 759 of 759 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354
+    },
+    {
+     "label": "K = 5",
+     "source": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+     "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+     "method": "declared",
+     "area_km2": 1364.4713,
+     "clip": {
+      "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+     },
+     "evidence": [
+      "declared in inputs/provenance/assessed-area-declarations.json",
+      "footprint polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+      "footprint tiles from inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1398)",
+      "clipped to \"grid-common (the grid study's common 487-tile carrier footprint)\" (outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson): 143.743 km\u00b2 removed upstream",
+      "basis: builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 and :161-166 (the script's --root help names this run; it writes root/verifier/<cell>/union_k<k>.geojson, where this union sits); planning/modality-bridge-2026-10-07.md:73",
+      "basis: footprint: scripts/image_b_prepare_and_union.py:84-90 raises CoverageError unless each pass's processed tiles equal the pinned manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json exactly",
+      "basis: clip: scripts/image_b_prepare_and_union.py:91-95 writes each pass with clip_geom = the grid_common_bounds union (:75), and :120 unions on the grid_common carrier tiles (scripts/materialise_grid_unions.py:94-95 drops off-carrier clusters)",
+      "basis: committed in b8e130fd3 (2026-08-28 23:17 UTC), after the --root/--k flags (4cc079f95) and the K-aware pass loading fix (bb6274e7c)",
+      "consistency: 791 of 791 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1364.4713,
+     "excess_over_common_km2": 0.0
+    },
+    {
+     "label": "K = 10",
+     "source": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+     "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+     "method": "declared",
+     "area_km2": 1364.4713,
+     "clip": {
+      "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+     },
+     "evidence": [
+      "declared in inputs/provenance/assessed-area-declarations.json",
+      "footprint polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+      "footprint tiles from inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1398)",
+      "clipped to \"grid-common (the grid study's common 487-tile carrier footprint)\" (outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson): 143.743 km\u00b2 removed upstream",
+      "basis: builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 (union_k{5,10}: the same image_b_prepare_and_union.py chain)",
+      "basis: footprint and clip: as for union_k5 (scripts/image_b_prepare_and_union.py:84-95, :120)",
+      "basis: committed in b9516c26f (2026-08-29, escalation passes 6-10, K=10 union)",
+      "consistency: 913 of 913 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1364.4713,
+     "excess_over_common_km2": 0.0
+    }
+   ],
+   "clip": {
+    "name": "clip-to-common-assessed-area",
+    "common_area_km2": 1364.4713,
+    "area_removed_km2": {
+     "K = 1": 37.9354,
+     "K = 3": 37.9354,
+     "K = 5": 0.0,
+     "K = 10": 0.0
+    }
+   },
+   "status": "clipped-to-common-area"
+  },
+  "rungs": [
+   {
+    "K": 1,
+    "pool": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+    "points": {
+     "opmax": {
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.8495,
+      "d50": {
+       "precision": 0.8378947368421052,
+       "recall": 0.9149425287356322,
+       "f1": 0.8747252747252747,
+       "n_detections": 502,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8376068376068376,
+       "recall": 0.9011494252873563,
+       "f1": 0.868217054263566,
+       "n_detections": 468,
+       "n_removed": 34
+      }
+     },
+     "carried": {
+      "vote_t": 1,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.8338,
+      "d50": {
+       "precision": 0.7870722433460076,
+       "recall": 0.9517241379310345,
+       "f1": 0.8616024973985432,
+       "n_detections": 558,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.7861271676300579,
+       "recall": 0.9379310344827586,
+       "f1": 0.8553459119496856,
+       "n_detections": 519,
+       "n_removed": 39
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 640,
+     "clipped_out": 50,
+     "argmax": {
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "f1": 0.8682,
+      "n": 468
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "f1": 0.8747,
+      "n": 502
+     }
+    }
+   },
+   {
+    "K": 3,
+    "pool": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+    "points": {
+     "opmax": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.886,
+      "d50": {
+       "precision": 0.8822269807280514,
+       "recall": 0.9471264367816092,
+       "f1": 0.9135254988913526,
+       "n_detections": 495,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8826086956521739,
+       "recall": 0.9333333333333333,
+       "f1": 0.9072625698324023,
+       "n_detections": 460,
+       "n_removed": 35
+      }
+     },
+     "carried": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.886,
+      "d50": {
+       "precision": 0.8822269807280514,
+       "recall": 0.9471264367816092,
+       "f1": 0.9135254988913526,
+       "n_detections": 495,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8826086956521739,
+       "recall": 0.9333333333333333,
+       "f1": 0.9072625698324023,
+       "n_detections": 460,
+       "n_removed": 35
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 759,
+     "clipped_out": 62,
+     "argmax": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "f1": 0.9073,
+      "n": 460
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "f1": 0.9135,
+      "n": 495
+     }
+    }
+   },
+   {
+    "K": 5,
+    "pool": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+    "points": {
+     "opmax": {
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.9066,
+      "d50": {
+       "precision": 0.8984198645598194,
+       "recall": 0.9149425287356322,
+       "f1": 0.9066059225512528,
+       "n_detections": 443,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8984198645598194,
+       "recall": 0.9149425287356322,
+       "f1": 0.9066059225512528,
+       "n_detections": 443,
+       "n_removed": 0
+      }
+     },
+     "carried": {
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.9066,
+      "d50": {
+       "precision": 0.8984198645598194,
+       "recall": 0.9149425287356322,
+       "f1": 0.9066059225512528,
+       "n_detections": 443,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8984198645598194,
+       "recall": 0.9149425287356322,
+       "f1": 0.9066059225512528,
+       "n_detections": 443,
+       "n_removed": 0
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 791,
+     "clipped_out": 0,
+     "argmax": {
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "f1": 0.9066,
+      "n": 443
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 5,
+      "prob_t": 0.1,
+      "f1": 0.9066,
+      "n": 443
+     }
+    }
+   },
+   {
+    "K": 10,
+    "pool": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+    "points": {
+     "opmax": {
+      "vote_t": 10,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.9068,
+      "d50": {
+       "precision": 0.9196217494089834,
+       "recall": 0.8942528735632184,
+       "f1": 0.9067599067599067,
+       "n_detections": 423,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9196217494089834,
+       "recall": 0.8942528735632184,
+       "f1": 0.9067599067599067,
+       "n_detections": 423,
+       "n_removed": 0
+      }
+     },
+     "carried": {
+      "vote_t": 10,
+      "prob_t": 0.1,
+      "committed_f1_20": 0.9068,
+      "d50": {
+       "precision": 0.9196217494089834,
+       "recall": 0.8942528735632184,
+       "f1": 0.9067599067599067,
+       "n_detections": 423,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9196217494089834,
+       "recall": 0.8942528735632184,
+       "f1": 0.9067599067599067,
+       "n_detections": 423,
+       "n_removed": 0
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 913,
+     "clipped_out": 0,
+     "argmax": {
+      "vote_t": 10,
+      "prob_t": 0.1,
+      "f1": 0.9068,
+      "n": 423
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 10,
+      "prob_t": 0.1,
+      "f1": 0.9068,
+      "n": 423
+     }
+    }
+   }
+  ]
+ },
+ "tier_e": {
+  "ladder": "tierE",
+  "assessed_area": {
+   "check": "assessed-area/1 (PI ruling D51)",
+   "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+   "frame_area_km2": 1402.4067,
+   "tolerance_km2": 0.01,
+   "common_area_km2": 1364.4713,
+   "max_excess_km2": 37.9354,
+   "pools": [
+    {
+     "label": "K = 1",
+     "source": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/crops",
+     "union": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/consensus_t1.geojson",
+     "method": "pass-provenance",
+     "area_km2": 1508.2145,
+     "clip": null,
+     "evidence": [
+      "pass provenance outputs/grid-2026-08-18/g384_ov192/consensus-n1/voting_summary.json (1 file(s))",
+      "outputs/grid-2026-08-18/g384_ov192/run_1/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "merge_passes applies no clip",
+      "consistency: 1826 of 1826 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354
+    },
+    {
+     "label": "K = 3",
+     "source": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/crops",
+     "union": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t1.geojson",
+     "method": "pass-provenance",
+     "area_km2": 1508.2145,
+     "clip": null,
+     "evidence": [
+      "pass provenance outputs/grid-2026-08-18/g384_ov192/consensus-n3/voting_summary.json (3 file(s))",
+      "outputs/grid-2026-08-18/g384_ov192/run_1/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_2/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_3/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "merge_passes applies no clip",
+      "consistency: 2481 of 2481 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354
+    },
+    {
+     "label": "K = 5",
+     "source": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/crops",
+     "union": "outputs/grid-2026-08-18/g384_ov192/consensus-n5/consensus_t1.geojson",
+     "method": "pass-provenance",
+     "area_km2": 1508.2145,
+     "clip": null,
+     "evidence": [
+      "pass provenance outputs/grid-2026-08-18/g384_ov192/consensus-n5/voting_summary.json (6 file(s))",
+      "outputs/grid-2026-08-18/g384_ov192/run_1/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_2/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_3/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_4/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1397 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "outputs/grid-2026-08-18/g384_ov192/run_4_recovery/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1 processed tile(s) on inputs/grid-2026-08-18/recovery_g384_ov192_run_4.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+      "outputs/grid-2026-08-18/g384_ov192/run_5/detections-detect_brief-text-3-flash-2026-08-18.geojson: 1398 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+      "merge_passes applies no clip",
+      "consistency: 2932 of 2932 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354
+    },
+    {
+     "label": "K = 10",
+     "source": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+     "union": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+     "method": "declared",
+     "area_km2": 1364.4713,
+     "clip": {
+      "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+      "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+     },
+     "evidence": [
+      "declared in inputs/provenance/assessed-area-declarations.json",
+      "footprint polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+      "footprint tiles from inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1398)",
+      "clipped to \"grid-common (the grid study's common 487-tile carrier footprint)\" (outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson): 143.743 km\u00b2 removed upstream",
+      "basis: builder identity: reports/recovery-fragment-drop-2026-09-13.md:128; scripts/run_k_ladder_tier_e.py module docstring (the committed K = 10 rung's union was built by materialise_grid_unions.py and filtered to the common 487-tile carrier footprint); results/k-ladder-2026-09-12/tier-e/unions.json committed_k10_sibling.footprint",
+      "basis: footprint: scripts/grid_prepare_scoring.py:515-524 raises CoverageError unless each pass's processed tiles equal the pinned manifest exactly",
+      "basis: clip: scripts/grid_prepare_scoring.py:535-540 writes the common-scope passes with clip_geom = the grid_common union; scripts/materialise_grid_unions.py:108 reads grid_common_bounds and :94-95 drops off-carrier clusters",
+      "basis: committed in 3c5d87b9f (2026-08-24, the four K=10 union candidate sets)",
+      "consistency: 3319 of 3319 union candidates lie inside the determined area"
+     ],
+     "warnings": [],
+     "reason": null,
+     "effective_area_km2": 1364.4713,
+     "excess_over_common_km2": 0.0
+    }
+   ],
+   "clip": {
+    "name": "clip-to-common-assessed-area",
+    "common_area_km2": 1364.4713,
+    "area_removed_km2": {
+     "K = 1": 37.9354,
+     "K = 3": 37.9354,
+     "K = 5": 37.9354,
+     "K = 10": 0.0
+    }
+   },
+   "status": "clipped-to-common-area"
+  },
+  "rungs": [
+   {
+    "K": 1,
+    "pool": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/crops",
+    "points": {
+     "opmax": {
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "committed_f1_20": 0.8546,
+      "d50": {
+       "precision": 0.8453159041394336,
+       "recall": 0.8919540229885058,
+       "f1": 0.8680089485458614,
+       "n_detections": 482,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8432671081677704,
+       "recall": 0.8781609195402299,
+       "f1": 0.8603603603603603,
+       "n_detections": 453,
+       "n_removed": 29
+      }
+     },
+     "carried": {
+      "vote_t": 1,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.854,
+      "d50": {
+       "precision": 0.835820895522388,
+       "recall": 0.9011494252873563,
+       "f1": 0.8672566371681415,
+       "n_detections": 493,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.8336933045356372,
+       "recall": 0.8873563218390804,
+       "f1": 0.8596881959910911,
+       "n_detections": 463,
+       "n_removed": 30
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 1826,
+     "clipped_out": 141,
+     "argmax": {
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "f1": 0.8604,
+      "n": 453
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 1,
+      "prob_t": 0.2,
+      "f1": 0.868,
+      "n": 482
+     }
+    }
+   },
+   {
+    "K": 3,
+    "pool": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/crops",
+    "points": {
+     "opmax": {
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.884,
+      "d50": {
+       "precision": 0.9063231850117096,
+       "recall": 0.8896551724137931,
+       "f1": 0.8979118329466357,
+       "n_detections": 450,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9049881235154394,
+       "recall": 0.8758620689655172,
+       "f1": 0.8901869158878506,
+       "n_detections": 421,
+       "n_removed": 29
+      }
+     },
+     "carried": {
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.884,
+      "d50": {
+       "precision": 0.9063231850117096,
+       "recall": 0.8896551724137931,
+       "f1": 0.8979118329466357,
+       "n_detections": 450,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9049881235154394,
+       "recall": 0.8758620689655172,
+       "f1": 0.8901869158878506,
+       "n_detections": 421,
+       "n_removed": 29
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 2481,
+     "clipped_out": 186,
+     "argmax": {
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "f1": 0.8902,
+      "n": 421
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 3,
+      "prob_t": 0.15,
+      "f1": 0.8979,
+      "n": 450
+     }
+    }
+   },
+   {
+    "K": 5,
+    "pool": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/crops",
+    "points": {
+     "opmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.8905,
+      "d50": {
+       "precision": 0.927536231884058,
+       "recall": 0.8827586206896552,
+       "f1": 0.9045936395759717,
+       "n_detections": 435,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9264705882352942,
+       "recall": 0.8689655172413793,
+       "f1": 0.896797153024911,
+       "n_detections": 408,
+       "n_removed": 27
+      }
+     },
+     "carried": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.8905,
+      "d50": {
+       "precision": 0.927536231884058,
+       "recall": 0.8827586206896552,
+       "f1": 0.9045936395759717,
+       "n_detections": 435,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9264705882352942,
+       "recall": 0.8689655172413793,
+       "f1": 0.896797153024911,
+       "n_detections": 408,
+       "n_removed": 27
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 2932,
+     "clipped_out": 218,
+     "argmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.8968,
+      "n": 408
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.9046,
+      "n": 435
+     }
+    }
+   },
+   {
+    "K": 10,
+    "pool": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+    "points": {
+     "carried": {
+      "vote_t": 10,
+      "prob_t": 0.15,
+      "committed_f1_20": 0.8886,
+      "d50": {
+       "precision": 0.9275,
+       "recall": 0.8528735632183908,
+       "f1": 0.888622754491018,
+       "n_detections": 400,
+       "n_removed": 0
+      },
+      "d51_clipped": {
+       "precision": 0.9275,
+       "recall": 0.8528735632183908,
+       "f1": 0.888622754491018,
+       "n_detections": 400,
+       "n_removed": 0
+      }
+     }
+    },
+    "d51_matched_sweep": {
+     "universe": 3319,
+     "clipped_out": 0,
+     "argmax": {
+      "vote_t": 10,
+      "prob_t": 0.15,
+      "f1": 0.8886,
+      "n": 400
+     },
+     "unclipped_argmax_d50": {
+      "vote_t": 10,
+      "prob_t": 0.15,
+      "f1": 0.8886,
+      "n": 400
+     }
+    }
+   }
+  ]
+ },
+ "phase2_gate_survey": [
+  {
+   "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+   "pool": "flash-minimal-text-n30-t07-text-t0.3",
+   "status": "refused",
+   "common_area_km2": 1400.3248,
+   "max_excess_km2": 2.0819,
+   "undetermined": null,
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1400.3248,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 2.0819,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": [
+    "Gemini 3 MINIMAL text 384 px, T 0.3: ASSESSED AREAS DIFFER (PI ruling D51): the pools did not search the same area \u2014 common 1400.3248 km\u00b2, excess up to 2.0819 km\u00b2 against a tolerance of 0.01 km\u00b2 [K = 1 1400.3248 km\u00b2 (+0.0), K = 3 1402.4067 km\u00b2 (+2.0819)]. Refusing to compare them; re-run with a clip to the common area to compare on the area every pool searched."
+   ]
+  },
+  {
+   "family": "Gemini 3 MINIMAL text 384 px, T 0.7",
+   "pool": "flash-minimal-text-n30-t07-text-t0.7",
+   "status": "undetermined",
+   "common_area_km2": null,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 1",
+    "K = 3",
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+   "pool": "flash-minimal-text-n30-t07-text-t1.0",
+   "status": "refused",
+   "common_area_km2": 1400.3175,
+   "max_excess_km2": 2.0893,
+   "undetermined": null,
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1400.3175,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 2.0893,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": [
+    "Gemini 3 MINIMAL text 384 px, T 1.0: ASSESSED AREAS DIFFER (PI ruling D51): the pools did not search the same area \u2014 common 1400.3175 km\u00b2, excess up to 2.0893 km\u00b2 against a tolerance of 0.01 km\u00b2 [K = 1 1400.3175 km\u00b2 (+0.0), K = 3 1402.4067 km\u00b2 (+2.0893)]. Refusing to compare them; re-run with a clip to the common area to compare on the area every pool searched."
+   ]
+  },
+  {
+   "family": "Gemini 3 HIGH text 384 px, T 0.3",
+   "pool": "flash-high-text-n5-text-t0.3",
+   "status": "undetermined",
+   "common_area_km2": 1402.4067,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 HIGH text 384 px, T 0.7",
+   "pool": "flash-high-text-n5-text-t0.7",
+   "status": "undetermined",
+   "common_area_km2": null,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 1",
+    "K = 3",
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 HIGH text 384 px, T 1.0",
+   "pool": "flash-high-text-n5-text-t1.0",
+   "status": "refused",
+   "common_area_km2": 1397.6458,
+   "max_excess_km2": 4.7609,
+   "undetermined": null,
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1397.6458,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 4.7609,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": [
+    "Gemini 3 HIGH text 384 px, T 1.0: ASSESSED AREAS DIFFER (PI ruling D51): the pools did not search the same area \u2014 common 1397.6458 km\u00b2, excess up to 4.7609 km\u00b2 against a tolerance of 0.01 km\u00b2 [K = 1 1397.6458 km\u00b2 (+0.0), K = 3 1402.4067 km\u00b2 (+4.7609)]. Refusing to compare them; re-run with a clip to the common area to compare on the area every pool searched."
+   ]
+  },
+  {
+   "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+   "pool": "image-n5-image-t0.3",
+   "status": "undetermined",
+   "common_area_km2": 1400.3069,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1400.3069,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1400.3069,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+   "pool": "image-n5-image-t0.7",
+   "status": "undetermined",
+   "common_area_km2": null,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 1",
+    "K = 3",
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+   "pool": "image-n5-image-t1.0",
+   "status": "refused",
+   "common_area_km2": 1399.9778,
+   "max_excess_km2": 2.4289,
+   "undetermined": null,
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1399.9778,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 2.4289,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": [
+    "Gemini 3 MINIMAL image 384 px, T 1.0: ASSESSED AREAS DIFFER (PI ruling D51): the pools did not search the same area \u2014 common 1399.9778 km\u00b2, excess up to 2.4289 km\u00b2 against a tolerance of 0.01 km\u00b2 [K = 1 1399.9778 km\u00b2 (+0.0), K = 3 1402.4067 km\u00b2 (+2.4289)]. Refusing to compare them; re-run with a clip to the common area to compare on the area every pool searched."
+   ]
+  },
+  {
+   "family": "Gemini 3 HIGH image 384 px, T 0.3",
+   "pool": "flash-high-image-n5-image-t0.3",
+   "status": "undetermined",
+   "common_area_km2": 1402.4067,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 HIGH image 384 px, T 0.7",
+   "pool": "flash-high-image-n5-image-t0.7",
+   "status": "undetermined",
+   "common_area_km2": null,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 1",
+    "K = 3",
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "pass outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson has no meta file recording its tile manifest",
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 HIGH image 384 px, T 1.0",
+   "pool": "flash-high-image-n5-image-t1.0",
+   "status": "undetermined",
+   "common_area_km2": 1402.4067,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3 scale-4-optimal 487",
+   "pool": "scale-4-optimal-487",
+   "status": "undetermined",
+   "common_area_km2": 1402.4067,
+   "max_excess_km2": 0.0,
+   "undetermined": [
+    "K = 5",
+    "K = 10"
+   ],
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": -0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "undetermined",
+     "effective_area_km2": null,
+     "excess_over_common_km2": null,
+     "reason": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus/voting_summary.json records no pass_provenance (a consensus written before pass provenance existed)",
+     "warnings": []
+    }
+   ],
+   "messages": []
+  },
+  {
+   "family": "Gemini 3.7 text, GS B geometry",
+   "pool": "g384_ov192_g37",
+   "status": "refused",
+   "common_area_km2": 1364.4713,
+   "max_excess_km2": 37.9354,
+   "undetermined": null,
+   "pools": [
+    {
+     "label": "K = 1",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 3",
+     "method": "pass-provenance",
+     "effective_area_km2": 1402.4067,
+     "excess_over_common_km2": 37.9354,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 5",
+     "method": "declared",
+     "effective_area_km2": 1364.4713,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    },
+    {
+     "label": "K = 10",
+     "method": "declared",
+     "effective_area_km2": 1364.4713,
+     "excess_over_common_km2": 0.0,
+     "reason": null,
+     "warnings": []
+    }
+   ],
+   "messages": [
+    "Gemini 3.7 text, GS B geometry: ASSESSED AREAS DIFFER (PI ruling D51): the pools did not search the same area \u2014 common 1364.4713 km\u00b2, excess up to 37.9354 km\u00b2 against a tolerance of 0.01 km\u00b2 [K = 1 1402.4067 km\u00b2 (+37.9354), K = 3 1402.4067 km\u00b2 (+37.9354), K = 5 1364.4713 km\u00b2 (+0.0), K = 10 1364.4713 km\u00b2 (+0.0)]. Refusing to compare them; re-run with a clip to the common area to compare on the area every pool searched."
+   ]
+  }
+ ]
+}

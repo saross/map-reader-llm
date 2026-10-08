@@ -50,7 +50,9 @@ from scripts.grid_analysis import (  # noqa: E402
     assign_primary_tiles,
     load_cell_passes,
 )
+from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
+from scripts.lib_assessed_area import KNOWN_TILINGS, write_area_record  # noqa: E402
 
 SCORING_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/scoring"
 OUT_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/verifier"
@@ -138,6 +140,24 @@ def main() -> int:
         dest.parent.mkdir(parents=True, exist_ok=True)
         gdf.to_crs("EPSG:4326").to_file(dest, driver="GeoJSON")
         print(f"wrote {dest.relative_to(PROJECT_ROOT)}")
+        # PI ruling D51: record the assessed area — the cell's full manifest
+        # footprint (grid_prepare_scoring gated every pass to it exactly)
+        # clipped to the common carrier footprint — beside the union.
+        manifest = str(CELLS[cell]["manifest"].relative_to(PROJECT_ROOT))
+        record = write_area_record(
+            dest,
+            builder="scripts/materialise_grid_unions.py over "
+                    "scripts/grid_prepare_scoring.py's common-scope passes",
+            footprint_bounds=KNOWN_TILINGS[manifest],
+            footprint_manifest=manifest,
+            clip_name="grid-common (the grid study's common 487-tile carrier footprint)",
+            clip_bounds=str(args.scoring_dir / "bounds" / "grid_common_bounds.geojson"),
+            passes=[
+                str(args.scoring_dir / "common" / cell / f"run_{i}" / "detections_dedup.geojson")
+                for i in range(1, K + 1)
+            ],
+        )
+        print(f"wrote {record.name}")
     return 0
 
 
