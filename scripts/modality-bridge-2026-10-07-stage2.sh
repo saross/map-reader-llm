@@ -16,7 +16,9 @@
 #                 run_1..run_K, each merged), each pass plus its recovery
 #                 fragments covering exactly the 1,398 pinned tiles, no tile
 #                 processed twice, no Stage 1 process of the arm alive, no
-#                 residual file outstanding.
+#                 residual file outstanding; and every pass file's meta
+#                 records the arm's model, temperature, thinking level and
+#                 cached share (scripts/modality_bridge_stage2_checks.py).
 #   2. union      the originals' chain (E80 20 m within-pass dedup, E72 exact
 #                 coverage, carrier clip, c = 1, vote_count, numeric pass
 #                 order) through scripts/modality_bridge_union.py's batch
@@ -28,11 +30,35 @@
 #                 classify AGREES with its union (not merely "not DISAGREES").
 #   5. rehearse   run_pv.py verify --mode batch --dry-run under the API-free
 #                 harness: one request per candidate, no client constructed,
-#                 and the request signature the card rehearsed against the
-#                 original legs' real-time requests.
-#   6. verify     run_pv.py verify --mode batch --temperature 0.0 with the
+#                 the request signature the card rehearsed against the
+#                 original legs' real-time requests, and the full-request
+#                 signature pinned beside it.
+#   6. verify     the union-size review band (±15 % of the guide), then
+#                 run_pv.py verify --mode batch --temperature 0.0 with the
 #                 Gemini 3 (gemini-3-flash-preview) or Gemini 3.7
 #                 (gemini-3.7-flash, thinking low) verifier. SPENDS.
+#   7. repair     after a leg lands: its PARSE_ERROR rows re-parsed from
+#                 batch_results.jsonl with the real-time path's repair, into
+#                 <leg>_repaired/ (the leg directory is not written).
+#
+# Operator overrides, each named in the refusal it lifts: BAND_OK=<leg>[,<leg>]
+# (those legs' unions outside their band; per leg, never blanket),
+# IMPLICIT_SHARE_OK=1 (g37-image's implicit cached share under 0.5; cost
+# only), FORCE=1 (re-lodge a leg whose earlier jobs are recorded in
+# batch_jobs.json; read the refusal first).
+#
+# Replicates (Run C, 2026-10-08; card planning/run-c-verifier-reinvocation-
+# 2026-10-08.md). REP=<n>, n >= 2, re-verifies a landed leg's crops with the
+# same request into verify_<v>_rep<n>, to measure verifier re-invocation;
+# the committed legs are replicate 1, and REP unset runs them exactly as
+# before. Under REP every name a leg writes carries -rep<n> (log, pid file,
+# rehearsal, coverage, metas and provenance records, scratch), so no
+# committed Stage 2 record is rewritten. `verify` also refuses a replicate
+# of a leg that has not landed, and `rehearse` requires the replicate's
+# request file to equal the original leg's verifier_requests.jsonl line for
+# line (record checks/request-identity-<leg>-rep<n>.json). The arm-level
+# build steps (union, extract, prepare) refuse REP. Every other gate, the
+# lock and the relaunch rules are unchanged.
 #
 #   arm              K   version                  verifier legs
 #   g3-text          10  detect_brief-text        g3
@@ -59,6 +85,9 @@
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh status
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh estimate
 #   bash scripts/modality-bridge-2026-10-07-stage2.sh wait g37-image:g3
+#   bash scripts/modality-bridge-2026-10-07-stage2.sh repair all
+#   REP=2 bash scripts/modality-bridge-2026-10-07-stage2.sh rehearse all
+#   REP=2 bash scripts/modality-bridge-2026-10-07-stage2.sh verify all
 #
 # Launch hygiene (docs/agent-guidance.md § Compute Location). A verifier leg
 # starts detached under a wrapper shell that writes its OWN pid to the pid
@@ -67,12 +96,17 @@
 # nothing follows the launch on its line. Legs are lodged one at a time: the
 # next starts only after the previous has logged every chunk's "Submitted
 # batch job" line, so each storage preflight sees the earlier uploads. A
-# polling verifier writes NOTHING between submission and its job's end, so
-# the pid (kill -0, never pgrep -f) is the liveness signal, not log age;
-# the poll itself gives up after 25 h. Never kill a polling leg: its job
-# keeps running, and batch_jobs.json in the leg directory names it
+# polling verifier logs an HTTP GET for its job about every 30 s (run_pv.py
+# sets the root logger to INFO; corrected 2026-10-08, audit A3: this said
+# "silent"), so `wait` treats an hour of log silence as a hang, beside the
+# pid (kill -0, never pgrep -f) and the EXIT line. Never kill a polling leg:
+# its job keeps running, and batch_jobs.json in the leg directory names it
 # (run_pv.py batch-recover). `verify` refuses a leg whose directory holds
-# batch_jobs.json without probabilities.json.
+# batch_jobs.json without probabilities.json. A relaunch moves the earlier
+# attempt's log aside (<log>.<UTC stamp>) and removes its pid file, so the
+# launcher, `status` and `wait` read only the current attempt (audit A1).
+# One writing subcommand runs at a time (flock on $ST2/stage2.lock; audit
+# A4); a launched leg does not hold the lock.
 #
 # Logs, pids and check records go under $OUT/stage2/, never $OUT/logs/: the
 # Stage 1 launcher's `status` parses every $OUT/logs/*.log name as
@@ -84,7 +118,7 @@
 # =============================================================================
 
 set -u
-cd "$(dirname "$0")/.." || exit 1
+cd "$(dirname "${BASH_SOURCE[0]}")/.." || exit 1
 
 PY=${PY:-.venv/bin/python}
 OUT=${OUT:-outputs/modality-bridge-2026-10-07}
@@ -106,11 +140,33 @@ ARMS="g3-text g3-image g37-text g37-image g37-image-cache g3-text-temp1 g3-image
 LEGS="g3-text:g3 g3-image:g3 g37-text:g3 g37-text:g37 g37-image:g3 g37-image:g37"
 LEGS="$LEGS g37-image-cache:g3 g37-image-cache:g37 g3-text-temp1:g3 g3-image-temp1:g3"
 
+# The replicate number (Run C; header). Empty: the original legs.
+REP=${REP:-}
+
+# sfx — the name suffix of the current replicate ("-rep<n>"), empty without.
+sfx() { if [ -n "$REP" ]; then printf -- '-rep%s' "$REP"; fi; }
+
+# check_rep — refuse a REP that is not an integer of 2 or more.
+check_rep() {
+  [ -z "$REP" ] && return 0
+  if ! [[ "$REP" =~ ^[1-9][0-9]*$ ]] || [ "$REP" -lt 2 ]; then
+    echo "REFUSED: REP=$REP — a replicate is an integer of 2 or more (the committed" \
+         "legs are replicate 1: leave REP unset for them)" >&2
+    return 1
+  fi
+}
+
 # Tile-elided request signatures rehearsed against the original legs'
 # real-time requests (card § 4; planning/modality-bridge-2026-10-07-stage2-
 # rehearsal.json): identical for every union under one verifier.
 SIG_G3=3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04
 SIG_G37=51567e8e54f8fa3cb85262431460020de5e57ff8ea3e1d63f0523d19beb34c1e
+# The same requests hashed whole, bar the key and the crop's bytes, so any
+# generation-config field added to the builder moves it (audit nit; computed
+# 2026-10-08, crop-independent by construction and checked on the original
+# crops: planning/modality-bridge-2026-10-07-stage2-rehearsal.json).
+SIGF_G3=5e9bb517e77f6ac2a19cdffa4c844c44485c69f82bd3a0e825617cfa7bc05c99
+SIGF_G37=38834432d7fdd5dfcb2e440a501b4c175e0fcffe2bd343053b14a5cb07b5ed8e
 
 # -----------------------------------------------------------------------------
 # Per-arm and per-leg facts.
@@ -143,7 +199,13 @@ leg_parts() {
   esac
 }
 
-leg_dir() { echo "$(vroot "$1")/verify_$2"; }
+# leg_dir ARM V — the leg's directory: verify_<v>, or verify_<v>_rep<n> under
+# REP. orig_leg_dir is always the original (replicate 1) directory.
+leg_dir() { echo "$(vroot "$1")/verify_$2${REP:+_rep$REP}"; }
+orig_leg_dir() { echo "$(vroot "$1")/verify_$2"; }
+
+# leg_name ARM V — the leg's log, pid and scratch name.
+leg_name() { echo "verify-$1-$2$(sfx)"; }
 
 vflags() {
   case "$1" in
@@ -153,6 +215,7 @@ vflags() {
 }
 
 sig_for() { case "$1" in g3) echo "$SIG_G3" ;; g37) echo "$SIG_G37" ;; esac; }
+sigf_for() { case "$1" in g3) echo "$SIGF_G3" ;; g37) echo "$SIGF_G37" ;; esac; }
 
 # verify_args ARM V [OUTDIR] — the exact run_pv.py verify arguments, one per
 # line. OUTDIR defaults to the leg directory; `rehearse` passes a scratch one.
@@ -192,7 +255,9 @@ check() {
     return 1
   fi
   mkdir -p "$ST2/checks"
-  rec="$ST2/checks/$arm-coverage.json"
+  # Under REP the records carry the replicate's suffix, so a replicate's
+  # rehearsal never rewrites the committed original records.
+  rec="$ST2/checks/$arm-coverage$(sfx).json"
   if ! "$PY" scripts/modality_bridge_union.py --layout batch --cell-dir "$OUT/$arm/$v" \
       --k "$k" --out-root "$OUT/$arm" --manifest "$MANIFEST" --json-out "$rec"; then
     echo "$arm: REFUSED — coverage gate failed (above)"
@@ -206,6 +271,15 @@ check() {
   fi
   echo "$arm: coverage OK — $k passes x $WANT_TILES tiles; files per pass" \
        "$(json_field "$rec" '[len(p["files"]) for p in d["passes"]]')"
+  # What the passes were sent with (audit A5): model, temperature, thinking
+  # level and cached share from every pass file's meta.
+  local -a extra=()
+  [ "${IMPLICIT_SHARE_OK:-0}" = 1 ] && extra=(--allow-low-implicit-share)
+  if ! "$PY" scripts/modality_bridge_stage2_checks.py metas "$arm" --out "$OUT" \
+      --json-out "$ST2/checks/$arm-metas$(sfx).json" "${extra[@]}"; then
+    echo "$arm: REFUSED — a pass meta does not record what the arm sends (above)"
+    return 1
+  fi
 }
 
 # -----------------------------------------------------------------------------
@@ -262,7 +336,7 @@ provenance() {
   local arm=$1 man rec cls
   man="$(crops_dir "$arm")/candidate_manifest.json"
   [ -f "$man" ] || { echo "$arm: REFUSED — no crop manifest ($man)"; return 1; }
-  rec="$ST2/checks/$arm-provenance.json"
+  rec="$ST2/checks/$arm-provenance$(sfx).json"
   mkdir -p "$ST2/checks"
   "$PY" scripts/check_union_provenance.py --manifest "$man" --json-out "$rec" > /dev/null 2>&1
   cls=$(json_field "$rec" 'd["manifest_results"][0]["classification"]' 2>/dev/null)
@@ -302,23 +376,51 @@ prepare_one() {
 # rehearse LEG — the leg's batch request built API-free and checked.
 # -----------------------------------------------------------------------------
 rehearse() {
-  local arm=$1 v=$2 name rec
-  name="verify-$arm-$v"
+  local arm=$1 v=$2 name rec rlog idrec rc
+  name=$(leg_name "$arm" "$v")
   check "$arm" || return 1
   "$PY" scripts/modality_bridge_union.py --check-record "$(union_path "$arm")" || return 1
   provenance "$arm" || return 1
-  rec="$ST2/checks/rehearse-$arm-$v.json"
+  rec="$ST2/checks/rehearse-$arm-$v$(sfx).json"
+  rlog="$ST2/logs/rehearse-$arm-$v$(sfx).log"
   # The dry run writes its request files under SCRATCH, not the leg dir.
   mapfile -t ARGS < <(verify_args "$arm" "$v" "$SCRATCH/$name")
-  mkdir -p "$SCRATCH"
+  mkdir -p "$SCRATCH" "$ST2/logs"
+  # A replicate keeps its dry-run request file for the identity check below,
+  # then deletes it (scratch; about 60 KB per candidate).
+  local -a keep=()
+  [ -n "$REP" ] && keep=(--keep-requests)
   if ! "$PY" scripts/verifier_dryrun_harness.py batch --summary-json "$rec" --first 3 \
-      -- "${ARGS[@]}" --dry-run > "$ST2/logs/rehearse-$arm-$v.log" 2>&1; then
-    echo "$name: REHEARSAL FAILED — read $ST2/logs/rehearse-$arm-$v.log and $rec"
+      "${keep[@]}" -- "${ARGS[@]}" --dry-run > "$rlog" 2>&1; then
+    rm -f "$SCRATCH/$name"/verifier_requests*.jsonl
+    echo "$name: REHEARSAL FAILED — read $rlog and $rec"
     return 1
+  fi
+  if [ -n "$REP" ]; then
+    # Run C: the replicate must send what the original leg sent, line for
+    # line, so that only the invocation differs. Fails closed when the
+    # original's request file is not on disc.
+    idrec="$ST2/checks/request-identity-$arm-$v$(sfx).json"
+    "$PY" scripts/modality_bridge_stage2_checks.py compare-requests \
+      "$(orig_leg_dir "$arm" "$v")" "$SCRATCH/$name" --json-out "$idrec"
+    rc=$?
+    rm -f "$SCRATCH/$name"/verifier_requests*.jsonl
+    if [ $rc -ne 0 ]; then
+      echo "$name: REFUSED — the replicate's requests are not the original leg's" \
+           "(exit $rc); read $idrec"
+      return 1
+    fi
   fi
   if [ "$(json_field "$rec" 'list(d["batch"]["elided_signatures"])')" != "['$(sig_for "$v")']" ]; then
     echo "$name: REFUSED — request signature $(json_field "$rec" 'list(d["batch"]["elided_signatures"])')" \
          "is not the rehearsed $(sig_for "$v")"
+    return 1
+  fi
+  if [ "$(json_field "$rec" 'list(d["batch"]["full_elided_signatures"])')" != "['$(sigf_for "$v")']" ]; then
+    echo "$name: REFUSED — full request signature" \
+         "$(json_field "$rec" 'list(d["batch"]["full_elided_signatures"])') is not the" \
+         "pinned $(sigf_for "$v") (a request field changed; generation-config keys" \
+         "$(json_field "$rec" 'list(d["batch"]["generation_config_keys"])'))"
     return 1
   fi
   echo "$name: rehearsed — $(json_field "$rec" 'd["batch"]["n_lines"]') requests," \
@@ -326,13 +428,12 @@ rehearse() {
 }
 
 # -----------------------------------------------------------------------------
-# verify_one LEG — gate, then launch one leg detached and wait for every
-# chunk's submission. SPENDS.
+# verify_one LEG — gate, then launch one leg (launch_leg). SPENDS.
 # -----------------------------------------------------------------------------
 verify_one() {
-  local arm=$1 v=$2 name log pidf ld n chunks waited=0 rec
-  name="verify-$arm-$v"
-  log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"; ld=$(leg_dir "$arm" "$v")
+  local arm=$1 v=$2 name pidf ld n rec
+  name=$(leg_name "$arm" "$v")
+  pidf="$ST2/pids/$name.pid"; ld=$(leg_dir "$arm" "$v")
   mkdir -p "$ST2/logs" "$ST2/pids"
   if alive "$pidf"; then
     echo "$name: process $(cat "$pidf") still running — skipped"; return 0
@@ -340,28 +441,86 @@ verify_one() {
   if [ -f "$ld/probabilities.json" ]; then
     echo "$name: already verified ($ld/probabilities.json) — skipped"; return 0
   fi
-  if [ -f "$ld/batch_jobs.json" ] && [ "${FORCE:-0}" != 1 ]; then
-    echo "$name: REFUSED — $ld/batch_jobs.json records job(s) lodged earlier and no" \
-         "probabilities.json was written; a job may still be running. Recover it" \
-         "with run_pv.py batch-recover (FORCE=1 overrides)."
+  # A replicate re-verifies a leg that has landed (Run C).
+  if [ -n "$REP" ] && [ ! -f "$(orig_leg_dir "$arm" "$v")/probabilities.json" ]; then
+    echo "$name: REFUSED — replicate $REP re-verifies a landed leg, and" \
+         "$(orig_leg_dir "$arm" "$v")/probabilities.json is missing"
     return 1
   fi
-  # The rehearsal is the gate: coverage, a current union, AGREES, one
-  # request per candidate, no client, the rehearsed signature.
+  if [ -f "$ld/batch_jobs.json" ] && [ "${FORCE:-0}" != 1 ]; then
+    echo "$name: REFUSED — $ld/batch_jobs.json records job(s) lodged by an earlier" \
+         "attempt, and no probabilities.json was written. Those jobs may still be" \
+         "running and billing. Read their state first; a job that finished or was" \
+         "lost while polling is retrieved with run_pv.py batch-recover (card § 7," \
+         "short legs). FORCE=1 lodges the WHOLE leg again as new jobs, billed in" \
+         "full on top of any earlier job: use it only once every job named in" \
+         "batch_jobs.json is known to have failed, and move the leg directory to" \
+         "archive/ first."
+    return 1
+  fi
+  # The union-size review band (card § 3; audit A6): a union outside it is a
+  # finding for the PI before any spend; the operator then decides, PER LEG
+  # (BAND_OK=<leg>[,<leg>]; re-check R1: a blanket waiver is refused).
+  "$PY" scripts/modality_bridge_stage2_checks.py band "$arm:$v" --out "$OUT" \
+    --band-ok "${BAND_OK:-}"
+  case $? in
+    0) ;;
+    3) echo "$name: REFUSED — no union built yet; run \`prepare $arm\` first"
+       return 1 ;;
+    2) echo "$name: REFUSED — BAND_OK must name legs (e.g. BAND_OK=$arm:$v)"
+       return 1 ;;
+    *) echo "$name: REFUSED — outside the review band (BAND_OK=$arm:$v overrides)"
+       return 1 ;;
+  esac
+  # The rehearsal is the gate: coverage and the pass metas, a current union,
+  # AGREES, one request per candidate, no client, the rehearsed signatures.
   rehearse "$arm" "$v" || return 1
-  rec="$ST2/checks/rehearse-$arm-$v.json"
+  rec="$ST2/checks/rehearse-$arm-$v$(sfx).json"
   n=$(json_field "$rec" 'd["batch"]["n_lines"]')
+  launch_leg "$arm" "$v" "$n"
+}
+
+# -----------------------------------------------------------------------------
+# launch_leg ARM V N — start one leg detached and wait until every chunk is
+# submitted. Each attempt has its own log: an earlier attempt's log is moved
+# aside (renamed with a UTC stamp, never deleted) and its pid file removed
+# before the launch, so this function, `status` and `wait` read only the
+# current attempt (audit A1: a relaunch was judged by the previous
+# attempt's "Batch verification failed", EXIT and pid). SPENDS.
+# -----------------------------------------------------------------------------
+launch_leg() {
+  local arm=$1 v=$2 n=$3 name log pidf chunks waited=0 old
+  name=$(leg_name "$arm" "$v")
+  log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
   chunks=$(( (n + PER_JOB - 1) / PER_JOB ))
+  mkdir -p "$ST2/logs" "$ST2/pids"
+  if alive "$pidf"; then
+    echo "$name: REFUSED — process $(cat "$pidf") is still running; not relaunching"
+    return 1
+  fi
+  if [ -f "$log" ]; then
+    old="$log.$(date -u +%Y%m%dT%H%M%SZ)"
+    [ -e "$old" ] && old="$old.$$"
+    mv "$log" "$old"
+    echo "$name: the earlier attempt's log is kept as $old"
+  fi
+  rm -f "$pidf"
 
   mapfile -t ARGS < <(verify_args "$arm" "$v")
   echo "=== $(date -Is) LAUNCH $name: $PY scripts/run_pv.py verify ${ARGS[*]}" >> "$log"
   # The wrapper writes its own pid, then runs the leg as its child and
   # records the exit status, so `status` and `wait` can read how it ended
-  # (rc is taken first: $? read after $(date) would be date's status).
+  # (rc is taken first: $? read after $(date) would be date's status). The
+  # job closes descriptor 9, the launcher's lock, so a polling leg does not
+  # hold it for hours.
   PYTHONUNBUFFERED=1 nohup bash -c 'echo $$ > "$0"; "$@"; rc=$?; echo "=== $(date -Is) EXIT $rc"' \
-    "$pidf" "$PY" scripts/run_pv.py verify "${ARGS[@]}" >> "$log" 2>&1 < /dev/null &
+    "$pidf" "$PY" scripts/run_pv.py verify "${ARGS[@]}" >> "$log" 2>&1 < /dev/null 9>&- &
   while [ ! -s "$pidf" ] && [ "$waited" -lt 30 ]; do sleep 1; waited=$((waited + 1)); done
-  echo "$name: started pid $(cat "$pidf" 2>/dev/null), log $log; $n candidates in $chunks job(s)"
+  if [ ! -s "$pidf" ]; then
+    echo "$name: no pid file after ${waited}s — read $log; verifying stops here"
+    return 1
+  fi
+  echo "$name: started pid $(cat "$pidf"), log $log; $n candidates in $chunks job(s)"
   waited=0
   while :; do
     if [ "$(grep -cE 'Submitted batch job [0-9]+/[0-9]+:' "$log")" -ge "$chunks" ]; then
@@ -384,8 +543,8 @@ verify_one() {
            "process is left running (pid $(cat "$pidf"))"
       return 1
     fi
-    sleep 15
-    waited=$((waited + 15))
+    sleep "${LODGE_POLL:-15}"
+    waited=$((waited + ${LODGE_POLL:-15}))
   done
 }
 
@@ -394,10 +553,10 @@ verify_one() {
 # failure lines (case-insensitive). No API.
 # -----------------------------------------------------------------------------
 status() {
-  local leg arm v name log pidf live ld res exitl fails
+  local leg arm v name log pidf live ld res perr exitl fails
   for leg in $LEGS; do
     read -r arm v < <(leg_parts "$leg")
-    name="verify-$arm-$v"; log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
+    name=$(leg_name "$arm" "$v"); log="$ST2/logs/$name.log"; pidf="$ST2/pids/$name.pid"
     ld=$(leg_dir "$arm" "$v")
     if [ ! -f "$log" ]; then
       printf '%-28s not launched; union %s, crops %s\n' "$name" \
@@ -407,13 +566,18 @@ status() {
     fi
     live=-; [ -f "$pidf" ] && { alive "$pidf" && live=ALIVE || live=gone; }
     exitl=$(grep -E '^=== .* EXIT [0-9]+$' "$log" | tail -1 | awk '{print $NF}')
-    res=-
-    [ -f "$ld/probabilities.json" ] &&
+    res=-; perr=-
+    if [ -f "$ld/probabilities.json" ]; then
       res="$(json_field "$ld/probabilities.json" 'len(d["results"])')/$(json_field "$(crops_dir "$arm")/candidate_manifest.json" 'len(d["candidates"])')"
+      perr=$(json_field "$ld/probabilities.json" 'sum(str(r.get("reasoning", "")).startswith("PARSE_ERROR") for r in d["results"].values())')
+    fi
     fails=$(grep -ciE 'failed|lost|partial|completeness gap|traceback|error|refus|storage cap' "$log")
-    printf '%-28s %-5s age %6ss exit %-2s submitted %s results %s fail-lines %s\n' \
+    # Only the current attempt's log is read; earlier attempts' logs were
+    # moved aside at relaunch (audit A1) and are only counted.
+    printf '%-28s %-5s age %6ss exit %-2s submitted %s results %s parse-errors %s fail-lines %s earlier-attempts %s\n' \
       "$name" "$live" "$(( $(date +%s) - $(stat -c %Y "$log") ))" "${exitl:--}" \
-      "$(grep -cE 'Submitted batch job [0-9]+/[0-9]+:' "$log")" "$res" "$fails"
+      "$(grep -cE 'Submitted batch job [0-9]+/[0-9]+:' "$log")" "$res" "$perr" "$fails" \
+      "$(find "$ST2/logs" -maxdepth 1 -name "$name.log.*" | wc -l)"
     grep -iE 'failed|lost|partial|completeness gap|traceback|error|refus|storage cap' "$log" |
       tail -2 | cut -c1-150 | sed 's/^/    | /'
   done
@@ -426,52 +590,41 @@ status() {
 wait_leg() {
   local arm v name
   read -r arm v < <(leg_parts "$1") || return 1
-  name="verify-$arm-$v"
-  # Staleness is not a signal here (a polling leg is silent), so the window
-  # is the poll's own 25 h cap; the pid and the EXIT line decide.
+  name=$(leg_name "$arm" "$v")
+  # A polling leg logs an HTTP GET for its job about every 30 s (run_pv.py
+  # sets the root logger to INFO), so an hour of silence is a hang (audit A3;
+  # first written here as "silent", with a 25 h window, which was wrong).
+  # The log is the current attempt's only (launch_leg moves earlier ones).
   "$PY" scripts/wait_for_run.py --log "$ST2/logs/$name.log" --pidfile "$ST2/pids/$name.pid" \
-    --stale-seconds 90000 --marker 'success=^=== .* EXIT 0$' \
+    --stale-seconds 3600 --poll "${WAIT_POLL:-60}" --marker 'success=^=== .* EXIT 0$' \
     --marker 'partial=^=== .* EXIT [1-9][0-9]*$'
 }
 
 # -----------------------------------------------------------------------------
-# estimate — per leg, candidates and cost at the register's per-candidate
-# rates (the original legs' audited cost / candidates; card § 3). Legs whose
-# union is not built yet are priced at the guide size given. No API.
+# estimate — per leg: candidates (the built union, else the guide), the
+# review band and cost at the original legs' audited per-candidate rates
+# (card § 3). Refuses (exit 1) when a built union lies outside its band,
+# unless BAND_OK names its leg (audit A6). Under REP the rows are that
+# replicate's legs (the same unions, so the same cost). No API.
 # -----------------------------------------------------------------------------
 estimate() {
-  "$PY" - "$LEGS" "$OUT" <<'PYEOF'
-import json
-import sys
-from pathlib import Path
+  local -a r=()
+  [ -n "$REP" ] && r=(--rep "$REP")
+  "$PY" scripts/modality_bridge_stage2_checks.py estimate --out "$OUT" \
+    --band-ok "${BAND_OK:-}" "${r[@]}"
+}
 
-legs, out = sys.argv[1].split(), Path(sys.argv[2])
-# Audited cost / candidates of the original legs (results/passes-manifest.json
-# via each leg's cost_audit.json): Gemini 3 verifier 2.271158/3319 to
-# 0.478101/674; Gemini 3.7 verifier 0.737004/674 (card: 0.87/791).
-rate = {"g3": (2.271158 / 3319, 0.478101 / 674), "g37": (0.737004 / 674, 0.87 / 791)}
-# Guide sizes until a union exists: the originals' unions; for the temp1 and
-# cache arms, their twins' through this chain (the T 0.7 passes 1-5: text
-# 2,714, image 2,788; g37-image 674). The Stage 1 card's 2,932 for text is
-# the merge_passes consensus-n5 union, not this chain (Stage 2 card § 3).
-guide = {"g3-text": 3319, "g3-image": 4065, "g37-text": 791, "g37-image": 674,
-         "g37-image-cache": 674, "g3-text-temp1": 2714, "g3-image-temp1": 2788}
-version = {"g3-text": "detect_brief-text", "g37-text": "detect_brief-text",
-           "g3-text-temp1": "detect_brief-text"}
-k = {"g3-text": 10, "g3-image": 10}
-lo_t = hi_t = 0.0
-for leg in legs:
-    arm, v = leg.split(":")
-    build = (out / arm / "verifier" / version.get(arm, "detect_brief-text-image")
-             / f"union_k{k.get(arm, 5)}.build.json")
-    n, src = (json.loads(build.read_text())["union_features"], "union") \
-        if build.exists() else (guide[arm], "guide")
-    lo, hi = sorted(n * r for r in rate[v])
-    lo_t += lo
-    hi_t += hi
-    print(f"{leg:22s} {n:6d} ({src:5s})  US${lo:6.2f} - {hi:6.2f}")
-print(f"{'total':22s} {'':14s}  US${lo_t:6.2f} - {hi_t:6.2f}")
-PYEOF
+# -----------------------------------------------------------------------------
+# repair LEG — re-parse the leg's PARSE_ERROR rows from batch_results.jsonl
+# with the real-time path's repair, into <leg>_repaired/ (audit A2; card
+# § 7). The leg directory is not written. No API.
+# -----------------------------------------------------------------------------
+repair() {
+  local arm=$1 v=$2 ld
+  ld=$(leg_dir "$arm" "$v")
+  [ -f "$ld/probabilities.json" ] && [ -f "$ld/batch_results.jsonl" ] ||
+    { echo "$(leg_name "$arm" "$v"): REFUSED — no probabilities.json and batch_results.jsonl in $ld"; return 1; }
+  "$PY" scripts/modality_bridge_stage2_checks.py repair "$ld"
 }
 
 # -----------------------------------------------------------------------------
@@ -509,8 +662,38 @@ expand_legs() {
   done
 }
 
+# take_lock — one writing subcommand at a time (audit A4: two `verify` runs
+# could otherwise both pass the alive and batch_jobs.json checks and lodge
+# one leg twice). Held on descriptor 9 until the command exits; a launched
+# leg closes 9 (launch_leg), so a polling leg never holds it.
+take_lock() {
+  mkdir -p "$ST2"
+  exec 9> "$ST2/stage2.lock"
+  if ! flock -n 9; then
+    echo "REFUSED: another Stage 2 command holds $ST2/stage2.lock" >&2
+    exit 1
+  fi
+}
+
+# Dispatch only when run, not when sourced (the tier-1 tests source this
+# file to exercise launch_leg with a test double).
+[[ "${BASH_SOURCE[0]}" == "$0" ]] || return 0
+
 cmd=${1:-}
 shift || true
+check_rep || exit 2
+# A replicate re-verifies existing crops: the arm-level build steps (and the
+# original legs' validations) run without REP.
+if [ -n "$REP" ]; then
+  case "$cmd" in
+    union|extract|prepare|validate-chain|anchor-gate)
+      echo "REFUSED: REP applies to verifier legs; run \`$cmd\` without REP" >&2
+      exit 2 ;;
+  esac
+fi
+case "$cmd" in
+  union|extract|provenance|prepare|rehearse|verify|repair) take_lock ;;
+esac
 case "$cmd" in
   plan) plan ;;
   validate-chain)
@@ -528,18 +711,28 @@ case "$cmd" in
       "$fn" "$arm" || exit 1
     done ;;
   estimate) estimate ;;
-  rehearse|verify)
+  rehearse|verify|repair)
     [ $# -gt 0 ] || { echo "$cmd needs: all | ARM:V ..." >&2; exit 2; }
     legs=$(expand_legs "$@") || exit 2
-    fn=rehearse; [ "$cmd" = verify ] && fn=verify_one
+    fn=$cmd; [ "$cmd" = verify ] && fn=verify_one
+    failed=""
     for leg in $legs; do
       read -r arm v < <(leg_parts "$leg")
-      "$fn" "$arm" "$v" || exit 1
+      if ! "$fn" "$arm" "$v"; then
+        # `repair` goes on to the other legs and reports them all at the
+        # end; rehearse and verify stop at the first failure.
+        [ "$cmd" = repair ] || exit 1
+        failed="$failed $leg"
+      fi
     done
+    if [ -n "$failed" ]; then
+      echo "REPAIR INCOMPLETE for:$failed (read each above)"
+      exit 1
+    fi
     if [ "$cmd" = verify ]; then echo "LODGING DONE $(date -Is)"; fi ;;
   status) status ;;
   wait) [ $# -eq 1 ] || { echo "wait needs one ARM:V" >&2; exit 2; }; wait_leg "$1" ;;
   *)
-    sed -n '2,75p' "$0"
+    sed -n '2,118p' "$0"
     exit 2 ;;
 esac

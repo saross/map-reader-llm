@@ -1,0 +1,111 @@
+{
+  "buffer_m": 20,
+  "g3_gap_committed": {
+    "delta_f1": 0.0549,
+    "p": 0.001,
+    "source": "results/image-b-gs-2026-08-28/analysis.json"
+  },
+  "pairs": {
+    "g3-t1-k5": {
+      "f1_a": 0.882424,
+      "f1_b": 0.824242,
+      "observed_diff": 0.058182,
+      "p_value": 0.0002,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000104,
+      "null_std": 0.016741,
+      "convention": "delta = text - image @20m"
+    },
+    "fifth-leg-g3v": {
+      "f1_a": 0.915411,
+      "f1_b": 0.931792,
+      "observed_diff": -0.016381,
+      "p_value": 0.0742,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000197,
+      "null_std": 0.009223,
+      "convention": "delta = text - image @20m"
+    },
+    "fifth-leg-g37v": {
+      "f1_a": 0.926488,
+      "f1_b": 0.936269,
+      "observed_diff": -0.009781,
+      "p_value": 0.2527,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000103,
+      "null_std": 0.008648,
+      "convention": "delta = text - image @20m"
+    },
+    "g3-best": {
+      "f1_a": 0.891596,
+      "f1_b": 0.839264,
+      "observed_diff": 0.052332,
+      "p_value": 0.0029,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000192,
+      "null_std": 0.018279,
+      "convention": "delta = text - image @20m"
+    },
+    "carried-verifier-best": {
+      "f1_a": 0.915411,
+      "f1_b": 0.915995,
+      "observed_diff": -0.000584,
+      "p_value": 0.9467,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5.1e-05,
+      "null_std": 0.007551,
+      "convention": "delta = text - image @20m"
+    },
+    "all-3.7-best": {
+      "f1_a": 0.926488,
+      "f1_b": 0.928821,
+      "observed_diff": -0.002334,
+      "p_value": 0.7477,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 9.6e-05,
+      "null_std": 0.006233,
+      "convention": "delta = text - image @20m"
+    }
+  },
+  "pair_sources": {
+    "g3-t1-k5": [
+      "results/modality-bridge-2026-10-07/g3-text-temp1-g3v",
+      "results/modality-bridge-2026-10-07/g3-image-temp1-g3v"
+    ],
+    "fifth-leg-g3v": [
+      "results/modality-bridge-2026-10-07/g37-text-g3v",
+      "results/modality-bridge-2026-10-07/g37-image-cache-g3v"
+    ],
+    "fifth-leg-g37v": [
+      "results/modality-bridge-2026-10-07/g37-text-g37v",
+      "results/modality-bridge-2026-10-07/g37-image-cache-g37v"
+    ],
+    "g3-best": [
+      "results/modality-bridge-2026-10-07/g3-text-g3v",
+      "results/modality-bridge-2026-10-07/g3-image-g3v"
+    ],
+    "carried-verifier-best": [
+      "results/modality-bridge-2026-10-07/g37-text-g3v",
+      "results/modality-bridge-2026-10-07/g37-image-g3v"
+    ],
+    "all-3.7-best": [
+      "results/modality-bridge-2026-10-07/g37-text-g37v",
+      "results/modality-bridge-2026-10-07/g37-image-g37v"
+    ]
+  },
+  "set_name": "verified_best_20m",
+  "gap_change_reference": "g3-t1-k5",
+  "gap_change": {
+    "fifth-leg-g3v": -0.07456299999999999,
+    "fifth-leg-g37v": -0.067963,
+    "g3-best": -0.005850000000000001,
+    "carried-verifier-best": -0.058766,
+    "all-3.7-best": -0.060516
+  }
+}

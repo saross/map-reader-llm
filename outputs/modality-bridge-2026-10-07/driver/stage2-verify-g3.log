@@ -1,0 +1,67 @@
+g3-text:g3: union 3258 inside the band 2821-3817 (guide 3319, original union_k10)
+INFO: detect_brief-text run_1: tiles 1398, raw 3239 -> dedup 1903
+INFO: detect_brief-text run_2: tiles 1398, raw 3168 -> dedup 1834
+INFO: detect_brief-text run_3: tiles 1398, raw 3250 -> dedup 1909
+INFO: detect_brief-text run_4: tiles 1398, raw 3175 -> dedup 1853
+INFO: detect_brief-text run_5: tiles 1398, raw 3221 -> dedup 1872
+INFO: detect_brief-text run_6: tiles 1398, raw 3278 -> dedup 1919
+INFO: detect_brief-text run_7: tiles 1398 (+1 fragment(s)), raw 3114 -> dedup 1808
+INFO: detect_brief-text run_8: tiles 1398 (+1 fragment(s)), raw 3175 -> dedup 1851
+INFO: detect_brief-text run_9: tiles 1398 (+1 fragment(s)), raw 3190 -> dedup 1895
+INFO: detect_brief-text run_10: tiles 1398 (+1 fragment(s)), raw 3228 -> dedup 1891
+INFO: gates passed for 10 pass(es) — re-run with --write to build
+g3-text: coverage OK — 10 passes x 1398 tiles; files per pass [1, 1, 1, 1, 1, 1, 2, 2, 2, 2]
+g3-text: metas OK — gemini-3-flash-preview, T 0.7, thinking minimal, cache none; pass cached shares [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+INFO: build record current: outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.geojson
+g3-text: provenance AGREES — 3258 candidates against 3258 union features, paired by candidate-id-index. Every vote_count agrees.
+verify-g3-text-g3: rehearsed — 3258 requests, 0 clients, signature 3b48d7193dcf…
+verify-g3-text-g3: started pid 714782, log outputs/modality-bridge-2026-10-07/stage2/logs/verify-g3-text-g3.log; 3258 candidates in 1 job(s)
+verify-g3-text-g3: submitted (batches/rn4chp7ukc7imne1byj23jv1m2ifzpajv4eh )
+g3-image:g3: union 3456 inside the band 3455-4675 (guide 4065, original union_k10)
+INFO: detect_brief-text-image run_1: tiles 1398, raw 2332 -> dedup 1456
+INFO: detect_brief-text-image run_2: tiles 1398, raw 2356 -> dedup 1465
+INFO: detect_brief-text-image run_3: tiles 1398, raw 2305 -> dedup 1440
+INFO: detect_brief-text-image run_4: tiles 1398, raw 2385 -> dedup 1499
+INFO: detect_brief-text-image run_5: tiles 1398, raw 2360 -> dedup 1472
+INFO: detect_brief-text-image run_6: tiles 1398, raw 2347 -> dedup 1445
+INFO: detect_brief-text-image run_7: tiles 1398, raw 2291 -> dedup 1408
+INFO: detect_brief-text-image run_8: tiles 1398, raw 2323 -> dedup 1437
+INFO: detect_brief-text-image run_9: tiles 1398, raw 2335 -> dedup 1477
+INFO: detect_brief-text-image run_10: tiles 1398, raw 2327 -> dedup 1444
+INFO: gates passed for 10 pass(es) — re-run with --write to build
+g3-image: coverage OK — 10 passes x 1398 tiles; files per pass [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+g3-image: metas OK — gemini-3-flash-preview, T 0.7, thinking minimal, cache explicit; pass cached shares [0.9445, 0.9445, 0.9445, 0.9445, 0.9445, 0.9445, 0.9445, 0.9445, 0.9445, 0.9445]
+INFO: build record current: outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/union_k10.geojson
+g3-image: provenance AGREES — 3456 candidates against 3456 union features, paired by candidate-id-index. Every vote_count agrees.
+verify-g3-image-g3: rehearsed — 3456 requests, 0 clients, signature 3b48d7193dcf…
+verify-g3-image-g3: started pid 716248, log outputs/modality-bridge-2026-10-07/stage2/logs/verify-g3-image-g3.log; 3456 candidates in 1 job(s)
+verify-g3-image-g3: submitted (batches/evs12mrs9b2pcdvng2wc3hfzd6mgx8uny69r )
+g3-text-temp1:g3: union 3179 inside the band 2768-3746 (guide 3257, T 0.7 guide 2,714 x 1.2 (T 1.0))
+INFO: detect_brief-text run_1: tiles 1398 (+1 fragment(s)), raw 3308 -> dedup 1989
+INFO: detect_brief-text run_2: tiles 1398 (+1 fragment(s)), raw 3309 -> dedup 1997
+INFO: detect_brief-text run_3: tiles 1398 (+1 fragment(s)), raw 3334 -> dedup 1981
+INFO: detect_brief-text run_4: tiles 1398 (+1 fragment(s)), raw 3288 -> dedup 1995
+INFO: detect_brief-text run_5: tiles 1398 (+1 fragment(s)), raw 3297 -> dedup 1949
+INFO: gates passed for 5 pass(es) — re-run with --write to build
+g3-text-temp1: coverage OK — 5 passes x 1398 tiles; files per pass [2, 2, 2, 2, 2]
+g3-text-temp1: metas OK — gemini-3-flash-preview, T 1.0, thinking minimal, cache none; pass cached shares [0.0, 0.0, 0.0, 0.0, 0.0]
+INFO: build record current: outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/union_k5.geojson
+g3-text-temp1: provenance AGREES — 3179 candidates against 3179 union features, paired by candidate-id-index. Every vote_count agrees.
+verify-g3-text-temp1-g3: rehearsed — 3179 requests, 0 clients, signature 3b48d7193dcf…
+verify-g3-text-temp1-g3: started pid 717581, log outputs/modality-bridge-2026-10-07/stage2/logs/verify-g3-text-temp1-g3.log; 3179 candidates in 1 job(s)
+verify-g3-text-temp1-g3: submitted (batches/9vhm6k2z04g60e07s8sdvogmash6c8xw16sy )
+g3-image-temp1:g3: union 3085 inside the band 2844-3848 (guide 3346, T 0.7 guide 2,788 x 1.2 (T 1.0))
+INFO: detect_brief-text-image run_1: tiles 1398, raw 2378 -> dedup 1556
+INFO: detect_brief-text-image run_2: tiles 1398, raw 2383 -> dedup 1554
+INFO: detect_brief-text-image run_3: tiles 1398, raw 2335 -> dedup 1514
+INFO: detect_brief-text-image run_4: tiles 1398, raw 2379 -> dedup 1515
+INFO: detect_brief-text-image run_5: tiles 1398, raw 2333 -> dedup 1490
+INFO: gates passed for 5 pass(es) — re-run with --write to build
+g3-image-temp1: coverage OK — 5 passes x 1398 tiles; files per pass [1, 1, 1, 1, 1]
+g3-image-temp1: metas OK — gemini-3-flash-preview, T 1.0, thinking minimal, cache explicit; pass cached shares [0.9445, 0.9445, 0.9445, 0.9445, 0.9445]
+INFO: build record current: outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/union_k5.geojson
+g3-image-temp1: provenance AGREES — 3085 candidates against 3085 union features, paired by candidate-id-index. Every vote_count agrees.
+verify-g3-image-temp1-g3: rehearsed — 3085 requests, 0 clients, signature 3b48d7193dcf…
+verify-g3-image-temp1-g3: started pid 719040, log outputs/modality-bridge-2026-10-07/stage2/logs/verify-g3-image-temp1-g3.log; 3085 candidates in 1 job(s)
+verify-g3-image-temp1-g3: submitted (batches/l9z73jl5a27lftsvpnr3didcvjni6g80syke )
+LODGING DONE 2026-10-07T18:19:03+00:00

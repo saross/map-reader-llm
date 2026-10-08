@@ -1,0 +1,40 @@
+=== 2026-10-07T14:48:06+00:00 LODGE g3-image-temp1-run5: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 1.0 --mode batch --service-tier flex --run 5 --output-dir outputs/modality-bridge-2026-10-07/g3-image-temp1 --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image-temp1
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image-temp1/detect_brief-text-image/run_5/batch_working/detections_detect_brief-text-image_run05.jsonl)
+  Submitted batch job: batches/6om9w838zombejzruop538zqjxk4yg7jcfti
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+=== 2026-10-07T14:50:36+00:00 SUBMITTED g3-image-temp1-run5 batches/6om9w838zombejzruop538zqjxk4yg7jcfti
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_RUNNING
+  Polling batches/6om9w838zombejzruop538zqjxk4yg7jcfti: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-053-3_Elenovo_x1152_y768.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+Malformed box_2d in K-35-053-3_Elenovo_x1728_y3072.png: [730, 485, 771, 542, 'mound']
+Malformed box_2d in K-35-053-3_Elenovo_x1728_y3072.png: [820, 462, 859, 508, 'mound']
+  Retried 1/1 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2335 detections, 0 failed, $1.9502
+  Released request file files/2lkyfgqpqfus (job terminal)
+
+Batch complete. Estimated cost: $1.9502
+Tiles processed: 1398

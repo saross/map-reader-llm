@@ -1,0 +1,92 @@
+=== 2026-10-07T17:07:00+00:00 LODGE g3-text-temp1-run2_rd1: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --model gemini-3-flash-preview --thinking-level minimal --tile-size 384 --allow-inert-fields --manifest outputs/modality-bridge-2026-10-07/g3-text-temp1/residual_run_2.json --tiles-dir inputs/tiles_384_ov192 --temperature 1.0 --mode batch --service-tier flex --run 2 --output-dir outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1 --skip-intent-check
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: outputs/modality-bridge-2026-10-07/g3-text-temp1/residual_run_2.json
+Output: outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1
+  Built JSONL: 3 lines (outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text/run_2/batch_working/detections_detect_brief-text_run02.jsonl)
+  Submitted batch job: batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+=== 2026-10-07T17:07:30+00:00 SUBMITTED g3-text-temp1-run2_rd1 batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_RUNNING
+  Polling batches/az3vzd52v2airdx31ytkpmbva1tehgd8e9y4: JOB_STATE_SUCCEEDED
+  Batch complete: 3 tiles, 6 detections, 0 failed, $0.0017
+  Released request file files/g4upftscerfo (job terminal)
+
+Batch complete. Estimated cost: $0.0017
+Tiles processed: 3

@@ -1,0 +1,47 @@
+INFO: anchor g3-text         F1 0.8961 (registered 0.8961) micro 0.8961 point (0.15, k10) OK
+INFO: anchor g3-image        F1 0.8412 (registered 0.8412) micro 0.8412 point (0.15, k9) OK
+INFO: anchor g37-text-g3v    F1 0.9139 (registered 0.9139) micro 0.9139 point (0.10, k5) OK
+INFO: anchor g37-text-g37v   F1 0.9265 (registered 0.9265) micro 0.9265 point (0.80, k5) OK
+INFO: anchor g37-image-g3v   F1 0.9254 (registered 0.9254) micro 0.9254 point (0.10, k5) OK
+INFO: anchor g37-image-g37v  F1 0.9308 (registered 0.9308) micro 0.9308 point (0.90, k5) OK
+INFO: anchor gap g3-text - g3-image: +0.0549 (registered +0.0549) p=0.0010 OK
+INFO: anchor gap g37-text-g3v - g37-image-g3v: -0.0115 (registered -0.0115) p=0.2533 OK
+INFO: anchor gap g37-text-g37v - g37-image-g37v: -0.0043 (registered -0.0043) p=0.6767 OK
+INFO: gate 1 passed (187 s)
+INFO: gap gap_test.json::g3                  +0.052332 p=0.0029 (committed +0.052332 p=0.0029) OK
+INFO: gap gap_test.json::carried-verifier    -0.000584 p=0.9467 (committed -0.000584 p=0.9467) OK
+INFO: gap gap_test.json::all-3.7             -0.002334 p=0.7477 (committed -0.002334 p=0.7477) OK
+INFO: gap k5/gap_test.json::g3-k5            +0.060948 p=0.0002 (committed +0.060948 p=0.0002) OK
+INFO: gap additions/gap_test.json::g3-t1-k5  +0.058182 p=0.0002 (committed +0.058182 p=0.0002) OK
+INFO: gap additions/gap_test.json::fifth-leg-g3v -0.016381 p=0.0742 (committed -0.016381 p=0.0742) OK
+INFO: gap additions/gap_test.json::fifth-leg-g37v -0.009781 p=0.2527 (committed -0.009781 p=0.2527) OK
+INFO: gap additions/gap_test.json::g3-best   +0.052332 p=0.0029 (committed +0.052332 p=0.0029) OK
+INFO: gap additions/gap_test.json::carried-verifier-best -0.000584 p=0.9467 (committed -0.000584 p=0.9467) OK
+INFO: gap additions/gap_test.json::all-3.7-best -0.002334 p=0.7477 (committed -0.002334 p=0.7477) OK
+INFO: gates 2-3 passed (197 s)
+INFO: gap change carried-verifier minus g3        -0.0529 CI95 [-0.0887, -0.0198] p=0.0047 (family-swap p=0.0031)
+INFO: gap change all-3.7 minus g3                 -0.0547 CI95 [-0.0909, -0.0195] p=0.0040 (family-swap p=0.0029)
+INFO: gap change carried-verifier minus g3-k5     -0.0615 CI95 [-0.0970, -0.0275] p=0.0004 (family-swap p=0.0004)
+INFO: gap change all-3.7 minus g3-k5              -0.0633 CI95 [-0.1003, -0.0277] p=0.0002 (family-swap p=0.0002)
+INFO: gap change carried-verifier minus g3-t1-k5  -0.0588 CI95 [-0.0917, -0.0256] p=0.0006 (family-swap p=0.0005)
+INFO: gap change all-3.7 minus g3-t1-k5           -0.0605 CI95 [-0.0955, -0.0288] p=0.0004 (family-swap p=0.0002)
+INFO: gap change fifth-leg-g3v minus g3           -0.0687 CI95 [-0.1072, -0.0316] p=0.0008 (family-swap p=0.0005)
+INFO: gap change fifth-leg-g37v minus g3          -0.0621 CI95 [-0.0978, -0.0270] p=0.0011 (family-swap p=0.0009)
+INFO: gap change fifth-leg-g3v minus g3-t1-k5     -0.0746 CI95 [-0.1098, -0.0416] p=0.0000 (family-swap p=0.0000)
+INFO: gap change fifth-leg-g37v minus g3-t1-k5    -0.0680 CI95 [-0.1008, -0.0359] p=0.0000 (family-swap p=0.0000)
+INFO: date g3-text-g3v      at_original_point  bridge 0.8916 - original 0.8961 = -0.0045 p=0.6163 discordant 32
+INFO: date g3-text-g3v      at_oracle          bridge 0.8916 - original 0.8961 = -0.0045 p=0.6163 discordant 32
+INFO: date g3-image-g3v     at_original_point  bridge 0.8331 - original 0.8412 = -0.0081 p=0.5301 discordant 60
+INFO: date g3-image-g3v     at_oracle          bridge 0.8393 - original 0.8412 = -0.0019 p=0.8841 discordant 55
+INFO: date g37-text-g3v     at_original_point  bridge 0.9154 - original 0.9139 = +0.0015 p=0.8715 discordant 33
+INFO: date g37-text-g3v     at_oracle          bridge 0.9154 - original 0.9139 = +0.0015 p=0.8715 discordant 33
+INFO: date g37-text-g37v    at_original_point  bridge 0.9265 - original 0.9265 = +0.0000 p=1.0000 discordant 22
+INFO: date g37-text-g37v    at_oracle          bridge 0.9265 - original 0.9265 = +0.0000 p=1.0000 discordant 22
+INFO: date g37-image-g3v    at_original_point  bridge 0.9160 - original 0.9254 = -0.0094 p=0.2571 discordant 24
+INFO: date g37-image-g3v    at_oracle          bridge 0.9160 - original 0.9254 = -0.0094 p=0.2571 discordant 24
+INFO: date g37-image-g37v   at_original_point  bridge 0.9288 - original 0.9308 = -0.0020 p=0.8360 discordant 19
+INFO: date g37-image-g37v   at_oracle          bridge 0.9288 - original 0.9308 = -0.0020 p=0.8360 discordant 19
+INFO: 2201 subset rungs over 7 arms on 20 workers
+INFO: subset rungs done: 3410 rows (379 s)
+INFO: gate 4 passed
+INFO: FLOORS COMPLETE -> results/modality-bridge-2026-10-07/floors (380 s)

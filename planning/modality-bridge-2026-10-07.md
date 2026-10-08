@@ -62,7 +62,7 @@ run-conditions register (`results/run-conditions.json`) and each run's card.
 | Output budget / format | 8,192 / `application/json` | same | same | same |
 | Tile manifest | `inputs/grid-2026-08-18/grid_384_ov192_manifest.json` (`484e00cb…`, 1,398 tiles) | same | same | same |
 | Tile tree / size | `inputs/tiles_384_ov192` / 384 px | same | same | same |
-| Context caching | none (prefix ~393 tokens) | **explicit** cache: system instruction + preamble + 17 examples, 18,909 tokens on every request, 1 h TTL; the request is the cache's user turn plus a second user turn (transition + tile) | none | **implicit** only (79.5 % of input cached); everything inline in one user turn |
+| Context caching | none (prefix ~393 tokens) | **explicit** cache: system instruction + preamble + 17 examples, 18,909 tokens on every main-pass request (the six recovery tiles, runs 1, 3, 6, 8 and 9, went inline: 16,272 cached of 20,018, the implicit pattern; corrected 2026-10-07 from "on every request", `planning/modality-bridge-2026-10-07-stage2.md`), 1 h TTL; the request is the cache's user turn plus a second user turn (transition + tile) | none | **implicit** only (79.5 % of input cached); everything inline in one user turn |
 | Serving tier | flex | **standard** (the cached path dropped `service_tier` until `2df65047e`, A61) | flex | flex |
 | Per call (mean) | 1,502 in, 149.3 out | 20,028 in (18,916 cached), 118.7 out | 1,502 in, 76.6 out, 279.0 thinking | 20,018 in (15,911 cached), 79.7 out, 179.1 thinking |
 | Register cost (K passes) | US$8.38 (flex) | US$25.96 (standard) | US$8.60 (passes 1–5, flex) | US$18.33 (flex) |
@@ -699,6 +699,12 @@ the cache); the batch path never deletes its caches; and a dead polling
 process orphans its job, whose name survives only in the log.
 
 ## Changelog
+
+### 2026-10-07 — The original image leg's recovery tiles (Session 163)
+
+§ 2.1's table said the original Gemini 3 image leg sent the explicit cache
+"on every request"; its six recovery tiles (6 of 13,980 requests) went
+inline (found by the Stage 2 meta check). Corrected in place.
 
 ### 2026-10-07 — Re-check fixes (Session 163)
 

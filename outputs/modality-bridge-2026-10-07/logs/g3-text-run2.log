@@ -1,0 +1,42 @@
+=== 2026-10-07T13:43:49+00:00 LODGE g3-text-run2: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text.json --model gemini-3-flash-preview --thinking-level minimal --tile-size 384 --allow-inert-fields --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 2 --output-dir outputs/modality-bridge-2026-10-07/g3-text --skip-intent-check
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-text
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-text/detect_brief-text/run_2/batch_working/detections_detect_brief-text_run02.jsonl)
+  Submitted batch job: batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+=== 2026-10-07T13:46:19+00:00 SUBMITTED g3-text-run2 batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_RUNNING
+  Polling batches/z6i6t7rqurqr4cuo7qvh4zxhp4qduwm0agfu: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-053-3_Elenovo_x1728_y1152.png: Extra data: line 16 column 1 (char 173)
+Malformed box_2d in K-35-053-3_Elenovo_x192_y1728.png: [725, 368, 38, 764, 405]
+  Retried 1/1 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 3169 detections, 0 failed, $0.8349
+  Released request file files/0jz6fpluxw6a (job terminal)
+
+Batch complete. Estimated cost: $0.8349
+Tiles processed: 1398

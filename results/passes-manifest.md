@@ -2,9 +2,9 @@
 
 # Passes manifest
 
-> Generated 2026-10-05T05:33:46Z · 1449 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `69df3b5d4`.
+> Generated 2026-10-08T08:16:32Z · 1455 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `303fbd3d2`.
 >
-> **Coverage**: 1449 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
+> **Coverage**: 1455 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
 | pass_id | model | modality | think | T | status | tiles | cands | cost_usd | basis |
 |---|---|---|---|---|---|---|---|---|---|
@@ -165,6 +165,12 @@
 | proposer-verifier-384::verified-adversarial-text-v1-prompt::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 572 | 0.396852 | audited |
 | proposer-verifier-512::verified-adversarial-text::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 140 | 0.198296 | audited |
 | proposer-verifier-512::verified-adversarial-text-v2::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 140 | 0.196954 | audited-upper-bound |
+| pv-diag-256::text-baseline-text-t0.0::run1 | gemini-3-flash | text | minimal | 0.0 | ok | 1032 | — | — | unrecorded |
+| pv-diag-256::text-n5-text-t0.7::run1 | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | — | — | unrecorded |
+| pv-diag-256::text-n5-text-t0.7::run2 | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | — | — | unrecorded |
+| pv-diag-256::text-n5-text-t0.7::run3 | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | — | — | unrecorded |
+| pv-diag-256::text-n5-text-t0.7::run4 | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | — | — | unrecorded |
+| pv-diag-256::text-n5-text-t0.7::run5 | gemini-3-flash | text | minimal | 0.7 | ok | 1032 | — | — | unrecorded |
 | pv-diag-256::verified-adv-text-consensus-5of5::run1 | gemini-3-flash-preview | text | minimal | 0.0 | ok | — | 1165 | 0.799018 | audited |
 | pv-diag-384::flash-high-image-n5-image-t0.0::run1 | gemini-3-flash-preview | image | high | 0.0 | ok | 484 | — | 0.644706 | audited-lower-bound |
 | pv-diag-384::flash-high-image-n5-image-t0.0::run2 | gemini-3-flash-preview | image | high | 0.0 | partial | 483 | — | 5.453974 | audited |

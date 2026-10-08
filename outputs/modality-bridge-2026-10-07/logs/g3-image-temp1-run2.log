@@ -1,0 +1,60 @@
+=== 2026-10-07T14:37:20+00:00 LODGE g3-image-temp1-run2: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 1.0 --mode batch --service-tier flex --run 2 --output-dir outputs/modality-bridge-2026-10-07/g3-image-temp1 --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image-temp1
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image-temp1/detect_brief-text-image/run_2/batch_working/detections_detect_brief-text-image_run02.jsonl)
+  Submitted batch job: batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+=== 2026-10-07T14:39:50+00:00 SUBMITTED g3-image-temp1-run2 batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_RUNNING
+  Polling batches/roxp1qxux06lbnzvnx3651gnwyyf677fs538: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-053-3_Elenovo_x1152_y768.png: Expecting ',' delimiter: line 9 column 18 (char 113)
+Malformed box_2d in K-35-053-3_Elenovo_x1728_y960.png: [756, 731, 797, 774, 'benchmark_mound']
+Failed to parse detections for K-35-053-3_Elenovo_x384_y1344.png: Expecting value: line 94 column 18 (char 1366)
+Malformed box_2d in K-35-078-1_Lesovo_x2496_y2688.png: [211, 342, 237, 367, 'mound', 'burial_mound']
+  Retried 2/2 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2385 detections, 0 failed, $1.9549
+  Released request file files/1addn51gj4h9 (job terminal)
+
+Batch complete. Estimated cost: $1.9549
+Tiles processed: 1398

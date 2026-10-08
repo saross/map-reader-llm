@@ -20,19 +20,93 @@ replaces it.
   `w15-floors-drafts` (`planning/d9-notes-55map-floors-draft-2026-10-07.md`).
   Three signed rows still carry a stale "UNSIGNED" `_note`
   (`planning/wording-changes-register.md` row K2).
-- [ ] **Universe rule for the K-ladders** (frames ruling (b)), to settle with
-  the PI: `reports/frames-blast-radius-2026-10-07.md` § 6 item 2. Rulings
-  already given 2026-10-07: option (A), the scorer fix, and (a), never re-key
-  across sheets.
-- [ ] **Run B Stage 1**: card `planning/modality-bridge-2026-10-07.md` (PI
-  rulings in § 10, added arms in § 4.8); addendum audit pending; then
-  `lodge g37-image:1`, the first-chunk gate, `lodge all`.
-- [x] **Input drift** (2026-10-07): traced, false alarm
-  (`reports/input-drift-2026-10-07.md`, `abe87128f`): documented recoveries,
-  inputs pinned by `e82_input_vintage`, 53 of 54 reproduce at their scored
-  inputs. Small follow-ups in its "Other flags" (two unlisted pv-diag
-  evaluations; the uplift supplement's missing pin column; teach the next
-  corpus-wide reproduction check to read the pins).
+- [x] **Universe rule for the K-ladders** (frames ruling (b)): RULED
+  2026-10-07, option 1 generalised (D51); scorer fix and never re-key (D50).
+- [ ] **PR #26 review** (D50 and D51 implemented, not merged; report
+  `reports/scorer-frames-d50-d51-2026-10-08.md` on the branch). Four PI
+  rulings: (1) as ruled, D50's origin restoration moves 707 cells beyond the
+  frames report's 70, all upward (a spatial-join re-key across sheet edges);
+  (2) the four `pv-diag-384` ladders the D51 gate refuses; (3) the nine
+  ladders whose area is undetermined (no pass provenance); (4) the re-score
+  itself, after merge.
+- [x] **Run B ran overnight** (2026-10-07, launch delegated by the PI, D52).
+  Stage 1: 45 of 45 passes at exact coverage, all on 2026-10-07 UTC
+  (`92b151058`, `2718be084`, `60aceebdd`, `987718a66`). Stage 2: ten verifier
+  legs, every candidate scored (`2b6edde9a`, `a3ea389c2`, `3c155685a`,
+  `94be8b01a`, `69eb32132`). File API cleared; caches deleted. First scoring
+  and findings: `results/modality-bridge-2026-10-07/findings.md`
+  (`aeff1e207`, `c2a3cdaff`). Audited US$94.52 plus cache storage.
+- [x] **Run B review with the PI**: the findings note; F-cal (Gemini 3 image
+  union 15 % smaller); the floors (D45/D46) and the gap-change interaction
+  permutation, still to compute; whether to delete the ~40 GB of request
+  files on sapphire (`batch_working/`, trivially rebuilt). DONE 2026-10-08:
+  floors and interaction test merged (`16d41b494`) after an independent
+  audit (`reports/s163-agent-records/run-b-floors-audit.md`); request
+  folders deleted (D55 Q3: 54 folders, 35 GB; the verifier request files
+  stay until Run C has compared them, then go).
+- [ ] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
+  further verifications of Run B's ten legs, on an agent's branch and
+  sapphire; card `planning/run-c-verifier-reinvocation-2026-10-08.md`.
+  Then delete Run B's verifier request files (D55 Q3).
+- [x] **pv-diag-256 registered in place** (D55 Q5): merged 2026-10-08
+  (`fbc4cb02a`). Its agent found: (a) the union sweep's verdicts now
+  depend on pass order: 24 unions in 10- and 30-pass pools read STALE by
+  0 to 4 features, because `75d7c8d4c` (2026-09-13) changed `merge_passes`
+  from name order to numeric order and clustering is order-dependent; so
+  "pinning union pass order" (S162 engineering list) comes before any
+  re-run of the sweep (`reports/union-staleness-retrospective-2026-09-12.md`
+  § 7); (b) `op-asis.diff` and `op-patched.diff`, named in the 2026-10-07
+  stale-register report, are untracked; (c) the six archived metas appear
+  both among the ledger's zero-usage metas and as unpriced register rows.
+- [x] **Registry repair** (2026-10-08, `df3679963`): this session's
+  registry rebuilds ran as `python`, absent on amd-tower, with output
+  discarded, so they failed silently; the floors audit record went
+  unregistered and `main` failed the registry test until rebuilt with
+  `.venv/bin/python`.
+- [ ] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
+  rows, not Gemini 3 Flash as the approval named; re-confirm with the PI.
+- [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
+  (`gemini3-image-55map-2026-09-16`, `verify_k1_arm2`, `verify_k3_arm2`,
+  `verify_k5_arm2`: an unescaped quote inside a string; the originals'
+  real-time path would have retried them), plus two repairable rows (0.0
+  booked where the response says 0.2 and 0.05). Found by the Run B Stage 2
+  `repair` scan (`planning/modality-bridge-2026-10-07-stage2.md`). PI
+  decision: re-verify the seven, and whether the batch parser should repair
+  as the real-time path does (re-booking would move committed rows).
+  2026-10-08: approved (D55 Q4), held on the model name (see above).
+- [x] **Copy or link the bench's null-tile history report** (PI decision,
+  raised by the map-reader-bench session 2026-10-08): bench repository,
+  `reports/2026-10-08-no-mound-signal-history.md` on branch
+  `claude/no-mound-history-2026-10-08` (bench PR #45). A case study of the
+  "output nothing" signal for the text arm, found (Obs 14) and lost
+  repeatedly. If copied: `reports/` with a provenance banner (source
+  repository, path, commit). Reply to the bench session when settled.
+  DONE 2026-10-08: PI ruled master copy here, bench links; copied as
+  `reports/no-mound-signal-history-2026-10-08.md` (`8309790d1`); bench PR
+  #45 branch now a pointer (`4b4fca7`); the bench session told.
+- [x] **Obs 508, same-model drift over time** (2026-10-08, `a9c5d4ef3`).
+  PI: observational only; later instances go in as new entries in the
+  working notes, not a new file.
+- [ ] **Paper framing corrections (PI agreed 2026-10-08):** "text" means
+  zero-shot (E90) wherever the drafts describe the text arm or the
+  modality contrast; the temperature caveat (3.7 ignores temperature, so
+  "configuration carries across versions" did not carry temperature);
+  the null-tile asymmetry between arms (being checked); why the 3.7
+  headline is text when Run B's cached 3.7 image cell scored 0.9352
+  against 0.9265 (n.s.); the signed K-ladder outcome still reads "worst
+  buy on every ladder" (Obs 502). 2026-10-08: the null-tile check found
+  the image arm's 17 examples include 3 null tiles and neither instruction
+  says an empty answer is acceptable; the 55-map corpus shows 3.7 image
+  ahead of 3.7 text (+0.0351 F1, P3), so the paper recommends 3.7 image
+  at K = 3 beside the Pareto frontier (D53), and no "no mounds is fine"
+  text run is made (D54). The claims inventory stays frozen with dated
+  notes (D55 Q1); oracle-against-oracle differences are descriptive (Q2).
+- [x] **Stray untracked `ib.md` and `otel_m.md`** (third-party pages saved
+  on 2026-09-21 during the cost-accounting work): deleted at the PI's
+  request, 2026-10-08.
+- [ ] **Triage the open items** into blocks submission / improves the
+  paper / after submission, then a dedicated planning session for a
+  submitted paper in about 30 days (PI agreed 2026-10-08).
 - [x] Temperature probe and follow-up (2026-10-07): Gemini 3.7 ignores
   temperature; no residual effect (`planning/temperature-probe-2026-10-07.md`
   §§ 7, 8.5).

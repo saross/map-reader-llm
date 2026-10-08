@@ -1,7 +1,10 @@
 # Stale register notes resolved, 2026-10-07
 
-> **Last revised**: 2026-10-07 (original publication, Session 162). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (§ 10 added: the PI's ruling registered
+> pv-diag-256's archived pool in place, and the union checker now reproduces
+> its union; § 0, § 1c and § 9 item 2 point to it. Before that: 2026-10-07,
+> original publication, Session 162). See [§ Changelog](#changelog) for
+> revision history.
 
 The record of the stale-register-notes pass (PI request, 2026-10-07),
 merged as branch `stale-notes-2026-10-07` (`6da52378c`..`84c75f184`). Written
@@ -26,6 +29,7 @@ branch's register, the scripts and the regeneration diffs, not retyped.
 | 5 | pv-diag-384 "No condition cites either" | **fixed** (append-only) | `results/run-conditions.json` | `e8d7d0f27` |
 | 6 | session-78 `*-text` `instruction_file` | **fixed** (field in place, note appended; builder fixed) | `scripts/build_gs_era2_board_opmax.py`, `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/opmax/membership.json`, `results/run-conditions.json` | `fe874fd41`, `369b767d3` |
 | - | propagation through generators | done | `results/conditions-manifest.json` + 5 renderings; 4 `post_run_report.md` | `3b537582b`, `84c75f184` |
+| 10 | pv-diag-256's archived pool registered in place (PI ruling, 2026-10-08) | **done** (added; nothing moved) | see § 10 | `20e0be0d3` … `8e343e6e7` |
 
 **Is `results/run-conditions.json` generated?** No. Its `_README` calls it "the
 generator's third INPUT", "Authored in archetype batches". The scripts that
@@ -123,6 +127,9 @@ empties `UNRESOLVABLE`, which `tests/test_check_union_provenance.py::test_docume
 forbids ("the table should not be silently emptied"), and it is the same
 "register the archived pool" decision the note leaves to the PI. 11/11 tests in
 that file pass.
+
+Superseded 2026-10-08: the PI ruled to register the pool in place, and the
+entry moved to `POOL_OVERRIDES`, with the test changed deliberately (§ 10).
 
 ### 1d. `reports/union-staleness-retrospective-2026-09-12.md` (`162af73c5`)
 
@@ -440,7 +447,8 @@ Each row's `_note` gains a dated record of the change (example, the first row):
    stage override; that is a design decision.
 2. **Registering the archived pv-diag-256 pool** (so that
    `check_union_provenance.py` reproduces the union itself): a PI decision. It
-   changes checker behaviour, and a tier-1 test.
+   changes checker behaviour, and a tier-1 test. Decided 2026-10-08 (register
+   in place) and done: § 10.
 3. **Other copies of stale claims, outside PR #25's list.** I left these
    unedited:
    - `reports/documentation-batch1-deltas-2026-09-13.md:205` and
@@ -479,7 +487,223 @@ Each row's `_note` gains a dated record of the change (example, the first row):
    The regeneration diffs are kept beside this report (`op-asis.diff`,
    `op-patched.diff`).
 
+## 10. pv-diag-256 registered in place (PI ruling, 2026-10-08)
+
+Added 2026-10-08 by the agent that did the work, on branch
+`worktree-agent-a462722af99b42e8c`, cut from `16d41b494`. It settles § 9 item 2.
+
+**The ruling.** The Session 162 close recommended "register pv-diag-256 in
+place" (`planning/paper-writeup-continuity.md`, S162 block, item 5, "Decisions
+waiting"). The PI approved it on 2026-10-08.
+
+**What "in place" meant at source.** The register already had the mechanism.
+A pool spec may name `repo_path`, a repository-relative root that stands in for
+the run directory: ruling D32 for verifier legs, D41 for proposer pools
+(`scripts/generate_post_run_report.py`, `_leg_root`). h10's
+`coldstart-pool_160` uses it for passes archived under
+`archive/intermediate-calibration/`. Registering in place therefore meant
+adding pool specs whose root is `archive/outputs-non-production-tile-sizes`.
+Nothing about that was ambiguous. No file moved, and no committed condition,
+evaluation, detection or figure changed.
+
+**Verified at source before acting.**
+
+- `git ls-files` lists the six pass directories, each with its detections,
+  `.meta.json` and `.tiles.json`. The metas record `detect_brief-text`,
+  `gemini-3-flash`, thinking `minimal`, 1,032 items, T 0.0 for the baseline
+  and T 0.7 for the five passes, and `include_example_images: false`. Pass
+  sizes: 1,828 (baseline); 1,843 / 1,859 / 1,829 / 1,838 / 1,856.
+- `3d22184d6` (2026-04-15), `276e4ca80` (2026-04-16) and `bd24293d4`
+  (2026-04-19) are the commits § 1 describes.
+- The baseline pass's detections and `consensus/text-baseline.geojson` share
+  sha256 `bf44bc7b11e3b3f3…`. The archived and live copies of
+  `text-{1..5}of5.geojson` are byte-identical.
+- Re-derived with the checker's own functions from the five T = 0.7 passes:
+  2,558 / 1,909 / 1,645 / 1,423 / 1,165 features at ≥ 1 … 5 votes, the
+  committed counts, with no unmatched feature at 1 m either way. The in-memory
+  EPSG:32635 vote-5 centroids equal `text-5of5.geojson`'s coordinates exactly.
+
+**Two choices, each with its precedent.**
+
+1. *Two pools, not one.* The keys follow pv-diag-384, which registers the same
+   layout as `text-baseline-text-t0.0` and `text-n10-text-t0.7`. The union's
+   pool alone would have satisfied the checker, but
+   `scripts/check_manipulation.py` (`proposer_metas_for_condition`) falls back
+   to a run's sole pool when nothing else binds a condition. With one pool it
+   would have bound the T = 0.0 baseline condition to the T = 0.7 passes.
+2. *Conditions unchanged.* Both still name `proposer_pool: "text"` with
+   `source_run: pv-diag-256`. pv-diag-384's baseline conditions do the same,
+   naming `text-baseline` beside the registered `text-baseline-text-t0.0`.
+   Re-pointing them would rewrite committed condition fields (left undone,
+   below).
+
+**What changed.**
+
+| file | change | commit |
+|---|---|---|
+| `results/run-conditions.json` | `pv-diag-256.proposer_pools`: `{}` → two specs at `repo_path` `archive/outputs-non-production-tile-sizes`; dated append to the run's `_note` | `20e0be0d3` |
+| `results/manipulation-gate-bindings.json` | dated append to the caveats of `pv-diag-256-text-baseline` and `pv-diag-256-text-5of5-union` | `20e0be0d3` |
+| `scripts/check_union_provenance.py` | union moved from `UNRESOLVABLE` (now empty) to `POOL_OVERRIDES`; comparison reads EPSG:32635 as well as WGS84; a union in any other declared CRS is UNRESOLVED; v1.1.0 | `303fbd3d2` |
+| `tests/test_check_union_provenance.py`; new `tests/test_check_union_provenance_committed.py` (tier 2) | guard test changed deliberately; registration, frame and CRS tests; the five committed unions re-derived | `303fbd3d2` |
+| `scripts/generate_run_reports.py`, `tests/test_generate_run_reports.py` | § 9.1 of a run report no longer places a `repo_path` pool inside the run directory | `a710152d1` |
+| `results/passes-manifest.json` and the five register renderings; `outputs/h10/post_run_report.md`, `outputs/h11/pv-diag-256/post_run_report.md` | regenerated | `e5f702d2c` |
+| 729 `cost_audit.json` sidecars, `data/pricing/archive-executions.json` | register stamp only | `8e343e6e7` |
+| this report, `reports/union-staleness-retrospective-2026-09-12.md`, and the re-run's output beside this report | record | the commit that adds this section |
+
+The `_note` append, verbatim:
+
+> Registered in place 2026-10-08 (PI ruling 2026-10-08, approving the Session 162 close's recommendation 'register pv-diag-256 in place', planning/paper-writeup-continuity.md; record: reports/stale-register-notes-2026-10-07.md section 10): 'proposer_pools stays empty' in the 2026-10-07 correction above is superseded. The six archived passes are registered where they lie, and no file moved: proposer_pools text-baseline-text-t0.0 (the N=1 T=0.0 baseline pass) and text-n5-text-t0.7 (the five N=5 T=0.7 passes) name repo_path archive/outputs-non-production-tile-sizes, the mechanism h10's coldstart-pool_160 uses (ruling D41); the keys follow pv-diag-384's names for the same layout. Their metas record no token usage (Batch API), so their passes-manifest rows carry cost_usd null with basis unrecorded (ruling D12). The conditions are unchanged: both still name proposer_pool 'text' with source_run pv-diag-256, as pv-diag-384's baseline conditions name theirs beside registered pools. scripts/check_union_provenance.py now re-derives consensus/ from text-n5-text-t0.7 (POOL_OVERRIDES) and reproduces text-1of5..text-5of5 exactly (2,558 / 1,909 / 1,645 / 1,423 / 1,165 features). No metric, eval or detection changed.
+
+The binding caveats gain a shorter dated note to the same effect. Each adds
+that the condition still names pool `text`, so the binding still supplies the
+proposer route. The gate confirms it: the routes now read
+`binding:pv-diag-256-text-baseline:passes-manifest:pv-diag-256/text-baseline-text-t0.0`
+and the five-source equivalent for the union.
+
+**Two defects found on the way, both fixed.**
+
+1. *The checker could not compare these unions at all.* The 256 plan's own
+   builder wrote them in EPSG:32635, with a `crs` member. Every union the
+   2026-09-12 sweep compared was a WGS84 `merge_passes.py` output, and
+   `_utm_points` projected every point as degrees. Moving the table entry alone
+   would have crashed on this union with
+   `ValueError: cannot convert float NaN to integer`. Projected points now pass
+   through (`merge_passes.coords_are_geographic` decides). The largest matched
+   offset, 0.068 m, comes from the `geojson` library's six-decimal precision on
+   `apply_threshold`'s WGS84 output; the pyproj round trip alone is
+   nanometres. That is what the 1 m tolerance is for.
+2. *Generated run reports placed `repo_path` pools inside the run directory.*
+   § 9.1's column header reads "Path within the run directory", and the cell
+   printed the bare `path`. h10's report has said `pool_160` lies inside
+   `outputs/h10` since D41, and pv-diag-256's would have done the same. The
+   cell now gives the repository path. The header is unchanged, so only those
+   two reports re-render.
+
+Every new test was confirmed red without its fix. The cases: override removed,
+table refilled, frame handling removed, CRS guard removed, and the committed
+renderer.
+
+**Regeneration and checks.** All of them ran on sapphire, in a disposable clone
+of the branch, with sapphire's `.venv`.
+
+- `generate_post_run_report.py --all --write`: `ALL VALID (44 runs + 658
+  conditions + 1455 passes + 71 analyses vs schemas)`. The passes register
+  gains exactly the six rows (1,449 → 1,455), each `cost_usd` null, basis
+  `unrecorded`, and a new `generated_at`. The runs, conditions and analyses
+  JSONs are unchanged. `run_type` stays `mixed`. `--check-renderings`: 5
+  current.
+- `generate_run_reports.py --check`: all 40 up to date after re-rendering
+  pv-diag-256 and h10. pv-diag-256's report now lists the six passes and gives
+  its total as "at least US$0.7990; no ceiling (6 unrecorded pass(es))".
+- `verify_run_conditions.py`: `44 run(s): 41 pass, 3 partial, 0 fail`, as in
+  § 7.
+- `derive_condition_modality.py --check`: exit 0.
+- `backfill_cost_audit_sidecars.py` and `build_archive_ledger.py`: each sidecar
+  and the ledger records the register's `generated_at`, so all 729 sidecars and
+  the ledger went stale on the stamp alone. Their content otherwise equals a
+  rebuild, checked file by file with the stamp removed. Both were rewritten.
+  The 98 sidecars `--write` also created are not committed. They are for new
+  metas of three 2026-10-07 workstreams (`modality-bridge` 86,
+  `temperature-probe` 8, `verifier-date` 4), were already missing at the base
+  commit, and belong to those workstreams.
+- Full tier 1, at head `8e343e6e7`:
+  `= 1 failed, 4038 passed, 5 skipped, 59 deselected, 3 xfailed, 4 warnings in 269.36s (0:04:29) =`.
+  The failure,
+  `test_build_generated_file_registry.py::test_committed_registry_matches_a_rebuild`,
+  predates the branch. The base commit `16d41b494` both rebuilt the registry
+  and added `reports/s163-agent-records/run-b-floors-audit.md` without
+  registering it, and a rebuild differs by that file alone. It is left for the
+  run-b workstream.
+- Tier 2: `4 failed, 51 passed, 2 skipped`. The new module passes at all five
+  thresholds. All four failures predate the branch. Three fail identically with
+  the base commit's register files swapped in
+  (`test_tile_presence_board_committed.py::test_a_two_stage_leg_sums_both_stages`
+  and two in `test_integration_intent_check.py`). The fourth, the sidecar test,
+  now reports only the 98 missing (0 differing), the same 98 as at base.
+- Ruff passes on the two scripts and three test modules touched.
+  `npx markdownlint-cli2` reports 0 errors on this report and the
+  retrospective.
+
+**A surprise: the union sweep now depends on the merger's pass order.** The
+checker's comparison changed, so I re-ran its full `--all` sweep to confirm the
+other 105 unions were unaffected. The output is
+`reports/stale-register-notes-2026-10-07-union-sweep-2026-10-08.json`. pv-diag-256 now
+REPRODUCES. But 24 unions that the 2026-09-12 sweep called REPRODUCES (15) or
+SUBPOOL-CONSISTENT (9) now read STALE, by 0 to 4 features. All 24 are in 10-
+or 30-pass pools: pv-diag-384, phase3a, phase3a-high and phase3a-replication.
+The re-derived counts of the five known-STALE unions moved too (for example
+`consensus_t2`: 1,186 → 1,176).
+
+The cause is `75d7c8d4c` (2026-09-13, "fold run_N_recovery fragments into their
+pass"). It changed `merge_passes.resolve_pass_files` from sorted directory-name
+order (`run_1`, `run_10`, `run_2`, …) to numeric order. `cluster_across_passes`
+is greedy, so the clusters depend on that order, and the order changes only
+when a pool has 10 or more passes. With the pre-`75d7c8d4c` merger, four of the
+24 return their 2026-09-12 class: a 10-pass whole pool, a 30-pass whole pool, a
+30-pass pv-diag-384 pool, and a declared 10-pass sub-pool. The known-STALE
+`consensus_t2` stays STALE. The pass files are byte-identical in sapphire's
+own checkout and the clone, and the checker in sapphire's checkout gives the
+same verdict. These are therefore not new staleness: the unions were built in
+the old order and are re-derived in the new one. Nothing on this branch causes
+them. The base (v1.0.0) checker's own full sweep, in the same clone, gives
+the same classes, feature counts and unmatched counts on all 105 other unions.
+The only difference between the two sweeps is pv-diag-256: UNRESOLVED under
+v1.0.0, REPRODUCES under v1.1.0.
+
+This bears on the S162 open item "pinning union pass order". Until the build
+order is pinned or recorded, a re-run of `check_union_provenance.py --all`
+calls these 24 STALE. Neither `run_pv.py verify`'s manifest check nor a union
+built since `75d7c8d4c` is affected. I did not investigate further or change
+anything for it.
+
+**Left undone.**
+
+1. *The conditions still name pool `text`.* Re-pointing `text-baseline` to
+   `text-baseline-text-t0.0` and `text-consensus-5of5` to `text-n5-text-t0.7`,
+   and dropping `source_run`, would let the register's own routes find their
+   passes instead of the bindings. Two code paths ignore `repo_path` for a
+   pool that a condition cites, and would need the same fix first:
+   `scripts/verify_run_conditions.py`, whose pool-directory check would warn
+   `pool-dir-not-found`, and `generate_post_run_report._pool_union_coverage`.
+   No condition cites a `repo_path` pool today, h10's included, so neither
+   path is reached.
+2. *Merge hazard.* `8e343e6e7` changes one line in each of 730 files. If
+   another branch regenerates the passes register before this one merges,
+   every one of them conflicts. To resolve, take either side, then rerun
+   `backfill_cost_audit_sidecars.py --write` and `build_archive_ledger.py
+   --write` against the merged register, without committing the other
+   workstreams' missing sidecars.
+3. *Zero-usage accounting.* The six archived metas now count twice: among the
+   ledger's 585 zero-usage archive metas (D39's invoice residual), and as
+   register rows with no figure. Neither carries money, so no figure is
+   double-counted. But someone counting unrecorded executions from both would
+   count these six twice.
+4. *The 2026-10-07 diffs.* § 9 item 6 says `op-asis.diff` and
+   `op-patched.diff` are kept beside this report. Neither is tracked, and
+   neither is in the main checkout's `reports/`.
+
 ## Changelog
+
+### 2026-10-08 — § 10: pv-diag-256 registered in place
+
+**Trigger**: the PI's ruling of 2026-10-08 on § 9 item 2, "register
+pv-diag-256 in place", which the Session 162 close recommended.
+
+| claim | before | after |
+|---|---|---|
+| `pv-diag-256.proposer_pools` | `{}` | two pools at `repo_path` `archive/outputs-non-production-tile-sizes` |
+| the checker on `outputs/h11/pv-diag-256/consensus` | UNRESOLVED (`UNRESOLVABLE`) | REPRODUCES (`POOL_OVERRIDES`), at all five thresholds |
+| `UNRESOLVABLE` entries | 1 | 0 |
+| passes register rows | 1,449 | 1,455 |
+| pv-diag-256's report, passes on file | 1 | 7 |
+| pv-diag-256's report, run total | US$0.7990 | at least US$0.7990; no ceiling (6 unrecorded) |
+
+**What did NOT change**: §§ 1–9's account of 2026-10-07, apart from the
+pointers added to § 0, § 1c and § 9 item 2; any condition, evaluation,
+detection or cost figure; the runs, conditions and analyses manifests' JSON.
+
+**Landed in**: `20e0be0d3` … `8e343e6e7` and the commit that adds this entry,
+on branch `worktree-agent-a462722af99b42e8c`.
 
 ### 2026-10-07 — Original publication (Session 162)
 

@@ -1,0 +1,54 @@
+2026-10-07 18:11:46,485 - INFO - Manifest/union vote check: AGREES — 3456 candidates against 3456 union features, paired by candidate-id-index. Every vote_count agrees.
+2026-10-07 18:11:46,485 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-07 18:11:46,485 - INFO - Candidates: 3456
+2026-10-07 18:11:46,485 - INFO - Mode: batch
+2026-10-07 18:11:46,485 - INFO - Iterations: 1
+2026-10-07 18:11:46,485 - INFO - Temperature override: 0.00
+2026-10-07 18:11:46,939 - INFO - Built verifier JSONL: 3456 lines (/home/shawn/cc-scratch/tmp/runb-stage2/verify-g3-image-g3/verifier_requests.jsonl)
+2026-10-07 18:11:46,939 - INFO - Built JSONL chunk 1/1: 3456 lines → /home/shawn/cc-scratch/tmp/runb-stage2/verify-g3-image-g3/verifier_requests.jsonl
+2026-10-07 18:11:46,939 - INFO - Built JSONL: 3456 lines in 1 chunk(s)
+2026-10-07 18:11:46,939 - INFO - [DRY RUN] JSONL written but not submitted
+{
+ "mode": "batch",
+ "argv": [
+  "--crops-dir",
+  "outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/crops",
+  "--verifier-config",
+  "prompts/configs/verify_adversarial-text.json",
+  "--output-dir",
+  "/home/shawn/cc-scratch/tmp/runb-stage2/verify-g3-image-g3",
+  "--mode",
+  "batch",
+  "--temperature",
+  "0.0",
+  "--model",
+  "gemini-3-flash-preview",
+  "--dry-run"
+ ],
+ "repo_root": "/home/shawn/Code/map-reader-llm",
+ "exit_status": 0,
+ "target_errors": [],
+ "stub_client_instances": 0,
+ "breaches": [],
+ "ok": true
+}
+{
+ "request_files": [
+  "verifier_requests.jsonl"
+ ],
+ "request_bytes": [
+  203457292
+ ],
+ "n_lines": 3456,
+ "n_candidates": 3456,
+ "keys_match_manifest": true,
+ "elided_signatures": {
+  "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 3456
+ },
+ "full_elided_signatures": {
+  "5e9bb517e77f6ac2a19cdffa4c844c44485c69f82bd3a0e825617cfa7bc05c99": 3456
+ },
+ "generation_config_keys": {
+  "max_output_tokens,response_mime_type,temperature,thinking_config": 3456
+ }
+}

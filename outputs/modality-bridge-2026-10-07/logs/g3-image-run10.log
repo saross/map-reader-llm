@@ -1,0 +1,37 @@
+=== 2026-10-07T13:36:49+00:00 LODGE g3-image-run10: .venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/detect_brief-text-image.json --model gemini-3-flash-preview --use-cache --manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json --tiles-dir inputs/tiles_384_ov192 --temperature 0.7 --mode batch --service-tier flex --run 10 --output-dir outputs/modality-bridge-2026-10-07/g3-image --skip-intent-check
+
+[intent-check] config diff vs base (detect_brief-text-image):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text-image
+Model: gemini-3-flash-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384_ov192
+Manifest: inputs/grid-2026-08-18/grid_384_ov192_manifest.json
+Output: outputs/modality-bridge-2026-10-07/g3-image
+  Built JSONL: 1398 lines (outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image/run_10/batch_working/detections_detect_brief-text-image_run10.jsonl)
+  Submitted batch job: batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+=== 2026-10-07T13:39:19+00:00 SUBMITTED g3-image-run10 batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_RUNNING
+  Polling batches/ys6jurnjy5hb62vrywu26c9ve1d8q3vy3obc: JOB_STATE_SUCCEEDED
+Failed to parse detections for K-35-052-4_32635_x1536_y3456.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+Failed to parse detections for K-35-053-3_Elenovo_x1152_y768.png: Expecting ',' delimiter: line 9 column 16 (char 111)
+  Retried 2/2 parse-failed tile(s) successfully
+  Batch complete: 1398 tiles, 2327 detections, 0 failed, $1.9502
+  Released request file files/cfcj99o1fjfp (job terminal)
+
+Batch complete. Estimated cost: $1.9502
+Tiles processed: 1398

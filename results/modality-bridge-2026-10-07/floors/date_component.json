@@ -1,0 +1,299 @@
+{
+ "label": "date plus serving mode (batch against the originals' real-time tiers), never date alone",
+ "cells": {
+  "g3-text-g3v": {
+   "original": "g3-text",
+   "original_point": [
+    0.15,
+    10
+   ],
+   "original_f1": 0.8961352657004831,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.15,
+     10
+    ],
+    "bridge_f1": 0.8915956151035322,
+    "difference": -0.004539650596950828,
+    "p_tile_swap": 0.6163,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 32,
+     "discordant_rate": 0.06570841889117043,
+     "fixed": 12,
+     "broken": 14,
+     "error_flip_rate": 0.053388090349075976,
+     "d_tp": -5.0,
+     "d_fp": -2.0,
+     "d_fn": 5.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.15,
+     10
+    ],
+    "bridge_f1": 0.8915956151035322,
+    "difference": -0.004539650596950828,
+    "p_tile_swap": 0.6163,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 32,
+     "discordant_rate": 0.06570841889117043,
+     "fixed": 12,
+     "broken": 14,
+     "error_flip_rate": 0.053388090349075976,
+     "d_tp": -5.0,
+     "d_fp": -2.0,
+     "d_fn": 5.0
+    }
+   }
+  },
+  "g3-image-g3v": {
+   "original": "g3-image",
+   "original_point": [
+    0.15,
+    9
+   ],
+   "original_f1": 0.8412121212121211,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.15,
+     9
+    ],
+    "bridge_f1": 0.8331388564760794,
+    "difference": -0.008073264736041641,
+    "p_tile_swap": 0.5301,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 60,
+     "discordant_rate": 0.12320328542094455,
+     "fixed": 12,
+     "broken": 18,
+     "error_flip_rate": 0.061601642710472276,
+     "d_tp": 10.0,
+     "d_fp": 22.0,
+     "d_fn": -10.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.15,
+     10
+    ],
+    "bridge_f1": 0.8392638036809815,
+    "difference": -0.001948317531139554,
+    "p_tile_swap": 0.8841,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 55,
+     "discordant_rate": 0.11293634496919917,
+     "fixed": 15,
+     "broken": 13,
+     "error_flip_rate": 0.057494866529774126,
+     "d_tp": -5.0,
+     "d_fp": -5.0,
+     "d_fn": 5.0
+    }
+   }
+  },
+  "g37-text-g3v": {
+   "original": "g37-text-g3v",
+   "original_point": [
+    0.1,
+    5
+   ],
+   "original_f1": 0.9138920780711826,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.1,
+     5
+    ],
+    "bridge_f1": 0.9154113557358053,
+    "difference": 0.0015192776646227868,
+    "p_tile_swap": 0.8715,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 33,
+     "discordant_rate": 0.06776180698151951,
+     "fixed": 13,
+     "broken": 8,
+     "error_flip_rate": 0.043121149897330596,
+     "d_tp": -3.0,
+     "d_fp": -5.0,
+     "d_fn": 3.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.1,
+     5
+    ],
+    "bridge_f1": 0.9154113557358053,
+    "difference": 0.0015192776646227868,
+    "p_tile_swap": 0.8715,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 33,
+     "discordant_rate": 0.06776180698151951,
+     "fixed": 13,
+     "broken": 8,
+     "error_flip_rate": 0.043121149897330596,
+     "d_tp": -3.0,
+     "d_fp": -5.0,
+     "d_fn": 3.0
+    }
+   }
+  },
+  "g37-text-g37v": {
+   "original": "g37-text-g37v",
+   "original_point": [
+    0.8,
+    5
+   ],
+   "original_f1": 0.9264877479579929,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.8,
+     5
+    ],
+    "bridge_f1": 0.9264877479579929,
+    "difference": 0.0,
+    "p_tile_swap": 1.0,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 22,
+     "discordant_rate": 0.045174537987679675,
+     "fixed": 8,
+     "broken": 8,
+     "error_flip_rate": 0.03285420944558522,
+     "d_tp": 0.0,
+     "d_fp": 0.0,
+     "d_fn": 0.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.75,
+     5
+    ],
+    "bridge_f1": 0.9264877479579929,
+    "difference": 0.0,
+    "p_tile_swap": 1.0,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 22,
+     "discordant_rate": 0.045174537987679675,
+     "fixed": 8,
+     "broken": 8,
+     "error_flip_rate": 0.03285420944558522,
+     "d_tp": 0.0,
+     "d_fp": 0.0,
+     "d_fn": 0.0
+    }
+   }
+  },
+  "g37-image-g3v": {
+   "original": "g37-image-g3v",
+   "original_point": [
+    0.1,
+    5
+   ],
+   "original_f1": 0.9254079254079255,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.1,
+     5
+    ],
+    "bridge_f1": 0.9159953970080553,
+    "difference": -0.009412528399870168,
+    "p_tile_swap": 0.2571,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 24,
+     "discordant_rate": 0.049281314168377825,
+     "fixed": 4,
+     "broken": 9,
+     "error_flip_rate": 0.026694045174537988,
+     "d_tp": 1.0,
+     "d_fp": 10.0,
+     "d_fn": -1.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.1,
+     5
+    ],
+    "bridge_f1": 0.9159953970080553,
+    "difference": -0.009412528399870168,
+    "p_tile_swap": 0.2571,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 24,
+     "discordant_rate": 0.049281314168377825,
+     "fixed": 4,
+     "broken": 9,
+     "error_flip_rate": 0.026694045174537988,
+     "d_tp": 1.0,
+     "d_fp": 10.0,
+     "d_fn": -1.0
+    }
+   }
+  },
+  "g37-image-g37v": {
+   "original": "g37-image-g37v",
+   "original_point": [
+    0.9,
+    5
+   ],
+   "original_f1": 0.9308323563892146,
+   "label": "date plus serving mode",
+   "at_original_point": {
+    "bridge_point": [
+     0.9,
+     5
+    ],
+    "bridge_f1": 0.9288214702450408,
+    "difference": -0.0020108861441737735,
+    "p_tile_swap": 0.836,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 19,
+     "discordant_rate": 0.039014373716632446,
+     "fixed": 5,
+     "broken": 6,
+     "error_flip_rate": 0.022587268993839837,
+     "d_tp": 1.0,
+     "d_fp": 3.0,
+     "d_fn": -1.0
+    }
+   },
+   "at_oracle": {
+    "bridge_point": [
+     0.88,
+     5
+    ],
+    "bridge_f1": 0.9288214702450408,
+    "difference": -0.0020108861441737735,
+    "p_tile_swap": 0.836,
+    "flips": {
+     "n_tiles": 487,
+     "discordant": 19,
+     "discordant_rate": 0.039014373716632446,
+     "fixed": 5,
+     "broken": 6,
+     "error_flip_rate": 0.022587268993839837,
+     "d_tp": 1.0,
+     "d_fp": 3.0,
+     "d_fn": -1.0
+    }
+   }
+  }
+ }
+}

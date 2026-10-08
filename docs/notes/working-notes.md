@@ -37730,3 +37730,116 @@ only the input set.
 **Related.** Obs 426 (the E82 pass-order and rounding-boundary family),
 Obs 419 (the D6 resolver audit; Obs 426 traces numeric replay to that
 resolver), Obs 505, Obs 502 (a rounding path as a source of error).
+
+## Observation 508: Same-model drift is a standing condition, not an incident — across seven months of ordinary use the same model name and the same request have moved at every time scale we happened to observe, and the pipeline's later stages absorbed most of it (Session 163, 2026-10-08)
+
+**Context.** Approved by the Principal Investigator (PI) on 2026-10-08
+(Session 163). Observational only, by the PI's ruling: no dedicated drift
+study and no paid drift runs. The entry gathers into one record the
+incidental evidence from months of ordinary use. Its prompt was Run B
+(2026-10-07), which re-ran the modality claim's four proposer arms on one
+day, on the Batch Application Programming Interface (API), with their
+original configurations (PI ruling D49), five to seven weeks after the
+originals (`results/modality-bridge-2026-10-07/findings.md` § 1). Below,
+T is temperature, t a verifier threshold, and K the number of proposer
+passes.
+
+**What was established.** In every row the model name and the request
+were held fixed as far as the record shows (see the caveats). Rows are in
+date order.
+
+| When | What moved, same model and request | Size | Source |
+|---|---|---|---|
+| 2026-03-08 → 03-15 | Gemini 3 Flash verifier scores on byte-identical crops | 34 % of decisions flipped at t = 0.2 on 80 identical crops (35 % on 60 changed crops); confounded with the E33 crop fix and the v2 configuration correction made at the same time | Obs 165 |
+| 2026-03-27 → 04-16 | The Gemini 3 Flash proposer, sent byte-identical requests | cross-date pass pairs differ by a median 0.037 and 0.061 F1 (two groups), against about 0.006 within a date | Obs 497 |
+| May; June 2026 | Re-invoking the T = 0.0 verifier | about 3 % of decisions flip per re-invocation (preserved outputs 0 %); F1 single-run standard deviation (SD) 0.0025–0.0072 | Obs 325, Obs 354 |
+| 2026-04-18 → 06-11 (54 days) | Proposer consensus, then verified cells, on the 55-map corpus | proposer-only 0.018–0.030 F1; through a fixed verifier 0.003–0.006; the verifier itself +0.0041 | Obs 506 |
+| September 2026 | The Batch API route against the real-time route, Gemini 3.7 verifier | inside the verifier's own re-invocation drift: flips at 0.90 of 5.3 % against 3.5 %, n = 171 | Obs 486 |
+| 2026-10-07, one day | One Gemini 3.7 verifier batch job against its sibling jobs (300 candidates) | mean \|Δp\| 0.0218–0.0318 for the four pairs that include the first T 2.0 job (0.0248–0.0318 against the three T 0.0 jobs), against 0.0144–0.0212 for the other six pairs | `planning/temperature-probe-2026-10-07.md` § 8.5; `outputs/temperature-probe-2026-10-07/followup.json` (`9f19110b0`) |
+| 2026-08-18 to 09-01 → 10-07 | Run B, five to seven weeks later | all six re-run cells within 0.01 F1 of their originals (largest −0.0094); Gemini 3 text − image gap +0.0523 against +0.0549; but the Gemini 3 image K = 10 union 3,456 against 4,065 (−15.0 %), the other three unions −0.3 % to −1.9 % | findings §§ 2, 3, and 5; `planning/modality-bridge-2026-10-07-stage2.md` § 8 (F-cal); `2b6edde9a`, `a3ea389c2`, `69eb32132` |
+| Counter-example | Apparent drift that was changed inputs | 53 of 54 cells reproduce their committed F1, precision, recall, and Matthews correlation coefficient (MCC) to 1e-4 at their scored inputs; the 54th reproduces F1, precision, and recall, and its MCC predates a later invariant | `reports/input-drift-2026-10-07.md` § 1 item 3 (line 44); Obs 431, Obs 456 |
+
+**Run B in detail.** The originals come from `grid-2026-08-18`,
+`image-b-gs-2026-08-28`, `gemini37-screen-2026-08-28`, and
+`gemini37-image-gs-2026-09-01` (Stage 2 card § 4.1). The six re-run cells
+moved by −0.0094 to +0.0015 F1 (findings § 2). The pool under one of them
+moved far more. The bridge Gemini 3 image K = 10 union holds 3,456
+candidates against the original's 4,065 (−15.0 %), yet each pass is only
+about 4 % lighter (raw 2,291–2,385 against 2,367–2,485). The passes agree
+more: singletons 1,500 against 1,938, and ten-vote clusters 580 against
+500 (Stage 2 card § 8, F-cal). The chain that built it rebuilds the
+original unions byte for byte, so it is not a pipeline artefact (findings
+§ 5). The other three unions moved −0.3 % to −1.9 %: Gemini 3 text 3,258
+against 3,319 (`2b6edde9a`; Stage 2 card § 8), 3.7 text 789 against 791
+(`a3ea389c2`), and 3.7 image 661 against 674 (`69eb32132`).
+
+**Reading.**
+
+1. **Drift appears at every time scale observed:** job to job within a day
+   (the temperature probe), re-invocation to re-invocation within a week
+   (Obs 325, Obs 354, and Obs 486), and across weeks and months (Obs 165,
+   Obs 497, Obs 506, and Run B).
+2. **It is largest at the pass level and smallest at the cell level.**
+   Consensus voting and the verifier absorb most of it. In Obs 506 a
+   0.018–0.030 proposer gap became 0.003–0.006 through a fixed verifier,
+   and in Run B a 15 % smaller Gemini 3 image union moved its cell's F1 by
+   −0.0081.
+3. **It is not uniform across configurations.** In Run B the Gemini 3
+   image arm moved and the other three barely did. Obs 506 item 5 likewise
+   found some gold-standard configurations drifting and others not, with
+   the image track among those that did.
+4. **It does not show in the transmitted request.** In Obs 497 the request
+   bodies were byte-identical across dates, so whatever changed lay beyond
+   what the project sends. The leading explanation is a change on the
+   provider's serving side, which we cannot observe.
+5. **Changed inputs must be ruled out before a difference is called
+   drift.** The frames check's 54 reproduction failures looked like drift.
+   They were inputs rewritten by documented campaigns, and at their scored
+   inputs 53 of 54 reproduce exactly (the counter-example row).
+
+**What follows.**
+
+1. **For the paper:** report each run's date beside its model identifier,
+   and treat a hosted preview model as a moving instrument. A comparison
+   between runs on different dates carries an execution component. A
+   same-day bridge such as Run B is the template for any claim that must
+   not carry a date component.
+2. **Reproducibility (PI-requested addition).** With hosted preview
+   models, reproduction and replication come apart: reproduction,
+   re-scoring the committed outputs, is exact (53 of 54 cells to 1e-4),
+   whereas replication, re-sending the same requests, agrees only to
+   within the drift above (in Run B, within 0.01 F1 per cell but 15 % in
+   the size of one candidate pool). What makes a result reproducible is
+   therefore the committed raw outputs, not the ability to re-send the
+   requests. Once the provider retires a model, even replication ends, and
+   the run date and the archived responses are the whole record.
+3. **Observational protocol:** no paid drift runs. When routine work
+   happens to repeat an identical request on a new date (a recovery, a
+   bridge, or a re-verification), log it as a new Observation in this log
+   that cites this one, not in a separate file (PI ruling, 2026-10-08).
+
+**Caveats.** Every row has confounds: machine, quota tier, and serving
+mode (Run B's originals ran on real-time tiers and the bridge on the Batch
+API; findings § 2), and in Obs 165 the E33 crop fix and the v2
+configuration correction. Obs 497 could not rule out machine, tier, or
+concurrency either. None of this separates model-weight updates from
+serving or batching changes. The probe's first T 2.0 job differs from its
+siblings in a temperature field that Gemini 3.7 ignores (probe § 7), so
+its requests are the same in effect, not byte for byte. Run B's replicate
+floors (rulings D45 and D46) are not yet computed, and the pending D50/D51
+scorer change may move its cells slightly (findings, status block).
+
+**Findable later.** drift, same-model drift, cross-date, serving drift,
+preview model, moving instrument, reproducibility, replication,
+reproduction against replication, Run B, modality bridge, observational
+drift protocol, F-cal, union 3,456 against 4,065.
+
+**Related.** Obs 128 (T = 0.0 "perfect determinism"; superseded by
+erratum E89), Obs 165 (March verifier drift on identical crops), Obs 325
+and Obs 354 (the T = 0.0 verifier's re-invocation flips), Obs 431 and
+Obs 456 (input-vintage drift, the counter-example's mechanism), Obs 486
+(the batch route inside re-invocation drift), Obs 497 (same request, three
+weeks apart), Obs 505 (within-execution consensus floors; cross-date pairs
+can be wider), Obs 506 (the verifier absorbs most proposer drift); erratum
+E89 (`docs/methodology/preregistration/protocol-errata.md`: T = 0.0 is not
+deterministic across independent calls).

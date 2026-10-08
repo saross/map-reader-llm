@@ -1,6 +1,7 @@
 # Run B Stage 2: pre-launch audit of the unions, crops and verifier legs
 
-> **Last revised**: 2026-10-08 (original publication). See
+> **Last revised**: 2026-10-08 (re-check of the fixes; see
+> [§ Re-check of the fixes](#re-check-of-the-fixes-2026-10-08)). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Auditor**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -403,7 +404,165 @@ empty directories (`standin/stage2/{checks,logs,pids}`) and ran no Python,
 because the interpreter path it named did not exist there. They were removed
 at once; sapphire's main checkout was not touched.
 
+## Re-check of the fixes (2026-10-08)
+
+- **Auditor**: as above (Claude Code, Opus 5.5 lane).
+- **Commits re-checked**: `cc1d586d8` (`scripts/modality_bridge_stage2_checks.py`:
+  pass metas A5, band A6, `repair` A2), `f32c8d9eb` (full-request signature),
+  `2f805f3a9` (launcher: A1, A3, A4, A5/A6 wiring, `repair`, A7), `749eabcde`
+  (card); run at `main` `b347e6de6`, which adds planning text only.
+- **Method**: one disposable `git clone --shared` on sapphire, fetched to
+  `b347e6de6`, removed afterwards. Stage 1's live passes and metas were read
+  only (copied into the clone where a check needed them in place). A test
+  double replaced a live `run_pv.py verify`. No API call; no key reachable.
+
+### Verdict
+
+**The fixes are sound; one change is needed before tonight, and one result
+should go to the PI.** A1 and A4 hold under test, A5 passes on every real
+Stage 1 meta read, the full signatures match their pins on a real bridge
+union, and `repair` never writes the leg and fails closed on unrepairable
+rows. But A6 as enforced will very likely refuse both `temp1` legs (R1), and
+the real Stage 1 Gemini 3 image union sits one candidate inside its band at
+−15.0 % (F-cal), which the gate will let through without asking. R2–R4 are
+low and concern `repair` and the clean-up after it.
+
+### R1 (medium): the band will refuse both `temp1` legs, by design of the guide
+
+`verify` now refuses a union outside ±15 % of its guide unless `BAND_OK=1`
+(launcher lines 396–397), and this applies to the `temp1` arms, whose guides
+are T 0.7 unions (`modality_bridge_stage2_checks.py` lines 122–125; bands
+2,307–3,121 and 2,370–3,206). The project has a direct measurement of what
+T 1.0 does to a five-pass union: the committed h11 arms
+`outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7` and
+`text-t1.0` (Gemini 3 Flash, `detect_brief-text.md`, minimal thinking, text
+only, 487 tiles). Through this chain's steps (20 m dedup, c = 1 clustering):
+
+| Passes | T 0.7 union | T 1.0 union | Ratio |
+|---|---:|---:|---:|
+| 1–5 | 1,593 | 1,926 | 1.209 |
+| 6–10 | 1,569 | 1,865 | 1.189 |
+
+Raw detections per pass hardly move (1,067–1,131 at T 0.7, 1,069–1,144 at
+T 1.0); the passes agree less, so the union grows. At that ratio
+`g3-text-temp1` lands near 3,230–3,280, above its 3,121 ceiling, and
+`g3-image-temp1` plausibly above 3,206. Both legs would stop at `verify` and
+wait for an operator who may not be there overnight. `BAND_OK=1` is read
+once per command, so `BAND_OK=1 … verify all` would also waive the band for
+the six D49 legs. **Fix:** give the two `temp1` arms T 1.0 guides (the T 0.7
+guide × 1.2: 3,257 and 3,346, band ±15 %), or return them to "reported, not
+stopped" as the card first had it; and make the override per leg (for
+example `BAND_OK_LEGS="g3-text-temp1:g3 g3-image-temp1:g3"`) rather than
+process-wide.
+
+### F-cal (flag for the PI): the bridge Gemini 3 image union is 15.0 % smaller
+
+All ten `g3-image` passes had landed with 1,398 tiles each. Built in the
+clone through the launcher (`union g3-image`, from copies of the live pass
+files and metas), the K = 10 union has **3,456** candidates against the
+original's 4,065 (−15.0 %): inside the band's floor of 3,455 by one, so
+`estimate` exits 0 and `verify` will not ask. Per pass the bridge is only
+about 4 % lighter (raw 2,291–2,385 against 2,367–2,485; clipped 1,315–1,391
+against 1,359–1,449); the difference is agreement between passes. Votes:
+singletons 1,500 against 1,938, ten-vote clusters 580 against 500. The K = 5
+union of passes 1–5 is 2,589 against 2,788 (−7.1 %). `g3-text`, still short
+by 2–3 tiles on runs 7–10 pending recovery, gives about 3,258 against 3,319
+(−1.8 %) without its fragments. Under the project's calibration rule this is
+a finding to raise before verifying, gate or no gate; it is not a defect of
+the fixes, and the leg would be correct to run.
+
+### R2 (low): a repaired verdict without `mound_probability` is booked 0.0 as "recovered"
+
+`repair_text` defaults a missing field to 0.0 (line 300). On synthetic texts
+in the clone, `'{"reasoning": "contour artefact"}\n}'` and a prefix-repaired
+object without the field both "recovered" as `mound_probability` 0.0, exit 0;
+a non-numeric value raised and went to `unrecovered`, as it should. None of
+the nine committed rows has this shape (two repair to real values, seven do
+not parse), and the real-time path has the same default, but the step
+exists to avoid a silent 0.0. **Fix:** in `repair_text`, raise unless the
+verdict holds `mound_probability` as a number in [0, 1].
+
+### R3 (low): a second `repair` overwrites a completed clean-up
+
+`repair_leg` writes `<leg>_repaired/probabilities.json` unconditionally
+(line 384). In the clone, on a copy of
+`…/g384_ov192_55map_g3img/verify_k3_arm2` (three unrepairable rows), a
+clean-up was simulated in the repaired copy (one removed row added back,
+a `run.meta.json` written) and `repair` re-run: the re-verified row was gone
+and the clean-up's `run.meta.json` was left beside a file that no longer
+matched it. Scoring would refuse (fail closed), but the paid real-time
+results are lost. The card's own sequence (`repair <leg>` as legs land,
+`repair all` when all are done, clean-up in between) reaches this.
+**Fix:** refuse when `<leg>_repaired/` already holds a `run.meta.json`, or a
+`probabilities.json` whose digest differs from the one `parse_repair.json`
+recorded for its own last write.
+
+### R4 (low): the clean-up on `<leg>_repaired` skips its configuration gate
+
+The repaired copy holds only `probabilities.json` and `parse_repair.json`.
+`run_pv.py cleanup --verified-dir <leg>_repaired` then finds no
+`run.meta.json`, logs `no-previous-meta` and proceeds unchecked
+(`run_pv.py` lines 436–445), so a typo in `--model`, `--thinking-level` or
+`--temperature` would not be refused. **Fix:** have `repair` copy the leg's
+`run.meta.json` into the repaired copy, so the gate compares against the
+leg (this also gives R3's guard its signal).
+
+### Nits
+
+- Card § 3's table still says "reported only" for the two `temp1` bands
+  (lines 221–222), against the text above it.
+- `repair all` stops at the first leg with an unrecovered row (exit 1), so
+  later legs get no repaired copy until `repair` is run per leg.
+- With no union built, `band` prints "no union built yet" but `verify`
+  reports it as "outside the review band".
+
+### Checked and found sound
+
+- **A1, under test** (stand-in `g37-text` arm, test double). A first attempt
+  refused before uploading; the relaunch moved the old log aside
+  (`…g3.log.20261007T143310Z`), printed the new pid, waited for the
+  double's submission 12 s later and reported `submitted … LODGING DONE`,
+  rc 0. `wait` blocked until the leg's `EXIT 0` (rc 0 after 35 s); `status`
+  showed `exit 0 submitted 1 … earlier-attempts 1`.
+- **A4, under test.** With one `verify` in flight, a second was refused
+  (`REFUSED: another Stage 2 command holds …/stage2.lock`, rc 1). While a
+  launched leg polled, `rehearse` ran normally: the leg does not hold the
+  lock (`9>&-`, launcher line 446).
+- **A5 against the real Stage 1 metas** (read only): `metas g3-image` OK, all
+  ten passes at 0.9445; `metas g3-text` OK; the landed `g37-image` chunk
+  metas record `gemini-3.7-flash`, 0.7, `low`, implicit shares 0.8005–0.8075
+  (floor 0.5); `merge_chunk_metadata` keeps chunk 0's configuration and
+  re-sums the shares, so the merged metas will check alike. The 3.7
+  explicit-cache share the window must admit for `g37-image-cache` is 0.9445
+  on the committed 55-map passes 4 and 5 (window 0.92–0.97). Sync retries are
+  booked in `retry_usage`, not `usage_stats` (identical totals on all ten
+  passes of each arm), so they cannot push a share out of the window.
+- **Full signatures.** `rehearse` on the real bridge `g3-image` union (3,456
+  requests) and on the stand-in `g37-text` legs (791 each) gave one full
+  signature per verifier, `5e9bb517…` and `38834432…`, equal to the pins,
+  with generation-config keys `max_output_tokens, response_mime_type,
+  temperature, thinking_config`.
+- **`repair`.** On three committed legs the leg directory's file digests were
+  unchanged and `git status` clean. Two rows recovered (0.0 → 0.2,
+  0.0 → 0.05; exit 0); three unrepairable rows were removed from the copy
+  (exit 1), so the join gate would refuse; a leg with none was copied
+  row-for-row.
+- **A3, A7**: `--stale-seconds 3600`; the `FORCE=1` message now says it lodges
+  the whole leg again and bills in full.
+- **Tests and lint**: 77 tier-1 tests pass (checks, launcher, harness, union,
+  anchors); `ruff check` passes on the changed Python.
+
 ## Changelog
+
+### 2026-10-08 — Re-check of the fixes
+
+Appended § Re-check of the fixes, at `b347e6de6` (fixes `cc1d586d8`,
+`f32c8d9eb`, `2f805f3a9`, `749eabcde`). A1, A3, A4, A5, A7 and the full
+signature hold; `repair` is sound in its main path. R1 (medium): the
+enforced band will refuse both `temp1` legs (T 1.0 unions measured
+19–21 % larger). Flag: the real bridge Gemini 3 image union is 3,456
+against 4,065, one inside the band. R2–R4 low, three nits. Nothing in the
+original findings changed.
 
 ### 2026-10-08 — Original publication
 

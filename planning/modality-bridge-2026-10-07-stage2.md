@@ -1,11 +1,28 @@
 # Run B Stage 2: unions, crops and verifier legs — commands, gates, validation
 
-> **Last revised**: 2026-10-08 (original publication; Session 163). See
+> **Last revised**: 2026-10-07 (the Gemini 3 legs launched; Session 163). See
 > [§ Changelog](#changelog) for revision history.
 
-**Status: READY, NOT LAUNCHED.** Everything Stage 2 needs that can be
+**Status, 2026-10-07 18:45 UTC: the four Gemini 3 legs LAUNCHED; the 3.7
+legs wait for their Stage 1 arms.** Basis: the PI's overnight delegation of
+2026-10-07, "please do launch any runs that pass checks" (D52), which this
+session reads as the § 7 item 9 go for legs that pass every other item; the
+costs sit inside Run B's approved total (D49, D52). Sequencing, a deliberate
+per-arm application of § 7: item 1 (Stage 1 complete) was met per arm. The
+four Gemini 3 arms landed to exact coverage on 2026-10-07 and were
+committed (`92b151058`) while the 3.7 arms were still running, so their
+verifier legs run on the same UTC day as their proposer passes. Items 2–8
+passed for them: `c3864092f` in HEAD; `validate-chain` four EQUAL;
+`anchor-gate` six cells and three gaps OK; `prepare` AGREES on all four
+(unions 3,258 / 3,456 / 3,179 / 3,085); `estimate` inside every band
+(US$8.88–9.21 for the four); `rehearse` 0 clients, signature `3b48d719…`;
+File API headroom is enforced by `verify`'s own pre-upload preflight.
+
+**Earlier status: READY, NOT LAUNCHED.** Everything Stage 2 needs that can be
 built and checked without an Application Programming Interface (API) call is
-built and checked. Launch waits on two things: Stage 1 landing to exact
+built and checked. The pre-launch audit
+(`reports/s163-agent-records/run-b-stage2-audit.md`, `d76be2814`) returned
+GO WITH FIXES; its fixes are in place (§ 9). Launch waits on two things: Stage 1 landing to exact
 coverage (Stage 1 card `planning/modality-bridge-2026-10-07.md` § 4.7), and
 the Principal Investigator's (PI's) go for the verifier spend (§ 7 item 9).
 No API call was made to prepare this card. The verifier rehearsal ran under a
@@ -43,7 +60,14 @@ The chain, per arm:
    with its merged pass file. Each pass, with every recovery fragment, must
    cover exactly the 1,398 pinned tiles, and no tile may be processed twice.
    No Stage 1 process of the arm may be alive, and no residual file may be
-   outstanding.
+   outstanding. **Pass metas** (audit A5): every pass file's `.meta.json`,
+   fragments included, must record the arm's model, temperature (1.0 on the
+   two `temp1` arms, 0.7 otherwise) and thinking level. The three
+   explicit-cache arms need a cached share of about 0.94 (0.92–0.97) on
+   every file, because a lower share means the cache did not engage and the
+   request shape differs. `g37-image` needs an implicit share of at least
+   0.5 per pass; this matters for cost only, and `IMPLICIT_SHARE_OK=1`
+   accepts a lower share (`scripts/modality_bridge_stage2_checks.py metas`).
 2. **Union.** The originals' chain: E80 20 m within-pass deduplication, E72
    exact coverage with additive recovery merge, carrier clip to
    `outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson`, a
@@ -61,12 +85,18 @@ The chain, per arm:
    than the exit status.
 5. **Rehearsal.** `run_pv.py verify --mode batch --dry-run` runs under the
    API-free harness. It must produce one request per candidate, construct no
-   client, and match the tile-elided request signature rehearsed against the
-   original legs (§ 4.3).
-6. **Verify** (spends): `run_pv.py verify --mode batch --temperature 0.0
-   --verifier-config prompts/configs/verify_adversarial-text.json`, with
-   `--model gemini-3-flash-preview` (Gemini 3) or `--model gemini-3.7-flash
+   client, and match both pinned signatures (§ 4.3): the tile-elided one
+   rehearsed against the original legs, and the full-request one.
+6. **Verify** (spends). The union must lie inside its review band (§ 3;
+   `BAND_OK=<arm>:<v>` overrides for that leg only; audit A6, re-check R1).
+   Then: `run_pv.py verify --mode batch
+   --temperature 0.0 --verifier-config
+   prompts/configs/verify_adversarial-text.json`, with `--model
+   gemini-3-flash-preview` (Gemini 3) or `--model gemini-3.7-flash
    --thinking-level low` (Gemini 3.7).
+7. **Repair** (after the leg lands; audit A2). The leg's `PARSE_ERROR`
+   rows are re-parsed from `batch_results.jsonl` with the real-time path's
+   repair into `<leg>_repaired/`, which scoring reads (§ 7 item 11).
 
 ## 2. Commands
 
@@ -78,13 +108,29 @@ spends.
 | `plan` | prints every union, extract, provenance and verify command | none |
 | `validate-chain` | rebuilds the four original unions both ways and compares them with the committed unions (§ 4.1) | none |
 | `anchor-gate` | reproduces the six original cells and three gaps (§ 4.4) | none |
-| `check ARM\|all` | the coverage gate | none |
+| `check ARM\|all` | the coverage gate and the pass metas | none |
 | `prepare ARM\|all` | check, union, extract, provenance (skips steps already done; re-checks the union's build record) | none |
 | `rehearse ARM:V\|all` | the leg's batch request built API-free and checked | none |
-| `estimate` | candidates and cost per leg (the union where built, else the guide size) | none |
-| `verify ARM:V\|all` | gates (via `rehearse`), then lodges legs one at a time | **spends** |
-| `status` | per leg: process, log age, exit, chunks submitted, results, failure lines | none |
-| `wait ARM:V` | blocks until the leg is terminal (`wait_for_run.py` exit codes) | none |
+| `estimate` | candidates, review band and cost per leg (the union where built, else the guide size); exits 1 on a union out of band unless `BAND_OK` names its leg | none |
+| `verify ARM:V\|all` | the band, gates (via `rehearse`), then lodges legs one at a time | **spends** |
+| `status` | per leg: process, log age, exit, chunks submitted, results, `PARSE_ERROR` rows, failure lines, earlier attempts | none |
+| `wait ARM:V` | blocks until the leg is terminal (`wait_for_run.py` exit codes; 3,600 s staleness) | none |
+| `repair ARM:V\|all` | re-parses the leg's `PARSE_ERROR` rows into `<leg>_repaired/` (§ 7 item 11) | none |
+
+Overrides, each named in the refusal it lifts:
+
+- `BAND_OK=<arm>:<v>[,<arm>:<v>]`: those legs' unions outside their band.
+  It is per leg; a blanket `1` is refused.
+- `IMPLICIT_SHARE_OK=1`: `g37-image`'s implicit share below 0.5.
+- `FORCE=1`: re-lodges a leg whose earlier jobs are recorded (§ 7, short
+  legs).
+
+Writing subcommands (`union`, `extract`, `provenance`, `prepare`,
+`rehearse`, `verify`, `repair`) hold a `flock` on
+`outputs/modality-bridge-2026-10-07/stage2/stage2.lock`, so two of them
+cannot run at once (audit A4: two `verify` runs could both pass the
+alive and `batch_jobs.json` checks and lodge one leg twice). A launched leg
+closes the lock's descriptor, so a polling leg never holds it.
 
 `V` is `g3` or `g37`. Legs: `g3-text:g3 g3-image:g3 g37-text:g3 g37-text:g37
 g37-image:g3 g37-image:g37 g37-image-cache:g3 g37-image-cache:g37
@@ -120,12 +166,27 @@ its line. Legs lodge one at a time; the next starts only after every chunk
 of the previous one (4,000 candidates per job) has logged `Submitted batch
 job`, so each storage preflight sees the earlier uploads.
 
-A polling verifier writes **nothing** between submission and its job's end:
-`lib_batch_api.poll_batch_job` logs only at a terminal state or on an error.
-The pid (`kill -0`) is therefore the liveness signal, not log age, and the
-poll's own 25-hour cap bounds a hang. `wait` uses a 25-hour staleness window
-and the `EXIT` line. Never kill a polling leg: its job keeps running, and
-the leg's `batch_jobs.json` names it for `run_pv.py batch-recover`. `verify`
+**Relaunch** (audit A1). Each attempt has its own log. Before a launch, an
+earlier attempt's log is moved aside to `<log>.<UTC stamp>` (never deleted;
+commit it) and its pid file is removed; a live pid refuses the launch. The
+launcher, `status` and `wait` therefore read only the current attempt. In
+the audit's test, a relaunch after a storage refusal was reported as
+`LODGING FAILED` while the new leg lodged and billed, and `wait` returned
+the old `EXIT 1`. Three tier-1 tests reproduce that case, and in a real copy
+without the fix all three fail.
+
+**Corrected 2026-10-08 (audit A3).** This paragraph first said a polling
+verifier writes nothing between submission and its job's end, judging from
+`lib_batch_api.poll_batch_job` alone, and set `wait`'s staleness window to
+25 hours. That was wrong. `run_pv.py` sets the root logger to INFO, so the
+HTTP client logs every poll. Run A's committed
+`outputs/verifier-date-2026-10-07/55maps-text-min-generalisation/increment.log`
+has an `HTTP Request: GET …/batches/…` line about every 30 s between
+`Submitted batch job` and the terminal state. Log age is therefore a sound
+liveness signal: `wait` treats 3,600 s of silence as a hang, beside the pid
+(`kill -0`) and the `EXIT` line. The poll's 25-hour cap would not bound a
+call that blocks. Never kill a polling leg: its job keeps running, and the
+leg's `batch_jobs.json` names it for `run_pv.py batch-recover`. `verify`
 refuses a leg that has `batch_jobs.json` but no `probabilities.json`.
 
 ## 3. Candidates and cost
@@ -155,11 +216,37 @@ by at most 3.1 % between disjoint pass sets (passes 1–5 against 6–10 through
 this chain: Gemini 3 text 2,714 against 2,687; Gemini 3 image 2,788 against
 2,875; 3.7 text 791 against 773). The date component (Stage 1 card § 1:
 0.04–0.06 F1 across 20 days) can add to that. **Review band: ±15 % of the
-guide.** A D49 union outside it is a surprising finding to raise with the PI
+guide.** A union outside it is a surprising finding to raise with the PI
 before verifying (the project's calibration rule); the spend at that size is
-no problem. The `temp1` arms run at T 1.0, where only T 0.7 guides exist,
-and a larger union is plausible there, so outside the band is reported, not
-stopped.
+no problem. **Enforced since 2026-10-08 (audit A6; per leg since the
+re-check, R1):** `estimate` flags the leg `OUT OF BAND` and exits 1, and
+`verify` refuses it, until the operator names that leg:
+`BAND_OK=<arm>:<v>[,<arm>:<v>]`. A blanket value (`1`, `all`) is refused,
+because it would also waive the band for every D49 leg of a `verify all`.
+
+**The two `temp1` guides are T 1.0 guides** (re-check R1). Their T 0.7
+twins' unions (2,714 text, 2,788 image) are multiplied by 1.2, giving
+**3,257** and **3,346**. The factor is measured on the committed h11
+Gemini 3 text arms:
+
+- **Source paths:** `outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7`
+  and `…/text-t1.0`.
+- **What they are:** `detect_brief-text`, minimal thinking, text only,
+  487 tiles.
+- **Through this chain's 20 m deduplication and c = 1 clustering,**
+  five-pass unions grow from 1,593 to 1,926 (passes 1–5, × 1.209) and from
+  1,569 to 1,865 (passes 6–10, × 1.189). Clipped to the common footprint
+  they grow × 1.216 and × 1.188.
+- **Why:** raw detections per pass barely move (1,067–1,131 at T 0.7,
+  1,069–1,144 at T 1.0); the passes agree less, so the union grows.
+- **Caveat:** the T 1.0 passes cover 484–487 of the 487 tiles, so if
+  anything the ratio errs low.
+
+The re-check measured these first. I re-derived them with the same code
+(the record's `audit_fixes_2026_10_08`). The image factor is assumed equal
+to the text one; it has not been measured. Without this change, the band
+would very likely have refused both `temp1` legs (bands 2,307–3,121 and
+2,370–3,206 around the T 0.7 guides).
 
 | Leg | Guide N | Source of the guide | Cost at guide | Review band (N) |
 |---|---:|---|---:|---|
@@ -171,14 +258,18 @@ stopped.
 | `g37-image:g37` | 674 | same union | US$0.74 | same |
 | `g37-image-cache:g3` | 674 | twin `g37-image` | US$0.46–0.48 | 573–775 |
 | `g37-image-cache:g37` | 674 | same union | US$0.74 | same |
-| `g3-text-temp1:g3` | 2,714 | Gemini 3 text passes 1–5 at T 0.7 | US$1.86–1.93 | reported only |
-| `g3-image-temp1:g3` | 2,788 | Gemini 3 image passes 1–5 at T 0.7 | US$1.91–1.98 | reported only |
-| **Ten legs** | **17,164** | | **US$12.62–13.01** | |
+| `g3-text-temp1:g3` | 3,257 | T 0.7 guide 2,714 (Gemini 3 text passes 1–5) × 1.2 | US$2.23–2.31 | 2,768–3,746 |
+| `g3-image-temp1:g3` | 3,346 | T 0.7 guide 2,788 (Gemini 3 image passes 1–5) × 1.2 | US$2.29–2.37 | 2,844–3,848 |
+| **Ten legs** | **18,265** | | **US$13.37–13.79** | |
 
 Against the PI's ceilings: the six D49 legs come to US$7.66–7.89 here
 against the Stage 1 card's US$7.72. The four added legs come to
-US$4.96–5.12 against its "about US$1.2" (fifth leg) plus "about US$3.93"
-(the pair), both inside the PI's approvals (Stage 1 card § 4.8).
+US$5.72–5.90. That is US$1.20–1.22 for the fifth leg against its "about
+US$1.2", and US$4.52–4.68 for the pair against "about US$3.93". With the
+pair's proposer cost (about US$16.3, Stage 1 card § 4.8) the pair comes to
+about US$20.8–21.0 against the US$21 the PI was quoted. That is at the
+ceiling, not over it, and a union above its guide would cross it (the band
+allows 15 % more).
 
 **A correction to the Stage 1 card's guide (flag).** § 4.8 and § 5 of that
 card price the pair at "the T 0.7 K = 5 unions' 2,932 and 2,788". The 2,788
@@ -286,8 +377,17 @@ matches.
 
 Every batch line of a leg has one tile-elided signature, the same across
 unions for a verifier: Gemini 3 `3b48d7193dcf0165…`, Gemini 3.7
-`51567e8e54f8fa3c…`. The launcher's `rehearse` refuses a leg whose built
-requests do not carry exactly that signature.
+`51567e8e54f8fa3c…`. That signature hashes five named generation-config
+fields, so a field added to the request builder would not move it (audit
+nit). Since 2026-10-08 the harness also records a **full signature**: the
+whole request with only the key and the crop's bytes removed, plus the
+generation-config key list. Its values are Gemini 3 `5e9bb517e77f6ac2…` and
+Gemini 3.7 `38834432d7fdd5df…`. They are the same on synthetic crops and on
+the original crops (rehearsed on the stand-in tree for `g3-text:g3`,
+`g37-text:g37` and `g37-image:g3`), and every line carries exactly
+`max_output_tokens, response_mime_type, temperature, thinking_config`. The
+old values are unchanged. The launcher's `rehearse` refuses a leg whose
+built requests do not carry exactly both pinned signatures.
 
 ### 4.4 The anchor gate reproduces the six original cells
 
@@ -384,7 +484,7 @@ Per cell (example: the Gemini 3 image bridge cell under its original point):
 .venv/bin/python scripts/image_b_analysis.py --six-cell-gate \
   --outputs-root outputs/modality-bridge-2026-10-07/g3-image \
   --cell detect_brief-text-image --k 10 --union-name union_k10.geojson \
-  --verify-dir verify_g3 --operating-point 0.15,9 --write-rung-sets \
+  --verify-dir verify_g3_repaired --operating-point 0.15,9 --write-rung-sets \
   --out-dir results/modality-bridge-2026-10-07/g3-image-g3v
 ```
 
@@ -399,7 +499,9 @@ Original points (Stage 1 card § 9 item 2):
 | `g37-image` G3 | `0.10,5` |
 | `g37-image` 3.7 | `0.90,5` |
 
-K = 5 cells take `--k 5 --no-ladder`. The ladder, which reads the dedup
+Every cell reads its leg's repaired copy: `--verify-dir verify_<g3|g37>_repaired`
+(§ 7 item 11; it equals the leg when nothing needed repair). K = 5 cells
+take `--k 5 --no-ladder`. The ladder, which reads the dedup
 passes the union step wrote, runs only on the two K = 10 arms; their
 `verified_ladder_n5_20m.geojson` is the inherited K = 5 rung. With no
 `--anchor-set`, the built-in head-to-head pairs the cell against the
@@ -447,24 +549,29 @@ Stage 2.
    - Stage 1's File API uploads deleted;
    - the launcher's `status` shows every pass gone, with no live recovery
      fragment.
-2. **The code is current.** Run `git pull`. HEAD must include `e1795c1a1`
-   (the launcher, the newest of the Stage 2 commits); check with
-   `git merge-base --is-ancestor e1795c1a1 HEAD`.
+2. **The code is current.** Run `git pull`. HEAD must include `c3864092f`
+   (the launcher with the audit's fixes); check with
+   `git merge-base --is-ancestor c3864092f HEAD`.
 3. **`bash scripts/modality-bridge-2026-10-07-stage2.sh validate-chain`**
    exits 0, with all four originals EQUAL. A failure means the chain or its
    inputs changed: stop.
-4. **`… anchor-gate`** exits 0: six cells and three gaps within 1e-3, about
-   3 min. If the D50 scorer change (`scorer-frames-d50-d51`; not on main at
+4. **`… anchor-gate`** exits 0: six cells and three gaps within 1e-3, 3 to
+   8 min. If the D50 scorer change (`scorer-frames-d50-d51`; not on main at
    the time of writing) has merged and moved an anchor, stop. The bridge
    must be scored by the path that reproduces the originals, or the
    originals re-registered first.
 5. **`… prepare all`** exits 0. Every arm reports `coverage OK — K passes x
-   1398 tiles`, a union, crops with 0 failed, and provenance `AGREES`.
-6. **`… estimate`.** Read every union size against § 3's review band. A D49
-   arm outside ±15 % of its guide is a surprising finding: raise it with the
-   PI before verifying. A `temp1` arm outside it is reported.
+   1398 tiles`, `metas OK` (model, temperature, thinking and cached share
+   per pass), a union, crops with 0 failed, and provenance `AGREES`. A
+   `META MISMATCH` on a cached arm means that pass fell back to inline
+   requests. Discard it (Stage 1 card § 4.5) and re-lodge it; never
+   override.
+6. **`… estimate`** exits 0: every built union lies inside its review band
+   (§ 3). If a union is out of band (exit 1), raise it with the PI before
+   verifying; `BAND_OK=<arm>:<v>` then lets that leg, and only that leg,
+   proceed.
 7. **`… rehearse all`** exits 0: ten legs, requests equal to candidates, 0
-   clients, the rehearsed signature on each.
+   clients, both pinned signatures on each.
 8. **File API headroom.** No other leg is lodged. Stage 1's uploads are
    released (the preflight still guards).
 9. **The PI's go for Stage 2.** D49 returns Stage 2 to the PI "with their
@@ -474,24 +581,122 @@ Stage 2.
    - the cost from `estimate`;
    - acknowledgement that the batch verifier requests, like Stage 1's, omit
      the four `OFF` safety settings and run on the batch tier (§ 4.3);
+   - acknowledgement that a batch response which needs repair is repaired
+     after landing, not retried as the originals' real-time path did
+     (item 11; § 8);
    - the § 3 correction to the 2,932 guide.
 10. **`… verify all`.** Legs lodge one at a time; the command prints
     `LODGING DONE`. Any refusal or lodging failure stops it. Re-running
     `verify all` skips finished and running legs.
-11. **Watch.** Use `… status` and `… wait <leg>` per leg (0 success, 2
-    exited non-zero, 5 stopped). A leg is done when it reaches `EXIT 0`, its
-    results equal its candidates, and it has no failure lines.
+11. **Watch, then repair.** Use `… status` and `… wait <leg>` per leg (0
+    success, 2 exited non-zero, 4 stale, 5 stopped). A leg is done when:
+    - it reaches `EXIT 0`;
+    - its results equal its candidates;
+    - it has no failure lines.
+
+    Then run `… repair <leg>` (or `repair all` when every leg is done).
+    - **What it does.** It re-parses the leg's `PARSE_ERROR` rows (a
+      response plain `json.loads` rejects, booked as 0.0 by the batch
+      parser) from `batch_results.jsonl` with the real-time path's repair,
+      into `<leg>_repaired/`. The leg directory is not touched.
+    - **What it writes.** It prints each row changed, as before → after.
+      The repaired copy holds `probabilities.json`, a byte copy of the
+      leg's `run.meta.json` (so a clean-up there keeps its configuration
+      gate: re-check R4) and `parse_repair.json`. That record lists the
+      rows changed and each file's digest.
+    - **What counts as recovered.** A row needs `mound_probability` as a
+      number in [0, 1]; a repaired payload without one stays unrepaired
+      (re-check R2).
+    - **Unrepairable rows.** `repair` exits 1 when a row cannot be
+      repaired. That row is removed from the repaired copy, so scoring
+      refuses until it is re-verified (the short-leg remedy below, second
+      case). `repair all` goes on past such a leg and lists every
+      incomplete leg at the end.
+    - **No overwrite.** A later `repair` refuses to overwrite a repaired
+      copy whose `probabilities.json` or `run.meta.json` it did not write,
+      such as a clean-up's merge (re-check R3).
+    - **Scoring.** Score from `--verify-dir verify_<v>_repaired`, which
+      equals the leg when nothing needed repair.
+
+    Expect few such rows: the 20 committed batch legs hold 9 in 157,256,
+    of which 2 repair and 7 do not.
 12. **After.** For each leg:
     - audited cost (`scripts/audit_verifier_cost.py`);
-    - commit the union, its build record, `scoring/`, the crop manifest,
-      `probabilities.json`, `run.meta.json`, `batch_jobs.json` and the
-      logs;
+    - commit:
+      - the union and its build record;
+      - `scoring/`;
+      - the crop manifest;
+      - `probabilities.json`, `run.meta.json`, `batch_jobs.json` and
+        **`batch_results.jsonl`**, which is the only record from which rows
+        can be re-parsed and usage re-audited;
+      - `<leg>_repaired/`;
+      - the logs, including earlier attempts' `<log>.<stamp>`;
+      - **`outputs/modality-bridge-2026-10-07/stage2/checks/`** (the
+        coverage, metas, provenance and rehearsal records the go/no-go rests
+        on), but not `stage2.lock`;
     - delete the leg's File API uploads.
 
     Then score per § 6.
 
+**A leg that comes back short (audit A7).** `image_b_analysis.py` refuses
+a union whose probabilities do not cover every candidate, so a short leg
+blocks scoring. The remedy depends on why it is short:
+
+- **Its job finished, but the launcher lost it while polling** (a `Batch
+  chunk … failed: … can be retrieved by name` line, or the leg process
+  died). Read the job names and states in the leg's `batch_jobs.json`, then
+  run `run_pv.py batch-recover --crops-dir <crops> --output-dir <leg>
+  --verifier-config prompts/configs/verify_adversarial-text.json --job
+  <name> --temperature 0.0 --model …` (plus `--thinking-level low` on 3.7).
+  This retrieves and books results already paid for; it makes no new
+  verifier calls.
+- **The job ended `FAILED`, `EXPIRED` or `CANCELLED`, a chunk never lodged,
+  or a row could not be repaired** (item 11). Those candidates were never
+  verified, and re-verifying them is new spend that needs the PI's go.
+  - **For a few candidates:** `run_pv.py cleanup --crops-dir <crops>
+    --verified-dir <dir> --verifier-config
+    prompts/configs/verify_adversarial-text.json --temperature 0.0 --model
+    …` (plus `--thinking-level low` on 3.7; `--dry-run` first lists them
+    without a call).
+    - This runs **real-time** (flex), so those candidates are a mode
+      deviation. It is recorded in `run.meta.json:cleanup_passes` and must
+      be named in the cell's report.
+    - Its configuration gate compares against the leg's main pass in
+      either directory, since the repaired copy holds the leg's
+      `run.meta.json`.
+    - **Order.** For candidates the batch never returned, use `--verified-dir
+      <leg>` before `repair`. For rows `repair` could not fix, use
+      `--verified-dir <leg>_repaired` after it. After that second clean-up,
+      `repair` refuses to run on the leg again, which keeps the paid
+      results.
+  - **For a lost whole leg:** `FORCE=1 … verify <leg>`, after moving the leg
+    directory to `archive/` and confirming every job named in its
+    `batch_jobs.json` failed. This re-lodges the **whole** leg as new batch
+    jobs, billed in full; an earlier job still running would bill as well.
+    The refusal message now says so.
+
 ## 8. Flags
 
+- **F-cal: the bridge Gemini 3 image union is 15.0 % smaller than the
+  original** (a finding for the PI from the audit's re-check,
+  `reports/s163-agent-records/run-b-stage2-audit.md` § "Re-check of the
+  fixes", F-cal, at `251f3b230`; recorded here, not acted on). All ten
+  bridge `g3-image` passes had landed (1,398 tiles each). Built through the
+  launcher in a disposable clone, the K = 10 union holds 3,456 candidates
+  against the original's 4,065 (−15.0 %). That is inside the band's floor
+  of 3,455 by one, so `estimate` and `verify` will not stop for it.
+  - **Per pass** the bridge is only about 4 % lighter (raw 2,291–2,385
+    against 2,367–2,485).
+  - **The difference is agreement between passes:** singletons 1,500
+    against 1,938, and ten-vote clusters 580 against 500.
+  - **The K = 5 union** of passes 1–5 is 2,589 against 2,788 (−7.1 %).
+  - **`g3-text`**, still short on runs 7–10 pending recovery, gives about
+    3,258 against 3,319 (−1.8 %) without its fragments.
+
+  Under the project's calibration rule this is a finding to raise with the
+  PI before verifying, gate or no gate. It is not a defect, and the leg
+  would be correct to run. The figures are the re-check's; I have not
+  rebuilt them.
 - **The D49/D52 boundary for Stage 2** (§ 7 item 9). This is not settled by
   any record found.
 - **The pending D50/D51 scorer change** (§ 7 item 4). The anchor gate exists
@@ -502,19 +707,172 @@ Stage 2.
   the union cannot be resolved. A bare `verify` run outside the launcher
   could therefore spend on an unchecked manifest. The launcher requires
   `AGREES`.
-- **A polling verifier is silent** (§ 2). Any watcher keyed on log age would
-  call a healthy leg dead.
-- **The tier-1 suite is red on main, not from Stage 2.**
-  `test_no_bare_convention_a_glob_outside_this_module` flags
-  `scripts/delete_landed_caches.py:161`, a bare `detections_*` glob added
-  by `580c7c494` (the Stage 1 cache-deletion tool, live tonight). It wants a
-  one-line move to `lib_detection_paths.find_pass_geojsons`, by its owner.
-  It was left alone here because the tool runs beside live passes. Stage 2's
-  own adapter had the same glob, and it was moved in `dadf935b4`.
-- **The sapphire scratch** (worktrees, stand-in tree, request files) was
-  removed after this card's evidence was copied into the record.
+- **Batch results handling differs from the originals' (audit A2).** The
+  batch parser books a response that plain `json.loads` rejects as 0.0 with
+  `PARSE_ERROR` (`lib_verifier.parse_verifier_results`). The original legs'
+  real-time path repaired such a response
+  (`lib_batch_api.parse_response_with_repair`) or retried it. Stage 2 closes
+  the gap after landing with `repair` (§ 7 item 11).
+  - **Proposed, not applied:** make `parse_verifier_results` parse with
+    `parse_response_with_repair`, the real-time path's own function. That
+    changes no request.
+  - **Why not applied:** it would change committed legs' outputs if they
+    were re-booked. In
+    `outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20`,
+    `candidate_06537` would go from 0.0 to 0.2 and `candidate_08272` from
+    0.0 to 0.05. It is shared code, so it wants its own review and a
+    decision on those legs.
+  - Even applied, it would not reach the seven rows no repair parses.
+- **Seven committed rows carry a 0.0 the originals' path would have
+  retried.** They are in `outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/`
+  `verify_k1_arm2` (1), `verify_k3_arm2` (3) and `verify_k5_arm2` (3). Each
+  has an unescaped double quote inside a string (e.g. `candidate_24301`,
+  `marks ('"'), but`), which none of the three repair tiers parses. These
+  are committed 55-map cells, not Run B; the boards' owners should see this.
+- **A finding about the original Gemini 3 image leg.** Its six recovery
+  tiles (runs 1, 3, 6 and 8, one tile each; run 9, two) record 16,272
+  cached of 20,018 input tokens per call, the implicit-cache pattern, not
+  the explicit cache's 18,909. So those six of its 13,980 requests went
+  inline, in a different request shape from the rest. Stage 1 card § 2.1
+  says the explicit cache applied "on every request". The meta check found
+  this on the stand-in tree. Run B's cached arms are held to the explicit
+  cache on every file, fragments included.
+- **A8, proposed for the Stage 1 launcher (not applied: Stage 1 is still
+  lodging).** Stage 1's `residuals` counts every `*.tiles.json` in a
+  recovery fragment's directory, chunk sidecars included, and has no
+  not-landed branch for fragments. A chunked fragment (only `g37-image`,
+  only for a residual over 466 tiles) that lost a chunk would therefore get
+  a residual for the lost chunk's tiles. Stage 2 would then refuse the
+  first fragment for holding chunks without a merged file, which fails
+  closed but cannot be completed. Proposed change, in `residuals()`:
+
+  ```python
+  frags, pending = [], None
+  for fd in sorted(glob.glob(f"{out}/{arm}/recovery_rd*/{ver}/run_{run}")):
+      sidecars = glob.glob(f"{fd}/*.tiles.json")
+      merged_f = [t for t in sidecars if "_chunk" not in t]
+      if sidecars and not merged_f:
+          pending = fd  # chunk sidecars but no merged sidecar: not landed
+          break
+      frags.extend(merged_f)
+  if pending:
+      print(f"{arm} run_{run}: FRAGMENT NOT LANDED ({pending}) — resume it with "
+            f"the same ROUND and its residual manifest; no new residual written")
+      continue
+  ```
+
+  A resumed fragment needs the residual manifest it was lodged from, so
+  `residuals` must not rewrite `residual_run_<N>.json` while a fragment is
+  pending (the `continue` above ensures that).
+- **A repaired copy's `run.meta.json` is the leg's, copied** (re-check R4).
+  Tools that discover verifier legs by walking the tree will see it as a
+  second stage: `audit_verifier_cost.py` walks every `probabilities.json`
+  with a sibling `run.meta.json`, and `backfill_cost_audit_sidecars.py`
+  every `*.meta.json`. It is the same leg and the same spend, and
+  `parse_repair.json` names its source (`run_meta_copied_from`). The honest
+  total comes from the explicit passes register and is not affected. A
+  clean-up merged there adds only its own `cleanup_passes` entry. Register
+  the repaired copy, if at all, as the same leg.
+- **The sapphire scratch** (clones, worktrees, stand-in tree, request files)
+  was removed after this card's evidence was copied into the record.
+
+## 9. The pre-launch audit and its fixes
+
+The audit is `reports/s163-agent-records/run-b-stage2-audit.md` (`d76be2814`),
+verdict GO WITH FIXES at `01bdbc53d`. The fixes landed at `cc1d586d8`,
+`f32c8d9eb` and `2f805f3a9`. Their evidence is in the record's
+`audit_fixes_2026_10_08`, from a disposable `git clone --shared` on sapphire
+that made no API call.
+
+| Finding | What changed | Evidence |
+|---|---|---|
+| A1 (medium) relaunch read the previous attempt | `launch_leg`: earlier log moved aside, pid file removed, live pid refused (§ 2) | 4 tier-1 tests; red sentinel in a real copy: 3 relaunch tests fail without the rotation |
+| A2 (medium) repairable responses booked 0.0; `batch_results.jsonl` not committed | `repair` into `<leg>_repaired/`, fail-closed on unrepairable rows; commit list (§ 7 items 11, 12); lib change proposed (§ 8) | the audit's two rows recover as 0.2 and 0.05; 20 committed legs: 9 rows, 2 recovered, 7 not; launcher `repair` on a copy of the audit's leg left its files' digests unchanged |
+| A3 (low) the "silent" claim; 25 h window | `wait --stale-seconds 3600`; § 2 corrected | Run A's log: an HTTP GET about every 30 s while polling |
+| A4 (low) two `verify` runs could lodge one leg twice | `flock` on `stage2/stage2.lock` for writing subcommands; the leg closes it | tier-1 tests; red sentinel: without `9>&-` a polling leg holds the lock |
+| A5 (low) metas unchecked | `check` reads every pass file's meta (§ 1) | real Stage 1 `g3-image`: 10 passes at 0.9445, OK; stand-in: D49 text arms and `g37-image` OK, `temp1` refused on T 0.7, cache arm refused on 0.788; the original `g3-image` fragments' 0.8129 found (§ 8) |
+| A6 (low) the band applied by hand | `estimate` flags and exits 1, `verify` refuses, `BAND_OK` overrides (per leg since R1; § 3) | stand-in `g37-text` set to 950: refused before any rehearsal; overridden, the provenance gate then refused the tampered record |
+| A7 (low) no remedy for a short leg; `FORCE=1` too light | § 7 "A leg that comes back short"; reworded refusal | — |
+| A8 (low; Stage 1) unmerged chunked fragment | proposed in § 8 for the Stage 1 launcher | — |
+| Nits | stale tier-1 flag dropped (the suite passes: 3,999 passed, 0 failed, on sapphire with these fixes); full-request signature pinned (§ 4.3); `stage2/checks/` in the commit list | signatures equal on synthetic and original crops |
+
+**The re-check** (same report, § "Re-check of the fixes", `251f3b230`)
+found the fixes sound and asked for four more, done at the commit after
+`749eabcde` that carries this text:
+
+| Item | What changed | Tests |
+|---|---|---|
+| R1 (medium) the band would refuse both `temp1` legs; `BAND_OK=1` waived it for every leg | `temp1` guides × 1.2 (3,257, 3,346; § 3, with the h11 evidence); `BAND_OK` names legs and a blanket value is refused | guide and band values; per-leg override in `band`, `estimate` and through `verify`; `BAND_OK=1` refused |
+| R2 (low) a payload without a probability "recovered" as 0.0 | `repair` requires `mound_probability` as a number in [0, 1] | five malformed payloads refused; interval ends accepted; such a row is removed, not recovered |
+| R3 (low) a second `repair` overwrote a clean-up | `repair` records the digest of every file it writes and refuses a copy whose files it did not write | a changed `probabilities.json` or `run.meta.json` refused (exit 3), file untouched; an untouched copy re-runs |
+| R4 (low) the clean-up on the repaired copy skipped its configuration gate | `repair` copies the leg's `run.meta.json` byte for byte | copy equals the leg's; digest recorded |
+| Nits | § 3 table rows; `repair all` continues and lists incomplete legs; `verify` with no union says so | launcher tests |
+
+Stage 2's tier-1 tests now number 94: union 25, harness 7, anchors 12,
+launcher 17 and checks 33.
 
 ## Changelog
+
+### 2026-10-07 — The Gemini 3 legs launched (Session 163)
+
+The four Gemini 3 verifier legs launched under the PI's overnight delegation
+(D52) after § 7 items 1–8 passed per arm; status block above. The 3.7 legs
+follow when their Stage 1 arms land.
+
+### 2026-10-08 — The re-check's fixes (Session 163)
+
+The audit's re-check (`251f3b230`) acted on (§ 9):
+
+- **R1:** T 1.0 guides for the two `temp1` legs, with the h11 evidence, and
+  a per-leg `BAND_OK`;
+- **R2:** `repair` requires a probability in [0, 1];
+- **R3:** `repair` will not overwrite a copy it did not write;
+- **R4:** `repair` copies the leg's `run.meta.json`;
+- **nits:** the § 3 rows, `repair all`, and `verify`'s no-union message.
+
+Recorded: the re-check's F-cal finding (§ 8), for the PI.
+
+| | Before | After |
+|---|---|---|
+| `g3-text-temp1` guide (band) | 2,714 (2,307–3,121) | 3,257 (2,768–3,746) |
+| `g3-image-temp1` guide (band) | 2,788 (2,370–3,206) | 3,346 (2,844–3,848) |
+| Ten legs at guide | 17,164; US$12.62–13.01 | 18,265; US$13.37–13.79 |
+| Added legs | US$4.96–5.12 | US$5.72–5.90 |
+| `BAND_OK` | `1` waives every leg | names legs; `1` refused |
+
+Unchanged: the D49 legs' guides, bands and costs, the validations of
+§§ 4.1–4.5, and the ten legs' commands.
+
+### 2026-10-08 — The pre-launch audit's fixes (Session 163)
+
+The audit (`reports/s163-agent-records/run-b-stage2-audit.md`, GO WITH
+FIXES) acted on (§ 9):
+
+- relaunches read only their own attempt (A1);
+- `PARSE_ERROR` rows repaired after landing into `<leg>_repaired/`, and
+  `batch_results.jsonl` and `stage2/checks/` added to the commit list (A2);
+- the "silent verifier" claim corrected and `wait`'s window set to 3,600 s
+  (A3);
+- a lock on writing subcommands (A4);
+- pass metas checked (A5);
+- the review band enforced (A6);
+- short-leg remedies and a clearer `FORCE=1` refusal (A7);
+- A8 proposed for Stage 1;
+- a full-request signature pinned.
+
+Corrected in place:
+
+| | Before | After |
+|---|---|---|
+| A polling verifier's log | "writes nothing" | an HTTP GET about every 30 s |
+| `wait` staleness window | 90,000 s | 3,600 s |
+| A `temp1` union out of band | "reported, not stopped" | refused until `BAND_OK=1` (since made per leg; next entry) |
+| Scoring's verify directory | `verify_<v>` | `verify_<v>_repaired` |
+| § 7 item 2's commit to check | `e1795c1a1` | `2f805f3a9` |
+
+Removed: the stale flag that the tier-1 suite was red. Unchanged: the
+union, crop, request and anchor validations (§§ 4.1–4.5), the costs, and
+the ten legs' commands.
 
 ### 2026-10-08 — Original publication (Session 163)
 
