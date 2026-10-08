@@ -5179,7 +5179,7 @@
     ]
    },
    "meta_beside_source": "detections_text-t0.0_run01.meta.json present in the archived run_1 (ls on sapphire; tracked): T 0.0, detect_brief-text, 1032 items.",
-   "caveats": "SURPRISE: the register _note ('Proposer passes were NOT materialised as run_* dirs'), scripts/check_union_provenance.py:170-177 (UNRESOLVABLE) and reports/register-repair-2026-10-05-investigations/d31-other-legs.md:152-153 ('pv-diag-256 has no proposer meta') are wrong: the pass, with its meta, was moved into archive/outputs-non-production-tile-sizes/ (untracked to tracked) by 276e4ca80. No registered pool covers it; a pool spec would need a repo_path under archive/."
+   "caveats": "SURPRISE: the register _note ('Proposer passes were NOT materialised as run_* dirs'), scripts/check_union_provenance.py:170-177 (UNRESOLVABLE) and reports/register-repair-2026-10-05-investigations/d31-other-legs.md:152-153 ('pv-diag-256 has no proposer meta') are wrong: the pass, with its meta, was moved into archive/outputs-non-production-tile-sizes/ (untracked to tracked) by 276e4ca80. No registered pool covers it; a pool spec would need a repo_path under archive/. Registered 2026-10-08 (PI ruling of that date, 'register pv-diag-256 in place'; reports/stale-register-notes-2026-10-07.md section 10): the sentence above about no registered pool is superseded. These sources are now the registered pool text-baseline-text-t0.0 of results/run-conditions.json, decomposition.pv-diag-256.proposer_pools, at repo_path archive/outputs-non-production-tile-sizes, with no file moved, and the passes manifest carries their rows. The condition still names pool 'text', so this binding still supplies its proposer route."
   },
   {
    "id": "pv-diag-256-text-5of5-union",
@@ -5209,7 +5209,7 @@
     ]
    },
    "meta_beside_source": "detections_text-t0.7_run0{1..5}.meta.json present in each archived run dir (ls on sapphire; tracked): T 0.7, detect_brief-text, 1032 items each.",
-   "caveats": "SURPRISE: resolves the one UNRESOLVED union of reports/union-staleness-retrospective-2026-09-12.md:352-373 ('the pool does not exist ... may not exist anywhere'): the five passes exist, tracked, with metas, under archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/. The binding rests on the plan, the logs, the archive commit and an exact reproduction, not on a recorded build command. Not registered as a pool."
+   "caveats": "SURPRISE: resolves the one UNRESOLVED union of reports/union-staleness-retrospective-2026-09-12.md:352-373 ('the pool does not exist ... may not exist anywhere'): the five passes exist, tracked, with metas, under archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/. The binding rests on the plan, the logs, the archive commit and an exact reproduction, not on a recorded build command. Not registered as a pool. Registered 2026-10-08 (PI ruling of that date, 'register pv-diag-256 in place'; reports/stale-register-notes-2026-10-07.md section 10): the sentence above about no registered pool is superseded. These sources are now the registered pool text-n5-text-t0.7 of results/run-conditions.json, decomposition.pv-diag-256.proposer_pools, at repo_path archive/outputs-non-production-tile-sizes, with no file moved, and the passes manifest carries their rows. The condition still names pool 'text', so this binding still supplies its proposer route. scripts/check_union_provenance.py now reproduces text-1of5..text-5of5 from this pool itself (POOL_OVERRIDES)."
   },
   {
    "id": "stage-d-256-consensus-text-5of5",
