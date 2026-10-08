@@ -1,7 +1,8 @@
 # Run B, the modality bridging pair: first findings
 
 > **Last revised**: 2026-10-08 (scoring plan items 4, 6 and 7: the gap-change
-> interaction test, the date component, and the replicate floors). See
+> interaction test, the date component, and the replicate floors; wording
+> after an independent audit). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: SCORED, FOR THE PRINCIPAL INVESTIGATOR'S (PI'S) REVIEW.** Point
@@ -84,20 +85,25 @@ Gap change against Gemini 3: −0.0529 (3.7, Gemini 3 verifier) and −0.0547
    1.9 times its floor), as large as at T 0.7.
 3. **Nor does the request shape.** Sent through the explicit cache, as
    Gemini 3 image is, 3.7 image still shows no text advantage. If anything,
-   image leads, by −0.016 (p 0.074) and −0.010 (p 0.25), but at 0.69 and
-   0.43 of their floors this is parity, not a resolved image lead. The
-   cached 3.7 image cells score a little above the inline ones (0.9318
-   against 0.9160; 0.9352 against 0.9288), also inside the floor of two
-   independent 3.7 image cells (0.74 and 0.37 of it at the best points,
-   from § 7's cell SDs).
+   image leads, by −0.016 (p 0.074) and −0.010 (p 0.25), but neither is
+   rejected and they sit at 0.69 and 0.43 of their floors: no resolved
+   gap, and no image lead. The cached 3.7 image cells score a little above
+   the inline ones at the operating points (0.9318 against 0.9160; 0.9352
+   against 0.9288), differences of 0.74 and 0.32 of the floor of two
+   independent 3.7 image cells (1.96 · √(SD² + SD²) + 0.001 from § 7's cell
+   SDs at those points); not tested by permutation.
 4. With temperature, request structure, tier, K and day matched, the family
    difference remains once only the model and its thinking level differ:
    the fully matched gap change is −0.075 and −0.068 (p < 0.0001), 1.9 and
    1.7 times its floor (§ 7). What remains is Gemini 3's text advantage
-   against none in Gemini 3.7: of R7.3-22's "parity or inversion", these
-   runs show parity.
-5. **Under D45 the family claim stands on these runs, narrowly.** All ten
-   gap changes reject and clear their point floors (1.24 to 1.87 times),
+   against no resolved gap in Gemini 3.7: of R7.3-22's "parity or
+   inversion", these runs show no inversion. They do not show parity in
+   the strict sense: the evidence is that the test does not reject and each
+   3.7 gap sits below its floor, which is not a test of equivalence.
+5. **Under D45 the family claim stands on these runs: every gap change
+   clears its point floor, and every one sits inside its floor's upper
+   bound.** All ten gap changes reject and clear their point floors (1.24
+   to 1.87 times),
    the floors re-derived from § 3 of the W2.7 report (1.36 to 1.79) and the
    direct-SD sensitivity (1.40 to 1.87), but none clears the upper bound of
    its floor (0.66 to 0.99). The K = 10 contrast the claim was first made
@@ -147,7 +153,10 @@ when it leaves error (FP + FN > 0) and **broken** when it enters it. The
 within-execution yardstick is the discordant-tile rate between disjoint
 subset rungs of the bridge arm, K' = 5 for Gemini 3 (126 pairs) and K' = 2
 for 3.7 (15 pairs): smaller rungs flip more tiles than the K = 10 or K = 5
-cells, so the yardstick is generous. Floor: 1.96 · √2 · SD + 0.001, the
+cells, so the yardstick is generous in pass count. It holds the verifier
+fixed, though, while each bridge cell was re-verified on a different date
+from its original, so verifier re-invocation flips are in the comparison
+but not in the yardstick. Floor: 1.96 · √2 · SD + 0.001, the
 original's SD taken equal to the bridge's (§ 7). Results
 `floors/date_component.json`.
 
@@ -166,10 +175,12 @@ Reading:
 - **No date-plus-mode component is resolved in F1.** No p falls below 0.25,
   and every difference is at most 0.46 of its within-execution floor (and
   0.42 of the § 3 floor).
-- **On five of six cells the bridge moves no more tiles than two halves of
-  one execution do.** Gemini 3 text is the exception: 6.6 % of tiles change
-  against a 95th percentile of 5.3 % between rungs half its size, balanced
-  (12 fixed, 14 broken), so its F1 hardly moves (flagged, § 8).
+- **On five of six cells the bridge moves no more tiles than two disjoint
+  rungs of one execution do** (five-pass rungs for Gemini 3, two-pass rungs
+  for 3.7). Gemini 3 text is the exception: 6.6 % of tiles change against a
+  95th percentile of 5.3 % between rungs half its size, balanced (12 fixed,
+  14 broken), so its F1 hardly moves (flagged, § 8). Part or all of the
+  excess may be verifier re-invocation, which the yardstick leaves out.
 - Gemini 3 image at the original point gains 10 TP and 22 FP (its union is
   15 % smaller and its passes agree more, § 8); at its oracle the difference
   is −0.0019. The lower F1 at k9 is the operating point moving, not the
@@ -257,20 +268,34 @@ difference to exceed its floor):
   1.03). At K = 10 it clears the point floor (1.50, or 1.81 on direct SDs,
   2.07 on § 3) but not the upper bound (0.80), which the image arm's
   carried SD drives.
-- **Every 3.7 gap is parity** (0.03 to 0.69 of its floor), the fifth leg's
-  included.
+- **No 3.7 gap is resolved** (none rejected; 0.03 to 0.69 of its floor),
+  the fifth leg's included. This is the absence of a resolved gap, not a
+  demonstrated equivalence.
 - **Every gap change rejects and clears its point floor** (1.24 to 1.87), on
   all three floor readings; none clears its upper bound (0.66 to 0.99). The
-  family claim therefore stands on these runs as a configuration claim, at
-  the margin § 6b's re-screen calls "stands narrowly" (W2.7 report § 6b,
-  R7.2-13a), most narrowly on the K = 10 contrast it was first made on.
+  family claim therefore stands on these runs as a configuration claim, in
+  the re-screen's category "clears the point floor; inside its upper bound"
+  (W2.7 report § 6b), most narrowly on the K = 10 contrast it was first made
+  on. The upper bound is conservative: it adds each cell's upper SD in
+  quadrature; a delta-method 95 % upper for the primary floor is about
+  0.068 (ratio 0.78), still below 1 (independent audit, 2026-10-08).
 
 Limits:
 
-- **The verifier band is borrowed.** The 0.001 per contrast was measured on
-  the 55-map corpus (W2.7 report § 1); no verifier re-invocation has been
-  measured on the 487-tile frame. The floors are proposer-stage floors plus
-  that band.
+- **The verifier band is borrowed, and probably too small for this
+  frame.** The 0.001 per contrast was measured on the 55-map corpus (W2.7
+  report § 1); no verifier re-invocation has been measured on the 487-tile
+  frame. Each cell here holds 393 to 441 detections, so one verifier
+  decision moves F1 by about 0.0011 to 0.0013, and the whole band is about
+  one decision; the 2.4 % same-week re-invocation flip rate would be about
+  ten. Scaled from the 55-map corpus (about 11 times as many detections),
+  the band would be about 0.003 to 0.005 per contrast. At 0.003 the primary
+  gap changes are 1.14 and 1.17 times their floors; at 0.005, 1.05 and
+  1.08. Both still clear the point floor, with a thin margin. The floors
+  are proposer-stage floors plus that band.
+- **Gemini 3 image at (0.15, k9)** follows a unanimity vote path at every
+  K' ≤ 5, so its carried SD is the k10 cell's (0.0164). This affects only
+  that cell's date-component floor, in the conservative direction.
 - **No floor at K = N is measured; each is carried.** The Gemini 3 image
   arm's SD rises with K (power exponent +0.31: unanimity rungs keep fewer,
   more borderline detections), so the power fit reads 0.0164 at K = 10
@@ -297,9 +322,10 @@ Limits:
   component shows in which tiles fail, not in how many, as the verifier's
   balanced cross-date flips did on the 55-map corpus (W2.7 report § 6c).
 - **§ 4 item 4 is reworded** (2026-10-08): it said the family difference "is
-  an inversion"; the 3.7 gaps sit inside their floors, so the runs show
-  parity, and the family difference that remains is the loss of Gemini 3's
-  text advantage (§ 7).
+  an inversion"; the 3.7 gaps are not rejected and sit inside their floors,
+  so the runs show no resolved 3.7 gap (not a demonstrated parity), and the
+  family difference that remains is the loss of Gemini 3's text advantage
+  (§ 7).
 - **Two Stage 2 outputs were never committed**, although the Stage 2 card
   § 7 item 12 lists both: every arm's `scoring/` (the deduplicated passes)
   and the `verify_g3_repaired/` copies of `g3-text`, `g3-image` and
@@ -328,6 +354,19 @@ Application Programming Interface (API) call.
 
 ## Changelog
 
+### 2026-10-08 — Wording after the independent audit
+
+An independent audit of `scripts/modality_bridge_floors.py` at `3d3cfe18e`
+(`reports/s163-agent-records/run-b-floors-audit.md`) found no code defect and
+recomputed the primary gap changes, their interaction p and the primary floor
+exactly. Its prose findings are applied: "parity" becomes "no resolved gap"
+(§§ 4, 7, 8; non-rejection below a floor is not an equivalence test); the
+D45 verdict takes the re-screen's own label; the verifier band's likely
+understatement is quantified (§ 7 Limits); the flip yardstick's fixed verifier
+is stated (§ 6); the cached-against-inline 3.7 image ratios are restated at the
+operating points (0.74 and 0.32; formerly "0.74 and 0.37 at the best points").
+No number from `floors/` changed.
+
 ### 2026-10-08 — Items 4, 6 and 7: gap-change test, date component, floors
 
 Scoring plan items 4, 6 and 7 (Stage 1 card § 9) computed with
@@ -341,9 +380,9 @@ component, same-tile flips) and 7 (floors); the former §§ 5 and 6 are now
 |---|---|---|
 | § 3, gap change | −0.0529 and −0.0547, "descriptive; no interaction permutation yet" | the same, interaction p 0.0047 and 0.0040, 1.24 and 1.28 times the floor |
 | § 4 item 1 | text advantage "about +0.05 F1 (p 0.003)"; cells "within 0.01 F1" of the originals | the same, plus 1.5 times its floor; the gap change resolved; each cell at most 0.46 of its floor |
-| § 4 item 3 | "image leads, by −0.016 (p 0.074) and −0.010 (p 0.25)" | the same numbers, at 0.69 and 0.43 of their floors: parity |
-| § 4 item 4 | the family difference "is an inversion that remains" | the family difference remains (−0.075 and −0.068, p < 0.0001, 1.9 and 1.7 times the floor); the 3.7 side is parity, not inversion |
-| § 4 item 5 | — | new: the D45 verdict, stands narrowly |
+| § 4 item 3 | "image leads, by −0.016 (p 0.074) and −0.010 (p 0.25)" | the same numbers, at 0.69 and 0.43 of their floors: no resolved gap |
+| § 4 item 4 | the family difference "is an inversion that remains" | the family difference remains (−0.075 and −0.068, p < 0.0001, 1.9 and 1.7 times the floor); no resolved 3.7 gap, so no inversion (not a demonstrated parity) |
+| § 4 item 5 | — | new: the D45 verdict, clears the point floor and inside its upper bound |
 | Status | floors, interaction and MCC gaps not computed | MCC gaps not computed |
 
 Unchanged: every cell, gap and p of §§ 2–3 (reproduced exactly), and
