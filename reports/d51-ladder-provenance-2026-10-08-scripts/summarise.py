@@ -6,9 +6,9 @@ Reads ``out/gate_survey.json``, ``out/clip_cost.json``,
 before and after, the PR #26 survey for comparison, the rebuild verdicts,
 the validation and cross-check counts, and Task C's tables.
 
-Usage (any machine; small JSON only)::
+Usage (any machine; small JSON, plus the gap tiles' pass files)::
 
-    python summarise.py --out-dir out
+    python summarise.py --out-dir out --repo ../..
 
 Created: 2026-10-08 (D57 (2), (3), Session 163 follow-up)
 Author: Shawn Ross, Claude Code
@@ -113,10 +113,36 @@ def gap_table(clip: dict[str, Any]) -> list[str]:
     return lines
 
 
+def gap_coverage(clip: dict[str, Any], rebuild: dict[str, Any], repo: Path) -> list[str]:
+    """How many of each rung's passes processed each gap tile.
+
+    A mound in a tile that only some of a pool's passes processed can win at
+    most that many votes, whatever the vote threshold; the D51 gate (the
+    union of processed tiles) does not see this. Pass lists come from the
+    rebuild record (K = 5 / 10, declared) and the recorded provenance
+    (K = 1 / 3), read in the same rows.
+    """
+    passes = {(r["pool"], r["K"]): r["read_order"] for r in rebuild["rows"]
+              if r["merger"] == "april"}
+    lines = ["| Ladder | Gap tile | K = 1 | K = 3 | K = 5 | K = 10 |", "|---|---|---|---|---|---|"]
+    for lad in clip["ladders"]:
+        for tile in lad["gap_tiles"]:
+            cells = []
+            for k in (1, 3, 5, 10):
+                files = passes[(lad["pool"], k)]
+                hit = sum(tile in (json.loads((repo / f).read_text()).get("processed_tiles")
+                                   or []) for f in files)
+                cells.append(f"{hit} of {len(files)}")
+            lines.append(f"| `{lad['pool']}` | `{tile}` | " + " | ".join(cells) + " |")
+    return lines
+
+
 def main() -> int:
     """Write out/summary.md."""
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out-dir", type=Path, required=True)
+    ap.add_argument("--repo", type=Path, default=Path("."),
+                    help="repository root (pass files are read for gap coverage)")
     args = ap.parse_args()
     d = args.out_dir
     gate = json.loads((d / "gate_survey.json").read_text())
@@ -153,11 +179,13 @@ def main() -> int:
         *[f"- {m['mutation']}: {'bites' if m['bites'] else 'DOES NOT BITE'} "
           f"({len(m['failed'])} test(s) red)" for m in sentinel["mutations"]], "",
         "## Task C: gaps", "", *gap_table(clip), "",
+        "## Task C: passes that processed each gap tile", "",
+        *gap_coverage(clip, rebuild, args.repo), "",
         "## Task C: opmax", "", *clip_tables(clip, "opmax"), "",
         "## Task C: stride-shell carried (where distinct from opmax)", "",
         *clip_tables(clip, "carried-stride-shell"), "",
     ]
-    (d / "summary.md").write_text("\n".join(lines) + "\n")
+    (d / "summary.md").write_text("\n".join(lines).rstrip("\n") + "\n")
     return 0
 
 
