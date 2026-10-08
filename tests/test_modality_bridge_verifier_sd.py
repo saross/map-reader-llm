@@ -11,6 +11,7 @@ All synthetic; nothing is read from disk.
 
 from __future__ import annotations
 
+import json
 import math
 import sys
 from pathlib import Path
@@ -27,8 +28,11 @@ from scripts.modality_bridge_verifier_sd import (  # noqa: E402
     chi2_sd_interval,
     flip_rates,
     floor_with_verifier,
+    identical_share,
     pooled_sd,
+    raw_dir,
     rep_dir,
+    response_text_digests,
     sd_summary,
 )
 
@@ -42,6 +46,31 @@ def test_replicate_one_is_read_where_the_floors_read_it() -> None:
             v = "g37" if "g37" in base else "g3"
             assert rep_dir(base, 2) == f"verify_{v}_rep2_repaired"
             assert rep_dir(base, 3) == f"verify_{v}_rep3_repaired"
+
+
+def test_raw_dir_drops_the_repaired_suffix() -> None:
+    for arm in ARMS.values():
+        for _leg, base in arm.legs:
+            v = "g37" if "g37" in base else "g3"
+            assert raw_dir(base, 1) == f"verify_{v}"
+            assert raw_dir(base, 3) == f"verify_{v}_rep3"
+
+
+def test_response_texts_compare_by_digest(tmp_path: Path) -> None:
+    rows = [{"key": "candidate_00000", "response": {"candidates": [
+                {"content": {"parts": [{"text": "same"}]}}]}},
+            {"key": "candidate_00001", "response": {"candidates": [
+                {"content": {"parts": [{"text": "a"}]}}]}},
+            {"key": "candidate_00002", "error": {"code": 500}}]
+    other = [dict(rows[0]), {"key": "candidate_00001", "response": {"candidates": [
+                {"content": {"parts": [{"text": "b"}]}}]}}, dict(rows[2])]
+    a, b = tmp_path / "a.jsonl", tmp_path / "b.jsonl"
+    a.write_text("".join(json.dumps(r) + "\n" for r in rows))
+    b.write_text("".join(json.dumps(r) + "\n" for r in other))
+    da, db = response_text_digests(a), response_text_digests(b)
+    assert set(da) == {"candidate_00000", "candidate_00001", "candidate_00002"}
+    assert identical_share(da, db) == pytest.approx(2 / 3)  # a row with no text hashes ""
+    assert identical_share(da, da) == 1.0
 
 
 def test_chi2_interval_for_two_degrees_of_freedom() -> None:

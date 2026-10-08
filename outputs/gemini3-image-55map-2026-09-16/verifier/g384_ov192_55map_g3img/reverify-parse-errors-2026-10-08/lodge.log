@@ -1,0 +1,22 @@
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=Ch9tb2RlbHMvdmVvLTMuMS1nZW5lcmF0ZS1wcmV2aWV3 "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+INFO File storage preflight: 0 file(s) stored (0.00 GB) + 1 chunk(s) to upload (0.00 GB) = 0.00 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU83mjyhdeQQA2wMTg_fat4RXr4Wf5UfD-mQO_FS04Ji0KpzD-lLV4_R_-9G9LD_vXHnFRK7bIMuBPPvg-yKvfAjVfg-QQ8aLBPEQf7LAW6c&upload_protocol=resumable "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/cf2gwe2yumnv
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.7-flash:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib
+Lodged batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib (7 requests, model gemini-3.7-flash)
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib "HTTP/1.1 200 OK"
+INFO Batch job batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib:download?alt=media "HTTP/1.1 200 OK"
+INFO Retrieved 7 result lines from batch job
+REVERIFY LODGE COMPLETE: 7/7 rows, job batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib
