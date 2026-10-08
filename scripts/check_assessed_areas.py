@@ -18,7 +18,11 @@ Description:
       to, the per-pool area removed is reported, and the exit is 0.
     * **An undetermined area** (no record, no declaration, no pass
       provenance): exit 4, loudly, unless ``--allow-undetermined`` is given,
-      which records the pool as undetermined (never as the same area).
+      which records the pool as undetermined (never as the same area). With
+      both options and different areas among the determined pools, the
+      status is ``clipped-to-common-area-with-undetermined``: the common
+      area of the determined pools is written, and every pool, the
+      undetermined included, is to be clipped to it.
 
     ``--json`` writes the full comparison record, which ladder outputs embed.
 

@@ -20,6 +20,10 @@ to a temporary directory:
   provenance is undetermined with a reason, and the comparison raises
   :class:`AssessedAreaUndeterminedError` (exit 4) unless explicitly allowed,
   in which case the status is never "same";
+* **both options** — with a clip and undetermined pools allowed, a mismatch
+  among the determined pools clips EVERY pool to their common area and the
+  status names both facts, never a bare "undetermined" (PR #26 review,
+  finding 1);
 * **provenance** — a consensus union's area is the union of its passes'
   processed tiles (recovery fragments resolved through a subset manifest),
   and a builder's record and a declared record are read and checked against
@@ -191,6 +195,79 @@ def test_allowing_undetermined_never_reports_the_same_area(world):
     comparison = laa.compare_assessed_areas(areas, allow_undetermined=True)
     assert comparison.status == laa.STATUS_UNDETERMINED
     assert comparison.record["undetermined"] == ["bare"]
+
+
+# ── Both options: a clip AND undetermined pools (PR #26 review, finding 1) ──
+#
+# The four refused pv-diag-384 ladders have K = 1 and K = 3 determined but
+# different, and K = 5 and K = 10 undetermined. With --clip-to-common-area
+# and --allow-undetermined-area both given, the gate used to return a bare
+# "undetermined" with no clip, and every driver then swept unclipped.
+
+
+def mixed_pools(world) -> list:
+    """K = 1 (4 km²) and K = 3 (2 km²) determined; K = 5 undetermined."""
+    bare = write_points(world["tmp"] / "bare.geojson", [(500, 500)])
+    return [laa.determine_assessed_area(world["native"], label="K = 1"),
+            laa.determine_assessed_area(world["clipped"], label="K = 3"),
+            laa.determine_assessed_area(bare, label="K = 5")]
+
+
+def test_both_options_clip_every_pool_to_the_determined_common_area(world):
+    """A mismatch among the determined pools is clipped, never passed as undetermined."""
+    comparison = laa.compare_assessed_areas(
+        mixed_pools(world), clip_to_common=True, allow_undetermined=True)
+    assert comparison.status == laa.STATUS_CLIPPED_UNDETERMINED
+    assert comparison.status != laa.STATUS_UNDETERMINED
+    assert comparison.clips
+    record = comparison.record
+    assert record["status"] == laa.STATUS_CLIPPED_UNDETERMINED
+    assert record["undetermined"] == ["K = 5"]
+    clip = record["clip"]
+    assert clip["name"] == laa.COMMON_AREA_CLIP_NAME
+    assert clip["common_to"] == ["K = 1", "K = 3"]
+    assert clip["undetermined_clipped"] == ["K = 5"]
+    # What the undetermined pool loses is unknown, and recorded as such.
+    assert clip["area_removed_km2"] == {"K = 1": pytest.approx(2.0), "K = 3": 0.0,
+                                        "K = 5": None}
+    assert comparison.common.area / 1e6 == pytest.approx(2.0)
+
+
+@pytest.mark.parametrize("pools", ["none-determined", "determined-agree"])
+def test_both_options_without_a_mismatch_stay_undetermined(world, pools):
+    """No pool determined, or the determined pools agree: no clip, as before."""
+    bare = write_points(world["tmp"] / "bare.geojson", [(500, 500)])
+    other = write_points(world["tmp"] / "other.geojson", [(700, 700)])
+    if pools == "none-determined":
+        areas = [laa.determine_assessed_area(bare, label="a"),
+                 laa.determine_assessed_area(other, label="b")]
+    else:
+        same = write_points(world["tmp"] / "same.geojson", [(600, 600)])
+        write_record(same, world["tiling"], clip=world["clip"])
+        areas = [laa.determine_assessed_area(world["clipped"], label="a"),
+                 laa.determine_assessed_area(same, label="b"),
+                 laa.determine_assessed_area(bare, label="c")]
+    comparison = laa.compare_assessed_areas(areas, clip_to_common=True,
+                                            allow_undetermined=True)
+    assert comparison.status == laa.STATUS_UNDETERMINED
+    assert not comparison.clips
+    assert "clip" not in comparison.record
+
+
+def test_the_gate_writes_the_clip_when_some_rungs_are_undetermined(world):
+    """run_area_gate: with both options the drivers get a clip_geojson to sweep with."""
+    bare = write_points(world["tmp"] / "bare.geojson", [(500, 500)])
+    target = world["tmp"] / "gate" / "common.geojson"
+    comparison = laa.run_area_gate(
+        {"K = 1": str(world["native"]), "K = 3": str(world["clipped"]),
+         "K = 5": str(bare)},
+        frame=world["tiling"], clip_to_common=True, allow_undetermined=True,
+        clip_geojson=target)
+    assert comparison.status == laa.STATUS_CLIPPED_UNDETERMINED
+    assert comparison.record["clip_geojson"]
+    area, name = laa.read_area_geojson(target)
+    assert name == laa.COMMON_AREA_CLIP_NAME
+    assert area.area / 1e6 == pytest.approx(2.0)
 
 
 def test_consensus_without_pass_provenance_is_undetermined(world):
@@ -447,6 +524,39 @@ def test_a_clip_never_removes_references(world):
     # The same cell unclipped finds both: the 0.5 is the clip's doing.
     whole = gpd.read_file(world["tiling"]).union_all()
     assert laa.rescore_clipped_evaluation(evaluation, whole)["recall"] == 1.0
+
+
+def test_the_ladder_builder_clips_an_undetermined_rung_too(world):
+    """With both options, every rung is re-scored on the determined rungs' common area.
+
+    The four refused pv-diag-384 ladders' shape (PR #26 review, finding 1):
+    K = 1 and K = 3 determined but different, K = 5 with no provenance. The
+    K = 5 point is clipped like the K = 1 point, and the ladder's status
+    names both the clip and the undetermined rung.
+    """
+    from scripts import build_k_ladder_phase2_tables as tables
+
+    evaluation = write_evaluation(world["tmp"], world["tiling"])
+    bare = write_points(world["tmp"] / "bare.geojson", [(500, 500)])
+    payload = {"ladders": [{
+        "family": "test", "frame_file": str(world["tiling"]),
+        "rungs": [
+            {"K": 1, "pool": str(world["native"]),
+             "opmax": {"eval_path": str(evaluation)}, "carried": {}},
+            {"K": 3, "pool": str(world["clipped"]), "opmax": None, "carried": {}},
+            {"K": 5, "pool": str(bare),
+             "opmax": {"eval_path": str(evaluation)}, "carried": {}},
+        ]}]}
+    assert tables.apply_area_gate(payload, clip_to_common=True,
+                                  allow_undetermined=True) == []
+    ladder = payload["ladders"][0]
+    assert ladder["assessed_area"]["status"] == laa.STATUS_CLIPPED_UNDETERMINED
+    assert ladder["assessed_area"]["undetermined"] == ["K = 5"]
+    for index in (0, 2):
+        point = ladder["rungs"][index]["opmax"]["clipped_to_common_area"]
+        assert point["n_removed"] == 1
+        assert (point["precision"], point["recall"]) == (1.0, 0.5)
+        assert point["clip"] == laa.COMMON_AREA_CLIP_NAME
 
 
 def test_the_ladder_builder_refuses_a_rung_with_no_pool(world):

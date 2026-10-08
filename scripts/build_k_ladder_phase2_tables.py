@@ -72,10 +72,13 @@ Description:
     pool's area cannot be determined — unless ``--clip-to-common-area``
     (every reported point is re-scored with its detections clipped to the
     common area, named in the output) or ``--allow-undetermined-area`` is
-    given. The 3.7 GS ladder's committed K = 5 and K = 10 unions were clipped
-    to the grid-common footprint upstream and its K = 1 and K = 3 unions were
-    not (37.94 km² of the board frame between them), which is the case the
-    gate exists for.
+    given. With both, a ladder whose determined rungs differ has EVERY rung,
+    the undetermined ones included, re-scored on the determined rungs'
+    common area, and its status says so
+    (``clipped-to-common-area-with-undetermined``). The 3.7 GS ladder's
+    committed K = 5 and K = 10 unions were clipped to the grid-common
+    footprint upstream and its K = 1 and K = 3 unions were not (37.94 km² of
+    the board frame between them), which is the case the gate exists for.
 
 Usage::
 
@@ -110,7 +113,6 @@ from scripts.lib_assessed_area import (  # noqa: E402
     EXIT_AREA_MISMATCH,
     EXIT_AREA_UNDETERMINED,
     METHOD_UNDETERMINED,
-    STATUS_CLIPPED,
     AssessedArea,
     AssessedAreaMismatchError,
     AssessedAreaUndeterminedError,
@@ -739,7 +741,9 @@ def apply_area_gate(
     assessed area determined from provenance and compared, within the
     ladder's scoring frame, against its siblings'. The ladder gains an
     ``assessed_area`` record either way. Where the areas differ and
-    ``clip_to_common`` is set, every reported operating point that names its
+    ``clip_to_common`` is set (with ``allow_undetermined``, also when some
+    rungs are undetermined: the clip is then to the determined rungs'
+    common area), every reported operating point that names its
     evaluation gains a ``clipped_to_common_area`` block: its F1@20 point
     estimate with the detections outside the common area removed and the
     frame's reference set kept (option 1 of the ruling), at the rung's own
@@ -779,7 +783,10 @@ def apply_area_gate(
             refusals.append(f"{ladder['family']}: {exc}")
             continue
         ladder["assessed_area"] = comparison.record
-        if comparison.status != STATUS_CLIPPED:
+        # A clip with undetermined rungs is a clip too: every rung, the
+        # undetermined ones included, is re-scored on the determined rungs'
+        # common area (finding 1 of the PR #26 review).
+        if not comparison.clips:
             continue
         for rung in ladder["rungs"]:
             for point in _rung_points(rung):

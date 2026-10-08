@@ -33,7 +33,11 @@ Description:
        caller asks to clip to the common area, in which case the result names
        the clip and the area each pool loses. An undetermined pool raises
        :class:`AssessedAreaUndeterminedError` unless the caller explicitly
-       allows it, and even then the result's status says so.
+       allows it, and even then the result's status says so. With both
+       options, a mismatch among the determined pools clips EVERY pool, the
+       undetermined ones included, to the area common to the determined
+       pools, and the status says both things
+       (:data:`STATUS_CLIPPED_UNDETERMINED`).
     3. :func:`write_area_record` is what union builders call so that future
        pools are determinable: it records the footprint (tiling polygons and
        the tile manifest), the clip geometry and the passes, beside the union.
@@ -133,6 +137,15 @@ METHOD_UNDETERMINED = "undetermined"
 STATUS_SAME = "same"
 STATUS_CLIPPED = "clipped-to-common-area"
 STATUS_UNDETERMINED = "undetermined"
+#: The determined pools' areas differed and the caller asked for a clip,
+#: while one or more pools were undetermined (and allowed): every pool, the
+#: undetermined included, is clipped to the area common to the DETERMINED
+#: pools, and the record names the undetermined pools. Never reported as a
+#: bare :data:`STATUS_UNDETERMINED`, which would let a caller skip the clip.
+STATUS_CLIPPED_UNDETERMINED = "clipped-to-common-area-with-undetermined"
+
+#: The outcomes under which a caller must clip every pool to the common area.
+CLIPPING_STATUSES: frozenset[str] = frozenset({STATUS_CLIPPED, STATUS_CLIPPED_UNDETERMINED})
 
 #: The name a clip to the common area carries in every output.
 COMMON_AREA_CLIP_NAME = "clip-to-common-assessed-area"
@@ -722,8 +735,8 @@ class AreaComparison:
     """The outcome of :func:`compare_assessed_areas`.
 
     Attributes:
-        status: :data:`STATUS_SAME`, :data:`STATUS_CLIPPED` or
-            :data:`STATUS_UNDETERMINED`.
+        status: :data:`STATUS_SAME`, :data:`STATUS_CLIPPED`,
+            :data:`STATUS_CLIPPED_UNDETERMINED` or :data:`STATUS_UNDETERMINED`.
         common: The area common to every determined pool (effective, i.e.
             within the frame when one was given), or ``None``.
         record: The JSON-serialisable record a caller writes into its output.
@@ -732,6 +745,15 @@ class AreaComparison:
     status: str
     common: BaseGeometry | None
     record: dict[str, Any]
+
+    @property
+    def clips(self) -> bool:
+        """Whether a caller must clip every pool to :attr:`common`.
+
+        Callers test this, never ``status == STATUS_CLIPPED``: a clip with
+        undetermined pools (:data:`STATUS_CLIPPED_UNDETERMINED`) is a clip too.
+        """
+        return self.status in CLIPPING_STATUSES
 
 
 def compare_assessed_areas(
@@ -756,7 +778,12 @@ def compare_assessed_areas(
         allow_undetermined: Return (status :data:`STATUS_UNDETERMINED`)
             instead of raising when a pool's area is undetermined. The
             determined pools are still compared and still refused on a
-            mismatch.
+            mismatch — unless ``clip_to_common`` is also set, when every pool,
+            the undetermined ones included, is clipped to the area common to
+            the determined pools (status :data:`STATUS_CLIPPED_UNDETERMINED`,
+            the undetermined pools named in ``record["undetermined"]`` and in
+            the clip block). With no pool determined there is nothing to
+            clip to, and the status is :data:`STATUS_UNDETERMINED`.
 
     Returns:
         An :class:`AreaComparison`.
@@ -823,24 +850,51 @@ def compare_assessed_areas(
             f"common area to compare on the area every pool searched.",
             record,
         )
+    undetermined_labels = [a.label for a in undetermined]
     if undetermined:
+        record["undetermined"] = undetermined_labels
+    if mismatch:
+        # Reached only with clip_to_common: a mismatch without it raised
+        # above. The clip is the area common to the DETERMINED pools, and it
+        # applies to EVERY pool. An undetermined pool searched an area nobody
+        # can state, so clipping it to the area each determined pool searched
+        # is the only way to compare it on that area. Before this branch came
+        # first, an undetermined pool turned a mismatch into a bare
+        # "undetermined" with no clip, and the drivers swept unclipped
+        # (finding 1 of the PR #26 review,
+        # reports/s163-agent-records/pr26-review.md).
+        clip: dict[str, Any] = {
+            "name": COMMON_AREA_CLIP_NAME,
+            "common_area_km2": _round(common_km2),
+            # An undetermined pool's loss is unknown: recorded as None.
+            "area_removed_km2": {p["label"]: p.get("excess_over_common_km2")
+                                 for p in pools},
+        }
+        if undetermined:
+            status = STATUS_CLIPPED_UNDETERMINED
+            clip["common_to"] = [a.label for a in determined]
+            clip["undetermined_clipped"] = undetermined_labels
+            logger.error(
+                "ASSESSED AREA UNDETERMINED for %s — allowed by the caller. The "
+                "determined pools differ by up to %.3f km², so EVERY pool, these "
+                "included, is clipped to the %.3f km² common to the determined "
+                "pools (%s); what the undetermined pools lose is unknown",
+                ", ".join(undetermined_labels), worst, common_km2,
+                COMMON_AREA_CLIP_NAME,
+            )
+        else:
+            status = STATUS_CLIPPED
+            logger.warning(
+                "assessed areas differ by up to %.3f km²: clipping every pool to "
+                "the common %.3f km² (%s)", worst, common_km2, COMMON_AREA_CLIP_NAME,
+            )
+        record["clip"] = clip
+    elif undetermined:
         status = STATUS_UNDETERMINED
-        record["undetermined"] = [a.label for a in undetermined]
         logger.error(
             "ASSESSED AREA UNDETERMINED for %s — allowed by the caller, recorded "
             "as undetermined, NOT as the same area",
-            ", ".join(a.label for a in undetermined),
-        )
-    elif mismatch:
-        status = STATUS_CLIPPED
-        record["clip"] = {
-            "name": COMMON_AREA_CLIP_NAME,
-            "common_area_km2": _round(common_km2),
-            "area_removed_km2": {p["label"]: p["excess_over_common_km2"] for p in pools},
-        }
-        logger.warning(
-            "assessed areas differ by up to %.3f km²: clipping every pool to "
-            "the common %.3f km² (%s)", worst, common_km2, COMMON_AREA_CLIP_NAME,
+            ", ".join(undetermined_labels),
         )
     else:
         status = STATUS_SAME
@@ -910,7 +964,10 @@ def add_area_gate_arguments(parser: Any) -> None:
     parser.add_argument(
         "--allow-undetermined-area", action="store_true",
         help="D51: record a rung whose assessed area cannot be determined "
-             "from provenance as undetermined instead of refusing")
+             "from provenance as undetermined instead of refusing (with "
+             "--clip-to-common-area and a mismatch among the determined "
+             "rungs, every rung, the undetermined included, is clipped to "
+             "the determined rungs' common area)")
 
 
 def run_area_gate(
@@ -929,9 +986,12 @@ def run_area_gate(
     On a mismatch (without ``clip_to_common``) or an undetermined area
     (without ``allow_undetermined``) it logs the refusal and exits with
     :data:`EXIT_AREA_MISMATCH` / :data:`EXIT_AREA_UNDETERMINED`; a driver
-    must not continue to compare rungs the gate refused. When it clips and
+    must not continue to compare rungs the gate refused. When it clips
+    (:attr:`AreaComparison.clips`: :data:`STATUS_CLIPPED`, or
+    :data:`STATUS_CLIPPED_UNDETERMINED` when some rungs are undetermined) and
     ``clip_geojson`` is given, the common area is written there for
-    ``sweep_f1_greedy_pv.py --clip-area``.
+    ``sweep_f1_greedy_pv.py --clip-area``, and every driver clips every rung
+    to it.
 
     Args:
         pools: ``{rung label: crops dir / crop manifest / union path}``.
@@ -958,7 +1018,7 @@ def run_area_gate(
     except AssessedAreaMismatchError as exc:
         logger.error("D51 gate REFUSED %s: %s", what, exc)
         raise SystemExit(EXIT_AREA_MISMATCH) from exc
-    if comparison.status == STATUS_CLIPPED and clip_geojson is not None:
+    if comparison.clips and clip_geojson is not None:
         write_area_geojson(comparison.common, clip_geojson, name=COMMON_AREA_CLIP_NAME)
         comparison.record["clip_geojson"] = _rel(clip_geojson)
     logger.info("D51 gate %s: %s (common %s km², max excess %s km²)", what,
