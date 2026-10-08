@@ -917,9 +917,20 @@ def _section_artefacts(run_id: str, corpus: Corpus) -> list[str]:
             for name, spec in sorted(pools.items()):
                 mod = spec.get("modality") if isinstance(spec, dict) else spec
                 path = spec.get("path") if isinstance(spec, dict) else None
-                path_cell = f"`{_pipe(path)}`" if path else (
-                    f"{NOT_SUPPLIED} (string-form pool; resolved as "
-                    f"`proposer/{_pipe(name)}`)")
+                # A pool that names ``repo_path`` (rulings D32 and D41: h10's
+                # archived coldstart-pool_160; pv-diag-256's archived pool,
+                # registered in place 2026-10-08) sits OUTSIDE the run
+                # directory, so its ``path`` is not a path within it. Say where
+                # it is rather than let the column header misplace it.
+                repo_path = spec.get("repo_path") if isinstance(spec, dict) else None
+                if repo_path and path:
+                    path_cell = (f"none: outside the run directory, at "
+                                 f"`{_pipe(repo_path)}/{_pipe(path)}` (`repo_path`)")
+                elif path:
+                    path_cell = f"`{_pipe(path)}`"
+                else:
+                    path_cell = (f"{NOT_SUPPLIED} (string-form pool; resolved as "
+                                 f"`proposer/{_pipe(name)}`)")
                 out.append(f"| `{_pipe(name)}` | {_cell(mod)} | {path_cell} |")
             out.append("")
         if vpasses:

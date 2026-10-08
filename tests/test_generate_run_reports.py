@@ -233,6 +233,27 @@ def test_verifier_passes_separated_from_proposer_passes(corpus):
 
 
 @pytest.mark.tier1
+def test_a_pool_outside_the_run_directory_is_not_placed_inside_it(corpus):
+    """A ``repo_path`` pool's ``path`` is not a path within the run directory.
+
+    pv-diag-256's pool, registered in place on 2026-10-08, and h10's
+    coldstart-pool_160 (D41) both sit under ``archive/``. Sentinel: before the
+    fix, § 9.1 printed their bare ``path`` under the header "Path within the
+    run directory", placing archived passes inside ``outputs/``.
+    """
+    text = grr.render_report("pv-diag-256", corpus, "abc1234")
+    assert ("| `text-n5-text-t0.7` | text | none: outside the run directory, at "
+            "`archive/outputs-non-production-tile-sizes/text-n5/text-t0.7` "
+            "(`repo_path`) |") in text
+    assert "| `text-n5-text-t0.7` | text | `text-n5/text-t0.7` |" not in text
+    h10 = grr.render_report("h10", corpus, "abc1234")
+    assert ("`archive/intermediate-calibration/h10-calibration-runs-v2/pool_160`"
+            in h10)
+    # A pool inside the run directory keeps the bare relative path.
+    assert "| `pool_160_hp4hn4` | image | `evaluation-v2/pool_160_hp4hn4` |" in h10
+
+
+@pytest.mark.tier1
 def test_run_total_is_a_range_never_a_sum_of_mixed_bounds():
     """Re-audit round 2: a total adding ceilings, floors and exact figures is none.
 
