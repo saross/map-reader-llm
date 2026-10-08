@@ -42,6 +42,23 @@ Description:
        pools are determinable: it records the footprint (tiling polygons and
        the tile manifest), the clip geometry and the passes, beside the union.
 
+    **Declarations for legacy provenance (PI ruling D57 (3)).** Two gaps in
+    old artefacts are filled by evidence-cited declarations in
+    :data:`DECLARATIONS_PATH`, never by inference from a path or a name:
+
+    * a pass whose meta records no tile manifest (the March 2026 batch
+      passes) takes the tiling a ``pass_tilings`` entry declares for it
+      (:func:`resolve_pass_manifest`); the pass's own ``processed_tiles``
+      still define what it assessed, and a processed tile outside the
+      declared manifest refuses;
+    * a consensus whose ``voting_summary.json`` predates pass provenance
+      takes the pass list a declaration's ``pass_provenance`` names, declared
+      only where a rebuild from those passes reproduced the committed union
+      (:func:`area_from_declared_passes`).
+
+    Both are anchored to the declared files' git blob hashes: a pass
+    rewritten since its declaration makes the area undetermined.
+
     **Effective area.** Scores are computed on a frame, so the comparison is
     made on each pool's assessed area intersected with the frame's tile union
     (the area that can contribute to a score). The raw assessed areas are
@@ -89,6 +106,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from scripts.lib_advanced_metrics import read_processed_tiles  # noqa: E402
+from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -107,7 +125,9 @@ RECORD_SCHEMA = "assessed-area/1"
 RECORD_SUFFIX = ".assessed-area.json"
 
 #: Records declared after the fact for legacy pools whose builders wrote
-#: none. Each entry carries the evidence it was reconstructed from.
+#: none (``declarations``), and tilings declared for passes whose meta
+#: records no tile manifest (``pass_tilings``). Each entry carries the
+#: evidence it was reconstructed from.
 DECLARATIONS_PATH = BASE_DIR / "inputs" / "provenance" / "assessed-area-declarations.json"
 
 #: Tilings whose tile polygons are known, keyed by the tile manifest a pass's
@@ -370,11 +390,122 @@ def pass_manifest(pass_path: Path) -> str | None:
     return str(manifest) if manifest else None
 
 
+#: Schema tag of a declared pass tiling (``pass_tilings`` entries).
+PASS_TILING_SCHEMA = "pass-tiling/1"
+
+
+@functools.lru_cache(maxsize=1)
+def _declared_pass_tilings() -> dict[str, dict[str, Any]]:
+    """The declared tilings, keyed by repository-relative pass path.
+
+    Each value is ``{"manifest", "git_blob_hash", "entry"}``: the tile
+    manifest the pass ran on, the blob hash of the pass file the declaration
+    was checked against, and the declaring entry (for its evidence).
+
+    Raises:
+        AssessedAreaUndeterminedError: If two entries declare the same pass.
+    """
+    if not DECLARATIONS_PATH.exists():
+        return {}
+    payload = json.loads(DECLARATIONS_PATH.read_text(encoding="utf-8"))
+    out: dict[str, dict[str, Any]] = {}
+    for entry in payload.get("pass_tilings", []):
+        if entry.get("schema") != PASS_TILING_SCHEMA:
+            raise AssessedAreaUndeterminedError(
+                f"a pass_tilings entry in {_rel(DECLARATIONS_PATH)} has schema "
+                f"{entry.get('schema')!r}, not {PASS_TILING_SCHEMA!r}"
+            )
+        for item in entry.get("passes", []):
+            if item["path"] in out:
+                raise AssessedAreaUndeterminedError(
+                    f"pass {item['path']} has two declared tilings in "
+                    f"{_rel(DECLARATIONS_PATH)}"
+                )
+            out[item["path"]] = {"manifest": entry.get("manifest"),
+                                 "git_blob_hash": item.get("git_blob_hash"),
+                                 "entry": entry}
+    return out
+
+
+def _check_blob(path: Path, rel: str, declared_hash: str | None, what: str) -> None:
+    """Refuse a declared file whose bytes are not the ones the declaration checked.
+
+    Args:
+        path: The file on disc.
+        rel: Its repository-relative path (for the message).
+        declared_hash: The git blob hash the declaration recorded.
+        what: What was declared (for the message).
+
+    Raises:
+        AssessedAreaUndeterminedError: If no hash was declared or the file's
+            current hash differs (the file was rewritten after the
+            declaration, so the declaration's evidence no longer covers it).
+    """
+    if not declared_hash:
+        raise AssessedAreaUndeterminedError(
+            f"the {what} declared for {rel} records no git_blob_hash"
+        )
+    actual = git_blob_hash(path)
+    if actual != declared_hash:
+        raise AssessedAreaUndeterminedError(
+            f"{rel} has changed since its {what} was declared (blob {actual} "
+            f"!= declared {declared_hash})"
+        )
+
+
+def resolve_pass_manifest(pass_path: Path, rel: str) -> tuple[str, str | None]:
+    """The tile manifest a pass ran on: its meta's record, else a declaration.
+
+    The meta file's ``manifest_path`` (:func:`pass_manifest`) is the
+    primary source. A pass whose meta records none (the March 2026 batch
+    passes, written by ``lib_batch_api.py`` 1.5.0 with a prompt-config
+    snapshot only) is resolved through a ``pass_tilings`` declaration in
+    :data:`DECLARATIONS_PATH`, which cites how the pass was produced and is
+    anchored to the pass file's git blob hash. Nothing is inferred from the
+    pass's path.
+
+    Args:
+        pass_path: The pass GeoJSON on disc.
+        rel: Its repository-relative path (the declaration key).
+
+    Returns:
+        ``(manifest, note)``: ``note`` is ``None`` for a meta record, or the
+        evidence line naming the declaration.
+
+    Raises:
+        AssessedAreaUndeterminedError: If neither source names a manifest,
+            the meta and a declaration disagree, or the declared pass file
+            has changed since it was declared.
+    """
+    recorded = pass_manifest(pass_path)
+    declared = _declared_pass_tilings().get(rel)
+    if declared is None:
+        if recorded is None:
+            raise AssessedAreaUndeterminedError(
+                f"pass {rel} has no meta file recording its tile manifest, and "
+                f"no declared tiling"
+            )
+        return recorded, None
+    if recorded is not None and recorded != declared["manifest"]:
+        raise AssessedAreaUndeterminedError(
+            f"pass {rel}: its meta records {recorded} but a declaration names "
+            f"{declared['manifest']}"
+        )
+    if recorded is not None:
+        return recorded, None
+    _check_blob(pass_path, rel, declared["git_blob_hash"], "tiling")
+    return declared["manifest"], (
+        f"tiling of {rel} declared in {_rel(DECLARATIONS_PATH)} "
+        f"({declared['entry'].get('label', declared['manifest'])})"
+    )
+
+
 def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
     """The union of the tiles a set of proposer passes processed.
 
     Each pass's own ``processed_tiles`` record (written by the detector) is
-    read, its tiling is resolved from its meta's manifest, and the processed
+    read, its tiling is resolved from its meta's manifest or, failing that,
+    a declared tiling (:func:`resolve_pass_manifest`), and the processed
     tiles' polygons are unioned across every pass (recovery fragments
     included, as the consensus step's pass provenance lists them).
 
@@ -386,8 +517,8 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
 
     Raises:
         AssessedAreaUndeterminedError: If any pass is missing, carries no
-            ``processed_tiles``, records no manifest, or names a tile its
-            tiling's polygons do not hold.
+            ``processed_tiles``, has no manifest recorded or declared, or
+            names a tile outside its manifest or its tiling's polygons.
     """
     if not pass_paths:
         raise AssessedAreaUndeterminedError("the pool lists no passes")
@@ -402,11 +533,7 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
             raise AssessedAreaUndeterminedError(
                 f"pass {rel} carries no processed_tiles record"
             )
-        manifest = pass_manifest(path)
-        if manifest is None:
-            raise AssessedAreaUndeterminedError(
-                f"pass {rel} has no meta file recording its tile manifest"
-            )
+        manifest, declared_note = resolve_pass_manifest(path, rel)
         polygons, bounds = tiling_polygons(manifest)
         chosen = polygons[polygons["tile_name"].astype(str).isin(processed)]
         if not processed <= set(_manifest_names(manifest)):
@@ -423,9 +550,44 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
         evidence.append(
             f"{rel}: {len(processed)} processed tile(s) on {manifest} "
             f"(polygons {bounds})"
+            + (f"; {declared_note}" if declared_note else "")
         )
     geometry = gpd.GeoSeries(pieces, crs=AREA_CRS).union_all()
     return geometry, evidence
+
+
+def area_from_declared_passes(
+    entries: list[dict[str, Any]],
+) -> tuple[BaseGeometry, list[str]]:
+    """The area of a legacy consensus from its declared pass provenance.
+
+    A consensus written before ``merge_passes.py`` recorded its inputs
+    (``voting_summary.json`` with ``total_passes`` only) is determinable
+    when a declaration names the pass files it was built from — declared
+    only where a rebuild from those files reproduced the committed union —
+    with each file's git blob hash. The files are checked against those
+    hashes, then treated exactly as recorded pass provenance
+    (:func:`area_from_passes`).
+
+    Args:
+        entries: ``[{"pass_id", "path", "git_blob_hash"}, ...]``, the shape
+            ``merge_passes.build_pass_provenance`` writes.
+
+    Returns:
+        ``(geometry, evidence)``.
+
+    Raises:
+        AssessedAreaUndeterminedError: If the list is empty, a file is
+            missing, or a file has changed since it was declared.
+    """
+    if not entries:
+        raise AssessedAreaUndeterminedError("the declaration lists no passes")
+    for entry in entries:
+        path = _abs(entry["path"])
+        if not path.exists():
+            raise AssessedAreaUndeterminedError(f"pass file missing: {entry['path']}")
+        _check_blob(path, entry["path"], entry.get("git_blob_hash"), "pass provenance")
+    return area_from_passes([entry["path"] for entry in entries])
 
 
 def area_from_record(record: dict[str, Any]) -> tuple[BaseGeometry, dict | None, list[str]]:
@@ -494,6 +656,12 @@ def _declarations() -> dict[str, dict[str, Any]]:
         return {}
     payload = json.loads(DECLARATIONS_PATH.read_text(encoding="utf-8"))
     return {entry["pool"]: entry for entry in payload.get("declarations", [])}
+
+
+def clear_declaration_caches() -> None:
+    """Forget the cached declarations (after :data:`DECLARATIONS_PATH` changes)."""
+    _declarations.cache_clear()
+    _declared_pass_tilings.cache_clear()
 
 
 def record_path_for(union: Path) -> Path:
@@ -603,11 +771,16 @@ def _determine_assessed_area(source: str | Path, *, label: str | None = None) ->
     1. **A builder's record** beside the union (:func:`record_path_for`),
        written by :func:`write_area_record`.
     2. **A declared record** for a legacy pool in :data:`DECLARATIONS_PATH`,
-       reconstructed after the fact with its evidence cited.
+       reconstructed after the fact with its evidence cited: either a
+       footprint (and clip), or the pass provenance a legacy consensus did
+       not record (:func:`area_from_declared_passes`).
     3. **The consensus step's pass provenance** (``voting_summary.json``
        beside the union, ``pass_provenance``): the union of every pass's
        processed tiles. ``merge_passes.py`` applies no clip, so none is
        added.
+
+    In routes 2 (pass provenance) and 3 each pass's tiling comes from its
+    meta file or a declared tiling (:func:`resolve_pass_manifest`).
 
     Anything else — a union with no record and no pass provenance — is
     UNDETERMINED, with the reason. The function never infers an area from a
@@ -639,6 +812,25 @@ def _determine_assessed_area(source: str | Path, *, label: str | None = None) ->
                                 evidence=[f"record {_rel(record_file)}", *evidence],
                                 **base)
         declared = _declarations().get(union_rel)
+        if declared is not None and declared.get("pass_provenance") is not None:
+            # A legacy merge_passes consensus: the declaration supplies the
+            # pass list its voting_summary.json lacks. merge_passes applies
+            # no clip, so a declaration naming a footprint or a clip as well
+            # is contradictory and refused.
+            if declared.get("footprint") or declared.get("clip"):
+                raise AssessedAreaUndeterminedError(
+                    f"the declaration for {union_rel} names pass provenance and "
+                    f"a footprint or clip; it must name one route"
+                )
+            geometry, evidence = area_from_declared_passes(declared["pass_provenance"])
+            return AssessedArea(
+                geometry=geometry, method=METHOD_DECLARED, clip=None,
+                evidence=[f"declared pass provenance in {_rel(DECLARATIONS_PATH)} "
+                          f"({len(declared['pass_provenance'])} file(s))",
+                          *evidence, "merge_passes applies no clip",
+                          *[f"basis: {item}" for item in declared.get("evidence", [])]],
+                **base,
+            )
         if declared is not None:
             geometry, clip, evidence = area_from_record(declared)
             return AssessedArea(

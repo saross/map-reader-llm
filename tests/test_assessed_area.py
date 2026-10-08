@@ -29,14 +29,23 @@ to a temporary directory:
   and a builder's record and a declared record are read and checked against
   the pool's candidates;
 * **frame** — areas are compared within the scoring frame, so a difference
-  wholly outside it is not a mismatch.
+  wholly outside it is not a mismatch;
+* **declared provenance** (PI ruling D57 (3)) — a pass whose meta records no
+  tile manifest takes a declared tiling, its own ``processed_tiles`` still
+  deciding the area, and a processed tile outside the declared manifest
+  refuses; a legacy consensus takes a declared pass list; both are anchored
+  to the declared files' git blob hashes, and a contradiction (meta against
+  declaration, two tilings for one pass, two routes in one declaration)
+  refuses rather than picking one.
 """
 
 from __future__ import annotations
 
 import json
 import sys
+from collections.abc import Iterator
 from pathlib import Path
+from typing import Any
 
 import geopandas as gpd
 import pytest
@@ -46,6 +55,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts import lib_assessed_area as laa  # noqa: E402
+from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
 
 pytestmark = pytest.mark.tier1
 
@@ -602,3 +612,182 @@ def test_the_sweep_clips_and_names_the_clip(world, monkeypatch, tmp_path):
     top = next(r for r in rows if r["prob_t"] == 0.0)
     assert (top["n"], top["clip_area"], top["clip_n_removed"]) == (1, "clip-name", 1)
     assert (top["p"], top["r"]) == (1.0, 0.5)
+
+
+# ── Declared provenance for legacy artefacts (PI ruling D57 (3)) ──────────
+
+
+@pytest.fixture()
+def legacy(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[dict[str, Any]]:
+    """Batch-era passes whose metas record no manifest, and a declarations file.
+
+    ``lib_batch_api.py`` 1.5.0 (March 2026) wrote a meta whose configuration
+    snapshot is the prompt config only, with no ``manifest_path``, so the
+    gate could not say which tiling a pass's ``processed_tiles`` belong to.
+    The fixture writes two such passes on a registered four-tile tiling
+    (run_1 skipped tile 3), points the library at a temporary declarations
+    file, and clears its caches before and after.
+    """
+    tiling = write_tiles(tmp_path / "tiling.geojson", [0, 1, 2, 3])
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps([f"S_x{x}_y0.png" for x in range(4)]))
+    monkeypatch.setattr(laa, "KNOWN_TILINGS", {str(manifest): str(tiling)})
+    declarations = tmp_path / "declarations.json"
+    monkeypatch.setattr(laa, "DECLARATIONS_PATH", declarations)
+    laa.clear_declaration_caches()
+
+    def write_pass(name: str, tiles: list[str]) -> Path:
+        path = tmp_path / name / "detections.geojson"
+        path.parent.mkdir()
+        path.write_text(json.dumps({"type": "FeatureCollection", "features": [],
+                                    "processed_tiles": tiles}))
+        path.with_name("detections.meta.json").write_text(json.dumps(
+            {"configuration": {"full_config_snapshot": {"version": "prompt-only"}}}))
+        return path
+
+    def declare(tilings: list[dict] | None = None, pools: list[dict] | None = None) -> None:
+        declarations.write_text(json.dumps({"pass_tilings": tilings or [],
+                                            "declarations": pools or []}))
+        laa.clear_declaration_caches()
+
+    def tiling_entry(paths: list[Path], man: Path | None = None) -> dict:
+        return {"schema": laa.PASS_TILING_SCHEMA, "manifest": str(man or manifest),
+                "label": "test tiling", "evidence": ["study YAML names the manifest"],
+                "passes": [{"path": str(p), "git_blob_hash": git_blob_hash(p)}
+                           for p in paths]}
+
+    yield {
+        "tmp": tmp_path, "manifest": manifest, "declare": declare,
+        "tiling_entry": tiling_entry,
+        "run_1": write_pass("run_1", [f"S_x{x}_y0.png" for x in (0, 1, 2)]),
+        "run_2": write_pass("run_2", [f"S_x{x}_y0.png" for x in range(4)]),
+    }
+    laa.clear_declaration_caches()
+
+
+def legacy_consensus(tmp: Path, name: str, xy: list[tuple[float, float]]) -> Path:
+    """A pre-2026-09-12 merge_passes union: voting_summary has no pass list."""
+    pool = tmp / name
+    pool.mkdir()
+    union = write_points(pool / "consensus_t1.geojson", xy)
+    (pool / "voting_summary.json").write_text(json.dumps(
+        {"total_passes": 2, "thresholds": {"1": len(xy)}}))
+    return union
+
+
+def test_without_a_manifest_or_a_declaration_a_pass_is_undetermined(legacy):
+    """The § 5.6 T 0.7 case before D57: the tiling is unknown, so is the area."""
+    union = consensus(legacy["tmp"], "k1", [legacy["run_1"]], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "no declared tiling" in area.reason
+
+
+def test_a_declared_tiling_resolves_a_pass_whose_meta_records_none(legacy):
+    """A declared tiling: the area is the pass's own processed tiles on it."""
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_1"], legacy["run_2"]])])
+    k1 = consensus(legacy["tmp"], "k1", [legacy["run_1"]], [(500, 500)])
+    k2 = consensus(legacy["tmp"], "k2", [legacy["run_1"], legacy["run_2"]],
+                   [(500, 500), (3500, 500)])
+    a1 = laa.determine_assessed_area(k1, label="K = 1")
+    a2 = laa.determine_assessed_area(k2, label="K = 2")
+    assert a1.method == laa.METHOD_PASS_PROVENANCE
+    # run_1 skipped tile 3: the declared tiling does not paper over the gap.
+    assert a1.area_km2 == pytest.approx(3.0)
+    assert a2.area_km2 == pytest.approx(4.0)
+    assert any("declared in" in line for line in a1.evidence)
+    with pytest.raises(laa.AssessedAreaMismatchError):
+        laa.compare_assessed_areas([a1, a2])
+
+
+def test_a_declared_tiling_naming_a_tile_outside_its_manifest_refuses(legacy):
+    """A pass whose processed tiles are not all in the declared manifest refuses."""
+    stray = legacy["tmp"] / "run_3" / "detections.geojson"
+    stray.parent.mkdir()
+    stray.write_text(json.dumps({"type": "FeatureCollection", "features": [],
+                                 "processed_tiles": ["S_x0_y0.png", "T_x9_y9.png"]}))
+    legacy["declare"]([legacy["tiling_entry"]([stray])])
+    union = consensus(legacy["tmp"], "k1", [stray], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "outside its own manifest" in area.reason
+
+
+def test_a_pass_rewritten_after_its_tiling_was_declared_is_undetermined(legacy):
+    """The declaration covers the bytes it checked, not a later rewrite."""
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_1"]])])
+    legacy["run_1"].write_text(json.dumps({"type": "FeatureCollection", "features": [],
+                                           "processed_tiles": ["S_x0_y0.png"]}))
+    union = consensus(legacy["tmp"], "k1", [legacy["run_1"]], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "changed since its tiling was declared" in area.reason
+
+
+def test_a_declared_tiling_that_contradicts_the_meta_is_undetermined(legacy, tmp_path):
+    """Where the meta does record a manifest, a different declaration refuses."""
+    other = tmp_path / "other-manifest.json"
+    other.write_text(json.dumps(["S_x0_y0.png"]))
+    legacy["run_2"].with_name("detections.meta.json").write_text(json.dumps(
+        {"configuration": {"full_config_snapshot": {
+            "manifest_path": str(legacy["manifest"])}}}))
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]], man=other)])
+    union = consensus(legacy["tmp"], "k1", [legacy["run_2"]], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "but a declaration names" in area.reason
+
+
+def test_a_pass_declared_twice_is_undetermined(legacy):
+    """Two tilings for one pass: refuse rather than pick one."""
+    entry = legacy["tiling_entry"]([legacy["run_1"]])
+    legacy["declare"]([entry, entry])
+    union = consensus(legacy["tmp"], "k1", [legacy["run_1"]], [(500, 500)])
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "two declared tilings" in area.reason
+
+
+def pool_entry(union: Path, paths: list[Path], **extra: Any) -> dict:
+    """A declaration naming a legacy consensus's passes, blob-anchored."""
+    return {"schema": laa.RECORD_SCHEMA, "pool": str(union),
+            "status": "declared-retrospectively",
+            "pass_provenance": [{"pass_id": p.parent.name, "path": str(p),
+                                 "git_blob_hash": git_blob_hash(p)} for p in paths],
+            "evidence": ["rebuild reproduces every consensus_t*.geojson"], **extra}
+
+
+def test_declared_pass_provenance_determines_a_legacy_consensus(legacy):
+    """The § 5.6 K = 5 / K = 10 case: a rebuild-backed pass list decides."""
+    union = legacy_consensus(legacy["tmp"], "k2", [(500, 500), (3500, 500)])
+    assert laa.determine_assessed_area(union).method == laa.METHOD_UNDETERMINED
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_1"], legacy["run_2"]])],
+                      [pool_entry(union, [legacy["run_1"], legacy["run_2"]])])
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_DECLARED
+    assert area.area_km2 == pytest.approx(4.0)
+    assert any("declared pass provenance" in line for line in area.evidence)
+    assert any("rebuild reproduces" in line for line in area.evidence)
+    assert not area.warnings
+
+
+def test_declared_pass_provenance_refuses_a_rewritten_pass(legacy):
+    """A pass changed after the pool was declared: undetermined."""
+    union = legacy_consensus(legacy["tmp"], "k2", [(500, 500)])
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]])],
+                      [pool_entry(union, [legacy["run_2"]])])
+    legacy["run_2"].write_text(legacy["run_2"].read_text() + " ")
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "changed since" in area.reason
+
+
+def test_a_declaration_naming_two_routes_is_refused(legacy):
+    """Pass provenance and a footprint in one declaration contradict each other."""
+    union = legacy_consensus(legacy["tmp"], "k2", [(500, 500)])
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]])],
+                      [pool_entry(union, [legacy["run_2"]],
+                                  footprint={"bounds": "x", "manifest": None})])
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "must name one route" in area.reason
