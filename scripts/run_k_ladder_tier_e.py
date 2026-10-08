@@ -106,6 +106,10 @@ import geopandas as gpd
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    ORIGIN_TILE_COLUMNS,
+    parse_tile_list,
+)
 from scripts.lib_assessed_area import (  # noqa: E402
     COMMON_AREA_CLIP_NAME,
     add_area_gate_arguments,
@@ -970,6 +974,32 @@ def materialise(
     return reassign_carrier_tiles(output)
 
 
+def origin_tile_where_no_members(gdf: gpd.GeoDataFrame) -> list[str | None]:
+    """The ``origin_source_tile`` a re-key must preserve, row by row.
+
+    A row whose member-list columns (:data:`ORIGIN_TILE_COLUMNS` other than
+    ``origin_source_tile``: ``origin_tiles``, ``source_tiles``) record any
+    tile needs none, since the list already holds every sheet the detection
+    was seen on, and a single tile copied ahead of it would privilege one
+    member. A row recording no members keeps its ``source_tile``, the only
+    record of where it was seen.
+
+    Args:
+        gdf: A materialised cell with a ``source_tile`` column.
+
+    Returns:
+        One tile name or ``None`` per row.
+    """
+    member_columns = [c for c in ORIGIN_TILE_COLUMNS
+                      if c != "origin_source_tile" and c in gdf.columns]
+    values = [gdf[c].tolist() for c in member_columns]
+    out: list[str | None] = []
+    for pos, tile in enumerate(gdf["source_tile"].tolist()):
+        has_members = any(parse_tile_list(column[pos]) for column in values)
+        out.append(None if has_members or not isinstance(tile, str) else tile)
+    return out
+
+
 def reassign_carrier_tiles(path: Path) -> int:
     """Re-key a materialised cell's ``source_tile`` to the board frame's tiles.
 
@@ -1002,10 +1032,21 @@ def reassign_carrier_tiles(path: Path) -> int:
     sheet's tiles gets a null rather than a neighbour's tile. Before the
     ruling 6 or 7 detections per cell were re-keyed onto the neighbouring
     sheet, where they could not match their own sheet's reference
-    (``reports/frames-blast-radius-2026-10-07.md`` § 5.4). The proposer's
-    tile is written to ``origin_source_tile`` before ``source_tile`` is
-    overwritten, so the scorer can always attribute the detection to its
-    origin sheet, and a second re-key of the same file cannot lose it.
+    (``reports/frames-blast-radius-2026-10-07.md`` § 5.4).
+
+    **Every member's sheet, not the first member's.** A cluster's origin is
+    the member list the consensus step recorded (``source_tiles``, or h13's
+    ``origin_tiles``); the re-key and the scorer read it and may attribute
+    the detection to any sheet it was seen on (the rule measured in
+    ``reports/scorer-frames-d50-d51-2026-10-08.md`` § 7 item 1). The
+    ``source_tile`` that ``materialise_pv_geojson.py`` writes is only the
+    list's FIRST entry, which ``merge_passes.py`` sorts alphabetically, so it
+    is written to ``origin_source_tile`` (consulted first) only for a row
+    whose member list records nothing. Copying it for every row, as this
+    did until 2026-10-08, made regeneration privilege the first member,
+    the rule § 7 rejected (PR #26 review, finding 3). Either way the origin
+    survives the overwrite of ``source_tile``, and a second re-key of the
+    same file cannot lose it.
 
     Args:
         path: The materialised detections GeoJSON, rewritten in place.
@@ -1019,7 +1060,9 @@ def reassign_carrier_tiles(path: Path) -> int:
         gdf = gdf.set_crs("EPSG:4326")
     before = len(gdf)
     if "source_tile" in gdf.columns and "origin_source_tile" not in gdf.columns:
-        gdf["origin_source_tile"] = gdf["source_tile"]
+        single = origin_tile_where_no_members(gdf)
+        if any(tile is not None for tile in single):
+            gdf["origin_source_tile"] = single
     projected = gdf.to_crs(bounds.crs)
     projected["source_tile"] = assign_primary_tiles(projected, bounds)
     gdf["source_tile"] = projected["source_tile"].to_numpy()

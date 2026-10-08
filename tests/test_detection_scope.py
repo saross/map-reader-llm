@@ -370,6 +370,48 @@ def test_h13_assign_primary_tiles_delegates_to_the_origin_rule(frame):
     assert assign_primary_tiles(d, frame) == ["A_x100_y0.png"]
 
 
+def test_tier_e_regeneration_keeps_every_member_sheet(frame, tmp_path, monkeypatch):
+    """Regenerating a tier E cell must not privilege the first member.
+
+    PR #26 review, finding 3. A cluster seen on A's tile x200 (outside the
+    frame) and B's tile x0 lies only in B's frame tile.
+    ``materialise_pv_geojson.py`` promotes the alphabetically first member
+    (A's) to ``source_tile``, and ``reassign_carrier_tiles`` used to copy it
+    into ``origin_source_tile``, which is read first: the re-key then found
+    no A tile holding the point and nulled it, and the scorer dropped the
+    detection as out of frame. Under the any-member rule the report
+    measured (§ 7 item 1) it is kept on B and matches B's reference. A row
+    with no member list still keeps its single origin tile.
+    """
+    from scripts import run_k_ladder_tier_e as tier_e
+
+    bounds = tmp_path / "bounds.geojson"
+    frame.to_file(bounds, driver="GeoJSON")
+    monkeypatch.setattr(tier_e, "BOARD_BOUNDS", str(bounds))
+
+    def feature(x: float, source_tile: str, source_tiles: list | None) -> dict:
+        """One materialised feature, as materialise_pv_geojson.py writes it."""
+        return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [x, 50]},
+                "properties": {"source_tile": source_tile, "source_tiles": source_tiles}}
+
+    cell = tmp_path / "cell.geojson"
+    cell.write_text(json.dumps({
+        "type": "FeatureCollection",
+        "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:EPSG::32635"}},
+        "features": [feature(251, "A_x200_y0.png", ["A_x200_y0.png", "B_x0_y0.png"]),
+                     feature(51, "A_x0_y0.png", None)],
+    }))
+    assert tier_e.reassign_carrier_tiles(cell) == 2
+    out = gpd.read_file(cell)
+    assert list(out["source_tile"]) == ["B_x0_y0.png", "A_x0_y0.png"]
+    assert out["origin_source_tile"].isna().tolist() == [True, False]
+    assert out["origin_source_tile"].iloc[1] == "A_x0_y0.png"
+    both = gpd.GeoDataFrame({"Map": ["B", "A"]},
+                            geometry=[Point(250, 50), Point(50, 50)], crs=CRS)
+    assert lam.scope_detections_to_frame(out, frame).diagnostics["n_out_of_frame"] == 0
+    assert lam.calculate_f1_internal(out, both, frame, 20) == (1.0, 1.0, 1.0)
+
+
 # ── The evaluation records the counts ─────────────────────────────────────
 
 
