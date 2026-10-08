@@ -1,0 +1,145 @@
+diff -ru a/scripts/evaluate_detections.py b/scripts/evaluate_detections.py
+--- a/scripts/evaluate_detections.py	2026-10-08 19:54:39.000000000 +1100
++++ b/scripts/evaluate_detections.py	2026-10-08 21:44:30.705744853 +1100
+@@ -1030,6 +1030,7 @@
+     "n_out_of_frame",
+     "n_out_of_frame_cross_sheet",
+     "n_origin_restored",
++    "n_origin_switched",
+     "n_origin_only",
+     "n_origin_unrecognised",
+     "n_unattributed",
+@@ -1066,7 +1067,8 @@
+         key: diagnostics[key]
+         for key in (
+             "n_out_of_frame", "n_out_of_frame_cross_sheet",
+-            "n_origin_restored", "n_origin_only", "n_unattributed_in_frame",
++            "n_origin_restored", "n_origin_switched", "n_origin_only",
++            "n_unattributed_in_frame",
+         )
+         if diagnostics.get(key)
+     }
+diff -ru a/scripts/lib_advanced_metrics.py b/scripts/lib_advanced_metrics.py
+--- a/scripts/lib_advanced_metrics.py	2026-10-08 19:54:39.000000000 +1100
++++ b/scripts/lib_advanced_metrics.py	2026-10-08 21:44:24.409735107 +1100
+@@ -1381,6 +1381,7 @@
+         "n_out_of_frame": 0,
+         "n_out_of_frame_cross_sheet": 0,
+         "n_origin_restored": 0,
++        "n_origin_switched": 0,
+         "n_origin_only": 0,
+         "n_origin_unrecognised": 0,
+         "n_unattributed": 0,
+@@ -1404,7 +1405,12 @@
+       :data:`ORIGIN_TILE_COLUMNS` (the first column with a parseable value
+       wins), its origin sheets are the frame sheets those tiles lie on — the
+       sheets it was SEEN on. If ``source_tile``'s sheet is one of them,
+-      ``source_tile`` stands: nothing was re-keyed. A row whose
++      ``source_tile`` stands: nothing was re-keyed — unless the point lies
++      outside that sheet's frame tiles and inside another origin sheet's,
++      when it is scored on that sheet (sorted first on a tie) and counted
++      in ``n_origin_switched``. The materialisers write the first,
++      alphabetical, member into ``source_tile``, so for a cluster seen on
++      two sheets that sheet is an accident of naming. A row whose
+       ``source_tile`` names a sheet it was never seen on was re-keyed across
+       a sheet edge; it is scored on an origin sheet instead (the one whose
+       tiles hold the point, sorted first on a tie) and counted in
+@@ -1456,6 +1462,10 @@
+         ``n_origin_restored``
+             Rows whose ``source_tile`` named a different frame sheet from
+             their recorded origin, scored on the origin instead.
++        ``n_origin_switched``
++            Rows whose ``source_tile`` named an origin sheet whose frame
++            tiles do not hold them, scored on another origin sheet whose
++            tiles do. Before the switch these were out of frame.
+         ``n_origin_only``
+             Rows with a null ``source_tile`` attributed from their origin.
+         ``n_origin_unrecognised``
+@@ -1545,7 +1555,7 @@
+     out_of_frame = np.zeros(n, dtype=bool)
+     counts = {
+         "n_out_of_frame": 0, "n_out_of_frame_cross_sheet": 0,
+-        "n_origin_restored": 0, "n_origin_only": 0,
++        "n_origin_restored": 0, "n_origin_switched": 0, "n_origin_only": 0,
+         "n_origin_unrecognised": 0,
+         "n_unattributed": 0, "n_unattributed_in_frame": 0,
+     }
+@@ -1573,10 +1583,19 @@
+         }
+ 
+         if origin_frame:
++            holding = sorted(origin_frame & sheets_hit[pos])
+             if source_sheet is not None and source_sheet in origin_frame:
+-                sheet = source_sheet
++                if source_sheet in sheets_hit[pos] or not holding:
++                    sheet = source_sheet
++                else:
++                    # Seen on two sheets, named on the one whose frame tiles
++                    # do not hold it: the materialisers write the first,
++                    # alphabetical, member into ``source_tile``. Scored on
++                    # the origin sheet whose tiles do hold it (sorted first
++                    # on a tie), as a re-keyed row is.
++                    sheet = holding[0]
++                    counts["n_origin_switched"] += 1
+             else:
+-                holding = sorted(origin_frame & sheets_hit[pos])
+                 sheet = holding[0] if holding else sorted(origin_frame)[0]
+                 if source_sheet is not None:
+                     counts["n_origin_restored"] += 1
+diff -ru a/tests/test_detection_scope.py b/tests/test_detection_scope.py
+--- a/tests/test_detection_scope.py	2026-10-08 19:54:39.000000000 +1100
++++ b/tests/test_detection_scope.py	2026-10-08 21:45:00.023791256 +1100
+@@ -195,6 +195,43 @@
+     assert diag["n_cross_sheet_avoided"] == 0
+ 
+ 
++def test_a_cluster_named_on_a_sheet_that_does_not_hold_it_is_scored_where_it_lies(frame):
++    """Members on A and B, named on A (first, alphabetical), lying only in B's tiles.
++
++    ``materialise_pv_geojson.py`` writes ``source_tiles[0]`` into
++    ``source_tile``. The cluster was seen on B and lies in B's tiles, so it
++    is scored on B: neither out of frame nor a re-key.
++    """
++    d = dets([("A_x100_y0.png", 205, 50)],
++             source_tiles=[["A_x100_y0.png", "B_x0_y0.png"]])
++    scope = lam.scope_detections_to_frame(d, frame)
++    assert list(scope.sheets) == ["B"]
++    diag = scope.diagnostics
++    assert (diag["n_origin_switched"], diag["n_out_of_frame"],
++            diag["n_origin_restored"]) == (1, 0, 0)
++    ref_b = gpd.GeoDataFrame({"Map": ["B"]}, geometry=[Point(206, 50)], crs=CRS)
++    assert lam.calculate_f1_internal(d, ref_b, frame, 20) == (1.0, 1.0, 1.0)
++    # The tile confusion keeps the row (it removes only out-of-frame rows).
++    assert len(scope.retained) == 1
++
++
++def test_a_single_origin_sheet_outside_its_tiles_is_not_switched(frame):
++    """Seen only on A, lying only in B's tiles: out of frame, never moved to B."""
++    d = dets([("A_x100_y0.png", 250, 50)], source_tiles=[["A_x100_y0.png"]])
++    diag = lam.scope_detections_to_frame(d, frame).diagnostics
++    assert (diag["n_origin_switched"], diag["n_out_of_frame"],
++            diag["n_out_of_frame_cross_sheet"]) == (0, 1, 1)
++
++
++def test_a_cluster_in_both_sheets_tiles_keeps_its_named_sheet(frame):
++    """In the overlap band both origin sheets hold it: ``source_tile`` stands."""
++    d = dets([("A_x100_y0.png", 195, 50)],
++             source_tiles=[["A_x100_y0.png", "B_x0_y0.png"]])
++    scope = lam.scope_detections_to_frame(d, frame)
++    assert list(scope.sheets) == ["A"]
++    assert scope.diagnostics["n_origin_switched"] == 0
++
++
+ def test_a_repr_origin_survives_a_geojson_round_trip(frame, refs, tmp_path):
+     """Tier E's case end to end: the repr STRING property, written and read back.
+ 
+@@ -428,6 +465,9 @@
+     summary = evaluate_multi_run_mean([run, run], label="x")
+     assert summary["detection_scope"]["n_out_of_frame"] == 2
+     assert summary["detection_scope"]["n_passes"] == 2
++    # The switch counter is written per pass and summed like the others.
++    assert block["n_origin_switched"] == 0
++    assert summary["detection_scope"]["n_origin_switched"] == 0
+ 
+ 
+ def test_scope_columns_are_not_required_beyond_the_attribution(frame, refs):
