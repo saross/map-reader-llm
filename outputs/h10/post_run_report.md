@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — h10
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `a710152d1`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h10` · **Registry status**: active · **Purpose**: not supplied
 
@@ -175,7 +175,7 @@ These classes are in Revision-Policy scope going forward (`docs/methodology/outp
 
 | Proposer pool | Modality | Path within the run directory |
 |---|---|---|
-| `coldstart-pool_160` | image | `pool_160` |
+| `coldstart-pool_160` | image | none: outside the run directory, at `archive/intermediate-calibration/h10-calibration-runs-v2/pool_160` (`repo_path`) |
 | `pool_020_hp4hn4` | image | `evaluation-v2/pool_020_hp4hn4` |
 | `pool_040_hp4hn4` | image | `evaluation-v2/pool_040_hp4hn4` |
 | `pool_080_hp4hn4` | image | `evaluation-v2/pool_080_hp4hn4` |
@@ -190,7 +190,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `a710152d1` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

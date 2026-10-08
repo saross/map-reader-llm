@@ -1,10 +1,11 @@
 # Union-staleness retrospective — is any committed consensus union stale against its pool?
 
-> **Last revised**: 2026-10-07 (§ 5 corrected: the pv-diag-256 pool this report
-> called non-existent is archived and tracked, and a read-only reproduction from
-> it matches the UNRESOLVED union exactly. Before that: 2026-09-12 (later), the
-> PI's rulings on § 3.3 and § 4.1 executed; and the original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (§ 5: the PI's ruling registered the
+> pv-diag-256 pool in place, and the checker now reproduces the UNRESOLVED union
+> itself; § 7: a re-run finds the sweep's verdicts depend on the merger's pass
+> order. Before that: 2026-10-07, § 5 corrected, the pool exists; 2026-09-12
+> (later), the PI's rulings on § 3.3 and § 4.1 executed; and the original
+> publication). See [§ Changelog](#changelog) for revision history.
 
 **Verdict in one line.** Of the **106** consensus unions that a registered
 condition reads, **64 REPRODUCE**, **36 are SUBPOOL-CONSISTENT**, **1 is
@@ -13,8 +14,9 @@ UNRESOLVED**, and **5 are STALE** — all five in
 the **first 5 of the pool's 30 passes** while the register describes the
 conditions that read it as `consensus-1of30` … `consensus-5of30` with
 `n_passes: 30`. The UNRESOLVED union's pool has since been found under
-`archive/`, and a read-only reproduction from it matches the union exactly
-(§ 5, corrected 2026-10-07); the sweep's own classification is unchanged.
+`archive/` and registered there, and the checker now reproduces the union
+exactly (§ 5, corrected 2026-10-07 and 2026-10-08); the sweep's own
+classification is unchanged.
 
 ## 1. Why this check exists
 
@@ -386,12 +388,20 @@ run outside this checker.
 
 The classification in § 6 and in
 `results/union-staleness-retrospective-2026-09-12.json` stays UNRESOLVED,
-because that is what the 2026-09-12 sweep returned; the checker still returns
-it, since no registered pool reaches `archive/` and its `POOL_OVERRIDES` table
-maps only registered pools (`scripts/check_union_provenance.py`,
-`UNRESOLVABLE`, reason restated 2026-10-07). Registering the archived passes as
-a pool, which would let the checker reproduce the union itself, is a separate
-decision. The condition is the 256 px anchor of the tile-size comparison
+because that is what the 2026-09-12 sweep returned. The checker itself now
+reproduces the union (updated 2026-10-08). The PI's ruling of 2026-10-08
+registered the archived passes in place as pv-diag-256's pools
+(`results/run-conditions.json`, `decomposition.pv-diag-256.proposer_pools`,
+which name `repo_path` `archive/outputs-non-production-tile-sizes`). The
+union's directory then moved from the checker's `UNRESOLVABLE` table to
+`POOL_OVERRIDES` (`scripts/check_union_provenance.py` v1.1.0), and the checker
+classifies `text-5of5`, and `text-1of5` … `text-4of5` too, REPRODUCES from the
+five passes, with no unmatched feature in either direction. That also needed
+one change to the comparison: these unions are in EPSG:32635, not WGS84 as
+§ 2 describes, because the 256 plan's own builder wrote them rather than
+`merge_passes.py`, and the checker now reads either frame. The record is
+`reports/stale-register-notes-2026-10-07.md` § 10. The condition is the 256 px
+anchor of the tile-size comparison
 (F1 @ 20 m orders 256 < 512 < 384 = 0.46 / 0.69 / 0.79 per the register note),
 and `results/run-facts.json` (`pv-diag-256.purpose`) flags it as an
 "Unregistered exploratory extension of the registered H11 two-level design
@@ -424,7 +434,7 @@ threshold, but only these are in scope).
 | `outputs/h11/n1-outstanding-384/image-t03/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus` | 3 | 1,2,3 | 3 | 3 of 3 | REPRODUCES |
-| `outputs/h11/pv-diag-256/consensus` | 1 | 5 | — | — | UNRESOLVED (pool since found; § 5) |
+| `outputs/h11/pv-diag-256/consensus` | 1 | 5 | — | — | UNRESOLVED (pool since found and registered; REPRODUCES since 2026-10-08; § 5) |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.0/consensus` | 2 | 1,3 | 3 | 3 of 3 | REPRODUCES |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus` | 1 | 9 | 10 | 10 of 10 | REPRODUCES |
 | `outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5` | 1 | 5 | 10 | 5 of 10 | SUBPOOL-CONSISTENT |
@@ -524,6 +534,23 @@ threshold, but only these are in scope).
   both pass. For the STALE cell that difference is material — a 5-pass `t5`
   carries `confidence: 1.0`, a 30-pass `t5` would carry 0.167 — and was checked
   by hand there, but it is not part of the automated verdict.
+- **A verdict depends on the order the merger reads the passes (found
+  2026-10-08).** `merge_passes.cluster_across_passes` is greedy, so the
+  clusters depend on pass order. On 2026-09-13 `75d7c8d4c` changed
+  `merge_passes.resolve_pass_files` from sorted directory-name order (`run_1`,
+  `run_10`, `run_2`, …) to numeric order. The order changes only for pools of
+  10 or more passes. A re-run of the sweep on 2026-10-08 (checker v1.1.0) calls
+  24 unions STALE that this report calls REPRODUCES (15) or
+  SUBPOOL-CONSISTENT (9), all in 10- or 30-pass pools, by 0 to 4 features. Four
+  of them, run with the merger as it stood before `75d7c8d4c`, return their
+  2026-09-12 class. A full sweep with the base (v1.0.0) checker gives the same
+  result as v1.1.0 on every union but pv-diag-256's, so the checker's
+  2026-10-08 change is not the cause. They are not new staleness either: the
+  unions were built in the old order
+  and are re-derived in the new one. This report's verdicts hold for the merger
+  it ran with. A re-run needs the build order pinned first.
+  `reports/stale-register-notes-2026-10-07.md` § 10 has the evidence, and the
+  re-run's output is beside it.
 
 ## 8. Reusable artefacts
 
@@ -531,14 +558,44 @@ threshold, but only these are in scope).
   `--all` for every union a registered condition reads; `--json-out` for the
   machine-readable result; exits 1 if any union is STALE, so it can gate a
   pipeline. Writes only to `--scratch-dir`.
-- `tests/test_check_union_provenance.py` — 11 tier-1 tests on a synthetic
+- `tests/test_check_union_provenance.py` — tier-1 tests on a synthetic
   pool, covering both failure modes: a pool that grew after the union was
   written, and a pass rewritten in place at an unchanged pass count (the case
-  `total_passes` cannot see).
+  `total_passes` cannot see). There were 11 at publication. Since 2026-10-08
+  there are 14: they also cover the EPSG:32635 frame, a foreign CRS, and
+  pv-diag-256's registered pool. A tier-2 companion,
+  `tests/test_check_union_provenance_committed.py`, re-derives pv-diag-256's
+  five committed unions.
 - `results/union-staleness-retrospective-2026-09-12.json` — the full 106-row
   result this report tabulates.
 
 ## Changelog
+
+### 2026-10-08 — § 5: the pool registered and reproduced; § 7: pass order
+
+**Trigger**: the PI's ruling of 2026-10-08, "register pv-diag-256 in place",
+which the Session 162 close recommended (`planning/paper-writeup-continuity.md`).
+The archived passes became pv-diag-256's registered pools, and
+`scripts/check_union_provenance.py` (v1.1.0) moved the union from
+`UNRESOLVABLE` to `POOL_OVERRIDES`. A re-run of the sweep, made to check that
+change, surfaced the pass-order dependence now recorded in § 7.
+
+| claim | before | after |
+|---|---|---|
+| verdict, the UNRESOLVED union | pool found; reproduced read-only outside the checker | pool found and registered; the checker reproduces it |
+| § 5, the checker's result | UNRESOLVED: "no registered pool reaches `archive/`"; registering is "a separate decision" | REPRODUCES for `text-1of5` … `text-5of5` (2,558 / 1,909 / 1,645 / 1,423 / 1,165 features); the EPSG:32635 frame noted |
+| § 6, the pv-diag-256 row | UNRESOLVED (pool since found; § 5) | UNRESOLVED (pool since found and registered; REPRODUCES since 2026-10-08; § 5) |
+| § 7 | four limits | a fifth: a verdict depends on the merger's pass order |
+| § 8, the test module | 11 tier-1 tests | 14, and a tier-2 module |
+
+**What did NOT change**: the sweep's counts (64 / 36 / 5 / 1) and every class
+in § 6, which record what the checker returned on 2026-09-12 with the merger of
+that date; `results/union-staleness-retrospective-2026-09-12.json`; § 2's
+account of the method as it ran. The five STALE unions are STALE in the re-run
+too.
+
+**Landed in**: the commit that adds this entry, on branch
+`worktree-agent-a462722af99b42e8c`.
 
 ### 2026-10-07 — § 5 corrected: the pv-diag-256 pool exists
 

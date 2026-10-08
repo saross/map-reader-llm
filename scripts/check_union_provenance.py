@@ -36,7 +36,9 @@ Classification
     does not reflect. The report names which.
 ``UNRESOLVED``
     The parameters are not recoverable — most often the pool's passes were
-    never materialised as ``run_*`` / ``pass_*`` directories.
+    never materialised as ``run_*`` / ``pass_*`` directories — or the union
+    declares a coordinate reference system (CRS) other than WGS84 or
+    EPSG:32635, the two frames the comparison reads.
 
 A second mode: a crop manifest against its union
 ------------------------------------------------
@@ -104,6 +106,7 @@ if str(_SCRIPT_DIR) not in sys.path:
 from merge_passes import (  # noqa: E402
     apply_threshold,
     cluster_across_passes,
+    coords_are_geographic,
     deduplicate_within_pass,
     geojson_coords_to_utm,
     load_pass_detections,
@@ -112,7 +115,9 @@ from merge_passes import (  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.0.0"
+# 1.1.0 (2026-10-08): pv-diag-256's union resolves through POOL_OVERRIDES, and
+# the comparison reads a union written in EPSG:32635 as well as WGS84.
+__version__ = "1.1.0"
 
 REPO_ROOT = _SCRIPT_DIR.parent
 
@@ -164,26 +169,29 @@ POOL_OVERRIDES: dict[str, str] = {
     # ("r2-balanced reuses h10 pool") and scripts/fuse_detections_wbf.py:136-142,
     # which names outputs/h10/evaluation-v2/pool_160_hp4hn4/run_{1..5}.
     "outputs/h12-v2/greedy/r2-balanced": "outputs/h10/evaluation-v2/pool_160_hp4hn4",
+    # Anchor: results/run-conditions.json, decomposition.pv-diag-256
+    # .proposer_pools["text-n5-text-t0.7"] = {"repo_path":
+    # "archive/outputs-non-production-tile-sizes", "path": "text-n5/text-t0.7"},
+    # registered in place on 2026-10-08 (PI ruling of that date; record:
+    # reports/stale-register-notes-2026-10-07.md section 10). 276e4ca80 archived
+    # the five N = 5, T = 0.7 passes there, tracked with their metas; binding
+    # pv-diag-256-text-5of5-union (results/manipulation-gate-bindings.json)
+    # names them. Until 2026-10-08 this union sat in UNRESOLVABLE. Its unions
+    # were not written by merge_passes but by the 256 plan's builder, in
+    # EPSG:32635; _utm_points reads either frame.
+    "outputs/h11/pv-diag-256/consensus":
+        "archive/outputs-non-production-tile-sizes/text-n5/text-t0.7",
 }
 
 #: union directory -> why this checker does not re-derive it.
-UNRESOLVABLE: dict[str, str] = {
-    # Anchor: results/manipulation-gate-bindings.json, binding
-    # pv-diag-256-text-5of5-union (PR #25), and the correction appended to
-    # results/run-conditions.json, decomposition.pv-diag-256._note, on
-    # 2026-10-07. Until then this entry said the proposer passes were never
-    # materialised. They were: 276e4ca80 archived the five N = 5, T = 0.7
-    # passes, tracked with their metas, at
-    # archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/run_1..5.
-    # The entry stays because no registered pool reaches archive/ and
-    # POOL_OVERRIDES maps only registered pools. The binding records a
-    # read-only reproduction from those passes that matches the union exactly.
-    "outputs/h11/pv-diag-256/consensus":
-        "pool not registered: its five passes sit outside the union's run, at "
-        "archive/outputs-non-production-tile-sizes/text-n5/text-t0.7/run_1..5 "
-        "(archived by 276e4ca80); provenance settled by binding "
-        "pv-diag-256-text-5of5-union (results/manipulation-gate-bindings.json)",
-}
+#:
+#: Empty since 2026-10-08, deliberately. Its one entry, pv-diag-256's
+#: ``consensus/``, moved to POOL_OVERRIDES when the PI's ruling registered the
+#: archived pool in place (reports/stale-register-notes-2026-10-07.md
+#: sections 1c and 10). The table stays as the mechanism for a union whose
+#: pool truly cannot be recovered; each entry must carry a re-verifiable
+#: anchor, and tests/test_check_union_provenance.py pins its contents.
+UNRESOLVABLE: dict[str, str] = {}
 
 #: Union filenames, and how to read the vote threshold out of them.
 _T_PATTERNS = (
@@ -332,16 +340,27 @@ def _has_passes(directory: Path) -> bool:
 
 
 def _utm_points(features: Iterable[dict]) -> list[tuple[float, float]]:
-    """Project each feature's point geometry to UTM metres.
+    """Return each feature's point geometry in UTM metres (EPSG:32635).
 
-    Consensus unions are ``Point`` features written by
-    ``merge_passes.apply_threshold``, stored in WGS84 (RFC 7946).
+    Consensus unions are ``Point`` features. Those written by
+    ``merge_passes.apply_threshold`` are stored in WGS84 (RFC 7946) and are
+    projected here. pv-diag-256's unions were written by a different builder
+    in EPSG:32635 itself, with a ``crs`` member saying so; projecting those
+    metres as if they were degrees gives NaN. So the frame is read per point
+    with ``merge_passes.coords_are_geographic``, the magnitude test the merger
+    applies to pass files, and projected coordinates are taken as they are:
+    EPSG:32635 is the only projected frame this pipeline writes, and
+    :func:`_foreign_crs` refuses a union that declares any other.
 
     Args:
         features: GeoJSON features.
 
     Returns:
         One ``(easting, northing)`` pair per feature, in input order.
+
+    Examples:
+        >>> _utm_points([{"geometry": {"coordinates": [404300.0, 4702900.0]}}])
+        [(404300.0, 4702900.0)]
     """
     points: list[tuple[float, float]] = []
     for feat in features:
@@ -350,8 +369,39 @@ def _utm_points(features: Iterable[dict]) -> list[tuple[float, float]]:
         if not coords:
             continue
         x, y = float(coords[0]), float(coords[1])
-        points.append(geojson_coords_to_utm(x, y))
+        if coords_are_geographic(x, y):
+            points.append(geojson_coords_to_utm(x, y))
+        else:
+            points.append((x, y))
     return points
+
+
+#: ``crs`` names a union may declare: WGS84 (the RFC 7946 default) and the
+#: pipeline's projected frame. Matched as substrings of the declared name, so
+#: both ``EPSG:32635`` and ``urn:ogc:def:crs:EPSG::32635`` qualify.
+_KNOWN_CRS_CODES = ("4326", "CRS84", "32635")
+
+
+def _foreign_crs(doc: dict) -> str | None:
+    """Return the union's declared CRS name when this checker cannot compare it.
+
+    Args:
+        doc: The parsed union GeoJSON.
+
+    Returns:
+        The declared name if it is neither WGS84 nor EPSG:32635, else ``None``
+        (including when no ``crs`` member is present).
+
+    Examples:
+        >>> _foreign_crs({"crs": {"properties": {"name": "EPSG:3857"}}})
+        'EPSG:3857'
+        >>> _foreign_crs({"crs": {"properties": {"name": "urn:ogc:def:crs:EPSG::32635"}}})
+        >>> _foreign_crs({})
+    """
+    name = ((doc.get("crs") or {}).get("properties") or {}).get("name")
+    if not name or any(code in str(name) for code in _KNOWN_CRS_CODES):
+        return None
+    return str(name)
 
 
 def compare_feature_sets(
@@ -496,9 +546,10 @@ def check_union(
     started = time.time()
     spec = resolve_union_spec(union_path, repo_root)
     committed_file = repo_root / spec.union_path
-    committed: list[dict] = []
+    committed_doc: dict = {}
     if committed_file.exists():
-        committed = list(json.loads(committed_file.read_text()).get("features", []))
+        committed_doc = json.loads(committed_file.read_text())
+    committed: list[dict] = list(committed_doc.get("features", []))
 
     vs_file = repo_root / spec.union_dir / "voting_summary.json"
     vs_total = None
@@ -518,6 +569,24 @@ def check_union(
             committed_features=len(committed) if committed_file.exists() else None,
             vs_total_passes=vs_total,
             detail=spec.unresolved_reason,
+            seconds=round(time.time() - started, 2),
+        )
+
+    # The comparison measures in EPSG:32635 metres and reads WGS84 or
+    # EPSG:32635 (see _utm_points). A union declaring any other frame is not
+    # compared rather than compared wrongly.
+    foreign = _foreign_crs(committed_doc)
+    if foreign:
+        return UnionResult(
+            union_path=spec.union_path,
+            classification="UNRESOLVED",
+            pool_dir=spec.pool_dir,
+            threshold=spec.threshold,
+            declared_subpool_n=spec.declared_subpool_n,
+            committed_features=len(committed),
+            vs_total_passes=vs_total,
+            detail=(f"the union declares CRS {foreign!r}; this checker compares "
+                    "WGS84 and EPSG:32635 only"),
             seconds=round(time.time() - started, 2),
         )
 
