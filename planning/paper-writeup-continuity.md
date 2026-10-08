@@ -48,8 +48,21 @@ replaces it.
   further verifications of Run B's ten legs, on an agent's branch and
   sapphire; card `planning/run-c-verifier-reinvocation-2026-10-08.md`.
   Then delete Run B's verifier request files (D55 Q3).
-- [ ] **pv-diag-256 registered in place** (D55 Q5): on an agent's branch,
-  for review and merge.
+- [x] **pv-diag-256 registered in place** (D55 Q5): merged 2026-10-08
+  (`fbc4cb02a`). Its agent found: (a) the union sweep's verdicts now
+  depend on pass order: 24 unions in 10- and 30-pass pools read STALE by
+  0 to 4 features, because `75d7c8d4c` (2026-09-13) changed `merge_passes`
+  from name order to numeric order and clustering is order-dependent; so
+  "pinning union pass order" (S162 engineering list) comes before any
+  re-run of the sweep (`reports/union-staleness-retrospective-2026-09-12.md`
+  § 7); (b) `op-asis.diff` and `op-patched.diff`, named in the 2026-10-07
+  stale-register report, are untracked; (c) the six archived metas appear
+  both among the ledger's zero-usage metas and as unpriced register rows.
+- [x] **Registry repair** (2026-10-08, `df3679963`): this session's
+  registry rebuilds ran as `python`, absent on amd-tower, with output
+  discarded, so they failed silently; the floors audit record went
+  unregistered and `main` failed the registry test until rebuilt with
+  `.venv/bin/python`.
 - [ ] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
   rows, not Gemini 3 Flash as the approval named; re-confirm with the PI.
 - [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
