@@ -16,7 +16,15 @@ artefact:
   failure mode), where the pass count alone shows nothing;
 * a pool whose passes were never materialised classifies **UNRESOLVED**;
 * the coordinate comparison is bidirectional, so a union that is a strict
-  subset of the re-derivation is not called identical.
+  subset of the re-derivation is not called identical;
+* a union written in EPSG:32635 (pv-diag-256's builder) compares like a WGS84
+  one, and a union in any other declared frame is **UNRESOLVED**;
+* the ``UNRESOLVABLE`` table changes only on purpose, and pv-diag-256's union,
+  which left it on 2026-10-08, resolves to the pool the register names.
+
+The re-derivation of pv-diag-256's committed unions themselves reads bulk
+committed data, so it is tier 2, in
+``tests/test_check_union_provenance_committed.py``.
 """
 
 from __future__ import annotations
@@ -31,13 +39,14 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.check_union_provenance import (  # noqa: E402
+    POOL_OVERRIDES,
     UNRESOLVABLE,
     check_union,
     compare_feature_sets,
     enumerate_registered_unions,
     resolve_union_spec,
 )
-from scripts.merge_passes import threshold_sweep  # noqa: E402
+from scripts.merge_passes import geojson_coords_to_utm, threshold_sweep  # noqa: E402
 
 pytestmark = pytest.mark.tier1
 
@@ -244,12 +253,116 @@ def test_pool_without_pass_directories_is_unresolved(tmp_path: Path) -> None:
     assert "run_*/pass_*" in result.detail
 
 
+#: What ``UNRESOLVABLE`` holds. Changing the table means changing this set.
+_EXPECTED_UNRESOLVABLE: set[str] = set()
+
+#: Union directories that have left ``UNRESOLVABLE``, and the registered pool
+#: each now resolves to through ``POOL_OVERRIDES``.
+_RETIRED_UNRESOLVABLE: dict[str, str] = {
+    # PI ruling 2026-10-08, "register pv-diag-256 in place"
+    # (reports/stale-register-notes-2026-10-07.md section 10).
+    "outputs/h11/pv-diag-256/consensus":
+        "archive/outputs-non-production-tile-sizes/text-n5/text-t0.7",
+}
+
+
 def test_documented_unresolvable_dirs_are_declared_not_guessed() -> None:
-    """The unresolvable table carries a re-verifiable anchor for each entry."""
-    assert UNRESOLVABLE, "the table should not be silently emptied"
+    """The unresolvable table changes only on purpose, and each entry has an anchor.
+
+    Until 2026-10-08 this test asserted the table was not empty ("the table
+    should not be silently emptied"), when its one entry was pv-diag-256's
+    ``consensus/``. The PI's ruling of 2026-10-08 registered that run's archived
+    pool in place, and the entry moved to ``POOL_OVERRIDES``, so the table is
+    now empty by decision. The guard is now exact rather than non-empty: the
+    table must equal ``_EXPECTED_UNRESOLVABLE``, so emptying or refilling it
+    means editing this test, and each retired entry must resolve to the pool
+    recorded for it here.
+    """
+    assert set(UNRESOLVABLE) == _EXPECTED_UNRESOLVABLE
+    for union_dir, pool_dir in _RETIRED_UNRESOLVABLE.items():
+        assert union_dir not in UNRESOLVABLE
+        assert POOL_OVERRIDES.get(union_dir) == pool_dir
     for union_dir, reason in UNRESOLVABLE.items():
         assert union_dir.startswith("outputs/")
         assert "run-conditions.json" in reason or "." in reason
+
+
+def test_pv_diag_256_union_resolves_to_its_registered_pool() -> None:
+    """pv-diag-256's union resolves to the pool the register names (2026-10-08).
+
+    The override and the register's pool spec must name the same directory,
+    so the checker cannot re-derive from a pool the register does not hold.
+    Sentinel: with the override removed, the union resolves to
+    ``outputs/h11/pv-diag-256``, which holds no pass directories.
+    """
+    register = json.loads(
+        (PROJECT_ROOT / "results" / "run-conditions.json").read_text(encoding="utf-8"),
+    )
+    pools = register["decomposition"]["pv-diag-256"]["proposer_pools"]
+    spec = pools["text-n5-text-t0.7"]
+    registered = f"{spec['repo_path']}/{spec['path']}"
+    assert POOL_OVERRIDES["outputs/h11/pv-diag-256/consensus"] == registered
+
+    union = resolve_union_spec(
+        PROJECT_ROOT / "outputs/h11/pv-diag-256/consensus/text-5of5.geojson",
+        repo_root=PROJECT_ROOT,
+    )
+    assert union.unresolved_reason is None
+    assert union.pool_dir == registered
+    assert union.threshold == 5
+    assert sorted(p.name for p in (PROJECT_ROOT / registered).glob("run_*")) == [
+        f"run_{n}" for n in range(1, 6)
+    ]
+
+
+# ---------------------------------------------------------------------------
+# Coordinate frames
+# ---------------------------------------------------------------------------
+
+
+def _reproject_union(path: Path, crs_name: str) -> None:
+    """Rewrite a merger-written WGS84 union in EPSG:32635 under a ``crs`` name.
+
+    This is the shape of pv-diag-256's unions, which its plan's builder wrote
+    in projected metres with a ``crs`` member, not via ``merge_passes``.
+    """
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    for feat in doc["features"]:
+        lon, lat = feat["geometry"]["coordinates"][:2]
+        feat["geometry"]["coordinates"] = list(geojson_coords_to_utm(lon, lat))
+    doc["crs"] = {"type": "name", "properties": {"name": crs_name}}
+    path.write_text(json.dumps(doc), encoding="utf-8")
+
+
+def test_a_union_written_in_utm_reproduces(tmp_path: Path) -> None:
+    """A union in EPSG:32635 compares like a WGS84 one.
+
+    Sentinel: before 2026-10-08 the comparison projected every point as if it
+    were degrees, and a projected union raised ``ValueError`` (NaN).
+    """
+    pool = tmp_path / "cell"
+    _pool_of(pool, {1: [0, 1], 2: [0, 1], 3: [0, 2]})
+    threshold_sweep(pool, pool / "consensus")
+    union = pool / "consensus" / "consensus_t2.geojson"
+    _reproject_union(union, "urn:ogc:def:crs:EPSG::32635")
+
+    result = check_union(union, tmp_path / "scratch", repo_root=tmp_path)
+    assert result.classification == "REPRODUCES"
+    assert result.committed_features == result.rederived_features == 2
+    assert (result.max_match_distance_m or 0.0) < 1.0
+
+
+def test_a_union_in_a_foreign_crs_is_unresolved(tmp_path: Path) -> None:
+    """A union declaring a frame the checker cannot read is not compared."""
+    pool = tmp_path / "cell"
+    _pool_of(pool, {1: [0, 1], 2: [0, 1]})
+    threshold_sweep(pool, pool / "consensus")
+    union = pool / "consensus" / "consensus_t2.geojson"
+    _reproject_union(union, "EPSG:3857")
+
+    result = check_union(union, tmp_path / "scratch", repo_root=tmp_path)
+    assert result.classification == "UNRESOLVED"
+    assert "EPSG:3857" in result.detail
 
 
 # ---------------------------------------------------------------------------
