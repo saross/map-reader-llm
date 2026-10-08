@@ -1,8 +1,9 @@
 # Run B, the modality bridging pair: first findings
 
-> **Last revised**: 2026-10-08 (scoring plan items 4, 6 and 7: the gap-change
-> interaction test, the date component, and the replicate floors; wording
-> after an independent audit). See
+> **Last revised**: 2026-10-08 (the 55-map 3.7 result beside § 4 item 4;
+> the Gemini 3 verifier's measured re-invocation noise in § 7 Limits;
+> earlier the same day, scoring plan items 4, 6 and 7 and the audit's
+> wording). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: SCORED, FOR THE PRINCIPAL INVESTIGATOR'S (PI'S) REVIEW.** Point
@@ -97,9 +98,21 @@ Gap change against Gemini 3: −0.0529 (3.7, Gemini 3 verifier) and −0.0547
    the fully matched gap change is −0.075 and −0.068 (p < 0.0001), 1.9 and
    1.7 times its floor (§ 7). What remains is Gemini 3's text advantage
    against no resolved gap in Gemini 3.7: of R7.3-22's "parity or
-   inversion", these runs show no inversion. They do not show parity in
-   the strict sense: the evidence is that the test does not reject and each
-   3.7 gap sits below its floor, which is not a test of equivalence.
+   inversion", these runs show no inversion on this frame. They do not
+   show parity in the strict sense: the evidence is that the test does not
+   reject and each 3.7 gap sits below its floor, which is not a test of
+   equivalence. **At deployment scale the inversion is there:** on the
+   55-map corpus (8,541 tiles), 3.7 image at K = 3 beats 3.7 text at
+   K = 3 by +0.0351 F1 (BH p < 0.0001) and +0.0484 tile-MCC, with text at
+   its post-hoc best threshold and image at its carried point
+   (`results/gemini37-image-55map-2026-09-13/findings.md` § 1, P3), mostly
+   through recall (0.951 against 0.892). The two 55-map arms ran about two
+   weeks apart (text passes 2026-08-29 to 08-31, image 2026-09-13), but
+   every 3.7 cell here moves at most
+   0.0094 between its original date and Run B's (§ 2), well under the 55-map
+   lead. The gold-standard frame cannot resolve a gap of that size, and the
+   cached arm's −0.0164 points the same way. PI ruling D53 adopts the
+   55-map result for the paper.
 5. **Under D45 the family claim stands on these runs: every gap change
    clears its point floor, and every one sits inside its floor's upper
    bound.** All ten gap changes reject and clear their point floors (1.24
@@ -284,15 +297,31 @@ Limits:
 
 - **The verifier band is borrowed, and probably too small for this
   frame.** The 0.001 per contrast was measured on the 55-map corpus (W2.7
-  report § 1); no verifier re-invocation has been measured on the 487-tile
-  frame. Each cell here holds 393 to 441 detections, so one verifier
+  report § 1). Each cell here holds 393 to 441 detections, so one verifier
   decision moves F1 by about 0.0011 to 0.0013, and the whole band is about
   one decision; the 2.4 % same-week re-invocation flip rate would be about
   ten. Scaled from the 55-map corpus (about 11 times as many detections),
   the band would be about 0.003 to 0.005 per contrast. At 0.003 the primary
   gap changes are 1.14 and 1.17 times their floors; at 0.005, 1.05 and
-  1.08. Both still clear the point floor, with a thin margin. The floors
-  are proposer-stage floors plus that band.
+  1.08. The floors are proposer-stage floors plus that band.
+- **The Gemini 3 verifier's re-invocation noise has been measured on a
+  487-tile gold-standard frame of 384-pixel tiles, against the same
+  reference** (corrected 2026-10-08: this note and the audit said none had
+  been). Five verifications of the same candidates by Gemini 3 Flash at
+  T 0.0 gave single-run F1 SDs of 0.0025 to 0.0072 per cell
+  (`results/verifier-robustness/verifier-robustness-findings.md` § 2,
+  June 2026, scored on `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`).
+  The **Gemini 3.7 verifier's** has never been measured. It samples at its
+  default temperature, 1.0, whatever is sent, so it may be noisier. Added
+  in quadrature for each of the four cells, in place of the band, a
+  per-cell verifier SD moves the two primary gap changes' ratios as
+  follows: 0.0025 gives 1.27 and 1.31; 0.0072 gives 1.07 and 1.10; 0.010
+  gives 0.94 and 0.97. The fully matched gap changes stay above 1 up to
+  0.012 (1.24 and 1.14). So the family claim holds on the matched
+  contrasts for any plausible verifier noise; whether the original K = 10
+  contrast clears its floor depends on the 3.7 verifier's. Run C (PI
+  ruling D56, `planning/pi-decisions-2026-09-20.md`) measures it by two
+  further verifications of all ten legs.
 - **Gemini 3 image at (0.15, k9)** follows a unanimity vote path at every
   K' ≤ 5, so its carried SD is the k10 cell's (0.0164). This affects only
   that cell's date-component floor, in the conservative direction.
@@ -353,6 +382,18 @@ US$0.075/M the September invoices show, add about US$9. §§ 5–7 made no
 Application Programming Interface (API) call.
 
 ## Changelog
+
+### 2026-10-08 — The 55-map 3.7 result; the verifier's measured noise
+
+§ 4 item 4 now gives the deployment-scale 3.7 result beside this frame's:
+on the 55-map corpus, 3.7 image beats 3.7 text by +0.0351 F1 (BH
+p < 0.0001), mostly recall, which this frame cannot resolve. PI ruling D53
+adopts it for the paper. § 7 Limits corrected: the Gemini 3 verifier's
+re-invocation noise was measured in June on a 487-tile gold-standard frame
+(0.0025 to 0.0072 F1 per cell); the note and the audit had said it never
+was. The sensitivity of the primary and fully matched ratios to a per-cell
+verifier SD is added; Run C (D56) measures the 3.7 verifier's. No number
+from `floors/` changed.
 
 ### 2026-10-08 — Wording after the independent audit
 

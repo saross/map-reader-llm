@@ -1,6 +1,6 @@
 # Run B floors and gap-change test: independent audit of the analysis code
 
-> **Last revised**: 2026-10-08 (original publication). See
+> **Last revised**: 2026-10-08 (a note on finding 1's premise). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Auditor**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -118,6 +118,19 @@ none of the reported numbers is wrong.
    ratio computed at the best points (0.37) that is in no JSON output.
 
 ## Changelog
+
+### 2026-10-08 — A note on finding 1's premise
+
+Added by the main session; the audit text above is unchanged. Finding 1
+proceeds as if no verifier re-invocation had been measured on this frame.
+One had: in June, five verifications of the same candidates by Gemini 3
+Flash at T 0.0, on a 487-tile gold-standard frame of 384-pixel tiles and
+the same reference, gave single-run F1 SDs of 0.0025 to 0.0072 per cell
+(`results/verifier-robustness/verifier-robustness-findings.md` § 2). That
+supports the finding's direction for the Gemini 3 verifier. The Gemini 3.7
+verifier's noise is unmeasured; Run C (PI ruling D56) measures both on Run
+B's own unions. See `results/modality-bridge-2026-10-07/findings.md` § 7
+Limits.
 
 ### 2026-10-08 — Original publication
 
