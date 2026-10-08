@@ -36,10 +36,22 @@ replaces it.
   `94be8b01a`, `69eb32132`). File API cleared; caches deleted. First scoring
   and findings: `results/modality-bridge-2026-10-07/findings.md`
   (`aeff1e207`, `c2a3cdaff`). Audited US$94.52 plus cache storage.
-- [ ] **Run B review with the PI**: the findings note; F-cal (Gemini 3 image
+- [x] **Run B review with the PI**: the findings note; F-cal (Gemini 3 image
   union 15 % smaller); the floors (D45/D46) and the gap-change interaction
   permutation, still to compute; whether to delete the ~40 GB of request
-  files on sapphire (`batch_working/`, trivially rebuilt).
+  files on sapphire (`batch_working/`, trivially rebuilt). DONE 2026-10-08:
+  floors and interaction test merged (`16d41b494`) after an independent
+  audit (`reports/s163-agent-records/run-b-floors-audit.md`); request
+  folders deleted (D55 Q3: 54 folders, 35 GB; the verifier request files
+  stay until Run C has compared them, then go).
+- [ ] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
+  further verifications of Run B's ten legs, on an agent's branch and
+  sapphire; card `planning/run-c-verifier-reinvocation-2026-10-08.md`.
+  Then delete Run B's verifier request files (D55 Q3).
+- [ ] **pv-diag-256 registered in place** (D55 Q5): on an agent's branch,
+  for review and merge.
+- [ ] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
+  rows, not Gemini 3 Flash as the approval named; re-confirm with the PI.
 - [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
   (`gemini3-image-55map-2026-09-16`, `verify_k1_arm2`, `verify_k3_arm2`,
   `verify_k5_arm2`: an unescaped quote inside a string; the originals'
@@ -48,6 +60,7 @@ replaces it.
   `repair` scan (`planning/modality-bridge-2026-10-07-stage2.md`). PI
   decision: re-verify the seven, and whether the batch parser should repair
   as the real-time path does (re-booking would move committed rows).
+  2026-10-08: approved (D55 Q4), held on the model name (see above).
 - [x] **Copy or link the bench's null-tile history report** (PI decision,
   raised by the map-reader-bench session 2026-10-08): bench repository,
   `reports/2026-10-08-no-mound-signal-history.md` on branch
@@ -68,7 +81,16 @@ replaces it.
   the null-tile asymmetry between arms (being checked); why the 3.7
   headline is text when Run B's cached 3.7 image cell scored 0.9352
   against 0.9265 (n.s.); the signed K-ladder outcome still reads "worst
-  buy on every ladder" (Obs 502).
+  buy on every ladder" (Obs 502). 2026-10-08: the null-tile check found
+  the image arm's 17 examples include 3 null tiles and neither instruction
+  says an empty answer is acceptable; the 55-map corpus shows 3.7 image
+  ahead of 3.7 text (+0.0351 F1, P3), so the paper recommends 3.7 image
+  at K = 3 beside the Pareto frontier (D53), and no "no mounds is fine"
+  text run is made (D54). The claims inventory stays frozen with dated
+  notes (D55 Q1); oracle-against-oracle differences are descriptive (Q2).
+- [x] **Stray untracked `ib.md` and `otel_m.md`** (third-party pages saved
+  on 2026-09-21 during the cost-accounting work): deleted at the PI's
+  request, 2026-10-08.
 - [ ] **Triage the open items** into blocks submission / improves the
   paper / after submission, then a dedicated planning session for a
   submitted paper in about 30 days (PI agreed 2026-10-08).
