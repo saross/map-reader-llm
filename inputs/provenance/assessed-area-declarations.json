@@ -1,8 +1,9 @@
 {
   "schema": "assessed-area-declarations/1",
   "created": "2026-10-07",
-  "ruling": "D51 (planning/pi-decisions-2026-09-20.md)",
-  "purpose": "Assessed-area records DECLARED after the fact for legacy candidate pools whose builders recorded neither their footprint nor the clip they applied. Read by scripts/lib_assessed_area.determine_assessed_area (method 'declared'), which also checks that every candidate of the pool lies inside the declared area. A pool built after 2026-10-07 by a builder that calls write_area_record carries its own record beside the union and needs no entry here. Each entry cites the evidence it was reconstructed from; none is inferred from a path or a naming convention alone.",
+  "revised": "2026-10-08 (PI ruling D57 (3): pass_tilings and pool pass_provenance)",
+  "ruling": "D51, D57 (planning/pi-decisions-2026-09-20.md)",
+  "purpose": "Assessed-area provenance DECLARED after the fact for legacy artefacts whose builders recorded too little. Read by scripts/lib_assessed_area. 'declarations' are legacy candidate pools: either a footprint and clip (the three of 2026-10-07, method 'declared', every candidate checked to lie inside the declared area), or the pass_provenance a pre-2026-09-12 merge_passes consensus did not record, declared only where a rebuild from those passes reproduced the committed directory (2026-10-08, PI ruling D57 (3)). 'pass_tilings' name the tile manifest of passes whose meta records none (2026-10-08, D57 (3)); the passes' own processed_tiles still define what they assessed. Every declared file is anchored to its git blob hash: a file rewritten after its declaration makes the area undetermined. A pool built after 2026-10-07 by a builder that calls write_area_record carries its own record beside the union and needs no entry here. Each entry cites the evidence it was reconstructed from; none is inferred from a path or a naming convention alone.",
   "declarations": [
     {
       "schema": "assessed-area/1",
@@ -61,6 +62,1631 @@
         "footprint: scripts/grid_prepare_scoring.py:515-524 raises CoverageError unless each pass's processed tiles equal the pinned manifest exactly",
         "clip: scripts/grid_prepare_scoring.py:535-540 writes the common-scope passes with clip_geom = the grid_common union; scripts/materialise_grid_unions.py:108 reads grid_common_bounds and :94-95 drops off-carrier clusters",
         "committed in 3c5d87b9f (2026-08-24, the four K=10 union candidate sets)"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "df437171f53c38828287b8c3c0dbe2b238a60f42"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "297593953c6a4cb8369dcae43a1966e2518a7b16"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "e321b9e6d22873ee2f180489a2cf022014332b30"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "172f10e74b7be7ea83503e69b46cd35d7d3b7119"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "57831014c0c41d42bb7148e553eac89190ecc4cf"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "df437171f53c38828287b8c3c0dbe2b238a60f42"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "3772b1b209099f26f691231a31f8680e3e18d3e9"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "297593953c6a4cb8369dcae43a1966e2518a7b16"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "e321b9e6d22873ee2f180489a2cf022014332b30"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "172f10e74b7be7ea83503e69b46cd35d7d3b7119"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "57831014c0c41d42bb7148e553eac89190ecc4cf"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "60d91e606b5ea8e2d14453f03bec720475348021"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "08f6326160b2eb1492e6fb765c80582830484109"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "0ff463d3fdb830ecfef8537b987a249c4f295b97"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "902beb36d354c327f0eff2d7c6bd7cf092fa3675"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "b3294b423704106af1eaa9b543f613120a7538de"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "e65c335d7023af66ca28a7a85f0928ad2195b99a"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "8b99ced8ab9aee33feb127ce8dbd82188b11600d"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "7b0376bf8229104d46c4601111b15dab0982bc6f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "b3294b423704106af1eaa9b543f613120a7538de"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "git_blob_hash": "e319b690f66539a69eba7f10b024f08c61c7bb2d"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "e65c335d7023af66ca28a7a85f0928ad2195b99a"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "8b99ced8ab9aee33feb127ce8dbd82188b11600d"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "7b0376bf8229104d46c4601111b15dab0982bc6f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "git_blob_hash": "fe2d2ba2080f01364781ad5f87dfed1dd1aea57b"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "git_blob_hash": "f3d3fd8cfd22fd50b083980766c0c006f7500918"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "git_blob_hash": "6e6c088d4a4754301f7366a4c1fdabd19d686091"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "git_blob_hash": "f5257af1e452a820b29c8c363855f418597f6584"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "2f23c3121340c091620ffdb9d215e38b1aef9106"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "9340b500c5f820150a6b07776fe6b9f43ddec5b4"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "f8e73e7cf1968a148018389d78a25ad17a7a0fcd"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "6a2518ef8a8c5bb846bfa7a6820d3cb9f240450f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "6f5c11e7ba6e7ba74568909c3c3461598ba9e24e"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0 --output-dir outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "2f23c3121340c091620ffdb9d215e38b1aef9106"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "1dc9a538682c43c8d59cb1a67e760509707c67b4"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "9340b500c5f820150a6b07776fe6b9f43ddec5b4"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "f8e73e7cf1968a148018389d78a25ad17a7a0fcd"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "6a2518ef8a8c5bb846bfa7a6820d3cb9f240450f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "6f5c11e7ba6e7ba74568909c3c3461598ba9e24e"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "1aa3252396549d784eaf6fe13fefcf5147caf480"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "d73a4aeaa4cab1bde8be158645b4087f38ae37ed"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "d07cb73dcd15ca8f87d4c2042ae3015c8b67742e"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "e13ddb7cd0e65c7926b7cb265356bb106a6ec62e"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "727f5c2bcafb9746f73f3e741a277b4156c61567"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "80abf2611d98b80b829736577bf6798317d275e0"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "5055859fea0eeb0ee6574fee4f37bad75ce05d2c"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "4b37dc3159563464999b034fb305babf1921ade2"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "727f5c2bcafb9746f73f3e741a277b4156c61567"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "80abf2611d98b80b829736577bf6798317d275e0"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "5055859fea0eeb0ee6574fee4f37bad75ce05d2c"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "c8e052c260d94390a1b946001bf8dd55f5c7d64c"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "700499f801eb927465f06487087cc1e44f1da687"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "d901736485367750aa8e64fb47dc3f5dc3c01910"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "ce626a3be6e7433b978c9931e533bc9d77bf25cf"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10 --sweep, --passes 1,2,3,4,5,6,7,8,9,10",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "git_blob_hash": "8ec5bf6886f20b150fc07e17c5db83bafd80c7d9"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "664cdf3775016fed087d64fef70445d8b5ad7b50"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "db9cf765e3e0696ddb5228c7306119557b18493c"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "850c4cb3e895f5a320f79913d9c97a8742eb73d1"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "b00113dab519a66bb55a2c612a131897ac47e3a2"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "git_blob_hash": "663fd9afdc986501524bbe0c90717f62d5a0b104"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "git_blob_hash": "d5400d9443af55bd72c7ba4445baf367531821f4"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "git_blob_hash": "1b2bdb4ddd60b87ee2a3fbc4bb9878395a7d18e3"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "git_blob_hash": "f1d7222fe26ff2de9b3d3ab64edbd6dae4b76f47"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "664cdf3775016fed087d64fef70445d8b5ad7b50"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "db9cf765e3e0696ddb5228c7306119557b18493c"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "850c4cb3e895f5a320f79913d9c97a8742eb73d1"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "b00113dab519a66bb55a2c612a131897ac47e3a2"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "24116eac1a22e86cf27d54ad7f1e6d8d5500b6fd"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "cc2f97b10f017e36955d3db398770e241eb00bb0"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "1a2e7388a49409424efdf9dd4d0bbdc72afef80b"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "43eaeda0c0b19d580338dfd55aa7cbbd67f81808"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f9da4c156c1e1173b3549450eae5399eeb3ad7ae"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0 --output-dir outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "24116eac1a22e86cf27d54ad7f1e6d8d5500b6fd"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "110a68c8a9e5d70274feebf6acf3aa6b732adcc9"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "cc2f97b10f017e36955d3db398770e241eb00bb0"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "1a2e7388a49409424efdf9dd4d0bbdc72afef80b"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "43eaeda0c0b19d580338dfd55aa7cbbd67f81808"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f9da4c156c1e1173b3549450eae5399eeb3ad7ae"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "22fc8c698d2478b6ae72e0040a4987f625c3f68b"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f405cdcde2d9fd36a426a2fc2667f23bf439ef61"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "d0652a191173f72df58453a9f92a23f1f7dc3e8d"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "b963ca2d802b58c56dc7a14614cea187148bafb6"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bf7575ca9cbd80606d24775d12c4b606ff241ad2"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "a0f192e9ed2e0047396e12ffabcd511c7427c48c"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "7a19cbe1196f487440a532abc819f1e69ef3eba7"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bb473eb837df94e66a21845fb163f2438faba99f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "5455cdd31ea099f6cea55cfea5bc977e0acb0725"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bf7575ca9cbd80606d24775d12c4b606ff241ad2"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "e60efa1a138c52fae3954f4e7cafadb2acd3d353"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "a0f192e9ed2e0047396e12ffabcd511c7427c48c"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "7a19cbe1196f487440a532abc819f1e69ef3eba7"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bb473eb837df94e66a21845fb163f2438faba99f"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "5455cdd31ea099f6cea55cfea5bc977e0acb0725"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "fdae2cbc986813781e08d609a832143805ff3b1d"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "3ab10f0417b272b54904d06b26275800153bb0b9"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "81db8d271d76fabebd97cc7cc4b7daf699f6930d"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "70b787acec8bbe86b0e0b3d2368c1df245791de9"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10 --sweep, --passes 1,2,3,4,5,6,7,8,9,10",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "git_blob_hash": "869d29d9a43a94de1e7b635bf0592adea7374391"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "8a752a89bebde97cd19acdb0ac10d9733e40a038"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "85670f68eabd44aab166d8df37bdb1b332effda7"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "393e00372a86c040013033655d56c1bd06a5f8c3"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "git_blob_hash": "cb6b5315be8ad4ad7dd3a9a7f3e07ab8961d44cd"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "git_blob_hash": "a497ed7d73cc3e6f0d7f459d9990f39d0bfda90c"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "git_blob_hash": "a201cca90e0802fc1dc12174b61ef3d5cc874752"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "git_blob_hash": "52e5fd4536bdc27d8b5e0f8dff0fbbcc0f1d4a1e"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "8a752a89bebde97cd19acdb0ac10d9733e40a038"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "85670f68eabd44aab166d8df37bdb1b332effda7"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "393e00372a86c040013033655d56c1bd06a5f8c3"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bb8adbd367f670a425074b4a65b1078b461ea585"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "2f0d346cef410cb4910fa33b2a8ac5fff28f0810"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "b8d6c0378903b8624d1be63c7dec1edf64e1a963"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "7c49bd60a5128706e60b64460349959dce99786b"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f54350dca82f619bc4455123bd49f82f77f03d8d"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0 --output-dir outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "bb8adbd367f670a425074b4a65b1078b461ea585"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "9a53183f9f4ce399d7d0d74e5fcf6e3f0bf1886e"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "2f0d346cef410cb4910fa33b2a8ac5fff28f0810"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "b8d6c0378903b8624d1be63c7dec1edf64e1a963"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "7c49bd60a5128706e60b64460349959dce99786b"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f54350dca82f619bc4455123bd49f82f77f03d8d"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "5d38d069ab23f670dc5487dabcfed5dde57e2b20"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "f70f90e637c6eaca760bdf1826f5e01b98c08cfb"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "36091be6d761de2aa5749c8df0afbed27a597b41"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+          "git_blob_hash": "d67ec366556c650f30dba7acc4df631f2fb85599"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 09fe46a7f 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t0.3 --output-dir outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "33e3665beb102b56b2d473f1d8e3dfff43f489da"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "f4000ba9965f85c7a69e117bb8ad4128940a404c"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "7ee66603f415ecb1c1328a2e7c122cd58c506a46"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "82fbe226516c50ec4577018f3d5f2ab20c6cbe41"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "9f54f7b037a087e25673bdb711bdf3d328a8e534"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t0.3 --output-dir outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "33e3665beb102b56b2d473f1d8e3dfff43f489da"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "711547dfb99da0851be711c6db947525d9097e20"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "f4000ba9965f85c7a69e117bb8ad4128940a404c"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "7ee66603f415ecb1c1328a2e7c122cd58c506a46"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "82fbe226516c50ec4577018f3d5f2ab20c6cbe41"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "9f54f7b037a087e25673bdb711bdf3d328a8e534"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "2a627261e2e3b9ed0157125b918ce624bdb33c17"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "b7a63f8f9479ddefdbb1133ad1aa7eda9087da90"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "63bf5348fd4883074bdd4d1433b50d346a977ffe"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "b79c073d8f9052608588806148a61e10c9a31325"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t0.7 --output-dir outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "9a9beae5063b9c22176ae150595b0bdcfe9d6653"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "e259e477a98ff1855cf1c5ddb893975a9a508ff9"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t0.7 --output-dir outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "git_blob_hash": "abb32a9cded26659a466cc06d24f41e616992627"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "9a9beae5063b9c22176ae150595b0bdcfe9d6653"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "e259e477a98ff1855cf1c5ddb893975a9a508ff9"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "git_blob_hash": "381d29cbe6ab71efe25ba441aa708e66d8696a85"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "git_blob_hash": "4fec3f62ab9d73061fae9fc8be6d76bfaf843028"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "git_blob_hash": "0211b8e391c373f65dee4ce94e206f85a613293a"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "git_blob_hash": "f76a3bb1c1ab814e798282a70855c0c05a3b459e"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t1.0 --output-dir outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "505fac1e31d9d5aaa8231fac30340cfa5affd7ae"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "867c72291e6f1cbb8d23cc8517d34e6c7b7eed24"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "29e75226ffaaf914f6b1a5da7ea1d201fb362d1b"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "8242f863061c0326a42ba1dec0e0ed1f7034ae9e"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "477589ede1993b1402ca0142e03d0a920a37dfb0"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/image-n5/image-t1.0 --output-dir outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "505fac1e31d9d5aaa8231fac30340cfa5affd7ae"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "40f7e2c49188d74fcd7b64bd39ae6dcd169a7e46"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "867c72291e6f1cbb8d23cc8517d34e6c7b7eed24"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "29e75226ffaaf914f6b1a5da7ea1d201fb362d1b"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "8242f863061c0326a42ba1dec0e0ed1f7034ae9e"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "477589ede1993b1402ca0142e03d0a920a37dfb0"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "04f647bf3e19175b016a8252a2837dc988b76997"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "e96ea02511047cb859d0dc2d24ff88e64bb74228"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "d3c64aaf9d9d084b637cf8603a366dc381590b64"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "25f66988a108a26c53c96e0047f35884740104a3"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in 2e8cc6481 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/scale-4-optimal-487 --output-dir outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5 --sweep, --passes 1,2,3,4,5",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "b39e4203cada8781c47137983c4a55bce6803756"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_2/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "72c9eecc4f588054648bed85ec45115b3c43e83f"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_3/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "98a58f740fdfd9a566220c9b3f46c6b5663c32f8"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_4/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "ce5854ab3d0c51589de5adf2d26d64d615ee6ad3"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_5/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "35ac1fb173bad4d1465db2d80ee1fb466cc42a1b"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in c3e8e0701 2026-04-17; its voting_summary.json records total_passes 5 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 5 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"EXACT\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    },
+    {
+      "schema": "assessed-area/1",
+      "pool": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus/consensus_t1.geojson",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "builder": "scripts/merge_passes.py --input-dir outputs/h11/pv-diag-384/scale-4-optimal-487 --output-dir outputs/h11/pv-diag-384/scale-4-optimal-487/consensus --sweep, no --passes (every run_* of the cell)",
+      "pass_provenance": [
+        {
+          "pass_id": "run_1",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "b39e4203cada8781c47137983c4a55bce6803756"
+        },
+        {
+          "pass_id": "run_10",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_10/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "81cc54b033df81d33c1fedf1056880bf624c5a73"
+        },
+        {
+          "pass_id": "run_2",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_2/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "72c9eecc4f588054648bed85ec45115b3c43e83f"
+        },
+        {
+          "pass_id": "run_3",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_3/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "98a58f740fdfd9a566220c9b3f46c6b5663c32f8"
+        },
+        {
+          "pass_id": "run_4",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_4/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "ce5854ab3d0c51589de5adf2d26d64d615ee6ad3"
+        },
+        {
+          "pass_id": "run_5",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_5/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "35ac1fb173bad4d1465db2d80ee1fb466cc42a1b"
+        },
+        {
+          "pass_id": "run_6",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_6/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "14805563a04a16f8ccb8cf5f6ba6489b7543141b"
+        },
+        {
+          "pass_id": "run_7",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_7/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "7025a4d95eb75760e96d1faf428e0ffba8d91944"
+        },
+        {
+          "pass_id": "run_8",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_8/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "0e576f5501f0edb028acb9749c39daa089110443"
+        },
+        {
+          "pass_id": "run_9",
+          "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_9/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+          "git_blob_hash": "bc4228d81b4e6f234fef07fb7c206972733a32cb"
+        }
+      ],
+      "clip": null,
+      "evidence": [
+        "committed in c3e8e0701 2026-04-17; its voting_summary.json records total_passes 10 and the threshold counts only",
+        "rebuild: merge_passes.py at 362f1a305 (the version in force on 2026-04-17, name order) from exactly these files reproduces all 10 consensus_t*.geojson of the directory byte for byte and every threshold count in its voting_summary.json",
+        "merger verdicts: {\"april\": \"EXACT\", \"current\": \"differs\"} (numeric order since 75d7c8d4c)",
+        "reports/d51-ladder-provenance-2026-10-08-scripts/rebuild_pools.py; out/rebuild_pools.json"
+      ]
+    }
+  ],
+  "pass_tilings": [
+    {
+      "schema": "pass-tiling/1",
+      "label": "flash-minimal-text-n30-t07-text-t0.7, runs 1-10 (March 2026 batch passes)",
+      "manifest": "inputs/tiles_384/full_evaluation_manifest.json",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "evidence": [
+        "writer: lib_batch_api.py 1.5.0 at 2126c3efa, lib_batch_api.py 1.5.0 at 9017ca7bc, lib_batch_api.py 1.5.0 at af571fc69 (each pass's meta environment); the metas' configuration snapshot is the prompt config only, with no manifest_path",
+        "study YAML at each writer commit: studies/h11-384-flash-minimal-text-n30-t07.yaml, the one whose execution.output_dir and condition name are this cell's; inputs.manifest = inputs/tiles_384/full_evaluation_manifest.json; its condition's prompt config and temperature equal each meta's configuration",
+        "scripts/lib_batch_api.py at each writer commit: prepare_batch_unit reads inputs['manifest'] and resolves tiles with _resolve_tile_paths(manifest_path)",
+        "inputs/tiles_384/full_evaluation_manifest.json: bytes at each writer commit equal its bytes now (commits touching it: 8b52ab63b)",
+        "tile for tile: each pass's .tiles.json completed ∪ failed equals the 487-tile manifest exactly, and its processed_tiles lie inside it; the only other registered tiling with the same names (inputs/grid-2026-08-18/grid_384_ov048_manifest.json) is absent at every writer commit and has identical polygons, so the area cannot depend on which is named",
+        "unprocessed tiles (the area they leave out stays out): none",
+        "checks: reports/d51-ladder-provenance-2026-10-08-scripts/t07_tilings.py; out/t07_tilings.json"
+      ],
+      "passes": [
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "8a752a89bebde97cd19acdb0ac10d9733e40a038"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "85670f68eabd44aab166d8df37bdb1b332effda7"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "393e00372a86c040013033655d56c1bd06a5f8c3"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "git_blob_hash": "cb6b5315be8ad4ad7dd3a9a7f3e07ab8961d44cd"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "git_blob_hash": "a497ed7d73cc3e6f0d7f459d9990f39d0bfda90c"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "git_blob_hash": "a201cca90e0802fc1dc12174b61ef3d5cc874752"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "git_blob_hash": "52e5fd4536bdc27d8b5e0f8dff0fbbcc0f1d4a1e"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "git_blob_hash": "869d29d9a43a94de1e7b635bf0592adea7374391"
+        }
+      ]
+    },
+    {
+      "schema": "pass-tiling/1",
+      "label": "flash-high-text-n5-text-t0.7, runs 1-10 (March 2026 batch passes)",
+      "manifest": "inputs/tiles_384/full_evaluation_manifest.json",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "evidence": [
+        "writer: lib_batch_api.py 1.5.0 at 2126c3efa, lib_batch_api.py 1.5.0 at 765cb232a, lib_batch_api.py 1.5.0 at 9017ca7bc, lib_batch_api.py 1.5.0 at e55c9c3ad (each pass's meta environment); the metas' configuration snapshot is the prompt config only, with no manifest_path",
+        "study YAML at each writer commit: studies/h11-384-flash-high-text-n5.yaml, the one whose execution.output_dir and condition name are this cell's; inputs.manifest = inputs/tiles_384/full_evaluation_manifest.json; its condition's prompt config and temperature equal each meta's configuration",
+        "scripts/lib_batch_api.py at each writer commit: prepare_batch_unit reads inputs['manifest'] and resolves tiles with _resolve_tile_paths(manifest_path)",
+        "inputs/tiles_384/full_evaluation_manifest.json: bytes at each writer commit equal its bytes now (commits touching it: 8b52ab63b)",
+        "tile for tile: each pass's .tiles.json completed ∪ failed equals the 487-tile manifest exactly, and its processed_tiles lie inside it; the only other registered tiling with the same names (inputs/grid-2026-08-18/grid_384_ov048_manifest.json) is absent at every writer commit and has identical polygons, so the area cannot depend on which is named",
+        "unprocessed tiles (the area they leave out stays out): none",
+        "checks: reports/d51-ladder-provenance-2026-10-08-scripts/t07_tilings.py; out/t07_tilings.json"
+      ],
+      "passes": [
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+          "git_blob_hash": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+          "git_blob_hash": "664cdf3775016fed087d64fef70445d8b5ad7b50"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+          "git_blob_hash": "db9cf765e3e0696ddb5228c7306119557b18493c"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+          "git_blob_hash": "850c4cb3e895f5a320f79913d9c97a8742eb73d1"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+          "git_blob_hash": "b00113dab519a66bb55a2c612a131897ac47e3a2"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+          "git_blob_hash": "663fd9afdc986501524bbe0c90717f62d5a0b104"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+          "git_blob_hash": "d5400d9443af55bd72c7ba4445baf367531821f4"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+          "git_blob_hash": "1b2bdb4ddd60b87ee2a3fbc4bb9878395a7d18e3"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+          "git_blob_hash": "f1d7222fe26ff2de9b3d3ab64edbd6dae4b76f47"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+          "git_blob_hash": "8ec5bf6886f20b150fc07e17c5db83bafd80c7d9"
+        }
+      ]
+    },
+    {
+      "schema": "pass-tiling/1",
+      "label": "image-n5-image-t0.7, runs 1-10 (March 2026 batch passes)",
+      "manifest": "inputs/tiles_384/full_evaluation_manifest.json",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "evidence": [
+        "writer: lib_batch_api.py 1.5.0 at 2f425fc8a, lib_batch_api.py 1.5.0 at 8b52ab63b (each pass's meta environment); the metas' configuration snapshot is the prompt config only, with no manifest_path",
+        "study YAML at each writer commit: studies/h11-384-pv-diag-image-n5.yaml, the one whose execution.output_dir and condition name are this cell's; inputs.manifest = inputs/tiles_384/full_evaluation_manifest.json; its condition's prompt config and temperature equal each meta's configuration",
+        "scripts/lib_batch_api.py at each writer commit: prepare_batch_unit reads inputs['manifest'] and resolves tiles with _resolve_tile_paths(manifest_path)",
+        "inputs/tiles_384/full_evaluation_manifest.json: bytes at each writer commit equal its bytes now (commits touching it: 8b52ab63b)",
+        "tile for tile: each pass's .tiles.json completed ∪ failed equals the 487-tile manifest exactly, and its processed_tiles lie inside it; the only other registered tiling with the same names (inputs/grid-2026-08-18/grid_384_ov048_manifest.json) is absent at every writer commit and has identical polygons, so the area cannot depend on which is named",
+        "unprocessed tiles (the area they leave out stays out): {\"outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson\": [\"K-35-053-3_Elenovo_x1344_y672.png\"], \"outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson\": [\"K-35-053-3_Elenovo_x1344_y672.png\"]}",
+        "checks: reports/d51-ladder-provenance-2026-10-08-scripts/t07_tilings.py; out/t07_tilings.json"
+      ],
+      "passes": [
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "9a9beae5063b9c22176ae150595b0bdcfe9d6653"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "e259e477a98ff1855cf1c5ddb893975a9a508ff9"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "git_blob_hash": "381d29cbe6ab71efe25ba441aa708e66d8696a85"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "git_blob_hash": "4fec3f62ab9d73061fae9fc8be6d76bfaf843028"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "git_blob_hash": "0211b8e391c373f65dee4ce94e206f85a613293a"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "git_blob_hash": "f76a3bb1c1ab814e798282a70855c0c05a3b459e"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "git_blob_hash": "abb32a9cded26659a466cc06d24f41e616992627"
+        }
+      ]
+    },
+    {
+      "schema": "pass-tiling/1",
+      "label": "flash-high-image-n5-image-t0.7, runs 1-10 (March 2026 batch passes)",
+      "manifest": "inputs/tiles_384/full_evaluation_manifest.json",
+      "status": "declared-retrospectively",
+      "declared": "2026-10-08 (PI ruling D57 (3))",
+      "evidence": [
+        "writer: lib_batch_api.py 1.5.0 at 2126c3efa, lib_batch_api.py 1.5.0 at 765cb232a, lib_batch_api.py 1.5.0 at 9017ca7bc (each pass's meta environment); the metas' configuration snapshot is the prompt config only, with no manifest_path",
+        "study YAML at each writer commit: studies/h11-384-flash-high-image-n5.yaml, the one whose execution.output_dir and condition name are this cell's; inputs.manifest = inputs/tiles_384/full_evaluation_manifest.json; its condition's prompt config and temperature equal each meta's configuration",
+        "scripts/lib_batch_api.py at each writer commit: prepare_batch_unit reads inputs['manifest'] and resolves tiles with _resolve_tile_paths(manifest_path)",
+        "inputs/tiles_384/full_evaluation_manifest.json: bytes at each writer commit equal its bytes now (commits touching it: 8b52ab63b)",
+        "tile for tile: each pass's .tiles.json completed ∪ failed equals the 487-tile manifest exactly, and its processed_tiles lie inside it; the only other registered tiling with the same names (inputs/grid-2026-08-18/grid_384_ov048_manifest.json) is absent at every writer commit and has identical polygons, so the area cannot depend on which is named",
+        "unprocessed tiles (the area they leave out stays out): none",
+        "checks: reports/d51-ladder-provenance-2026-10-08-scripts/t07_tilings.py; out/t07_tilings.json"
+      ],
+      "passes": [
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+          "git_blob_hash": "b3294b423704106af1eaa9b543f613120a7538de"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+          "git_blob_hash": "e65c335d7023af66ca28a7a85f0928ad2195b99a"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+          "git_blob_hash": "8b99ced8ab9aee33feb127ce8dbd82188b11600d"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+          "git_blob_hash": "7b0376bf8229104d46c4601111b15dab0982bc6f"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+          "git_blob_hash": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+          "git_blob_hash": "fe2d2ba2080f01364781ad5f87dfed1dd1aea57b"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+          "git_blob_hash": "f3d3fd8cfd22fd50b083980766c0c006f7500918"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+          "git_blob_hash": "6e6c088d4a4754301f7366a4c1fdabd19d686091"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+          "git_blob_hash": "f5257af1e452a820b29c8c363855f418597f6584"
+        },
+        {
+          "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+          "git_blob_hash": "e319b690f66539a69eba7f10b024f08c61c7bb2d"
+        }
       ]
     }
   ]
