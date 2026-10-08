@@ -1,0 +1,39 @@
+INFO: g3-text-g3v/best               (0.15, 10) F1 0.8916 0.8905 0.8932
+INFO: g3-text-g3v/op                 (0.15, 10) F1 0.8916 0.8905 0.8932
+INFO: g3-text-g3v/ladder5            (0.15, 5) F1 0.8849 0.8849 0.8868
+INFO: g3-image-g3v/best              (0.15, 10) F1 0.8393 0.8364 0.8393
+INFO: g3-image-g3v/op                (0.15, 9) F1 0.8331 0.8304 0.8341
+INFO: g3-image-g3v/ladder5           (0.15, 5) F1 0.8239 0.8231 0.8269
+INFO: g37-text-g3v/best              (0.1, 5) F1 0.9154 0.9131 0.9097
+INFO: g37-text-g3v/op                (0.1, 5) F1 0.9154 0.9131 0.9097
+INFO: g37-text-g37v/best             (0.75, 5) F1 0.9265 0.9271 0.9283
+INFO: g37-text-g37v/op               (0.8, 5) F1 0.9265 0.9282 0.9294
+INFO: g37-image-g3v/best             (0.1, 5) F1 0.9160 0.9218 0.9158
+INFO: g37-image-g3v/op               (0.1, 5) F1 0.9160 0.9218 0.9158
+INFO: g37-image-g37v/best            (0.88, 5) F1 0.9288 0.9272 0.9282
+INFO: g37-image-g37v/op              (0.9, 5) F1 0.9288 0.9294 0.9292
+INFO: g37-image-cache-g3v/best       (0.1, 5) F1 0.9318 0.9343 0.9307
+INFO: g37-image-cache-g3v/op         (0.1, 5) F1 0.9318 0.9343 0.9307
+INFO: g37-image-cache-g37v/best      (0.95, 5) F1 0.9363 0.9377 0.9393
+INFO: g37-image-cache-g37v/op        (0.9, 5) F1 0.9352 0.9377 0.9394
+INFO: g3-text-temp1-g3v/best         (0.15, 5) F1 0.8824 0.8814 0.8786
+INFO: g3-image-temp1-g3v/best        (0.15, 5) F1 0.8242 0.8228 0.8210
+INFO: gates passed: 20 committed sets reproduced by replicate 1 (34 s)
+INFO: g3                                 +0.0523 ratio 1.50 -> 1.53 (break-even verifier SD 0.0144)
+INFO: carried-verifier                   -0.0006 ratio 0.03 -> 0.02 (break-even verifier SD 0.0000)
+INFO: all-3.7                            -0.0023 ratio 0.10 -> 0.10 (break-even verifier SD 0.0000)
+INFO: g3-k5                              +0.0609 ratio 2.17 -> 2.22 (break-even verifier SD 0.0197)
+INFO: g3-t1-k5                           +0.0582 ratio 1.87 -> 1.91 (break-even verifier SD 0.0180)
+INFO: fifth-leg-g3v                      -0.0164 ratio 0.69 -> 0.69 (break-even verifier SD 0.0000)
+INFO: fifth-leg-g37v                     -0.0098 ratio 0.43 -> 0.45 (break-even verifier SD 0.0000)
+INFO: carried-verifier minus g3          -0.0529 ratio 1.24 -> 1.27 (break-even verifier SD 0.0087)
+INFO: all-3.7 minus g3                   -0.0547 ratio 1.28 -> 1.33 (break-even verifier SD 0.0093)
+INFO: carried-verifier minus g3-k5       -0.0615 ratio 1.66 -> 1.69 (break-even verifier SD 0.0129)
+INFO: all-3.7 minus g3-k5                -0.0633 ratio 1.70 -> 1.78 (break-even verifier SD 0.0134)
+INFO: carried-verifier minus g3-t1-k5    -0.0588 ratio 1.49 -> 1.52 (break-even verifier SD 0.0116)
+INFO: all-3.7 minus g3-t1-k5             -0.0605 ratio 1.53 -> 1.59 (break-even verifier SD 0.0121)
+INFO: fifth-leg-g3v minus g3             -0.0687 ratio 1.60 -> 1.65 (break-even verifier SD 0.0141)
+INFO: fifth-leg-g37v minus g3            -0.0621 ratio 1.47 -> 1.53 (break-even verifier SD 0.0121)
+INFO: fifth-leg-g3v minus g3-t1-k5       -0.0746 ratio 1.87 -> 1.93 (break-even verifier SD 0.0164)
+INFO: fifth-leg-g37v minus g3-t1-k5      -0.0680 ratio 1.74 -> 1.81 (break-even verifier SD 0.0145)
+INFO: VERIFIER SD COMPLETE -> /home/shawn/Code/map-reader-llm/results/modality-bridge-2026-10-07/verifier-sd (34 s)
