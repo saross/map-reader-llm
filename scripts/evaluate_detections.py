@@ -1030,6 +1030,7 @@ _DETECTION_SCOPE_COUNTS: tuple[str, ...] = (
     "n_out_of_frame",
     "n_out_of_frame_cross_sheet",
     "n_origin_restored",
+    "n_origin_switched",
     "n_origin_only",
     "n_origin_unrecognised",
     "n_unattributed",
@@ -1066,7 +1067,8 @@ def describe_detection_scope(
         key: diagnostics[key]
         for key in (
             "n_out_of_frame", "n_out_of_frame_cross_sheet",
-            "n_origin_restored", "n_origin_only", "n_unattributed_in_frame",
+            "n_origin_restored", "n_origin_switched", "n_origin_only",
+            "n_unattributed_in_frame",
         )
         if diagnostics.get(key)
     }
