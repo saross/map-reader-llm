@@ -50,6 +50,15 @@ from typing import Any
 
 BOARD = "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson"
 TILING = "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+#: The nine ladders whose K = 1 / K = 3 rungs the gate determined before D57 (3)
+#: (PR #26 survey, ``ladders_new.json`` → ``phase2_gate_survey``).
+DETERMINABLE_POOLS = {
+    "flash-minimal-text-n30-t07-text-t0.3", "flash-minimal-text-n30-t07-text-t1.0",
+    "flash-high-text-n5-text-t0.3", "flash-high-text-n5-text-t1.0",
+    "image-n5-image-t0.3", "image-n5-image-t1.0",
+    "flash-high-image-n5-image-t0.3", "flash-high-image-n5-image-t1.0",
+    "scale-4-optimal-487",
+}
 
 
 def survey(tables: Any, laa: Any, declarations: Path) -> list[dict[str, Any]]:
@@ -83,12 +92,12 @@ def survey(tables: Any, laa: Any, declarations: Path) -> list[dict[str, Any]]:
 def validation(code: Path, tables: Any, laa: Any, tilings: Path, rebuild: dict,
                scratch: Path) -> list[dict[str, Any]]:
     """Declared-route areas against recorded-route areas on known rungs."""
-    pools = []
-    for row in rebuild["rows"]:
-        if row["role"] != "validation" or row["merger"] != "april" or \
-                row["pool"] == "g384_ov192_g37":
-            continue
-        pools.append(row)
+    # Only the ladders whose K = 1 / K = 3 areas the gate determined BEFORE
+    # D57 (3) — the T 0.7 ladders' rungs now depend on Task A's own
+    # declarations, so they cannot validate it.
+    pools = [row for row in rebuild["rows"]
+             if row["role"] == "validation" and row["merger"] == "april"
+             and row["pool"] in DETERMINABLE_POOLS]
     tiling_entries = json.loads(tilings.read_text())["pass_tilings"]
     declared_pools = []
     for row in pools:

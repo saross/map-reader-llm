@@ -113,8 +113,13 @@ def counts(lam: Any, det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
 
 
 def score(lam: Any, det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
-          bounds: gpd.GeoDataFrame, gap: Any) -> dict[str, Any]:
-    """F1 / P / R / tile MCC and the gap counts for one detection set."""
+          bounds: gpd.GeoDataFrame, gap: Any, gap_tiles: list[str]) -> dict[str, Any]:
+    """F1 / P / R / tile MCC and the gap counts for one detection set.
+
+    ``gap_tile_confusion`` records how the tile confusion classed each tile
+    that holds part of the gap (its reference and detection counts), so a
+    tile-MCC move, or its absence, can be traced to those tiles.
+    """
     c = counts(lam, det, ref, bounds)
     tp, fp, fn = c["tp"], c["fp"], c["fn"]
     p = tp / (tp + fp) if tp + fp else 0.0
@@ -126,9 +131,13 @@ def score(lam: Any, det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
         if abs(f2 - f1) > 1e-12 or abs(p2 - p) > 1e-12 or abs(r2 - r) > 1e-12:
             raise SystemExit("counts disagree with calculate_f1_internal")
     mcc = None
+    gap_confusion = []
     if len(det):
         tc = lam.calculate_tile_classification(det, ref, bounds, tile_join="id")
         mcc = None if "error" in tc else tc.get("mcc")
+        gap_confusion = [{k: t[k] for k in ("tile_name", "n_references", "n_detections",
+                                            "classification")}
+                         for t in tc.get("tile_details", []) if t["tile_name"] in gap_tiles]
     denom = 2 * tp + fp + fn
     return {
         "f1": f1, "precision": p, "recall": r, "tile_mcc": mcc,
@@ -136,6 +145,7 @@ def score(lam: Any, det: gpd.GeoDataFrame, ref: gpd.GeoDataFrame,
         "gap_mounds_found": sum(1 for g in c["matched_refs"] if g.intersects(gap)),
         "gap_tp_detections": sum(1 for g in c["matched_dets"] if g.intersects(gap)),
         "gap_fp_detections": sum(1 for g in c["unmatched_dets"] if g.intersects(gap)),
+        "gap_tile_confusion": gap_confusion,
     }
 
 
@@ -208,9 +218,9 @@ def main() -> int:
                 clipped, removed = laa.clip_points_to_area(det, common)
                 committed = next((b.get("f1") for b in ev["summary"]["buffers"]
                                   if b.get("buffer_metres") == BUFFER_M), None)
-                i = score(lam, det, ref, bounds, gap)
-                ii = score(lam, clipped, ref, bounds, gap)
-                iii = score(lam, clipped, ref, shrunk, gap)
+                i = score(lam, det, ref, bounds, gap, gap_tiles)
+                ii = score(lam, clipped, ref, bounds, gap, gap_tiles)
+                iii = score(lam, clipped, ref, shrunk, gap, gap_tiles)
                 d = i["denominator"]
                 estimate = {
                     "per_lost_mound": (2 - i["f1"]) / d if d else None,
