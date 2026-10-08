@@ -14,7 +14,8 @@ to a temporary directory:
   :class:`AssessedAreaMismatchError` (exit 3 from the CLI and the gate);
 * **clip** — with ``clip_to_common`` the comparison names the clip and the
   area each pool loses, and the clip helpers drop exactly the points
-  outside it; the ladder builder re-scores its points clipped;
+  outside it; the ladder builder re-scores its points clipped; a clip
+  never removes a reference (D51 option 1);
 * **undetermined** — a union with no record, no declaration and no pass
   provenance is undetermined with a reason, and the comparison raises
   :class:`AssessedAreaUndeterminedError` (exit 4) unless explicitly allowed,
@@ -411,6 +412,41 @@ def test_the_ladder_builder_refuses_and_clips(world):
     assert point["n_removed"] == 1
     assert (point["precision"], point["recall"]) == (1.0, 0.5)
     assert point["clip"] == laa.COMMON_AREA_CLIP_NAME
+
+
+def write_evaluation(tmp: Path, tiling: Path) -> Path:
+    """Two references and two matching detections, one in each half of the strip.
+
+    The clip of the ``world`` fixture (tiles x0 and x1) holds one of each.
+    """
+    refs = write_points(tmp / "refs.geojson", [(500, 500), (2500, 500)], Map=["S", "S"])
+    detections = write_points(tmp / "dets.geojson", [(501, 500), (2501, 500)],
+                              source_tile=["S_x0_y0.png", "S_x2_y0.png"])
+    evaluation = tmp / "evaluation.json"
+    evaluation.write_text(json.dumps({"_metadata": {"input_files": {
+        "detections": str(detections), "bounds": str(tiling),
+        "ground_truth": str(refs)}}}))
+    return evaluation
+
+
+def test_a_clip_never_removes_references(world):
+    """D51 option 1: clip the detections, keep the frame's reference set whole.
+
+    A direct pin on :func:`rescore_clipped_evaluation`. The PR #26 review's
+    mutation M7 (clip the references too) was caught only by the ladder
+    builder's wiring test. Here the clip removes the detection in the east
+    half (precision 1.0), and the east reference stays a false negative
+    (recall 0.5); had the clip removed that reference too, recall would read
+    1.0.
+    """
+    evaluation = write_evaluation(world["tmp"], world["tiling"])
+    area = gpd.read_file(world["clip"]).union_all()
+    out = laa.rescore_clipped_evaluation(evaluation, area, buffer_m=20)
+    assert (out["n_detections"], out["n_removed"]) == (1, 1)
+    assert (out["precision"], out["recall"]) == (1.0, 0.5)
+    # The same cell unclipped finds both: the 0.5 is the clip's doing.
+    whole = gpd.read_file(world["tiling"]).union_all()
+    assert laa.rescore_clipped_evaluation(evaluation, whole)["recall"] == 1.0
 
 
 def test_the_ladder_builder_refuses_a_rung_with_no_pool(world):
