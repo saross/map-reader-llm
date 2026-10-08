@@ -508,6 +508,10 @@ def floors_with_verifier(contrasts: Mapping[str, Any], floors: Mapping[str, Any]
         v_sd = [cells[x]["sd"] for x in m]
         v_up = [cells[x]["sd_ci95"][1] for x in m]
         v_pool = [pooled[cells[x]["verifier"]]["sd"] for x in m]
+        # Added after the results (not in the card's § 7 plan): each cell at
+        # its family's pooled 95 % upper bound, a tighter upper reading than
+        # a single cell's two-degree-of-freedom interval.
+        v_pool_up = [pooled[cells[x]["verifier"]]["sd_ci95"][1] for x in m]
         new = {
             "floor": floor_with_verifier(p_sd, v_sd),
             "floor_upper": floor_with_verifier(p_up, v_sd),
@@ -515,6 +519,7 @@ def floors_with_verifier(contrasts: Mapping[str, Any], floors: Mapping[str, Any]
             "s3_floor": floor_with_verifier(p_s3, v_sd),
             "floor_verifier_upper": floor_with_verifier(p_sd, v_up),
             "floor_verifier_pooled": floor_with_verifier(p_sd, v_pool),
+            "floor_verifier_pooled_upper": floor_with_verifier(p_sd, v_pool_up),
         }
         ratios = {k.replace("floor", "ratio") if k != "s3_floor" else "s3_ratio":
                   abs(est) / v for k, v in new.items()}
@@ -551,7 +556,7 @@ def write_summary(path: Path, cells: Mapping[str, Any], floors: Mapping[str, Any
         w.writerow([])
         w.writerow(["kind", "label", "estimate", "committed_ratio", "ratio", "ratio_upper",
                     "ratio_direct", "s3_ratio", "ratio_verifier_upper", "ratio_verifier_pooled",
-                    "break_even_verifier_sd"])
+                    "ratio_verifier_pooled_upper", "break_even_verifier_sd"])
         for label, g in floors.items():
             nv = g["with_verifier"]
             w.writerow([g["type"], label, round(g["estimate"], 6),
@@ -559,6 +564,7 @@ def write_summary(path: Path, cells: Mapping[str, Any], floors: Mapping[str, Any
                         round(nv["ratio_upper"], 4), round(nv["ratio_direct"], 4),
                         round(nv["s3_ratio"], 4), round(nv["ratio_verifier_upper"], 4),
                         round(nv["ratio_verifier_pooled"], 4),
+                        round(nv["ratio_verifier_pooled_upper"], 4),
                         round(g["break_even_verifier_sd"], 6)])
 
 
