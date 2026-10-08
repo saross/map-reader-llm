@@ -44,10 +44,28 @@ replaces it.
   audit (`reports/s163-agent-records/run-b-floors-audit.md`); request
   folders deleted (D55 Q3: 54 folders, 35 GB; the verifier request files
   stay until Run C has compared them, then go).
-- [ ] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
+- [x] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
   further verifications of Run B's ten legs, on an agent's branch and
   sapphire; card `planning/run-c-verifier-reinvocation-2026-10-08.md`.
-  Then delete Run B's verifier request files (D55 Q3).
+  Then delete Run B's verifier request files (D55 Q3). DONE 2026-10-08:
+  twenty legs, 34,332 of 34,332 candidates booked, audited US$25.3176
+  (`outputs/modality-bridge-2026-10-07/stage2/checks/run-c-cost-audit.json`,
+  `f70cd09f3`); write-up Run B findings § 7a (`46a0720a7`). Verifier SD
+  per cell 0.0011–0.0034 (Gemini 3) and 0.0003–0.0021 (3.7); every
+  gap-change ratio rises with the measured noise in place of the 0.001
+  band (primaries 1.24 → 1.27 and 1.28 → 1.33). All three replicates were
+  scored in one run with `main`'s scorer (PR #26 unmerged); replicate 1
+  reproduces the committed sets tile for tile (§ 7a gate). Request files
+  deleted 2026-10-08: all 30 `verifier_requests.jsonl` under
+  `outputs/modality-bridge-2026-10-07/` on sapphire (3.05 GB, untracked;
+  originals under D55 Q3, the replicates' as byte-identical copies, one
+  SHA-256 per leg across its three replicates).
+- [ ] **After PR #26 merges, re-score Run B and Run C together.** Their
+  cells are not in the D50/D51 measurement's 2,727, and the 487-tile frame
+  is where origin restoration moves cells (median +0.0018, about the size
+  of the verifier SDs). Re-run `scripts/modality_bridge_verifier_sd.py`
+  so all three replicates and the floors use the new scorer at once;
+  never mix scorer versions within one SD or floor.
 - [x] **pv-diag-256 registered in place** (D55 Q5): merged 2026-10-08
   (`fbc4cb02a`). Its agent found: (a) the union sweep's verdicts now
   depend on pass order: 24 unions in 10- and 30-pass pools read STALE by
@@ -63,8 +81,10 @@ replaces it.
   discarded, so they failed silently; the floors audit record went
   unregistered and `main` failed the registry test until rebuilt with
   `.venv/bin/python`.
-- [ ] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
+- [x] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
   rows, not Gemini 3 Flash as the approval named; re-confirm with the PI.
+  DONE 2026-10-08: re-confirmed ("yes for the Gemini Flash calls"); an
+  agent is executing on branch `q4-reverify-55map-rows`.
 - [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
   (`gemini3-image-55map-2026-09-16`, `verify_k1_arm2`, `verify_k3_arm2`,
   `verify_k5_arm2`: an unescaped quote inside a string; the originals'
