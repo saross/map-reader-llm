@@ -33,7 +33,7 @@ import re
 import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable, Iterator
+from typing import Any, Callable, Iterable, Iterator
 
 import geopandas as gpd
 import numpy as np
@@ -1134,6 +1134,40 @@ ORIGIN_TILE_COLUMNS: tuple[str, ...] = (
     "source_tiles",
 )
 
+#: The study's map sheets: the stable parent catalogue a recorded origin is
+#: identified against when it names no sheet of the frame being scored (the
+#: D50 review, finding 2: Astra, 2026-10-09). It lets the scope tell an
+#: origin on a REAL sheet the frame leaves out — a frame reduced to some of
+#: the sheets a detection set was proposed on — from a tile vocabulary the
+#: study never used. The four gold-standard sheets and the 55-map
+#: generalisation set, exactly the sheets of
+#: ``inputs/vectors/bounds/384/full_evaluation_bounds.geojson`` and
+#: ``inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`` (a tier-1
+#: test holds the two equal). No name is a prefix of another, so the
+#: longest-prefix rule reads each tile name one way.
+STUDY_SHEETS: frozenset[str] = frozenset({
+    # Gold standard (four sheets).
+    "K-35-052-4_32635", "K-35-053-3_Elenovo", "K-35-062-2_Rakovski",
+    "K-35-078-1_Lesovo",
+    # 55-map generalisation set.
+    "K-35-042-3", "K-35-050-4", "K-35-051-3", "K-35-051-4", "K-35-052-2",
+    "K-35-052-3", "K-35-053-1", "K-35-053-2", "K-35-053-4_Boyadzhik",
+    "K-35-054-1_Straldzha_4326", "K-35-054-2_Atolov_4326", "K-35-054-3_Yambol",
+    "K-35-054-4_Voynika", "K-35-055-1", "K-35-055-2", "K-35-055-3",
+    "K-35-055-4", "K-35-056-3", "K-35-062-4_Asenovgrad_4326",
+    "K-35-063-1_Granit_4326", "K-35-063-2_Chirpan_4326",
+    "K-35-063-3_Tatarevo_4326", "K-35-063-4_Skobelevo_4326",
+    "K-35-064-1_Sredets_4326", "K-35-064-2_Radnevo_4326",
+    "K-35-064-3_Dimitrovgrad_4326", "K-35-064-4_Galabovo_4326",
+    "K-35-065-1_Radetski_4326", "K-35-065-2_GManastir_4326",
+    "K-35-065-3_Glavan_4326", "K-35-065-4", "K-35-066-1", "K-35-066-2",
+    "K-35-066-3", "K-35-066-4", "K-35-067-1", "K-35-067-2", "K-35-067-3",
+    "K-35-067-4", "K-35-074-1", "K-35-074-2", "K-35-074-3", "K-35-074-4",
+    "K-35-075-1", "K-35-075-2", "K-35-075-3", "K-35-075-4", "K-35-076-1",
+    "K-35-076-2", "K-35-076-3", "K-35-076-4", "K-35-077-1", "K-35-077-2",
+    "K-35-077-3", "K-35-077-4",
+})
+
 #: Quoted tokens inside a list-like string: ``'a'`` or ``"a"``.
 _QUOTED_TOKEN_RE = re.compile(r"'([^']*)'|\"([^\"]*)\"")
 
@@ -1333,6 +1367,92 @@ def _sheet_of_tile_name(name: Any, sheets_longest_first: list[str]) -> str | Non
     return None
 
 
+def frame_tile_sheets(gdf_bounds: gpd.GeoDataFrame) -> np.ndarray:
+    """Each frame tile's sheet, by the one rule both sides of the scorer use.
+
+    The detection scope puts a frame tile on the LONGEST frame sheet its
+    name starts with (:func:`_sheet_of_tile_name`); the per-sheet loop used
+    to select a sheet's tiles with a bare ``str.startswith(sheet)``, which
+    also hands sheet ``A`` every tile of a sheet ``AB``. Where one sheet
+    name is a prefix of another, references were then scoped to tiles the
+    detection side gave to the other sheet (the D50 review, finding 3).
+    Every per-sheet selection now reads this one assignment. Among the
+    study's sheets (:data:`STUDY_SHEETS`) no name is a prefix of another,
+    so on every committed frame it selects exactly the tiles
+    ``str.startswith`` selected, in the same order.
+
+    Args:
+        gdf_bounds: Frame tile polygons with a ``tile_name`` column.
+
+    Returns:
+        An object array aligned row for row with ``gdf_bounds``: each
+        tile's frame sheet, or ``None`` for a tile on no frame sheet.
+
+    Example:
+        >>> sheets = frame_tile_sheets(bounds)  # doctest: +SKIP
+        >>> bounds[sheets == "K-35-052-4_32635"]  # doctest: +SKIP
+    """
+    longest_first = sorted(frame_sheets(gdf_bounds), key=len, reverse=True)
+    return np.array(
+        [_sheet_of_tile_name(str(t), longest_first) for t in gdf_bounds["tile_name"]],
+        dtype=object,
+    )
+
+
+def _origin_sheets(
+    names: list[str],
+    frame_longest_first: list[str],
+    excluded_longest_first: list[str],
+) -> tuple[set[str], set[str]]:
+    """The frame sheets, and the excluded catalogue sheets, a row's origins name.
+
+    Each name is read once: a name on a frame sheet is that sheet's (the
+    attribution rule, unchanged), and only a name on NO frame sheet is looked
+    up among the catalogue sheets the frame leaves out, so a name can never
+    count as both inside and outside the frame.
+
+    Args:
+        names: The row's recorded origin tile names.
+        frame_longest_first: The frame's sheets, longest first.
+        excluded_longest_first: The catalogue sheets the frame leaves out,
+            longest first (:func:`_excluded_catalogue_longest_first`).
+
+    Returns:
+        ``(in_frame, excluded)``: the frame sheets named, and the excluded
+        catalogue sheets named (either may be empty).
+    """
+    in_frame: set[str] = set()
+    excluded: set[str] = set()
+    for name in names:
+        sheet = _sheet_of_tile_name(name, frame_longest_first)
+        if sheet is not None:
+            in_frame.add(sheet)
+            continue
+        other = _sheet_of_tile_name(name, excluded_longest_first)
+        if other is not None:
+            excluded.add(other)
+    return in_frame, excluded
+
+
+def _excluded_catalogue_longest_first(
+    sheet_catalogue: Iterable[str] | None,
+    frame_set: set[str],
+) -> list[str]:
+    """The catalogue sheets a frame leaves out, longest first.
+
+    Args:
+        sheet_catalogue: The parent catalogue; :data:`STUDY_SHEETS` when
+            ``None``.
+        frame_set: The frame's sheets.
+
+    Returns:
+        Catalogue sheets not in the frame, longest first (ties by name, so
+        the order is deterministic).
+    """
+    catalogue = STUDY_SHEETS if sheet_catalogue is None else frozenset(sheet_catalogue)
+    return sorted(catalogue - frame_set, key=lambda s: (-len(s), s))
+
+
 @dataclass(frozen=True)
 class DetectionScope:
     """Detections scoped to a frame under ruling D50, with the counts that show it.
@@ -1384,6 +1504,8 @@ def _empty_scope_diagnostics(n_detections: int) -> dict[str, Any]:
         "n_origin_switched": 0,
         "n_origin_only": 0,
         "n_origin_unrecognised": 0,
+        "n_origin_excluded": 0,
+        "n_origin_partly_excluded": 0,
         "n_unattributed": 0,
         "n_unattributed_in_frame": 0,
         "origin_columns": [],
@@ -1396,6 +1518,7 @@ def scope_detections_to_frame(
     gdf_bounds: gpd.GeoDataFrame,
     *,
     require_attribution: bool = True,
+    sheet_catalogue: Iterable[str] | None = None,
 ) -> DetectionScope:
     """Scope detections to a frame per sheet by tile geometry (ruling D50).
 
@@ -1425,6 +1548,22 @@ def scope_detections_to_frame(
     naming a frame sheet, or a foreign sheet's name) is *unattributed*: it
     is not scored, exactly as before the ruling, and counted.
 
+    **Reduced frames.** Attribution reads only the frame's own sheets, so it
+    depends on which sheets the caller passes. Score one sheet of a
+    multi-sheet set by handing over that sheet's tiles alone and a
+    detection seen on a sheet left out loses that origin: a row seen only on
+    the omitted sheet falls back to ``source_tile`` (and is scored on the
+    kept sheet if it names it), and a cluster seen on both is scored on the
+    kept one. Per-sheet results from reduced frames then need not sum to the
+    full frame's, and one detection can count on two sheets (the D50 review,
+    finding 2). To score sheets separately, scope the FULL frame once and
+    read its partitions (:meth:`DetectionScope.on_sheet`,
+    :func:`per_sheet_confusion`). The rule itself is unchanged here; the
+    case is made visible instead: an origin that names no frame sheet is
+    looked up in ``sheet_catalogue``, and a sheet found there, outside the
+    frame, is counted (``n_origin_excluded``, ``n_origin_partly_excluded``)
+    apart from a tile vocabulary the catalogue does not know.
+
     **Scope.** An attributed detection is kept only if it intersects one of
     its own sheet's frame tiles — the reference side's rule
     (:func:`scope_references_to_tiles`: per-tile spatial join,
@@ -1441,6 +1580,10 @@ def scope_detections_to_frame(
             origin column raises, as the scorers always have. When ``False``
             (the tile confusion, which can book detections by geometry
             alone), such a set is returned unscoped with ``applied`` false.
+        sheet_catalogue: The parent sheet catalogue an origin naming no
+            frame sheet is identified against; :data:`STUDY_SHEETS` when
+            ``None``. It feeds the two ``*_excluded`` diagnostics only and
+            never changes which rows are kept or where they are scored.
 
     Returns:
         A :class:`DetectionScope`. Its ``diagnostics`` hold:
@@ -1472,6 +1615,19 @@ def scope_detections_to_frame(
             Rows whose recorded origin names no frame sheet; attributed by
             ``source_tile`` as before the ruling (a naming-convention
             difference is likelier than a detection from another sheet set).
+        ``n_origin_excluded``
+            Of those, rows whose origin names a catalogue sheet the frame
+            leaves out: identified, but excluded by the frame. Nonzero means
+            the frame is a reduced one for this detection set (or the set
+            reaches beyond it), and the ``source_tile`` fallback may score a
+            detection on a sheet it was never seen on. The remaining
+            ``n_origin_unrecognised - n_origin_excluded`` rows name a tile
+            vocabulary the catalogue does not know.
+        ``n_origin_partly_excluded``
+            Rows attributed from their origin on a frame sheet whose origin
+            ALSO names a catalogue sheet the frame leaves out: a cluster seen
+            across the frame's edge, which a fuller frame might score on the
+            omitted sheet.
         ``n_unattributed``
             Rows on no frame sheet, not scored.
         ``n_unattributed_in_frame``
@@ -1519,16 +1675,19 @@ def scope_detections_to_frame(
     sheets = frame_sheets(gdf_bounds)
     frame_set = set(sheets)
     longest_first = sorted(sheets, key=len, reverse=True)
+    excluded_longest_first = _excluded_catalogue_longest_first(
+        sheet_catalogue, frame_set,
+    )
 
     # Which frame sheets' tiles does each detection intersect? One join
     # against every frame tile, keyed by POSITION so a non-unique input
-    # index cannot conflate rows. A tile belongs to sheet M when its name
-    # starts with M — the selection every per-sheet scorer makes for M's
-    # ``map_bounds``.
-    tile_sheet = {
-        str(t): _sheet_of_tile_name(str(t), longest_first)
-        for t in gdf_bounds["tile_name"].unique()
-    }
+    # index cannot conflate rows. A tile belongs to the longest frame sheet
+    # its name starts with — :func:`frame_tile_sheets`, the assignment the
+    # per-sheet loop (:func:`iter_sheet_scopes`) selects each sheet's tiles
+    # by, so both sides share one geometric support.
+    tile_sheet = dict(zip(
+        (str(t) for t in gdf_bounds["tile_name"]), frame_tile_sheets(gdf_bounds),
+    ))
     points = gpd.GeoDataFrame(
         geometry=gdf_det.geometry.to_numpy(), crs=gdf_det.crs,
     )
@@ -1556,7 +1715,8 @@ def scope_detections_to_frame(
     counts = {
         "n_out_of_frame": 0, "n_out_of_frame_cross_sheet": 0,
         "n_origin_restored": 0, "n_origin_switched": 0, "n_origin_only": 0,
-        "n_origin_unrecognised": 0,
+        "n_origin_unrecognised": 0, "n_origin_excluded": 0,
+        "n_origin_partly_excluded": 0,
         "n_unattributed": 0, "n_unattributed_in_frame": 0,
     }
     for pos in range(n):
@@ -1576,13 +1736,15 @@ def scope_detections_to_frame(
         # so its first entry is alphabetical, not first-seen. (Measured, the
         # two rules differ on few cells; the choice rests on that principle —
         # reports/scorer-frames-d50-d51-2026-10-08.md § 7.)
-        origin_frame = {
-            sheet for sheet in (
-                _sheet_of_tile_name(name, longest_first) for name in origin_names
-            ) if sheet is not None
-        }
+        # ``origin_excluded``: catalogue sheets it was seen on that this
+        # frame leaves out. Counted only; attribution reads the frame alone.
+        origin_frame, origin_excluded = _origin_sheets(
+            origin_names, longest_first, excluded_longest_first,
+        )
 
         if origin_frame:
+            if origin_excluded:
+                counts["n_origin_partly_excluded"] += 1
             holding = sorted(origin_frame & sheets_hit[pos])
             if source_sheet is not None and source_sheet in origin_frame:
                 if source_sheet in sheets_hit[pos] or not holding:
@@ -1602,13 +1764,17 @@ def scope_detections_to_frame(
                 else:
                     counts["n_origin_only"] += 1
         else:
-            # No recorded origin, or one naming no frame sheet. The latter is
-            # far more likely a naming-convention difference than a detection
-            # imported from another sheet set, so ``source_tile`` decides as
-            # it always has — and the row is counted, so a reader can see it.
+            # No recorded origin, or one naming no frame sheet. ``source_tile``
+            # decides as it always has, and the row is counted, so a reader
+            # can see it. The catalogue separates the two ways an origin can
+            # name no frame sheet: a study sheet the frame leaves out (a
+            # reduced frame, ``n_origin_excluded``), or a tile vocabulary the
+            # study never used (the rest of ``n_origin_unrecognised``).
             sheet = source_sheet
             if origin_names:
                 counts["n_origin_unrecognised"] += 1
+                if origin_excluded:
+                    counts["n_origin_excluded"] += 1
 
         if sheet is None or sheet not in frame_set:
             counts["n_unattributed"] += 1
@@ -1676,12 +1842,18 @@ def iter_sheet_scopes(
     once, so the detection side and the reference side are scoped the same
     way at every call site (ruling D50). References: the sheet's rows by
     their map column, then :func:`scope_references_to_tiles` on the sheet's
-    tiles. Detections: :func:`scope_detections_to_frame`.
+    tiles. Detections: :func:`scope_detections_to_frame`. A sheet's tiles
+    are the ones :func:`frame_tile_sheets` assigns to it — the assignment
+    the detection scope's spatial join reads — so a reference and a
+    detection at the same point are judged against the same polygons even
+    where one sheet name is a prefix of another (the D50 review,
+    finding 3).
 
     Args:
         gdf_det: Detections, or a :class:`DetectionScope` already computed
             for this frame (saves the spatial join when the caller needs the
-            scoped set as well).
+            scoped set as well). A scope computed for a DIFFERENT frame is
+            not checked for; pass the scope of this ``gdf_bounds``.
         gdf_ref: References.
         gdf_bounds: Frame tile polygons with a ``tile_name`` column.
         ref_map_col: The references' sheet column; detected by
@@ -1698,8 +1870,9 @@ def iter_sheet_scopes(
         gdf_det if isinstance(gdf_det, DetectionScope)
         else scope_detections_to_frame(gdf_det, gdf_bounds)
     )
+    tile_sheets = frame_tile_sheets(gdf_bounds)
     for sheet in frame_sheets(gdf_bounds):
-        sheet_bounds = gdf_bounds[gdf_bounds["tile_name"].str.startswith(sheet)]
+        sheet_bounds = gdf_bounds[tile_sheets == sheet]
         ref_scope = gdf_ref[gdf_ref[ref_map_col] == sheet]
         if not ref_scope.empty:
             ref_scope = scope_references_to_tiles(ref_scope, sheet_bounds)
@@ -1738,6 +1911,8 @@ def assign_primary_tiles_on_origin_sheet(
     gdf_points: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     origin: list[list[str]] | None = None,
+    *,
+    sheet_catalogue: Iterable[str] | None = None,
 ) -> tuple[list[str | None], dict[str, int]]:
     """Give each point one frame tile — never one on another sheet (ruling D50).
 
@@ -1764,11 +1939,21 @@ def assign_primary_tiles_on_origin_sheet(
     in spatial-join order at the minimum distance), so a point whose
     candidates all lie on one sheet receives the tile it always received.
 
+    The legacy fallback has the reduced-frame blind spot of
+    :func:`scope_detections_to_frame`: an origin on a study sheet the frame
+    leaves out names no frame sheet, so the point takes the nearest tile of
+    whatever sheet holds it — possibly one it was never seen on. That case
+    is counted apart (``n_origin_excluded``) from an origin in a tile
+    vocabulary the catalogue does not know; the assignment is unchanged.
+
     Args:
         gdf_points: Points in the frame's coordinate reference system.
         gdf_bounds: Frame tile polygons with a ``tile_name`` column.
         origin: Per-row origin tile names; inferred by
             :func:`origin_tiles_of` when ``None``.
+        sheet_catalogue: The parent sheet catalogue an origin naming no
+            frame sheet is identified against; :data:`STUDY_SHEETS` when
+            ``None``. Diagnostics only.
 
     Returns:
         ``(tile_names, diagnostics)``: one name (or ``None``) per row in
@@ -1776,13 +1961,19 @@ def assign_primary_tiles_on_origin_sheet(
         ``n_outside_frame`` (no frame tile at all), ``n_outside_origin_sheet``
         (frame tiles, but none on the origin sheet — formerly re-keyed to a
         neighbour), ``n_cross_sheet_avoided`` (the legacy rule would have
-        picked another sheet's tile) and ``n_no_origin`` (legacy rule used).
+        picked another sheet's tile), ``n_no_origin`` (legacy rule used: no
+        origin names a frame sheet), and, of those, ``n_origin_unrecognised``
+        (an origin is recorded but names no frame sheet) and, of those,
+        ``n_origin_excluded`` (it names a catalogue sheet the frame leaves
+        out); and ``n_origin_partly_excluded`` (assigned on an origin sheet,
+        but also seen on a catalogue sheet the frame leaves out).
     """
     n = len(gdf_points)
     diag = {
         "n_points": n, "n_assigned": 0, "n_outside_frame": 0,
         "n_outside_origin_sheet": 0, "n_cross_sheet_avoided": 0,
-        "n_no_origin": 0,
+        "n_no_origin": 0, "n_origin_unrecognised": 0, "n_origin_excluded": 0,
+        "n_origin_partly_excluded": 0,
     }
     if n == 0:
         return [], diag
@@ -1790,6 +1981,14 @@ def assign_primary_tiles_on_origin_sheet(
         origin = origin_tiles_of(gdf_points)
     sheets = frame_sheets(gdf_bounds)
     longest_first = sorted(sheets, key=len, reverse=True)
+    excluded_longest_first = _excluded_catalogue_longest_first(
+        sheet_catalogue, set(sheets),
+    )
+    # The canonical tile-to-sheet assignment (frame_tile_sheets), the one
+    # the scorer's detection scope and per-sheet loop read.
+    tile_sheet = dict(zip(
+        (str(t) for t in gdf_bounds["tile_name"]), frame_tile_sheets(gdf_bounds),
+    ))
 
     points = gpd.GeoDataFrame(
         geometry=gdf_points.geometry.to_numpy(), crs=gdf_points.crs,
@@ -1825,27 +2024,29 @@ def assign_primary_tiles_on_origin_sheet(
         legacy = nearest(names)
         # The sheets the point was seen on, the same set
         # scope_detections_to_frame attributes by, so a freshly written
-        # source_tile is never re-attributed at scoring time.
-        origin_sheets = {
-            s for s in (
-                _sheet_of_tile_name(t, longest_first) for t in origin[pos]
-            ) if s is not None
-        }
+        # source_tile is never re-attributed at scoring time; and the
+        # catalogue sheets it was seen on that the frame leaves out.
+        origin_sheets, origin_excluded = _origin_sheets(
+            origin[pos], longest_first, excluded_longest_first,
+        )
         if not origin_sheets:
             diag["n_no_origin"] += 1
+            if origin[pos]:
+                diag["n_origin_unrecognised"] += 1
+                if origin_excluded:
+                    diag["n_origin_excluded"] += 1
             assigned.append(legacy)
             diag["n_assigned"] += 1
             continue
-        own = [
-            t for t in names
-            if _sheet_of_tile_name(str(t), longest_first) in origin_sheets
-        ]
+        own = [t for t in names if tile_sheet.get(str(t)) in origin_sheets]
         if not own:
             diag["n_outside_origin_sheet"] += 1
             assigned.append(None)
             continue
+        if origin_excluded:
+            diag["n_origin_partly_excluded"] += 1
         choice = nearest(own)
-        if _sheet_of_tile_name(str(legacy), longest_first) not in origin_sheets:
+        if tile_sheet.get(str(legacy)) not in origin_sheets:
             diag["n_cross_sheet_avoided"] += 1
         assigned.append(choice)
         diag["n_assigned"] += 1
@@ -2361,7 +2562,7 @@ def score_detection_set(
 
 
 def calculate_f1_internal(
-    gdf_det: gpd.GeoDataFrame,
+    gdf_det: gpd.GeoDataFrame | DetectionScope,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
@@ -2380,9 +2581,15 @@ def calculate_f1_internal(
     Before the ruling a detection was kept whenever its ``source_tile``
     began with M, wherever it lay.
 
+    Pass the FULL frame. Scoring one sheet by passing only its tiles is a
+    reduced frame, whose attribution can differ from the full frame's
+    (:func:`scope_detections_to_frame`, "Reduced frames"); per-sheet
+    figures come from :func:`per_sheet_confusion` instead.
+
     Args:
         gdf_det: GeoDataFrame of detections, carrying ``source_tile`` and/or
-            an origin column (:data:`ORIGIN_TILE_COLUMNS`).
+            an origin column (:data:`ORIGIN_TILE_COLUMNS`), or the
+            :class:`DetectionScope` already computed for this frame.
         gdf_ref: GeoDataFrame of ground truth references.
         gdf_bounds: GeoDataFrame of tile boundaries (defines evaluation scope).
         buffer_metres: Maximum distance for a valid match (default 20 m).
@@ -2390,40 +2597,105 @@ def calculate_f1_internal(
     Returns:
         Tuple of (precision, recall, f1).
     """
+    # The per-sheet counts of ONE full-frame scoring, summed: a per-sheet
+    # report built from :func:`per_sheet_confusion` decomposes this exactly.
     tp = 0
     fp = 0
     fn = 0
+    for s_tp, s_fp, s_fn in per_sheet_confusion(
+        gdf_det, gdf_ref, gdf_bounds, buffer_metres,
+    ).values():
+        tp += s_tp
+        fp += s_fp
+        fn += s_fn
+    return precision_recall_f1(tp, fp, fn)
 
+
+def precision_recall_f1(
+    tp: int, fp: int, fn: int,
+) -> tuple[float, float, float]:
+    """Precision, recall and F1 from counts, exactly as the F1 scorer computes them.
+
+    A zero denominator gives the integer ``0`` (not ``0.0``), as
+    :func:`calculate_f1_internal` always has, so values written through it
+    serialise unchanged.
+
+    Args:
+        tp: True positives.
+        fp: False positives.
+        fn: False negatives.
+
+    Returns:
+        ``(precision, recall, f1)``.
+
+    Example:
+        >>> precision_recall_f1(3, 1, 1)
+        (0.75, 0.75, 0.75)
+    """
+    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
+    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
+    f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
+    return precision, recall, f1
+
+
+def per_sheet_confusion(
+    gdf_det: gpd.GeoDataFrame | DetectionScope,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float = 20,
+) -> dict[str, tuple[int, int, int]]:
+    """Each frame sheet's TP, FP and FN, as partitions of ONE full-frame scoring.
+
+    This is the matching :func:`calculate_f1_internal` sums, kept per
+    sheet. A per-map report MUST read these partitions of the full frame
+    rather than re-score each sheet on its own tiles: the detection scope
+    attributes a detection among the frame's sheets only, so a frame reduced
+    to one sheet can score a cluster seen on two sheets on both, and the
+    per-map counts then fail to sum to the full frame's (the D50 review,
+    finding 2; :func:`scope_detections_to_frame`, "Reduced frames"). Here
+    they sum to it by construction.
+
+    Args:
+        gdf_det: Detections, or the :class:`DetectionScope` of this same
+            frame (computed once, it saves the spatial join when a caller
+            scores several buffers).
+        gdf_ref: References (``Map`` or ``source_map`` sheet column).
+        gdf_bounds: The FULL frame's tile polygons.
+        buffer_metres: Maximum distance for a valid match.
+
+    Returns:
+        ``sheet -> (tp, fp, fn)`` for every frame sheet, in sorted order,
+        sheets with nothing on either side included as ``(0, 0, 0)``.
+
+    Example:
+        >>> scope = scope_detections_to_frame(dets, bounds)  # doctest: +SKIP
+        >>> per_sheet_confusion(scope, refs, bounds, 20)["K-35-052-4_32635"]
+        ... # doctest: +SKIP
+        (41, 7, 5)
+    """
+    counts: dict[str, tuple[int, int, int]] = {}
     # The reference sheet column ('Map' for the gold standard, 'source_map'
     # for the 55-map student ground truth) is detected inside the shared
     # per-sheet loop, which raises if neither is present.
-    for _sheet, det_scope, ref_scope, _bounds in iter_sheet_scopes(
+    for sheet, det_scope, ref_scope, _bounds in iter_sheet_scopes(
         gdf_det, gdf_ref, gdf_bounds,
     ):
         if det_scope.empty and ref_scope.empty:
-            continue
-
-        if det_scope.empty:
-            fn += len(ref_scope)
+            counts[sheet] = (0, 0, 0)
+        elif det_scope.empty:
+            counts[sheet] = (0, 0, len(ref_scope))
         elif ref_scope.empty:
-            fp += len(det_scope)
+            counts[sheet] = (0, len(det_scope), 0)
         else:
             # One-to-one matching using Hungarian algorithm
             det_geoms = list(det_scope.geometry)
             ref_geoms = list(ref_scope.geometry)
 
-            matched_det, matched_ref, unmatched_det, unmatched_ref = \
+            matched_det, _matched_ref, unmatched_det, unmatched_ref = \
                 match_detections_to_references(det_geoms, ref_geoms, buffer_metres)
 
-            tp += len(matched_det)
-            fp += len(unmatched_det)
-            fn += len(unmatched_ref)
-
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0
-    f1 = 2 * (precision * recall) / (precision + recall) if (precision + recall) > 0 else 0
-
-    return precision, recall, f1
+            counts[sheet] = (len(matched_det), len(unmatched_det), len(unmatched_ref))
+    return counts
 
 
 def bootstrap_ci(

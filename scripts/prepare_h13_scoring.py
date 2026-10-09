@@ -315,7 +315,8 @@ def assign_primary_tiles(
     when that is ``None``, from the rows' own ``origin_source_tile`` /
     ``origin_tiles`` / ``source_tiles`` / ``source_tile`` columns. A
     detection with no recorded origin (bare cluster centroids) keeps the
-    legacy unrestricted rule; the count is logged.
+    legacy unrestricted rule; the count is logged, and a warning names the
+    points whose origin lies on a study sheet the frame leaves out.
 
     Args:
         gdf_det: Detections (point geometries) in the project CRS.
@@ -342,9 +343,20 @@ def assign_primary_tiles(
         )
     if diag["n_no_origin"]:
         logger.debug(
-            "primary tiles: %d of %d points carry no recorded origin; "
+            "primary tiles: %d of %d points carry no origin on a frame sheet; "
             "assigned by the unrestricted nearest-centroid rule",
             diag["n_no_origin"], diag["n_points"],
+        )
+    if diag["n_origin_excluded"] or diag["n_origin_partly_excluded"]:
+        # The frame leaves out a study sheet these points were seen on: the
+        # legacy fallback may hand a point a tile on a sheet it was never
+        # seen on (the D50 review, finding 2).
+        logger.warning(
+            "primary tiles: %d of %d points were seen only on study sheets "
+            "this frame leaves out (legacy rule used), %d also on one; the "
+            "frame is narrower than the detection set",
+            diag["n_origin_excluded"], diag["n_points"],
+            diag["n_origin_partly_excluded"],
         )
     return assigned
 
