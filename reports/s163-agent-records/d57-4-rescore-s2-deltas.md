@@ -1,6 +1,6 @@
 # D57 (4) re-score, Phases 0 and 2: the S2 deltas
 
-> **Last revised**: 2026-10-09 (original publication). See
+> **Last revised**: 2026-10-09 (pv-diag-384 count corrected to 28). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -136,8 +136,9 @@ see the rounding note above for h13 arm A native; both buffers are in
   0.6288→0.6306; image-t03 1/2of3 0.5822→0.5838, 0.6424→0.6442;
   pro-image-high-t0 0.5614→0.5631, 0.5760→0.5778, 0.5854→0.5873;
   pro-text-high-t0 0.4634→0.4647, 0.5203→0.5217, 0.5748→0.5764.
-- **pv-diag-384** (25 conditions): every one rises by +0.0015 to +0.0025;
-  the list is in `out/report_tables.md`.
+- **pv-diag-384** (28 conditions; the three t0.0 ones score cells under
+  `results/recovery-reeval-2026-07-30/` and `…-2026-09-08/`): every one
+  rises by +0.0015 to +0.0025; the list is in `out/report_tables.md`.
 
 ## D58 Q2: the 25 drifted or pinned cells (Stage A only)
 
@@ -227,6 +228,14 @@ separately.
    the plan.
 
 ## Changelog
+
+### 2026-10-09 — pv-diag-384 count corrected
+
+The registered-cells list said "pv-diag-384 (25 conditions)"; `out/registered_deltas.json` has
+28, three of which score cells under `results/recovery-reeval-2026-*`, so the
+per-family counts now sum to 61. The range (+0.0015 to +0.0025) was re-checked
+over all 28 and is unchanged; no number moved. Found by the copy step's agent
+(draft PR #29).
 
 ### 2026-10-09 — Original publication
 
