@@ -2669,8 +2669,7 @@ def per_sheet_confusion(
 
     Example:
         >>> scope = scope_detections_to_frame(dets, bounds)  # doctest: +SKIP
-        >>> per_sheet_confusion(scope, refs, bounds, 20)["K-35-052-4_32635"]
-        ... # doctest: +SKIP
+        >>> per_sheet_confusion(scope, refs, bounds, 20)["A"]  # doctest: +SKIP
         (41, 7, 5)
     """
     counts: dict[str, tuple[int, int, int]] = {}
