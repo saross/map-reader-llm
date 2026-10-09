@@ -101,7 +101,30 @@ replaces it.
   `reports/s163-agent-records/d57-4-rescore-s3-deltas.md`: no conclusion
   changes where OLD reproduces; five stopped lines predate D50; the
   null-exemplar board waits for Phase 6). Phase 6 is blocked on the D51
-  publishing-path fix (item below).
+  publishing-path fix (item below). Census done in part
+  (`reports/s163-agent-records/d57-4-rescore-census.md`): OLD reproduces
+  695 of 737 Phase 2 cells exactly; the other 42 lose intervals for a
+  pre-D50 reason (tile-join refusal); 458 live cells remain, halted by
+  the sapphire memory fault. Phase 4 done
+  (`reports/s163-agent-records/d57-4-rescore-s4-q4.md`): Run B and Run C
+  reproduce; Q4 moves only the predicted rows; PR #28 open, not merged.
+- [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
+  `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
+  13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
+  offset (one bit set). Hold heavy compute there until the PI has run a
+  memory test or reset memory to stock settings (a reboot needs the
+  physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
+  compare byte for byte with draft PR #29 before it merges; resume the
+  census (458 cells; command in the census record).
+- [ ] **W2.7 cells move under the new scorer** (D57 (4) scope; Phase 4
+  record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
+  +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
+  floors-v2 `FastScorer` still reproduces the old cells.
+- [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
+  reads a key the 2026-09-21 relabel renamed to
+  `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
+- [ ] **PR #29 description**: add the 42 tile-join cells (intervals
+  withheld for a pre-D50 reason) and the hardware caveat before review.
 - [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
   `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
   changes requested; no committed full-frame score shown wrong). (1) A

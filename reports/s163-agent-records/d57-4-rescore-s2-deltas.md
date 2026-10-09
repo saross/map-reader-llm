@@ -1,7 +1,7 @@
 # D57 (4) re-score, Phases 0 and 2: the S2 deltas
 
-> **Last revised**: 2026-10-09 (pv-diag-384 count corrected to 28). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-10 (census results; sapphire memory-fault
+> caveat). See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), a subagent of the main Session 163 session, on
@@ -110,6 +110,15 @@ on.
 - No F1 falls at any buffer in any cell.
 - MCC moved in 18 unregistered cells only (55-map uplift supplement), both
   directions, |Δ| ≤ 0.00027. Every registered MCC is unchanged.
+- **Against the committed files, 42 regenerated cells lose their intervals
+  (and 37 their tile block, MCC included), and this is not D50.** They are
+  `results/uplift-supplement/k1-gapfill` (35),
+  `results/pairwise/tile-size-30m` (5), and
+  `results/uplift-supplement/verifier-pairing` (2), scored between
+  2026-08-20 and 2026-09-08, before the tile-join refusal (`7ba47b63b`,
+  `fd59a68b0`, `3eeaf96f4`); the OLD scorer withholds them identically, and
+  their points reproduce. None is registered or cited in `docs/paper/`
+  (`reports/s163-agent-records/d57-4-rescore-census.md`).
 - MCC matched to 1e-9 in 635 cells and the refusal matched in 41. Every
   evaluation carries all 10 `_DETECTION_SCOPE_COUNTS` keys;
   `n_out_of_frame` and `n_origin_restored` equal the jsonl's `new_scope`;
@@ -228,6 +237,18 @@ separately.
    the plan.
 
 ## Changelog
+
+### 2026-10-10 — census results and a hardware caveat
+
+The OLD-scorer census (`reports/s163-agent-records/d57-4-rescore-census.md`)
+reproduces 695 of the 737 Phase 2 cells exactly, so every change in those
+695 regenerated files is D50 alone. The other 42 lose intervals for a
+reason that predates D50; a bullet now says so under § Phase 2. The census
+also found a memory fault on sapphire (a single bit set in 64-bit values
+under load). This report's NEW values were computed on sapphire about
+09:35–10:15Z on 2026-10-09 and have been checked against an independent
+computation only at the gated points; a byte-for-byte reproduction is
+recommended before PR #29 is merged. No number in this report changed.
 
 ### 2026-10-09 — pv-diag-384 count corrected
 
