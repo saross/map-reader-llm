@@ -1,6 +1,6 @@
 # Evaluation: stride-55map-2026-08-25__g384-ov128-55map-n3-carried-posthoc-p0_15-k3-r2-gt-unverified
 
-**Generated**: 2026-09-12T01:23:21.850067+00:00  
+**Generated**: 2026-10-09T10:11:35.930861+00:00  
 **Detections**: 12682  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
