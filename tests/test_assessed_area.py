@@ -16,6 +16,12 @@ to a temporary directory:
   area each pool loses, and the clip helpers drop exactly the points
   outside it; the ladder builder re-scores its points clipped; a clip
   never removes a reference (D51 option 1);
+* **publishing** — the ladder builder's tables, gains, export and figure
+  report the clipped score as their named basis, keep the as-evaluated
+  score as a named historical basis, withhold what the clip did not
+  regenerate, refuse (exit 5) a clip that cannot re-score a reported point,
+  and name no basis at all without a clip (Astra's review of 2026-10-09,
+  finding 1);
 * **undetermined** — a union with no record, no declaration and no pass
   provenance is undetermined with a reason, and the comparison raises
   :class:`AssessedAreaUndeterminedError` (exit 4) unless explicitly allowed,
@@ -469,12 +475,17 @@ def test_the_ladder_builder_refuses_and_clips(world):
         "detections": str(detections), "bounds": str(world["tiling"]),
         "ground_truth": str(refs)}}}))
 
+    # As evaluated, both detections match both references: F1@20 = 1.
+    as_evaluated = {"eval_path": str(evaluation), "vote_t": 1, "prob_t": 0.5,
+                    "f1_20": 1.0, "f1_20_ci": [0.9, 1.0], "precision_20": 1.0,
+                    "recall_20": 1.0, "tile_mcc": 0.8, "n_detections": 2}
+
     def payload() -> dict:
         return {"ladders": [{
             "family": "test", "frame_file": str(world["tiling"]),
             "rungs": [
                 {"K": 1, "pool": str(world["native"]),
-                 "opmax": {"eval_path": str(evaluation)}, "carried": {}},
+                 "opmax": dict(as_evaluated), "carried": {}},
                 {"K": 5, "pool": str(world["clipped"]), "opmax": None, "carried": {}},
             ]}]}
 
@@ -482,13 +493,33 @@ def test_the_ladder_builder_refuses_and_clips(world):
     messages = tables.apply_area_gate(refused)
     assert len(messages) == 1 and "DIFFER" in messages[0]
     assert refused["ladders"][0]["assessed_area"]["status"] == "refused"
+    # A refused ladder's points are untouched.
+    assert refused["ladders"][0]["rungs"][0]["opmax"] == as_evaluated
 
     clipped = payload()
     assert tables.apply_area_gate(clipped, clip_to_common=True) == []
-    point = clipped["ladders"][0]["rungs"][0]["opmax"]["clipped_to_common_area"]
+    reported = clipped["ladders"][0]["rungs"][0]["opmax"]
+    point = reported["clipped_to_common_area"]
     assert point["n_removed"] == 1
     assert (point["precision"], point["recall"]) == (1.0, 0.5)
     assert point["clip"] == laa.COMMON_AREA_CLIP_NAME
+    # Astra's review of 2026-10-09, finding 1: the clipped score is the
+    # REPORTED one, in the fields every product reads — 2/3, not the
+    # unclipped 1 — and nothing unregenerated is paired with it.
+    assert reported["score_basis"] == tables.BASIS_CLIPPED
+    assert reported["f1_20"] == pytest.approx(2 / 3, abs=1e-4)
+    assert (reported["precision_20"], reported["recall_20"]) == (1.0, 0.5)
+    assert (reported["n_detections"], reported["n_removed_by_clip"]) == (1, 1)
+    assert (reported["vote_t"], reported["prob_t"]) == (1, 0.5)
+    for key in ("f1_20_ci", "tile_mcc", "eval_path"):
+        assert reported[key] is None and key in reported["withheld"]
+    assert reported["rescored_from_eval_path"] == str(evaluation)
+    # The original values survive whole, under a named historical basis.
+    history = reported[tables.HISTORICAL_KEY]
+    assert history["score_basis"] == tables.BASIS_AS_EVALUATED
+    assert {k: history[k] for k in as_evaluated} == as_evaluated
+    assert clipped["ladders"][0]["score_basis"]["reported"] == tables.BASIS_CLIPPED
+    assert clipped["score_basis"]["clip_requested"] is True
 
 
 def write_evaluation(tmp: Path, tiling: Path) -> Path:
@@ -569,6 +600,236 @@ def test_the_ladder_builder_refuses_a_rung_with_no_pool(world):
                          "carried": {}}]}
     messages = tables.apply_area_gate({"ladders": [ladder]})
     assert len(messages) == 1 and "records no candidate pool" in messages[0]
+
+
+# ── End to end: gate → tables, export and figure (Astra, 2026-10-09) ──────
+
+
+def write_cell(tmp: Path, name: str, tiling: Path, xy: list[tuple[float, float]]) -> Path:
+    """Write one evaluated cell: detections at ``xy``, the strip's two references.
+
+    The references sit at x = 500 and x = 2500, one in each half of the
+    strip; the ``world`` clip (tiles x0 and x1) holds the west one only.
+    """
+    refs = tmp / "refs.geojson"
+    if not refs.exists():
+        write_points(refs, [(500, 500), (2500, 500)], Map=["S", "S"])
+    dets = write_points(tmp / f"{name}.geojson", xy,
+                        source_tile=[f"S_x{int(x // 1000)}_y0.png" for x, _ in xy])
+    evaluation = tmp / f"{name}.evaluation.json"
+    evaluation.write_text(json.dumps({"_metadata": {"input_files": {
+        "detections": str(dets), "bounds": str(tiling), "ground_truth": str(refs)}}}))
+    return evaluation
+
+
+def full_rung(k: int, pool: Path, evaluation: Path | None, f1: float, p: float,
+              r: float, n: int) -> dict:
+    """A rung shaped as build() makes it, costing US$K, one carried point shared."""
+    point = {"vote_t": 1, "prob_t": 0.5, "n_detections": n, "f1_20": f1,
+             "f1_20_ci": [round(f1 - 0.1, 4), f1], "precision_20": p, "recall_20": r,
+             "tile_mcc": 0.5, "tile_mcc_ci": [0.4, 0.6]}
+    if evaluation is not None:
+        point["eval_path"] = str(evaluation)
+    shell = dict(point)
+    return {"K": k, "source": "test", "candidates": n, "pool": str(pool),
+            "condition_id": f"run::k{k}", "opmax": point,
+            "carried": {"k-equals-K": shell, "stride-shell": shell},
+            "proposer_flex_usd": float(k), "verifier_flex_usd": 0.0,
+            "all_in_flex_usd": float(k)}
+
+
+def full_ladder(family: str, pool_slug: str, tiling: Path, rungs: list[dict]) -> dict:
+    """A ladder shaped as build() makes it."""
+    return {"family": family, "proposer_pool": pool_slug, "run_id": "run",
+            "thinking_level": "minimal", "modality": "text", "temperature": 0.3,
+            "pass_usd": 1.0, "pass_usd_anchor": "test", "corpus": "test",
+            "frame": "test", "frame_file": str(tiling), "reference_file": "refs",
+            "headline_buffer_m": 20, "r1_verifier": True, "n_rungs": len(rungs),
+            "rungs": rungs}
+
+
+@pytest.fixture()
+def two_ladders(world) -> dict:
+    """One ladder the gate must clip, one whose rungs searched the same area.
+
+    The clipped ladder's rungs, as evaluated and clipped to tiles x0–x1:
+
+    * K = 1 (native pool): detections at x 501, 1501, 2501 — as evaluated
+      P 2/3, R 1, F1 0.8; clipped P 0.5, R 0.5, F1 0.5;
+    * K = 3 (native pool): Astra's fixture, x 501 and 2501 — as evaluated
+      F1 1; clipped P 1, R 0.5, F1 2/3;
+    * K = 5 (clipped pool): x 501 — F1 2/3 either way.
+
+    So the reported gain is +0.1667 (K = 1 0.5 → K = 3 0.6667) where the
+    as-evaluated gain is +0.2 (0.8 → 1.0).
+    """
+    tmp, tiling = world["tmp"], world["tiling"]
+    k1 = write_cell(tmp, "k1", tiling, [(501, 500), (1501, 500), (2501, 500)])
+    k3 = write_cell(tmp, "k3", tiling, [(501, 500), (2501, 500)])
+    k5 = write_cell(tmp, "k5", tiling, [(501, 500)])
+    clipped = full_ladder("Clipped ladder", "clip-pool", tiling, [
+        full_rung(1, world["native"], k1, 0.8, 2 / 3, 1.0, 3),
+        full_rung(3, world["native"], k3, 1.0, 1.0, 1.0, 2),
+        full_rung(5, world["clipped"], k5, 0.6667, 1.0, 0.5, 1),
+    ])
+    same = full_ladder("Same-area ladder", "same-pool", tiling, [
+        full_rung(1, world["native"], k1, 0.8, 2 / 3, 1.0, 3),
+        full_rung(3, world["native"], k3, 1.0, 1.0, 1.0, 2),
+        full_rung(5, world["native"], k5, 0.6667, 1.0, 0.5, 1),
+    ])
+    return {"generated_at_utc": "2026-10-10T00:00:00+00:00", "n_ladders": 2,
+            "ladders": [clipped, same]}
+
+
+def run_builder(monkeypatch, tmp: Path, payload: dict, *flags: str) -> dict:
+    """Run the ladder builder's CLI on ``payload``, writing into ``tmp``."""
+    from scripts import build_k_ladder_phase2_tables as tables
+
+    out = tmp / "phase2"
+    monkeypatch.setattr(tables, "build", lambda: payload)
+    monkeypatch.setattr(tables, "PHASE2", out)
+    monkeypatch.setattr(tables, "FIGURE", tmp / "figure.png")
+    monkeypatch.setattr(tables, "git_head", lambda: "test")
+    monkeypatch.setattr(sys, "argv", ["build", *flags])
+    tables.main()
+    return {"ladders": json.loads((out / "ladders.json").read_text()),
+            "tables": (out / "ladder-tables.md").read_text(),
+            "compat": json.loads((out / "ladders-compat.json").read_text()),
+            "figure": tmp / "figure.png"}
+
+
+def table_row(markdown: str, section: str, k: int) -> list[str]:
+    """The cells of rung K's row in one ladder's section of the tables."""
+    body = markdown.split(f"## {section}\n", 1)[1].split("\n## ", 1)[0]
+    row = next(line for line in body.splitlines() if line.startswith(f"| {k} |"))
+    return [cell.strip() for cell in row.strip("|").split("|")]
+
+
+def test_a_clipped_ladder_publishes_the_clipped_basis_end_to_end(
+        world, two_ladders, monkeypatch):
+    """Astra's finding 1: the tables, gains, export and figure report the clip.
+
+    Before v1.4.0 the gate computed the clipped score in a nested block and
+    every product published the unclipped one. Here the CLI runs from the
+    gate to its written products, and each must carry the clipped value as
+    its reported basis, name that basis, keep the as-evaluated value only as
+    a named historical basis, and pair the clipped value with no interval,
+    tile metric or evaluation it did not regenerate.
+    """
+    from scripts import build_k_ladder_phase2_tables as tables
+
+    out = run_builder(monkeypatch, world["tmp"], two_ladders, "--clip-to-common-area")
+    clipped, same = out["ladders"]["ladders"]
+
+    # ladders.json: the reported fields carry the clip; history kept, named.
+    assert out["ladders"]["score_basis"]["clip_requested"] is True
+    assert clipped["score_basis"]["reported"] == tables.BASIS_CLIPPED
+    expected = {1: (0.5, 0.8), 3: (0.6667, 1.0), 5: (0.6667, 0.6667)}
+    for rung in clipped["rungs"]:
+        reported, as_evaluated = expected[rung["K"]]
+        for point in (rung["opmax"], rung["carried"]["stride-shell"]):
+            assert point["f1_20"] == pytest.approx(reported, abs=1e-4)
+            assert point[tables.HISTORICAL_KEY]["f1_20"] == pytest.approx(as_evaluated)
+            assert point[tables.HISTORICAL_KEY]["score_basis"] == tables.BASIS_AS_EVALUATED
+            for key in ("f1_20_ci", "tile_mcc", "tile_mcc_ci", "eval_path"):
+                assert point[key] is None, (rung["K"], key)
+    # The same-area ladder is reported as evaluated, its values untouched.
+    assert same["score_basis"]["reported"] == tables.BASIS_AS_EVALUATED
+    assert [r["opmax"]["f1_20"] for r in same["rungs"]] == [0.8, 1.0, 0.6667]
+    assert tables.HISTORICAL_KEY not in same["rungs"][0]["opmax"]
+
+    # The summary's gain is the clipped one; the as-evaluated gain is history.
+    row = next(r for r in out["ladders"]["summary"] if r["family"] == "Clipped ladder")
+    assert (row["f1_k1"], row["f1_best"], row["best_k"], row["gain"]) == (
+        0.5, 0.6667, 3, 0.1667)
+    assert row["score_basis"] == tables.BASIS_CLIPPED
+    assert row["mcc_verdict"] == "withheld" and row["mcc_k1"] is None
+    assert row[tables.HISTORICAL_KEY]["gain"] == pytest.approx(0.2)
+
+    # The rendered tables: the basis named, clipped beside historical, MCC
+    # withheld, the summary and Pareto rows on the clipped values.
+    md = out["tables"]
+    assert "**Score basis.**" in md
+    assert "Score basis: **clipped to the common assessed area**" in md
+    assert "Score basis: **as evaluated**" in md
+    k1 = table_row(md, "Clipped ladder", 1)
+    assert k1[4:8] == ["0.5000", "0.8000", "withheld", "2"]
+    assert table_row(md, "Clipped ladder", 3)[4:6] == ["0.6667", "1.0000"]
+    assert table_row(md, "Same-area ladder", 1)[4] == "0.8000"
+    summary = next(line for line in md.splitlines()
+                   if line.startswith("| Clipped ladder | clip-to-common"))
+    assert "**+0.1667**" in summary and "withheld | withheld | withheld" in summary
+    assert "+0.2000 (K=1 0.8000, K=3 1.0000)" in summary
+    pareto = md.split("## Pareto", 1)[1]
+    assert "| Clipped ladder | clip-to-common-assessed-area | " \
+           "1 @ $1.00 → 0.5000; 3 @ $3.00 → 0.6667 |" in pareto
+
+    # The export: the clipped ladder is withheld with what it lacks; the
+    # same-area ladder is exported and names its basis.
+    compat = out["compat"]
+    assert [entry["family_base"] for entry in compat["ladders"]] == ["Same-area ladder"]
+    assert compat["ladders"][0]["score_basis"] == tables.BASIS_AS_EVALUATED
+    assert compat["score_basis"]["clip_requested"] is True
+    withheld = next(e for e in compat["skipped"] if e["family"] == "Clipped ladder")
+    assert withheld["score_basis"] == tables.BASIS_CLIPPED
+    assert len(withheld["missing"]) == 3
+    assert [(r["K"], r["f1_20"], r["f1_20_as_evaluated_historical"])
+            for r in withheld["rungs"]] == [(1, 0.5, 0.8), (3, 0.6667, 1.0),
+                                            (5, 0.6667, 0.6667)]
+
+    # The figure plots the clipped values and labels the line.
+    series = {s["family"]: s for s in tables.figure_series(out["ladders"])}
+    assert series["Clipped ladder"]["label"].endswith("[clipped]")
+    assert series["Clipped ladder"]["score_basis"] == tables.BASIS_CLIPPED
+    assert [tuple(p) for p in series["Clipped ladder"]["points"]] == [
+        (1, 1.0, 0.5), (3, 3.0, 0.6667), (5, 5.0, 0.6667)]
+    assert [p[2] for p in series["Same-area ladder"]["points"]] == [0.8, 1.0, 0.6667]
+    assert out["figure"].stat().st_size > 0
+
+
+@pytest.mark.parametrize("fault", ["no-eval-path", "no-inputs"])
+def test_a_clip_that_cannot_rescore_a_point_refuses(world, two_ladders, monkeypatch,
+                                                    fault):
+    """A requested clip exits 5 and writes nothing when a point cannot be re-scored.
+
+    Before v1.4.0 such a point was skipped silently and published unclipped
+    beside its clipped siblings (Astra's review of 2026-10-09, finding 1).
+    """
+    from scripts import build_k_ladder_phase2_tables as tables
+
+    point = two_ladders["ladders"][0]["rungs"][1]["opmax"]
+    if fault == "no-eval-path":
+        del point["eval_path"]
+    else:
+        bare = world["tmp"] / "bare.evaluation.json"
+        bare.write_text(json.dumps({"_metadata": {}}))
+        point["eval_path"] = str(bare)
+    with pytest.raises(SystemExit) as stop:
+        run_builder(monkeypatch, world["tmp"], two_ladders, "--clip-to-common-area")
+    assert stop.value.code == tables.EXIT_CLIP_RESCORE_FAILED == 5
+    assert not (world["tmp"] / "phase2").exists()
+    # The refused ladder is left as it was: no half-clipped points.
+    assert two_ladders["ladders"][0]["rungs"][0]["opmax"]["f1_20"] == 0.8
+    assert "score_basis" not in two_ladders["ladders"][0]
+
+
+def test_an_unclipped_build_names_no_basis(world, two_ladders, monkeypatch):
+    """Without the flag the products carry no basis record, so they keep v1.3.0's bytes.
+
+    The mismatched ladder still refuses (exit 3); the same-area ladder alone
+    builds, with its values as evaluated and no score-basis text anywhere.
+    """
+    with pytest.raises(SystemExit) as stop:
+        run_builder(monkeypatch, world["tmp"], two_ladders)
+    assert stop.value.code == laa.EXIT_AREA_MISMATCH
+    two_ladders["ladders"] = two_ladders["ladders"][1:]
+    two_ladders["n_ladders"] = 1
+    out = run_builder(monkeypatch, world["tmp"], two_ladders, "--no-figure")
+    for product in ("ladders", "compat"):
+        assert "score_basis" not in json.dumps(out[product])
+        assert "historical_as_evaluated" not in json.dumps(out[product])
+    assert "Score basis" not in out["tables"] and "score basis" not in out["tables"]
+    assert table_row(out["tables"], "Same-area ladder", 1)[4:6] == ["0.8000", "0.5000"]
 
 
 def test_the_sweep_clips_and_names_the_clip(world, monkeypatch, tmp_path):
