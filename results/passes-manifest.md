@@ -2,7 +2,7 @@
 
 # Passes manifest
 
-> Generated 2026-10-08T08:16:32Z · 1455 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `303fbd3d2`.
+> Generated 2026-10-08T08:16:32Z · 1455 row(s) · schema v1.0 · rendered from `results/passes-manifest.json` at commit `494b5a7af`.
 >
 > **Coverage**: 1455 pass(es) across the decomposed runs (sub-step 3b in progress). `cost_usd` is on the AUDITED basis (PI ruling D11): each pass's own tokens, recovery fragments included, priced by `scripts/lib_cost.price_usage` at the tier the evidence supports; `basis` says which kind of figure it is (`audited-upper-bound` = tier unresolved, priced at the highest candidate; the row's `cost_source` gives both bounds and the evidence).
 
