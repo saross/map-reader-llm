@@ -14,6 +14,9 @@ by ``reports/d51-ladder-provenance-2026-10-08-scripts/`` (``t07_tilings.py``,
   ``.tiles.json`` attempted (completed ∪ failed) exactly that manifest;
 * every declared pool resolves through the library as ``declared``, with
   every candidate inside its area;
+* every declaration is pinned (Astra's review of 2026-10-09, P2): a pool's
+  ``pool_git_blob_hash`` is the blob committed at ``HEAD``, and each entry
+  pins every file its area is read from, at the hash committed at ``HEAD``;
 * the four T 0.7 ladders' gate verdicts: MINIMAL image T 0.7 is refused
   (its K = 1 pass skipped ``K-35-053-3_Elenovo_x1344_y672.png``, as its
   T 1.0 sibling's did), and the other three assessed the same area.
@@ -25,6 +28,7 @@ D51 gate on real tilings.
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -83,6 +87,27 @@ def test_declared_pools_resolve(entry):
     area = laa.determine_assessed_area(entry["pool"], label=entry["pool"])
     assert area.method == laa.METHOD_DECLARED, area.reason
     assert not area.warnings
+
+
+def _head_blob(path: str) -> str:
+    """The blob committed at HEAD for a repository path (``git rev-parse``)."""
+    return subprocess.run(["git", "-C", str(PROJECT_ROOT), "rev-parse", f"HEAD:{path}"],
+                          capture_output=True, text=True, check=True).stdout.strip()
+
+
+@pytest.mark.parametrize("entry", DECLARATIONS["declarations"] + DECLARATIONS["pass_tilings"],
+                         ids=lambda e: (e.get("pool") or e.get("label", "?"))
+                         .split("pv-diag-384/")[-1])
+def test_every_declaration_is_pinned_to_committed_bytes(entry):
+    """The consensus and every input are pinned, and pinned to what HEAD holds."""
+    if entry.get("schema") != laa.PASS_TILING_SCHEMA:
+        assert entry[laa.POOL_HASH_KEY] == _head_blob(entry["pool"]) \
+            == git_blob_hash(PROJECT_ROOT / entry["pool"])
+    pinned = {item["path"]: item["git_blob_hash"] for item in entry[laa.INPUTS_KEY]}
+    assert set(laa.declaration_inputs(entry)) <= set(pinned)
+    for path, digest in pinned.items():
+        assert digest == _head_blob(path) == git_blob_hash(PROJECT_ROOT / path), path
+    assert laa.check_declaration_pins(entry, "test") == len(pinned)
 
 
 def test_there_are_twenty_six_declared_pools_and_four_tilings():

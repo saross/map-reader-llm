@@ -224,7 +224,14 @@ def run_job(args: tuple[str, str, dict[str, Any], str]) -> dict[str, Any]:
 
 
 def declaration(code: Path, row: dict[str, Any], others: list[dict[str, Any]]) -> dict:
-    """The pool declaration an EXACT rebuild supports."""
+    """The pool declaration an EXACT rebuild supports.
+
+    It records the git blob hash of the consensus the rebuild was compared
+    with (``pool_git_blob_hash``), so the library applies the declaration
+    only to those bytes (Astra's review of 2026-10-09, P2; added
+    2026-10-10). ``write_declarations.py`` pins the remaining inputs
+    (pass metas, tile manifests and polygons) when it writes the file.
+    """
     entries = sorted(({"pass_id": Path(p).parent.name, "path": p,
                        "git_blob_hash": blob(code / p)} for p in row["read_order"]),
                      key=lambda e: (e["pass_id"], e["path"]))
@@ -236,6 +243,7 @@ def declaration(code: Path, row: dict[str, Any], others: list[dict[str, Any]]) -
     return {
         "schema": "assessed-area/1",
         "pool": row["union"],
+        "pool_git_blob_hash": blob(code / row["union"]),
         "status": "declared-retrospectively",
         "declared": "2026-10-08 (PI ruling D57 (3))",
         "builder": f"scripts/merge_passes.py --input-dir {row['cell']} --output-dir "
