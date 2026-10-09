@@ -68,7 +68,10 @@ from lib_advanced_metrics import (  # noqa: E402
     calculate_f1_internal,
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
+    frame_sheets,
     normalise_ref_class,
+    per_sheet_confusion,
+    precision_recall_f1,
     spatial_tolerance_curve,
 )
 from evaluate_detections import load_geojson  # noqa: E402
@@ -361,7 +364,8 @@ def analyse_run_variability(
     return {"per_condition": results, "levene_test": levene_result, "raw": run_f1s}
 
 
-def analyse_tile_mcc(conditions, optimal_thresholds, gdf_ref, gdf_bounds, n_bootstrap=1000, seed=42):
+def analyse_tile_mcc(conditions, optimal_thresholds, gdf_ref, gdf_bounds,
+                     n_bootstrap=1000, seed=42):
     """Analysis 3: Tile-level MCC, sensitivity, specificity."""
     logger.info("=== Analysis 3: Tile-level MCC ===")
     results = []
@@ -447,8 +451,10 @@ def analyse_threshold_robustness(conditions, gdf_ref, gdf_bounds, buffer_m=20):
         # Drop at adjacent thresholds
         sorted_sweep = sorted(sweep, key=lambda x: x["t"])
         best_idx = next(i for i, s in enumerate(sorted_sweep) if s["t"] == best["t"])
-        drop_minus = round(best["f1"] - sorted_sweep[best_idx - 1]["f1"], 4) if best_idx > 0 else None
-        drop_plus = round(best["f1"] - sorted_sweep[best_idx + 1]["f1"], 4) if best_idx < len(sorted_sweep) - 1 else None
+        drop_minus = (round(best["f1"] - sorted_sweep[best_idx - 1]["f1"], 4)
+                      if best_idx > 0 else None)
+        drop_plus = (round(best["f1"] - sorted_sweep[best_idx + 1]["f1"], 4)
+                     if best_idx < len(sorted_sweep) - 1 else None)
 
         results.append({
             "condition": cid, "optimal_t": best["t"], "optimal_f1": best["f1"],
@@ -462,12 +468,19 @@ def analyse_threshold_robustness(conditions, gdf_ref, gdf_bounds, buffer_m=20):
 
 
 def analyse_per_map_sheet(conditions, optimal_thresholds, gdf_ref, gdf_bounds, buffer_m=20):
-    """Analysis 6: Per-map-sheet F1."""
+    """Analysis 6: Per-map-sheet F1.
+
+    Each sheet's F1 is read from the per-sheet partition of ONE full-frame
+    scoring (``per_sheet_confusion``), so the per-sheet counts sum to the
+    frame's. Re-scoring each sheet on its own tiles — what this did until
+    the D50 review (finding 2, 2026-10-10) — attributes a detection among
+    that sheet alone, so a cluster seen on two sheets could count on both.
+    The sheets are the frame's own (``frame_sheets``), which for the
+    gold-standard tile names are the ``<sheet>_<suffix>`` prefixes this
+    used to split out.
+    """
     logger.info("=== Analysis 6: Per-map-sheet F1 ===")
-    # Get map names from bounds
-    maps = sorted(gdf_bounds["tile_name"].apply(
-        lambda t: "_".join(t.split("_")[:2]) if "_" in t else t
-    ).unique())
+    maps = frame_sheets(gdf_bounds)
     logger.info("  Maps: %s", maps)
 
     results = []
@@ -476,12 +489,12 @@ def analyse_per_map_sheet(conditions, optimal_thresholds, gdf_ref, gdf_bounds, b
         gj = PROJECT_ROOT / cfg["consensus_dir"] / f"consensus_t{t}.geojson"
         gdf_det = load_consensus_geojson(gj, gdf_bounds)
 
+        sheet_counts = per_sheet_confusion(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m,
+        )
         per_map = {}
         for map_name in maps:
-            map_bounds = gdf_bounds[gdf_bounds["tile_name"].str.startswith(map_name)]
-            if map_bounds.empty:
-                continue
-            p, r, f1 = calculate_f1_internal(gdf_det, gdf_ref, map_bounds, buffer_metres=buffer_m)
+            _p, _r, f1 = precision_recall_f1(*sheet_counts[map_name])
             per_map[map_name] = round(f1, 4)
 
         f1_vals = list(per_map.values())
@@ -518,7 +531,8 @@ def analyse_per_subtype_recall(conditions, optimal_thresholds, gdf_ref, gdf_boun
         per_subtype = {}
         for st, refs in subtypes.items():
             gdf_ref_sub = gpd.GeoDataFrame(refs, crs=gdf_ref.crs)
-            _, r, _ = calculate_f1_internal(gdf_det, gdf_ref_sub, gdf_bounds, buffer_metres=buffer_m)
+            _, r, _ = calculate_f1_internal(
+                gdf_det, gdf_ref_sub, gdf_bounds, buffer_metres=buffer_m)
             per_subtype[st] = round(r, 4)
 
         results.append({"condition": cid, "per_subtype": per_subtype})
@@ -574,7 +588,8 @@ def analyse_thinking_temp_interaction(conditions, optimal_thresholds, gdf_ref, g
                 continue
             for think_key, think_label in [(high_key, "HIGH"), (min_key, "MINIMAL")]:
                 t = optimal_thresholds[think_key]
-                gj = PROJECT_ROOT / conditions[think_key]["consensus_dir"] / f"consensus_t{t}.geojson"
+                gj = (PROJECT_ROOT / conditions[think_key]["consensus_dir"]
+                      / f"consensus_t{t}.geojson")
                 gdf_det = load_consensus_geojson(gj, gdf_bounds)
                 int_conditions[(think_label, f"T{temp}")] = (gdf_det, gdf_bounds)
 
@@ -587,7 +602,9 @@ def analyse_thinking_temp_interaction(conditions, optimal_thresholds, gdf_ref, g
                 )
                 interaction_tests[metric] = result
                 logger.info("  Interaction test (%s): %s",
-                             metric, "significant" if result.get("any_significant") else "not significant")
+                             metric,
+                             "significant" if result.get("any_significant")
+                             else "not significant")
             except Exception as exc:
                 logger.warning("  Interaction test (%s) failed: %s", metric, exc)
                 interaction_tests[metric] = {"error": str(exc)}
@@ -626,7 +643,8 @@ def analyse_consensus_convergence(
         # N=10 (or N=K) optimal — already computed
         consensus_dir = PROJECT_ROOT / cfg["consensus_dir"]
         if consensus_dir.exists():
-            _, best_f1 = find_optimal_threshold(consensus_dir, gdf_ref_local, gdf_bounds_local, buffer_m)
+            _, best_f1 = find_optimal_threshold(
+                consensus_dir, gdf_ref_local, gdf_bounds_local, buffer_m)
             entry["points"].append({"N": cfg["K"], "f1": round(best_f1, 4), "source": "consensus"})
 
         # N=5 if available
@@ -736,7 +754,8 @@ def analyse_spatial_clustering(conditions, optimal_thresholds, gdf_ref, gdf_boun
         t = optimal_thresholds[cid]
         gj = PROJECT_ROOT / cfg["consensus_dir"] / f"consensus_t{t}.geojson"
         gdf_det = load_consensus_geojson(gj, gdf_bounds)
-        tile_metrics = compute_per_tile_tp_fp_fn(gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m)
+        tile_metrics = compute_per_tile_tp_fp_fn(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_m)
 
         fps = tile_metrics["fp"].values
         fns = tile_metrics["fn"].values
@@ -747,8 +766,10 @@ def analyse_spatial_clustering(conditions, optimal_thresholds, gdf_ref, gdf_boun
             "condition": cid,
             "fp_mean": round(np.mean(fps), 3), "fp_sd": round(np.std(fps), 3), "fp_cv": fp_cv,
             "fn_mean": round(np.mean(fns), 3), "fn_sd": round(np.std(fns), 3), "fn_cv": fn_cv,
-            "fp_max_tile": tile_metrics.loc[tile_metrics["fp"].idxmax(), "tile_name"] if len(fps) > 0 else "",
-            "fn_max_tile": tile_metrics.loc[tile_metrics["fn"].idxmax(), "tile_name"] if len(fns) > 0 else "",
+            "fp_max_tile": (tile_metrics.loc[tile_metrics["fp"].idxmax(), "tile_name"]
+                            if len(fps) > 0 else ""),
+            "fn_max_tile": (tile_metrics.loc[tile_metrics["fn"].idxmax(), "tile_name"]
+                            if len(fns) > 0 else ""),
         })
 
         # Accumulate for cross-condition problem tile analysis
@@ -789,7 +810,8 @@ def analyse_thinking_tokens(conditions):
                 "condition": cid, "run": run_path.name,
                 "thinking_tokens": thinking_tokens,
                 "total_tokens": total_tokens,
-                "thinking_fraction": round(thinking_tokens / total_tokens, 3) if total_tokens > 0 else 0,
+                "thinking_fraction": (round(thinking_tokens / total_tokens, 3)
+                                      if total_tokens > 0 else 0),
             })
 
     # Summarise by condition

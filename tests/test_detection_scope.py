@@ -685,3 +685,31 @@ def test_the_evaluation_rolls_up_the_excluded_counts(wide_frame, two_sheet_refs)
     assert summary["detection_scope"]["n_origin_excluded"] == 2
     assert summary["detection_scope"]["n_origin_partly_excluded"] == 0
 
+
+def test_heterogeneity_per_map_figures_decompose_the_full_frame(
+    wide_frame, two_sheet_refs,
+):
+    """The 55-map per-map table reads partitions: B scores an FN, not a TP."""
+    from scripts.analyse_55maps_heterogeneity import evaluate_per_map
+
+    d = dets([("B_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png"])
+    rows = {m.map_name: m for m in evaluate_per_map(d, two_sheet_refs, wide_frame, (20,))}
+    assert (rows["A"].f1, rows["A"].n_dets) == (1.0, 1)
+    # Scored on B's tiles alone this was F1 1.0 with one detection.
+    assert (rows["B"].f1, rows["B"].recall, rows["B"].n_dets) == (0, 0, 0)
+
+
+@pytest.mark.parametrize("module", ["analyse_secondary_effects",
+                                    "analyse_secondary_effects_text"])
+def test_secondary_effects_per_map_figures_decompose_the_full_frame(
+    wide_frame, two_sheet_refs, monkeypatch, module,
+):
+    """Analysis 6 reads the same partitions in both secondary-effects scripts."""
+    import importlib
+
+    mod = importlib.import_module(f"scripts.{module}")
+    d = dets([("B_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png"])
+    monkeypatch.setattr(mod, "load_consensus_geojson", lambda _path, _bounds: d)
+    out = mod.analyse_per_map_sheet({"c": {"consensus_dir": "unused"}}, {"c": 3},
+                                    two_sheet_refs, wide_frame, buffer_m=20)
+    assert out[0]["per_map"] == {"A": 1.0, "B": 0}
