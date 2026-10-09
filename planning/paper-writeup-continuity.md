@@ -176,10 +176,29 @@ replaces it.
   prefix collision among the 60 sheets in the 34 tracked bounds files,
   checked 2026-10-10). Add a regression test for each. Astra asks the PI
   to approve focused offline tests on their side.
+  Progress 2026-10-10: PI approved Astra's tests (Shawn to confirm to
+  Astra directly). Fixes in PR #33 (`d50-review-fixes`, head `57b094878`):
+  one tile-to-sheet assignment for both sides; the three reduced-frame
+  callers read full-frame partitions; diagnostics `n_origin_excluded`
+  and `n_origin_partly_excluded`; 50 of 50 PR #29 cells reproduce
+  exactly. Finding 1 is PR #30. Re-review requested from Astra
+  2026-10-09T22:43Z. **PI decision pending**: whether full-frame
+  attribution should exclude an origin naming a real sheet outside the
+  frame (measured: moves 0 of 2,751 committed cells).
 - [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
   it zips candidates with `hsu_not_ruled_out`, an index list, so the
   member lists are the first *n* candidates; the signed null-exemplar
   findings misname the admitted and dropped cells (S3 record, flag 4).
+  Fixed in PR #32 (`fix-null-exemplar-admissible`, head `c497c3109`);
+  artefacts are regenerated in Phase 6. Not fixed there:
+  `scripts/build_gs_era2_board.py:688–690` also ignores `kept_indices`
+  (harmless while no candidate is dropped).
+- [ ] **amd-tower disk**: 99 % full (7.1 GB free) on 2026-10-10 when two
+  full 9.2 GB worktree checkouts were made; other sessions may have hit
+  write errors. Freed to 35 GB by removing three clean, pushed worktrees
+  (branches kept). Agents should use sparse checkouts; the 12 GB
+  `sol-phase2-codex-entry` and 6.4 GB `archive` worktrees under
+  `~/worktrees/map-reader-llm/` are not Claude's.
 - [ ] **Stale CIs in `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.json`**:
   committed in `dccee3362` before the BCa-adapter fix `122104b8a`; today's
   intervals are wider. Its Markdown shows no intervals (S3 record).
