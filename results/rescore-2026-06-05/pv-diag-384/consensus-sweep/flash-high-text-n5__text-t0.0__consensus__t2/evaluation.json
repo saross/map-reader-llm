@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-22T13:37:12.075456+00:00",
+  "timestamp": "2026-10-09T10:21:08.488973+00:00",
   "summary": {
     "label": "consensus_t2",
     "n_detections": 985,
@@ -484,6 +484,24 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 985,
+      "n_in_scope": 985,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 4,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "source_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
         "tp": 209,
@@ -511,15 +529,16 @@
         "ci_lower": 0.2621,
         "ci_upper": 0.3755,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "142f2c5c9",
+    "script_git_commit": "494b5a7af",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-22T13:36:41.698934+00:00",
+    "generated_at_utc": "2026-10-09T10:20:26.612863+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson"
@@ -550,6 +569,8 @@
       "output_dir": "results/rescore-2026-06-05/pv-diag-384/consensus-sweep/flash-high-text-n5__text-t0.0__consensus__t2",
       "label": "consensus_t2",
       "mcc": true,
+      "tile_join": "id",
+      "require_clean_inputs": false,
       "workers": 1
     },
     "bootstrap": {
@@ -565,10 +586,23 @@
     },
     "input_files": {
       "detections": [
-        "/home/shawn/cc-scratch/tmp/tmpw_1man92/frozen/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson"
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/09fe46a7f/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson"
       ],
-      "ground_truth": "/home/shawn/cc-scratch/tmp/tmpw_1man92/frozen/inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "/home/shawn/cc-scratch/tmp/tmpw_1man92/frozen/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+      "ground_truth": "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "494b5a7af",
+      "inputs": {
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/09fe46a7f/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson": "outside-repo",
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson": "outside-repo",
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "outside-repo"
+      },
+      "blob_hashes": {
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/09fe46a7f/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.0/consensus/consensus_t2.geojson": "151077497d701264ac319e9cca63580a9c9a2c5e",
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "/home/shawn/scratch/d57-4-rescore-2026-10-09/q2/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5"
+      }
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",
