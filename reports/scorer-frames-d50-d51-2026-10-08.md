@@ -1,6 +1,6 @@
 # Scorer frames: rulings D50 and D51 implemented and measured, 2026-10-08
 
-> **Last revised**: 2026-10-08 (review fixes and merge with `main`; § 5.2's count named). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-08 (§ 5.7: the draft fix applied after PR #26 merged). See [§ Changelog](#changelog) for revision history.
 
 **Status: FOR THE PI.** Implementation of two PI rulings of 2026-10-07
 (`planning/pi-decisions-2026-09-20.md`, entries D50 and D51) on branch
@@ -39,7 +39,8 @@ register.
 | Tier E K-ladder under D51 (K = 1/3/5/10) | 0.8604 / 0.8902 / 0.8968 / 0.8886 | same |
 | Sweeps re-run whose argmax moves | 0 of 12 | `sweeps_new.json`, `stride55_new.json` |
 | Phase 2 ladders the D51 gate passes as they stand | 0 of 14 (5 refused, 9 undetermined) | `ladders_new.json` → `phase2_gate_survey` |
-| Tier-1 suite at the final head `9a3c7b038` | 4,024 passed, 0 failed | `tier1_summary.txt` |
+| Tier-1 suite at the merged head `842f9e92a` | 4,151 passed, 0 failed | `tier1_summary_842f9e92a.txt` |
+| Committed cells holding a detection the materialised-`source_tile` gap drops (§ 5.7) | **0 of 2,751** | `source-tile-gap/source-tile-gap.json` |
 
 1. **D50 reproduces the frames report exactly where it predicted.** All 70 cells with
    out-of-frame detections read the report's ON values to 1e-9, MCC included, and all
@@ -269,6 +270,12 @@ named `delete_landed_caches.py` and `modality_bridge_union.py`, the concurrent R
 session's new files; it failed identically on a clean copy of `origin/main` at
 `2956c4250`, and `main` has since fixed it (`01bdbc53d`).
 
+At the merged head after the review fixes, `842f9e92a`, the suite reads **4,151
+passed, 0 failed**, 5 skipped, 59 deselected and 3 xfailed in 278 s (a PI-approved
+run on sapphire in a throwaway detached worktree; `tier1_summary_842f9e92a.txt`).
+The § 5.7 addendum adds documents and measurement scripts only, so this run still
+covers the scorer.
+
 ### 4.4 Union builders and cost
 
 `modality_bridge_union.py --validate-originals`, run with the branch's code at
@@ -420,6 +427,114 @@ mounds inside each gap. A missing tile in a single pass is the E72 failure mode,
 these K = 1 rungs are scored from consensus files that carry no `processed_tiles`, so
 the coverage guard could not see it; the gate sees it from the pass provenance.
 
+### 5.7 The materialised `source_tile` gap: counted, none in committed cells (addendum)
+
+The review fixes recorded a gap found while fixing (§ Changelog): where a file
+carries both a written `source_tile` and a member list, the scope keeps
+`source_tile` whenever it names one of the detection's origin sheets, without asking
+whether that sheet's frame tiles hold the point. The PI asked for it to be counted
+before deciding on a fix. It was re-verified at source at `842f9e92a` and counted
+over every cell of § 4.1 by `source_tile_gap.py`, on sapphire, importing the scorer
+from two `git archive` copies of the branch, as it stands (rule a) and with the
+draft fix below applied (rule b), and reading data from sapphire's `main` checkout at
+`46a0720a7`. No API call was made. Outputs are under
+`out/source-tile-gap/`; the per-cell census and both full re-scores stay on sapphire
+in `~/scratch/source-tile-gap-2026-10-08/out/`.
+
+**Mechanism.** `materialise_pv_geojson.py` (lines 216–221) and
+`materialise_opmax_cells.py` (lines 390–393) promote `source_tiles[0]`, the first,
+alphabetical, member, into `source_tile` when a consensus row has none.
+`scope_detections_to_frame` keeps that sheet whenever it is an origin sheet
+(`lib_advanced_metrics.py` lines 1575–1577) and then drops the row if the sheet's
+tiles do not hold the point. The synthetic probe (`probe-rule-a.json`,
+`probe-rule-b.json`) is a two-sheet frame and one cluster with members on `A_x100`
+and `B_x0`, its centroid at x 205, inside `B_x0` only, named on `A_x100`. Rule a
+drops it as out of frame (cross-sheet), F1@20 0 against a reference on sheet B 1 m
+away; rule b scores it on B, F1@20 1.0.
+
+| Measure | Value |
+|---|---:|
+| Cells classified (every scored or diagnosed cell of § 4.1) | 2,751 |
+| … carrying a written `source_tile` and an origin column | 404 (516,785 detections) |
+| Detections whose origin tiles lie on two or more frame sheets | 11, in 11 cells |
+| … of those with a written `source_tile` | 0 |
+| **Affected detections** (named on an origin sheet whose tiles miss them, inside another origin sheet's) | **0, in 0 cells** |
+| … with origin sheets taken from every origin column, not the first with a value | 0 |
+| Named on their only origin sheet and outside its tiles (out of frame under either rule) | 283, in 9 cells |
+| Cells re-scored end to end under both rules | 2,727 |
+| … where rule b differs from rule a by more than 1e-9 (any metric at any buffer, MCC or its refusal, or the scope counts) | **0** |
+| … where rule a reproduces § 4.1's NEW values to 1e-9 | 2,727 |
+| Sweep universes of § 4.2 holding a candidate seen on two sheets | 0 of 10 |
+
+`source-tile-gap.json` → `summary`; `sweeps-census.json`. The 11 two-sheet detections
+are 55-map consensus rows whose `source_tile` the evaluator synthesises by spatial
+join, which always names a sheet holding the point. The 283 are the 3.7 K = 1 and
+K = 3 cells and their copies (§ 5.1), out of frame as D50 rules.
+
+Four checks tie the zero to the scorer. With the draft fix applied, its new counter
+`n_origin_switched` equals the census in every cell, and every cell's out-of-frame
+count falls by exactly that number, zero, against the run of § 4.1. Outside the
+library, a regular expression on sheet names in the raw member lists of ten files
+(19,707 rows, two of them `pv-materialised` cells) finds no cluster spanning two
+sheets. In the sweep universes, the candidates outside their named sheet's tiles
+number 38, 38, 45, 38, 45, 0, 96, 125, 148 and 148, which is § 4.2's out-of-frame
+column exactly, and every one was seen on one sheet only. Carrying member lists
+through the sweep loader (`sweep_f1_wbf.load_candidates_as_gdf`, which keeps
+`source_tile` alone) would therefore change nothing. The two 55-map stride
+universes record no member list, so neither rule can see a second sheet there (the
+bare-centroid case of § 7 item 6).
+
+**Why it is empty.** Clustering in `merge_passes.py` is purely spatial, with no sheet
+constraint, so the zero is a property of the corpus, not of the code. Detections in
+the band where two sheets' padded tiles overlap were seen on one sheet only, as the
+restored rows of § 5.2 already suggested, with 11 exceptions in the whole universe,
+none of them carrying a written `source_tile`. A cell built later from passes over
+overlapping sheet content could be affected.
+
+**Consequences.** No cell, registered condition, ladder rung, sweep row or sweep
+argmax moves. The origin restoration of § 5.2 does not interact with the gap:
+restoration acts on rows whose `source_tile` names a sheet they were never seen on,
+the gap on rows whose `source_tile` names a sheet they were seen on, and no committed
+row is of the second kind.
+
+**Draft fix (not applied).** A row whose `source_tile` names an origin sheet whose
+tiles do not hold it, while another origin sheet's tiles do, is scored on that sheet
+(sorted first on a tie), as a re-keyed row is, and counted:
+
+```python
+        if origin_frame:
+            holding = sorted(origin_frame & sheets_hit[pos])
+            if source_sheet is not None and source_sheet in origin_frame:
+                if source_sheet in sheets_hit[pos] or not holding:
+                    sheet = source_sheet
+                else:
+                    sheet = holding[0]
+                    counts["n_origin_switched"] += 1
+            else:
+                sheet = holding[0] if holding else sorted(origin_frame)[0]
+```
+
+The counter joins `_empty_scope_diagnostics`, the docstring, and
+`evaluate_detections.py`'s `_DETECTION_SCOPE_COUNTS` and warning list. The tests,
+added to `tests/test_detection_scope.py`, check three cases and the evaluator. A
+cluster named on the sheet whose tiles miss it is scored on the other sheet. A
+single-origin row outside its sheet is not switched. A row inside both sheets' tiles
+keeps its named sheet. The evaluator also writes and sums the counter. On code-only
+copies the module and `test_tile_join_withheld.py` read 56 passed before the fix and
+59 after; with only the switch disabled, the first new test alone turns red
+(`draft-fix-tests.txt`; tier E's regeneration test is deselected in every copy
+because it reads `outputs/`). Under the default `id` tile join, a switched row stays
+booked to its named tile, as on `main`, so the probe's tile MCC is undefined under
+rule a and −0.33 under rule b. The full diff is `draft-fix.diff`. A fix in the
+materialisers instead would need the frame at materialisation time, would have to
+be repeated in each writer that promotes the first member (at least the two above
+and `fuse_detections_wbf.py` line 340), and would change committed files.
+
+**Applied after PR #26 merged** (`fefb73f2b`), on branch `fix/origin-switch-d50`, as a
+small follow-up before the D57 (4) re-score, so re-scored evaluations carry
+`n_origin_switched`. The draft diff applied unchanged. It moves no committed number
+(the counts above).
+
 ## 6. What the PI would approve next (nothing below has been changed)
 
 **Code.** Merging the branch changes the scorer every script imports. From then on, a
@@ -453,7 +568,7 @@ README and tiering, `results/conditions-manifest.md`, the uplift CSVs) were not
 re-read here. Beyond them, the h13 findings and register outcome (A − B) and the
 null-exemplar analysis's Era-1 statistics change (§ 5.5).
 
-**The PI is asked to rule on four questions.**
+**The PI is asked to rule on five questions.**
 
 1. **Accept the origin-restoration scale.** D50 was ruled on a measured 70 cells; the
    rule as ruled ("never re-key") also restores 707 cells the frames report could not
@@ -472,6 +587,10 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
    records them as undetermined.
 4. **The re-score itself**, as a separate step after merging, deciding which of
    § 6's artefacts to regenerate and in what order.
+5. **The materialised `source_tile` gap (§ 5.7).** It drops no detection in any
+   committed cell, so the draft fix moves no number and saves no re-score wherever
+   it lands. Land it in this pull request (it changes `scripts/` after the review
+   and after the merged head's tier-1 run, § 4.3), in a follow-up, or not at all.
 
 ## 7. Implementation notes and surprises
 
@@ -544,6 +663,39 @@ null-exemplar analysis's Era-1 statistics change (§ 5.5).
 
 ## Changelog
 
+### 2026-10-08 — The `source_tile` gap fix applied
+
+**Trigger.** PR #26 merged (`fefb73f2b`); the § 5.7 draft fix was applied unchanged on
+branch `fix/origin-switch-d50` before the D57 (4) re-score. No measured value in this
+report moves: § 5.7 found 0 affected cells and a full re-score with the fix differing
+by 0.0. Only the banner and § 5.7's closing paragraph changed.
+
+### 2026-10-08 — Addendum: the materialised `source_tile` gap counted
+
+**Trigger.** The PI asked for the gap recorded below ("Found while fixing, not
+changed") to be counted before deciding whether it needs its own fix, and whether
+that fix belongs in this pull request so as to avoid a second re-score. § 5.7
+reports the count, the mechanism re-verified at `842f9e92a`, a synthetic probe, an
+end-to-end re-score of every cell under the branch's rule and under a draft fix, and
+the draft fix with its tests. § 6 gains question 5. The tier-1 result at the merged
+head replaces the "Remaining" line of the entry below, and §§ 1 and 4.3 cite it.
+
+| Claim | Before | After |
+|---|---|---|
+| Committed cells where the gap drops a detection | not measured | 0 of 2,751 (0 detections) |
+| Cells moving between the branch's rule and the draft fix | — | 0 of 2,727, to 1e-9 |
+| Tier-1 suite cited in § 1 | `9a3c7b038`: 4,024 passed, 0 failed | `842f9e92a`: 4,151 passed, 0 failed |
+| Questions for the PI in § 6 | four | five |
+
+**What did not change.** No measured result in §§ 1–6 moved. The gap is empty in
+every committed cell and sweep universe, so no cell, ladder rung, sweep or gate
+result built from them can move with the fix; the ladders, sweeps and gate survey
+were not re-run. Rule a, the merged head's scorer on sapphire's current `main` data
+(`46a0720a7`), reproduced § 4.1's NEW values in all 2,727 cells to 1e-9, so the
+review fixes and the merge with `main` moved no scored cell either. No
+code under `scripts/` changed; the draft fix is a diff under
+`out/source-tile-gap/`, not applied. Script and outputs: `b9fafda15`.
+
 ### 2026-10-08 — Review fixes and merge with `main`
 
 **Trigger.** The independent review of the pull request (Claude, Opus 5.5, read-only;
@@ -598,7 +750,10 @@ seen on two sheets but lying only in the second sheet's frame tiles is therefore
 still out of frame for such a cell (a synthetic probe). This predates the branch, and
 how often it occurs in committed cells was not measured.
 
-**Remaining.** The full tier-1 suite on the merged head, to be run on sapphire.
+**Tier-1 at the merged head.** Run after this entry was first written (PI-approved,
+2026-10-08, on sapphire in a throwaway detached worktree): at `842f9e92a`, **4,151
+passed, 0 failed**, 5 skipped, 59 deselected and 3 xfailed in 278 s
+(`tier1_summary_842f9e92a.txt`; § 4.3).
 
 ### 2026-10-08 — Original publication (Session 163)
 

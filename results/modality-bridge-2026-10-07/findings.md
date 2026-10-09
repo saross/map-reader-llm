@@ -1,15 +1,18 @@
 # Run B, the modality bridging pair: first findings
 
-> **Last revised**: 2026-10-08 (the 55-map 3.7 result beside § 4 item 4;
-> the Gemini 3 verifier's measured re-invocation noise in § 7 Limits;
-> earlier the same day, scoring plan items 4, 6 and 7 and the audit's
-> wording). See
+> **Last revised**: 2026-10-08 (Run C: the verifier's re-invocation noise
+> measured on these cells, and § 7's floors with it, in the new § 7a;
+> earlier the same day, the 55-map 3.7 result, scoring plan items 4, 6 and
+> 7, and the audit's wording). See
 > [§ Changelog](#changelog) for revision history.
 
 **Status: SCORED, FOR THE PRINCIPAL INVESTIGATOR'S (PI'S) REVIEW.** Point
 estimates and tile-swap p-values (§§ 2–3), the gap-change interaction test
 (§ 5), the date component per cell (§ 6), and the D45/D46 replicate floors
-(§ 7), every run behind the six-cell anchor gate. Not yet computed: Matthews
+(§ 7), every run behind the six-cell anchor gate; § 7a adds Run C, three
+verifier replicates of every leg, and the floors with the verifier's
+measured noise (`scripts/modality_bridge_verifier_sd.py`, which first
+reproduces every committed set tile for tile). Not yet computed: Matthews
 correlation coefficient (MCC) gaps. §§ 2–3 were scored with the scorer on
 `main` at `aa1746fbd`; §§ 5–7 with `scripts/modality_bridge_floors.py` on
 `a9c5d4ef3` (no scorer file changed between the two), which reproduces every
@@ -121,7 +124,11 @@ Gap change against Gemini 3: −0.0529 (3.7, Gemini 3 verifier) and −0.0547
    direct-SD sensitivity (1.40 to 1.87), but none clears the upper bound of
    its floor (0.66 to 0.99). The K = 10 contrast the claim was first made
    on is the narrowest (1.24 and 1.28); the K-matched and fully matched
-   contrasts are clearer (1.66 to 1.87).
+   contrasts are clearer (1.66 to 1.87). **With the verifier's noise
+   measured (Run C, § 7a)** in place of the borrowed band, every point
+   ratio rises (1.27 to 1.93; the primaries 1.27 and 1.33), and the
+   verdict stands; one upper reading reaches 1.01 (3.7 with the Gemini 3
+   verifier against the Gemini 3 K = 5 rung).
 
 ## 5. The gap change, tested (scoring plan item 4)
 
@@ -292,18 +299,23 @@ difference to exceed its floor):
   on. The upper bound is conservative: it adds each cell's upper SD in
   quadrature; a delta-method 95 % upper for the primary floor is about
   0.068 (ratio 0.78), still below 1 (independent audit, 2026-10-08).
+  These floors carry the borrowed verifier band; § 7a replaces it with the
+  verifier's measured noise, which raises every ratio slightly.
 
 Limits:
 
-- **The verifier band is borrowed, and probably too small for this
-  frame.** The 0.001 per contrast was measured on the 55-map corpus (W2.7
-  report § 1). Each cell here holds 393 to 441 detections, so one verifier
-  decision moves F1 by about 0.0011 to 0.0013, and the whole band is about
-  one decision; the 2.4 % same-week re-invocation flip rate would be about
-  ten. Scaled from the 55-map corpus (about 11 times as many detections),
-  the band would be about 0.003 to 0.005 per contrast. At 0.003 the primary
-  gap changes are 1.14 and 1.17 times their floors; at 0.005, 1.05 and
-  1.08. The floors are proposer-stage floors plus that band.
+- **The verifier band is borrowed; it was suspected too small for this
+  frame, and the measurement does not bear that out** (Run C, § 7a,
+  2026-10-08). The 0.001 per contrast was measured on the 55-map corpus
+  (W2.7 report § 1). Each cell here holds 393 to 441 detections, so one
+  verifier decision moves F1 by about 0.0011 to 0.0013, and the whole band
+  is about one decision; the 2.4 % same-week re-invocation flip rate would
+  be about ten. Scaled from the 55-map corpus (about 11 times as many
+  detections), the band would be about 0.003 to 0.005 per contrast. At
+  0.003 the primary gap changes are 1.14 and 1.17 times their floors; at
+  0.005, 1.05 and 1.08. The floors are proposer-stage floors plus that
+  band. Measured on these cells and added in quadrature, the verifier's
+  noise lowers every gap-change floor below its banded value (§ 7a).
 - **The Gemini 3 verifier's re-invocation noise has been measured on a
   487-tile gold-standard frame of 384-pixel tiles, against the same
   reference** (corrected 2026-10-08: this note and the audit said none had
@@ -311,8 +323,12 @@ Limits:
   T 0.0 gave single-run F1 SDs of 0.0025 to 0.0072 per cell
   (`results/verifier-robustness/verifier-robustness-findings.md` § 2,
   June 2026, scored on `inputs/vectors/bounds/384/full_evaluation_bounds.geojson`).
-  The **Gemini 3.7 verifier's** has never been measured. It samples at its
-  default temperature, 1.0, whatever is sent, so it may be noisier. Added
+  Clarified 2026-10-08 (Run C): the range spans two cells, 0.0032 to
+  0.0072 for the 384-pixel cell and 0.0025 to 0.0048 for a 256-pixel one
+  (`results/verifier-robustness/robustness_summary_T0.0.json`).
+  The **Gemini 3.7 verifier's** had not been measured before Run C. It
+  samples at its default temperature, 1.0, whatever is sent, so it may be
+  noisier. Added
   in quadrature for each of the four cells, in place of the band, a
   per-cell verifier SD moves the two primary gap changes' ratios as
   follows: 0.0025 gives 1.27 and 1.31; 0.0072 gives 1.07 and 1.10; 0.010
@@ -320,8 +336,11 @@ Limits:
   0.012 (1.24 and 1.14). So the family claim holds on the matched
   contrasts for any plausible verifier noise; whether the original K = 10
   contrast clears its floor depends on the 3.7 verifier's. Run C (PI
-  ruling D56, `planning/pi-decisions-2026-09-20.md`) measures it by two
-  further verifications of all ten legs.
+  ruling D56, `planning/pi-decisions-2026-09-20.md`) measured it by two
+  further verifications of all ten legs (§ 7a): the 3.7 verifier's per-cell
+  SD is 0.0003 to 0.0021 (pooled 0.0011) and the Gemini 3 verifier's 0.0011
+  to 0.0034 (pooled 0.0022), well under the 0.0087 at which the primary
+  would reach its floor; with them the primaries are 1.27 and 1.33.
 - **Gemini 3 image at (0.15, k9)** follows a unanimity vote path at every
   K' ≤ 5, so its carried SD is the k10 cell's (0.0164). This affects only
   that cell's date-component floor, in the conservative direction.
@@ -337,8 +356,184 @@ Limits:
   proposer-only consensus from 30-pass pools; its K = 10, t = 10 value
   rests on six pairs.
 
+## 7a. The verifier's re-invocation noise, measured (Run C)
+
+**What ran.** On 2026-10-08 each of the ten Stage 2 legs was verified twice
+more (replicates 2 and 3; the committed legs, verified on 2026-10-07, are
+replicate 1). Same verifier, config, temperature and crops, on the Batch API
+(PI ruling D56; card `planning/run-c-verifier-reinvocation-2026-10-08.md`).
+Every replicate's request file equals the original's byte for byte (34,332
+of 34,332 lines), so only the invocation differs. All twenty legs booked
+every candidate. One response did not parse and was repaired to the value
+booked (card § 9). Audited cost US$25.32.
+
+**Method** (card § 7, fixed before the first lodge). Each committed set of
+§§ 2, 5 and 7 is scored at its own point with each replicate's
+probabilities; the K = 5 rungs re-inherit them within 10 m. Gate, passed:
+replicate 1 reproduces all 20 committed sets tile for tile. Per cell: the SD
+of the three F1s (two degrees of freedom) and its 95 % chi-square interval,
+0.52 to 6.3 times the estimate. "Split" counts the candidates the cell's
+vote gate admits whose accept/reject decision differs between replicates.
+The floors are § 7's, with 1.96 · √(Σ proposer SD² + Σ verifier SD²) in
+place of the 0.001-per-contrast band; the proposer SDs are § 7's, read from
+`floors/floors.json`. Script `scripts/modality_bridge_verifier_sd.py`;
+results `verifier-sd/verifier_sd.json`, `verifier-sd/floors_with_verifier.json`,
+`verifier-sd/summary.csv` and `verifier-sd/gates.json`; 35 s on sapphire.
+
+**Cells** (F1 at 20 m, 487-tile frame):
+
+| Cell (point) | Verifier | F1, replicates 1 / 2 / 3 | SD (95 % interval) | Split |
+|---|---|---|---:|---:|
+| Gemini 3 text (0.15, k10) | Gemini 3 | 0.8916 / 0.8905 / 0.8932 | 0.0014 (0.0007–0.0085) | 19 of 942 |
+| Gemini 3 image (0.15, k10) | Gemini 3 | 0.8393 / 0.8364 / 0.8393 | 0.0016 (0.0009–0.0104) | 13 of 580 |
+| Gemini 3 image (0.15, k9) | Gemini 3 | 0.8331 / 0.8304 / 0.8341 | 0.0019 (0.0010–0.0121) | 14 of 680 |
+| Gemini 3 text, K = 5 rung (0.15, k5) | Gemini 3 | 0.8849 / 0.8849 / 0.8868 | 0.0011 (0.0006–0.0068) | 23 of 1,086 |
+| Gemini 3 image, K = 5 rung (0.15, k5) | Gemini 3 | 0.8239 / 0.8231 / 0.8269 | 0.0020 (0.0010–0.0123) | 16 of 670 |
+| 3.7 text (0.10, k5) | Gemini 3 | 0.9154 / 0.9131 / 0.9097 | 0.0029 (0.0015–0.0180) | 7 of 466 |
+| 3.7 text (0.75, k5) | Gemini 3.7 | 0.9265 / 0.9271 / 0.9283 | 0.0009 (0.0005–0.0059) | 10 of 466 |
+| 3.7 text (0.80, k5) | Gemini 3.7 | 0.9265 / 0.9282 / 0.9294 | 0.0015 (0.0008–0.0092) | 11 of 466 |
+| 3.7 image (0.10, k5) | Gemini 3 | 0.9160 / 0.9218 / 0.9158 | 0.0034 (0.0018–0.0216) | 10 of 460 |
+| 3.7 image (0.88, k5) | Gemini 3.7 | 0.9288 / 0.9272 / 0.9282 | 0.0008 (0.0004–0.0050) | 14 of 460 |
+| 3.7 image (0.90, k5) | Gemini 3.7 | 0.9288 / 0.9294 / 0.9292 | 0.0003 (0.0002–0.0019) | 15 of 460 |
+| 3.7 image cached (0.10, k5) | Gemini 3 | 0.9318 / 0.9343 / 0.9307 | 0.0018 (0.0009–0.0114) | 4 of 455 |
+| 3.7 image cached (0.95, k5) | Gemini 3.7 | 0.9363 / 0.9377 / 0.9393 | 0.0015 (0.0008–0.0094) | 17 of 455 |
+| 3.7 image cached (0.90, k5) | Gemini 3.7 | 0.9352 / 0.9377 / 0.9394 | 0.0021 (0.0011–0.0133) | 15 of 455 |
+| Gemini 3 text, T 1.0 (0.15, k5) | Gemini 3 | 0.8824 / 0.8814 / 0.8786 | 0.0020 (0.0010–0.0123) | 17 of 1,018 |
+| Gemini 3 image, T 1.0 (0.15, k5) | Gemini 3 | 0.8242 / 0.8228 / 0.8210 | 0.0017 (0.0009–0.0104) | 12 of 588 |
+
+Where a cell's operating point and best point coincide, one row serves both.
+
+**By verifier:**
+
+- **Gemini 3:** per-cell SDs 0.0011 to 0.0034. Pooled over the best sets of
+  its seven legs, 0.0022 (14 degrees of freedom; 95 % 0.0016 to 0.0035).
+  June's single-run SDs, from five verifications at T 0.0 (§ 7 Limits), were
+  0.0025 to 0.0072: 0.0032 to 0.0072 over the five vote levels of its
+  384-pixel cell and 0.0025 to 0.0048 over those of a 256-pixel cell
+  (`results/verifier-robustness/robustness_summary_T0.0.json`). These are
+  lower (flagged, § 8).
+- **Gemini 3.7:** per-cell SDs 0.0003 to 0.0021. Pooled over its three legs,
+  0.0011 (6 degrees of freedom; 0.0007 to 0.0025).
+- **Responses.** Between any two replicates, Gemini 3 returns byte-identical
+  text for 48.0 to 52.5 % of candidates and changes 13 to 17 % of
+  probabilities; Gemini 3.7 never returns identical text and changes 35 to
+  43 % of probabilities. At the cells' points Gemini 3.7 splits more
+  decisions (2.1 to 3.7 % of admitted candidates, against 0.9 to 2.4 %), yet
+  its F1 SDs are the smaller (flagged, § 8).
+- **Day.** Replicate 1 ran a day before 2 and 3. Replicate 1 minus the mean
+  of 2 and 3 ranges from −0.0034 to +0.0040, with both signs on both
+  verifiers: no day-to-day shift shows.
+
+**Gaps** against floors with the measured verifier SD (point; the upper
+reading uses each cell's upper proposer SD):
+
+| Gap | Estimate | Floor, band (ratio) | Floor, measured (ratio) | Upper ratio, band → measured | Break-even verifier SD |
+|---|---:|---:|---:|---:|---:|
+| Gemini 3, K = 10 | +0.0523 | 0.0349 (1.50) | 0.0342 (1.53) | 0.80 → 0.81 | 0.0144 |
+| Gemini 3, K = 5 rung | +0.0609 | 0.0280 (2.17) | 0.0274 (2.22) | 1.40 → 1.42 | 0.0197 |
+| Gemini 3, T 1.0, K = 5 | +0.0582 | 0.0311 (1.87) | 0.0305 (1.91) | 1.03 → 1.05 | 0.0180 |
+| 3.7, Gemini 3 verifier | −0.0006 | 0.0232 (0.03) | 0.0239 (0.02) | 0.01 → 0.01 | — |
+| 3.7, 3.7 verifier | −0.0023 | 0.0234 (0.10) | 0.0226 (0.10) | 0.05 → 0.05 | — |
+| 3.7 text − cached image, Gemini 3 verifier | −0.0164 | 0.0239 (0.69) | 0.0238 (0.69) | 0.31 → 0.31 | — |
+| 3.7 text − cached image, 3.7 verifier | −0.0098 | 0.0225 (0.43) | 0.0218 (0.45) | 0.18 → 0.18 | — |
+
+**Gap changes:**
+
+| Gap change | Estimate | Floor, band (ratio) | Floor, measured (ratio) | Upper ratio, band → measured | Direct, band → measured | § 3-derived, without → with verifier | Break-even verifier SD |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **Primary:** 3.7 (Gemini 3 verifier) − Gemini 3 K = 10 | −0.0529 | 0.0426 (1.24) | 0.0417 (1.27) | 0.66 → 0.68 | 1.40 → 1.43 | 1.36 → 1.32 | 0.0087 |
+| **Primary:** all-3.7 − Gemini 3 K = 10 | −0.0547 | 0.0427 (1.28) | 0.0410 (1.33) | 0.66 → 0.68 | 1.45 → 1.51 | 1.41 → 1.39 | 0.0093 |
+| 3.7 (Gemini 3 verifier) − Gemini 3 K = 5 rung | −0.0615 | 0.0370 (1.66) | 0.0364 (1.69) | 0.99 → 1.01 | — | 1.47 → 1.43 | 0.0129 |
+| all-3.7 − Gemini 3 K = 5 rung | −0.0633 | 0.0371 (1.70) | 0.0355 (1.78) | 0.96 → 0.99 | — | 1.52 → 1.51 | 0.0134 |
+| 3.7 (Gemini 3 verifier) − Gemini 3 T 1.0 | −0.0588 | 0.0394 (1.49) | 0.0388 (1.52) | 0.82 → 0.83 | — | 1.41 → 1.37 | 0.0116 |
+| all-3.7 − Gemini 3 T 1.0 | −0.0605 | 0.0395 (1.53) | 0.0380 (1.59) | 0.81 → 0.83 | — | 1.45 → 1.44 | 0.0121 |
+| Fifth leg (Gemini 3 verifier) − Gemini 3 K = 10 | −0.0687 | 0.0429 (1.60) | 0.0417 (1.65) | 0.81 → 0.82 | 1.81 → 1.86 | 1.77 → 1.73 | 0.0141 |
+| Fifth leg (3.7 verifier) − Gemini 3 K = 10 | −0.0621 | 0.0422 (1.47) | 0.0405 (1.53) | 0.72 → 0.74 | 1.67 → 1.74 | 1.60 → 1.58 | 0.0121 |
+| Fifth leg (Gemini 3 verifier) − Gemini 3 T 1.0, fully matched | −0.0746 | 0.0398 (1.87) | 0.0387 (1.93) | 0.95 → 0.97 | — | 1.79 → 1.75 | 0.0164 |
+| Fifth leg (3.7 verifier) − Gemini 3 T 1.0, fully matched | −0.0680 | 0.0390 (1.74) | 0.0375 (1.81) | 0.86 → 0.88 | — | 1.63 → 1.61 | 0.0145 |
+
+"Break-even" is the verifier SD that, on all four cells alike, brings the
+point ratio to 1; "—" in that column means the gap is below its floor with
+no verifier noise at all. § 3's committed floors carry no band, so adding
+the verifier lowers those ratios slightly.
+
+**Verifier sensitivities** on the gap changes' point ratios: the pooled SD
+of each cell's verifier family, that SD at its 95 % upper bound (added after
+the results), and each cell at its own upper bound (pre-specified):
+
+| Gap change | Measured per cell | Pooled | Pooled, upper | Each cell at its upper |
+|---|---:|---:|---:|---:|
+| **Primary:** 3.7 (Gemini 3 verifier) − Gemini 3 K = 10 | 1.27 | 1.28 | 1.24 | 0.72 |
+| **Primary:** all-3.7 − Gemini 3 K = 10 | 1.33 | 1.32 | 1.29 | 1.08 |
+| 3.7 (Gemini 3 verifier) − Gemini 3 K = 5 rung | 1.69 | 1.71 | 1.64 | 0.87 |
+| all-3.7 − Gemini 3 K = 5 rung | 1.78 | 1.77 | 1.71 | 1.34 |
+| 3.7 (Gemini 3 verifier) − Gemini 3 T 1.0 | 1.52 | 1.53 | 1.47 | 0.80 |
+| all-3.7 − Gemini 3 T 1.0 | 1.59 | 1.59 | 1.54 | 1.18 |
+| Fifth leg (Gemini 3 verifier) − Gemini 3 K = 10 | 1.65 | 1.64 | 1.59 | 1.07 |
+| Fifth leg (3.7 verifier) − Gemini 3 K = 10 | 1.53 | 1.52 | 1.48 | 1.18 |
+| Fifth leg (Gemini 3 verifier) − Gemini 3 T 1.0, fully matched | 1.93 | 1.92 | 1.85 | 1.16 |
+| Fifth leg (3.7 verifier) − Gemini 3 T 1.0, fully matched | 1.81 | 1.81 | 1.75 | 1.28 |
+
+Reading:
+
+- **The verifier adds less than the band assumed.** Measured per cell and
+  added in quadrature, it lowers every gap change's floor, so every point
+  ratio rises: the primaries from 1.24 and 1.28 to 1.27 and 1.33, the
+  K = 5 contrasts to 1.69 and 1.78, the T 1.0 ones to 1.52 and 1.59, and
+  the fully matched ones to 1.93 and 1.81. The audit's suspicion that the
+  0.001 band was too small (§ 7 Limits) is not borne out (flagged, § 8).
+- **The K = 10 contrast clears its floor with the verifier measured.** It
+  would need a per-cell verifier SD of 0.0087 (Gemini 3 verifier) or 0.0093
+  (all-3.7) to reach its floor. The largest measured is 0.0034, and the
+  pooled upper bounds are 0.0035 (Gemini 3) and 0.0025 (Gemini 3.7).
+- **No contrast changes side of its point, upper, direct or § 3 floor,
+  save one upper reading.** 3.7 (Gemini 3 verifier) − Gemini 3 K = 5 rung
+  moves from 0.99 to 1.01 times its upper floor; every other gap change
+  stays inside its upper bound (0.68 to 0.99).
+- **Three replicates bound one cell's SD loosely.** With every cell at its
+  own two-degree-of-freedom upper bound at once (6.3 times its SD), the
+  three gap changes built on the inline 3.7 cells under the Gemini 3
+  verifier fall below 1 (0.72, 0.87 and 0.80), because those two cells'
+  SDs are the largest measured (0.0029 and 0.0034). Every other gap change
+  stays above 1 (1.07 to 1.34). Pooled within each verifier, the upper
+  bounds leave every gap change at 1.24 or more.
+
+Limits:
+
+- Three replicates per cell. The per-cell SDs are rough; the pooled SDs
+  assume one SD per verifier across its cells.
+- The replicates measure re-invocation within a day and across one day, on
+  the batch tier. They do not cover longer drift or the originals' real-time
+  tiers (§ 6 compares those).
+- Verifier noise is taken as independent of the proposer's and between
+  cells, since each cell's leg is a separate invocation. The K = 5 rungs
+  inherit probabilities from the K = 10 legs, so they share those legs'
+  verifier draws; no contrast pairs a rung with its own K = 10 cell.
+- Otherwise the floors are § 7's, with the same carried proposer SDs and
+  normality assumption.
+
 ## 8. Flags
 
+- **Run C's verifier noise runs against three expectations** (§ 7a; raised
+  as findings, not explained away):
+  - **It is smaller than the band assumed.** The audit and § 7 Limits
+    expected the 0.001-per-contrast band to understate it; measured, it
+    lowers every gap-change floor and raises every ratio.
+  - **The Gemini 3.7 verifier is the steadier in F1, not the noisier.** It
+    samples at T 1.0 and never repeats a response, changes 35 to 43 % of
+    probabilities between replicates (Gemini 3: 13 to 17 %) and splits more
+    decisions at the cells' points (2.1 to 3.7 % against 0.9 to 2.4 %), yet
+    its per-cell F1 SDs are the smaller (pooled 0.0011 against 0.0022).
+  - **The Gemini 3 verifier's SDs (0.0011 to 0.0034) sit below June's**
+    0.0025 to 0.0072 (0.0032 to 0.0072 on its 384-pixel cell). June's run
+    differs in tier (real-time flex), in its cells (the 1-of-5 unions of
+    3,736 and 2,558 candidates, one of them on 256-pixel tiles) and in its
+    points, so the two are not the same measurement.
+
+  Gemini 3 returns byte-identical text for about half the candidates
+  between any two replicates; its one unparseable response in Run C
+  (`g3-image-temp1`, `candidate_02479`, replicate 3) is the same text as
+  replicate 1's, which failed at the same position.
 - **The Gemini 3 image K = 10 union is 15.0 % smaller than the original**
   (3,456 against 4,065; the passes agree more; Stage 2 card § 8, F-cal). Its F1
   moved by −0.0081 only. Raised as a surprise; the chain that built it rebuilds
@@ -381,7 +576,41 @@ D52). The 3.7 cache reads are priced at the rate card's US$0.0375/M. At the
 US$0.075/M the September invoices show, add about US$9. §§ 5–7 made no
 Application Programming Interface (API) call.
 
+Run C (§ 7a), twenty verifier legs on 2026-10-08: US$25.32 audited
+(`scripts/audit_verifier_cost.py`, record
+`outputs/modality-bridge-2026-10-07/stage2/checks/run-c-cost-audit.json`;
+US$12.66 per replicate, against the US$12.69 of Run B's ten legs), within
+D56's US$50. The analysis made no API call.
+
 ## Changelog
+
+### 2026-10-08 — Run C: the verifier's re-invocation noise, measured
+
+Run C (PI ruling D56; card `planning/run-c-verifier-reinvocation-2026-10-08.md`)
+verified each of the ten Stage 2 legs twice more with byte-identical
+requests (US$25.32). New § 7a: per-cell verifier SDs from three replicates,
+flips, and § 7's floors with the measured verifier variance in quadrature
+in place of the 0.001-per-contrast band (`scripts/modality_bridge_verifier_sd.py`,
+results `verifier-sd/`; replicate 1 reproduced all 20 committed sets tile
+for tile). New § 8 flag: the noise runs against three expectations. § 9
+gains Run C's cost. § 4 item 5, § 7's reading and § 7 Limits point to § 7a;
+§ 7 Limits' June range is clarified (it spans a 384-pixel and a 256-pixel
+cell) and its "probably too small" is answered.
+
+| Claim | Before | After |
+|---|---|---|
+| Verifier noise on this frame | Gemini 3: June's 0.0025–0.0072; 3.7: never measured | Gemini 3: 0.0011–0.0034 per cell (pooled 0.0022); 3.7: 0.0003–0.0021 (pooled 0.0011) |
+| Primary gap changes, of floor | 1.24 and 1.28 (band) | 1.27 and 1.33 (measured verifier) |
+| K = 5, T 1.0, fully matched gap changes | 1.66, 1.70; 1.49, 1.53; 1.87, 1.74 | 1.69, 1.78; 1.52, 1.59; 1.93, 1.81 |
+| Gap changes' upper readings | 0.66 to 0.99 | 0.68 to 1.01 (one at 1.01) |
+| Break-even per-cell verifier SD, primaries | "about 0.009" | 0.0087 and 0.0093 |
+
+Unchanged: every cell, gap, gap change and p of §§ 2–6, and every number
+of § 7 and `floors/`, which still report the banded floors. Commits: the
+launcher's replicates `88103aef1`, the card `4b199a2ef`, the analysis
+`a79cb4d40`, `cc9a21c68` and `65b73ab21`, the legs `6c1e82014` and
+`9793307a5`, the results `494309a43` and `2283f2054`, the cost record
+`f70cd09f3`.
 
 ### 2026-10-08 — The 55-map 3.7 result; the verifier's measured noise
 

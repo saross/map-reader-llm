@@ -1,0 +1,194 @@
+{
+ "summary": {
+  "n_cells_census": 2800,
+  "n_cells_classified": 2751,
+  "census_errors": [],
+  "n_cells_affected": 0,
+  "n_detections_affected": 0,
+  "n_detections_stuck_all_cells": 283,
+  "n_cells_with_stuck": 9,
+  "n_cells_with_multi_origin": 11,
+  "n_detections_multi_origin": 11,
+  "multi_origin_cells": [
+   {
+    "eval": "archive/uplift-supplement-pairing/verified-paired-crsless-scoring-2026-08-29/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "archive/55maps-superseded-gt-evals/condition-scoring-backfill-2026-05-30/55maps-image-consensus-3of5/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-generalisation__verified-paired/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-high-generalisation__verified-k4-r2-gt/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-image-generalisation__verified-k3-r2-gt/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-image-generalisation__verified/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-high-generalisation__verified/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-high-t0-3-generalisation__verified-k4-r2-gt/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-min-generalisation__verified-k4-r2-gt/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-high-t0-3-generalisation__verified/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   },
+   {
+    "eval": "results/uplift-supplement/verifier-pairing/55maps-text-min-generalisation__verified/evaluation.json",
+    "n": 1,
+    "source_tile_in_file": [
+     false
+    ]
+   }
+  ],
+  "all_columns": {
+   "n_cells_affected": 0,
+   "n_detections_affected": 0,
+   "n_cells_with_multi_origin": 11,
+   "n_detections_multi_origin": 11
+  },
+  "written_source_tile_with_origin": {
+   "n_cells": 404,
+   "n_detections": 516785
+  },
+  "stuck_cells": [
+   {
+    "eval": "archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+    "n_stuck": 28,
+    "n_detections": 495
+   },
+   {
+    "eval": "archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+    "n_stuck": 32,
+    "n_detections": 558
+   },
+   {
+    "eval": "archive/superseded-consensus-2026-09-13/recovery-fragment-drop/evaluations-as-read-2026-09-13/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+    "n_stuck": 27,
+    "n_detections": 502
+   },
+   {
+    "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+    "n_stuck": 28,
+    "n_detections": 495
+   },
+   {
+    "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+    "n_stuck": 27,
+    "n_detections": 502
+   },
+   {
+    "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+    "n_stuck": 32,
+    "n_detections": 558
+   },
+   {
+    "eval": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0.10-k1/evaluation.json",
+    "n_stuck": 40,
+    "n_detections": 558
+   },
+   {
+    "eval": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+    "n_stuck": 34,
+    "n_detections": 502
+   },
+   {
+    "eval": "results/null-exemplar-sensitivity-2026-09-13/cells/era2-b-487/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+    "n_stuck": 35,
+    "n_detections": 495
+   }
+  ],
+  "affected_by_family": {},
+  "affected_by_status": {},
+  "affected_source_tile_in_file": {},
+  "affected_origin_columns": {},
+  "affected_also_d50_origin_restored": 0,
+  "check_counter_equals_census": true,
+  "check_counter_mismatches": [],
+  "check_out_of_frame_falls_by_count": true,
+  "check_out_of_frame_mismatches": [],
+  "n_affected_scored": 0,
+  "n_a_reproduces_d50": 0,
+  "a_not_reproducing_d50": [],
+  "n_moved_ge_0.001": 0,
+  "n_moved_f1_20_ge_0.001": 0,
+  "f1_20_delta": {
+   "n_positive": 0,
+   "n_negative": 0,
+   "n_zero": 0,
+   "min": null,
+   "max": null
+  },
+  "largest": null,
+  "n_registered_moved": 0,
+  "registered_moved": [],
+  "analyses_moved": [],
+  "end_to_end": {
+   "n_scored_in_both": 2727,
+   "n_b_differs_from_a_gt_1e-9": 0,
+   "n_b_moves_vs_a_ge_0.001": 0,
+   "max_abs_b_minus_a": 0.0,
+   "n_compared_with_d50": 2727,
+   "n_a_reproduces_d50_1e-9": 2727,
+   "a_not_reproducing_d50": [],
+   "status_counts_a": {
+    "scored": 2727,
+    "diagnostics-only": 24,
+    "skipped": 49
+   },
+   "status_counts_b": {
+    "scored": 2727,
+    "diagnostics-only": 24,
+    "skipped": 49
+   }
+  }
+ },
+ "cells": []
+}

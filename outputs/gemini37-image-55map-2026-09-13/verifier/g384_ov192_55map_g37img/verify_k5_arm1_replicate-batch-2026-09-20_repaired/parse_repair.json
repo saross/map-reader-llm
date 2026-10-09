@@ -1,0 +1,33 @@
+{
+ "script": "scripts/modality_bridge_stage2_checks.py repair",
+ "method": "lib_batch_api.parse_response_with_repair after Markdown-fence stripping, then lib_verifier._unwrap_verdict_payload: the real-time path's parse (lib_verifier._call_verifier_api)",
+ "leg_dir": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20",
+ "source_probabilities_sha256": "345767ca31b1ad26a8d9bca54f6387080ac9d8745d2405426e991f4cae619c2b",
+ "source_batch_results_sha256": "f42e46129bb69c17fc6e7c80368c53ae52e5b830446ce612e9b5f3347e26ae56",
+ "n_results": 9173,
+ "n_results_written": 9173,
+ "n_parse_error_rows": 2,
+ "changed": [
+  {
+   "key": "candidate_06537",
+   "before": 0.0,
+   "after": 0.2,
+   "before_reasoning": "PARSE_ERROR: Extra data: line 7 column 1 (char 739)",
+   "text_sha256": "3d9ff4b800efae2b7fac53ab52ad158c2e0d737b9533910902a248e4d4dc5c88"
+  },
+  {
+   "key": "candidate_08272",
+   "before": 0.0,
+   "after": 0.05,
+   "before_reasoning": "PARSE_ERROR: Extra data: line 7 column 1 (char 812)",
+   "text_sha256": "6ca1df2fbf19232f7964644250a0b780eb91769f0198158a73ce41c7d2de755f"
+  }
+ ],
+ "unrecovered": [],
+ "run_meta_copied_from": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20/run.meta.json",
+ "source_run_meta_sha256": "b85b2b1cace97b34d32c9357e19e8368fb824e8bf0807c3898262fe92fd15a9e",
+ "written": {
+  "probabilities.json": "1d756112421d4c9c0a193abffe19a73060dd31354385e46d2f763ded9f2d4aca",
+  "run.meta.json": "b85b2b1cace97b34d32c9357e19e8368fb824e8bf0807c3898262fe92fd15a9e"
+ }
+}

@@ -44,10 +44,177 @@ replaces it.
   audit (`reports/s163-agent-records/run-b-floors-audit.md`); request
   folders deleted (D55 Q3: 54 folders, 35 GB; the verifier request files
   stay until Run C has compared them, then go).
-- [ ] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
+- [x] **Run C, the verifier's repeat-run noise** (D56, up to US$50): two
   further verifications of Run B's ten legs, on an agent's branch and
   sapphire; card `planning/run-c-verifier-reinvocation-2026-10-08.md`.
-  Then delete Run B's verifier request files (D55 Q3).
+  Then delete Run B's verifier request files (D55 Q3). DONE 2026-10-08:
+  twenty legs, 34,332 of 34,332 candidates booked, audited US$25.3176
+  (`outputs/modality-bridge-2026-10-07/stage2/checks/run-c-cost-audit.json`,
+  `f70cd09f3`); write-up Run B findings § 7a (`46a0720a7`). Verifier SD
+  per cell 0.0011–0.0034 (Gemini 3) and 0.0003–0.0021 (3.7); every
+  gap-change ratio rises with the measured noise in place of the 0.001
+  band (primaries 1.24 → 1.27 and 1.28 → 1.33). All three replicates were
+  scored in one run with `main`'s scorer (PR #26 unmerged); replicate 1
+  reproduces the committed sets tile for tile (§ 7a gate). Request files
+  deleted 2026-10-08: all 30 `verifier_requests.jsonl` under
+  `outputs/modality-bridge-2026-10-07/` on sapphire (3.05 GB, untracked;
+  originals under D55 Q3, the replicates' as byte-identical copies, one
+  SHA-256 per leg across its three replicates).
+- [x] **PR #26's older `source_tile` gap counted** (D57 context,
+  2026-10-08; branch `scorer-frames-d50-d51` at `e504f921f`, report
+  § 5.7): 0 affected cells and 0 detections over 2,751 classified cells;
+  a full re-score with the draft fix differs from the branch by 0.0.
+  The draft fix (`n_origin_switched`; diff in the report's
+  `out/source-tile-gap/draft-fix.diff`) goes in a small follow-up PR
+  after #26 merges and before the re-score, so re-scored evaluations
+  carry its counter; it changes no committed number. DONE: PR #27
+  merged as `8988f3f17` (tier-1 4,171 passed) before the PI had approved
+  the merge; ratified 2026-10-09 (D58). Local and sapphire synced to
+  `8988f3f17` 2026-10-09.
+- [ ] **Record the sheet(s) a detection was seen on, everywhere**
+  (PI, 2026-10-09, D58). The sheet is recoverable from `source_tile`
+  (the tile name encodes it) except in three cases: (a) a cluster seen
+  on two overlapping sheets keeps only its first, alphabetical, member
+  in `source_tile`, and the member list (`source_tiles`) is dropped by
+  Run B's unions (e.g.
+  `outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.geojson`:
+  `source_tile` and `vote_count` only) and by the sweep loader (item
+  below); (b) a later step re-wrote `source_tile` to a neighbouring
+  sheet (tier E's and h13's materialisers; D50 restores these where an
+  origin column survives, `scripts/lib_advanced_metrics.py:1097–1105`);
+  (c) rungs rebuilt from bare points get their tile by location
+  (`scripts/modality_bridge_floors.py:648–653`, `assign_primary_tiles`).
+  Fix: carry `source_tiles` through every writer (unions, verified
+  sets, rung builders, sweep loader) and count rows that lack it.
+  Today's measured effect is nil (report § 5.7: 0 affected cells).
+- [ ] **D57 (4) re-score** (plan card
+  `planning/d57-4-rescore-plan-2026-10-09.md`, rulings D58): phases 0
+  and 2 next (pre-flight and tier-1 at `8988f3f17`; the changed cells,
+  stride sweeps, and conditions manifest, into scratch first; deltas to
+  the PI before anything is copied into the tree). Includes the Q2
+  two-stage re-score of the 25 drifted cells where their inputs as
+  scored can be recovered (scorer change first, drift second);
+  otherwise they stay historical records.
+  Progress 2026-10-10: phases 0 and 2 in draft PR #29 (not to be merged
+  yet; S2 record `reports/s163-agent-records/d57-4-rescore-s2-deltas.md`);
+  Phase 3 done in scratch (S3 record
+  `reports/s163-agent-records/d57-4-rescore-s3-deltas.md`: no conclusion
+  changes where OLD reproduces; five stopped lines predate D50; the
+  null-exemplar board waits for Phase 6). Phase 6 is blocked on the D51
+  publishing-path fix (item below). Census done in part
+  (`reports/s163-agent-records/d57-4-rescore-census.md`): OLD reproduces
+  695 of 737 Phase 2 cells exactly; the other 42 lose intervals for a
+  pre-D50 reason (tile-join refusal); 458 live cells remain, halted by
+  the sapphire memory fault. Phase 4 done
+  (`reports/s163-agent-records/d57-4-rescore-s4-q4.md`): Run B and Run C
+  reproduce; Q4 moves only the predicted rows; PR #28 open, not merged.
+- [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
+  `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
+  13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
+  offset (one bit set). Hold heavy compute there until the PI has run a
+  memory test or reset memory to stock settings (a reboot needs the
+  physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
+  compare byte for byte with draft PR #29 before it merges; resume the
+  census (458 cells; command in the census record).
+- [ ] **W2.7 cells move under the new scorer** (D57 (4) scope; Phase 4
+  record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
+  +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
+  floors-v2 `FastScorer` still reproduces the old cells.
+- [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
+  reads a key the 2026-09-21 relabel renamed to
+  `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
+- [ ] **PR #29 description**: add the 42 tile-join cells (intervals
+  withheld for a pre-D50 reason) and the hardware caveat before review.
+- [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
+  `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
+  changes requested; no committed full-frame score shown wrong). (1) A
+  caller that scores one sheet with the full detections
+  (`scripts/analyse_55maps_heterogeneity.py:272–291`;
+  `scripts/analyse_secondary_effects*.py` pass `map_bounds`) builds the
+  origin frame from that sheet only
+  (`scripts/lib_advanced_metrics.py:1579–1611`), so a two-sheet cluster
+  can count on both sheets. No per-map result has been regenerated since
+  D50 landed (`fefb73f2b`), so nothing committed is affected; fix before
+  any per-map re-run. (2) `iter_sheet_scopes` selects reference bounds by
+  bare `startswith` while detections use the longest prefix; latent (no
+  prefix collision among the 60 sheets in the 34 tracked bounds files,
+  checked 2026-10-10). Add a regression test for each. Astra asks the PI
+  to approve focused offline tests on their side.
+- [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
+  it zips candidates with `hsu_not_ruled_out`, an index list, so the
+  member lists are the first *n* candidates; the signed null-exemplar
+  findings misname the admitted and dropped cells (S3 record, flag 4).
+- [ ] **Stale CIs in `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.json`**:
+  committed in `dccee3362` before the BCa-adapter fix `122104b8a`; today's
+  intervals are wider. Its Markdown shows no intervals (S3 record).
+- [ ] **Sweep candidates cannot be reached by a scorer fix**
+  (`e504f921f`, report § 5.7 item 3): the sweep loader keeps
+  `source_tile` and drops the member list. Harmless today (every
+  out-of-frame sweep candidate was seen on one sheet only); a future
+  pool over overlapping sheet content could be hit.
+- [x] **D55 Q4 executed** (2026-10-08, merged `c92409f77`): one Batch
+  API job, 7 `gemini-3.7-flash` calls, US$0.007672
+  (`outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08/record.json`);
+  all seven parsed; two rows re-booked. Booked into the legs'
+  `_repaired/` copies only; no committed leg or evaluation changed.
+  Gemini 3 image arm 2: none of 13 cells moves. The 3.7 K = 5 arm 1
+  replicate's two cells would move (F1 0.9135 → 0.9134, MCC 0.7530 →
+  0.7527; drift test (a) tile-MCC +0.000145 → −0.000132, n.s. either
+  way; flips 221 → 220).
+- [ ] **Adopt the Q4 corrections in the D57 (4) re-score**: the 55-map
+  scorers read `verify_k{k}_{arm}` by fixed name, not `_repaired`;
+  point them at the repaired copy where one exists (Stage 2's
+  convention), then update the replicate's citing documents once
+  (list in the Q4 agent's hand-back: replicate findings, the 2×2 tests
+  declaration, the temperature notice, both inheritance findings,
+  tile-presence, D8, the analyses registers).
+- [ ] **Hard-coded repository roots** (`Path("/home/shawn/Code/map-reader-llm")`):
+  `results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py:88`
+  and `…/inheritance-2026-09-20/inheritance_ladder.py:114` made a
+  scratch run write six tracked files in sapphire's shared checkout
+  (content byte-identical; found by the Q4 agent). `git grep` finds
+  five more (`replicate_k5_arm2.py:56`, two
+  `inputs/student-baseline-2023/scripts/` stages, two
+  `reports/*-2026-10-05-scripts/`). Derive the root from `__file__`.
+- [ ] **D57 (3) evidence under cross-vendor review**: branch
+  `d51-ladder-provenance` at `1fc1f72df`
+  (`reports/d51-ladder-provenance-2026-10-08.md`); review request to
+  Astra by agent mail 2026-10-08
+  (`~/agent-mail/claude/outbox/codex/20261008T113959.092914Z-claude-d51-ladder-provenance-review.md`).
+  Gate after: 7 refused, 7 same, 0 undetermined (MINIMAL image T 0.7
+  and T 0.3 newly refused). Clip cost measured: HIGH text T 1.0 −0.0040
+  on K = 3/5/10, MINIMAL image T 0.7 about −0.003, others 0. Open for
+  the PI: partial coverage inside a pool (image T 1.0's gap tile seen
+  by 2 of 10 passes, below every vote threshold) is invisible to a
+  union-area gate.
+  Review received 2026-10-09
+  (`~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d51-ladder-provenance-review.md`):
+  reconstruction supported; changes requested. (1) Blocker for Phase 6:
+  `scripts/build_k_ladder_phase2_tables.py:790–800` attaches a
+  `clipped_to_common_area` block, but the tables (1063–1067), the
+  compatibility inventory (885–888), and the figure still read the
+  unclipped `f1_20`, and a point that cannot be re-scored is skipped
+  silently (confirmed 2026-10-10 on `cb513d709`). (2) Bind each
+  retrospective declaration to the consensus file's own hash. (3) Correct
+  the report: 247 files are 195 target plus 52 validation, and a byte-exact
+  rebuild shows a reproducible construction, not a unique pass history.
+  Astra recommends reporting per-reference vote support (`c ≥ v`) for the
+  partial-coverage question, which remains the PI's.
+- [x] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
+  so the Q4 deltas are not computed across two scorer versions; the
+  tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
+  whose later commits touch no code. Refresh the PR description (it
+  still says 54 tests and gives no basis for 696) before merging.
+  DONE 2026-10-08: merged as `fefb73f2b`, description refreshed.
+- [ ] **After PR #26 merges, re-score Run B and Run C together** (plan
+  card Phase 4). The plan card predicts no move: their files carry no
+  origin column and nothing re-wrote their `source_tile`, so D50 has
+  nothing to restore; a gates-only run confirms first. Their
+  cells are not in the D50/D51 measurement's 2,727, and the 487-tile frame
+  is where origin restoration moves cells (median +0.0018, about the size
+  of the verifier SDs). Re-run `scripts/modality_bridge_verifier_sd.py`
+  so all three replicates and the floors use the new scorer at once;
+  never mix scorer versions within one SD or floor.
 - [x] **pv-diag-256 registered in place** (D55 Q5): merged 2026-10-08
   (`fbc4cb02a`). Its agent found: (a) the union sweep's verdicts now
   depend on pass order: 24 unions in 10- and 30-pass pools read STALE by
@@ -63,8 +230,10 @@ replaces it.
   discarded, so they failed silently; the floors audit record went
   unregistered and `main` failed the registry test until rebuilt with
   `.venv/bin/python`.
-- [ ] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
+- [x] **Q4 held** (D55): the seven unparseable rows are Gemini 3.7 Flash
   rows, not Gemini 3 Flash as the approval named; re-confirm with the PI.
+  DONE 2026-10-08: re-confirmed ("yes for the Gemini Flash calls"); an
+  agent is executing on branch `q4-reverify-55map-rows`.
 - [ ] **Seven committed 55-map verifier rows hold an unparseable 0.0**
   (`gemini3-image-55map-2026-09-16`, `verify_k1_arm2`, `verify_k3_arm2`,
   `verify_k5_arm2`: an unescaped quote inside a string; the originals'

@@ -1,0 +1,157 @@
+{
+ "mode": "batch",
+ "argv": [
+  "--crops-dir",
+  "outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/crops",
+  "--verifier-config",
+  "prompts/configs/verify_adversarial-text.json",
+  "--output-dir",
+  "/home/shawn/cc-scratch/tmp/runb-stage2/verify-g3-text-g3-rep2",
+  "--mode",
+  "batch",
+  "--temperature",
+  "0.0",
+  "--model",
+  "gemini-3-flash-preview",
+  "--dry-run"
+ ],
+ "repo_root": "/home/shawn/Code/map-reader-llm",
+ "batch": {
+  "request_files": [
+   "verifier_requests.jsonl"
+  ],
+  "request_bytes": [
+   196788018
+  ],
+  "n_lines": 3258,
+  "n_candidates": 3258,
+  "keys_match_manifest": true,
+  "elided_signatures": {
+   "3b48d7193dcf0165af68d3b283a3bc6ce884689e0c4cb0e7369f5d5f219f7d04": 3258
+  },
+  "full_elided_signatures": {
+   "5e9bb517e77f6ac2a19cdffa4c844c44485c69f82bd3a0e825617cfa7bc05c99": 3258
+  },
+  "generation_config_keys": {
+   "max_output_tokens,response_mime_type,temperature,thinking_config": 3258
+  },
+  "first_requests": [
+   {
+    "key": "candidate_00000",
+    "n_contents": 1,
+    "roles": [
+     "user"
+    ],
+    "parts": [
+     [
+      "text",
+      "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+      "Reference examples (text descriptions only):\n- Positive: Bur"
+     ],
+     [
+      "text",
+      "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+      "Now classify the candidate symbol at the centre of this crop"
+     ],
+     [
+      "image",
+      "image/png",
+      "7376d13514f3c88e1ae481f3f8ce573006ad38c717e0bb8842b07635030c3417"
+     ]
+    ],
+    "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "cached_content": null,
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "response_mime_type": "application/json",
+    "thinking_level": "MINIMAL",
+    "safety_settings": null,
+    "service_tier": null,
+    "request_keys": [
+     "contents",
+     "generation_config",
+     "system_instruction"
+    ]
+   },
+   {
+    "key": "candidate_00001",
+    "n_contents": 1,
+    "roles": [
+     "user"
+    ],
+    "parts": [
+     [
+      "text",
+      "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+      "Reference examples (text descriptions only):\n- Positive: Bur"
+     ],
+     [
+      "text",
+      "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+      "Now classify the candidate symbol at the centre of this crop"
+     ],
+     [
+      "image",
+      "image/png",
+      "42fb073c08e4629567eaf0686a72b5bb259f0865d41011ad8a14c516889f7905"
+     ]
+    ],
+    "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "cached_content": null,
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "response_mime_type": "application/json",
+    "thinking_level": "MINIMAL",
+    "safety_settings": null,
+    "service_tier": null,
+    "request_keys": [
+     "contents",
+     "generation_config",
+     "system_instruction"
+    ]
+   },
+   {
+    "key": "candidate_00002",
+    "n_contents": 1,
+    "roles": [
+     "user"
+    ],
+    "parts": [
+     [
+      "text",
+      "4ee9f4cd980c89a3dd0ef97a269f2353ef189aa63a277b9ee1097f3abba07371",
+      "Reference examples (text descriptions only):\n- Positive: Bur"
+     ],
+     [
+      "text",
+      "f52b1889deeca277343a9e7094bb76bd26866b60fa57c5687d9cc8c7385e92da",
+      "Now classify the candidate symbol at the centre of this crop"
+     ],
+     [
+      "image",
+      "image/png",
+      "f2c6cd56de19f1be761c32a0093598c96c340b432a37fea5ec346dd793fa65ff"
+     ]
+    ],
+    "system_instruction_sha256": "2518d5298d9b84bac6810bb0d11e59ef534c46853f65cb25dc1454af3497e15d",
+    "cached_content": null,
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "response_mime_type": "application/json",
+    "thinking_level": "MINIMAL",
+    "safety_settings": null,
+    "service_tier": null,
+    "request_keys": [
+     "contents",
+     "generation_config",
+     "system_instruction"
+    ]
+   }
+  ]
+ },
+ "exit_status": 0,
+ "target_errors": [],
+ "stub_client_instances": 0,
+ "breaches": [],
+ "ok": true
+}

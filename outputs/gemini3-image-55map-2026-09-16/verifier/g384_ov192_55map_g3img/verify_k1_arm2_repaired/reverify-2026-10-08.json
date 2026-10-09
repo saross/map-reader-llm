@@ -1,0 +1,23 @@
+{
+ "script": "scripts/reverify_unparseable_rows.py book",
+ "decision": "D55 (Q4), planning/pi-decisions-2026-09-20.md",
+ "leg_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2",
+ "run_dir": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/reverify-parse-errors-2026-10-08",
+ "batch_job": "batches/e6dxq8kkyias6bmbmutp3kf6n9ayi66o61ib",
+ "model": "gemini-3.7-flash",
+ "tier": "batch",
+ "probabilities_sha256_before": "86dce4c0eee60de224c9c3515682bed25380d8a5ca555d522d0d8d96144abcc7",
+ "probabilities_sha256_after": "584c326478a3934cefa0e41d60a7da73eed43a0316b9500fcb780d89e96aba78",
+ "complete": true,
+ "rows": [
+  {
+   "key": "candidate_14666",
+   "old_probability": 0.0,
+   "new_probability": 0.05,
+   "parse_method": "json.loads",
+   "cost_usd": 0.001129
+  }
+ ],
+ "not_booked": [],
+ "note": "run.meta.json here is still the leg's byte copy; the calls' usage and cost are in the run directory's record.json"
+}

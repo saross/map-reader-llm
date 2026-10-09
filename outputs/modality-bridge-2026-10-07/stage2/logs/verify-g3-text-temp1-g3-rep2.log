@@ -1,0 +1,78 @@
+=== 2026-10-08T08:32:23+00:00 LAUNCH verify-g3-text-temp1-g3-rep2: .venv/bin/python scripts/run_pv.py verify --crops-dir outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/crops --verifier-config prompts/configs/verify_adversarial-text.json --output-dir outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2 --mode batch --temperature 0.0 --model gemini-3-flash-preview
+2026-10-08 08:32:24,185 - INFO - Manifest/union vote check: AGREES — 3179 candidates against 3179 union features, paired by candidate-id-index. Every vote_count agrees.
+2026-10-08 08:32:24,185 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-08 08:32:24,185 - INFO - Candidates: 3179
+2026-10-08 08:32:24,185 - INFO - Mode: batch
+2026-10-08 08:32:24,185 - INFO - Iterations: 1
+2026-10-08 08:32:24,185 - INFO - Temperature override: 0.00
+2026-10-08 08:32:24,611 - INFO - Built verifier JSONL: 3179 lines (outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2/verifier_requests.jsonl)
+2026-10-08 08:32:24,611 - INFO - Built JSONL chunk 1/1: 3179 lines → outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2/verifier_requests.jsonl
+2026-10-08 08:32:24,611 - INFO - Built JSONL: 3179 lines in 1 chunk(s)
+2026-10-08 08:32:25,271 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+2026-10-08 08:32:25,433 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?pageToken=Ch9tb2RlbHMvdmVvLTMuMS1nZW5lcmF0ZS1wcmV2aWV3 "HTTP/1.1 200 OK"
+2026-10-08 08:32:25,970 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+2026-10-08 08:32:25,973 - INFO - File storage preflight: 8 file(s) stored (0.60 GB) + 1 chunk(s) to upload (0.18 GB) = 0.78 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+2026-10-08 08:32:26,851 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+2026-10-08 08:32:28,255 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:29,755 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:30,962 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:32,445 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:33,816 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:35,144 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:36,547 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:37,985 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:39,482 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:40,831 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:42,353 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:43,487 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:44,937 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:46,230 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:47,512 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:48,949 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:50,301 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:51,731 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:52,976 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:54,420 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:55,974 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:32:57,507 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:33:00,715 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?upload_id=AP6rU81J8wKwgUgFSu5YkffwReF3sR--n6sb0LBxm0he8TiqRH3-UNt_13XLYOOMPhT5WtzxiL5LDK17NIwN_whkAC5Bcs-HuqN0rbsgUFBd_w&upload_protocol=resumable "HTTP/1.1 200 OK"
+2026-10-08 08:33:00,716 - INFO - Uploaded JSONL as: files/embvao6ov6bo
+2026-10-08 08:33:00,716 - INFO - Uploaded chunk 1/1: files/embvao6ov6bo
+2026-10-08 08:33:32,999 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:batchGenerateContent "HTTP/1.1 200 OK"
+2026-10-08 08:33:33,001 - INFO - Submitted batch job: batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k
+2026-10-08 08:33:33,001 - INFO - Submitted batch job 1/1: batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k
+2026-10-08 08:33:33,574 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+=== 2026-10-08T08:33:40+00:00 SUBMITTED verify-g3-text-temp1-g3-rep2
+2026-10-08 08:34:04,230 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:34:34,872 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:35:05,491 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:35:36,133 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:36:06,771 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:36:37,406 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:37:08,045 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:37:38,697 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:38:09,325 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:38:39,966 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:39:10,664 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:39:41,309 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:40:11,950 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:40:42,588 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:41:13,245 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:41:43,885 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:42:14,531 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:42:45,179 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:43:15,787 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:43:46,398 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:44:17,024 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:44:47,645 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:45:18,273 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:45:48,921 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k "HTTP/1.1 200 OK"
+2026-10-08 08:45:48,923 - INFO - Batch job batches/3b2oh3urs1amr421glqwkrno2w3gsptlrp0k reached terminal state: JOB_STATE_SUCCEEDED
+2026-10-08 08:45:48,923 - INFO - Batch job 1/1 finished polling: JOB_STATE_SUCCEEDED
+2026-10-08 08:45:50,002 - INFO - HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-3b2oh3urs1amr421glqwkrno2w3gsptlrp0k:download?alt=media "HTTP/1.1 200 OK"
+2026-10-08 08:45:51,013 - INFO - Retrieved 3179 result lines from batch job
+2026-10-08 08:45:51,036 - INFO - Batch usage booked from 3179/3179 responses: 5,696,768 input tokens (0 cached), 502,869 output; raw results -> outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2/batch_results.jsonl
+2026-10-08 08:45:51,060 - INFO - Probabilities written: outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2/probabilities.json
+2026-10-08 08:45:51,061 - INFO - Metadata written: outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3_rep2/run.meta.json
+2026-10-08 08:45:51,061 - INFO - Score summary: mean=0.201, above threshold (0.5): 526/3179 (16.5%)
+=== 2026-10-08T08:45:51+00:00 EXIT 0

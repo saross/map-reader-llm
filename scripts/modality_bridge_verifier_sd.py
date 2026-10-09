@@ -25,7 +25,10 @@ replicate result existed:
    replicate's probabilities within 10 m (the floors' subset machinery).
 2. **Flips.** Candidate accept/reject decisions at each set's point, among
    the candidates its vote gate admits: pairwise flip rates, and the share
-   split across the three replicates.
+   split across the three replicates. Per leg, over the whole union: the
+   share of candidates whose probability changes, and the share whose
+   response text is byte-identical between replicates (added after the
+   results, from each replicate's raw ``batch_results.jsonl``).
 3. **Verifier SD.** The sample SD of the three F1s (two degrees of freedom),
    its 95 % chi-square interval and the range. Sensitivity: a pooled SD per
    verifier family over one set per leg (``best``).
@@ -128,6 +131,54 @@ def rep_dir(base: str, rep: int) -> str:
         return base
     v = base.removeprefix("verify_").removesuffix("_repaired")
     return f"verify_{v}_rep{rep}_repaired"
+
+
+def raw_dir(base: str, rep: int) -> str:
+    """The leg directory holding a replicate's raw ``batch_results.jsonl``.
+
+    Args:
+        base: The floors' replicate-1 directory (``fl.ARMS[...].legs``).
+        rep: Replicate number.
+
+    Returns:
+        The un-repaired leg directory name.
+
+    Examples:
+        >>> raw_dir("verify_g3_repaired", 1), raw_dir("verify_g3", 2)
+        ('verify_g3', 'verify_g3_rep2')
+    """
+    return rep_dir(base, rep).removesuffix("_repaired")
+
+
+def response_text_digests(path: Path) -> dict[str, str]:
+    """Per result key, the SHA-256 of the verifier's response text in a batch results file.
+
+    Args:
+        path: A leg's ``batch_results.jsonl``.
+
+    Returns:
+        ``{key: sha256}``; a row without a text part hashes the empty string.
+    """
+    out = {}
+    with open(path) as fh:
+        for line in fh:
+            row = json.loads(line)
+            try:
+                text = row["response"]["candidates"][0]["content"]["parts"][0]["text"]
+            except (KeyError, IndexError, TypeError):
+                text = ""
+            out[row["key"]] = hashlib.sha256((text or "").encode()).hexdigest()
+    return out
+
+
+def identical_share(a: Mapping[str, str], b: Mapping[str, str]) -> float:
+    """Share of the keys of ``a`` whose value in ``b`` is the same.
+
+    Examples:
+        >>> identical_share({"x": "1", "y": "2"}, {"x": "1", "y": "3"})
+        0.5
+    """
+    return sum(b.get(k) == v for k, v in a.items()) / len(a) if a else float("nan")
 
 
 def chi2_sd_interval(sd: float, df: int, level: float = CI_LEVEL) -> tuple[float, float]:
@@ -435,20 +486,29 @@ def score_cells(sets: Mapping[tuple[str, str], Any], unions: Mapping[tuple, Any]
 
 
 def union_flips(unions: Mapping[tuple, Any], reps: Sequence[int] = REPS) -> dict[str, Any]:
-    """Per leg: the share of union candidates whose probability changes, and flips at 0.5.
+    """Per leg: probability changes, identical responses, and flips at 0.5.
 
     Returns:
-        Per ``arm/leg``: candidates, pairwise share with any probability
-        change, and the accept flips over the whole union at prob_t 0.5 (a
-        common reference point; the cells' own points are in ``cells``).
+        Per ``arm/leg``: candidates, the pairwise share with any probability
+        change, the pairwise share whose response text is byte-identical
+        (from each replicate's raw ``batch_results.jsonl``), and the accept
+        flips over the whole union at prob_t 0.5 (a common reference point;
+        the cells' own points are in ``cells``).
     """
     out = {}
     for name, arm in fl.ARMS.items():
-        for leg, _base in arm.legs:
+        vroot = fl.OUTPUTS / name / "verifier" / arm.cell
+        for leg, base in arm.legs:
             probs = [unions[(name, leg, r)]["mound_probability"].to_numpy() for r in reps]
-            changed = {f"{i + 1}-{j + 1}": float(np.mean(probs[i] != probs[j]))
-                       for i, j in itertools.combinations(range(len(reps)), 2)}
+            pairs = list(itertools.combinations(range(len(reps)), 2))
+            changed = {f"{reps[i]}-{reps[j]}": float(np.mean(probs[i] != probs[j]))
+                       for i, j in pairs}
+            texts = [response_text_digests(vroot / raw_dir(base, r) / "batch_results.jsonl")
+                     for r in reps]
+            same = {f"{reps[i]}-{reps[j]}": identical_share(texts[i], texts[j])
+                    for i, j in pairs}
             out[f"{name}/{leg}"] = {"n": int(len(probs[0])), "prob_changed_share": changed,
+                                    "text_identical_share": same,
                                     "flips_at_0.5": flip_rates([p >= 0.5 for p in probs])}
     return out
 
@@ -508,6 +568,10 @@ def floors_with_verifier(contrasts: Mapping[str, Any], floors: Mapping[str, Any]
         v_sd = [cells[x]["sd"] for x in m]
         v_up = [cells[x]["sd_ci95"][1] for x in m]
         v_pool = [pooled[cells[x]["verifier"]]["sd"] for x in m]
+        # Added after the results (not in the card's § 7 plan): each cell at
+        # its family's pooled 95 % upper bound, a tighter upper reading than
+        # a single cell's two-degree-of-freedom interval.
+        v_pool_up = [pooled[cells[x]["verifier"]]["sd_ci95"][1] for x in m]
         new = {
             "floor": floor_with_verifier(p_sd, v_sd),
             "floor_upper": floor_with_verifier(p_up, v_sd),
@@ -515,6 +579,7 @@ def floors_with_verifier(contrasts: Mapping[str, Any], floors: Mapping[str, Any]
             "s3_floor": floor_with_verifier(p_s3, v_sd),
             "floor_verifier_upper": floor_with_verifier(p_sd, v_up),
             "floor_verifier_pooled": floor_with_verifier(p_sd, v_pool),
+            "floor_verifier_pooled_upper": floor_with_verifier(p_sd, v_pool_up),
         }
         ratios = {k.replace("floor", "ratio") if k != "s3_floor" else "s3_ratio":
                   abs(est) / v for k, v in new.items()}
@@ -551,7 +616,7 @@ def write_summary(path: Path, cells: Mapping[str, Any], floors: Mapping[str, Any
         w.writerow([])
         w.writerow(["kind", "label", "estimate", "committed_ratio", "ratio", "ratio_upper",
                     "ratio_direct", "s3_ratio", "ratio_verifier_upper", "ratio_verifier_pooled",
-                    "break_even_verifier_sd"])
+                    "ratio_verifier_pooled_upper", "break_even_verifier_sd"])
         for label, g in floors.items():
             nv = g["with_verifier"]
             w.writerow([g["type"], label, round(g["estimate"], 6),
@@ -559,6 +624,7 @@ def write_summary(path: Path, cells: Mapping[str, Any], floors: Mapping[str, Any
                         round(nv["ratio_upper"], 4), round(nv["ratio_direct"], 4),
                         round(nv["s3_ratio"], 4), round(nv["ratio_verifier_upper"], 4),
                         round(nv["ratio_verifier_pooled"], 4),
+                        round(nv["ratio_verifier_pooled_upper"], 4),
                         round(g["break_even_verifier_sd"], 6)])
 
 

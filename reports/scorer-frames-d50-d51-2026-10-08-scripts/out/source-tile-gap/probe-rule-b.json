@@ -1,0 +1,58 @@
+{
+ "code": "repo-alt",
+ "lib": "/home/shawn/scratch/source-tile-gap-2026-10-08/repo-alt/scripts/lib_advanced_metrics.py",
+ "scored_on": [
+  "B"
+ ],
+ "diagnostics": {
+  "n_detections": 1,
+  "n_in_scope": 1,
+  "n_out_of_frame": 0,
+  "n_out_of_frame_cross_sheet": 0,
+  "n_origin_restored": 0,
+  "n_origin_switched": 1,
+  "n_origin_only": 0,
+  "n_origin_unrecognised": 0,
+  "n_unattributed": 0,
+  "n_unattributed_in_frame": 0
+ },
+ "f1_20": {
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0
+ },
+ "tile_confusion": {
+  "tp": 0,
+  "fp": 1,
+  "fn": 1,
+  "tn": 2,
+  "mcc": -0.3333333333333333,
+  "error": null
+ },
+ "classify": {
+  "n_detections": 1,
+  "n_affected": 1,
+  "n_stuck": 0,
+  "n_multi_origin": 1,
+  "examples": [
+   {
+    "row": 0,
+    "source_tile": "A_x100_y0.png",
+    "origin_tiles": [
+     "A_x100_y0.png",
+     "B_x0_y0.png"
+    ],
+    "named_sheet": "A",
+    "sheets_holding": [
+     "B"
+    ],
+    "alternative_sheet": "B",
+    "x": 205.0,
+    "y": 50.0
+   }
+  ],
+  "origin_columns": [
+   "source_tiles"
+  ]
+ }
+}

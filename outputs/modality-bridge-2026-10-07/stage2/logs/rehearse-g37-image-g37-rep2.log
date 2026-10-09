@@ -1,0 +1,57 @@
+2026-10-08 08:27:36,637 - INFO - Manifest/union vote check: AGREES — 661 candidates against 661 union features, paired by candidate-id-index. Every vote_count agrees.
+2026-10-08 08:27:36,637 - INFO - Thinking level override: low
+2026-10-08 08:27:36,637 - INFO - Verifier config: verify_adversarial-text.json
+2026-10-08 08:27:36,637 - INFO - Candidates: 661
+2026-10-08 08:27:36,637 - INFO - Mode: batch
+2026-10-08 08:27:36,637 - INFO - Iterations: 1
+2026-10-08 08:27:36,637 - INFO - Temperature override: 0.00
+2026-10-08 08:27:36,723 - INFO - Built verifier JSONL: 661 lines (/home/shawn/cc-scratch/tmp/runb-stage2/verify-g37-image-g37-rep2/verifier_requests.jsonl)
+2026-10-08 08:27:36,723 - INFO - Built JSONL chunk 1/1: 661 lines → /home/shawn/cc-scratch/tmp/runb-stage2/verify-g37-image-g37-rep2/verifier_requests.jsonl
+2026-10-08 08:27:36,723 - INFO - Built JSONL: 661 lines in 1 chunk(s)
+2026-10-08 08:27:36,723 - INFO - [DRY RUN] JSONL written but not submitted
+{
+ "mode": "batch",
+ "argv": [
+  "--crops-dir",
+  "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/crops",
+  "--verifier-config",
+  "prompts/configs/verify_adversarial-text.json",
+  "--output-dir",
+  "/home/shawn/cc-scratch/tmp/runb-stage2/verify-g37-image-g37-rep2",
+  "--mode",
+  "batch",
+  "--temperature",
+  "0.0",
+  "--model",
+  "gemini-3.7-flash",
+  "--thinking-level",
+  "low",
+  "--dry-run"
+ ],
+ "repo_root": "/home/shawn/Code/map-reader-llm",
+ "exit_status": 0,
+ "target_errors": [],
+ "stub_client_instances": 0,
+ "breaches": [],
+ "ok": true
+}
+{
+ "request_files": [
+  "verifier_requests.jsonl"
+ ],
+ "request_bytes": [
+  38245567
+ ],
+ "n_lines": 661,
+ "n_candidates": 661,
+ "keys_match_manifest": true,
+ "elided_signatures": {
+  "51567e8e54f8fa3cb85262431460020de5e57ff8ea3e1d63f0523d19beb34c1e": 661
+ },
+ "full_elided_signatures": {
+  "38834432d7fdd5dfcb2e440a501b4c175e0fcffe2bd343053b14a5cb07b5ed8e": 661
+ },
+ "generation_config_keys": {
+  "max_output_tokens,response_mime_type,temperature,thinking_config": 661
+ }
+}

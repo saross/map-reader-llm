@@ -1381,6 +1381,7 @@ def _empty_scope_diagnostics(n_detections: int) -> dict[str, Any]:
         "n_out_of_frame": 0,
         "n_out_of_frame_cross_sheet": 0,
         "n_origin_restored": 0,
+        "n_origin_switched": 0,
         "n_origin_only": 0,
         "n_origin_unrecognised": 0,
         "n_unattributed": 0,
@@ -1404,7 +1405,12 @@ def scope_detections_to_frame(
       :data:`ORIGIN_TILE_COLUMNS` (the first column with a parseable value
       wins), its origin sheets are the frame sheets those tiles lie on — the
       sheets it was SEEN on. If ``source_tile``'s sheet is one of them,
-      ``source_tile`` stands: nothing was re-keyed. A row whose
+      ``source_tile`` stands: nothing was re-keyed — unless the point lies
+      outside that sheet's frame tiles and inside another origin sheet's,
+      when it is scored on that sheet (sorted first on a tie) and counted
+      in ``n_origin_switched``. The materialisers write the first,
+      alphabetical, member into ``source_tile``, so for a cluster seen on
+      two sheets that sheet is an accident of naming. A row whose
       ``source_tile`` names a sheet it was never seen on was re-keyed across
       a sheet edge; it is scored on an origin sheet instead (the one whose
       tiles hold the point, sorted first on a tie) and counted in
@@ -1456,6 +1462,10 @@ def scope_detections_to_frame(
         ``n_origin_restored``
             Rows whose ``source_tile`` named a different frame sheet from
             their recorded origin, scored on the origin instead.
+        ``n_origin_switched``
+            Rows whose ``source_tile`` named an origin sheet whose frame
+            tiles do not hold them, scored on another origin sheet whose
+            tiles do. Before the switch these were out of frame.
         ``n_origin_only``
             Rows with a null ``source_tile`` attributed from their origin.
         ``n_origin_unrecognised``
@@ -1545,7 +1555,7 @@ def scope_detections_to_frame(
     out_of_frame = np.zeros(n, dtype=bool)
     counts = {
         "n_out_of_frame": 0, "n_out_of_frame_cross_sheet": 0,
-        "n_origin_restored": 0, "n_origin_only": 0,
+        "n_origin_restored": 0, "n_origin_switched": 0, "n_origin_only": 0,
         "n_origin_unrecognised": 0,
         "n_unattributed": 0, "n_unattributed_in_frame": 0,
     }
@@ -1573,10 +1583,19 @@ def scope_detections_to_frame(
         }
 
         if origin_frame:
+            holding = sorted(origin_frame & sheets_hit[pos])
             if source_sheet is not None and source_sheet in origin_frame:
-                sheet = source_sheet
+                if source_sheet in sheets_hit[pos] or not holding:
+                    sheet = source_sheet
+                else:
+                    # Seen on two sheets, named on the one whose frame tiles
+                    # do not hold it: the materialisers write the first,
+                    # alphabetical, member into ``source_tile``. Scored on
+                    # the origin sheet whose tiles do hold it (sorted first
+                    # on a tie), as a re-keyed row is.
+                    sheet = holding[0]
+                    counts["n_origin_switched"] += 1
             else:
-                holding = sorted(origin_frame & sheets_hit[pos])
                 sheet = holding[0] if holding else sorted(origin_frame)[0]
                 if source_sheet is not None:
                     counts["n_origin_restored"] += 1
