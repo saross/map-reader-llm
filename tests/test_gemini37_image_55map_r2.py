@@ -402,3 +402,68 @@ def test_the_selectors_return_none_when_no_row_is_scored() -> None:
 
     assert mod.mcc_argmax_unconstrained([_mcc_row(0.1, 1, None)]) is None
     assert mod.mcc_argmax_at_carried_k([_mcc_row(0.1, 1, 0.7)], 3) is None
+
+
+# ---------------------------------------------------------------------------
+# Which verify directory a rung reads (D55 Q4, D58 Q8; lib_verify_dirs).
+#
+# End to end on a tiny campaign: a crop manifest, the fixed-name leg with an
+# unparseable row booked as 0.0, and its ``_repaired`` copy with the row
+# re-verified. ``rung_frame`` must read the copy by default, read the leg under
+# ``MAP_READER_VERIFY_DIRS=fixed``, and say in its attrs which one it read.
+# ---------------------------------------------------------------------------
+
+
+def _tiny_campaign(root: Path) -> Path:
+    """A one-rung campaign cell under ``root``; returns its verifier cell dir."""
+    cell = root / "verifier" / "cell"
+    cands = [
+        {"candidate_id": i, "source_tile": f"MAPA_x{i}_y0.png",
+         "centroid_x": 400000.0 + i, "centroid_y": 4700000.0,
+         "properties": {"vote_count": 1 + i}}
+        for i in range(2)
+    ]
+    (cell / "crops_k3").mkdir(parents=True)
+    (cell / "crops_k3" / "candidate_manifest.json").write_text(
+        json.dumps({"candidates": cands}))
+    for name, p0 in (("verify_k3_arm2", 0.0), ("verify_k3_arm2_repaired", 0.05)):
+        (cell / name).mkdir()
+        (cell / name / "probabilities.json").write_text(json.dumps({"results": {
+            "candidate_00000": {"mound_probability": p0},
+            "candidate_00001": {"mound_probability": 0.9},
+        }}))
+    (cell / "verify_k3_arm2_repaired" / "parse_repair.json").write_text(json.dumps(
+        {"n_parse_error_rows": 1, "changed": [], "unrecovered": [{"key": "candidate_00000"}]}))
+    (cell / "verify_k3_arm2_repaired" / "reverify-2026-10-08.json").write_text(json.dumps(
+        {"rows": [{"key": "candidate_00000", "cost_usd": 0.001}]}))
+    return cell
+
+
+def test_rung_frame_reads_the_repaired_copy_and_records_it(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from scripts import gemini37_image_55map_r2 as mod
+    from scripts.lib_verify_dirs import POLICY_ENV
+
+    cell = _tiny_campaign(tmp_path)
+    monkeypatch.setattr(mod, "CAMPAIGN_ROOT", tmp_path)
+    monkeypatch.setattr(mod, "CAMPAIGN_CELL", "cell")
+    monkeypatch.setattr(mod, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(mod, "build_map_constrained_index", lambda: {"MAPA": {}})
+    monkeypatch.setattr(mod, "assign_standard_tile",
+                        lambda index, origin, x, y: f"MAPA_x{int(x)}_y0.png")
+    monkeypatch.delenv(POLICY_ENV, raising=False)
+
+    frame = mod.rung_frame("arm2", 3)
+    assert list(frame["mound_probability"]) == [0.05, 0.9]
+    prov = frame.attrs["verifier_probabilities"]
+    assert prov["dir"] == "verifier/cell/verify_k3_arm2_repaired"
+    assert (prov["parse_error_rows"], prov["unrecovered"], prov["reverified"]) == (1, 1, 1)
+    assert mod.rung_verify_dir("arm2", 3) == cell / "verify_k3_arm2_repaired"
+
+    monkeypatch.setenv(POLICY_ENV, "fixed")
+    before = mod.rung_frame("arm2", 3)
+    assert list(before["mound_probability"]) == [0.0, 0.9]
+    assert before.attrs["verifier_probabilities"]["dir"] == "verifier/cell/verify_k3_arm2"
+    assert before.attrs["verifier_probabilities"]["policy"] == "fixed"
+    assert before.attrs["verifier_probabilities"]["parse_error_rows"] is None
