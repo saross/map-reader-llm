@@ -95,6 +95,35 @@ replaces it.
   two-stage re-score of the 25 drifted cells where their inputs as
   scored can be recovered (scorer change first, drift second);
   otherwise they stay historical records.
+  Progress 2026-10-10: phases 0 and 2 in draft PR #29 (not to be merged
+  yet; S2 record `reports/s163-agent-records/d57-4-rescore-s2-deltas.md`);
+  Phase 3 done in scratch (S3 record
+  `reports/s163-agent-records/d57-4-rescore-s3-deltas.md`: no conclusion
+  changes where OLD reproduces; five stopped lines predate D50; the
+  null-exemplar board waits for Phase 6). Phase 6 is blocked on the D51
+  publishing-path fix (item below).
+- [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
+  `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
+  changes requested; no committed full-frame score shown wrong). (1) A
+  caller that scores one sheet with the full detections
+  (`scripts/analyse_55maps_heterogeneity.py:272–291`;
+  `scripts/analyse_secondary_effects*.py` pass `map_bounds`) builds the
+  origin frame from that sheet only
+  (`scripts/lib_advanced_metrics.py:1579–1611`), so a two-sheet cluster
+  can count on both sheets. No per-map result has been regenerated since
+  D50 landed (`fefb73f2b`), so nothing committed is affected; fix before
+  any per-map re-run. (2) `iter_sheet_scopes` selects reference bounds by
+  bare `startswith` while detections use the longest prefix; latent (no
+  prefix collision among the 60 sheets in the 34 tracked bounds files,
+  checked 2026-10-10). Add a regression test for each. Astra asks the PI
+  to approve focused offline tests on their side.
+- [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
+  it zips candidates with `hsu_not_ruled_out`, an index list, so the
+  member lists are the first *n* candidates; the signed null-exemplar
+  findings misname the admitted and dropped cells (S3 record, flag 4).
+- [ ] **Stale CIs in `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.json`**:
+  committed in `dccee3362` before the BCa-adapter fix `122104b8a`; today's
+  intervals are wider. Its Markdown shows no intervals (S3 record).
 - [ ] **Sweep candidates cannot be reached by a scorer fix**
   (`e504f921f`, report § 5.7 item 3): the sweep loader keeps
   `source_tile` and drops the member list. Harmless today (every
@@ -135,6 +164,19 @@ replaces it.
   the PI: partial coverage inside a pool (image T 1.0's gap tile seen
   by 2 of 10 passes, below every vote threshold) is invisible to a
   union-area gate.
+  Review received 2026-10-09
+  (`~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d51-ladder-provenance-review.md`):
+  reconstruction supported; changes requested. (1) Blocker for Phase 6:
+  `scripts/build_k_ladder_phase2_tables.py:790–800` attaches a
+  `clipped_to_common_area` block, but the tables (1063–1067), the
+  compatibility inventory (885–888), and the figure still read the
+  unclipped `f1_20`, and a point that cannot be re-scored is skipped
+  silently (confirmed 2026-10-10 on `cb513d709`). (2) Bind each
+  retrospective declaration to the consensus file's own hash. (3) Correct
+  the report: 247 files are 195 target plus 52 validation, and a byte-exact
+  rebuild shows a reproducible construction, not a unique pass history.
+  Astra recommends reporting per-reference vote support (`c ≥ v`) for the
+  partial-coverage question, which remains the PI's.
 - [x] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
   so the Q4 deltas are not computed across two scorer versions; the
   tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
