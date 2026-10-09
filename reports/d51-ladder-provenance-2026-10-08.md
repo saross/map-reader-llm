@@ -1,10 +1,13 @@
 # D51 ladder provenance and the cost of the clip: rulings D57 (2) and (3), 2026-10-08
 
-> **Last revised**: 2026-10-08 (original publication). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-10 (Astra's review of 2026-10-09: file total corrected, the rebuild's
+> inverse-provenance claim qualified, the coverage-authority claim scoped, declarations pinned to
+> the consensus and inputs). See [§ Changelog](#changelog) for revision history.
 
-**Status: FOR REVIEW** (a cross-vendor review by Astra, then the PI). Branch
+**Status: FOR RE-REVIEW** (Astra reviewed `1fc1f72df` on 2026-10-09 and asked for
+changes; the fixes are on branch `d51-ladder-provenance-fixes`, then the PI). Branch
 `d51-ladder-provenance`, cut from PR #26's branch `scorer-frames-d50-d51` at
-`842f9e92a`, to become a follow-up pull request once PR #26 merges. It adds
+`842f9e92a`. It adds
 evidence-cited declarations so that the D51 gate can determine every Phase 2
 pv-diag-384 rung, and measures what the D51 clip costs the ladders the gate
 then refuses. No API call was made. No committed consensus, evaluation, sweep,
@@ -37,10 +40,14 @@ point. D50, D51 and D57 are PI rulings in `planning/pi-decisions-2026-09-20.md`
   pv-diag-384 ladders were rebuilt from their presumed passes.
   `merge_passes.py` as of `362f1a305`, the version in force when every one of
   them was committed on 2026-04-17 (name order), reproduces **all 26 byte for
-  byte**: every threshold file, 247 in all, and every count in each
-  `voting_summary.json`. The current merger (numeric order since `75d7c8d4c`)
+  byte**: every threshold file, 195 in all, and every count in each
+  `voting_summary.json`. The 52 threshold files of the 26 K = 1 and K = 3
+  validation pools reproduce byte for byte too (247 across both groups). The current merger (numeric order since `75d7c8d4c`)
   reproduces the 13 K = 5 pools and **none of the 13 K = 10 pools**. Each pool
-  is declared with the pass list the April rebuild read.
+  is declared with the pass list the April rebuild read. An exact rebuild shows
+  that those passes, read in that order, construct the committed pool; it does
+  not show that no other pass history could (§ 3.2), so each declaration is an
+  evidence-cited retrospective reconstruction, not a proof of uniqueness.
 - **Surprising: a new refusal.** Once its K = 10 pool is determinable,
   **MINIMAL image T 0.3 is refused** too. Runs 1–5 and 10 all skipped
   `K-35-078-1_Lesovo_x2352_y3024.png`, so K = 1, 3 and 5 share an area that
@@ -86,11 +93,32 @@ a declaration of exactly the missing fact. A new `pass_tilings` section in
 for a list of pass files, each anchored by its git blob hash. The new
 `resolve_pass_manifest` (commit `283d2626c`) falls back to it only when the
 meta records no manifest. The pass's own `processed_tiles` still define what it
-assessed, so the declared tiling cannot hide a skipped tile. The existing check
+assessed (within the scope set out below), so the declared tiling cannot hide a
+skipped tile. The existing check
 still refuses a processed tile outside the manifest, now reached through the
 declared route as well; a tier-1 test covers it. A meta that records a
 different manifest, a pass declared twice, or a pass whose bytes have changed
 since its declaration all make the area undetermined rather than picking one.
+
+**The scope of `processed_tiles` as the coverage record (added 2026-10-10,
+Astra's review).** For the passes declared here, the top-level
+`processed_tiles` records the tiles whose output was incorporated, empty tiles
+included, and leaves out a tile whose response failed. The April writer
+(`b57cf6c22:scripts/4_detect_mounds_batch.py`) logs a success before parsing
+(line 562), returns nothing on a parse failure (583–586), and adds a tile to
+the record only when output came back (1152–1164). The March batch writer
+removes unresolved parse failures before writing the record
+(`8b52ab63b:scripts/lib_batch_api.py:1583`). The claim does not extend to every
+historical writer path. That revision's patch route (`:1975–2007`) writes the
+tiles it recovers into a nested `properties.processed_tiles`, which
+`read_processed_tiles` does not read. It rewrites the GeoJSON only when the
+recovered tiles yielded features, and it marks the sidecar `.tiles.json` with
+`patched` and `patch_timestamp`. None of the 130 declared pass files was
+patched. All carry a top-level record and none a nested one; no feature's
+`source_tile` lies outside the top-level set; and no sidecar records `patched`
+or `patch_timestamp` (Astra's scan, repeated 2026-10-10). A patched file, or a
+pass from another campaign, needs the same sidecar check before its top-level
+record is taken as its coverage.
 
 ### 2.3 The evidence, per pass
 
@@ -176,16 +204,30 @@ The 3.7 GS ladder's pools were declared in PR #26.
 | `362f1a305` (name order) | 13 of 13 exact | 13 of 13 exact | 13 of 13 exact | 13 of 13 exact |
 | branch (numeric order) | 13 of 13 exact | 13 of 13 exact | 13 of 13 exact | **0 of 13** |
 
-Under `362f1a305` all 247 threshold files are byte-identical, and all 26
-validation pools read exactly their recorded passes. Under the current merger
+Under `362f1a305` all 195 threshold files of the 26 target pools are
+byte-identical, as are the 52 of the 26 validation pools (247 across both
+groups), and all 26 validation pools read exactly their recorded passes. Under the current merger
 every K = 10 pool differs. At `consensus_t1` the feature counts differ by 0 to
 9, and dozens of features have no partner within 1 m (for example HIGH text
 T 0.7: 5,866 committed against 5,858 rebuilt, with 176 and 168 unmatched);
 `out/rebuild_pools.json` → `rows[].differences` lists each. This confirms
 the union-staleness retrospective's § 7 note: these unions are not stale, but
-any re-derivation must pin name order. **Had the presumed passes or the order
-been wrong, the April rebuild would have differed as the numeric one does.**
-A single misplaced pass moves dozens of clusters.
+any re-derivation must pin name order.
+
+**What an exact rebuild establishes (revised 2026-10-10, Astra's review).** It
+establishes a reproducible forward construction: these pass files, read in
+this order by this merger, produce the committed directory byte for byte. It
+does not establish a unique inverse history. The merger consumes features, so
+two pass histories that differ only where no pass found a candidate (in
+particular, which zero-detection tiles each pass processed) yield the same
+consensus and the same counts, but not the same assessed area. The numeric
+rebuild shows the merger is order-sensitive at K = 10. It does not show that
+every other pass history would be distinguishable. The declarations therefore
+rest on the forward construction together with the historical evidence: the
+first-N rule in the script that wrote the pools, the single 2026-04-17 commit
+of each directory, and Astra's check that every declared input had its
+declared blob at each pool's addition commit. They are named as
+evidence-cited retrospective declarations, not proofs of uniqueness.
 
 ### 3.3 Declarations
 
@@ -198,6 +240,22 @@ exactly like recorded pass provenance, after checking each file's blob hash
 resolve their tiling through Task A's declarations. Declarations are written
 by `write_declarations.py` and committed in `3a8fca8f5`; PR #26's three
 declarations are unchanged.
+
+**Pins (added 2026-10-10, Astra's review, finding 2).** The pass hashes alone
+did not bind a declaration to the consensus it was checked against: a K = 1
+or differently clipped union written over the declared path, with every pass
+file intact, kept the declared K = 10 area. A smaller candidate set cannot
+contradict a larger declared area through the candidates-inside check. Each
+pool declaration now records the blob hash of its consensus
+(`pool_git_blob_hash`). Every declaration, the three of PR #26 and the four
+declared tilings included, also pins each other file its area is read from
+(`inputs`: pass metas, tile manifests and polygons, footprint and clip
+polygons). The library checks both before applying a declaration
+(`check_declaration_pins`), and a change to any of them makes the area
+undetermined. The declarations were regenerated by `write_declarations.py`
+from the committed outputs and files, without re-running the rebuild. Their
+content is otherwise unchanged. All 294 pinned files equal both
+`git hash-object` and the blob committed at `HEAD` (`out/declaration_pins.json`).
 
 ## 4. Validation
 
@@ -439,9 +497,15 @@ here.
 - **The declared tilings cover runs 1–10 only**, the passes any K ≤ 10 rung
   uses. Runs 11–30 of the two 30-pass text cells are undeclared; the K = 30
   unions are not Phase 2 rungs.
-- **The presumed-pass rule is checked, not assumed.** Had a pool been built
-  from other passes, its rebuild would not have matched and it would have
-  stayed undetermined. None did.
+- **The presumed-pass rule is checked against the committed bytes, not
+  assumed, but the check is one-directional** (revised 2026-10-10). Every
+  pool's rebuild from its presumed passes matched exactly. A pool built from
+  other passes would usually not have matched, as the numeric order did not at
+  K = 10. Passes differing only where none found a candidate would have, with a
+  different assessed area (§ 3.2). The declarations rest on the forward
+  construction and the historical evidence together.
+- **The coverage record is scoped to unpatched passes** (§ 2.2). Patched files
+  and other campaigns need their sidecars checked first.
 - **D57 (4), the re-score, is not done.** The builder (`phase2/ladders.json`)
   will now refuse seven ladders unless run with `--clip-to-common-area`. With
   every rung determined, `--allow-undetermined-area` is no longer needed for
@@ -464,8 +528,9 @@ PYTHONDONTWRITEBYTECODE=1 "$PY" "$D/t07_tilings.py" --code "$W" \
     --out "$S/out/t07_tilings.json" --validation-declarations "$S/validation-tilings.json"
 PYTHONDONTWRITEBYTECODE=1 "$PY" "$D/rebuild_pools.py" --code "$W" \
     --scratch "$S/rebuilds" --out "$S/out/rebuild_pools.json" --workers 10
-python3 "$D/write_declarations.py" --repo "$W" \
-    --tilings "$S/out/t07_tilings.json" --pools "$S/out/rebuild_pools.json"
+"$PY" "$D/write_declarations.py" --repo "$W" \
+    --tilings "$S/out/t07_tilings.json" --pools "$S/out/rebuild_pools.json" \
+    --pins-out "$S/out/declaration_pins.json"
 git -C "$W" show 842f9e92a:inputs/provenance/assessed-area-declarations.json \
     > "$S/base-declarations.json"
 PYTHONDONTWRITEBYTECODE=1 "$PY" "$D/gate_survey.py" --code "$W" \
@@ -485,7 +550,10 @@ What each check would have shown if a claim were false:
 - **A wrong tiling:** check 5 fails (completed ∪ failed ≠ manifest), or the
   tier-2 test does.
 - **A wrong pass list or merge order:** the April rebuild differs, as the
-  numeric-order one does at K = 10.
+  numeric-order one does at K = 10, except for a pass list differing only
+  where no pass found a candidate, which no rebuild can detect (§ 3.2).
+- **A pool or tiling rewritten after its declaration:** the pins refuse it
+  (§ 3.3; tier-1 mutation tests in `tests/test_assessed_area.py`).
 - **A library error in the declared routes:** the 18 validation areas or the
   52 independent areas disagree.
 - **A scorer or loader difference:** an unclipped score departs from its
@@ -498,6 +566,33 @@ run is kept beside them as `rebuilds-first-run/`; its verdict table equals the
 committed one.
 
 ## Changelog
+
+### 2026-10-10 — Astra's review: file total, inverse provenance, coverage scope, pins
+
+Trigger: Astra's cross-vendor source review of `1fc1f72df` (agent mail of
+2026-10-09, findings 2 and 3); the PI asked for the fixes on 2026-10-10.
+
+| Claim | Before | After |
+|---|---|---|
+| Threshold files byte-identical under the April merger (§ 1, § 3.2) | 247, attached to the 26 target pools | 195 for the 26 target pools, 52 for the 26 validation pools, 247 across both |
+| What an exact rebuild shows (§ 1, § 3.2, § 8, § 9) | a wrong pass list or order would have produced a different rebuild | a reproducible forward construction, not a unique inverse history |
+| `processed_tiles` as the coverage record (§ 2.2) | stated without scope | scoped to unpatched passes; all 130 declared pass files checked unpatched |
+| Declarations (§ 3.3) | pass blob hashes only | the consensus blob hash and every input pinned: 294 files, each equal to `git hash-object` and to `HEAD` |
+
+Not changed: every gate verdict (7 refused, 7 the same, 0 undetermined),
+every area, every Task C number, the pool-level rebuild verdicts (26 of 26
+exact under the April merger, 0 of 13 K = 10 pools under the current one),
+and the declared pass lists and tilings. A re-run of the gate survey on
+sapphire with the pinned declarations reproduced the committed "after"
+survey on all fourteen ladders (the PR records the run).
+
+Code and data: `scripts/lib_assessed_area.py` (`declaration_inputs`,
+`pin_declaration`, `check_declaration_pins`, `tiling_inputs`; the declared
+routes check the pins), `rebuild_pools.py` (`declaration` records the
+consensus hash), `write_declarations.py` (pins every entry and checks each
+pin against git), `inputs/provenance/assessed-area-declarations.json`
+(regenerated), `out/declaration_pins.json` (new), and the tests. Landed in
+the commits on `d51-ladder-provenance-fixes` that add this entry.
 
 ### 2026-10-08 — Original publication
 
