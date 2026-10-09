@@ -36,7 +36,12 @@ to a temporary directory:
   refuses; a legacy consensus takes a declared pass list; both are anchored
   to the declared files' git blob hashes, and a contradiction (meta against
   declaration, two tilings for one pass, two routes in one declaration)
-  refuses rather than picking one.
+  refuses rather than picking one;
+* **pinned evidence** (Astra's review of 2026-10-09, P2) — a declaration
+  is bound to the consensus it was checked against and to every other file
+  its area is read from (pass metas, tile manifests and polygons, footprint
+  and clip polygons): rewriting any of them in place, the pool alone with
+  every pass hash still valid included, makes the area undetermined.
 """
 
 from __future__ import annotations
@@ -423,12 +428,12 @@ def test_a_declared_record_is_read_for_a_legacy_pool(world, monkeypatch):
     """Legacy pools are determinable only through an evidenced declaration."""
     legacy = write_points(world["tmp"] / "legacy.geojson", [(500, 500)])
     declarations = world["tmp"] / "declarations.json"
-    declarations.write_text(json.dumps({"declarations": [{
+    declarations.write_text(json.dumps({"declarations": [laa.pin_declaration({
         "schema": laa.RECORD_SCHEMA, "pool": str(legacy),
         "footprint": {"bounds": str(world["tiling"]), "manifest": None},
         "clip": {"name": "c", "bounds": str(world["clip"])},
         "evidence": ["builder line 1"],
-    }]}))
+    })]}))
     monkeypatch.setattr(laa, "DECLARATIONS_PATH", declarations)
     laa._declarations.cache_clear()
     try:
@@ -645,9 +650,19 @@ def legacy(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[dict[str
             {"configuration": {"full_config_snapshot": {"version": "prompt-only"}}}))
         return path
 
-    def declare(tilings: list[dict] | None = None, pools: list[dict] | None = None) -> None:
-        declarations.write_text(json.dumps({"pass_tilings": tilings or [],
-                                            "declarations": pools or []}))
+    def declare(tilings: list[dict] | None = None, pools: list[dict] | None = None,
+                *, pin: bool = True) -> None:
+        """Write the declarations, pinned as the real writer pins them.
+
+        Tilings are written and pinned first: a pool's pins resolve its
+        passes' manifests through the declared tilings.
+        """
+        tilings = [laa.pin_declaration(t) if pin else t for t in tilings or []]
+        declarations.write_text(json.dumps({"pass_tilings": tilings, "declarations": []}))
+        laa.clear_declaration_caches()
+        pools = [laa.pin_declaration(d) if pin else d for d in pools or []]
+        declarations.write_text(json.dumps({"pass_tilings": tilings,
+                                            "declarations": pools}))
         laa.clear_declaration_caches()
 
     def tiling_entry(paths: list[Path], man: Path | None = None) -> dict:
@@ -787,7 +802,156 @@ def test_a_declaration_naming_two_routes_is_refused(legacy):
     union = legacy_consensus(legacy["tmp"], "k2", [(500, 500)])
     legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]])],
                       [pool_entry(union, [legacy["run_2"]],
-                                  footprint={"bounds": "x", "manifest": None})])
+                                  footprint={"bounds": "x", "manifest": None})],
+                      pin=False)
     area = laa.determine_assessed_area(union, label="K = 2")
     assert area.method == laa.METHOD_UNDETERMINED
     assert "must name one route" in area.reason
+
+
+# ── Pinned evidence: a declaration binds what it was checked against ──────
+# Astra's review of 2026-10-09, P2: the retrospective route validated the
+# declared pass hashes but not the consensus's own, so a pool rewritten in
+# place (a K = 1 union, a clipped one) kept the K = 10 area it was declared
+# with. A declaration now pins the pool and every other file its area is
+# read from, and any of them changing makes the area undetermined.
+
+
+def replace_points(path: Path, xy: list[tuple[float, float]]) -> None:
+    """Rewrite a GeoJSON of points in place (the same path, other bytes)."""
+    path.unlink()
+    write_points(path, xy)
+
+
+def shift_tiles(path: Path) -> None:
+    """Rewrite a tiling in place: the same tile names, polygons 100 m north."""
+    gdf = gpd.read_file(path)
+    gdf["geometry"] = gdf.geometry.translate(0, 100)
+    path.unlink()
+    gdf.to_file(path, driver="GeoJSON")
+
+
+def declared_k2(legacy) -> tuple[Path, list[Path]]:
+    """A legacy K = 2 consensus declared, pinned, from both passes (4 km²)."""
+    union = legacy_consensus(legacy["tmp"], "k2", [(500, 500), (3500, 500)])
+    passes = [legacy["run_1"], legacy["run_2"]]
+    legacy["declare"]([legacy["tiling_entry"](passes)], [pool_entry(union, passes)])
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_DECLARED and area.area_km2 == pytest.approx(4.0)
+    assert any("unchanged since the declaration" in line for line in area.evidence)
+    return union, passes
+
+
+def test_a_consensus_replaced_in_place_is_undetermined(legacy):
+    """Only the pool changes; every declared pass hash stays valid.
+
+    The replacement is a smaller pool whose one candidate lies inside the
+    declared area, so the candidates-inside check cannot contradict it: the
+    pool's own blob hash is the only thing that can.
+    """
+    union, passes = declared_k2(legacy)
+    replace_points(union, [(500, 500)])
+    declared = json.loads(laa.DECLARATIONS_PATH.read_text())["declarations"][0]
+    assert all(git_blob_hash(Path(item["path"])) == item["git_blob_hash"]
+               for item in declared["pass_provenance"])
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "has changed since its pass provenance was declared" in area.reason
+
+
+def test_a_pool_declaration_without_its_consensus_hash_is_undetermined(legacy):
+    """A declaration that does not bind its consensus is not applied."""
+    union, passes = declared_k2(legacy)
+    payload = json.loads(laa.DECLARATIONS_PATH.read_text())
+    del payload["declarations"][0][laa.POOL_HASH_KEY]
+    laa.DECLARATIONS_PATH.write_text(json.dumps(payload))
+    laa.clear_declaration_caches()
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "records no git_blob_hash" in area.reason
+
+
+def test_a_tiling_rewritten_after_a_pool_declaration_is_undetermined(legacy):
+    """The tiling geometry is evidence: shifting its polygons in place refuses."""
+    union, _passes = declared_k2(legacy)
+    shift_tiles(legacy["tmp"] / "tiling.geojson")
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "tiling.geojson has changed since" in area.reason
+
+
+def test_a_pass_meta_rewritten_after_a_pool_declaration_is_undetermined(legacy):
+    """A pass's meta records its tiling, so it is pinned with the pool."""
+    union, _passes = declared_k2(legacy)
+    legacy["run_2"].with_name("detections.meta.json").write_text(json.dumps(
+        {"configuration": {"full_config_snapshot": {
+            "manifest_path": str(legacy["manifest"])}}}))
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "detections.meta.json has changed since" in area.reason
+
+
+def test_a_declaration_that_leaves_an_input_unpinned_is_undetermined(legacy):
+    """Every file the area is read from must be pinned, not just some."""
+    union, _passes = declared_k2(legacy)
+    payload = json.loads(laa.DECLARATIONS_PATH.read_text())
+    entry = payload["declarations"][0]
+    entry[laa.INPUTS_KEY] = [item for item in entry[laa.INPUTS_KEY]
+                             if item["role"] != "tile polygons"]
+    laa.DECLARATIONS_PATH.write_text(json.dumps(payload))
+    laa.clear_declaration_caches()
+    area = laa.determine_assessed_area(union, label="K = 2")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "it does not pin" in area.reason
+
+
+def test_a_declared_tiling_rewritten_in_place_is_undetermined(legacy):
+    """Route 3 with a declared tiling: its polygons are pinned too."""
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]])])
+    union = consensus(legacy["tmp"], "k1", [legacy["run_2"]], [(500, 500)])
+    assert laa.determine_assessed_area(union).method == laa.METHOD_PASS_PROVENANCE
+    shift_tiles(legacy["tmp"] / "tiling.geojson")
+    area = laa.determine_assessed_area(union, label="K = 1")
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "has changed since its tiling was declared" in area.reason
+
+
+@pytest.mark.parametrize("mutation", ["pool", "clip"])
+def test_a_footprint_declaration_is_bound_to_its_pool_and_clip(world, monkeypatch,
+                                                               mutation):
+    """The PR #26 footprint declarations are pinned the same way."""
+    legacy = write_points(world["tmp"] / "legacy.geojson", [(500, 500), (1500, 500)])
+    declarations = world["tmp"] / "declarations.json"
+    declarations.write_text(json.dumps({"declarations": [laa.pin_declaration({
+        "schema": laa.RECORD_SCHEMA, "pool": str(legacy),
+        "footprint": {"bounds": str(world["tiling"]), "manifest": None},
+        "clip": {"name": "c", "bounds": str(world["clip"])},
+        "evidence": ["builder line 1"],
+    })]}))
+    monkeypatch.setattr(laa, "DECLARATIONS_PATH", declarations)
+    laa.clear_declaration_caches()
+    try:
+        assert laa.determine_assessed_area(legacy).method == laa.METHOD_DECLARED
+        if mutation == "pool":
+            replace_points(legacy, [(500, 500)])
+        else:
+            shift_tiles(world["clip"])
+        area = laa.determine_assessed_area(legacy, label="legacy")
+    finally:
+        laa.clear_declaration_caches()
+    assert area.method == laa.METHOD_UNDETERMINED
+    assert "has changed since its footprint was declared" in area.reason
+
+
+def test_pinning_records_the_committed_shape(legacy):
+    """The pool hash follows ``pool``; the inputs come before ``evidence``."""
+    union = legacy_consensus(legacy["tmp"], "k2", [(500, 500)])
+    legacy["declare"]([legacy["tiling_entry"]([legacy["run_2"]])])
+    pinned = laa.pin_declaration(pool_entry(union, [legacy["run_2"]]))
+    keys = list(pinned)
+    assert keys[keys.index("pool") + 1] == laa.POOL_HASH_KEY
+    assert keys.index(laa.INPUTS_KEY) == keys.index("evidence") - 1
+    assert pinned[laa.POOL_HASH_KEY] == git_blob_hash(union)
+    roles = {item["role"] for item in pinned[laa.INPUTS_KEY]}
+    assert roles == {"pass meta (records its tile manifest)", "tile manifest",
+                     "tile polygons"}
