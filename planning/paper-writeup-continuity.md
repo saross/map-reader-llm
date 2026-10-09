@@ -118,7 +118,17 @@ replaces it.
   census (458 cells; command in the census record).
   Diagnosis is with personal-assistant (session personal-assistant-43):
   the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
-  guarantee; one DIMM's sensor had latched its 55 °C alarm.
+  guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
+  2026-10-10 (via personal-assistant-43): EXPO off this afternoon
+  (JEDEC 4,800 MT/s), after map-reader-llm's all-clear; probably a
+  memtest86+ pass overnight at 4,800; then the paused census (458 cells,
+  kernel-log tripwire, 8 workers) as the confirmation soak, launched only
+  when personal-assistant opens the window, with DIMM temperatures logged
+  (`sensors spd5118-*`). Open D57 (4) work in progress at decision time:
+  the PR #29 re-run check (batch 1, 73 registered and Stage A cells,
+  clean; batch 2 running) and the D50 fixes. D51 fixes are PRs #30
+  (publishing path) and #31 (declaration pins, report corrections),
+  re-review requested from Astra 2026-10-09T22:28Z.
 - [ ] **Re-check results computed on sapphire in the fault windows** (PI
   via personal-assistant-43, 2026-10-10). **Do not run until the memory
   fix is confirmed.** A set bit in an index crashes the run, but in a
