@@ -67,7 +67,34 @@ replaces it.
   The draft fix (`n_origin_switched`; diff in the report's
   `out/source-tile-gap/draft-fix.diff`) goes in a small follow-up PR
   after #26 merges and before the re-score, so re-scored evaluations
-  carry its counter; it changes no committed number.
+  carry its counter; it changes no committed number. DONE: PR #27
+  merged as `8988f3f17` (tier-1 4,171 passed) before the PI had approved
+  the merge; ratified 2026-10-09 (D58). Local and sapphire synced to
+  `8988f3f17` 2026-10-09.
+- [ ] **Record the sheet(s) a detection was seen on, everywhere**
+  (PI, 2026-10-09, D58). The sheet is recoverable from `source_tile`
+  (the tile name encodes it) except in three cases: (a) a cluster seen
+  on two overlapping sheets keeps only its first, alphabetical, member
+  in `source_tile`, and the member list (`source_tiles`) is dropped by
+  Run B's unions (e.g.
+  `outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.geojson`:
+  `source_tile` and `vote_count` only) and by the sweep loader (item
+  below); (b) a later step re-wrote `source_tile` to a neighbouring
+  sheet (tier E's and h13's materialisers; D50 restores these where an
+  origin column survives, `scripts/lib_advanced_metrics.py:1097–1105`);
+  (c) rungs rebuilt from bare points get their tile by location
+  (`scripts/modality_bridge_floors.py:648–653`, `assign_primary_tiles`).
+  Fix: carry `source_tiles` through every writer (unions, verified
+  sets, rung builders, sweep loader) and count rows that lack it.
+  Today's measured effect is nil (report § 5.7: 0 affected cells).
+- [ ] **D57 (4) re-score** (plan card
+  `planning/d57-4-rescore-plan-2026-10-09.md`, rulings D58): phases 0
+  and 2 next (pre-flight and tier-1 at `8988f3f17`; the changed cells,
+  stride sweeps, and conditions manifest, into scratch first; deltas to
+  the PI before anything is copied into the tree). Includes the Q2
+  two-stage re-score of the 25 drifted cells where their inputs as
+  scored can be recovered (scorer change first, drift second);
+  otherwise they stay historical records.
 - [ ] **Sweep candidates cannot be reached by a scorer fix**
   (`e504f921f`, report § 5.7 item 3): the sweep loader keeps
   `source_tile` and drops the member list. Harmless today (every
@@ -108,12 +135,16 @@ replaces it.
   the PI: partial coverage inside a pool (image T 1.0's gap tile seen
   by 2 of 10 passes, below every vote threshold) is invisible to a
   union-area gate.
-- [ ] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
+- [x] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
   so the Q4 deltas are not computed across two scorer versions; the
   tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
   whose later commits touch no code. Refresh the PR description (it
   still says 54 tests and gives no basis for 696) before merging.
-- [ ] **After PR #26 merges, re-score Run B and Run C together.** Their
+  DONE 2026-10-08: merged as `fefb73f2b`, description refreshed.
+- [ ] **After PR #26 merges, re-score Run B and Run C together** (plan
+  card Phase 4). The plan card predicts no move: their files carry no
+  origin column and nothing re-wrote their `source_tile`, so D50 has
+  nothing to restore; a gates-only run confirms first. Their
   cells are not in the D50/D51 measurement's 2,727, and the 487-tile frame
   is where origin restoration moves cells (median +0.0018, about the size
   of the verifier SDs). Re-run `scripts/modality_bridge_verifier_sd.py`
