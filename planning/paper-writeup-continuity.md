@@ -116,6 +116,32 @@ replaces it.
   physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
   compare byte for byte with draft PR #29 before it merges; resume the
   census (458 cells; command in the census record).
+  Diagnosis is with personal-assistant (session personal-assistant-43):
+  the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
+  guarantee; one DIMM's sensor had latched its 55 °C alarm.
+- [ ] **Re-check results computed on sapphire in the fault windows** (PI
+  via personal-assistant-43, 2026-10-10). **Do not run until the memory
+  fix is confirmed.** A set bit in an index crashes the run, but in a
+  score or statistic it passes silently, and there is no ECC. Windows,
+  from `journalctl -k` per boot on sapphire (checked 2026-10-10):
+  (1) **2026-10-05 onwards** (current boot from 2026-09-05; first
+  `Bad page state` 2026-10-05T04:14Z, four on 2026-10-09) — highest risk,
+  and the rest of that boot from 2026-09-05 is the same configuration
+  with no report; (2) **an earlier episode on 2026-05-06**: 36
+  `Bad page state` reports between 11:44 and 13:58 UTC, after which that
+  boot (from 2026-01-29) ended; the boot of 2026-05-12 to 2026-09-05
+  logged none. Kernel reports only fire when a flip hits page metadata,
+  so they show the rate, not the onset. Shape: list results computed on
+  sapphire in those windows that feed claims; subtract those already
+  verified by exact reproduction (census: 1,704 committed evaluations;
+  Phase 3: every artefact OLD reproduced; Run B and Run C, byte-identical;
+  PR #29 by the running re-run check); re-run the rest after the fix.
+  Known 2026-10-07 to 2026-10-09 scratch work (personal-assistant-43's
+  list): frames-blast-radius, input-drift, temperature-probe,
+  scorer-frames-d50-d51 (PR #26), d51-ladder-provenance (and its worktree
+  data, about 750 files), pr26-tier1, q4-rescore, q4-tools,
+  runbc-request-files, source-tile-gap, d57-4-rescore, and
+  q4-repaired-readers; also cover other map-reader-llm sessions' work.
 - [ ] **W2.7 cells move under the new scorer** (D57 (4) scope; Phase 4
   record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
   +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
