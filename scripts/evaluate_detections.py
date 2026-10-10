@@ -1033,6 +1033,8 @@ _DETECTION_SCOPE_COUNTS: tuple[str, ...] = (
     "n_origin_switched",
     "n_origin_only",
     "n_origin_unrecognised",
+    "n_origin_excluded",
+    "n_origin_partly_excluded",
     "n_unattributed",
     "n_unattributed_in_frame",
 )
@@ -1051,7 +1053,13 @@ def describe_detection_scope(
     reader can see that the rule fired: how many detections lay outside
     their own sheet's tiles (and of those, how many inside another
     sheet's), and how many were scored on a recorded origin sheet rather
-    than on a re-keyed ``source_tile``.
+    than on a re-keyed ``source_tile``. It also warns when a recorded origin
+    names a study sheet this frame leaves out (``n_origin_excluded``): the
+    frame is then narrower than the detection set, and those detections are
+    excluded rather than re-keyed (PI decision, 2026-10-10). A detection
+    seen across the frame's edge is refused before this point
+    (``ReducedFrameRefusalError``), so ``n_origin_partly_excluded`` is 0
+    whenever an evaluation is written.
 
     Args:
         gdf_det: One pass's detections, as scored.
@@ -1068,6 +1076,7 @@ def describe_detection_scope(
         for key in (
             "n_out_of_frame", "n_out_of_frame_cross_sheet",
             "n_origin_restored", "n_origin_switched", "n_origin_only",
+            "n_origin_excluded", "n_origin_partly_excluded",
             "n_unattributed_in_frame",
         )
         if diagnostics.get(key)

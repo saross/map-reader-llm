@@ -54,8 +54,10 @@ sys.path.insert(0, str(BASE_DIR / "scripts"))
 
 from evaluate_detections import load_geojson  # noqa: E402
 from lib_advanced_metrics import (  # noqa: E402
-    calculate_f1_internal,
+    DetectionScope,
     get_map_name,
+    per_sheet_confusion,
+    precision_recall_f1,
     scope_detections_to_frame,
 )
 
@@ -216,14 +218,17 @@ def count_per_map(
     gdf_dets: gpd.GeoDataFrame,
     gdf_refs: gpd.GeoDataFrame,
     ref_map_col: str,
-    tiles: gpd.GeoDataFrame | None = None,
+    scope: DetectionScope | None = None,
 ) -> tuple[int, int]:
     """Return ``(n_dets, n_refs)`` attributed to ``map_name``.
 
-    The detection count is the one ``calculate_f1_internal`` matches: the
-    library's own detection scope (PI ruling D50: on the origin sheet,
-    inside one of the sheet's tiles), computed against ``tiles``. Until that
-    ruling it was a ``source_tile`` prefix count, which included detections
+    The detection count is the one the per-map F1 matches: the sheet's
+    partition of the FULL frame's detection scope (PI ruling D50: on the
+    origin sheet, inside one of the sheet's tiles). Until the D50 review
+    (finding 2, 2026-10-10) the scope was computed against the sheet's
+    tiles alone, which attributes a detection among that one sheet: a
+    cluster seen on two sheets could then count on both. Before the ruling
+    it was a ``source_tile`` prefix count, which included detections
     outside the sheet's tiles. The reference count stays the map-column
     match it has always been (a reporting count, not F1's scoped
     denominator). Spatial pre-filtering of the inputs was removed (see
@@ -234,18 +239,20 @@ def count_per_map(
         gdf_dets: All detections.
         gdf_refs: All references.
         ref_map_col: The references' sheet column.
-        tiles: The sheet's tile polygons. ``None`` falls back to the
-            pre-D50 prefix count (kept for callers without the tiles).
+        scope: The detection scope of the FULL frame
+            (``scope_detections_to_frame(gdf_dets, full_bounds)``). ``None``
+            falls back to the pre-D50 prefix count (kept for callers without
+            the frame).
 
     Returns:
         ``(n_dets, n_refs)``.
     """
     if "source_tile" not in gdf_dets.columns:
         n_dets = 0
-    elif tiles is None:
+    elif scope is None:
         n_dets = int(gdf_dets["source_tile"].str.startswith(map_name).sum())
     else:
-        n_dets = len(scope_detections_to_frame(gdf_dets, tiles).on_sheet(map_name))
+        n_dets = len(scope.on_sheet(map_name))
     n_refs = int((gdf_refs[ref_map_col] == map_name).sum())
     return n_dets, n_refs
 
@@ -258,10 +265,15 @@ def evaluate_per_map(
 ) -> list[MapMetrics]:
     """Compute Hungarian-matched F1/P/R per map at each buffer.
 
+    Each map's figures are its partition of one full-frame scoring, so the
+    per-map true positives, false positives and false negatives sum to the
+    frame's (see the comment in the body).
+
     Args:
         gdf_dets: Final filtered detections (one GeoDataFrame).
         gdf_refs: Ground-truth mounds.
-        gdf_bounds: Tile-level bounds covering all maps of interest.
+        gdf_bounds: Tile-level bounds covering all maps of interest (the
+            FULL frame, never one map's tiles).
         buffers: Tolerance buffers in metres.
 
     Returns:
@@ -269,23 +281,33 @@ def evaluate_per_map(
     """
     by_map = split_by_map(gdf_bounds)
     ref_map_col = _ref_map_col(gdf_refs)
+    # ONE full-frame scoring, read per sheet. Ruling D50 attributes each
+    # detection among the frame's sheets, so scoring a sheet on its own
+    # tiles is a different frame: a cluster seen on two sheets is scored on
+    # whichever one is passed, and the per-map counts stop summing to the
+    # full frame's (the D50 review, finding 2, 2026-10-10). The full-frame
+    # scope's partitions sum to it by construction. Pre-filtering the
+    # detections or references is neither necessary nor desirable (see
+    # audit 2026-04-18).
+    scope = scope_detections_to_frame(gdf_dets, gdf_bounds)
+    counts_by_buffer = {
+        buf: per_sheet_confusion(scope, gdf_refs, gdf_bounds, buffer_metres=buf)
+        for buf in buffers
+    }
     results: list[MapMetrics] = []
     for i, (map_name, tiles) in enumerate(sorted(by_map.items()), 1):
         n_dets, n_refs = count_per_map(
-            map_name, gdf_dets, gdf_refs, ref_map_col, tiles=tiles,
+            map_name, gdf_dets, gdf_refs, ref_map_col, scope=scope,
         )
         logger.info(
             "[%d/%d] %s: tiles=%d, refs=%d, dets=%d",
             i, len(by_map), map_name, len(tiles), n_refs, n_dets,
         )
         for buf in buffers:
-            # calculate_f1_internal scopes both dets and refs internally
-            # to the maps present in the tile bounds, so we pass the
-            # FULL dets and refs GeoDataFrames with only the map's
-            # tile bounds. Pre-filtering is neither necessary nor
-            # desirable (see audit 2026-04-18).
-            p, r, f1 = calculate_f1_internal(
-                gdf_dets, gdf_refs, tiles, buffer_metres=buf,
+            # A group of tiles on no frame sheet ("Unknown") scores nothing,
+            # as the per-sheet call on its tiles did.
+            p, r, f1 = precision_recall_f1(
+                *counts_by_buffer[buf].get(map_name, (0, 0, 0)),
             )
             results.append(MapMetrics(
                 map_name=map_name, buffer_m=buf,
