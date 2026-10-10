@@ -115,7 +115,11 @@ replaces it.
   memory test or reset memory to stock settings (a reboot needs the
   physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
   compare byte for byte with draft PR #29 before it merges; resume the
-  census (458 cells; command in the census record).
+  census (458 cells; command in the census record). PR #29 re-run DONE
+  2026-10-10 before the fix (PI's choice; agreement of two runs is the
+  check): all 2,262 files identical, no new kernel report (S2 record
+  changelog). The all-clear for the EXPO reboot went to
+  personal-assistant-43 at 00:11Z.
   Diagnosis is with personal-assistant (session personal-assistant-43):
   the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
   guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
