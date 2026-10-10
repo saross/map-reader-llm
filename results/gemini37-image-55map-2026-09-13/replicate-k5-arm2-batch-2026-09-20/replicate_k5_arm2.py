@@ -53,7 +53,10 @@ from typing import Any
 
 import numpy as np
 
-PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
+#: The repository root, three levels above this file's directory
+#: (``results/<campaign>/<study>/``), so a copy run elsewhere reads and writes
+#: its own tree (it was hard-coded to ``/home/shawn/Code/map-reader-llm``).
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
