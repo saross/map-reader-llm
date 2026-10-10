@@ -211,6 +211,13 @@ replaces it.
   Astra's own test file at #33's head passed 3 of 6; the other 3 failed
   by design (#33 flagged reduced frames, did not prevent them). An agent
   is adding the rule to #33; Astra is mailed when it is checked.
+  DONE 2026-10-10: #33 head `0a857c80c` (rules: out-of-frame origin
+  excluded; origins across the edge refused without `parent_bounds=`;
+  unknown vocabulary falls back with a WARNING). Checked at source:
+  Astra's file 3 of 6 as written (A/B are not study sheets), 6 of 6
+  with `parent_bounds=`; #33's scope tests 79 passed. Re-review mail
+  to Astra 2026-10-10T06:48Z on both workstreams (D51: Astra's file
+  passes on #30 and #31 merged); the PI wakes Astra.
   Related, confirmed on `main`: `per_map_counts()` in
   `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
   detections by the pre-D50 `source_tile` prefix, and ignores origins;
