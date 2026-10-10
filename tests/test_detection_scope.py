@@ -1006,3 +1006,44 @@ def test_secondary_effects_per_map_figures_decompose_the_full_frame(
     out = mod.analyse_per_map_sheet({"c": {"consensus_dir": "unused"}}, {"c": 3},
                                     two_sheet_refs, wide_frame, buffer_m=20)
     assert out[0]["per_map"] == {"A": 1.0, "B": 0}
+
+
+# ── Common-footprint bootstraps: each condition's frame is the parent ────
+
+
+def test_the_common_footprint_bootstraps_follow_each_conditions_frame():
+    """A footprint smaller than a condition's frame is scored with that frame as parent.
+
+    Condition A is scored on two study sheets, condition B on the first
+    alone, so the common footprint is a reduced frame of A's frame. A
+    cluster seen on both sheets (rule 2) refuses there without the parent;
+    with A's frame as parent the footprint's counts are A's partition of
+    the full scoring, and every common-footprint bootstrap runs.
+    """
+    a, b = "K-35-052-3", "K-35-052-4_32635"
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": [f"{a}_x0_y0.png", f"{b}_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+    only_a = _sheet(bounds, a)
+    refs = gpd.GeoDataFrame({"Map": [a, b]}, geometry=[Point(195, 50)] * 2, crs=CRS)
+    cluster = dets([(f"{a}_x0_y0.png", 195, 50)],
+                   origin_tiles=[f"{a}_x0_y0.png;{b}_x0_y0.png"])
+    plain = dets([(f"{a}_x0_y0.png", 195, 50)])
+    with pytest.raises(lam.ReducedFrameRefusalError):
+        lam.compute_per_tile_tp_fp_fn(cluster, refs, only_a)
+    table = lam.compute_per_tile_tp_fp_fn(cluster, refs, only_a, parent_bounds=bounds)
+    assert tuple(int(table[c].sum()) for c in ("tp", "fp", "fn")) == \
+        lam.per_sheet_confusion(cluster, refs, bounds, 20)[a] == (1, 0, 0)
+    assert lam._parent_of_cut(bounds, bounds) is None
+    assert lam._parent_of_cut(bounds, only_a) is bounds
+    effect = lam.bootstrap_effect_size_ci(cluster, bounds, plain, only_a, refs,
+                                          n_iterations=20, random_seed=1)
+    assert "error" not in effect and effect["f1_difference"]["mean"] == 0
+    tile_effect = lam.bootstrap_tile_effect_size_ci(cluster, bounds, plain, only_a, refs,
+                                                    n_iterations=20, random_seed=1)
+    assert "error" not in tile_effect
+    interaction = lam.bootstrap_interaction_ci(
+        {("x", "1"): (cluster, bounds), ("x", "2"): (plain, only_a),
+         ("y", "1"): (cluster, bounds), ("y", "2"): (plain, only_a)},
+        refs, n_iterations=20, random_seed=1)
+    assert "error" not in interaction

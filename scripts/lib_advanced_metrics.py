@@ -2643,6 +2643,8 @@ def compute_per_tile_tp_fp_fn(
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
     tile_join: str = TILE_JOIN_DEFAULT,
+    *,
+    parent_bounds: gpd.GeoDataFrame | None = None,
 ) -> pd.DataFrame:
     """
     Pre-compute TP, FP, FN counts per tile via per-map Hungarian matching.
@@ -2694,6 +2696,10 @@ def compute_per_tile_tp_fp_fn(
         buffer_metres: Maximum distance for a valid match (default 20 m).
         tile_join: One of :data:`TILE_JOINS`; defaults to
             :data:`TILE_JOIN_DEFAULT`.
+        parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
+            (:func:`scope_detections_to_frame`). The common-footprint
+            bootstraps pass a condition's own frame here when the common
+            footprint is smaller than it (:func:`_parent_of_cut`).
 
     Returns:
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
@@ -2720,7 +2726,7 @@ def compute_per_tile_tp_fp_fn(
     # § 2.1). The matching below reads the attributed in-scope rows
     # (``scope``); the booking diagnostics read every row but the removed
     # out-of-frame ones (``scope.retained``), as they always read every row.
-    scope = scope_detections_to_frame(gdf_det, gdf_bounds)
+    scope = scope_detections_to_frame(gdf_det, gdf_bounds, parent_bounds=parent_bounds)
     gdf_det = scope.retained
     # Pre-book detections geometrically when asked to. ``booked_tiles``
     # maps a detection's GeoDataFrame index to the tile name(s) its
@@ -3415,6 +3421,35 @@ def bootstrap_ci(
     }
 
 
+def _parent_of_cut(
+    gdf_bounds: gpd.GeoDataFrame,
+    cut: gpd.GeoDataFrame,
+) -> gpd.GeoDataFrame | None:
+    """The frame a common-footprint cut was taken from, when the cut is smaller.
+
+    The paired bootstraps score every condition on the tiles all conditions
+    share. Where that footprint is smaller than a condition's own frame it
+    is a REDUCED frame of it, and ruling D59 counts a detection there only
+    if the condition's frame attributes it to a sheet inside the footprint
+    (the comment above :class:`ReducedFrameRefusalError`): the frame is
+    passed as ``parent_bounds``. Without it, a detection seen across the
+    footprint's edge would refuse, and one in an unknown tile vocabulary
+    would fall back to ``source_tile``, which carries no such guarantee.
+    Where the footprint is the whole frame nothing is passed, so a
+    same-frame comparison is scored exactly as before. A footprint that
+    cuts through a sheet is still not an additive share of the frame's
+    points (whole-sheet partitions only).
+
+    Args:
+        gdf_bounds: A condition's own frame.
+        cut: Its rows on the common footprint.
+
+    Returns:
+        ``gdf_bounds`` when ``cut`` holds fewer tiles, else ``None``.
+    """
+    return gdf_bounds if len(cut) < len(gdf_bounds) else None
+
+
 def bootstrap_effect_size_ci(
     gdf_det_a: gpd.GeoDataFrame,
     gdf_bounds_a: gpd.GeoDataFrame,
@@ -3478,11 +3513,15 @@ def bootstrap_effect_size_ci(
     # Filter bounds to common tiles for consistent scoping
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
+    # A footprint smaller than a condition's frame is a reduced frame of it,
+    # attributed as that frame attributes (ruling D59).
     tile_metrics_a = compute_per_tile_tp_fp_fn(
         gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=buffer_metres,
+        parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
     )
     tile_metrics_b = compute_per_tile_tp_fp_fn(
         gdf_det_b, gdf_ref, common_bounds_b, buffer_metres=buffer_metres,
+        parent_bounds=_parent_of_cut(gdf_bounds_b, common_bounds_b),
     )
 
     f1_diffs = []
@@ -3988,6 +4027,7 @@ def bootstrap_interaction_ci(
         common_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(common_tiles)]
         cell_tile_metrics[(a_level, b_level)] = compute_per_tile_tp_fp_fn(
             gdf_det, gdf_ref, common_bounds, buffer_metres=buffer_metres,
+            parent_bounds=_parent_of_cut(gdf_bounds, common_bounds),
         )
 
     # Storage for simple effect distributions per factor_a level
@@ -4567,6 +4607,8 @@ def calculate_tile_classification(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_join: str = TILE_JOIN_DEFAULT,
+    *,
+    parent_bounds: gpd.GeoDataFrame | None = None,
 ) -> dict:
     """
     Binary classification of tiles as empty vs populated for MCC calculation.
@@ -4604,6 +4646,10 @@ def calculate_tile_classification(
         gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column).
         tile_join: One of :data:`TILE_JOINS`; defaults to
             :data:`TILE_JOIN_DEFAULT`.
+        parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
+            (:func:`scope_detections_to_frame`). The common-footprint
+            bootstrap passes a condition's own frame here when the common
+            footprint is smaller than it (:func:`_parent_of_cut`).
 
     Returns:
         Classification results including tp, tn, fp, fn counts; mcc;
@@ -4635,7 +4681,7 @@ def calculate_tile_classification(
     # needed a sheet, the geometric joins book them by position, and the
     # ``id`` join treats them by name below.
     scope = scope_detections_to_frame(
-        gdf_det, gdf_bounds, require_attribution=False,
+        gdf_det, gdf_bounds, require_attribution=False, parent_bounds=parent_bounds,
     )
     gdf_det = scope.retained
 
@@ -4979,11 +5025,15 @@ def bootstrap_tile_effect_size_ci(
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
 
+    # A footprint smaller than a condition's frame is a reduced frame of it,
+    # attributed as that frame attributes (ruling D59).
     result_a_full = calculate_tile_classification(
         gdf_det_a, gdf_ref, common_bounds_a, tile_join=tile_join,
+        parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
     )
     result_b_full = calculate_tile_classification(
         gdf_det_b, gdf_ref, common_bounds_b, tile_join=tile_join,
+        parent_bounds=_parent_of_cut(gdf_bounds_b, common_bounds_b),
     )
     for label, result in (("A", result_a_full), ("B", result_b_full)):
         if "error" in result:
