@@ -84,27 +84,32 @@ BUFFERS_STANDARD: tuple[int, ...] = (
 #: One tuple per matched operating point:
 #: ``(cell_dir, arm, n_passes, threshold_label, expected_f1_at_20m,
 #:   detections_rel, registered_condition_label)``.
-#: ``expected_f1_at_20m`` is the § 3 operating-point table of
+#: ``expected_f1_at_20m`` was the § 3 operating-point table of
 #: ``results/e43-matched-temperature/findings.md`` (commit ``6176b985e``) — the
-#: sanity anchor the whole filing is gated on.
+#: sanity anchor the whole filing is gated on. Updated 2026-10-10 (PI ruling
+#: Q6, D57 (4) re-score): the D50 scorer raises each cell's F1@20 m by about
+#: 0.002 (0.6397 → 0.6415, 0.6610 → 0.6631, 0.6332 → 0.6352, 0.6667 →
+#: 0.6687; MCC and n_detections unchanged). findings.md § 3 and
+#: ``ANALYSIS_OUTCOME`` below keep the pre-D50 values until their Phase 5
+#: revision.
 CELLS: tuple[tuple[str, str, int, str, float, str, str], ...] = (
     (
-        "t07-n5-5of5", "T=0.7", 5, "5-of-5", 0.6397,
+        "t07-n5-5of5", "T=0.7", 5, "5-of-5", 0.6415,
         f"{STUDY}/text-t0.7/consensus-n5/consensus_t5.geojson",
         "flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5",
     ),
     (
-        "t10-n5-5of5", "T=1.0", 5, "5-of-5", 0.6610,
+        "t10-n5-5of5", "T=1.0", 5, "5-of-5", 0.6631,
         f"{STUDY}/text-t1.0/consensus-n5/consensus_t5.geojson",
         "flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5",
     ),
     (
-        "t07-n10-10of10", "T=0.7", 10, "10-of-10", 0.6332,
+        "t07-n10-10of10", "T=0.7", 10, "10-of-10", 0.6352,
         f"{STUDY}/text-t0.7/consensus-n10/consensus_t10.geojson",
         "flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10",
     ),
     (
-        "t10-n10-9of10", "T=1.0", 10, "9-of-10", 0.6667,
+        "t10-n10-9of10", "T=1.0", 10, "9-of-10", 0.6687,
         f"{STUDY}/text-t1.0/consensus/consensus_t9.geojson",
         "flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
     ),
