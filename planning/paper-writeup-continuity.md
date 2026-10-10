@@ -128,8 +128,9 @@ replaces it.
   check): all 2,262 files identical, no new kernel report (S2 record
   changelog). The all-clear for the EXPO reboot went to
   personal-assistant-43 at 00:11Z.
-  Sapphire rebooted at 05:09Z (`uptime -s`; memory settings not read
-  from this session); no `Bad page state` report on that boot through
+  Sapphire rebooted at 05:09Z (`uptime -s`) at JEDEC 4,800 MT/s, EXPO
+  off (PI, confirmed in the BIOS and by a command-line check); no
+  `Bad page state` report on that boot through
   #29's tier-1. **Soak launched 2026-10-10T06:09Z** (D59): the census
   resume, 467 replays (458 cells plus 9 vintage), 8 workers, tripwire
   armed at 5; `out/resume.log`, `out/soak-temps.log` (DIMM and Tctl
@@ -141,8 +142,8 @@ replaces it.
   kernel report, the 22 crashed replays now reproduce, DIMMs at most
   49.8 °C; census complete (2,123 of 2,216 reproduce; every one of the
   93 others has a deterministic cause; census record changelog). The
-  fault-window re-check (next item) may now proceed once the PI confirms
-  the memory setting.
+  fault-window re-check (next item) may now proceed: the fix is
+  confirmed (setting and soak).
   Diagnosis is with personal-assistant (session personal-assistant-43):
   the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
   guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions

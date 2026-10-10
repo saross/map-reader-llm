@@ -58,8 +58,9 @@ the agent's readings.
   under a stop file, halt-on-failure, and a kernel-log tripwire, which
   fired at 15:22:55Z after 817 clean cells.
 - **Resolved, as far as a soak can show (2026-10-10).** Sapphire
-  rebooted at 05:09Z for the PI's planned memory change (the setting
-  was not read from the main session). The census's remaining 467
+  rebooted at 05:09Z with its memory at JEDEC 4,800 MT/s, EXPO off (the
+  PI confirmed the speed in the BIOS and with a command-line check). The
+  census's remaining 467
   replays then ran as the soak, under the same 8-worker load: 467 of 467
   clean in 3,425 s, no new `Bad page state` report (5 before and after,
   all from earlier boots), and all 22 replays that crashed on
