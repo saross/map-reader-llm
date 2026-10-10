@@ -315,8 +315,12 @@ def assign_primary_tiles(
     when that is ``None``, from the rows' own ``origin_source_tile`` /
     ``origin_tiles`` / ``source_tiles`` / ``source_tile`` columns. A
     detection with no recorded origin (bare cluster centroids) keeps the
-    legacy unrestricted rule; the count is logged, and a warning names the
-    points whose origin lies on a study sheet the frame leaves out.
+    legacy unrestricted rule; the count is logged. A point seen only on
+    study sheets the frame leaves out gets no tile (``None``), with a
+    warning: the frame is narrower than the detection set. One seen across
+    the frame's edge raises
+    :class:`lib_advanced_metrics.ReducedFrameRefusalError` (the D50 review,
+    finding 2; PI decision 2026-10-10).
 
     Args:
         gdf_det: Detections (point geometries) in the project CRS.
@@ -326,7 +330,12 @@ def assign_primary_tiles(
     Returns:
         List of tile names aligned with ``gdf_det``'s row order; ``None``
         for a detection intersecting no tile of its own sheet (only possible
-        in the native scope, where detections are not clipped).
+        in the native scope, where detections are not clipped) or seen only
+        on sheets the frame leaves out.
+
+    Raises:
+        ReducedFrameRefusalError: If a detection was seen on a frame sheet
+            and on a study sheet the frame leaves out.
     """
     if gdf_det.empty:
         return []
@@ -341,22 +350,22 @@ def assign_primary_tiles(
             diag["n_cross_sheet_avoided"], diag["n_points"],
             diag["n_outside_origin_sheet"],
         )
-    if diag["n_no_origin"]:
+    n_legacy = diag["n_no_origin"] - diag["n_origin_excluded"]
+    if n_legacy:
         logger.debug(
             "primary tiles: %d of %d points carry no origin on a frame sheet; "
             "assigned by the unrestricted nearest-centroid rule",
-            diag["n_no_origin"], diag["n_points"],
+            n_legacy, diag["n_points"],
         )
-    if diag["n_origin_excluded"] or diag["n_origin_partly_excluded"]:
-        # The frame leaves out a study sheet these points were seen on: the
-        # legacy fallback may hand a point a tile on a sheet it was never
-        # seen on (the D50 review, finding 2).
+    if diag["n_origin_excluded"]:
+        # The frame leaves out the study sheet(s) these points were seen
+        # on. They get no tile rather than one on a sheet they were never
+        # seen on (the D50 review, finding 2; PI decision 2026-10-10).
         logger.warning(
             "primary tiles: %d of %d points were seen only on study sheets "
-            "this frame leaves out (legacy rule used), %d also on one; the "
-            "frame is narrower than the detection set",
+            "this frame leaves out and get no tile; the frame is narrower "
+            "than the detection set",
             diag["n_origin_excluded"], diag["n_points"],
-            diag["n_origin_partly_excluded"],
         )
     return assigned
 

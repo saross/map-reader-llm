@@ -26,13 +26,21 @@ overlap by 10 m):
 * (the D50 review, Astra, 2026-10-09) one tile-to-sheet assignment serves
   references, detections and each sheet's tiles even when one sheet name is
   a prefix of another (finding 3), and per-sheet results are partitions of
-  one full-frame scoring that sum to it, while a reduced frame's blind spot
-  is counted apart from an unknown tile vocabulary (finding 2).
+  one full-frame scoring that sum to it (finding 2);
+* (PI decision, 2026-10-10) a reduced frame counts a detection if and only
+  if its parent frame attributes it to one of the reduced frame's sheets:
+  an origin seen only on a study sheet the frame leaves out is excluded,
+  not re-keyed; one seen across the frame's edge is refused unless the
+  parent frame is given (``parent_bounds``), which then governs; an unknown
+  tile vocabulary keeps the ``source_tile`` fallback but warns. Astra's
+  three counterexamples are regression tests below, and any partition of a
+  frame into whole sheets sums exactly to it.
 """
 
 from __future__ import annotations
 
 import json
+import logging
 import sys
 from pathlib import Path
 
@@ -573,20 +581,23 @@ def _total(counts: dict[str, tuple[int, int, int]]) -> tuple[int, int, int]:
     return tuple(sum(c[i] for c in counts.values()) for i in range(3))
 
 
-@pytest.mark.parametrize("origin_column, origin_value, source_tile", [
-    # Single origin: seen on A only, re-keyed to B's overlapping tile.
-    ("origin_tiles", "A_x0_y0.png", "B_x0_y0.png"),
-    # Several origins: seen on A and on B; the materialiser named A first.
-    ("source_tiles", '["A_x0_y0.png", "B_x0_y0.png"]', "A_x0_y0.png"),
-])
+#: Astra's two cases (the D50 review, 2026-10-09): a detection seen only on
+#: A and re-keyed to B's overlapping tile, and a cluster seen on A and B
+#: that the materialiser named on A (the first, alphabetical, member).
+ASTRA_CASES = [
+    pytest.param("origin_tiles", "A_x0_y0.png", "B_x0_y0.png", id="single-origin"),
+    pytest.param("source_tiles", '["A_x0_y0.png", "B_x0_y0.png"]', "A_x0_y0.png",
+                 id="multi-origin"),
+]
+
+
+@pytest.mark.parametrize("origin_column, origin_value, source_tile", ASTRA_CASES)
 def test_per_sheet_results_are_partitions_of_the_full_frame(
     wide_frame, two_sheet_refs, origin_column, origin_value, source_tile,
 ):
-    """Finding 2: per-sheet counts sum to the full frame's; reduced frames do not.
+    """Finding 2: the full frame's per-sheet counts sum to its score.
 
-    Astra's counterexample (single origin) and its two-sheet cluster twin.
     The full frame scores the detection on A: a TP on A and an FN on B.
-    Scoring each sheet on its own tiles scores it on A AND on B: two TPs.
     """
     d = dets([(source_tile, 195, 50)], **{origin_column: [origin_value]})
     full = lam.per_sheet_confusion(d, two_sheet_refs, wide_frame, 20)
@@ -598,79 +609,358 @@ def test_per_sheet_results_are_partitions_of_the_full_frame(
     scope = lam.scope_detections_to_frame(d, wide_frame)
     assert lam.per_sheet_confusion(scope, two_sheet_refs, wide_frame, 20) == full
 
-    # The hazard the partitions avoid, kept visible: each reduced frame
-    # scores the detection on its own sheet, so the sheets over-count.
-    reduced = {}
-    for sheet in ("A", "B"):
-        reduced.update(lam.per_sheet_confusion(
-            d, two_sheet_refs, _sheet(wide_frame, sheet), 20))
-    assert reduced == {"A": (1, 0, 0), "B": (1, 0, 0)}
-    assert _total(reduced) != _total(full)
 
+@pytest.mark.parametrize("origin_column, origin_value, source_tile", ASTRA_CASES)
+def test_reduced_frames_given_the_parent_sum_to_it(
+    wide_frame, two_sheet_refs, origin_column, origin_value, source_tile,
+):
+    """The contract: a reduced frame counts a detection iff the parent puts it there.
 
-def test_a_reduced_frame_counts_an_excluded_origin_apart(wide_frame):
-    """Finding 2's diagnostics: an excluded sheet is not an unknown vocabulary.
-
-    On B's tiles alone: a row seen only on A (single origin) falls back to
-    ``source_tile`` and is counted as excluded; a row seen on A and B is
-    attributed to B and counted as partly excluded; a row whose origin is in
-    a vocabulary the catalogue does not know stays merely unrecognised.
+    Astra's regression (``reduced_frames_partition``): scored on each
+    sheet's tiles alone, the detection used to count on A AND on B. Given
+    the full frame as ``parent_bounds``, each reduced frame scores exactly
+    its partition of the full frame, for one origin and for several.
     """
-    d = dets([("B_x0_y0.png", 195, 50), ("A_x0_y0.png", 195, 50),
-              ("B_x0_y0.png", 300, 50)],
-             source_tiles=['["A_x0_y0.png"]', '["A_x0_y0.png", "B_x0_y0.png"]',
-                           '["Q-99_x0_y0.png"]'])
-    only_b = _sheet(wide_frame, "B")
-    diag = lam.scope_detections_to_frame(
-        d, only_b, sheet_catalogue=["A", "B"]).diagnostics
-    assert (diag["n_origin_unrecognised"], diag["n_origin_excluded"],
-            diag["n_origin_partly_excluded"], diag["n_origin_only"]) == (2, 1, 1, 1)
-    # The full frame excludes nothing.
-    full = lam.scope_detections_to_frame(
-        d, wide_frame, sheet_catalogue=["A", "B"]).diagnostics
-    assert (full["n_origin_excluded"], full["n_origin_partly_excluded"]) == (0, 0)
-    assert full["n_origin_unrecognised"] == 1
+    d = dets([(source_tile, 195, 50)], **{origin_column: [origin_value]})
+    full = lam.scope_detections_to_frame(d, wide_frame)
+    counts = []
+    reduced: dict[str, tuple[int, int, int]] = {}
+    for sheet in ("A", "B"):
+        part = _sheet(wide_frame, sheet)
+        scope = lam.scope_detections_to_frame(d, part, parent_bounds=wide_frame)
+        counts.append(len(scope.detections))
+        reduced.update(lam.per_sheet_confusion(
+            d, two_sheet_refs, part, 20, parent_bounds=wide_frame))
+        assert lam.calculate_f1_internal(
+            d, two_sheet_refs, part, 20, parent_bounds=wide_frame,
+        ) == lam.precision_recall_f1(*reduced[sheet])
+    assert counts == [1, 0]
+    assert sum(counts) == len(full.detections) == 1
+    assert reduced == lam.per_sheet_confusion(d, two_sheet_refs, wide_frame, 20)
+    only_b = lam.scope_detections_to_frame(
+        d, _sheet(wide_frame, "B"), parent_bounds=wide_frame).diagnostics
+    assert (only_b["n_parent_elsewhere"], only_b["n_parent_sheets"]) == (1, 2)
+    assert only_b["n_in_scope"] == 0
 
 
-def test_the_catalogue_changes_only_the_diagnostics(wide_frame):
-    """sheet_catalogue never moves a row: same rows, sheets and retained set."""
-    d = dets([("B_x0_y0.png", 195, 50), ("A_x0_y0.png", 195, 50)],
-             source_tiles=['["A_x0_y0.png"]', '["A_x0_y0.png", "B_x0_y0.png"]'])
+@pytest.mark.parametrize("a, b, catalogue", [
+    pytest.param("A", "B", ["A", "B"], id="synthetic-explicit-catalogue"),
+    pytest.param("K-35-052-3", "K-35-052-4_32635", None, id="study-sheets-default"),
+])
+def test_an_out_of_frame_origin_is_excluded_not_rekeyed(a, b, catalogue):
+    """Rule 1 (PI decision, 2026-10-10): no ``source_tile`` fallback for a real sheet.
+
+    Astra's single-origin case on B's tiles alone: the detection was seen
+    only on A, a catalogue sheet the frame leaves out, so it is excluded
+    and counted, and the two reduced frames sum to the full frame. With
+    real study sheets the default catalogue (:data:`STUDY_SHEETS`) applies.
+    """
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": [f"{a}_x0_y0.png", f"{b}_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+    d = dets([(f"{b}_x0_y0.png", 195, 50)], origin_tiles=[f"{a}_x0_y0.png"])
+    full = lam.scope_detections_to_frame(d, bounds, sheet_catalogue=catalogue)
+    on_a = lam.scope_detections_to_frame(
+        d, _sheet(bounds, a), sheet_catalogue=catalogue)
+    on_b = lam.scope_detections_to_frame(
+        d, _sheet(bounds, b), sheet_catalogue=catalogue)
+    assert [len(on_a.detections), len(on_b.detections)] == [1, 0]
+    assert len(full.detections) == 1 and list(full.sheets) == [a]
+    diag = on_b.diagnostics
+    assert (diag["n_origin_excluded"], diag["n_origin_unrecognised"]) == (1, 1)
+    assert (diag["n_in_scope"], diag["n_unattributed"], diag["n_out_of_frame"]) == (0, 0, 0)
+    # Every row is accounted for exactly once.
+    assert diag["n_detections"] == (diag["n_in_scope"] + diag["n_out_of_frame"]
+                                    + diag["n_unattributed"] + diag["n_origin_excluded"])
+    # The tile confusion still books the row (it is on no frame sheet).
+    assert on_b.retained.index.tolist() == [0]
+
+
+@pytest.mark.parametrize("a, b, catalogue", [
+    pytest.param("A", "B", ["A", "B"], id="synthetic-explicit-catalogue"),
+    pytest.param("K-35-052-3", "K-35-052-4_32635", None, id="study-sheets-default"),
+])
+def test_origins_across_the_frame_edge_are_refused_without_the_parent(
+    a, b, catalogue, two_sheet_refs,
+):
+    """Rule 2: a cluster seen on both sides of the frame's edge is not guessed.
+
+    Astra's multi-origin case: which sheet the full frame scores it on
+    depends on the other sheet's tiles, which a reduced frame lacks. Every
+    scoring entry point refuses, naming ``parent_bounds``; given the
+    parent, the reduced frames sum to it.
+    """
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": [f"{a}_x0_y0.png", f"{b}_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+    refs = two_sheet_refs.assign(Map=[a, b])
+    d = dets([(f"{a}_x0_y0.png", 195, 50)],
+             origin_tiles=[f"{a}_x0_y0.png;{b}_x0_y0.png"])
+    for sheet, other in ((a, b), (b, a)):
+        part = _sheet(bounds, sheet)
+        with pytest.raises(lam.ReducedFrameRefusalError, match="parent_bounds=") as err:
+            lam.scope_detections_to_frame(d, part, sheet_catalogue=catalogue)
+        assert (err.value.n_rows, err.value.positions) == (1, [0])
+        assert err.value.sheets_left_out == [other]
+        assert err.value.within_parent is False
+        with pytest.raises(lam.ReducedFrameRefusalError):
+            lam.calculate_f1_internal(d, refs, part, 20, sheet_catalogue=catalogue)
+        with pytest.raises(lam.ReducedFrameRefusalError):
+            lam.per_sheet_confusion(d, refs, part, 20, sheet_catalogue=catalogue)
+        with pytest.raises(lam.ReducedFrameRefusalError):
+            list(lam.iter_sheet_scopes(d, refs, part, sheet_catalogue=catalogue))
+    counts = [
+        len(lam.scope_detections_to_frame(
+            d, _sheet(bounds, s), sheet_catalogue=catalogue,
+            parent_bounds=bounds).detections)
+        for s in (a, b)
+    ]
+    assert counts == [1, 0]
+    governed = lam.scope_detections_to_frame(
+        d, _sheet(bounds, a), sheet_catalogue=catalogue, parent_bounds=bounds,
+    ).diagnostics
+    # Seen across this frame's edge too; the parent decided.
+    assert governed["n_origin_partly_excluded"] == 1
+
+
+def test_a_parent_that_itself_leaves_a_sheet_out_is_refused(wide_frame):
+    """The parent is only as good as its own sheets: it must not cut a cluster either."""
+    d = dets([("A_x0_y0.png", 195, 50)],
+             origin_tiles=["A_x0_y0.png;B_x0_y0.png;C_x0_y0.png"])
+    with pytest.raises(lam.ReducedFrameRefusalError, match="FULL") as err:
+        lam.scope_detections_to_frame(d, _sheet(wide_frame, "A"),
+                                      sheet_catalogue=["A", "B", "C"],
+                                      parent_bounds=wide_frame)
+    assert err.value.within_parent is True and err.value.sheets_left_out == ["C"]
+
+
+@pytest.fixture()
+def three_sheet_frame() -> gpd.GeoDataFrame:
+    """Sheets A, B and C, two tiles each; padded tiles overlap at each edge."""
+    return gpd.GeoDataFrame(
+        {"tile_name": ["A_x0_y0.png", "A_x100_y0.png", "B_x0_y0.png",
+                       "B_x100_y0.png", "C_x0_y0.png", "C_x100_y0.png"]},
+        geometry=[box(0, 0, 100, 100), box(100, 0, 200, 100),
+                  box(190, 0, 290, 100), box(290, 0, 390, 100),
+                  box(380, 0, 480, 100), box(480, 0, 580, 100)],
+        crs=CRS,
+    )
+
+
+def test_every_sheet_partition_sums_to_the_parent(three_sheet_frame):
+    """The contract as a property: any partition into whole sheets sums exactly.
+
+    A mixed detection set: in-frame rows, re-keyed rows, clusters seen on
+    two sheets (in each overlap band, named on either), a switch, a row
+    out of frame, an unattributed row, and an unknown tile vocabulary.
+    """
+    rows = [
+        ("A_x0_y0.png", 50, 50, None),                      # plain, on A
+        ("B_x0_y0.png", 195, 50, "A_x100_y0.png"),          # re-keyed to B
+        ("A_x100_y0.png", 195, 50, "A_x100_y0.png;B_x0_y0.png"),  # seen on A and B
+        ("B_x0_y0.png", 195, 50, "A_x100_y0.png;B_x0_y0.png"),    # named on B
+        ("B_x100_y0.png", 385, 50, "B_x100_y0.png;C_x0_y0.png"),  # seen on B and C
+        ("A_x100_y0.png", 250, 50, "A_x100_y0.png;B_x0_y0.png"),  # switched to B
+        ("C_x100_y0.png", 700, 50, None),                   # out of frame
+        (None, 300, 50, None),                              # unattributed
+        ("C_x0_y0.png", 450, 50, "Q-99_x0_y0.png"),         # unknown vocabulary
+    ]
+    d = dets([(s, x, y) for s, x, y, _ in rows], origin_tiles=[o for *_, o in rows])
+    refs = gpd.GeoDataFrame(
+        {"Map": ["A", "A", "B", "B", "C", "C"]},
+        geometry=[Point(50, 50), Point(195, 50), Point(196, 50), Point(385, 50),
+                  Point(386, 50), Point(450, 50)], crs=CRS)
+    full = lam.per_sheet_confusion(d, refs, three_sheet_frame, 20)
+    full_scope = lam.scope_detections_to_frame(d, three_sheet_frame)
+    sheets = lam.frame_tile_sheets(three_sheet_frame)
+    for partition in ([["A"], ["B"], ["C"]], [["A", "B"], ["C"]], [["A"], ["B", "C"]]):
+        reduced: dict[str, tuple[int, int, int]] = {}
+        kept: list[int] = []
+        for group in partition:
+            part = three_sheet_frame[np.isin(sheets.astype(str), group)]
+            reduced.update(lam.per_sheet_confusion(
+                d, refs, part, 20, parent_bounds=three_sheet_frame))
+            scope = lam.scope_detections_to_frame(d, part, parent_bounds=three_sheet_frame)
+            kept += scope.detections.index.tolist()
+            for sheet in group:
+                assert scope.on_sheet(sheet).index.tolist() == \
+                    full_scope.on_sheet(sheet).index.tolist()
+        assert reduced == full, partition
+        assert sorted(kept) == sorted(full_scope.detections.index.tolist())
+
+
+def test_the_full_frame_as_its_own_parent_changes_nothing(frame):
+    """Passing the full frame as its own parent reproduces the plain scope exactly."""
+    d = dets([("A_x0_y0.png", 50, 50), ("B_x0_y0.png", 195, 50),
+              ("A_x100_y0.png", 500, 50), (None, 300, 50)],
+             origin_tiles=[None, "A_x100_y0.png", None, None])
+    plain = lam.scope_detections_to_frame(d, frame)
+    governed = lam.scope_detections_to_frame(d, frame, parent_bounds=frame)
+    assert governed.detections.index.tolist() == plain.detections.index.tolist()
+    assert list(governed.sheets) == list(plain.sheets)
+    assert governed.retained.index.tolist() == plain.retained.index.tolist()
+    extra = {"n_parent_sheets": 2, "n_parent_elsewhere": 0}
+    assert governed.diagnostics == {**plain.diagnostics, **extra}
+
+
+def test_a_parent_must_contain_the_frame(wide_frame, frame):
+    """A frame that is not part of the given parent is refused, not trusted."""
+    d = dets([("A_x0_y0.png", 50, 50)])
+    with pytest.raises(ValueError, match="not tiles of the parent"):
+        lam.scope_detections_to_frame(d, frame, parent_bounds=wide_frame)
+    moved = wide_frame.copy()
+    moved.loc[moved.index[0], "geometry"] = box(0, 0, 150, 100)
+    with pytest.raises(ValueError, match="different polygons"):
+        lam.scope_detections_to_frame(d, _sheet(wide_frame, "A"), parent_bounds=moved)
+    twice = pd.concat([wide_frame, wide_frame.iloc[[0]]])
+    with pytest.raises(ValueError, match="repeat"):
+        lam.scope_detections_to_frame(d, _sheet(wide_frame, "A"), parent_bounds=twice)
+    scope = lam.scope_detections_to_frame(d, wide_frame)
+    with pytest.raises(ValueError, match="already"):
+        list(lam.iter_sheet_scopes(scope, gpd.GeoDataFrame(
+            {"Map": []}, geometry=[], crs=CRS), wide_frame, parent_bounds=wide_frame))
+
+
+def test_an_unknown_vocabulary_keeps_the_fallback_but_warns(wide_frame, caplog):
+    """Rule 3: where the catalogue cannot see, the scorer says so.
+
+    With synthetic sheets the default catalogue knows neither A nor B, so
+    on B's tiles alone Astra's detection still falls back to ``source_tile``
+    (the unknown-vocabulary rule the PI kept): the warning names the
+    argument that would prevent a double count.
+    """
+    d = dets([("B_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png"])
+    with caplog.at_level(logging.WARNING):
+        scope = lam.scope_detections_to_frame(d, _sheet(wide_frame, "B"))
+    assert len(scope.detections) == 1
+    assert scope.diagnostics["n_origin_unrecognised"] == 1
+    assert scope.diagnostics["n_origin_excluded"] == 0
+    assert any("parent_bounds=" in r.getMessage() for r in caplog.records
+               if r.levelno == logging.WARNING)
+    caplog.clear()
+    with caplog.at_level(logging.WARNING):
+        lam.scope_detections_to_frame(d, wide_frame)
+    assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
+
+
+def test_the_catalogue_decides_excluded_versus_unknown(wide_frame):
+    """The catalogue now moves rows: an identified sheet is excluded, an unknown one is not."""
+    d = dets([("B_x0_y0.png", 195, 50)], source_tiles=['["A_x0_y0.png"]'])
     only_b = _sheet(wide_frame, "B")
     with_catalogue = lam.scope_detections_to_frame(d, only_b, sheet_catalogue=["A", "B"])
     without = lam.scope_detections_to_frame(d, only_b, sheet_catalogue=[])
-    assert with_catalogue.detections.index.tolist() == without.detections.index.tolist()
-    assert list(with_catalogue.sheets) == list(without.sheets)
-    assert with_catalogue.retained.index.tolist() == without.retained.index.tolist()
-    assert without.diagnostics["n_origin_excluded"] == 0
+    assert with_catalogue.detections.index.tolist() == []
+    assert without.detections.index.tolist() == [0]
     assert with_catalogue.diagnostics["n_origin_excluded"] == 1
+    assert without.diagnostics["n_origin_excluded"] == 0
+    assert (with_catalogue.diagnostics["n_origin_unrecognised"]
+            == without.diagnostics["n_origin_unrecognised"] == 1)
 
 
 def test_the_default_catalogue_is_the_study_sheets():
-    """A 55-map neighbour of a gold-standard sheet is identified; a variant name is not."""
+    """A 55-map neighbour of a gold-standard sheet is excluded; a variant name is not."""
     gs = gpd.GeoDataFrame({"tile_name": ["K-35-052-4_32635_x0_y0.png"]},
                           geometry=[box(0, 0, 100, 100)], crs=CRS)
     d = dets([("K-35-052-4_32635_x0_y0.png", 50, 50)] * 2,
              origin_tiles=["K-35-052-3_x0_y0.png", "K-35-052-4_x0_y0.png"])
     diag = lam.scope_detections_to_frame(d, gs).diagnostics
     assert (diag["n_origin_unrecognised"], diag["n_origin_excluded"]) == (2, 1)
-    assert diag["n_in_scope"] == 2
+    # The K-35-052-3 row is excluded; the variant name falls back and stays.
+    assert diag["n_in_scope"] == 1
+
+
+@pytest.mark.parametrize("a, b, catalogue", [
+    pytest.param("A", "B", ["A", "B"], id="synthetic-explicit-catalogue"),
+    pytest.param("K-35-052-3", "K-35-052-4_32635", None, id="study-sheets-default"),
+])
+def test_the_materialiser_does_not_rekey_an_excluded_origin(a, b, catalogue):
+    """Astra's ``materialiser_no_rekey``: an A-origin point gets no B tile on B alone.
+
+    The full frame gives it A's tile. On B's tiles alone it gets ``None``,
+    by rule 1 or by following the parent; a cluster seen on A and B is
+    refused without the parent and follows it with one.
+    """
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": [f"{a}_x0_y0.png", f"{b}_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+    only_b = _sheet(bounds, b)
+    point = gpd.GeoDataFrame({"origin_tiles": [f"{a}_x0_y0.png"]},
+                             geometry=[Point(195, 50)], crs=CRS)
+    full, _ = lam.assign_primary_tiles_on_origin_sheet(
+        point, bounds, sheet_catalogue=catalogue)
+    assert full == [f"{a}_x0_y0.png"]
+    names, diag = lam.assign_primary_tiles_on_origin_sheet(
+        point, only_b, sheet_catalogue=catalogue)
+    assert names == [None]
+    assert (diag["n_origin_excluded"], diag["n_assigned"]) == (1, 0)
+    names, diag = lam.assign_primary_tiles_on_origin_sheet(
+        point, only_b, sheet_catalogue=catalogue, parent_bounds=bounds)
+    assert names == [None] and diag["n_parent_elsewhere"] == 1
+
+    cluster = point.assign(origin_tiles=[f"{a}_x0_y0.png;{b}_x0_y0.png"])
+    with pytest.raises(lam.ReducedFrameRefusalError, match="parent_bounds="):
+        lam.assign_primary_tiles_on_origin_sheet(
+            cluster, only_b, sheet_catalogue=catalogue)
+    full, _ = lam.assign_primary_tiles_on_origin_sheet(
+        cluster, bounds, sheet_catalogue=catalogue)
+    parts = [
+        lam.assign_primary_tiles_on_origin_sheet(
+            cluster, _sheet(bounds, s), sheet_catalogue=catalogue,
+            parent_bounds=bounds)[0][0]
+        for s in (a, b)
+    ]
+    assert [t for t in parts if t is not None] == full
 
 
 def test_primary_tiles_count_an_excluded_origin_apart(wide_frame):
-    """The materialiser's legacy fallback carries the same distinction."""
+    """The materialiser's counts: excluded (no tile), unknown (legacy), none (legacy)."""
     d = gpd.GeoDataFrame(
-        {"origin_tiles": ["A_x0_y0.png", "Q-99_x0_y0.png", None,
-                          "A_x0_y0.png;B_x0_y0.png"]},
-        geometry=[Point(195, 50)] * 4, crs=CRS)
+        {"origin_tiles": ["A_x0_y0.png", "Q-99_x0_y0.png", None]},
+        geometry=[Point(195, 50)] * 3, crs=CRS)
     names, diag = lam.assign_primary_tiles_on_origin_sheet(
         d, _sheet(wide_frame, "B"), sheet_catalogue=["A", "B"])
-    assert names == ["B_x0_y0.png"] * 4
+    assert names == [None, "B_x0_y0.png", "B_x0_y0.png"]
     assert (diag["n_no_origin"], diag["n_origin_unrecognised"],
-            diag["n_origin_excluded"], diag["n_origin_partly_excluded"]) == (3, 2, 1, 1)
+            diag["n_origin_excluded"], diag["n_origin_partly_excluded"],
+            diag["n_assigned"]) == (3, 2, 1, 0, 2)
     _, full = lam.assign_primary_tiles_on_origin_sheet(
         d, wide_frame, sheet_catalogue=["A", "B"])
     assert (full["n_origin_excluded"], full["n_origin_partly_excluded"]) == (0, 0)
+
+
+def test_the_h13_wrapper_warns_and_leaves_an_excluded_point_unassigned(caplog):
+    """prepare_h13_scoring.assign_primary_tiles: no tile, and a WARNING, on a reduced frame."""
+    from scripts import prepare_h13_scoring as h13
+
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": ["K-35-052-3_x0_y0.png", "K-35-052-4_32635_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+    point = gpd.GeoDataFrame({"origin_tiles": ["K-35-052-3_x0_y0.png"]},
+                             geometry=[Point(195, 50)], crs=CRS)
+    with caplog.at_level(logging.WARNING):
+        assigned = h13.assign_primary_tiles(point, bounds.iloc[[1]])
+    assert assigned == [None]
+    assert any("leaves out" in r.getMessage() for r in caplog.records
+               if r.levelno == logging.WARNING)
+
+
+def test_restoring_the_origin_can_lower_a_score(wide_frame):
+    """Astra's non-monotonic example (passing): D50 is not an upward-only rule.
+
+    Only a B reference. Without the recorded origin the detection is
+    attributed by ``source_tile`` to B, as the pre-D50 named-sheet scorer
+    attributed it, and matches: F1 1 (Astra ran the scorer at
+    ``b3c52591d`` on this input and got (1.0, 1.0, 1.0)). With its origin
+    restored to A it is an A false positive and the B reference a false
+    negative: F1 0. The real corpus's direction is an empirical question.
+    """
+    refs = gpd.GeoDataFrame({"Map": ["B"]}, geometry=[Point(195, 50)], crs=CRS)
+    named_only = dets([("B_x0_y0.png", 195, 50)])
+    restored = dets([("B_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png"])
+    assert lam.calculate_f1_internal(named_only, refs, wide_frame, 20) == (1.0, 1.0, 1.0)
+    assert lam.calculate_f1_internal(restored, refs, wide_frame, 20) == (0, 0, 0)
+    assert lam.per_sheet_confusion(restored, refs, wide_frame, 20) == {
+        "A": (0, 1, 0), "B": (0, 0, 1)}
 
 
 def test_the_evaluation_rolls_up_the_excluded_counts(wide_frame, two_sheet_refs):
@@ -681,6 +971,9 @@ def test_the_evaluation_rolls_up_the_excluded_counts(wide_frame, two_sheet_refs)
     run = evaluate_single_run(d, two_sheet_refs, wide_frame, buffers=[20],
                               n_bootstrap=50, seed=1)
     assert run["detection_scope"]["n_origin_excluded"] == 1
+    # Rule 1: seen only on a study sheet this frame leaves out, so excluded
+    # (before 2026-10-10 it fell back to B and was scored there).
+    assert run["detection_scope"]["n_in_scope"] == 0
     summary = evaluate_multi_run_mean([run, run], label="x")
     assert summary["detection_scope"]["n_origin_excluded"] == 2
     assert summary["detection_scope"]["n_origin_partly_excluded"] == 0

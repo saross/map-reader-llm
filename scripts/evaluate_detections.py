@@ -1054,9 +1054,12 @@ def describe_detection_scope(
     their own sheet's tiles (and of those, how many inside another
     sheet's), and how many were scored on a recorded origin sheet rather
     than on a re-keyed ``source_tile``. It also warns when a recorded origin
-    names a study sheet this frame leaves out (``n_origin_excluded``,
-    ``n_origin_partly_excluded``): the frame is then narrower than the
-    detection set, and its attribution may differ from a fuller frame's.
+    names a study sheet this frame leaves out (``n_origin_excluded``): the
+    frame is then narrower than the detection set, and those detections are
+    excluded rather than re-keyed (PI decision, 2026-10-10). A detection
+    seen across the frame's edge is refused before this point
+    (``ReducedFrameRefusalError``), so ``n_origin_partly_excluded`` is 0
+    whenever an evaluation is written.
 
     Args:
         gdf_det: One pass's detections, as scored.
