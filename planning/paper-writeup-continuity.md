@@ -225,11 +225,28 @@ replaces it.
   with `parent_bounds=`; #33's scope tests 79 passed. Re-review mail
   to Astra 2026-10-10T06:48Z on both workstreams (D51: Astra's file
   passes on #30 and #31 merged); the PI wakes Astra.
+  Astra's verdicts (2026-10-10T06:58Z): **#31 accepted, merged
+  `fb1a997ac`** (main merged in; tier-1 4,233 passed; declarations
+  module 68 passed). #30: one downstream guard asked for
+  (`k_ladder_tension_analyses.py`), done at `42d215fcb` (62 passed in
+  the main session's run of Astra's tests), re-review mailed 07:39Z.
+  #33: a frame prefix could hide a longer excluded catalogue sheet;
+  fixed at `73106fcdf` (96 passed in the main session's run), plus the
+  common-footprint bootstraps now pass the parent (`29faf5618`), whose
+  effect on committed and Phase 3 outputs is being audited before the
+  #33 re-review mail.
   Related, confirmed on `main`: `per_map_counts()` in
   `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
   detections by the pre-D50 `source_tile` prefix, and ignores origins;
   it feeds the stride sweep's paired permutations. Fix in Phase 5 with
   the W2.7 `FastScorer`, after a search for other scorer restatements.
+- [ ] **`one_tier: false` where the tier count is unknown**: the committed
+  `results/k-ladder-2026-09-12/tension/effect-sizes.json` has six
+  gold-standard rows with `n_tiers` null and `one_tier` false, because
+  `phase2/mcc-test/summary.json` carries no `n_tiers` and
+  `cmd_effect_sizes` computes `n_tiers == 1`. Predates PRs #30 and #31;
+  not cited in `docs/paper/`. Fix: null when the count is missing, then
+  regenerate (found by the #30 guard agent, 2026-10-10).
 - [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
   it zips candidates with `hsu_not_ruled_out`, an index list, so the
   member lists are the first *n* candidates; the signed null-exemplar
