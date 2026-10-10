@@ -108,6 +108,14 @@ replaces it.
   the sapphire memory fault. Phase 4 done
   (`reports/s163-agent-records/d57-4-rescore-s4-q4.md`): Run B and Run C
   reproduce; Q4 moves only the predicted rows; PR #28 open, not merged.
+  **Merged 2026-10-10 (D59):** PR #32 (`87e458ca7`), PR #28
+  (`30de6a68d`), and PR #29 (`b9b42c79b`; `main` merged in, e43 anchors
+  updated under D58 Q6 at `121b6ec6d`, tier-1 4,215 passed and 0 failed
+  on sapphire). Next: Phases 3–5 as their own PR. Phase 5 must also
+  revise `results/e43-matched-temperature/findings.md` § 3 and
+  `ANALYSIS_OUTCOME` in `scripts/author_e43_matched_temperature.py`
+  (copied into six register files; new p values in the S3 record's e43 item) and
+  the ungated `committed_f1: 0.6667` in `scripts/h13_k_sensitivity.py:249`.
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
@@ -120,6 +128,15 @@ replaces it.
   check): all 2,262 files identical, no new kernel report (S2 record
   changelog). The all-clear for the EXPO reboot went to
   personal-assistant-43 at 00:11Z.
+  Sapphire rebooted at 05:09Z (`uptime -s`; memory settings not read
+  from this session); no `Bad page state` report on that boot through
+  #29's tier-1. **Soak launched 2026-10-10T06:09Z** (D59): the census
+  resume, 467 replays (458 cells plus 9 vintage), 8 workers, tripwire
+  armed at 5; `out/resume.log`, `out/soak-temps.log` (DIMM and Tctl
+  each minute), `out/soak-kernel-before.txt`, and the old stop file
+  kept as `out/STOP.halted-2026-10-09`, under
+  `~/scratch/d57-4-rescore-2026-10-09/census-old/` on sapphire. Then
+  `compare_census.py` and `analyse_census.py`.
   Diagnosis is with personal-assistant (session personal-assistant-43):
   the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
   guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
@@ -163,8 +180,9 @@ replaces it.
 - [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
   reads a key the 2026-09-21 relabel renamed to
   `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
-- [ ] **PR #29 description**: add the 42 tile-join cells (intervals
+- [x] **PR #29 description**: add the 42 tile-join cells (intervals
   withheld for a pre-D50 reason) and the hardware caveat before review.
+  DONE 2026-10-10 (with the merge-readiness notes), before merging.
 - [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
   `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
   changes requested; no committed full-frame score shown wrong). (1) A
@@ -189,6 +207,15 @@ replaces it.
   2026-10-09T22:43Z. **PI decision pending**: whether full-frame
   attribution should exclude an origin naming a real sheet outside the
   frame (measured: moves 0 of 2,751 committed cells).
+  RULED 2026-10-10 (D59): yes, with prevention for reduced frames.
+  Astra's own test file at #33's head passed 3 of 6; the other 3 failed
+  by design (#33 flagged reduced frames, did not prevent them). An agent
+  is adding the rule to #33; Astra is mailed when it is checked.
+  Related, confirmed on `main`: `per_map_counts()` in
+  `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
+  detections by the pre-D50 `source_tile` prefix, and ignores origins;
+  it feeds the stride sweep's paired permutations. Fix in Phase 5 with
+  the W2.7 `FastScorer`, after a search for other scorer restatements.
 - [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
   it zips candidates with `hsu_not_ruled_out`, an index list, so the
   member lists are the first *n* candidates; the signed null-exemplar
