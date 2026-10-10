@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-21T13:44:42.074504+00:00",
+  "timestamp": "2026-10-09T09:38:24.517245+00:00",
   "summary": {
     "label": "HIGH-t0.3-2of10",
     "n_detections": 1265,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.4341,
-        "f1_point": 0.4341,
-        "f1_ci_lower": 0.3922,
-        "f1_ci_upper": 0.4767,
+        "f1": 0.4353,
+        "f1_point": 0.4353,
+        "f1_ci_lower": 0.3936,
+        "f1_ci_upper": 0.4781,
         "f1_ci_method": "BCa",
-        "precision": 0.2917,
-        "p_point": 0.2917,
-        "p_ci_lower": 0.2562,
-        "p_ci_upper": 0.3296,
+        "precision": 0.2925,
+        "p_point": 0.2925,
+        "p_ci_lower": 0.2572,
+        "p_ci_upper": 0.3304,
         "p_ci_method": "BCa",
-        "recall": 0.8483,
-        "r_point": 0.8483,
-        "r_ci_lower": 0.808,
-        "r_ci_upper": 0.8817,
+        "recall": 0.8506,
+        "r_point": 0.8506,
+        "r_ci_lower": 0.8108,
+        "r_ci_upper": 0.884,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -41,20 +41,20 @@
       },
       {
         "buffer_metres": 30,
-        "f1": 0.4682,
-        "f1_point": 0.4682,
-        "f1_ci_lower": 0.4253,
-        "f1_ci_upper": 0.5123,
+        "f1": 0.4694,
+        "f1_point": 0.4694,
+        "f1_ci_lower": 0.4267,
+        "f1_ci_upper": 0.5134,
         "f1_ci_method": "BCa",
-        "precision": 0.3146,
-        "p_point": 0.3146,
-        "p_ci_lower": 0.2778,
-        "p_ci_upper": 0.3545,
+        "precision": 0.3154,
+        "p_point": 0.3154,
+        "p_ci_lower": 0.2788,
+        "p_ci_upper": 0.3553,
         "p_ci_method": "BCa",
-        "recall": 0.9149,
-        "r_point": 0.9149,
-        "r_ci_lower": 0.8848,
-        "r_ci_upper": 0.9384,
+        "recall": 0.9172,
+        "r_point": 0.9172,
+        "r_ci_lower": 0.888,
+        "r_ci_upper": 0.9405,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -75,20 +75,20 @@
       },
       {
         "buffer_metres": 40,
-        "f1": 0.48,
-        "f1_point": 0.48,
-        "f1_ci_lower": 0.437,
-        "f1_ci_upper": 0.5245,
+        "f1": 0.4812,
+        "f1_point": 0.4812,
+        "f1_ci_lower": 0.4385,
+        "f1_ci_upper": 0.5255,
         "f1_ci_method": "BCa",
-        "precision": 0.3225,
-        "p_point": 0.3225,
-        "p_ci_lower": 0.2854,
-        "p_ci_upper": 0.3631,
+        "precision": 0.3233,
+        "p_point": 0.3233,
+        "p_ci_lower": 0.2862,
+        "p_ci_upper": 0.3639,
         "p_ci_method": "BCa",
-        "recall": 0.9379,
-        "r_point": 0.9379,
-        "r_ci_lower": 0.9087,
-        "r_ci_upper": 0.9594,
+        "recall": 0.9402,
+        "r_point": 0.9402,
+        "r_ci_lower": 0.9117,
+        "r_ci_upper": 0.9609,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -109,20 +109,20 @@
       },
       {
         "buffer_metres": 50,
-        "f1": 0.4859,
-        "f1_point": 0.4859,
-        "f1_ci_lower": 0.4428,
-        "f1_ci_upper": 0.5303,
+        "f1": 0.4871,
+        "f1_point": 0.4871,
+        "f1_ci_lower": 0.4441,
+        "f1_ci_upper": 0.5313,
         "f1_ci_method": "BCa",
-        "precision": 0.3265,
-        "p_point": 0.3265,
-        "p_ci_lower": 0.2891,
-        "p_ci_upper": 0.3672,
+        "precision": 0.3273,
+        "p_point": 0.3273,
+        "p_ci_lower": 0.2901,
+        "p_ci_upper": 0.368,
         "p_ci_method": "BCa",
-        "recall": 0.9494,
-        "r_point": 0.9494,
-        "r_ci_lower": 0.9236,
-        "r_ci_upper": 0.9683,
+        "recall": 0.9517,
+        "r_point": 0.9517,
+        "r_ci_lower": 0.9271,
+        "r_ci_upper": 0.9695,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -144,6 +144,24 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 1265,
+      "n_in_scope": 1265,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 3,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "source_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
         "tp": 213,
@@ -171,15 +189,16 @@
         "ci_lower": 0.3206,
         "ci_upper": 0.4394,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "349cdd1b6",
+    "script_git_commit": "494b5a7af",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-21T13:44:29.965217+00:00",
+    "generated_at_utc": "2026-10-09T09:38:07.024241+00:00",
     "cli_args": {
       "detections": [
         "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t2.geojson"
@@ -200,6 +219,8 @@
       "output_dir": "results/phase3a-image-matrix/high-t0.3/n10/high-t0-3-2of10",
       "label": "HIGH-t0.3-2of10",
       "mcc": true,
+      "tile_join": "id",
+      "require_clean_inputs": true,
       "workers": 1
     },
     "bootstrap": {
@@ -219,6 +240,19 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "494b5a7af",
+      "inputs": {
+        "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t2.geojson": "clean",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t2.geojson": "ab3bb84807098a652731b5981a361c5cc91e1b40",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5"
+      }
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",

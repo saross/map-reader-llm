@@ -1,24 +1,24 @@
 # Evaluation: stride-55map-2026-08-25__g384-ov128-55map-n5-carried-p0_15-k4-standardised-gt-n1
 
-**Generated**: 2026-08-29T08:21:55.944348+00:00  
+**Generated**: 2026-10-09T09:59:12.237754+00:00  
 **Detections**: 23743  
 
 | Buffer | F1 | F1 CI | P | P CI | R | R CI | MCC | MCC CI | Sens | Spec |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 5m | 0.061 | N/A * | 0.037 | N/A * | 0.176 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 10m | 0.147 | N/A * | 0.089 | N/A * | 0.422 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 15m | 0.216 | N/A * | 0.131 | N/A * | 0.621 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 20m | 0.258 | N/A * | 0.156 | N/A * | 0.740 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 25m | 0.283 | N/A * | 0.172 | N/A * | 0.813 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 30m | 0.296 | N/A * | 0.179 | N/A * | 0.849 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 35m | 0.302 | N/A * | 0.183 | N/A * | 0.867 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 40m | 0.305 | N/A * | 0.185 | N/A * | 0.875 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 45m | 0.307 | N/A * | 0.186 | N/A * | 0.880 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 50m | 0.307 | N/A * | 0.186 | N/A * | 0.882 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 75m | 0.310 | N/A * | 0.188 | N/A * | 0.889 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 100m | 0.311 | N/A * | 0.188 | N/A * | 0.891 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 125m | 0.312 | N/A * | 0.189 | N/A * | 0.895 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
-| 150m | 0.313 | N/A * | 0.189 | N/A * | 0.897 | N/A * | 0.007 | N/A * | 0.007 | 0.994 |
+| 5m | 0.062 | WITHHELD * | 0.037 | WITHHELD * | 0.176 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 10m | 0.148 | WITHHELD * | 0.090 | WITHHELD * | 0.422 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 15m | 0.217 | WITHHELD * | 0.132 | WITHHELD * | 0.621 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 20m | 0.259 | WITHHELD * | 0.157 | WITHHELD * | 0.740 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 25m | 0.285 | WITHHELD * | 0.173 | WITHHELD * | 0.813 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 30m | 0.297 | WITHHELD * | 0.180 | WITHHELD * | 0.849 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 35m | 0.304 | WITHHELD * | 0.184 | WITHHELD * | 0.867 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 40m | 0.307 | WITHHELD * | 0.186 | WITHHELD * | 0.875 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 45m | 0.308 | WITHHELD * | 0.187 | WITHHELD * | 0.880 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 50m | 0.309 | WITHHELD * | 0.187 | WITHHELD * | 0.882 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 75m | 0.311 | WITHHELD * | 0.189 | WITHHELD * | 0.889 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 100m | 0.312 | WITHHELD * | 0.189 | WITHHELD * | 0.891 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 125m | 0.313 | WITHHELD * | 0.190 | WITHHELD * | 0.895 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
+| 150m | 0.314 | WITHHELD * | 0.190 | WITHHELD * | 0.897 | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * | WITHHELD * |
 
-\* **Partial coverage** — the detection set does not cover the evaluation bounds it is scored against (partial: 8486/8541 tiles unprocessed). Ground-truth mounds on unprocessed tiles are counted as artificial false negatives, so the POINT ESTIMATE is deflated as well as the interval; neither is comparable with a full-coverage cell. Re-score both arms against bounds the data actually covers. See erratum E72 in `docs/methodology/preregistration/protocol-errata.md` and `results/evaluation-scopes.md` § 12.
+\* **Per-tile statistics WITHHELD** — the tile-join invariant refused this cell's per-tile table (`tile_join_detection_shortfall`): 77 of 23605 in-frame detections were booked to a tile (shortfall 23528, 0 outside the frame entirely, 10477 inside more than one tile). The two tile vocabularies: the frame carries 8541 names under map prefixes ['K-35-042-3', 'K-35-050-4', 'K-35-051-3', 'K-35-051-4', 'K-35-052-2', 'K-35-052-3', 'K-35-053-1', 'K-35-053-2', 'K-35-053-4_Boyadzhik', 'K-35-054-1_Straldzha_4326', 'K-35-054-2_Atolov_4326', 'K-35-054-3_Yambol', 'K-35-054-4_Voynika', 'K-35-055-1', 'K-35-055-2', 'K-35-055-3', 'K-35-055-4', 'K-35-056-3', 'K-35-062-4_Asenovgrad_4326', 'K-35-063-1_Granit_4326', 'K-35-063-2_Chirpan_4326', 'K-35-063-3_Tatarevo_4326', 'K-35-063-4_Skobelevo_4326', 'K-35-064-1_Sredets_4326', 'K-35-064-2_Radnevo_4326', 'K-35-064-3_Dimitrovgrad_4326', 'K-35-064-4_Galabovo_4326', 'K-35-065-1_Radetski_4326', 'K-35-065-2_GManastir_4326', 'K-35-065-3_Glavan_4326', 'K-35-065-4', 'K-35-066-1', 'K-35-066-2', 'K-35-066-3', 'K-35-066-4', 'K-35-067-1', 'K-35-067-2', 'K-35-067-3', 'K-35-067-4', 'K-35-074-1', 'K-35-074-2', 'K-35-074-3', 'K-35-074-4', 'K-35-075-1', 'K-35-075-2', 'K-35-075-3', 'K-35-075-4', 'K-35-076-1', 'K-35-076-2', 'K-35-076-3', 'K-35-076-4', 'K-35-077-1', 'K-35-077-2', 'K-35-077-3', 'K-35-077-4'] (e.g. ['K-35-042-3_x0_y0.png', 'K-35-042-3_x0_y1008.png', 'K-35-042-3_x0_y1344.png']); the detections carry 14001 names under ['K-35-042-3', 'K-35-050-4', 'K-35-051-3', 'K-35-051-4', 'K-35-052-2', 'K-35-052-3', 'K-35-053-1', 'K-35-053-2', 'K-35-053-4_Boyadzhik', 'K-35-054-1_Straldzha_4326', 'K-35-054-2_Atolov_4326', 'K-35-054-3_Yambol', 'K-35-054-4_Voynika', 'K-35-055-1', 'K-35-055-2', 'K-35-055-3', 'K-35-055-4', 'K-35-056-3', 'K-35-062-4_Asenovgrad_4326', 'K-35-063-1_Granit_4326', 'K-35-063-2_Chirpan_4326', 'K-35-063-3_Tatarevo_4326', 'K-35-063-4_Skobelevo_4326', 'K-35-064-1_Sredets_4326', 'K-35-064-2_Radnevo_4326', 'K-35-064-3_Dimitrovgrad_4326', 'K-35-064-4_Galabovo_4326', 'K-35-065-1_Radetski_4326', 'K-35-065-2_GManastir_4326', 'K-35-065-3_Glavan_4326', 'K-35-065-4', 'K-35-066-1', 'K-35-066-2', 'K-35-066-3', 'K-35-066-4', 'K-35-067-1', 'K-35-067-2', 'K-35-067-3', 'K-35-067-4', 'K-35-074-1', 'K-35-074-2', 'K-35-074-3', 'K-35-074-4', 'K-35-075-1', 'K-35-075-2', 'K-35-075-3', 'K-35-075-4', 'K-35-076-1', 'K-35-076-2', 'K-35-076-3', 'K-35-076-4', 'K-35-077-1', 'K-35-077-2', 'K-35-077-3', 'K-35-077-4'] (e.g. ['K-35-042-3_x0_y0.png', 'K-35-042-3_x0_y1024.png', 'K-35-042-3_x0_y1280.png']), of which 55 are in the frame's vocabulary. Withheld, and named rather than silently omitted: tile_classification, tile_mcc, tile_sensitivity, tile_specificity, per_tile_table, bootstrap_ci_f1, bootstrap_ci_precision, bootstrap_ci_recall, per_tile_permutation_tests, coverage_diagnostics. The bootstrap confidence intervals are withheld with the tile block because they resample TILES (the resampling unit fixed in Decision 10), not matched pairs, so the refused table is their input too. **Reported in full, and unaffected**: the F1, precision and recall POINT estimates in the columns above — `lib_advanced_metrics.calculate_f1_internal` matches detections to references geometrically per map sheet and consults no tile. Per the PI's ruling of 2026-09-13 (Session 153, ruling 6); see `reports/tile-mcc-geometric-join-2026-09-12.md` and `reports/recovery-drop-fix-2026-09-13.md` § 6.3.
 

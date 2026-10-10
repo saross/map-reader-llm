@@ -108,6 +108,14 @@ replaces it.
   the sapphire memory fault. Phase 4 done
   (`reports/s163-agent-records/d57-4-rescore-s4-q4.md`): Run B and Run C
   reproduce; Q4 moves only the predicted rows; PR #28 open, not merged.
+  **Merged 2026-10-10 (D59):** PR #32 (`87e458ca7`), PR #28
+  (`30de6a68d`), and PR #29 (`b9b42c79b`; `main` merged in, e43 anchors
+  updated under D58 Q6 at `121b6ec6d`, tier-1 4,215 passed and 0 failed
+  on sapphire). Next: Phases 3–5 as their own PR. Phase 5 must also
+  revise `results/e43-matched-temperature/findings.md` § 3 and
+  `ANALYSIS_OUTCOME` in `scripts/author_e43_matched_temperature.py`
+  (copied into six register files; new p values in the S3 record's e43 item) and
+  the ungated `committed_f1: 0.6667` in `scripts/h13_k_sensitivity.py:249`.
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
@@ -115,7 +123,62 @@ replaces it.
   memory test or reset memory to stock settings (a reboot needs the
   physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
   compare byte for byte with draft PR #29 before it merges; resume the
-  census (458 cells; command in the census record).
+  census (458 cells; command in the census record). PR #29 re-run DONE
+  2026-10-10 before the fix (PI's choice; agreement of two runs is the
+  check): all 2,262 files identical, no new kernel report (S2 record
+  changelog). The all-clear for the EXPO reboot went to
+  personal-assistant-43 at 00:11Z.
+  Sapphire rebooted at 05:09Z (`uptime -s`; memory settings not read
+  from this session); no `Bad page state` report on that boot through
+  #29's tier-1. **Soak launched 2026-10-10T06:09Z** (D59): the census
+  resume, 467 replays (458 cells plus 9 vintage), 8 workers, tripwire
+  armed at 5; `out/resume.log`, `out/soak-temps.log` (DIMM and Tctl
+  each minute), `out/soak-kernel-before.txt`, and the old stop file
+  kept as `out/STOP.halted-2026-10-09`, under
+  `~/scratch/d57-4-rescore-2026-10-09/census-old/` on sapphire. Then
+  `compare_census.py` and `analyse_census.py`.
+  **Soak PASSED 2026-10-10** (06:09–07:06Z): 467 of 467 clean, no new
+  kernel report, the 22 crashed replays now reproduce, DIMMs at most
+  49.8 °C; census complete (2,123 of 2,216 reproduce; every one of the
+  93 others has a deterministic cause; census record changelog). The
+  fault-window re-check (next item) may now proceed once the PI confirms
+  the memory setting.
+  Diagnosis is with personal-assistant (session personal-assistant-43):
+  the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
+  guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
+  2026-10-10 (via personal-assistant-43): EXPO off this afternoon
+  (JEDEC 4,800 MT/s), after map-reader-llm's all-clear; probably a
+  memtest86+ pass overnight at 4,800; then the paused census (458 cells,
+  kernel-log tripwire, 8 workers) as the confirmation soak, launched only
+  when personal-assistant opens the window, with DIMM temperatures logged
+  (`sensors spd5118-*`). Open D57 (4) work in progress at decision time:
+  the PR #29 re-run check (batch 1, 73 registered and Stage A cells,
+  clean; batch 2 running) and the D50 fixes. D51 fixes are PRs #30
+  (publishing path) and #31 (declaration pins, report corrections),
+  re-review requested from Astra 2026-10-09T22:28Z.
+- [ ] **Re-check results computed on sapphire in the fault windows** (PI
+  via personal-assistant-43, 2026-10-10). **Do not run until the memory
+  fix is confirmed.** A set bit in an index crashes the run, but in a
+  score or statistic it passes silently, and there is no ECC. Windows,
+  from `journalctl -k` per boot on sapphire (checked 2026-10-10):
+  (1) **2026-10-05 onwards** (current boot from 2026-09-05; first
+  `Bad page state` 2026-10-05T04:14Z, four on 2026-10-09) — highest risk,
+  and the rest of that boot from 2026-09-05 is the same configuration
+  with no report; (2) **an earlier episode on 2026-05-06**: 36
+  `Bad page state` reports between 11:44 and 13:58 UTC, after which that
+  boot (from 2026-01-29) ended; the boot of 2026-05-12 to 2026-09-05
+  logged none. Kernel reports only fire when a flip hits page metadata,
+  so they show the rate, not the onset. Shape: list results computed on
+  sapphire in those windows that feed claims; subtract those already
+  verified by exact reproduction (census: 1,704 committed evaluations;
+  Phase 3: every artefact OLD reproduced; Run B and Run C, byte-identical;
+  PR #29 by the running re-run check); re-run the rest after the fix.
+  Known 2026-10-07 to 2026-10-09 scratch work (personal-assistant-43's
+  list): frames-blast-radius, input-drift, temperature-probe,
+  scorer-frames-d50-d51 (PR #26), d51-ladder-provenance (and its worktree
+  data, about 750 files), pr26-tier1, q4-rescore, q4-tools,
+  runbc-request-files, source-tile-gap, d57-4-rescore, and
+  q4-repaired-readers; also cover other map-reader-llm sessions' work.
 - [ ] **W2.7 cells move under the new scorer** (D57 (4) scope; Phase 4
   record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
   +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
@@ -123,8 +186,9 @@ replaces it.
 - [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
   reads a key the 2026-09-21 relabel renamed to
   `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
-- [ ] **PR #29 description**: add the 42 tile-join cells (intervals
+- [x] **PR #29 description**: add the 42 tile-join cells (intervals
   withheld for a pre-D50 reason) and the hardware caveat before review.
+  DONE 2026-10-10 (with the merge-readiness notes), before merging.
 - [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
   `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
   changes requested; no committed full-frame score shown wrong). (1) A
@@ -140,10 +204,45 @@ replaces it.
   prefix collision among the 60 sheets in the 34 tracked bounds files,
   checked 2026-10-10). Add a regression test for each. Astra asks the PI
   to approve focused offline tests on their side.
+  Progress 2026-10-10: PI approved Astra's tests (Shawn to confirm to
+  Astra directly). Fixes in PR #33 (`d50-review-fixes`, head `57b094878`):
+  one tile-to-sheet assignment for both sides; the three reduced-frame
+  callers read full-frame partitions; diagnostics `n_origin_excluded`
+  and `n_origin_partly_excluded`; 50 of 50 PR #29 cells reproduce
+  exactly. Finding 1 is PR #30. Re-review requested from Astra
+  2026-10-09T22:43Z. **PI decision pending**: whether full-frame
+  attribution should exclude an origin naming a real sheet outside the
+  frame (measured: moves 0 of 2,751 committed cells).
+  RULED 2026-10-10 (D59): yes, with prevention for reduced frames.
+  Astra's own test file at #33's head passed 3 of 6; the other 3 failed
+  by design (#33 flagged reduced frames, did not prevent them). An agent
+  is adding the rule to #33; Astra is mailed when it is checked.
+  DONE 2026-10-10: #33 head `0a857c80c` (rules: out-of-frame origin
+  excluded; origins across the edge refused without `parent_bounds=`;
+  unknown vocabulary falls back with a WARNING). Checked at source:
+  Astra's file 3 of 6 as written (A/B are not study sheets), 6 of 6
+  with `parent_bounds=`; #33's scope tests 79 passed. Re-review mail
+  to Astra 2026-10-10T06:48Z on both workstreams (D51: Astra's file
+  passes on #30 and #31 merged); the PI wakes Astra.
+  Related, confirmed on `main`: `per_map_counts()` in
+  `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
+  detections by the pre-D50 `source_tile` prefix, and ignores origins;
+  it feeds the stride sweep's paired permutations. Fix in Phase 5 with
+  the W2.7 `FastScorer`, after a search for other scorer restatements.
 - [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
   it zips candidates with `hsu_not_ruled_out`, an index list, so the
   member lists are the first *n* candidates; the signed null-exemplar
   findings misname the admitted and dropped cells (S3 record, flag 4).
+  Fixed in PR #32 (`fix-null-exemplar-admissible`, head `c497c3109`);
+  artefacts are regenerated in Phase 6. Not fixed there:
+  `scripts/build_gs_era2_board.py:688–690` also ignores `kept_indices`
+  (harmless while no candidate is dropped).
+- [ ] **amd-tower disk**: 99 % full (7.1 GB free) on 2026-10-10 when two
+  full 9.2 GB worktree checkouts were made; other sessions may have hit
+  write errors. Freed to 35 GB by removing three clean, pushed worktrees
+  (branches kept). Agents should use sparse checkouts; the 12 GB
+  `sol-phase2-codex-entry` and 6.4 GB `archive` worktrees under
+  `~/worktrees/map-reader-llm/` are not Claude's.
 - [ ] **Stale CIs in `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.json`**:
   committed in `dccee3362` before the BCa-adapter fix `122104b8a`; today's
   intervals are wider. Its Markdown shows no intervals (S3 record).

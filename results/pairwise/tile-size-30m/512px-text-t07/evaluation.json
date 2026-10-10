@@ -1,88 +1,177 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-20T13:12:40.690087+00:00",
+  "timestamp": "2026-10-09T09:37:49.820733+00:00",
   "summary": {
     "label": "512px-text-t07",
     "n_detections": 924,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.5254,
-        "f1_point": 0.5254,
-        "f1_ci_lower": 0.1933,
-        "f1_ci_upper": 0.5668,
-        "f1_ci_method": "BCa",
-        "precision": 0.3864,
-        "p_point": 0.3864,
-        "p_ci_lower": 0.1712,
-        "p_ci_upper": 0.5894,
-        "p_ci_method": "BCa",
+        "f1": 0.5925,
+        "f1_point": 0.5925,
+        "f1_ci_lower": null,
+        "f1_ci_upper": null,
+        "f1_ci_method": null,
+        "precision": 0.4636,
+        "p_point": 0.4636,
+        "p_ci_lower": null,
+        "p_ci_upper": null,
+        "p_ci_method": null,
         "recall": 0.8207,
         "r_point": 0.8207,
-        "r_ci_lower": 0.1877,
-        "r_ci_upper": 0.5705,
-        "r_ci_method": "BCa",
-        "coverage": {
-          "n_tiles": 487,
-          "n_zero_count_tiles": 398,
-          "zero_fraction": 0.8172484599589322,
-          "threshold": 0.5,
-          "coverage_status": "partial_coverage",
-          "coverage_source": "processed_tiles",
-          "n_processed_tiles": 40,
-          "n_unprocessed_tiles": 447,
-          "coverage_detail": "partial: 447/487 tiles unprocessed"
-        },
-        "coverage_status": "partial_coverage",
+        "r_ci_lower": null,
+        "r_ci_upper": null,
+        "r_ci_method": null,
+        "coverage": null,
+        "coverage_status": "withheld",
+        "ci_withheld": true,
+        "ci_withheld_reason": "tile_join_detection_shortfall",
+        "ci_withheld_detail": "tile confusion refused: 120 of 770 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 650. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
         "ci_unreliable": true,
-        "ci_excludes_point": true,
+        "ci_excludes_point": null,
         "sparse_coverage": false,
-        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+        "ci_flag_basis": "ci-withheld-tile-join-refusal"
       },
       {
         "buffer_metres": 30,
-        "f1": 0.5416,
-        "f1_point": 0.5416,
-        "f1_ci_lower": 0.2138,
-        "f1_ci_upper": 0.5893,
-        "f1_ci_method": "BCa",
-        "precision": 0.3983,
-        "p_point": 0.3983,
-        "p_ci_lower": 0.1783,
-        "p_ci_upper": 0.5942,
-        "p_ci_method": "BCa",
+        "f1": 0.6108,
+        "f1_point": 0.6108,
+        "f1_ci_lower": null,
+        "f1_ci_upper": null,
+        "f1_ci_method": null,
+        "precision": 0.4779,
+        "p_point": 0.4779,
+        "p_ci_lower": null,
+        "p_ci_upper": null,
+        "p_ci_method": null,
         "recall": 0.846,
         "r_point": 0.846,
-        "r_ci_lower": 0.2235,
-        "r_ci_upper": 0.6134,
-        "r_ci_method": "BCa",
-        "coverage": {
-          "n_tiles": 487,
-          "n_zero_count_tiles": 402,
-          "zero_fraction": 0.8254620123203286,
-          "threshold": 0.5,
-          "coverage_status": "partial_coverage",
-          "coverage_source": "processed_tiles",
-          "n_processed_tiles": 40,
-          "n_unprocessed_tiles": 447,
-          "coverage_detail": "partial: 447/487 tiles unprocessed"
-        },
-        "coverage_status": "partial_coverage",
+        "r_ci_lower": null,
+        "r_ci_upper": null,
+        "r_ci_method": null,
+        "coverage": null,
+        "coverage_status": "withheld",
+        "ci_withheld": true,
+        "ci_withheld_reason": "tile_join_detection_shortfall",
+        "ci_withheld_detail": "tile confusion refused: 120 of 770 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 650. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
         "ci_unreliable": true,
-        "ci_excludes_point": true,
+        "ci_excludes_point": null,
         "sparse_coverage": false,
-        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+        "ci_flag_basis": "ci-withheld-tile-join-refusal"
       }
     ],
     "ci_unreliable_any_buffer": true,
-    "coverage_status": "partial_coverage"
+    "coverage_status": "withheld",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 924,
+      "n_in_scope": 770,
+      "n_out_of_frame": 154,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 0,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
+    "tile_join_withheld": {
+      "withheld": true,
+      "reason": "tile_join_detection_shortfall",
+      "detail": "tile confusion refused: 120 of 770 in-frame detections were booked to a tile under the 'id' tile join, a shortfall of 650. The join is not describing this frame \u2014 most often because the cell's source_tile vocabulary is not the frame's. MCC is withheld rather than reported.",
+      "tile_join": "id",
+      "reference_join": "geometric-contains",
+      "shortfall": {
+        "axis": "detections",
+        "n_booked": 120,
+        "n_inside_union": 770,
+        "n_outside_union": 0,
+        "n_multi_tile": 287,
+        "shortfall": 650
+      },
+      "vocabularies": {
+        "frame": {
+          "n_tiles": 487,
+          "n_distinct_tile_names": 487,
+          "map_prefixes": [
+            "K-35-052-4_32635",
+            "K-35-053-3_Elenovo",
+            "K-35-062-2_Rakovski",
+            "K-35-078-1_Lesovo"
+          ],
+          "sample_tile_names": [
+            "K-35-052-4_32635_x0_y0.png",
+            "K-35-052-4_32635_x0_y1008.png",
+            "K-35-052-4_32635_x0_y1344.png"
+          ]
+        },
+        "detections": {
+          "n_detections": 770,
+          "id_column": "source_tile",
+          "id_column_present": true,
+          "n_distinct_tile_names": 299,
+          "n_names_in_frame_vocabulary": 40,
+          "map_prefixes": [
+            "K-35-052-4_32635",
+            "K-35-053-3_Elenovo",
+            "K-35-062-2_Rakovski",
+            "K-35-078-1_Lesovo"
+          ],
+          "sample_tile_names": [
+            "K-35-052-4_32635_x0_y0.png",
+            "K-35-052-4_32635_x0_y1344.png",
+            "K-35-052-4_32635_x0_y1792.png"
+          ]
+        }
+      },
+      "withheld_quantities": [
+        "tile_classification",
+        "tile_mcc",
+        "tile_sensitivity",
+        "tile_specificity",
+        "per_tile_table",
+        "bootstrap_ci_f1",
+        "bootstrap_ci_precision",
+        "bootstrap_ci_recall",
+        "per_tile_permutation_tests",
+        "coverage_diagnostics"
+      ],
+      "reported_quantities": [
+        "f1_point",
+        "precision_point",
+        "recall_point",
+        "n_detections"
+      ],
+      "tile_join_diagnostics": {
+        "detections": {
+          "n_points": 770,
+          "n_assigned": 120,
+          "n_inside_union": 770,
+          "n_outside_union": 0,
+          "n_multi_tile": 287,
+          "tile_join": "id"
+        },
+        "references": {
+          "n_points": 569,
+          "n_assigned": 435,
+          "n_inside_union": 435,
+          "n_outside_union": 134,
+          "n_multi_tile": 117,
+          "tile_join": "geometric-contains"
+        }
+      },
+      "ruling": "PI ruling 2026-09-13 (S153 ruling 6): the name-based 'id' tile join is the published tile-MCC convention; a cell the invariant refuses reports its whole-frame F1 in full and withholds its per-tile statistics. See reports/tile-mcc-geometric-join-2026-09-12.md."
+    }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "9c82d3fa0",
+    "script_git_commit": "494b5a7af",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-20T13:12:36.490689+00:00",
+    "generated_at_utc": "2026-10-09T09:37:47.794299+00:00",
     "cli_args": {
       "detections": [
         "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson"
@@ -101,6 +190,8 @@
       "output_dir": "results/pairwise/tile-size-30m/512px-text-t07",
       "label": "512px-text-t07",
       "mcc": false,
+      "tile_join": "id",
+      "require_clean_inputs": true,
       "workers": 1
     },
     "bootstrap": {
@@ -108,11 +199,7 @@
       "seed": 42,
       "resampling_unit": "tile_level",
       "method_requested": "BCa",
-      "library": "scipy.stats.bootstrap",
-      "method": "BCa",
-      "methods_measured": [
-        "BCa"
-      ]
+      "library": "scipy.stats.bootstrap"
     },
     "input_files": {
       "detections": [
@@ -120,6 +207,19 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "494b5a7af",
+      "inputs": {
+        "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson": "clean",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "outputs/retest/phase2b/track2-text/T0.7/run_1/detections_T0.7_run01.geojson": "2342ff0248d84218c1dbb413fc51aaf01270017d",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5"
+      }
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",

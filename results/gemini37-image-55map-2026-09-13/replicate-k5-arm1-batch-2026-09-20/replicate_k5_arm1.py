@@ -22,6 +22,19 @@ engine recipe — so the replicate lands on the same instrument as the cells it
 is compared against. Nothing in ``scripts/`` is modified (another agent owns
 that file).
 
+Which probabilities each leg reads (added 2026-10-09)
+-----------------------------------------------------
+Each leg is read from its ``_repaired`` copy where that copy holds
+``probabilities.json``, and from the leg itself otherwise (PI decisions D55 Q4
+and D58 Q8; ``scripts/lib_verify_dirs.py``). The arm 1 replicate's copy
+re-books two rows the batch parser had booked as an unparseable 0.0.
+``agreement.json`` and ``sweeps.json`` record the directory read, its SHA-256
+and its repair counts as ``verifier_probabilities``.
+``MAP_READER_VERIFY_DIRS=fixed`` reads the fixed-name legs, as before. The
+repository root is derived from this file's location (it was hard-coded to
+``/home/shawn/Code/map-reader-llm``, which made a scratch copy write into the
+shared checkout).
+
 What this adds over the arm 2 driver
 ------------------------------------
 The ``agree`` stage reports three extra things the arm 2 note did not need:
@@ -85,7 +98,10 @@ from typing import Any
 
 import numpy as np
 
-PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
+#: The repository root, three levels above this file's directory
+#: (``results/<campaign>/<study>/``), so a copy run elsewhere reads and writes
+#: its own tree.
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
@@ -111,6 +127,7 @@ from scripts.gemini37_image_55map_r2 import (  # noqa: E402
     tile_vectors,
     with_carried,
 )
+from scripts.lib_verify_dirs import resolve_leg, verify_dir_provenance  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -221,6 +238,26 @@ def _probs(vdir: Path) -> dict[str, float]:
     """``candidate_id -> mound_probability`` for one verifier invocation."""
     results = json.loads((vdir / "probabilities.json").read_text())["results"]
     return {k: float(v["mound_probability"]) for k, v in results.items()}
+
+
+def leg_dir(leg: Path) -> Path:
+    """The directory a leg's probabilities are read from.
+
+    The leg's ``_repaired`` copy where it holds ``probabilities.json``, else
+    the leg (``scripts/lib_verify_dirs.py``; D55 Q4, D58 Q8).
+
+    Args:
+        leg: A leg's fixed-name directory, e.g. :attr:`Arm.replicate`.
+
+    Returns:
+        The directory to read.
+    """
+    return resolve_leg(leg)
+
+
+def provenance(vdir: Path) -> dict[str, Any]:
+    """The directory read, its probabilities' SHA-256 and its repair counts."""
+    return verify_dir_provenance(vdir, PROJECT_ROOT)
 
 
 def wilson_interval(successes: int, n: int, z: float = 1.96) -> tuple[float, float]:
@@ -390,8 +427,10 @@ def stage_agree() -> int:
     """Write ``agreement.json`` for this arm, with the other arm beside it."""
     carried_t = decision_threshold()
     thresholds = tuple(sorted({carried_t, *COMMON_THRESHOLDS}))
-    block = agreement_block(_probs(ARM.original), _probs(ARM.replicate), thresholds)
-    other = agreement_block(_probs(OTHER.original), _probs(OTHER.replicate), thresholds)
+    arm_orig, arm_rep = leg_dir(ARM.original), leg_dir(ARM.replicate)
+    other_orig, other_rep = leg_dir(OTHER.original), leg_dir(OTHER.replicate)
+    block = agreement_block(_probs(arm_orig), _probs(arm_rep), thresholds)
+    other = agreement_block(_probs(other_orig), _probs(other_rep), thresholds)
 
     out = {
         "arm": ARM.key,
@@ -399,8 +438,8 @@ def stage_agree() -> int:
         "verifier_thinking": ARM_MODEL[ARM.key][1],
         "k": K,
         "carried_threshold": carried_t,
-        "original": str(ARM.original.relative_to(PROJECT_ROOT)),
-        "replicate": str(ARM.replicate.relative_to(PROJECT_ROOT)),
+        "original": str(arm_orig.relative_to(PROJECT_ROOT)),
+        "replicate": str(arm_rep.relative_to(PROJECT_ROOT)),
         **block,
         "arm2_reference" if ARM.key == "arm1" else "arm1_reference": {
             "note": (
@@ -412,10 +451,14 @@ def stage_agree() -> int:
             "verifier_model": ARM_MODEL[OTHER.key][0],
             "verifier_thinking": ARM_MODEL[OTHER.key][1],
             "carried_threshold": float(carried_point(OTHER.key, K)[0]),
-            "original": str(OTHER.original.relative_to(PROJECT_ROOT)),
-            "replicate": str(OTHER.replicate.relative_to(PROJECT_ROOT)),
+            "original": str(other_orig.relative_to(PROJECT_ROOT)),
+            "replicate": str(other_rep.relative_to(PROJECT_ROOT)),
             **other,
+            "verifier_probabilities": {"original": provenance(other_orig),
+                                       "replicate": provenance(other_rep)},
         },
+        "verifier_probabilities": {"original": provenance(arm_orig),
+                                   "replicate": provenance(arm_rep)},
     }
     REP_HOME.mkdir(parents=True, exist_ok=True)
     dest = REP_HOME / "agreement.json"
@@ -454,14 +497,17 @@ def replicate_frame():
     """The replicate's candidate frame: K = 5 union geometry, replicate probabilities.
 
     Mirrors ``gemini37_image_55map_r2.rung_frame`` exactly, with the replicate's
-    verify directory in place of the original's.
+    verify directory (:func:`leg_dir`) in place of the original's; the
+    frame's ``attrs["verifier_probabilities"]`` records which one was read.
 
     Returns:
         A GeoDataFrame in EPSG:32635 with ``vote_count``, ``mound_probability``,
         ``source_tile`` (scoring frame) and ``origin_source_tile``.
     """
-    raw = load_manifest_probs(CROPS_K5, ARM.replicate)
-    return assign_eval_frame_tiles(raw)
+    vdir = leg_dir(ARM.replicate)
+    frame = assign_eval_frame_tiles(load_manifest_probs(CROPS_K5, vdir))
+    frame.attrs["verifier_probabilities"] = provenance(vdir)
+    return frame
 
 
 def stage_materialise(workers: int) -> int:
@@ -533,7 +579,8 @@ def stage_materialise(workers: int) -> int:
     sweeps = {
         "buffer_m": BUFFER_M,
         "reference": REFERENCE,
-        "source_probabilities": str(ARM.replicate.relative_to(PROJECT_ROOT)),
+        "source_probabilities": frame.attrs["verifier_probabilities"]["dir"],
+        "verifier_probabilities": frame.attrs["verifier_probabilities"],
         "rungs": {REP_RUNG: {
             "n_sweep_points": len(rows),
             "carried_point": [carried_prob, carried_votes],
