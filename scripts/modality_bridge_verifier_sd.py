@@ -61,6 +61,9 @@ Usage::
 
 Zero API. Run on sapphire (the ``ladder5`` rungs need the arm's deduplicated
 passes, under ``<arm>/scoring/`` there; ``--scoring-root`` points elsewhere).
+``--floors-dir`` reads the floors from another directory than the committed
+``floors/`` (added 2026-10-09 for the D57 (4) re-score, so the verifier SD can
+be re-derived from floors just regenerated in scratch under the same scorer).
 
 Created: 2026-10-08
 Author: Shawn Ross, Claude Code
@@ -387,6 +390,23 @@ def load_replicates(reps: Sequence[int] = REPS
     return unions, prov, failures
 
 
+def load_floors(floors_dir: Path) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """The floors this run re-derives and extends: ``floors``, ``gates``, ``gap_change``.
+
+    Args:
+        floors_dir: A ``modality_bridge_floors.py`` output directory (the
+            committed ``results/modality-bridge-2026-10-07/floors/`` by
+            default, or a scratch re-run of it).
+
+    Returns:
+        The parsed ``floors.json``, ``gates.json`` and ``gap_change.json``.
+    """
+    def read(name: str) -> dict[str, Any]:
+        return json.loads((floors_dir / name).read_text())
+
+    return read("floors.json"), read("gates.json"), read("gap_change.json")
+
+
 def first_five_rung(name: str, scoring_root: Path) -> tuple[Any, np.ndarray, np.ndarray]:
     """The first-five rung of a ten-pass arm and its inheritance into the union.
 
@@ -649,6 +669,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="Root holding <arm>/scoring/common/<cell>/run_<N>/ (default: the "
                          "Stage 2 location on sapphire).")
     ap.add_argument("--out-dir", type=Path, default=fl.RESULTS / "verifier-sd")
+    ap.add_argument("--floors-dir", type=Path, default=fl.RESULTS / "floors",
+                    help="Directory holding floors.json, gates.json and gap_change.json "
+                         "(default: the committed floors).")
     ap.add_argument("--gate-only", action="store_true",
                     help="Load replicate 1 only, run every gate, write nothing (a check "
                          "before the replicates land).")
@@ -656,11 +679,9 @@ def main(argv: list[str] | None = None) -> int:
     reps = (1,) if args.gate_only else REPS
     t0 = time.time()
 
+    floors, floors_gates, gap_change = load_floors(args.floors_dir)
     fl._G["bounds"] = gpd.read_file(COMMON_BOUNDS)
     fl._G["ref"] = gpd.read_file(GROUND_TRUTH).to_crs(CRS)
-    floors = json.loads((fl.RESULTS / "floors" / "floors.json").read_text())
-    floors_gates = json.loads((fl.RESULTS / "floors" / "gates.json").read_text())
-    gap_change = json.loads((fl.RESULTS / "floors" / "gap_change.json").read_text())
     gates: dict[str, Any] = {}
     failures: list[str] = []
 
@@ -720,7 +741,8 @@ def main(argv: list[str] | None = None) -> int:
     meta = {"script": "scripts/modality_bridge_verifier_sd.py", "replicates": list(REPS),
             "replicate_dates": {"1": "2026-10-07", "2": "2026-10-08", "3": "2026-10-08"},
             "z": fl.Z, "ci_level": CI_LEVEL, "june_g3_single_run_sd_range": JUNE_G3_RANGE,
-            "scoring_root": str(args.scoring_root), "wall_seconds": round(time.time() - t0, 1)}
+            "scoring_root": str(args.scoring_root), "floors_dir": str(args.floors_dir),
+            "wall_seconds": round(time.time() - t0, 1)}
     (out / "gates.json").write_text(json.dumps({"meta": meta, **gates}, indent=1,
                                                default=float) + "\n")
     (out / "verifier_sd.json").write_text(json.dumps(

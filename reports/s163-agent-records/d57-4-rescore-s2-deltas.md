@@ -1,7 +1,7 @@
 # D57 (4) re-score, Phases 0 and 2: the S2 deltas
 
-> **Last revised**: 2026-10-09 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-10 (every file verified by exact
+> reproduction). See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), a subagent of the main Session 163 session, on
@@ -110,6 +110,15 @@ on.
 - No F1 falls at any buffer in any cell.
 - MCC moved in 18 unregistered cells only (55-map uplift supplement), both
   directions, |Δ| ≤ 0.00027. Every registered MCC is unchanged.
+- **Against the committed files, 42 regenerated cells lose their intervals
+  (and 37 their tile block, MCC included), and this is not D50.** They are
+  `results/uplift-supplement/k1-gapfill` (35),
+  `results/pairwise/tile-size-30m` (5), and
+  `results/uplift-supplement/verifier-pairing` (2), scored between
+  2026-08-20 and 2026-09-08, before the tile-join refusal (`7ba47b63b`,
+  `fd59a68b0`, `3eeaf96f4`); the OLD scorer withholds them identically, and
+  their points reproduce. None is registered or cited in `docs/paper/`
+  (`reports/s163-agent-records/d57-4-rescore-census.md`).
 - MCC matched to 1e-9 in 635 cells and the refusal matched in 41. Every
   evaluation carries all 10 `_DETECTION_SCOPE_COUNTS` keys;
   `n_out_of_frame` and `n_origin_restored` equal the jsonl's `new_scope`;
@@ -136,8 +145,9 @@ see the rounding note above for h13 arm A native; both buffers are in
   0.6288→0.6306; image-t03 1/2of3 0.5822→0.5838, 0.6424→0.6442;
   pro-image-high-t0 0.5614→0.5631, 0.5760→0.5778, 0.5854→0.5873;
   pro-text-high-t0 0.4634→0.4647, 0.5203→0.5217, 0.5748→0.5764.
-- **pv-diag-384** (25 conditions): every one rises by +0.0015 to +0.0025;
-  the list is in `out/report_tables.md`.
+- **pv-diag-384** (28 conditions; the three t0.0 ones score cells under
+  `results/recovery-reeval-2026-07-30/` and `…-2026-09-08/`): every one
+  rises by +0.0015 to +0.0025; the list is in `out/report_tables.md`.
 
 ## D58 Q2: the 25 drifted or pinned cells (Stage A only)
 
@@ -227,6 +237,48 @@ separately.
    the plan.
 
 ## Changelog
+
+### 2026-10-10 — every file verified by exact reproduction
+
+The hardware caveat below is resolved. An independent re-run on sapphire
+(fresh clone at `494b5a7af`, at most 4 processes, kernel-log tripwire;
+2026-10-09T21:57Z to 2026-10-10T00:08Z, no new `Bad page state` report)
+recomputed every number-bearing file draft PR #29 (`f2277608d`) adds or
+changes, and a comparison run on amd-tower found all 2,262 identical:
+762 byte for byte, 1,500 after replacing only declared volatile values
+(scoring timestamps, the `**Generated**:` line, the manifest's own
+generation stamps, and the Stage A scratch-path prefix, each required to
+occur equally on both sides). That covers the 749 cells (737 Phase 2 and
+12 Stage A) as JSON, CSV, and Markdown, the stride CSVs, the conditions
+manifest, the register renderings, and 11 unchanged siblings; the six
+post-run reports and the generated-file registry were regenerated from
+the recomputed inputs and match too. Red sentinels (an F1 changed by
+0.0001, a CSV digit, a Markdown value, a renamed key, a path commit, and a
+shifted carried-forward stamp) were each flagged; no third run was needed.
+Separately, the D50 review-fix agent reproduced 50 of these cells exactly
+under PR #33's code. No number in this report changed. Records:
+`~/scratch/d57-4-rescore-2026-10-09/rerun-check/` on sapphire
+(`out/compare/full.json`).
+
+### 2026-10-10 — census results and a hardware caveat
+
+The OLD-scorer census (`reports/s163-agent-records/d57-4-rescore-census.md`)
+reproduces 695 of the 737 Phase 2 cells exactly, so every change in those
+695 regenerated files is D50 alone. The other 42 lose intervals for a
+reason that predates D50; a bullet now says so under § Phase 2. The census
+also found a memory fault on sapphire (a single bit set in 64-bit values
+under load). This report's NEW values were computed on sapphire about
+09:35–10:15Z on 2026-10-09 and have been checked against an independent
+computation only at the gated points; a byte-for-byte reproduction is
+recommended before PR #29 is merged. No number in this report changed.
+
+### 2026-10-09 — pv-diag-384 count corrected
+
+The registered-cells list said "pv-diag-384 (25 conditions)"; `out/registered_deltas.json` has
+28, three of which score cells under `results/recovery-reeval-2026-*`, so the
+per-family counts now sum to 61. The range (+0.0015 to +0.0025) was re-checked
+over all 28 and is unchanged; no number moved. Found by the copy step's agent
+(draft PR #29).
 
 ### 2026-10-09 — Original publication
 

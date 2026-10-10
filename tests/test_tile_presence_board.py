@@ -647,3 +647,69 @@ def test_a_fully_priced_run_reports_nothing_unpriced(tmp_path, monkeypatch, capl
         assert tp.main(["--stage", "costs"]) == 0
     assert json.loads((tmp_path / tp.COSTS).read_text())["unpriced_legs"] == []
     assert not any("UNPRICED" in r.getMessage() for r in caplog.records)
+
+
+# --- The image legs' repaired probabilities (D55 Q4, D58 Q8) ------------------
+
+
+def _image_leg(root, name: str, repaired: bool) -> str:
+    """A leg under ``root`` (and its ``_repaired`` copy); returns its stage path."""
+    stage = f"outputs/c/verifier/cell/{name}"
+    leg = root / stage
+    leg.mkdir(parents=True)
+    (leg / "probabilities.json").write_text(json.dumps(
+        {"results": {"candidate_00000": {"mound_probability": 0.0}}}))
+    if repaired:
+        copy = root / f"{stage}_repaired"
+        copy.mkdir()
+        (copy / "probabilities.json").write_text(json.dumps(
+            {"results": {"candidate_00000": {"mound_probability": 0.01}}}))
+        (copy / "parse_repair.json").write_text(json.dumps(
+            {"n_parse_error_rows": 1, "changed": [],
+             "unrecovered": [{"key": "candidate_00000"}]}))
+        (copy / "reverify-2026-10-08.json").write_text(json.dumps(
+            {"rows": [{"key": "candidate_00000", "cost_usd": 0.003328}]}))
+    return stage
+
+
+def test_an_image_legs_block_names_the_repaired_copy_it_reads(tmp_path, monkeypatch) -> None:
+    monkeypatch.setattr(tp, "PROJECT_ROOT", tmp_path)
+    monkeypatch.delenv("MAP_READER_VERIFY_DIRS", raising=False)
+    block = tp.probabilities_block((_image_leg(tmp_path, "verify_k5_arm2", True),))
+    assert block["dir"] == "outputs/c/verifier/cell/verify_k5_arm2_repaired"
+    assert (block["unrecovered"], block["reverified"]) == (1, 1)
+    assert block["reverify_usd"] == pytest.approx(0.003328)
+    plain = tp.probabilities_block((_image_leg(tmp_path, "verify_k5_arm1", False),))
+    assert plain["dir"] == "outputs/c/verifier/cell/verify_k5_arm1"
+    assert plain["reverify_usd"] is None
+
+
+def test_the_reverification_is_added_to_the_legs_cost_and_returned(tmp_path,
+                                                                   monkeypatch) -> None:
+    monkeypatch.setattr(tp, "PROJECT_ROOT", tmp_path)
+    monkeypatch.delenv("MAP_READER_VERIFY_DIRS", raising=False)
+    block = tp.probabilities_block((_image_leg(tmp_path, "verify_k5_arm2", True),))
+    record = {"basis": "measured", "usd": 51.092455, "candidates": 45786}
+    added = tp.add_reverify_cost(record, block)
+    assert added == pytest.approx(0.003328)
+    assert record["usd"] == pytest.approx(51.095783)
+    assert record["verifier_probabilities"] is block
+    # A leg outside the image campaigns is left exactly as it was.
+    other = {"basis": "measured", "usd": 2.0, "candidates": 80}
+    assert tp.add_reverify_cost(other, None) == 0.0
+    assert other == {"basis": "measured", "usd": 2.0, "candidates": 80}
+
+
+def test_an_unpriced_leg_stays_unpriced_with_its_block(tmp_path, monkeypatch) -> None:
+    # SENTINEL: a re-verification cost added to no cost would read as the leg's.
+    monkeypatch.setattr(tp, "PROJECT_ROOT", tmp_path)
+    block = tp.probabilities_block((_image_leg(tmp_path, "verify_k5_arm2", True),))
+    record = {"basis": "unpriced", "usd": None, "candidates": None}
+    assert tp.add_reverify_cost(record, block) == 0.0
+    assert record["usd"] is None and record["verifier_probabilities"] is block
+
+
+def test_only_the_image_campaign_legs_are_repairable() -> None:
+    keys = [k for k in tp.LEGS if k.startswith(tp.REPAIRABLE_LEG_PREFIXES)]
+    assert sorted(keys) == sorted(f"{p}-ARM{a}-K{k}" for p in ("IMG", "G3IMG")
+                                  for a in (1, 2) for k in (1, 3, 5))
