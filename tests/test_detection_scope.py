@@ -1167,8 +1167,21 @@ def test_a_one_shot_catalogue_is_read_once():
 # ── Common-footprint bootstraps: each condition's frame is the parent ────
 
 
-def test_the_common_footprint_bootstraps_follow_each_conditions_frame():
-    """A footprint smaller than a condition's frame is scored with that frame as parent.
+def _spy_on_per_tile_parents(monkeypatch) -> list:
+    """Record the ``parent_bounds`` each per-tile table is computed with."""
+    seen: list = []
+    real = lam.compute_per_tile_tp_fp_fn
+
+    def spy(*args, **kwargs):
+        seen.append(kwargs.get("parent_bounds"))
+        return real(*args, **kwargs)
+
+    monkeypatch.setattr(lam, "compute_per_tile_tp_fp_fn", spy)
+    return seen
+
+
+def test_the_common_footprint_bootstraps_follow_each_conditions_frame(monkeypatch):
+    """A footprint that drops a whole sheet of a condition's frame gets that frame as parent.
 
     Condition A is scored on two study sheets, condition B on the first
     alone, so the common footprint is a reduced frame of A's frame. A
@@ -1192,9 +1205,11 @@ def test_the_common_footprint_bootstraps_follow_each_conditions_frame():
         lam.per_sheet_confusion(cluster, refs, bounds, 20)[a] == (1, 0, 0)
     assert lam._parent_of_cut(bounds, bounds) is None
     assert lam._parent_of_cut(bounds, only_a) is bounds
+    seen = _spy_on_per_tile_parents(monkeypatch)
     effect = lam.bootstrap_effect_size_ci(cluster, bounds, plain, only_a, refs,
                                           n_iterations=20, random_seed=1)
     assert "error" not in effect and effect["f1_difference"]["mean"] == 0
+    assert len(seen) == 2 and seen[0] is bounds and seen[1] is None
     tile_effect = lam.bootstrap_tile_effect_size_ci(cluster, bounds, plain, only_a, refs,
                                                     n_iterations=20, random_seed=1)
     assert "error" not in tile_effect
@@ -1203,3 +1218,49 @@ def test_the_common_footprint_bootstraps_follow_each_conditions_frame():
          ("y", "1"): (cluster, bounds), ("y", "2"): (plain, only_a)},
         refs, n_iterations=20, random_seed=1)
     assert "error" not in interaction
+
+
+def test_a_within_sheet_footprint_keeps_its_pre_pr33_attribution(frame, monkeypatch):
+    """A footprint that only trims tiles gets no parent (the coordinator's decision).
+
+    Sheet A's tile x100 is dropped; both sheets remain, so rules 1 and 2
+    cannot act and the footprint keeps the attribution it had before
+    PR #33. A row seen on A and B in the overlap, named on A's x0 tile
+    (kept, so the default ``id`` join can book it): the full frame scores
+    it on A, whose x100 tile holds it, so with the parent it would fall
+    out of the footprint; scored on the footprint itself it switches to B,
+    whose tile holds it, and matches B's reference. D59's guarantee is for
+    whole-sheet partitions only, so the bootstrap keeps the second reading.
+    """
+    cut = frame[frame["tile_name"] != "A_x100_y0.png"]
+    assert set(lam.frame_sheets(cut)) == set(lam.frame_sheets(frame))
+    assert lam._parent_of_cut(frame, cut) is None
+    d = dets([("A_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png;B_x0_y0.png"])
+    refs = gpd.GeoDataFrame({"Map": ["B"]}, geometry=[Point(196, 50)], crs=CRS)
+
+    def totals(table: pd.DataFrame) -> tuple[int, int, int]:
+        return tuple(int(table[c].sum()) for c in ("tp", "fp", "fn"))
+
+    assert totals(lam.compute_per_tile_tp_fp_fn(d, refs, cut)) == (1, 0, 0)
+    assert totals(lam.compute_per_tile_tp_fp_fn(d, refs, cut, parent_bounds=frame)) == (0, 0, 1)
+    seen = _spy_on_per_tile_parents(monkeypatch)
+    effect = lam.bootstrap_effect_size_ci(d, frame, d, cut, refs, n_iterations=20, random_seed=1)
+    assert "error" not in effect
+    assert seen == [None, None]
+
+
+def test_a_footprint_that_drops_a_sheet_and_trims_another_gets_the_parent(
+    three_sheet_frame, monkeypatch,
+):
+    """Dropping any whole sheet makes the footprint a reduced frame, trimmed or not."""
+    cut = three_sheet_frame[~three_sheet_frame["tile_name"].isin(
+        ["C_x0_y0.png", "C_x100_y0.png", "B_x100_y0.png"])]
+    assert lam.frame_sheets(cut) == ["A", "B"]
+    assert lam._parent_of_cut(three_sheet_frame, cut) is three_sheet_frame
+    d = dets([("A_x0_y0.png", 50, 50)])
+    refs = gpd.GeoDataFrame({"Map": ["A"]}, geometry=[Point(50, 50)], crs=CRS)
+    seen = _spy_on_per_tile_parents(monkeypatch)
+    effect = lam.bootstrap_effect_size_ci(d, three_sheet_frame, d, cut, refs,
+                                          n_iterations=20, random_seed=1)
+    assert "error" not in effect
+    assert len(seen) == 2 and seen[0] is three_sheet_frame and seen[1] is None

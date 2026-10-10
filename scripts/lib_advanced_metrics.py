@@ -1605,7 +1605,9 @@ def frame_tile_sheets(
 # sheet. The library's common-footprint bootstraps
 # (:func:`bootstrap_effect_size_ci`, :func:`bootstrap_tile_effect_size_ci`,
 # :func:`bootstrap_interaction_ci`) pass each condition's own frame as the
-# parent whenever the common footprint is smaller than it.
+# parent when the common footprint drops a whole sheet of it; a footprint
+# that only trims tiles within sheets keeps its pre-PR #33 attribution
+# (:func:`_parent_of_cut`).
 #
 # On a full frame these rules move nothing that has been measured: the
 # read-only measurement of 2026-10-09 over all 2,751 committed full-frame
@@ -2871,7 +2873,7 @@ def compute_per_tile_tp_fp_fn(
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstraps pass a condition's own frame here when the common
-            footprint is smaller than it (:func:`_parent_of_cut`).
+            footprint drops a whole sheet of it (:func:`_parent_of_cut`).
 
     Returns:
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
@@ -3606,29 +3608,51 @@ def _parent_of_cut(
     gdf_bounds: gpd.GeoDataFrame,
     cut: gpd.GeoDataFrame,
 ) -> gpd.GeoDataFrame | None:
-    """The frame a common-footprint cut was taken from, when the cut is smaller.
+    """The frame a common-footprint cut was taken from, when the cut drops a whole sheet.
 
     The paired bootstraps score every condition on the tiles all conditions
-    share. Where that footprint is smaller than a condition's own frame it
-    is a REDUCED frame of it, and ruling D59 counts a detection there only
-    if the condition's frame attributes it to a sheet inside the footprint
-    (the comment above :class:`ReducedFrameRefusalError`): the frame is
-    passed as ``parent_bounds``. Without it, a detection seen across the
-    footprint's edge would refuse, and one in an unknown tile vocabulary
-    would fall back to ``source_tile``, which carries no such guarantee.
-    Where the footprint is the whole frame nothing is passed, so a
-    same-frame comparison is scored exactly as before. A footprint that
-    cuts through a sheet is still not an additive share of the frame's
-    points (whole-sheet partitions only).
+    share. Where that footprint leaves out at least one whole sheet of a
+    condition's own frame, it is a REDUCED frame of it in ruling D59's
+    sense, and D59 counts a detection there only if the condition's frame
+    attributes it to a sheet inside the footprint (the comment above
+    :class:`ReducedFrameRefusalError`): the frame is passed as
+    ``parent_bounds``. Without it, a detection seen across the footprint's
+    edge would refuse, and one in an unknown tile vocabulary would fall
+    back to ``source_tile``, which carries no such guarantee.
+
+    A footprint that only trims tiles within sheets keeps every sheet, so it
+    gets no parent and keeps the attribution it had before PR #33 (the
+    coordinator's decision, 2026-10-10). D59's guarantee is for whole-sheet
+    partitions only: where tiles overlap, a within-sheet cut is no additive
+    share of the frame's points, and following the parent there would only
+    change which sheet a row seen on two sheets is scored on (it would fall
+    out of frame instead of switching sheet). Rules 1 and 2 cannot act on
+    such a cut either, since it leaves out no sheet. Where the footprint is
+    the whole frame nothing is passed, so a same-frame comparison is scored
+    exactly as before.
+
+    The footprint's sheets are read as the frame reads its own tiles
+    (:func:`frame_tile_sheets` of ``gdf_bounds``, restricted to the cut's
+    tiles), so both sheet sets come from one reading.
 
     Args:
         gdf_bounds: A condition's own frame.
         cut: Its rows on the common footprint.
 
     Returns:
-        ``gdf_bounds`` when ``cut`` holds fewer tiles, else ``None``.
+        ``gdf_bounds`` when the cut's sheets are a strict subset of the
+        frame's (a sheet dropped, whether or not other sheets are trimmed),
+        else ``None``.
+
+    Example:
+        >>> _parent_of_cut(frame, frame) is None  # doctest: +SKIP
+        True
     """
-    return gdf_bounds if len(cut) < len(gdf_bounds) else None
+    sheets = frame_tile_sheets(gdf_bounds)
+    in_cut = gdf_bounds["tile_name"].astype(str).isin(set(cut["tile_name"].astype(str)))
+    frame_set = {s for s in sheets if s is not None}
+    cut_set = {s for s in sheets[in_cut.to_numpy()] if s is not None}
+    return gdf_bounds if cut_set < frame_set else None
 
 
 def bootstrap_effect_size_ci(
@@ -3694,8 +3718,8 @@ def bootstrap_effect_size_ci(
     # Filter bounds to common tiles for consistent scoping
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
-    # A footprint smaller than a condition's frame is a reduced frame of it,
-    # attributed as that frame attributes (ruling D59).
+    # A footprint that drops a whole sheet of a condition's frame is a
+    # reduced frame of it, attributed as that frame attributes (ruling D59).
     tile_metrics_a = compute_per_tile_tp_fp_fn(
         gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=buffer_metres,
         parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
@@ -4830,7 +4854,7 @@ def calculate_tile_classification(
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstrap passes a condition's own frame here when the common
-            footprint is smaller than it (:func:`_parent_of_cut`).
+            footprint drops a whole sheet of it (:func:`_parent_of_cut`).
 
     Returns:
         Classification results including tp, tn, fp, fn counts; mcc;
@@ -5206,8 +5230,8 @@ def bootstrap_tile_effect_size_ci(
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
 
-    # A footprint smaller than a condition's frame is a reduced frame of it,
-    # attributed as that frame attributes (ruling D59).
+    # A footprint that drops a whole sheet of a condition's frame is a
+    # reduced frame of it, attributed as that frame attributes (ruling D59).
     result_a_full = calculate_tile_classification(
         gdf_det_a, gdf_ref, common_bounds_a, tile_join=tile_join,
         parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
