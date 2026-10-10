@@ -42,6 +42,31 @@ Description:
        pools are determinable: it records the footprint (tiling polygons and
        the tile manifest), the clip geometry and the passes, beside the union.
 
+    **Declarations for legacy provenance (PI ruling D57 (3)).** Two gaps in
+    old artefacts are filled by evidence-cited declarations in
+    :data:`DECLARATIONS_PATH`, never by inference from a path or a name:
+
+    * a pass whose meta records no tile manifest (the March 2026 batch
+      passes) takes the tiling a ``pass_tilings`` entry declares for it
+      (:func:`resolve_pass_manifest`); the pass's own ``processed_tiles``
+      still define what it assessed, and a processed tile outside the
+      declared manifest refuses;
+    * a consensus whose ``voting_summary.json`` predates pass provenance
+      takes the pass list a declaration's ``pass_provenance`` names, declared
+      only where a rebuild from those passes reproduced the committed union
+      (:func:`area_from_declared_passes`).
+
+    Both are anchored to the declared files' git blob hashes: a pass
+    rewritten since its declaration makes the area undetermined. Since
+    2026-10-10 (Astra's review of 2026-10-09, P2) a declaration is also
+    bound to the consensus it was checked against (``pool_git_blob_hash``)
+    and pins every other file its area is read from (``inputs``: pass
+    metas, tile manifests and polygons, footprint and clip polygons;
+    :func:`declaration_inputs`). Each is checked before the declaration is
+    applied (:func:`check_declaration_pins`): a pool or a tiling rewritten
+    in place, with every pass hash still valid, is undetermined too. The
+    pins are written by :func:`pin_declaration`.
+
     **Effective area.** Scores are computed on a frame, so the comparison is
     made on each pool's assessed area intersected with the frame's tile union
     (the area that can contribute to a score). The raw assessed areas are
@@ -89,6 +114,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 from scripts.lib_advanced_metrics import read_processed_tiles  # noqa: E402
+from scripts.lib_content_anchor import git_blob_hash  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -107,7 +133,9 @@ RECORD_SCHEMA = "assessed-area/1"
 RECORD_SUFFIX = ".assessed-area.json"
 
 #: Records declared after the fact for legacy pools whose builders wrote
-#: none. Each entry carries the evidence it was reconstructed from.
+#: none (``declarations``), and tilings declared for passes whose meta
+#: records no tile manifest (``pass_tilings``). Each entry carries the
+#: evidence it was reconstructed from.
 DECLARATIONS_PATH = BASE_DIR / "inputs" / "provenance" / "assessed-area-declarations.json"
 
 #: Tilings whose tile polygons are known, keyed by the tile manifest a pass's
@@ -297,6 +325,56 @@ def _verified_tiling(manifest: str) -> tuple[gpd.GeoDataFrame, frozenset[str]]:
     return gdf, names
 
 
+def _registered_matches(manifest: str) -> list[tuple[str, gpd.GeoDataFrame]]:
+    """The registered tilings holding every tile of a subset manifest.
+
+    Args:
+        manifest: A manifest that is not itself a key of :data:`KNOWN_TILINGS`.
+
+    Returns:
+        ``[(registered manifest, polygons of the subset's tiles), ...]``.
+
+    Raises:
+        AssessedAreaUndeterminedError: If the manifest file is missing.
+    """
+    if not _abs(manifest).exists():
+        raise AssessedAreaUndeterminedError(f"tile manifest missing: {manifest}")
+    wanted = _manifest_names(manifest)
+    matches = []
+    for key in KNOWN_TILINGS:
+        if not _abs(KNOWN_TILINGS[key]).exists() or not _abs(key).exists():
+            continue  # a registered tiling absent from this checkout cannot match
+        gdf, names = _verified_tiling(key)
+        if wanted <= names:
+            matches.append((key, gdf[gdf["tile_name"].astype(str).isin(wanted)]))
+    return matches
+
+
+def tiling_inputs(manifest: str) -> dict[str, str]:
+    """The files a manifest's tile polygons are read from, by role.
+
+    The same resolution as :func:`tiling_polygons`: a registered manifest
+    and its polygon file, or a subset manifest and every registered tiling
+    that holds all its tiles. A retrospective declaration pins these
+    (:func:`pin_declaration`), because rewriting any of them in place would
+    change the area it declares.
+
+    Args:
+        manifest: A manifest path as a pass's meta records it.
+
+    Returns:
+        ``{repository-relative path: role}``.
+    """
+    if manifest in KNOWN_TILINGS:
+        return {_rel(manifest): "tile manifest",
+                _rel(KNOWN_TILINGS[manifest]): "tile polygons"}
+    out = {_rel(manifest): "tile manifest (subset)"}
+    for key, _polygons in _registered_matches(manifest):
+        out[_rel(key)] = "tile manifest (holds the subset)"
+        out[_rel(KNOWN_TILINGS[key])] = "tile polygons (hold the subset)"
+    return out
+
+
 def tiling_polygons(manifest: str) -> tuple[gpd.GeoDataFrame, str]:
     """The tile polygons for the tiles of one pass's manifest.
 
@@ -323,20 +401,12 @@ def tiling_polygons(manifest: str) -> tuple[gpd.GeoDataFrame, str]:
     if manifest in KNOWN_TILINGS:
         gdf, _names = _verified_tiling(manifest)
         return gdf, KNOWN_TILINGS[manifest]
-    if not _abs(manifest).exists():
-        raise AssessedAreaUndeterminedError(f"tile manifest missing: {manifest}")
-    wanted = _manifest_names(manifest)
-    matches = []
-    for key in KNOWN_TILINGS:
-        if not _abs(KNOWN_TILINGS[key]).exists() or not _abs(key).exists():
-            continue  # a registered tiling absent from this checkout cannot match
-        gdf, names = _verified_tiling(key)
-        if wanted <= names:
-            matches.append((key, gdf[gdf["tile_name"].astype(str).isin(wanted)]))
+    matches = _registered_matches(manifest)
     if not matches:
         raise AssessedAreaUndeterminedError(
             f"no registered tiling (lib_assessed_area.KNOWN_TILINGS) holds every "
-            f"tile of {manifest} ({len(wanted)} tiles); register its polygons"
+            f"tile of {manifest} ({len(_manifest_names(manifest))} tiles); register "
+            f"its polygons"
         )
     first_key, first = matches[0]
     first_area = _union_of(first).area
@@ -349,6 +419,11 @@ def tiling_polygons(manifest: str) -> tuple[gpd.GeoDataFrame, str]:
     return first, f"{KNOWN_TILINGS[first_key]} (subset manifest of {first_key})"
 
 
+def meta_path(pass_path: Path) -> Path:
+    """The meta file the detector writes beside a pass GeoJSON."""
+    return pass_path.with_name(pass_path.name.replace(".geojson", ".meta.json"))
+
+
 def pass_manifest(pass_path: Path) -> str | None:
     """The tile manifest a proposer pass ran on, from its sibling meta file.
 
@@ -358,7 +433,7 @@ def pass_manifest(pass_path: Path) -> str | None:
     Returns:
         The manifest path as the meta records it, or ``None``.
     """
-    meta = pass_path.with_name(pass_path.name.replace(".geojson", ".meta.json"))
+    meta = meta_path(pass_path)
     if not meta.exists():
         return None
     try:
@@ -370,11 +445,125 @@ def pass_manifest(pass_path: Path) -> str | None:
     return str(manifest) if manifest else None
 
 
+#: Schema tag of a declared pass tiling (``pass_tilings`` entries).
+PASS_TILING_SCHEMA = "pass-tiling/1"
+
+
+@functools.lru_cache(maxsize=1)
+def _declared_pass_tilings() -> dict[str, dict[str, Any]]:
+    """The declared tilings, keyed by repository-relative pass path.
+
+    Each value is ``{"manifest", "git_blob_hash", "entry"}``: the tile
+    manifest the pass ran on, the blob hash of the pass file the declaration
+    was checked against, and the declaring entry (for its evidence).
+
+    Raises:
+        AssessedAreaUndeterminedError: If two entries declare the same pass.
+    """
+    if not DECLARATIONS_PATH.exists():
+        return {}
+    payload = json.loads(DECLARATIONS_PATH.read_text(encoding="utf-8"))
+    out: dict[str, dict[str, Any]] = {}
+    for entry in payload.get("pass_tilings", []):
+        if entry.get("schema") != PASS_TILING_SCHEMA:
+            raise AssessedAreaUndeterminedError(
+                f"a pass_tilings entry in {_rel(DECLARATIONS_PATH)} has schema "
+                f"{entry.get('schema')!r}, not {PASS_TILING_SCHEMA!r}"
+            )
+        for item in entry.get("passes", []):
+            if item["path"] in out:
+                raise AssessedAreaUndeterminedError(
+                    f"pass {item['path']} has two declared tilings in "
+                    f"{_rel(DECLARATIONS_PATH)}"
+                )
+            out[item["path"]] = {"manifest": entry.get("manifest"),
+                                 "git_blob_hash": item.get("git_blob_hash"),
+                                 "entry": entry}
+    return out
+
+
+def _check_blob(path: Path, rel: str, declared_hash: str | None, what: str) -> None:
+    """Refuse a declared file whose bytes are not the ones the declaration checked.
+
+    Args:
+        path: The file on disc.
+        rel: Its repository-relative path (for the message).
+        declared_hash: The git blob hash the declaration recorded.
+        what: What was declared (for the message).
+
+    Raises:
+        AssessedAreaUndeterminedError: If no hash was declared or the file's
+            current hash differs (the file was rewritten after the
+            declaration, so the declaration's evidence no longer covers it).
+    """
+    if not declared_hash:
+        raise AssessedAreaUndeterminedError(
+            f"the {what} declared for {rel} records no git_blob_hash"
+        )
+    actual = git_blob_hash(path)
+    if actual != declared_hash:
+        raise AssessedAreaUndeterminedError(
+            f"{rel} has changed since its {what} was declared (blob {actual} "
+            f"!= declared {declared_hash})"
+        )
+
+
+def resolve_pass_manifest(pass_path: Path, rel: str) -> tuple[str, str | None]:
+    """The tile manifest a pass ran on: its meta's record, else a declaration.
+
+    The meta file's ``manifest_path`` (:func:`pass_manifest`) is the
+    primary source. A pass whose meta records none (the March 2026 batch
+    passes, written by ``lib_batch_api.py`` 1.5.0 with a prompt-config
+    snapshot only) is resolved through a ``pass_tilings`` declaration in
+    :data:`DECLARATIONS_PATH`, which cites how the pass was produced and is
+    anchored to the pass file's git blob hash. Nothing is inferred from the
+    pass's path.
+
+    Args:
+        pass_path: The pass GeoJSON on disc.
+        rel: Its repository-relative path (the declaration key).
+
+    Returns:
+        ``(manifest, note)``: ``note`` is ``None`` for a meta record, or the
+        evidence line naming the declaration.
+
+    Raises:
+        AssessedAreaUndeterminedError: If neither source names a manifest,
+            the meta and a declaration disagree, or the declared pass file
+            has changed since it was declared.
+    """
+    recorded = pass_manifest(pass_path)
+    declared = _declared_pass_tilings().get(rel)
+    if declared is None:
+        if recorded is None:
+            raise AssessedAreaUndeterminedError(
+                f"pass {rel} has no meta file recording its tile manifest, and "
+                f"no declared tiling"
+            )
+        return recorded, None
+    if recorded is not None and recorded != declared["manifest"]:
+        raise AssessedAreaUndeterminedError(
+            f"pass {rel}: its meta records {recorded} but a declaration names "
+            f"{declared['manifest']}"
+        )
+    if recorded is not None:
+        return recorded, None
+    _check_blob(pass_path, rel, declared["git_blob_hash"], "tiling")
+    # The declared manifest and its polygons are evidence too: a tiling
+    # rewritten in place would move the area under an unchanged pass.
+    check_declaration_pins(declared["entry"], "tiling")
+    return declared["manifest"], (
+        f"tiling of {rel} declared in {_rel(DECLARATIONS_PATH)} "
+        f"({declared['entry'].get('label', declared['manifest'])})"
+    )
+
+
 def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
     """The union of the tiles a set of proposer passes processed.
 
     Each pass's own ``processed_tiles`` record (written by the detector) is
-    read, its tiling is resolved from its meta's manifest, and the processed
+    read, its tiling is resolved from its meta's manifest or, failing that,
+    a declared tiling (:func:`resolve_pass_manifest`), and the processed
     tiles' polygons are unioned across every pass (recovery fragments
     included, as the consensus step's pass provenance lists them).
 
@@ -386,8 +575,8 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
 
     Raises:
         AssessedAreaUndeterminedError: If any pass is missing, carries no
-            ``processed_tiles``, records no manifest, or names a tile its
-            tiling's polygons do not hold.
+            ``processed_tiles``, has no manifest recorded or declared, or
+            names a tile outside its manifest or its tiling's polygons.
     """
     if not pass_paths:
         raise AssessedAreaUndeterminedError("the pool lists no passes")
@@ -402,11 +591,7 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
             raise AssessedAreaUndeterminedError(
                 f"pass {rel} carries no processed_tiles record"
             )
-        manifest = pass_manifest(path)
-        if manifest is None:
-            raise AssessedAreaUndeterminedError(
-                f"pass {rel} has no meta file recording its tile manifest"
-            )
+        manifest, declared_note = resolve_pass_manifest(path, rel)
         polygons, bounds = tiling_polygons(manifest)
         chosen = polygons[polygons["tile_name"].astype(str).isin(processed)]
         if not processed <= set(_manifest_names(manifest)):
@@ -423,9 +608,191 @@ def area_from_passes(pass_paths: list[str]) -> tuple[BaseGeometry, list[str]]:
         evidence.append(
             f"{rel}: {len(processed)} processed tile(s) on {manifest} "
             f"(polygons {bounds})"
+            + (f"; {declared_note}" if declared_note else "")
         )
     geometry = gpd.GeoSeries(pieces, crs=AREA_CRS).union_all()
     return geometry, evidence
+
+
+def area_from_declared_passes(
+    entries: list[dict[str, Any]],
+) -> tuple[BaseGeometry, list[str]]:
+    """The area of a legacy consensus from its declared pass provenance.
+
+    A consensus written before ``merge_passes.py`` recorded its inputs
+    (``voting_summary.json`` with ``total_passes`` only) is determinable
+    when a declaration names the pass files it was built from — declared
+    only where a rebuild from those files reproduced the committed union —
+    with each file's git blob hash. The files are checked against those
+    hashes, then treated exactly as recorded pass provenance
+    (:func:`area_from_passes`).
+
+    Args:
+        entries: ``[{"pass_id", "path", "git_blob_hash"}, ...]``, the shape
+            ``merge_passes.build_pass_provenance`` writes.
+
+    Returns:
+        ``(geometry, evidence)``.
+
+    Raises:
+        AssessedAreaUndeterminedError: If the list is empty, a file is
+            missing, or a file has changed since it was declared.
+    """
+    if not entries:
+        raise AssessedAreaUndeterminedError("the declaration lists no passes")
+    for entry in entries:
+        path = _abs(entry["path"])
+        if not path.exists():
+            raise AssessedAreaUndeterminedError(f"pass file missing: {entry['path']}")
+        _check_blob(path, entry["path"], entry.get("git_blob_hash"), "pass provenance")
+    return area_from_passes([entry["path"] for entry in entries])
+
+
+#: Where a pool declaration records the blob hash of the consensus (union)
+#: file its evidence was checked against (Astra's review of 2026-10-09, P2).
+POOL_HASH_KEY = "pool_git_blob_hash"
+
+#: Where every declaration pins the other files its area is read from.
+INPUTS_KEY = "inputs"
+
+
+def declaration_inputs(entry: dict[str, Any]) -> dict[str, str]:
+    """The evidence-bearing files a declaration's area is read from, by role.
+
+    Besides the pool (pinned by :data:`POOL_HASH_KEY`) and the declared pass
+    files (each pinned in ``pass_provenance`` or ``passes``), an area is
+    read from files that can be rewritten in place without touching either:
+
+    * a pool declared through its pass provenance — each pass's meta file
+      (which records the tile manifest) and its tiling's manifest and
+      polygon files (:func:`tiling_inputs`);
+    * a pool declared through a footprint — the footprint's polygon and
+      manifest files and the clip's polygon file;
+    * a declared pass tiling (``pass_tilings``) — the declared manifest and
+      its registered polygon file.
+
+    Resolution is not checked here (no blob is compared): this is the set a
+    declaration must pin, used both to pin it (:func:`pin_declaration`) and
+    to check it (:func:`check_declaration_pins`).
+
+    Args:
+        entry: A ``declarations`` or ``pass_tilings`` entry.
+
+    Returns:
+        ``{repository-relative path: role}``.
+
+    Raises:
+        AssessedAreaUndeterminedError: If a declared pass has no tile
+            manifest, recorded or declared.
+    """
+    if entry.get("schema") == PASS_TILING_SCHEMA:
+        return tiling_inputs(entry["manifest"])
+    out: dict[str, str] = {}
+    if entry.get("pass_provenance") is not None:
+        for item in entry["pass_provenance"]:
+            rel = item["path"]
+            path = _abs(rel)
+            if meta_path(path).exists():
+                out[_rel(meta_path(path))] = "pass meta (records its tile manifest)"
+            manifest = pass_manifest(path) or (
+                _declared_pass_tilings().get(rel) or {}).get("manifest")
+            if manifest is None:
+                raise AssessedAreaUndeterminedError(
+                    f"pass {rel} has no tile manifest, recorded or declared"
+                )
+            out.update(tiling_inputs(manifest))
+        return out
+    footprint = entry.get("footprint") or {}
+    clip = entry.get("clip") or {}
+    for value, role in ((footprint.get("bounds"), "footprint polygons"),
+                        (footprint.get("manifest"), "footprint manifest"),
+                        (clip.get("bounds"), "clip polygons")):
+        if value:
+            out[_rel(value)] = role
+    return out
+
+
+def pin_declaration(entry: dict[str, Any]) -> dict[str, Any]:
+    """A copy of a declaration pinned to the current bytes of what it declares.
+
+    A pool declaration gains :data:`POOL_HASH_KEY`, the git blob hash of
+    the consensus file (right after ``pool``), and every declaration gains
+    :data:`INPUTS_KEY`, ``[{"path", "role", "git_blob_hash"}, ...]`` for
+    each file :func:`declaration_inputs` names (before ``evidence``). Run
+    when a declaration is written, on the files its evidence was checked
+    against; :func:`check_declaration_pins` and the pool-hash check refuse
+    the declaration once any of them changes.
+
+    Args:
+        entry: A ``declarations`` or ``pass_tilings`` entry (not mutated).
+
+    Returns:
+        The pinned copy.
+
+    Raises:
+        AssessedAreaUndeterminedError: If a file to pin is missing.
+    """
+    def blob_of(rel: str) -> str:
+        digest = git_blob_hash(_abs(rel))
+        if digest is None:
+            raise AssessedAreaUndeterminedError(f"cannot pin {rel}: the file is missing")
+        return digest
+
+    inputs = [{"path": rel, "role": role, "git_blob_hash": blob_of(rel)}
+              for rel, role in sorted(declaration_inputs(entry).items())]
+    out: dict[str, Any] = {}
+    for key, value in entry.items():
+        if key in (POOL_HASH_KEY, INPUTS_KEY):
+            continue
+        if key == "evidence":
+            out[INPUTS_KEY] = inputs
+        out[key] = value
+        if key == "pool":
+            out[POOL_HASH_KEY] = blob_of(value)
+    out.setdefault(INPUTS_KEY, inputs)
+    return out
+
+
+def check_declaration_pins(entry: dict[str, Any], what: str) -> int:
+    """Refuse a declaration whose pinned inputs changed or are incomplete.
+
+    Every file :func:`declaration_inputs` names for the entry must be pinned
+    in its :data:`INPUTS_KEY`, and every pinned file must still have its
+    pinned blob hash. A file rewritten after the declaration (a tiling's
+    polygons, a pass's meta) means its evidence no longer describes what
+    would be read, so the area is undetermined.
+
+    Args:
+        entry: A ``declarations`` or ``pass_tilings`` entry.
+        what: What was declared (for the message).
+
+    Returns:
+        The number of pinned inputs checked.
+
+    Raises:
+        AssessedAreaUndeterminedError: If the entry pins nothing, leaves an
+            input unpinned, or a pinned file is missing or changed.
+    """
+    name = entry.get("pool") or entry.get("label") or entry.get("manifest")
+    pins = entry.get(INPUTS_KEY)
+    if pins is None:
+        raise AssessedAreaUndeterminedError(
+            f"the {what} declared for {name} pins none of the files its area is "
+            f"read from (no {INPUTS_KEY!r}); re-declare it"
+        )
+    pinned = {item["path"]: item.get("git_blob_hash") for item in pins}
+    unpinned = sorted(set(declaration_inputs(entry)) - set(pinned))
+    if unpinned:
+        raise AssessedAreaUndeterminedError(
+            f"the {what} declared for {name} is read from {len(unpinned)} file(s) "
+            f"it does not pin: {', '.join(unpinned[:3])}"
+        )
+    for rel, digest in pinned.items():
+        path = _abs(rel)
+        if not path.exists():
+            raise AssessedAreaUndeterminedError(f"pinned input missing: {rel}")
+        _check_blob(path, rel, digest, what)
+    return len(pinned)
 
 
 def area_from_record(record: dict[str, Any]) -> tuple[BaseGeometry, dict | None, list[str]]:
@@ -494,6 +861,12 @@ def _declarations() -> dict[str, dict[str, Any]]:
         return {}
     payload = json.loads(DECLARATIONS_PATH.read_text(encoding="utf-8"))
     return {entry["pool"]: entry for entry in payload.get("declarations", [])}
+
+
+def clear_declaration_caches() -> None:
+    """Forget the cached declarations (after :data:`DECLARATIONS_PATH` changes)."""
+    _declarations.cache_clear()
+    _declared_pass_tilings.cache_clear()
 
 
 def record_path_for(union: Path) -> Path:
@@ -603,11 +976,16 @@ def _determine_assessed_area(source: str | Path, *, label: str | None = None) ->
     1. **A builder's record** beside the union (:func:`record_path_for`),
        written by :func:`write_area_record`.
     2. **A declared record** for a legacy pool in :data:`DECLARATIONS_PATH`,
-       reconstructed after the fact with its evidence cited.
+       reconstructed after the fact with its evidence cited: either a
+       footprint (and clip), or the pass provenance a legacy consensus did
+       not record (:func:`area_from_declared_passes`).
     3. **The consensus step's pass provenance** (``voting_summary.json``
        beside the union, ``pass_provenance``): the union of every pass's
        processed tiles. ``merge_passes.py`` applies no clip, so none is
        added.
+
+    In routes 2 (pass provenance) and 3 each pass's tiling comes from its
+    meta file or a declared tiling (:func:`resolve_pass_manifest`).
 
     Anything else — a union with no record and no pass provenance — is
     UNDETERMINED, with the reason. The function never infers an area from a
@@ -639,11 +1017,46 @@ def _determine_assessed_area(source: str | Path, *, label: str | None = None) ->
                                 evidence=[f"record {_rel(record_file)}", *evidence],
                                 **base)
         declared = _declarations().get(union_rel)
+        if declared is not None and declared.get("pass_provenance") is not None:
+            # A legacy merge_passes consensus: the declaration supplies the
+            # pass list its voting_summary.json lacks. merge_passes applies
+            # no clip, so a declaration naming a footprint or a clip as well
+            # is contradictory and refused.
+            if declared.get("footprint") or declared.get("clip"):
+                raise AssessedAreaUndeterminedError(
+                    f"the declaration for {union_rel} names pass provenance and "
+                    f"a footprint or clip; it must name one route"
+                )
+            # The declaration describes the consensus its rebuild reproduced,
+            # not whatever now sits at its path: a pool rewritten in place
+            # (a K = 1 union, a clipped one) leaves every pass hash valid,
+            # and a smaller candidate set cannot contradict a larger declared
+            # area (Astra's review of 2026-10-09, P2). So the pool's own
+            # blob, and every other file the area is read from, are checked
+            # before the declaration is applied.
+            _check_blob(union, union_rel, declared.get(POOL_HASH_KEY), "pass provenance")
+            n_pinned = check_declaration_pins(declared, "pass provenance")
+            geometry, evidence = area_from_declared_passes(declared["pass_provenance"])
+            return AssessedArea(
+                geometry=geometry, method=METHOD_DECLARED, clip=None,
+                evidence=[f"declared pass provenance in {_rel(DECLARATIONS_PATH)} "
+                          f"({len(declared['pass_provenance'])} file(s))",
+                          f"pins: the consensus (blob {declared[POOL_HASH_KEY]}) and "
+                          f"{n_pinned} pinned input(s) unchanged since the declaration",
+                          *evidence, "merge_passes applies no clip",
+                          *[f"basis: {item}" for item in declared.get("evidence", [])]],
+                **base,
+            )
         if declared is not None:
+            _check_blob(union, union_rel, declared.get(POOL_HASH_KEY), "footprint")
+            n_pinned = check_declaration_pins(declared, "footprint")
             geometry, clip, evidence = area_from_record(declared)
             return AssessedArea(
                 geometry=geometry, method=METHOD_DECLARED, clip=clip,
-                evidence=[f"declared in {_rel(DECLARATIONS_PATH)}", *evidence,
+                evidence=[f"declared in {_rel(DECLARATIONS_PATH)}",
+                          f"pins: the pool (blob {declared[POOL_HASH_KEY]}) and "
+                          f"{n_pinned} pinned input(s) unchanged since the declaration",
+                          *evidence,
                           *[f"basis: {item}" for item in declared.get("evidence", [])]],
                 **base,
             )
