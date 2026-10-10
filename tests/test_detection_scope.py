@@ -32,7 +32,8 @@ overlap by 10 m):
   an origin seen only on a study sheet the frame leaves out is excluded,
   not re-keyed; one seen across the frame's edge is refused unless the
   parent frame is given (``parent_bounds``), which then governs; an unknown
-  tile vocabulary keeps the ``source_tile`` fallback but warns. Astra's
+  tile vocabulary keeps the ``source_tile`` fallback but warns (a
+  compatibility path for full frames, with no partition guarantee). Astra's
   three counterexamples are regression tests below, and any partition of a
   frame into whole sheets sums exactly to it;
 * (Astra's re-review, 2026-10-10) every tile name — origin, ``source_tile``
@@ -827,12 +828,15 @@ def test_a_parent_must_contain_the_frame(wide_frame, frame):
 
 
 def test_an_unknown_vocabulary_keeps_the_fallback_but_warns(wide_frame, caplog):
-    """Rule 3: where the catalogue cannot see, the scorer says so.
+    """Rule 3 is a compatibility path, with a warning and no partition guarantee.
 
     With synthetic sheets the default catalogue knows neither A nor B, so
     on B's tiles alone Astra's detection still falls back to ``source_tile``
-    (the unknown-vocabulary rule the PI kept): the warning names the
-    argument that would prevent a double count.
+    (the unknown-vocabulary rule the PI kept for full-frame evaluations).
+    It is not part of D59's prevention: scored without the parent, the two
+    one-sheet frames count the detection twice where the full frame counts
+    it once. The warning says so and names ``parent_bounds``, which
+    restores the partition.
     """
     d = dets([("B_x0_y0.png", 195, 50)], origin_tiles=["A_x0_y0.png"])
     with caplog.at_level(logging.WARNING):
@@ -840,12 +844,37 @@ def test_an_unknown_vocabulary_keeps_the_fallback_but_warns(wide_frame, caplog):
     assert len(scope.detections) == 1
     assert scope.diagnostics["n_origin_unrecognised"] == 1
     assert scope.diagnostics["n_origin_excluded"] == 0
-    assert any("parent_bounds=" in r.getMessage() for r in caplog.records
-               if r.levelno == logging.WARNING)
+    warnings_ = [r.getMessage() for r in caplog.records if r.levelno == logging.WARNING]
+    assert any("parent_bounds=" in m and "compatibility path" in m for m in warnings_)
     caplog.clear()
     with caplog.at_level(logging.WARNING):
-        lam.scope_detections_to_frame(d, wide_frame)
+        full = lam.scope_detections_to_frame(d, wide_frame)
     assert not [r for r in caplog.records if r.levelno >= logging.WARNING]
+    # No guarantee without the parent; the parent restores the partition.
+    alone = [len(lam.scope_detections_to_frame(d, _sheet(wide_frame, s)).detections)
+             for s in ("A", "B")]
+    governed = [len(lam.scope_detections_to_frame(
+        d, _sheet(wide_frame, s), parent_bounds=wide_frame).detections) for s in ("A", "B")]
+    assert (alone, governed, len(full.detections)) == ([1, 1], [1, 0], 1)
+
+
+def test_the_full_frame_partitions_count_a_fallback_row_once(wide_frame, two_sheet_refs):
+    """The library's per-sheet paths read ONE full-frame scoping, so rule 3 cannot double-count.
+
+    A row in a vocabulary no catalogue knows falls back to ``source_tile``
+    (B); every sheet's partition comes from the same scope, so it is one
+    detection on one sheet, and the partitions sum to the frame's score.
+    """
+    d = dets([("B_x0_y0.png", 195, 50), ("A_x0_y0.png", 50, 50)],
+             origin_tiles=["Q-99_x0_y0.png", None])
+    scope = lam.scope_detections_to_frame(d, wide_frame)
+    per_sheet = {s: det.index.tolist() for s, det, _r, _b in
+                 lam.iter_sheet_scopes(scope, two_sheet_refs, wide_frame)}
+    assert per_sheet == {"A": [1], "B": [0]}
+    counts = lam.per_sheet_confusion(scope, two_sheet_refs, wide_frame, 20)
+    assert counts == {"A": (0, 1, 1), "B": (1, 0, 0)}
+    assert lam.calculate_f1_internal(d, two_sheet_refs, wide_frame, 20) == \
+        lam.precision_recall_f1(*_total(counts))
 
 
 def test_the_catalogue_decides_excluded_versus_unknown(wide_frame):

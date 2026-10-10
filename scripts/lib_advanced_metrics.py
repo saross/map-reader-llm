@@ -22,8 +22,9 @@ Detection scope (PI ruling D50, 2026-10-07):
 - scope_detections_to_frame(): detections scoped per map sheet by tile
   geometry, exactly as references are, each attributed to the sheet it
   was SEEN on (its origin sheet); every scorer above routes through it
-- iter_sheet_scopes(): the per-sheet (detections, references) pairs every
-  per-sheet matcher iterates, so no script keeps its own copy of the rule
+- iter_sheet_scopes(): the library's per-sheet (detections, references)
+  loop, read by its matchers and the scripts migrated to it; some scripts
+  still keep per-map loops of their own (see its docstring)
 - ReducedFrameRefusalError: a frame narrower than its detection set refuses
   a detection seen across its edge unless ``parent_bounds`` names the full
   frame (the D50 review, finding 2; PI decision, 2026-10-10)
@@ -1703,6 +1704,12 @@ def _refuse_partly_excluded(
 def _warn_unknown_origins(n_unknown: int, n_rows: int, what: str) -> None:
     """Warn that some origins name no frame sheet and no catalogue sheet (rule 3).
 
+    Such rows keep the ``source_tile`` fallback: a compatibility path for a
+    full-frame (legacy) evaluation whose tile vocabulary the catalogue does
+    not recognise. It is not part of ruling D59's prevention and gives no
+    partition guarantee (see the comment above
+    :class:`ReducedFrameRefusalError`), so the warning says so.
+
     Args:
         n_unknown: Rows with at least one such origin name.
         n_rows: Rows in the input.
@@ -1712,11 +1719,13 @@ def _warn_unknown_origins(n_unknown: int, n_rows: int, what: str) -> None:
         return
     logger.warning(
         "%s: %d of %d detections record an origin tile on neither a sheet "
-        "of this frame nor a sheet of the catalogue. If this frame is part "
-        "of a larger frame that holds such a sheet, a detection may count "
-        "here although that frame attributes it elsewhere; pass "
-        "parent_bounds= (the full frame) or a sheet_catalogue= that names "
-        "the sheet.",
+        "of this frame nor a sheet of the catalogue; they fall back to "
+        "source_tile. That fallback is a compatibility path for a "
+        "full-frame evaluation and carries no partition guarantee: if this "
+        "frame is part of a larger frame that holds such a sheet, a "
+        "detection may count here although that frame attributes it "
+        "elsewhere. Score a reduced frame with parent_bounds= (the full "
+        "frame), or pass a sheet_catalogue= that names the sheet.",
         what, n_unknown, n_rows,
     )
 
@@ -1731,6 +1740,10 @@ def _check_within_parent(
     The frame's tiles must be tiles of the parent: the same names, the
     same polygons and the same sheets. Only then is the parent's
     attribution, restricted to the frame, the parent's verdict.
+    Containment is necessary for the partition guarantee but does not
+    prove it: only a frame of WHOLE sheets of the parent is an additive
+    partition of the parent's points (see the comment above
+    :class:`ReducedFrameRefusalError`).
 
     Args:
         gdf_bounds: The reduced frame's tile polygons.
@@ -2108,11 +2121,16 @@ def scope_detections_to_frame(
     parent frame and restricted to this frame: a row the parent scores on
     another sheet is excluded here (``n_parent_elsewhere``), and a row it
     scores on one of this frame's sheets is kept when it intersects that
-    sheet's tiles here. An origin naming neither a frame sheet nor a
-    catalogue sheet is logged as a WARNING: the catalogue cannot tell
-    whether it names a sheet of some larger frame. The simplest per-sheet
-    report needs none of this: scope the FULL frame once and read its
-    partitions (:meth:`DetectionScope.on_sheet`, :func:`per_sheet_confusion`).
+    sheet's tiles here. The guarantee is for frames of WHOLE sheets of the
+    parent: where tiles overlap, a frame of part of a sheet is not an
+    additive partition of the parent's points, whatever its containment.
+    An origin naming neither a frame sheet nor a catalogue sheet keeps the
+    ``source_tile`` fallback and is logged as a WARNING; that fallback is a
+    compatibility path for full-frame evaluations and gives no partition
+    guarantee, so a deliberately reduced frame must pass ``parent_bounds``.
+    The simplest per-sheet report needs none of this: scope the FULL frame
+    once and read its partitions (:meth:`DetectionScope.on_sheet`,
+    :func:`per_sheet_confusion`).
 
     **Scope.** An attributed detection is kept only if it intersects one of
     its own sheet's frame tiles — the reference side's rule
@@ -2369,18 +2387,33 @@ def iter_sheet_scopes(
 ) -> Iterator[tuple[str, gpd.GeoDataFrame, gpd.GeoDataFrame, gpd.GeoDataFrame]]:
     """Yield each frame sheet's detections and references, scoped by one rule.
 
-    This is the per-sheet loop every matcher in the repository runs —
-    :func:`calculate_f1_internal`, :func:`compute_per_tile_tp_fp_fn`, the
-    corrected-F1 engine and the analysis scripts that copied it — written
-    once, so the detection side and the reference side are scoped the same
-    way at every call site (ruling D50). References: the sheet's rows by
-    their map column, then :func:`scope_references_to_tiles` on the sheet's
-    tiles. Detections: :func:`scope_detections_to_frame`. A sheet's tiles
-    are the ones :func:`frame_tile_sheets` assigns to it — the assignment
-    the detection scope's spatial join reads — so a reference and a
-    detection at the same point are judged against the same polygons even
-    where one sheet name is a prefix of another (the D50 review,
-    finding 3).
+    This is the library's per-sheet loop, written once so the detection
+    side and the reference side are scoped the same way at every call site
+    that uses it (ruling D50): :func:`calculate_f1_internal` and
+    :func:`per_sheet_confusion`, :func:`compute_per_tile_tp_fp_fn`, the
+    corrected-F1 engine, and the analysis scripts migrated to it. It is
+    NOT yet every matcher in the repository. Some scripts still call
+    :func:`match_detections_to_references` from per-map loops of their
+    own; among them ``stride55_sweep_oracle.per_map_counts`` splits by
+    the pre-D50 ``source_tile`` prefix and ignores recorded origins, so
+    its outputs stay outside D50-corrected claims until it is migrated
+    (Phase 5), and ``compare_tile_sizes.py`` keeps its own loop.
+
+    References: the sheet's rows by their map column, then
+    :func:`scope_references_to_tiles` on the sheet's tiles. Detections:
+    :func:`scope_detections_to_frame`. A sheet's tiles are the ones
+    :func:`frame_tile_sheets` assigns to it, with the catalogue the
+    detection scope read names with — the assignment its spatial join
+    reads — so a reference and a detection at the same point are judged
+    against the same polygons even where one sheet name is a prefix of
+    another (the D50 review, finding 3).
+
+    Every sheet's partition comes from ONE scoping of ``gdf_bounds``, so a
+    detection is yielded for at most one sheet whichever rule attributed
+    it, the ``source_tile`` fallback for an unknown vocabulary (rule 3)
+    included. Pass the FULL frame for per-sheet figures that are shares of
+    it; a frame cut from a larger one needs ``parent_bounds`` (see the
+    comment above :class:`ReducedFrameRefusalError`).
 
     Args:
         gdf_det: Detections, or a :class:`DetectionScope` already computed
@@ -3260,8 +3293,11 @@ def calculate_f1_internal(
     out, refuses one also seen on such a sheet unless ``parent_bounds``
     names the full frame, and with ``parent_bounds`` counts exactly the
     detections the full frame attributes to its sheets
-    (:func:`scope_detections_to_frame`, "Reduced frames"). Per-sheet
-    figures are simplest from :func:`per_sheet_confusion` on the full frame.
+    (:func:`scope_detections_to_frame`, "Reduced frames"). Without the
+    parent, an origin in an unrecognised tile vocabulary falls back to
+    ``source_tile``, a compatibility path with no partition guarantee, so
+    a deliberately reduced frame should always pass it. Per-sheet figures
+    are simplest from :func:`per_sheet_confusion` on the full frame.
 
     Args:
         gdf_det: GeoDataFrame of detections, carrying ``source_tile`` and/or
@@ -3336,11 +3372,17 @@ def per_sheet_confusion(
     This is the matching :func:`calculate_f1_internal` sums, kept per
     sheet. A per-map report should read these partitions of the full frame
     rather than re-score each sheet on its own tiles: they sum to the full
-    frame's counts by construction. A reduced frame (some of the full
-    frame's sheets) sums to them too, but only because it excludes
-    detections seen only off its sheets and refuses those seen across its
-    edge unless ``parent_bounds`` is given (the D50 review, finding 2;
-    :func:`scope_detections_to_frame`, "Reduced frames").
+    frame's counts by construction, whichever rule attributed each
+    detection (each is scored on one sheet at most). A reduced frame made
+    of whole sheets of the full frame sums to them too when it is scored
+    with ``parent_bounds``. Without the parent it excludes detections seen
+    only off its sheets and refuses those seen across its edge, but an
+    origin in a tile vocabulary the catalogue does not recognise falls
+    back to ``source_tile`` (rule 3, a compatibility path), which gives no
+    such guarantee. A frame of PART of a sheet is no partition at all:
+    where tiles overlap, its points are not an additive share of the full
+    frame's (the D50 review, finding 2; the comment above
+    :class:`ReducedFrameRefusalError`).
 
     Args:
         gdf_det: Detections, or the :class:`DetectionScope` of this same
