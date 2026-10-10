@@ -34,7 +34,12 @@ overlap by 10 m):
   parent frame is given (``parent_bounds``), which then governs; an unknown
   tile vocabulary keeps the ``source_tile`` fallback but warns. Astra's
   three counterexamples are regression tests below, and any partition of a
-  frame into whole sheets sums exactly to it.
+  frame into whole sheets sums exactly to it;
+* (Astra's re-review, 2026-10-10) every tile name — origin, ``source_tile``
+  and frame tile — is read by the longest sheet of the frame and the
+  catalogue together, so a shorter frame sheet never claims a name a longer
+  left-out sheet owns, and the library's common-footprint bootstraps score
+  a footprint smaller than a condition's frame with that frame as parent.
 """
 
 from __future__ import annotations
@@ -1006,6 +1011,128 @@ def test_secondary_effects_per_map_figures_decompose_the_full_frame(
     out = mod.analyse_per_map_sheet({"c": {"consensus_dir": "unused"}}, {"c": 3},
                                     two_sheet_refs, wide_frame, buffer_m=20)
     assert out[0]["per_map"] == {"A": 1.0, "B": 0}
+
+
+# ── The D50 re-review (Astra, 2026-10-10): one rule for every tile name ───
+
+
+@pytest.fixture()
+def nested_prefix_frame() -> gpd.GeoDataFrame:
+    """Astra's re-review frame: sheet A's tile x 0-200, sheet AB's x 190-390."""
+    return gpd.GeoDataFrame(
+        {"tile_name": ["A_x0_y0.png", "AB_x0_y0.png"]},
+        geometry=[box(0, 0, 200, 100), box(190, 0, 390, 100)], crs=CRS)
+
+
+@pytest.mark.parametrize("with_parent", [False, True], ids=["no-parent", "parent"])
+def test_a_shorter_frame_sheet_does_not_claim_an_excluded_sheets_name(
+    nested_prefix_frame, with_parent,
+):
+    """Astra's counterexample: resolve across frame and catalogue, then classify.
+
+    The catalogue is complete, {A, AB}; the frame holds only A's tile. A
+    detection seen only on AB (``AB_x0_y0.png``) lies in the overlap. The
+    frame-first lookup read that name as A's, the shorter frame prefix, so
+    the scope kept it on A (``n_origin_excluded`` 0) and the materialiser
+    gave it A's tile. Read by the longest sheet of the frame and the
+    catalogue together it is AB's: excluded by rule 1 without the parent,
+    and attributed by the parent to AB, outside this frame, with it.
+    """
+    d = gpd.GeoDataFrame(
+        {"source_tile": ["AB_x0_y0.png"], "origin_tiles": ["AB_x0_y0.png"]},
+        geometry=[Point(195, 50)], crs=CRS)
+    catalogue = ["A", "AB"]
+    options: dict = {"sheet_catalogue": catalogue}
+    if with_parent:
+        options["parent_bounds"] = nested_prefix_frame
+    only_a = nested_prefix_frame.iloc[[0]]
+    scope = lam.scope_detections_to_frame(d, only_a, **options)
+    names, mdiag = lam.assign_primary_tiles_on_origin_sheet(d, only_a, **options)
+    assert scope.detections.empty and names == [None]
+    diag = scope.diagnostics
+    if with_parent:
+        assert (diag["n_parent_elsewhere"], diag["n_origin_excluded"]) == (1, 0)
+        assert (mdiag["n_parent_elsewhere"], mdiag["n_assigned"]) == (1, 0)
+    else:
+        assert (diag["n_origin_excluded"], diag["n_origin_unrecognised"]) == (1, 1)
+        assert (mdiag["n_origin_excluded"], mdiag["n_assigned"]) == (1, 0)
+    # The full frame scores it on AB; the one-sheet frames sum to it.
+    full = lam.scope_detections_to_frame(d, nested_prefix_frame, sheet_catalogue=catalogue)
+    assert list(full.sheets) == ["AB"]
+    full_names, _ = lam.assign_primary_tiles_on_origin_sheet(
+        d, nested_prefix_frame, sheet_catalogue=catalogue)
+    assert full_names == ["AB_x0_y0.png"]
+    only_ab = lam.scope_detections_to_frame(d, nested_prefix_frame.iloc[[1]], **options)
+    assert [len(scope.detections), len(only_ab.detections)] == [0, 1]
+
+
+def test_a_source_tile_on_an_excluded_longer_sheet_names_no_frame_sheet(
+    nested_prefix_frame,
+):
+    """The same rule for ``source_tile``: no origin recorded, named on AB, frame A only.
+
+    The frame-first lookup scored the row on A, an A false positive the
+    full frame never counts. Read by the one rule, the name is AB's, so on
+    A's tiles alone the row is on no frame sheet (unattributed, inside the
+    frame), as a foreign name always was, and the per-sheet results of the
+    two one-sheet frames sum to the full frame's.
+    """
+    d = dets([("AB_x0_y0.png", 195, 50)])
+    catalogue = ["A", "AB"]
+    only_a = nested_prefix_frame.iloc[[0]]
+    diag = lam.scope_detections_to_frame(d, only_a, sheet_catalogue=catalogue).diagnostics
+    assert (diag["n_in_scope"], diag["n_unattributed"], diag["n_unattributed_in_frame"]) == (
+        0, 1, 1)
+    governed = lam.scope_detections_to_frame(
+        d, only_a, sheet_catalogue=catalogue, parent_bounds=nested_prefix_frame)
+    assert governed.detections.empty and governed.diagnostics["n_parent_elsewhere"] == 1
+    refs = gpd.GeoDataFrame({"Map": ["AB"]}, geometry=[Point(195, 50)], crs=CRS)
+    full = lam.per_sheet_confusion(d, refs, nested_prefix_frame, 20, sheet_catalogue=catalogue)
+    parts: dict[str, tuple[int, int, int]] = {}
+    for i in range(2):
+        parts.update(lam.per_sheet_confusion(
+            d, refs, nested_prefix_frame.iloc[[i]], 20, sheet_catalogue=catalogue))
+    assert full == parts == {"A": (0, 0, 0), "AB": (1, 0, 0)}
+
+
+def test_frame_tiles_are_read_by_the_same_rule():
+    """A frame tile is read as the parent reads it, even by a left-out catalogue sheet.
+
+    Contrived, because no study sheet allows it: a sheet ``A_x1`` (its own
+    tiles ``A_x1_x...``) starts the name of A's tile ``A_x10_y0.png``, so
+    the parent frame gives that tile to ``A_x1``. A frame of A's tiles alone
+    read it as A's when it searched its own sheets only, and an A reference
+    there became a false negative the parent never counts. With the
+    catalogue it puts the tile on no sheet, as the parent does.
+    """
+    parent = gpd.GeoDataFrame(
+        {"tile_name": ["A_x0_y0.png", "A_x10_y0.png", "A_x1_x0_y0.png"]},
+        geometry=[box(0, 0, 100, 100), box(100, 0, 200, 100), box(200, 0, 300, 100)],
+        crs=CRS)
+    assert lam.frame_sheets(parent) == ["A", "A_x1"]
+    assert list(lam.frame_tile_sheets(parent)) == ["A", "A_x1", "A_x1"]
+    a_tiles = parent.iloc[[0, 1]]
+    assert list(lam.frame_tile_sheets(a_tiles, sheet_catalogue=["A", "A_x1"])) == ["A", None]
+    assert list(lam.frame_tile_sheets(a_tiles, sheet_catalogue=["A"])) == ["A", "A"]
+    refs = gpd.GeoDataFrame({"Map": ["A"]}, geometry=[Point(150, 50)], crs=CRS)
+    none = dets([])
+    assert lam.per_sheet_confusion(none, refs, parent, 20)["A"] == (0, 0, 0)
+    assert lam.per_sheet_confusion(
+        none, refs, a_tiles, 20, sheet_catalogue=["A", "A_x1"]) == {"A": (0, 0, 0)}
+    # A frame holding a tile its parent gives to another sheet is refused.
+    with pytest.raises(ValueError, match="on another sheet"):
+        lam.scope_detections_to_frame(
+            none, a_tiles, sheet_catalogue=["A", "A_x1"], parent_bounds=parent)
+
+
+def test_a_one_shot_catalogue_is_read_once():
+    """A generator catalogue serves every resolution in one call, not only the first."""
+    bounds = gpd.GeoDataFrame({"tile_name": ["A_x0_y0.png"]},
+                              geometry=[box(0, 0, 200, 100)], crs=CRS)
+    d = dets([("A_x0_y0.png", 195, 50)], origin_tiles=["AB_x0_y0.png"])
+    scope = lam.scope_detections_to_frame(d, bounds, sheet_catalogue=(s for s in ["A", "AB"]))
+    assert scope.diagnostics["n_origin_excluded"] == 1
+    assert scope.sheet_catalogue == frozenset({"A", "AB"})
 
 
 # ── Common-footprint bootstraps: each condition's frame is the parent ────

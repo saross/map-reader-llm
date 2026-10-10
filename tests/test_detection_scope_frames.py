@@ -12,7 +12,12 @@ tile-bounds files and hold that:
    gold-standard and 55-map evaluation frames; and
 2. on every committed frame, each sheet's tiles under the new rule are the
    tiles the old rule selected, in the same order — so no committed score
-   can move through this change.
+   can move through this change; and
+3. on every committed frame, the frame's sheets and ``STUDY_SHEETS`` are
+   prefix-free together, so reading a tile name by the longest sheet of
+   the two together (Astra's re-review, 2026-10-10) reads every name —
+   frame tile, ``source_tile`` or origin — exactly as the frame-first
+   search did.
 
 They read about 11 MB of committed GeoJSON, hence tier 2.
 """
@@ -87,3 +92,22 @@ def test_every_committed_frame_selects_each_sheets_tiles_as_before():
             if old != new:
                 differing.append((str(path.relative_to(PROJECT_ROOT)), sheet))
     assert differing == []
+
+
+def test_every_committed_frame_is_prefix_free_with_the_catalogue():
+    """No committed frame reads a tile name differently under the one-rule resolution.
+
+    Where a frame's sheets and the catalogue are prefix-free together, at
+    most one sheet starts any name (two that did would be prefixes of one
+    another), so the longest sheet of the two together and the frame-first
+    search find the same sheet for every name.
+    """
+    frames = [p for p in _committed_frames() if not _tile_names(p).empty]
+    if not frames:
+        pytest.skip("no committed tile-bounds files present")
+    clashes = []
+    for path in frames:
+        names = sorted(set(lam.frame_sheets(_tile_names(path))) | lam.STUDY_SHEETS)
+        clashes += [(str(path.relative_to(PROJECT_ROOT)), a, b)
+                    for a in names for b in names if a != b and b.startswith(a)]
+    assert clashes == []

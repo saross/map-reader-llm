@@ -1346,21 +1346,23 @@ def frame_sheets(gdf_bounds: gpd.GeoDataFrame) -> list[str]:
 
 
 def _sheet_of_tile_name(name: Any, sheets_longest_first: list[str]) -> str | None:
-    """The frame sheet a tile name belongs to, by the scorers' prefix rule.
+    """The sheet a tile name belongs to, by the scorers' prefix rule.
 
     The per-sheet scorers have always put a detection on sheet M when its
     ``source_tile`` *starts with* M (not when ``get_map_name`` equals M), so a
     name in a different tile vocabulary of the same sheet — a 192 px stride
     against a 336 px frame, or a 55-map tile carrying a place-name suffix —
     still lands on its sheet. The longest matching prefix wins, so the rule
-    is unambiguous even if one sheet name were a prefix of another.
+    is unambiguous even if one sheet name were a prefix of another. The
+    scorer searches the frame's sheets and the catalogue's together
+    (:class:`_SheetResolver`), never the frame's alone.
 
     Args:
         name: A tile name (or a missing value).
-        sheets_longest_first: Frame sheet names, longest first.
+        sheets_longest_first: The sheets to search, longest first.
 
     Returns:
-        The frame sheet, or ``None`` for a missing, empty or foreign name.
+        The sheet, or ``None`` for a missing, empty or foreign name.
     """
     if not isinstance(name, str) or not name:
         return None
@@ -1370,22 +1372,154 @@ def _sheet_of_tile_name(name: Any, sheets_longest_first: list[str]) -> str | Non
     return None
 
 
-def frame_tile_sheets(gdf_bounds: gpd.GeoDataFrame) -> np.ndarray:
+def _catalogue(sheet_catalogue: Iterable[str] | None) -> frozenset[str]:
+    """The parent sheet catalogue as a set, read once.
+
+    Args:
+        sheet_catalogue: The caller's catalogue, or ``None`` for
+            :data:`STUDY_SHEETS`. Any iterable, a one-shot generator
+            included: it is consumed here, once.
+
+    Returns:
+        The catalogue's sheet names.
+    """
+    return STUDY_SHEETS if sheet_catalogue is None else frozenset(sheet_catalogue)
+
+
+class _SheetResolver:
+    """Reads every tile name by ONE rule: the longest frame-or-catalogue sheet.
+
+    A name — a frame tile's, a ``source_tile`` or a recorded origin — is
+    first resolved to the LONGEST sheet it starts with among the frame's
+    sheets and the catalogue's TOGETHER, and only then classified: on a
+    frame sheet, on a catalogue sheet the frame leaves out (*excluded*), or
+    on neither (*unknown*).
+
+    Until the D50 re-review (Astra, 2026-10-10) a name was looked up among
+    the frame's sheets first, and among the left-out catalogue sheets only
+    if that failed. A shorter frame sheet could then claim a name that a
+    longer left-out sheet owns: with the catalogue ``{A, AB}`` and a frame
+    holding only A, ``AB_x0_y0.png`` was read as A's, so a detection seen
+    only on AB was scored on A (and the materialiser gave it A's tile),
+    where the parent frame, which holds AB, scores it on AB.
+
+    With a complete catalogue — one naming every sheet of the parent
+    frame — the sheets searched are the catalogue itself, for the parent
+    and for every frame cut from it, so each name is read the same way in
+    all of them. Where the frame's sheets and the catalogue are prefix-free
+    together, at most one sheet starts any name, and this reads every name
+    exactly as the frame-first search did. :data:`STUDY_SHEETS` is
+    prefix-free, and a tier-2 test holds it so together with the sheets of
+    every committed frame, so no committed frame reads a name differently.
+
+    Args:
+        frame_sheet_names: The frame's sheets (:func:`frame_sheets`).
+        catalogue: The parent catalogue (:func:`_catalogue`).
+
+    Attributes:
+        frame_set: The frame's sheets.
+        catalogue: The parent catalogue.
+    """
+
+    def __init__(self, frame_sheet_names: Iterable[str], catalogue: frozenset[str]) -> None:
+        self.frame_set: frozenset[str] = frozenset(frame_sheet_names)
+        self.catalogue: frozenset[str] = catalogue
+        # Longest first. Two distinct names of one length cannot both start
+        # one name, so the tie-break by name only fixes the order.
+        self._longest_first = sorted(
+            self.frame_set | catalogue, key=lambda s: (-len(s), s),
+        )
+        # Tile names repeat across rows (every detection on a tile carries
+        # its name), so each distinct name is resolved once.
+        self._memo: dict[str, str | None] = {}
+
+    def sheet_of(self, name: Any) -> str | None:
+        """The frame or catalogue sheet a name lies on, by the longest prefix.
+
+        Args:
+            name: A tile name (or a missing value).
+
+        Returns:
+            The sheet, or ``None`` for a missing, empty or unknown name.
+        """
+        if not isinstance(name, str) or not name:
+            return None
+        if name not in self._memo:
+            self._memo[name] = _sheet_of_tile_name(name, self._longest_first)
+        return self._memo[name]
+
+    def frame_sheet_of(self, name: Any) -> str | None:
+        """The frame sheet a name lies on, or ``None`` (excluded or unknown).
+
+        Args:
+            name: A tile name (or a missing value).
+
+        Returns:
+            :meth:`sheet_of` when that is a frame sheet, else ``None``.
+        """
+        sheet = self.sheet_of(name)
+        return sheet if sheet in self.frame_set else None
+
+    def origin_sheets(self, names: list[str]) -> tuple[set[str], set[str], bool]:
+        """The frame sheets, and the excluded catalogue sheets, a row's origins name.
+
+        Each name is resolved once (:meth:`sheet_of`) and then classified,
+        so it counts as inside the frame, outside it, or unknown — never two
+        of these.
+
+        Args:
+            names: The row's recorded origin tile names.
+
+        Returns:
+            ``(in_frame, excluded, unknown)``: the frame sheets named, the
+            excluded catalogue sheets named (either may be empty), and
+            whether any name lies on neither.
+        """
+        in_frame: set[str] = set()
+        excluded: set[str] = set()
+        unknown = False
+        for name in names:
+            sheet = self.sheet_of(name)
+            if sheet is None:
+                unknown = True
+            elif sheet in self.frame_set:
+                in_frame.add(sheet)
+            else:
+                excluded.add(sheet)
+        return in_frame, excluded, unknown
+
+
+def frame_tile_sheets(
+    gdf_bounds: gpd.GeoDataFrame,
+    *,
+    sheet_catalogue: Iterable[str] | None = None,
+) -> np.ndarray:
     """Each frame tile's sheet, by the one rule both sides of the scorer use.
 
-    The detection scope puts a frame tile on the LONGEST frame sheet its
-    name starts with (:func:`_sheet_of_tile_name`); the per-sheet loop used
-    to select a sheet's tiles with a bare ``str.startswith(sheet)``, which
-    also hands sheet ``A`` every tile of a sheet ``AB``. Where one sheet
-    name is a prefix of another, references were then scoped to tiles the
-    detection side gave to the other sheet (the D50 review, finding 3).
-    Every per-sheet selection now reads this one assignment. Among the
-    study's sheets (:data:`STUDY_SHEETS`) no name is a prefix of another,
-    so on every committed frame it selects exactly the tiles
-    ``str.startswith`` selected, in the same order.
+    The detection scope puts a frame tile on the LONGEST sheet its name
+    starts with (:class:`_SheetResolver`: the frame's sheets and the
+    catalogue's together), and on no sheet when that one is not the
+    frame's; the per-sheet loop used to select a sheet's tiles with a bare
+    ``str.startswith(sheet)``, which also hands sheet ``A`` every tile of
+    a sheet ``AB``. Where one sheet name is a prefix of another,
+    references were then scoped to tiles the detection side gave to the
+    other sheet (the D50 review, finding 3). Every per-sheet selection in
+    this library now reads this one assignment (some scripts still keep
+    their own loops: see :func:`iter_sheet_scopes`). Among the study's
+    sheets (:data:`STUDY_SHEETS`) no name is a prefix of another, so on
+    every committed frame it selects exactly the tiles ``str.startswith``
+    selected, in the same order (a tier-2 test).
+
+    A catalogue sheet the frame leaves out can claim a frame tile only if
+    its name extends a frame sheet's name with the start of that sheet's
+    own tile suffix (a sheet ``A_x1`` against the tile ``A_x10_y0.png``).
+    The parent frame then gives the tile to that sheet too, so the reduced
+    frame does the same: it puts the tile on no sheet.
 
     Args:
         gdf_bounds: Frame tile polygons with a ``tile_name`` column.
+        sheet_catalogue: The parent catalogue; :data:`STUDY_SHEETS` when
+            ``None``.
 
     Returns:
         An object array aligned row for row with ``gdf_bounds``: each
@@ -1395,70 +1529,11 @@ def frame_tile_sheets(gdf_bounds: gpd.GeoDataFrame) -> np.ndarray:
         >>> sheets = frame_tile_sheets(bounds)  # doctest: +SKIP
         >>> bounds[sheets == "K-35-052-4_32635"]  # doctest: +SKIP
     """
-    longest_first = sorted(frame_sheets(gdf_bounds), key=len, reverse=True)
+    resolver = _SheetResolver(frame_sheets(gdf_bounds), _catalogue(sheet_catalogue))
     return np.array(
-        [_sheet_of_tile_name(str(t), longest_first) for t in gdf_bounds["tile_name"]],
+        [resolver.frame_sheet_of(str(t)) for t in gdf_bounds["tile_name"]],
         dtype=object,
     )
-
-
-def _origin_sheets(
-    names: list[str],
-    frame_longest_first: list[str],
-    excluded_longest_first: list[str],
-) -> tuple[set[str], set[str], bool]:
-    """The frame sheets, and the excluded catalogue sheets, a row's origins name.
-
-    Each name is read once: a name on a frame sheet is that sheet's (the
-    attribution rule, unchanged), and only a name on NO frame sheet is looked
-    up among the catalogue sheets the frame leaves out, so a name can never
-    count as both inside and outside the frame. A name on neither is in a
-    tile vocabulary the catalogue does not know.
-
-    Args:
-        names: The row's recorded origin tile names.
-        frame_longest_first: The frame's sheets, longest first.
-        excluded_longest_first: The catalogue sheets the frame leaves out,
-            longest first (:func:`_excluded_catalogue_longest_first`).
-
-    Returns:
-        ``(in_frame, excluded, unknown)``: the frame sheets named, the
-        excluded catalogue sheets named (either may be empty), and whether
-        any name lies on neither.
-    """
-    in_frame: set[str] = set()
-    excluded: set[str] = set()
-    unknown = False
-    for name in names:
-        sheet = _sheet_of_tile_name(name, frame_longest_first)
-        if sheet is not None:
-            in_frame.add(sheet)
-            continue
-        other = _sheet_of_tile_name(name, excluded_longest_first)
-        if other is not None:
-            excluded.add(other)
-        else:
-            unknown = True
-    return in_frame, excluded, unknown
-
-
-def _excluded_catalogue_longest_first(
-    sheet_catalogue: Iterable[str] | None,
-    frame_set: set[str],
-) -> list[str]:
-    """The catalogue sheets a frame leaves out, longest first.
-
-    Args:
-        sheet_catalogue: The parent catalogue; :data:`STUDY_SHEETS` when
-            ``None``.
-        frame_set: The frame's sheets.
-
-    Returns:
-        Catalogue sheets not in the frame, longest first (ties by name, so
-        the order is deterministic).
-    """
-    catalogue = STUDY_SHEETS if sheet_catalogue is None else frozenset(sheet_catalogue)
-    return sorted(catalogue - frame_set, key=lambda s: (-len(s), s))
 
 
 # ── Reduced frames: the parent frame governs (the D50 review, finding 2) ──
@@ -1468,37 +1543,75 @@ def _excluded_catalogue_longest_first(
 # the frame's own sheets, so before 2026-10-10 a reduced frame could score
 # a detection that the parent scores on another sheet, and per-sheet
 # results stopped summing to the parent's (Astra's review, 2026-10-09).
-# The contract since then (PI decision, 2026-10-10): **a detection counts in
-# a reduced frame if and only if the parent frame attributes it to a sheet
-# inside the reduced frame.** Three rules carry it out, in the detection
-# scope and the primary-tile materialiser alike:
+# The contract since then (PI ruling D59, 2026-10-10): **a detection counts
+# in a reduced frame if and only if the parent frame attributes it to a
+# sheet inside the reduced frame.**
+#
+# Every tile name (a frame tile's, a ``source_tile``, a recorded origin) is
+# first read by ONE rule, :class:`_SheetResolver`: the longest sheet it
+# starts with among the frame's sheets and the catalogue's together, then
+# classified as on a frame sheet, on a catalogue sheet the frame leaves out,
+# or unknown. A shorter frame sheet therefore never claims a name that a
+# longer left-out sheet owns (Astra's re-review, 2026-10-10: with the
+# catalogue {A, AB}, an A-only frame read ``AB_x0_y0.png`` as A's). Two
+# rules then carry the contract out, in the detection scope and the
+# primary-tile materialiser alike:
 #
 # 1. **Out-of-frame origin** (PI decision, 2026-10-10). A row whose
-#    recorded origins name no sheet of the frame but at least one study
+#    recorded origins name no sheet of the frame but at least one catalogue
 #    sheet the frame leaves out (``n_origin_excluded``) was seen only on
 #    sheets outside the frame. It is excluded and counted; it no longer
 #    falls back to ``source_tile``. Any parent frame either attributes it to
 #    one of those sheets, outside this frame, or excludes it by this same
-#    rule, so the exclusion is the parent's verdict. An origin in a tile
-#    vocabulary the catalogue does not know keeps the ``source_tile``
-#    fallback, but the scorer now warns about it (rule 3).
+#    rule, so the exclusion is the parent's verdict.
 # 2. **Origins on both sides of the frame's edge.** A row seen on a frame
-#    sheet AND on a study sheet the frame leaves out is attributed in the
-#    parent by geometry: whichever origin sheet's tiles hold the point. The
-#    reduced frame does not hold the left-out sheet's tiles, so it cannot
+#    sheet AND on a catalogue sheet the frame leaves out is attributed in
+#    the parent by geometry: whichever origin sheet's tiles hold the point.
+#    The reduced frame does not hold the left-out sheet's tiles, so it cannot
 #    reproduce that choice, and it refuses (:class:`ReducedFrameRefusalError`)
 #    rather than guess. Pass ``parent_bounds``, the full evaluation frame:
 #    attribution is then computed on the parent and restricted to this
 #    frame's sheets, which reproduces the parent's choice exactly.
-# 3. **Warn where the catalogue cannot see.** An origin name on no sheet of
-#    the frame and no catalogue sheet might still name a sheet of some
-#    larger frame the catalogue does not list. That path cannot be ruled
-#    out, so the scope and the materialiser log a WARNING when it occurs.
 #
-# On a full frame the three rules move nothing that has been measured: the
+# **The guarantee is for whole-sheet partitions only.** A reduced frame
+# made of whole sheets of its parent counts exactly the detections the
+# parent attributes to those sheets, so the per-sheet TP, FP and FN of any
+# partition of the parent into whole sheets sum exactly to the parent's. A
+# frame made of PART of a sheet's tiles is not such a partition: where
+# tiles overlap, one point lies in tiles on both sides of the cut, so the
+# parts are not an additive partition of the parent's points, on the
+# detection side or the reference side. Containment in the parent
+# (:func:`_check_within_parent`: the parent's tiles, polygons and sheets)
+# is necessary for the guarantee but does not prove additivity. Such a
+# frame is an evaluation frame in its own right, as the common-footprint
+# frames are, and its counts are not a share of the parent's.
+#
+# **Rule 3 is a compatibility path, not part of the contract.** An origin
+# name on no sheet of the frame and no catalogue sheet (a tile vocabulary
+# the catalogue does not recognise) keeps the pre-D50 ``source_tile``
+# fallback, and the scope and the materialiser log a WARNING. The fallback
+# exists for a full-frame (legacy) evaluation whose vocabulary is not
+# recognised. It is not part of D59's prevention and gives no partition
+# guarantee: on a reduced frame scored without its parent, such a row can
+# count although the parent attributes it to another sheet. A deliberately
+# reduced frame must therefore be scored with ``parent_bounds``; attribution
+# is then the parent's, whichever rule makes it, so the fallback cannot
+# count a row twice across a partition. The library's own per-sheet paths
+# never meet it that way: :func:`iter_sheet_scopes` and
+# :func:`per_sheet_confusion` read every sheet's partition from ONE scoping
+# of the frame they are given, and the per-map consumers repaired on
+# 2026-10-10 give them the full frame, so each row counts on at most one
+# sheet. The library's common-footprint bootstraps
+# (:func:`bootstrap_effect_size_ci`, :func:`bootstrap_tile_effect_size_ci`,
+# :func:`bootstrap_interaction_ci`) pass each condition's own frame as the
+# parent whenever the common footprint is smaller than it.
+#
+# On a full frame these rules move nothing that has been measured: the
 # read-only measurement of 2026-10-09 over all 2,751 committed full-frame
 # cells (PR #33) found ``n_origin_unrecognised``, ``n_origin_excluded`` and
-# ``n_origin_partly_excluded`` 0 in every cell.
+# ``n_origin_partly_excluded`` 0 in every cell; and the frame's sheets with
+# :data:`STUDY_SHEETS` are prefix-free on every committed frame (tier-2
+# test), so the one-rule resolution reads every name there as before.
 
 
 class ReducedFrameRefusalError(ValueError):
@@ -1611,6 +1724,7 @@ def _warn_unknown_origins(n_unknown: int, n_rows: int, what: str) -> None:
 def _check_within_parent(
     gdf_bounds: gpd.GeoDataFrame,
     parent_bounds: gpd.GeoDataFrame,
+    catalogue: frozenset[str],
 ) -> None:
     """Refuse a parent frame that the frame is not a part of.
 
@@ -1621,6 +1735,8 @@ def _check_within_parent(
     Args:
         gdf_bounds: The reduced frame's tile polygons.
         parent_bounds: The parent frame's tile polygons.
+        catalogue: The parent catalogue both frames' tiles are read with
+            (:func:`frame_tile_sheets`).
 
     Raises:
         ValueError: If the coordinate reference systems differ, a parent
@@ -1662,8 +1778,8 @@ def _check_within_parent(
             f"parent_bounds: {len(differ)} same-named tiles have different "
             f"polygons in the parent frame (e.g. {differ[:5]})"
         )
-    own = list(frame_tile_sheets(gdf_bounds))
-    parents = list(frame_tile_sheets(parent_bounds)[pos])
+    own = list(frame_tile_sheets(gdf_bounds, sheet_catalogue=catalogue))
+    parents = list(frame_tile_sheets(parent_bounds, sheet_catalogue=catalogue)[pos])
     if own != parents:
         differ = sorted({n for n, a, b in zip(names, own, parents) if a != b})
         raise ValueError(
@@ -1675,6 +1791,7 @@ def _check_within_parent(
 def _frame_hits(
     gdf_det: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
+    catalogue: frozenset[str],
 ) -> tuple[list[set[str]], np.ndarray]:
     """Which frame sheets' tiles each detection intersects, by one spatial join.
 
@@ -1687,6 +1804,7 @@ def _frame_hits(
     Args:
         gdf_det: Detections in the frame's coordinate reference system.
         gdf_bounds: Frame tile polygons with a ``tile_name`` column.
+        catalogue: The parent catalogue the tiles are read with.
 
     Returns:
         ``(hits, in_union)``: per row, the set of frame sheets whose tiles
@@ -1694,7 +1812,8 @@ def _frame_hits(
     """
     n = len(gdf_det)
     tile_sheet = dict(zip(
-        (str(t) for t in gdf_bounds["tile_name"]), frame_tile_sheets(gdf_bounds),
+        (str(t) for t in gdf_bounds["tile_name"]),
+        frame_tile_sheets(gdf_bounds, sheet_catalogue=catalogue),
     ))
     points = gpd.GeoDataFrame(
         geometry=gdf_det.geometry.to_numpy(), crs=gdf_det.crs,
@@ -1754,7 +1873,7 @@ def _attribute_rows(
     gdf_bounds: gpd.GeoDataFrame,
     origin_columns: list[str],
     has_source_tile: bool,
-    sheet_catalogue: Iterable[str] | None,
+    catalogue: frozenset[str],
 ) -> _RowAttribution:
     """Attribute every detection to one sheet of a frame (ruling D50).
 
@@ -1767,22 +1886,22 @@ def _attribute_rows(
         gdf_bounds: The frame attribution is computed on.
         origin_columns: The :data:`ORIGIN_TILE_COLUMNS` present.
         has_source_tile: Whether ``source_tile`` is present.
-        sheet_catalogue: The parent catalogue; :data:`STUDY_SHEETS` when
-            ``None``.
+        catalogue: The parent catalogue (:func:`_catalogue`).
 
     Returns:
         A :class:`_RowAttribution`.
     """
     n = len(gdf_det)
-    sheets = frame_sheets(gdf_bounds)
-    frame_set = set(sheets)
-    longest_first = sorted(sheets, key=len, reverse=True)
-    excluded_longest_first = _excluded_catalogue_longest_first(
-        sheet_catalogue, frame_set,
-    )
-    hits, in_union = _frame_hits(gdf_det, gdf_bounds)
+    # One reading of every name — source_tile and origins alike — by the
+    # longest sheet of the frame and the catalogue together, so a shorter
+    # frame sheet never claims a name a longer left-out sheet owns (Astra's
+    # re-review, 2026-10-10). A source_tile on a left-out or unknown sheet
+    # names no frame sheet, exactly as a foreign name always has.
+    resolver = _SheetResolver(frame_sheets(gdf_bounds), catalogue)
+    frame_set = resolver.frame_set
+    hits, in_union = _frame_hits(gdf_det, gdf_bounds, catalogue)
     named = (
-        [_sheet_of_tile_name(v, longest_first) for v in gdf_det["source_tile"]]
+        [resolver.frame_sheet_of(v) for v in gdf_det["source_tile"]]
         if has_source_tile else [None] * n
     )
     origin_values = [(c, gdf_det[c].tolist()) for c in origin_columns]
@@ -1813,8 +1932,8 @@ def _attribute_rows(
         # reports/scorer-frames-d50-d51-2026-10-08.md § 7.)
         # ``origin_excluded``: catalogue sheets it was seen on that this
         # frame leaves out (rules 1 and 2 above).
-        origin_frame, origin_excluded, has_unknown = _origin_sheets(
-            origin_names, longest_first, excluded_longest_first,
+        origin_frame, origin_excluded, has_unknown = resolver.origin_sheets(
+            origin_names,
         )
         origin_frames.append(origin_frame)
         unknown[pos] = has_unknown
@@ -1882,12 +2001,16 @@ class DetectionScope:
             parent removes as out of its frame are removed as well. This is
             what the tile confusion books: it never needed a sheet, and the
             ruling changes it only by the out-of-frame rows.
+        sheet_catalogue: The parent catalogue the scope read tile names
+            with, so :func:`iter_sheet_scopes` reads the frame's tiles for
+            the reference side by the same rule.
     """
 
     detections: gpd.GeoDataFrame
     sheets: np.ndarray
     diagnostics: dict[str, Any] = field(default_factory=dict)
     retained: gpd.GeoDataFrame | None = None
+    sheet_catalogue: frozenset[str] = STUDY_SHEETS
 
     def on_sheet(self, sheet: str) -> gpd.GeoDataFrame:
         """Return the in-scope detections attributed to one sheet.
@@ -1937,6 +2060,10 @@ def scope_detections_to_frame(
 
     **Attribution.** Each detection is put on ONE sheet, its origin sheet:
 
+    Every name — origin, ``source_tile`` and frame tile — is read by one
+    rule (:class:`_SheetResolver`): the longest sheet it starts with among
+    the frame's sheets and ``sheet_catalogue``'s together.
+
     * when the row records the proposer's own tile(s) in one of
       :data:`ORIGIN_TILE_COLUMNS` (the first column with a parseable value
       wins), its origin sheets are the frame sheets those tiles lie on — the
@@ -1959,9 +2086,10 @@ def scope_detections_to_frame(
       seen only off this frame: it is excluded, not scored, and counted in
       ``n_origin_excluded`` (the out-of-frame-origin rule, PI decision
       2026-10-10). It never falls back to ``source_tile``;
-    * otherwise the sheet ``source_tile`` names by the scorers' prefix rule
-      (:func:`_sheet_of_tile_name`) — no recorded origin, or one in a tile
-      vocabulary the catalogue does not know.
+    * otherwise the frame sheet ``source_tile`` names, if any — no recorded
+      origin, or one in a tile vocabulary the catalogue does not know (rule
+      3: a compatibility path for full-frame evaluations, with a WARNING;
+      not part of the reduced-frame contract below).
 
     A row on no frame sheet (null or empty ``source_tile`` and no origin
     naming a frame sheet, or a foreign sheet's name) is *unattributed*: it
@@ -2002,9 +2130,9 @@ def scope_detections_to_frame(
             origin column raises, as the scorers always have. When ``False``
             (the tile confusion, which can book detections by geometry
             alone), such a set is returned unscoped with ``applied`` false.
-        sheet_catalogue: The parent sheet catalogue an origin naming no
-            frame sheet is identified against; :data:`STUDY_SHEETS` when
-            ``None``. It separates an origin on a real sheet the frame
+        sheet_catalogue: The parent sheet catalogue every tile name is
+            read with, together with the frame's sheets; :data:`STUDY_SHEETS`
+            when ``None``. It separates an origin on a real sheet the frame
             leaves out (excluded, or refused when the row was also seen on
             a frame sheet) from a tile vocabulary the study never used
             (``source_tile`` fallback, with a warning).
@@ -2089,16 +2217,19 @@ def scope_detections_to_frame(
         ...     dets, one, parent_bounds=bounds).diagnostics["n_parent_elsewhere"]
         3
     """
+    catalogue = _catalogue(sheet_catalogue)
     if parent_bounds is not None:
         # Checked first, so a misused parent fails even on an empty set.
-        _check_within_parent(gdf_bounds, parent_bounds)
+        _check_within_parent(gdf_bounds, parent_bounds, catalogue)
     n = len(gdf_det)
     diag = _empty_scope_diagnostics(n)
     if parent_bounds is not None:
         diag["n_parent_sheets"] = len(frame_sheets(parent_bounds))
         diag["n_parent_elsewhere"] = 0
     if n == 0:
-        return DetectionScope(gdf_det, np.array([], dtype=object), diag, gdf_det)
+        return DetectionScope(
+            gdf_det, np.array([], dtype=object), diag, gdf_det, catalogue,
+        )
 
     origin_columns = [c for c in ORIGIN_TILE_COLUMNS if c in gdf_det.columns]
     diag["origin_columns"] = origin_columns
@@ -2118,7 +2249,7 @@ def scope_detections_to_frame(
             "detections carry no source_tile or origin column"
         )
         return DetectionScope(
-            gdf_det, np.full(n, None, dtype=object), diag, gdf_det,
+            gdf_det, np.full(n, None, dtype=object), diag, gdf_det, catalogue,
         )
 
     # Attribution: on this frame, or — for a reduced frame given its
@@ -2126,7 +2257,7 @@ def scope_detections_to_frame(
     within_parent = parent_bounds is not None
     att = _attribute_rows(
         gdf_det, parent_bounds if within_parent else gdf_bounds,
-        origin_columns, has_source_tile, sheet_catalogue,
+        origin_columns, has_source_tile, catalogue,
     )
     _refuse_partly_excluded(
         att.partly, att.sheets_left_out,
@@ -2134,7 +2265,7 @@ def scope_detections_to_frame(
     )
     # Membership is always decided on THIS frame's tiles.
     if within_parent:
-        hits, in_union = _frame_hits(gdf_det, gdf_bounds)
+        hits, in_union = _frame_hits(gdf_det, gdf_bounds, catalogue)
     else:
         hits, in_union = att.hits, att.in_union
     frame_set = set(frame_sheets(gdf_bounds))
@@ -2197,6 +2328,7 @@ def scope_detections_to_frame(
     return DetectionScope(
         gdf_det.iloc[np.flatnonzero(keep)], kept_sheets, diag,
         gdf_det.iloc[np.flatnonzero(~(out_of_frame | removed_by_parent))],
+        catalogue,
     )
 
 
@@ -2292,7 +2424,9 @@ def iter_sheet_scopes(
             gdf_det, gdf_bounds,
             sheet_catalogue=sheet_catalogue, parent_bounds=parent_bounds,
         )
-    tile_sheets = frame_tile_sheets(gdf_bounds)
+    # The reference side reads the frame's tiles with the catalogue the
+    # detection scope read every name with.
+    tile_sheets = frame_tile_sheets(gdf_bounds, sheet_catalogue=scope.sheet_catalogue)
     for sheet in frame_sheets(gdf_bounds):
         sheet_bounds = gdf_bounds[tile_sheets == sheet]
         ref_scope = gdf_ref[gdf_ref[ref_map_col] == sheet]
@@ -2341,7 +2475,7 @@ def _primary_tile_rows(
     gdf_points: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     origin: list[list[str]],
-    sheet_catalogue: Iterable[str] | None,
+    catalogue: frozenset[str],
 ) -> tuple[list[str | None], list[tuple[str, ...]], list[set[str]],
            np.ndarray, np.ndarray, set[str]]:
     """The per-point core of :func:`assign_primary_tiles_on_origin_sheet`.
@@ -2353,8 +2487,7 @@ def _primary_tile_rows(
             system.
         gdf_bounds: The frame the assignment is computed on.
         origin: Per-row origin tile names.
-        sheet_catalogue: The parent catalogue; :data:`STUDY_SHEETS` when
-            ``None``.
+        catalogue: The parent catalogue (:func:`_catalogue`).
 
     Returns:
         ``(assigned, counted, origin_sheets, partly, unknown,
@@ -2365,15 +2498,16 @@ def _primary_tile_rows(
         on no frame or catalogue sheet; and the left-out sheets named.
     """
     n = len(gdf_points)
-    sheets = frame_sheets(gdf_bounds)
-    longest_first = sorted(sheets, key=len, reverse=True)
-    excluded_longest_first = _excluded_catalogue_longest_first(
-        sheet_catalogue, set(sheets),
-    )
+    # Origins are read by the detection scope's one rule: the longest sheet
+    # of the frame and the catalogue together (Astra's re-review,
+    # 2026-10-10), so a shorter frame sheet never claims a left-out sheet's
+    # tile name.
+    resolver = _SheetResolver(frame_sheets(gdf_bounds), catalogue)
     # The canonical tile-to-sheet assignment (frame_tile_sheets), the one
     # the scorer's detection scope and per-sheet loop read.
     tile_sheet = dict(zip(
-        (str(t) for t in gdf_bounds["tile_name"]), frame_tile_sheets(gdf_bounds),
+        (str(t) for t in gdf_bounds["tile_name"]),
+        frame_tile_sheets(gdf_bounds, sheet_catalogue=catalogue),
     ))
 
     points = gpd.GeoDataFrame(
@@ -2403,8 +2537,8 @@ def _primary_tile_rows(
         # scope_detections_to_frame attributes by, so a freshly written
         # source_tile is never re-attributed at scoring time; and the
         # catalogue sheets it was seen on that the frame leaves out.
-        origin_sheets, origin_excluded, has_unknown = _origin_sheets(
-            origin[pos], longest_first, excluded_longest_first,
+        origin_sheets, origin_excluded, has_unknown = resolver.origin_sheets(
+            origin[pos],
         )
         origin_sheet_sets.append(origin_sheets)
         unknown[pos] = has_unknown
@@ -2499,17 +2633,21 @@ def assign_primary_tiles_on_origin_sheet(
     parent frame might give it the left-out sheet's tile. With
     ``parent_bounds`` the assignment is the parent's, restricted to this
     frame: a point the parent assigns to a tile outside it gets ``None``
-    (``n_parent_elsewhere``). An origin in a tile vocabulary the catalogue
-    does not know keeps the legacy rule and is logged as a WARNING.
+    (``n_parent_elsewhere``). Origins are read as the detection scope
+    reads them: the longest sheet of the frame and the catalogue together.
+    An origin in a tile vocabulary the catalogue does not know keeps the
+    legacy rule and is logged as a WARNING; that is a compatibility path
+    for full-frame materialisation, not part of the reduced-frame contract,
+    so a deliberately reduced frame must pass ``parent_bounds``.
 
     Args:
         gdf_points: Points in the frame's coordinate reference system.
         gdf_bounds: Frame tile polygons with a ``tile_name`` column.
         origin: Per-row origin tile names; inferred by
             :func:`origin_tiles_of` when ``None``.
-        sheet_catalogue: The parent sheet catalogue an origin naming no
-            frame sheet is identified against; :data:`STUDY_SHEETS` when
-            ``None``.
+        sheet_catalogue: The parent sheet catalogue every origin name is
+            read with, together with the frame's sheets; :data:`STUDY_SHEETS`
+            when ``None``.
         parent_bounds: The full frame this frame is part of, or ``None``
             (checked as :func:`scope_detections_to_frame` checks it).
 
@@ -2534,8 +2672,9 @@ def assign_primary_tiles_on_origin_sheet(
         ValueError: If ``parent_bounds`` is given but the frame is not part
             of it.
     """
+    catalogue = _catalogue(sheet_catalogue)
     if parent_bounds is not None:
-        _check_within_parent(gdf_bounds, parent_bounds)
+        _check_within_parent(gdf_bounds, parent_bounds, catalogue)
     n = len(gdf_points)
     diag = {"n_points": n, **dict.fromkeys(_PRIMARY_TILE_COUNTS, 0)}
     if parent_bounds is not None:
@@ -2548,7 +2687,7 @@ def assign_primary_tiles_on_origin_sheet(
     assigned, counted, origin_sheet_sets, partly, unknown, left_out = (
         _primary_tile_rows(
             gdf_points, parent_bounds if within_parent else gdf_bounds,
-            origin, sheet_catalogue,
+            origin, catalogue,
         )
     )
     _refuse_partly_excluded(
