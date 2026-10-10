@@ -121,7 +121,9 @@ def test_absent_metric_is_not_supplied_not_zero(corpus):
     assert "6 condition(s): 20" in text
     row = next(ln for ln in text.splitlines() if ln.startswith("| `arm-a-overlap-12-5`"))
     cells = [c.strip() for c in row.split("|")]
-    assert cells[7].startswith("0.5580"), cells        # F1@20 m, measured
+    # 2026-10-09: 0.5580 -> 0.5734. The D57 (4) re-score (D50 scope) moves this
+    # measured value, so the pin is updated as D58 Q6 rules.
+    assert cells[7].startswith("0.5734"), cells        # F1@20 m, measured
     assert cells[8] == grr.NOT_SUPPLIED, cells         # F1@50 m, never scored
 
 

@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — n1-outstanding-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `d639b249e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/n1-outstanding-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -102,27 +102,27 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 | `baseline-pro-text-high-t-0-0` | single-pass | none | 1 | — | not supplied | 0.4942 [0.4384, 0.5478] | 0.5249 [0.4679, 0.5794] | 0.3808 |
 | `baseline-pro-text-high-t-0-0-post-e71` | single-pass | none | 1 | — | not supplied | 0.4919 [0.4378, 0.5452] | 0.5208 [0.4651, 0.5746] | 0.3992 |
 | `baseline-pro-text-medium-t-0-7` | single-pass | none | 1 | — | 1445 | 0.4160 [0.3613, 0.4712] | 0.4298 [0.3740, 0.4863] | 0.3105 |
-| `brief-text-t03-consensus-1of3` | consensus | consensus | 3 | k=1 | 1229 | 0.4663 [0.4085, 0.5255] | 0.4808 [0.4228, 0.5415] | 0.0651 |
-| `brief-text-t03-consensus-2of3` | consensus | consensus | 3 | k=2 | 952 | 0.5537 [0.4970, 0.6097] | 0.5725 [0.5134, 0.6277] | 0.0938 |
-| `brief-text-t03-consensus-3of3` | consensus | consensus | 3 | k=3 | 794 | 0.5907 [0.5346, 0.6443] | 0.6054 [0.5485, 0.6599] | 0.1711 |
+| `brief-text-t03-consensus-1of3` | consensus | consensus | 3 | k=1 | 1229 | 0.4675 [0.4100, 0.5270] | 0.4820 [0.4238, 0.5424] | 0.0651 |
+| `brief-text-t03-consensus-2of3` | consensus | consensus | 3 | k=2 | 952 | 0.5552 [0.4982, 0.6113] | 0.5739 [0.5150, 0.6293] | 0.0938 |
+| `brief-text-t03-consensus-3of3` | consensus | consensus | 3 | k=3 | 794 | 0.5924 [0.5358, 0.6461] | 0.6070 [0.5498, 0.6612] | 0.1711 |
 | `brief-text-t03-single-pass-run_1` | single-pass | none | 1 | — | 1078 | 0.5010 [0.4454, 0.5574] | 0.5261 [0.4686, 0.5834] | 0.0427 |
 | `brief-text-t03-single-pass-run_2` | single-pass | none | 1 | — | 1052 | 0.4990 [0.4437, 0.5556] | 0.5286 [0.4712, 0.5850] | 0.0143 |
 | `brief-text-t03-single-pass-run_3` | single-pass | none | 1 | — | 1096 | 0.4977 [0.4386, 0.5545] | 0.5147 [0.4544, 0.5718] | 0.0605 |
-| `image-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 690 | 0.6240 [0.5816, 0.6661] | 0.7129 [0.6750, 0.7493] | 0.2157 |
-| `image-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 681 | 0.6290 [0.5863, 0.6710] | 0.7186 [0.6808, 0.7549] | 0.2157 |
-| `image-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 675 | 0.6288 [0.5866, 0.6708] | 0.7189 [0.6819, 0.7556] | 0.2197 |
+| `image-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 690 | 0.6258 [0.5834, 0.6679] | 0.7147 [0.6769, 0.7508] | 0.2157 |
+| `image-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 681 | 0.6308 [0.5885, 0.6732] | 0.7204 [0.6823, 0.7564] | 0.2157 |
+| `image-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 675 | 0.6306 [0.5883, 0.6727] | 0.7207 [0.6834, 0.7569] | 0.2197 |
 | `image-t0-single-pass-run_1` | single-pass | none | 1 | — | 745 | 0.6000 [0.5596, 0.6408] | 0.6814 [0.6438, 0.7164] | 0.3124 |
 | `image-t0-single-pass-run_2` | single-pass | none | 1 | — | 747 | 0.5956 [0.5553, 0.6364] | 0.6785 [0.6404, 0.7142] | 0.3160 |
 | `image-t0-single-pass-run_3` | single-pass | none | 1 | — | 746 | 0.5995 [0.5591, 0.6400] | 0.6808 [0.6428, 0.7159] | 0.3124 |
-| `image-t03-consensus-1of3` | consensus | consensus | 3 | k=1 | 812 | 0.5822 [0.5395, 0.6270] | 0.6544 [0.6143, 0.6937] | 0.1689 |
-| `image-t03-consensus-2of3` | consensus | consensus | 3 | k=2 | 664 | 0.6424 [0.6002, 0.6843] | 0.7261 [0.6894, 0.7622] | 0.2216 |
+| `image-t03-consensus-1of3` | consensus | consensus | 3 | k=1 | 812 | 0.5838 [0.5407, 0.6282] | 0.6560 [0.6162, 0.6952] | 0.1689 |
+| `image-t03-consensus-2of3` | consensus | consensus | 3 | k=2 | 664 | 0.6442 [0.6025, 0.6860] | 0.7279 [0.6913, 0.7642] | 0.2216 |
 | `image-t03-consensus-3of3` | consensus | consensus | 3 | k=3 | 567 | 0.6766 [0.6340, 0.7194] | 0.7525 [0.7157, 0.7879] | 0.3489 |
 | `image-t03-single-pass-run_1` | single-pass | none | 1 | — | 753 | 0.5943 [0.5534, 0.6364] | 0.6751 [0.6377, 0.7106] | 0.3065 |
 | `image-t03-single-pass-run_2` | single-pass | none | 1 | — | 746 | 0.5944 [0.5512, 0.6395] | 0.6757 [0.6363, 0.7130] | 0.2934 |
 | `image-t03-single-pass-run_3` | single-pass | none | 1 | — | 747 | 0.5905 [0.5508, 0.6294] | 0.6802 [0.6436, 0.7154] | 0.3160 |
-| `pro-image-high-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 730 | 0.5614 [0.5176, 0.6033] | 0.6747 [0.6317, 0.7152] | 0.5577 |
-| `pro-image-high-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 690 | 0.5760 [0.5326, 0.6176] | 0.6987 [0.6563, 0.7368] | 0.5678 |
-| `pro-image-high-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 648 | 0.5854 [0.5401, 0.6282] | 0.7073 [0.6641, 0.7458] | 0.5921 |
+| `pro-image-high-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 730 | 0.5631 [0.5195, 0.6053] | 0.6764 [0.6332, 0.7170] | 0.5577 |
+| `pro-image-high-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 690 | 0.5778 [0.5341, 0.6190] | 0.7004 [0.6582, 0.7387] | 0.5678 |
+| `pro-image-high-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 648 | 0.5873 [0.5421, 0.6299] | 0.7091 [0.6660, 0.7476] | 0.5921 |
 | `pro-image-high-t0-single-pass-run_1` | single-pass | none | 1 | — | 692 | 0.5288 [0.4818, 0.5745] | 0.6371 [0.5897, 0.6802] | 0.6093 |
 | `pro-image-high-t0-single-pass-run_1-post-e71` | single-pass | none | 1 | — | 750 | 0.5401 [0.4970, 0.5827] | 0.6650 [0.6235, 0.7041] | 0.6508 |
 | `pro-image-high-t0-single-pass-run_2` | single-pass | none | 1 | — | 681 | 0.5305 [0.4829, 0.5760] | 0.6344 [0.5868, 0.6772] | 0.6073 |
@@ -130,9 +130,9 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 | `pro-image-high-t0-single-pass-run_3` | single-pass | none | 1 | — | 677 | 0.5234 [0.4748, 0.5696] | 0.6295 [0.5815, 0.6733] | 0.6021 |
 | `pro-image-high-t0-single-pass-run_3-post-e71` | single-pass | none | 1 | — | 741 | 0.5459 [0.5017, 0.5888] | 0.6650 [0.6222, 0.7045] | 0.6428 |
 | `pro-image-medium-t07-single-pass-run_1` | single-pass | none | 1 | — | 941 | 0.4520 [0.4032, 0.4985] | 0.5858 [0.5307, 0.6347] | 0.5984 |
-| `pro-text-high-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 1192 | 0.4634 [0.4092, 0.5167] | 0.4929 [0.4363, 0.5476] | 0.2629 |
-| `pro-text-high-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 991 | 0.5203 [0.4649, 0.5736] | 0.5526 [0.4958, 0.6057] | 0.3333 |
-| `pro-text-high-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 842 | 0.5748 [0.5212, 0.6281] | 0.6092 [0.5550, 0.6615] | 0.3894 |
+| `pro-text-high-t0-consensus-1of3` | consensus | consensus | 3 | k=1 | 1192 | 0.4647 [0.4104, 0.5178] | 0.4942 [0.4378, 0.5488] | 0.2629 |
+| `pro-text-high-t0-consensus-2of3` | consensus | consensus | 3 | k=2 | 991 | 0.5217 [0.4661, 0.5748] | 0.5540 [0.4971, 0.6074] | 0.3333 |
+| `pro-text-high-t0-consensus-3of3` | consensus | consensus | 3 | k=3 | 842 | 0.5764 [0.5228, 0.6295] | 0.6108 [0.5564, 0.6627] | 0.3894 |
 | `pro-text-high-t0-single-pass-run_1` | single-pass | none | 1 | — | 1026 | 0.5010 [0.4456, 0.5527] | 0.5298 [0.4732, 0.5827] | 0.3916 |
 | `pro-text-high-t0-single-pass-run_1-post-e71` | single-pass | none | 1 | — | 1090 | 0.4931 [0.4396, 0.5458] | 0.5207 [0.4655, 0.5738] | 0.3970 |
 | `pro-text-high-t0-single-pass-run_2` | single-pass | none | 1 | — | 1028 | 0.4867 [0.4307, 0.5431] | 0.5195 [0.4622, 0.5764] | 0.3704 |
@@ -259,7 +259,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `d639b249e` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

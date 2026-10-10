@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-20T13:09:11.356451+00:00",
+  "timestamp": "2026-10-09T09:35:23.000682+00:00",
   "summary": {
     "label": "postverif_t5",
     "n_detections": 374,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.8677,
-        "f1_point": 0.8677,
-        "f1_ci_lower": 0.8349,
-        "f1_ci_upper": 0.8952,
+        "f1": 0.8702,
+        "f1_point": 0.8702,
+        "f1_ci_lower": 0.8373,
+        "f1_ci_upper": 0.8974,
         "f1_ci_method": "BCa",
-        "precision": 0.9385,
-        "p_point": 0.9385,
-        "p_ci_lower": 0.9053,
-        "p_ci_upper": 0.9611,
+        "precision": 0.9412,
+        "p_point": 0.9412,
+        "p_ci_lower": 0.908,
+        "p_ci_upper": 0.9632,
         "p_ci_method": "BCa",
-        "recall": 0.8069,
-        "r_point": 0.8069,
-        "r_ci_lower": 0.7593,
-        "r_ci_upper": 0.8467,
+        "recall": 0.8092,
+        "r_point": 0.8092,
+        "r_ci_lower": 0.7625,
+        "r_ci_upper": 0.8485,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -42,6 +42,24 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "sparse_cross_grid",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 374,
+      "n_in_scope": 374,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 1,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "source_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
         "tp": 179,
@@ -69,15 +87,16 @@
         "ci_lower": 0.9671,
         "ci_upper": 0.9963,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "9c82d3fa0",
+    "script_git_commit": "494b5a7af",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-20T13:09:09.182761+00:00",
+    "generated_at_utc": "2026-10-09T09:35:20.320267+00:00",
     "cli_args": {
       "detections": [
         "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t5.geojson"
@@ -95,6 +114,8 @@
       "output_dir": "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/t5",
       "label": "postverif_t5",
       "mcc": true,
+      "tile_join": "id",
+      "require_clean_inputs": true,
       "workers": 1
     },
     "bootstrap": {
@@ -114,6 +135,19 @@
       ],
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "494b5a7af",
+      "inputs": {
+        "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t5.geojson": "clean",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "results/deployment-oracle-2026-06-06/gs-postverifier-sweep/high-t0.3/postverif_t5.geojson": "2bb3a26242540ed0ba82380f0e225e5e11d294df",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5"
+      }
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",

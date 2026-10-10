@@ -1,35 +1,54 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-20T13:12:01.354248+00:00",
+  "timestamp": "2026-10-09T09:36:06.774852+00:00",
   "summary": {
     "label": "h13-armB-native",
     "n_runs": 3,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.5222,
-        "f1_point": 0.5222,
-        "f1_ci_lower": 0.4692,
-        "f1_ci_upper": 0.5718,
-        "precision": 0.3906,
-        "p_point": 0.3906,
-        "p_ci_lower": 0.3369,
-        "p_ci_upper": 0.4435,
-        "recall": 0.7875,
-        "r_point": 0.7875,
-        "r_ci_lower": 0.7379,
-        "r_ci_upper": 0.8287,
+        "f1": 0.5277,
+        "f1_point": 0.5277,
+        "f1_ci_lower": 0.4747,
+        "f1_ci_upper": 0.577,
+        "precision": 0.3947,
+        "p_point": 0.3947,
+        "p_ci_lower": 0.3413,
+        "p_ci_upper": 0.4481,
+        "recall": 0.7957,
+        "r_point": 0.7957,
+        "r_ci_lower": 0.7463,
+        "r_ci_upper": 0.8358,
         "coverage_status": "normal",
         "ci_unreliable": false,
-        "ci_zero_fraction": 0.125581,
-        "ci_n_tiles": 430,
         "ci_excludes_point": false,
         "sparse_coverage": false,
-        "ci_flag_basis": "measured-exclusion-or-partial-coverage"
+        "ci_flag_basis": "measured-exclusion-or-partial-coverage",
+        "ci_zero_fraction": 0.125581,
+        "ci_n_tiles": 430
       }
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_passes": 3,
+      "n_detections": 3405,
+      "n_in_scope": 3405,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 16,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "origin_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "mcc": {
         "mean": 0.0117,
@@ -65,11 +84,11 @@
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "9c82d3fa0",
+    "script_git_commit": "494b5a7af",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-20T13:11:50.693963+00:00",
+    "generated_at_utc": "2026-10-09T09:35:53.250855+00:00",
     "cli_args": {
       "detections": [
         "outputs/h13/scoring/native/armB/run_1/detections_dedup.geojson",
@@ -89,6 +108,8 @@
       "output_dir": "results/h13-overlap-2026-08-18/native/armB",
       "label": "h13-armB-native",
       "mcc": true,
+      "tile_join": "id",
+      "require_clean_inputs": true,
       "workers": 1
     },
     "bootstrap": {
@@ -111,6 +132,23 @@
       "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
       "bounds": "outputs/h13/scoring/bounds/h13_armB_bounds.geojson"
     },
+    "input_git_state": {
+      "head": "494b5a7af",
+      "inputs": {
+        "outputs/h13/scoring/native/armB/run_1/detections_dedup.geojson": "clean",
+        "outputs/h13/scoring/native/armB/run_2/detections_dedup.geojson": "clean",
+        "outputs/h13/scoring/native/armB/run_3/detections_dedup.geojson": "clean",
+        "inputs/vectors/references/mounds-reference.geojson": "clean",
+        "outputs/h13/scoring/bounds/h13_armB_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "outputs/h13/scoring/native/armB/run_1/detections_dedup.geojson": "1db17e9568a5a06bb8d9c3d4b1ca058db924e396",
+        "outputs/h13/scoring/native/armB/run_2/detections_dedup.geojson": "22420ddec753d4718b3654e1ee376778e89870d1",
+        "outputs/h13/scoring/native/armB/run_3/detections_dedup.geojson": "ec0bf43ec914c5a6c92219963167b99eeae7f7ef",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "outputs/h13/scoring/bounds/h13_armB_bounds.geojson": "ae69110e6dc19c400b96bd88b94ba967e63f8e2b"
+      }
+    },
     "spatial": {
       "evaluation_crs": "EPSG:32635",
       "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
@@ -125,20 +163,20 @@
       "buffers": [
         {
           "buffer_metres": 20,
-          "f1": 0.5299,
-          "f1_point": 0.5299,
-          "f1_ci_lower": 0.4759,
-          "f1_ci_upper": 0.5814,
+          "f1": 0.5359,
+          "f1_point": 0.5359,
+          "f1_ci_lower": 0.4814,
+          "f1_ci_upper": 0.5866,
           "f1_ci_method": "BCa",
-          "precision": 0.3977,
-          "p_point": 0.3977,
-          "p_ci_lower": 0.3437,
-          "p_ci_upper": 0.4521,
+          "precision": 0.4021,
+          "p_point": 0.4021,
+          "p_ci_lower": 0.3476,
+          "p_ci_upper": 0.4571,
           "p_ci_method": "BCa",
-          "recall": 0.794,
-          "r_point": 0.794,
-          "r_ci_lower": 0.7347,
-          "r_ci_upper": 0.837,
+          "recall": 0.8028,
+          "r_point": 0.8028,
+          "r_ci_lower": 0.7433,
+          "r_ci_upper": 0.8449,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 430,
@@ -160,6 +198,24 @@
       ],
       "ci_unreliable_any_buffer": false,
       "coverage_status": "normal",
+      "detection_scope": {
+        "rule": "origin-sheet-geometric",
+        "applied": true,
+        "n_detections": 1124,
+        "n_in_scope": 1124,
+        "n_out_of_frame": 0,
+        "n_out_of_frame_cross_sheet": 0,
+        "n_origin_restored": 5,
+        "n_origin_switched": 0,
+        "n_origin_only": 0,
+        "n_origin_unrecognised": 0,
+        "n_unattributed": 0,
+        "n_unattributed_in_frame": 0,
+        "origin_columns": [
+          "origin_tiles"
+        ],
+        "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+      },
       "tile_classification": {
         "confusion": {
           "tp": 241,
@@ -187,7 +243,8 @@
           "ci_lower": 0.0933,
           "ci_upper": 0.2038,
           "method": "BCa"
-        }
+        },
+        "tile_join": "id"
       }
     },
     {
@@ -196,20 +253,20 @@
       "buffers": [
         {
           "buffer_metres": 20,
-          "f1": 0.5152,
-          "f1_point": 0.5152,
-          "f1_ci_lower": 0.4645,
-          "f1_ci_upper": 0.5637,
+          "f1": 0.5199,
+          "f1_point": 0.5199,
+          "f1_ci_lower": 0.4698,
+          "f1_ci_upper": 0.5683,
           "f1_ci_method": "BCa",
-          "precision": 0.3873,
-          "p_point": 0.3873,
-          "p_ci_lower": 0.3357,
-          "p_ci_upper": 0.4389,
+          "precision": 0.3909,
+          "p_point": 0.3909,
+          "p_ci_lower": 0.3398,
+          "p_ci_upper": 0.4429,
           "p_ci_method": "BCa",
-          "recall": 0.7691,
-          "r_point": 0.7691,
-          "r_ci_lower": 0.7223,
-          "r_ci_upper": 0.8127,
+          "recall": 0.7762,
+          "r_point": 0.7762,
+          "r_ci_lower": 0.7294,
+          "r_ci_upper": 0.8189,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 430,
@@ -231,6 +288,24 @@
       ],
       "ci_unreliable_any_buffer": false,
       "coverage_status": "normal",
+      "detection_scope": {
+        "rule": "origin-sheet-geometric",
+        "applied": true,
+        "n_detections": 1118,
+        "n_in_scope": 1118,
+        "n_out_of_frame": 0,
+        "n_out_of_frame_cross_sheet": 0,
+        "n_origin_restored": 6,
+        "n_origin_switched": 0,
+        "n_origin_only": 0,
+        "n_origin_unrecognised": 0,
+        "n_unattributed": 0,
+        "n_unattributed_in_frame": 0,
+        "origin_columns": [
+          "origin_tiles"
+        ],
+        "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+      },
       "tile_classification": {
         "confusion": {
           "tp": 238,
@@ -258,7 +333,8 @@
           "ci_lower": 0.0823,
           "ci_upper": 0.1902,
           "method": "BCa"
-        }
+        },
+        "tile_join": "id"
       }
     },
     {
@@ -267,20 +343,20 @@
       "buffers": [
         {
           "buffer_metres": 20,
-          "f1": 0.5214,
-          "f1_point": 0.5214,
-          "f1_ci_lower": 0.4672,
-          "f1_ci_upper": 0.5704,
+          "f1": 0.5272,
+          "f1_point": 0.5272,
+          "f1_ci_lower": 0.473,
+          "f1_ci_upper": 0.5762,
           "f1_ci_method": "BCa",
-          "precision": 0.3869,
-          "p_point": 0.3869,
-          "p_ci_lower": 0.3314,
-          "p_ci_upper": 0.4394,
+          "precision": 0.3912,
+          "p_point": 0.3912,
+          "p_ci_lower": 0.3364,
+          "p_ci_upper": 0.4443,
           "p_ci_method": "BCa",
-          "recall": 0.7993,
-          "r_point": 0.7993,
-          "r_ci_lower": 0.7566,
-          "r_ci_upper": 0.8363,
+          "recall": 0.8082,
+          "r_point": 0.8082,
+          "r_ci_lower": 0.7662,
+          "r_ci_upper": 0.8435,
           "r_ci_method": "BCa",
           "coverage": {
             "n_tiles": 430,
@@ -302,6 +378,24 @@
       ],
       "ci_unreliable_any_buffer": false,
       "coverage_status": "normal",
+      "detection_scope": {
+        "rule": "origin-sheet-geometric",
+        "applied": true,
+        "n_detections": 1163,
+        "n_in_scope": 1163,
+        "n_out_of_frame": 0,
+        "n_out_of_frame_cross_sheet": 0,
+        "n_origin_restored": 5,
+        "n_origin_switched": 0,
+        "n_origin_only": 0,
+        "n_origin_unrecognised": 0,
+        "n_unattributed": 0,
+        "n_unattributed_in_frame": 0,
+        "origin_columns": [
+          "origin_tiles"
+        ],
+        "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+      },
       "tile_classification": {
         "confusion": {
           "tp": 243,
@@ -329,7 +423,8 @@
           "ci_lower": 0.0818,
           "ci_upper": 0.1888,
           "method": "BCa"
-        }
+        },
+        "tile_join": "id"
       }
     }
   ]
