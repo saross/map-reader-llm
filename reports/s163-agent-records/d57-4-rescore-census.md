@@ -1,11 +1,13 @@
 # D57 (4) re-score: OLD-scorer census of committed evaluations
 
-> **Last revised**: 2026-10-10 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-10 (census completed as the sapphire memory soak).
+> See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), a subagent of the main Session 163 session, on
-  sapphire, 2026-10-09 12:14–15:23 UTC (22.45 CPU-hours).
+  sapphire, 2026-10-09 12:14–15:23 UTC (22.45 CPU-hours). Completed by
+  the main session on 2026-10-10, 06:09–07:06 UTC, as the memory soak
+  (§ Completion).
 - **Repository**: `map-reader-llm`. Committed values read from git at
   `494b5a7af`; `results/` and `archive/` are identical across
   `b3c52591d`..`ea5d0b602`.
@@ -17,8 +19,11 @@
 - **Where the outputs are**: `~/scratch/d57-4-rescore-2026-10-09/census-old/`
   on sapphire — `out/census_cells.csv` (2,800 rows with disposition,
   result, cause, provenance, conditions, and analyses), `out/nonrepro.csv`
-  (76 rows), `out/census_summary.json`, `out/compare.{json,csv}`,
+  (93 rows), `out/census_summary.json`, `out/compare.{json,csv}`,
   `out/plan.json`, `out/queue.json`, `scripts/` (6 files), and the replays.
+  The halted run's outputs are kept in `out/pre-soak-2026-10-10/` (its
+  `nonrepro.csv` has 76 rows) and its stop file as
+  `out/STOP.halted-2026-10-09`; the soak's log is `out/resume.log`.
 - **Guarantees**: no repository or worktree was modified, nothing was
   committed, and no model Application Programming Interface (API) was
   called.
@@ -51,7 +56,17 @@ the agent's readings.
   memory overclock profile) is a hypothesis only.
 - The census stopped its load at 14:24Z, then ran only small-frame cells
   under a stop file, halt-on-failure, and a kernel-log tripwire, which
-  fired at 15:22:55Z after 817 clean cells. No census process is running.
+  fired at 15:22:55Z after 817 clean cells.
+- **Resolved, as far as a soak can show (2026-10-10).** Sapphire
+  rebooted at 05:09Z for the PI's planned memory change (the setting
+  was not read from the main session). The census's remaining 467
+  replays then ran as the soak, under the same 8-worker load: 467 of 467
+  clean in 3,425 s, no new `Bad page state` report (5 before and after,
+  all from earlier boots), and all 22 replays that crashed on
+  2026-10-09 now reproduce exactly. DIMMs read 40.8–49.8 °C (alarm
+  55 °C) and CPU Tctl at most 68.8 °C, logged each minute
+  (`out/soak-temps.log`). On 2026-10-09 the same load crashed 21 of 46
+  heavy replays.
 
 **What it means.** An exact reproduction cannot arise from corruption, so
 every "reproduced exactly" below stands, and so do Run B and Run C's
@@ -63,6 +78,10 @@ comparison. Values computed on sapphire and never checked against an
 independent computation are therefore unverified, including the
 D57 (4) Phase 2 NEW files in draft PR #29 (computed about 09:35–10:15Z,
 before today's first kernel report but after the 2026-10-05 one).
+Those files have since been verified: an independent re-run reproduced
+all 2,262 exactly (S2 record changelog), and PR #29 merged on
+2026-10-10. Other once-computed results from the fault windows are a
+separate re-check (`planning/paper-writeup-continuity.md`).
 
 ## Counts
 
@@ -84,13 +103,13 @@ Of the 2,216 replayable cells (737 Phase 2, 1,479 other):
 
 | Result | Phase 2 | Other | Total |
 |---|---:|---:|---:|
-| Reproduced exactly | 695 | 1,009 | 1,704 |
-| Not reproduced | 42 | 12 | 54 |
-| Replay crashed (memory fault) | 0 | 22 | 22 |
-| Not run (325 small-frame halted by the tripwire, 111 deferred 55-map) | 0 | 436 | 436 |
+| Reproduced exactly | 695 | 1,428 | 2,123 |
+| Not reproduced | 42 | 51 | 93 |
+| Replay crashed | 0 | 0 | 0 |
+| Not run | 0 | 0 | 0 |
 
-Vintage replays of the E82-pinned drifted cells: 17 of 17 small-frame
-ones reproduce exactly; the 9 on the 55-map frame were not run.
+Vintage replays of the drifted cells: 26 of 26 reproduce exactly (17
+small-frame, 9 on the 55-map frame).
 
 **Answer.** Among the 737 Phase 2 cells, OLD reproduces 695 exactly —
 every point, every interval bound at every buffer, the Matthews correlation
@@ -132,50 +151,103 @@ spot check's failure turned up among live cells.
   verifier-pairing cells; Phase 3 found those two go computed → pending,
   and this is why. None of these values is cited in `docs/paper/`.
 
-## The 12 other live cells OLD does not reproduce
+## The 51 other live cells OLD does not reproduce
 
-- **Tile-join withheld, 2 cells (registered)**:
+All three causes are deterministic, and none involves D50. The 39 found
+by the completion run (§ Completion) are unregistered and feed no
+register analysis; the 11 registered ones are the ones listed here before.
+
+- **Tile-join withheld, 23 cells.** 21 unregistered, found by the
+  completion run: `results/uplift-supplement/verifier-pairing` (15) and
+  `results/uplift-supplement/k1-gapfill` (6), the same cause as the 42
+  Phase 2 cells. Two registered ones, found first:
   `results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax`
   and `…-carried-p0_10-k1` (analyses `k-ladder-2026-09-12` and
   `null-exemplar-sensitivity-2026-09-13`). Scored 2026-09-12 at
   `f724b7a10`, hours before `7ba47b63b`. The frames table already marks
   them `mcc-refused-now`; their F1 reproduces.
-- **Input drift, 9 cells (all registered; all feed
-  `uplift-supplement-flatten`)**. Each reproduces exactly on its
-  E82-pinned inputs, so neither the scorer nor D50 is involved:
+- **Input drift, 26 cells; each reproduces exactly on its inputs as
+  scored**, so neither the scorer nor D50 is involved. 17 unregistered,
+  found by the completion run: `results/paper-eval/mcc/384px` (4),
+  `results/paper-eval/n1/384px-all-buffers` (4), and the 55-map
+  `outputs/55maps-{image,text-high,text-min}-generalisation` evaluations
+  (3 each, counting the cell below). Nine registered ones, all feeding
+  `uplift-supplement-flatten`, found first:
   `paper-eval/n1/384px-14buf-mcc` pro-image and pro-text high T0 (pin
   `1f443fd69`); `rescore-2026-05-31/n1-outstanding-384` pro-image and
   pro-text high T0 `run_1`–`run_3` (pin `c3852ebad`); and
   `rescore-2026-05-31/e47-propose-brief/…/run_4` (pin `52b0215a6`).
-- **Unresolved, 1 cell (unregistered)**:
-  `outputs/55maps-text-min-generalisation/full-buffer-eval`. Points and
-  intervals are off by ±0.0001 (F1@20 0.6202 → 0.6201); `n_detections`
-  equal. Its pinned reference blob
-  (`student-mounds-55maps-reviewed.geojson` at `baf1497a7`) differs from
-  today's; the frames table calls it `unexplained`. Replayed at 13:47Z,
-  before today's first kernel report; its vintage replay was not run.
+- **Resolved as input drift**:
+  `outputs/55maps-text-min-generalisation/full-buffer-eval`, first listed
+  as unresolved (points and intervals off by ±0.0001, F1@20 0.6202 →
+  0.6201; its pinned reference blob `student-mounds-55maps-reviewed.geojson`
+  at `baf1497a7` differs from today's). Its vintage replay, run in the
+  completion, reproduces it exactly.
+- **Older interval vintage, 2 cells (unregistered)**:
+  `outputs/55maps-text-high-t0.3-generalisation/evaluation` and
+  `…/extended-buffer-eval`, scored 2026-04-27 (`291715b4`, `548604d9`).
+  Points, MCC point, and `n_detections` reproduce; 28 and 30 interval
+  values and 4 and 5 flags do not (e.g. F1@50 interval [0.7911, 0.8128]
+  committed, [0.7916, 0.8134] replayed; a `sparse_cross_grid` coverage
+  flag added). A second replay of both, by the main session, matched
+  the first in every field except the output path and timestamps, with
+  byte-equal CSVs (`repeat-b-interval-2026-10-10/`), so the difference
+  is deterministic: an interval or coverage change between April and
+  `b3c52591d`, like the archived spot check. Not attributed to a commit.
 - **Paper check**: `git grep` of `docs/paper/` for every affected cell's
   committed interval pairs, MCC points, F1@20/30/50, and condition ids
   finds no citation (one coincidental hit: 0.8709 in R5-05's
-  "F1 0.8709–0.8764", which describes a different matrix).
+  "F1 0.8709–0.8764", which describes a different matrix). For the 39
+  found by the completion run, by the main session: 192 distinct
+  committed values give 8 coincidental hits (p values, differences, and
+  another corpus's ladder), and two labels match: R2-13's tie set names
+  `pro-text-high-t-0-0` and `pro-text-medium-t-0-0` (run
+  `n1-baseline-matrix-384`). The files here with those labels are
+  unregistered copies, and each reproduces on its inputs as scored.
 
-## To resume (after sapphire is cleared)
+## Completion (2026-10-10): the memory soak
 
-458 live cells (102 registered) plus 9 vintage replays remain. Delete
-`out/STOP` first; the runner skips finished cells and re-runs failed ones:
+The 467 remaining replays (458 cells, 22 of them the crashed ones, plus 9
+vintage replays) ran on sapphire from 06:09:23 to 07:06:39 UTC as the PI's
+confirmation soak, after the reboot. The halted run's stop file was kept as
+`out/STOP.halted-2026-10-09`; the command was the one this record gave,
+with `--workers 8 --halt-on-failure --kernel-tripwire` (armed at 5 reports).
+A logger wrote DIMM (`spd5118`) and CPU (`k10temp` Tctl) temperatures each
+minute until the run ended. Then, with the previous outputs copied to
+`out/pre-soak-2026-10-10/`:
 
 ```bash
-nohup ~/Code/map-reader-llm/.venv/bin/python <root>/scripts/run_census.py \
-  --queue <root>/out/queue.json --old ~/scratch/d57-4-rescore-2026-10-09/old \
-  --inputs-root <root>/inputs --sidecars <root>/sidecars \
-  --pidfile <root>/out/resume.pid --workers 8 --stop-file <root>/out/STOP \
-  --halt-on-failure --kernel-tripwire > <root>/out/resume.log 2>&1 < /dev/null &
+python compare_census.py --census-root <root> --repo ~/Code/map-reader-llm \
+  --rev 494b5a7af \
+  --repro-failures ~/scratch/frames-blast-radius-2026-10-07/out/summary/reproduction_failures.csv
+python analyse_census.py --census-root <root> --repo ~/Code/map-reader-llm --rev 494b5a7af
 ```
 
-Then `compare_census.py` and `analyse_census.py`, with the arguments in
-their docstrings.
+Both exited 0. The run: `DONE 467/467 ok in 3425s; failed 0`; no stop
+file; kernel count 5 before and after.
 
 ## Changelog
+
+### 2026-10-10 — Census completed as the sapphire memory soak
+
+Trigger: the PI's memory change and soak (D59). The 467 replays left by the
+halted run ran clean on the rebooted machine; the main session ran the
+comparison and analysis, re-ran the two new interval-vintage cells to
+show the difference is deterministic, and checked the 39 newly found
+non-reproductions against `docs/paper/`.
+
+| Count | Before | After |
+|---|---:|---:|
+| Reproduced exactly (Phase 2 / other / total) | 695 / 1,009 / 1,704 | 695 / 1,428 / 2,123 |
+| Not reproduced | 42 / 12 / 54 | 42 / 51 / 93 |
+| Crashed (memory fault) | 22 | 0 |
+| Not run | 436 | 0 |
+| Vintage replays reproducing | 17 of 17 run | 26 of 26 |
+
+Not changed: the Phase 2 answer (695 of 737; the 42 tile-join cells), the
+11 registered non-reproductions and their causes, and the finding that
+no affected value is cited in the paper. The one "unresolved" cell is now
+explained as input drift.
 
 ### 2026-10-10 — Original publication
 

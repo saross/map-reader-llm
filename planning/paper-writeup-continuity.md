@@ -137,6 +137,12 @@ replaces it.
   kept as `out/STOP.halted-2026-10-09`, under
   `~/scratch/d57-4-rescore-2026-10-09/census-old/` on sapphire. Then
   `compare_census.py` and `analyse_census.py`.
+  **Soak PASSED 2026-10-10** (06:09–07:06Z): 467 of 467 clean, no new
+  kernel report, the 22 crashed replays now reproduce, DIMMs at most
+  49.8 °C; census complete (2,123 of 2,216 reproduce; every one of the
+  93 others has a deterministic cause; census record changelog). The
+  fault-window re-check (next item) may now proceed once the PI confirms
+  the memory setting.
   Diagnosis is with personal-assistant (session personal-assistant-43):
   the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
   guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
