@@ -235,6 +235,17 @@ replaces it.
   common-footprint bootstraps now pass the parent (`29faf5618`), whose
   effect on committed and Phase 3 outputs is being audited before the
   #33 re-review mail.
+  Audit done: no committed or Phase 3 output takes that route; the
+  parent is now passed only when a footprint drops a whole sheet
+  (`d99128f65`; 98 passed in the main session's run). #33 re-review
+  mailed 08:05Z. Side finding (not D50): the committed
+  `results/h11-384-pv-diagnostic/pairwise/{fair-384-vs-512,pairwise-384px}.json`
+  carry March bootstrap fields that no current library reproduces
+  (means up to 0.0044 off, e.g. I4 0.0669 → 0.0625); pre-D50 and D50
+  give identical output and reproduce the October class-B records.
+  Known to the D42 report (fair file not re-tested, B-D1; the 384 px
+  pairwise file NOT RE-TESTABLE); its "72 of 558" is the pre-D50 count
+  (D50: 71). Agent's scratch: `~/scratch/d50-wholesheet-2026-10-10/`.
   Related, confirmed on `main`: `per_map_counts()` in
   `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
   detections by the pre-D50 `source_tile` prefix, and ignores origins;
