@@ -9,6 +9,9 @@ Deterministic checks against committed source-of-truth files:
 
 from __future__ import annotations
 
+import copy
+from pathlib import Path
+
 import pytest
 
 from scripts.generate_post_run_report import (
@@ -90,8 +93,10 @@ def test_verify_feature_count_drift_warns_not_fails():
                 "architecture": "proposer-verifier",
                 "aggregation": "verified",
                 "n_passes": 5,
-                "detections": "outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
-                "eval_path": "archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/text-min/evaluation.json",
+                "detections": ("outputs/55maps-text-min-generalisation/verified/"
+                               "verified_detections.geojson"),
+                "eval_path": ("archive/55maps-superseded-gt-evals/55maps-cleaned-gt-evaluation/"
+                              "text-min/evaluation.json"),
             }],
         }
     }
@@ -146,8 +151,9 @@ def test_coord_frame_distinguishes_utm_no_crs_from_declared():
     archived_utm = ("archive/data-repairs/consensus-384-UNINTENDED-T1.0-missing-crs/"
                     "voting/consensus_t1.geojson")
     assert _geojson_coord_frame(archived_utm) == "utm-no-crs"
+    # repaired -> WGS84
     assert _geojson_coord_frame(
-        "outputs/h11/proposer-verifier-384/verified-brief-text.geojson") == "ok"  # repaired -> WGS84
+        "outputs/h11/proposer-verifier-384/verified-brief-text.geojson") == "ok"
     # UTM coords but a declared EPSG::32635 crs member -> the scorer reprojects it; not a hazard
     assert _geojson_coord_frame(
         "outputs/h11/e47-propose-brief/text-baseline/"
@@ -323,6 +329,114 @@ def test_malformed_vintage_stamp_surfaces():
     codes = {d["code"] for d in discs}
     assert "input-vintage-malformed" in codes
     assert "eval-detections-mismatch" in codes
+
+
+# ------------------------------------------------ D60 (1), 2026-10-12 ---
+# A cell re-scored on inputs recovered from git records the commit each input
+# was read at under the GENERAL ``_metadata.input_vintage`` key (the same
+# path → commit map as the E82 replay's ``e82_input_vintage``). The verifier
+# reads both keys and prefers neither: a path the two keys record at different
+# commits is reported and left out, so a pin on it cannot check out.
+# These tests serve the pinned row's real evaluation with its vintage keys
+# rewritten in memory; nothing on disk changes.
+
+_PINNED_STAMP = {"detections_commit": "c3852ebad",
+                 "superseded_measurement": "pro-image-high-t0-single-pass-run_1-post-e71",
+                 "erratum": "E71"}
+
+
+def _serve_rekeyed_eval(monkeypatch: pytest.MonkeyPatch, rekey) -> None:
+    """Serve the pinned row's evaluation with its vintage keys rewritten.
+
+    Args:
+        monkeypatch: The pytest fixture (the patch is undone after the test).
+        rekey: Called with a copy of the committed ``e82_input_vintage`` map;
+            returns the vintage keys to install in its place.
+    """
+    original = _g._load_json
+    target = (_g.REPO_ROOT / _PINNED_SPEC["eval_path"]).resolve()
+
+    def load(path):
+        """Load as usual; rewrite the vintage keys of the one target file."""
+        doc = original(path)
+        if Path(path).resolve() == target:
+            doc = copy.deepcopy(doc)
+            meta = doc["_metadata"]
+            meta.update(rekey(dict(meta.pop("e82_input_vintage"))))
+        return doc
+
+    monkeypatch.setattr(_g, "_load_json", load)
+
+
+def _verify_pinned(spec: dict) -> list[dict]:
+    """Verify the pinned row; the index is unused because the row names its eval."""
+    return verify_condition(spec, _SCOPE, _n1_pools(), "outputs/h11/n1-outstanding-384", {})
+
+
+@pytest.mark.tier1
+def test_general_input_vintage_key_is_read(monkeypatch):
+    """An evaluation carrying only the general key is checked exactly as an E82 one."""
+    _serve_rekeyed_eval(monkeypatch, lambda e82: {"input_vintage": e82})
+    discs = _verify_pinned(dict(_PINNED_SPEC, input_vintage=_PINNED_STAMP))
+    codes = {d["code"] for d in discs}
+    assert "pinned-vintage" in codes, discs
+    assert not [d for d in discs if d["severity"] == "ERROR"], discs
+
+
+@pytest.mark.tier1
+def test_both_vintage_keys_agreeing_are_read(monkeypatch):
+    """Both keys recording the same commits: one disclosure, no conflict, no ERROR."""
+    _serve_rekeyed_eval(monkeypatch,
+                        lambda e82: {"e82_input_vintage": e82, "input_vintage": dict(e82)})
+    discs = _verify_pinned(dict(_PINNED_SPEC, input_vintage=_PINNED_STAMP))
+    codes = {d["code"] for d in discs}
+    assert "pinned-vintage" in codes, discs
+    assert "eval-vintage-conflict" not in codes, discs
+    assert not [d for d in discs if d["severity"] == "ERROR"], discs
+
+
+@pytest.mark.tier1
+@pytest.mark.parametrize("right_key", ["e82_input_vintage", "input_vintage"])
+def test_conflicting_vintage_keys_prefer_neither(monkeypatch, right_key):
+    """Keys that disagree on the detections commit: neither wins, whichever is right.
+
+    The conflict is reported, and the pin cannot check out against a
+    contradictory record, so the row fails as a mismatch in BOTH orders.
+    """
+    det = _PINNED_SPEC["detections"]
+    wrong_key = ({"e82_input_vintage", "input_vintage"} - {right_key}).pop()
+
+    def rekey(e82: dict) -> dict:
+        """The right key keeps the true commit; the wrong one names another."""
+        return {right_key: e82, wrong_key: {**e82, det: "deadbeef0"}}
+
+    _serve_rekeyed_eval(monkeypatch, rekey)
+    discs = _verify_pinned(dict(_PINNED_SPEC, input_vintage=_PINNED_STAMP))
+    assert [d for d in discs if d["code"] == "eval-vintage-conflict"
+            and d["severity"] == "WARN" and det in d["message"]], discs
+    assert [d for d in discs if d["code"] == "pinned-vintage-mismatch"
+            and d["severity"] == "ERROR"], discs
+    assert "pinned-vintage" not in {d["code"] for d in discs}, discs
+
+
+@pytest.mark.tier1
+def test_eval_input_vintage_merges_and_reports():
+    """The merge helper: disjoint paths union, agreement kept, conflict dropped."""
+    # imported here, not at module top, so the red sentinel (this test run
+    # against the pre-D60 verifier) fails this test alone, not the module
+    from scripts.verify_run_conditions import _eval_input_vintage
+
+    vintage, problems = _eval_input_vintage({
+        "e82_input_vintage": {"a.geojson": "aaa", "b.geojson": "bbb",
+                              "outputs/h11/wbf/c.geojson": "ccc"},
+        "input_vintage": {"a.geojson": "aaa", "b.geojson": "zzz", "d.geojson": "ddd"}})
+    assert vintage == {"a.geojson": "aaa", "outputs/wbf/c.geojson": "ccc",
+                       "d.geojson": "ddd"}
+    assert [code for code, _ in problems] == ["eval-vintage-conflict"]
+    assert "b.geojson" in problems[0][1]
+    assert _eval_input_vintage({}) == ({}, [])
+    _, bad = _eval_input_vintage({"input_vintage": "abc123"})
+    assert [code for code, _ in bad] == ["eval-vintage-malformed"]
 
 
 # --------------------------------------------------------------------------- #
