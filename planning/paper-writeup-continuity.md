@@ -116,6 +116,16 @@ replaces it.
   `ANALYSIS_OUTCOME` in `scripts/author_e43_matched_temperature.py`
   (copied into six register files; new p values in the S3 record's e43 item) and
   the ungated `committed_f1: 0.6667` in `scripts/h13_k_sensitivity.py:249`.
+  **Ruled 2026-10-11/12 (D60), all as recommended:** (1) the 13 unpinned
+  drifted cells get a general `input_vintage` key, read by
+  `verify_run_conditions.py` in its own small PR; their Stage A values
+  are recomputed and committed only on a byte match; Stage B for all 25
+  joins Phase 5. (3) The consensus route is fixed, not H2 alone:
+  `consensus_to_gdf` keeps contributing tiles, the PV loader is checked,
+  and all 32 pairwise comparisons are re-run before any document moves.
+  (4) W2.7: `FastScorer` rebuilt on the shared attribution, § 6 and § 6b
+  regenerated together. (3), (4), and the stride55 `per_map_counts()` form
+  Phase 5's sweep for scorer restatements. (2) is in the D57 (3) item.
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
@@ -184,6 +194,9 @@ replaces it.
   record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
   +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
   floors-v2 `FastScorer` still reproduces the old cells.
+  RULED 2026-10-12 (D60 (4)): rebuild `FastScorer` on the shared
+  attribution, then regenerate § 6 and § 6b together in Phase 5. None of
+  the 26 moved pair rows crosses p = 0.05 (checked 2026-10-12).
 - [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
   reads a key the 2026-09-21 relabel renamed to
   `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
@@ -328,6 +341,12 @@ replaces it.
   rebuild shows a reproducible construction, not a unique pass history.
   Astra recommends reporting per-reference vote support (`c ≥ v`) for the
   partial-coverage question, which remains the PI's.
+  RULED 2026-10-11/12 (D60 (2)): a known limitation; Phase 6 reports
+  per-reference vote support (`c` against `v`, per sheet) and flags
+  mounds and area below threshold; Astra's stricter sensitivity runs if
+  flagged mounds or area beyond the known gap tiles touch a rung a paper
+  claim rests on. The bias can run either way (lost mounds lower recall,
+  lost false alarms raise precision).
 - [x] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
   so the Q4 deltas are not computed across two scorer versions; the
   tier-1 result at `842f9e92a` (4,151 passed) still covers the head,
