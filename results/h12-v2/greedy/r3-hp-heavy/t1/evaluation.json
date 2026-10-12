@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-08-20T13:11:53.389420+00:00",
+  "timestamp": "2026-10-12T12:45:39.272195+00:00",
   "summary": {
     "label": "r3-hp-heavy-greedy-t1",
     "n_detections": 1518,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.2683,
-        "f1_point": 0.2683,
-        "f1_ci_lower": 0.2302,
-        "f1_ci_upper": 0.309,
+        "f1": 0.2693,
+        "f1_point": 0.2693,
+        "f1_ci_lower": 0.2312,
+        "f1_ci_upper": 0.3098,
         "f1_ci_method": "BCa",
-        "precision": 0.1726,
-        "p_point": 0.1726,
-        "p_ci_lower": 0.1445,
-        "p_ci_upper": 0.2037,
+        "precision": 0.1733,
+        "p_point": 0.1733,
+        "p_ci_lower": 0.1451,
+        "p_ci_upper": 0.2043,
         "p_ci_method": "BCa",
-        "recall": 0.6023,
-        "r_point": 0.6023,
-        "r_ci_lower": 0.5285,
-        "r_ci_upper": 0.6686,
+        "recall": 0.6046,
+        "r_point": 0.6046,
+        "r_ci_lower": 0.5308,
+        "r_ci_upper": 0.6705,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -41,20 +41,20 @@
       },
       {
         "buffer_metres": 30,
-        "f1": 0.298,
-        "f1_point": 0.298,
-        "f1_ci_lower": 0.2574,
-        "f1_ci_upper": 0.3398,
+        "f1": 0.299,
+        "f1_point": 0.299,
+        "f1_ci_lower": 0.2583,
+        "f1_ci_upper": 0.3408,
         "f1_ci_method": "BCa",
-        "precision": 0.1917,
-        "p_point": 0.1917,
-        "p_ci_lower": 0.1614,
-        "p_ci_upper": 0.2241,
+        "precision": 0.1924,
+        "p_point": 0.1924,
+        "p_ci_lower": 0.1619,
+        "p_ci_upper": 0.2247,
         "p_ci_method": "BCa",
-        "recall": 0.669,
-        "r_point": 0.669,
-        "r_ci_lower": 0.5931,
-        "r_ci_upper": 0.7323,
+        "recall": 0.6713,
+        "r_point": 0.6713,
+        "r_ci_lower": 0.5949,
+        "r_ci_upper": 0.7342,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -75,20 +75,20 @@
       },
       {
         "buffer_metres": 40,
-        "f1": 0.3041,
-        "f1_point": 0.3041,
-        "f1_ci_lower": 0.2629,
-        "f1_ci_upper": 0.3457,
+        "f1": 0.3052,
+        "f1_point": 0.3052,
+        "f1_ci_lower": 0.2637,
+        "f1_ci_upper": 0.3468,
         "f1_ci_method": "BCa",
-        "precision": 0.1957,
-        "p_point": 0.1957,
-        "p_ci_lower": 0.1648,
-        "p_ci_upper": 0.2284,
+        "precision": 0.1963,
+        "p_point": 0.1963,
+        "p_ci_lower": 0.1653,
+        "p_ci_upper": 0.229,
         "p_ci_method": "BCa",
-        "recall": 0.6828,
-        "r_point": 0.6828,
-        "r_ci_lower": 0.6057,
-        "r_ci_upper": 0.7457,
+        "recall": 0.6851,
+        "r_point": 0.6851,
+        "r_ci_lower": 0.6074,
+        "r_ci_upper": 0.7481,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -109,20 +109,20 @@
       },
       {
         "buffer_metres": 50,
-        "f1": 0.3072,
-        "f1_point": 0.3072,
-        "f1_ci_lower": 0.2657,
-        "f1_ci_upper": 0.349,
+        "f1": 0.3082,
+        "f1_point": 0.3082,
+        "f1_ci_lower": 0.2665,
+        "f1_ci_upper": 0.3499,
         "f1_ci_method": "BCa",
-        "precision": 0.1976,
-        "p_point": 0.1976,
-        "p_ci_lower": 0.1665,
-        "p_ci_upper": 0.2306,
+        "precision": 0.1983,
+        "p_point": 0.1983,
+        "p_ci_lower": 0.1671,
+        "p_ci_upper": 0.2309,
         "p_ci_method": "BCa",
-        "recall": 0.6897,
-        "r_point": 0.6897,
-        "r_ci_lower": 0.6128,
-        "r_ci_upper": 0.7525,
+        "recall": 0.692,
+        "r_point": 0.692,
+        "r_ci_lower": 0.6147,
+        "r_ci_upper": 0.7548,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -143,14 +143,32 @@
       }
     ],
     "ci_unreliable_any_buffer": false,
-    "coverage_status": "normal"
+    "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 1518,
+      "n_in_scope": 1518,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 5,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "source_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "9c82d3fa0",
-    "script_git_status": "dirty",
-    "generated_at_utc": "2026-08-20T13:11:39.801749+00:00",
+    "script_git_commit": "c546f6901",
+    "script_git_status": "clean",
+    "generated_at_utc": "2026-10-12T12:45:26.457013+00:00",
     "cli_args": {
       "detections": [
         "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson"
@@ -171,6 +189,8 @@
       "output_dir": "results/h12-v2/greedy/r3-hp-heavy/t1",
       "label": "r3-hp-heavy-greedy-t1",
       "mcc": false,
+      "tile_join": "id",
+      "require_clean_inputs": false,
       "workers": 1
     },
     "bootstrap": {
@@ -186,16 +206,34 @@
     },
     "input_files": {
       "detections": [
-        "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson"
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/2e84d4a65/outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson"
       ],
-      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
-      "bounds": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+      "ground_truth": "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson"
+    },
+    "input_git_state": {
+      "head": "c546f6901",
+      "inputs": {
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/2e84d4a65/outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson": "outside-repo",
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson": "outside-repo",
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "outside-repo"
+      },
+      "blob_hashes": {
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/2e84d4a65/outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson": "a5d6fd443df9366fd425fedacba3b2fb7c5d7d28",
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "/home/shawn/scratch/d60-1-input-vintage-2026-10-12/stage-a/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5"
+      }
     },
     "spatial": {
       "evaluation_crs": "EPSG:32635",
       "evaluation_crs_name": "UTM Zone 35N (Bulgaria)",
       "geojson_storage_crs": "EPSG:4326",
       "geojson_storage_note": "GeoJSON is WGS84 (RFC 7946) unless a file declares its own crs member; the scorer reprojects to evaluation_crs before matching."
+    },
+    "input_vintage": {
+      "outputs/h12-v2/greedy/r3-hp-heavy/consensus_t1.geojson": "2e84d4a65",
+      "inputs/vectors/references/mounds-reference.geojson": "cfc10c133",
+      "inputs/vectors/bounds/384/full_evaluation_bounds.geojson": "8b52ab63b"
     }
   }
 }
