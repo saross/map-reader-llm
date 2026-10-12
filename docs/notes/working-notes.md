@@ -37843,3 +37843,167 @@ weeks apart), Obs 505 (within-execution consensus floors; cross-date pairs
 can be wider), Obs 506 (the verifier absorbs most proposer drift); erratum
 E89 (`docs/methodology/preregistration/protocol-errata.md`: T = 0.0 is not
 deterministic across independent calls).
+
+## Observation 509: Gemini 3.1 Pro at "HIGH" thinking did not think at T = 0.0 — the June invoice confirms the zero thought-token counts, so those Pro HIGH cells are Pro without thinking, and a requested thinking level is not evidence of the delivered one (Session 163, 2026-10-12)
+
+**Context.** Approved by the Principal Investigator (PI) on 2026-10-12
+(Session 163) as action (ii) of ruling D61 (4)
+(`planning/pi-decisions-2026-09-20.md`, recorded in `b40f68a5f` and
+amended in `7910371b5`). The D57 (4) Phase 3 test of h6 A-09 priced Pro
+passes that record no
+thinking. The manipulation check of 2026-10-05
+(`reports/manipulation-check-2026-10-05.md`), commissioned after Obs 496,
+had published those zeros as "unverified, probably a usage-reporting
+gap"; its § D was revised in place on 2026-10-12 (`374c48199`, before →
+after table in its changelog) after the invoice check below. Below, T is
+temperature, and "Pro" is `gemini-3.1-pro-preview`.
+
+**What was established.** Thought tokens per request, as per-pass means
+(`tokens.thinking` over requests in `results/passes-manifest.json`) unless
+stated:
+
+| Arm | Passes | Thought tokens per request | Source |
+|---|---:|---|---|
+| Pro HIGH, T 0.0 (`n1-pro-rerun-384` `pro-{text,image}-high-t0`) | 6 | 0 | manifest; metas' `usage_stats.total_thoughts_tokens` |
+| Pro MEDIUM, T 0.0 (`pv-diag-384` `pro-medium-{text,image}-baseline`, runs 2 and 3) | 4 | 6–7 | manifest |
+| Pro MEDIUM, T 0.7 (`n1-pro-rerun-384` `pro-{text,image}-medium-t07`) | 6 | 20–43 | manifest |
+| Pro HIGH, T 0.7 (`pv-diag-384` `pro-high-text-n5`, `pro-high-image-n5`) | 10 + 5 | not recorded | item 4 |
+| Flash HIGH, T 0.0, the matched comparator (`n1-outstanding-384::pro-text-high-t0::run1`, `gemini-3-flash-preview` per erratum E57) | 1 | about 4,100 (2,012,117 over 487 requests) | its meta; manifest |
+| Flash HIGH, all metas with usage | 170 metas | median 1,999 | report § D table |
+
+1. **Pro at HIGH and T = 0.0 did not think.** The six genuine-Pro HIGH
+   passes (three text, three image, 487 requests each, run 2026-06-03
+   between 05:39 and 05:47 UTC; Pro by the provider's own `model_version`,
+   Obs 338) record zero thought tokens, in their metas and in the
+   manifest alike.
+2. **Not a recording gap.** Google bills thought tokens as output. The
+   June 2026 Cost-table export for project `map-reader-llm`
+   (`docs/costs/Shawn-research_Cost table, 2026-06-01 — 2026-06-30.csv`,
+   gitignored, local only) has two Gemini 3 Pro output rows, both with
+   usage dated 2026-06-02 to 06-03: 374,105 tokens (standard) and 319,422
+   (flex), 693,527 in all. The 16 Pro proposer passes run in that window
+   (the 12 `n1-pro-rerun-384` passes, and runs 2 and 3 of `pv-diag-384`
+   `pro-medium-text-baseline` and `pro-medium-image-baseline`) record
+   686,307 output plus thought tokens in the manifest: 7,220 fewer
+   (1.0 %). Charged entirely to the 2,922 HIGH requests, that leaves at
+   most about 2.5 unrecorded tokens per request. The two rows also split
+   as the manifest's tiers do: flex 319,422 against 317,987 recorded for
+   the eight text passes, standard 374,105 against 368,320 for the eight
+   image passes. A text HIGH pass of 487 requests took 31 to 48 seconds
+   (manifest `wall_clock_s`), consistent with no thinking.
+3. **The request was right.** At `b7403f0a6` the runner builds
+   `types.ThinkingConfig(thinking_level=config["thinking_level"])`
+   (`scripts/4_detect_mounds_batch.py:862–866`), and the file is unchanged
+   at `5a1c3f90a` and `058380647`, the two commits the six HIGH metas
+   record (`environment.git_commit`). For each of the six launches,
+   `outputs/h11/n1-pro-rerun-384/_run_log.txt` overrides the temperature
+   to 0.0 and prints "Thinking level: high", and each meta records
+   `configuration.thinking_level = high`. HIGH was requested and not
+   delivered. Why it was not is unexplained; the only pattern on record is
+   that Pro's recorded thinking is lowest at T = 0.0 (at MEDIUM, 6–7
+   against 20–43 per request).
+4. **The T = 0.7 Pro HIGH pools cannot be checked.** `pv-diag-384`
+   `pro-high-text-n5` (10 passes) and `pro-high-image-n5` (5 passes) ran
+   on the Batch Application Programming Interface (API) in March 2026;
+   runs 6–10 of the text pool were five jobs on `gemini-3.1-pro-preview`
+   submitted 2026-03-29 (`logs/pro-n10-batch-20260329-120951.log`, which
+   reports $0.0000 per job). That batch path booked no usage (every meta
+   records zero tokens), and no invoice line covers the pools. March's
+   Pro rows (1,166,317 input and 472,406 output tokens, usage 2026-03-23
+   to 03-25) are smaller than the runner's own estimate for the ten text
+   passes alone (339,926 input tokens per pass, in the log), and
+   `map-reader-llm` billed no usage between 2026-03-27 and 2026-04-07.
+5. **For those pools, E57's evidence is the request.** E57 classed them as
+   genuine Pro from `pricing_used.model`, the runner's price lookup for
+   the requested model; no per-response model is recorded for them
+   (erratum E77 makes the same point for the text pool).
+
+**Reading.**
+
+1. **A requested setting is not evidence of the delivered one.** The
+   configuration, the run log, and the request the runner built all said
+   HIGH. The provider's usage field said zero, but a zero is also what a
+   recording gap looks like. The invoice, written by a different system,
+   was the independent witness that decided between the two; the run logs
+   could not.
+2. **A manipulation check must measure delivery.** The 2026-10-05 check
+   asked whether each manipulation reached the request. For thinking, the
+   request is not enough: Flash HIGH and MINIMAL show medians of 1,999
+   and 0 thought tokens per request (report § D), while Pro HIGH at
+   T = 0.0 sent the right request and delivered nothing.
+3. **At T = 0.0 the Pro thinking contrast was zero against six or seven
+   thought tokens per request.** A-06's thinking decomposition
+   (`results/h6-registered-analyses/a06_decision_rule.json`, "not a
+   registered factor") and Obs 415 found HIGH against MEDIUM below 0.03 F1
+   in every cell; at T = 0.0 (+0.0124 text, +0.0103 image) neither arm
+   thought more than a few tokens per request on the recorded passes, so
+   that null is no test of thinking there. (This reading is not part of
+   the D61 (4) ruling.)
+
+**What follows** (items 1–4 ruled in D61 (4)).
+
+1. **The Pro HIGH T = 0.0 cells are Pro without thinking** and must be
+   described so: in H6, and on the N = 1 baseline leaderboard, where
+   Obs 339 placed `pro-text-high-t-0-0` in Tier 1.
+2. **A-06's "temperature is the driver" reading at HIGH is open**
+   (`results/h6-registered-analyses/findings.md:65`). It compares T = 0.0
+   passes that did not think with T = 0.7 passes whose thinking is
+   unknown, so the gap is temperature, or thinking delivered at T = 0.7
+   and not at T = 0.0.
+3. **A-09's verdict is unaffected, but its cost gap must be qualified.**
+   Its audited Pro cost prices no thinking and needs no correction, and
+   the registered verdict (CLOSED) stands. Its matched-configuration
+   comparison, which does not decide the gate, is not like-for-like, and
+   the re-derived report must say so beside the cost figures before it is
+   signed (amendment `7910371b5`): the Flash comparator's audited US$6.62
+   per text pass is standard-tier pricing that includes about 2.0 million
+   thought tokens (US$0.60 without them), while Pro's US$0.93 is the flex
+   rate (US$1.85 at standard) with no thinking delivered. The gap reflects
+   the thinking failure and the tier difference, not a cheaper model.
+4. **Additional gold-standard Pro runs** are for the PI to consider where
+   a gate is tripped (55-map runs need further consideration), each under
+   the API review gate.
+5. **Check delivery wherever thinking is a factor:** read thought tokens
+   from the response, and where the record is in doubt, the invoice.
+6. **A same-day probe is designed** (`scripts/run_pro_thinking_probe.sh`,
+   `c4e6305d9`; PI approval under D61 (4), per its header): five arms of
+   the same 50 gold-standard tiles, matching the June run except in
+   temperature, to measure the thinking Pro delivers at each temperature
+   on today's service. It cannot show what the March passes did, and its
+   results belong in a later entry.
+
+**Caveats.** The invoice reconciles totals over 16 passes, not single
+passes: it rules out thinking at Flash's thousands of tokens per request,
+not a residue of a few. The HIGH text passes ran on flex; the HIGH image
+passes requested flex, but their cached calls dropped the tier and were
+served at standard (manifest `tier_method: cached-path`), consistent
+with the two invoice rows (item 2). The Cost-table exports are in
+Australian dollars (AUD) and filtered to the project
+(`reports/billing-reconciliation-2026-09-11.md`); token counts are
+unaffected, but the CSVs are gitignored, so the check re-runs only where
+they are held. The finding is about Pro as served on
+2026-06-03; Obs 508 applies, and another date may differ.
+
+**Findable later.** Pro thinking, thought tokens, total_thoughts_tokens,
+tokens.thinking, invoice reconciliation, manipulation check,
+thinking_level HIGH, requested against delivered, Pro without thinking,
+A-06 confound, A-09 audited cost, n1-pro-rerun-384, pro-high-text-n5,
+693,527 against 686,307, 7,220 tokens.
+
+**Related.** Obs 337 (E57's billing reconciliation and intent ≠ request
+≠ service; its "billing verified" for the `pv-diag-384` pools rested on
+`pricing_used` rates, and for the two March HIGH pools no invoice line
+exists), Obs 338 and Obs 339 (the genuine-Pro re-run that produced the
+HIGH T = 0.0 cells, and the Tier-1 tie between HIGH and MEDIUM at T = 0.0),
+Obs 415 (temperature, not thinking, drives the genuine-Pro corner gap; now
+open at HIGH), Obs 496 (Experiment E's levers never reached the model,
+which commissioned the manipulation check), Obs 500 (the invoice as the
+only witness outside the chain), Obs 508 (same-model drift); errata E57
+(§ Update, 2026-06-03) and E77
+(`docs/methodology/preregistration/protocol-errata.md`).
+
+**Artefacts**: `reports/manipulation-check-2026-10-05.md` § D
+(`374c48199`); D61 (4) (`b40f68a5f`, amended `7910371b5`);
+`results/passes-manifest.json`;
+`outputs/h11/n1-pro-rerun-384/` metas and `_run_log.txt`;
+`logs/pro-n10-batch-20260329-120951.log`.
