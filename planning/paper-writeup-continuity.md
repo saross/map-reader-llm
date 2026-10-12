@@ -126,6 +126,31 @@ replaces it.
   (4) W2.7: `FastScorer` rebuilt on the shared attribution, § 6 and § 6b
   regenerated together. (3), (4), and the stride55 `per_map_counts()` form
   Phase 5's sweep for scorer restatements. (2) is in the D57 (3) item.
+  **Overnight 2026-10-12/13 (PI: "run the analyses I've already approved"),
+  all draft, none merged:** #34 `fix/dry-run-no-cache` (`47c38541d`; a
+  dry run created a billed context cache); #35 `d61-regenerations`
+  (`75abef2ab`; tier-0 intervals with the replay at `122104b8a^`/`122104b8a`,
+  A-06 with BH, A-09 audited; `h6-a09-cost-gate` re-sign-pending); #36
+  `d60-1-input-vintage` (`91d30c37f`; reader plus 13 Stage A cells, byte
+  match; Stage B reported only); #37 `d60-consensus-route` (`4ddfd6b93`;
+  D61 (2) outcome: inputs changed; H2 ΔF1 0.076083 → 0.073730, no p or
+  BH decision crosses); #38 `d60-w27-fastscorer` (`3448e1e9b`; no floor or
+  verdict moves); #39 `scorer-restatement-sweep` (`51b77731d`;
+  `per_map_counts()` moves nothing; inventory). Pro thinking probe:
+  `outputs/pro-thinking-probe-2026-10-12/probe-report.md` (all 20
+  successful requests at HIGH had zero thinking at T 0.0, 0.7, 1.0).
+  Fault-window list: `reports/s163-agent-records/fault-window-recheck-list.md`.
+  **Found, for the PI:** (a) the plateau, grid, H13, and Image-B chains
+  score bare centroids with no origin, so D50 falls back to the old
+  cross-sheet rule; on the signed plateau board the four incumbents score
+  +0.007 to +0.017 F1 @ 20 m on their recorded sheets (#39 inventory § 9.3;
+  committed values confirmed in `results/stride-2026-08-25/plateau_analyses.json`,
+  the recorded-sheet values not yet reproduced by the main session);
+  (b) W2.7 `cluster_subset` frames and `scripts/analyse_diversity.py`'s own
+  `consensus_to_gdf` copy have the same gap; (c) the signed A-09 outcome
+  text's limb-2 reasoning was already false in the committed artefact
+  (verdict unaffected); (d) A-07 needs its D50 regeneration (25 leaves);
+  (e) `sweep_fourth_50m.csv` moves 8 rows under D50 (generator not re-run).
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
