@@ -1,9 +1,13 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-09-08 (A-07 and A-09 refreshed on the Flash
-> comparator rebuilt from the E71-recovered passes, PI instruction S150;
-> no verdict changes, the image fragility flag retired). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-12 (A-06 regenerated with the D42
+> permutation p and Benjamini–Hochberg across its four factor-T
+> contrasts, PI ruling D61 (3); the finding that the Pro HIGH T = 0.0
+> passes did not think recorded against A-06's HIGH-cell reading, D61
+> (4); no A-06 number in the table or verdict changes). 2026-09-08: A-07
+> and A-09 refreshed on the Flash comparator rebuilt from the
+> E71-recovered passes. See [§ Changelog](#changelog) for revision
+> history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -73,6 +77,44 @@ precision); the two delta estimators (manifest eval vintage vs
 pass-averaged micro) are reconciled by an in-script gate and agree
 to ≤ 0.0005. The original confounded contrast is retained in the
 artefact as a superseded record.
+
+**Note, 2026-10-12 (PI rulings D61 (3) and D61 (4)).** Two additions;
+the table above, the four rule verdicts, and the registered outcome
+text are unchanged.
+
+*p-values (D61 (3)).* The artefact now carries the paired tile-swap
+permutation p that PI ruling D42 adopted (10,000 permutations, seed 42,
+through the shared helper `e45_bootstrap_pairings.paired_bootstrap`,
+`3c3023f51`), in place of the retired bootstrap p, which sat at its
+floor of 0.001 in all four cells. Benjamini–Hochberg (BH) is applied
+across the four registered factor-T contrasts as one family. The
+registered rule has no p condition, so BH is reported beside it and
+decides nothing:
+
+| Contrast (T = 0.0 − T = 0.7) | Bootstrap p (retired) | Permutation p | BH-adjusted p | Discordant tiles |
+|---|---:|---:|---:|---:|
+| Text, HIGH | 0.001 (floor) | 0 (< 0.0001) | 0 | 175 |
+| Text, MEDIUM | 0.001 (floor) | 0.0019 | 0.0019 | 147 |
+| Image, HIGH | 0.001 (floor) | 0 (< 0.0001) | 0 | 218 |
+| Image, MEDIUM | 0.001 (floor) | 0.0002 | 0.00027 | 192 |
+
+All four reject at q = 0.05. Deltas, intervals, and the four flags are
+unchanged.
+
+*Pro HIGH did not think (D61 (4)).* The Pro HIGH T = 0.0 passes
+(`n1-pro-rerun-384`, `pro-{text,image}-high-t0`) delivered no thinking:
+they record zero thought tokens, and the June 2026 invoice confirms it
+(`reports/manipulation-check-2026-10-05.md` § D; Obs 509). Whether the
+T = 0.7 Pro HIGH comparators (`pv-diag-384`,
+`pro-high-{text,image}-n5`) thought is unknown: they carry no recorded
+usage and no matching invoice line. At HIGH, therefore, the factor-T
+contrast compares T = 0.0 without thinking against T = 0.7 with
+thinking unknown, and the reading "temperature is the driver" is open
+there: the gap is temperature, or thinking delivered at T = 0.7 and not
+at T = 0.0. The thinking context at T = 0.0 (HIGH − MEDIUM) likewise
+compares Pro without thinking against MEDIUM thinking. Nothing is
+re-labelled here; the register row's outcome text is the PI's to
+revise.
 
 ## A-07 — the Phase 3 voting-threshold comparison
 
@@ -228,6 +270,43 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-10-12 — A-06 regenerated: permutation p with BH; the thinking finding recorded (PI ruling D61 (3) and (4))
+
+**Refresh trigger**: the shared helper `paired_bootstrap` took the D42
+permutation p on 2026-10-05 (`3c3023f51`), and `a06_decision_rule.json`
+(2026-09-08) was never regenerated, so the D57 (4) Phase 3 re-score found
+it still carrying the bootstrap p fields
+(`reports/s163-agent-records/d57-4-rescore-s3-deltas.md` § Stopped lines).
+PI ruling D61 (3), which records it as the only file under `results/`
+still carrying `p_at_floor`: regenerate on today's script and add BH
+across the four registered contrasts. PI ruling D61 (4) adds the thinking finding.
+`scripts/h6_registered_analyses.py` gained `apply_bh_to_factor_t` with
+tier-1 tests; the artefact was regenerated on sapphire in two
+independent runs, byte-identical apart from `generated_at`.
+
+**Before → after** (`a06_decision_rule.json`, the 28 leaves the Phase 3
+diff predicted, plus the BH fields):
+
+| Field, per contrast (text HIGH / text MEDIUM / image HIGH / image MEDIUM) | Before | After |
+|---|---|---|
+| `p_value` | 0.001 / 0.001 / 0.001 / 0.001 (bootstrap floor) | 0 / 0.0019 / 0 / 0.0002 (permutation) |
+| `p_at_floor`, `prop_gt_zero`, `prop_le_zero` | present | removed (bootstrap p retired) |
+| `p_method`, `n_permutations`, `n_discordant_tiles` | absent | permutation test, 10,000, 175 / 147 / 218 / 192 |
+| `p_bh_adjusted` (new) | absent | 0 / 0.0019 / 0 / 0.000267 |
+
+**What did NOT change**: every F1, delta, and delta interval; all four
+rule verdicts (fires); the thinking-context deltas and intervals; the
+estimator-reconciliation gate. The register row `h6-a06-decision-rule`
+quotes no p-value, so none of its numbers moved and its signature is
+not lapsed by this regeneration; whether the D61 (4) finding bears on
+its outcome text ("TEMPERATURE IS THE DRIVER") is for the PI.
+`a07_voting_thresholds.json`, which the same script writes, was not
+committed: under today's scorer (D50) it moves 25 leaves, a separate
+Phase 5 item. The two consensus `voting_summary.json` files under
+`outputs/h11/n1-pro-rerun-384/` gain only the `pass_provenance_schema`
+tag `merge_passes` has written since `ac7d393c7`; their counts and the
+consensus GeoJSON files are unchanged.
 
 ### 2026-09-08 (later, S151) — A-07's retired-flag prose corrected: 0.0015, not 0.0016
 

@@ -45,7 +45,9 @@ Stages:
   4. A-06 registered rule on the only available contrast (the
      temperature-and-thinking corner pair, per modality; E40-class
      confound disclosed), with a paired tile-bootstrap **delta** CI
-     as the operational augmentation (never the per-condition F1 CI).
+     as the operational augmentation (never the per-condition F1 CI),
+     and the D42 permutation p, Benjamini-Hochberg-adjusted across the
+     four registered factor-T contrasts (PI ruling D61 (3), 2026-10-12).
   5. A-09 cost gate on audited per-pass `cost_usd` (both sides), with
      the all-Flash `pareto_v2.json` frontier as the Flash-optimal
      yardstick.
@@ -73,6 +75,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from e45_bootstrap_pairings import micro_f1, paired_bootstrap  # noqa: E402
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_permutation import bh_adjust  # noqa: E402
 from lib_phase4_transfer import (  # noqa: E402
     evaluate_factor_sensitivity,
     evaluate_voting_threshold_transfer,
@@ -126,6 +129,75 @@ A08_STATEMENT = (
 COST_WINDOW = 0.10
 F1_WINDOW = 0.02
 
+#: A-06's four registered factor-T contrasts (T = 0.0 against the carried
+#: T = 0.7 at matched thinking), in the fixed order the Benjamini-Hochberg
+#: (BH) family is read. PI ruling D42 tests every contrast by the paired
+#: tile-swap permutation test with BH; D61 (3) applies it to A-06.
+FACTOR_T_FAMILY = (("text", "high"), ("text", "medium"),
+                   ("image", "high"), ("image", "medium"))
+BH_Q = 0.05
+BH_METHOD = (
+    "Benjamini-Hochberg step-up across A-06's four registered factor-T "
+    "contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied "
+    "to each contrast's paired tile-swap permutation p (PI rulings D42 and "
+    "D61 (3)); scripts/lib_permutation.bh_adjust")
+
+
+def apply_bh_to_factor_t(factor_t: dict) -> dict:
+    """Adjust A-06's four factor-T permutation p-values as one BH family.
+
+    Each contrast row gains ``p_bh_adjusted`` (6 dp), ``p_adjust_method``,
+    and ``bh_rejects_at_q_0.05``; the raw p stays where the shared helper
+    wrote it (``delta_bootstrap.p_value``). The registered A-06 rule
+    (delta >= 0.03) carries no p condition, so BH is reported beside it,
+    never in place of it.
+
+    Args:
+        factor_t: The ``registered_factor_T`` block, keyed modality ->
+            thinking level -> contrast row. Mutated in place.
+
+    Returns:
+        A family summary: method, q, member labels, raw and adjusted p,
+        and the rejection reading per member.
+
+    Raises:
+        ValueError: If any of the four contrasts is missing; a smaller
+            family would silently shrink m and understate the adjustment.
+
+    Example:
+        >>> block = {m: {t: {"delta_bootstrap": {"p_value": p}}
+        ...              for t, p in (("high", 0.0), ("medium", 0.0019))}
+        ...          for m in ("text", "image")}
+        >>> apply_bh_to_factor_t(block)["p_bh_adjusted"]["text MEDIUM"]
+        0.0019
+    """
+    missing = [f"{m}/{t}" for m, t in FACTOR_T_FAMILY
+               if t not in factor_t.get(m, {})]
+    if missing:
+        raise ValueError(f"A-06 BH family incomplete: missing {missing}")
+    labels = [f"{m} {t.upper()}" for m, t in FACTOR_T_FAMILY]
+    raw = [float(factor_t[m][t]["delta_bootstrap"]["p_value"])
+           for m, t in FACTOR_T_FAMILY]
+    adjusted = [round(p, 6) for p in bh_adjust(raw)]
+    for (m, t), p_adj in zip(FACTOR_T_FAMILY, adjusted):
+        row = factor_t[m][t]
+        row["p_bh_adjusted"] = p_adj
+        row["p_adjust_method"] = BH_METHOD
+        row["bh_rejects_at_q_0.05"] = bool(p_adj <= BH_Q)
+    return {
+        "method": BH_METHOD,
+        "q": BH_Q,
+        "family": labels,
+        "p_permutation": dict(zip(labels, raw)),
+        "p_bh_adjusted": dict(zip(labels, adjusted)),
+        "rejected_at_q": {lab: bool(p <= BH_Q) for lab, p in zip(labels, adjusted)},
+        "_note": (
+            "The registered A-06 rule (delta >= 0.03, no CI or p condition) "
+            "decides the flag; the BH-adjusted permutation p is the D42 "
+            "testing convention reported beside it. A p of 0 means no "
+            "permutation of 10,000 reached the observed |delta| (p < 0.0001)."),
+    }
+
 
 def coverage_note(pro: dict, flash: dict) -> str:
     """State the comparator's tile coverage from the manifest counts, not a literal.
@@ -158,8 +230,9 @@ def fragility_caveat(image_curve: dict[int, float]) -> str:
     The 2026-08-17 artefact carried the margin as a literal ("k=3 beats k=1 by
     0.0016", a rounding of the recorded 0.001545 that the archived pre-recovery
     artefact and findings.md give as 0.0015; the retired-flag sentence below
-    now says 0.0015 — S151, PI instruction); it is now read from the curve so a rebuilt comparator (the
-    post-E71 consensus sweeps, S150) cannot leave a stale number behind.
+    now says 0.0015 — S151, PI instruction); it is now read from the curve so
+    a rebuilt comparator (the post-E71 consensus sweeps, S150) cannot leave a
+    stale number behind.
     """
     best_k = max(image_curve, key=image_curve.get)
     ordered = sorted(image_curve.values(), reverse=True)
@@ -585,6 +658,10 @@ def main() -> int:
             }
         a06_thinking_ctx[modality] = th_rows
 
+    # BH across the four registered factor-T contrasts (D42, D61 (3)). The
+    # thinking-context deltas above carry CIs only, so they are not tested.
+    a06_multiplicity = apply_bh_to_factor_t(a06_factor_t)
+
     a06 = {
         "_README": (
             "A-06 (registered: preregistration.md:677 — 'If alternative "
@@ -603,13 +680,17 @@ def main() -> int:
             "fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, "
             "seed 42), never a per-condition F1 CI. Replicate-count "
             "caveat: the T=0.7 corners average 5-10 passes vs 3 for the "
-            "others (same estimator, differing precision)."),
+            "others (same estimator, differing precision). p-values: the "
+            "paired tile-swap permutation test (D42), BH-adjusted across "
+            "the four factor-T contrasts (D61 (3)); see "
+            "multiplicity_factor_T."),
         "generated_at": at,
         "registered_prediction": (
             "H6: 'The Flash-optimal configuration will perform well on "
             "Pro, with at most minor factor adjustments needed' "
             "(preregistration.md, H6 Prediction)."),
         "registered_factor_T": a06_factor_t,
+        "multiplicity_factor_T (BH, D42 and D61 (3))": a06_multiplicity,
         "thinking_decomposition_context (not a registered factor)":
             a06_thinking_ctx,
         "superseded_confounded_contrast": {

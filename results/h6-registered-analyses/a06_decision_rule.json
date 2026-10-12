@@ -1,6 +1,6 @@
 {
- "_README": "A-06 (registered: preregistration.md:677 \u2014 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment', registered WITHOUT a CI condition). REVISED after the S135 blind verification (HIGH-1): the full genuine-Pro thinking x temperature 2x2 exists per modality (n1-pro-rerun-384 + pv-diag-384 Pro baselines, same Era-2 corpus, identical instruction/library hashes), so the registered factor T IS cleanly evaluable at matched thinking \u2014 the earlier confounded-only framing is superseded. Thinking level is not a registered Phase-2 factor and is reported as decomposition context. M/E, H5, and O remain unvaried. The delta CI is the operational augmentation documented in lib_phase4_transfer.py:22-27, fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, seed 42), never a per-condition F1 CI. Replicate-count caveat: the T=0.7 corners average 5-10 passes vs 3 for the others (same estimator, differing precision).",
- "generated_at": "2026-09-08T13:00:39.499653+00:00",
+ "_README": "A-06 (registered: preregistration.md:677 \u2014 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment', registered WITHOUT a CI condition). REVISED after the S135 blind verification (HIGH-1): the full genuine-Pro thinking x temperature 2x2 exists per modality (n1-pro-rerun-384 + pv-diag-384 Pro baselines, same Era-2 corpus, identical instruction/library hashes), so the registered factor T IS cleanly evaluable at matched thinking \u2014 the earlier confounded-only framing is superseded. Thinking level is not a registered Phase-2 factor and is reported as decomposition context. M/E, H5, and O remain unvaried. The delta CI is the operational augmentation documented in lib_phase4_transfer.py:22-27, fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, seed 42), never a per-condition F1 CI. Replicate-count caveat: the T=0.7 corners average 5-10 passes vs 3 for the others (same estimator, differing precision). p-values: the paired tile-swap permutation test (D42), BH-adjusted across the four factor-T contrasts (D61 (3)); see multiplicity_factor_T.",
+ "generated_at": "2026-10-12T12:55:51.414646+00:00",
  "registered_prediction": "H6: 'The Flash-optimal configuration will perform well on Pro, with at most minor factor adjustments needed' (preregistration.md, H6 Prediction).",
  "registered_factor_T": {
   "text": {
@@ -24,10 +24,10 @@
       "lower": 0.033959,
       "upper": 0.084565
      },
-     "prop_le_zero": 0.0,
-     "prop_gt_zero": 1.0,
-     "p_value": 0.001,
-     "p_at_floor": true,
+     "p_value": 0.0,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 175,
      "ci_excludes_zero": true
     },
     "library_result_with_ci_augmentation": {
@@ -60,7 +60,10 @@
     "n_passes": {
      "t07": 10,
      "t00": 3
-    }
+    },
+    "p_bh_adjusted": 0.0,
+    "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+    "bh_rejects_at_q_0.05": true
    },
    "medium": {
     "t07_f1": 0.7555,
@@ -82,10 +85,10 @@
       "lower": 0.011291,
       "upper": 0.062031
      },
-     "prop_le_zero": 0.0,
-     "prop_gt_zero": 1.0,
-     "p_value": 0.001,
-     "p_at_floor": true,
+     "p_value": 0.0019,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 147,
      "ci_excludes_zero": true
     },
     "library_result_with_ci_augmentation": {
@@ -118,7 +121,10 @@
     "n_passes": {
      "t07": 3,
      "t00": 3
-    }
+    },
+    "p_bh_adjusted": 0.0019,
+    "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+    "bh_rejects_at_q_0.05": true
    }
   },
   "image": {
@@ -142,10 +148,10 @@
       "lower": 0.04206,
       "upper": 0.107635
      },
-     "prop_le_zero": 0.0,
-     "prop_gt_zero": 1.0,
-     "p_value": 0.001,
-     "p_at_floor": true,
+     "p_value": 0.0,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 218,
      "ci_excludes_zero": true
     },
     "library_result_with_ci_augmentation": {
@@ -178,7 +184,10 @@
     "n_passes": {
      "t07": 5,
      "t00": 3
-    }
+    },
+    "p_bh_adjusted": 0.0,
+    "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+    "bh_rejects_at_q_0.05": true
    },
    "medium": {
     "t07_f1": 0.595,
@@ -200,10 +209,10 @@
       "lower": 0.029897,
       "upper": 0.088783
      },
-     "prop_le_zero": 0.0,
-     "prop_gt_zero": 1.0,
-     "p_value": 0.001,
-     "p_at_floor": true,
+     "p_value": 0.0002,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 192,
      "ci_excludes_zero": true
     },
     "library_result_with_ci_augmentation": {
@@ -236,9 +245,41 @@
     "n_passes": {
      "t07": 3,
      "t00": 3
-    }
+    },
+    "p_bh_adjusted": 0.000267,
+    "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+    "bh_rejects_at_q_0.05": true
    }
   }
+ },
+ "multiplicity_factor_T (BH, D42 and D61 (3))": {
+  "method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+  "q": 0.05,
+  "family": [
+   "text HIGH",
+   "text MEDIUM",
+   "image HIGH",
+   "image MEDIUM"
+  ],
+  "p_permutation": {
+   "text HIGH": 0.0,
+   "text MEDIUM": 0.0019,
+   "image HIGH": 0.0,
+   "image MEDIUM": 0.0002
+  },
+  "p_bh_adjusted": {
+   "text HIGH": 0.0,
+   "text MEDIUM": 0.0019,
+   "image HIGH": 0.0,
+   "image MEDIUM": 0.000267
+  },
+  "rejected_at_q": {
+   "text HIGH": true,
+   "text MEDIUM": true,
+   "image HIGH": true,
+   "image MEDIUM": true
+  },
+  "_note": "The registered A-06 rule (delta >= 0.03, no CI or p condition) decides the flag; the BH-adjusted permutation p is the D42 testing convention reported beside it. A p of 0 means no permutation of 10,000 reached the observed |delta| (p < 0.0001)."
  },
  "thinking_decomposition_context (not a registered factor)": {
   "text": {
