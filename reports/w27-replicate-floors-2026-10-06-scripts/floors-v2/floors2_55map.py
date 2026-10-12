@@ -19,15 +19,21 @@ kept), and (c) all K-subsets without replacement on the union clusters (no
 re-clustering), each scored like the real rungs.
 
 Gates (stop on failure): fast clustering == committed ``cluster_votes``; fast
-scorer == committed ``compute_per_tile_tp_fp_fn`` per tile; the six committed
-rung counts of W2.7 § 2 and the N10 / N5 top-rung counts; and (after the run)
-every W2.7 subset cell (``subset_cells.json``) reproduced exactly.
+scorer == the live ``compute_per_tile_tp_fp_fn`` per tile on six cells; the six
+committed rung counts of W2.7 § 2 and the N10 / N5 top-rung counts; and (after
+the run, gate 4) every cell of ``floors2_scorer_gate.py``'s live-library gate --
+every § 6 cell of the board families and a seeded random sample of the others --
+reproduced exactly (n_det, tp, fp, fn, F1), with that gate passed under the same
+library and scorer blob hashes as this run (PI ruling D60 (4), 2026-10-12).
+Until 2026-10-12 gate 4 compared with the committed § 6 ``subset_cells.json``,
+which the pre-D50 scorer had written, so it could not see the D50 rule.
 
-Zero API. Run on sapphire:
-    PYTHONPYCACHEPREFIX=/tmp/floors2/pycache .venv/bin/python floors2_55map.py \
-        --workers 20 --out /tmp/floors2/out55 [--sims 200]
+Zero API. Run on sapphire (``REPO`` = the checkout these scripts sit in):
+    REPO=<clone> PYTHONPYCACHEPREFIX=/tmp/floors2/pycache .venv/bin/python floors2_55map.py \
+        --workers 8 --scorer-gate <gate dir> --out /tmp/floors2/out55 [--sims 200]
 
-Author: Shawn Ross & Claude (Anthropic) | Created: 2026-10-07 | Apache 2.0
+Author: Shawn Ross & Claude (Anthropic) | Created: 2026-10-07 | Gate 4 against the
+live library: 2026-10-12 | Apache 2.0
 """
 
 from __future__ import annotations
@@ -83,11 +89,23 @@ TOP_GATES = {
 _G: dict = {}
 
 
+def blob_hash(path: Path) -> str:
+    """The file's git blob hash (``git hash-object``)."""
+    import hashlib
+
+    data = path.read_bytes()
+    return hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
+
+
 def frame_arrays(cell: gpd.GeoDataFrame) -> dict:
-    """Plain arrays of an inherited rung frame, in frame order."""
+    """An inherited rung frame attributed once by the library, with its threshold arrays.
+
+    ``prep`` is the scorer's :class:`floors2_lib.PreparedFrame`: every row's sheet
+    under the library's detection scope (D50), so each (prob_t, k) cell is a row
+    mask of it.
+    """
     return {
-        "xy": np.c_[cell.geometry.x.to_numpy(), cell.geometry.y.to_numpy()],
-        "tiles": cell["source_tile"].to_numpy(dtype=object),
+        "prep": _G["scorer"].prepare(cell),
         "prob": cell["mound_probability"].to_numpy(dtype=float),
         "votes": cell["vote_count"].to_numpy(dtype=int),
     }
@@ -100,7 +118,7 @@ def score_ops(fam: str, K: int, fa: dict, votes: np.ndarray | None = None, ks=No
     for p in PROBS[fam]:
         for k in ks or range(1, K + 1):
             m = (fa["prob"] >= p) & (v >= k)
-            tp, fp, fn = _G["scorer"].totals(fa["xy"][m], fa["tiles"][m])
+            tp, fp, fn = _G["scorer"].totals(fa["prep"], m)
             out.append(
                 {
                     "family": fam,
@@ -161,6 +179,12 @@ def main() -> int:
     ap.add_argument("--out", type=Path, default=Path("/tmp/floors2/out55"))
     ap.add_argument("--sims", type=int, default=0)
     ap.add_argument("--max-k10", type=int, default=5)
+    ap.add_argument(
+        "--scorer-gate",
+        type=Path,
+        required=True,
+        help="directory holding floors2_scorer_gate.py's scorer_gate.json and cells CSV",
+    )
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
@@ -188,7 +212,8 @@ def main() -> int:
     bounds = (bounds.set_crs("EPSG:4326") if bounds.crs is None else bounds).to_crs("EPSG:32635")
     _G.update(scorer=L.FastScorer(ref, bounds, w27.BUFFER_M), index=index, fam=fam)
 
-    # Gate 2: fast scorer == committed per-tile table (exact), on six cells.
+    # Gate 2: fast scorer == the live library's per-tile table (exact), on six cells,
+    # through the production path (the whole frame attributed once, the cell a mask).
     for f, s, p, k in (
         ("B", (0, 1, 2, 3, 4), 0.15, 5),
         ("A", (2,), 0.20, 1),
@@ -198,11 +223,11 @@ def main() -> int:
         ("ARM1", (3,), 0.10, 1),
     ):
         cell = w27.inherit(w27.cluster_subset(fam[f]["passes"], s, index), fam[f]["union"])
-        sub = cell[(cell["mound_probability"] >= p) & (cell["vote_count"] >= k)]
+        m = ((cell["mound_probability"] >= p) & (cell["vote_count"] >= k)).to_numpy()
+        sub = cell[m]
         tm = compute_per_tile_tp_fp_fn(sub, ref, bounds, buffer_metres=w27.BUFFER_M)
         slow = {r.tile_name: (int(r.tp), int(r.fp), int(r.fn)) for r in tm.itertuples()}
-        fa = frame_arrays(sub)
-        fast_arr = _G["scorer"].per_tile(fa["xy"], fa["tiles"])
+        fast_arr = _G["scorer"].per_tile(frame_arrays(cell)["prep"], m)
         fast = {t: tuple(int(x) for x in fast_arr[i]) for t, i in _G["scorer"].tile_pos.items()}
         ok = slow == fast
         gates[f"FastScorer == compute_per_tile_tp_fp_fn ({f} {s} {p} k{k})"] = {
@@ -253,30 +278,48 @@ def main() -> int:
         w.writerows(recs)
     print(f"{len(recs)} subset cells scored {time.time() - t0:.0f}s", flush=True)
 
-    # Gate 4: every W2.7 subset cell reproduced exactly.
-    old = json.loads(
-        (REPO / "reports/w27-replicate-floors-2026-10-06-scripts/subset_cells.json").read_text()
-    )
+    # Gate 4: every cell the live-library gate scored is reproduced exactly, and that
+    # gate passed under this run's library and scorer (D60 (4)).
+    gate = json.loads((args.scorer_gate / "scorer_gate.json").read_text())
+    here = Path(__file__).resolve().parent
+    blobs_now = {
+        "scripts/lib_advanced_metrics.py": blob_hash(REPO / "scripts/lib_advanced_metrics.py"),
+        "floors2_lib.py": blob_hash(here / "floors2_lib.py"),
+    }
+    blobs_ok = all(gate["blob_hashes"].get(k) == v for k, v in blobs_now.items())
     have = {(r["family"], r["subset"], r["prob_t"], r["k"]): r for r in recs}
-    n_chk, bad = 0, []
-    for o in old:
-        if o["family"] == "UPL":
-            continue
-        key = (o["family"], "-".join(map(str, o["subset"])), o["prob_t"], o["k"])
-        r = have.get(key)
-        if r is None:
-            continue
-        n_chk += 1
-        if r["n_det"] != o["n_det"] or r["f1"] != o["f1"]:
-            bad.append({"key": key, "old": [o["n_det"], o["f1"]], "new": [r["n_det"], r["f1"]]})
-    gates["W2.7 subset_cells.json reproduced"] = {
+    n_chk, n_listed, bad = 0, 0, []
+    with open(args.scorer_gate / "scorer_gate_cells.csv") as fh:
+        for o in csv.DictReader(fh):
+            if o["family"] == "UPL":
+                continue
+            n_listed += 1
+            key = (o["family"], o["subset"], float(o["prob_t"]), int(o["k"]))
+            r = have.get(key)
+            if r is None:
+                bad.append({"key": key, "missing": True})
+                continue
+            n_chk += 1
+            lib = [int(o["n_det"]), int(o["lib_tp"]), int(o["lib_fp"]), int(o["lib_fn"])]
+            got = [r["n_det"], r["tp"], r["fp"], r["fn"]]
+            if got != lib or r["f1"] != float(o["lib_f1"]):
+                bad.append({"key": key, "library": lib + [o["lib_f1"]], "run": got + [r["f1"]]})
+    gates["live-library gate cells reproduced (floors2_scorer_gate.py)"] = {
+        "gate_pass": bool(gate["pass"]),
+        "blob_hashes_match": blobs_ok,
+        "blob_hashes": blobs_now,
+        "listed": n_listed,
         "checked": n_chk,
         "mismatches": bad[:20],
-        "pass": not bad and n_chk > 300,
+        "pass": bool(gate["pass"]) and blobs_ok and not bad and n_chk == n_listed > 0,
     }
-    print(f"GATE W2.7 cells: checked {n_chk}, mismatches {len(bad)}", flush=True)
+    print(
+        f"GATE live-library cells: gate pass {gate['pass']}, blobs match {blobs_ok}, "
+        f"checked {n_chk} of {n_listed}, mismatches {len(bad)}",
+        flush=True,
+    )
     (args.out / "gates.json").write_text(json.dumps(gates, indent=1, default=str))
-    if bad:
+    if not all(g["pass"] for g in gates.values()):
         return 1
 
     if args.sims:

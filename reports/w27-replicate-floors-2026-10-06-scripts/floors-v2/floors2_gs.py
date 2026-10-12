@@ -16,8 +16,11 @@ empirical disjoint-subset spread from all 30 passes (W2.7's
 10-subsets per pool).
 
 Gates (stop on failure): KD-shortlisted greedy star == the GS script's
-``consensus``; fast scorer == ``_per_tile_one_set``; every slice subset that
-coincides with a W2.7 disjoint subset reproduces its committed F1 and count.
+``consensus``; fast scorer == ``_per_tile_one_set`` (the live library's
+per-tile table); every slice subset that coincides with a W2.7 disjoint subset
+reproduces its committed F1 and count. Since 2026-10-12 the scorer is the
+rebuilt ``FastScorer`` (library attribution, D60 (4)); each cell's detections
+are attributed by the library before scoring.
 
 Zero API. Run on sapphire:
     PYTHONPYCACHEPREFIX=/tmp/floors2/pycache .venv/bin/python floors2_gs.py \
@@ -90,8 +93,8 @@ def score_cell(
     keep = cents[votes >= t]
     det = gpd.GeoDataFrame(geometry=[Point(xy) for xy in keep], crs=gs.TARGET_CRS)
     det = gs.assign_source_tiles(det, bounds)
-    xy = np.c_[det.geometry.x.to_numpy(), det.geometry.y.to_numpy()]
-    tp, fp, fn = _G["scorers"][scope].totals(xy, det["source_tile"].to_numpy(dtype=object))
+    sc = _G["scorers"][scope]
+    tp, fp, fn = sc.totals(sc.prepare(det))
     return int(len(keep)), tp, fp, fn
 
 
@@ -166,9 +169,7 @@ def main() -> int:
         )
         tp, fp, fn = gs._per_tile_one_set(det, ref, bounds, order, gs.SCOPES[scope][2][0])
         sc = _G["scorers"][scope]
-        arr = sc.per_tile(
-            np.c_[det.geometry.x, det.geometry.y], det["source_tile"].to_numpy(dtype=object)
-        )
+        arr = sc.per_tile(sc.prepare(det))
         fast = {t: tuple(arr[i]) for t, i in sc.tile_pos.items()}
         slow = {t: (tp[i], fp[i], fn[i]) for i, t in enumerate(order)}
         ok = all(tuple(float(x) for x in fast[t]) == slow[t] for t in order) and set(fast) == set(

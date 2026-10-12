@@ -38,11 +38,10 @@ for f, s in (
     ("ARM2", (2, 3, 4)),
 ):
     cell = w27.inherit(w27.cluster_subset(fam[f]["passes"], s, index), fam[f]["union"])
-    xy = np.c_[cell.geometry.x, cell.geometry.y]
-    tiles = cell["source_tile"].to_numpy(dtype=object)
+    pi, pf = si.prepare(cell), sf.prepare(cell)
     for p in sorted(set(cell["mound_probability"].quantile([0.3, 0.5, 0.7, 0.9]).round(3))):
         m = cell["mound_probability"].to_numpy() >= p
-        a, c = si.per_tile(xy[m], tiles[m]), sf.per_tile(xy[m], tiles[m])
+        a, c = si.per_tile(pi, m), sf.per_tile(pf, m)
         n += 1
         n_tot_diff += int(not np.array_equal(a.sum(0), c.sum(0)))
         n_tile_diff += int((a != c).any(axis=1).sum())
