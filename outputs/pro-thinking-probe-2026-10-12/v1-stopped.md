@@ -21,3 +21,14 @@
   took about five minutes and most exhausted the output budget, which points to heavy thinking
   at T = 0.0 today. Version 2 (`scripts/run_pro_thinking_probe_v2.sh`) measures it, one
   attempt per tile, so every request's tokens are recorded.
+
+## Correction (2026-10-12T13:10Z): the cause was 503s, not thinking
+
+Version 2's first arm (`v2-text-t0.0/`, one attempt per tile, flex tier) recorded every
+request: 17 of 20 returned `503 UNAVAILABLE` ("This model is currently experiencing high
+demand"), and the 3 that succeeded finished with `STOP`, 10 output tokens, and **zero thought
+tokens**, as in June. So the v1 attempts above were 503 retries with backoff, not responses that
+exhausted the output budget, and the "reading" above (heavy thinking at T = 0.0 today) is wrong.
+503s are not billed: v1's spend is roughly its successful requests at about US$0.0016 each
+(under US$0.10), not the upper bound given above. Version 3
+(`scripts/run_pro_thinking_probe_v3.sh`) moves to the standard tier.
