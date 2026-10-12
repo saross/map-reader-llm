@@ -1,0 +1,1762 @@
+{
+  "run_id": "1fde9bc0-ed88-4b5a-8ba9-d6a8d9825724",
+  "timestamp": {
+    "start": "2026-10-12T13:50:45.042509+00:00",
+    "end": "2026-10-12T14:14:27.590266+00:00",
+    "duration_seconds": 1422.547757
+  },
+  "environment": {
+    "git_commit": "a36f69a9420ed7cf02fdac5657b614d7c6d0dde8",
+    "script": "4_detect_mounds_batch.py",
+    "script_version": "6.0.0"
+  },
+  "configuration": {
+    "version": "library_plus-hp",
+    "model": "gemini-3.1-pro-preview",
+    "instruction_file": "detect_brief-text-image.md",
+    "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+    "system_instruction_text": "# Mound Detection\n\nDetect all burial mound symbols in this Soviet topographic map tile.\n\n## Target Symbols\n\nAll mound symbols share one diagnostic feature: short **rays (hachures) radiating OUTWARD** from a central shape, forming a \"sunburst\" or \"gear\" pattern. This indicates elevated terrain.\n\n**Subtypes to detect:**\n\n- **Burial mound (kurgan)**: Orange-brown hollow circle with rays. ~10-20 pixels diameter. Often accompanied by elevation numbers or \"\u043a\u0443\u0440\u0433.\" label.\n- **Settlement mound**: Orange-brown, larger and often oval/irregular. More rays (8-15).\n- **Triangulation point on mound**: Black triangle with central dot, surrounded by black rays.\n- **Benchmark on mound**: Black square with central dot, surrounded by black rays.\n\nThe **rays pointing outward** are essential. Symbols without visible rays are not mounds.\n\n## Guidelines\n\n1. Provide individual bounding boxes for each symbol, even in clusters.\n2. Symbols may be partially occluded by lines, shapes, or text. Include if the sunburst pattern remains discernible.\n3. If reference examples are provided, compare uncertain cases against them. Each reference image is centred on the feature being labelled \u2014 the target symbol for Positive examples, the confusable feature for Negative examples.\n\n## Output Format\n\nReturn JSON with normalised coordinates (0-1000):\n\n{\n    \"detections\": [\n        {\n            \"box_2d\": [ymin, xmin, ymax, xmax],\n            \"label\": \"mound\",\n            \"subtype\": \"burial_mound\" | \"settlement_mound\" | \"triangulation_mound\" | \"benchmark_mound\"\n        }\n    ]\n}\n",
+    "library_hash": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+    "library_hash_basis": "example-bytes+path-label-category/1",
+    "library_manifest": [
+      {
+        "path": "neutral-naming/example_01.png",
+        "label": "Positive",
+        "category": "canonical_positive",
+        "sha256": "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+      },
+      {
+        "path": "neutral-naming/example_02.png",
+        "label": "Positive",
+        "category": "canonical_positive",
+        "sha256": "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+      },
+      {
+        "path": "neutral-naming/example_03.png",
+        "label": "Positive",
+        "category": "canonical_positive",
+        "sha256": "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+      },
+      {
+        "path": "neutral-naming/example_04.png",
+        "label": "Positive",
+        "category": "canonical_positive",
+        "sha256": "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+      },
+      {
+        "path": "neutral-naming/example_05.png",
+        "label": "Positive",
+        "category": "hard_positive",
+        "sha256": "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+      },
+      {
+        "path": "neutral-naming/example_06.png",
+        "label": "Positive",
+        "category": "hard_positive",
+        "sha256": "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+      },
+      {
+        "path": "neutral-naming/example_07.png",
+        "label": "Positive",
+        "category": "hard_positive",
+        "sha256": "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+      },
+      {
+        "path": "neutral-naming/example_08.png",
+        "label": "Positive",
+        "category": "hard_positive",
+        "sha256": "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+      },
+      {
+        "path": "neutral-naming/example_09.png",
+        "label": "Negative",
+        "category": "canonical_negative",
+        "sha256": "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+      },
+      {
+        "path": "neutral-naming/example_10.png",
+        "label": "Negative",
+        "category": "canonical_negative",
+        "sha256": "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+      },
+      {
+        "path": "neutral-naming/example_15.png",
+        "label": "Negative",
+        "category": "null",
+        "sha256": "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+      },
+      {
+        "path": "neutral-naming/example_16.png",
+        "label": "Negative",
+        "category": "null",
+        "sha256": "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+      },
+      {
+        "path": "neutral-naming/example_17.png",
+        "label": "Negative",
+        "category": "null",
+        "sha256": "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+      }
+    ],
+    "temperature": 0.7,
+    "max_output_tokens": 8192,
+    "thinking_level": "high",
+    "tile_size": null,
+    "include_example_images": true,
+    "example_count": 13,
+    "full_config_snapshot": {
+      "version": "library_plus-hp",
+      "description": "H8 Condition 3: +HP library. Adds hard positives (no hard negatives). Image-using track (brief-text-image).",
+      "hypothesis": "H8-3",
+      "model": "gemini-3.1-pro",
+      "instruction_file": "detect_brief-text-image.md",
+      "include_example_images": true,
+      "temperature": 0.7,
+      "max_output_tokens": 8192,
+      "thinking_level": "high",
+      "composition": {
+        "canonical_positive": 4,
+        "canonical_negative": 2,
+        "hard_positive": 4,
+        "hard_negative": 0,
+        "null": 3
+      },
+      "total_examples": 13,
+      "hard_examples": 4,
+      "examples": [
+        {
+          "path": "neutral-naming/example_01.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_02.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_03.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_04.png",
+          "label": "Positive",
+          "category": "canonical_positive"
+        },
+        {
+          "path": "neutral-naming/example_05.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_06.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_07.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_08.png",
+          "label": "Positive",
+          "category": "hard_positive"
+        },
+        {
+          "path": "neutral-naming/example_09.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_10.png",
+          "label": "Negative",
+          "category": "canonical_negative"
+        },
+        {
+          "path": "neutral-naming/example_15.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_16.png",
+          "label": "Negative",
+          "category": "null"
+        },
+        {
+          "path": "neutral-naming/example_17.png",
+          "label": "Negative",
+          "category": "null"
+        }
+      ],
+      "note": "Tests +HP effect (contrast C2). Hard positives improve recall for degraded/occluded mounds.",
+      "manifest_path": "outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json"
+    },
+    "cli_overrides": {
+      "temperature": 0.7,
+      "thinking_level": "high"
+    }
+  },
+  "execution_stats": {
+    "items_processed": 5,
+    "items_failed": 15,
+    "items_skipped": 0,
+    "retries_total": 49,
+    "retries_rate_limit": 0,
+    "retries_server_error": 49,
+    "retries_timeout": 0,
+    "retries_other": 0,
+    "finish_reason_counts": {
+      "error": 15,
+      "success": 5
+    },
+    "safety_blocks": 0,
+    "parse_failures": 15,
+    "empty_responses": 15,
+    "completed_items": [
+      "K-35-078-1_Lesovo_x2688_y672.png",
+      "K-35-062-2_Rakovski_x3360_y2688.png",
+      "K-35-052-4_32635_x2688_y1680.png",
+      "K-35-052-4_32635_x2688_y0.png",
+      "K-35-062-2_Rakovski_x2688_y2688.png"
+    ],
+    "failed_items": [
+      {
+        "item_id": "K-35-062-2_Rakovski_x3696_y1344.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T13:55:14.177152+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x336_y3024.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:06:28.863014+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y3360.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:06:48.325936+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2352.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:07:49.962581+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x4032_y3696.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:08:09.245888+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y3024.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:08:51.108571+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2352_y1344.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:09:00.560154+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y336.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:10:11.931285+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1008_y2688.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:10:51.323905+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x3024_y1680.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:11:18.666807+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2352_y672.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:11:55.249648+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y0.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:11:57.994795+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x4032_y336.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:12:16.035909+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2688.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:12:45.976810+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3696_y3024.png",
+        "reason": "Retries Exhausted / Invalid Finish Reason",
+        "category": "api",
+        "timestamp": "2026-10-12T14:14:25.875050+00:00"
+      }
+    ],
+    "retry_details": [
+      {
+        "item_id": "K-35-062-2_Rakovski_x3696_y1344.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:50:56.840363+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x4032_y3696.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:51:00.968973+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x3024_y1680.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:51:02.042577+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y336.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:51:02.190038+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y3360.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:51:15.176711+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2352.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:51:15.200039+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3696_y1344.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:53:37.916224+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3696_y1344.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:54:41.439842+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2688.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:24.457640+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x3360_y2688.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:26.572767+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y1680.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:26.789972+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y0.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:29.665542+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3696_y3024.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:32.575130+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x4032_y336.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:32.927704+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x336_y3024.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:58:43.162551+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2688_y2688.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:59:07.662421+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1008_y2688.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:59:20.367391+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2352_y1344.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:59:20.938332+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y0.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T13:59:39.928877+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1008_y2688.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:00:02.952896+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2352_y1344.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:00:04.457237+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2352.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:04:25.573925+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y3024.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:05:01.697606+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x336_y3024.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:05:09.408678+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y3360.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:05:10.463188+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x336_y3024.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:05:53.413765+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y3360.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:06:10.710524+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x4032_y3696.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:06:13.724289+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y3024.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:06:49.352568+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2352.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:07:14.383342+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x4032_y3696.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:07:29.910310+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y3024.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:08:20.220576+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x2352_y1344.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:08:21.902154+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2352_y672.png",
+        "attempt": 1,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:08:48.228442+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y336.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:08:48.977293+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x2688_y336.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:09:41.477228+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x3024_y1680.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:09:43.017573+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2352_y672.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:20.107655+00:00"
+      },
+      {
+        "item_id": "K-35-078-1_Lesovo_x1008_y2688.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:20.577571+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y0.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:20.609256+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x3024_y1680.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:43.629904+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x4032_y336.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:45.305636+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3696_y3024.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:10:45.397635+00:00"
+      },
+      {
+        "item_id": "K-35-062-2_Rakovski_x2352_y672.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:11:15.543996+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x1008_y0.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:11:19.292426+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2688.png",
+        "attempt": 2,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:11:22.927985+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x4032_y336.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:11:44.341517+00:00"
+      },
+      {
+        "item_id": "K-35-052-4_32635_x672_y2688.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:12:15.445088+00:00"
+      },
+      {
+        "item_id": "K-35-053-3_Elenovo_x3696_y3024.png",
+        "attempt": 3,
+        "reason": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+        "error_type": "server_error",
+        "timestamp": "2026-10-12T14:13:47.134201+00:00"
+      }
+    ]
+  },
+  "usage_stats": {
+    "total_input_tokens": 78295,
+    "total_output_tokens": 290,
+    "total_cached_tokens": 72745,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 78585,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 78295,
+        "output_tokens": 290,
+        "total_tokens": 78585,
+        "request_count": 20
+      }
+    },
+    "served_tier_counts": {
+      "unreported": 15,
+      "flex": 5
+    }
+  },
+  "results_summary": {
+    "total_detections": 4,
+    "class_counts": {
+      "burial_mound": 3,
+      "triangulation_mound": 1
+    },
+    "parsed_detections": 4,
+    "detections_not_emitted": 0,
+    "reconciled_against": "geojson feature count"
+  },
+  "per_item_metadata": [
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3696_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:54:13.720520+00:00",
+      "response_timestamp": "2026-10-12T13:54:41.439803+00:00",
+      "latency_ms": 27719,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x336_y3024.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:05:48.083139+00:00",
+      "response_timestamp": "2026-10-12T14:05:53.413727+00:00",
+      "latency_ms": 5330,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x672_y3360.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:05:49.378602+00:00",
+      "response_timestamp": "2026-10-12T14:06:10.710485+00:00",
+      "latency_ms": 21331,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x672_y2352.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:05:04.537933+00:00",
+      "response_timestamp": "2026-10-12T14:07:14.383283+00:00",
+      "latency_ms": 129845,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x4032_y3696.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:06:50.659914+00:00",
+      "response_timestamp": "2026-10-12T14:07:29.910264+00:00",
+      "latency_ms": 39250,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2688_y672.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "gemini-3.1-pro-preview",
+      "model_version": "gemini-3.1-pro-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15659,
+        "output_tokens": 6,
+        "total_tokens": 15665,
+        "cached_input_tokens": 14549,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 427
+          }
+        ],
+        "cache": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 406
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 14143
+          }
+        ]
+      },
+      "traffic_type": null,
+      "service_tier_applied": "flex",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:50:47.855985+00:00",
+      "response_timestamp": "2026-10-12T14:08:21.365006+00:00",
+      "latency_ms": 1053509,
+      "attempt_number": 1,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 18
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x1008_y3024.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:07:21.111002+00:00",
+      "response_timestamp": "2026-10-12T14:08:20.220532+00:00",
+      "latency_ms": 59109,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x2352_y1344.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:00:41.767501+00:00",
+      "response_timestamp": "2026-10-12T14:08:21.902115+00:00",
+      "latency_ms": 460134,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x3360_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "gemini-3.1-pro-preview",
+      "model_version": "gemini-3.1-pro-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15659,
+        "output_tokens": 10,
+        "total_tokens": 15669,
+        "cached_input_tokens": 14549,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 427
+          }
+        ],
+        "cache": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 406
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 14143
+          }
+        ]
+      },
+      "traffic_type": null,
+      "service_tier_applied": "flex",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:58:58.879594+00:00",
+      "response_timestamp": "2026-10-12T14:09:09.209947+00:00",
+      "latency_ms": 610330,
+      "attempt_number": 2,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 22
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x2688_y1680.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "gemini-3.1-pro-preview",
+      "model_version": "gemini-3.1-pro-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15659,
+        "output_tokens": 136,
+        "total_tokens": 15795,
+        "cached_input_tokens": 14549,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          },
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 427
+          }
+        ],
+        "cache": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 406
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 14143
+          }
+        ]
+      },
+      "traffic_type": null,
+      "service_tier_applied": "flex",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:59:05.116750+00:00",
+      "response_timestamp": "2026-10-12T14:09:13.838873+00:00",
+      "latency_ms": 608722,
+      "attempt_number": 2,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 323
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x2688_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "gemini-3.1-pro-preview",
+      "model_version": "gemini-3.1-pro-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15659,
+        "output_tokens": 1,
+        "total_tokens": 15660,
+        "cached_input_tokens": 14549,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 427
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          }
+        ],
+        "cache": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 406
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 14143
+          }
+        ]
+      },
+      "traffic_type": null,
+      "service_tier_applied": "flex",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:59:06.441940+00:00",
+      "response_timestamp": "2026-10-12T14:09:26.435805+00:00",
+      "latency_ms": 619993,
+      "attempt_number": 2,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 2
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2688_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "gemini-3.1-pro-preview",
+      "model_version": "gemini-3.1-pro-preview",
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 15659,
+        "output_tokens": 137,
+        "total_tokens": 15796,
+        "cached_input_tokens": 14549,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {
+        "prompt": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 427
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 15232
+          }
+        ],
+        "cache": [
+          {
+            "modality": "MediaModality.TEXT",
+            "count": 406
+          },
+          {
+            "modality": "MediaModality.IMAGE",
+            "count": 14143
+          }
+        ]
+      },
+      "traffic_type": null,
+      "service_tier_applied": "flex",
+      "finish_reason": "success",
+      "raw_finish_reason": "FinishReason.STOP",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T13:59:45.940694+00:00",
+      "response_timestamp": "2026-10-12T14:10:11.847691+00:00",
+      "latency_ms": 625906,
+      "attempt_number": 2,
+      "retry_reason": null,
+      "response_empty": false,
+      "parse_success": true,
+      "parse_error": null,
+      "raw_response_length": 318
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x2688_y336.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:09:27.890132+00:00",
+      "response_timestamp": "2026-10-12T14:09:41.477188+00:00",
+      "latency_ms": 13587,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-078-1_Lesovo_x1008_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:00:40.575942+00:00",
+      "response_timestamp": "2026-10-12T14:10:20.577532+00:00",
+      "latency_ms": 580001,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x3024_y1680.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:10:13.263144+00:00",
+      "response_timestamp": "2026-10-12T14:10:43.629852+00:00",
+      "latency_ms": 30366,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-062-2_Rakovski_x2352_y672.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:10:53.811128+00:00",
+      "response_timestamp": "2026-10-12T14:11:15.543956+00:00",
+      "latency_ms": 21732,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x1008_y0.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:10:58.214719+00:00",
+      "response_timestamp": "2026-10-12T14:11:19.292378+00:00",
+      "latency_ms": 21077,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x4032_y336.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:11:19.091990+00:00",
+      "response_timestamp": "2026-10-12T14:11:44.341457+00:00",
+      "latency_ms": 25249,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-052-4_32635_x672_y2688.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:11:56.970598+00:00",
+      "response_timestamp": "2026-10-12T14:12:15.445052+00:00",
+      "latency_ms": 18474,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    },
+    {
+      "request_id": null,
+      "item_id": "K-35-053-3_Elenovo_x3696_y3024.png",
+      "provider": "google_gemini",
+      "model_requested": "gemini-3.1-pro-preview",
+      "model_used": "",
+      "model_version": null,
+      "system_fingerprint": null,
+      "tokens": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "total_tokens": 0,
+        "cached_input_tokens": 0,
+        "cache_creation_tokens": 0,
+        "reasoning_tokens": 0,
+        "thoughts_tokens": 0,
+        "tool_use_tokens": 0,
+        "audio_input_tokens": 0,
+        "audio_output_tokens": 0,
+        "accepted_prediction_tokens": 0,
+        "rejected_prediction_tokens": 0
+      },
+      "modality_breakdown": {},
+      "traffic_type": null,
+      "service_tier_applied": null,
+      "finish_reason": "error",
+      "raw_finish_reason": "ServerError",
+      "safety_blocked": false,
+      "safety_ratings": [],
+      "prompt_safety_ratings": [],
+      "prompt_block_reason": null,
+      "citation_metadata": null,
+      "grounding_used": false,
+      "grounding_queries": [],
+      "grounding_sources": [],
+      "request_timestamp": "2026-10-12T14:11:22.703436+00:00",
+      "response_timestamp": "2026-10-12T14:13:47.134163+00:00",
+      "latency_ms": 144430,
+      "attempt_number": 3,
+      "retry_reason": null,
+      "response_empty": true,
+      "parse_success": false,
+      "parse_error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}",
+      "raw_response_length": 0
+    }
+  ],
+  "cost_estimate": {
+    "schema": "cost/2",
+    "cost_basis": "audited",
+    "input_cost_usd": 0.00555,
+    "cached_input_cost_usd": 0.014549,
+    "output_cost_usd": 0.00174,
+    "total_cost_usd": 0.021839,
+    "list_input_cost_usd": 0.025649,
+    "list_output_cost_usd": 0.00348,
+    "list_total_cost_usd": 0.029129,
+    "tokens_billed": {
+      "input_fresh": 5550,
+      "input_cached": 72745,
+      "output": 290,
+      "thinking": 0
+    },
+    "pricing_used": {
+      "model": "gemini-3.1-pro-preview",
+      "model_recorded": "gemini-3.1-pro-preview",
+      "tier": "flex",
+      "tier_source": "cli --service-tier",
+      "priced_at": "2026-10-12",
+      "input_per_1m": 1.0,
+      "cached_input_per_1m": 0.2,
+      "output_per_1m": 6.0,
+      "thinking_tokens_billed_as_output": 0,
+      "discount": 0.749734,
+      "discount_reason": "flex tier, billed total over standard-tier total, from the rate card row valid from 2025-12-01",
+      "rate_card": {
+        "path": "data/pricing/gemini-rate-card.json",
+        "version": "2026-09-21.2",
+        "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf",
+        "row_valid_from": "2025-12-01",
+        "row_valid_to": null,
+        "invoice_confirmed": true
+      }
+    }
+  },
+  "billing": {
+    "service_tier": "flex",
+    "tier_source": "cli --service-tier"
+  },
+  "tpm_governor": {
+    "governor_type": "token_bucket",
+    "rpm_limit": 20000,
+    "tpm_limit": 20000000,
+    "target_rpm": 14400,
+    "target_tpm": 14400000,
+    "target_utilisation": 0.72,
+    "current_tpm": 3321,
+    "available_request_capacity": 14400.0,
+    "available_token_capacity": 14400000.0,
+    "cooldown_seconds": 15.0,
+    "tokens_per_request": 20000,
+    "total_tokens": 78585,
+    "total_requests": 54,
+    "total_rate_limits": 0,
+    "total_cooldown_seconds": 0.0,
+    "avg_latency_seconds": 703.69,
+    "peak_wait_seconds": 0.0,
+    "elapsed_seconds": 1419.8
+  }
+}
