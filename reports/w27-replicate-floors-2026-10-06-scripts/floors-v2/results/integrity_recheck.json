@@ -1,0 +1,29 @@
+{
+ "w27_cache": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache-recheck",
+ "cache_was_empty": true,
+ "sec6_second_run": {
+  "files": {
+   "gates.json": "identical bytes",
+   "subset_cells.json": "identical bytes",
+   "subset_cells.npz": "identical members",
+   "subset_pairs.csv": "identical bytes",
+   "verifier_provenance.json": "identical bytes"
+  },
+  "only_in_one": [],
+  "pass": true
+ },
+ "sec6b_sample": {
+  "population": "rows of subset_cells_all.csv",
+  "population_size": 16260,
+  "fraction": 0.1,
+  "n": 1626,
+  "seed": 20261013,
+  "rng": "numpy.random.default_rng(seed).choice(population_size, n, replace=False)",
+  "frames_rebuilt": 1161,
+  "comparison": "the recomputed row's CSV line against the first run's, byte for byte",
+  "mismatches": [],
+  "pass": true
+ },
+ "pass": true,
+ "wall_seconds": 435
+}
