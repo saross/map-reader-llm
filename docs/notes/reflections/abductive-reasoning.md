@@ -9201,3 +9201,94 @@ thresholds.
 State how many replicate pairs stand under every floor, and prefer an
 estimator that uses every subset with the overlap correction to any
 statistic of one or three pairs.
+
+## Entry — 2026-10-12 (Session 163, map-reader-llm): The slow requests that were not thinking
+
+**Session:** b3023aae-7074-46f5-aa93-68b085ec2d1d
+**Instance:** primary (this episode post-dates the session's compaction and was experienced directly)
+
+### Surprising fact
+
+The Pro thinking probe's first arm (Gemini 3.1 Pro, thinking HIGH, T 0.0,
+flex tier) ran at about 300 seconds per request, against 3.7 seconds for the
+same requests in June, and its rate governor counted 273 attempts for 50
+tiles. June's passes had recorded zero thinking, so this looked like the
+opposite: Pro thinking hard.
+
+### Probe
+
+I read the runner's retry code: a `MAX_TOKENS` finish, or a response with no
+content parts, is retried up to 15 times. I inferred that thinking was
+exhausting the 8,192-token output budget, so each retry was a fully billed
+attempt, and stopped the run to protect the budget. The per-request records
+were in memory and lost. Version 2 ran one attempt per tile so that every
+request's tokens would be recorded, and its first arm answered the question:
+17 of 20 requests returned `503 UNAVAILABLE` ("This model is currently
+experiencing high demand"), and the 3 that succeeded had zero thought tokens
+and 10 output tokens, exactly as in June.
+
+### Belief revision
+
+The slow, repeated attempts were unbilled 503 retries with backoff, not
+billed thinking. The spend was cents, not the US$13.84 upper bound I had
+reported, and Pro was not thinking. I had built a mechanism from the code's
+retry branch and the latency, without naming the rival (the server failing)
+or the check that would separate them (the per-request finish reason). The
+later v3 run on the standard tier and the batch replication confirmed the
+revised belief: zero or near-zero thinking at HIGH at every temperature.
+
+### What would change this belief
+
+A batch or real-time run in which HIGH requests on this task record
+substantial thought tokens without an explicit budget.
+
+### Implications for practice
+
+Before reporting why a run is slow or failing, read the per-request finish
+reasons, which the runner records. When those records are in memory, prefer
+a one-attempt rerun that writes them over an inference from aggregate
+counters.
+
+## Entry — 2026-10-12/13 (Session 163, map-reader-llm): 951 to 954, attributed three ways
+
+**Session:** b3023aae-7074-46f5-aa93-68b085ec2d1d
+**Instance:** primary (the second and third attributions); the first comes from the D57 (4) Phase 3 record, written before this instance's context
+
+### Surprising fact
+
+Two of H2's March 2026 contrasts would not reproduce under the old scorer:
+their shared single-pass arm gave 954 detections where the committed files
+had 951.
+
+### Probe
+
+The Phase 3 record called it input drift. Checking at source, I found the
+five pass files matched their own metadata dated 25 March, three days before
+the test, and had not changed since first tracked; I concluded a change in
+the consensus code was the likelier cause and recorded that in the ruling.
+The PI chose to find out first (D61 (2)). The agent replayed the March code,
+the commit that first contained the orchestrator, on today's pass files and
+got 954. So the code was not the cause: the files the March test read
+differed from today's. The file modification times (runs rewritten
+2026-03-26T12:02Z) did not settle when, because 951 was still recorded after
+that.
+
+### Belief revision
+
+Input drift after all, as the first record said, but for reasons neither the
+record nor I had shown. Matching metadata and file counts made "unchanged
+inputs" feel established; the replay, which held the code fixed and varied
+nothing else, was the only test that could tell code from data.
+
+### What would change this belief
+
+A preserved copy of the March pass files that reproduces 954 with the March
+code (the inputs would then have been the same, and something else differed,
+such as a library version).
+
+### Implications for practice
+
+When a count changes, hold one side fixed before attributing: old code on
+today's data tests the data, today's code on old data tests the code.
+Metadata that agrees with a file is evidence it was written then, not that it
+was never rewritten.
