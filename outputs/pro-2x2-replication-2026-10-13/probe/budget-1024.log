@@ -1,0 +1,39 @@
+WARNING: --allow-inert-fields — launching /home/shawn/scratch/scorer-restatement-sweep-2026-10-12/repo/prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching /home/shawn/scratch/scorer-restatement-sweep-2026-10-12/repo/prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 4
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-2x2-replication-2026-10-13/probe/budget-1024/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-2x2-replication-2026-10-13/probe/budget-1024/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Using Manifest: /home/shawn/scratch/scorer-restatement-sweep-2026-10-12/repo/outputs/pro-2x2-replication-2026-10-13/tiles-10-smoke-seed42.json
+Manifest loaded. Found 10 of 10 tiles (10 remaining to process).
+Processing 10 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:02<00:23,  2.66s/it] 20%|██        | 2/10 [00:03<00:14,  1.77s/it] 50%|█████     | 5/10 [00:03<00:02,  1.90it/s] 70%|███████   | 7/10 [00:04<00:01,  2.86it/s] 90%|█████████ | 9/10 [00:05<00:00,  2.21it/s]100%|██████████| 10/10 [00:06<00:00,  1.90it/s]100%|██████████| 10/10 [00:06<00:00,  1.62it/s]
+
+Finished. Saved to outputs/pro-2x2-replication-2026-10-13/probe/budget-1024/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-2x2-replication-2026-10-13/probe/budget-1024/detections-detect_brief-text-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-2x2-replication-2026-10-13/probe/budget-1024/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Tiles processed: 10
+Tiles failed: 0
+Total detections: 14
+Tokens used: 15,950
+Estimated cost: $0.0412

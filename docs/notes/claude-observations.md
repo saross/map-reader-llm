@@ -3139,3 +3139,69 @@ not his to guarantee in them.
 **How to apply.** After applying a batch of his decisions, list what is
 still open that his message did not touch, each with the one-line choice it
 needs, before moving on.
+
+## claude-obs 150 — 2026-10-13: He runs a second reader beside me and relays its notes mid-turn
+
+**Pattern.** Through S163 Shawn pasted short notes from a side agent into the
+running turn ("Heads up · …"). Each was a precise check on something I had
+just said or committed: partial coverage hides false alarms too, so my "lower
+bound" was wrong; A-09's cost gap was not like-for-like; my A-09 draft
+dropped a line that was still true; tonight's sapphire load exceeded the
+soak's conditions. All four were right.
+
+**Lesson.** He treats an independent reader as part of the working method,
+not as an audit after the fact, and he expects the correction to land at
+once and visibly.
+
+**How to apply.** Verify a relayed note at source, fix it in the same turn,
+and record the correction as its own commit that names the note, rather than
+folding it silently into the text. Do not argue a note away before checking
+it.
+
+## claude-obs 151 — 2026-10-13: He steps back after a run of fixes and asks what the design got wrong
+
+**Pattern.** After three days of separate seam defects (prefix collision,
+origin gap, wrong-sheet crops, the batch text cache), Shawn asked "did we do
+something wrong when making the tiles/crops or designing the programme?".
+The answer, that places were identified by a string re-derived at every
+stage, explained most of the week, and he then asked for it in `planning/`
+and sent to map-reader-bench.
+
+**Lesson.** He wants the root cause named as soon as a pattern exists, and
+he values lessons that travel to other projects. I fixed instances for a week
+without offering the synthesis; it should have come from me after the second
+related defect.
+
+**How to apply.** When two or three defects share a mechanism, stop and write
+one paragraph naming the common cause and what design would prevent it,
+before fixing the next instance; offer to record it for future projects.
+
+## claude-obs 152 — 2026-10-13: Self-critique — I reported mechanisms before naming their rivals
+
+**Pattern.** Three times in two days I gave a confident cause that the next
+measurement overturned: slow probe requests read as heavy thinking (they
+were 503s), a 951 → 954 change read as a code change (the replay showed
+changed inputs), and a coverage shortfall read as a one-way bias. Each time
+the competing explanation was obvious in hindsight and cheap to test.
+
+**Lesson.** A plausible mechanism stated without its rival reads to Shawn as
+a finding; he then rules on it.
+
+**How to apply.** Before reporting a cause, write the strongest rival in one
+line and the cheapest check that separates them; report "X or Y, and this
+check decides" unless the check has already been run.
+
+## claude-obs 153 — 2026-10-13: He sets budget envelopes with a trigger to stop and rethink
+
+**Pattern.** Shawn approved spend as envelopes with an escalation rule: "up
+to a 25 % overrun", "up to $100 for this, but if it starts to look like it's
+going to run much more than that, we need to rethink". He did not set
+per-call limits.
+
+**Lesson.** He delegates execution inside a bound and wants to be brought
+back in when the bound is threatened, not before.
+
+**How to apply.** Build the envelope into the design as a stop rule (a first
+pass alone, a cost guard between stages, halting at twice the estimate), and
+report the running total against the cap at each stage, so that the "rethink"
+moment is visible before it is reached.

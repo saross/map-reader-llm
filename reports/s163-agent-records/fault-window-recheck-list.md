@@ -1,6 +1,6 @@
 # Sapphire fault windows: what was computed there, and what is still unverified
 
-> **Last revised**: 2026-10-13 (original publication). See
+> **Last revised**: 2026-10-13 (overnight reproduction evidence added). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Prepared by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -228,7 +228,39 @@ before it was probably local.
 4. Inputs (W1-8, W2-11) through the existing provenance and rebuild tools.
 5. W3-1 folded into D61 (2) and D60 (3); the rest of W3 as capacity allows.
 
+## Overnight evidence (2026-10-12/13), to fold into the rows after review
+
+The overnight agents' draft PRs reproduced several listed items. Each entry names the rows it
+bears on; no row above is ticked until the PI has read the evidence. All of it ran on sapphire
+after the memory fix, with a kernel-log tripwire that recorded no new error, and every
+committed artefact was produced twice and compared byte for byte.
+
+- **W1-5 (W2.7 floors)**, draft PR #38: the § 6 cell, pair, and gate files equal Phase 4's
+  2026-10-09 runs byte for byte; the rebuilt `FastScorer` reproduces the live scorer on all 466
+  § 6 cells and 1,000 sampled § 6b cells, so the 4 moved cells and 26 pair rows are the D50
+  scorer; § 6b regenerated, with a seeded 10 % rebuilt independently and byte-identical. The
+  § 3 gold-standard floors were not regenerated (its 486 coincident cells reproduce).
+- **W1-14 (uncommitted W1 values)**: the 13 Stage A cells reproduce the 2026-10-09 preview byte
+  for byte (draft PR #36); Phase 3's H2 26-of-30 value 0.816471 is reproduced by the fixed
+  route (draft PR #37); A-06's permutation p values (0, 0.0019, 0, 0.0002) and the tier-0
+  interval change are reproduced (draft PR #35); the S4 flag 2 W2.7 deltas are reproduced
+  (draft PR #38). Other Phase 3 NEW values are not yet reproduced.
+- **W2-9 (h6 A-06 and A-09)**: both regenerated twice, byte-identical apart from timestamps,
+  on draft PR #35; the committed files are superseded once it merges.
+- **W3-1 (`results/pairwise/`)**, draft PR #37: today's unfixed code reproduces 30 of the 32
+  hypothesis comparisons exactly; the other two share the single-pass arm whose inputs changed
+  before tracking (D61 (2) outcome). The leaderboard round robin was not checked file by file.
+- **W1-1 and stride outputs**, draft PR #39: re-running every consumer of `per_map_counts()`
+  reproduced each committed output byte for byte (stride sweep, full ladder, ladder pairs,
+  A5 against B5, Gemini 3.7 sweep, grid board; its inventory names the files); which of W1-1's
+  files that covers is to be checked against the inventory before ticking.
+
 ## Changelog
+
+### 2026-10-13 (later) — Overnight reproduction evidence
+
+Added § Overnight evidence, pointing rows W1-1, W1-5, W1-14, W2-9, and W3-1 at the overnight
+draft PRs #35–#39 that reproduce them in part. No row's status changed.
 
 ### 2026-10-13 — Original publication
 
