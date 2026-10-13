@@ -246,8 +246,12 @@ first run (04:32 UTC) and after the last (07:15 UTC).
   `stride55_ladder.cluster_first_n` and `gemini37_arm_ladder.cluster_first_n`
   too, and how the two GeoJSON writers should serialise the list, is the
   PI's call. Measured effect: none at any board operating point.
-- PR #33 (`d50-review-fixes`) is not merged; if it lands, the gate must be
-  re-run, as PR #38 already notes.
+- PR #33 (`d50-review-fixes`) merged into `main` (`7a8a081e1`) while these
+  runs were under way; PR #38 and this branch do not carry it yet. When #38
+  takes `main`, the gate and these runs must be repeated with #33's library
+  (PR #38's own probe found #33 moved no W2.7 cell without the tiles; with
+  them it is untested here). On the H13 chain and the library copies (PR
+  #41), #33 changed nothing.
 
 ## Changelog
 
