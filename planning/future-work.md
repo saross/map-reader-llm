@@ -106,6 +106,18 @@ condition fires.
 
 ---
 
+## 2. Spatial identity redesign (tiling, cropping, provenance)
+
+**Status**: Deferred 2026-10-13 (Session 163); not current paper scope. The lessons from a week
+of seam defects (the origin gap, wrong-sheet verifier crops, the sheet-name prefix collision,
+diverging real-time and batch request builders, drifting scorer copies, and hash-ordered
+resampling), and the principles for building the next pipeline so they cannot recur, are in
+`planning/generalised-pipeline-roadmap.md` § WS2, which is the canonical copy.
+
+**Trigger**: the first new corpus, a pipeline version 2, or any decision to rebuild the tiling.
+
+---
+
 ## Adding new items to this register
 
 When an item is moved here from the continuity doc:
@@ -115,7 +127,7 @@ When an item is moved here from the continuity doc:
    **Triggers for revisiting**, and **Detailed specs** (cross-references
    only — do not duplicate spec content).
 2. Update `paper-writeup-continuity.md` to mark the corresponding items
-   as "DEFERRED to `planning/future-work.md` § <section>" rather than
+   as "DEFERRED to `planning/future-work.md` § N" (the section number) rather than
    leaving them in the active to-do register.
 3. Preserve the original detailed specs in their existing files; this
    document is a register, not a replacement.
