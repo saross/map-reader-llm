@@ -1,0 +1,150 @@
+{
+ "harness": [
+  {
+   "label": "main 67a3f2795",
+   "runs_agree": true,
+   "varies": [
+    "bootstrap_effect_size_ci",
+    "bootstrap_interaction_ci",
+    "bootstrap_tile_effect_size_ci"
+   ],
+   "n_cases": 12
+  },
+  {
+   "label": "fix before merge",
+   "runs_agree": true,
+   "varies": [],
+   "n_cases": 12
+  },
+  {
+   "label": "main 8ec0fa5e7 (after PR #33)",
+   "runs_agree": true,
+   "varies": [
+    "bootstrap_effect_size_ci",
+    "bootstrap_interaction_ci",
+    "bootstrap_tile_effect_size_ci"
+   ],
+   "n_cases": 12
+  },
+  {
+   "label": "fix after merge",
+   "runs_agree": true,
+   "varies": [],
+   "n_cases": 12
+  }
+ ],
+ "replays": [
+  {
+   "family": "retest",
+   "output": "out/phase2a-evaluation.json",
+   "merged_sha256": "a000bf4a87f14c52b5747dac68fa6e03190fe7299e7319529e528ee4379b4161",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2b-track1-evaluation.json",
+   "merged_sha256": "3364a63b2bd60d33265d215a53d7fb27a461cc787cb83410fd7f2c7bae795a3d",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2b-track2-evaluation.json",
+   "merged_sha256": "9a648c58c5d70f792fcf34b050e3d9851bcc236a5d788a0f1fe7fa66b3ac5974",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2c-exploratory-evaluation.json",
+   "merged_sha256": "8a5f19a022d9157af73e4b19ecc1c30148fdf548dadab03046fa7885ab543270",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2c-track1-evaluation.json",
+   "merged_sha256": "a3a1530856b732655feac0938bd79718af342732ee90c3935c023573a7851129",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2c-track2-evaluation.json",
+   "merged_sha256": "bbb89dc0be21b2afbe56f98ebef33e707c819905175cdc11ecf64b7bdcb80412",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2d-track1-evaluation.json",
+   "merged_sha256": "9da0d0937dc7ee0d00806d085570e92c764a8ca3466b0fce1f1e6d4b6f0a25ec",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2d-track2-evaluation.json",
+   "merged_sha256": "b5a701acf512b8f1ffd70c7e52c5cf58060a9c4e17e52706d20aae5f3c17fecc",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "retest",
+   "output": "out/phase2e-evaluation.json",
+   "merged_sha256": "ab9151b71f2437c879fd1494fb871d457a81f92f1d1dbe5f2bf79116b36405e9",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "interaction",
+   "output": "out/image.json",
+   "merged_sha256": "d4c8a4bdb482c76979c1d0858243816bd5a08c0f76ac6be5f09c793209fdedd6",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "interaction",
+   "output": "out/text.json",
+   "merged_sha256": "667c881cfc3ef15f32822e112b2b3cae8a025210a709fb904ac331cc06562321",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "sd-v1",
+   "output": "results/secondary-effects-consensus-sd/sd_shrinkage.json",
+   "merged_sha256": "982561a0030ec37c127e92abe1a0513ae743347a2c37af579b019d3cc51901a9",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "fair384",
+   "output": "out/fair-384-vs-512.json",
+   "merged_sha256": "058b33ffc11a752698665ff6483fb7ef2417f1c43a901ecc7596eaf27548c20c",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "fair384",
+   "output": "out/pairwise-384px.json",
+   "merged_sha256": "35b98866f047a667b3ce1a81af128781aa3bfcb1949c20d4ae67ad7afb577a46",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "pvpair",
+   "output": "out/text-asis/comparison.json",
+   "merged_sha256": "5155353dcf67a84ee48f2320da8e15bd548de303dfa83edb8e15234af970e126",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  },
+  {
+   "family": "pvpair",
+   "output": "out/image-asis/comparison.json",
+   "merged_sha256": "35ee9c772e21704c9e9d403c9cb8930c150344811558791864561909f8dcbe52",
+   "merged_runs_agree": true,
+   "equals_premerge_fix": true
+  }
+ ]
+}

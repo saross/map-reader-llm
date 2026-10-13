@@ -80,6 +80,27 @@ Description:
     footprint upstream and its K = 1 and K = 3 unions were not (37.94 km² of
     the board frame between them), which is the case the gate exists for.
 
+    **What a clip publishes (v1.4.0, Astra's review of 2026-10-09,
+    finding 1).** Before v1.4.0 a clip attached a nested
+    ``clipped_to_common_area`` block to each point and every product still
+    published the unclipped scores. Now, when ``--clip-to-common-area`` is
+    given, each ladder names its **score basis** in every product (the
+    tables, the summary gains, the Pareto rows, the figure's legend, the
+    compatibility inventory and ``ladders.json``): a ladder the gate clips
+    REPORTS the clipped re-scores in the fields every consumer reads
+    (``f1_20``, ``precision_20``, ``recall_20``, ``n_detections``) and
+    keeps its original values whole under ``historical_as_evaluated``. The
+    fields the clip did not regenerate — the bootstrap interval, tile-MCC
+    and its interval, and the evaluation, detection and board-cell paths —
+    are WITHHELD on a clipped point (set to ``null`` and listed with the
+    reason under ``withheld``), never paired with the clipped estimate. A
+    clipped ladder is WITHHELD from the compatibility inventory, because the
+    instruments that read it resolve each rung through the register to the
+    unclipped evaluation; the inventory says what is missing. A requested
+    clip REFUSES (exit 5) when a reported point cannot be re-scored. Without
+    the flag nothing here changes: the products are byte-identical to
+    v1.3.0's.
+
 Usage::
 
     python scripts/build_k_ladder_phase2_tables.py [--clip-to-common-area]
@@ -87,6 +108,7 @@ Usage::
 Outputs:
     results/k-ladder-2026-09-12/phase2/ladders.json
     results/k-ladder-2026-09-12/phase2/ladder-tables.md
+    results/k-ladder-2026-09-12/phase2/ladders-compat.json
     results/k-ladder-2026-09-12/figures/k-ladder-pareto-phase2.png
 
 Author: Shawn Ross, Claude Code
@@ -96,6 +118,7 @@ Licence: Apache 2.0
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import logging
 import subprocess
@@ -125,9 +148,52 @@ from scripts.lib_frontier_cost import gs_units, phase2_pass_units  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-#: 1.3.0 (2026-10-07): the D51 assessed-area gate; 1.2.1: shares rounded once
-#: (D27); 1.2.0: costs from the register.
-__version__ = "1.3.0"
+#: 1.4.0 (2026-10-10): a clip is the reported basis in every product, the
+#: unregenerated fields are withheld, and a point the clip cannot re-score
+#: refuses (Astra's review of 2026-10-09, finding 1); 1.3.0 (2026-10-07): the
+#: D51 assessed-area gate; 1.2.1: shares rounded once (D27); 1.2.0: costs from
+#: the register.
+__version__ = "1.4.0"
+
+#: The score basis of a ladder the D51 gate clipped: every reported point is
+#: re-scored with its detections clipped to the area common to all rungs.
+BASIS_CLIPPED = COMMON_AREA_CLIP_NAME
+
+#: The score basis of a ladder reported as its cells were evaluated. Under a
+#: clip it is also the name of the HISTORICAL basis a clipped point keeps.
+BASIS_AS_EVALUATED = "as-evaluated"
+
+#: Where a clipped point keeps its original (as-evaluated, unclipped) values.
+HISTORICAL_KEY = "historical_as_evaluated"
+
+#: The fields of a point that describe its as-evaluated cell and that a clip
+#: does not regenerate, each with the reason it is withheld on a clipped point.
+#: Pairing any of them with a clipped estimate would present an old interval,
+#: tile metric or evaluation as though it belonged to the clipped score.
+NOT_REGENERATED_BY_CLIP: dict[str, str] = {
+    "f1_20_ci": "the bootstrap interval of the unclipped cell; not regenerated on "
+                "the clipped detections",
+    "tile_mcc": "tile-MCC of the unclipped cell's tile table; not regenerated on "
+                "the clipped detections",
+    "tile_mcc_ci": "the interval of the unclipped tile-MCC; not regenerated",
+    "tile_mcc_raw": "the unclipped cell's raw tile-MCC; not regenerated",
+    "eval_path": "the unclipped cell's evaluation; no evaluation of the clipped "
+                 "detections exists (the re-score read its inputs: "
+                 "rescored_from_eval_path)",
+    "detections": "the unclipped cell's materialised detections; the clipped "
+                  "detections were scored in memory and not written",
+    "cell": "the signed board's unclipped cell directory",
+}
+
+#: Vocabulary-withholding notes that describe the unclipped tile-MCC; on a
+#: clipped point they move to the historical record with the value they explain.
+_HISTORICAL_ONLY = ("tile_mcc_withheld", "tile_mcc_withheld_why")
+
+#: Exit code when a requested clip cannot re-score a reported point.
+EXIT_CLIP_RESCORE_FAILED = 5
+
+#: The marker every clip re-score refusal carries (``main`` exits 5 on it).
+CLIP_RESCORE_FAILED = "CLIP RE-SCORE FAILED"
 
 #: Which of the two readings of "the carried point" the tables REPORT, settled
 #: by the PI on 2026-09-13: the gold-standard stride ladder's own vote shell
@@ -717,15 +783,142 @@ def build() -> dict[str, Any]:
     }
 
 
+def _named_rung_points(rung: dict[str, Any]) -> list[tuple[str, dict[str, Any]]]:
+    """Every operating point a rung reports, each with a name for messages.
+
+    A point shared by two readings (a Phase 2 rung's carried dict maps both
+    readings to one object) is listed once, under its first name.
+
+    Args:
+        rung: One rung of a ladder.
+
+    Returns:
+        ``[(name, point), ...]``: ``opmax`` first, then each carried reading.
+    """
+    named: list[tuple[str, dict[str, Any]]] = (
+        [("opmax", rung["opmax"])] if rung.get("opmax") else []
+    )
+    seen: set[int] = {id(point) for _, point in named}
+    for reading, values in (rung.get("carried") or {}).items():
+        if values and id(values) not in seen:
+            named.append((f"carried {reading}", values))
+            seen.add(id(values))
+    return named
+
+
 def _rung_points(rung: dict[str, Any]) -> list[dict[str, Any]]:
     """Every operating point a rung reports (opmax and each carried reading)."""
-    points = [rung["opmax"]] if rung.get("opmax") else []
-    seen: set[int] = {id(p) for p in points}
-    for values in (rung.get("carried") or {}).values():
-        if values and id(values) not in seen:
-            points.append(values)
-            seen.add(id(values))
-    return points
+    return [point for _, point in _named_rung_points(rung)]
+
+
+def is_clipped(ladder: dict[str, Any]) -> bool:
+    """Whether a ladder's scores are reported on the clipped basis."""
+    return (ladder.get("score_basis") or {}).get("reported") == BASIS_CLIPPED
+
+
+def historical(point: dict[str, Any] | None) -> dict[str, Any]:
+    """A point's as-evaluated values: its historical record when clipped, else itself.
+
+    Args:
+        point: An operating point, or ``None``.
+
+    Returns:
+        The values the cell was evaluated with (empty for ``None``).
+    """
+    if not point:
+        return {}
+    return point.get(HISTORICAL_KEY) or point
+
+
+def report_clipped_point(point: dict[str, Any], clipped: dict[str, Any]) -> None:
+    """Make a point's clipped re-score its reported values (D51, in place).
+
+    The point keeps its operating point (``vote_t``, ``prob_t``) and the
+    fields every consumer reads now carry the clipped re-score: ``f1_20``,
+    ``precision_20``, ``recall_20`` and ``n_detections``. Every field the
+    clip did not regenerate (:data:`NOT_REGENERATED_BY_CLIP`) is set to
+    ``None`` and listed with its reason under ``withheld``, so no consumer
+    pairs the clipped estimate with the unclipped cell's interval, tile
+    metric or evaluation. The point's original values are kept whole under
+    :data:`HISTORICAL_KEY`, named :data:`BASIS_AS_EVALUATED`.
+
+    Args:
+        point: A reported operating point (mutated).
+        clipped: Its :func:`rescore_clipped_evaluation` result, named.
+    """
+    record = copy.deepcopy(point)
+    record["score_basis"] = BASIS_AS_EVALUATED
+    withheld = {
+        key: why for key, why in NOT_REGENERATED_BY_CLIP.items() if key in point
+    }
+    for key in withheld:
+        point[key] = None
+    for key in _HISTORICAL_ONLY:
+        point.pop(key, None)
+    point.update(
+        {
+            "score_basis": BASIS_CLIPPED,
+            "f1_20": clipped["f1"],
+            "precision_20": clipped["precision"],
+            "recall_20": clipped["recall"],
+            "n_detections": clipped["n_detections"],
+            "n_removed_by_clip": clipped["n_removed"],
+            "rescored_from_eval_path": record.get("eval_path"),
+            "withheld": withheld,
+            "clipped_to_common_area": clipped,
+            HISTORICAL_KEY: record,
+        }
+    )
+
+
+def _ladder_basis(comparison_record: dict[str, Any], clipped: bool) -> dict[str, Any]:
+    """The ``score_basis`` record a ladder carries when a clip was requested.
+
+    Args:
+        comparison_record: The ladder's ``assessed_area`` record.
+        clipped: Whether the gate clipped this ladder.
+
+    Returns:
+        A JSON-serialisable record naming the reported basis.
+    """
+    if not clipped:
+        return {
+            "reported": BASIS_AS_EVALUATED,
+            "why": (
+                f"a clip was requested and the gate's status is "
+                f"{comparison_record.get('status')!r}, so nothing was clipped: "
+                "the scores are the cells as evaluated"
+            ),
+        }
+    return {
+        "reported": BASIS_CLIPPED,
+        "historical": BASIS_AS_EVALUATED,
+        "historical_key": HISTORICAL_KEY,
+        "status": comparison_record.get("status"),
+        "common_area_km2": comparison_record.get("common_area_km2"),
+        "frame_area_km2": comparison_record.get("frame_area_km2"),
+        "what": (
+            "every reported point's F1@20, precision, recall and detection count "
+            "are re-scored with its detections clipped to the area every rung "
+            "searched and the frame's reference set kept whole (D51 option 1), "
+            "at the rung's own unclipped operating point"
+        ),
+        "withheld": (
+            "on every clipped point the fields the clip did not regenerate (the "
+            "bootstrap interval, tile-MCC and its interval, and the evaluation, "
+            "detection and board-cell paths) are null and listed under "
+            f"'withheld'; the as-evaluated values are under '{HISTORICAL_KEY}'"
+        ),
+        "unchanged": (
+            "candidates and the proposer, verifier and all-in costs are each "
+            "rung's as-run pool and spend: the clip changes what is scored, not "
+            "what was paid"
+        ),
+        "register": (
+            "a rung's condition_id and labels name its registered as-evaluated "
+            "cells; no clipped cell is registered"
+        ),
+    }
 
 
 def apply_area_gate(
@@ -740,14 +933,23 @@ def apply_area_gate(
     For every ladder, each rung's candidate pool (``rung["pool"]``) has its
     assessed area determined from provenance and compared, within the
     ladder's scoring frame, against its siblings'. The ladder gains an
-    ``assessed_area`` record either way. Where the areas differ and
-    ``clip_to_common`` is set (with ``allow_undetermined``, also when some
-    rungs are undetermined: the clip is then to the determined rungs'
-    common area), every reported operating point that names its
-    evaluation gains a ``clipped_to_common_area`` block: its F1@20 point
-    estimate with the detections outside the common area removed and the
-    frame's reference set kept (option 1 of the ruling), at the rung's own
-    operating point.
+    ``assessed_area`` record either way.
+
+    Where the areas differ and ``clip_to_common`` is set (with
+    ``allow_undetermined``, also when some rungs are undetermined: the clip
+    is then to the determined rungs' common area), EVERY reported operating
+    point is re-scored with the detections outside the common area removed
+    and the frame's reference set kept (option 1 of the ruling), at the
+    rung's own operating point, and the re-score becomes the point's
+    reported value (:func:`report_clipped_point`; the original values are
+    kept as the historical basis). A point that cannot be re-scored — it
+    names no evaluation, its evaluation names no inputs, or the inputs
+    cannot be read — refuses the ladder (:data:`CLIP_RESCORE_FAILED`)
+    rather than being skipped, and the ladder's points are left untouched.
+
+    With ``clip_to_common`` the payload and every ladder that passes gain a
+    ``score_basis`` record naming the basis the products report. Without it
+    neither is added, so the products of an unclipped build are unchanged.
 
     Args:
         payload: The output of :func:`build` (mutated).
@@ -760,6 +962,17 @@ def apply_area_gate(
         The caller must not publish a payload with refusals.
     """
     refusals: list[str] = []
+    if clip_to_common:
+        payload["score_basis"] = {
+            "clip_requested": True,
+            "clip": COMMON_AREA_CLIP_NAME,
+            "ruling": "PI ruling D51 (2026-10-07), option 1",
+            "per_ladder": (
+                "each ladder's score_basis names its reported basis: "
+                f"{BASIS_CLIPPED!r} where the gate clipped it, "
+                f"{BASIS_AS_EVALUATED!r} where it found nothing to clip"
+            ),
+        }
     for ladder in payload["ladders"]:
         areas = []
         for rung in ladder["rungs"]:
@@ -787,17 +1000,51 @@ def apply_area_gate(
         # undetermined ones included, is re-scored on the determined rungs'
         # common area (finding 1 of the PR #26 review).
         if not comparison.clips:
+            if clip_to_common:
+                ladder["score_basis"] = _ladder_basis(comparison.record, clipped=False)
             continue
+        # Re-score every reported point before changing any, so a refusal
+        # leaves the ladder as it was. A point that cannot be re-scored is a
+        # refusal, never a silent skip: publishing it unclipped beside its
+        # clipped siblings would compare two areas under one basis.
+        failures: list[str] = []
+        rescored: list[tuple[dict[str, Any], dict[str, Any]]] = []
         for rung in ladder["rungs"]:
-            for point in _rung_points(rung):
-                if point.get("eval_path"):
+            for name, point in _named_rung_points(rung):
+                where = f"K = {rung['K']} {name}"
+                eval_path = point.get("eval_path")
+                if not eval_path:
+                    failures.append(f"{where} names no evaluation to re-score")
+                    continue
+                try:
                     clipped = rescore_clipped_evaluation(
-                        point["eval_path"], comparison.common, buffer_m=HEADLINE_BUFFER,
+                        eval_path, comparison.common, buffer_m=HEADLINE_BUFFER,
                     )
-                    if clipped is not None:
-                        clipped["clip"] = COMMON_AREA_CLIP_NAME
-                        clipped["at"] = "the rung's own (unclipped) operating point"
-                        point["clipped_to_common_area"] = clipped
+                except (OSError, ValueError, KeyError) as exc:
+                    failures.append(
+                        f"{where}: {eval_path} could not be re-scored "
+                        f"({type(exc).__name__}: {exc})"
+                    )
+                    continue
+                if clipped is None:
+                    failures.append(
+                        f"{where}: {eval_path} records no detections, bounds and "
+                        "reference to re-score"
+                    )
+                    continue
+                clipped["clip"] = COMMON_AREA_CLIP_NAME
+                clipped["at"] = "the rung's own (unclipped) operating point"
+                rescored.append((point, clipped))
+        if failures:
+            refusals.append(
+                f"{ladder['family']}: {CLIP_RESCORE_FAILED} — a clip to the common "
+                f"area was requested and {len(failures)} reported point(s) cannot "
+                f"be re-scored on it: {'; '.join(failures)}"
+            )
+            continue
+        for point, clipped in rescored:
+            report_clipped_point(point, clipped)
+        ladder["score_basis"] = _ladder_basis(comparison.record, clipped=True)
     return refusals
 
 
@@ -831,6 +1078,15 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
     A family with fewer than three register-resolvable rungs on one basis is
     omitted, with the reason recorded.
 
+    **A clipped ladder is withheld** (D51; Astra's review of 2026-10-09,
+    finding 1). The instruments resolve each rung's ``condition_id`` through
+    the register to its evaluation and recompute from it, and the register
+    holds only the as-evaluated (unclipped) cells. Exporting a clipped
+    ladder would have them test the unclipped comparison under the clipped
+    ladder's name, so it is listed under ``skipped`` with what is missing
+    instead. When a clip was requested, every exported ladder names its
+    ``score_basis`` (as evaluated) and the inventory names the request.
+
     Args:
         payload: The output of :func:`build`.
 
@@ -839,6 +1095,7 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
     """
     ladders: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
+    clip_requested = bool(payload.get("score_basis"))
 
     for ladder in payload["ladders"]:
         basis = (
@@ -846,6 +1103,9 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
             if ladder["proposer_pool"] == "g384_ov192_g37"
             else "opmax"
         )
+        if is_clipped(ladder):
+            skipped.append(_withheld_clipped_ladder(ladder, basis))
+            continue
         rungs: list[dict[str, Any]] = []
         for rung in ladder["rungs"]:
             point = rung.get(basis)
@@ -935,27 +1195,30 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
                 }
             )
             continue
-        ladders.append(
-            {
-                "slug": "phase2-" + (
-                    ladder["proposer_pool"].replace(".", "-").replace("_", "-").lower()
-                ),
-                "family": f"{ladder['family']} [{basis}]",
-                "family_base": ladder["family"],
-                "operating_point_basis": basis,
-                "carried_reading": CARRIED_READING if basis == "carried" else None,
-                "run_id": ladder["run_id"],
-                "proposer_pool": ladder["proposer_pool"],
-                "corpus": ladder["corpus"],
-                "frame_file": ladder["frame_file"],
-                "reference_file": ladder["reference_file"],
-                "headline_buffer_m": ladder["headline_buffer_m"],
-                "r1_verifier": ladder["r1_verifier"],
-                "rungs": rungs,
-            }
-        )
+        entry: dict[str, Any] = {
+            "slug": "phase2-" + (
+                ladder["proposer_pool"].replace(".", "-").replace("_", "-").lower()
+            ),
+            "family": f"{ladder['family']} [{basis}]",
+            "family_base": ladder["family"],
+            "operating_point_basis": basis,
+            "carried_reading": CARRIED_READING if basis == "carried" else None,
+            "run_id": ladder["run_id"],
+            "proposer_pool": ladder["proposer_pool"],
+            "corpus": ladder["corpus"],
+            "frame_file": ladder["frame_file"],
+            "reference_file": ladder["reference_file"],
+            "headline_buffer_m": ladder["headline_buffer_m"],
+            "r1_verifier": ladder["r1_verifier"],
+            "rungs": rungs,
+        }
+        if clip_requested:
+            # Named only under a clip request, so an unclipped build's
+            # inventory is byte-identical to v1.3.0's.
+            entry["score_basis"] = BASIS_AS_EVALUATED
+        ladders.append(entry)
 
-    return {
+    inventory: dict[str, Any] = {
         "generated_at_utc": payload["generated_at_utc"],
         "script": "scripts/build_k_ladder_phase2_tables.py",
         "schema_note": (
@@ -967,6 +1230,74 @@ def compat_inventory(payload: dict[str, Any]) -> dict[str, Any]:
         "n_skipped": len(skipped),
         "skipped": skipped,
         "ladders": ladders,
+    }
+    if clip_requested:
+        inventory["score_basis"] = {
+            "clip_requested": True,
+            "exported": BASIS_AS_EVALUATED,
+            "note": (
+                "a clip to the common assessed area was requested (D51). Every "
+                "exported ladder is on the as-evaluated basis, because the "
+                "instruments resolve its registered cells; every ladder the gate "
+                f"clipped is under 'skipped' with score_basis {BASIS_CLIPPED!r} "
+                "and what its export is missing"
+            ),
+        }
+    return inventory
+
+
+#: What a clipped ladder's export lacks, so the instruments could test it.
+CLIPPED_EXPORT_MISSING = (
+    "per rung, the reported point's detections materialised as a GeoJSON "
+    "clipped to the common assessed area (clip-to-common-assessed-area)",
+    "per rung, an evaluation.json of those clipped detections, with its "
+    "bootstrap interval and per-tile table regenerated",
+    "per rung, a register row (results/run-conditions.json) naming that "
+    "evaluation, so that scripts/k_ladder_mcc_test.py and "
+    "scripts/k_ladder_mcb.py resolve the clipped cell and not the "
+    "as-evaluated one",
+)
+
+
+def _withheld_clipped_ladder(ladder: dict[str, Any], basis: str) -> dict[str, Any]:
+    """The ``skipped`` entry of a ladder the D51 gate clipped.
+
+    Args:
+        ladder: A ladder whose score basis is :data:`BASIS_CLIPPED`.
+        basis: Its operating-point basis (``opmax`` or ``carried``).
+
+    Returns:
+        The entry, naming both bases' F1@20 per rung and what is missing.
+    """
+    rungs = []
+    for rung in ladder["rungs"]:
+        point = rung.get(basis)
+        if basis == "carried":
+            point = (rung.get("carried") or {}).get(CARRIED_READING)
+        if not point or point.get("f1_20") is None:
+            continue
+        rungs.append(
+            {
+                "K": rung["K"],
+                "f1_20": point["f1_20"],
+                "f1_20_basis": point.get("score_basis", BASIS_AS_EVALUATED),
+                "f1_20_as_evaluated_historical": historical(point).get("f1_20"),
+            }
+        )
+    return {
+        "family": ladder["family"],
+        "basis": basis,
+        "score_basis": BASIS_CLIPPED,
+        "n_resolvable_rungs": len(rungs),
+        "why": (
+            "the ladder is reported on the clipped basis (D51), and the "
+            "instruments resolve each rung's condition_id through the register "
+            "to its as-evaluated (unclipped) evaluation, so an export would test "
+            "the unclipped comparison under this ladder's name. Withheld until "
+            "the clipped cells exist"
+        ),
+        "missing": list(CLIPPED_EXPORT_MISSING),
+        "rungs": rungs,
     }
 
 
@@ -1002,8 +1333,107 @@ def pct(ratio: float | None) -> str:
     return f"{ratio * 100:.0f} %"
 
 
+def _basis_paragraph() -> str:
+    """The paragraph a clip-requested build's tables open with."""
+    return (
+        "**Score basis.** This build was asked to clip to the common assessed "
+        "area (`--clip-to-common-area`, PI ruling D51). Each ladder names its "
+        "basis below: a ladder the gate clipped REPORTS clipped re-scores and "
+        "keeps its original scores beside them as a historical basis, never as "
+        "the reported one; a ladder in which the gate found nothing to clip is "
+        "reported as evaluated. The summary and Pareto tables carry each "
+        "ladder's basis, and so does the figure's legend. Clipped ladders are "
+        "withheld from `ladders-compat.json`, which lists what their export "
+        "lacks."
+    )
+
+
+def _ladder_basis_line(ladder: dict[str, Any]) -> str:
+    """The line naming one ladder's score basis (clip-requested builds only)."""
+    basis = ladder.get("score_basis") or {}
+    if not is_clipped(ladder):
+        return f"Score basis: **as evaluated** — {basis.get('why', 'not clipped')}."
+    return (
+        "Score basis: **clipped to the common assessed area** "
+        f"(`{BASIS_CLIPPED}`, {fmt(basis.get('common_area_km2'))} km² of the "
+        f"frame's {fmt(basis.get('frame_area_km2'))} km²; gate status "
+        f"`{basis.get('status')}`). Each F1@20 marked *clipped* is re-scored "
+        "with the rung's detections clipped to that area and the frame's "
+        "reference set kept whole (D51 option 1), at the rung's own unclipped "
+        "operating point; *n* is the clipped detection count. The *as evaluated "
+        "(historical)* columns are the original unclipped scores, kept for "
+        "comparison, not reported. Tile-MCC, the bootstrap intervals and the "
+        "evaluation paths are withheld: they belong to the unclipped cells and "
+        "were not regenerated. Candidates and costs are each rung's as-run pool "
+        "and spend."
+    )
+
+
+def _clipped_ladder_rows(ladder: dict[str, Any]) -> list[str]:
+    """One clipped ladder's table: clipped and historical F1@20 side by side."""
+    rows = [
+        "| K | source | candidates | opmax (k, p) | opmax F1@20, clipped | "
+        "opmax F1@20, as evaluated (historical) | opmax tile-MCC | n, clipped | "
+        "carried F1@20, clipped | carried F1@20, as evaluated (historical) | "
+        "carried F1@20, k = K (disclosed), clipped | carried F1@20, k = K "
+        "(disclosed), as evaluated (historical) | proposer US$ | verifier US$ | "
+        "all-in US$ |",
+        "|---:|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for rung in ladder["rungs"]:
+        opmax = rung.get("opmax") or {}
+        carried = rung.get("carried") or {}
+        kk = carried.get(CARRIED_READING_DISCLOSED) or {}
+        shell = carried.get(CARRIED_READING) or {}
+        point = (
+            f"({opmax.get('vote_t')}, {opmax.get('prob_t')})" if opmax else "—"
+        )
+        rows.append(
+            f"| {rung['K']} | {rung['source']} | "
+            f"{fmt(rung.get('candidates'), 0)} | {point} | "
+            f"{fmt(opmax.get('f1_20'))} | {fmt(historical(opmax).get('f1_20'))} | "
+            f"{'withheld' if opmax else '—'} | "
+            f"{fmt(opmax.get('n_detections'), 0)} | "
+            f"{fmt(shell.get('f1_20'))} | {fmt(historical(shell).get('f1_20'))} | "
+            f"{fmt(kk.get('f1_20'))} | {fmt(historical(kk).get('f1_20'))} | "
+            f"{fmt(rung.get('proposer_flex_usd'), 2)} | "
+            f"{fmt(rung.get('verifier_flex_usd'), 2)} | "
+            f"**{fmt(rung.get('all_in_flex_usd'), 2)}** |"
+        )
+    return rows
+
+
+def _gain(by_k: dict[int, dict[str, Any]], *, as_evaluated: bool = False,
+          ) -> tuple[float, float, int, float]:
+    """K = 1's F1@20, the best rung's F1@20 and K, and the gain between them.
+
+    Args:
+        by_k: ``{K: rung}`` for the rungs with an opmax F1@20, K = 1 among them.
+        as_evaluated: Read each point's historical (as-evaluated) F1@20
+            instead of its reported one.
+
+    Returns:
+        ``(base, best, best_k, gain)``, the gain rounded to four decimals.
+    """
+    def f1(k: int) -> float:
+        point = by_k[k]["opmax"]
+        return (historical(point) if as_evaluated else point)["f1_20"]
+
+    base = f1(1)
+    best_k = max(by_k, key=f1)
+    best = f1(best_k)
+    return base, best, best_k, round(best - base, 4)
+
+
 def tables(payload: dict[str, Any]) -> str:
-    """Render the per-family ladder tables and the two summary tables."""
+    """Render the per-family ladder tables and the two summary tables.
+
+    When the payload records a clip request (``payload["score_basis"]``),
+    every table names each ladder's score basis and a clipped ladder's
+    F1@20 is its clipped re-score, with the as-evaluated value beside it as
+    the historical basis. Without one the text is exactly v1.3.0's.
+    """
+    clip_requested = bool(payload.get("score_basis"))
     lines: list[str] = []
     lines.append("# Phase 2: the fourteen new four-rung K ladders")
     lines.append("")
@@ -1028,6 +1458,9 @@ def tables(payload: dict[str, Any]) -> str:
         "curator reference, 14 buffers, 10,000 BCa draws, seed 42, MCC."
     )
     lines.append("")
+    if clip_requested:
+        lines.append(_basis_paragraph())
+        lines.append("")
 
     for ladder in payload["ladders"]:
         lines.append(f"## {ladder['family']}")
@@ -1039,6 +1472,13 @@ def tables(payload: dict[str, Any]) -> str:
             f"US${ladder['pass_usd']:.3f} — {ladder['pass_usd_anchor']}."
         )
         lines.append("")
+        if clip_requested:
+            lines.append(_ladder_basis_line(ladder))
+            lines.append("")
+        if is_clipped(ladder):
+            lines.extend(_clipped_ladder_rows(ladder))
+            lines.append("")
+            continue
         lines.append(
             "| K | source | candidates | opmax (k, p) | opmax F1@20 | "
             "opmax tile-MCC | n | carried F1@20 | carried F1@20, k = K "
@@ -1074,12 +1514,20 @@ def tables(payload: dict[str, Any]) -> str:
     # --- Summary 1: F1 gain and MCC direction -------------------------------
     lines.append("## Summary: what K buys, per family")
     lines.append("")
-    lines.append(
-        "| family | K=1 F1@20 | best rung F1@20 (K) | total F1 gain | "
-        "K=3 share of the gain | K=1 MCC | best-rung MCC | MCC verdict | "
-        "K=3 cost / top-rung cost |"
-    )
-    lines.append("|---|---:|---|---:|---:|---:|---:|:---:|---:|")
+    if clip_requested:
+        lines.append(
+            "| family | score basis | K=1 F1@20 | best rung F1@20 (K) | total F1 "
+            "gain | K=3 share of the gain | K=1 MCC | best-rung MCC | MCC verdict | "
+            "K=3 cost / top-rung cost | total F1 gain, as evaluated (historical) |"
+        )
+        lines.append("|---|---|---:|---|---:|---:|---:|---:|:---:|---:|---|")
+    else:
+        lines.append(
+            "| family | K=1 F1@20 | best rung F1@20 (K) | total F1 gain | "
+            "K=3 share of the gain | K=1 MCC | best-rung MCC | MCC verdict | "
+            "K=3 cost / top-rung cost |"
+        )
+        lines.append("|---|---:|---|---:|---:|---:|---:|:---:|---:|")
     summary_rows: list[dict[str, Any]] = []
     for ladder in payload["ladders"]:
         by_k = {
@@ -1089,10 +1537,8 @@ def tables(payload: dict[str, Any]) -> str:
         }
         if 1 not in by_k or len(by_k) < 2:
             continue
-        base = by_k[1]["opmax"]["f1_20"]
-        best_k = max(by_k, key=lambda k: by_k[k]["opmax"]["f1_20"])
-        best = by_k[best_k]["opmax"]["f1_20"]
-        gain = round(best - base, 4)
+        clipped = is_clipped(ladder)
+        base, best, best_k, gain = _gain(by_k)
         at3 = by_k.get(3, {}).get("opmax", {}).get("f1_20")
         # Each share is rendered from its raw quotient and stored to four
         # decimals; rounding before rendering double-rounds (D27).
@@ -1117,27 +1563,48 @@ def tables(payload: dict[str, Any]) -> str:
         cost_share = (
             None if cost_share_raw is None else round(cost_share_raw, 4)
         )
-        lines.append(
-            f"| {ladder['family']} | {fmt(base)} | {fmt(best)} (K={best_k}) | "
-            f"**{gain:+.4f}** | "
-            f"{pct(share_raw)} | "
-            f"{fmt(mcc1)} | {fmt(mccbest)} | {verdict} | "
-            f"{pct(cost_share_raw)} |"
-        )
-        summary_rows.append(
-            {
-                "family": ladder["family"],
-                "f1_k1": base,
-                "f1_best": best,
-                "best_k": best_k,
-                "gain": gain,
-                "share_at_k3": share,
-                "mcc_k1": mcc1,
-                "mcc_best": mccbest,
-                "mcc_verdict": verdict.replace("*", ""),
-                "cost_share_at_k3": cost_share,
+        row: dict[str, Any] = {
+            "family": ladder["family"],
+            "f1_k1": base,
+            "f1_best": best,
+            "best_k": best_k,
+            "gain": gain,
+            "share_at_k3": share,
+            "mcc_k1": mcc1,
+            "mcc_best": mccbest,
+            "mcc_verdict": verdict.replace("*", ""),
+            "cost_share_at_k3": cost_share,
+        }
+        if not clip_requested:
+            lines.append(
+                f"| {ladder['family']} | {fmt(base)} | {fmt(best)} (K={best_k}) | "
+                f"**{gain:+.4f}** | "
+                f"{pct(share_raw)} | "
+                f"{fmt(mcc1)} | {fmt(mccbest)} | {verdict} | "
+                f"{pct(cost_share_raw)} |"
+            )
+            summary_rows.append(row)
+            continue
+        # A clip-requested build names each row's basis; a clipped ladder's
+        # tile-MCC was not regenerated, so its MCC cells say so.
+        row["score_basis"] = BASIS_CLIPPED if clipped else BASIS_AS_EVALUATED
+        historical_cell = "— (not clipped)"
+        mcc_cells = f"{fmt(mcc1)} | {fmt(mccbest)} | {verdict}"
+        if clipped:
+            row["mcc_verdict"] = "withheld"
+            mcc_cells = "withheld | withheld | withheld"
+            h_base, h_best, h_best_k, h_gain = _gain(by_k, as_evaluated=True)
+            row[HISTORICAL_KEY] = {
+                "f1_k1": h_base, "f1_best": h_best, "best_k": h_best_k,
+                "gain": h_gain,
             }
+            historical_cell = f"{h_gain:+.4f} (K=1 {fmt(h_base)}, K={h_best_k} {fmt(h_best)})"
+        lines.append(
+            f"| {ladder['family']} | {row['score_basis']} | {fmt(base)} | "
+            f"{fmt(best)} (K={best_k}) | **{gain:+.4f}** | {pct(share_raw)} | "
+            f"{mcc_cells} | {pct(cost_share_raw)} | {historical_cell} |"
         )
+        summary_rows.append(row)
     lines.append("")
 
     # --- Summary 2: efficient rungs -----------------------------------------
@@ -1148,8 +1615,17 @@ def tables(payload: dict[str, Any]) -> str:
         "well at the sweep-optimal point."
     )
     lines.append("")
-    lines.append("| family | efficient rungs (K @ US$ → F1@20) |")
-    lines.append("|---|---|")
+    if clip_requested:
+        lines.append(
+            "Each row is on its ladder's score basis: a clipped ladder's F1@20 "
+            "is its clipped re-score."
+        )
+        lines.append("")
+        lines.append("| family | score basis | efficient rungs (K @ US$ → F1@20) |")
+        lines.append("|---|---|---|")
+    else:
+        lines.append("| family | efficient rungs (K @ US$ → F1@20) |")
+        lines.append("|---|---|")
     for ladder in payload["ladders"]:
         points = sorted(
             (
@@ -1166,8 +1642,12 @@ def tables(payload: dict[str, Any]) -> str:
             if f1 > best_so_far:
                 efficient.append(f"{k} @ ${usd:.2f} → {f1:.4f}")
                 best_so_far = f1
+        basis_cell = (
+            f"{BASIS_CLIPPED if is_clipped(ladder) else BASIS_AS_EVALUATED} | "
+            if clip_requested else ""
+        )
         lines.append(
-            f"| {ladder['family']} | "
+            f"| {ladder['family']} | {basis_cell}"
             f"{'; '.join(efficient) if efficient else '—'} |"
         )
     payload["summary"] = summary_rows
@@ -1176,15 +1656,22 @@ def tables(payload: dict[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def figure(payload: dict[str, Any], out: Path) -> None:
-    """Cost against F1@20 at the sweep-optimal point, one line per family."""
-    import matplotlib
+def figure_series(payload: dict[str, Any]) -> list[dict[str, Any]]:
+    """The data the figure plots: one line per ladder with two or more points.
 
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+    Each line's points are ``(K, all-in US$, F1@20)`` on the ladder's
+    reported basis, so a clipped ladder plots its clipped re-scores; its
+    legend label says so. ``index`` is the ladder's position in the payload,
+    which picks its marker.
 
-    fig, ax = plt.subplots(figsize=(9.0, 6.0))
-    markers = ["o", "s", "^", "v", "D", "P", "X", "*", "<", ">", "h", "p", "8", "d"]
+    Args:
+        payload: The gated payload.
+
+    Returns:
+        ``[{"index", "family", "label", "modality", "score_basis",
+        "points"}, ...]``.
+    """
+    series: list[dict[str, Any]] = []
     for index, ladder in enumerate(payload["ladders"]):
         points = sorted(
             (
@@ -1196,19 +1683,48 @@ def figure(payload: dict[str, Any], out: Path) -> None:
         )
         if len(points) < 2:
             continue
+        label = ladder["family"].replace("Gemini 3 ", "").replace(
+            "Gemini 3.7 ", "3.7 "
+        )
+        if is_clipped(ladder):
+            label += " [clipped]"
+        series.append(
+            {
+                "index": index,
+                "family": ladder["family"],
+                "label": label,
+                "modality": ladder["modality"],
+                "score_basis": (
+                    BASIS_CLIPPED if is_clipped(ladder) else BASIS_AS_EVALUATED
+                ),
+                "points": points,
+            }
+        )
+    return series
+
+
+def figure(payload: dict[str, Any], out: Path) -> None:
+    """Cost against F1@20 at the sweep-optimal point, one line per family."""
+    import matplotlib
+
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots(figsize=(9.0, 6.0))
+    markers = ["o", "s", "^", "v", "D", "P", "X", "*", "<", ">", "h", "p", "8", "d"]
+    for entry in figure_series(payload):
+        points = entry["points"]
         xs = [point[1] for point in points]
         ys = [point[2] for point in points]
-        style = "--" if ladder["modality"] == "image" else "-"
+        style = "--" if entry["modality"] == "image" else "-"
         ax.plot(
             xs,
             ys,
             style,
-            marker=markers[index % len(markers)],
+            marker=markers[entry["index"] % len(markers)],
             linewidth=1.3,
             markersize=5.5,
-            label=ladder["family"].replace("Gemini 3 ", "").replace(
-                "Gemini 3.7 ", "3.7 "
-            ),
+            label=entry["label"],
         )
         for k, x, y in points:
             ax.annotate(
@@ -1222,7 +1738,10 @@ def figure(payload: dict[str, Any], out: Path) -> None:
     ax.set_xlabel(
         "Audited all-in cost per rung, US$ (flex, gold standard), log scale"
     )
-    ax.set_ylabel("F1@20 on the board frame, sweep-optimal point")
+    ylabel = "F1@20 on the board frame, sweep-optimal point"
+    if payload.get("score_basis"):
+        ylabel += "\n[clipped]: re-scored on the common assessed area (D51)"
+    ax.set_ylabel(ylabel)
     ax.set_title(
         "Pass count against cost: the fourteen four-rung ladders Phase 2 "
         "completed"
@@ -1233,6 +1752,14 @@ def figure(payload: dict[str, Any], out: Path) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(out, dpi=160)
     plt.close(fig)
+
+
+def _display(path: Path) -> Path:
+    """A path relative to the repository when it is inside it, for log lines."""
+    try:
+        return path.relative_to(BASE_DIR)
+    except ValueError:
+        return path
 
 
 def main() -> None:
@@ -1262,9 +1789,21 @@ def main() -> None:
     if refusals:
         for message in refusals:
             logger.error("D51 gate REFUSED %s", message)
+        if any(CLIP_RESCORE_FAILED in m for m in refusals):
+            # A requested clip that cannot re-score every reported point
+            # must not publish: exit 5, nothing written.
+            raise SystemExit(EXIT_CLIP_RESCORE_FAILED)
         undetermined_only = all("UNDETERMINED" in m for m in refusals)
         raise SystemExit(
             EXIT_AREA_UNDETERMINED if undetermined_only else EXIT_AREA_MISMATCH
+        )
+    if args.clip_to_common_area:
+        clipped = [ladder["family"] for ladder in payload["ladders"] if is_clipped(ladder)]
+        logger.warning(
+            "score basis: %d ladder(s) REPORTED clipped to the common area (%s), "
+            "%d as evaluated; clipped ladders are withheld from the compat "
+            "inventory", len(clipped), "; ".join(clipped) or "none",
+            len(payload["ladders"]) - len(clipped),
         )
     markdown = tables(payload)
     PHASE2.mkdir(parents=True, exist_ok=True)
@@ -1282,7 +1821,7 @@ def main() -> None:
         "compat inventory: %d ladder(s) testable, %d skipped -> %s",
         compat["n_ladders"],
         compat["n_skipped"],
-        (PHASE2 / "ladders-compat.json").relative_to(BASE_DIR),
+        _display(PHASE2 / "ladders-compat.json"),
     )
     for entry in compat["skipped"]:
         logger.warning(

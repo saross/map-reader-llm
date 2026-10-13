@@ -1,0 +1,73 @@
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Output: outputs/pro-2x2-replication-2026-10-13/text-high-t0.0
+  Built JSONL: 487 lines (outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_3/batch_working/detections_detect_brief-text_run03.jsonl)
+  Submitted batch job: batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_RUNNING
+  Polling batches/5b3jm22g2t5ytk7ruirvb9tyhefxmxpcyxoz: JOB_STATE_SUCCEEDED
+  Batch complete: 484 tiles, 445 detections, 3 failed, $0.9244
+  Accepting partial result: 3 tile(s) failed (≤ 97 threshold = 20% of 487)
+  Released request file files/l529w1k2bidj (job terminal)
+
+Batch complete. Estimated cost: $0.9244
+Tiles processed: 484
+Tiles failed: 3
