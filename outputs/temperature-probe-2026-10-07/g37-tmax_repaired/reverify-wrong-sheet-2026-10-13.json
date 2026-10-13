@@ -1,0 +1,60 @@
+{
+ "script": "scripts/reverify_wrong_sheet_crops.py book",
+ "decision": "D62 (1) step 2, planning/pi-decisions-2026-09-20.md",
+ "leg_dir": "outputs/temperature-probe-2026-10-07/g37-tmax",
+ "run_dir": "outputs/wrong-sheet-reverify-2026-10-13",
+ "base": "leg",
+ "riders": [],
+ "batch_job": "batches/3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79",
+ "job": "gemini-3.7-flash_t2.0_low",
+ "model": "gemini-3.7-flash",
+ "temperature": 2.0,
+ "thinking_level": "low",
+ "tier": "batch",
+ "probabilities_sha256_before": "3ea9ad824de7eb59feeefd64aaf136a8775ad34cbc4a1fdc2255766e05aed939",
+ "probabilities_sha256_after": "4ef74e27e841d8b38c84ff233f445cc47c004e98202cae482f7f587f2e2839e0",
+ "rows": [
+  {
+   "key": "candidate_00216",
+   "old_probability": 0.0,
+   "new_probability": 0.98,
+   "parse_method": "json.loads",
+   "cost_usd": 0.001098,
+   "old_crop_dark_share": 1.0,
+   "old_crop_raster": "K-35-052-4_32635.tif",
+   "new_crop_dark_share": 0.002667,
+   "new_crop_raster": "K-35-053-3_Elenovo.tif",
+   "new_crop": "crops/outputs__temperature-probe-2026-10-07__crops/candidate_00216.png",
+   "new_crop_sha256": "efb81791079588354067fee6d85cef6b0ea5d257132db11c262b0c41532bb4d5"
+  },
+  {
+   "key": "candidate_00217",
+   "old_probability": 0.0,
+   "new_probability": 0.95,
+   "parse_method": "json.loads",
+   "cost_usd": 0.000996,
+   "old_crop_dark_share": 0.644222,
+   "old_crop_raster": "K-35-052-4_32635.tif",
+   "new_crop_dark_share": 0.357556,
+   "new_crop_raster": "K-35-053-3_Elenovo.tif",
+   "new_crop": "crops/outputs__temperature-probe-2026-10-07__crops/candidate_00217.png",
+   "new_crop_sha256": "1877bc8b9d63f187f28c405385c0f3d3f2fbb9f668a6af99f809927c4923f512"
+  },
+  {
+   "key": "candidate_00602",
+   "old_probability": 0.0,
+   "new_probability": 0.01,
+   "parse_method": "json.loads",
+   "cost_usd": 0.001146,
+   "old_crop_dark_share": 1.0,
+   "old_crop_raster": "K-35-052-4_32635.tif",
+   "new_crop_dark_share": 0.003956,
+   "new_crop_raster": "K-35-053-3_Elenovo.tif",
+   "new_crop": "crops/outputs__temperature-probe-2026-10-07__crops/candidate_00602.png",
+   "new_crop_sha256": "4c5cfbe77a073014232bc3fa78cf080c60992ffa5203c68c30e2d1174498ab80"
+  }
+ ],
+ "removed_unparseable": [],
+ "absent_from_base": [],
+ "note": "run.meta.json here is the leg's byte copy (or the committed repaired copy's); the calls' usage and cost are in the run directory's record.json"
+}

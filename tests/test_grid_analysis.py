@@ -187,6 +187,27 @@ def test_as_gdf_drops_detections_off_the_carrier_grid():
 
 
 @pytest.mark.tier1
+def test_as_gdf_with_origins_books_a_detection_on_its_own_sheet():
+    """D62 (1): with origins, a point in two sheets' overlap stays on its sheet.
+
+    Without origins (the legacy path, kept only to replay pre-D62 numbers)
+    the nearest tile centroid on ANY sheet wins, which here is sheet B's.
+    """
+    tile_a = "K-35-001-1_32635_x0_y0.png"
+    tile_b = "K-35-001-2_32635_x0_y0.png"
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": [tile_a, tile_b]},
+        geometry=[box(-10, 0, 110, 100), box(90, 0, 210, 100)], crs=CRS)
+    point = np.array([[105.0, 50.0]])
+    assert as_gdf(point, bounds).iloc[0]["source_tile"] == tile_b
+    fixed = as_gdf(point, bounds, origins=[[tile_a]])
+    assert fixed.iloc[0]["source_tile"] == tile_a
+    assert fixed.iloc[0]["origin_tiles"] == tile_a
+    # Seen on A, but on no tile of A: dropped, as the shared scorer drops it.
+    assert as_gdf(np.array([[150.0, 50.0]]), bounds, origins=[[tile_a]]).empty
+
+
+@pytest.mark.tier1
 def test_as_gdf_handles_empty_input():
     """An empty cluster set yields an empty, still-scorable frame."""
     bounds = gpd.GeoDataFrame(

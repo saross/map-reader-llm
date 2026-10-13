@@ -45,6 +45,11 @@ try:  # only ``scripts/`` on sys.path
     from lib_detection_paths import find_pass_geojsons
 except ImportError:  # repo root on sys.path
     from scripts.lib_detection_paths import find_pass_geojsons
+# The same dual-mode guard for the shared scorer's tile-list parser.
+try:  # only ``scripts/`` on sys.path
+    from lib_advanced_metrics import parse_tile_list
+except ImportError:  # repo root on sys.path
+    from scripts.lib_advanced_metrics import parse_tile_list
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -297,13 +302,25 @@ def generate_consensus_gdf(
     each run, clusters across runs, applies the vote threshold, and
     returns a GeoDataFrame suitable for bootstrap comparisons.
 
+    **The contributing tiles are kept** (PI ruling D62 (1), 2026-10-13,
+    the fix D60 (3) made to ``analyse_consensus_sweep.consensus_to_gdf``).
+    ``source_tiles`` is each cluster's origin record: the proposer tiles
+    its members were SEEN on. ``source_tile`` is still the alphabetically
+    first of them, as before, so for a cluster seen on two sheets that
+    sheet is an accident of naming. The shared scorer
+    (``lib_advanced_metrics.scope_detections_to_frame``, ruling D50) reads
+    the list and scores such a row on the origin sheet whose tiles hold
+    it, where with ``source_tile`` alone it could only drop the row as out
+    of frame. Until 2026-10-13 the list was dropped here.
+
     Args:
         run_dirs: List of paths to run directories (e.g., run_1/, run_2/).
         threshold: Minimum vote count to retain a cluster.
 
     Returns:
-        GeoDataFrame with 'source_tile' column and Point geometries,
-        CRS explicitly set to EPSG:32635.
+        GeoDataFrame with 'source_tile', 'source_tiles' (a list of tile
+        names per row), 'subtype', 'vote_count', 'total_passes', and Point
+        geometries, CRS explicitly set to EPSG:32635.
     """
     total_passes = len(run_dirs)
 
@@ -321,7 +338,7 @@ def generate_consensus_gdf(
 
     if not pass_detections:
         return gpd.GeoDataFrame(
-            columns=["geometry", "source_tile", "subtype"],
+            columns=["geometry", "source_tile", "source_tiles", "subtype"],
             crs=TARGET_CRS,
         )
 
@@ -340,6 +357,10 @@ def generate_consensus_gdf(
             rows.append({
                 "geometry": ShapelyPoint(cluster["centroid"]),
                 "source_tile": source_tile,
+                # The origin record, in the form the shared scorer reads
+                # (a list of tile names); parse_tile_list raises on a
+                # malformed one rather than letting it pass as a name.
+                "source_tiles": parse_tile_list(cluster["source_tiles"]),
                 "subtype": cluster["label"],
                 "vote_count": cluster["vote_count"],
                 "total_passes": total_passes,
@@ -347,7 +368,7 @@ def generate_consensus_gdf(
 
     if not rows:
         return gpd.GeoDataFrame(
-            columns=["geometry", "source_tile", "subtype"],
+            columns=["geometry", "source_tile", "source_tiles", "subtype"],
             crs=TARGET_CRS,
         )
 
@@ -366,13 +387,26 @@ def build_pv_gdf(
     optimal threshold from threshold_sweep.json, filters candidates at that
     threshold, and builds Point geometries from manifest centroids.
 
+    **The candidate's contributing tiles are kept** (PI ruling D62 (1),
+    2026-10-13, the fix D60 (3) made to
+    ``evaluate_pv_results.build_candidate_gdf``). A candidate drawn from a
+    consensus union records its cluster's members' proposer tiles in
+    ``properties.source_tiles``; ``extract_candidates.py`` writes only the
+    alphabetically first of them into the top-level ``source_tile``. The
+    shared scorer (``lib_advanced_metrics.scope_detections_to_frame``,
+    ruling D50) reads the list to score a candidate seen on two sheets on
+    the origin sheet whose tiles hold it. A candidate with no recorded
+    list (a single-pass manifest) gets an empty one, which the scorer
+    treats exactly as before. Until 2026-10-13 the list was dropped here.
+
     Args:
         pv_results_dir: Directory containing probabilities.json.
         manifest_dir: Directory containing candidate_manifest.json.
         sweep_dir: Directory containing threshold_sweep.json.
 
     Returns:
-        GeoDataFrame with 'source_tile' column and Point geometries.
+        GeoDataFrame with 'source_tile', 'source_tiles' (a list of tile
+        names per row), 'mound_probability', and Point geometries.
     """
     # Load optimal threshold
     sweep_file = sweep_dir / "threshold_sweep.json"
@@ -427,18 +461,22 @@ def build_pv_gdf(
                     "Candidate %s not found in manifest, skipping", cand_id,
                 )
                 continue
+            # The origin record, in the form the shared scorer reads (a
+            # list of tile names); parse_tile_list raises on a malformed one.
+            props = manifest_entry.get("properties") or {}
             rows.append({
                 "geometry": ShapelyPoint(
                     manifest_entry["centroid_x"],
                     manifest_entry["centroid_y"],
                 ),
                 "source_tile": manifest_entry["source_tile"],
+                "source_tiles": parse_tile_list(props.get("source_tiles")),
                 "mound_probability": prob,
             })
 
     if not rows:
         return gpd.GeoDataFrame(
-            columns=["geometry", "source_tile", "mound_probability"],
+            columns=["geometry", "source_tile", "source_tiles", "mound_probability"],
             crs=TARGET_CRS,
         )
 

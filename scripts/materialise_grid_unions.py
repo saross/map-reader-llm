@@ -11,11 +11,21 @@ inputs under that rule:
 
 * passes load through the SAME loader the sweep used
   (``grid_analysis.load_cell_passes``, common scope, runs 1–10);
-* clustering is the SAME function at the same corroboration level
-  (``h13_k_sensitivity.cluster_votes`` at c = 1);
-* the carrier-tile filter replicates ``grid_analysis.as_gdf`` (clusters
-  falling on no carrier tile are dropped), with each cluster's vote
-  count carried through the filter;
+* clustering is the SAME clustering at the same corroboration level
+  (``h13_k_sensitivity.cluster_votes`` at c = 1, run through
+  ``lib_cluster_origins.cluster_votes_with_members``, which returns the
+  same centroids and votes and each cluster's member tiles);
+* the carrier-tile filter replicates ``grid_analysis.as_gdf`` with origins
+  (PI ruling D62 (1), 2026-10-13): each cluster records the tiles its
+  members were seen on (``origin_tiles``) and is booked to the nearest
+  carrier tile on its own sheet; clusters on no tile of their own sheet
+  are dropped, with each cluster's vote count carried through the filter.
+  Before D62 the tile was the nearest among ALL carrier tiles, which could
+  re-key a cluster to a neighbouring sheet. The committed unions were
+  written that way; re-tiling them on their origin moves no row in or
+  out (11 to 64 rows per committed grid, stride, winner-ladder, or Image-B
+  union change tile, measured 2026-10-13), so the documented counts below
+  still hold;
 * the GATE: each cell's surviving count must equal the documented
   figure EXACTLY (1,402 / 2,585 / 1,827 / 3,319; findings § verifier
   costing) or the script refuses to write and exits non-zero.
@@ -38,7 +48,6 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
-from shapely.geometry import Point
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -47,12 +56,14 @@ from scripts.grid_analysis import (  # noqa: E402
     CELL_LABEL,
     CELL_ORDER,
     CRS,
-    assign_primary_tiles,
     load_cell_passes,
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.lib_assessed_area import KNOWN_TILINGS, write_area_record  # noqa: E402
+from scripts.lib_cluster_origins import (  # noqa: E402
+    cluster_votes_with_members,
+    points_on_origin,
+)
 
 SCORING_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/scoring"
 OUT_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/verifier"
@@ -72,29 +83,26 @@ EXPECTED = {
 def union_with_votes(
     passes: list[list[dict]], bounds: gpd.GeoDataFrame,
 ) -> gpd.GeoDataFrame:
-    """Cluster a K-pass pool at c = 1 and tile-filter, carrying votes.
+    """Cluster a K-pass pool at c = 1 and tile-filter, carrying votes and origins.
 
-    Replicates the sweep's candidate construction (``cluster_votes`` then
-    ``as_gdf``'s carrier-tile drop) with ``vote_count`` retained per
-    surviving cluster.
+    Replicates the sweep's candidate construction (the clustering, then
+    ``as_gdf``'s carrier-tile drop with origins) with ``vote_count`` retained
+    per surviving cluster.
 
     Args:
         passes: Deduplicated detections per pass (the loader's shape).
         bounds: Carrier tile bounds with a ``tile_name`` column.
 
     Returns:
-        GeoDataFrame in the project CRS with ``vote_count`` and
-        ``source_tile`` columns; off-carrier clusters dropped.
+        GeoDataFrame in the project CRS with ``vote_count``, ``origin_tiles``
+        (the members' tiles, ``;``-joined) and ``source_tile`` (on the
+        cluster's own sheet) columns; clusters on no tile of their own sheet
+        dropped.
     """
-    centroids, votes = cluster_votes(passes, CORROBORATION)
-    if len(centroids) == 0:
-        return gpd.GeoDataFrame(
-            {"vote_count": [], "source_tile": []}, geometry=[], crs=CRS)
-    gdf = gpd.GeoDataFrame(
-        {"vote_count": votes},
-        geometry=[Point(xy) for xy in centroids], crs=CRS)
-    gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
-    return gdf[gdf["source_tile"].notna()].copy()
+    centroids, votes, members = cluster_votes_with_members(passes, CORROBORATION)
+    gdf, _ = points_on_origin(
+        centroids, bounds, members, CRS, columns={"vote_count": votes})
+    return gdf
 
 
 def main() -> int:

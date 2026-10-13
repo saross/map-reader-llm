@@ -28,6 +28,22 @@ stride programme (`results/stride-2026-08-25/findings.md`):
    drift between clusterings. Exact re-verification of finalists is a
    separately gated spend.
 
+4. **The exact winner ladder** (``winner_ladder_exact``). The 384 px /
+   33.3 % cell's N ∈ {1, 3, 5} unions were re-verified exactly (PI-approved
+   2026-08-25, commit ``346694beb``); their boards were folded into this
+   file then by hand. :func:`winner_ladder_exact` now computes them, so the
+   script regenerates its whole artefact.
+
+**Origins (PI ruling D62 (1), 2026-10-13).** Every scored detection carries
+the tiles it was seen on into the shared scorer, so it is booked to a
+carrier tile on its OWN sheet: the nine cells' verified unions are rebuilt
+from their passes (``lib_cluster_origins.union_on_origin``), the first-N
+clusters keep their members' tiles, and the four incumbents keep the
+``source_tile`` their own files record. Before D62 all of these were bare
+centroids booked to the nearest carrier tile on ANY sheet, which near a
+sheet edge re-keyed a detection to the neighbouring sheet
+(``reports/s163-agent-records/origin-gap-grid-plateau.md``).
+
 Zero API. Run on sapphire (~40 sweeps, 78 permutation pairs at 10k).
 
 Usage::
@@ -64,11 +80,20 @@ from n1_baseline_leaderboard_tiering import (  # noqa: E402
 )
 
 from scripts.grid_analysis import CRS, as_gdf, load_cell_passes, score  # noqa: E402
-from scripts.grid_verifier_analysis import per_tile_counts, verified_subset  # noqa: E402
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
+from scripts.grid_verifier_analysis import (  # noqa: E402
+    load_verified_union,
+    per_tile_counts,
+    reassignment_gate,
+    verified_subset,
+)
+from scripts.lib_cluster_origins import (  # noqa: E402
+    cluster_votes_with_members,
+    recorded_origin,
+    union_on_origin,
+)
 from scripts.stride_verifier_analysis import (  # noqa: E402
-    load_stride_union,
-    reassign_gate,
+    load_stride_union_on_origin,
+    score_at,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -105,7 +130,14 @@ CELL_SPECS: dict[str, dict[str, Any]] = {
     "g384_ov240": {"root": "outputs/stride-phasec-2026-08-25", "grid": False},
 }
 
-#: Phase A incumbents on the common footprint (clip via as_gdf at load).
+#: The exact winner ladder: the cell whose first-N unions were re-verified,
+#: and the rungs (``verifier/<cell>/union_k<N>.geojson`` with
+#: ``verify_k<N>/``).
+WINNER_CELL = "g384_ov128"
+WINNER_NS = (1, 3, 5)
+
+#: Phase A incumbents on the common footprint (clip via as_gdf at load, each
+#: detection kept on the sheet of its own recorded ``source_tile``).
 INCUMBENTS: dict[str, str] = {
     "opmax": "results/verifier-robustness/opmax-sets/"
              "opmax-16of30-N5minT0.3-vt3-pt0.15.geojson",
@@ -119,19 +151,46 @@ INCUMBENTS: dict[str, str] = {
 
 
 def load_k10_union(cell: str, bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """Load a cell's K = 10 verified union (grid or stride layout)."""
+    """Load a cell's K = 10 verified union (grid or stride layout), on origin.
+
+    Both layouts go through their own join and round-trip gates, then
+    (D62 (1)) the union is rebuilt from the cell's passes, its members'
+    tiles are attached, and each row is booked on its own sheet.
+
+    Args:
+        cell: Cell label (a key of :data:`CELL_SPECS`).
+        bounds: Common carrier bounds.
+
+    Returns:
+        The joined union with ``mound_probability``, ``vote_count``,
+        ``origin_tiles`` and an origin-sheet ``source_tile``.
+    """
     spec = CELL_SPECS[cell]
     if spec["grid"]:
-        root = PROJECT_ROOT / spec["root"] / "verifier" / cell
-        gdf = gpd.read_file(root / "union_k10.geojson").to_crs(CRS)
-        results = json.loads(
-            (root / "verify" / "probabilities.json").read_text())["results"]
-        gdf["mound_probability"] = [
-            float(results[f"candidate_{i:05d}"]["mound_probability"])
-            for i in range(len(gdf))
-        ]
-        return gdf
-    return reassign_gate(load_stride_union(cell), bounds, cell)
+        gdf = reassignment_gate(load_verified_union(cell), bounds, cell)
+        passes = load_cell_passes(PROJECT_ROOT / spec["root"] / "scoring", cell)
+        return union_on_origin(gdf, passes, bounds, label=cell, n_passes=10)
+    return load_stride_union_on_origin(cell, bounds)
+
+
+def load_incumbent(rel: str, bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """One Phase A incumbent clipped to the common carrier, on its own sheet.
+
+    Each incumbent file records its own ``source_tile``; that tile's sheet is
+    kept as the detection's origin (D62 (1)) rather than discarded for a bare
+    centroid, so a detection near a sheet edge is not booked to the
+    neighbouring sheet's carrier tile.
+
+    Args:
+        rel: The incumbent's path relative to the repository root.
+        bounds: Common carrier bounds.
+
+    Returns:
+        The scorable set (rows on no carrier tile of their own sheet dropped).
+    """
+    inc = gpd.read_file(PROJECT_ROOT / rel).to_crs(CRS)
+    return as_gdf(np.asarray([[g.x, g.y] for g in inc.geometry]), bounds,
+                  origins=recorded_origin(inc))
 
 
 def best_points() -> dict[str, dict[str, Any]]:
@@ -247,8 +306,8 @@ def first_n_ladder(
         cell_out = {"prop10_flex_usd": round(float(prop10), 4), "N": {}}
         for n in (1, 3, 5):
             subset_passes = passes[:n]
-            centroids, votes = cluster_votes(subset_passes, 1)
-            gdf = as_gdf(centroids, bounds)
+            centroids, votes, members = cluster_votes_with_members(subset_passes, 1)
+            gdf = as_gdf(centroids, bounds, origins=members)
             # as_gdf drops off-carrier rows but keeps positional indices, so
             # the surviving rows' votes are recovered by original position.
             kept = gdf.index.to_numpy()
@@ -292,6 +351,71 @@ def first_n_ladder(
     return ladder
 
 
+def winner_ladder_exact(
+    bounds: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame, prop10_flex_usd: float,
+) -> dict[str, Any]:
+    """The exactly re-verified first-N rungs of the winner cell.
+
+    Each rung's union (``union_k<N>.geojson``, built from the first N passes)
+    is joined to its own ``verify_k<N>`` probabilities and gated as the K = 10
+    unions are, then swept over every observed ``prob_t`` (and 0.0) crossed
+    with ``min_votes`` 1..N; the best F1 at 20 m is kept (first maximum in
+    sweep order, as :func:`first_n_ladder` keeps it).
+
+    Args:
+        bounds: Common carrier bounds.
+        gdf_ref: Curator references.
+        prop10_flex_usd: The cell's audited K = 10 proposer spend on the flex
+            basis (the ladder's ``prop10_flex_usd``); a rung's proposer share
+            is N/10 of it.
+
+    Returns:
+        ``{"cell", "note", "N": {n: {...}}}`` in the committed layout.
+    """
+    root = PROJECT_ROOT / CELL_SPECS[WINNER_CELL]["root"] / "verifier" / WINNER_CELL
+    out: dict[str, Any] = {
+        "cell": WINNER_CELL,
+        "note": ("Exact re-verification of the N in {1,3,5} unions (PI-approved "
+                 "2026-08-25, ~$3.4 flex): full unions verified including "
+                 "inheritance-unmatched clusters; join gates exact."),
+        "N": {},
+    }
+    for n in WINNER_NS:
+        union_name = f"union_k{n}.geojson"
+        union_n = len(json.loads((root / union_name).read_text())["features"])
+        gdf = load_stride_union_on_origin(
+            WINNER_CELL, bounds, union_name=union_name,
+            verify_dir=f"verify_k{n}", n_passes=n)
+        thresholds = sorted({0.0} | {float(v) for v in gdf["mound_probability"]})
+        best = None
+        for prob_t in thresholds:
+            for k in range(1, n + 1):
+                row = score(verified_subset(gdf, prob_t, k), gdf_ref, bounds)
+                row.update({"prob_t": prob_t, "min_votes": k})
+                if best is None or row["f1"] > best["f1"]:
+                    best = row
+        best_set = verified_subset(gdf, best["prob_t"], best["min_votes"])
+        meta = json.loads((root / f"verify_k{n}" / "run.meta.json").read_text())
+        list_usd = float(meta["cost_estimate"]["list_total_cost_usd"])
+        flex_usd = round(list_usd / 2.0, 4)
+        out["N"][n] = {
+            "union_n": union_n,
+            "verified_failed": int(meta["execution_stats"]["items_failed"]),
+            "best": {k: best[k] for k in
+                     ("precision", "recall", "f1", "mcc",
+                      "n_detections", "prob_t", "min_votes")},
+            "f1_30m": score_at(best_set, gdf_ref, bounds, 30)["f1"],
+            "verifier_list_usd": list_usd,
+            "verifier_flex_usd": flex_usd,
+            "all_in_flex_usd": round(prop10_flex_usd * n / 10 + flex_usd, 2),
+        }
+        logger.info("exact ladder N=%d: union %d | best F1=%.4f at p>=%.2f k>=%d "
+                    "| @30m %.4f | $%.2f all-in", n, union_n, best["f1"],
+                    best["prob_t"], best["min_votes"], out["N"][n]["f1_30m"],
+                    out["N"][n]["all_in_flex_usd"])
+    return out
+
+
 def main() -> int:
     bounds = gpd.read_file(COMMON_BOUNDS)
     gdf_ref = gpd.read_file(GROUND_TRUTH)
@@ -304,13 +428,13 @@ def main() -> int:
         sets[cell] = verified_subset(u, points[cell]["prob_t"],
                                      points[cell]["min_votes"])
     for name, rel in INCUMBENTS.items():
-        inc = gpd.read_file(PROJECT_ROOT / rel).to_crs(CRS)
-        sets[name] = as_gdf(
-            np.asarray([[g.x, g.y] for g in inc.geometry]), bounds)
+        sets[name] = load_incumbent(rel, bounds)
 
     board = board_and_tiers(sets, bounds, gdf_ref)
     curves = k_curves(len(bounds))
     ladder = first_n_ladder(bounds, gdf_ref)
+    exact = winner_ladder_exact(
+        bounds, gdf_ref, ladder[WINNER_CELL]["prop10_flex_usd"])
 
     OUT_PATH.write_text(json.dumps({
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -331,6 +455,7 @@ def main() -> int:
         },
         "bootstrap_config": {"n_permutations": N_PERMUTATIONS, "seed": SEED,
                              "fdr_q": FDR_Q},
+        "winner_ladder_exact": exact,
     }, indent=2) + "\n")
     logger.info("wrote %s", OUT_PATH.relative_to(PROJECT_ROOT))
     return 0
