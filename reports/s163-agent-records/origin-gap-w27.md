@@ -1,6 +1,7 @@
 # D62 (1): W2.7's subset frames carry contributing tiles
 
-> **Last revised**: 2026-10-13 (original publication). See
+> **Last revised**: 2026-10-13 (later: the regeneration § 6 called for
+> is done, on PR #38's branch, and moved what § 3 predicted). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -242,6 +243,7 @@ first run (04:32 UTC) and after the last (07:15 UTC).
   § 6b cells, the 18 floor rows, and the other rows listed in § 3 move as
   shown, with no quoted figure changing at its precision. PR #38's own
   record of "362 cells moved by D50" would read 230 net of this fix.
+  (Done later on 2026-10-13, with PR #33's library: see the Changelog.)
 - **The board's own rung builder** (§ 4): whether to carry the tiles in
   `stride55_ladder.cluster_first_n` and `gemini37_arm_ladder.cluster_first_n`
   too, and how the two GeoJSON writers should serialise the list, is the
@@ -251,9 +253,24 @@ first run (04:32 UTC) and after the last (07:15 UTC).
   takes `main`, the gate and these runs must be repeated with #33's library
   (PR #38's own probe found #33 moved no W2.7 cell without the tiles; with
   them it is untested here). On the H13 chain and the library copies (PR
-  #41), #33 changed nothing.
+  #41), #33 changed nothing. (Repeated later on 2026-10-13 with the tiles:
+  #33 moved no W2.7 output; see the Changelog.)
 
 ## Changelog
+
+### 2026-10-13 (later) — The regeneration done
+
+The regeneration § 6 called for was done on PR #38's branch
+(`d60-w27-fastscorer`), after `main` (`4974c3c2b`, carrying PR #33's
+library) was merged in (`cc8f277c6`): every W2.7 floors-v2 output was
+regenerated twice, independently, on sapphire, at `533e62605`, and the two
+runs agree byte for byte. The movements are exactly those of § 3 (§ 6
+unchanged; the gate exact on all 1,466 cells with the sentinel failing on
+the same four § 6 cells; 132 § 6b cells; 18 floor rows by at most
+0.0000072; `tables.md` and the rescreen unchanged), and #33's library moved
+nothing. Results: `bdb4de89b`; account: the 2026-10-13 changelog entries
+of W2.7's report (`reports/w27-replicate-floors-2026-10-06.md`) and of
+`floors-v2.md`. Commit: see git log for this entry.
 
 ### 2026-10-13 — Original publication
 

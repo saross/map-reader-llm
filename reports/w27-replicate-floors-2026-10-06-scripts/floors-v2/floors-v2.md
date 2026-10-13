@@ -1,8 +1,9 @@
 # W2.7 floors v2: subsampling floors for the 55-map board, validated
 
-> **Last revised**: 2026-10-12 (PI ruling D60 (4): `FastScorer` rebuilt on the shared
-> library's attribution and every cell regenerated; one quoted value moves). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-13 (PI ruling D62 (1): subset clusters carry the tiles they were
+> seen on, every cell regenerated on the library as merged in PR #33; 132 cells return to
+> their pre-D50 values and no quoted value moves). See [§ Changelog](#changelog) for revision
+> history.
 
 Agent report, 2026-10-07. Read-only on the repository; no Application Programming Interface (API)
 call; compute on sapphire (`/tmp/floors2/`). Scripts, gates and results are in `floors-v2/` beside
@@ -33,7 +34,10 @@ consensus serve as a model?
   and ten top-rung counts are reproduced, as are **all 460 W2.7 subset cells and 486 coincident
   gold-standard (GS) cells, to the last bit of F1**. Since 2026-10-12 the scorer's gate is the
   live library scorer, not the committed § 6 cells: `floors2_scorer_gate.py` checks every § 6
-  cell and 1,000 sampled § 6b cells tile by tile (`results/scorer_gate.json`).
+  cell and 1,000 sampled § 6b cells tile by tile (`results/scorer_gate.json`). Since
+  2026-10-13 each rung cluster also carries the tiles its members were seen on (PI ruling
+  D62 (1)); the fast clustering that supplies them is gated equal to the committed
+  `cluster_votes_with_origins` (`results/gates55.json`).
 
 ## 2. New proposer-stage floors (verifier fixed)
 
@@ -205,6 +209,31 @@ minutes against an expected hour, because the gated restatements (KD-tree shortl
 Geometry Engine Open Source (GEOS) matching) run tens of times faster per cell than the W2.7 path.
 
 ## Changelog
+
+### 2026-10-13 — Cluster origins carried, cells regenerated (PI ruling D62 (1))
+
+**Trigger**: ruling D62 (1) requires W2.7's `cluster_subset` to carry each cluster's contributing
+tiles into scoring (PR #44, `36bf9472d`), and these cells to be regenerated once after that fix;
+PR #33's changes to the shared library had merged into `main` in the meantime and were merged in
+first (`cc8f277c6`). Every 55-map and gold-standard cell was regenerated twice, in independent
+runs that agree byte for byte, and a seeded 10 % of the subset cells a third time. 132 of the
+16,260 subset cells move: family B subsets of three to five passes holding pass 8, k ≤ 3, one
+false positive more each (F1 −0.000087 to −0.000053), each back to its value before the
+2026-10-12 entry. Of the 362 cells that entry moved, 230 stay moved. The 57,576 simulated cells
+and the 69,120 gold-standard slice cells are byte-identical to the 2026-10-12 run; PR #33's
+library moved no cell.
+
+| | Before | After |
+|---|---|---|
+| § 2, B N3 carried floor (0.15, k3) | 0.0051 (0.005058) | 0.0051 (0.005063) |
+| `results/floors55_all.csv` rows moved | — | 18 (B, K = 3 to 5, k ≤ 3), each floor by at most 0.0000072 |
+
+**What did NOT change**: every figure here at its quoted precision (the floors and jackknife
+SEs of § 2, the validation ratios of § 3, the fits and exponents of § 4, the model ratios of
+§ 5, ρ, and every floor, bound and verdict of § 6, R7.2-32a's upper bound 0.0093 included);
+`results/tables.md`, `results/rescreen.csv` and the re-screen log are byte-identical. Full
+record: `reports/w27-replicate-floors-2026-10-06.md` § Changelog, 2026-10-13. Commit:
+`bdb4de89b` (regenerated results).
 
 ### 2026-10-12 — Rebuilt scorer, cells regenerated (PI ruling D60 (4))
 
