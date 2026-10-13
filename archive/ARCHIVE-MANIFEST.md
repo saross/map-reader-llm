@@ -235,3 +235,12 @@ repository's `outputs/retest/` version (tracked from 2026-04-15). Some March
 pairwise artefacts were computed from them, so D42's class B re-test needs
 them. Archived at the PI's request (Session 161); `README.md` in the folder
 gives the detail and an MD5 inventory of the whole scratch directory.
+
+## 2026-10-12 addition: `superseded-w27-floors-2026-10-12/`
+
+PI ruling D60 (4) rebuilt the W2.7 floors-v2 `FastScorer` on the shared
+library's attribution (ruling D50) and regenerated W2.7 § 6 and § 6b of
+`reports/w27-replicate-floors-2026-10-06.md` under the current scorer. The
+folder keeps the pre-D50 `FastScorer` (the red sentinel of
+`floors2_scorer_gate.py`) and the § 6 and § 6b outputs the regeneration
+replaced; its `README.md` lists them.

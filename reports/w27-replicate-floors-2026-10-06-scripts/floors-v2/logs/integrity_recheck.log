@@ -1,0 +1,8 @@
+START recheck 2026-10-13T13:07:59Z head 533e62605bd0fadfb8f74d577664ec2293ab01d4 lib dbd1be560ee14a44453121e39eca03f57d05a377 dirty 0 cache /home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache-1013-recheck workers 12
+§ 6 second run: {'files': {'gates.json': 'identical bytes', 'subset_cells.json': 'identical bytes', 'subset_cells.npz': 'identical members', 'subset_pairs.csv': 'identical bytes', 'verifier_provenance.json': 'identical bytes'}, 'only_in_one': [], 'pass': True}
+2026-10-13 13:08:04,021 - INFO - pass pin OK stride:g384_ov192_55map (K=10, 19 files)
+2026-10-13 13:08:37,737 - INFO - pass pin OK stride:g384_ov128_55map (K=10, 19 files)
+2026-10-13 13:08:57,946 - INFO - pass pin OK g37:g384_ov192_55map_g37 (K=5, 11 files)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+§ 6b sample: 1626 rows (seed 20261013), 1161 frames, 0 mismatches; overall pass True; 4480s
+EXIT recheck 0 2026-10-13T14:22:44Z

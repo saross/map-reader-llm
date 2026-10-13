@@ -1,0 +1,149 @@
+{
+ "cluster_votes_fast == committed (A (0, 1, 2))": {
+  "pass": true,
+  "n": 26245
+ },
+ "cluster_votes_fast == committed (ARM1 (1, 3))": {
+  "pass": true,
+  "n": 9981
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (B (0, 1, 2, 3, 4) 0.15 k5)": {
+  "pass": true,
+  "n_det": 4736,
+  "totals": [
+   4147,
+   589,
+   871
+  ]
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (A (2,) 0.2 k1)": {
+  "pass": true,
+  "n_det": 4829,
+  "totals": [
+   4022,
+   807,
+   996
+  ]
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (ARM2 (0, 1, 2) 0.95 k3)": {
+  "pass": true,
+  "n_det": 5097,
+  "totals": [
+   4475,
+   622,
+   543
+  ]
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (G3IMG-ARM1 (0, 4) 0.15 k1)": {
+  "pass": true,
+  "n_det": 10275,
+  "totals": [
+   4566,
+   5709,
+   452
+  ]
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (FOURTH (5, 6, 7) 0.96 k2)": {
+  "pass": true,
+  "n_det": 5123,
+  "totals": [
+   4331,
+   792,
+   687
+  ]
+ },
+ "FastScorer == compute_per_tile_tp_fp_fn (ARM1 (3,) 0.1 k1)": {
+  "pass": true,
+  "n_det": 6564,
+  "totals": [
+   4540,
+   2024,
+   478
+  ]
+ },
+ "B (0, 1, 2, 3, 4) (0.15, k5)": {
+  "expected": 4736,
+  "got": 4736,
+  "pass": true
+ },
+ "A (0, 1, 2, 3, 4) (0.15, k4)": {
+  "expected": 4597,
+  "got": 4597,
+  "pass": true
+ },
+ "ARM1 (0, 1, 2) (0.1, k3)": {
+  "expected": 5482,
+  "got": 5482,
+  "pass": true
+ },
+ "ARM2 (0, 1, 2) (0.8, k3)": {
+  "expected": 5187,
+  "got": 5187,
+  "pass": true
+ },
+ "FOURTH (0, 1, 2, 3, 4) (0.98, k5)": {
+  "expected": 4431,
+  "got": 4431,
+  "pass": true
+ },
+ "FOURTH (0, 1, 2) (0.98, k3)": {
+  "expected": 4623,
+  "got": 4623,
+  "pass": true
+ },
+ "W2.7 subset_cells.json reproduced": {
+  "checked": 460,
+  "mismatches": [],
+  "pass": true
+ },
+ "top rung A (0.15, k8)": {
+  "expected": 4475,
+  "got": 4475,
+  "pass": true
+ },
+ "top rung A (0.15, k7)": {
+  "expected": 4639,
+  "got": 4639,
+  "pass": true
+ },
+ "top rung B (0.15, k10)": {
+  "expected": 4505,
+  "got": 4505,
+  "pass": true
+ },
+ "top rung B (0.2, k9)": {
+  "expected": 4639,
+  "got": 4639,
+  "pass": true
+ },
+ "top rung FOURTH (0.98, k10)": {
+  "expected": 4246,
+  "got": 4246,
+  "pass": true
+ },
+ "top rung FOURTH (0.96, k9)": {
+  "expected": 4495,
+  "got": 4495,
+  "pass": true
+ },
+ "top rung ARM1 (0.1, k5)": {
+  "expected": 5229,
+  "got": 5229,
+  "pass": true
+ },
+ "top rung ARM1 (0.15, k5)": {
+  "expected": 4616,
+  "got": 4616,
+  "pass": true
+ },
+ "top rung ARM2 (0.8, k5)": {
+  "expected": 5003,
+  "got": 5003,
+  "pass": true
+ },
+ "top rung ARM2 (0.95, k5)": {
+  "expected": 4924,
+  "got": 4924,
+  "pass": true
+ }
+}
