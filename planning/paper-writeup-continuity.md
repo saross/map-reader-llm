@@ -14,8 +14,8 @@ project state.
 rebuilt, tier-1 on sapphire 0 failed, kernel bad-page count 0 before and after,
 merged tree identical to the tested head; recorded in D62 and D63): #45
 `d9866f49e`, #42 `dddfcc0af`, #41 `602593ecb`, #43 `0e8a1fa7a`, #44 into #38's
-branch `e2a424fea`, #38 `446171b97` (W2.7 § 6/§ 6b regenerated once with #44 and
-#33's library: § 6 unchanged, 132 § 6b cells back to pre-D50, no quoted floor
+branch `e2a424fea`, #38 `446171b97` (W2.7 § 6/§ 6b regenerated once with #44
+and #33's library: § 6 unchanged, 132 § 6b cells back to pre-D50, no quoted floor
 moves), #35 `3a5e5c453` (tier-0 regenerated on the origin route: 18 of 27 cells
 +0.0050 to +0.0162, A now edges B inside noise; H13 findings changelog
 2026-10-13). `h6-a06-decision-rule` and `h6-a09-cost-gate` are re-sign-pending.
