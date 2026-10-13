@@ -78,6 +78,9 @@ import floors2_55map as f2  # noqa: E402
 import floors2_lib as L  # noqa: E402
 from scripts.build_55map_leaderboard import BOUNDS, reference_gt  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes as cluster_votes_committed  # noqa: E402
+from scripts.h13_k_sensitivity import (  # noqa: E402
+    cluster_votes_with_origins as cluster_votes_origins_committed,
+)
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
 
@@ -213,7 +216,15 @@ def main() -> int:
         if not (np.array_equal(c0, c1) and np.array_equal(v0, v1)):
             print(f"GATE FAILURE: cluster_votes_fast != committed on {f} {s}", flush=True)
             return 1
-    w27.cluster_votes = L.cluster_votes_fast
+        # The contributing tiles cluster_subset carries (PI ruling D62 (1)).
+        c2, v2, o2 = cluster_votes_origins_committed(sub, 1)
+        c3, v3, o3 = L.cluster_votes_fast_origins(sub, 1)
+        if not (np.array_equal(c0, c2) and np.array_equal(v0, v2) and np.array_equal(c2, c3)
+                and np.array_equal(v2, v3) and o2 == o3):
+            print(f"GATE FAILURE: cluster_votes_fast_origins != committed on {f} {s}",
+                  flush=True)
+            return 1
+    w27.cluster_votes_origins = L.cluster_votes_fast_origins
     upl = w27.load_upl_frame()
     _G["upl"] = {}
     for s in ((0, 1, 2, 3, 4), (5, 6, 7, 8, 9)):

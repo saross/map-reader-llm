@@ -11,6 +11,10 @@ before any result is used:
   KD-tree used only to shortlist neighbours; the membership test, member order and
   centroid arithmetic are the committed ones. It also records each cluster's
   contributing passes (a bitmask), which the vote-propensity model needs.
+  ``cluster_votes_fast_origins`` is the same restatement of
+  ``h13_k_sensitivity.cluster_votes_with_origins``: it also returns each
+  cluster's contributing tiles, which ``w27_55map_subset_replicates.cluster_subset``
+  carries into scoring (PI ruling D62 (1), 2026-10-13).
 * ``FastScorer`` -- ``lib_advanced_metrics.compute_per_tile_tp_fp_fn`` under the
   default ``id`` tile join, built on the shared library's own attribution
   (PI rulings D50 and D60 (4)):
@@ -108,6 +112,78 @@ def cluster_votes_fast(
         masks.append(sum(1 << o for o in ow))
     LAST_MEMBERS["masks"] = masks
     return np.asarray(cents), np.asarray(votes, dtype=int)
+
+
+def _member_tiles(detection: dict) -> list[str]:
+    """One pooled detection's proposer tiles, as ``h13_k_sensitivity._member_tiles`` reads them.
+
+    ``source_tiles`` (the deduplicated detection's member list) when it names
+    any tile, else ``source_tile``; ``parse_tile_list`` drops empty names.
+    """
+    from scripts.lib_advanced_metrics import parse_tile_list
+
+    tiles = parse_tile_list(detection.get("source_tiles"))
+    if not tiles:
+        tiles = parse_tile_list(detection.get("source_tile"))
+    return tiles
+
+
+def cluster_votes_fast_origins(
+    passes: list[list[dict]], min_corroboration: int, radius: float = 20.0
+) -> tuple[np.ndarray, np.ndarray, list[list[str]]]:
+    """``h13_k_sensitivity.cluster_votes_with_origins`` with the KD-tree shortlist.
+
+    :func:`cluster_votes_fast`, step for step (the same shortlist, membership
+    test, member order and centroid arithmetic, and the same pass bitmasks in
+    ``LAST_MEMBERS['masks']``), also returning each cluster's contributing
+    tiles: the sorted union of its members' proposer tiles (PI ruling D62 (1),
+    2026-10-13). :func:`cluster_votes_fast` itself is unchanged, so the
+    gold-standard slices that use it are unaffected. Exact equality with the
+    committed function (centroids, votes and tiles) is gated before use
+    (``floors2_55map.py`` gate 1; ``floors2_scorer_gate.py``).
+
+    Args:
+        passes: Deduplicated detections per pass (dicts with ``centroid`` and
+            ``source_tiles`` or ``source_tile``).
+        min_corroboration: Minimum within-pass ``cluster_size`` to keep.
+        radius: Clustering radius in metres (the committed ``DEDUP_M``).
+
+    Returns:
+        (centroids [m, 2], votes [m], one sorted tile list per cluster).
+    """
+    pts: list = []
+    owner: list[int] = []
+    tiles: list[list[str]] = []
+    for idx, dets in enumerate(passes):
+        for d in dets:
+            if d.get("cluster_size", 1) >= min_corroboration:
+                pts.append(d["centroid"])
+                owner.append(idx)
+                tiles.append(_member_tiles(d))
+    n = len(pts)
+    if n == 0:
+        LAST_MEMBERS["masks"] = []
+        return np.zeros((0, 2)), np.zeros(0, dtype=int), []
+    arr = np.asarray(pts, dtype=float)
+    own = np.asarray(owner, dtype=int)
+    neigh = cKDTree(arr).query_ball_point(arr, r=radius + 1e-6)
+    taken = np.zeros(n, dtype=bool)
+    cents, votes, masks, origins = [], [], [], []
+    for i in range(n):
+        if taken[i]:
+            continue
+        cand = np.asarray(neigh[i], dtype=np.intp)
+        cand = cand[~taken[cand]]
+        d = np.hypot(arr[cand, 0] - arr[i, 0], arr[cand, 1] - arr[i, 1])
+        members = np.union1d(cand[d <= radius], [i])
+        taken[members] = True
+        cents.append((arr[members, 0].mean(), arr[members, 1].mean()))
+        ow = set(own[members].tolist())
+        votes.append(len(ow))
+        masks.append(sum(1 << o for o in ow))
+        origins.append(sorted({t for m in members.tolist() for t in tiles[m]}))
+    LAST_MEMBERS["masks"] = masks
+    return np.asarray(cents), np.asarray(votes, dtype=int), origins
 
 
 @dataclass(frozen=True)
