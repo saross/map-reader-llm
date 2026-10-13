@@ -152,6 +152,19 @@ replaces it.
   text's limb-2 reasoning was already false in the committed artefact
   (verdict unaffected); (d) A-07 needs its D50 regeneration (25 leaves);
   (e) `sweep_fourth_50m.csv` moves 8 rows under D50 (generator not re-run).
+  **2026-10-13 (D62):** merged #30, #34, #39, #37, #40 (#36's reader), and
+  #36 (D62 (2); heads and tier-1 counts in the decisions log). #33 repaired
+  for Astra's mixed-cut P2 (`c02c1d1eb`: `MixedCutRefusalError`; whole-sheet
+  cuts keep the parent, within-sheet cuts unchanged from `main`; tier-1
+  4,272 passed); re-review mailed 2026-10-13T04:34Z. #35 carries the
+  approved A-09 text (`0aa9efda5`). New finding, not acted on: the paired
+  bootstraps build `common_tiles` from a set of tile names
+  (`scripts/lib_advanced_metrics.py:2649`, `:3149`, `:4150` on `main`), so
+  their resampling order, and so their intervals, follow the per-process
+  `PYTHONHASHSEED`; nothing in `scripts/` or the test configuration pins it
+  (the D42 replays pin 0). Astra's probe gave −0.55 or −0.85 by seed with
+  identical counts. Sorting the tiles would make every interval
+  reproducible but move committed ones; a PI decision.
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid

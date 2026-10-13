@@ -63,7 +63,7 @@ from shapely.geometry import mapping, shape
 # Add scripts directory to path for sibling module imports
 sys.path.insert(0, str(Path(__file__).parent))
 from analyse_phase2_results import load_condition_results
-from lib_advanced_metrics import bootstrap_ci, calculate_f1_internal
+from lib_advanced_metrics import bootstrap_ci, calculate_f1_internal, parse_tile_list
 from merge_passes import (
     apply_threshold,
     cluster_across_passes,
@@ -138,18 +138,38 @@ def consensus_to_gdf(
     contributing tiles. For F1 evaluation, each detection needs a single
     'source_tile' assigned via spatial join against tile boundaries.
 
+    **The contributing tiles are kept** (PI ruling D60 (3), 2026-10-12).
+    ``source_tiles`` is the cluster's origin record: the proposer tiles
+    its members were SEEN on. The shared scorer
+    (``lib_advanced_metrics.scope_detections_to_frame``, ruling D50)
+    reads it to attribute each detection to its origin sheet; the single
+    ``source_tile`` below is chosen by location and, near a sheet edge
+    where padded tiles overlap, can name the neighbouring sheet. Until
+    2026-10-12 this function returned only ``source_tile``, so every
+    in-memory consensus arm (``run_pairwise_tests.py``,
+    ``paired_permutation_consensus.py``, ``evaluate_tile_mcc.py``, the
+    sweep below) was scored on the location rule alone while the same
+    set read from its committed GeoJSON was scored on its origins: H2's
+    26-of-30 arm read F1 0.814118 where the re-scored cell and H3 read
+    0.816471. With the list kept, the in-memory set and the file set
+    are scored identically. ``source_tile`` itself is still assigned
+    exactly as ``evaluate_detections.py`` assigns it to a file that
+    lacks it (first intersecting tile), so the per-tile booking is the
+    file route's too.
+
     Args:
         consensus_fc: GeoJSON FeatureCollection from apply_threshold().
         gdf_bounds: GeoDataFrame of tile boundaries with 'tile_name'.
 
     Returns:
-        GeoDataFrame with 'source_tile', 'subtype', and Point geometry
-        in EPSG:32635.
+        GeoDataFrame with 'source_tile', 'source_tiles' (a list of tile
+        names per row, empty where a feature recorded none), 'subtype',
+        and Point geometry in EPSG:32635.
     """
     features = consensus_fc.get("features", [])
     if not features:
         return gpd.GeoDataFrame(
-            columns=["source_tile", "subtype", "geometry"],
+            columns=["source_tile", "source_tiles", "subtype", "geometry"],
             geometry="geometry",
             crs=TARGET_CRS,
         )
@@ -188,9 +208,29 @@ def consensus_to_gdf(
         "tile_name"
     ].fillna("unknown")
 
+    # Keep the origin record in the form the shared scorer reads: one
+    # list of tile names per row. ``parse_tile_list`` accepts every
+    # serialisation a producer writes (a list from apply_threshold(), a
+    # JSON string, a NumPy-array repr) and raises on anything else, so a
+    # malformed record is refused here rather than silently scored by
+    # location. A feature with no record gets an empty list, which the
+    # scorer treats exactly as it treated the column's absence.
+    # Built as an object Series so pandas stores one list per row rather
+    # than reading a list of equal-length lists as a 2-D array.
+    recorded = (
+        gdf_joined["source_tiles"].tolist()
+        if "source_tiles" in gdf_joined.columns
+        else [None] * len(gdf_joined)
+    )
+    gdf_joined["source_tiles"] = pd.Series(
+        [parse_tile_list(value) for value in recorded],
+        index=gdf_joined.index,
+        dtype=object,
+    )
+
     # Return only columns needed for F1 evaluation
     result = gdf_joined[
-        ["source_tile", "subtype", "geometry"]
+        ["source_tile", "source_tiles", "subtype", "geometry"]
     ].copy()
     return result
 
