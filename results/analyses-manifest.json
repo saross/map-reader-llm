@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-12T13:05:05Z",
+  "generated_at": "2026-10-13T04:32:39Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -2032,7 +2032,7 @@
       "predicted_outcome": "Registered gate: 'Full per-model optimisation only if Pro demonstrates substantially superior cost-effectiveness (>=20% higher F1 at comparable cost, OR comparable F1 at <=50% cost)'. Expectation from the standing record (all-Flash-3 conclusion; Pro competitive on F1 but dearer per call): gate CLOSED against the Flash frontier. An OPEN verdict is a flagged surprise feeding the PI's ~US$48 re-run decision. [Authored before computation.]",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "GATE CLOSED on the Flash-optimal basis, AS PREDICTED (refreshed 2026-09-08 on the recovered comparator: the -post-e71 single-pass aggregates and the rebuilt N=3 sweeps; verdict unchanged) - the artefact carries registered_gate_verdict itself, with both limbs computed in code against the min6/min11 frontier rungs under declared operational windows (cost +/-10%, F1 +/-0.02). Limb 1 never fires (Pro F1 below every frontier F1); limb 2 never fires (nearest case: Pro single-pass text at 76% of min6's cost gives up 0.0739 F1). Matched-configuration basis (the pure model effect, not the gate's verdict): text limb fires (F1 ratio 1.40 at cost ratio 1.03); image limb does NOT fire on either count (F1 ratio 1.14 < 1.20 on the recovered comparator, was 1.21 on the pre-recovery sweeps; cost ratio 1.32). Comparator coverage as scored: Flash single-pass aggregates at 484-486/487 (post-E71 rows; F1 text 0.4919, image 0.5446), the E71 residue only. Verification-round corrections retained: Pro single-pass text is CHEAPER than min6 absolutely and per F1 point (verdict rests on the limbs, not dominance). Cost bases disclosed as non-identical (per-pass extractor vs modelled token-load flex; conservative direction for CLOSED). Artefact: results/h6-registered-analyses/a09_cost_gate.json (pre-refresh copy: archive/pre-recovery-2026-09-08/h6-registered-analyses/).",
+      "outcome": "GATE CLOSED on the Flash-optimal basis, AS PREDICTED (re-derived 2026-10-13 on the audited cost basis, D16/WP7 and D61 (4); verdict unchanged). Both limbs are computed in code against the min6/min11 frontier rungs under declared operational windows (cost \u00b110 %, F1 \u00b10.02). Limb 1 cannot fire: every Pro point's F1 is below the frontier's (ratios 0.75\u20130.98). Limb 2 needs comparable F1 and at most half the cost together, and no Pro point has both: the Pro text N = 3 union comes within 0.02 F1 of min6 (ratio 0.982) but costs 1.14 times as much, and Pro single-pass text costs 23 % of min11 but gives up 0.079 F1. Matched-configuration basis (the pure model effect at Pro's own corner, not the gate's verdict): on audited costs neither limb fires, because Pro is both better (F1 ratio 1.40 text, 1.13 image) and far cheaper (cost ratio 0.05 text, 0.22 image), a case neither limb is worded for. That cost gap is not like-for-like: the Flash comparator's text passes were billed at the standard tier and include about 2.0 M thought tokens each, while Pro delivered no thinking (invoice-confirmed, Obs 509) and its text passes were billed at flex; on one tier with no thinking on either side, one Pro text pass against the comparator's three-pass consensus is about 1.03 (image 1.27). Comparator coverage as scored: Flash single-pass aggregates at 484\u2013486/487 (post-E71 rows; F1 text 0.4919, image 0.5446). Verification-round correction retained, updated: Pro single-pass text is cheaper than min6 outright (38 % of its cost) and per F1 point (0.42 of its cost per point at F1 ratio 0.92), so the verdict rests on the limbs, not on Pro costing more. Cost bases still differ: Pro's are the gold-standard passes' audited costs at the tier served (text flex, image standard through the cached path); the frontier rungs are the passes register at the uniform flex tier, from 55-map deployment means scaled to 487 tiles (D19); re-pricing Pro's image passes at flex would halve their cost but cannot make limb 2 fire, since no Pro image point is within 0.02 F1 (ratios \u2264 0.82). Artefact: results/h6-registered-analyses/a09_cost_gate.json.",
       "paper_section": "Methods",
       "output_path": "results/h6-registered-analyses",
       "working_notes_obs": [],
@@ -2063,7 +2063,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-10-12T13:05:05Z",
+        "last_extracted_at": "2026-10-13T04:32:39Z",
         "extractor_version": "0.8.0"
       }
     },
