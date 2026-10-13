@@ -45,10 +45,14 @@ Stages:
   4. A-06 registered rule on the only available contrast (the
      temperature-and-thinking corner pair, per modality; E40-class
      confound disclosed), with a paired tile-bootstrap **delta** CI
-     as the operational augmentation (never the per-condition F1 CI).
+     as the operational augmentation (never the per-condition F1 CI),
+     and the D42 permutation p, Benjamini-Hochberg-adjusted across the
+     four registered factor-T contrasts (PI ruling D61 (3), 2026-10-12).
   5. A-09 cost gate on audited per-pass `cost_usd` (both sides), with
      the all-Flash `pareto_v2.json` frontier as the Flash-optimal
-     yardstick.
+     yardstick, and beside the matched-configuration costs a
+     like-for-like re-pricing (one tier, no thinking) that backs the
+     not-like-for-like caveat (PI ruling D61 (4), 2026-10-12).
 
 Usage (run on sapphire; a few minutes)::
 
@@ -73,6 +77,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from e45_bootstrap_pairings import micro_f1, paired_bootstrap  # noqa: E402
 from lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from lib_cost import (  # noqa: E402
+    load_rate_card,
+    price_tokens,
+    rate_card_identity,
+    token_classes,
+)
+from lib_permutation import bh_adjust  # noqa: E402
 from lib_phase4_transfer import (  # noqa: E402
     evaluate_factor_sensitivity,
     evaluate_voting_threshold_transfer,
@@ -126,6 +137,253 @@ A08_STATEMENT = (
 COST_WINDOW = 0.10
 F1_WINDOW = 0.02
 
+#: A-06's four registered factor-T contrasts (T = 0.0 against the carried
+#: T = 0.7 at matched thinking), in the fixed order the Benjamini-Hochberg
+#: (BH) family is read. PI ruling D42 tests every contrast by the paired
+#: tile-swap permutation test with BH; D61 (3) applies it to A-06.
+FACTOR_T_FAMILY = (("text", "high"), ("text", "medium"),
+                   ("image", "high"), ("image", "medium"))
+BH_Q = 0.05
+BH_METHOD = (
+    "Benjamini-Hochberg step-up across A-06's four registered factor-T "
+    "contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied "
+    "to each contrast's paired tile-swap permutation p (PI rulings D42 and "
+    "D61 (3)); scripts/lib_permutation.bh_adjust")
+
+#: Tolerance for re-pricing an audited pass at its served tier: the register
+#: stores cost_usd at 6 dp, so anything wider means the tokens were misread.
+REPRICE_TOL = 5e-6
+
+
+def apply_bh_to_factor_t(factor_t: dict) -> dict:
+    """Adjust A-06's four factor-T permutation p-values as one BH family.
+
+    Each contrast row gains ``p_bh_adjusted`` (6 dp), ``p_adjust_method``,
+    and ``bh_rejects_at_q_0.05``; the raw p stays where the shared helper
+    wrote it (``delta_bootstrap.p_value``). The registered A-06 rule
+    (delta >= 0.03) carries no p condition, so BH is reported beside it,
+    never in place of it.
+
+    Args:
+        factor_t: The ``registered_factor_T`` block, keyed modality ->
+            thinking level -> contrast row. Mutated in place.
+
+    Returns:
+        A family summary: method, q, member labels, raw and adjusted p,
+        and the rejection reading per member.
+
+    Raises:
+        ValueError: If any of the four contrasts is missing; a smaller
+            family would silently shrink m and understate the adjustment.
+
+    Example:
+        >>> block = {m: {t: {"delta_bootstrap": {"p_value": p}}
+        ...              for t, p in (("high", 0.0), ("medium", 0.0019))}
+        ...          for m in ("text", "image")}
+        >>> apply_bh_to_factor_t(block)["p_bh_adjusted"]["text MEDIUM"]
+        0.0019
+    """
+    missing = [f"{m}/{t}" for m, t in FACTOR_T_FAMILY
+               if t not in factor_t.get(m, {})]
+    if missing:
+        raise ValueError(f"A-06 BH family incomplete: missing {missing}")
+    labels = [f"{m} {t.upper()}" for m, t in FACTOR_T_FAMILY]
+    raw = [float(factor_t[m][t]["delta_bootstrap"]["p_value"])
+           for m, t in FACTOR_T_FAMILY]
+    adjusted = [round(p, 6) for p in bh_adjust(raw)]
+    for (m, t), p_adj in zip(FACTOR_T_FAMILY, adjusted):
+        row = factor_t[m][t]
+        row["p_bh_adjusted"] = p_adj
+        row["p_adjust_method"] = BH_METHOD
+        row["bh_rejects_at_q_0.05"] = bool(p_adj <= BH_Q)
+    return {
+        "method": BH_METHOD,
+        "q": BH_Q,
+        "family": labels,
+        "p_permutation": dict(zip(labels, raw)),
+        "p_bh_adjusted": dict(zip(labels, adjusted)),
+        "rejected_at_q": {lab: bool(p <= BH_Q) for lab, p in zip(labels, adjusted)},
+        "_note": (
+            "The registered A-06 rule (delta >= 0.03, no CI or p condition) "
+            "decides the flag; the BH-adjusted permutation p is the D42 "
+            "testing convention reported beside it. A p of 0 means no "
+            "permutation of 10,000 reached the observed |delta| (p < 0.0001)."),
+    }
+
+
+def _mean(values: list[float]) -> float:
+    """Arithmetic mean of a non-empty list."""
+    return sum(values) / len(values)
+
+
+def _requested_tiers(fragment: dict) -> list[str]:
+    """Service tiers the run logs asked for, read from a fragment's evidence.
+
+    The coster records each tier clue as ``"<method>: <source> -> <tier>"``;
+    a ``run-log-inherited`` clue is what the launch requested, which the
+    served tier can override (the cached path omitted ``service_tier``).
+    """
+    return sorted({
+        clue.rsplit("->", 1)[-1].strip()
+        for clue in fragment.get("evidence", [])
+        if clue.startswith("run-log-inherited") and "->" in clue})
+
+
+def like_for_like_costs(passes: list[dict], pool: str,
+                        card_path: Path | str | None = None) -> dict:
+    """Re-price both sides of one matched-configuration pair on one footing.
+
+    The audited ``cost_usd`` prices each pass at the tier it was SERVED and
+    counts every thought token. The two sides differ on both counts (PI
+    ruling D61 (4)): the Flash comparator ran standard with about 2 M
+    thought tokens per text pass, while Pro text ran flex and Pro delivered
+    no thinking (Obs 509). This re-prices each pass's recorded tokens at the
+    standard tier with and without its thought tokens, using the same rate
+    card row the register used, so the two can be compared on one tier with
+    no thinking on either side.
+
+    Args:
+        passes: Rows of ``results/passes-manifest.json``.
+        pool: The proposer pool shared by both runs (e.g.
+            ``pro-text-high-t0``).
+        card_path: An alternative rate card, for tests.
+
+    Returns:
+        ``pro`` and ``flash_comparator`` blocks (pass count, model, audited
+        mean, tiers served and requested, thinking, standard-tier means with
+        and without thinking), the ``one_tier_no_thinking`` ratios (one Pro
+        pass against the comparator's three-pass consensus, and one against
+        one), and the rate card's identity.
+
+    Raises:
+        SystemExit: If a pool has no passes, a pass carries other than one
+            priced fragment, or re-pricing at the served tier does not
+            reproduce the audited ``cost_usd`` (the tokens were misread).
+    """
+    card = load_rate_card(card_path)
+    sides = {"pro": PRO_RUN, "flash_comparator": FLASH_COMPARATOR_RUN}
+    out: dict = {}
+    unrounded: dict[str, float] = {}
+    for side, run_id in sides.items():
+        rows = [p for p in passes if p.get("run_id") == run_id
+                and p.get("proposer_pool") == pool]
+        if not rows:
+            sys.exit(f"A-09 LIKE-FOR-LIKE GATE FAIL: no passes for {run_id}::{pool}")
+        served_tiers, methods, requested, models = set(), set(), set(), set()
+        audited, std, std_nt, thinking = [], [], [], []
+        for p in rows:
+            frags = (p.get("cost_source") or {}).get("fragments") or []
+            if len(frags) != 1:
+                sys.exit(f"A-09 LIKE-FOR-LIKE GATE FAIL: {run_id}::{pool} pass "
+                         f"has {len(frags)} priced fragments; expected 1")
+            frag, tok = frags[0], p["tokens"]
+            classes = token_classes({
+                "total_input_tokens": tok["input_billed"],
+                "total_cached_tokens": tok["input_cached"],
+                "total_output_tokens": tok["output"],
+                "total_thoughts_tokens": tok["thinking"]})
+            model, at = frag["model"], frag["priced_at"]
+            served = price_tokens(classes, model, frag["tier"], at, card)["total"]
+            if abs(served - float(p["cost_usd"])) > REPRICE_TOL:
+                sys.exit(f"A-09 LIKE-FOR-LIKE GATE FAIL: {run_id}::{pool} "
+                         f"re-priced at {frag['tier']} to {served:.6f}, register "
+                         f"says {p['cost_usd']}")
+            audited.append(float(p["cost_usd"]))
+            std.append(price_tokens(classes, model, "standard", at, card)["total"])
+            std_nt.append(price_tokens({**classes, "thinking": 0}, model,
+                                       "standard", at, card)["total"])
+            thinking.append(classes["thinking"])
+            served_tiers.add(frag["tier"])
+            methods.add(frag.get("tier_method", "unrecorded"))
+            requested.update(_requested_tiers(frag))
+            models.add(model)
+        unrounded[side] = _mean(std_nt)
+        out[side] = {
+            "n_passes": len(rows),
+            "model": sorted(models),
+            "thinking_level_configured": sorted(
+                {str(p.get("thinking_level")) for p in rows}),
+            "audited_cost_per_pass_usd": round(_mean(audited), 4),
+            "tier_served": sorted(served_tiers),
+            "tier_method": sorted(methods),
+            "tier_requested_per_run_log": sorted(requested),
+            "thinking_tokens_per_pass": int(round(_mean(thinking))),
+            "standard_tier_cost_per_pass_usd": round(_mean(std), 4),
+            "standard_tier_cost_per_pass_usd_without_thinking": round(
+                unrounded[side], 4),
+        }
+    out["one_tier_no_thinking"] = {
+        "tier": "standard",
+        "pro_one_pass_over_flash_n3_consensus": round(
+            unrounded["pro"] / (3 * unrounded["flash_comparator"]), 4),
+        "pro_one_pass_over_flash_one_pass": round(
+            unrounded["pro"] / unrounded["flash_comparator"], 4),
+    }
+    out["rate_card"] = rate_card_identity(card_path)
+    return out
+
+
+def cost_caveat_statement(text: dict, image: dict) -> str:
+    """The not-like-for-like caveat A-09 must carry beside its cost figures.
+
+    PI ruling D61 (4): the re-derived report states, before it is signed,
+    that the audited matched-configuration cost gap is not like-for-like.
+    Every figure is read from the :func:`like_for_like_costs` blocks, so the
+    sentence cannot drift from the data it describes.
+
+    Args:
+        text: :func:`like_for_like_costs` for the text pool.
+        image: The same for the image pool.
+
+    Returns:
+        One paragraph of plain text.
+    """
+    ft, pt = text["flash_comparator"], text["pro"]
+    fi, pi = image["flash_comparator"], image["pro"]
+
+    def tiers(block: dict) -> str:
+        return "/".join(block["tier_served"])
+
+    def thought(block: dict) -> str:
+        n = block["thinking_tokens_per_pass"]
+        return ("no thinking delivered" if n == 0
+                else f"about {n / 1e6:.1f} million thought tokens per pass")
+
+    asked = pi.get("tier_requested_per_run_log") or []
+    if asked and asked != pi["tier_served"]:
+        image_tier = (f"asked for {'/'.join(asked)} but were served at "
+                      f"{tiers(pi)}")
+        if "cached-path" in pi.get("tier_method", []):
+            image_tier += " (the cached path drops the service tier)"
+    else:
+        image_tier = f"were served at {tiers(pi)}"
+    lt, li = text["one_tier_no_thinking"], image["one_tier_no_thinking"]
+    return (
+        "NOT LIKE-FOR-LIKE (PI ruling D61 (4); stated beside the cost figures "
+        "before any re-signing). Text: the Flash comparator's audited "
+        f"${ft['audited_cost_per_pass_usd']:.2f} per pass (mean of "
+        f"{ft['n_passes']}) is {tiers(ft)}-tier pricing that includes "
+        f"{thought(ft)} (${ft['standard_tier_cost_per_pass_usd_without_thinking']:.2f}"
+        " without them), while Pro's "
+        f"${pt['audited_cost_per_pass_usd']:.2f} is the {tiers(pt)} rate (its "
+        f"standard-tier price is ${pt['standard_tier_cost_per_pass_usd']:.2f}) "
+        f"with {thought(pt)}. Image: Pro's passes {image_tier}, "
+        f"${pi['audited_cost_per_pass_usd']:.2f} per pass with {thought(pi)}; "
+        f"the Flash comparator's ${fi['audited_cost_per_pass_usd']:.2f} is "
+        f"{tiers(fi)}-tier pricing that includes {thought(fi)} "
+        f"(${fi['standard_tier_cost_per_pass_usd_without_thinking']:.2f} "
+        f"without them). On one tier ({lt['tier']}) with no thinking on either "
+        "side, one Pro text pass costs "
+        f"{lt['pro_one_pass_over_flash_n3_consensus']:.2f} times the "
+        "comparator's three-pass consensus (one pass against one, "
+        f"{lt['pro_one_pass_over_flash_one_pass']:.1f}); for image, "
+        f"{li['pro_one_pass_over_flash_n3_consensus']:.2f} "
+        f"({li['pro_one_pass_over_flash_one_pass']:.1f}). The audited gap "
+        "therefore reflects Pro's undelivered thinking (Obs 509; "
+        "reports/manipulation-check-2026-10-05.md § D) and the tier "
+        "difference, not a cheaper model."
+    )
+
 
 def coverage_note(pro: dict, flash: dict) -> str:
     """State the comparator's tile coverage from the manifest counts, not a literal.
@@ -158,8 +416,9 @@ def fragility_caveat(image_curve: dict[int, float]) -> str:
     The 2026-08-17 artefact carried the margin as a literal ("k=3 beats k=1 by
     0.0016", a rounding of the recorded 0.001545 that the archived pre-recovery
     artefact and findings.md give as 0.0015; the retired-flag sentence below
-    now says 0.0015 — S151, PI instruction); it is now read from the curve so a rebuilt comparator (the
-    post-E71 consensus sweeps, S150) cannot leave a stale number behind.
+    now says 0.0015 — S151, PI instruction); it is now read from the curve so
+    a rebuilt comparator (the post-E71 consensus sweeps, S150) cannot leave a
+    stale number behind.
     """
     best_k = max(image_curve, key=image_curve.get)
     ordered = sorted(image_curve.values(), reverse=True)
@@ -585,6 +844,10 @@ def main() -> int:
             }
         a06_thinking_ctx[modality] = th_rows
 
+    # BH across the four registered factor-T contrasts (D42, D61 (3)). The
+    # thinking-context deltas above carry CIs only, so they are not tested.
+    a06_multiplicity = apply_bh_to_factor_t(a06_factor_t)
+
     a06 = {
         "_README": (
             "A-06 (registered: preregistration.md:677 — 'If alternative "
@@ -603,13 +866,17 @@ def main() -> int:
             "fed a paired tile-bootstrap CI of the DIFFERENCE (B=1,000, "
             "seed 42), never a per-condition F1 CI. Replicate-count "
             "caveat: the T=0.7 corners average 5-10 passes vs 3 for the "
-            "others (same estimator, differing precision)."),
+            "others (same estimator, differing precision). p-values: the "
+            "paired tile-swap permutation test (D42), BH-adjusted across "
+            "the four factor-T contrasts (D61 (3)); see "
+            "multiplicity_factor_T."),
         "generated_at": at,
         "registered_prediction": (
             "H6: 'The Flash-optimal configuration will perform well on "
             "Pro, with at most minor factor adjustments needed' "
             "(preregistration.md, H6 Prediction)."),
         "registered_factor_T": a06_factor_t,
+        "multiplicity_factor_T (BH, D42 and D61 (3))": a06_multiplicity,
         "thinking_decomposition_context (not a registered factor)":
             a06_thinking_ctx,
         "superseded_confounded_contrast": {
@@ -681,6 +948,10 @@ def main() -> int:
                 "cost_usd": round(3 * flash_cost, 4)},
             "limbs_vs_flash_same_config_n3": limbs(
                 pro_f1, pro_cost, flash_n3_best, 3 * flash_cost),
+            # The audited costs above differ in tier and in thinking; this
+            # block re-prices the same tokens on one footing (D61 (4)).
+            "like_for_like_cost (not the gate's basis; D61 (4))":
+                like_for_like_costs(passes, pool),
             "coverage_disclosure": {
                 "pro": coverage(PRO_RUN, pool),
                 "flash_comparator": coverage(FLASH_COMPARATOR_RUN, pool),
@@ -706,6 +977,10 @@ def main() -> int:
                     any_limb_fires_vs_frontier = True
         frontier_eval[modality] = per_rung
 
+    llf_key = "like_for_like_cost (not the gate's basis; D61 (4))"
+    cost_caveat = cost_caveat_statement(matched_config["text"][llf_key],
+                                        matched_config["image"][llf_key])
+
     a09 = {
         "_README": (
             "A-09 (registered: preregistration.md:691). Cost bases: "
@@ -718,7 +993,11 @@ def main() -> int:
             "Pro passes were billed above flex rates the Pro side is "
             "over-costed, which makes the CLOSED verdict conservative. "
             "Comparability windows are operational choices declared in "
-            "the limb blocks, not registered."),
+            "the limb blocks, not registered. Since 2026-10-12 (PI ruling "
+            "D61 (4), executing D16 / WP7) cost_usd is the audited basis "
+            "(D11), and the matched-configuration costs are NOT like-for-"
+            "like: see cost_comparability_caveat and each modality's "
+            "like_for_like_cost block."),
         "generated_at": at,
         "registered_gate_verdict": (
             "OPEN" if any_limb_fires_vs_frontier else "CLOSED"),
@@ -728,6 +1007,7 @@ def main() -> int:
             "configuration comparison measures the pure model effect at "
             "Pro's preferred corner (Flash never optimised there) and "
             "does not decide the gate."),
+        "cost_comparability_caveat": cost_caveat,
         "matched_configuration_comparison": matched_config,
         "flash_optimal_frontier_evaluation": {
             "source": str(PARETO_V2.relative_to(BASE_DIR)),

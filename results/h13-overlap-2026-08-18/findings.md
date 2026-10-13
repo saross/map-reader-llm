@@ -1,9 +1,13 @@
 # H13 — tile overlap: F1, cost-efficiency, and edge detection
 
-> **Last revised**: 2026-10-05 (p-values from the paired permutation test,
-> PI ruling D42; no verdict changes). 2026-08-19: bootstrap standardised to
-> B = 10,000 per erratum E82; the three per-arm evaluations re-scored at
-> that count. See
+> **Last revised**: 2026-10-13 (the post-hoc Tier-0 aggregation sweep
+> regenerated on the origin route, PI ruling D62 (1): 18 of its 27 points
+> rise; no number in this document's body changes). 2026-10-12: the sweep's
+> F1 intervals regenerated on the fixed bootstrap adapter, PI ruling D61
+> (1); no point estimate and no number in this document's body changes.
+> 2026-10-05: p-values from the paired permutation test, PI ruling D42; no
+> verdict changes. 2026-08-19: bootstrap standardised to B = 10,000 per
+> erratum E82; the three per-arm evaluations re-scored at that count. See
 > [§ Changelog](#changelog) for revision history.
 
 **What this is.** The registered three-arm H13 overlap contrast
@@ -311,6 +315,11 @@ Gate reproduced: validation V1's arm-A run_1 deduplication figure
 - `native/arm{A,B,C}/evaluation.{json,csv,md}` — secondary scope.
 - `outputs/h13/scoring/` — deduplicated detection sets, per-arm and
   common bounds, `dedup_summary.json`.
+- `tier0-aggregation/` — the post-hoc Tier-0 aggregation sweep
+  (corroboration × consensus, 27 cells; E41-class, outside the
+  registered H13 row; `scripts/h13_aggregation_sweep.py`). Its F1
+  intervals were regenerated on 2026-10-12, and its points on 2026-10-13
+  on the origin route (§ Changelog).
 - Register row: `h13-overlap-arms` in `results/analyses-manifest.json`
   (classification PROPOSED post-hoc per the discharge principle; PI
   ratification queued).
@@ -337,6 +346,138 @@ Gate reproduced: validation V1's arm-A run_1 deduplication figure
   tile-level resampling, percentile CI95, B = 1,000.
 
 ## Changelog
+
+### 2026-10-13 — Tier-0 aggregation sweep: points regenerated on the origin route (PI ruling D62 (1))
+
+**Refresh trigger**: PR #41 (merged as `602593ecb`) made the sweep's
+aggregated clusters keep their contributing proposer tiles
+(`origin_tiles`) and tiled each cluster on its own sheet
+(`h13_aggregation_sweep.write_cell`). Until then they were tiled as bare
+centroids by location alone, so D50's scorer fell back to the legacy
+cross-sheet rule (`reports/s163-agent-records/origin-gap-h13-copies.md`
+§ 1.4). PI ruling D62 (1) regenerates the sweep once, after that fix; it
+was regenerated on PR #35's branch with `main` merged in (`9f8119e97`).
+
+**Integrity**: two independent runs on sapphire (one in place, one into a
+scratch directory) agree byte for byte on the Markdown and all 27 cell
+files, and on the JSON apart from `generated_at_utc`; the kernel's
+bad-page count stayed 0. All 27 cells equal the after-values PR #41's
+record gives (n, F1, and both interval bounds at four decimal places).
+
+**Before → after** (F1 with BCa CI95, B = 1,000, seed 42): 18 of 27 cells
+rise, by +0.0050 to +0.0162. The nine `c = 3` cells, in which no cluster
+changes sheet, do not move, and no cell's detection count changes.
+
+| Arm | Best cell (c, k) | Before | After |
+|---|---|---|---|
+| A | (1, 3) | 0.6264 [0.5639, 0.6803] | 0.6426 [0.5858, 0.6938] |
+| B | (1, 3) | 0.6331 [0.5756, 0.6874] | 0.6415 [0.5860, 0.6933] |
+| C | (2, 3) | 0.7114 [0.6567, 0.7602] | 0.7191 [0.6673, 0.7659] |
+
+Each arm's best cell keeps its (c, k). Arm A's best now edges arm B's
+(0.6426 against 0.6415; before, B led by 0.0067). The sweep tests no
+contrast between arms and the two intervals overlap almost entirely, so
+this is a change of order inside noise, and "B ahead of A after
+aggregation" should not be read from the sweep. The headline reading,
+that overlap's ranking inverts under aggregation (arm C best), stands.
+The full 27-row table is in PR #41's record, § 1.4.
+
+**What did NOT change**: the registered H13 overlap analysis and every
+number in this document's body (the per-pass sets the main analysis
+scores already carried their tiles); the nine `c = 3` cells; each arm's
+best (c, k). **Superseded**: the 2026-10-12 entry below says the Markdown
+and the cell files were byte-identical after regeneration, so Obs 416
+needed no change. That held for the interval regeneration alone. Now
+`tier0_sweep.md` and all 27 cell files change (each cell file also
+records `origin_tiles`), and Obs 416 quotes three moved values: 0.7114
+(P 0.7347, R 0.6896), 0.6264, and 0.6331 become 0.7191 (P 0.7426,
+R 0.6970), 0.6426, and 0.6415. Observations are not edited in place; a
+correcting Observation is the PI's call (PR #41's record § 5, item 3).
+Commit: the one landing this entry with the regenerated files.
+
+### 2026-10-12 — Tier-0 aggregation sweep: F1 intervals regenerated (PI ruling D61 (1))
+
+**Refresh trigger**: the post-hoc Tier-0 aggregation sweep
+(`tier0-aggregation/tier0_sweep.json`; generator
+`scripts/h13_aggregation_sweep.py`; E41-class, outside the registered H13
+row) was committed on 2026-08-18 (`dccee3362`), the evening before the
+bias-corrected and accelerated (BCa) bootstrap adapter fix `122104b8a`
+(2026-08-19, defect D15: the adapter transposed scipy's resample batch,
+so each interval was read off the wrong distribution). The sweep was never
+regenerated, and the D57 (4) Phase 3 re-score found that its 27 points
+reproduce while its 54 F1 interval bounds do not
+(`reports/s163-agent-records/d57-4-rescore-s3-deltas.md` § Stopped lines).
+PI ruling D61 (1) (`planning/pi-decisions-2026-09-20.md`): regenerate the
+JSON on today's code, and test the attribution to `122104b8a` by replay
+rather than by dates.
+
+**Replay evidence** (sapphire, 2026-10-12): the sweep was run in
+disposable `git archive` copies of `122104b8a^` (`19d58ccd9`) and of
+`122104b8a`, and on this branch, all with today's virtual environment.
+The inputs (`outputs/h13/scoring/`, last changed in `faff43dd4`, and
+`inputs/vectors/references/mounds-reference.geojson`) and the sweep
+script itself are byte-identical in all three trees; between the parent
+and the fix, only `scripts/lib_advanced_metrics.py` differs.
+
+| Tree | 27 points (n, P, R, F1) | 54 F1 interval bounds |
+|---|---|---|
+| `122104b8a^`, the parent | identical to the committed file | identical to the committed file (54 of 54) |
+| `122104b8a`, the fix | identical | none identical; all 27 intervals wider |
+| this branch (today's code) | identical | identical to the fix's (54 of 54) |
+
+The stale bounds are therefore the defective adapter's, and nothing
+between the fix and today, D50's sheet scoping included, moves the sweep.
+`tier0_sweep.md` (points only) and the 27 `cells/*.geojson` files are
+byte-identical after regeneration, so Obs 416, which cites the Markdown,
+needs no change.
+
+**Before → after** (F1 CI95, BCa, B = 1,000, seed 42; points unchanged):
+
+| Arm | c | k | F1 | Before | After | Width ratio |
+|---|---:|---:|---:|---|---|---:|
+| A | 1 | 1 | 0.4753 | [0.4348, 0.5092] | [0.4086, 0.5314] | 1.65 |
+| A | 1 | 2 | 0.6183 | [0.5855, 0.6518] | [0.5570, 0.6733] | 1.75 |
+| A | 1 | 3 | 0.6264 | [0.5930, 0.6581] | [0.5639, 0.6803] | 1.79 |
+| A | 2 | 1 | 0.1768 | [0.1507, 0.2005] | [0.1360, 0.2262] | 1.81 |
+| A | 2 | 2 | 0.1544 | [0.1293, 0.1770] | [0.1153, 0.2010] | 1.79 |
+| A | 2 | 3 | 0.0977 | [0.0746, 0.1177] | [0.0656, 0.1417] | 1.77 |
+| A | 3 | 1 | 0.0111 | [0.0038, 0.0180] | [0.0033, 0.0275] | 1.71 |
+| A | 3 | 2 | 0.0111 | [0.0038, 0.0180] | [0.0033, 0.0275] | 1.71 |
+| A | 3 | 3 | 0.0074 | [0.0012, 0.0133] | [0.0000, 0.0222] | 1.84 |
+| B | 1 | 1 | 0.4190 | [0.3845, 0.4524] | [0.3595, 0.4728] | 1.67 |
+| B | 1 | 2 | 0.5872 | [0.5560, 0.6201] | [0.5277, 0.6434] | 1.81 |
+| B | 1 | 3 | 0.6331 | [0.6037, 0.6637] | [0.5756, 0.6874] | 1.86 |
+| B | 2 | 1 | 0.4433 | [0.4138, 0.4743] | [0.3860, 0.4939] | 1.78 |
+| B | 2 | 2 | 0.3978 | [0.3660, 0.4300] | [0.3373, 0.4561] | 1.85 |
+| B | 2 | 3 | 0.3238 | [0.2952, 0.3580] | [0.2682, 0.3811] | 1.80 |
+| B | 3 | 1 | 0.0979 | [0.0729, 0.1191] | [0.0676, 0.1423] | 1.62 |
+| B | 3 | 2 | 0.0851 | [0.0596, 0.1022] | [0.0539, 0.1266] | 1.71 |
+| B | 3 | 3 | 0.0576 | [0.0407, 0.0725] | [0.0325, 0.0944] | 1.94 |
+| C | 1 | 1 | 0.2948 | [0.2678, 0.3248] | [0.2487, 0.3441] | 1.67 |
+| C | 1 | 2 | 0.4717 | [0.4370, 0.5052] | [0.4129, 0.5299] | 1.72 |
+| C | 1 | 3 | 0.5872 | [0.5507, 0.6155] | [0.5270, 0.6481] | 1.87 |
+| C | 2 | 1 | 0.6340 | [0.5996, 0.6677] | [0.5703, 0.6915] | 1.78 |
+| C | 2 | 2 | 0.7079 | [0.6756, 0.7355] | [0.6534, 0.7552] | 1.70 |
+| C | 2 | 3 | 0.7114 | [0.6793, 0.7398] | [0.6567, 0.7602] | 1.71 |
+| C | 3 | 1 | 0.6714 | [0.6380, 0.7034] | [0.6115, 0.7216] | 1.69 |
+| C | 3 | 2 | 0.6584 | [0.6263, 0.6889] | [0.6004, 0.7116] | 1.78 |
+| C | 3 | 3 | 0.6144 | [0.5789, 0.6459] | [0.5573, 0.6730] | 1.73 |
+
+The widths grow by 1.62 to 1.94 times, around the `sqrt(1000/340)` = 1.71
+that the 2026-08-19 entry below gives for the defect on this 340-tile
+scope (the sweep's `carrier_tiles`). One
+reading moves with them: each arm's best cell had a single-condition
+interval disjoint from the others' (arm C, `c ≥ 2`, `k ≥ 3`, against arm
+B, `c ≥ 1`, `k ≥ 3`), and the two now overlap. The sweep runs no paired
+contrast between arms, so it never tested that separation, and no
+committed claim rests on it (Obs 416 cites points).
+
+**What did NOT change**: all 27 points, each arm's best cell (A 0.6264,
+B 0.6331, C 0.7114), the Markdown, the cell files, and every number in
+this document's body. The registered row `h13-overlap-2026-08-18` does
+not cite the sweep; it is still `signed` on `main`, and its re-signing,
+which D50 already requires, is a separate step not taken here. Commit:
+the one landing this entry with the regenerated JSON.
 
 ### 2026-10-05 — p-values from the permutation test (PI ruling D42)
 
