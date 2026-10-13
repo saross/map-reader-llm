@@ -1,0 +1,22 @@
+=== 2026-10-13T04:25:16Z START legacy_extras
+=== 2026-10-13T04:26:16Z END legacy_extras rc=0
+=== 2026-10-13T04:26:16Z START grid_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_analysis.py --bootstrap 10000
+=== 2026-10-13T04:28:22Z END grid_analysis rc=0
+=== 2026-10-13T04:28:22Z START grid_materialise_conditions: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_materialise_conditions.py
+=== 2026-10-13T04:28:32Z END grid_materialise_conditions rc=0
+=== 2026-10-13T04:28:32Z START grid_verifier_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_verifier_analysis.py --materialise-conditions
+=== 2026-10-13T04:31:47Z END grid_verifier_analysis rc=0
+=== 2026-10-13T04:31:47Z START stride_verifier_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/stride_verifier_analysis.py
+=== 2026-10-13T04:36:09Z END stride_verifier_analysis rc=0
+=== 2026-10-13T04:36:09Z START grid_incumbent_rescore: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_incumbent_rescore.py
+=== 2026-10-13T04:36:17Z END grid_incumbent_rescore rc=0
+anchor F1 (text-B verified best) = 0.8961352657004831
+=== 2026-10-13T04:36:17Z START image_b_min: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/image_b_analysis.py --union-name union_k10.geojson --anchor-f1 0.8961352657004831
+=== 2026-10-13T04:38:13Z END image_b_min rc=0
+=== 2026-10-13T04:38:13Z START image_b_high: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/image_b_analysis.py --cell g384_ov192_image_high --out-dir results/image-b-gs-2026-08-28/high --anchor-f1 0.8961352657004831
+=== 2026-10-13T04:41:08Z END image_b_high rc=0
+=== 2026-10-13T04:41:08Z START image_b_pair: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/image_b_pair.py
+=== 2026-10-13T04:41:12Z END image_b_pair rc=0
+=== 2026-10-13T04:41:12Z START plateau: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/stride_plateau_analyses.py
+=== 2026-10-13T04:48:49Z END plateau rc=0
+=== 2026-10-13T04:48:49Z CHAIN DONE

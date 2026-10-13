@@ -15,6 +15,10 @@ committed outputs plus the two unions, and answers the registered bets:
 - HP5: proposer cost 3.0–3.5× MINIMAL's audited $20.3?
   (audited-rate reconciliation from the metas' token counts)
 
+Both unions are rebuilt from their passes and booked on each row's own
+sheet before the verified bests are scored (PI ruling D62 (1), 2026-10-13;
+``lib_cluster_origins.union_on_origin``).
+
 Usage::
 
     python scripts/image_b_pair.py
@@ -40,12 +44,13 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from scripts.grid_analysis import CRS  # noqa: E402
+from scripts.grid_analysis import CRS, load_cell_passes  # noqa: E402
 from scripts.grid_verifier_analysis import (  # noqa: E402
     per_tile_counts,
     verified_subset,
 )
 from scripts.image_b_analysis import load_image_union  # noqa: E402
+from scripts.lib_cluster_origins import union_on_origin  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     permutation_test_float,
 )
@@ -59,6 +64,10 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 VBASE = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier"
+SCORING = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/scoring"
+#: Both cells' verified K = 10 unions. The MINIMAL cell later gained K = 3
+#: and K = 5 unions beside it, so the file is named rather than globbed.
+UNION_NAME = "union_k10.geojson"
 RES = PROJECT_ROOT / "results/image-b-gs-2026-08-28"
 # Audited flex rates (token-load audit § 3.4): non-cached input $0.25/M,
 # cached $0.05/M, output + thinking $1.50/M.
@@ -93,7 +102,10 @@ def main() -> int:
     sets = {}
     for tag, cell, best in (("min", "g384_ov192_image", bmin),
                             ("high", "g384_ov192_image_high", bhigh)):
-        u = reassign_gate(load_image_union(VBASE / cell), bounds, cell)
+        u = reassign_gate(load_image_union(VBASE / cell, UNION_NAME), bounds, cell)
+        # D62 (1): members from the cell's ten passes, each row on its sheet.
+        u = union_on_origin(u, load_cell_passes(SCORING, cell), bounds,
+                            label=cell, n_passes=10)
         sets[tag] = {"union": u,
                      "best": verified_subset(u, best["prob_t"],
                                              best["min_votes"])}
