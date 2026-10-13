@@ -38,6 +38,20 @@ Description:
     read from the committed artefacts rather than recomputed — so the two
     corpora's effect sizes can be compared without reference to significance.
 
+    **(b) under a D51 clip (v1.1.0).** When the Phase 2 builder
+    (``scripts/build_k_ladder_phase2_tables.py`` v1.4.0) was run with
+    ``--clip-to-common-area``, a clipped ladder's ``phase2/ladders.json``
+    reports clipped F1@20 values, while ``phase2/mcc-test/summary.json`` can
+    only hold inference on the as-evaluated (unclipped) cells: the
+    compatibility export the permutation instrument reads withholds every
+    clipped ladder. A row for a clipped ladder therefore keeps its clipped F1
+    values, names its ``score_basis``, and sets every field computed on the
+    other basis — the permutation p-value and tier count joined from the
+    summary, and the bootstrap intervals and tile-MCC of the unclipped cells —
+    to ``null``, listing each under ``withheld`` with its reason (Astra's
+    re-review of 2026-10-10). Without a clip, the builder names no basis and
+    neither does this table, so its output is unchanged.
+
     **(c) The grid overlap comparison.** The grid study's consensus-only
     K = 1/3/5/10 ladders exist at four (tile size x overlap) geometries at
     fixed MINIMAL text T 0.7, which isolates whether K's return depends on the
@@ -84,6 +98,7 @@ sys.path.insert(0, str(BASE_DIR))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
+from scripts.lib_assessed_area import COMMON_AREA_CLIP_NAME  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     TARGET_CRS,
     micro_f1,
@@ -92,7 +107,43 @@ from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-__version__ = "1.0.0"
+#: 1.1.0 (2026-10-10): the effect-size table withholds the inference of a
+#: ladder the D51 gate clipped and names its score basis (Astra's re-review of
+#: PR #30, 2026-10-10); 1.0.0: the three analyses.
+__version__ = "1.1.0"
+
+#: The score-basis markers the Phase 2 builder
+#: (``scripts/build_k_ladder_phase2_tables.py`` v1.4.0) writes into
+#: ``phase2/ladders.json`` when a clip is requested: ``score_basis`` on the
+#: payload (a record), on each ladder (``{"reported": ...}``) and on each
+#: clipped point (a string). They are mirrored here rather than imported from
+#: the builder, which prices its families at import time;
+#: ``tests/test_k_ladder_tension_basis.py`` pins them to the builder's.
+BASIS_CLIPPED = COMMON_AREA_CLIP_NAME
+BASIS_AS_EVALUATED = "as-evaluated"
+
+#: The fields of a gold-standard effect-size row that are not on the clipped
+#: basis when its ladder is reported clipped, each with the reason it is
+#: withheld. ``phase2/mcc-test/summary.json`` is written by
+#: ``scripts/k_ladder_mcc_test.py`` from ``phase2/ladders-compat.json``, which
+#: withholds every clipped ladder, so whatever it holds for the family was
+#: computed on the as-evaluated (unclipped) cells.
+NOT_ON_CLIPPED_BASIS: dict[str, str] = {
+    "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not "
+                 "regenerated on the clipped detections",
+    "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not "
+                  "regenerated on the clipped detections",
+    "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not "
+                    "regenerated on the clipped detections",
+    "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not "
+                     "regenerated on the clipped detections",
+    "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of "
+            "phase2/mcc-test/summary.json, computed on the as-evaluated "
+            "(unclipped) cells; no permutation test exists on the clipped basis",
+    "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, "
+               "computed on the as-evaluated (unclipped) cells",
+    "one_tier": "the tier classification derived from n_tiers, which is withheld",
+}
 
 OUT_DIR = BASE_DIR / "results" / "k-ladder-2026-09-12" / "tension"
 
@@ -382,11 +433,61 @@ def cmd_subsample(args: argparse.Namespace) -> dict[str, Any]:
 # --- (b) the effect-size table ----------------------------------------------
 
 
+def phase2_row_basis(
+    ladder: dict[str, Any], *points: dict[str, Any]
+) -> str | None:
+    """The score basis a Phase 2 ladder's effect-size row is reported on.
+
+    Reads the markers the Phase 2 builder writes (:data:`BASIS_CLIPPED`).
+    The row is clipped when the ladder's ``score_basis`` reports the clip,
+    or when any point the row reads carries the clipped ``score_basis``: the
+    builder clips every point of a clipped ladder or refuses the ladder, so
+    the second test only matters to a payload trimmed after the build.
+
+    Args:
+        ladder: One ladder of ``phase2/ladders.json``.
+        *points: The operating points the row reads (K = 1 and the best rung).
+
+    Returns:
+        :data:`BASIS_CLIPPED`, the ladder's named basis otherwise, or ``None``
+        when nothing names a basis — an unclipped build, whose rows gain no
+        field.
+    """
+    reported = (ladder.get("score_basis") or {}).get("reported")
+    if reported == BASIS_CLIPPED or any(
+        point.get("score_basis") == BASIS_CLIPPED for point in points
+    ):
+        return BASIS_CLIPPED
+    return reported
+
+
+def withhold_off_basis_fields(row: dict[str, Any]) -> None:
+    """Null a clipped row's fields that are not on its basis, and say why.
+
+    Every field of :data:`NOT_ON_CLIPPED_BASIS` is set to ``None`` and listed
+    with its reason under ``withheld`` — the shape the Phase 2 builder gives a
+    clipped point — so the clipped F1 is never paired with inference computed
+    on the unclipped cells.
+
+    Args:
+        row: A gold-standard effect-size row (mutated).
+    """
+    for key in NOT_ON_CLIPPED_BASIS:
+        row[key] = None
+    row["withheld"] = dict(NOT_ON_CLIPPED_BASIS)
+
+
 def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
     """Assemble every MINIMAL ladder's K = 1 -> best-rung effect size.
 
     Reads the committed ladder inventories and permutation summaries rather
     than recomputing, so the table is a re-presentation of registered numbers.
+
+    A Phase 2 ladder the D51 gate clipped keeps its clipped F1 values, names
+    its ``score_basis`` and has the fields computed on its unclipped cells
+    withheld (:func:`withhold_off_basis_fields`); no permutation or bootstrap
+    is run here to replace them. Without a clip nothing names a basis and the
+    output is unchanged.
     """
     rows: list[dict[str, Any]] = []
 
@@ -404,6 +505,11 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
         entry.get("family") or entry.get("ladder"): entry
         for entry in p2_mcc.get("ladders", [])
     }
+    # The builder records a payload-level score basis only when a clip was
+    # requested (D51); an unclipped build names no basis anywhere, and then
+    # neither does any row here, so the table keeps its bytes.
+    clip_requested = bool(phase2.get("score_basis"))
+    withheld_families: list[str] = []
     for ladder in phase2.get("ladders", []):
         family = ladder.get("family") or ""
         if "MINIMAL" not in family:
@@ -415,34 +521,52 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
             continue
         best_k = max(rungs, key=lambda k: rungs[k].get("f1_20") or -1.0)
         stat = p2_by_family.get(family, {})
-        rows.append(
-            {
-                "corpus": "gold standard (4 maps, 487 tiles)",
-                "ladder": family,
-                "buffer_m": ladder.get("headline_buffer_m"),
-                "thinking": ladder.get("thinking_level"),
-                "modality": ladder.get("modality"),
-                "temperature": ladder.get("temperature"),
-                "K_low": 1,
-                "K_best": best_k,
-                "f1_low": rungs[1].get("f1_20"),
-                "f1_best": rungs[best_k].get("f1_20"),
-                "delta_f1": round(
-                    rungs[best_k]["f1_20"] - rungs[1]["f1_20"], 6
-                ),
-                "f1_low_ci": rungs[1].get("f1_20_ci"),
-                "f1_best_ci": rungs[best_k].get("f1_20_ci"),
-                "tile_mcc_low": rungs[1].get("tile_mcc"),
-                "tile_mcc_best": rungs[best_k].get("tile_mcc"),
-                "p_bh": stat.get("f1_p_bh_k1_to_best"),
-                "n_tiers": stat.get("n_tiers"),
-                "one_tier": stat.get("n_tiers") == 1,
-                "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
-            }
+        row = {
+            "corpus": "gold standard (4 maps, 487 tiles)",
+            "ladder": family,
+            "buffer_m": ladder.get("headline_buffer_m"),
+            "thinking": ladder.get("thinking_level"),
+            "modality": ladder.get("modality"),
+            "temperature": ladder.get("temperature"),
+            "K_low": 1,
+            "K_best": best_k,
+            "f1_low": rungs[1].get("f1_20"),
+            "f1_best": rungs[best_k].get("f1_20"),
+            "delta_f1": round(
+                rungs[best_k]["f1_20"] - rungs[1]["f1_20"], 6
+            ),
+            "f1_low_ci": rungs[1].get("f1_20_ci"),
+            "f1_best_ci": rungs[best_k].get("f1_20_ci"),
+            "tile_mcc_low": rungs[1].get("tile_mcc"),
+            "tile_mcc_best": rungs[best_k].get("tile_mcc"),
+            "p_bh": stat.get("f1_p_bh_k1_to_best"),
+            "n_tiers": stat.get("n_tiers"),
+            "one_tier": stat.get("n_tiers") == 1,
+            "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+        }
+        # D51 (Astra's re-review of PR #30, 2026-10-10): a clipped ladder's F1
+        # values are the clipped re-scores, but the summary joined above was
+        # computed on its unclipped cells, and so were the point's interval
+        # and tile-MCC. Keep the clipped F1, withhold the rest, name the basis.
+        basis = phase2_row_basis(ladder, rungs[1], rungs[best_k])
+        if basis == BASIS_CLIPPED:
+            withhold_off_basis_fields(row)
+            withheld_families.append(family)
+        if basis is not None or clip_requested:
+            row["score_basis"] = basis or BASIS_AS_EVALUATED
+        rows.append(row)
+    if withheld_families:
+        logger.warning(
+            "%d gold-standard ladder(s) reported on the clipped basis (%s): "
+            "their clipped F1 is kept and the inference computed on the "
+            "unclipped cells is withheld (%s)",
+            len(withheld_families), BASIS_CLIPPED, "; ".join(withheld_families),
         )
 
     # The deployment MINIMAL ladders, from the Phase 1 inventory and its
-    # permutation summary.
+    # permutation summary. That inventory is written by
+    # scripts/build_k_ladder_tables.py, which has no clip, so these rows are
+    # always as evaluated; they name that basis only beside a clipped table.
     phase1 = json.loads(
         (BASE_DIR / "results" / "k-ladder-2026-09-12"
          / "ladders.json").read_text()
@@ -508,8 +632,10 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
                 "source": "results/k-ladder-2026-09-12/ladders.json",
             }
         )
+        if clip_requested:
+            rows[-1]["score_basis"] = BASIS_AS_EVALUATED
 
-    out = {
+    out: dict[str, Any] = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(
             timespec="seconds"
         ),
@@ -519,9 +645,27 @@ def cmd_effect_sizes(args: argparse.Namespace) -> dict[str, Any]:
             "committed ladder inventories and permutation summaries, not "
             "recomputed."
         ),
-        "n_rows": len(rows),
-        "rows": rows,
     }
+    if clip_requested:
+        # Named only under a clip request, so an unclipped table keeps its
+        # bytes (the builder's convention, "an unclipped build names no basis").
+        out["score_basis"] = {
+            "clip_requested": True,
+            "clip": BASIS_CLIPPED,
+            "per_row": (
+                "each row names its score basis. A gold-standard row reported "
+                f"{BASIS_CLIPPED!r} carries its ladder's clipped F1@20 values; "
+                "every field computed on the unclipped cells (the bootstrap "
+                "intervals, tile-MCC, and the permutation p-value and tier "
+                "count joined from phase2/mcc-test/summary.json) is null and "
+                "listed under 'withheld'. The as-evaluated values remain in "
+                "phase2/ladders.json under 'historical_as_evaluated'. Every "
+                f"other row is {BASIS_AS_EVALUATED!r}"
+            ),
+            "n_withheld": len(withheld_families),
+        }
+    out["n_rows"] = len(rows)
+    out["rows"] = rows
     path = OUT_DIR / "effect-sizes.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, indent=2) + "\n")

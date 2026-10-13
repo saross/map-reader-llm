@@ -61,8 +61,8 @@ from scripts.compute_corrected_f1_multi_buffer import (  # noqa: E402
 )
 from scripts.lib_advanced_metrics import (  # noqa: E402
     get_map_name,
+    iter_sheet_scopes,
     match_detections_to_references,
-    scope_references_to_tiles,
 )
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -122,27 +122,51 @@ def load_candidates(cell: str, spec: dict,
 
 def per_map_counts(gdf_det: gpd.GeoDataFrame, gdf_ext: gpd.GeoDataFrame,
                    bounds: gpd.GeoDataFrame) -> dict[str, tuple[int, int, int]]:
-    """Per-map (TP, FP, FN) at BUFFER_R — the paired-permutation input."""
-    maps = {get_map_name(n) for n in bounds["tile_name"].unique()}
-    maps.discard("Unknown")
+    """Per-map (TP, FP, FN) at BUFFER_R — the paired-permutation input.
+
+    Each sheet's detections and references come from the shared scorer's
+    per-sheet loop, ``lib_advanced_metrics.iter_sheet_scopes`` (PI ruling
+    D50, 2026-10-07), the loop ``compute_counts_at_r`` runs for the F1 the
+    sweep reports. A detection is attributed to its origin sheet (an
+    ``origin_source_tile``, ``origin_tiles`` or ``source_tiles`` column wins
+    over a re-keyed ``source_tile``), its sheet is resolved by the library's
+    longest-prefix rule, and it is kept only if it intersects one of that
+    sheet's frame tiles, exactly as references are scoped. The per-sheet
+    counts therefore sum to ``compute_counts_at_r``'s totals.
+
+    Until 2026-10-12 this function kept its own loop: detections were split
+    by a bare ``source_tile.str.startswith(sheet)`` prefix wherever they lay,
+    and origins were ignored (the pre-D50 rule; PI ruling D60 (3) and (4)
+    name it in Phase 5's sweep for scorer restatements). The matcher, the
+    reference scoping, and the keys are unchanged.
+
+    Args:
+        gdf_det: Detections carrying ``source_tile`` and/or an origin column,
+            in ``DEFAULT_CRS``.
+        gdf_ext: Extended ground truth with ``REF_MAP_COL``, same CRS.
+        bounds: Frame tile polygons with ``tile_name``, same CRS.
+
+    Returns:
+        Map sheet -> ``(tp, fp, fn)``, one entry per frame sheet
+        (``lib_advanced_metrics.frame_sheets``: ``Unknown`` excluded),
+        including sheets with nothing on either side.
+    """
     out: dict[str, tuple[int, int, int]] = {}
-    for m in sorted(maps):
-        mb = bounds[bounds["tile_name"].str.startswith(m)]
-        ref = gdf_ext[gdf_ext[REF_MAP_COL] == m]
-        ref = scope_references_to_tiles(ref, mb) if not ref.empty else ref
-        det = gdf_det[gdf_det["source_tile"].str.startswith(m)]
+    for sheet, det, ref, _sheet_bounds in iter_sheet_scopes(
+        gdf_det, gdf_ext, bounds, ref_map_col=REF_MAP_COL,
+    ):
         if det.empty and ref.empty:
-            out[m] = (0, 0, 0)
+            out[sheet] = (0, 0, 0)
             continue
         if det.empty:
-            out[m] = (0, 0, len(ref))
+            out[sheet] = (0, 0, len(ref))
             continue
         if ref.empty:
-            out[m] = (0, len(det), 0)
+            out[sheet] = (0, len(det), 0)
             continue
         md, _, ud, ur = match_detections_to_references(
             list(det.geometry), list(ref.geometry), BUFFER_R)
-        out[m] = (len(md), len(ud), len(ur))
+        out[sheet] = (len(md), len(ud), len(ur))
     return out
 
 

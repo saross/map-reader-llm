@@ -112,7 +112,10 @@ def load_pv_detections(
         threshold: Minimum mound_probability for acceptance.
 
     Returns:
-        GeoDataFrame with source_tile and geometry columns.
+        GeoDataFrame with source_tile, source_tiles (each candidate's
+        contributing tiles, its origin record under ruling D50; kept since
+        D60 (3), 2026-10-12, see ``build_candidate_gdf``) and geometry
+        columns.
     """
     from evaluate_pv_results import build_candidate_gdf, load_probabilities
 
@@ -142,7 +145,11 @@ def load_consensus_detections(
         gdf_bounds: Tile boundary GeoDataFrame for source_tile assignment.
 
     Returns:
-        GeoDataFrame with source_tile and geometry columns.
+        GeoDataFrame with source_tile, source_tiles (each cluster's
+        contributing tiles, its origin record under ruling D50; kept since
+        D60 (3), 2026-10-12, see ``consensus_to_gdf``) and geometry
+        columns. The arm is therefore scored exactly as its committed
+        consensus GeoJSON is.
     """
     from analyse_consensus_sweep import consensus_to_gdf, precompute_clusters
     from paired_permutation_consensus import apply_threshold
