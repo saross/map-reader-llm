@@ -1540,3 +1540,33 @@ accept / edit / discard / replace.
   call. Both were recovered within minutes without loss, but were they
   visible to him as disruption, and does he want such incidents reported as
   they happen or only at close? (claude-obs 148 is my side.)
+
+## S163 candidates (pending review, 2026-10-13, drafted at handoff) — silence never discards
+
+Things Shawn may have observed about how Claude worked in Session 163 (this
+instance worked from 2026-10-11 onwards; earlier S163 work is not covered).
+For accept / edit / discard / replace.
+
+- **C1 — Walking decisions one at a time, with the figures re-checked first.**
+  For the four science decisions, the five stopped analyses, and the D62 list,
+  I re-read each decision's sources before presenting it, gave options and one
+  recommendation, and recorded his ruling in the decisions log before moving
+  on. He ruled on about a dozen decisions in short replies. Is this the right
+  default shape, or would he prefer a batch with "all as recommended" as the
+  fast path?
+- **C2 — Confident causes that turned out wrong.** Three times in two days I
+  stated a mechanism that the next measurement overturned (thinking that was
+  really 503 retries; a code change that was really changed inputs; a bias I
+  called one-way), and his relayed side-agent notes caught four more slips.
+  Did these cost him trust or time, and would he rather I lead with "X or Y,
+  and this check decides"?
+- **C3 — Stopping a paid run on my own initiative.** I halted the probe's
+  first version when the attempt count passed the approved calls, before
+  asking. The stop protected the budget, but the reason I gave (billed
+  thinking) was wrong, and the per-request records were lost. Was stopping
+  first and explaining after the right call, or would he rather be asked?
+- **C4 — The overnight orchestration.** At "do as much as you can before
+  morning" I ran six agents with branch-only rules, then tightened them
+  mid-run (lower process caps, duplicate runs, a kernel tripwire) when a side
+  note flagged the sapphire load. Was the amount of autonomous work, and its
+  safeguards, about right?

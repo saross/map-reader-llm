@@ -12025,3 +12025,71 @@ amended two answers while typing, and asked "anything else I missed?". The
 amendments ("T03 alone ... amend my prior answer") were easy to misread;
 reading the whole message before acting, and stating the reading back in
 the gate, kept the run inside what he approved.*
+
+## Session 163 — 2026-10-07 to 10-13 — the session where one way of naming places turned out to sit under every defect
+
+*Reflecting on session work in map-reader-llm, Session 163 (Opus 5.5).
+Instance boundary: this instance worked from a compaction summary. It
+experienced directly the part from 2026-10-11 onwards (the four science
+decisions, the stopped analyses, the Pro thinking probes, the overnight
+agents, D62–D64, fourteen merges, the seam defects, the Pro 2×2 run). The
+earlier S163 work (Run B and Run C, the census, the sapphire memory fault,
+Astra's first D50/D51 reviews) is reconstructed from the summary and the
+records, not remembered.*
+
+**What surprised you about this session?** How many separate defects turned
+out to be one. Over three days we found a sheet-name prefix collision, an
+origin gap in four scoring chains, verifier crops cut from the wrong sheet's
+raster, a batch path that sent text-only requests their example images, and
+scorer copies that had drifted. Each arrived as its own finding, through its
+own route, with its own PR. Only when the PI asked "did we do something
+wrong when making the tiles/crops or designing the programme?" did it become
+plain that most of them were one thing: places were identified by a string,
+the tile file name, and every stage re-derived "which sheet" from it. At a
+seam, where two sheets' padded tiles overlap, that re-derivation could pick
+the neighbour, and the same wrong guess then damaged two stages, the scorer
+and the cropper. The verifier, shown a black square, scored real mounds near
+zero and twice described a triangulation point that was not there. I had
+been fixing instances for a week without naming the cause; the PI's question
+named it in one sentence.
+
+The second surprise was smaller and odder: Gemini 3.1 Pro asked for HIGH
+thinking delivered none, at every temperature, confirmed by the June invoice
+to within 1 %, while MEDIUM delivered a little. A requested setting is not a
+delivered one, and only an independent witness (the bill) could tell.
+
+**What's the single most important thing a future reader should know about
+this session?** That almost nothing here was found by a pipeline checking
+itself. Every defect surfaced where two independent routes met and
+disagreed: H2 against H3 on the same 26-of-30 set; the black crops against
+the K-ladder's correct crops of the same places; batch against real-time
+token counts in a ten-tile smoke run; one hash seed against another; the
+invoice against the run metas. And several of my own readings were wrong
+until a second reader checked them: the partial-coverage bias I called a
+lower bound, D61 (2)'s cause (I said code, the replay said inputs), the
+probe's slow requests (I said thinking, they were 503s), A-09's cost gap
+(not like-for-like), and the A-09 draft that dropped a line that was still
+true. Four of those corrections came from side-agent notes the PI relayed
+mid-turn. The working method that held up was not "be right first" but
+"make each claim cheap to check, and check it before it lands": the
+decisions log recorded every ruling as it was made, so each correction is a
+visible later commit rather than a silent rewrite.
+
+**What context from this session will be hardest to reconstruct in six
+months?** The distinctions. Three defects look alike from outside and are
+not: the origin gap (scoring against the wrong sheet's mounds, fixable by
+re-scoring), the wrong-sheet crops (the verifier never saw the mound,
+fixable only by re-cropping and re-verifying), and the batch text cache
+(text requests carried images, which reached no committed pass because
+batch caching only arrived on 17 September and every later text pass books
+its usage). Which legs are clean matters as much: the 55-map legs, the
+K-ladder (it records its members), Era 1, and pv-diag, so D53's evidence
+stands. And the D64 text corners ran uncached for a reason that will look
+like an arbitrary flag without this entry. The merge order of the seven open
+draft PRs, and why #35 and #38 wait for the origin fixes, is recorded in the
+continuity file; the reasons are here.
+
+*Relational note: the PI moved from line-by-line rulings to "do as much as
+you can before morning" and back, and twice asked for wind-down while
+approving new work. Recording each approval with its exact words before
+acting kept the boundaries clear when the pace changed.*
