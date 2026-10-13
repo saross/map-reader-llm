@@ -1,0 +1,18 @@
+=== 2026-10-13T04:26:21Z START grid_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_analysis.py --bootstrap 10000
+=== 2026-10-13T04:28:26Z END grid_analysis rc=0
+=== 2026-10-13T04:28:26Z START grid_materialise_conditions: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_materialise_conditions.py
+=== 2026-10-13T04:28:36Z END grid_materialise_conditions rc=0
+=== 2026-10-13T04:28:36Z START grid_verifier_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_verifier_analysis.py --materialise-conditions
+=== 2026-10-13T04:31:48Z END grid_verifier_analysis rc=0
+=== 2026-10-13T04:31:48Z START stride_verifier_analysis: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/stride_verifier_analysis.py
+=== 2026-10-13T04:36:15Z END stride_verifier_analysis rc=0
+=== 2026-10-13T04:36:15Z START grid_incumbent_rescore: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/grid_incumbent_rescore.py
+=== 2026-10-13T04:36:22Z END grid_incumbent_rescore rc=0
+anchor F1 (text-B verified best) = 0.8961352657004831
+=== 2026-10-13T04:36:22Z START image_b_min: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/image_b_analysis.py --union-name union_k10.geojson
+=== 2026-10-13T04:38:16Z END image_b_min rc=0
+=== 2026-10-13T04:38:16Z START image_b_high: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/image_b_analysis.py --cell g384_ov192_image_high --out-dir results/image-b-gs-2026-08-28/high
+=== 2026-10-13T04:41:08Z END image_b_high rc=0
+=== 2026-10-13T04:41:08Z START plateau: /home/shawn/Code/map-reader-llm/.venv/bin/python scripts/stride_plateau_analyses.py
+=== 2026-10-13T04:47:51Z END plateau rc=0
+=== 2026-10-13T04:47:51Z CHAIN DONE
