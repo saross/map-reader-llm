@@ -8,6 +8,62 @@ project state.
 
 ---
 
+## 🔍 S163 CLOSE (2026-10-07 to 10-13, Opus) — START HERE: D57 (4) MERGED; THE SEAM DEFECTS FOUND AND FIXED ON PRs; PRO 2×2 RE-RUN DONE
+
+Read `planning/pi-decisions-2026-09-20.md` D59–D64 first (rulings, outcomes, and
+every PR's head and tier-1 count are recorded there). This session merged #26–#34,
+PR #36, #37, #39, and #40 and found a family of defects at sheet seams; the root
+cause and the principles for the next pipeline are in
+`planning/generalised-pipeline-roadmap.md` § WS2. Spend this session: Pro thinking
+probe about US$0.10 (v1–v3), wrong-sheet re-verification US$0.82, D64 run US$46.42.
+
+**Open draft PRs (none merged), suggested merge order:** #45 D63 hash-order fix
+(`1dbcebfb7`; no verdict moves) → #42 origin gap in the grid, plateau, stride, and
+Image-B chains (`13679676c`) → #41 H13 chain and library copies (`bf28e228d`) →
+PR #43 wrong-sheet re-verification, repaired probabilities (`24f78779e`; its registry
+drift clears when `main` is merged in) → #38 W2.7 `FastScorer` (`3448e1e9b`),
+with PR #44 stacked on it (`750ed97b7`; both lack #33, so rerun the W2.7 gate after
+merging `main`) → #35 tier-0, A-06, A-09 (`b7e27d54c`; regenerate tier-0 again
+after #41; A-06 and A-09 re-sign-pending with the PI's approved texts). Each:
+`main` merged in, tier-1 on sapphire, merged tree identical to the tested head.
+
+**Then, in order:**
+
+1. **Re-score the boards once** under #42, #41, and #43's repaired probabilities
+   (point the GS boards' readers and the three Run B `verify_g3` legs at the
+   `_repaired` copies), and report before any document changes: R1b-05, R1b-15
+   ("6 of 78" becomes 8; the 30 m sentence fails), R1b-16 (the "shelf" sentence
+   fails), the grid findings' Phase A paragraph (opmax ties the winner), Image-B,
+   the 14 signed analyses downstream of the wrong-sheet legs. Then restatements and
+   re-signing for the PI. Also #37's moved artefacts (pairwise, leaderboards,
+   factor analysis, e45) and A-07 under D50, in the same pass.
+2. **D64 analysis:** A-06's registered rule on the new same-day Pro passes; top up
+   the 15 failed tiles first (needs API approval, a few cents).
+3. **Next-session side issues (PI, 2026-10-13):** the 55-map black-margin
+   detections (14,938 points seen in black map margins on their own sheet) and
+   `g384_ov240`'s 708 candidates 0.5–1.4 km off the map
+   (`reports/s163-agent-records/wrong-sheet-crops-sweep-2026-10-13.md`).
+4. **D62 decisions still open:** (5) A-07's D50 regeneration timing; (6) the uplift
+   flatten (D61 (5)); (7) which fault-window rows to re-check
+   (`reports/s163-agent-records/fault-window-recheck-list.md`, with its overnight
+   evidence section); (8) housekeeping (sapphire scratch under `~/scratch/*2026-10-1*`,
+   about 100 GB; sapphire was at 95 %).
+5. **Smaller items:** fix the batch path's `include_example_images` default
+   (`run_batch_unit` gets a `batch_config` without it; add a cross-mode payload
+   test); whether the board's rung builder (`stride55_ladder.cluster_first_n`)
+   carries origins; `h13_k_sensitivity.py`'s 0.6463 literal (0.6687 on the origin
+   route); whether H13's re-signing uses rewritten prepared sets; Obs 416 quotes
+   the old tier-0 best cells; D63's four order-only sites and
+   `analyse_secondary_effects*.py`'s never-present key; a reply from
+   map-reader-bench to the 2026-10-13 lessons mail.
+6. **Findings worth an Observation:** Pro at `thinking_level` HIGH thinks less than
+   at MEDIUM on this task (HIGH 0–2 thought tokens per request, MEDIUM 9–48), and a
+   4,096-token budget made it think on 2 of 10 tiles; the verifier described
+   features on all-black crops; the spatial-identity lessons (offered as a methods
+   note).
+
+---
+
 ## 🔍 S163 OPEN (2026-10-07, Opus) — RUN B PREPARED WITH THREE ADDED ARMS; TEMPERATURE PROBE DONE; OPEN ITEMS
 
 Written mid-session so the to-do list survives a context reset; the close block
