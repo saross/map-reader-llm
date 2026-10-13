@@ -21,6 +21,11 @@ Covers the properties the 2026-09-13 sensitivity analysis rests on:
    replicate-mean cell a DIRECTORY, never a list. Collapsing the mean into a
    union produced apparent between-frame deltas of up to 0.33 F1 before this
    was fixed.
+6. **The Hsu admissible set is read by index (regression).**
+   ``selection_aware_intervals.py`` writes ``hsu_not_ruled_out`` as candidate
+   INDICES; the assemble stage once zipped it with the candidates as a mask,
+   which named the first *n* candidates and lost one whenever index 0 was
+   admitted.
 """
 
 from __future__ import annotations
@@ -312,3 +317,54 @@ def test_mcc_from_confusion_matches_the_definition():
     assert sens.mcc_from_confusion(0, 0, 10, 10) == pytest.approx(-1.0)
     assert sens.mcc_from_confusion(5, 5, 5, 5) == pytest.approx(0.0)
     assert sens.mcc_from_confusion(10, 0, 0, 0) is None, "a zero margin is None"
+
+
+# ── 6. the Hsu admissible set ────────────────────────────────────────────
+
+def test_hsu_admissible_refs_selects_by_index_including_zero():
+    """Index 0 is a candidate, not a False; the set is not the first n names."""
+    import analyse_null_exemplar_sensitivity as sens
+
+    doc = {"candidates": ["a", {"ref": "b"}, {"label": "c"}, "d", "e"],
+           "n_candidates": 5, "hsu_not_ruled_out": [0, 2, 4]}
+    assert sens.hsu_admissible_refs(doc) == ["a", "c", "e"]
+    # The mask reading this replaces named ['b', 'c']: the first three names
+    # paired with 0, 2 and 4, the one paired with 0 dropped as False.
+    mask_reading = sorted(r for r, keep in zip(
+        ["a", "b", "c", "d", "e"], doc["hsu_not_ruled_out"]) if keep)
+    assert mask_reading == ["b", "c"]
+
+
+def test_hsu_admissible_refs_maps_through_kept_indices():
+    """After an E81 drop the indices count the SCORED candidates only."""
+    import analyse_null_exemplar_sensitivity as sens
+
+    doc = {"candidates": ["a", "b", "c", "d"], "n_candidates": 3,
+           "kept_indices": [0, 2, 3], "hsu_not_ruled_out": [1, 2]}
+    assert sens.hsu_admissible_refs(doc) == ["c", "d"]
+
+
+@pytest.mark.parametrize(("hsu", "error"), [
+    ([True, False, True], TypeError),   # a boolean mask is not indices
+    ([0, 1.0], TypeError),              # nor is a float
+    ([0, 3], ValueError),               # outside the three scored candidates
+    ([-1], ValueError),                 # never a negative (from-the-end) index
+])
+def test_hsu_admissible_refs_refuses_what_the_writer_never_produces(hsu, error):
+    """A malformed set raises rather than naming the wrong candidates."""
+    import analyse_null_exemplar_sensitivity as sens
+
+    doc = {"candidates": ["a", "b", "c"], "n_candidates": 3,
+           "hsu_not_ruled_out": hsu}
+    with pytest.raises(error):
+        sens.hsu_admissible_refs(doc)
+
+
+def test_hsu_admissible_refs_refuses_a_kept_list_of_the_wrong_length():
+    """kept_indices must cover exactly the scored candidates."""
+    import analyse_null_exemplar_sensitivity as sens
+
+    doc = {"candidates": ["a", "b", "c"], "n_candidates": 3,
+           "kept_indices": [0, 1], "hsu_not_ruled_out": [0]}
+    with pytest.raises(ValueError, match="kept_indices"):
+        sens.hsu_admissible_refs(doc)

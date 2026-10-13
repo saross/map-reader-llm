@@ -1202,6 +1202,67 @@ def summarise_deltas(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
     return out
 
 
+def hsu_admissible_refs(doc: dict[str, Any]) -> list[str]:
+    """Name the candidates a multiple-comparisons-with-the-best document admits.
+
+    ``selection_aware_intervals.py`` writes ``hsu_not_ruled_out`` as a list
+    of candidate INDICES (``[i for i in range(n_cand) if ...]``), not as a
+    boolean mask over the candidates. The indices count the candidates it
+    actually scored: when it dropped candidates with an undefined statistic
+    (erratum E81), ``kept_indices`` maps each scored position back to its
+    position in the written ``candidates`` list, which keeps every candidate.
+
+    Until 2026-10-10 the assemble stage zipped ``candidates`` with this list
+    as if it were a mask. That kept the first *n* candidates whatever the
+    indices said (and dropped the first one whenever index 0 was admitted),
+    so ``analysis.json`` named the wrong admitted and dropped cells.
+
+    Args:
+        doc: A ``selection_aware_intervals.py --board`` output document, with
+            ``candidates`` (labels, or dicts carrying ``ref`` or ``label``),
+            ``hsu_not_ruled_out``, and optionally ``kept_indices`` and
+            ``n_candidates``.
+
+    Returns:
+        The admitted candidates' names, sorted.
+
+    Raises:
+        TypeError: If ``hsu_not_ruled_out`` holds anything but integer
+            indices (a boolean mask is refused, never read as indices).
+        ValueError: If ``kept_indices`` disagrees with ``n_candidates``, or
+            an index falls outside the scored candidates.
+
+    Example:
+        >>> hsu_admissible_refs({"candidates": ["a", "b", "c"],
+        ...                      "hsu_not_ruled_out": [0, 2]})
+        ['a', 'c']
+    """
+    refs = [c if isinstance(c, str) else c.get("ref", c.get("label"))
+            for c in doc["candidates"]]
+    kept = doc.get("kept_indices")
+    if kept is None:
+        # Written before E81 added the drop: every candidate was scored.
+        kept = list(range(len(refs)))
+    n_scored = doc.get("n_candidates", len(kept))
+    if len(kept) != n_scored:
+        raise ValueError(
+            f"kept_indices lists {len(kept)} candidates but n_candidates is "
+            f"{n_scored}")
+    names = []
+    for index in doc["hsu_not_ruled_out"]:
+        # bool is a subclass of int: a mask would otherwise read as 0s and 1s.
+        if isinstance(index, bool) or not isinstance(index, int):
+            raise TypeError(
+                "hsu_not_ruled_out must hold candidate indices, found "
+                f"{index!r} ({type(index).__name__})")
+        if not 0 <= index < len(kept):
+            raise ValueError(
+                f"hsu_not_ruled_out index {index} is outside the {len(kept)} "
+                "scored candidates")
+        names.append(refs[kept[index]])
+    return sorted(names)
+
+
 def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
     """Build the before/after comparison and write ``analysis.json``.
 
@@ -1309,13 +1370,9 @@ def stage_assemble(inventory: dict[str, Any]) -> dict[str, Any]:
         after_doc = json.loads(
             (OUT_DIR / "mcb-reduced" / reduced_name).read_text())
 
-        def admissible(doc: dict[str, Any]) -> list[str]:
-            refs = [c if isinstance(c, str) else c.get("ref", c.get("label"))
-                    for c in doc["candidates"]]
-            return sorted(r for r, keep in zip(refs, doc["hsu_not_ruled_out"])
-                          if keep)
-
-        a_before, a_after = admissible(before_doc), admissible(after_doc)
+        # ``hsu_not_ruled_out`` is a list of indices, not a mask.
+        a_before = hsu_admissible_refs(before_doc)
+        a_after = hsu_admissible_refs(after_doc)
         mcb[metric] = {
             "n_candidates_before": before_doc["n_candidates"],
             "n_candidates_after": after_doc["n_candidates"],

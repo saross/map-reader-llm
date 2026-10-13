@@ -54,6 +54,14 @@ machinery, the permutation tests, the engine recipe — so these cells land on t
 same instrument as the cells they are compared against. Nothing in ``scripts/``
 is modified.
 
+Since 2026-10-09 the r2 frames read each leg's ``_repaired`` copy where one
+holds ``probabilities.json`` (PI decisions D55 Q4 and D58 Q8;
+``scripts/lib_verify_dirs.py``): on the Gemini 3 pool, all three arm 2 legs.
+``ladder.json`` names the source leg actually read and records, per arm and
+rung, the directory, its SHA-256 and its repair counts
+(``verifier_probabilities``). The repository root is derived from this file's
+location rather than hard-coded.
+
 Stages
 ------
 ``separation``   The within-union nearest-neighbour distances that set how
@@ -111,7 +119,11 @@ import geopandas as gpd
 import numpy as np
 from scipy.spatial import cKDTree
 
-PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
+#: The repository root, three levels above this file's directory
+#: (``results/<campaign>/<study>/``), so a copy run elsewhere reads and writes
+#: its own tree (it was hard-coded to ``/home/shawn/Code/map-reader-llm``,
+#: which made a scratch run write six tracked files in the shared checkout).
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
@@ -133,10 +145,12 @@ from scripts.gemini37_image_55map_r2 import (  # noqa: E402
     permutation_test_mcc,
     read_detections,
     rung_frame,
+    rung_verify_dir,
     select_campaign,
     tile_vectors,
     with_carried,
 )
+from scripts.lib_verify_dirs import verify_dir_provenance  # noqa: E402
 from scripts.stride55_ladder import INHERIT_TOL_M  # noqa: E402
 from scripts.stride55_prepare_and_union import DEDUP_METRES  # noqa: E402
 
@@ -460,9 +474,15 @@ def stage_ladder(workers: int) -> int:
             "takes the probability of its nearest K = 5 candidate within "
             f"{INHERIT_TOL_M:.0f} m; unmatched candidates are counted and excluded "
             "from scoring."),
+        # The leg each arm's probabilities were inherited from: its
+        # ``_repaired`` copy where one holds probabilities.json (D55 Q4,
+        # D58 Q8), as ``rung_frame`` reads it.
         "source_leg": {
-            arm: str((CAMPAIGN.root / "verifier" / CAMPAIGN.cell
-                      / f"verify_k{SOURCE_K}_{arm}").relative_to(PROJECT_ROOT))
+            arm: str(rung_verify_dir(arm, SOURCE_K).relative_to(PROJECT_ROOT))
+            for arm in ARMS},
+        "verifier_probabilities": {
+            arm: {f"k{k}": verify_dir_provenance(rung_verify_dir(arm, k), PROJECT_ROOT)
+                  for k in (*RUNGS, SOURCE_K)}
             for arm in ARMS},
         "unions": {
             f"k{k}": str((CAMPAIGN.root / "verifier" / CAMPAIGN.cell

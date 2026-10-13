@@ -26,6 +26,16 @@ EXACTLY (B-N5-carried 4,736; A-N5-carried 4,597; ARM1-N3-carried 5,482;
 ARM2-N3-carried 5,187; FOURTH-N5-carried 4,431; FOURTH-N3-carried 4,623),
 because that is the proof that the subset builder IS the board's rung builder.
 
+The image families' K = 5 unions take their probabilities from each leg's
+``_repaired`` copy where that copy holds ``probabilities.json``, and from the
+leg itself otherwise (PI decisions D55 Q4 and D58 Q8, added 2026-10-09;
+``scripts/lib_verify_dirs.py``): on the Gemini 3 pool, ``verify_k5_arm2``
+carries three re-verified rows that way. ``verifier_provenance.json`` in
+``--out`` records, per image family, the directory read, its SHA-256 and its
+repair counts. ``MAP_READER_VERIFY_DIRS=fixed`` reads the fixed-name legs, as
+before. The deduplicated-pass cache is ``/tmp/w27/passes`` unless
+``W27_CACHE`` names another directory.
+
 Zero API. Run on sapphire:
     .venv/bin/python w27_55map_subset_replicates.py --gate-only
     .venv/bin/python w27_55map_subset_replicates.py --workers 20 --out /tmp/w27
@@ -37,6 +47,7 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import os
 import sys
 import time
 from multiprocessing import Pool
@@ -60,12 +71,17 @@ from scripts.grid_prepare_scoring import load_pass  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.lib_permutation import paired_permutation_test  # noqa: E402
+from scripts.lib_verify_dirs import resolve_verify_dir, verify_dir_provenance  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import micro_f1  # noqa: E402
 from scripts.merge_passes import centroid_from_geometry  # noqa: E402
 from scripts.pin_pass_provenance import PINNED_CELLS, tag_for_cell_dir, verify_pin  # noqa: E402
 from scripts.stride55_ladder import INHERIT_TOL_M  # noqa: E402
-from scripts.stride55_prepare_and_union import DEDUP_METRES, OUTROOT, resolve_pass_paths  # noqa: E402
+from scripts.stride55_prepare_and_union import (  # noqa: E402
+    DEDUP_METRES,
+    OUTROOT,
+    resolve_pass_paths,
+)
 from scripts.stride55_score import assign_standard_tile, build_map_constrained_index  # noqa: E402
 from scripts.stride55_sweep_oracle import RUNS as STRIDE_RUNS  # noqa: E402
 from scripts.stride55_sweep_oracle import load_candidates as load_stride_candidates  # noqa: E402
@@ -102,7 +118,9 @@ IMG = {
 UPL = REPO / "outputs/55maps-text-min-n10-uplift"
 
 _G: dict = {}
-CACHE = Path("/tmp/w27/passes")
+#: Deduplicated passes, pickled once per pool (``W27_CACHE`` overrides, so a
+#: scratch run keeps its cache in its own tree).
+CACHE = Path(os.environ.get("W27_CACHE", "/tmp/w27/passes"))
 
 
 def dedup_fast(features: list[dict], distance_thresh: float = DEDUP_METRES) -> list[dict]:
@@ -116,8 +134,10 @@ def dedup_fast(features: list[dict], distance_thresh: float = DEDUP_METRES) -> l
     """
     if not features:
         return []
-    cents = np.asarray([centroid_from_geometry(f.get("geometry", {})) for f in features], dtype=float)
-    tiles = [(f.get("properties") or {}).get("source_tile") or (f.get("properties") or {}).get("tile_id", "unknown")
+    cents = np.asarray([centroid_from_geometry(f.get("geometry", {})) for f in features],
+                       dtype=float)
+    tiles = [(f.get("properties") or {}).get("source_tile")
+             or (f.get("properties") or {}).get("tile_id", "unknown")
              for f in features]
     labels = [(f.get("properties") or {}).get("subtype", "mound") for f in features]
     n = len(cents)
@@ -191,7 +211,8 @@ def dedup_equality_gate() -> dict:
     return {"pass": bool(same), "n_raw": len(raw), "n_slow": len(slow), "n_fast": len(fast)}
 
 
-def cluster_subset(passes: list[list[dict]], idxs: tuple[int, ...], index: dict) -> gpd.GeoDataFrame:
+def cluster_subset(passes: list[list[dict]], idxs: tuple[int, ...],
+                   index: dict) -> gpd.GeoDataFrame:
     """``stride55_ladder.cluster_first_n`` over an arbitrary pass subset.
 
     Identical arithmetic: ``cluster_votes`` at min_corroboration 1 over the
@@ -237,14 +258,17 @@ def load_img_passes(camp: str) -> list[list[dict]]:
 def load_upl_frame() -> gpd.GeoDataFrame:
     """UPL's verified band (>= 3 of 10) with each candidate's contributing passes."""
     from scripts.final_board_sweeps import load_manifest_probs, prob_key  # noqa: F401
-    cands = json.loads((UPL / "crops-3of10/candidate_manifest.json").read_text())["candidates"]
+    cands = json.loads(
+        (UPL / "crops-3of10/candidate_manifest.json").read_text())["candidates"]
     probs = json.loads((UPL / "verified-3of10/probabilities.json").read_text())["results"]
     gdf = gpd.GeoDataFrame({
         "contrib": [tuple(c["properties"]["contributing_passes"]) for c in cands],
         "vote_count": [c["properties"]["vote_count"] for c in cands],
-        "mound_probability": [float(probs[prob_key(c["candidate_id"])]["mound_probability"]) for c in cands],
+        "mound_probability": [float(probs[prob_key(c["candidate_id"])]["mound_probability"])
+                              for c in cands],
         "source_tile": [c["source_tile"] for c in cands],
-    }, geometry=gpd.points_from_xy([c["centroid_x"] for c in cands], [c["centroid_y"] for c in cands]),
+    }, geometry=gpd.points_from_xy([c["centroid_x"] for c in cands],
+                                   [c["centroid_y"] for c in cands]),
         crs="EPSG:32635")
     return gdf
 
@@ -256,9 +280,14 @@ def build_families(gate_only: bool) -> dict:
     fam: dict[str, dict] = {}
     b_passes = load_stride_passes("g384_ov192_55map")
     a_passes = load_stride_passes("g384_ov128_55map")
-    fam["A"] = {"passes": a_passes, "union": load_stride_candidates("g384_ov128_55map", STRIDE_RUNS["g384_ov128_55map"], bounds)}
-    fam["B"] = {"passes": b_passes, "union": load_stride_candidates("g384_ov192_55map", STRIDE_RUNS["g384_ov192_55map"], bounds)}
-    fam["FOURTH"] = {"passes": b_passes, "union": load_g37_candidates("fourth", G37_CELLS["fourth"])}
+    fam["A"] = {"passes": a_passes,
+                "union": load_stride_candidates("g384_ov128_55map",
+                                                STRIDE_RUNS["g384_ov128_55map"], bounds)}
+    fam["B"] = {"passes": b_passes,
+                "union": load_stride_candidates("g384_ov192_55map",
+                                                STRIDE_RUNS["g384_ov192_55map"], bounds)}
+    fam["FOURTH"] = {"passes": b_passes,
+                     "union": load_g37_candidates("fourth", G37_CELLS["fourth"])}
     arm = load_g37_passes()
     fam["ARM1"] = {"passes": arm, "union": load_g37_candidates("arm1", G37_CELLS["arm1"])}
     fam["ARM2"] = {"passes": arm, "union": load_g37_candidates("arm2", G37_CELLS["arm2"])}
@@ -267,8 +296,13 @@ def build_families(gate_only: bool) -> dict:
         for camp, root in IMG.items():
             passes = _cached(f"img_{camp}", lambda camp=camp: load_img_passes(camp))
             for a in ("arm1", "arm2"):
-                raw = load_manifest_probs(root / "crops_k5", root / f"verify_k5_{a}")
-                fam[f"{camp}-{a.upper()}"] = {"passes": passes, "union": raw}
+                # The leg's _repaired copy where it holds probabilities.json
+                # (D55 Q4, D58 Q8), recorded beside the family.
+                vdir = resolve_verify_dir(root, f"verify_k5_{a}")
+                raw = load_manifest_probs(root / "crops_k5", vdir)
+                fam[f"{camp}-{a.upper()}"] = {
+                    "passes": passes, "union": raw,
+                    "verifier_probabilities": verify_dir_provenance(vdir, REPO)}
     for f in fam.values():
         f["n"] = len(f["passes"])
         f["index"] = index
@@ -279,7 +313,8 @@ def subsets_for(n: int) -> dict[int, list[tuple[int, ...]]]:
     """Disjoint-capable subsets per rung size N (consecutive partitions; all
     2-subsets for N = 2 so disjoint pairs can be enumerated)."""
     out: dict[int, list[tuple[int, ...]]] = {1: [(i,) for i in range(n)]}
-    out[2] = [c for c in itertools.combinations(range(n), 2)] if n <= 5 else [(i, i + 1) for i in range(0, n - 1, 2)]
+    out[2] = ([c for c in itertools.combinations(range(n), 2)] if n <= 5
+              else [(i, i + 1) for i in range(0, n - 1, 2)])
     if n >= 6:
         out[3] = [tuple(range(i, i + 3)) for i in range(0, n - 2, 3)]
     if n >= 10:
@@ -312,7 +347,8 @@ def _score(task):
         i = idx.get(r["tile_name"])
         if i is not None:
             tp[i], fp[i], fn[i] = float(r["tp"]), float(r["fp"]), float(r["fn"])
-    return {"family": fam, "subset": subset, "prob_t": prob_t, "k": k, "n_det": int(len(sub)),
+    return {"family": fam, "subset": subset, "prob_t": prob_t, "k": k,
+            "n_det": int(len(sub)),
             "f1": micro_f1(int(tp.sum()), int(fp.sum()), int(fn.sum())),
             "arr": np.stack([tp, fp, fn], axis=1)}
 
@@ -323,8 +359,10 @@ def _test(job):
                                 {"tp": b[:, 0], "fp": b[:, 1], "fn": b[:, 2]},
                                 n_permutations=N_PERMS, seed=SEED)
     m = r["metrics"]["f1"]
-    return {**job["meta"], "f1_a": m["a"], "f1_b": m["b"], "dF1": m["observed_diff"], "abs_dF1": abs(m["observed_diff"]),
-            "perm_p": m["p_value"], "null_std": m["null_std"], "n_discordant": r["n_discordant_tiles"]}
+    return {**job["meta"], "f1_a": m["a"], "f1_b": m["b"], "dF1": m["observed_diff"],
+            "abs_dF1": abs(m["observed_diff"]),
+            "perm_p": m["p_value"], "null_std": m["null_std"],
+            "n_discordant": r["n_discordant_tiles"]}
 
 
 def main() -> int:
@@ -341,15 +379,23 @@ def main() -> int:
         print("GATE FAILURE: nothing written", flush=True)
         return 1
     fam = build_families(args.gate_only)
-    print(f"families loaded in {time.time() - t0:.0f}s: " + ", ".join(f"{k}(n={v['n']})" for k, v in fam.items()), flush=True)
+    print(f"families loaded in {time.time() - t0:.0f}s: "
+          + ", ".join(f"{k}(n={v['n']})" for k, v in fam.items()), flush=True)
+    # Which verify directory each image family's probabilities came from.
+    (args.out / "verifier_provenance.json").write_text(json.dumps(
+        {f: spec["verifier_probabilities"] for f, spec in fam.items()
+         if "verifier_probabilities" in spec}, indent=1) + "\n")
 
     # Gates: first-N subsets reproduce committed rung cells exactly.
     gates = {}
     for (f, subset, prob_t, k), expected in GATES.items():
-        cell = inherit(cluster_subset(fam[f]["passes"], subset, fam[f]["index"]), fam[f]["union"])
+        cell = inherit(cluster_subset(fam[f]["passes"], subset, fam[f]["index"]),
+                       fam[f]["union"])
         n = int(((cell["mound_probability"] >= prob_t) & (cell["vote_count"] >= k)).sum())
-        gates[f"{f} {subset} ({prob_t}, k{k})"] = {"expected": expected, "got": n, "pass": n == expected}
-        print(f"GATE {f} {subset} ({prob_t}, k{k}): expected {expected}, got {n} -> {'PASS' if n == expected else 'FAIL'}", flush=True)
+        gates[f"{f} {subset} ({prob_t}, k{k})"] = {"expected": expected, "got": n,
+                                                   "pass": n == expected}
+        print(f"GATE {f} {subset} ({prob_t}, k{k}): expected {expected}, got {n} -> "
+              f"{'PASS' if n == expected else 'FAIL'}", flush=True)
     gates["dedup_fast equality (g37 run_1)"] = eq
     (args.out / "gates.json").write_text(json.dumps(gates, indent=1))
     if not all(g["pass"] for g in gates.values()):
@@ -362,7 +408,8 @@ def main() -> int:
     # families are placed in a module global before the pool forks, so the
     # workers inherit them without pickling (fork start method on Linux).
     _G["fam"] = fam
-    frame_jobs = [(f, s) for f, spec in fam.items() for subs in subsets_for(spec["n"]).values() for s in subs]
+    frame_jobs = [(f, s) for f, spec in fam.items()
+                  for subs in subsets_for(spec["n"]).values() for s in subs]
     with Pool(args.workers) as pool:
         built = pool.map(_build_frame, frame_jobs, chunksize=1)
     frames: dict[tuple, gpd.GeoDataFrame] = dict(zip(frame_jobs, built))
@@ -391,24 +438,31 @@ def main() -> int:
     print(f"scored in {time.time() - t0:.0f}s", flush=True)
     by = {(r["family"], r["subset"], r["prob_t"], r["k"]): r for r in scored}
     np.savez_compressed(args.out / "subset_cells.npz",
-                        keys=np.array([json.dumps([r["family"], list(r["subset"]), r["prob_t"], r["k"]]) for r in scored]),
+                        keys=np.array([json.dumps([r["family"], list(r["subset"]),
+                                                   r["prob_t"], r["k"]])
+                                       for r in scored]),
                         arr=np.stack([r["arr"] for r in scored]))
     cells = [{k: v for k, v in r.items() if k != "arr"} for r in scored]
     (args.out / "subset_cells.json").write_text(json.dumps(cells, indent=1, default=list))
 
     jobs = []
     for f in sorted({r["family"] for r in scored}):
-        subs = sorted({r["subset"] for r in scored if r["family"] == f}, key=lambda s: (len(s), s))
+        subs = sorted({r["subset"] for r in scored if r["family"] == f},
+                      key=lambda s: (len(s), s))
         for sa, sb in itertools.combinations(subs, 2):
             if len(sa) != len(sb) or set(sa) & set(sb):
                 continue
             for prob_t in PROBS[f]:
                 for k in ks_for(len(sa)):
                     ra, rb = by[(f, sa, prob_t, k)], by[(f, sb, prob_t, k)]
+                    kind = ("cross-execution (04-18 vs 06-11)" if f == "UPL"
+                            else "within-execution")
                     jobs.append({"a": ra["arr"], "b": rb["arr"],
-                                 "meta": {"family": f, "n_rung": len(sa), "subset_a": sa, "subset_b": sb,
-                                          "prob_t": prob_t, "k": k, "n_det_a": ra["n_det"], "n_det_b": rb["n_det"],
-                                          "kind": "cross-execution (04-18 vs 06-11)" if f == "UPL" else "within-execution"}})
+                                 "meta": {"family": f, "n_rung": len(sa),
+                                          "subset_a": sa, "subset_b": sb,
+                                          "prob_t": prob_t, "k": k,
+                                          "n_det_a": ra["n_det"], "n_det_b": rb["n_det"],
+                                          "kind": kind}})
     print(f"{len(jobs)} disjoint pairs to test", flush=True)
     with Pool(args.workers) as pool:
         res = pool.map(_test, jobs, chunksize=4)
@@ -417,7 +471,8 @@ def main() -> int:
         w = csv.DictWriter(fh, fieldnames=list(res[0].keys()))
         w.writeheader()
         for r in res:
-            w.writerow({k: (json.dumps(v) if isinstance(v, (tuple, list)) else v) for k, v in r.items()})
+            w.writerow({k: (json.dumps(v) if isinstance(v, (tuple, list)) else v)
+                        for k, v in r.items()})
     print(f"done in {time.time() - t0:.0f}s -> {args.out}", flush=True)
     return 0
 

@@ -1,0 +1,112 @@
+{
+ "head": "94a9e5cc7",
+ "symlinks_in_copy": 0,
+ "green": {
+  "returncode": 0,
+  "failed": [],
+  "summary": [
+   "======================= 34 passed, 3 deselected in 0.94s ======================="
+  ]
+ },
+ "mutations": [
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_declared_tiling_naming_a_tile_outside_its_manifest_refuses",
+    "test_a_declared_tiling_resolves_a_pass_whose_meta_records_none",
+    "test_a_declared_tiling_that_contradicts_the_meta_is_undetermined",
+    "test_a_pass_declared_twice_is_undetermined",
+    "test_a_pass_rewritten_after_its_tiling_was_declared_is_undetermined",
+    "test_declared_pass_provenance_determines_a_legacy_consensus"
+   ],
+   "summary": [
+    "================== 6 failed, 28 passed, 3 deselected in 1.04s =================="
+   ],
+   "mutation": "declared tilings never consulted",
+   "expected_red": [
+    "test_a_declared_tiling_resolves_a_pass_whose_meta_records_none"
+   ],
+   "bites": true
+  },
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_declared_tiling_naming_a_tile_outside_its_manifest_refuses"
+   ],
+   "summary": [
+    "================== 1 failed, 33 passed, 3 deselected in 1.11s =================="
+   ],
+   "mutation": "processed tiles outside the manifest accepted",
+   "expected_red": [
+    "test_a_declared_tiling_naming_a_tile_outside_its_manifest_refuses"
+   ],
+   "bites": true
+  },
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_pass_rewritten_after_its_tiling_was_declared_is_undetermined",
+    "test_declared_pass_provenance_refuses_a_rewritten_pass"
+   ],
+   "summary": [
+    "================== 2 failed, 32 passed, 3 deselected in 1.03s =================="
+   ],
+   "mutation": "blob anchor not checked",
+   "expected_red": [
+    "test_a_pass_rewritten_after_its_tiling_was_declared_is_undetermined",
+    "test_declared_pass_provenance_refuses_a_rewritten_pass"
+   ],
+   "bites": true
+  },
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_declared_tiling_that_contradicts_the_meta_is_undetermined"
+   ],
+   "summary": [
+    "================== 1 failed, 33 passed, 3 deselected in 1.19s =================="
+   ],
+   "mutation": "meta and declaration may disagree",
+   "expected_red": [
+    "test_a_declared_tiling_that_contradicts_the_meta_is_undetermined"
+   ],
+   "bites": true
+  },
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_pass_declared_twice_is_undetermined"
+   ],
+   "summary": [
+    "================== 1 failed, 33 passed, 3 deselected in 1.09s =================="
+   ],
+   "mutation": "a pass may be declared twice",
+   "expected_red": [
+    "test_a_pass_declared_twice_is_undetermined"
+   ],
+   "bites": true
+  },
+  {
+   "returncode": 1,
+   "failed": [
+    "test_a_declaration_naming_two_routes_is_refused"
+   ],
+   "summary": [
+    "================== 1 failed, 33 passed, 3 deselected in 1.05s =================="
+   ],
+   "mutation": "a declaration may name two routes",
+   "expected_red": [
+    "test_a_declaration_naming_two_routes_is_refused"
+   ],
+   "bites": true
+  }
+ ],
+ "restored": {
+  "returncode": 0,
+  "failed": [],
+  "summary": [
+   "======================= 34 passed, 3 deselected in 0.94s ======================="
+  ]
+ },
+ "all_bite": true
+}

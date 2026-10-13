@@ -108,6 +108,50 @@ replaces it.
   the sapphire memory fault. Phase 4 done
   (`reports/s163-agent-records/d57-4-rescore-s4-q4.md`): Run B and Run C
   reproduce; Q4 moves only the predicted rows; PR #28 open, not merged.
+  **Merged 2026-10-10 (D59):** PR #32 (`87e458ca7`), PR #28
+  (`30de6a68d`), and PR #29 (`b9b42c79b`; `main` merged in, e43 anchors
+  updated under D58 Q6 at `121b6ec6d`, tier-1 4,215 passed and 0 failed
+  on sapphire). Next: Phases 3–5 as their own PR. Phase 5 must also
+  revise `results/e43-matched-temperature/findings.md` § 3 and
+  `ANALYSIS_OUTCOME` in `scripts/author_e43_matched_temperature.py`
+  (copied into six register files; new p values in the S3 record's e43 item) and
+  the ungated `committed_f1: 0.6667` in `scripts/h13_k_sensitivity.py:249`.
+  **Ruled 2026-10-11/12 (D60), all as recommended:** (1) the 13 unpinned
+  drifted cells get a general `input_vintage` key, read by
+  `verify_run_conditions.py` in its own small PR; their Stage A values
+  are recomputed and committed only on a byte match; Stage B for all 25
+  joins Phase 5. (3) The consensus route is fixed, not H2 alone:
+  `consensus_to_gdf` keeps contributing tiles, the PV loader is checked,
+  and all 32 pairwise comparisons are re-run before any document moves.
+  (4) W2.7: `FastScorer` rebuilt on the shared attribution, § 6 and § 6b
+  regenerated together. (3), (4), and the stride55 `per_map_counts()` form
+  Phase 5's sweep for scorer restatements. (2) is in the D57 (3) item.
+  **Overnight 2026-10-12/13 (PI: "run the analyses I've already approved"),
+  all draft, none merged:** #34 `fix/dry-run-no-cache` (`47c38541d`; a
+  dry run created a billed context cache); #35 `d61-regenerations`
+  (`75abef2ab`; tier-0 intervals with the replay at `122104b8a^`/`122104b8a`,
+  A-06 with BH, A-09 audited; `h6-a09-cost-gate` re-sign-pending); #36
+  `d60-1-input-vintage` (`91d30c37f`; reader plus 13 Stage A cells, byte
+  match; Stage B reported only); #37 `d60-consensus-route` (`4ddfd6b93`;
+  D61 (2) outcome: inputs changed; H2 ΔF1 0.076083 → 0.073730, no p or
+  BH decision crosses); #38 `d60-w27-fastscorer` (`3448e1e9b`; no floor or
+  verdict moves); #39 `scorer-restatement-sweep` (`51b77731d`;
+  `per_map_counts()` moves nothing; inventory). Pro thinking probe:
+  `outputs/pro-thinking-probe-2026-10-12/probe-report.md` (all 20
+  successful requests at HIGH had zero thinking at T 0.0, 0.7, 1.0).
+  Fault-window list: `reports/s163-agent-records/fault-window-recheck-list.md`.
+  **Found, for the PI:** (a) the plateau, grid, H13, and Image-B chains
+  score bare centroids with no origin, so D50 falls back to the old
+  cross-sheet rule; on the signed plateau board the four incumbents score
+  +0.007 to +0.017 F1 @ 20 m on their recorded sheets (#39 inventory § 9.3;
+  committed values confirmed in `results/stride-2026-08-25/plateau_analyses.json`;
+  reproduced independently by the main session 2026-10-13, exactly:
+  `reports/s163-agent-records/plateau-recorded-sheet-check-2026-10-13/`);
+  (b) W2.7 `cluster_subset` frames and `scripts/analyse_diversity.py`'s own
+  `consensus_to_gdf` copy have the same gap; (c) the signed A-09 outcome
+  text's limb-2 reasoning was already false in the committed artefact
+  (verdict unaffected); (d) A-07 needs its D50 regeneration (25 leaves);
+  (e) `sweep_fourth_50m.csv` moves 8 rows under D50 (generator not re-run).
 - [ ] **⚠ Sapphire memory fault (found 2026-10-09)**: five
   `Bad page state` kernel reports (2026-10-05, then four on 2026-10-09
   13:51–15:23Z) and 23 crashes whose indices are 2^34 plus a valid
@@ -115,16 +159,76 @@ replaces it.
   memory test or reset memory to stock settings (a reboot needs the
   physical LUKS unlock). Then: re-run the 737 Phase 2 NEW cells and
   compare byte for byte with draft PR #29 before it merges; resume the
-  census (458 cells; command in the census record).
+  census (458 cells; command in the census record). PR #29 re-run DONE
+  2026-10-10 before the fix (PI's choice; agreement of two runs is the
+  check): all 2,262 files identical, no new kernel report (S2 record
+  changelog). The all-clear for the EXPO reboot went to
+  personal-assistant-43 at 00:11Z.
+  Sapphire rebooted at 05:09Z (`uptime -s`) at JEDEC 4,800 MT/s, EXPO
+  off (PI, confirmed in the BIOS and by a command-line check); no
+  `Bad page state` report on that boot through
+  #29's tier-1. **Soak launched 2026-10-10T06:09Z** (D59): the census
+  resume, 467 replays (458 cells plus 9 vintage), 8 workers, tripwire
+  armed at 5; `out/resume.log`, `out/soak-temps.log` (DIMM and Tctl
+  each minute), `out/soak-kernel-before.txt`, and the old stop file
+  kept as `out/STOP.halted-2026-10-09`, under
+  `~/scratch/d57-4-rescore-2026-10-09/census-old/` on sapphire. Then
+  `compare_census.py` and `analyse_census.py`.
+  **Soak PASSED 2026-10-10** (06:09–07:06Z): 467 of 467 clean, no new
+  kernel report, the 22 crashed replays now reproduce, DIMMs at most
+  49.8 °C; census complete (2,123 of 2,216 reproduce; every one of the
+  93 others has a deterministic cause; census record changelog). The
+  fault-window re-check (next item) may now proceed: the fix is
+  confirmed (setting and soak).
+  Diagnosis is with personal-assistant (session personal-assistant-43):
+  the DIMMs run at their XMP/EXPO 5,600 MT/s, above AMD's 5,200
+  guarantee; one DIMM's sensor had latched its 55 °C alarm. PI decisions
+  2026-10-10 (via personal-assistant-43): EXPO off this afternoon
+  (JEDEC 4,800 MT/s), after map-reader-llm's all-clear; probably a
+  memtest86+ pass overnight at 4,800; then the paused census (458 cells,
+  kernel-log tripwire, 8 workers) as the confirmation soak, launched only
+  when personal-assistant opens the window, with DIMM temperatures logged
+  (`sensors spd5118-*`). Open D57 (4) work in progress at decision time:
+  the PR #29 re-run check (batch 1, 73 registered and Stage A cells,
+  clean; batch 2 running) and the D50 fixes. D51 fixes are PRs #30
+  (publishing path) and #31 (declaration pins, report corrections),
+  re-review requested from Astra 2026-10-09T22:28Z.
+- [ ] **Re-check results computed on sapphire in the fault windows** (PI
+  via personal-assistant-43, 2026-10-10). **Do not run until the memory
+  fix is confirmed.** A set bit in an index crashes the run, but in a
+  score or statistic it passes silently, and there is no ECC. Windows,
+  from `journalctl -k` per boot on sapphire (checked 2026-10-10):
+  (1) **2026-10-05 onwards** (current boot from 2026-09-05; first
+  `Bad page state` 2026-10-05T04:14Z, four on 2026-10-09) — highest risk,
+  and the rest of that boot from 2026-09-05 is the same configuration
+  with no report; (2) **an earlier episode on 2026-05-06**: 36
+  `Bad page state` reports between 11:44 and 13:58 UTC, after which that
+  boot (from 2026-01-29) ended; the boot of 2026-05-12 to 2026-09-05
+  logged none. Kernel reports only fire when a flip hits page metadata,
+  so they show the rate, not the onset. Shape: list results computed on
+  sapphire in those windows that feed claims; subtract those already
+  verified by exact reproduction (census: 1,704 committed evaluations;
+  Phase 3: every artefact OLD reproduced; Run B and Run C, byte-identical;
+  PR #29 by the running re-run check); re-run the rest after the fix.
+  Known 2026-10-07 to 2026-10-09 scratch work (personal-assistant-43's
+  list): frames-blast-radius, input-drift, temperature-probe,
+  scorer-frames-d50-d51 (PR #26), d51-ladder-provenance (and its worktree
+  data, about 750 files), pr26-tier1, q4-rescore, q4-tools,
+  runbc-request-files, source-tile-gap, d57-4-rescore, and
+  q4-repaired-readers; also cover other map-reader-llm sessions' work.
 - [ ] **W2.7 cells move under the new scorer** (D57 (4) scope; Phase 4
   record, flag 2): 4 of 466 § 6 subset cells (family B, k1, F1 about
   +0.00007) and 26 of 865 pair rows (e.g. p 0.0576 → 0.0615); the § 6b
   floors-v2 `FastScorer` still reproduces the old cells.
+  RULED 2026-10-12 (D60 (4)): rebuild `FastScorer` on the shared
+  attribution, then regenerate § 6 and § 6b together in Phase 5. None of
+  the 26 moved pair rows crosses p = 0.05 (checked 2026-10-12).
 - [ ] **Inheritance ladder `KeyError: 'mcc_oracle'`**: `--stage ladder`
   reads a key the 2026-09-21 relabel renamed to
   `mcc_argmax_at_carried_k` (Phase 4 record, flag 3); both campaigns.
-- [ ] **PR #29 description**: add the 42 tile-join cells (intervals
+- [x] **PR #29 description**: add the 42 tile-join cells (intervals
   withheld for a pre-D50 reason) and the hardware caveat before review.
+  DONE 2026-10-10 (with the merge-readiness notes), before merging.
 - [ ] **D50 scorer review findings** (Astra, agent mail 2026-10-09,
   `~/agent-mail/codex/outbox/claude/20261009T122503Z-astra-d50-scorer-review.md`;
   changes requested; no committed full-frame score shown wrong). (1) A
@@ -140,10 +244,73 @@ replaces it.
   prefix collision among the 60 sheets in the 34 tracked bounds files,
   checked 2026-10-10). Add a regression test for each. Astra asks the PI
   to approve focused offline tests on their side.
+  Progress 2026-10-10: PI approved Astra's tests (Shawn to confirm to
+  Astra directly). Fixes in PR #33 (`d50-review-fixes`, head `57b094878`):
+  one tile-to-sheet assignment for both sides; the three reduced-frame
+  callers read full-frame partitions; diagnostics `n_origin_excluded`
+  and `n_origin_partly_excluded`; 50 of 50 PR #29 cells reproduce
+  exactly. Finding 1 is PR #30. Re-review requested from Astra
+  2026-10-09T22:43Z. **PI decision pending**: whether full-frame
+  attribution should exclude an origin naming a real sheet outside the
+  frame (measured: moves 0 of 2,751 committed cells).
+  RULED 2026-10-10 (D59): yes, with prevention for reduced frames.
+  Astra's own test file at #33's head passed 3 of 6; the other 3 failed
+  by design (#33 flagged reduced frames, did not prevent them). An agent
+  is adding the rule to #33; Astra is mailed when it is checked.
+  DONE 2026-10-10: #33 head `0a857c80c` (rules: out-of-frame origin
+  excluded; origins across the edge refused without `parent_bounds=`;
+  unknown vocabulary falls back with a WARNING). Checked at source:
+  Astra's file 3 of 6 as written (A/B are not study sheets), 6 of 6
+  with `parent_bounds=`; #33's scope tests 79 passed. Re-review mail
+  to Astra 2026-10-10T06:48Z on both workstreams (D51: Astra's file
+  passes on #30 and #31 merged); the PI wakes Astra.
+  Astra's verdicts (2026-10-10T06:58Z): **#31 accepted, merged
+  `fb1a997ac`** (main merged in; tier-1 4,233 passed; declarations
+  module 68 passed). #30: one downstream guard asked for
+  (`k_ladder_tension_analyses.py`), done at `42d215fcb` (62 passed in
+  the main session's run of Astra's tests), re-review mailed 07:39Z.
+  #33: a frame prefix could hide a longer excluded catalogue sheet;
+  fixed at `73106fcdf` (96 passed in the main session's run), plus the
+  common-footprint bootstraps now pass the parent (`29faf5618`), whose
+  effect on committed and Phase 3 outputs is being audited before the
+  #33 re-review mail.
+  Audit done: no committed or Phase 3 output takes that route; the
+  parent is now passed only when a footprint drops a whole sheet
+  (`d99128f65`; 98 passed in the main session's run). #33 re-review
+  mailed 08:05Z. Side finding (not D50): the committed
+  `results/h11-384-pv-diagnostic/pairwise/{fair-384-vs-512,pairwise-384px}.json`
+  carry March bootstrap fields that no current library reproduces
+  (means up to 0.0044 off, e.g. I4 0.0669 → 0.0625); pre-D50 and D50
+  give identical output and reproduce the October class-B records.
+  Known to the D42 report (fair file not re-tested, B-D1; the 384 px
+  pairwise file NOT RE-TESTABLE); its "72 of 558" is the pre-D50 count
+  (D50: 71). Agent's scratch: `~/scratch/d50-wholesheet-2026-10-10/`.
+  Related, confirmed on `main`: `per_map_counts()` in
+  `scripts/stride55_sweep_oracle.py:123–146` has its own matcher, splits
+  detections by the pre-D50 `source_tile` prefix, and ignores origins;
+  it feeds the stride sweep's paired permutations. Fix in Phase 5 with
+  the W2.7 `FastScorer`, after a search for other scorer restatements.
+- [ ] **`one_tier: false` where the tier count is unknown**: the committed
+  `results/k-ladder-2026-09-12/tension/effect-sizes.json` has six
+  gold-standard rows with `n_tiers` null and `one_tier` false, because
+  `phase2/mcc-test/summary.json` carries no `n_tiers` and
+  `cmd_effect_sizes` computes `n_tiers == 1`. Predates PRs #30 and #31;
+  not cited in `docs/paper/`. Fix: null when the count is missing, then
+  regenerate (found by the #30 guard agent, 2026-10-10).
 - [ ] **Fix `admissible()` in `scripts/analyse_null_exemplar_sensitivity.py:1312–1316`**:
   it zips candidates with `hsu_not_ruled_out`, an index list, so the
   member lists are the first *n* candidates; the signed null-exemplar
   findings misname the admitted and dropped cells (S3 record, flag 4).
+  Fixed in PR #32 (`fix-null-exemplar-admissible`, head `c497c3109`);
+  artefacts are regenerated in Phase 6. Not fixed there:
+  `scripts/build_gs_era2_board.py:688–690` also ignores `kept_indices`
+  (harmless while no candidate is dropped).
+- [ ] **amd-tower disk**: 99 % full (7.1 GB free) on 2026-10-10 when two
+  full 9.2 GB worktree checkouts were made; other sessions may have hit
+  write errors. Freed to 35 GB by removing three clean, pushed worktrees
+  (branches kept). Agents should use sparse checkouts; the 12 GB
+  `sol-phase2-codex-entry` and 6.4 GB `archive` worktrees under
+  `~/worktrees/map-reader-llm/` are not Claude's.
 - [ ] **Stale CIs in `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.json`**:
   committed in `dccee3362` before the BCa-adapter fix `122104b8a`; today's
   intervals are wider. Its Markdown shows no intervals (S3 record).
@@ -200,6 +367,12 @@ replaces it.
   rebuild shows a reproducible construction, not a unique pass history.
   Astra recommends reporting per-reference vote support (`c ≥ v`) for the
   partial-coverage question, which remains the PI's.
+  RULED 2026-10-11/12 (D60 (2)): a known limitation; Phase 6 reports
+  per-reference vote support (`c` against `v`, per sheet) and flags
+  mounds and area below threshold; Astra's stricter sensitivity runs if
+  flagged mounds or area beyond the known gap tiles touch a rung a paper
+  claim rests on. The bias can run either way (lost mounds lower recall,
+  lost false alarms raise precision).
 - [x] **Merge PR #26 (D57 (4)) once Q4's before→after re-score is in**,
   so the Q4 deltas are not computed across two scorer versions; the
   tier-1 result at `842f9e92a` (4,151 passed) still covers the head,

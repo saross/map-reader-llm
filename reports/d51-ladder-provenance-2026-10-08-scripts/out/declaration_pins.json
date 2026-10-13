@@ -1,0 +1,2066 @@
+{
+ "check": "every pinned git blob hash equals git hash-object and the blob at HEAD",
+ "head": "7768c64b0",
+ "n_pinned": 294,
+ "n_equal": 294,
+ "rows": [
+  {
+   "path": "inputs/grid-2026-08-18/grid_384_ov192_manifest.json",
+   "pinned": "615c3ce52fc949ae6ea489ddd9ee1b5a944db942",
+   "git_hash_object": "615c3ce52fc949ae6ea489ddd9ee1b5a944db942",
+   "head_blob": "615c3ce52fc949ae6ea489ddd9ee1b5a944db942",
+   "equal": true
+  },
+  {
+   "path": "inputs/tiles_384/full_evaluation_manifest.json",
+   "pinned": "5f9ce922aec1e2f1ea9d510af11e2c40ebd8cee7",
+   "git_hash_object": "5f9ce922aec1e2f1ea9d510af11e2c40ebd8cee7",
+   "head_blob": "5f9ce922aec1e2f1ea9d510af11e2c40ebd8cee7",
+   "equal": true
+  },
+  {
+   "path": "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "pinned": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5",
+   "git_hash_object": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5",
+   "head_blob": "a223dc7e8c4e42af5a6d8c2f9dc5bb00b4ce97a5",
+   "equal": true
+  },
+  {
+   "path": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+   "pinned": "88443a96e9ef9f06fdd597db3ec53950aa0a1326",
+   "git_hash_object": "88443a96e9ef9f06fdd597db3ec53950aa0a1326",
+   "head_blob": "88443a96e9ef9f06fdd597db3ec53950aa0a1326",
+   "equal": true
+  },
+  {
+   "path": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+   "pinned": "8b7c1ce9dea8dffeb68f4779d156682f1dec18c2",
+   "git_hash_object": "8b7c1ce9dea8dffeb68f4779d156682f1dec18c2",
+   "head_blob": "8b7c1ce9dea8dffeb68f4779d156682f1dec18c2",
+   "equal": true
+  },
+  {
+   "path": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson",
+   "pinned": "7600bff7ccf8403d6fb3458bd73d9da61287c768",
+   "git_hash_object": "7600bff7ccf8403d6fb3458bd73d9da61287c768",
+   "head_blob": "7600bff7ccf8403d6fb3458bd73d9da61287c768",
+   "equal": true
+  },
+  {
+   "path": "outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+   "pinned": "d2bb2e83ca5deae6fabedcb639dc543554f55b03",
+   "git_hash_object": "d2bb2e83ca5deae6fabedcb639dc543554f55b03",
+   "head_blob": "d2bb2e83ca5deae6fabedcb639dc543554f55b03",
+   "equal": true
+  },
+  {
+   "path": "outputs/grid-2026-08-18/verifier/g384_ov192/union_k10.geojson",
+   "pinned": "c41320415e0da53e6b9b21babef2c48269358d0d",
+   "git_hash_object": "c41320415e0da53e6b9b21babef2c48269358d0d",
+   "head_blob": "c41320415e0da53e6b9b21babef2c48269358d0d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+   "pinned": "8e1081c9555bbcafce36fbba268f474429de23ae",
+   "git_hash_object": "8e1081c9555bbcafce36fbba268f474429de23ae",
+   "head_blob": "8e1081c9555bbcafce36fbba268f474429de23ae",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus/consensus_t1.geojson",
+   "pinned": "82cc773e6768f9739cc578335544c5638705df27",
+   "git_hash_object": "82cc773e6768f9739cc578335544c5638705df27",
+   "head_blob": "82cc773e6768f9739cc578335544c5638705df27",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "df437171f53c38828287b8c3c0dbe2b238a60f42",
+   "git_hash_object": "df437171f53c38828287b8c3c0dbe2b238a60f42",
+   "head_blob": "df437171f53c38828287b8c3c0dbe2b238a60f42",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "697b92b42eb8f975add75554feca3290ddc5a937",
+   "git_hash_object": "697b92b42eb8f975add75554feca3290ddc5a937",
+   "head_blob": "697b92b42eb8f975add75554feca3290ddc5a937",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "3772b1b209099f26f691231a31f8680e3e18d3e9",
+   "git_hash_object": "3772b1b209099f26f691231a31f8680e3e18d3e9",
+   "head_blob": "3772b1b209099f26f691231a31f8680e3e18d3e9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "a0a8b48dba386b6e44c45070d4b71be0b0a0dfa1",
+   "git_hash_object": "a0a8b48dba386b6e44c45070d4b71be0b0a0dfa1",
+   "head_blob": "a0a8b48dba386b6e44c45070d4b71be0b0a0dfa1",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "297593953c6a4cb8369dcae43a1966e2518a7b16",
+   "git_hash_object": "297593953c6a4cb8369dcae43a1966e2518a7b16",
+   "head_blob": "297593953c6a4cb8369dcae43a1966e2518a7b16",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "4469a64e731819af6e909c51a30b014b07504515",
+   "git_hash_object": "4469a64e731819af6e909c51a30b014b07504515",
+   "head_blob": "4469a64e731819af6e909c51a30b014b07504515",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "e321b9e6d22873ee2f180489a2cf022014332b30",
+   "git_hash_object": "e321b9e6d22873ee2f180489a2cf022014332b30",
+   "head_blob": "e321b9e6d22873ee2f180489a2cf022014332b30",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "47073dee9a50a3000a68669495d3620c91702880",
+   "git_hash_object": "47073dee9a50a3000a68669495d3620c91702880",
+   "head_blob": "47073dee9a50a3000a68669495d3620c91702880",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "172f10e74b7be7ea83503e69b46cd35d7d3b7119",
+   "git_hash_object": "172f10e74b7be7ea83503e69b46cd35d7d3b7119",
+   "head_blob": "172f10e74b7be7ea83503e69b46cd35d7d3b7119",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "625a1b316525ce57566834d43f58612e2f862e90",
+   "git_hash_object": "625a1b316525ce57566834d43f58612e2f862e90",
+   "head_blob": "625a1b316525ce57566834d43f58612e2f862e90",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "57831014c0c41d42bb7148e553eac89190ecc4cf",
+   "git_hash_object": "57831014c0c41d42bb7148e553eac89190ecc4cf",
+   "head_blob": "57831014c0c41d42bb7148e553eac89190ecc4cf",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "36ecdbb7d56d8847fa88cd5dc2186cd83bf3b2db",
+   "git_hash_object": "36ecdbb7d56d8847fa88cd5dc2186cd83bf3b2db",
+   "head_blob": "36ecdbb7d56d8847fa88cd5dc2186cd83bf3b2db",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "60d91e606b5ea8e2d14453f03bec720475348021",
+   "git_hash_object": "60d91e606b5ea8e2d14453f03bec720475348021",
+   "head_blob": "60d91e606b5ea8e2d14453f03bec720475348021",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "42c52758dcfd89361b87cd130c5a9ce88b48e26b",
+   "git_hash_object": "42c52758dcfd89361b87cd130c5a9ce88b48e26b",
+   "head_blob": "42c52758dcfd89361b87cd130c5a9ce88b48e26b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "08f6326160b2eb1492e6fb765c80582830484109",
+   "git_hash_object": "08f6326160b2eb1492e6fb765c80582830484109",
+   "head_blob": "08f6326160b2eb1492e6fb765c80582830484109",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "6ccf250c46b6a8cacc52404e51c6617757747729",
+   "git_hash_object": "6ccf250c46b6a8cacc52404e51c6617757747729",
+   "head_blob": "6ccf250c46b6a8cacc52404e51c6617757747729",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "0ff463d3fdb830ecfef8537b987a249c4f295b97",
+   "git_hash_object": "0ff463d3fdb830ecfef8537b987a249c4f295b97",
+   "head_blob": "0ff463d3fdb830ecfef8537b987a249c4f295b97",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "1222ff597e6ba10b39f824c416e0ca159ef38507",
+   "git_hash_object": "1222ff597e6ba10b39f824c416e0ca159ef38507",
+   "head_blob": "1222ff597e6ba10b39f824c416e0ca159ef38507",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "902beb36d354c327f0eff2d7c6bd7cf092fa3675",
+   "git_hash_object": "902beb36d354c327f0eff2d7c6bd7cf092fa3675",
+   "head_blob": "902beb36d354c327f0eff2d7c6bd7cf092fa3675",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "4f92f0c56c082c911931a35981f0eb6874d5e522",
+   "git_hash_object": "4f92f0c56c082c911931a35981f0eb6874d5e522",
+   "head_blob": "4f92f0c56c082c911931a35981f0eb6874d5e522",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+   "pinned": "4f7cf41901742e6704ae08e43ec069fdf82a6f4c",
+   "git_hash_object": "4f7cf41901742e6704ae08e43ec069fdf82a6f4c",
+   "head_blob": "4f7cf41901742e6704ae08e43ec069fdf82a6f4c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus/consensus_t1.geojson",
+   "pinned": "1f06dcc00d2903b4c5a5500b7228c5d4e4a4beea",
+   "git_hash_object": "1f06dcc00d2903b4c5a5500b7228c5d4e4a4beea",
+   "head_blob": "1f06dcc00d2903b4c5a5500b7228c5d4e4a4beea",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+   "pinned": "b3294b423704106af1eaa9b543f613120a7538de",
+   "git_hash_object": "b3294b423704106af1eaa9b543f613120a7538de",
+   "head_blob": "b3294b423704106af1eaa9b543f613120a7538de",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json",
+   "pinned": "24004fd2d67710ee5925d2ba052954e594616c74",
+   "git_hash_object": "24004fd2d67710ee5925d2ba052954e594616c74",
+   "head_blob": "24004fd2d67710ee5925d2ba052954e594616c74",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+   "pinned": "e319b690f66539a69eba7f10b024f08c61c7bb2d",
+   "git_hash_object": "e319b690f66539a69eba7f10b024f08c61c7bb2d",
+   "head_blob": "e319b690f66539a69eba7f10b024f08c61c7bb2d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_10/detections_image-t0.7_run10.meta.json",
+   "pinned": "6597adaa58d66b7596215d46f15f9bb19011606d",
+   "git_hash_object": "6597adaa58d66b7596215d46f15f9bb19011606d",
+   "head_blob": "6597adaa58d66b7596215d46f15f9bb19011606d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+   "pinned": "e65c335d7023af66ca28a7a85f0928ad2195b99a",
+   "git_hash_object": "e65c335d7023af66ca28a7a85f0928ad2195b99a",
+   "head_blob": "e65c335d7023af66ca28a7a85f0928ad2195b99a",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_2/detections_image-t0.7_run02.meta.json",
+   "pinned": "5eed2cf74abbd3201cc6487ba45311c8636090ef",
+   "git_hash_object": "5eed2cf74abbd3201cc6487ba45311c8636090ef",
+   "head_blob": "5eed2cf74abbd3201cc6487ba45311c8636090ef",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+   "pinned": "8b99ced8ab9aee33feb127ce8dbd82188b11600d",
+   "git_hash_object": "8b99ced8ab9aee33feb127ce8dbd82188b11600d",
+   "head_blob": "8b99ced8ab9aee33feb127ce8dbd82188b11600d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_3/detections_image-t0.7_run03.meta.json",
+   "pinned": "4ab171fa318684a2fd4b1e4f351943598ad1be37",
+   "git_hash_object": "4ab171fa318684a2fd4b1e4f351943598ad1be37",
+   "head_blob": "4ab171fa318684a2fd4b1e4f351943598ad1be37",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+   "pinned": "7b0376bf8229104d46c4601111b15dab0982bc6f",
+   "git_hash_object": "7b0376bf8229104d46c4601111b15dab0982bc6f",
+   "head_blob": "7b0376bf8229104d46c4601111b15dab0982bc6f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_4/detections_image-t0.7_run04.meta.json",
+   "pinned": "a9e5cb2d5f24f5deb197772a9a57b089a9c3ecc0",
+   "git_hash_object": "a9e5cb2d5f24f5deb197772a9a57b089a9c3ecc0",
+   "head_blob": "a9e5cb2d5f24f5deb197772a9a57b089a9c3ecc0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+   "pinned": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e",
+   "git_hash_object": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e",
+   "head_blob": "b95e6b8bc5cb464a5bd1fbd4fe0ec1772f3c168e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_5/detections_image-t0.7_run05.meta.json",
+   "pinned": "b5b1880cc8d02f71a38dc64949a3d215e3c84783",
+   "git_hash_object": "b5b1880cc8d02f71a38dc64949a3d215e3c84783",
+   "head_blob": "b5b1880cc8d02f71a38dc64949a3d215e3c84783",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+   "pinned": "fe2d2ba2080f01364781ad5f87dfed1dd1aea57b",
+   "git_hash_object": "fe2d2ba2080f01364781ad5f87dfed1dd1aea57b",
+   "head_blob": "fe2d2ba2080f01364781ad5f87dfed1dd1aea57b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_6/detections_image-t0.7_run06.meta.json",
+   "pinned": "7a45f85799a61e8e5ec7b96a2f7ea1e573fea831",
+   "git_hash_object": "7a45f85799a61e8e5ec7b96a2f7ea1e573fea831",
+   "head_blob": "7a45f85799a61e8e5ec7b96a2f7ea1e573fea831",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+   "pinned": "f3d3fd8cfd22fd50b083980766c0c006f7500918",
+   "git_hash_object": "f3d3fd8cfd22fd50b083980766c0c006f7500918",
+   "head_blob": "f3d3fd8cfd22fd50b083980766c0c006f7500918",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_7/detections_image-t0.7_run07.meta.json",
+   "pinned": "7005dd9040933c20c4504130dbb6da3918d04a35",
+   "git_hash_object": "7005dd9040933c20c4504130dbb6da3918d04a35",
+   "head_blob": "7005dd9040933c20c4504130dbb6da3918d04a35",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+   "pinned": "6e6c088d4a4754301f7366a4c1fdabd19d686091",
+   "git_hash_object": "6e6c088d4a4754301f7366a4c1fdabd19d686091",
+   "head_blob": "6e6c088d4a4754301f7366a4c1fdabd19d686091",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_8/detections_image-t0.7_run08.meta.json",
+   "pinned": "5d85c89be66b062db38555e5388fe49033a57f72",
+   "git_hash_object": "5d85c89be66b062db38555e5388fe49033a57f72",
+   "head_blob": "5d85c89be66b062db38555e5388fe49033a57f72",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+   "pinned": "f5257af1e452a820b29c8c363855f418597f6584",
+   "git_hash_object": "f5257af1e452a820b29c8c363855f418597f6584",
+   "head_blob": "f5257af1e452a820b29c8c363855f418597f6584",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/run_9/detections_image-t0.7_run09.meta.json",
+   "pinned": "e179b73b2140e2fb2a228c2eb62ba26f3df0f664",
+   "git_hash_object": "e179b73b2140e2fb2a228c2eb62ba26f3df0f664",
+   "head_blob": "e179b73b2140e2fb2a228c2eb62ba26f3df0f664",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+   "pinned": "a804e52bfdc5ee3c12457006b4d8e005f9f4601c",
+   "git_hash_object": "a804e52bfdc5ee3c12457006b4d8e005f9f4601c",
+   "head_blob": "a804e52bfdc5ee3c12457006b4d8e005f9f4601c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson",
+   "pinned": "84e3bc4ce47b84a7737622a5486ef7f4663e03fb",
+   "git_hash_object": "84e3bc4ce47b84a7737622a5486ef7f4663e03fb",
+   "head_blob": "84e3bc4ce47b84a7737622a5486ef7f4663e03fb",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "2f23c3121340c091620ffdb9d215e38b1aef9106",
+   "git_hash_object": "2f23c3121340c091620ffdb9d215e38b1aef9106",
+   "head_blob": "2f23c3121340c091620ffdb9d215e38b1aef9106",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "b901942b21eb62b119bda18e0f577a97b898706b",
+   "git_hash_object": "b901942b21eb62b119bda18e0f577a97b898706b",
+   "head_blob": "b901942b21eb62b119bda18e0f577a97b898706b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "1dc9a538682c43c8d59cb1a67e760509707c67b4",
+   "git_hash_object": "1dc9a538682c43c8d59cb1a67e760509707c67b4",
+   "head_blob": "1dc9a538682c43c8d59cb1a67e760509707c67b4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "a9573a75543035656e09a1ca6459ecf765512ac8",
+   "git_hash_object": "a9573a75543035656e09a1ca6459ecf765512ac8",
+   "head_blob": "a9573a75543035656e09a1ca6459ecf765512ac8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "9340b500c5f820150a6b07776fe6b9f43ddec5b4",
+   "git_hash_object": "9340b500c5f820150a6b07776fe6b9f43ddec5b4",
+   "head_blob": "9340b500c5f820150a6b07776fe6b9f43ddec5b4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "e7add41670b50078c20226819ea23a6f835aa073",
+   "git_hash_object": "e7add41670b50078c20226819ea23a6f835aa073",
+   "head_blob": "e7add41670b50078c20226819ea23a6f835aa073",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "f8e73e7cf1968a148018389d78a25ad17a7a0fcd",
+   "git_hash_object": "f8e73e7cf1968a148018389d78a25ad17a7a0fcd",
+   "head_blob": "f8e73e7cf1968a148018389d78a25ad17a7a0fcd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "7153f1f4c34bf2cd727a9b15249ca4ef0b550e84",
+   "git_hash_object": "7153f1f4c34bf2cd727a9b15249ca4ef0b550e84",
+   "head_blob": "7153f1f4c34bf2cd727a9b15249ca4ef0b550e84",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "6a2518ef8a8c5bb846bfa7a6820d3cb9f240450f",
+   "git_hash_object": "6a2518ef8a8c5bb846bfa7a6820d3cb9f240450f",
+   "head_blob": "6a2518ef8a8c5bb846bfa7a6820d3cb9f240450f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "40e09cb1ac4587fe68308dc1370a7acfcd5d3ed9",
+   "git_hash_object": "40e09cb1ac4587fe68308dc1370a7acfcd5d3ed9",
+   "head_blob": "40e09cb1ac4587fe68308dc1370a7acfcd5d3ed9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "6f5c11e7ba6e7ba74568909c3c3461598ba9e24e",
+   "git_hash_object": "6f5c11e7ba6e7ba74568909c3c3461598ba9e24e",
+   "head_blob": "6f5c11e7ba6e7ba74568909c3c3461598ba9e24e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "6885049030a6321b1a447726751d8a6005936915",
+   "git_hash_object": "6885049030a6321b1a447726751d8a6005936915",
+   "head_blob": "6885049030a6321b1a447726751d8a6005936915",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "1aa3252396549d784eaf6fe13fefcf5147caf480",
+   "git_hash_object": "1aa3252396549d784eaf6fe13fefcf5147caf480",
+   "head_blob": "1aa3252396549d784eaf6fe13fefcf5147caf480",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "bd235dbd025b9b6ea68097d6481d6767d8b4c7ba",
+   "git_hash_object": "bd235dbd025b9b6ea68097d6481d6767d8b4c7ba",
+   "head_blob": "bd235dbd025b9b6ea68097d6481d6767d8b4c7ba",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "d73a4aeaa4cab1bde8be158645b4087f38ae37ed",
+   "git_hash_object": "d73a4aeaa4cab1bde8be158645b4087f38ae37ed",
+   "head_blob": "d73a4aeaa4cab1bde8be158645b4087f38ae37ed",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "a680732dd307f7a020331982c456906b88de7f30",
+   "git_hash_object": "a680732dd307f7a020331982c456906b88de7f30",
+   "head_blob": "a680732dd307f7a020331982c456906b88de7f30",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "d07cb73dcd15ca8f87d4c2042ae3015c8b67742e",
+   "git_hash_object": "d07cb73dcd15ca8f87d4c2042ae3015c8b67742e",
+   "head_blob": "d07cb73dcd15ca8f87d4c2042ae3015c8b67742e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "fda3959146ce783f0b5aaff341a148e1a0e2eec8",
+   "git_hash_object": "fda3959146ce783f0b5aaff341a148e1a0e2eec8",
+   "head_blob": "fda3959146ce783f0b5aaff341a148e1a0e2eec8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "e13ddb7cd0e65c7926b7cb265356bb106a6ec62e",
+   "git_hash_object": "e13ddb7cd0e65c7926b7cb265356bb106a6ec62e",
+   "head_blob": "e13ddb7cd0e65c7926b7cb265356bb106a6ec62e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "4a95d4004a13cc1c49f58a17902ecbbfa29f2420",
+   "git_hash_object": "4a95d4004a13cc1c49f58a17902ecbbfa29f2420",
+   "head_blob": "4a95d4004a13cc1c49f58a17902ecbbfa29f2420",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n5/consensus_t1.geojson",
+   "pinned": "6750d60fa60293a45758699ab3cd94b855c8074b",
+   "git_hash_object": "6750d60fa60293a45758699ab3cd94b855c8074b",
+   "head_blob": "6750d60fa60293a45758699ab3cd94b855c8074b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus/consensus_t1.geojson",
+   "pinned": "fa9223468f8efd3d5b30e83485ac22191b87e310",
+   "git_hash_object": "fa9223468f8efd3d5b30e83485ac22191b87e310",
+   "head_blob": "fa9223468f8efd3d5b30e83485ac22191b87e310",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c",
+   "git_hash_object": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c",
+   "head_blob": "a96da2137c85f6a9c0afbd5b91b6e91ba50dad0c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "5b989d8bfca95ade69bf15e350d862d88bed6ad9",
+   "git_hash_object": "5b989d8bfca95ade69bf15e350d862d88bed6ad9",
+   "head_blob": "5b989d8bfca95ade69bf15e350d862d88bed6ad9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "4b37dc3159563464999b034fb305babf1921ade2",
+   "git_hash_object": "4b37dc3159563464999b034fb305babf1921ade2",
+   "head_blob": "4b37dc3159563464999b034fb305babf1921ade2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "e088109e98fc173593eea9ed53c8d355900a6f83",
+   "git_hash_object": "e088109e98fc173593eea9ed53c8d355900a6f83",
+   "head_blob": "e088109e98fc173593eea9ed53c8d355900a6f83",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2",
+   "git_hash_object": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2",
+   "head_blob": "93249a1c008fe9d52c2c359d680fd65c7fb1aeb2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "f9ef2eff3a99ab627f9ed79d2ca3f8f9610eebbc",
+   "git_hash_object": "f9ef2eff3a99ab627f9ed79d2ca3f8f9610eebbc",
+   "head_blob": "f9ef2eff3a99ab627f9ed79d2ca3f8f9610eebbc",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "727f5c2bcafb9746f73f3e741a277b4156c61567",
+   "git_hash_object": "727f5c2bcafb9746f73f3e741a277b4156c61567",
+   "head_blob": "727f5c2bcafb9746f73f3e741a277b4156c61567",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "863cae7e641927bdf569e5484025a01c3bd7aa96",
+   "git_hash_object": "863cae7e641927bdf569e5484025a01c3bd7aa96",
+   "head_blob": "863cae7e641927bdf569e5484025a01c3bd7aa96",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "80abf2611d98b80b829736577bf6798317d275e0",
+   "git_hash_object": "80abf2611d98b80b829736577bf6798317d275e0",
+   "head_blob": "80abf2611d98b80b829736577bf6798317d275e0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "4e4307bb31f20c3a88cb9e1dd2a62a70d31d1bca",
+   "git_hash_object": "4e4307bb31f20c3a88cb9e1dd2a62a70d31d1bca",
+   "head_blob": "4e4307bb31f20c3a88cb9e1dd2a62a70d31d1bca",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "5055859fea0eeb0ee6574fee4f37bad75ce05d2c",
+   "git_hash_object": "5055859fea0eeb0ee6574fee4f37bad75ce05d2c",
+   "head_blob": "5055859fea0eeb0ee6574fee4f37bad75ce05d2c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "1a29608231271e8214178bc4d9fb4d5885463ea8",
+   "git_hash_object": "1a29608231271e8214178bc4d9fb4d5885463ea8",
+   "head_blob": "1a29608231271e8214178bc4d9fb4d5885463ea8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "c8e052c260d94390a1b946001bf8dd55f5c7d64c",
+   "git_hash_object": "c8e052c260d94390a1b946001bf8dd55f5c7d64c",
+   "head_blob": "c8e052c260d94390a1b946001bf8dd55f5c7d64c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "62b72b9703f65657b4d15a7bfc663cc009141280",
+   "git_hash_object": "62b72b9703f65657b4d15a7bfc663cc009141280",
+   "head_blob": "62b72b9703f65657b4d15a7bfc663cc009141280",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "700499f801eb927465f06487087cc1e44f1da687",
+   "git_hash_object": "700499f801eb927465f06487087cc1e44f1da687",
+   "head_blob": "700499f801eb927465f06487087cc1e44f1da687",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "55f987f041e3c280faa2f2c938893bb58aab92ec",
+   "git_hash_object": "55f987f041e3c280faa2f2c938893bb58aab92ec",
+   "head_blob": "55f987f041e3c280faa2f2c938893bb58aab92ec",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "d901736485367750aa8e64fb47dc3f5dc3c01910",
+   "git_hash_object": "d901736485367750aa8e64fb47dc3f5dc3c01910",
+   "head_blob": "d901736485367750aa8e64fb47dc3f5dc3c01910",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "d7eb99ef103eef9bb8346d4c4d6b5466ace88a18",
+   "git_hash_object": "d7eb99ef103eef9bb8346d4c4d6b5466ace88a18",
+   "head_blob": "d7eb99ef103eef9bb8346d4c4d6b5466ace88a18",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "ce626a3be6e7433b978c9931e533bc9d77bf25cf",
+   "git_hash_object": "ce626a3be6e7433b978c9931e533bc9d77bf25cf",
+   "head_blob": "ce626a3be6e7433b978c9931e533bc9d77bf25cf",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "d3c9f58d56b2921e3f25473ccae92f6f5e574c21",
+   "git_hash_object": "d3c9f58d56b2921e3f25473ccae92f6f5e574c21",
+   "head_blob": "d3c9f58d56b2921e3f25473ccae92f6f5e574c21",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n10/consensus_t1.geojson",
+   "pinned": "2271f091757d2b06335a40f3385c3659d174663d",
+   "git_hash_object": "2271f091757d2b06335a40f3385c3659d174663d",
+   "head_blob": "2271f091757d2b06335a40f3385c3659d174663d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n5/consensus_t1.geojson",
+   "pinned": "a6973c27431da135b51dd1106043962cb9c620af",
+   "git_hash_object": "a6973c27431da135b51dd1106043962cb9c620af",
+   "head_blob": "a6973c27431da135b51dd1106043962cb9c620af",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+   "pinned": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04",
+   "git_hash_object": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04",
+   "head_blob": "660ddbe0518909cfc54ee2e4f1d2ebe1e2e9af04",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+   "pinned": "1868371a4851d3160b7769b3cf9d21b40d2caa3d",
+   "git_hash_object": "1868371a4851d3160b7769b3cf9d21b40d2caa3d",
+   "head_blob": "1868371a4851d3160b7769b3cf9d21b40d2caa3d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+   "pinned": "8ec5bf6886f20b150fc07e17c5db83bafd80c7d9",
+   "git_hash_object": "8ec5bf6886f20b150fc07e17c5db83bafd80c7d9",
+   "head_blob": "8ec5bf6886f20b150fc07e17c5db83bafd80c7d9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_10/detections_text-t0.7_run10.meta.json",
+   "pinned": "95ac11b85ac681f2626748cd35b15ce994ccb303",
+   "git_hash_object": "95ac11b85ac681f2626748cd35b15ce994ccb303",
+   "head_blob": "95ac11b85ac681f2626748cd35b15ce994ccb303",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+   "pinned": "664cdf3775016fed087d64fef70445d8b5ad7b50",
+   "git_hash_object": "664cdf3775016fed087d64fef70445d8b5ad7b50",
+   "head_blob": "664cdf3775016fed087d64fef70445d8b5ad7b50",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_2/detections_text-t0.7_run02.meta.json",
+   "pinned": "158d7f02a5562b3a40aada09c7548b72d3cf41e3",
+   "git_hash_object": "158d7f02a5562b3a40aada09c7548b72d3cf41e3",
+   "head_blob": "158d7f02a5562b3a40aada09c7548b72d3cf41e3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+   "pinned": "db9cf765e3e0696ddb5228c7306119557b18493c",
+   "git_hash_object": "db9cf765e3e0696ddb5228c7306119557b18493c",
+   "head_blob": "db9cf765e3e0696ddb5228c7306119557b18493c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_3/detections_text-t0.7_run03.meta.json",
+   "pinned": "8307a566e7cee1230435d19175728cb8faabe6b4",
+   "git_hash_object": "8307a566e7cee1230435d19175728cb8faabe6b4",
+   "head_blob": "8307a566e7cee1230435d19175728cb8faabe6b4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+   "pinned": "850c4cb3e895f5a320f79913d9c97a8742eb73d1",
+   "git_hash_object": "850c4cb3e895f5a320f79913d9c97a8742eb73d1",
+   "head_blob": "850c4cb3e895f5a320f79913d9c97a8742eb73d1",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_4/detections_text-t0.7_run04.meta.json",
+   "pinned": "a6a77ae9ea503888810a49933eeafc0f7a4f686d",
+   "git_hash_object": "a6a77ae9ea503888810a49933eeafc0f7a4f686d",
+   "head_blob": "a6a77ae9ea503888810a49933eeafc0f7a4f686d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+   "pinned": "b00113dab519a66bb55a2c612a131897ac47e3a2",
+   "git_hash_object": "b00113dab519a66bb55a2c612a131897ac47e3a2",
+   "head_blob": "b00113dab519a66bb55a2c612a131897ac47e3a2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_5/detections_text-t0.7_run05.meta.json",
+   "pinned": "fffed5b5dd8b12ee0f5f5be0764ca2a651a8cf22",
+   "git_hash_object": "fffed5b5dd8b12ee0f5f5be0764ca2a651a8cf22",
+   "head_blob": "fffed5b5dd8b12ee0f5f5be0764ca2a651a8cf22",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+   "pinned": "663fd9afdc986501524bbe0c90717f62d5a0b104",
+   "git_hash_object": "663fd9afdc986501524bbe0c90717f62d5a0b104",
+   "head_blob": "663fd9afdc986501524bbe0c90717f62d5a0b104",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_6/detections_text-t0.7_run06.meta.json",
+   "pinned": "0597d9873ed232b6cba01dacd33b04fb3c77ed4d",
+   "git_hash_object": "0597d9873ed232b6cba01dacd33b04fb3c77ed4d",
+   "head_blob": "0597d9873ed232b6cba01dacd33b04fb3c77ed4d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+   "pinned": "d5400d9443af55bd72c7ba4445baf367531821f4",
+   "git_hash_object": "d5400d9443af55bd72c7ba4445baf367531821f4",
+   "head_blob": "d5400d9443af55bd72c7ba4445baf367531821f4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_7/detections_text-t0.7_run07.meta.json",
+   "pinned": "760aaefcd19fd587cf5bcc75e6a6d60afee1c642",
+   "git_hash_object": "760aaefcd19fd587cf5bcc75e6a6d60afee1c642",
+   "head_blob": "760aaefcd19fd587cf5bcc75e6a6d60afee1c642",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+   "pinned": "1b2bdb4ddd60b87ee2a3fbc4bb9878395a7d18e3",
+   "git_hash_object": "1b2bdb4ddd60b87ee2a3fbc4bb9878395a7d18e3",
+   "head_blob": "1b2bdb4ddd60b87ee2a3fbc4bb9878395a7d18e3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_8/detections_text-t0.7_run08.meta.json",
+   "pinned": "0bf3baa606bc0fd8ff01ec51d0f4cef9827f24d1",
+   "git_hash_object": "0bf3baa606bc0fd8ff01ec51d0f4cef9827f24d1",
+   "head_blob": "0bf3baa606bc0fd8ff01ec51d0f4cef9827f24d1",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+   "pinned": "f1d7222fe26ff2de9b3d3ab64edbd6dae4b76f47",
+   "git_hash_object": "f1d7222fe26ff2de9b3d3ab64edbd6dae4b76f47",
+   "head_blob": "f1d7222fe26ff2de9b3d3ab64edbd6dae4b76f47",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/run_9/detections_text-t0.7_run09.meta.json",
+   "pinned": "1f0f3d30f0353c8f793d79403a4a55b4652571b4",
+   "git_hash_object": "1f0f3d30f0353c8f793d79403a4a55b4652571b4",
+   "head_blob": "1f0f3d30f0353c8f793d79403a4a55b4652571b4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n5/consensus_t1.geojson",
+   "pinned": "529124ef38b63cee8a3ba2df31f97773110645a2",
+   "git_hash_object": "529124ef38b63cee8a3ba2df31f97773110645a2",
+   "head_blob": "529124ef38b63cee8a3ba2df31f97773110645a2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus/consensus_t1.geojson",
+   "pinned": "1341b31084b7c6a5723ec0179b5ff43ce07ca0d2",
+   "git_hash_object": "1341b31084b7c6a5723ec0179b5ff43ce07ca0d2",
+   "head_blob": "1341b31084b7c6a5723ec0179b5ff43ce07ca0d2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "24116eac1a22e86cf27d54ad7f1e6d8d5500b6fd",
+   "git_hash_object": "24116eac1a22e86cf27d54ad7f1e6d8d5500b6fd",
+   "head_blob": "24116eac1a22e86cf27d54ad7f1e6d8d5500b6fd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "687e826f6ef27e243ce04a4d1024b57eb2550636",
+   "git_hash_object": "687e826f6ef27e243ce04a4d1024b57eb2550636",
+   "head_blob": "687e826f6ef27e243ce04a4d1024b57eb2550636",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "110a68c8a9e5d70274feebf6acf3aa6b732adcc9",
+   "git_hash_object": "110a68c8a9e5d70274feebf6acf3aa6b732adcc9",
+   "head_blob": "110a68c8a9e5d70274feebf6acf3aa6b732adcc9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "4715c9f52c2b61d3befe995b97cbe1e7aafb3e66",
+   "git_hash_object": "4715c9f52c2b61d3befe995b97cbe1e7aafb3e66",
+   "head_blob": "4715c9f52c2b61d3befe995b97cbe1e7aafb3e66",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "cc2f97b10f017e36955d3db398770e241eb00bb0",
+   "git_hash_object": "cc2f97b10f017e36955d3db398770e241eb00bb0",
+   "head_blob": "cc2f97b10f017e36955d3db398770e241eb00bb0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "8597377d6bc053d3555e7ecce36b9494d81f74ef",
+   "git_hash_object": "8597377d6bc053d3555e7ecce36b9494d81f74ef",
+   "head_blob": "8597377d6bc053d3555e7ecce36b9494d81f74ef",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "1a2e7388a49409424efdf9dd4d0bbdc72afef80b",
+   "git_hash_object": "1a2e7388a49409424efdf9dd4d0bbdc72afef80b",
+   "head_blob": "1a2e7388a49409424efdf9dd4d0bbdc72afef80b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "3f71fce5007d1c88b0277a3b318e12372ff3a618",
+   "git_hash_object": "3f71fce5007d1c88b0277a3b318e12372ff3a618",
+   "head_blob": "3f71fce5007d1c88b0277a3b318e12372ff3a618",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "43eaeda0c0b19d580338dfd55aa7cbbd67f81808",
+   "git_hash_object": "43eaeda0c0b19d580338dfd55aa7cbbd67f81808",
+   "head_blob": "43eaeda0c0b19d580338dfd55aa7cbbd67f81808",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "de46455cdcc2d39900c4b3269bf9d933d2617d59",
+   "git_hash_object": "de46455cdcc2d39900c4b3269bf9d933d2617d59",
+   "head_blob": "de46455cdcc2d39900c4b3269bf9d933d2617d59",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "f9da4c156c1e1173b3549450eae5399eeb3ad7ae",
+   "git_hash_object": "f9da4c156c1e1173b3549450eae5399eeb3ad7ae",
+   "head_blob": "f9da4c156c1e1173b3549450eae5399eeb3ad7ae",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "1de43f5b0e229091192315b58d74350979702a37",
+   "git_hash_object": "1de43f5b0e229091192315b58d74350979702a37",
+   "head_blob": "1de43f5b0e229091192315b58d74350979702a37",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "22fc8c698d2478b6ae72e0040a4987f625c3f68b",
+   "git_hash_object": "22fc8c698d2478b6ae72e0040a4987f625c3f68b",
+   "head_blob": "22fc8c698d2478b6ae72e0040a4987f625c3f68b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "b0db5624dd1082edf8a49cf4d602118c06936a2c",
+   "git_hash_object": "b0db5624dd1082edf8a49cf4d602118c06936a2c",
+   "head_blob": "b0db5624dd1082edf8a49cf4d602118c06936a2c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "f405cdcde2d9fd36a426a2fc2667f23bf439ef61",
+   "git_hash_object": "f405cdcde2d9fd36a426a2fc2667f23bf439ef61",
+   "head_blob": "f405cdcde2d9fd36a426a2fc2667f23bf439ef61",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "8e33e99b89d723de3046e147d83407c12bb53349",
+   "git_hash_object": "8e33e99b89d723de3046e147d83407c12bb53349",
+   "head_blob": "8e33e99b89d723de3046e147d83407c12bb53349",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "d0652a191173f72df58453a9f92a23f1f7dc3e8d",
+   "git_hash_object": "d0652a191173f72df58453a9f92a23f1f7dc3e8d",
+   "head_blob": "d0652a191173f72df58453a9f92a23f1f7dc3e8d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "ab9a5bb332d8fafc5c78dfce7c2a829697cf2fdf",
+   "git_hash_object": "ab9a5bb332d8fafc5c78dfce7c2a829697cf2fdf",
+   "head_blob": "ab9a5bb332d8fafc5c78dfce7c2a829697cf2fdf",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "b963ca2d802b58c56dc7a14614cea187148bafb6",
+   "git_hash_object": "b963ca2d802b58c56dc7a14614cea187148bafb6",
+   "head_blob": "b963ca2d802b58c56dc7a14614cea187148bafb6",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "d76349b635626cdaf7837bd3befc5cb688b77924",
+   "git_hash_object": "d76349b635626cdaf7837bd3befc5cb688b77924",
+   "head_blob": "d76349b635626cdaf7837bd3befc5cb688b77924",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n5/consensus_t1.geojson",
+   "pinned": "4c6a347c17808c90d9c3c57b727d3e386c050bce",
+   "git_hash_object": "4c6a347c17808c90d9c3c57b727d3e386c050bce",
+   "head_blob": "4c6a347c17808c90d9c3c57b727d3e386c050bce",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus/consensus_t1.geojson",
+   "pinned": "0049fa3c295a10f3bb528b3f19b3749e117fb6df",
+   "git_hash_object": "0049fa3c295a10f3bb528b3f19b3749e117fb6df",
+   "head_blob": "0049fa3c295a10f3bb528b3f19b3749e117fb6df",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "bf7575ca9cbd80606d24775d12c4b606ff241ad2",
+   "git_hash_object": "bf7575ca9cbd80606d24775d12c4b606ff241ad2",
+   "head_blob": "bf7575ca9cbd80606d24775d12c4b606ff241ad2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_1/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "a85ea3490b46f4d308a7662daa8b23388311eee1",
+   "git_hash_object": "a85ea3490b46f4d308a7662daa8b23388311eee1",
+   "head_blob": "a85ea3490b46f4d308a7662daa8b23388311eee1",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "e60efa1a138c52fae3954f4e7cafadb2acd3d353",
+   "git_hash_object": "e60efa1a138c52fae3954f4e7cafadb2acd3d353",
+   "head_blob": "e60efa1a138c52fae3954f4e7cafadb2acd3d353",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_10/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "27ce9c8f315bef730b0f1f6d5ff230e37dfd636b",
+   "git_hash_object": "27ce9c8f315bef730b0f1f6d5ff230e37dfd636b",
+   "head_blob": "27ce9c8f315bef730b0f1f6d5ff230e37dfd636b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "a0f192e9ed2e0047396e12ffabcd511c7427c48c",
+   "git_hash_object": "a0f192e9ed2e0047396e12ffabcd511c7427c48c",
+   "head_blob": "a0f192e9ed2e0047396e12ffabcd511c7427c48c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_2/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "d8b351dcb59ed5b263b67e699867be691d2fc87d",
+   "git_hash_object": "d8b351dcb59ed5b263b67e699867be691d2fc87d",
+   "head_blob": "d8b351dcb59ed5b263b67e699867be691d2fc87d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "7a19cbe1196f487440a532abc819f1e69ef3eba7",
+   "git_hash_object": "7a19cbe1196f487440a532abc819f1e69ef3eba7",
+   "head_blob": "7a19cbe1196f487440a532abc819f1e69ef3eba7",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_3/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "67fcdf4a4312de5f42860b2952724c468a00410d",
+   "git_hash_object": "67fcdf4a4312de5f42860b2952724c468a00410d",
+   "head_blob": "67fcdf4a4312de5f42860b2952724c468a00410d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "bb473eb837df94e66a21845fb163f2438faba99f",
+   "git_hash_object": "bb473eb837df94e66a21845fb163f2438faba99f",
+   "head_blob": "bb473eb837df94e66a21845fb163f2438faba99f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_4/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "ab423eb86a88dac4c87b709e12fba71f0fa54f7c",
+   "git_hash_object": "ab423eb86a88dac4c87b709e12fba71f0fa54f7c",
+   "head_blob": "ab423eb86a88dac4c87b709e12fba71f0fa54f7c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "5455cdd31ea099f6cea55cfea5bc977e0acb0725",
+   "git_hash_object": "5455cdd31ea099f6cea55cfea5bc977e0acb0725",
+   "head_blob": "5455cdd31ea099f6cea55cfea5bc977e0acb0725",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_5/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "252cc9dc9dba1094dafbfe3f889961ad69cf7e16",
+   "git_hash_object": "252cc9dc9dba1094dafbfe3f889961ad69cf7e16",
+   "head_blob": "252cc9dc9dba1094dafbfe3f889961ad69cf7e16",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "fdae2cbc986813781e08d609a832143805ff3b1d",
+   "git_hash_object": "fdae2cbc986813781e08d609a832143805ff3b1d",
+   "head_blob": "fdae2cbc986813781e08d609a832143805ff3b1d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_6/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "67ec5e5bee6a664b8c7bb0b3dcb59246e6224d83",
+   "git_hash_object": "67ec5e5bee6a664b8c7bb0b3dcb59246e6224d83",
+   "head_blob": "67ec5e5bee6a664b8c7bb0b3dcb59246e6224d83",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "3ab10f0417b272b54904d06b26275800153bb0b9",
+   "git_hash_object": "3ab10f0417b272b54904d06b26275800153bb0b9",
+   "head_blob": "3ab10f0417b272b54904d06b26275800153bb0b9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_7/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "ab18e347901c1ce8b8e7969757f726d188acbca8",
+   "git_hash_object": "ab18e347901c1ce8b8e7969757f726d188acbca8",
+   "head_blob": "ab18e347901c1ce8b8e7969757f726d188acbca8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "81db8d271d76fabebd97cc7cc4b7daf699f6930d",
+   "git_hash_object": "81db8d271d76fabebd97cc7cc4b7daf699f6930d",
+   "head_blob": "81db8d271d76fabebd97cc7cc4b7daf699f6930d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_8/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "87d9be72590e77b228b52fd127803f2c6b7a2e9f",
+   "git_hash_object": "87d9be72590e77b228b52fd127803f2c6b7a2e9f",
+   "head_blob": "87d9be72590e77b228b52fd127803f2c6b7a2e9f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "70b787acec8bbe86b0e0b3d2368c1df245791de9",
+   "git_hash_object": "70b787acec8bbe86b0e0b3d2368c1df245791de9",
+   "head_blob": "70b787acec8bbe86b0e0b3d2368c1df245791de9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/run_9/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "1ec0172f5423a45e0ed1b4cd2312ea3834a6e439",
+   "git_hash_object": "1ec0172f5423a45e0ed1b4cd2312ea3834a6e439",
+   "head_blob": "1ec0172f5423a45e0ed1b4cd2312ea3834a6e439",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n10/consensus_t1.geojson",
+   "pinned": "59e8adaf812ac95c5f5738f64b0b60b4cbeb5708",
+   "git_hash_object": "59e8adaf812ac95c5f5738f64b0b60b4cbeb5708",
+   "head_blob": "59e8adaf812ac95c5f5738f64b0b60b4cbeb5708",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n5/consensus_t1.geojson",
+   "pinned": "a03f4f7a13d6c31ac3c3ca624c19738bd3be4449",
+   "git_hash_object": "a03f4f7a13d6c31ac3c3ca624c19738bd3be4449",
+   "head_blob": "a03f4f7a13d6c31ac3c3ca624c19738bd3be4449",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.geojson",
+   "pinned": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922",
+   "git_hash_object": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922",
+   "head_blob": "c5912af2cb5c5cbd4681b3f16eaf1b276fa1c922",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_1/detections_text-t0.7_run01.meta.json",
+   "pinned": "d5610fd1ab6b6e297f3ea2a03e6da046cd17af0e",
+   "git_hash_object": "d5610fd1ab6b6e297f3ea2a03e6da046cd17af0e",
+   "head_blob": "d5610fd1ab6b6e297f3ea2a03e6da046cd17af0e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.geojson",
+   "pinned": "869d29d9a43a94de1e7b635bf0592adea7374391",
+   "git_hash_object": "869d29d9a43a94de1e7b635bf0592adea7374391",
+   "head_blob": "869d29d9a43a94de1e7b635bf0592adea7374391",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_10/detections_text-t0.7_run10.meta.json",
+   "pinned": "224613bfcbab938f1c6feecc7798e64e5cc9800c",
+   "git_hash_object": "224613bfcbab938f1c6feecc7798e64e5cc9800c",
+   "head_blob": "224613bfcbab938f1c6feecc7798e64e5cc9800c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.geojson",
+   "pinned": "8a752a89bebde97cd19acdb0ac10d9733e40a038",
+   "git_hash_object": "8a752a89bebde97cd19acdb0ac10d9733e40a038",
+   "head_blob": "8a752a89bebde97cd19acdb0ac10d9733e40a038",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_2/detections_text-t0.7_run02.meta.json",
+   "pinned": "14c19fb63e0882a0bc3248e5395827cdf2a79ffc",
+   "git_hash_object": "14c19fb63e0882a0bc3248e5395827cdf2a79ffc",
+   "head_blob": "14c19fb63e0882a0bc3248e5395827cdf2a79ffc",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.geojson",
+   "pinned": "85670f68eabd44aab166d8df37bdb1b332effda7",
+   "git_hash_object": "85670f68eabd44aab166d8df37bdb1b332effda7",
+   "head_blob": "85670f68eabd44aab166d8df37bdb1b332effda7",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_3/detections_text-t0.7_run03.meta.json",
+   "pinned": "fcca8979dcc8ac55fe5ba559f0e04c031dcbdfa3",
+   "git_hash_object": "fcca8979dcc8ac55fe5ba559f0e04c031dcbdfa3",
+   "head_blob": "fcca8979dcc8ac55fe5ba559f0e04c031dcbdfa3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.geojson",
+   "pinned": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4",
+   "git_hash_object": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4",
+   "head_blob": "318eef3d0b8ca7d49f775a133d2ab75438c24fb4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_4/detections_text-t0.7_run04.meta.json",
+   "pinned": "35bca9b6c57b5a064717867ff187475a0107557e",
+   "git_hash_object": "35bca9b6c57b5a064717867ff187475a0107557e",
+   "head_blob": "35bca9b6c57b5a064717867ff187475a0107557e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.geojson",
+   "pinned": "393e00372a86c040013033655d56c1bd06a5f8c3",
+   "git_hash_object": "393e00372a86c040013033655d56c1bd06a5f8c3",
+   "head_blob": "393e00372a86c040013033655d56c1bd06a5f8c3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_5/detections_text-t0.7_run05.meta.json",
+   "pinned": "16f5bf3029c53b3dcad101f084ee155532e0e094",
+   "git_hash_object": "16f5bf3029c53b3dcad101f084ee155532e0e094",
+   "head_blob": "16f5bf3029c53b3dcad101f084ee155532e0e094",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.geojson",
+   "pinned": "cb6b5315be8ad4ad7dd3a9a7f3e07ab8961d44cd",
+   "git_hash_object": "cb6b5315be8ad4ad7dd3a9a7f3e07ab8961d44cd",
+   "head_blob": "cb6b5315be8ad4ad7dd3a9a7f3e07ab8961d44cd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_6/detections_text-t0.7_run06.meta.json",
+   "pinned": "69b9ec7c85734839ebad00cacb18ae86e647b630",
+   "git_hash_object": "69b9ec7c85734839ebad00cacb18ae86e647b630",
+   "head_blob": "69b9ec7c85734839ebad00cacb18ae86e647b630",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.geojson",
+   "pinned": "a497ed7d73cc3e6f0d7f459d9990f39d0bfda90c",
+   "git_hash_object": "a497ed7d73cc3e6f0d7f459d9990f39d0bfda90c",
+   "head_blob": "a497ed7d73cc3e6f0d7f459d9990f39d0bfda90c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_7/detections_text-t0.7_run07.meta.json",
+   "pinned": "4c1d1d2dace315d6e09f012e53014cade5e3b5a4",
+   "git_hash_object": "4c1d1d2dace315d6e09f012e53014cade5e3b5a4",
+   "head_blob": "4c1d1d2dace315d6e09f012e53014cade5e3b5a4",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.geojson",
+   "pinned": "a201cca90e0802fc1dc12174b61ef3d5cc874752",
+   "git_hash_object": "a201cca90e0802fc1dc12174b61ef3d5cc874752",
+   "head_blob": "a201cca90e0802fc1dc12174b61ef3d5cc874752",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_8/detections_text-t0.7_run08.meta.json",
+   "pinned": "f8bf036341547db60ff9b932ee42b7acb1e7e01b",
+   "git_hash_object": "f8bf036341547db60ff9b932ee42b7acb1e7e01b",
+   "head_blob": "f8bf036341547db60ff9b932ee42b7acb1e7e01b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.geojson",
+   "pinned": "52e5fd4536bdc27d8b5e0f8dff0fbbcc0f1d4a1e",
+   "git_hash_object": "52e5fd4536bdc27d8b5e0f8dff0fbbcc0f1d4a1e",
+   "head_blob": "52e5fd4536bdc27d8b5e0f8dff0fbbcc0f1d4a1e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/run_9/detections_text-t0.7_run09.meta.json",
+   "pinned": "0e1fc2e0d6c9ec696c463c580246816296e61cf6",
+   "git_hash_object": "0e1fc2e0d6c9ec696c463c580246816296e61cf6",
+   "head_blob": "0e1fc2e0d6c9ec696c463c580246816296e61cf6",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n5/consensus_t1.geojson",
+   "pinned": "f7fe3ee9a0a4d6eacb975bfa8f37dfc0e2d3491c",
+   "git_hash_object": "f7fe3ee9a0a4d6eacb975bfa8f37dfc0e2d3491c",
+   "head_blob": "f7fe3ee9a0a4d6eacb975bfa8f37dfc0e2d3491c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus/consensus_t1.geojson",
+   "pinned": "978ccef1593ec75bf0c975e794e3ab77617d5961",
+   "git_hash_object": "978ccef1593ec75bf0c975e794e3ab77617d5961",
+   "head_blob": "978ccef1593ec75bf0c975e794e3ab77617d5961",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "bb8adbd367f670a425074b4a65b1078b461ea585",
+   "git_hash_object": "bb8adbd367f670a425074b4a65b1078b461ea585",
+   "head_blob": "bb8adbd367f670a425074b4a65b1078b461ea585",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_1/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "d2886c67bffb2d18957a8f947bdbcbc64520477f",
+   "git_hash_object": "d2886c67bffb2d18957a8f947bdbcbc64520477f",
+   "head_blob": "d2886c67bffb2d18957a8f947bdbcbc64520477f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "9a53183f9f4ce399d7d0d74e5fcf6e3f0bf1886e",
+   "git_hash_object": "9a53183f9f4ce399d7d0d74e5fcf6e3f0bf1886e",
+   "head_blob": "9a53183f9f4ce399d7d0d74e5fcf6e3f0bf1886e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_10/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "a49ffce131be077333f520028016766229212b4f",
+   "git_hash_object": "a49ffce131be077333f520028016766229212b4f",
+   "head_blob": "a49ffce131be077333f520028016766229212b4f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "2f0d346cef410cb4910fa33b2a8ac5fff28f0810",
+   "git_hash_object": "2f0d346cef410cb4910fa33b2a8ac5fff28f0810",
+   "head_blob": "2f0d346cef410cb4910fa33b2a8ac5fff28f0810",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_2/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "527fbe20fa1405fe11b600d4a2cd6d0a38c1a9b2",
+   "git_hash_object": "527fbe20fa1405fe11b600d4a2cd6d0a38c1a9b2",
+   "head_blob": "527fbe20fa1405fe11b600d4a2cd6d0a38c1a9b2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "b8d6c0378903b8624d1be63c7dec1edf64e1a963",
+   "git_hash_object": "b8d6c0378903b8624d1be63c7dec1edf64e1a963",
+   "head_blob": "b8d6c0378903b8624d1be63c7dec1edf64e1a963",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_3/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "acb3e340ede830ddb705ecbd3284bf18059f520a",
+   "git_hash_object": "acb3e340ede830ddb705ecbd3284bf18059f520a",
+   "head_blob": "acb3e340ede830ddb705ecbd3284bf18059f520a",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "7c49bd60a5128706e60b64460349959dce99786b",
+   "git_hash_object": "7c49bd60a5128706e60b64460349959dce99786b",
+   "head_blob": "7c49bd60a5128706e60b64460349959dce99786b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_4/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "068a03882b7542d4378576a8e000d78fba2a8d53",
+   "git_hash_object": "068a03882b7542d4378576a8e000d78fba2a8d53",
+   "head_blob": "068a03882b7542d4378576a8e000d78fba2a8d53",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "f54350dca82f619bc4455123bd49f82f77f03d8d",
+   "git_hash_object": "f54350dca82f619bc4455123bd49f82f77f03d8d",
+   "head_blob": "f54350dca82f619bc4455123bd49f82f77f03d8d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_5/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "b35c4b70c001b812559327728781eb575b1458bc",
+   "git_hash_object": "b35c4b70c001b812559327728781eb575b1458bc",
+   "head_blob": "b35c4b70c001b812559327728781eb575b1458bc",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "5d38d069ab23f670dc5487dabcfed5dde57e2b20",
+   "git_hash_object": "5d38d069ab23f670dc5487dabcfed5dde57e2b20",
+   "head_blob": "5d38d069ab23f670dc5487dabcfed5dde57e2b20",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_6/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "b7f6a4cc1e0bf4330856dc83034f7de928e4e2bb",
+   "git_hash_object": "b7f6a4cc1e0bf4330856dc83034f7de928e4e2bb",
+   "head_blob": "b7f6a4cc1e0bf4330856dc83034f7de928e4e2bb",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "f70f90e637c6eaca760bdf1826f5e01b98c08cfb",
+   "git_hash_object": "f70f90e637c6eaca760bdf1826f5e01b98c08cfb",
+   "head_blob": "f70f90e637c6eaca760bdf1826f5e01b98c08cfb",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_7/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "c15880eab9cef00220d5c4e6fcbcfb852891ef9d",
+   "git_hash_object": "c15880eab9cef00220d5c4e6fcbcfb852891ef9d",
+   "head_blob": "c15880eab9cef00220d5c4e6fcbcfb852891ef9d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "36091be6d761de2aa5749c8df0afbed27a597b41",
+   "git_hash_object": "36091be6d761de2aa5749c8df0afbed27a597b41",
+   "head_blob": "36091be6d761de2aa5749c8df0afbed27a597b41",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_8/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "c3c1867a8f1f7a56981098241dd4c3ec572f0a84",
+   "git_hash_object": "c3c1867a8f1f7a56981098241dd4c3ec572f0a84",
+   "head_blob": "c3c1867a8f1f7a56981098241dd4c3ec572f0a84",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.geojson",
+   "pinned": "d67ec366556c650f30dba7acc4df631f2fb85599",
+   "git_hash_object": "d67ec366556c650f30dba7acc4df631f2fb85599",
+   "head_blob": "d67ec366556c650f30dba7acc4df631f2fb85599",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/run_9/detections-detect_brief-text-3-flash-2026-04-17.meta.json",
+   "pinned": "56ef11d0866d27153fc9481f30019ef3c9c93a8d",
+   "git_hash_object": "56ef11d0866d27153fc9481f30019ef3c9c93a8d",
+   "head_blob": "56ef11d0866d27153fc9481f30019ef3c9c93a8d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n5/consensus_t1.geojson",
+   "pinned": "9e588e5e1702e509350af04faaa5a791db7a353d",
+   "git_hash_object": "9e588e5e1702e509350af04faaa5a791db7a353d",
+   "head_blob": "9e588e5e1702e509350af04faaa5a791db7a353d",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus/consensus_t1.geojson",
+   "pinned": "131760d34a19c98e8b1ac5003a84b6faed9ade4b",
+   "git_hash_object": "131760d34a19c98e8b1ac5003a84b6faed9ade4b",
+   "head_blob": "131760d34a19c98e8b1ac5003a84b6faed9ade4b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "33e3665beb102b56b2d473f1d8e3dfff43f489da",
+   "git_hash_object": "33e3665beb102b56b2d473f1d8e3dfff43f489da",
+   "head_blob": "33e3665beb102b56b2d473f1d8e3dfff43f489da",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_1/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "282dc413a657562081b7b148ef791609d8679ba1",
+   "git_hash_object": "282dc413a657562081b7b148ef791609d8679ba1",
+   "head_blob": "282dc413a657562081b7b148ef791609d8679ba1",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "711547dfb99da0851be711c6db947525d9097e20",
+   "git_hash_object": "711547dfb99da0851be711c6db947525d9097e20",
+   "head_blob": "711547dfb99da0851be711c6db947525d9097e20",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_10/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "973b3e706dc274bab9db9b92987dc54a31c46ec9",
+   "git_hash_object": "973b3e706dc274bab9db9b92987dc54a31c46ec9",
+   "head_blob": "973b3e706dc274bab9db9b92987dc54a31c46ec9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "f4000ba9965f85c7a69e117bb8ad4128940a404c",
+   "git_hash_object": "f4000ba9965f85c7a69e117bb8ad4128940a404c",
+   "head_blob": "f4000ba9965f85c7a69e117bb8ad4128940a404c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_2/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "81739102adf6a64a8ddeaebfdfd8dc383af779be",
+   "git_hash_object": "81739102adf6a64a8ddeaebfdfd8dc383af779be",
+   "head_blob": "81739102adf6a64a8ddeaebfdfd8dc383af779be",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "7ee66603f415ecb1c1328a2e7c122cd58c506a46",
+   "git_hash_object": "7ee66603f415ecb1c1328a2e7c122cd58c506a46",
+   "head_blob": "7ee66603f415ecb1c1328a2e7c122cd58c506a46",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_3/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "acb2149a53160c1c01ff29b5dba6609e16382912",
+   "git_hash_object": "acb2149a53160c1c01ff29b5dba6609e16382912",
+   "head_blob": "acb2149a53160c1c01ff29b5dba6609e16382912",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "82fbe226516c50ec4577018f3d5f2ab20c6cbe41",
+   "git_hash_object": "82fbe226516c50ec4577018f3d5f2ab20c6cbe41",
+   "head_blob": "82fbe226516c50ec4577018f3d5f2ab20c6cbe41",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_4/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "2ae52b54eb08202dc489575fe9ad8057bc8f8e1c",
+   "git_hash_object": "2ae52b54eb08202dc489575fe9ad8057bc8f8e1c",
+   "head_blob": "2ae52b54eb08202dc489575fe9ad8057bc8f8e1c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "9f54f7b037a087e25673bdb711bdf3d328a8e534",
+   "git_hash_object": "9f54f7b037a087e25673bdb711bdf3d328a8e534",
+   "head_blob": "9f54f7b037a087e25673bdb711bdf3d328a8e534",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_5/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "9e64357f7d481e8a0ea0bb2b1c24c463d9747d9a",
+   "git_hash_object": "9e64357f7d481e8a0ea0bb2b1c24c463d9747d9a",
+   "head_blob": "9e64357f7d481e8a0ea0bb2b1c24c463d9747d9a",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "2a627261e2e3b9ed0157125b918ce624bdb33c17",
+   "git_hash_object": "2a627261e2e3b9ed0157125b918ce624bdb33c17",
+   "head_blob": "2a627261e2e3b9ed0157125b918ce624bdb33c17",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_6/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "e7f51971898883a6610356babe6867326a52a848",
+   "git_hash_object": "e7f51971898883a6610356babe6867326a52a848",
+   "head_blob": "e7f51971898883a6610356babe6867326a52a848",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "b7a63f8f9479ddefdbb1133ad1aa7eda9087da90",
+   "git_hash_object": "b7a63f8f9479ddefdbb1133ad1aa7eda9087da90",
+   "head_blob": "b7a63f8f9479ddefdbb1133ad1aa7eda9087da90",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_7/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "3164e72d5deb6fd584def7e9e5c90e8e2339f6d6",
+   "git_hash_object": "3164e72d5deb6fd584def7e9e5c90e8e2339f6d6",
+   "head_blob": "3164e72d5deb6fd584def7e9e5c90e8e2339f6d6",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "63bf5348fd4883074bdd4d1433b50d346a977ffe",
+   "git_hash_object": "63bf5348fd4883074bdd4d1433b50d346a977ffe",
+   "head_blob": "63bf5348fd4883074bdd4d1433b50d346a977ffe",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_8/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "fab68f178ac224fec867ca7fc6d704d3a11a68bc",
+   "git_hash_object": "fab68f178ac224fec867ca7fc6d704d3a11a68bc",
+   "head_blob": "fab68f178ac224fec867ca7fc6d704d3a11a68bc",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "b79c073d8f9052608588806148a61e10c9a31325",
+   "git_hash_object": "b79c073d8f9052608588806148a61e10c9a31325",
+   "head_blob": "b79c073d8f9052608588806148a61e10c9a31325",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/run_9/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "ec93f22e782d6e32e3b8f943d8a82da2657b1682",
+   "git_hash_object": "ec93f22e782d6e32e3b8f943d8a82da2657b1682",
+   "head_blob": "ec93f22e782d6e32e3b8f943d8a82da2657b1682",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n5/consensus_t1.geojson",
+   "pinned": "135462524c2eca92e31f9c7e4e9ae0812ca334a8",
+   "git_hash_object": "135462524c2eca92e31f9c7e4e9ae0812ca334a8",
+   "head_blob": "135462524c2eca92e31f9c7e4e9ae0812ca334a8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus/consensus_t1.geojson",
+   "pinned": "1ff33cd7b25d6c3c997ffd15b106c7b3961e9a3e",
+   "git_hash_object": "1ff33cd7b25d6c3c997ffd15b106c7b3961e9a3e",
+   "head_blob": "1ff33cd7b25d6c3c997ffd15b106c7b3961e9a3e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.geojson",
+   "pinned": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f",
+   "git_hash_object": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f",
+   "head_blob": "793dfed82e96d3f5f35f187a4fa6429843c0fa4f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_1/detections_image-t0.7_run01.meta.json",
+   "pinned": "6627ee784db460f36f6fbdc1d62eb29c66958060",
+   "git_hash_object": "6627ee784db460f36f6fbdc1d62eb29c66958060",
+   "head_blob": "6627ee784db460f36f6fbdc1d62eb29c66958060",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_10/detections_image-t0.7_run10.geojson",
+   "pinned": "abb32a9cded26659a466cc06d24f41e616992627",
+   "git_hash_object": "abb32a9cded26659a466cc06d24f41e616992627",
+   "head_blob": "abb32a9cded26659a466cc06d24f41e616992627",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_10/detections_image-t0.7_run10.meta.json",
+   "pinned": "5cdea1866185a9554f2592638fefeb6b262cc1e5",
+   "git_hash_object": "5cdea1866185a9554f2592638fefeb6b262cc1e5",
+   "head_blob": "5cdea1866185a9554f2592638fefeb6b262cc1e5",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.geojson",
+   "pinned": "9a9beae5063b9c22176ae150595b0bdcfe9d6653",
+   "git_hash_object": "9a9beae5063b9c22176ae150595b0bdcfe9d6653",
+   "head_blob": "9a9beae5063b9c22176ae150595b0bdcfe9d6653",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_2/detections_image-t0.7_run02.meta.json",
+   "pinned": "75e6805c22676e6261b42b7ba5072c6ca8ccf24b",
+   "git_hash_object": "75e6805c22676e6261b42b7ba5072c6ca8ccf24b",
+   "head_blob": "75e6805c22676e6261b42b7ba5072c6ca8ccf24b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.geojson",
+   "pinned": "e259e477a98ff1855cf1c5ddb893975a9a508ff9",
+   "git_hash_object": "e259e477a98ff1855cf1c5ddb893975a9a508ff9",
+   "head_blob": "e259e477a98ff1855cf1c5ddb893975a9a508ff9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_3/detections_image-t0.7_run03.meta.json",
+   "pinned": "8f49b5c39b28891697dea9b870ab80166fe0acb5",
+   "git_hash_object": "8f49b5c39b28891697dea9b870ab80166fe0acb5",
+   "head_blob": "8f49b5c39b28891697dea9b870ab80166fe0acb5",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.geojson",
+   "pinned": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9",
+   "git_hash_object": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9",
+   "head_blob": "bab25ab4ff84ef1069c5cf82e1e0bd0d5e5444b9",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_4/detections_image-t0.7_run04.meta.json",
+   "pinned": "fba853784a43ab7f060b34c2654517a2e373480b",
+   "git_hash_object": "fba853784a43ab7f060b34c2654517a2e373480b",
+   "head_blob": "fba853784a43ab7f060b34c2654517a2e373480b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.geojson",
+   "pinned": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6",
+   "git_hash_object": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6",
+   "head_blob": "84642cae2c8eefc825ffed5ad2d4f4506d618ba6",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_5/detections_image-t0.7_run05.meta.json",
+   "pinned": "bed01113c77f58a5856de8a6eeedecd5a0fa8798",
+   "git_hash_object": "bed01113c77f58a5856de8a6eeedecd5a0fa8798",
+   "head_blob": "bed01113c77f58a5856de8a6eeedecd5a0fa8798",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_6/detections_image-t0.7_run06.geojson",
+   "pinned": "381d29cbe6ab71efe25ba441aa708e66d8696a85",
+   "git_hash_object": "381d29cbe6ab71efe25ba441aa708e66d8696a85",
+   "head_blob": "381d29cbe6ab71efe25ba441aa708e66d8696a85",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_6/detections_image-t0.7_run06.meta.json",
+   "pinned": "1138ad864013ca7cb2c5cd61f2ae124916c4ca6c",
+   "git_hash_object": "1138ad864013ca7cb2c5cd61f2ae124916c4ca6c",
+   "head_blob": "1138ad864013ca7cb2c5cd61f2ae124916c4ca6c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_7/detections_image-t0.7_run07.geojson",
+   "pinned": "4fec3f62ab9d73061fae9fc8be6d76bfaf843028",
+   "git_hash_object": "4fec3f62ab9d73061fae9fc8be6d76bfaf843028",
+   "head_blob": "4fec3f62ab9d73061fae9fc8be6d76bfaf843028",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_7/detections_image-t0.7_run07.meta.json",
+   "pinned": "dd0c288b19ccd2fc2a0de93e44dafe3dc2860bc3",
+   "git_hash_object": "dd0c288b19ccd2fc2a0de93e44dafe3dc2860bc3",
+   "head_blob": "dd0c288b19ccd2fc2a0de93e44dafe3dc2860bc3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_8/detections_image-t0.7_run08.geojson",
+   "pinned": "0211b8e391c373f65dee4ce94e206f85a613293a",
+   "git_hash_object": "0211b8e391c373f65dee4ce94e206f85a613293a",
+   "head_blob": "0211b8e391c373f65dee4ce94e206f85a613293a",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_8/detections_image-t0.7_run08.meta.json",
+   "pinned": "5375dc83fdd8493139d5493a9795285573e0e15e",
+   "git_hash_object": "5375dc83fdd8493139d5493a9795285573e0e15e",
+   "head_blob": "5375dc83fdd8493139d5493a9795285573e0e15e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_9/detections_image-t0.7_run09.geojson",
+   "pinned": "f76a3bb1c1ab814e798282a70855c0c05a3b459e",
+   "git_hash_object": "f76a3bb1c1ab814e798282a70855c0c05a3b459e",
+   "head_blob": "f76a3bb1c1ab814e798282a70855c0c05a3b459e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/run_9/detections_image-t0.7_run09.meta.json",
+   "pinned": "f4b2aafaf82db25186572971ee6f3ead1786a107",
+   "git_hash_object": "f4b2aafaf82db25186572971ee6f3ead1786a107",
+   "head_blob": "f4b2aafaf82db25186572971ee6f3ead1786a107",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n5/consensus_t1.geojson",
+   "pinned": "acdce728d74d927c91af8e4b502194bac8f01cbd",
+   "git_hash_object": "acdce728d74d927c91af8e4b502194bac8f01cbd",
+   "head_blob": "acdce728d74d927c91af8e4b502194bac8f01cbd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus/consensus_t1.geojson",
+   "pinned": "d925a1de3824d8f819773cb9f71a33cabc6765aa",
+   "git_hash_object": "d925a1de3824d8f819773cb9f71a33cabc6765aa",
+   "head_blob": "d925a1de3824d8f819773cb9f71a33cabc6765aa",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "505fac1e31d9d5aaa8231fac30340cfa5affd7ae",
+   "git_hash_object": "505fac1e31d9d5aaa8231fac30340cfa5affd7ae",
+   "head_blob": "505fac1e31d9d5aaa8231fac30340cfa5affd7ae",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_1/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "c5780770102a2a30fd7e26e81e275ff5d19b7dab",
+   "git_hash_object": "c5780770102a2a30fd7e26e81e275ff5d19b7dab",
+   "head_blob": "c5780770102a2a30fd7e26e81e275ff5d19b7dab",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "40f7e2c49188d74fcd7b64bd39ae6dcd169a7e46",
+   "git_hash_object": "40f7e2c49188d74fcd7b64bd39ae6dcd169a7e46",
+   "head_blob": "40f7e2c49188d74fcd7b64bd39ae6dcd169a7e46",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_10/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "68bef75351db86d29b49be683d33071c56f9f3dd",
+   "git_hash_object": "68bef75351db86d29b49be683d33071c56f9f3dd",
+   "head_blob": "68bef75351db86d29b49be683d33071c56f9f3dd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "867c72291e6f1cbb8d23cc8517d34e6c7b7eed24",
+   "git_hash_object": "867c72291e6f1cbb8d23cc8517d34e6c7b7eed24",
+   "head_blob": "867c72291e6f1cbb8d23cc8517d34e6c7b7eed24",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_2/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "654f1d7324d45e03746753d51fc7e75383a21aad",
+   "git_hash_object": "654f1d7324d45e03746753d51fc7e75383a21aad",
+   "head_blob": "654f1d7324d45e03746753d51fc7e75383a21aad",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "29e75226ffaaf914f6b1a5da7ea1d201fb362d1b",
+   "git_hash_object": "29e75226ffaaf914f6b1a5da7ea1d201fb362d1b",
+   "head_blob": "29e75226ffaaf914f6b1a5da7ea1d201fb362d1b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_3/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "9ba414df1f0739033bda289951a48ac707217ccc",
+   "git_hash_object": "9ba414df1f0739033bda289951a48ac707217ccc",
+   "head_blob": "9ba414df1f0739033bda289951a48ac707217ccc",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "8242f863061c0326a42ba1dec0e0ed1f7034ae9e",
+   "git_hash_object": "8242f863061c0326a42ba1dec0e0ed1f7034ae9e",
+   "head_blob": "8242f863061c0326a42ba1dec0e0ed1f7034ae9e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_4/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "85d7b10174376e8c99dd30832831857693ec4de2",
+   "git_hash_object": "85d7b10174376e8c99dd30832831857693ec4de2",
+   "head_blob": "85d7b10174376e8c99dd30832831857693ec4de2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "477589ede1993b1402ca0142e03d0a920a37dfb0",
+   "git_hash_object": "477589ede1993b1402ca0142e03d0a920a37dfb0",
+   "head_blob": "477589ede1993b1402ca0142e03d0a920a37dfb0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_5/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "9e0c711daa1932537b2d4297c5d2004b6d5d7a6e",
+   "git_hash_object": "9e0c711daa1932537b2d4297c5d2004b6d5d7a6e",
+   "head_blob": "9e0c711daa1932537b2d4297c5d2004b6d5d7a6e",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "04f647bf3e19175b016a8252a2837dc988b76997",
+   "git_hash_object": "04f647bf3e19175b016a8252a2837dc988b76997",
+   "head_blob": "04f647bf3e19175b016a8252a2837dc988b76997",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_6/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "8053fd56d51566b0b7a089fbb594badcd94881d0",
+   "git_hash_object": "8053fd56d51566b0b7a089fbb594badcd94881d0",
+   "head_blob": "8053fd56d51566b0b7a089fbb594badcd94881d0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "e96ea02511047cb859d0dc2d24ff88e64bb74228",
+   "git_hash_object": "e96ea02511047cb859d0dc2d24ff88e64bb74228",
+   "head_blob": "e96ea02511047cb859d0dc2d24ff88e64bb74228",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_7/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "5f3ee70b2dce9d29261adfe9b0d8eb4fa1672b4f",
+   "git_hash_object": "5f3ee70b2dce9d29261adfe9b0d8eb4fa1672b4f",
+   "head_blob": "5f3ee70b2dce9d29261adfe9b0d8eb4fa1672b4f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "d3c64aaf9d9d084b637cf8603a366dc381590b64",
+   "git_hash_object": "d3c64aaf9d9d084b637cf8603a366dc381590b64",
+   "head_blob": "d3c64aaf9d9d084b637cf8603a366dc381590b64",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_8/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "bb717fab9bf47328148c06cf50ef8fee89b17ee2",
+   "git_hash_object": "bb717fab9bf47328148c06cf50ef8fee89b17ee2",
+   "head_blob": "bb717fab9bf47328148c06cf50ef8fee89b17ee2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.geojson",
+   "pinned": "25f66988a108a26c53c96e0047f35884740104a3",
+   "git_hash_object": "25f66988a108a26c53c96e0047f35884740104a3",
+   "head_blob": "25f66988a108a26c53c96e0047f35884740104a3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/run_9/detections-library_plus-hp-3-flash-2026-04-16.meta.json",
+   "pinned": "e08f766db4178017d6f8d4e93442d3db9b839109",
+   "git_hash_object": "e08f766db4178017d6f8d4e93442d3db9b839109",
+   "head_blob": "e08f766db4178017d6f8d4e93442d3db9b839109",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n5/consensus_t1.geojson",
+   "pinned": "7e0981712c4737820c59852c576cc6ab34b177ab",
+   "git_hash_object": "7e0981712c4737820c59852c576cc6ab34b177ab",
+   "head_blob": "7e0981712c4737820c59852c576cc6ab34b177ab",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus/consensus_t1.geojson",
+   "pinned": "b15173c709020a95a3b0d6c979434a777a80dc86",
+   "git_hash_object": "b15173c709020a95a3b0d6c979434a777a80dc86",
+   "head_blob": "b15173c709020a95a3b0d6c979434a777a80dc86",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "b39e4203cada8781c47137983c4a55bce6803756",
+   "git_hash_object": "b39e4203cada8781c47137983c4a55bce6803756",
+   "head_blob": "b39e4203cada8781c47137983c4a55bce6803756",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_1/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "4122498ab218a12c2d98f9a948d502379d8e15fd",
+   "git_hash_object": "4122498ab218a12c2d98f9a948d502379d8e15fd",
+   "head_blob": "4122498ab218a12c2d98f9a948d502379d8e15fd",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_10/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "81cc54b033df81d33c1fedf1056880bf624c5a73",
+   "git_hash_object": "81cc54b033df81d33c1fedf1056880bf624c5a73",
+   "head_blob": "81cc54b033df81d33c1fedf1056880bf624c5a73",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_10/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "7d27bbb2b3026df09574f083450228bc88b3cfd2",
+   "git_hash_object": "7d27bbb2b3026df09574f083450228bc88b3cfd2",
+   "head_blob": "7d27bbb2b3026df09574f083450228bc88b3cfd2",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_2/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "72c9eecc4f588054648bed85ec45115b3c43e83f",
+   "git_hash_object": "72c9eecc4f588054648bed85ec45115b3c43e83f",
+   "head_blob": "72c9eecc4f588054648bed85ec45115b3c43e83f",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_2/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "93a6658118052a582a47cbe2096ec0c53ec9d1b0",
+   "git_hash_object": "93a6658118052a582a47cbe2096ec0c53ec9d1b0",
+   "head_blob": "93a6658118052a582a47cbe2096ec0c53ec9d1b0",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_3/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "98a58f740fdfd9a566220c9b3f46c6b5663c32f8",
+   "git_hash_object": "98a58f740fdfd9a566220c9b3f46c6b5663c32f8",
+   "head_blob": "98a58f740fdfd9a566220c9b3f46c6b5663c32f8",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_3/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "6bdd7484b331f93f64b5c9f66c43d5b0ad8cb0d5",
+   "git_hash_object": "6bdd7484b331f93f64b5c9f66c43d5b0ad8cb0d5",
+   "head_blob": "6bdd7484b331f93f64b5c9f66c43d5b0ad8cb0d5",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_4/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "ce5854ab3d0c51589de5adf2d26d64d615ee6ad3",
+   "git_hash_object": "ce5854ab3d0c51589de5adf2d26d64d615ee6ad3",
+   "head_blob": "ce5854ab3d0c51589de5adf2d26d64d615ee6ad3",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_4/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "2dded6bc5dea0f10eacc60acb22ebc2c4410c681",
+   "git_hash_object": "2dded6bc5dea0f10eacc60acb22ebc2c4410c681",
+   "head_blob": "2dded6bc5dea0f10eacc60acb22ebc2c4410c681",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_5/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "35ac1fb173bad4d1465db2d80ee1fb466cc42a1b",
+   "git_hash_object": "35ac1fb173bad4d1465db2d80ee1fb466cc42a1b",
+   "head_blob": "35ac1fb173bad4d1465db2d80ee1fb466cc42a1b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_5/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "85ed9de0730417e6a4c8fc91d60f2a3905691261",
+   "git_hash_object": "85ed9de0730417e6a4c8fc91d60f2a3905691261",
+   "head_blob": "85ed9de0730417e6a4c8fc91d60f2a3905691261",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_6/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "14805563a04a16f8ccb8cf5f6ba6489b7543141b",
+   "git_hash_object": "14805563a04a16f8ccb8cf5f6ba6489b7543141b",
+   "head_blob": "14805563a04a16f8ccb8cf5f6ba6489b7543141b",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_6/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "170be97df7607d9355a6af44b2faa3856169e93c",
+   "git_hash_object": "170be97df7607d9355a6af44b2faa3856169e93c",
+   "head_blob": "170be97df7607d9355a6af44b2faa3856169e93c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_7/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "7025a4d95eb75760e96d1faf428e0ffba8d91944",
+   "git_hash_object": "7025a4d95eb75760e96d1faf428e0ffba8d91944",
+   "head_blob": "7025a4d95eb75760e96d1faf428e0ffba8d91944",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_7/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "c8757898bfee94bac86b07dfcdd966cb84a90f6c",
+   "git_hash_object": "c8757898bfee94bac86b07dfcdd966cb84a90f6c",
+   "head_blob": "c8757898bfee94bac86b07dfcdd966cb84a90f6c",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_8/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "0e576f5501f0edb028acb9749c39daa089110443",
+   "git_hash_object": "0e576f5501f0edb028acb9749c39daa089110443",
+   "head_blob": "0e576f5501f0edb028acb9749c39daa089110443",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_8/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "e24fcc3a61ba13fb1d4c67bd91507c223e454285",
+   "git_hash_object": "e24fcc3a61ba13fb1d4c67bd91507c223e454285",
+   "head_blob": "e24fcc3a61ba13fb1d4c67bd91507c223e454285",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_9/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.geojson",
+   "pinned": "bc4228d81b4e6f234fef07fb7c206972733a32cb",
+   "git_hash_object": "bc4228d81b4e6f234fef07fb7c206972733a32cb",
+   "head_blob": "bc4228d81b4e6f234fef07fb7c206972733a32cb",
+   "equal": true
+  },
+  {
+   "path": "outputs/h11/pv-diag-384/scale-4-optimal-487/run_9/detections-detect_h8_scale-4_v2-3-flash-2026-04-16.meta.json",
+   "pinned": "b92955cff9cb40af876158ee20961a6b303012b6",
+   "git_hash_object": "b92955cff9cb40af876158ee20961a6b303012b6",
+   "head_blob": "b92955cff9cb40af876158ee20961a6b303012b6",
+   "equal": true
+  }
+ ]
+}

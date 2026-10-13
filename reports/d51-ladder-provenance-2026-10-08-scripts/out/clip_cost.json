@@ -1,0 +1,3961 @@
+{
+ "buffer_m": 20,
+ "ladders": [
+  {
+   "pool": "flash-minimal-text-n30-t07-text-t0.3",
+   "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1400.3248,
+   "gap_km2": 2.0819,
+   "gap_tiles": [
+    "K-35-053-3_Elenovo_x336_y2016.png"
+   ],
+   "gap_reference_mounds": 0,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 2.0819,
+    "K = 5": 2.0819,
+    "K = 10": 2.0819
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t0_3-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.8555,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8554502369668247,
+        "precision": 0.882640586797066,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.7986214805183726,
+        "tp": 361,
+        "fp": 48,
+        "fn": 74,
+        "n_detections": 409,
+        "denominator": 844,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8554502369668247,
+        "precision": 0.882640586797066,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.7986214805183726,
+        "tp": 361,
+        "fp": 48,
+        "fn": 74,
+        "n_detections": 409,
+        "denominator": 844,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8554502369668247,
+        "precision": 0.882640586797066,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.7986214805183726,
+        "tp": 361,
+        "fp": 48,
+        "fn": 74,
+        "n_detections": 409,
+        "denominator": 844,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013561016149682172,
+        "per_removed_fp": 0.0010135666314772804,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 2,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t0_3-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.8708,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8708133971291866,
+        "precision": 0.9077306733167082,
+        "recall": 0.8367816091954023,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 364,
+        "fp": 37,
+        "fn": 71,
+        "n_detections": 401,
+        "denominator": 836,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8708133971291866,
+        "precision": 0.9077306733167082,
+        "recall": 0.8367816091954023,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 364,
+        "fp": 37,
+        "fn": 71,
+        "n_detections": 401,
+        "denominator": 836,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8708133971291866,
+        "precision": 0.9077306733167082,
+        "recall": 0.8367816091954023,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 364,
+        "fp": 37,
+        "fn": 71,
+        "n_detections": 401,
+        "denominator": 836,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013507016780751357,
+        "per_removed_fp": 0.00104164281953252,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t0_3-n3-carried-p0_15-k3/evaluation.json",
+       "committed_f1_20": 0.8586,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8585732165206508,
+        "precision": 0.9423076923076923,
+        "recall": 0.7885057471264367,
+        "tile_mcc": 0.7555765419993428,
+        "tp": 343,
+        "fp": 21,
+        "fn": 92,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8585732165206508,
+        "precision": 0.9423076923076923,
+        "recall": 0.7885057471264367,
+        "tile_mcc": 0.7555765419993428,
+        "tp": 343,
+        "fp": 21,
+        "fn": 92,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8585732165206508,
+        "precision": 0.9423076923076923,
+        "recall": 0.7885057471264367,
+        "tile_mcc": 0.7555765419993428,
+        "tp": 343,
+        "fp": 21,
+        "fn": 92,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014285691908377336,
+        "per_removed_fp": 0.00107455972030119,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.8778,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8778173190984578,
+        "precision": 0.9068627450980392,
+        "recall": 0.8505747126436781,
+        "tile_mcc": 0.7735141904719502,
+        "tp": 370,
+        "fp": 38,
+        "fn": 65,
+        "n_detections": 408,
+        "denominator": 843,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8778173190984578,
+        "precision": 0.9068627450980392,
+        "recall": 0.8505747126436781,
+        "tile_mcc": 0.7735141904719502,
+        "tp": 370,
+        "fp": 38,
+        "fn": 65,
+        "n_detections": 408,
+        "denominator": 843,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8778173190984578,
+        "precision": 0.9068627450980392,
+        "recall": 0.8505747126436781,
+        "tile_mcc": 0.7735141904719502,
+        "tp": 370,
+        "fp": 38,
+        "fn": 65,
+        "n_detections": 408,
+        "denominator": 843,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001331177557415827,
+        "per_removed_fp": 0.0010413016833908158,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.8635,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8634686346863469,
+        "precision": 0.9285714285714286,
+        "recall": 0.8068965517241379,
+        "tile_mcc": 0.7561900396485016,
+        "tp": 351,
+        "fp": 27,
+        "fn": 84,
+        "n_detections": 378,
+        "denominator": 813,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8634686346863469,
+        "precision": 0.9285714285714286,
+        "recall": 0.8068965517241379,
+        "tile_mcc": 0.7561900396485016,
+        "tp": 351,
+        "fp": 27,
+        "fn": 84,
+        "n_detections": 378,
+        "denominator": 813,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8634686346863469,
+        "precision": 0.9285714285714286,
+        "recall": 0.8068965517241379,
+        "tile_mcc": 0.7561900396485016,
+        "tp": 351,
+        "fp": 27,
+        "fn": 84,
+        "n_detections": 378,
+        "denominator": 813,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013979475588113814,
+        "per_removed_fp": 0.0010620770414346212,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.873,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8729792147806004,
+        "precision": 0.877030162412993,
+        "recall": 0.8689655172413793,
+        "tile_mcc": 0.7910109847649028,
+        "tp": 378,
+        "fp": 53,
+        "fn": 57,
+        "n_detections": 431,
+        "denominator": 866,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8729792147806004,
+        "precision": 0.877030162412993,
+        "recall": 0.8689655172413793,
+        "tile_mcc": 0.7910109847649028,
+        "tp": 378,
+        "fp": 53,
+        "fn": 57,
+        "n_detections": 431,
+        "denominator": 866,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8729792147806004,
+        "precision": 0.877030162412993,
+        "recall": 0.8689655172413793,
+        "tile_mcc": 0.7910109847649028,
+        "tp": 378,
+        "fp": 53,
+        "fn": 57,
+        "n_detections": 431,
+        "denominator": 866,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013014096827013853,
+        "per_removed_fp": 0.0010080591394695155,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.8582,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8582089552238805,
+        "precision": 0.9349593495934959,
+        "recall": 0.7931034482758621,
+        "tile_mcc": 0.7470820183381932,
+        "tp": 345,
+        "fp": 24,
+        "fn": 90,
+        "n_detections": 369,
+        "denominator": 804,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8582089552238805,
+        "precision": 0.9349593495934959,
+        "recall": 0.7931034482758621,
+        "tile_mcc": 0.7470820183381932,
+        "tp": 345,
+        "fp": 24,
+        "fn": 90,
+        "n_detections": 369,
+        "denominator": 804,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8582089552238805,
+        "precision": 0.9349593495934959,
+        "recall": 0.7931034482758621,
+        "tile_mcc": 0.7470820183381932,
+        "tp": 345,
+        "fp": 24,
+        "fn": 90,
+        "n_detections": 369,
+        "denominator": 804,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x336_y2016.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014201381153931833,
+        "per_removed_fp": 0.001067424073661543,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "pool": "flash-minimal-text-n30-t07-text-t1.0",
+   "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1400.3175,
+   "gap_km2": 2.0893,
+   "gap_tiles": [
+    "K-35-062-2_Rakovski_x3360_y2688.png"
+   ],
+   "gap_reference_mounds": 0,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 2.0893,
+    "K = 5": 2.0893,
+    "K = 10": 2.0893
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.2,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.8235,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8235294117647061,
+        "precision": 0.8433734939759037,
+        "recall": 0.8045977011494253,
+        "tile_mcc": 0.8094604645074259,
+        "tp": 350,
+        "fp": 65,
+        "fn": 85,
+        "n_detections": 415,
+        "denominator": 850,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8235294117647061,
+        "precision": 0.8433734939759037,
+        "recall": 0.8045977011494253,
+        "tile_mcc": 0.8094604645074259,
+        "tp": 350,
+        "fp": 65,
+        "fn": 85,
+        "n_detections": 415,
+        "denominator": 850,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8235294117647061,
+        "precision": 0.8433734939759037,
+        "recall": 0.8045977011494253,
+        "tile_mcc": 0.8094604645074259,
+        "tp": 350,
+        "fp": 65,
+        "fn": 85,
+        "n_detections": 415,
+        "denominator": 850,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013840830449826987,
+        "per_removed_fp": 0.0009688581314878894,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n1-carried-p0_15-k1/evaluation.json",
+       "committed_f1_20": 0.8228,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.822843822843823,
+        "precision": 0.83451536643026,
+        "recall": 0.8114942528735632,
+        "tile_mcc": 0.7961268741265609,
+        "tp": 353,
+        "fp": 70,
+        "fn": 82,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.822843822843823,
+        "precision": 0.83451536643026,
+        "recall": 0.8114942528735632,
+        "tile_mcc": 0.7961268741265609,
+        "tp": 353,
+        "fp": 70,
+        "fn": 82,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.822843822843823,
+        "precision": 0.83451536643026,
+        "recall": 0.8114942528735632,
+        "tile_mcc": 0.7961268741265609,
+        "tp": 353,
+        "fp": 70,
+        "fn": 82,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013719768964524208,
+        "per_removed_fp": 0.0009590254345499102,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 2,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.8647,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8646706586826347,
+        "precision": 0.9025,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 361,
+        "fp": 39,
+        "fn": 74,
+        "n_detections": 400,
+        "denominator": 835,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8646706586826347,
+        "precision": 0.9025,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 361,
+        "fp": 39,
+        "fn": 74,
+        "n_detections": 400,
+        "denominator": 835,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8646706586826347,
+        "precision": 0.9025,
+        "recall": 0.8298850574712644,
+        "tile_mcc": 0.8039967393618908,
+        "tp": 361,
+        "fp": 39,
+        "fn": 74,
+        "n_detections": 400,
+        "denominator": 835,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013596758578651082,
+        "per_removed_fp": 0.0010355337229732153,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n3-carried-p0_15-k3/evaluation.json",
+       "committed_f1_20": 0.8279,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8279430789133247,
+        "precision": 0.9467455621301775,
+        "recall": 0.735632183908046,
+        "tile_mcc": 0.7412960511200392,
+        "tp": 320,
+        "fp": 18,
+        "fn": 115,
+        "n_detections": 338,
+        "denominator": 773,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8279430789133247,
+        "precision": 0.9467455621301775,
+        "recall": 0.735632183908046,
+        "tile_mcc": 0.7412960511200392,
+        "tp": 320,
+        "fp": 18,
+        "fn": 115,
+        "n_detections": 338,
+        "denominator": 773,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8279430789133247,
+        "precision": 0.9467455621301775,
+        "recall": 0.735632183908046,
+        "tile_mcc": 0.7412960511200392,
+        "tp": 320,
+        "fp": 18,
+        "fn": 115,
+        "n_detections": 338,
+        "denominator": 773,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015162443998533964,
+        "per_removed_fp": 0.0010710777217507435,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.8714,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8714285714285713,
+        "precision": 0.9037037037037037,
+        "recall": 0.8413793103448276,
+        "tile_mcc": 0.7796562809560899,
+        "tp": 366,
+        "fp": 39,
+        "fn": 69,
+        "n_detections": 405,
+        "denominator": 840,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8714285714285713,
+        "precision": 0.9037037037037037,
+        "recall": 0.8413793103448276,
+        "tile_mcc": 0.7796562809560899,
+        "tp": 366,
+        "fp": 39,
+        "fn": 69,
+        "n_detections": 405,
+        "denominator": 840,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8714285714285713,
+        "precision": 0.9037037037037037,
+        "recall": 0.8413793103448276,
+        "tile_mcc": 0.7796562809560899,
+        "tp": 366,
+        "fp": 39,
+        "fn": 69,
+        "n_detections": 405,
+        "denominator": 840,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013435374149659864,
+        "per_removed_fp": 0.0010374149659863943,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.8579,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.85785536159601,
+        "precision": 0.9373297002724795,
+        "recall": 0.7908045977011494,
+        "tile_mcc": 0.753092641918401,
+        "tp": 344,
+        "fp": 23,
+        "fn": 91,
+        "n_detections": 367,
+        "denominator": 802,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.85785536159601,
+        "precision": 0.9373297002724795,
+        "recall": 0.7908045977011494,
+        "tile_mcc": 0.753092641918401,
+        "tp": 344,
+        "fp": 23,
+        "fn": 91,
+        "n_detections": 367,
+        "denominator": 802,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.85785536159601,
+        "precision": 0.9373297002724795,
+        "recall": 0.7908045977011494,
+        "tile_mcc": 0.753092641918401,
+        "tp": 344,
+        "fp": 23,
+        "fn": 91,
+        "n_detections": 367,
+        "denominator": 802,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.00142412049676308,
+        "per_removed_fp": 0.001069645089271833,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 5,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.8781,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8781065088757398,
+        "precision": 0.9048780487804878,
+        "recall": 0.8528735632183908,
+        "tile_mcc": 0.7880599064889484,
+        "tp": 371,
+        "fp": 39,
+        "fn": 64,
+        "n_detections": 410,
+        "denominator": 845,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8781065088757398,
+        "precision": 0.9048780487804878,
+        "recall": 0.8528735632183908,
+        "tile_mcc": 0.7880599064889484,
+        "tp": 371,
+        "fp": 39,
+        "fn": 64,
+        "n_detections": 410,
+        "denominator": 845,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8781065088757398,
+        "precision": 0.9048780487804878,
+        "recall": 0.8528735632183908,
+        "tile_mcc": 0.7880599064889484,
+        "tp": 371,
+        "fp": 39,
+        "fn": 64,
+        "n_detections": 410,
+        "denominator": 845,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013276846048807813,
+        "per_removed_fp": 0.0010391793004446625,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.8571,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8571428571428571,
+        "precision": 0.9421487603305785,
+        "recall": 0.7862068965517242,
+        "tile_mcc": 0.7458050992194387,
+        "tp": 342,
+        "fp": 21,
+        "fn": 93,
+        "n_detections": 363,
+        "denominator": 798,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8571428571428571,
+        "precision": 0.9421487603305785,
+        "recall": 0.7862068965517242,
+        "tile_mcc": 0.7458050992194387,
+        "tp": 342,
+        "fp": 21,
+        "fn": 93,
+        "n_detections": 363,
+        "denominator": 798,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8571428571428571,
+        "precision": 0.9421487603305785,
+        "recall": 0.7862068965517242,
+        "tile_mcc": 0.7458050992194387,
+        "tp": 342,
+        "fp": 21,
+        "fn": 93,
+        "n_detections": 363,
+        "denominator": 798,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-062-2_Rakovski_x3360_y2688.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014321518080916576,
+        "per_removed_fp": 0.0010741138560687433,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "pool": "flash-high-text-n5-text-t1.0",
+   "family": "Gemini 3 HIGH text 384 px, T 1.0",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1397.6458,
+   "gap_km2": 4.7609,
+   "gap_tiles": [
+    "K-35-052-4_32635_x4032_y336.png",
+    "K-35-062-2_Rakovski_x1680_y0.png",
+    "K-35-078-1_Lesovo_x1008_y2016.png"
+   ],
+   "gap_reference_mounds": 3,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 4.7609,
+    "K = 5": 4.7609,
+    "K = 10": 4.7609
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.2,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.781,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.781038374717833,
+        "precision": 0.7671840354767184,
+        "recall": 0.7954022988505747,
+        "tile_mcc": 0.8161984013442791,
+        "tp": 346,
+        "fp": 105,
+        "fn": 89,
+        "n_detections": 451,
+        "denominator": 886,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.781038374717833,
+        "precision": 0.7671840354767184,
+        "recall": 0.7954022988505747,
+        "tile_mcc": 0.8161984013442791,
+        "tp": 346,
+        "fp": 105,
+        "fn": 89,
+        "n_detections": 451,
+        "denominator": 886,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7836919592298981,
+        "precision": 0.7671840354767184,
+        "recall": 0.8009259259259259,
+        "tile_mcc": 0.8161984013442791,
+        "tp": 346,
+        "fp": 105,
+        "fn": 86,
+        "n_detections": 451,
+        "denominator": 883,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013758031888060577,
+        "per_removed_fp": 0.0008815331543090666,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n1-carried-p0_15-k1/evaluation.json",
+       "committed_f1_20": 0.7788,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7787610619469026,
+        "precision": 0.7505330490405118,
+        "recall": 0.8091954022988506,
+        "tile_mcc": 0.8071341918449285,
+        "tp": 352,
+        "fp": 117,
+        "fn": 83,
+        "n_detections": 469,
+        "denominator": 904,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7787610619469026,
+        "precision": 0.7505330490405118,
+        "recall": 0.8091954022988506,
+        "tile_mcc": 0.8071341918449285,
+        "tp": 352,
+        "fp": 117,
+        "fn": 83,
+        "n_detections": 469,
+        "denominator": 904,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.781354051054384,
+        "precision": 0.7505330490405118,
+        "recall": 0.8148148148148148,
+        "tile_mcc": 0.8071341918449285,
+        "tp": 352,
+        "fp": 117,
+        "fn": 80,
+        "n_detections": 469,
+        "denominator": 901,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001350928028819798,
+        "per_removed_fp": 0.0008614613517111755,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 2,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.8541,
+       "detections_removed_by_clip": 3,
+       "unclipped": {
+        "f1": 0.8541423570595099,
+        "precision": 0.8672985781990521,
+        "recall": 0.8413793103448276,
+        "tile_mcc": 0.7986214805183726,
+        "tp": 366,
+        "fp": 56,
+        "fn": 69,
+        "n_detections": 422,
+        "denominator": 857,
+        "gap_mounds_found": 3,
+        "gap_tp_detections": 3,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 3,
+          "classification": "TP"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8501170960187354,
+        "precision": 0.8663484486873508,
+        "recall": 0.8344827586206897,
+        "tile_mcc": 0.7948120620808555,
+        "tp": 363,
+        "fp": 56,
+        "fn": 72,
+        "n_detections": 419,
+        "denominator": 854,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8531139835487661,
+        "precision": 0.8663484486873508,
+        "recall": 0.8402777777777778,
+        "tile_mcc": 0.7948120620808555,
+        "tp": 363,
+        "fp": 56,
+        "fn": 69,
+        "n_detections": 419,
+        "denominator": 851,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013370567595571647,
+        "per_removed_fp": 0.0009966655274906767,
+        "linear_delta_f1": -0.0040111702786714935
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n3-carried-p0_15-k3/evaluation.json",
+       "committed_f1_20": 0.822,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.8220230473751601,
+        "precision": 0.9277456647398844,
+        "recall": 0.7379310344827587,
+        "tile_mcc": 0.7443208853071419,
+        "tp": 321,
+        "fp": 25,
+        "fn": 114,
+        "n_detections": 346,
+        "denominator": 781,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8220230473751601,
+        "precision": 0.9277456647398844,
+        "recall": 0.7379310344827587,
+        "tile_mcc": 0.7443208853071419,
+        "tp": 321,
+        "fp": 25,
+        "fn": 114,
+        "n_detections": 346,
+        "denominator": 781,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8251928020565552,
+        "precision": 0.9277456647398844,
+        "recall": 0.7430555555555556,
+        "tile_mcc": 0.7443208853071419,
+        "tp": 321,
+        "fp": 25,
+        "fn": 111,
+        "n_detections": 346,
+        "denominator": 778,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015082931531688092,
+        "per_removed_fp": 0.0010525263090591039,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.2,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.8688,
+       "detections_removed_by_clip": 3,
+       "unclipped": {
+        "f1": 0.8687572590011615,
+        "precision": 0.8779342723004695,
+        "recall": 0.8597701149425288,
+        "tile_mcc": 0.7857140351270143,
+        "tp": 374,
+        "fp": 52,
+        "fn": 61,
+        "n_detections": 426,
+        "denominator": 861,
+        "gap_mounds_found": 3,
+        "gap_tp_detections": 3,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 3,
+          "classification": "TP"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8648018648018648,
+        "precision": 0.8770685579196218,
+        "recall": 0.8528735632183908,
+        "tile_mcc": 0.7818832871540911,
+        "tp": 371,
+        "fp": 52,
+        "fn": 64,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8678362573099415,
+        "precision": 0.8770685579196218,
+        "recall": 0.8587962962962963,
+        "tile_mcc": 0.7818832871540911,
+        "tp": 371,
+        "fp": 52,
+        "fn": 61,
+        "n_detections": 423,
+        "denominator": 855,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013138707793250157,
+        "per_removed_fp": 0.0010090095923358437,
+        "linear_delta_f1": -0.003941612337975047
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.8607,
+       "detections_removed_by_clip": 3,
+       "unclipped": {
+        "f1": 0.8606658446362516,
+        "precision": 0.9281914893617021,
+        "recall": 0.8022988505747126,
+        "tile_mcc": 0.7567456943918549,
+        "tp": 349,
+        "fp": 27,
+        "fn": 86,
+        "n_detections": 376,
+        "denominator": 811,
+        "gap_mounds_found": 3,
+        "gap_tp_detections": 3,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 3,
+          "classification": "TP"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8564356435643564,
+        "precision": 0.9276139410187667,
+        "recall": 0.7954022988505747,
+        "tile_mcc": 0.753092641918401,
+        "tp": 346,
+        "fp": 27,
+        "fn": 89,
+        "n_detections": 373,
+        "denominator": 808,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8596273291925466,
+        "precision": 0.9276139410187667,
+        "recall": 0.8009259259259259,
+        "tile_mcc": 0.753092641918401,
+        "tp": 346,
+        "fp": 27,
+        "fn": 86,
+        "n_detections": 373,
+        "denominator": 805,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014048509930502447,
+        "per_removed_fp": 0.0010612402523258342,
+        "linear_delta_f1": -0.0042145529791507335
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 5,
+       "prob_t": 0.2,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.8804,
+       "detections_removed_by_clip": 3,
+       "unclipped": {
+        "f1": 0.8803716608594656,
+        "precision": 0.8896713615023474,
+        "recall": 0.871264367816092,
+        "tile_mcc": 0.7910109847649028,
+        "tp": 379,
+        "fp": 47,
+        "fn": 56,
+        "n_detections": 426,
+        "denominator": 861,
+        "gap_mounds_found": 3,
+        "gap_tp_detections": 3,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 3,
+          "classification": "TP"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8764568764568763,
+        "precision": 0.8888888888888888,
+        "recall": 0.864367816091954,
+        "tile_mcc": 0.7872180964038328,
+        "tp": 376,
+        "fp": 47,
+        "fn": 59,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.87953216374269,
+        "precision": 0.8888888888888888,
+        "recall": 0.8703703703703703,
+        "tile_mcc": 0.7872180964038328,
+        "tp": 376,
+        "fp": 47,
+        "fn": 56,
+        "n_detections": 423,
+        "denominator": 855,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013003813462723977,
+        "per_removed_fp": 0.0010224990253884618,
+        "linear_delta_f1": -0.003901144038817193
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.8671,
+       "detections_removed_by_clip": 3,
+       "unclipped": {
+        "f1": 0.8670807453416148,
+        "precision": 0.9432432432432433,
+        "recall": 0.8022988505747126,
+        "tile_mcc": 0.7616157093956676,
+        "tp": 349,
+        "fp": 21,
+        "fn": 86,
+        "n_detections": 370,
+        "denominator": 805,
+        "gap_mounds_found": 3,
+        "gap_tp_detections": 3,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 3,
+          "classification": "TP"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.8628428927680798,
+        "precision": 0.9427792915531336,
+        "recall": 0.7954022988505747,
+        "tile_mcc": 0.7579787794819492,
+        "tp": 346,
+        "fp": 21,
+        "fn": 89,
+        "n_detections": 367,
+        "denominator": 802,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 4,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.8660826032540676,
+        "precision": 0.9427792915531336,
+        "recall": 0.8009259259259259,
+        "tile_mcc": 0.7579787794819492,
+        "tp": 346,
+        "fp": 21,
+        "fn": 86,
+        "n_detections": 367,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-052-4_32635_x4032_y336.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-062-2_Rakovski_x1680_y0.png",
+          "n_references": 1,
+          "n_detections": 0,
+          "classification": "FN"
+         },
+         {
+          "tile_name": "K-35-078-1_Lesovo_x1008_y2016.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014073531113768761,
+        "per_removed_fp": 0.001077118938312565,
+        "linear_delta_f1": -0.004222059334130629
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "pool": "image-n5-image-t0.3",
+   "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1400.3069,
+   "gap_km2": 2.0998,
+   "gap_tiles": [
+    "K-35-078-1_Lesovo_x2352_y3024.png"
+   ],
+   "gap_reference_mounds": 0,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 0.0,
+    "K = 5": 0.0,
+    "K = 10": 2.0998
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.2,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_3-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.768,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7679999999999999,
+        "precision": 0.7636363636363637,
+        "recall": 0.7724137931034483,
+        "tile_mcc": 0.8442634635196924,
+        "tp": 336,
+        "fp": 104,
+        "fn": 99,
+        "n_detections": 440,
+        "denominator": 875,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7679999999999999,
+        "precision": 0.7636363636363637,
+        "recall": 0.7724137931034483,
+        "tile_mcc": 0.8442634635196924,
+        "tp": 336,
+        "fp": 104,
+        "fn": 99,
+        "n_detections": 440,
+        "denominator": 875,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7679999999999999,
+        "precision": 0.7636363636363637,
+        "recall": 0.7724137931034483,
+        "tile_mcc": 0.8442634635196924,
+        "tp": 336,
+        "fp": 104,
+        "fn": 99,
+        "n_detections": 440,
+        "denominator": 875,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014080000000000002,
+        "per_removed_fp": 0.0008777142857142856,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_3-n1-carried-p0_15-k1/evaluation.json",
+       "committed_f1_20": 0.7654,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7654320987654322,
+        "precision": 0.7478070175438597,
+        "recall": 0.7839080459770115,
+        "tile_mcc": 0.8474610654454898,
+        "tp": 341,
+        "fp": 115,
+        "fn": 94,
+        "n_detections": 456,
+        "denominator": 891,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7654320987654322,
+        "precision": 0.7478070175438597,
+        "recall": 0.7839080459770115,
+        "tile_mcc": 0.8474610654454898,
+        "tp": 341,
+        "fp": 115,
+        "fn": 94,
+        "n_detections": 456,
+        "denominator": 891,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7654320987654322,
+        "precision": 0.7478070175438597,
+        "recall": 0.7839080459770115,
+        "tile_mcc": 0.8474610654454898,
+        "tp": 341,
+        "fp": 115,
+        "fn": 94,
+        "n_detections": 456,
+        "denominator": 891,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0013855980934170233,
+        "per_removed_fp": 0.0008590708179185546,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_3-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.7774,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7773766546329723,
+        "precision": 0.8156565656565656,
+        "recall": 0.7425287356321839,
+        "tile_mcc": 0.8177990630524311,
+        "tp": 323,
+        "fp": 73,
+        "fn": 112,
+        "n_detections": 396,
+        "denominator": 831,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7773766546329723,
+        "precision": 0.8156565656565656,
+        "recall": 0.7425287356321839,
+        "tile_mcc": 0.8177990630524311,
+        "tp": 323,
+        "fp": 73,
+        "fn": 112,
+        "n_detections": 396,
+        "denominator": 831,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7773766546329723,
+        "precision": 0.8156565656565656,
+        "recall": 0.7425287356321839,
+        "tile_mcc": 0.8177990630524311,
+        "tp": 323,
+        "fp": 73,
+        "fn": 112,
+        "n_detections": 396,
+        "denominator": 831,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001471267563618565,
+        "per_removed_fp": 0.0009354713052141664,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.7767,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014528241208298304,
+        "per_removed_fp": 0.0009224727912841837,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.7767,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7767220902612827,
+        "precision": 0.8034398034398035,
+        "recall": 0.7517241379310344,
+        "tile_mcc": 0.8416240719631218,
+        "tp": 327,
+        "fp": 80,
+        "fn": 108,
+        "n_detections": 407,
+        "denominator": 842,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014528241208298304,
+        "per_removed_fp": 0.0009224727912841837,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 7,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.7819,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7818831942789034,
+        "precision": 0.8118811881188119,
+        "recall": 0.7540229885057471,
+        "tile_mcc": 0.8377377811948655,
+        "tp": 328,
+        "fp": 76,
+        "fn": 107,
+        "n_detections": 404,
+        "denominator": 839,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7818831942789034,
+        "precision": 0.8118811881188119,
+        "recall": 0.7540229885057471,
+        "tile_mcc": 0.8377377811948655,
+        "tp": 328,
+        "fp": 76,
+        "fn": 107,
+        "n_detections": 404,
+        "denominator": 839,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7818831942789034,
+        "precision": 0.8118811881188119,
+        "recall": 0.7540229885057471,
+        "tile_mcc": 0.8377377811948655,
+        "tp": 328,
+        "fp": 76,
+        "fn": 107,
+        "n_detections": 404,
+        "denominator": 839,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001451867468082356,
+        "per_removed_fp": 0.0009319227583777156,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.7759,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7759036144578313,
+        "precision": 0.8151898734177215,
+        "recall": 0.7402298850574712,
+        "tile_mcc": 0.8338613879847839,
+        "tp": 322,
+        "fp": 73,
+        "fn": 113,
+        "n_detections": 395,
+        "denominator": 830,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7759036144578313,
+        "precision": 0.8151898734177215,
+        "recall": 0.7402298850574712,
+        "tile_mcc": 0.8338613879847839,
+        "tp": 322,
+        "fp": 73,
+        "fn": 113,
+        "n_detections": 395,
+        "denominator": 830,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7759036144578313,
+        "precision": 0.8151898734177215,
+        "recall": 0.7402298850574712,
+        "tile_mcc": 0.8338613879847839,
+        "tp": 322,
+        "fp": 73,
+        "fn": 113,
+        "n_detections": 395,
+        "denominator": 830,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-078-1_Lesovo_x2352_y3024.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014748149223399623,
+        "per_removed_fp": 0.0009348236318769052,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "pool": "image-n5-image-t0.7",
+   "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1399.9778,
+   "gap_km2": 2.4289,
+   "gap_tiles": [
+    "K-35-053-3_Elenovo_x1344_y672.png"
+   ],
+   "gap_reference_mounds": 2,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 2.4289,
+    "K = 5": 2.4289,
+    "K = 10": 2.4289
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_7-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.7252,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7252252252252251,
+        "precision": 0.7108167770419426,
+        "recall": 0.7402298850574712,
+        "tile_mcc": 0.8437222546300227,
+        "tp": 322,
+        "fp": 131,
+        "fn": 113,
+        "n_detections": 453,
+        "denominator": 888,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7252252252252251,
+        "precision": 0.7108167770419426,
+        "recall": 0.7402298850574712,
+        "tile_mcc": 0.8437222546300227,
+        "tp": 322,
+        "fp": 131,
+        "fn": 113,
+        "n_detections": 453,
+        "denominator": 888,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7268623024830698,
+        "precision": 0.7108167770419426,
+        "recall": 0.74364896073903,
+        "tile_mcc": 0.8476564963470621,
+        "tp": 322,
+        "fp": 131,
+        "fn": 111,
+        "n_detections": 453,
+        "denominator": 886,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014355571788004222,
+        "per_removed_fp": 0.0008166950734518301,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 2,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_7-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.7599,
+       "detections_removed_by_clip": 2,
+       "unclipped": {
+        "f1": 0.7599067599067599,
+        "precision": 0.7706855791962175,
+        "recall": 0.7494252873563219,
+        "tile_mcc": 0.8377377811948655,
+        "tp": 326,
+        "fp": 97,
+        "fn": 109,
+        "n_detections": 423,
+        "denominator": 858,
+        "gap_mounds_found": 2,
+        "gap_tp_detections": 2,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7570093457943926,
+        "precision": 0.7695961995249406,
+        "recall": 0.7448275862068966,
+        "tile_mcc": 0.8338613879847839,
+        "tp": 324,
+        "fp": 97,
+        "fn": 111,
+        "n_detections": 421,
+        "denominator": 856,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7587822014051523,
+        "precision": 0.7695961995249406,
+        "recall": 0.7482678983833718,
+        "tile_mcc": 0.8375965827587305,
+        "tp": 324,
+        "fp": 97,
+        "fn": 109,
+        "n_detections": 421,
+        "denominator": 854,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001445330116658788,
+        "per_removed_fp": 0.000885672214343543,
+        "linear_delta_f1": -0.002890660233317576
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_7-n3-carried-p0_15-k3/evaluation.json",
+       "committed_f1_20": 0.7522,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7522464698331194,
+        "precision": 0.8517441860465116,
+        "recall": 0.6735632183908046,
+        "tile_mcc": 0.7994046540816854,
+        "tp": 293,
+        "fp": 51,
+        "fn": 142,
+        "n_detections": 344,
+        "denominator": 779,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7522464698331194,
+        "precision": 0.8517441860465116,
+        "recall": 0.6735632183908046,
+        "tile_mcc": 0.7994046540816854,
+        "tp": 293,
+        "fp": 51,
+        "fn": 142,
+        "n_detections": 344,
+        "denominator": 779,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7541827541827542,
+        "precision": 0.8517441860465116,
+        "recall": 0.6766743648960739,
+        "tile_mcc": 0.8028707550556088,
+        "tp": 293,
+        "fp": 51,
+        "fn": 140,
+        "n_detections": 344,
+        "denominator": 777,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0016017375226789223,
+        "per_removed_fp": 0.0009656565723146591,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.7734,
+       "detections_removed_by_clip": 2,
+       "unclipped": {
+        "f1": 0.7733644859813085,
+        "precision": 0.7862232779097387,
+        "recall": 0.7609195402298851,
+        "tile_mcc": 0.838327705164423,
+        "tp": 331,
+        "fp": 90,
+        "fn": 104,
+        "n_detections": 421,
+        "denominator": 856,
+        "gap_mounds_found": 2,
+        "gap_tp_detections": 2,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7704918032786885,
+        "precision": 0.7852028639618138,
+        "recall": 0.7563218390804598,
+        "tile_mcc": 0.8344762601424413,
+        "tp": 329,
+        "fp": 90,
+        "fn": 106,
+        "n_detections": 419,
+        "denominator": 854,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7723004694835679,
+        "precision": 0.7852028639618138,
+        "recall": 0.7598152424942263,
+        "tile_mcc": 0.8381820538415431,
+        "tp": 329,
+        "fp": 90,
+        "fn": 104,
+        "n_detections": 419,
+        "denominator": 852,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014329854135732378,
+        "per_removed_fp": 0.0009034631845576033,
+        "linear_delta_f1": -0.0028659708271464757
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.7654,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7654320987654321,
+        "precision": 0.8266666666666667,
+        "recall": 0.7126436781609196,
+        "tile_mcc": 0.8207753823199486,
+        "tp": 310,
+        "fp": 65,
+        "fn": 125,
+        "n_detections": 375,
+        "denominator": 810,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7654320987654321,
+        "precision": 0.8266666666666667,
+        "recall": 0.7126436781609196,
+        "tile_mcc": 0.8207753823199486,
+        "tp": 310,
+        "fp": 65,
+        "fn": 125,
+        "n_detections": 375,
+        "denominator": 810,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7673267326732675,
+        "precision": 0.8266666666666667,
+        "recall": 0.7159353348729792,
+        "tile_mcc": 0.8243611017756561,
+        "tp": 310,
+        "fp": 65,
+        "fn": 123,
+        "n_detections": 375,
+        "denominator": 808,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001524157902758726,
+        "per_removed_fp": 0.00094497789971041,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 6,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.7881,
+       "detections_removed_by_clip": 2,
+       "unclipped": {
+        "f1": 0.7880952380952382,
+        "precision": 0.817283950617284,
+        "recall": 0.7609195402298851,
+        "tile_mcc": 0.8222900144404892,
+        "tp": 331,
+        "fp": 74,
+        "fn": 104,
+        "n_detections": 405,
+        "denominator": 840,
+        "gap_mounds_found": 2,
+        "gap_tp_detections": 2,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7852028639618139,
+        "precision": 0.8163771712158809,
+        "recall": 0.7563218390804598,
+        "tile_mcc": 0.8184516368156041,
+        "tp": 329,
+        "fp": 74,
+        "fn": 106,
+        "n_detections": 403,
+        "denominator": 838,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7870813397129186,
+        "precision": 0.8163771712158809,
+        "recall": 0.7598152424942263,
+        "tile_mcc": 0.8221239712836896,
+        "tp": 329,
+        "fp": 74,
+        "fn": 104,
+        "n_detections": 403,
+        "denominator": 836,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014427437641723355,
+        "per_removed_fp": 0.0009382086167800455,
+        "linear_delta_f1": -0.002885487528344671
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.7708,
+       "detections_removed_by_clip": 2,
+       "unclipped": {
+        "f1": 0.7707808564231738,
+        "precision": 0.8523676880222841,
+        "recall": 0.7034482758620689,
+        "tile_mcc": 0.8020765530669638,
+        "tp": 306,
+        "fp": 53,
+        "fn": 129,
+        "n_detections": 359,
+        "denominator": 794,
+        "gap_mounds_found": 2,
+        "gap_tp_detections": 2,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 2,
+          "classification": "TP"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7676767676767677,
+        "precision": 0.8515406162464986,
+        "recall": 0.6988505747126437,
+        "tile_mcc": 0.7983612772305299,
+        "tp": 304,
+        "fp": 53,
+        "fn": 131,
+        "n_detections": 357,
+        "denominator": 792,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.769620253164557,
+        "precision": 0.8515406162464986,
+        "recall": 0.7020785219399538,
+        "tile_mcc": 0.8018554505415016,
+        "tp": 304,
+        "fp": 53,
+        "fn": 129,
+        "n_detections": 357,
+        "denominator": 790,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015481349415325265,
+        "per_removed_fp": 0.0009707567461249041,
+        "linear_delta_f1": -0.003096269883065053
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "pool": "image-n5-image-t1.0",
+   "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+   "gate_status": "clipped-to-common-area",
+   "common_area_km2": 1399.9778,
+   "gap_km2": 2.4289,
+   "gap_tiles": [
+    "K-35-053-3_Elenovo_x1344_y672.png"
+   ],
+   "gap_reference_mounds": 2,
+   "area_removed_km2": {
+    "K = 1": 0.0,
+    "K = 3": 2.4289,
+    "K = 5": 2.4289,
+    "K = 10": 2.4289
+   },
+   "rungs": [
+    {
+     "K": 1,
+     "points": {
+      "opmax": {
+       "vote_t": 1,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t1_0-n1-opmax/evaluation.json",
+       "committed_f1_20": 0.7044,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7044444444444443,
+        "precision": 0.6817204301075269,
+        "recall": 0.728735632183908,
+        "tile_mcc": 0.8359783648469384,
+        "tp": 317,
+        "fp": 148,
+        "fn": 118,
+        "n_detections": 465,
+        "denominator": 900,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7044444444444443,
+        "precision": 0.6817204301075269,
+        "recall": 0.728735632183908,
+        "tile_mcc": 0.8359783648469384,
+        "tp": 317,
+        "fp": 148,
+        "fn": 118,
+        "n_detections": 465,
+        "denominator": 900,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7060133630289531,
+        "precision": 0.6817204301075269,
+        "recall": 0.7321016166281755,
+        "tile_mcc": 0.8398493090181772,
+        "tp": 317,
+        "fp": 148,
+        "fn": 116,
+        "n_detections": 465,
+        "denominator": 898,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0014395061728395063,
+        "per_removed_fp": 0.0007827160493827159,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 3,
+     "points": {
+      "opmax": {
+       "vote_t": 2,
+       "prob_t": 0.2,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t1_0-n3-opmax/evaluation.json",
+       "committed_f1_20": 0.7288,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7287543655413272,
+        "precision": 0.7382075471698113,
+        "recall": 0.7195402298850575,
+        "tile_mcc": 0.8177990630524311,
+        "tp": 313,
+        "fp": 111,
+        "fn": 122,
+        "n_detections": 424,
+        "denominator": 859,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7287543655413272,
+        "precision": 0.7382075471698113,
+        "recall": 0.7195402298850575,
+        "tile_mcc": 0.8177990630524311,
+        "tp": 313,
+        "fp": 111,
+        "fn": 122,
+        "n_detections": 424,
+        "denominator": 859,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7304550758459744,
+        "precision": 0.7382075471698113,
+        "recall": 0.7228637413394919,
+        "tile_mcc": 0.8215006210576922,
+        "tp": 313,
+        "fp": 111,
+        "fn": 120,
+        "n_detections": 424,
+        "denominator": 857,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.001479913427774939,
+        "per_removed_fp": 0.0008483752800248279,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 3,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t1_0-n3-carried-p0_15-k3/evaluation.json",
+       "committed_f1_20": 0.7016,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7015706806282722,
+        "precision": 0.8145896656534954,
+        "recall": 0.6160919540229886,
+        "tile_mcc": 0.7629466553272535,
+        "tp": 268,
+        "fp": 61,
+        "fn": 167,
+        "n_detections": 329,
+        "denominator": 764,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7015706806282722,
+        "precision": 0.8145896656534954,
+        "recall": 0.6160919540229886,
+        "tile_mcc": 0.7629466553272535,
+        "tp": 268,
+        "fp": 61,
+        "fn": 167,
+        "n_detections": 329,
+        "denominator": 764,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7034120734908138,
+        "precision": 0.8145896656534954,
+        "recall": 0.6189376443418014,
+        "tile_mcc": 0.7663612392636224,
+        "tp": 268,
+        "fp": 61,
+        "fn": 165,
+        "n_detections": 329,
+        "denominator": 762,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0016995148159315808,
+        "per_removed_fp": 0.000918286231188838,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 5,
+     "points": {
+      "opmax": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax/evaluation.json",
+       "committed_f1_20": 0.7384,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7384230287859824,
+        "precision": 0.8104395604395604,
+        "recall": 0.6781609195402298,
+        "tile_mcc": 0.8020765530669638,
+        "tp": 295,
+        "fp": 69,
+        "fn": 140,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7384230287859824,
+        "precision": 0.8104395604395604,
+        "recall": 0.6781609195402298,
+        "tile_mcc": 0.8020765530669638,
+        "tp": 295,
+        "fp": 69,
+        "fn": 140,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7402760351317441,
+        "precision": 0.8104395604395604,
+        "recall": 0.6812933025404158,
+        "tile_mcc": 0.8055858899288106,
+        "tp": 295,
+        "fp": 69,
+        "fn": 138,
+        "n_detections": 364,
+        "denominator": 797,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015789448951364423,
+        "per_removed_fp": 0.0009241840160024811,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 4,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n5-carried-p0_15-k4/evaluation.json",
+       "committed_f1_20": 0.7384,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7384230287859824,
+        "precision": 0.8104395604395604,
+        "recall": 0.6781609195402298,
+        "tile_mcc": 0.8020765530669638,
+        "tp": 295,
+        "fp": 69,
+        "fn": 140,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7384230287859824,
+        "precision": 0.8104395604395604,
+        "recall": 0.6781609195402298,
+        "tile_mcc": 0.8020765530669638,
+        "tp": 295,
+        "fp": 69,
+        "fn": 140,
+        "n_detections": 364,
+        "denominator": 799,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.7402760351317441,
+        "precision": 0.8104395604395604,
+        "recall": 0.6812933025404158,
+        "tile_mcc": 0.8055858899288106,
+        "tp": 295,
+        "fp": 69,
+        "fn": 138,
+        "n_detections": 364,
+        "denominator": 797,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015789448951364423,
+        "per_removed_fp": 0.0009241840160024811,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    },
+    {
+     "K": 10,
+     "points": {
+      "opmax": {
+       "vote_t": 6,
+       "prob_t": 0.2,
+       "eval_path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax/evaluation.json",
+       "committed_f1_20": 0.7428,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.7427884615384617,
+        "precision": 0.7783375314861462,
+        "recall": 0.7103448275862069,
+        "tile_mcc": 0.8077758185006721,
+        "tp": 309,
+        "fp": 88,
+        "fn": 126,
+        "n_detections": 397,
+        "denominator": 832,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.7427884615384617,
+        "precision": 0.7783375314861462,
+        "recall": 0.7103448275862069,
+        "tile_mcc": 0.8077758185006721,
+        "tp": 309,
+        "fp": 88,
+        "fn": 126,
+        "n_detections": 397,
+        "denominator": 832,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.744578313253012,
+        "precision": 0.7783375314861462,
+        "recall": 0.7136258660508084,
+        "tile_mcc": 0.8113726734750262,
+        "tp": 309,
+        "fp": 88,
+        "fn": 124,
+        "n_detections": 397,
+        "denominator": 830,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0015110715606508874,
+        "per_removed_fp": 0.0008927745931952664,
+        "linear_delta_f1": 0.0
+       }
+      },
+      "carried-stride-shell": {
+       "vote_t": 8,
+       "prob_t": 0.15,
+       "eval_path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n10-carried-p0_15-k8/evaluation.json",
+       "committed_f1_20": 0.7313,
+       "detections_removed_by_clip": 0,
+       "unclipped": {
+        "f1": 0.731266149870801,
+        "precision": 0.8348082595870207,
+        "recall": 0.6505747126436782,
+        "tile_mcc": 0.7762290437345575,
+        "tp": 283,
+        "fp": 56,
+        "fn": 152,
+        "n_detections": 339,
+        "denominator": 774,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "clipped": {
+        "f1": 0.731266149870801,
+        "precision": 0.8348082595870207,
+        "recall": 0.6505747126436782,
+        "tile_mcc": 0.7762290437345575,
+        "tp": 283,
+        "fp": 56,
+        "fn": 152,
+        "n_detections": 339,
+        "denominator": 774,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 2,
+          "n_detections": 0,
+          "classification": "FN"
+         }
+        ]
+       },
+       "gap_removed": {
+        "f1": 0.733160621761658,
+        "precision": 0.8348082595870207,
+        "recall": 0.6535796766743649,
+        "tile_mcc": 0.7796329795961874,
+        "tp": 283,
+        "fp": 56,
+        "fn": 150,
+        "n_detections": 339,
+        "denominator": 772,
+        "gap_mounds_found": 0,
+        "gap_tp_detections": 0,
+        "gap_fp_detections": 0,
+        "gap_tile_confusion": [
+         {
+          "tile_name": "K-35-053-3_Elenovo_x1344_y672.png",
+          "n_references": 0,
+          "n_detections": 0,
+          "classification": "TN"
+         }
+        ]
+       },
+       "estimate": {
+        "per_lost_mound": 0.0016391910208387586,
+        "per_removed_fp": 0.0009447883073266162,
+        "linear_delta_f1": 0.0
+       }
+      }
+     }
+    }
+   ]
+  }
+ ]
+}

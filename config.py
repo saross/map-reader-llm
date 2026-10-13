@@ -1,8 +1,83 @@
+import logging
 import os
+import re
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# =============================================================================
+# HTTP REQUEST LOG REDACTION
+# =============================================================================
+#
+# httpx logs every request at INFO ('HTTP Request: GET <url> "HTTP/1.1 200
+# OK"'), and most scripts set the root logger to INFO, so every request URL
+# lands in run logs that are committed to this public repository. Gemini
+# URLs carry pagination cursors (pageToken) and resumable-upload session IDs
+# (upload_id) in their query strings. On 2026-10-07 and 2026-10-08 a
+# secret scanner flagged the cursors, and an endpoint sent the key as ?key=
+# would publish it. The filter below keeps each request line (method, path,
+# and status) and replaces only the query string.
+#
+# Why not raise httpx to WARNING: while a batch job is polled, these lines
+# (about one every 30 s) are the only writes to its log, and
+# scripts/wait_for_run.py treats an hour without a write as a hang
+# (reports/s163-agent-records/run-b-stage2-audit.md). Silencing them would
+# make every long batch leg look hung.
+#
+# The filter sits on the "httpx" logger, so it applies to that logger's
+# records wherever the root logger is configured. It is installed on import
+# because every script that calls the Gemini API imports this module,
+# directly or through scripts/lib_batch_api.py. Committed logs written
+# before 2026-10-10 keep their query strings.
+# =============================================================================
+
+# A URL's query string: from "?" up to whitespace, a quote, or a fragment.
+_URL_QUERY = re.compile(r"(https?://[^\s\"'?#]+)\?[^\s\"'#]*")
+
+
+class RedactUrlQueryFilter(logging.Filter):
+    """Replace the query string of every URL in a log record with ``?<redacted>``.
+
+    The record is formatted first, so this works whatever position the URL
+    takes in the record's arguments. A record without a URL query is passed
+    through untouched; no record is dropped.
+
+    Example:
+        After ``install_http_log_redaction()``, the httpx line
+        ``GET https://host/v1/files?pageToken=abc "HTTP/1.1 200 OK"`` is
+        logged as ``GET https://host/v1/files?<redacted> "HTTP/1.1 200 OK"``.
+    """
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        """Redact URL query strings in ``record`` in place; always keep it."""
+        try:
+            message = record.getMessage()
+        except Exception:  # a malformed record: leave it for logging to report
+            return True
+        redacted = _URL_QUERY.sub(r"\1?<redacted>", message)
+        if redacted != message:
+            # The message is now final text, so drop the arguments: with
+            # args None, getMessage() returns msg without %-formatting.
+            record.msg, record.args = redacted, None
+        return True
+
+
+def install_http_log_redaction(logger_names: tuple[str, ...] = ("httpx",)) -> None:
+    """Attach one ``RedactUrlQueryFilter`` to each named logger (idempotent).
+
+    Args:
+        logger_names: Loggers whose records carry request URLs. httpx is the
+            one that logs at INFO; httpcore and urllib3 log URLs only at
+            DEBUG and are not covered by default.
+    """
+    for name in logger_names:
+        logger = logging.getLogger(name)
+        if not any(isinstance(f, RedactUrlQueryFilter) for f in logger.filters):
+            logger.addFilter(RedactUrlQueryFilter())
+
+
+install_http_log_redaction()
 
 # Base paths
 BASE_DIR = Path(__file__).parent

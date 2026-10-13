@@ -1,7 +1,7 @@
 # D57 (4) re-score, Phases 0 and 2: the S2 deltas
 
-> **Last revised**: 2026-10-10 (census results; sapphire memory-fault
-> caveat). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-10 (every file verified by exact
+> reproduction). See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), a subagent of the main Session 163 session, on
@@ -237,6 +237,28 @@ separately.
    the plan.
 
 ## Changelog
+
+### 2026-10-10 — every file verified by exact reproduction
+
+The hardware caveat below is resolved. An independent re-run on sapphire
+(fresh clone at `494b5a7af`, at most 4 processes, kernel-log tripwire;
+2026-10-09T21:57Z to 2026-10-10T00:08Z, no new `Bad page state` report)
+recomputed every number-bearing file draft PR #29 (`f2277608d`) adds or
+changes, and a comparison run on amd-tower found all 2,262 identical:
+762 byte for byte, 1,500 after replacing only declared volatile values
+(scoring timestamps, the `**Generated**:` line, the manifest's own
+generation stamps, and the Stage A scratch-path prefix, each required to
+occur equally on both sides). That covers the 749 cells (737 Phase 2 and
+12 Stage A) as JSON, CSV, and Markdown, the stride CSVs, the conditions
+manifest, the register renderings, and 11 unchanged siblings; the six
+post-run reports and the generated-file registry were regenerated from
+the recomputed inputs and match too. Red sentinels (an F1 changed by
+0.0001, a CSV digit, a Markdown value, a renamed key, a path commit, and a
+shifted carried-forward stamp) were each flagged; no third run was needed.
+Separately, the D50 review-fix agent reproduced 50 of these cells exactly
+under PR #33's code. No number in this report changed. Records:
+`~/scratch/d57-4-rescore-2026-10-09/rerun-check/` on sapphire
+(`out/compare/full.json`).
 
 ### 2026-10-10 — census results and a hardware caveat
 
