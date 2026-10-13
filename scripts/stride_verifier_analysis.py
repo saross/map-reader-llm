@@ -15,6 +15,11 @@ equals the union file's feature count; keys are exactly the contiguous
 ``candidate_NNNNN`` range; carrier-tile reassignment reproduces the stored
 ``source_tile`` after the CRS round-trip. There is no committed-sweep anchor
 for the new cells (they are new); the union score is recorded, not gated.
+Then (PI ruling D62 (1), 2026-10-13) each union is rebuilt from its cell's
+ten prepared passes under a row-for-row gate, every row carries the tiles
+its members were seen on, and it is booked to a carrier tile on its OWN
+sheet; the stored ``source_tile`` was the nearest among all carrier tiles,
+which near a sheet edge can be the neighbouring sheet's.
 
 Outputs (under ``results/stride-2026-08-25/``):
     - stride_verifier_analysis.json — boards (20 m and 30 m), contrasts,
@@ -45,13 +50,20 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.grid_analysis import CRS, SEED, paired_bootstrap, score  # noqa: E402
+from scripts.grid_analysis import (  # noqa: E402
+    CRS,
+    SEED,
+    load_cell_passes,
+    paired_bootstrap,
+    score,
+)
 from scripts.grid_verifier_analysis import (  # noqa: E402
     JoinGateError,
     per_tile_counts,
     verified_subset,
 )
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
+from scripts.lib_cluster_origins import union_on_origin  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -105,11 +117,14 @@ CONTRASTS: dict[str, tuple[str, str]] = {
 }
 
 
-def load_stride_union(label: str) -> gpd.GeoDataFrame:
+def load_stride_union(label: str, *, union_name: str = "union_k10.geojson",
+                      verify_dir: str = "verify") -> gpd.GeoDataFrame:
     """Load one stride cell's union joined to its verifier probabilities.
 
     Args:
         label: Cell label.
+        union_name: The union file under ``verifier/<label>/``.
+        verify_dir: The verify-stage directory holding ``probabilities.json``.
 
     Returns:
         GeoDataFrame in the project CRS with ``vote_count``,
@@ -119,8 +134,8 @@ def load_stride_union(label: str) -> gpd.GeoDataFrame:
         JoinGateError: On any join-gate failure.
     """
     root = PROJECT_ROOT / STRIDE_CELLS[label][0] / "verifier" / label
-    gdf = gpd.read_file(root / "union_k10.geojson").to_crs(CRS)
-    results = json.loads((root / "verify" / "probabilities.json").read_text())["results"]
+    gdf = gpd.read_file(root / union_name).to_crs(CRS)
+    results = json.loads((root / verify_dir / "probabilities.json").read_text())["results"]
     if len(results) != len(gdf):
         raise JoinGateError(
             f"{label}: {len(results)} probabilities vs {len(gdf)} union features")
@@ -143,6 +158,37 @@ def reassign_gate(gdf: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame,
     out = gdf.copy()
     out["source_tile"] = fresh
     return out
+
+
+def load_stride_union_on_origin(
+    label: str, bounds: gpd.GeoDataFrame, *, union_name: str = "union_k10.geojson",
+    verify_dir: str = "verify", n_passes: int = K_TOTAL,
+) -> gpd.GeoDataFrame:
+    """A stride cell's verified union, gated, with each row on its own sheet.
+
+    :func:`load_stride_union` and :func:`reassign_gate`, then (D62 (1)) the
+    union's clusters rebuilt from the cell's first ``n_passes`` prepared
+    passes, their member tiles attached, and each row booked to a carrier
+    tile on its own sheet (``lib_cluster_origins.union_on_origin``).
+
+    Args:
+        label: Cell label.
+        bounds: Common carrier bounds.
+        union_name: The union file under ``verifier/<label>/`` (the winner
+            ladder's first-N unions are ``union_k<N>.geojson``).
+        verify_dir: Its verify-stage directory.
+        n_passes: How many passes the union was built from.
+
+    Returns:
+        The joined union with ``origin_tiles`` and an origin-sheet
+        ``source_tile``; index = the verifier's candidate number.
+    """
+    root = PROJECT_ROOT / STRIDE_CELLS[label][0]
+    gdf = reassign_gate(
+        load_stride_union(label, union_name=union_name, verify_dir=verify_dir),
+        bounds, label)
+    return union_on_origin(gdf, load_cell_passes(root / "scoring", label), bounds,
+                           label=f"{label}/{union_name}", n_passes=n_passes)
 
 
 def score_at(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
@@ -173,7 +219,7 @@ def main() -> int:
     union_scores: dict[str, dict[str, Any]] = {}
 
     for label, (_, stride, px, ov) in STRIDE_CELLS.items():
-        gdf = reassign_gate(load_stride_union(label), bounds, label)
+        gdf = load_stride_union_on_origin(label, bounds)
         union_scores[label] = score(gdf, gdf_ref, bounds)
         thresholds = sorted({0.0} | {float(v) for v in gdf["mound_probability"]})
         rows = []

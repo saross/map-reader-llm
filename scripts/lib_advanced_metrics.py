@@ -3798,7 +3798,10 @@ def bootstrap_effect_size_ci(
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
     tiles_b = set(gdf_bounds_b['tile_name'].unique())
-    common_tiles = list(tiles_a & tiles_b)
+    # Sorted (ruling D63): the seeded draw below indexes this list, and a
+    # set's iteration order follows the per-process string-hash seed, so an
+    # unsorted list gave a different interval in every process.
+    common_tiles = sorted(tiles_a & tiles_b)
     n_tiles = len(common_tiles)
 
     if n_tiles == 0:
@@ -3925,8 +3928,9 @@ def _permutation_on_tile_metrics(
     """Paired tile-swap permutation test of A - B on per-tile counts (D42).
 
     Tiles are put in SORTED order first: the swap a tile receives depends
-    on its position, and ``common_tiles`` comes from a set intersection
-    whose order varies with the interpreter's hash seed.
+    on its position, so the order must not depend on the caller. (Until
+    ruling D63 the bootstrap callers built ``common_tiles`` from a set, whose
+    order followed the interpreter's hash seed; they now sort it as well.)
 
     Args:
         tile_metrics_a: Per-tile counts for condition A.
@@ -4308,7 +4312,9 @@ def bootstrap_interaction_ci(
     for (a_level, b_level), (gdf_det, gdf_bounds) in conditions.items():
         tile_sets.append(set(gdf_bounds['tile_name'].unique()))
 
-    common_tiles = list(set.intersection(*tile_sets))
+    # Sorted (ruling D63): the seeded draw below indexes this list, and a
+    # set's iteration order follows the per-process string-hash seed.
+    common_tiles = sorted(set.intersection(*tile_sets))
     n_tiles = len(common_tiles)
 
     if n_tiles == 0:
@@ -5324,7 +5330,10 @@ def bootstrap_tile_effect_size_ci(
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
     tiles_b = set(gdf_bounds_b['tile_name'].unique())
-    common_tiles = list(tiles_a & tiles_b)
+    # Sorted (ruling D63): the seeded draw below indexes this list, and a
+    # set's iteration order follows the per-process string-hash seed, so an
+    # unsorted list gave a different interval in every process.
+    common_tiles = sorted(tiles_a & tiles_b)
     n_tiles = len(common_tiles)
 
     if n_tiles == 0:

@@ -87,13 +87,17 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.grid_prepare_scoring import CELLS, GRID_ROOT, N_PASSES  # noqa: E402
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
 from scripts.h13_overlap_analysis import micro_f1, paired_bootstrap  # noqa: E402
 from scripts.lib_permutation import paired_interaction_permutation  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
     score_detection_set,
+)
+from scripts.lib_cluster_origins import (  # noqa: E402
+    cluster_votes_with_members,
+    member_tiles,
+    points_on_origin,
 )
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
@@ -132,24 +136,29 @@ CELL_LABEL = {
 }
 
 
-def load_cell_passes(scoring_dir: Path, cell: str, scope: str = "common") -> list[list[dict]]:
+def load_cell_passes(
+    scoring_dir: Path, cell: str, scope: str = "common", n_passes: int = N_PASSES,
+) -> list[list[dict]]:
     """Load one cell's deduplicated passes in run order.
 
     Args:
         scoring_dir: Root of the prepared scoring artefacts.
         cell: Cell label.
         scope: ``common`` (the shared carrier grid) or ``native``.
+        n_passes: How many passes to load (``run_1`` .. ``run_<n>``); the
+            grid's ten by default, fewer for a K < 10 campaign.
 
     Returns:
-        One detection list per pass, in ``run_1`` .. ``run_10`` order. Each
-        detection carries ``centroid``, ``label``, ``source_tiles`` and the
-        within-pass ``cluster_size`` the corroboration filter reads.
+        One detection list per pass, in ``run_1`` .. ``run_<n>`` order. Each
+        detection carries ``centroid``, ``label``, ``source_tiles`` (the
+        proposer tiles it was seen on, its origin) and the within-pass
+        ``cluster_size`` the corroboration filter reads.
 
     Raises:
         FileNotFoundError: If a pass file is missing.
     """
     passes: list[list[dict]] = []
-    for i in range(1, N_PASSES + 1):
+    for i in range(1, n_passes + 1):
         path = scoring_dir / scope / cell / f"run_{i}" / "detections_dedup.geojson"
         if not path.exists():
             raise FileNotFoundError(f"Prepared pass missing: {path}")
@@ -166,22 +175,61 @@ def load_cell_passes(scoring_dir: Path, cell: str, scope: str = "common") -> lis
     return passes
 
 
-def as_gdf(centroids: np.ndarray, bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+def as_gdf(
+    centroids: np.ndarray, bounds: gpd.GeoDataFrame,
+    origins: list[list[str]] | None = None,
+) -> gpd.GeoDataFrame:
     """Wrap cluster centroids as a scorable GeoDataFrame on the carrier grid.
+
+    **Pass ``origins`` (PI ruling D62 (1)).** Each point is then recorded with
+    the tiles it was seen on (``origin_tiles``) and booked to the nearest
+    carrier tile ON ITS OWN SHEET (``lib_advanced_metrics.
+    assign_primary_tiles_on_origin_sheet``); a point on no tile of its own
+    sheet is dropped, as the shared scorer would drop it. Without
+    ``origins`` the point has no recorded sheet and the legacy rule applies:
+    the nearest tile centroid among ALL carrier tiles, which near a sheet
+    edge can be the neighbouring sheet's tile, so the detection is matched
+    against the wrong sheet's references. That path is kept only to replay
+    numbers published before D62; every chain in this repository passes
+    ``origins``.
 
     Args:
         centroids: Array of shape (n, 2) in the project CRS.
         bounds: Carrier tile bounds with a ``tile_name`` column.
+        origins: Per-centroid origin tile names (a cluster's member tiles
+            from :func:`scripts.lib_cluster_origins.cluster_votes_with_members`,
+            a pass detection's ``source_tiles``, or a set's recorded
+            ``source_tile``).
 
     Returns:
-        GeoDataFrame with a ``source_tile`` column; rows that fall on no
-        carrier tile are dropped (they cannot be scored or booked to a tile).
+        GeoDataFrame with a ``source_tile`` column (and ``origin_tiles`` when
+        ``origins`` is given); rows that fall on no carrier tile (of their own
+        sheet, when ``origins`` is given) are dropped. The index is each
+        row's position in ``centroids``.
     """
+    if origins is not None:
+        gdf, _ = points_on_origin(centroids, bounds, origins, CRS)
+        return gdf
     if len(centroids) == 0:
         return gpd.GeoDataFrame({"source_tile": []}, geometry=[], crs=CRS)
     gdf = gpd.GeoDataFrame(geometry=[Point(xy) for xy in centroids], crs=CRS)
     gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
     return gdf[gdf["source_tile"].notna()].copy()
+
+
+def pass_frame(dets: list[dict], bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    """One deduplicated pass as a scorable frame, each detection on its own sheet.
+
+    Args:
+        dets: One pass from :func:`load_cell_passes`.
+        bounds: Carrier tile bounds.
+
+    Returns:
+        :func:`as_gdf` of the pass's centroids with each detection's recorded
+        ``source_tiles`` as its origin.
+    """
+    return as_gdf(np.asarray([d["centroid"] for d in dets], dtype=float).reshape(-1, 2),
+                  bounds, origins=[member_tiles(d) for d in dets])
 
 
 def score(
@@ -236,7 +284,7 @@ def single_pass_table(
     for cell in CELL_ORDER:
         rows = []
         for i, dets in enumerate(cell_passes[cell], start=1):
-            gdf = as_gdf(np.asarray([d["centroid"] for d in dets], dtype=float), bounds)
+            gdf = pass_frame(dets, bounds)
             row = score(gdf, gdf_ref, bounds)
             # The tile confusion matrix is what makes an MCC readable at all —
             # without it a low MCC cannot be told apart from a degenerate one.
@@ -352,7 +400,7 @@ def build_per_tile(
     for cell in CELL_ORDER:
         acc = {k: np.zeros(len(tile_order)) for k in ("tp", "fp", "fn")}
         for dets in cell_passes[cell]:
-            gdf = as_gdf(np.asarray([d["centroid"] for d in dets], dtype=float), bounds)
+            gdf = pass_frame(dets, bounds)
             tm = compute_per_tile_tp_fp_fn(gdf, gdf_ref, bounds, buffer_metres=BUFFER_M)
             tm = tm.set_index("tile_name").reindex(tile_order).fillna(0)
             for k in ("tp", "fp", "fn"):
@@ -453,10 +501,11 @@ def sweep(
         for k_total in K_LADDER:
             subset = passes[:k_total]
             for c in CORROBORATION:
-                centroids, votes = cluster_votes(subset, c)
+                centroids, votes, members = cluster_votes_with_members(subset, c)
                 for k in range(1, k_total + 1):
                     sel = votes >= k
-                    gdf = as_gdf(centroids[sel], bounds)
+                    gdf = as_gdf(centroids[sel], bounds,
+                                 origins=[members[i] for i in np.flatnonzero(sel)])
                     row = score(gdf, gdf_ref, bounds)
                     row.update({
                         "cell": cell, "label": CELL_LABEL[cell],

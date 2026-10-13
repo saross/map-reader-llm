@@ -8549,3 +8549,49 @@ compaction summary.*
   give byte-identical sweeps (all 32 pairs), and a detection on a real mound
   outside the frame is a false positive. Before reading "the two agree" as
   evidence, ask whether the instrument could have disagreed.
+
+## Session 163 — 2026-10-07 to 10-13 (D57 (4) merged; D59–D64; the seam defects; Pro thinking; the Pro 2×2 re-run)
+
+*Post-compaction instance for the work before 2026-10-11 (reconstructed from
+the summary); primary for everything after.*
+
+- **A vision model shown a blank image will sometimes describe one.** The
+  grid verifier (`gemini-3-flash-preview`, `verify_adversarial-text`, T 0.0)
+  was given crops that were 99–100 % black no-data, because the crop came from
+  the wrong sheet's raster. It scored them 0.0–0.05, and for two of them
+  wrote that "the symbol is a standard Soviet map representation of a
+  triangulation point". On the corrected crops the same places scored up to
+  1.0. A verifier's reasoning text is not evidence that it saw anything; a
+  cheap pre-call gate (refuse mostly-no-data crops) is the defence.
+- **A requested model setting is not a delivered one, and the bill is the
+  independent witness.** Gemini 3.1 Pro at `thinking_level` HIGH recorded
+  zero thought tokens; the June invoice matched recorded output plus thinking
+  to 1.0 %, so the zeros were real, not a logging gap. Same-day batch runs
+  then showed HIGH thinking *less* than MEDIUM (0–2 against 9–48 tokens per
+  request), and only an explicit 4,096-token budget made Pro think (2 of 10
+  tiles). Experiments that vary "thinking" must measure delivered thought
+  tokens per condition before reading any contrast as a thinking effect.
+- **My causal stories were confident, plausible, and wrong three times in two
+  days.** I read slow, repeated requests as heavy thinking (they were
+  unbilled 503s), a 951 → 954 detection change as a code change from file
+  dates (the replay showed changed inputs), and a coverage shortfall as
+  biasing gains only one way (it hides false alarms too). Each was corrected
+  by the next measurement or a side agent. The pattern: I reported a
+  mechanism before naming its rival and the cheapest check that would
+  separate them. Naming the rival first would have cost one sentence each
+  time.
+- **Parallel subagents work best as independent second readers, with their
+  claims re-checked at source.** Six-agent overnight rounds produced seven
+  draft PRs; the main session's spot-checks caught an agent misreading a
+  ratio (one Pro pass against one Flash pass rather than against three) and a
+  "43 places" figure with no recorded definition, while side-agent notes
+  caught four of mine. On hardware without ECC memory, requiring every
+  committed number to come out byte-identical from two independent runs made
+  the parallel work trustworthy at modest cost.
+- **Two implementations of one operation drift silently.** The real-time and
+  batch request builders diverged (batch with caching sent a text-only
+  config's example images; earlier the cached path dropped the flex tier),
+  and three scorer copies fell behind the shared scorer. Each was found only
+  when the two copies were made to run on the same input. One builder and one
+  scorer, with any fast copy gated against the live one in tests, is the
+  durable fix.

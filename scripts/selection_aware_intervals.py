@@ -87,10 +87,10 @@ from scripts.grid_analysis import (  # noqa: E402
     CELL_LABEL,
     CORROBORATION,
     as_gdf,
-    cluster_votes,
     load_cell_passes,
 )
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_cluster_origins import cluster_votes_with_members  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -138,9 +138,13 @@ def build_candidate_tile_counts(
     rows: list[np.ndarray] = []
 
     for c in CORROBORATION:
-        centroids, votes = cluster_votes(passes, c)
+        # Each cluster keeps its members' tiles, so it is booked on its own
+        # sheet, as the sweep it reproduces now books it (D62 (1)).
+        centroids, votes, members = cluster_votes_with_members(passes, c)
         for k in range(1, k_total + 1):
-            gdf = as_gdf(centroids[votes >= k], bounds)
+            sel = votes >= k
+            gdf = as_gdf(centroids[sel], bounds,
+                         origins=[members[i] for i in np.flatnonzero(sel)])
             arr = np.zeros((len(tile_order), 3))
             if not gdf.empty:
                 tm = compute_per_tile_tp_fp_fn(
@@ -624,7 +628,8 @@ def build_sweep_tile_counts(
     for s, f in zip(specs, f1s, strict=True):
         s["f1"] = float(f)
     meta: dict[str, Any] = {"sweep_union": str(union_path), "sweep_verify": str(verify_dir),
-                            "K": k_total, "bounds": str(bounds_path), "n_thresholds": len(thresholds)}
+                            "K": k_total, "bounds": str(bounds_path),
+                            "n_thresholds": len(thresholds)}
     if sweep_csv is not None:
         by_point = {(s["prob_t"], s["min_votes"]): s for s in specs}
         worst_f1, worst_n, n_rows = 0.0, 0, 0
@@ -644,8 +649,10 @@ def build_sweep_tile_counts(
         meta["gate_sweep_csv"] = {"path": str(sweep_csv), "rows": n_rows,
                                   "max_abs_delta_f1": worst_f1, "max_abs_delta_n": worst_n}
         if worst_f1 > 1e-9 or worst_n:
-            raise ValueError(f"sweep gate FAILED: max |dF1| {worst_f1:.2e}, max |dn| {worst_n} vs {sweep_csv}")
-        logger.info("sweep gate OK: %d rows of %s reproduced (max |dF1| %.1e)", n_rows, sweep_csv, worst_f1)
+            raise ValueError(f"sweep gate FAILED: max |dF1| {worst_f1:.2e}, "
+                             f"max |dn| {worst_n} vs {sweep_csv}")
+        logger.info("sweep gate OK: %d rows of %s reproduced (max |dF1| %.1e)",
+                    n_rows, sweep_csv, worst_f1)
     if anchor_eval is not None:
         doc = json.loads(Path(anchor_eval).read_text())
         brow = next(b for b in doc["summary"]["buffers"] if b["buffer_metres"] == buffer_metres)
@@ -654,7 +661,8 @@ def build_sweep_tile_counts(
                                     "argmax_f1": apparent, "delta": apparent - float(brow["f1"])}
         # evaluation.json publishes F1 to four decimals; the gate is that precision.
         if abs(apparent - float(brow["f1"])) > 5e-5:
-            raise ValueError(f"anchor gate FAILED: argmax {apparent:.6f} vs {brow['f1']:.6f} in {anchor_eval}")
+            raise ValueError(f"anchor gate FAILED: argmax {apparent:.6f} vs "
+                             f"{brow['f1']:.6f} in {anchor_eval}")
         logger.info("anchor gate OK: argmax %.4f == %s", apparent, anchor_eval)
     logger.info("sweep %s / %s K=%d: %d candidates over %d tiles", union_path.name,
                 verify_dir.name, k_total, len(specs), len(tile_order))
@@ -686,7 +694,8 @@ def main() -> int:
                     help="The verify stage directory holding probabilities.json.")
     ap.add_argument("--sweep-k", type=int, default=None, help="The pool's pass count K.")
     ap.add_argument("--sweep-csv", type=Path, default=None,
-                    help="Gate: the screen's committed sweep_20m.csv the candidates must reproduce.")
+                    help="Gate: the screen's committed sweep_20m.csv the candidates "
+                         "must reproduce.")
     ap.add_argument("--sweep-anchor-eval", type=Path, default=None,
                     help="Gate: a committed evaluation.json the argmax candidate must equal.")
     ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")

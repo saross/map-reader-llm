@@ -1,0 +1,44 @@
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Output: outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7
+  Built JSONL: 487 lines (outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_1/batch_working/detections_detect_brief-text_run01.jsonl)
+  Submitted batch job: batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_RUNNING
+  Polling batches/ktddp0uh1hiijbvp9vblrbopw5gp6uv6n1ic: JOB_STATE_SUCCEEDED
+  Batch complete: 487 tiles, 451 detections, 0 failed, $1.0291
+  Released request file files/vkm7cahwah0s (job terminal)
+
+Batch complete. Estimated cost: $1.0291
+Tiles processed: 487

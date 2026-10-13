@@ -20,7 +20,10 @@ What it does, per cell:
    deduplicated passes, using `grid_analysis`'s own clustering so the
    materialised set is the same set the published sweep scored.
 2. Writes it as a scorable GeoJSON with `source_tile` assigned against the
-   common carrier grid (the E79 nearest-centroid rule).
+   common carrier grid (the E79 nearest-centroid rule, restricted to the
+   cluster's own sheet) and `origin_tiles`, the tiles the cluster's members
+   were seen on (PI ruling D62 (1), 2026-10-13: before it, the tile was the
+   nearest among ALL carrier tiles and could lie on a neighbouring sheet).
 3. Runs `evaluate_detections.py` against the common bounds at B = 10 000.
 4. Verifies the resulting F1@20 m reproduces the published sweep value, and
    fails loudly if it does not.
@@ -50,6 +53,7 @@ from pathlib import Path
 from typing import Any
 
 import geopandas as gpd
+import numpy as np
 from shapely.geometry import mapping
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -59,10 +63,10 @@ from scripts.grid_analysis import (  # noqa: E402
     CELL_LABEL,
     CELL_ORDER,
     as_gdf,
-    cluster_votes,
     load_cell_passes,
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
+from scripts.lib_cluster_origins import cluster_votes_with_members  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -109,8 +113,11 @@ def materialise(cell: str, point: dict, bounds: gpd.GeoDataFrame, target: Path) 
         Number of features written.
     """
     passes = load_cell_passes(SCORING_DIR, cell)[:K_TOTAL]
-    centroids, votes = cluster_votes(passes, point["min_corroboration"])
-    gdf = as_gdf(centroids[votes >= point["min_votes"]], bounds)
+    centroids, votes, members = cluster_votes_with_members(
+        passes, point["min_corroboration"])
+    sel = votes >= point["min_votes"]
+    gdf = as_gdf(centroids[sel], bounds,
+                 origins=[members[i] for i in np.flatnonzero(sel)])
 
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(json.dumps({
@@ -123,11 +130,13 @@ def materialise(cell: str, point: dict, bounds: gpd.GeoDataFrame, target: Path) 
                 "geometry": mapping(geom),
                 "properties": {
                     "source_tile": tile,
+                    "origin_tiles": origin,
                     "label": "mound",
                     "subtype": "mound",
                 },
             }
-            for geom, tile in zip(gdf.geometry, gdf["source_tile"], strict=True)
+            for geom, tile, origin in zip(
+                gdf.geometry, gdf["source_tile"], gdf["origin_tiles"], strict=True)
         ],
     }, indent=2))
     return len(gdf)
