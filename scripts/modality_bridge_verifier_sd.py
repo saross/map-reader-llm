@@ -113,7 +113,8 @@ def rep_dir(base: str, rep: int) -> str:
     """The verify directory a replicate is scored from.
 
     Replicate 1 is read where the floors read it (``verify_g3`` for the three
-    legs whose repaired copies were never committed and changed no row;
+    Run B legs, which the shared leg rule resolves to ``verify_g3_repaired/``
+    by default and to ``verify_g3/`` under ``MAP_READER_VERIFY_DIRS=fixed``;
     ``verify_<v>_repaired`` otherwise). Replicates 2 and 3 are read from
     their repaired copies.
 
@@ -371,22 +372,16 @@ def load_replicates(reps: Sequence[int] = REPS
                 vdir = rep_dir(base, rep)
                 key = f"{name}/{leg}/rep{rep}"
                 try:
-                    u = reassign_gate(iba.load_image_union(vroot, arm.union_name, vdir),
-                                      fl._G["bounds"], key)
+                    joined = iba.load_image_union(vroot, arm.union_name, vdir)
+                    u = reassign_gate(joined, fl._G["bounds"], key)
                 except (JoinGateError, FileNotFoundError) as exc:
                     failures.append(f"{key}: {exc}")
                     continue
                 unions[(name, leg, rep)] = u
-                rec = vroot / vdir / "parse_repair.json"
-                repair = json.loads(rec.read_text()) if rec.exists() else None
-                prov[key] = {
-                    "dir": str((vroot / vdir).relative_to(PROJECT_ROOT)),
-                    "probabilities_sha256": sha256(vroot / vdir / "probabilities.json"),
-                    "n": int(len(u)),
-                    "parse_error_rows": None if repair is None else repair["n_parse_error_rows"],
-                    "repaired": None if repair is None else len(repair["changed"]),
-                    "unrecovered": None if repair is None else len(repair["unrecovered"]),
-                }
+                # The directory the rule actually read (lib_verify_dirs), not
+                # the name asked for: replicate 1 of the three Run B legs is
+                # asked for as ``verify_g3`` and read from its repaired copy.
+                prov[key] = {**joined.attrs["verifier_probabilities"], "n": int(len(u))}
     return unions, prov, failures
 
 

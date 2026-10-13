@@ -69,8 +69,14 @@ are rebuilt from the committed pass GeoJSONs by
 into ``--scoring-root`` (the rebuilt unions equal the committed ones). The
 first scoring read three Gemini 3 legs' ``verify_g3_repaired/`` copies,
 which were not committed either; their ``parse_repair.json`` records no
-parse-error row and no change, so this script reads the committed
-``verify_g3/`` (gate 2 confirms every F1).
+parse-error row and no change, so this script read the committed
+``verify_g3/`` (gate 2 confirms every F1). PI decision D62 (1) step 2
+(2026-10-13) then re-verified those legs' wrong-sheet rows on crops from
+their own sheet and committed the result as ``verify_g3_repaired/``, so the
+three legs are now named by their fixed name and read under the shared leg
+rule (``scripts/lib_verify_dirs.py``): the repaired copy by default, the
+fixed-name leg under ``MAP_READER_VERIFY_DIRS=fixed``. The other legs keep
+their explicit ``_repaired`` names, which the rule reads as named.
 
 Usage::
 
@@ -151,9 +157,11 @@ class Arm:
         return f"union_k{self.n_passes}.geojson"
 
 
-#: The seven arms. ``g3-text``, ``g3-image`` and ``g3-text-temp1`` read the
-#: committed ``verify_g3``: their uncommitted ``_repaired`` copies changed no
-#: row (module docstring).
+#: The seven arms. ``g3-text``, ``g3-image`` and ``g3-text-temp1`` name their
+#: replicate-1 leg ``verify_g3``, which ``image_b_analysis.load_image_union``
+#: resolves under the shared leg rule: ``verify_g3_repaired/`` (D62 (1) step
+#: 2's re-verified rows) by default, ``verify_g3/`` under
+#: ``MAP_READER_VERIFY_DIRS=fixed`` (module docstring).
 ARMS: dict[str, Arm] = {a.name: a for a in (
     Arm("g3-text", "detect_brief-text", 10, (("g3v", "verify_g3"),)),
     Arm("g3-image", "detect_brief-text-image", 10, (("g3v", "verify_g3"),)),
@@ -1234,12 +1242,15 @@ def main(argv: list[str] | None = None) -> int:
 
     _G["arms"] = {}
     provenance: dict[str, Any] = {}
+    #: Which directory each leg was read from under the shared rule.
+    verifier_probabilities: dict[str, Any] = {}
     for name, arm in ARMS.items():
         vroot = OUTPUTS / name / "verifier" / arm.cell
         probs, union_ref = {}, None
         for leg, vdir in arm.legs:
-            u = reassign_gate(iba.load_image_union(vroot, arm.union_name, vdir),
-                              _G["bounds"], f"{name}/{leg}")
+            joined = iba.load_image_union(vroot, arm.union_name, vdir)
+            verifier_probabilities[f"{name}/{leg}"] = joined.attrs["verifier_probabilities"]
+            u = reassign_gate(joined, _G["bounds"], f"{name}/{leg}")
             probs[leg] = u["mound_probability"].to_numpy()
             union_ref = u
         points: dict[str, list[tuple[float, float]]] = {}
@@ -1263,6 +1274,7 @@ def main(argv: list[str] | None = None) -> int:
             f"run_{i}": sha256(sdir / "common" / arm.cell / f"run_{i}" / "detections_dedup.geojson")
             for i in range(1, arm.n_passes + 1)}
     gates["scoring_passes_sha256"] = provenance
+    gates["verifier_probabilities"] = verifier_probabilities
     rows, counts, tops = run_subsets(args.workers)
     logger.info("subset rungs done: %d rows (%.0f s)", len(rows), time.time() - t0)
 
