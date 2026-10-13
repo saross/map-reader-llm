@@ -14,6 +14,11 @@ inputs are built from lists only, so they are the same in both processes;
 on ``main`` before the fix every assertion here failed (red sentinel,
 recorded in ``reports/s163-agent-records/bootstrap-hash-order.md``).
 
+The same ruling replaced two seeds derived from the built-in ``hash()`` of
+strings (``analyse_consensus_sd_shrinkage.py`` and its v2), which are salted
+per process in the same way; those are tested here too, with their file and
+consensus steps stubbed so that only the seeded draws are exercised.
+
 The synthetic tile names follow the tiling pipeline's
 ``<sheet>_x<N>_y<N>.png`` form so that the scorer attributes detections to
 their sheet; other name forms are scoped out and leave every count at zero,
@@ -35,8 +40,9 @@ pytestmark = pytest.mark.tier1
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-# Two hash seeds that order the synthetic tile set differently (checked on
-# ``main`` before the fix: every case below differed between them).
+# Two hash seeds that order the synthetic tile set differently and give
+# different hash-derived seeds (checked on ``main`` before the fix: every
+# case below differed between them).
 HASH_SEEDS = ("1", "2")
 
 
@@ -98,8 +104,49 @@ def _synthetic() -> dict[str, Any]:
     }
 
 
+def _sd_v1_result() -> Any:
+    """``compute_sd_per_cell_per_k`` (SD shrinkage v1) on fixed per-pass F1s."""
+    import numpy as np
+    import pandas as pd
+
+    from scripts.analyse_consensus_sd_shrinkage import compute_sd_per_cell_per_k
+
+    rs = np.random.RandomState(5)
+    rows = []
+    for track, k_max in (("text", 10), ("image", 5)):
+        for thinking in ("HIGH", "MINIMAL"):
+            for temperature in (0.0, 0.7):
+                rows.extend({"track": track, "thinking": thinking, "T": temperature,
+                             "K_max": k_max, "f1": float(rs.uniform(0.5, 0.8))}
+                            for _ in range(k_max))
+    out = compute_sd_per_cell_per_k(pd.DataFrame(rows))
+    return out.to_dict(orient="records")
+
+
+def _sd_v2_result() -> Any:
+    """``_process_stratum`` (SD shrinkage v2) with its I/O and scoring stubbed.
+
+    Eight passes and at most five subsamples per K', so K' = 2 to 6 are drawn
+    at random from the stratum's seed; the stubbed F1 of a subsample is a
+    fixed function of which passes it holds, so the output records the draw.
+    """
+    import scripts.analyse_consensus_sd_shrinkage_v2 as v2
+    import evaluate_detections  # resolvable: v2 puts scripts/ on sys.path
+
+    evaluate_detections.load_geojson = lambda _path: None
+    v2.discover_run_dirs = lambda _root: [Path(f"run_{i}") for i in range(1, 9)]
+    v2.load_run_features = lambda run_dir: [{"pass": run_dir.name}]
+    v2.deduplicate_within_pass = lambda feats, distance_thresh: feats
+    v2.consensus_f1_for_subsample = (
+        lambda _dedup, subsample, k_used, *_args, **_kwargs:
+        sum(int(name.split("_")[1]) ** 2 for name in subsample) / (64.0 * k_used))
+    stratum = {"label": "text_HIGH_T0.7", "bounds": "unused", "run_dir": "unused",
+               "K_max": 8, "track": "text", "thinking": "HIGH", "T": 0.7}
+    return v2._process_stratum((stratum, "unused", 5, 20.0, 20))
+
+
 def _results() -> dict[str, Any]:
-    """Run the three D63-fixed functions on the synthetic problem."""
+    """Run every D63-fixed function on its fixed synthetic input."""
     import warnings
 
     from scripts.lib_advanced_metrics import (
@@ -124,6 +171,8 @@ def _results() -> dict[str, Any]:
             *pair, n_iterations=200, random_seed=42),
         "bootstrap_interaction_ci": bootstrap_interaction_ci(
             conditions, s["ref"], n_iterations=200, random_seed=42),
+        "sd_shrinkage_v1": _sd_v1_result(),
+        "sd_shrinkage_v2": _sd_v2_result(),
     }
 
 
@@ -152,6 +201,8 @@ def per_seed_results() -> dict[str, dict[str, Any]]:
     "bootstrap_effect_size_ci",
     "bootstrap_tile_effect_size_ci",
     "bootstrap_interaction_ci",
+    "sd_shrinkage_v1",
+    "sd_shrinkage_v2",
 ])
 def test_identical_across_hash_seeds(
     per_seed_results: dict[str, dict[str, Any]], function: str,
@@ -174,6 +225,8 @@ def test_synthetic_problem_is_not_degenerate(
     resampling order.
     """
     res = per_seed_results[HASH_SEEDS[0]]
+    # The v2 stub must leave room for a random draw: some K' not exhaustive.
+    assert any(not row["exhaustive"] for row in res["sd_shrinkage_v2"][1]["per_k"])
     f1 = res["bootstrap_effect_size_ci"]["f1_difference"]
     mcc = res["bootstrap_tile_effect_size_ci"]["mcc_difference"]
     dod = res["bootstrap_interaction_ci"]["interaction_contrasts"][0][
