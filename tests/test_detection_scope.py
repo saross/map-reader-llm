@@ -40,7 +40,13 @@ overlap by 10 m):
   and frame tile — is read by the longest sheet of the frame and the
   catalogue together, so a shorter frame sheet never claims a name a longer
   left-out sheet owns, and the library's common-footprint bootstraps score
-  a footprint smaller than a condition's frame with that frame as parent.
+  a footprint that drops whole sheets of a condition's frame with that
+  frame as parent, and one that only trims tiles within sheets as on
+  ``main``;
+* (PI ruling D62, 2026-10-13, after Astra's review of 2026-10-11) a
+  footprint that does both, dropping a whole sheet and trimming a retained
+  one, is refused (``MixedCutRefusalError``), so a sheet outside the
+  footprint cannot change how the retained sheets are scored.
 """
 
 from __future__ import annotations
@@ -1249,18 +1255,114 @@ def test_a_within_sheet_footprint_keeps_its_pre_pr33_attribution(frame, monkeypa
     assert seen == [None, None]
 
 
-def test_a_footprint_that_drops_a_sheet_and_trims_another_gets_the_parent(
+def test_a_footprint_that_drops_whole_sheets_only_gets_the_parent(
     three_sheet_frame, monkeypatch,
 ):
-    """Dropping any whole sheet makes the footprint a reduced frame, trimmed or not."""
-    cut = three_sheet_frame[~three_sheet_frame["tile_name"].isin(
-        ["C_x0_y0.png", "C_x100_y0.png", "B_x100_y0.png"])]
-    assert lam.frame_sheets(cut) == ["A", "B"]
+    """A pure whole-sheet cut (every tile of each retained sheet kept) gets the parent."""
+    cut = three_sheet_frame[~three_sheet_frame["tile_name"].str.startswith("C_")]
+    assert lam.frame_sheets(cut) == ["A", "B"] and len(cut) == 4
     assert lam._parent_of_cut(three_sheet_frame, cut) is three_sheet_frame
     d = dets([("A_x0_y0.png", 50, 50)])
     refs = gpd.GeoDataFrame({"Map": ["A"]}, geometry=[Point(50, 50)], crs=CRS)
     seen = _spy_on_per_tile_parents(monkeypatch)
     effect = lam.bootstrap_effect_size_ci(d, three_sheet_frame, d, cut, refs,
                                           n_iterations=20, random_seed=1)
-    assert "error" not in effect
+    assert "error" not in effect and effect["f1_difference"]["mean"] == 0
     assert len(seen) == 2 and seen[0] is three_sheet_frame and seen[1] is None
+
+
+def test_a_footprint_that_drops_a_sheet_and_trims_another_is_refused(three_sheet_frame):
+    """A mixed cut is refused, naming the dropped and the trimmed sheets (ruling D62).
+
+    Dropping C and B's x100 tile is neither a whole-sheet partition (B is
+    trimmed) nor a cut that keeps every sheet (C is gone). Before ruling
+    D62 the helper passed the parent here (``d99128f65``).
+    """
+    cut = three_sheet_frame[~three_sheet_frame["tile_name"].isin(
+        ["C_x0_y0.png", "C_x100_y0.png", "B_x100_y0.png"])]
+    assert lam.frame_sheets(cut) == ["A", "B"]
+    with pytest.raises(lam.MixedCutRefusalError) as err:
+        lam._parent_of_cut(three_sheet_frame, cut)
+    assert isinstance(err.value, ValueError)
+    assert err.value.sheets_dropped == ["C"]
+    assert err.value.sheets_trimmed == {"B": (1, 2)}
+    message = str(err.value)
+    assert "['C']" in message and "B (1 of 2 tiles kept)" in message
+    assert "D62" in message
+    d = dets([("A_x0_y0.png", 50, 50)])
+    refs = gpd.GeoDataFrame({"Map": ["A"]}, geometry=[Point(50, 50)], crs=CRS)
+    with pytest.raises(lam.MixedCutRefusalError):
+        lam.bootstrap_effect_size_ci(d, three_sheet_frame, d, cut, refs,
+                                     n_iterations=20, random_seed=1)
+    with pytest.raises(lam.MixedCutRefusalError):
+        lam.bootstrap_tile_effect_size_ci(d, three_sheet_frame, d, cut, refs,
+                                          n_iterations=20, random_seed=1)
+    with pytest.raises(lam.MixedCutRefusalError):
+        lam.bootstrap_interaction_ci(
+            {("x", "1"): (d, three_sheet_frame), ("x", "2"): (d, cut),
+             ("y", "1"): (d, cut), ("y", "2"): (d, cut)},
+            refs, n_iterations=20, random_seed=1)
+
+
+# ── Astra's mixed-cut probes (review of d99128f65, 2026-10-11; ruling D62) ──
+#
+# Her two probe files (``test_review_mixed_cut.py`` and
+# ``test_review_public_cut.py``), carried in with their geometry unchanged.
+# She asserted that adding an empty, distant sheet C, outside an unchanged
+# common footprint, leaves the comparison unchanged; at ``d99128f65`` the
+# counts went (1, 0, 0) -> (0, 0, 1) and the public mean F1 difference
+# 0.0 -> -0.85. Adapted to ruling D62: without C the footprint is a
+# within-sheet cut, scored as on ``main``; with C it is a mixed cut (C
+# dropped, A trimmed) and is refused, so C can no longer change a score.
+
+
+@pytest.fixture()
+def astra_mixed_case() -> tuple:
+    """Astra's frame with C, the common footprint, a two-sheet row, and B's reference."""
+    bounds = gpd.GeoDataFrame(
+        {"tile_name": ["A_x0_y0.png", "A_x100_y0.png", "B_x0_y0.png",
+                       "B_x100_y0.png", "C_x0_y0.png"]},
+        geometry=[box(0, 0, 100, 100), box(100, 0, 200, 100),
+                  box(190, 0, 290, 100), box(290, 0, 390, 100),
+                  box(1000, 0, 1100, 100)], crs=CRS,
+    )
+    cut = bounds.iloc[[0, 2, 3]]
+    detections = gpd.GeoDataFrame(
+        {"source_tile": ["A_x0_y0.png"],
+         "origin_tiles": ["A_x0_y0.png;B_x0_y0.png"]},
+        geometry=[Point(195, 50)], crs=CRS,
+    )
+    references = gpd.GeoDataFrame({"Map": ["B"]}, geometry=[Point(196, 50)], crs=CRS)
+    return bounds, cut, detections, references
+
+
+def test_an_unrelated_omitted_sheet_cannot_change_the_common_footprint(astra_mixed_case):
+    """Astra's first probe: adding empty, distant C refuses rather than rescoring A/B."""
+    bounds, cut, detections, references = astra_mixed_case
+    original = bounds.iloc[:4]
+    # Without C: a within-sheet cut, no parent, the footprint's own reading.
+    assert lam._parent_of_cut(original, cut) is None
+    table = lam.compute_per_tile_tp_fp_fn(detections, references, cut)
+    assert tuple(int(table[c].sum()) for c in ("tp", "fp", "fn")) == (1, 0, 0)
+    effect = lam.bootstrap_effect_size_ci(detections, original, detections, cut, references,
+                                          n_iterations=20, random_seed=1)
+    assert effect["f1_difference"]["mean"] == 0.0
+    # With C: a mixed cut, refused, so C cannot move the counts.
+    with pytest.raises(lam.MixedCutRefusalError) as err:
+        lam._parent_of_cut(bounds, cut)
+    assert err.value.sheets_dropped == ["C"]
+    assert err.value.sheets_trimmed == {"A": (1, 2)}
+    with pytest.raises(lam.MixedCutRefusalError):
+        lam.bootstrap_effect_size_ci(detections, bounds, detections, cut, references,
+                                     n_iterations=20, random_seed=1)
+
+
+def test_an_empty_distant_sheet_cannot_change_the_public_contrast(astra_mixed_case):
+    """Astra's second probe: the public bootstrap refuses where it used to move."""
+    bounds, cut, detections, references = astra_mixed_case
+    before = lam.bootstrap_effect_size_ci(detections, bounds.iloc[:4], detections, cut,
+                                          references, n_iterations=20, random_seed=1)
+    assert before["f1_difference"]["mean"] == 0.0
+    with pytest.raises(lam.MixedCutRefusalError, match=r"drops whole sheet\(s\) \['C'\]"):
+        lam.bootstrap_effect_size_ci(detections, bounds, detections, cut, references,
+                                     n_iterations=20, random_seed=1)

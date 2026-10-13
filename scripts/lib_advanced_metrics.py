@@ -28,6 +28,9 @@ Detection scope (PI ruling D50, 2026-10-07):
 - ReducedFrameRefusalError: a frame narrower than its detection set refuses
   a detection seen across its edge unless ``parent_bounds`` names the full
   frame (the D50 review, finding 2; PI decision, 2026-10-10)
+- MixedCutRefusalError: the common-footprint bootstraps refuse a footprint
+  that drops a whole sheet of a condition's frame AND trims a sheet it keeps
+  (PI ruling D62, 2026-10-13)
 """
 
 import functools
@@ -35,6 +38,7 @@ import json
 import logging
 import re
 import warnings
+from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator
@@ -1587,6 +1591,18 @@ def frame_tile_sheets(
 # frame is an evaluation frame in its own right, as the common-footprint
 # frames are, and its counts are not a share of the parent's.
 #
+# **A MIXED cut is refused** (PI ruling D62, 2026-10-13, after Astra's
+# review of 2026-10-11). A cut that drops a whole sheet of its parent AND
+# trims a sheet it keeps is not a whole-sheet partition, so the guarantee
+# does not hold for it. Scoring it with the parent, as a whole-sheet cut is
+# scored, made the attribution on its retained sheets depend on a sheet
+# outside it. Astra's case: adding an empty, distant sheet to one
+# condition's frame, outside an unchanged common footprint, switched a row
+# seen on two retained sheets from (TP, FP, FN) = (1, 0, 0) to (0, 0, 1).
+# Until an attribution contract for such cuts is stated and tested on both
+# arms of a comparison, the common-footprint bootstraps refuse one
+# (:class:`MixedCutRefusalError`, raised by :func:`_parent_of_cut`).
+#
 # **Rule 3 is a compatibility path, not part of the contract.** An origin
 # name on no sheet of the frame and no catalogue sheet (a tile vocabulary
 # the catalogue does not recognise) keeps the pre-D50 ``source_tile``
@@ -1604,10 +1620,11 @@ def frame_tile_sheets(
 # 2026-10-10 give them the full frame, so each row counts on at most one
 # sheet. The library's common-footprint bootstraps
 # (:func:`bootstrap_effect_size_ci`, :func:`bootstrap_tile_effect_size_ci`,
-# :func:`bootstrap_interaction_ci`) pass each condition's own frame as the
-# parent when the common footprint drops a whole sheet of it; a footprint
-# that only trims tiles within sheets keeps its pre-PR #33 attribution
-# (:func:`_parent_of_cut`).
+# :func:`bootstrap_interaction_ci`) read each condition's footprint by
+# :func:`_parent_of_cut`: one that drops whole sheets of the condition's
+# frame and keeps every tile of the sheets it retains is scored with that
+# frame as the parent; one that only trims tiles within sheets keeps its
+# pre-PR #33 attribution, as on ``main``; one that does both is refused.
 #
 # On a full frame these rules move nothing that has been measured: the
 # read-only measurement of 2026-10-09 over all 2,751 committed full-frame
@@ -1650,6 +1667,39 @@ class ReducedFrameRefusalError(ValueError):
         self.positions = positions
         self.sheets_left_out = sheets_left_out
         self.within_parent = within_parent
+
+
+class MixedCutRefusalError(ValueError):
+    """A common footprint drops a whole sheet of a frame AND trims a sheet it keeps.
+
+    The common-footprint bootstraps score each condition on the tiles all
+    conditions share. A footprint that drops whole sheets of a condition's
+    frame and keeps every tile of the rest is scored with that frame as the
+    parent (ruling D59); one that only trims tiles within sheets is scored
+    as a frame in its own right, as on ``main``. A footprint that does both
+    (a MIXED cut) has no stated attribution contract: D59's guarantee is for
+    whole-sheet partitions only, and scoring it with the parent made the
+    retained sheets' counts depend on a sheet outside the footprint (Astra's
+    review, 2026-10-11). PI ruling D62 (2026-10-13) refuses it. A
+    :class:`ValueError` subclass, like :class:`ReducedFrameRefusalError`
+    and :class:`TileJoinRefusalError`.
+
+    Attributes:
+        sheets_dropped: The frame's sheets the footprint leaves out entirely.
+        sheets_trimmed: The retained sheets it keeps only part of, each
+            mapped to ``(tiles kept, tiles in the frame)``.
+    """
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        sheets_dropped: list[str],
+        sheets_trimmed: dict[str, tuple[int, int]],
+    ) -> None:
+        super().__init__(message)
+        self.sheets_dropped = sheets_dropped
+        self.sheets_trimmed = sheets_trimmed
 
 
 def _refuse_partly_excluded(
@@ -2873,7 +2923,8 @@ def compute_per_tile_tp_fp_fn(
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstraps pass a condition's own frame here when the common
-            footprint drops a whole sheet of it (:func:`_parent_of_cut`).
+            footprint drops whole sheets of it and trims none of the rest
+            (:func:`_parent_of_cut`, which refuses a mixed cut).
 
     Returns:
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
@@ -3608,51 +3659,87 @@ def _parent_of_cut(
     gdf_bounds: gpd.GeoDataFrame,
     cut: gpd.GeoDataFrame,
 ) -> gpd.GeoDataFrame | None:
-    """The frame a common-footprint cut was taken from, when the cut drops a whole sheet.
+    """The frame a common-footprint cut was taken from, for a whole-sheet cut only.
 
     The paired bootstraps score every condition on the tiles all conditions
-    share. Where that footprint leaves out at least one whole sheet of a
-    condition's own frame, it is a REDUCED frame of it in ruling D59's
-    sense, and D59 counts a detection there only if the condition's frame
-    attributes it to a sheet inside the footprint (the comment above
-    :class:`ReducedFrameRefusalError`): the frame is passed as
-    ``parent_bounds``. Without it, a detection seen across the footprint's
-    edge would refuse, and one in an unknown tile vocabulary would fall
-    back to ``source_tile``, which carries no such guarantee.
+    share. A footprint is read against each condition's own frame as one of
+    three kinds:
 
-    A footprint that only trims tiles within sheets keeps every sheet, so it
-    gets no parent and keeps the attribution it had before PR #33 (the
-    coordinator's decision, 2026-10-10). D59's guarantee is for whole-sheet
-    partitions only: where tiles overlap, a within-sheet cut is no additive
-    share of the frame's points, and following the parent there would only
-    change which sheet a row seen on two sheets is scored on (it would fall
-    out of frame instead of switching sheet). Rules 1 and 2 cannot act on
-    such a cut either, since it leaves out no sheet. Where the footprint is
-    the whole frame nothing is passed, so a same-frame comparison is scored
-    exactly as before.
+    * **Whole-sheet cut** (some sheets dropped, every tile of each retained
+      sheet kept). It is a REDUCED frame of the condition's frame in ruling
+      D59's sense, and D59 counts a detection there only if the condition's
+      frame attributes it to a sheet inside the footprint (the comment above
+      :class:`ReducedFrameRefusalError`): the frame is returned, to be
+      passed as ``parent_bounds``. Without it, a detection seen across the
+      footprint's edge would refuse, and one in an unknown tile vocabulary
+      would fall back to ``source_tile``, which carries no such guarantee.
+    * **Within-sheet cut** (every sheet kept, tiles trimmed within sheets),
+      or the whole frame. ``None``: the footprint is scored as a frame in
+      its own right, exactly as on ``main`` (the coordinator's decision,
+      2026-10-10). D59's guarantee is for whole-sheet partitions only:
+      where tiles overlap, a within-sheet cut is no additive share of the
+      frame's points, and following the parent there would only change
+      which sheet a row seen on two sheets is scored on (it would fall out
+      of frame instead of switching sheet). Rules 1 and 2 cannot act on
+      such a cut either, since it leaves out no sheet of the frame. Where
+      the footprint is the whole frame nothing is passed, so a same-frame
+      comparison is scored exactly as before.
+    * **Mixed cut** (a whole sheet dropped AND a retained sheet trimmed).
+      Refused, by PI ruling D62 (2026-10-13): it is not a whole-sheet
+      partition, and scoring it with the parent, as this helper did at
+      ``d99128f65``, made the retained sheets' counts depend on a sheet
+      outside the footprint (Astra's review, 2026-10-11: an empty, distant
+      sheet added to one condition's frame moved a row from TP to FN).
 
     The footprint's sheets are read as the frame reads its own tiles
     (:func:`frame_tile_sheets` of ``gdf_bounds``, restricted to the cut's
-    tiles), so both sheet sets come from one reading.
+    tiles), so both readings come from one assignment. A frame tile on no
+    sheet (``None``) belongs to no sheet and is not counted on either side.
 
     Args:
         gdf_bounds: A condition's own frame.
         cut: Its rows on the common footprint.
 
     Returns:
-        ``gdf_bounds`` when the cut's sheets are a strict subset of the
-        frame's (a sheet dropped, whether or not other sheets are trimmed),
-        else ``None``.
+        ``gdf_bounds`` for a whole-sheet cut, ``None`` for a within-sheet
+        cut or the whole frame.
+
+    Raises:
+        MixedCutRefusalError: For a mixed cut; the message and attributes
+            name the dropped sheets and each trimmed sheet's tile counts.
 
     Example:
         >>> _parent_of_cut(frame, frame) is None  # doctest: +SKIP
         True
     """
     sheets = frame_tile_sheets(gdf_bounds)
-    in_cut = gdf_bounds["tile_name"].astype(str).isin(set(cut["tile_name"].astype(str)))
-    frame_set = {s for s in sheets if s is not None}
-    cut_set = {s for s in sheets[in_cut.to_numpy()] if s is not None}
-    return gdf_bounds if cut_set < frame_set else None
+    in_cut = gdf_bounds["tile_name"].astype(str).isin(
+        set(cut["tile_name"].astype(str))
+    ).to_numpy()
+    # Tiles per frame sheet: in the frame, and in the cut.
+    in_frame = Counter(s for s in sheets if s is not None)
+    kept = Counter(s for s in sheets[in_cut] if s is not None)
+    if set(kept) == set(in_frame):
+        return None  # no sheet dropped: the whole frame or a within-sheet cut
+    dropped = sorted(set(in_frame) - set(kept))
+    trimmed = {s: (kept[s], in_frame[s]) for s in sorted(kept) if kept[s] < in_frame[s]}
+    if trimmed:
+        shown = ", ".join(
+            f"{s} ({k} of {n} tiles kept)" for s, (k, n) in list(trimmed.items())[:10]
+        )
+        raise MixedCutRefusalError(
+            f"common footprint: a mixed cut of this condition's frame. It "
+            f"drops whole sheet(s) {dropped[:10]} AND trims retained "
+            f"sheet(s) {shown}. Ruling D59's partition guarantee covers "
+            f"whole-sheet cuts only, and no attribution contract is stated "
+            f"for a mixed cut, so it is refused rather than scored (PI "
+            f"ruling D62, 2026-10-13). Compare conditions whose common "
+            f"footprint either keeps every sheet of each frame (tiles may be "
+            f"trimmed within sheets) or drops whole sheets only.",
+            sheets_dropped=dropped,
+            sheets_trimmed=trimmed,
+        )
+    return gdf_bounds
 
 
 def bootstrap_effect_size_ci(
@@ -3702,6 +3789,11 @@ def bootstrap_effect_size_ci(
         When ``return_p_values=True``, each metric dict also includes
         ``p_value`` and ``p_method``, and the result gains ``permutation``
         (tiles, discordant tiles, permutations, seed).
+
+    Raises:
+        MixedCutRefusalError: If the common footprint drops a whole sheet of
+            a condition's frame AND trims a sheet it keeps (ruling D62; see
+            :func:`_parent_of_cut`).
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -3718,8 +3810,9 @@ def bootstrap_effect_size_ci(
     # Filter bounds to common tiles for consistent scoping
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
-    # A footprint that drops a whole sheet of a condition's frame is a
-    # reduced frame of it, attributed as that frame attributes (ruling D59).
+    # A footprint that drops whole sheets of a condition's frame, and trims
+    # none of the rest, is a reduced frame of it, attributed as that frame
+    # attributes (ruling D59); a mixed cut is refused (ruling D62).
     tile_metrics_a = compute_per_tile_tp_fp_fn(
         gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=buffer_metres,
         parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
@@ -4195,6 +4288,11 @@ def bootstrap_interaction_ci(
             - "metric": The metric tested
             - "n_tiles": Number of common tiles
             - "n_iterations": Number of bootstrap iterations
+
+    Raises:
+        MixedCutRefusalError: If the common footprint drops a whole sheet of
+            a condition's frame AND trims a sheet it keeps (ruling D62; see
+            :func:`_parent_of_cut`).
     """
     # Extract factor levels from condition keys
     factor_a_levels = sorted({k[0] for k in conditions})
@@ -4226,7 +4324,9 @@ def bootstrap_interaction_ci(
     m_idx = metric_index[metric]
 
     # Pre-compute per-tile TP/FP/FN for each cell (errata E26)
-    # Filter bounds to common tiles for each cell
+    # Filter bounds to common tiles for each cell. A footprint that drops
+    # whole sheets of a cell's frame, and trims none of the rest, is scored
+    # with that frame as parent (ruling D59); a mixed cut is refused (D62).
     cell_tile_metrics: dict[tuple, pd.DataFrame] = {}
     for (a_level, b_level), (gdf_det, gdf_bounds) in conditions.items():
         common_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(common_tiles)]
@@ -4854,7 +4954,8 @@ def calculate_tile_classification(
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstrap passes a condition's own frame here when the common
-            footprint drops a whole sheet of it (:func:`_parent_of_cut`).
+            footprint drops whole sheets of it and trims none of the rest
+            (:func:`_parent_of_cut`, which refuses a mixed cut).
 
     Returns:
         Classification results including tp, tn, fp, fn counts; mcc;
@@ -5214,6 +5315,11 @@ def bootstrap_tile_effect_size_ci(
         Effect size CIs for MCC, sensitivity, and specificity differences.
         If either condition's tile join is refused, the refusal dict is
         returned instead, with ``condition`` naming which side failed.
+
+    Raises:
+        MixedCutRefusalError: If the common footprint drops a whole sheet of
+            a condition's frame AND trims a sheet it keeps (ruling D62; see
+            :func:`_parent_of_cut`).
     """
     # Get common tiles between conditions
     tiles_a = set(gdf_bounds_a['tile_name'].unique())
@@ -5230,8 +5336,9 @@ def bootstrap_tile_effect_size_ci(
     common_bounds_a = gdf_bounds_a[gdf_bounds_a['tile_name'].isin(common_tiles)]
     common_bounds_b = gdf_bounds_b[gdf_bounds_b['tile_name'].isin(common_tiles)]
 
-    # A footprint that drops a whole sheet of a condition's frame is a
-    # reduced frame of it, attributed as that frame attributes (ruling D59).
+    # A footprint that drops whole sheets of a condition's frame, and trims
+    # none of the rest, is a reduced frame of it, attributed as that frame
+    # attributes (ruling D59); a mixed cut is refused (ruling D62).
     result_a_full = calculate_tile_classification(
         gdf_det_a, gdf_ref, common_bounds_a, tile_join=tile_join,
         parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
