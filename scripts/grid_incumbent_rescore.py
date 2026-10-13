@@ -22,7 +22,11 @@ Per incumbent set, two stages with a hard gate between them:
    clipped carrier via `grid_analysis.as_gdf` (off-carrier detections drop,
    exactly as every grid cell's detections were clipped) and scored at 20 m
    and 30 m with tile Matthews Correlation Coefficient (MCC; undefined
-   stays ``null``, erratum E81).
+   stays ``null``, erratum E81). Each detection keeps the sheet of the
+   ``source_tile`` its own file records as its origin, so it is booked to
+   a carrier tile on that sheet (PI ruling D62 (1), 2026-10-13); before
+   D62 the recorded tile was discarded and a detection near a sheet edge
+   could be booked to the neighbouring sheet.
 
 Usage::
 
@@ -58,6 +62,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from scripts.grid_analysis import CRS, as_gdf, paired_bootstrap, score  # noqa: E402
 from scripts.grid_verifier_analysis import per_tile_counts  # noqa: E402
+from scripts.lib_cluster_origins import recorded_origin  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -134,7 +139,7 @@ def rescore_incumbent(
             f"registered {registered_f1:.4f} by {delta:.5f}")
 
     centroids = np.asarray([[g.x, g.y] for g in gdf.geometry], dtype=float)
-    clipped = as_gdf(centroids, common_bounds)
+    clipped = as_gdf(centroids, common_bounds, origins=recorded_origin(gdf))
     row: dict[str, Any] = {
         "condition_id": condition_id,
         "detections": str(det_path.relative_to(PROJECT_ROOT)),
@@ -192,7 +197,8 @@ def main() -> int:
         # same carrier, so the Decision 10 instrument applies directly.
         inc = gpd.read_file(PROJECT_ROOT / row["detections"]).to_crs(CRS)
         centroids = np.asarray([[g.x, g.y] for g in inc.geometry], dtype=float)
-        pt_inc = per_tile_counts(as_gdf(centroids, common_bounds),
+        pt_inc = per_tile_counts(as_gdf(centroids, common_bounds,
+                                        origins=recorded_origin(inc)),
                                  common_bounds, gdf_ref)
         contrast = paired_bootstrap(pt_winner, pt_inc, BOOTSTRAP, seed=SEED)
         row["paired_contrast_vs_grid_winner_20m"] = contrast

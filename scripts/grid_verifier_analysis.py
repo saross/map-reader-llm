@@ -26,8 +26,14 @@ What it does:
    EXACTLY (1,402 / 2,585 / 1,827 / 3,319); the probability keys are exactly
    ``candidate_00000 .. candidate_{n-1:05d}``; carrier-tile reassignment of the
    round-tripped geometries reproduces the stored ``source_tile`` per feature;
-   and re-scoring the unthresholded union reproduces the committed sweep's
-   (K = 10, c >= 1, k >= 1) row.
+   the union's clusters, rebuilt from the cell's ten prepared passes,
+   reproduce the committed rows (count, votes, centroids), so each row can
+   carry the tiles its members were seen on and is then booked to a carrier
+   tile on its OWN sheet (PI ruling D62 (1), 2026-10-13; the stored
+   ``source_tile`` was the nearest among all carrier tiles, which near a
+   sheet edge can be the neighbouring sheet's); and re-scoring the
+   unthresholded union reproduces the committed sweep's (K = 10, c >= 1,
+   k >= 1) row.
 
 2. **The post-verifier sweep.** Per cell, every achievable operating point
    *within the c = 1 union* (the union was materialised at corroboration 1,
@@ -112,12 +118,14 @@ from scripts.grid_analysis import (  # noqa: E402
     CELL_ORDER,
     CRS,
     SEED,
+    load_cell_passes,
     paired_bootstrap,
     paired_interaction,
     score,
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_cluster_origins import ORIGIN_COLUMN, union_on_origin  # noqa: E402
 from scripts.materialise_grid_unions import EXPECTED  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
@@ -125,6 +133,9 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 VERIFIER_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/verifier"
+#: The cells' prepared passes, which the unions were clustered from (their
+#: members' tiles are the unions' origins; D62 (1)).
+SCORING_DIR = PROJECT_ROOT / "outputs/grid-2026-08-18/scoring"
 COMMON_BOUNDS = (
     PROJECT_ROOT / "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson")
 GRID_ANALYSIS = PROJECT_ROOT / "results/grid-2026-08-18/grid_analysis.json"
@@ -463,14 +474,19 @@ def materialise_condition(
                     # back to union_k10.geojson and probabilities.json.
                     "candidate_id": int(idx),
                     "source_tile": tile,
+                    # The tiles the cluster's members were seen on (D62 (1)):
+                    # the scorer attributes the row to their sheet.
+                    "origin_tiles": origin,
                     "label": "mound",
                     "subtype": "mound",
                     "vote_count": int(votes),
                     "mound_probability": float(prob),
                 },
             }
-            for idx, geom, tile, votes, prob in zip(
+            for idx, geom, tile, origin, votes, prob in zip(
                 subset.index, subset.geometry, subset["source_tile"],
+                subset[ORIGIN_COLUMN] if ORIGIN_COLUMN in subset.columns
+                else [None] * len(subset),
                 subset["vote_count"], subset["mound_probability"], strict=True)
         ],
     }, indent=2))
@@ -540,6 +556,11 @@ def main() -> int:
     for cell in CELL_ORDER:
         gdf = load_verified_union(cell)
         gdf = reassignment_gate(gdf, bounds, cell)
+        # D62 (1): rebuild the union's clusters from its passes (gated row
+        # for row), attach their member tiles, and book each row on its own
+        # sheet before anything is scored.
+        gdf = union_on_origin(gdf, load_cell_passes(SCORING_DIR, cell), bounds,
+                              label=cell, n_passes=K_TOTAL)
         anchor = next(
             r for r in committed
             if r["cell"] == cell and r["K"] == K_TOTAL

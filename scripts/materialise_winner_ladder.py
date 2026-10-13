@@ -7,7 +7,10 @@ The free N-ladder (`scripts/stride_plateau_analyses.py`) estimated the
 probabilities. The PI approved exact re-verification (2026-08-25, ~$3.4
 flex): this script writes those three unions as verifier inputs, derived
 EXACTLY as the ladder derived them (first-N passes, `cluster_votes` at
-c = 1, carrier filter with per-cluster votes), under a count gate against
+c = 1, carrier filter with per-cluster votes; since PI ruling D62 (1),
+2026-10-13, each cluster also records its members' tiles as
+``origin_tiles`` and is booked to a carrier tile on its own sheet, via
+``materialise_grid_unions.union_with_votes``), under a count gate against
 the ladder's published union sizes (1,290 / 1,700 / 1,968 — the
 `union_n` fields in `plateau_analyses.json`, which include the
 inheritance-unmatched clusters; exact verification covers those too,
@@ -33,14 +36,12 @@ import sys
 from pathlib import Path
 
 import geopandas as gpd
-from shapely.geometry import Point
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.grid_analysis import CRS, load_cell_passes  # noqa: E402
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
-from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
+from scripts.grid_analysis import load_cell_passes  # noqa: E402
+from scripts.materialise_grid_unions import union_with_votes  # noqa: E402
 
 CELL = "g384_ov128"
 ROOT = PROJECT_ROOT / "outputs/stride-phaseb-2026-08-25"
@@ -63,12 +64,7 @@ def main() -> int:
 
     failures = 0
     for n in NS:
-        centroids, votes = cluster_votes(passes[:n], 1)
-        gdf = gpd.GeoDataFrame(
-            {"vote_count": votes},
-            geometry=[Point(xy) for xy in centroids], crs=CRS)
-        gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
-        gdf = gdf[gdf["source_tile"].notna()].copy()
+        gdf = union_with_votes(passes[:n], bounds)
         ok = len(gdf) == expected[n]
         print(f"N={n}: union {len(gdf)} (ladder recorded {expected[n]}) "
               f"{'OK' if ok else 'MISMATCH'}")

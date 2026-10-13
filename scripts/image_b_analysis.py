@@ -15,6 +15,13 @@ GATES (nothing written unless all pass):
 
 1. Join gates on the image union ↔ probabilities (count + contiguous
    keys) and the carrier reassignment gate — the stride instruments.
+   Then (PI ruling D62 (1), 2026-10-13) the union is rebuilt from the
+   cell's prepared passes under a row-for-row gate, each row carries the
+   tiles its members were seen on, and it is booked to a carrier tile on
+   its OWN sheet; the first-N ladder's clusters keep their members' tiles
+   the same way. Before D62 every row was booked to the nearest carrier
+   tile on ANY sheet, which near a sheet edge re-keyed it to the
+   neighbouring sheet.
 2. Anchor gate: the text-B registered detections re-scored through
    THIS script's path must reproduce the registered F1@20 (0.8961)
    within 0.0005 (the board showed mechanism identity at this cell).
@@ -73,7 +80,11 @@ from scripts.grid_verifier_analysis import (  # noqa: E402
     per_tile_counts,
     verified_subset,
 )
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
+from scripts.lib_cluster_origins import (  # noqa: E402
+    cluster_votes_with_members,
+    points_on_origin,
+    union_on_origin,
+)
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     permutation_test_float,
 )
@@ -227,11 +238,17 @@ def main(argv: list[str] | None = None) -> int:
     # ---- Image union, gated. ----
     union = load_image_union(VROOT, args.union_name, args.verify_dir)
     union = reassign_gate(union, bounds, CELL)
-    logger.info("%s: union %d joined and reassignment-gated", CELL,
-                len(union))
+    # D62 (1): the union's members from its K passes, each row on its sheet.
+    passes = load_cell_passes(SCORING, CELL, n_passes=args.k)
+    union = union_on_origin(union, passes, bounds, label=CELL, n_passes=args.k)
+    logger.info("%s: union %d joined, reassignment-gated, and on origin",
+                CELL, len(union))
 
     # ---- Anchor gate: text-B registered set through this path. ----
     anchor = gpd.read_file(anchor_path).to_crs(CRS)
+    # assign_primary_tiles reads the anchor's own recorded origin (its
+    # origin_tiles where the set records them, else its source_tile), so the
+    # anchor stays on the sheets it was seen on (D62 (1)).
     anchor["source_tile"] = assign_primary_tiles(anchor, bounds)
     a20 = score(anchor, gdf_ref, bounds)
     if abs(a20["f1"] - args.anchor_f1) > 0.0005:
@@ -325,19 +342,18 @@ def main(argv: list[str] | None = None) -> int:
         logger.info("ANALYSIS COMPLETE (no ladder) -> %s",
                     (OUT / "analysis.json").relative_to(PROJECT_ROOT))
         return 0
-    passes = load_cell_passes(SCORING, CELL)
     tree = cKDTree(np.c_[union.geometry.x, union.geometry.y])
     probs10 = union["mound_probability"].to_numpy()
     ladder: dict = {}
     rung_sets: dict = {}
     for n in (1, 3, 5):
-        centroids, votes = cluster_votes(passes[:n], 1)
-        gdf = gpd.GeoDataFrame(
-            {"vote_count": np.asarray(votes)},
-            geometry=gpd.points_from_xy([c[0] for c in centroids],
-                                        [c[1] for c in centroids]),
-            crs=CRS)
-        gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
+        centroids, votes, members = cluster_votes_with_members(passes[:n], 1)
+        # Rows on no tile of their own sheet are kept (null source_tile, so
+        # the scorer leaves them unattributed) because this loop never
+        # dropped off-carrier rows and its union counts include them.
+        gdf, _ = points_on_origin(
+            centroids, bounds, members, CRS,
+            columns={"vote_count": np.asarray(votes)}, drop_unassigned=False)
         d, idx = tree.query(np.c_[gdf.geometry.x, gdf.geometry.y], k=1)
         gdf["mound_probability"] = probs10[idx]
         matched = d <= INHERIT_TOL_M
@@ -363,6 +379,15 @@ def main(argv: list[str] | None = None) -> int:
                                  n_permutations=N_PERMS, seed=SEED)
     logger.info("image N5 - N10 @20m: dF1=%+.4f p=%.4f",
                 sat["observed_diff"], sat["p_value"])
+    # The IP5 strict test (N3 against N10), committed in the base cell's
+    # analysis.json on 2026-08-28 (8621f215d) by hand; computed here so the
+    # script regenerates its whole artefact.
+    t3 = per_tile_counts(rung_sets[3], bounds, gdf_ref)
+    sat3 = permutation_test_float(t3["tp"], t3["fp"], t3["fn"],
+                                  ti["tp"], ti["fp"], ti["fn"],
+                                  n_permutations=N_PERMS, seed=SEED)
+    logger.info("image N3 - N10 @20m: dF1=%+.4f p=%.4f",
+                sat3["observed_diff"], sat3["p_value"])
 
     payload = {
         "cell": CELL, "buffer_primary_m": BUFFER_PRIMARY,
@@ -373,6 +398,7 @@ def main(argv: list[str] | None = None) -> int:
         "head_to_head_20m": head,
         "ladder": ladder,
         "saturation_N5_vs_N10": sat,
+        "saturation_N3_vs_N10": sat3,
     }
     payload.update(extra)
     (OUT / "analysis.json").write_text(
