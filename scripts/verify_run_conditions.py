@@ -33,7 +33,11 @@ schema-valid but wrong:
   and the feature count at ``<commit>:<path>`` must equal ``n_detections`` — and
   reported as a disclosed WARN, not a wrong-source ERROR. A reproduction gate
   is not a currency gate: drift against the working tree is the row's stated
-  condition, and a claimed vintage that does not reproduce IS an error.
+  condition, and a claimed vintage that does not reproduce IS an error. The
+  evaluation's record is read from ``_metadata.e82_input_vintage`` and from the
+  general ``_metadata.input_vintage`` (D60 (1), 2026-10-12); a path the two
+  record at different commits is reported (``eval-vintage-conflict``) and
+  neither commit is used (``_eval_input_vintage``).
 
 This is Tier 1 of the Batch verification loop (the deterministic backbone). A
 fresh-context LLM adversarial pass (Tier 2) handles the judgment calls. The
@@ -91,6 +95,59 @@ def _eval_inputs(eval_doc: dict) -> tuple[list[str], str | None]:
         dets = [dets]
     bounds = inf.get("bounds") or (meta.get("cli_args") or {}).get("bounds")
     return [g._normalise_detections_path(d) for d in dets], bounds
+
+
+#: ``_metadata`` keys under which an evaluation records the commit each input
+#: was read at (repository path → commit). ``e82_input_vintage`` is the E82
+#: replay's (D40, ruling 3a); ``input_vintage`` is the general key for any cell
+#: scored on inputs recovered from git (D60 (1), 2026-10-12). Same structure,
+#: same semantics.
+EVAL_VINTAGE_KEYS: tuple[str, ...] = ("e82_input_vintage", "input_vintage")
+
+
+def _eval_input_vintage(meta: dict) -> tuple[dict[str, str], list[tuple[str, str]]]:
+    """Merge an evaluation's recorded input vintage over both keys.
+
+    Precedence: NEITHER key wins. A path recorded under one key, or under both
+    at the same commit, is kept. A path recorded at DIFFERENT commits is left
+    out and reported, so a register pin on it cannot check out against a
+    contradictory record (it then fails as ``pinned-vintage-mismatch``).
+    Commits compare as recorded strings: a short and a full hash of one commit
+    also count as a conflict, surfaced rather than resolved silently. A key
+    whose value is not a path → commit map is reported and skipped.
+
+    Args:
+        meta: The evaluation's ``_metadata``.
+
+    Returns:
+        ``(vintage, problems)``: normalised path → commit, and one
+        ``(code, message)`` per conflicting path or malformed key.
+    """
+    merged: dict[str, str] = {}
+    source: dict[str, str] = {}  # path → the key it was first read from
+    conflicts: set[str] = set()
+    problems: list[tuple[str, str]] = []
+    for key in EVAL_VINTAGE_KEYS:
+        stamp = meta.get(key)
+        if stamp is None:
+            continue
+        if not isinstance(stamp, dict):
+            problems.append(("eval-vintage-malformed",
+                             f"_metadata.{key} is not a path → commit map ({stamp!r})"))
+            continue
+        for path, commit in stamp.items():
+            rel = g._normalise_detections_path(path)
+            if rel in merged and merged[rel] != commit:
+                conflicts.add(rel)
+                problems.append(("eval-vintage-conflict",
+                                 f"{rel}: _metadata.{source[rel]} records {merged[rel]} but "
+                                 f"_metadata.{key} records {commit} — neither is used"))
+            else:
+                merged.setdefault(rel, commit)
+                source.setdefault(rel, key)
+    for rel in conflicts:
+        merged.pop(rel)
+    return merged, problems
 
 
 def _geojson_feature_count(rel_path: str) -> int | None:
@@ -233,11 +290,12 @@ def verify_condition(spec: dict, scope_bounds: str | None,
     if eval_doc is not None and detections:
         eval_dets, eval_bounds = _eval_inputs(eval_doc)
         det_norm = g._normalise_detections_path(detections)
-        # The E82 replay records each input's commit at the cell's scoring time
+        # The evaluation records each input's commit at the cell's scoring time
         # under in-repo keys — the only place a frozen copy names what it was.
-        eval_vintage = {
-            g._normalise_detections_path(k): v for k, v in
-            ((eval_doc.get("_metadata") or {}).get("e82_input_vintage") or {}).items()}
+        # Both vintage keys are read; neither wins a disagreement (see helper).
+        eval_vintage, vintage_problems = _eval_input_vintage(eval_doc.get("_metadata") or {})
+        for code, problem in vintage_problems:
+            discs.append(_disc(WARN, code, f"{label}: {problem}"))
         # A directory-valued ``detections`` names an aggregated multi-pass
         # cell; the evaluation records the per-pass files it scored. The row
         # matches when every scored file lies under that directory (the h13

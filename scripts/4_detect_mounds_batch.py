@@ -1037,6 +1037,16 @@ def detect_mounds_versioned(
         # Refuse, before any request, a config the cached call cannot carry
         # (outside the try below, whose fallback would hide it).
         cached_call_config(gen_config, "cachedContents/preflight")
+    if use_cache and dry_run:
+        # A context cache is billed storage from the moment it exists. The
+        # dry-run exit below comes after this block and before the cleanup
+        # that deletes the cache at the end of a real pass, so until
+        # 2026-10-12 a dry run created a cache and left it alive for its
+        # whole TTL (24 h by default): the Pro thinking probe's image dry run
+        # left a 14,549-token Gemini 3.1 Pro cache that had to be deleted by
+        # hand. A dry run now reports the cache instead of creating it.
+        print("Context cache: not created (dry run); a real run creates it here.")
+    elif use_cache:
         cache_parts = [
             types.Part.from_text(
                 text="Here are the Reference Symbols you must find:"
@@ -1932,7 +1942,8 @@ Examples:
     )
     parser.add_argument(
         "--dry-run", action="store_true",
-        help="Validate config without making API calls",
+        help=("Validate config without billable API calls (the model name is "
+              "still resolved with a free models.list call; no cache is created)"),
     )
     parser.add_argument("--limit", type=int, help="Process only first N tiles")
     parser.add_argument(
