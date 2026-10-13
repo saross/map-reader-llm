@@ -1,7 +1,9 @@
-START f2_55map 2026-10-12T13:42:42Z head f155ab9374df6ccbbbbf96a8670cdb25d70ae0ff lib c6e6198b09f39f846b5a6ea92b3067d8c79d7e78 cache /home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache
-families loaded 5s
+START s6b 2026-10-13T12:15:14Z head 533e62605bd0fadfb8f74d577664ec2293ab01d4 lib dbd1be560ee14a44453121e39eca03f57d05a377 dirty 0 cache /home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache-1013-r1 workers 12
+families loaded 4s
 GATE cluster A (0, 1, 2): True (26245 clusters)
+GATE cluster origins A (0, 1, 2): True
 GATE cluster ARM1 (1, 3): True (9981 clusters)
+GATE cluster origins ARM1 (1, 3): True
 r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
 GATE scorer B (0, 1, 2, 3, 4) (0.15,k5): True n=4736 totals=[4147, 589, 871]
 GATE scorer A (2,) (0.2,k1): True n=4829 totals=[4022, 807, 996]
@@ -15,9 +17,9 @@ GATE ARM1 (0, 1, 2) (0.1,k3): expected 5482 got 5482
 GATE ARM2 (0, 1, 2) (0.8,k3): expected 5187 got 5187
 GATE FOURTH (0, 1, 2, 3, 4) (0.98,k5): expected 4431 got 4431
 GATE FOURTH (0, 1, 2) (0.98,k3): expected 4623 got 4623
-gates 1-3 passed 54s
+gates 1-3 passed 67s
 1364 subset jobs over 5 pass sets
-16260 subset cells scored 498s
+16260 subset cells scored 330s
 GATE live-library cells: gate pass True, blobs match True, checked 1460 of 1460, mismatches 0
 GATE top A (0.15,k8): expected 4475 got 4475
 GATE top A (0.15,k7): expected 4639 got 4639
@@ -30,6 +32,6 @@ GATE top ARM1 (0.15,k5): expected 4616 got 4616
 GATE top ARM2 (0.8,k5): expected 5003 got 5003
 GATE top ARM2 (0.95,k5): expected 4924 got 4924
 12036 simulation jobs
-57576 simulated cells 729s
-done 729s
-EXIT f2_55map 0 2026-10-12T13:54:53Z
+57576 simulated cells 445s
+done 445s
+EXIT s6b 0 2026-10-13T12:22:40Z

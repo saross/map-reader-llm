@@ -1,0 +1,3 @@
+kernel "Bad page state" count (journalctl -k -b | grep -c), sapphire (no ECC memory)
+before all compute: 0 at 2026-10-13T11:45:19Z
+after all compute:  0 at 2026-10-13T14:22:57Z

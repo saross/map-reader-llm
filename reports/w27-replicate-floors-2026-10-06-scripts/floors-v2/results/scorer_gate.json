@@ -75,7 +75,7 @@
   ]
  ],
  "w27_subset_cells_crosscheck": {
-  "file": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/w27/subset_cells.json",
+  "file": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/1013-r1/w27/subset_cells.json",
   "checked": 466,
   "mismatches": []
  },
@@ -89,8 +89,8 @@
  },
  "comparison": "per tile: every frame tile's (tp, fp, fn) against the live compute_per_tile_tp_fp_fn at 50 m on r2",
  "blob_hashes": {
-  "scripts/lib_advanced_metrics.py": "c6e6198b09f39f846b5a6ea92b3067d8c79d7e78",
-  "floors2_lib.py": "9626205eb598e9a194f908404a77f5e20410580b",
+  "scripts/lib_advanced_metrics.py": "dbd1be560ee14a44453121e39eca03f57d05a377",
+  "floors2_lib.py": "e0e7afe1bf1933fbd928e14bce7a5b75ce303d45",
   "legacy floors2_lib.py": "8a9677737a4b00b9abbbc4639c89f4efce9a6245"
  },
  "summary": {
@@ -406,54 +406,6 @@
      "cell": [
       "B",
       [
-       3,
-       4,
-       6,
-       8
-      ],
-      0.15,
-      1
-     ],
-     "lib": [
-      4472,
-      2883,
-      546
-     ],
-     "legacy": [
-      4472,
-      2884,
-      546
-     ],
-     "error": ""
-    },
-    {
-     "cell": [
-      "B",
-      [
-       3,
-       4,
-       6,
-       8
-      ],
-      0.2,
-      2
-     ],
-     "lib": [
-      4325,
-      1351,
-      693
-     ],
-     "legacy": [
-      4325,
-      1352,
-      693
-     ],
-     "error": ""
-    },
-    {
-     "cell": [
-      "B",
-      [
        5,
        6,
        7,
@@ -578,31 +530,6 @@
       "B",
       [
        1,
-       3,
-       5,
-       6,
-       8
-      ],
-      0.2,
-      1
-     ],
-     "lib": [
-      4397,
-      2845,
-      621
-     ],
-     "legacy": [
-      4397,
-      2846,
-      621
-     ],
-     "error": ""
-    },
-    {
-     "cell": [
-      "B",
-      [
-       1,
        4,
        5,
        7,
@@ -653,56 +580,6 @@
       "B",
       [
        2,
-       3,
-       4,
-       6,
-       8
-      ],
-      0.2,
-      2
-     ],
-     "lib": [
-      4345,
-      1593,
-      673
-     ],
-     "legacy": [
-      4345,
-      1594,
-      673
-     ],
-     "error": ""
-    },
-    {
-     "cell": [
-      "B",
-      [
-       2,
-       3,
-       5,
-       6,
-       8
-      ],
-      0.2,
-      1
-     ],
-     "lib": [
-      4413,
-      2895,
-      605
-     ],
-     "legacy": [
-      4413,
-      2896,
-      605
-     ],
-     "error": ""
-    },
-    {
-     "cell": [
-      "B",
-      [
-       2,
        4,
        5,
        7,
@@ -726,5 +603,5 @@
    ]
   }
  },
- "wall_seconds": 1586
+ "wall_seconds": 810
 }

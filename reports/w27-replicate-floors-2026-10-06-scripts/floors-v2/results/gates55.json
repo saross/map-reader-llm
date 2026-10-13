@@ -3,9 +3,19 @@
   "pass": true,
   "n": 26245
  },
+ "cluster_votes_fast_origins == committed (A (0, 1, 2))": {
+  "pass": true,
+  "n": 26245,
+  "n_multi_sheet_origin": 2
+ },
  "cluster_votes_fast == committed (ARM1 (1, 3))": {
   "pass": true,
   "n": 9981
+ },
+ "cluster_votes_fast_origins == committed (ARM1 (1, 3))": {
+  "pass": true,
+  "n": 9981,
+  "n_multi_sheet_origin": 0
  },
  "FastScorer == compute_per_tile_tp_fp_fn (B (0, 1, 2, 3, 4) 0.15 k5)": {
   "pass": true,
@@ -95,8 +105,8 @@
   "gate_pass": true,
   "blob_hashes_match": true,
   "blob_hashes": {
-   "scripts/lib_advanced_metrics.py": "c6e6198b09f39f846b5a6ea92b3067d8c79d7e78",
-   "floors2_lib.py": "9626205eb598e9a194f908404a77f5e20410580b"
+   "scripts/lib_advanced_metrics.py": "dbd1be560ee14a44453121e39eca03f57d05a377",
+   "floors2_lib.py": "e0e7afe1bf1933fbd928e14bce7a5b75ce303d45"
   },
   "listed": 1460,
   "checked": 1460,

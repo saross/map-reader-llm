@@ -1,14 +1,14 @@
 [filtered: 69123 INFO lines 'Assigned source_tile to N/N detections via spatial join' removed]
-START f2_gs 2026-10-12T13:55:25Z head f155ab9374df6ccbbbbf96a8670cdb25d70ae0ff lib c6e6198b09f39f846b5a6ea92b3067d8c79d7e78 cache /home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache
+START gs 2026-10-13T12:22:40Z head 533e62605bd0fadfb8f74d577664ec2293ab01d4 lib dbd1be560ee14a44453121e39eca03f57d05a377 dirty 0 cache /home/shawn/scratch/d60-w27-fastscorer-2026-10-12/w27-cache-1013-r1 workers 12
 9 30-pass pools: ['pv-diag-384::flash-high-text-n5-text-t0.7', 'pv-diag-384::flash-minimal-text-n30-t07-text-t0.7', 'retest-phase3a::track2-text-t1.0', 'retest-phase3a::track2-text-t0.3', 'retest-phase3a::track2-text-t0.7', 'retest-phase3a-replication::minimal', 'retest-phase3a-high::track2-text-t0.7', 'retest-phase3a-replication::high', 'retest-phase3a-high::track2-text-t1.0']
-passes loaded 2s
+passes loaded 1s
 GATE consensus pv-diag-384::flash-high-text-n5-text-t0.7: True
 GATE consensus pv-diag-384::flash-minimal-text-n30-t07-text-t0.7: True
 GATE scorer pv-diag-384::flash-high-text-n5-text-t0.7 (px384): True
 GATE scorer pv-diag-384::flash-minimal-text-n30-t07-text-t0.7 (px384): True
 GATE scorer retest-phase3a::track2-text-t1.0 (era1): True
 17199 consensus jobs
-69120 cells 363s
+69120 cells 183s
 GATE W2.7 GS cells: checked 486, mismatches 0
-done 364s
-EXIT f2_gs 0 2026-10-12T14:01:29Z
+done 183s
+EXIT gs 0 2026-10-13T12:25:44Z
