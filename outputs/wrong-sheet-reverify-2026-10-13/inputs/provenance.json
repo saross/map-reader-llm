@@ -1,0 +1,15 @@
+{
+ "note": "Inputs to scripts/reverify_wrong_sheet_crops.py build, copied from the read-only wrong-sheet sweep (reports/s163-agent-records/wrong-sheet-crops-sweep-2026-10-13.md), whose two runs (runA, runB) are byte-identical for both files.",
+ "sweep_scratch": "sapphire:~/scratch/wrong-sheet-crops-2026-10-13/out",
+ "wrong_sheet.csv": {
+  "source": "runA/wrong_sheet.csv",
+  "sha256": "1059d43aea332e606c3308b00c3ff673fe795865c210654011d6614cb29b13c5",
+  "runB_sha256": "1059d43aea332e606c3308b00c3ff673fe795865c210654011d6614cb29b13c5"
+ },
+ "pairing.json": {
+  "source": "runA/legs.json (manifest and pairing of each outputs/ leg in wrong_sheet.csv)",
+  "legs_json_sha256": "f62c94bab6dc0429dcdd24d28658f14f41fe5429607fe0624157309bd8ea2ae4",
+  "runB_legs_json_sha256": "f62c94bab6dc0429dcdd24d28658f14f41fe5429607fe0624157309bd8ea2ae4",
+  "n_legs": 95
+ }
+}
