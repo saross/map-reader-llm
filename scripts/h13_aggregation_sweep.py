@@ -31,6 +31,12 @@ comparison exists at each filter strength. Scoring is unchanged from the
 main analysis: the common A n B n C footprint, 20 m matching, the same
 evaluator.
 
+**Tile attribution (PI ruling D62 (1), 2026-10-13).** Each aggregated
+cluster keeps its contributing proposer tiles (``origin_tiles``) and is
+tiled on its own sheet (:func:`write_cell`), as the main analysis's
+per-pass sets already were. Until 2026-10-13 the clusters were tiled as
+bare centroids, by location alone.
+
 Note on classification: this sweep is a POST-HOC extension (E41-class)
 beyond H13's registered single-factor overlap design, which registers no
 aggregation stage. It must not be reported under the registered-
@@ -76,6 +82,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_ci,
     calculate_f1_internal,
+    parse_tile_list,
 )
 from scripts.merge_passes import cluster_across_passes  # noqa: E402
 from scripts.prepare_h13_scoring import (  # noqa: E402
@@ -153,8 +160,38 @@ def aggregate(
     return [c for c in clusters if c["vote_count"] >= min_votes]
 
 
+def cluster_origin(cluster: dict) -> list[str]:
+    """A cluster's contributing proposer tiles, sorted, empties dropped.
+
+    ``cluster_across_passes`` records the union of its members' tiles as
+    ``source_tiles``. Members loaded from a prepared set whose
+    ``origin_tiles`` was empty arrive as ``[""]`` (``"".split(";")``);
+    ``parse_tile_list`` drops such names, so they never become an origin.
+
+    Args:
+        cluster: One cluster dict from ``cluster_across_passes``.
+
+    Returns:
+        Sorted, de-duplicated tile names (empty where none is recorded).
+    """
+    return sorted(set(parse_tile_list(cluster.get("source_tiles"))))
+
+
 def write_cell(clusters: list[dict], bounds: gpd.GeoDataFrame, target: Path) -> gpd.GeoDataFrame:
     """Write one swept cell as a scorable GeoJSON and return it loaded.
+
+    **Origins (PI ruling D62 (1), 2026-10-13).** Each cluster's contributing
+    tiles (:func:`cluster_origin`) are passed to ``assign_primary_tiles`` as
+    its origin, so its ``source_tile`` is the nearest carrier tile ON ITS
+    OWN SHEET, and are kept as ``origin_tiles`` (``;``-joined, the
+    convention ``prepare_h13_scoring.write_dedup_geojson`` writes) both in
+    the returned frame and in the written file. The shared scorer reads
+    that column, so the in-memory cell and the file are attributed alike.
+    Until 2026-10-13 the clusters reached ``assign_primary_tiles`` as bare
+    centroids, and the legacy rule could book a centroid in the overlap of
+    two sheets' padded tiles to the neighbouring sheet. A cluster with no
+    tile of its own sheet gets a null ``source_tile`` and is scored as out
+    of frame (ruling D50).
 
     Args:
         clusters: Surviving clusters for the cell.
@@ -162,21 +199,24 @@ def write_cell(clusters: list[dict], bounds: gpd.GeoDataFrame, target: Path) -> 
         target: Output path.
 
     Returns:
-        The cell as a GeoDataFrame with a ``source_tile`` column.
+        The cell as a GeoDataFrame with ``source_tile`` and
+        ``origin_tiles`` columns.
     """
     if clusters:
+        origins = [cluster_origin(c) for c in clusters]
         gdf = gpd.GeoDataFrame(
             {
                 "label": [c["label"] for c in clusters],
                 "votes": [c["vote_count"] for c in clusters],
+                "origin_tiles": [";".join(o) for o in origins],
             },
             geometry=[Point(c["centroid"]) for c in clusters],
             crs=f"EPSG:{CRS_EPSG}",
         )
-        gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
+        gdf["source_tile"] = assign_primary_tiles(gdf, bounds, origin=origins)
     else:
         gdf = gpd.GeoDataFrame(
-            {"label": [], "votes": [], "source_tile": []},
+            {"label": [], "votes": [], "origin_tiles": [], "source_tile": []},
             geometry=[], crs=f"EPSG:{CRS_EPSG}",
         )
 
@@ -194,6 +234,7 @@ def write_cell(clusters: list[dict], bounds: gpd.GeoDataFrame, target: Path) -> 
                     "label": row["label"],
                     "subtype": row["label"],
                     "votes": int(row["votes"]),
+                    "origin_tiles": row["origin_tiles"],
                 },
             }
             for _, row in gdf.iterrows()

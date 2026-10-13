@@ -60,6 +60,9 @@ import w27_55map_subset_replicates as w27  # noqa: E402  (inserts REPO, REPO/scr
 import floors2_lib as L  # noqa: E402
 from scripts.build_55map_leaderboard import BOUNDS, reference_gt  # noqa: E402
 from scripts.h13_k_sensitivity import cluster_votes as cluster_votes_committed  # noqa: E402
+from scripts.h13_k_sensitivity import (  # noqa: E402
+    cluster_votes_with_origins as cluster_votes_origins_committed,
+)
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 
 PROBS = {
@@ -202,10 +205,26 @@ def main() -> int:
         ok = c0.shape == c1.shape and bool(np.array_equal(c0, c1)) and bool(np.array_equal(v0, v1))
         gates[f"cluster_votes_fast == committed ({f} {s})"] = {"pass": ok, "n": int(len(v0))}
         print(f"GATE cluster {f} {s}: {ok} ({len(v0)} clusters)", flush=True)
-        if not ok:
+        # The same for the contributing tiles cluster_subset now carries (PI ruling
+        # D62 (1)): the fast restatement's centroids, votes and tiles equal the
+        # committed cluster_votes_with_origins, whose centroids and votes equal
+        # cluster_votes's.
+        c2, v2, o2 = cluster_votes_origins_committed(sub, 1)
+        c3, v3, o3 = L.cluster_votes_fast_origins(sub, 1)
+        ok_o = (
+            bool(np.array_equal(c0, c2)) and bool(np.array_equal(v0, v2))
+            and bool(np.array_equal(c2, c3)) and bool(np.array_equal(v2, v3)) and o2 == o3
+        )
+        gates[f"cluster_votes_fast_origins == committed ({f} {s})"] = {
+            "pass": ok_o, "n": int(len(v2)),
+            "n_multi_sheet_origin": sum(len({t.split("_x")[0] for t in o}) > 1 for o in o2),
+        }
+        print(f"GATE cluster origins {f} {s}: {ok_o}", flush=True)
+        if not (ok and ok_o):
             (args.out / "gates.json").write_text(json.dumps(gates, indent=1))
             return 1
-    w27.cluster_votes = L.cluster_votes_fast  # cluster_subset now uses the gated restatement
+    # cluster_subset now uses the gated restatement, contributing tiles included.
+    w27.cluster_votes_origins = L.cluster_votes_fast_origins
 
     ref = reference_gt("r2")
     bounds = gpd.read_file(BOUNDS)

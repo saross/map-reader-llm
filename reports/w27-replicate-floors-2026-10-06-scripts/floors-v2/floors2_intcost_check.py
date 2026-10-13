@@ -21,7 +21,7 @@ import w27_55map_subset_replicates as w27  # noqa: E402
 import floors2_lib as L  # noqa: E402
 from scripts.build_55map_leaderboard import BOUNDS, reference_gt  # noqa: E402
 
-w27.cluster_votes = L.cluster_votes_fast
+w27.cluster_votes_origins = L.cluster_votes_fast_origins  # D62 (1): tiles carried
 fam = w27.build_families(gate_only=True)
 index = next(iter(fam.values()))["index"]
 ref = reference_gt("r2")

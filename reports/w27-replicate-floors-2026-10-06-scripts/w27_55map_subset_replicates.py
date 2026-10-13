@@ -55,6 +55,7 @@ from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 from scipy.spatial import cKDTree
 from shapely.geometry import Point
 
@@ -68,7 +69,8 @@ from scripts.gemini37_arm_ladder import CELL_DIR as G37_CELL_DIR  # noqa: E402
 from scripts.gemini37_sweep_oracle import CELLS as G37_CELLS  # noqa: E402
 from scripts.gemini37_sweep_oracle import load_candidates as load_g37_candidates  # noqa: E402
 from scripts.grid_prepare_scoring import load_pass  # noqa: E402
-from scripts.h13_k_sensitivity import cluster_votes  # noqa: E402
+from scripts.h13_k_sensitivity import cluster_votes_with_origins  # noqa: E402
+from scripts.lib_advanced_metrics import parse_tile_list  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.lib_permutation import paired_permutation_test  # noqa: E402
 from scripts.lib_verify_dirs import resolve_verify_dir, verify_dir_provenance  # noqa: E402
@@ -118,6 +120,11 @@ IMG = {
 UPL = REPO / "outputs/55maps-text-min-n10-uplift"
 
 _G: dict = {}
+#: The clustering ``cluster_subset`` calls: ``h13_k_sensitivity``'s
+#: ``cluster_votes_with_origins`` (centroids, votes, and each cluster's
+#: contributing tiles; PI ruling D62 (1)), or the gated fast restatement the
+#: floors-v2 scripts install here (``floors2_lib.cluster_votes_fast_origins``).
+cluster_votes_origins = cluster_votes_with_origins
 #: Deduplicated passes, pickled once per pool (``W27_CACHE`` overrides, so a
 #: scratch run keeps its cache in its own tree).
 CACHE = Path(os.environ.get("W27_CACHE", "/tmp/w27/passes"))
@@ -218,9 +225,19 @@ def cluster_subset(passes: list[list[dict]], idxs: tuple[int, ...],
     Identical arithmetic: ``cluster_votes`` at min_corroboration 1 over the
     subset in index order, standard-grid tile from the nearest pooled
     detection's origin tile.
+
+    **Contributing tiles (PI ruling D62 (1), 2026-10-13).** Each cluster also
+    carries ``source_tiles``: the sorted union of its members' proposer
+    tiles, from :data:`cluster_votes_origins` (the same clustering, so the
+    centroids, votes, and ``source_tile`` are unchanged). The shared scorer
+    (``lib_advanced_metrics.scope_detections_to_frame``, ruling D50) reads
+    it: a cluster seen on two sheets is scored on the one whose tiles hold
+    it, and one whose ``source_tile`` names a sheet it was never seen on is
+    restored to its origin sheet. Until 2026-10-13 the frame carried one
+    tile (the nearest pooled detection's first member) and nothing else.
     """
     subset = [passes[i] for i in idxs]
-    centroids, votes = cluster_votes(subset, 1)
+    centroids, votes, origins = cluster_votes_origins(subset, 1)
     tiles_flat = [d["source_tiles"][0] for p in subset for d in p]
     pooled = np.asarray([d["centroid"] for p in subset for d in p], dtype=float)
     gdf = gpd.GeoDataFrame({"vote_count": np.asarray(votes)},
@@ -228,6 +245,9 @@ def cluster_subset(passes: list[list[dict]], idxs: tuple[int, ...],
     _, j = cKDTree(pooled).query(np.c_[gdf.geometry.x, gdf.geometry.y], k=1)
     gdf["source_tile"] = [assign_standard_tile(index, tiles_flat[i], x, y)
                           for i, x, y in zip(j, gdf.geometry.x, gdf.geometry.y)]
+    # One list per row (an object Series, so pandas does not read a list of
+    # equal-length lists as a 2-D array).
+    gdf["source_tiles"] = pd.Series([list(o) for o in origins], index=gdf.index, dtype=object)
     return gdf
 
 
@@ -256,7 +276,14 @@ def load_img_passes(camp: str) -> list[list[dict]]:
 
 
 def load_upl_frame() -> gpd.GeoDataFrame:
-    """UPL's verified band (>= 3 of 10) with each candidate's contributing passes."""
+    """UPL's verified band (>= 3 of 10) with each candidate's contributing passes.
+
+    Each candidate also keeps its contributing tiles (``properties.source_tiles``,
+    the union cluster's members' proposer tiles), so the shared scorer can
+    attribute a candidate seen on two sheets to the one whose tiles hold it
+    (PI ruling D62 (1), 2026-10-13; four of the 16,482 candidates were seen on
+    two sheets). Until 2026-10-13 only the top-level ``source_tile`` was kept.
+    """
     from scripts.final_board_sweeps import load_manifest_probs, prob_key  # noqa: F401
     cands = json.loads(
         (UPL / "crops-3of10/candidate_manifest.json").read_text())["candidates"]
@@ -267,6 +294,9 @@ def load_upl_frame() -> gpd.GeoDataFrame:
         "mound_probability": [float(probs[prob_key(c["candidate_id"])]["mound_probability"])
                               for c in cands],
         "source_tile": [c["source_tile"] for c in cands],
+        "source_tiles": pd.Series(
+            [parse_tile_list((c.get("properties") or {}).get("source_tiles")) for c in cands],
+            dtype=object),
     }, geometry=gpd.points_from_xy([c["centroid_x"] for c in cands],
                                    [c["centroid_y"] for c in cands]),
         crs="EPSG:32635")
