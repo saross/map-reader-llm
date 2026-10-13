@@ -27,6 +27,13 @@ deduplicated detections are corroborated by a second tile against 37 %
 at 50 %), so B constrains the VOTE dimension well and the corroboration
 dimension only loosely.
 
+**Tile attribution (PI ruling D62 (1), 2026-10-13).** Clusters are built by
+:func:`cluster_votes_with_origins`, which keeps each cluster's contributing
+proposer tiles, and :func:`score` tiles and scores every cluster on its own
+sheet. Until 2026-10-13 the clusters reached scoring as bare centroids, so a
+centroid in the overlap of two sheets' padded tiles could be booked to the
+neighbouring sheet and matched against its references.
+
 Usage::
 
     python scripts/h13_k_sensitivity.py \\
@@ -50,12 +57,16 @@ from typing import Any
 
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 from shapely.geometry import Point
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from scripts.lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    calculate_f1_internal,
+    parse_tile_list,
+)
 from scripts.lib_detection_paths import find_pass_geojsons  # noqa: E402
 from scripts.merge_passes import deduplicate_within_pass  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
@@ -148,16 +159,131 @@ def cluster_votes(
     return np.asarray(centroids), np.asarray(votes, dtype=int)
 
 
+def _member_tiles(detection: dict) -> list[str]:
+    """The proposer tile(s) one pooled detection was seen on.
+
+    A detection deduplicated by ``merge_passes.deduplicate_within_pass``
+    records its members' tiles as ``source_tiles`` (a list); a raw or
+    hand-built detection may carry a single ``source_tile`` instead.
+    ``parse_tile_list`` accepts every serialisation the corpus holds and
+    drops empty names, so ``""`` (what ``"".split(";")`` leaves for a
+    feature with no record) contributes nothing.
+
+    Args:
+        detection: One deduplicated detection dict.
+
+    Returns:
+        Tile names, possibly empty.
+    """
+    tiles = parse_tile_list(detection.get("source_tiles"))
+    if not tiles:
+        tiles = parse_tile_list(detection.get("source_tile"))
+    return tiles
+
+
+def cluster_votes_with_origins(
+    passes: list[list[dict]], min_corroboration: int,
+) -> tuple[np.ndarray, np.ndarray, list[list[str]]]:
+    """:func:`cluster_votes`, also returning each cluster's contributing tiles.
+
+    **Why this exists (PI ruling D62 (1), 2026-10-13).** :func:`cluster_votes`
+    returns bare centroids. Scored through
+    :func:`prepare_h13_scoring.assign_primary_tiles`, a bare centroid has no
+    recorded origin, so the D50 never-re-key rule
+    (``lib_advanced_metrics.assign_primary_tiles_on_origin_sheet``) falls
+    back to the legacy rule: the nearest tile centroid among ALL frame
+    tiles. Where two sheets' padded tiles overlap, that tile can belong to
+    the neighbouring sheet, and the per-sheet matcher then scores the
+    detection against the wrong sheet's references
+    (``reports/frames-blast-radius-2026-10-07.md`` § 5.4). This function
+    keeps, for every cluster, the sorted union of its members' proposer
+    tiles, so the caller can pass them on as the origin.
+
+    The clustering is :func:`cluster_votes`'s, step for step (the same pool
+    order, seeds, radius, and membership), so the centroids and vote counts
+    are identical to it; ``tests/test_h13_origin_route.py`` pins that.
+    :func:`cluster_votes` itself is left unchanged because the grid,
+    plateau, stride, Image-B, W2.7, and Gemini 3.7 ladder chains import it
+    with its two-value contract.
+
+    Args:
+        passes: Deduplicated detections per pass, each carrying
+            ``centroid``, optionally ``cluster_size``, and its proposer
+            tiles (``source_tiles`` or ``source_tile``).
+        min_corroboration: Minimum within-pass ``cluster_size`` to keep.
+
+    Returns:
+        Tuple of (centroids array of shape (n, 2), vote-count array, one
+        sorted list of contributing tile names per cluster).
+
+    Example:
+        >>> passes = [[{"centroid": (0.0, 0.0), "source_tiles": ["M_x0_y0.png"]}],
+        ...           [{"centroid": (5.0, 0.0), "source_tiles": ["M_x0_y1.png"]}]]
+        >>> _, votes, origins = cluster_votes_with_origins(passes, 1)
+        >>> votes.tolist(), origins
+        ([2], [['M_x0_y0.png', 'M_x0_y1.png']])
+    """
+    pts: list[tuple[float, float]] = []
+    owner: list[int] = []
+    tiles: list[list[str]] = []
+    for idx, dets in enumerate(passes):
+        for d in dets:
+            if d.get("cluster_size", 1) >= min_corroboration:
+                pts.append(d["centroid"])
+                owner.append(idx)
+                tiles.append(_member_tiles(d))
+    n = len(pts)
+    if n == 0:
+        return np.zeros((0, 2)), np.zeros(0, dtype=int), []
+
+    arr = np.asarray(pts, dtype=float)
+    own = np.asarray(owner, dtype=int)
+    taken = np.zeros(n, dtype=bool)
+    centroids: list[tuple[float, float]] = []
+    votes: list[int] = []
+    origins: list[list[str]] = []
+
+    # The greedy star clustering of cluster_votes, unchanged: each untaken
+    # point in pool order seeds a cluster that absorbs every untaken point
+    # within DEDUP_M of it.
+    for i in range(n):
+        if taken[i]:
+            continue
+        d = np.hypot(arr[:, 0] - arr[i, 0], arr[:, 1] - arr[i, 1])
+        members = np.flatnonzero((d <= DEDUP_M) & ~taken)
+        members = np.union1d(members, [i])
+        taken[members] = True
+        centroids.append((arr[members, 0].mean(), arr[members, 1].mean()))
+        votes.append(len(set(own[members].tolist())))
+        origins.append(sorted({t for m in members.tolist() for t in tiles[m]}))
+
+    return np.asarray(centroids), np.asarray(votes, dtype=int), origins
+
+
 def score(
     centroids: np.ndarray, votes: np.ndarray, min_votes: int,
     bounds: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
+    origins: list[list[str]] | None = None,
 ) -> tuple[float, float, float, int]:
     """Score one vote threshold against ground truth.
+
+    **Origins (PI ruling D62 (1), 2026-10-13).** When ``origins`` is given
+    (one list of contributing tiles per cluster, from
+    :func:`cluster_votes_with_origins`), each selected cluster is tiled on
+    its own sheet (``assign_primary_tiles(..., origin=...)``) and carries
+    the list into scoring as ``source_tiles``, so the shared scorer
+    attributes it by origin exactly as it attributes a committed consensus
+    file. A cluster that intersects no tile of its own sheet is out of
+    frame for that sheet and is not scored, which is the scorer's own rule
+    (ruling D50). Without ``origins`` the legacy, location-only tiling is
+    used, as before.
 
     Args:
         centroids: Cluster centroids. votes: Per-cluster vote counts.
         min_votes: Vote threshold. bounds: Scoring bounds.
         gdf_ref: Ground truth.
+        origins: Optional per-cluster contributing tiles, aligned with
+            ``centroids``.
 
     Returns:
         Tuple of (precision, recall, F1, detection count).
@@ -167,7 +293,18 @@ def score(
         return 0.0, 0.0, 0.0, 0
     gdf = gpd.GeoDataFrame(
         geometry=[Point(xy) for xy in centroids[sel]], crs=CRS)
-    gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
+    if origins is None:
+        gdf["source_tile"] = assign_primary_tiles(gdf, bounds)
+    else:
+        if len(origins) != len(centroids):
+            raise ValueError(
+                f"origins has {len(origins)} entries for {len(centroids)} clusters"
+            )
+        kept = [list(origins[i]) for i in np.flatnonzero(sel)]
+        # One list per row: built as an object Series so pandas does not
+        # read a list of equal-length lists as a 2-D array.
+        gdf["source_tiles"] = pd.Series(kept, index=gdf.index, dtype=object)
+        gdf["source_tile"] = assign_primary_tiles(gdf, bounds, origin=kept)
     gdf = gdf[gdf["source_tile"].notna()].copy()
     if gdf.empty:
         return 0.0, 0.0, 0.0, 0
@@ -218,9 +355,12 @@ def main() -> int:
         for K in K_LADDER:
             subset = passes[:K]
             for c in CORROBORATION:
-                cents, votes = cluster_votes(subset, c)
+                # Each cluster keeps its contributing tiles, so it is tiled
+                # and scored on its own sheet (ruling D62 (1)).
+                cents, votes, origins = cluster_votes_with_origins(subset, c)
                 for k in range(1, K + 1):
-                    p, r, f1, n = score(cents, votes, k, bounds, gdf_ref)
+                    p, r, f1, n = score(
+                        cents, votes, k, bounds, gdf_ref, origins=origins)
                     rows.append({"K": K, "min_corroboration": c, "min_votes": k,
                                  "precision": p, "recall": r, "f1": f1,
                                  "n_detections": n})
@@ -242,8 +382,8 @@ def main() -> int:
     # Diagnostic A: the T=1.0 pool at 9-of-10 on its native scope, which is
     # the committed consensus cell — any gap is deduplication alone.
     passes = load_pool(POOLS["minimal-t1.0"], 10)
-    cents, votes = cluster_votes(passes, 1)
-    p, r, f1, n = score(cents, votes, 9, bounds, gdf_ref)
+    cents, votes, origins = cluster_votes_with_origins(passes, 1)
+    p, r, f1, n = score(cents, votes, 9, bounds, gdf_ref, origins=origins)
     out["decomposition"] = {
         "condition": "pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10",
         "committed_f1": 0.6667,

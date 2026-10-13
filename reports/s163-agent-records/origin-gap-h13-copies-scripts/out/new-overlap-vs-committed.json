@@ -1,0 +1,414 @@
+{
+ "a": "/home/shawn/scratch/origin-gap-h13-copies-2026-10-13/out/new1/overlap",
+ "b": "/home/shawn/scratch/origin-gap-h13-copies-2026-10-13/committed/main-overlap",
+ "counts": {
+  "differs": 2
+ },
+ "files": {
+  "h13_overlap_analysis.json": {
+   "leaves": {
+    "/cost_efficiency/marginal[0]/delta_f1": [
+     -0.043226147966481276,
+     -0.03803430617664072
+    ],
+    "/cost_efficiency/marginal[0]/f1_per_additional_usd": [
+     -0.11486326510317169,
+     -0.10106717343331925
+    ],
+    "/cost_efficiency/marginal[1]/delta_f1": [
+     -0.11846268745064314,
+     -0.11735117284521906
+    ],
+    "/cost_efficiency/marginal[1]/f1_per_additional_usd": [
+     -0.05266379930534936,
+     -0.05216966411928576
+    ],
+    "/cost_efficiency/marginal[2]/delta_f1": [
+     -0.16168883541712442,
+     -0.15538547902185978
+    ],
+    "/cost_efficiency/marginal[2]/f1_per_additional_usd": [
+     -0.06157836413306736,
+     -0.059177763161659805
+    ],
+    "/cost_efficiency/per_arm/armA/f1_per_usd": [
+     0.41821562552903185,
+     0.40694020425251387
+    ],
+    "/cost_efficiency/per_arm/armA/micro_f1": [
+     0.5733021077283372,
+     0.5578454332552694
+    ],
+    "/cost_efficiency/per_arm/armB/f1_per_usd": [
+     0.30339360638767,
+     0.297518439726406
+    ],
+    "/cost_efficiency/per_arm/armB/micro_f1": [
+     0.530075959761856,
+     0.5198111270786286
+    ],
+    "/cost_efficiency/per_arm/armC/f1_per_usd": [
+     0.10299163340344665,
+     0.10070133995736583
+    ],
+    "/cost_efficiency/per_arm/armC/micro_f1": [
+     0.4116132723112128,
+     0.4024599542334096
+    ],
+    "/edge_detection/binned_by_armA_margin[3]/recall_armA": [
+     0.691511387163561,
+     0.6790890269151137
+    ],
+    "/edge_detection/binned_by_armA_margin[3]/recall_armB": [
+     0.7805383022774327,
+     0.7681159420289856
+    ],
+    "/edge_detection/binned_by_armA_margin[3]/recall_armC": [
+     0.8530020703933746,
+     0.8405797101449274
+    ],
+    "/edge_detection/binned_by_armA_margin[4]/recall_armA": [
+     0.7909356725146198,
+     0.7763157894736842
+    ],
+    "/edge_detection/binned_by_armA_margin[4]/recall_armB": [
+     0.8201754385964912,
+     0.8099415204678363
+    ],
+    "/edge_detection/binned_by_armA_margin[4]/recall_armC": [
+     0.9049707602339181,
+     0.8903508771929824
+    ],
+    "/edge_detection/binned_by_armA_margin[5]/recall_armA": [
+     0.8511326860841423,
+     0.7961165048543689
+    ],
+    "/edge_detection/binned_by_armA_margin[5]/recall_armB": [
+     0.7928802588996764,
+     0.7540453074433656
+    ],
+    "/edge_detection/binned_by_armA_margin[5]/recall_armC": [
+     0.9190938511326862,
+     0.8673139158576053
+    ],
+    "/edge_detection/low_margin_subgroup/recall_armA_high_margin": [
+     0.7676767676767677,
+     0.7468434343434344
+    ],
+    "/edge_detection/low_margin_subgroup/recall_armB_high_margin": [
+     0.8005050505050504,
+     0.7847222222222222
+    ],
+    "/edge_detection/low_margin_subgroup/recall_armC_high_margin": [
+     0.8907828282828283,
+     0.870580808080808
+    ],
+    "/edge_detection/overall_recall/armA": [
+     0.758364312267658,
+     0.7379182156133829
+    ],
+    "/edge_detection/overall_recall/armB": [
+     0.7998760842627013,
+     0.7843866171003717
+    ],
+    "/edge_detection/overall_recall/armC": [
+     0.8915737298636927,
+     0.8717472118959108
+    ],
+    "/f1_vs_overlap/arms/armA/fn": [
+     130.0,
+     141.0
+    ],
+    "/f1_vs_overlap/arms/armA/fp": [
+     477.33333333333337,
+     488.33333333333337
+    ],
+    "/f1_vs_overlap/arms/armA/micro_f1": [
+     0.5733021077283372,
+     0.5578454332552694
+    ],
+    "/f1_vs_overlap/arms/armA/precision": [
+     0.46084337349397586,
+     0.44841867469879515
+    ],
+    "/f1_vs_overlap/arms/armA/recall": [
+     0.758364312267658,
+     0.7379182156133829
+    ],
+    "/f1_vs_overlap/arms/armA/tp": [
+     408.0,
+     397.0
+    ],
+    "/f1_vs_overlap/arms/armB/fn": [
+     107.66666666666666,
+     116.0
+    ],
+    "/f1_vs_overlap/arms/armB/fp": [
+     655.3333333333333,
+     663.6666666666666
+    ],
+    "/f1_vs_overlap/arms/armB/micro_f1": [
+     0.530075959761856,
+     0.5198111270786286
+    ],
+    "/f1_vs_overlap/arms/armB/precision": [
+     0.39637703408044217,
+     0.38870125882714157
+    ],
+    "/f1_vs_overlap/arms/armB/recall": [
+     0.7998760842627013,
+     0.7843866171003717
+    ],
+    "/f1_vs_overlap/arms/armB/tp": [
+     430.3333333333333,
+     422.0
+    ],
+    "/f1_vs_overlap/arms/armC/fn": [
+     58.33333333333333,
+     69.0
+    ],
+    "/f1_vs_overlap/arms/armC/fp": [
+     1313.0,
+     1323.6666666666667
+    ],
+    "/f1_vs_overlap/arms/armC/micro_f1": [
+     0.4116132723112128,
+     0.4024599542334096
+    ],
+    "/f1_vs_overlap/arms/armC/precision": [
+     0.2675715879509111,
+     0.2616214206024544
+    ],
+    "/f1_vs_overlap/arms/armC/recall": [
+     0.8915737298636927,
+     0.8717472118959108
+    ],
+    "/f1_vs_overlap/arms/armC/tp": [
+     479.66666666666663,
+     469.0
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/primary/bootstrap_mean": [
+     0.04231847059948225,
+     0.037413949774150565
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/primary/ci_lower": [
+     0.005454817108262167,
+     0.0009453550982732143
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/primary/ci_upper": [
+     0.07753385040220867,
+     0.07075018924858273
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/primary/delta": [
+     0.043226147966481276,
+     0.03803430617664072
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/primary/p_two_sided": [
+     0.0237,
+     0.0385
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/sensitivity/bootstrap_mean": [
+     0.042880199652906764,
+     0.03770653840364267
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/sensitivity/ci_lower": [
+     0.006026452995033957,
+     0.0015171723770212792
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/sensitivity/ci_upper": [
+     0.07949463052702883,
+     0.0741118347472877
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/sensitivity/delta": [
+     0.043226147966481276,
+     0.03803430617664072
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armB/sensitivity/p_two_sided": [
+     0.0237,
+     0.0385
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/primary/bootstrap_mean": [
+     0.1611583141713046,
+     0.15508470492496082
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/primary/ci_lower": [
+     0.12703939544605886,
+     0.1213724722960994
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/primary/ci_upper": [
+     0.1942713266676706,
+     0.18887772374435066
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/primary/delta": [
+     0.16168883541712442,
+     0.15538547902185978
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/sensitivity/bootstrap_mean": [
+     0.1609966234612811,
+     0.15467960824594332
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/sensitivity/ci_lower": [
+     0.12630989583799584,
+     0.12036640190298088
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/sensitivity/ci_upper": [
+     0.19550527606314977,
+     0.18903424345230518
+    ],
+    "/f1_vs_overlap/paired_contrasts/armA_vs_armC/sensitivity/delta": [
+     0.16168883541712442,
+     0.15538547902185978
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/primary/bootstrap_mean": [
+     0.11883984357182231,
+     0.11767075515081027
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/primary/ci_lower": [
+     0.09264747547361046,
+     0.09217316470444688
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/primary/ci_upper": [
+     0.14513005513771776,
+     0.14366475899289669
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/primary/delta": [
+     0.11846268745064314,
+     0.11735117284521906
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/sensitivity/bootstrap_mean": [
+     0.11811642380837434,
+     0.11697306984230063
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/sensitivity/ci_lower": [
+     0.09254678398789803,
+     0.09191261174724284
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/sensitivity/ci_upper": [
+     0.14390297108298788,
+     0.14221964263123127
+    ],
+    "/f1_vs_overlap/paired_contrasts/armB_vs_armC/sensitivity/delta": [
+     0.11846268745064314,
+     0.11735117284521906
+    ]
+   },
+   "verdict": "differs"
+  },
+  "per_tile_counts.json": {
+   "leaves": {
+    "/armA/fn[60]": [
+     2.0,
+     10.0
+    ],
+    "/armA/fn[61]": [
+     0.0,
+     1.0
+    ],
+    "/armA/fn[66]": [
+     0.0,
+     2.0
+    ],
+    "/armA/fp[60]": [
+     3.6666666666666665,
+     11.666666666666666
+    ],
+    "/armA/fp[61]": [
+     1.0,
+     2.0
+    ],
+    "/armA/fp[66]": [
+     1.6666666666666667,
+     3.6666666666666665
+    ],
+    "/armA/tp[60]": [
+     8.0,
+     0.0
+    ],
+    "/armA/tp[61]": [
+     1.0,
+     0.0
+    ],
+    "/armA/tp[66]": [
+     2.0,
+     0.0
+    ],
+    "/armB/fn[60]": [
+     4.666666666666667,
+     10.0
+    ],
+    "/armB/fn[61]": [
+     0.0,
+     1.0
+    ],
+    "/armB/fn[66]": [
+     0.0,
+     2.0
+    ],
+    "/armB/fp[60]": [
+     5.0,
+     10.333333333333334
+    ],
+    "/armB/fp[61]": [
+     0.0,
+     1.0
+    ],
+    "/armB/fp[66]": [
+     0.0,
+     2.0
+    ],
+    "/armB/tp[60]": [
+     5.333333333333333,
+     0.0
+    ],
+    "/armB/tp[61]": [
+     1.0,
+     0.0
+    ],
+    "/armB/tp[66]": [
+     2.0,
+     0.0
+    ],
+    "/armC/fn[60]": [
+     2.3333333333333335,
+     10.0
+    ],
+    "/armC/fn[61]": [
+     0.0,
+     1.0
+    ],
+    "/armC/fn[66]": [
+     0.0,
+     2.0
+    ],
+    "/armC/fp[60]": [
+     11.666666666666666,
+     19.333333333333332
+    ],
+    "/armC/fp[61]": [
+     3.0,
+     4.0
+    ],
+    "/armC/fp[66]": [
+     6.333333333333333,
+     8.333333333333334
+    ],
+    "/armC/tp[60]": [
+     7.666666666666667,
+     0.0
+    ],
+    "/armC/tp[61]": [
+     1.0,
+     0.0
+    ],
+    "/armC/tp[66]": [
+     2.0,
+     0.0
+    ]
+   },
+   "verdict": "differs"
+  }
+ },
+ "ignored_keys": [
+  "generated_at_utc"
+ ]
+}
