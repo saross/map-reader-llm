@@ -244,3 +244,16 @@ library's attribution (ruling D50) and regenerated W2.7 § 6 and § 6b of
 folder keeps the pre-D50 `FastScorer` (the red sentinel of
 `floors2_scorer_gate.py`) and the § 6 and § 6b outputs the regeneration
 replaced; its `README.md` lists them.
+
+## 2026-10-14 addition: `pre-topup-2026-10-13/`
+
+The D64 same-day Gemini 3.1 Pro replication of h6 A-06's 2×2
+(`outputs/pro-2x2-replication-2026-10-13/`, `f53ae836b`) finished with 15
+tiles failed as `batch_api_error` in three text HIGH passes. The PI approved
+a top-up (Session 164): `scripts/topup_pro_2x2_failed_tiles.py` re-sent the
+15 tiles through `lib_batch_api.patch_failed_tiles` at each pass's own
+conditions, real-time on the flex tier, on 2026-10-13 UTC, and all 15 were
+recovered. The three passes' pre-top-up `.geojson`, `.meta.json`, and
+`.tiles.json` files are preserved here, one directory per pass
+(`<corner>__detect_brief-text__run_<n>/`); the live files carry a
+`recovery_history` entry with the patch's own usage.

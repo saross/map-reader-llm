@@ -2,13 +2,17 @@
   "run_id": "d0bda252-b2ec-46e2-848a-e870b430896d",
   "timestamp": {
     "start": "2026-10-13T07:28:00.859901+00:00",
-    "end": "2026-10-13T07:28:00.862512+00:00",
-    "duration_seconds": 0.002611
+    "end": "2026-10-13T22:26:05.410693+00:00",
+    "duration_seconds": 1809.5093149999998
   },
   "environment": {
     "git_commit": "19f7413a2853fb3db46a97f5b5bc7eee438a60c2",
     "script": "lib_batch_api.py",
-    "script_version": "1.5.0"
+    "script_version": "1.5.0",
+    "git_commits": [
+      "19f7413a2853fb3db46a97f5b5bc7eee438a60c2",
+      "unknown"
+    ]
   },
   "configuration": {
     "version": "detect_brief-text",
@@ -229,8 +233,8 @@
     }
   },
   "execution_stats": {
-    "items_processed": 484,
-    "items_failed": 3,
+    "items_processed": 487,
+    "items_failed": 0,
     "items_skipped": 0,
     "retries_total": 0,
     "retries_rate_limit": 0,
@@ -725,43 +729,34 @@
       "K-35-078-1_Lesovo_x2352_y1344.png",
       "K-35-052-4_32635_x1680_y0.png",
       "K-35-053-3_Elenovo_x672_y672.png",
-      "K-35-052-4_32635_x336_y3360.png"
+      "K-35-052-4_32635_x336_y3360.png",
+      "K-35-078-1_Lesovo_x3696_y2688.png",
+      "K-35-062-2_Rakovski_x1680_y2688.png",
+      "K-35-078-1_Lesovo_x2688_y1344.png"
     ],
-    "failed_items": [
-      {
-        "item_id": "K-35-062-2_Rakovski_x1680_y2688.png",
-        "reason": "batch_api_error",
-        "category": null,
-        "timestamp": "2026-10-13T07:28:00.862500+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x2688_y1344.png",
-        "reason": "batch_api_error",
-        "category": null,
-        "timestamp": "2026-10-13T07:28:00.862505+00:00"
-      },
-      {
-        "item_id": "K-35-078-1_Lesovo_x3696_y2688.png",
-        "reason": "batch_api_error",
-        "category": null,
-        "timestamp": "2026-10-13T07:28:00.862507+00:00"
-      }
-    ],
+    "failed_items": [],
     "retry_details": []
   },
   "usage_stats": {
-    "total_input_tokens": 726968,
-    "total_output_tokens": 32900,
+    "total_input_tokens": 731477,
+    "total_output_tokens": 32930,
     "total_cached_tokens": 0,
     "total_reasoning_tokens": 0,
     "total_thoughts_tokens": 0,
     "total_tool_use_tokens": 0,
-    "total_tokens": 759868,
-    "by_provider": {},
+    "total_tokens": 764407,
+    "by_provider": {
+      "google_gemini": {
+        "input_tokens": 4509,
+        "output_tokens": 30,
+        "total_tokens": 4539,
+        "request_count": 3
+      }
+    },
     "served_tier_counts": {},
-    "n_responses_with_usage": 484,
+    "n_responses_with_usage": 487,
     "usage_source": "batch results file (per-response usageMetadata)",
-    "cached_share": 0.0
+    "cached_share": null
   },
   "results_summary": {
     "total_detections": 445,
@@ -770,17 +765,17 @@
   "cost_estimate": {
     "schema": "cost/2",
     "cost_basis": "audited",
-    "input_cost_usd": 0.726968,
+    "input_cost_usd": 0.731477,
     "cached_input_cost_usd": 0.0,
-    "output_cost_usd": 0.1974,
-    "total_cost_usd": 0.924368,
-    "list_input_cost_usd": 1.453936,
-    "list_output_cost_usd": 0.3948,
-    "list_total_cost_usd": 1.848736,
+    "output_cost_usd": 0.19758,
+    "total_cost_usd": 0.929057,
+    "list_input_cost_usd": 1.462954,
+    "list_output_cost_usd": 0.39516,
+    "list_total_cost_usd": 1.858114,
     "tokens_billed": {
-      "input_fresh": 726968,
+      "input_fresh": 731477,
       "input_cached": 0,
-      "output": 32900,
+      "output": 32930,
       "thinking": 0
     },
     "pricing_used": {
@@ -802,8 +797,7 @@
         "row_valid_from": "2025-12-01",
         "row_valid_to": null,
         "invoice_confirmed": true
-      },
-      "batch_discount": 0.5
+      }
     }
   },
   "billing": {
@@ -813,5 +807,174 @@
   "batch_api": {
     "execution_mode": "batch",
     "batch_discount_applied": true
-  }
+  },
+  "per_item_metadata": [],
+  "recovery_history": [
+    {
+      "timestamp": "2026-10-13T22:26:05.410985+00:00",
+      "initial_failed": 3,
+      "recovered": 3,
+      "still_failing": 0,
+      "still_failing_ids": [],
+      "recovered_ids": [
+        "K-35-062-2_Rakovski_x1680_y2688.png",
+        "K-35-078-1_Lesovo_x2688_y1344.png",
+        "K-35-078-1_Lesovo_x3696_y2688.png"
+      ],
+      "recovery_cost_usd": null,
+      "recovery_duration_seconds": 1809.506704,
+      "recovery_run_id": null,
+      "recovery_usage": {
+        "total_input_tokens": 4509,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 30,
+        "total_thoughts_tokens": 0,
+        "total_tokens": 4539,
+        "n_responses_with_usage": 3,
+        "by_provider": {
+          "google_gemini": {
+            "input_tokens": 4509,
+            "output_tokens": 30,
+            "total_tokens": 4539,
+            "request_count": 3
+          }
+        }
+      },
+      "recovery_service_tier": "flex"
+    }
+  ],
+  "configuration_history": [
+    {
+      "source": "original",
+      "recorded_at": "2026-10-13T07:28:00.859901+00:00",
+      "run_id": "d0bda252-b2ec-46e2-848a-e870b430896d",
+      "configuration": {
+        "version": "detect_brief-text",
+        "model": "gemini-3.1-pro-preview",
+        "instruction_file": "detect_brief-text.md",
+        "system_instruction_hash": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+        "library_hash": "7c9bbcec1c4396db59aca57303fa1d679e0d93ffb0249b526dd5d89fe41dab1c",
+        "library_hash_basis": "example-bytes+path-label-category/1",
+        "library_manifest": [
+          {
+            "path": "neutral-naming/example_01.png",
+            "label": "Positive",
+            "category": "canonical_positive",
+            "sha256": "58a4e11c83de0fe022b04fd846780d53db8da8f07d9db26a9a84ba9b29f981ad"
+          },
+          {
+            "path": "neutral-naming/example_02.png",
+            "label": "Positive",
+            "category": "canonical_positive",
+            "sha256": "9270433e81e1ff8660e067a6c187a994cbf33a5903384dd608383d7d1d88c980"
+          },
+          {
+            "path": "neutral-naming/example_03.png",
+            "label": "Positive",
+            "category": "canonical_positive",
+            "sha256": "f46b416e2833ae73401c5966a0878f050aff4df2a6ec016b36105e2f8c7215f3"
+          },
+          {
+            "path": "neutral-naming/example_04.png",
+            "label": "Positive",
+            "category": "canonical_positive",
+            "sha256": "750fd6554851bdfc663dbf6b4f345bdbcef0d8c3fed2e45af8f7e2d60b3bafc6"
+          },
+          {
+            "path": "neutral-naming/example_05.png",
+            "label": "Positive",
+            "category": "hard_positive",
+            "sha256": "fa461776a6fbb42f2adb5e494e054939cba9efe3eea56ab4217b8775ff333002"
+          },
+          {
+            "path": "neutral-naming/example_06.png",
+            "label": "Positive",
+            "category": "hard_positive",
+            "sha256": "2e5e66c8c47747b2368a849cfd7fcf3b94c2b9999b73042521c7a6a0fbe4d2ee"
+          },
+          {
+            "path": "neutral-naming/example_07.png",
+            "label": "Positive",
+            "category": "hard_positive",
+            "sha256": "0adff338e45e2901b31a262ad88245ff64ba76baf183b29c9f15fcd8c89aa61a"
+          },
+          {
+            "path": "neutral-naming/example_08.png",
+            "label": "Positive",
+            "category": "hard_positive",
+            "sha256": "5ba8a0da725432634596312985b618026c1984414683e51f9f2a721a2c0103b9"
+          },
+          {
+            "path": "neutral-naming/example_09.png",
+            "label": "Negative",
+            "category": "canonical_negative",
+            "sha256": "116c06a55accd57bc0cb23204c7d663061d5353c4c7774a991d69b24971ab8cd"
+          },
+          {
+            "path": "neutral-naming/example_10.png",
+            "label": "Negative",
+            "category": "canonical_negative",
+            "sha256": "f3b0b928caa6c588393a30b9d6f917241fd7e72b8bf1c564ffc62799cf56da2b"
+          },
+          {
+            "path": "neutral-naming/example_11.png",
+            "label": "Negative",
+            "category": "hard_negative",
+            "sha256": "c5f2345291c44bdad73bac1b8dd4749c926d72af8163e2a35ff0c9d353801184"
+          },
+          {
+            "path": "neutral-naming/example_12.png",
+            "label": "Negative",
+            "category": "hard_negative",
+            "sha256": "481cbea1b0d95080ab971efe424680662a03c6df5091a4c9a9cac8b33f74ce90"
+          },
+          {
+            "path": "neutral-naming/example_13.png",
+            "label": "Negative",
+            "category": "hard_negative",
+            "sha256": "748c40694fc65756dc61a18dffabdc0ef5bac07c216d2c54d5a97b1db9a574cc"
+          },
+          {
+            "path": "neutral-naming/example_14.png",
+            "label": "Negative",
+            "category": "hard_negative",
+            "sha256": "233bffdca2d1a57b69101227154d1aef923258041c8a62d0bf98441b69ab5509"
+          },
+          {
+            "path": "neutral-naming/example_15.png",
+            "label": "Negative",
+            "category": "null",
+            "sha256": "7c9cc242bc74393bafb8e08366f1802f0facd58991ff5a8f84bdf872f4bccdde"
+          },
+          {
+            "path": "neutral-naming/example_16.png",
+            "label": "Negative",
+            "category": "null",
+            "sha256": "f121195276a64b35810713ef59d40c5f7f91b2bca569b06f4f66de8d5f28c05c"
+          },
+          {
+            "path": "neutral-naming/example_17.png",
+            "label": "Negative",
+            "category": "null",
+            "sha256": "0b0a7b95ebf183cb9cbd455231bb83952f3b5e82be490da7ad8ad672c3b7195a"
+          }
+        ],
+        "temperature": 0.0,
+        "max_output_tokens": 8192,
+        "thinking_level": "high",
+        "tile_size": null,
+        "include_example_images": false,
+        "example_count": 17,
+        "full_config_snapshot_sha256": "9bcf9a198f53ceb146ad0962a0df487045fe561d48176bcaf15ce877ebb3ea8b"
+      }
+    },
+    {
+      "source": "resume",
+      "recorded_at": "2026-10-13T22:26:05.411056+00:00",
+      "run_id": null,
+      "configuration": {},
+      "differs_from_previous": false,
+      "changed_fields": []
+    }
+  ]
 }
