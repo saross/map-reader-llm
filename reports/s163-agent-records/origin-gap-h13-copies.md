@@ -1,7 +1,7 @@
 # D62 (1): the origin gap in the H13 chain and the consensus library copies
 
-> **Last revised**: 2026-10-13 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-13 (re-run at the head with PR #33 merged;
+> nothing moved). See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), an overnight subagent of the main Session 163
@@ -10,8 +10,11 @@
   2026-10-13 before it was written here.
 - **Date**: 2026-10-13 (UTC).
 - **Repository**: `map-reader-llm`, branch `origin-gap-h13-copies` from
-  `main` at `e8a7f4363`, with `main` at `04575a51a` merged in (`5cd9a5606`;
-  the merged PRs touch none of the files or code paths measured here). Fixes: `7ab2caa9f` (H13 chain), `6ccf097d0`
+  `main` at `e8a7f4363`, with `main` merged in twice: at `04575a51a`
+  (`5cd9a5606`; those PRs touch none of the files or code paths measured
+  here) and at `017834ced` (`e203248e9`), which brings PR #33's changes to
+  `lib_advanced_metrics.py` and `prepare_h13_scoring.assign_primary_tiles`.
+  Everything was re-run at `e203248e9` and is unchanged (§ 3). Fixes: `7ab2caa9f` (H13 chain), `6ccf097d0`
   (its real-data test), `25943b776` (library copies).
 - **Ruling**: PI ruling D62 (1) (`planning/pi-decisions-2026-09-20.md`):
   "the route is fixed in all four chains and in the other copies
@@ -43,7 +46,7 @@
 (a `git archive` of `e8a7f4363`) run today; "NEW" is this branch. NEW was
 run twice: "NEW1" in the branch clone, "NEW2" in a `git archive` of the fix
 commit, in new processes. Every NEW number below is identical in both runs
-(§ 4). F1 is at 20 m unless stated.
+(§ 3). F1 is at 20 m unless stated.
 
 ## Bottom line
 
@@ -73,7 +76,7 @@ commit, in new processes. Every NEW number below is identical in both runs
    changes. `analyse_diversity.consensus_to_gdf` (the 225 Phase 3c
    diversity arms): 885 rows in 124 arms are now matched on their origin
    sheet, but no arm's precision, recall, or F1 changes, and the per-tile
-   tables the intervals resample are identical (§ 3.3).
+   tables the intervals resample are identical (§ 2.3).
 4. **Two items for the PI** (§ 5): `h13_k_sensitivity.py`'s decomposition
    hard-codes the pre-fix shared-scope value 0.6463, which the fix moves to
    0.6687, so the "footprint effect" it logs (−0.0224) is an artefact; and
@@ -400,14 +403,22 @@ two independent runs that agree:
   byte-identical outputs (124 of 124 tables equal in both).
 - OLD values are checked against the committed files (§ 1.2), which serve as
   their second witness.
+- **At the head with PR #33 merged** (`e203248e9`; library blob
+  `422950282`, against `c6e6198b0` for the runs above), the H13 chain and
+  the library-copy measurement were run twice more (in the clone and in a
+  `git archive` of that commit). Every H13 output equals NEW1's (111 files
+  byte-identical, 5 identical but for `generated_at_utc`), the four
+  library-copy section files equal NEW1's byte for byte, and the per-tile
+  check again finds all 124 tables equal, with byte-identical outputs. So PR #33 changes
+  nothing reported here.
 - The H13 runs did not pin `PYTHONHASHSEED` (the library-copy runs pinned
   0), so NEW1, NEW2, and OLD ran under different hash seeds and still
   agree; none of the outputs here goes through the set-ordered paired
   bootstraps recorded on `main` on 2026-10-13
   (`planning/paper-writeup-continuity.md`, the D62 entry).
 - The kernel's "bad page" count (`journalctl -k -b | grep -c -i "bad page"`)
-  read 0 at 03:59, 04:09, 04:11, 04:20, 04:32, and 04:47 UTC (the last
-  after every run reported here).
+  read 0 at 03:59, 04:09, 04:11, 04:20, 04:32, 04:47, 07:23, 07:35, and
+  07:41 UTC (the last after every run reported here).
 
 ## 4. Not done
 
@@ -418,7 +429,9 @@ two independent runs that agree:
   a geometry-only frame, inventory § 3) and `scripts/selection_aware_intervals.py`
   (through the grid chain's `as_gdf`) are neither in this workstream's brief
   nor fixed here.
-- W2.7's `cluster_subset`: on branch `origin-gap-w27`, its own record.
+- W2.7's `cluster_subset`: on branch `origin-gap-w27` (draft PR #44,
+  stacked on PR #38), with its own record,
+  `reports/s163-agent-records/origin-gap-w27.md`.
 
 ## 5. For the PI
 
@@ -438,6 +451,18 @@ two independent runs that agree:
 3. **Obs 416 and the tier-0 Markdown** quote the moved best cells (§ 1.4).
 
 ## Changelog
+
+### 2026-10-13 (later) — Re-run with PR #33 merged
+
+**Trigger**: PR #33 (D50 review findings 2 and 3) merged into `main` after
+the first publication, changing `lib_advanced_metrics.py` and
+`prepare_h13_scoring.assign_primary_tiles`; `main` at `017834ced` was merged
+into this branch (`e203248e9`). The H13 chain, the library-copy measurement,
+and the per-tile check were re-run twice at that head (§ 3). **No number in
+this record moved**: every output equals the earlier runs' (the H13 JSONs
+ignoring only `generated_at_utc`). Also corrected two section
+cross-references and named W2.7's PR (#44). Commit: the one landing this
+entry.
 
 ### 2026-10-13 — Original publication
 
