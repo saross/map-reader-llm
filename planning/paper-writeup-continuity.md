@@ -144,8 +144,9 @@ replaces it.
   score bare centroids with no origin, so D50 falls back to the old
   cross-sheet rule; on the signed plateau board the four incumbents score
   +0.007 to +0.017 F1 @ 20 m on their recorded sheets (#39 inventory § 9.3;
-  committed values confirmed in `results/stride-2026-08-25/plateau_analyses.json`,
-  the recorded-sheet values not yet reproduced by the main session);
+  committed values confirmed in `results/stride-2026-08-25/plateau_analyses.json`;
+  reproduced independently by the main session 2026-10-13, exactly:
+  `reports/s163-agent-records/plateau-recorded-sheet-check-2026-10-13/`);
   (b) W2.7 `cluster_subset` frames and `scripts/analyse_diversity.py`'s own
   `consensus_to_gdf` copy have the same gap; (c) the signed A-09 outcome
   text's limb-2 reasoning was already false in the committed artefact
