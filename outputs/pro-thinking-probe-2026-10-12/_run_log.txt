@@ -1,0 +1,111 @@
+=== 2026-10-12T12:32:50Z pro-thinking-probe LAUNCH (model=gemini-3.1-pro, flex, workers=10) ===
+=== 2026-10-12T12:32:50Z START text-t0.0 (temp=0.0 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.0
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-50-seed42.json
+Manifest loaded. Found 50 of 50 tiles (50 remaining to process).
+Processing 50 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/50 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=28 429s=0 avg_lat=N/A
+  2%|▏         | 1/50 [00:39<31:54, 39.07s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=31 429s=0 avg_lat=39.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=36 429s=0 avg_lat=39.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=39 429s=0 avg_lat=39.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=43 429s=0 avg_lat=39.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=46 429s=0 avg_lat=39.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=54 429s=0 avg_lat=39.1s
+  4%|▍         | 2/50 [01:48<45:23, 56.74s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=60 429s=0 avg_lat=73.7s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=65 429s=0 avg_lat=73.7s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=68 429s=0 avg_lat=73.7s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=74 429s=0 avg_lat=73.7s
+  6%|▌         | 3/50 [02:36<41:19, 52.75s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=77 429s=0 avg_lat=54.4s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=83 429s=0 avg_lat=54.4s
+  8%|▊         | 4/50 [02:59<31:28, 41.07s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=86 429s=0 avg_lat=85.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=88 429s=0 avg_lat=85.6s
+ 10%|█         | 5/50 [03:41<31:13, 41.63s/it] 12%|█▏        | 6/50 [03:49<22:04, 30.11s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=93 429s=0 avg_lat=108.4s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=97 429s=0 avg_lat=108.4s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=99 429s=0 avg_lat=108.4s
+ 14%|█▍        | 7/50 [04:22<22:10, 30.94s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=104 429s=0 avg_lat=124.3s
+ 16%|█▌        | 8/50 [04:30<16:31, 23.60s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=110 429s=0 avg_lat=136.0s
+ 18%|█▊        | 9/50 [04:51<15:36, 22.85s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=115 429s=0 avg_lat=153.3s
+ 20%|██        | 10/50 [05:01<12:37, 18.93s/it] 22%|██▏       | 11/50 [05:04<09:03, 13.93s/it] 24%|██▍       | 12/50 [05:04<06:16,  9.90s/it] 26%|██▌       | 13/50 [05:09<05:02,  8.17s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=122 429s=0 avg_lat=191.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=124 429s=0 avg_lat=191.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=133 429s=0 avg_lat=191.9s
+ 28%|██▊       | 14/50 [05:33<07:54, 13.17s/it] 30%|███       | 15/50 [05:40<06:31, 11.18s/it] 32%|███▏      | 16/50 [05:44<05:10,  9.14s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=143 429s=0 avg_lat=200.2s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=145 429s=0 avg_lat=200.2s
+ 34%|███▍      | 17/50 [06:11<08:01, 14.58s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=157 429s=0 avg_lat=201.7s
+ 36%|███▌      | 18/50 [06:15<06:03, 11.35s/it] 38%|███▊      | 19/50 [06:18<04:31,  8.77s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=162 429s=0 avg_lat=215.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=163 429s=0 avg_lat=215.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=168 429s=0 avg_lat=215.5s
+ 40%|████      | 20/50 [07:03<09:44, 19.49s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=173 429s=0 avg_lat=206.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=174 429s=0 avg_lat=206.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=177 429s=0 avg_lat=206.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=181 429s=0 avg_lat=206.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=185 429s=0 avg_lat=206.1s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=188 429s=0 avg_lat=206.1s
+ 42%|████▏     | 21/50 [08:12<16:42, 34.56s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=192 429s=0 avg_lat=213.0s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=193 429s=0 avg_lat=213.0s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=195 429s=0 avg_lat=213.0s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=200 429s=0 avg_lat=213.0s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=203 429s=0 avg_lat=213.0s
+ 44%|████▍     | 22/50 [09:17<20:20, 43.60s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=205 429s=0 avg_lat=226.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=209 429s=0 avg_lat=226.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=211 429s=0 avg_lat=226.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=214 429s=0 avg_lat=226.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=215 429s=0 avg_lat=226.5s
+ 46%|████▌     | 23/50 [10:19<22:06, 49.11s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=218 429s=0 avg_lat=238.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=223 429s=0 avg_lat=238.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=225 429s=0 avg_lat=238.6s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=226 429s=0 avg_lat=238.6s
+ 48%|████▊     | 24/50 [11:24<23:21, 53.92s/it] 50%|█████     | 25/50 [11:33<16:51, 40.46s/it] 52%|█████▏    | 26/50 [11:37<11:44, 29.37s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=231 429s=0 avg_lat=256.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=233 429s=0 avg_lat=256.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=235 429s=0 avg_lat=256.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=236 429s=0 avg_lat=256.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=239 429s=0 avg_lat=256.5s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=243 429s=0 avg_lat=256.5s
+ 54%|█████▍    | 27/50 [13:15<19:13, 50.15s/it] 56%|█████▌    | 28/50 [13:26<14:01, 38.24s/it] 58%|█████▊    | 29/50 [13:28<09:34, 27.37s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=246 429s=0 avg_lat=279.7s
+ 60%|██████    | 30/50 [13:58<09:23, 28.18s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=252 429s=0 avg_lat=287.5s
+ 62%|██████▏   | 31/50 [14:11<07:31, 23.75s/it]                                                62%|██████▏   | 31/50 [14:13<07:31, 23.75s/it] 64%|██████▍   | 32/50 [14:13<05:09, 17.17s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=254 429s=0 avg_lat=287.5s
+                                                64%|██████▍   | 32/50 [14:30<05:09, 17.17s/it] 66%|██████▌   | 33/50 [14:30<04:51, 17.14s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=255 429s=0 avg_lat=284.7s
+                                                66%|██████▌   | 33/50 [15:06<04:51, 17.14s/it] 68%|██████▊   | 34/50 [15:06<06:05, 22.85s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=258 429s=0 avg_lat=292.7s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=260 429s=0 avg_lat=292.7s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=261 429s=0 avg_lat=292.7s
+                                                68%|██████▊   | 34/50 [16:36<06:05, 22.85s/it] 70%|███████   | 35/50 [16:36<10:46, 43.08s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=262 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=264 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=266 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=267 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=270 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=270 429s=0 avg_lat=298.9s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=273 429s=0 avg_lat=298.9s
