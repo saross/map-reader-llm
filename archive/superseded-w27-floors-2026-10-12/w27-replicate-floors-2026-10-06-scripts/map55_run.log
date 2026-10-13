@@ -1,0 +1,14 @@
+GATE dedup_fast == deduplicate_within_pass on g37 run_1: {'pass': True, 'n_raw': 17994, 'n_slow': 8511, 'n_fast': 8511}
+families loaded in 18s: A(n=10), B(n=10), FOURTH(n=10), ARM1(n=5), ARM2(n=5), G37IMG-ARM1(n=5), G37IMG-ARM2(n=5), G3IMG-ARM1(n=5), G3IMG-ARM2(n=5)
+GATE B (0, 1, 2, 3, 4) (0.15, k5): expected 4736, got 4736 -> PASS
+GATE A (0, 1, 2, 3, 4) (0.15, k4): expected 4597, got 4597 -> PASS
+GATE ARM1 (0, 1, 2) (0.1, k3): expected 5482, got 5482 -> PASS
+GATE ARM2 (0, 1, 2) (0.8, k3): expected 5187, got 5187 -> PASS
+GATE FOURTH (0, 1, 2, 3, 4) (0.98, k5): expected 4431, got 4431 -> PASS
+GATE FOURTH (0, 1, 2) (0.98, k3): expected 4623, got 4623 -> PASS
+152 subset frames built in 219s
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+466 scoring tasks
+scored in 424s
+865 disjoint pairs to test
+done in 620s -> /tmp/w27

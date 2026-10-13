@@ -3,7 +3,7 @@
 Floors v2 shared library: exact fast restatements of the board's clustering and scorer.
 ======================================================================================
 
-Two restatements, each gated for bit-exact equality with the committed function
+Two restatements, each gated for exact equality with the committed function
 before any result is used:
 
 * ``cluster_votes_fast`` -- ``h13_k_sensitivity.cluster_votes`` (seed-order greedy
@@ -11,20 +11,52 @@ before any result is used:
   KD-tree used only to shortlist neighbours; the membership test, member order and
   centroid arithmetic are the committed ones. It also records each cluster's
   contributing passes (a bitmask), which the vote-propensity model needs.
+  ``cluster_votes_fast_origins`` is the same restatement of
+  ``h13_k_sensitivity.cluster_votes_with_origins``: it also returns each
+  cluster's contributing tiles, which ``w27_55map_subset_replicates.cluster_subset``
+  carries into scoring (PI ruling D62 (1), 2026-10-13).
 * ``FastScorer`` -- ``lib_advanced_metrics.compute_per_tile_tp_fp_fn`` under the
-  default ``id`` tile join: per-map Hungarian matching on the SAME cost matrix
-  (GEOS distances; the committed matcher builds the matrix with ``np.full`` on an
-  integer fill when the buffer is an int, so distances are truncated to whole
-  metres before assignment, and this restatement does the same), TP/FP booked to
-  the detection's ``source_tile``, FN to the reference's primary tile. The
-  reference-side work (scoping, primary tiles) is done once per frame.
+  default ``id`` tile join, built on the shared library's own attribution
+  (PI rulings D50 and D60 (4)):
 
-Zero API. Author: Shawn Ross & Claude (Anthropic) | Created: 2026-10-07 | Apache 2.0
+  - **Detections** are attributed once per frame by the library's
+    ``scope_detections_to_frame``: each row goes to its origin sheet (a recorded
+    origin in ``ORIGIN_TILE_COLUMNS`` wins over a re-keyed ``source_tile``),
+    sheets are read by the library's longest-prefix resolver, and a row is
+    scored only if it intersects one of its own sheet's frame tiles. The
+    attribution is row by row, so any threshold cell of a prepared frame (a row
+    mask) has exactly the attribution the library gives that cell; the frame
+    is attributed once and every cell reuses it.
+  - **References** are the library's own per-sheet scopes, read once from
+    ``iter_sheet_scopes``; each reference's false-negative tile is
+    ``_assign_refs_to_primary_tiles``'s nearest-centroid primary tile.
+  - **Matching** is per sheet on the SAME cost matrix as
+    ``match_detections_to_references`` (GEOS distances; the committed matcher
+    builds the matrix with ``np.full`` on an integer fill when the buffer is an
+    int, so distances are truncated to whole metres before assignment, and this
+    restatement does the same), with each sheet's rows in frame order.
+  - **Booking**: true and false positives to the detection's ``source_tile``,
+    false negatives to the reference's primary tile; a scored detection whose
+    ``source_tile`` is not a frame tile refuses the cell, as the library's
+    tile-join invariant does.
+
+  Until 2026-10-12 this class split detections by ``source_tile`` prefix alone:
+  no geometric scope, no origin restoration, and a bare ``str.startswith``
+  sheet match. That version reproduced the pre-D50 scorer, and is archived
+  under ``archive/superseded-w27-floors-2026-10-12/`` for the red sentinel of
+  ``floors2_scorer_gate.py``.
+
+Zero API. Author: Shawn Ross & Claude (Anthropic) | Created: 2026-10-07 |
+Rebuilt on the library's attribution: 2026-10-12 | Apache 2.0
 """
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
+
+import geopandas as gpd
 import numpy as np
+import pandas as pd
 import shapely
 from scipy.optimize import linear_sum_assignment
 from scipy.spatial import cKDTree
@@ -82,97 +114,253 @@ def cluster_votes_fast(
     return np.asarray(cents), np.asarray(votes, dtype=int)
 
 
+def _member_tiles(detection: dict) -> list[str]:
+    """One pooled detection's proposer tiles, as ``h13_k_sensitivity._member_tiles`` reads them.
+
+    ``source_tiles`` (the deduplicated detection's member list) when it names
+    any tile, else ``source_tile``; ``parse_tile_list`` drops empty names.
+    """
+    from scripts.lib_advanced_metrics import parse_tile_list
+
+    tiles = parse_tile_list(detection.get("source_tiles"))
+    if not tiles:
+        tiles = parse_tile_list(detection.get("source_tile"))
+    return tiles
+
+
+def cluster_votes_fast_origins(
+    passes: list[list[dict]], min_corroboration: int, radius: float = 20.0
+) -> tuple[np.ndarray, np.ndarray, list[list[str]]]:
+    """``h13_k_sensitivity.cluster_votes_with_origins`` with the KD-tree shortlist.
+
+    :func:`cluster_votes_fast`, step for step (the same shortlist, membership
+    test, member order and centroid arithmetic, and the same pass bitmasks in
+    ``LAST_MEMBERS['masks']``), also returning each cluster's contributing
+    tiles: the sorted union of its members' proposer tiles (PI ruling D62 (1),
+    2026-10-13). :func:`cluster_votes_fast` itself is unchanged, so the
+    gold-standard slices that use it are unaffected. Exact equality with the
+    committed function (centroids, votes and tiles) is gated before use
+    (``floors2_55map.py`` gate 1; ``floors2_scorer_gate.py``).
+
+    Args:
+        passes: Deduplicated detections per pass (dicts with ``centroid`` and
+            ``source_tiles`` or ``source_tile``).
+        min_corroboration: Minimum within-pass ``cluster_size`` to keep.
+        radius: Clustering radius in metres (the committed ``DEDUP_M``).
+
+    Returns:
+        (centroids [m, 2], votes [m], one sorted tile list per cluster).
+    """
+    pts: list = []
+    owner: list[int] = []
+    tiles: list[list[str]] = []
+    for idx, dets in enumerate(passes):
+        for d in dets:
+            if d.get("cluster_size", 1) >= min_corroboration:
+                pts.append(d["centroid"])
+                owner.append(idx)
+                tiles.append(_member_tiles(d))
+    n = len(pts)
+    if n == 0:
+        LAST_MEMBERS["masks"] = []
+        return np.zeros((0, 2)), np.zeros(0, dtype=int), []
+    arr = np.asarray(pts, dtype=float)
+    own = np.asarray(owner, dtype=int)
+    neigh = cKDTree(arr).query_ball_point(arr, r=radius + 1e-6)
+    taken = np.zeros(n, dtype=bool)
+    cents, votes, masks, origins = [], [], [], []
+    for i in range(n):
+        if taken[i]:
+            continue
+        cand = np.asarray(neigh[i], dtype=np.intp)
+        cand = cand[~taken[cand]]
+        d = np.hypot(arr[cand, 0] - arr[i, 0], arr[cand, 1] - arr[i, 1])
+        members = np.union1d(cand[d <= radius], [i])
+        taken[members] = True
+        cents.append((arr[members, 0].mean(), arr[members, 1].mean()))
+        ow = set(own[members].tolist())
+        votes.append(len(ow))
+        masks.append(sum(1 << o for o in ow))
+        origins.append(sorted({t for m in members.tolist() for t in tiles[m]}))
+    LAST_MEMBERS["masks"] = masks
+    return np.asarray(cents), np.asarray(votes, dtype=int), origins
+
+
+@dataclass(frozen=True)
+class PreparedFrame:
+    """One detection frame attributed by the library, ready for many threshold cells.
+
+    Attributes:
+        points: Matcher geometry per row (the row's point, or its centroid), in
+            frame order, as ``match_detections_to_references`` reads it.
+        sheet: Per row, the index of its attributed sheet in ``FastScorer.sheets``,
+            or -1 when the library does not score the row (unattributed, or
+            outside its own sheet's frame tiles).
+        book: Per row, the tile position its true or false positive is booked to
+            (``source_tile`` under the ``id`` join), or -1 when ``source_tile`` is
+            not a frame tile name.
+        has_source_tile: Whether the frame carries a ``source_tile`` column.
+        diagnostics: The library's ``detection_scope`` counts for the whole frame.
+    """
+
+    points: np.ndarray
+    sheet: np.ndarray
+    book: np.ndarray
+    has_source_tile: bool
+    diagnostics: dict = field(default_factory=dict)
+
+    def __len__(self) -> int:
+        return len(self.sheet)
+
+
 class FastScorer:
-    """``compute_per_tile_tp_fp_fn`` (id tile join) with the reference side cached.
+    """``compute_per_tile_tp_fp_fn`` (id tile join) with both sides cached.
+
+    Usage::
+
+        scorer = FastScorer(ref, bounds, 50)
+        prep = scorer.prepare(frame)                  # attribute once per frame
+        tp, fp, fn = scorer.totals(prep, mask)        # any row mask: one cell
+        table = scorer.per_tile(prep, mask)           # [n_tiles, 3] in tile_pos order
 
     Args:
         ref: Reference GeoDataFrame (``Map`` or ``source_map`` column).
-        bounds: Tile bounds GeoDataFrame (``tile_name``).
+        bounds: Tile bounds GeoDataFrame (``tile_name``), in the frames' CRS.
         buffer: Match buffer in metres, passed with the SAME type the committed
             caller passes (an int buffer gives an integer cost matrix there).
     """
 
-    def __init__(self, ref, bounds, buffer):
+    def __init__(self, ref: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame, buffer) -> None:
         from scripts.lib_advanced_metrics import (
             _assign_refs_to_primary_tiles,
-            get_map_name,
-            scope_references_to_tiles,
+            iter_sheet_scopes,
         )
 
         self.buffer = buffer
-        self.tile_order = [str(t) for t in bounds["tile_name"]]
-        self.tile_set = set(self.tile_order)
-        self.tile_pos = {t: i for i, t in enumerate(dict.fromkeys(self.tile_order))}
+        self.bounds = bounds
+        # The library keys its per-tile table by ``tile_name`` (one entry per
+        # distinct name, bounds order); positions follow the same keys.
+        self.tile_pos = {t: i for i, t in enumerate(dict.fromkeys(bounds["tile_name"]))}
         ref_to_tile = {}
         for tile, idxs in _assign_refs_to_primary_tiles(ref, bounds).items():
             for r in idxs:
                 ref_to_tile[r] = tile
-        col = "Map" if "Map" in ref.columns else "source_map"
-        self.maps = []
-        for map_name in {get_map_name(n) for n in bounds["tile_name"].unique()}:
-            if map_name == "Unknown":
-                continue
-            mb = bounds[bounds["tile_name"].str.startswith(map_name)]
-            rm = ref[ref[col] == map_name]
-            rs = scope_references_to_tiles(rm, mb) if not rm.empty else rm.iloc[0:0]
-            geoms = [g if g.geom_type == "Point" else g.centroid for g in rs.geometry]
-            fn_tile = []
-            for r in rs.index:
+        # Each sheet's in-scope references exactly as the library's per-sheet
+        # loop yields them. On ``main`` the reference side does not depend on
+        # the detections, so an empty detection set reads it once.
+        empty = gpd.GeoDataFrame(
+            {"source_tile": pd.Series([], dtype=object)},
+            geometry=gpd.GeoSeries([], crs=bounds.crs),
+        )
+        self.sheets: list[tuple[str, np.ndarray, np.ndarray]] = []
+        for sheet, _dets, ref_scope, _sheet_bounds in iter_sheet_scopes(empty, ref, bounds):
+            geoms = [g if g.geom_type == "Point" else g.centroid for g in ref_scope.geometry]
+            fn_pos = []
+            for r in ref_scope.index:
                 t = ref_to_tile.get(r)
-                fn_tile.append(t if (t and t in self.tile_set) else None)
-            self.maps.append((map_name, np.asarray(geoms, dtype=object), fn_tile))
-        self._maps_of: dict[str, list[int]] = {}
+                fn_pos.append(self.tile_pos[t] if (t and t in self.tile_pos) else -1)
+            self.sheets.append(
+                (sheet, np.asarray(geoms, dtype=object), np.asarray(fn_pos, dtype=np.int64))
+            )
+        self.sheet_index = {name: i for i, (name, _, _) in enumerate(self.sheets)}
 
-    def _maps_for(self, tile) -> list[int]:
-        if not isinstance(tile, str):
-            raise ValueError(f"non-string source_tile {tile!r}")
-        m = self._maps_of.get(tile)
-        if m is None:
-            m = [i for i, (name, _, _) in enumerate(self.maps) if tile.startswith(name)]
-            self._maps_of[tile] = m
-        return m
+    def prepare(self, frame: gpd.GeoDataFrame) -> PreparedFrame:
+        """Attribute every row of ``frame`` once with the library's detection scope.
 
-    def per_tile(self, xy: np.ndarray, tiles) -> np.ndarray:
-        """Per-tile [tp, fp, fn] over ``tile_pos`` order (unique tile names)."""
+        Args:
+            frame: Detections in the bounds' CRS (``source_tile`` and/or an origin
+                column, as ``compute_per_tile_tp_fp_fn`` requires).
+
+        Returns:
+            A :class:`PreparedFrame` whose rows align with ``frame``'s rows.
+        """
+        from scripts.lib_advanced_metrics import scope_detections_to_frame
+
+        n = len(frame)
+        # Positions, not labels: the library's spatial join is keyed by position,
+        # and a positional index makes the kept rows' positions read directly.
+        f = frame.reset_index(drop=True)
+        scope = scope_detections_to_frame(f, self.bounds)
+        sheet = np.full(n, -1, dtype=np.int64)
+        kept = scope.detections.index.to_numpy()
+        if len(kept):
+            sheet[kept] = [self.sheet_index[s] for s in scope.sheets]
+        geoms = f.geometry.to_numpy()
+        points = np.asarray(
+            [g if g.geom_type == "Point" else g.centroid for g in geoms], dtype=object
+        )
+        has_st = "source_tile" in f.columns
+        book = np.full(n, -1, dtype=np.int64)
+        if has_st:
+            for i, t in enumerate(f["source_tile"].tolist()):
+                # ``recorded_tile in tile_counts``: the library's id-join test.
+                if t in self.tile_pos:
+                    book[i] = self.tile_pos[t]
+        return PreparedFrame(points, sheet, book, has_st, dict(scope.diagnostics))
+
+    def per_tile(self, prep: PreparedFrame, mask: np.ndarray | None = None) -> np.ndarray:
+        """Per-tile [tp, fp, fn] of one cell, over ``tile_pos`` order.
+
+        Args:
+            prep: A prepared frame.
+            mask: Boolean row mask selecting the cell (all rows when ``None``).
+
+        Returns:
+            Integer array [n_tiles, 3].
+
+        Raises:
+            KeyError: If a detection is scored but the frame has no ``source_tile``
+                (the library reads ``det_row["source_tile"]`` there).
+            ValueError: If a scored detection's ``source_tile`` is not a frame tile:
+                the library's tile-join invariant refuses such a table.
+        """
         out = np.zeros((len(self.tile_pos), 3), dtype=np.int64)
-        by_map: dict[int, list[int]] = {}
-        for i, t in enumerate(tiles):
-            for m in self._maps_for(t):
-                by_map.setdefault(m, []).append(i)
-        pts = shapely.points(np.asarray(xy, dtype=float)) if len(xy) else np.zeros(0, dtype=object)
+        scored = prep.sheet >= 0 if mask is None else (np.asarray(mask, bool) & (prep.sheet >= 0))
+        rows = np.flatnonzero(scored)  # frame order, as each sheet's scope keeps it
+        if len(rows) and not prep.has_source_tile:
+            raise KeyError("source_tile: scored detections carry no source_tile column")
+        if len(rows) and (prep.book[rows] < 0).any():
+            short = int((prep.book[rows] < 0).sum())
+            raise ValueError(
+                f"per-tile table refused: {short} of {len(rows)} in-frame detections "
+                "carry a source_tile that is not a frame tile (the library's "
+                "tile_join_detection_shortfall)"
+            )
+        row_sheet = prep.sheet[rows]
         buf = self.buffer
-        for m, (_, ref_geoms, fn_tile) in enumerate(self.maps):
-            di = by_map.get(m, [])
-            if not di and len(ref_geoms) == 0:
+        for s, (_name, ref_geoms, fn_pos) in enumerate(self.sheets):
+            di = rows[row_sheet == s]
+            if not len(di) and not len(ref_geoms):
                 continue
-            if not di:
-                for t in fn_tile:
-                    if t is not None:
-                        out[self.tile_pos[t], 2] += 1
+            if not len(di):
+                for p in fn_pos[fn_pos >= 0]:
+                    out[p, 2] += 1
                 continue
-            if len(ref_geoms) == 0:
-                for i in di:
-                    if tiles[i] in self.tile_set:
-                        out[self.tile_pos[tiles[i]], 1] += 1
+            if not len(ref_geoms):
+                for p in prep.book[di]:
+                    out[p, 1] += 1
                 continue
-            dist = shapely.distance(pts[di][:, None], ref_geoms[None, :])
+            dist = shapely.distance(prep.points[di][:, None], ref_geoms[None, :])
             cost = np.full((len(di), len(ref_geoms)), buf * 1000)  # committed dtype rule
             ok = dist <= buf
             cost[ok] = dist[ok]
             r_d, r_r = linear_sum_assignment(cost)
             keep = cost[r_d, r_r] <= buf
-            md, mr = set(r_d[keep].tolist()), set(r_r[keep].tolist())
-            for j, i in enumerate(di):
-                t = tiles[i]
-                if t in self.tile_set:
-                    out[self.tile_pos[t], 0 if j in md else 1] += 1
-            for j, t in enumerate(fn_tile):
-                if j not in mr and t is not None:
-                    out[self.tile_pos[t], 2] += 1
+            matched_det = np.zeros(len(di), dtype=bool)
+            matched_det[r_d[keep]] = True
+            matched_ref = np.zeros(len(ref_geoms), dtype=bool)
+            matched_ref[r_r[keep]] = True
+            np.add.at(out[:, 0], prep.book[di[matched_det]], 1)
+            np.add.at(out[:, 1], prep.book[di[~matched_det]], 1)
+            fn = fn_pos[~matched_ref]
+            np.add.at(out[:, 2], fn[fn >= 0], 1)
         return out
 
-    def totals(self, xy, tiles) -> tuple[int, int, int]:
-        a = self.per_tile(xy, tiles).sum(axis=0)
+    def totals(
+        self, prep: PreparedFrame, mask: np.ndarray | None = None
+    ) -> tuple[int, int, int]:
+        """Micro totals (tp, fp, fn) of one cell; see :meth:`per_tile`."""
+        a = self.per_tile(prep, mask).sum(axis=0)
         return int(a[0]), int(a[1]), int(a[2])
 
 

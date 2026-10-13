@@ -1,5 +1,10 @@
 # W2.7 floors v2: subsampling floors for the 55-map board, validated
 
+> **Last revised**: 2026-10-13 (PI ruling D62 (1): subset clusters carry the tiles they were
+> seen on, every cell regenerated on the library as merged in PR #33; 132 cells return to
+> their pre-D50 values and no quoted value moves). See [§ Changelog](#changelog) for revision
+> history.
+
 Agent report, 2026-10-07. Read-only on the repository; no Application Programming Interface (API)
 call; compute on sapphire (`/tmp/floors2/`). Scripts, gates and results are in `floors-v2/` beside
 this file. The question: the 55-map proposer floors of W2.7 § 6 rest on one to three disjoint pairs
@@ -27,7 +32,12 @@ consensus serve as a model?
 - **Gates, all passed** (`results/gates55.json`, `gates_gs.json`). The clustering and scorer
   restatements equal the committed functions exactly (tile for tile). All six W2.7 § 2 rung counts
   and ten top-rung counts are reproduced, as are **all 460 W2.7 subset cells and 486 coincident
-  gold-standard (GS) cells, to the last bit of F1**.
+  gold-standard (GS) cells, to the last bit of F1**. Since 2026-10-12 the scorer's gate is the
+  live library scorer, not the committed § 6 cells: `floors2_scorer_gate.py` checks every § 6
+  cell and 1,000 sampled § 6b cells tile by tile (`results/scorer_gate.json`). Since
+  2026-10-13 each rung cluster also carries the tiles its members were seen on (PI ruling
+  D62 (1)); the fast clustering that supplies them is gated equal to the committed
+  `cluster_votes_with_origins` (`results/gates55.json`).
 
 ## 2. New proposer-stage floors (verifier fixed)
 
@@ -153,7 +163,7 @@ same point (`results/rescreen.csv`, `cell_sds.csv`).
 | R7.2-16a N5 ≈ N10 carried (A; B +0.0006) | −0.0009 | nested | 0.005 → tie | 0.0069 (0.0123) | tie, unchanged |
 | R7.2-16b oracle residues A / B | +0.0036 / +0.0043 | nested | 0.005 → inside | 0.0069 / 0.0058 | inside, unchanged |
 | R7.2-30 B-N5-carried > T03-oracle | +0.0104 | cross, about 4 months | 0.011–0.013 → inside | 0.0106–0.0136 [0.0066] | inside, unchanged |
-| R7.2-32a B N5 vs N10 carried | +0.0006 | nested | 0.005 → tie | 0.0059 (0.0092) | tie, unchanged |
+| R7.2-32a B N5 vs N10 carried | +0.0006 | nested | 0.005 → tie | 0.0059 (0.0093) | tie, unchanged |
 | R7.3-04 ARM1 vs B, N5 | +0.0048 | cross, 3–6 days | 0.011–0.013 → tie | 0.0103–0.0133 [0.0063] | tie, unchanged |
 | R7.3-06b ARM2-N5 vs FOURTH-N10 | +0.0099 | cross, 3–6 days | 0.011–0.013 → unresolved | 0.0112–0.0142 [0.0072] | unresolved, unchanged (clears the within part 1.4×) |
 | R7.3-07 ARM2 tax, oracle − carried | +0.0043 | nested threshold | 0.005 → "noise-sized" | **0.0020 (0.0033)** | **changes: a small, resolved tax** |
@@ -197,3 +207,54 @@ Sapphire, 20–22 workers. 55-map: 367 s (gates 52 s; 16,260 subset cells 176 s;
 cells 139 s). GS: 123 s (69,120 cells). Analysis and tables: under 15 s. Total compute was about 9
 minutes against an expected hour, because the gated restatements (KD-tree shortlist; vectorised
 Geometry Engine Open Source (GEOS) matching) run tens of times faster per cell than the W2.7 path.
+
+## Changelog
+
+### 2026-10-13 — Cluster origins carried, cells regenerated (PI ruling D62 (1))
+
+**Trigger**: ruling D62 (1) requires W2.7's `cluster_subset` to carry each cluster's contributing
+tiles into scoring (PR #44, `36bf9472d`), and these cells to be regenerated once after that fix;
+PR #33's changes to the shared library had merged into `main` in the meantime and were merged in
+first (`cc8f277c6`). Every 55-map and gold-standard cell was regenerated twice, in independent
+runs that agree byte for byte, and a seeded 10 % of the subset cells a third time. 132 of the
+16,260 subset cells move: family B subsets of three to five passes holding pass 8, k ≤ 3, one
+false positive more each (F1 −0.000087 to −0.000053), each back to its value before the
+2026-10-12 entry. Of the 362 cells that entry moved, 230 stay moved. The 57,576 simulated cells
+and the 69,120 gold-standard slice cells are byte-identical to the 2026-10-12 run; PR #33's
+library moved no cell.
+
+| | Before | After |
+|---|---|---|
+| § 2, B N3 carried floor (0.15, k3) | 0.0051 (0.005058) | 0.0051 (0.005063) |
+| `results/floors55_all.csv` rows moved | — | 18 (B, K = 3 to 5, k ≤ 3), each floor by at most 0.0000072 |
+
+**What did NOT change**: every figure here at its quoted precision (the floors and jackknife
+SEs of § 2, the validation ratios of § 3, the fits and exponents of § 4, the model ratios of
+§ 5, ρ, and every floor, bound and verdict of § 6, R7.2-32a's upper bound 0.0093 included);
+`results/tables.md`, `results/rescreen.csv` and the re-screen log are byte-identical. Full
+record: `reports/w27-replicate-floors-2026-10-06.md` § Changelog, 2026-10-13. Commit:
+`bdb4de89b` (regenerated results).
+
+### 2026-10-12 — Rebuilt scorer, cells regenerated (PI ruling D60 (4))
+
+**Trigger**: ruling D50's detection scope (merged in PR #29, `b9b42c79b`) moved four W2.7 § 6
+cells, and this analysis's `FastScorer` still reproduced the pre-D50 scorer (it split detections
+by `source_tile` with no geometric scope). It was rebuilt on the library's own attribution and
+gated against the live library scorer; every 55-map and gold-standard cell was then regenerated.
+362 of the 16,260 subset cells move (family B subsets holding pass 8, k ≤ 3; one false positive
+fewer each, F1 +0.00005 to +0.00009); the 57,576 simulated cells and the 69,120 gold-standard
+slice cells are byte-identical to the 2026-10-07 run.
+
+| | Before | After |
+|---|---|---|
+| § 6, R7.2-32a new floor (upper) | 0.0059 (0.0092) | 0.0059 (0.0093) |
+
+**What did NOT change**: every other figure here at its quoted precision (the floors and their
+jackknife SEs in § 2, the validation ratios of § 3, the fits of § 4, the model ratios of § 5, and
+every verdict in § 6). Full record: `reports/w27-replicate-floors-2026-10-06.md` § Changelog,
+2026-10-12. Commit: `4c1a34b07` (regenerated results).
+
+### 2026-10-07 — Original publication
+
+The agent report as first written: floors from every pass subset with the pre-D50 `FastScorer`,
+validated on the 30-pass gold-standard pools (`a4b5734cb`).

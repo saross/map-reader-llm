@@ -1,0 +1,49 @@
+{
+ "run": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/1013-r1",
+ "reference": "run",
+ "root": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/1013-r2",
+ "files": {
+  "w27/subset_cells.json": "identical bytes",
+  "w27/subset_pairs.csv": "identical bytes",
+  "w27/gates.json": "identical bytes",
+  "w27/verifier_provenance.json": "identical bytes",
+  "gate/scorer_gate.json": {
+   "leaves_changed": 2,
+   "max_abs_numeric": 118,
+   "only_in_new": [],
+   "only_in_ref": [],
+   "changed": [
+    {
+     "leaf": "/w27_subset_cells_crosscheck/file",
+     "ref": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/1013-r2/w27/subset_cells.json",
+     "new": "/home/shawn/scratch/d60-w27-fastscorer-2026-10-12/out/1013-r1/w27/subset_cells.json"
+    },
+    {
+     "leaf": "/wall_seconds",
+     "ref": 928,
+     "new": 810
+    }
+   ]
+  },
+  "gate/scorer_gate_cells.csv": "identical bytes",
+  "out55/subset_cells_all.csv": "identical bytes",
+  "out55/sim_cells.csv": "identical bytes",
+  "out55/gates.json": "identical bytes",
+  "outgs/gs_slice_cells.csv": "identical bytes",
+  "outgs/gates.json": "identical bytes",
+  "rescreen.out": "identical bytes",
+  "results/cell_sds.csv": "identical bytes",
+  "results/extrapolation55.csv": "identical bytes",
+  "results/floors55_all.csv": "identical bytes",
+  "results/gs_k10_check.csv": "identical bytes",
+  "results/gs_k10_summary.csv": "identical bytes",
+  "results/gs_validation.csv": "identical bytes",
+  "results/gs_validation_summary.csv": "identical bytes",
+  "results/nested_rung55.csv": "identical bytes",
+  "results/nested_threshold55.csv": "identical bytes",
+  "results/propensity55.csv": "identical bytes",
+  "results/rescreen.csv": "identical bytes",
+  "results/results.json": "identical bytes",
+  "results/tables.md": "identical bytes"
+ }
+}

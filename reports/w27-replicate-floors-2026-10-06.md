@@ -1,8 +1,10 @@
 # W2.7 / W7.6: replicate floors for configuration-level claims, measured
 
-> **Last revised**: 2026-10-07 (latest: § 6c added, Run A's same-date
-> re-verification of T03 and text MIN). See [§ Changelog](#changelog) for
-> revision history.
+> **Last revised**: 2026-10-13 (PI ruling D62 (1): § 6 and § 6b regenerated
+> once more, with each subset cluster carrying the tiles it was seen on and
+> on the library as merged in PR #33; § 6 does not move, 132 § 6b cells
+> return to their pre-D50 values, and no quoted floor or verdict moves). See
+> [§ Changelog](#changelog) for revision history.
 
 **Status: measured; the floors are in § 3 to § 6, the inventory of the paper's
 configuration-level claims against them in § 7.** Rulings D45 to D47
@@ -271,6 +273,12 @@ FOURTH (ten passes: 45 pairs at N = 1, 10 at N = 2, 3 at N = 3, 1 at N = 5),
 ARM1, ARM2 and the two image pools (five passes: 10 pairs at N = 1, 15 at
 N = 2). UPL is the cross-execution case. 466 subset cells; the full table is
 `subset_pairs.csv`, summarised here at the board's own operating points.
+Regenerated on 2026-10-12 under the current scorer (ruling D50's detection
+scope, PI ruling D60 (4)): four family B cells and 26 pair rows moved by less
+than 0.0001 F1, and one median below changed in its fourth decimal
+([§ Changelog](#changelog)). Regenerated again on 2026-10-13, with each
+cluster carrying the tiles it was seen on (PI ruling D62 (1)) and on the
+library as merged in PR #33: nothing in § 6 moved.
 
 | family | N (rung) | prob_t | k | pairs | median \|ΔF1\| | 95th pct | max | rejects |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -306,7 +314,7 @@ N = 2). UPL is the cross-execution case. 466 subset cells; the full table is
 | B | 1 | 0.2 | 1 | 45 | 0.0031 | 0.0069 | 0.0075 | 18% |
 | B | 2 | 0.15 | 1 | 10 | 0.0033 | 0.0082 | 0.0088 | 30% |
 | B | 2 | 0.15 | 2 | 10 | 0.0012 | 0.0024 | 0.0025 | 0% |
-| B | 2 | 0.2 | 1 | 10 | 0.0031 | 0.0074 | 0.0083 | 30% |
+| B | 2 | 0.2 | 1 | 10 | 0.0032 | 0.0074 | 0.0083 | 30% |
 | B | 2 | 0.2 | 2 | 10 | 0.0016 | 0.0031 | 0.0036 | 0% |
 | B | 3 | 0.15 | 2 | 3 | 0.0014 | 0.0025 | 0.0026 | 0% |
 | B | 3 | 0.15 | 3 | 3 | 0.0039 | 0.0049 | 0.0050 | 33% |
@@ -466,8 +474,21 @@ ten-pass family, at N = 3 on three pairs, and at N = 10 on none, so its
 (`floors-v2/` beside this report: method, scripts, gates, results; agent
 record `floors-v2/floors-v2.md`) rebuilt every family's rung from EVERY
 K-subset of its passes with the § 6 mechanism (verifier held fixed):
-16,260 cells. It reproduces every § 2 gate count, all 460 W2.7 subset
-cells and 486 matching gold-standard cells exactly.
+16,260 cells. It reproduces every § 2 gate count and 486 matching
+gold-standard cells exactly. Its fast scorer was rebuilt on 2026-10-12 on
+the shared library's attribution (PI ruling D60 (4); until then it split
+detections by tile name and so still reproduced the pre-D50 scorer), and
+a gate against the live library scorer (`floors-v2/floors2_scorer_gate.py`)
+holds it exact, tile by tile, on all 466 § 6 cells and on 1,000 of the
+15,800 other cells, drawn with seed 20261012; the pre-D50 restatement fails
+the same gate on the four § 6 cells the D50 rule moved. Since 2026-10-13
+each subset cluster also carries the tiles its members were seen on (PI
+ruling D62 (1)), so a cluster seen on two sheets is scored on the sheet
+whose tiles hold it. Two independent runs (new processes, the passes
+re-deduplicated from the raw files into empty caches) agree byte for byte
+on every output, and a third recomputed a seeded 10 % of these cells from
+the raw passes, again byte for byte
+(`floors-v2/results/integrity_recheck.json`).
 
 **Method.** The run-to-run SD of a K-pass rung is estimated from the
 variance of F1 over all K-subsets, corrected for the subsets' overlap:
@@ -685,6 +706,142 @@ yet measures on this corpus; a free check exists (the 8-day text-HIGH pair,
    sentinel design; both are offline and can follow.
 
 ## Changelog
+
+### 2026-10-13 — §§ 6 and 6b regenerated with cluster origins (PI ruling D62 (1))
+
+**Trigger**: PI ruling D62 (1) requires W2.7's `cluster_subset` to carry
+each cluster's contributing tiles into scoring, and ruled that these floors
+be regenerated once, after that fix. The fix is PR #44 (`36bf9472d`, merged
+into this branch as `e2a424fea`; record
+`reports/s163-agent-records/origin-gap-w27.md`): a subset cluster now
+carries `source_tiles`, so the shared scorer (ruling D50) scores a cluster
+seen on two sheets on the sheet whose tiles hold it. PR #33 (the D50 review
+fixes to `scripts/lib_advanced_metrics.py`) merged into `main` while #44 was
+under way, and the 2026-10-12 runs predate it, so `main` (`4974c3c2b`) was
+merged in first (`cc8f277c6`) and every run used the merged library (blob
+`dbd1be560`, in place of `c6e6198b0`).
+
+**What was done** (sapphire, twelve workers; no API call), at
+`533e62605`: § 6 (`w27_55map_subset_replicates.py`), the scorer gate
+(`floors-v2/floors2_scorer_gate.py`), § 6b with 200 simulations
+(`floors2_55map.py`), the gold-standard slices (`floors2_gs.py`), and the
+floors analysis (`floors2_analyse.py`, `floors2_rescreen.py`,
+`floors2_tables.py`), each run twice, in new processes, with the passes
+re-deduplicated from the raw files into an empty cache each time. The two
+runs agree byte for byte on every output, the per-tile arrays of § 6's
+`subset_cells.npz` included; only the run logs and the scorer gate's run
+time and input path differ. A third process set, with a third empty cache,
+recomputed a seeded 10 % of the § 6b rows from the raw passes
+(`floors2_integrity_recheck.py`, seed 20261013, as on 2026-10-12): 1,626
+rows (8 of them moved cells), 0 mismatches. Its frames were clustered by
+the committed `h13_k_sensitivity.cluster_votes_with_origins`, not the fast
+restatement the runs use (the script still installs the fast clustering
+under the pre-#44 name, which `cluster_subset` no longer reads), so this
+check is also independent of that restatement. The kernel's "bad page"
+count (sapphire has no error-correcting memory) read 0 before and after.
+Drivers and comparisons: `floors-v2/regen-2026-10-13/`.
+
+| | Before (2026-10-12) | After |
+|---|---|---|
+| § 6 cells, pairs, gates and provenance | — | unchanged, byte for byte |
+| Scorer gate | exact on all 1,466 cells; the pre-D50 sentinel fails on the four § 6 cells and on 22 sampled § 6b cells | exact on all 1,466; the sentinel fails on the same four and on 17 sampled cells (the five dropped are cells where the library again agrees with the pre-D50 scorer) |
+| § 6b cells this regeneration moves | — | 132 of 16,260: family B subsets of three to five passes holding pass 8, k ≤ 3, one false positive more each (F1 −0.000087 to −0.000053); every one returns to its pre-D50 value |
+| § 6b cells moved by D50, net | 362 | 230 |
+| `floors55_all.csv` | — | 18 rows (B, K = 3 to 5, k ≤ 3, prob_t 0.15 and 0.20) move, each floor by at most 0.0000072 |
+| § 6b B N3 carried floor (0.15, k3) | 0.0051 (0.005058) | 0.0051 (0.005063) |
+
+The other analysis files move only in rows built from those family B cells:
+`cell_sds.csv` 6 rows (B's N10 points, and the T03, TM, TH7 and UPL proxies,
+which take B's value), `extrapolation55.csv` 8 (B's fits),
+`nested_rung55.csv` 8, `nested_threshold55.csv` 2 and `propensity55.csv` 8
+(all B), and the same values in `results.json`. None of them is a figure
+quoted here or in `floors-v2.md` that moves at its quoted precision. One
+unquoted floor crosses a fourth-decimal boundary: B's K = 5 union point at
+(0.20, k1), 0.022256 → 0.022250, which no board cell uses. The 2026-10-12
+entry's "362 of 16,260" § 6b cells moved by D50 reads 230 net of this fix
+(all at k = 1).
+
+**What did NOT change**: § 6 as a whole (every cell, pair row, p value and
+table entry); the 57,576 simulated cells and the 69,120 gold-standard slice
+cells (byte-identical, so the validation of § 6b stands); `tables.md`,
+`floors-v2/results/rescreen.csv` and the re-screen log, so every verdict
+and ratio in § 7.2 and in `floors-v2.md`; every floor and bound quoted in
+§ 6b and § 7.2 at its quoted precision (B N1 oracle 0.0080, from 0.007957;
+R7.2-32a's upper bound 0.0093); every cell of A, FOURTH, ARM1, ARM2 and the
+image pools. PR #33's library (with PR #45's sorted resampling order, which
+W2.7 does not call) moved no W2.7 output: every file equals PR #44's
+scratch run on the earlier library byte for byte (the gold-standard slices,
+which that run did not repeat, equal the committed ones), except the
+library blob hash the gate files record and the gate's run time and input
+path. Commits: `cc8f277c6` (merge of `main`), `533e62605` (registry),
+`bdb4de89b` (regenerated results); this entry: see git log.
+
+### 2026-10-12 — §§ 6 and 6b regenerated under the D50 scorer (PI ruling D60 (4))
+
+**Trigger**: ruling D50 (detections scoped per sheet by tile geometry and
+attributed to their origin sheet; `scripts/lib_advanced_metrics.py` as
+merged in PR #29, `b9b42c79b`) moved four § 6 subset cells (D57 (4)
+Phase 4, `reports/s163-agent-records/d57-4-rescore-s4-q4.md` flag 2), and
+§ 6b's `FastScorer` (`floors-v2/floors2_lib.py`) still reproduced the
+pre-D50 scorer: it split detections by `source_tile`, ignored recorded
+origins and kept rows outside their sheet's tiles. Ruling D60 (4): rebuild
+it on the library's attribution, require it to reproduce the current
+scorer exactly, and regenerate § 6 and § 6b together.
+
+**What was done** (sapphire, five workers; no API call):
+
+- `FastScorer` now attributes each frame once with the library's own
+  `scope_detections_to_frame` and reads each sheet's references from
+  `iter_sheet_scopes`; a threshold cell is a row mask of the prepared
+  frame. It does not depend on the unmerged PR #33: it calls the library's
+  public scope functions, so a later resolver change reaches it, and its
+  gate must then be re-run.
+- The gate (`floors-v2/floors2_scorer_gate.py`, `results/scorer_gate.json`):
+  the live `compute_per_tile_tp_fp_fn`, tile by tile, on all 466 § 6 cells
+  and on 1,000 of the 15,800 other § 6b cells (simple random sample,
+  `numpy.random.default_rng(20261012)`). The rebuilt scorer is exact on all
+  1,466. The archived pre-D50 scorer fails on exactly the four § 6 cells
+  below (and on 22 sampled § 6b cells, all family B), so the gate sees the
+  change it guards. `floors2_55map.py`'s gate 4 now requires this gate's
+  pass under the same library and scorer blob hashes, where it compared with
+  the committed § 6 cells before.
+- Integrity (sapphire has no error-correcting memory, so a flipped bit
+  would pass silently): a second, independent run, in new processes with
+  the passes re-deduplicated from the raw files into an empty cache,
+  reproduced every § 6 output byte for byte (`subset_cells.json`,
+  `subset_pairs.csv`, `gates.json`, `verifier_provenance.json`, and the
+  per-tile arrays of `subset_cells.npz`; only the run logs, which carry
+  times and paths, were not compared) and 1,626 of the 16,260 § 6b rows
+  (10 %, `numpy.random.default_rng(20261013)`, 28 of them moved cells),
+  each recomputed from the raw passes and equal to the first run's line
+  byte for byte (`floors-v2/results/integrity_recheck.json`). The § 6
+  cell, pair and gate files also equal the Phase 4 runs of 2026-10-09 byte
+  for byte, and the 57,576 simulated and 69,120 gold-standard cells equal
+  the 2026-10-07 run.
+
+| | Before | After |
+|---|---|---|
+| § 6 cells moved | — | 4 of 466: family B, subsets (8,) and (8, 9), k = 1, one false positive fewer each, detections unchanged |
+| B (8,), 0.15 / 0.2, k1 | 0.79679 / 0.80249 | 0.79687 / 0.80257 |
+| B (8, 9), 0.15 / 0.2, k1 | 0.76399 / 0.77413 | 0.76405 / 0.77420 |
+| § 6 pair rows | — | 26 of 865 change; largest change in a pair's ΔF1 0.00008 and in its p 0.019; none crosses 0.05 (nearest: B [1] against [8] at 0.2, p 0.0576 → 0.0615) |
+| § 6 table, B N = 2 at (0.2, k1), median \|ΔF1\| | 0.0031 | 0.0032 |
+| § 6b cells moved | — | 362 of 16,260: family B subsets holding pass 8, k ≤ 3, one false positive fewer each (F1 +0.00005 to +0.00009) |
+| § 6b B N1 oracle floor (0.20, k1) | 0.0080 (0.007982) | 0.0080 (0.007957) |
+| § 6b B N3 carried floor (0.15, k3) | 0.0051 (0.005063) | 0.0051 (0.005058) |
+| `floors-v2.md` § 6, R7.2-32a floor upper bound (a rounding crossing; the verdict, a tie, stands) | 0.0092 (0.009247) | 0.0093 (0.009257) |
+
+**What did NOT change**: every other entry of § 6's two tables, its
+rejection rates and its reading; every § 6b floor, bound and ratio at the
+precision quoted (no cell of A, FOURTH, ARM1, ARM2 or the image pools
+moved, nor any B cell at its board points (0.15, k5) and (0.20, k5); the
+N = 10 extrapolations, the fitted exponents, the nested floors and the
+model ratios round as before); the 57,576 simulated cells and all 69,120
+gold-standard slice cells (byte-identical to the 2026-10-07 run, so the
+validation of § 6b is unchanged); `tables.md`; every verdict and ratio in
+`floors-v2/results/rescreen.csv` and in § 7 and § 7.2; §§ 3 to 5, 6a and
+6c. Commits: `f155ab937` (scorer and gates), `b772a0c33` (§ 6),
+`4c1a34b07` (§ 6b), `78ba54665` (integrity); this entry: see git log.
 
 ### 2026-10-07 (last) — D48's proposer caveat
 
