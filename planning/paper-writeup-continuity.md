@@ -8,6 +8,37 @@ project state.
 
 ---
 
+## 🔍 S164 PROGRESS (2026-10-13/14 UTC, Opus) — ALL SEVEN PRs MERGED; RE-SCORE REPORTED ON DRAFT PR #46; PI DECISIONS PENDING
+
+**Merged in the recorded order** (each with `main` merged in and the registry
+rebuilt, tier-1 on sapphire 0 failed, kernel bad-page count 0 before and after,
+merged tree identical to the tested head; recorded in D62 and D63): #45
+`d9866f49e`, #42 `dddfcc0af`, #41 `602593ecb`, #43 `0e8a1fa7a`, #44 into #38's
+branch `e2a424fea`, #38 `446171b97` (W2.7 § 6/§ 6b regenerated once with #44 and
+#33's library: § 6 unchanged, 132 § 6b cells back to pre-D50, no quoted floor
+moves), #35 `3a5e5c453` (tier-0 regenerated on the origin route: 18 of 27 cells
++0.0050 to +0.0162, A now edges B inside noise; H13 findings changelog
+2026-10-13). `h6-a06-decision-rule` and `h6-a09-cost-gate` are re-sign-pending.
+
+**Step 1 re-score DONE, not published**: draft PR #46 (`rescore-repaired-gs`,
+`655d012d7`; record `reports/s164-agent-records/rescore-repaired-gs.md`, § 8 =
+the PI's six questions). Main session re-checked at source: plateau significant
+pairs committed 6 → origin-only 8 → repaired 6; post-verifier overlap at 384 px
+−0.0285 p 0.0235 → −0.0256 p 0.0541 (both repaired runs). Fails: R1b-09 /
+grid overlap reversal at 384 px; I3 on the 3.7 image carried arm; R1b-15's 30 m
+sentence; R1b-16's shelf; the grid Phase A paragraph. Surprise S9: four Era-2
+members move on today's code with no repaired row (pre-D50 evaluations).
+
+**Waiting on the PI**: #46's § 8 questions (merge the routing; publish the
+restatements and re-sign; which point a registered condition takes when its
+argmax moves; uplift twins; null-exemplar re-run; bridge floors/SD); the D64
+top-up API approval (15 tiles, `gemini-3.1-pro-preview`, real-time flex via
+`lib_batch_api.patch_failed_tiles`, about US$0.03); Obs 416's moved tier-0
+values; A-06/A-09 re-signing; D62 (5)–(8). Sapphire disk 97 % (30 GB free);
+the S164 merge worktree removed, its logs in `~/scratch/s164-merges-2026-10-13/`.
+
+---
+
 ## 🔍 S163 CLOSE (2026-10-07 to 10-13, Opus) — START HERE: D57 (4) MERGED; THE SEAM DEFECTS FOUND AND FIXED ON PRs; PRO 2×2 RE-RUN DONE
 
 Read `planning/pi-decisions-2026-09-20.md` D59–D64 first (rulings, outcomes, and
