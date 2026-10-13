@@ -1,0 +1,27 @@
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: library_plus-hp
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: outputs/pro-2x2-replication-2026-10-13/tiles-10-smoke-seed42.json
+Output: outputs/pro-2x2-replication-2026-10-13/smoke/image-high-t0.0
+  Built JSONL: 10 lines (outputs/pro-2x2-replication-2026-10-13/smoke/image-high-t0.0/library_plus-hp/run_1/batch_working/detections_library_plus-hp_run01.jsonl)
+  Submitted batch job: batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_RUNNING
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_RUNNING
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_RUNNING
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_RUNNING
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_RUNNING
+  Polling batches/uwn3i6g0rz8qx8o3rrb0dk89e156cm5yunxb: JOB_STATE_SUCCEEDED
+  Batch complete: 10 tiles, 15 detections, 0 failed, $0.0466
+  Released request file files/tfh86xx127qx (job terminal)
+
+Batch complete. Estimated cost: $0.0466
+Tiles processed: 10

@@ -1,0 +1,83 @@
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: library_plus-hp
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Output: outputs/pro-2x2-replication-2026-10-13/image-high-t0.7
+  Built JSONL: 487 lines (outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_3/batch_working/detections_library_plus-hp_run03.jsonl)
+  Submitted batch job: batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_RUNNING
+  Polling batches/9nq3d2cb4on6eubsc41o36yj5g1ho90w7858: JOB_STATE_SUCCEEDED
+  Batch complete: 487 tiles, 540 detections, 0 failed, $2.1916
+  Released request file files/dy7pcke9inz4 (job terminal)
+
+Batch complete. Estimated cost: $2.1916
+Tiles processed: 487
