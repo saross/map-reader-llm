@@ -1,0 +1,85 @@
+=== 2026-10-12T12:55:57Z pro-thinking-probe v2 LAUNCH (model=gemini-3.1-pro, flex, workers=10) ===
+=== 2026-10-12T12:55:57Z START text-t0.0 (temp=0.0 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.0
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v2-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v2-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:33<10:38, 33.58s/it] 10%|█         | 2/20 [00:34<04:19, 14.42s/it]                                               10%|█         | 2/20 [00:36<04:19, 14.42s/it] 15%|█▌        | 3/20 [00:36<02:29,  8.82s/it] 20%|██        | 4/20 [00:37<01:28,  5.50s/it]                                               20%|██        | 4/20 [00:37<01:28,  5.50s/it] 25%|██▌       | 5/20 [00:37<00:56,  3.79s/it] 30%|███       | 6/20 [00:39<00:41,  3.00s/it] 35%|███▌      | 7/20 [00:40<00:32,  2.50s/it] 40%|████      | 8/20 [00:41<00:22,  1.87s/it] 45%|████▌     | 9/20 [00:42<00:19,  1.74s/it]                                               45%|████▌     | 9/20 [00:43<00:19,  1.74s/it]                                               45%|████▌     | 9/20 [00:43<00:19,  1.74s/it] 50%|█████     | 10/20 [00:43<00:13,  1.37s/it] 55%|█████▌    | 11/20 [01:08<01:16,  8.50s/it] 60%|██████    | 12/20 [01:08<00:48,  6.11s/it] 65%|██████▌   | 13/20 [01:10<00:34,  4.88s/it] 70%|███████   | 14/20 [01:15<00:28,  4.72s/it] 75%|███████▌  | 15/20 [02:07<01:35, 19.15s/it] 80%|████████  | 16/20 [02:14<01:01, 15.46s/it] 85%|████████▌ | 17/20 [04:54<02:56, 58.85s/it] 90%|█████████ | 18/20 [09:35<04:11, 125.53s/it] 95%|█████████▌| 19/20 [09:56<01:34, 94.36s/it] 100%|██████████| 20/20 [10:01<00:00, 67.46s/it]100%|██████████| 20/20 [10:01<00:00, 30.08s/it]
+
+WARNING: 3 tiles have failed. Check API status.
+
+WARNING: 5 consecutive failures!
+
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+
+WARNING: 10 consecutive failures!
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v2-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v2-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v2-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-12.meta.json
+Tiles processed: 3
+Tiles failed: 17
+Total detections: 0
+Tokens used: 4,536
+Estimated cost: $0.0047
+=== 2026-10-12T13:06:02Z END   text-t0.0 exit=2 ===
+=== 2026-10-12T13:06:02Z START text-t0.7 (temp=0.7 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v2-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v2-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  5%|▌         | 1/20 [00:35<11:14, 35.48s/it] 10%|█         | 2/20 [00:35<04:24, 14.69s/it]                                               10%|█         | 2/20 [00:36<04:24, 14.69s/it] 15%|█▌        | 3/20 [00:36<02:21,  8.35s/it] 20%|██        | 4/20 [00:37<01:25,  5.32s/it]                                               20%|██        | 4/20 [00:37<01:25,  5.32s/it] 25%|██▌       | 5/20 [00:37<00:55,  3.72s/it] 30%|███       | 6/20 [00:38<00:37,  2.70s/it] 35%|███▌      | 7/20 [00:39<00:25,  1.95s/it] 40%|████      | 8/20 [00:40<00:19,  1.63s/it] 45%|████▌     | 9/20 [00:41<00:16,  1.50s/it]                                               45%|████▌     | 9/20 [00:41<00:16,  1.50s/it]                                               45%|████▌     | 9/20 [00:41<00:16,  1.50s/it] 50%|█████     | 10/20 [00:41<00:12,  1.20s/it] 55%|█████▌    | 11/20 [00:42<00:09,  1.03s/it] 60%|██████    | 12/20 [00:42<00:06,  1.15it/s] 65%|██████▌   | 13/20 [00:43<00:06,  1.08it/s] 70%|███████   | 14/20 [00:44<00:04,  1.28it/s] 75%|███████▌  | 15/20 [00:45<00:03,  1.28it/s] 80%|████████  | 16/20 [00:45<00:02,  1.49it/s] 85%|████████▌ | 17/20 [00:45<00:01,  1.95it/s]
