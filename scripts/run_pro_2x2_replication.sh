@@ -72,13 +72,22 @@ declare -A CORNERS=(
 run_pass() {  # corner manifest outdir run
   local corner=$1 manifest=$2 outdir=$3 run=$4
   read -r config temp think _ <<< "${CORNERS[$corner]}"
+  # Context caching for image only. The batch path reads
+  # include_example_images from a config dict that lacks it and defaults to
+  # True (lib_batch_api.run_batch_unit, called with the runner's
+  # batch_config), so a cached TEXT request carries the 17 example images:
+  # the 2026-10-13 smoke run measured 20,020 input tokens per text request
+  # against June's 1,502. Text has nothing worth caching (the real-time
+  # cache is refused as too small), so text runs uncached, as June did.
+  local cache_flag="--use-cache"
+  [[ "$config" == detect_brief-text.json ]] && cache_flag=""
   echo "=== $(date -u +%FT%TZ) START $corner run_$run (T=$temp think=$think) ===" >> "$LOG"
   "$PY" scripts/4_detect_mounds_batch.py \
     --config "prompts/configs/$config" \
     --model "$MODEL" --temperature "$temp" --thinking-level "$think" \
     --manifest "$manifest" --tiles-dir "$TILES_DIR" --tile-size 384 \
     --output-dir "$outdir" --mode batch --run "$run" \
-    --use-cache --skip-intent-check --allow-inert-fields \
+    $cache_flag --skip-intent-check --allow-inert-fields \
     --service-tier flex --workers 4 \
     > "$outdir.run_$run.log" 2>&1 < /dev/null
   local rc=$?
@@ -88,9 +97,9 @@ run_pass() {  # corner manifest outdir run
 echo "=== $(date -u +%FT%TZ) $STAGE LAUNCH (model=$MODEL, batch) ===" >> "$LOG"
 case "$STAGE" in
   smoke)
-    for corner in text-high-t0.0 image-high-t0.0; do
+    for corner in ${SMOKE_CORNERS:-text-high-t0.0 image-high-t0.0}; do
       mkdir -p "$BASE/smoke"
-      run_pass "$corner" "$SMOKE_MANIFEST" "$BASE/smoke/$corner" 1 &
+      run_pass "$corner" "$SMOKE_MANIFEST" "$BASE/smoke/$corner" "${SMOKE_RUN:-1}" &
     done
     wait ;;
   wave1)
