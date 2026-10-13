@@ -102,6 +102,7 @@ import random
 import re
 import sys
 import time
+import zlib
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timezone
 from itertools import combinations
@@ -466,8 +467,11 @@ def _process_stratum(
     pass_ids = list(pass_dedup.keys())
     k_max = len(pass_ids)
 
-    # Stratum hash for deterministic-but-distinct random seeds
-    stratum_seed = (RANDOM_SEED + abs(hash(stratum["label"]))) % (2**31)
+    # Stratum hash for deterministic-but-distinct random seeds. CRC-32, not
+    # the built-in ``hash()``, which is salted per process for strings, so
+    # the old seed (and every subsample drawn from it) changed from run to
+    # run (ruling D63).
+    stratum_seed = (RANDOM_SEED + zlib.crc32(stratum["label"].encode("utf-8"))) % (2**31)
 
     per_k: list[dict[str, Any]] = []
     per_subsample_f1s: dict[int, list[float]] = {}

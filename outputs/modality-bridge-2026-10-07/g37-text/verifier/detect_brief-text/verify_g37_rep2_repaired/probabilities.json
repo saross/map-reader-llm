@@ -732,16 +732,16 @@
       "alternative_evidence": "The symbol is small, positioned next to a blue dot (well/spring or coordinate) and contour line, surrounded by text nearby like '\u043a\u0443\u0440\u0433.' below."
     },
     "candidate_00121": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no symbol present in the crop, making it impossible to be a burial mound.",
-      "best_alternative": "Empty background or image corruption artefact",
-      "alternative_evidence": "The crop consists entirely of solid black pixels with no map features, lines, symbols, or text visible."
+      "mound_probability": 0.98,
+      "reasoning": "The symbols are classic brown sunburst/gear-ring kurgan (burial mound) symbols denoting a mound group, explicitly reinforced by the Cyrillic label '\u043a\u0443' (kurgan) nearby. There is no plausible non-mound alternative for this well-defined group of hachured mounds.",
+      "best_alternative": "Natural relief feature or vegetation/rough terrain symbol",
+      "alternative_evidence": "The symbol is clustered with several identical brown star-like/gear-like shapes with nearby small numbers."
     },
     "candidate_00122": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no symbol present in the crop at all; it is an entirely solid black tile.",
-      "best_alternative": "Blank black image / missing data artefact",
-      "alternative_evidence": "The crop contains only uniform solid black pixels with no map features, symbols, contour lines, or background visible."
+      "mound_probability": 0.98,
+      "reasoning": "The candidate symbol at the center is one of a group of clearly drawn burial mounds (kurgans), represented by circular hachured rings (sunbursts) in brown ink, confirmed by the label '\u043a\u0443\u0440.' to the east. Each individual gear-shaped symbol in this cluster represents a mound.",
+      "best_alternative": "A cluster of individual burial mounds (kurgans) or sandy mounds/hummocks.",
+      "alternative_evidence": "There is a tight cluster of multiple brown gear/sunburst-like ring symbols with distinct radiating hachures/teeth. The text '\u043a\u0443\u0440.' (kurgan) appears just to the right."
     },
     "candidate_00123": {
       "mound_probability": 0.95,
@@ -750,16 +750,16 @@
       "alternative_evidence": "There is a dense cluster of several identical brown star/sunburst symbols accompanied by relative height numerals (2, 3), which can sometimes represent relief features like hummocks or dunes."
     },
     "candidate_00124": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no symbol present at the centre; the crop contains only solid black pixels, making it impossible to be a burial mound.",
-      "best_alternative": "Black map border or corrupted blank image patch",
-      "alternative_evidence": "The entire image crop is completely black with zero visible features, symbols, or map content."
+      "mound_probability": 0.05,
+      "reasoning": "The candidate point is situated directly on the junction of a road/embankment break and a ditch line. While there are kurgan/mound symbols nearby in the lower right (labelled '\u043a\u0443\u0440.'), the exact center does not contain a mound symbol, but rather infrastructure crossing details.",
+      "best_alternative": "A road bridge/culvert, canal intersection, or survey traverse mark along intersecting line features",
+      "alternative_evidence": "At the exact centre of the crop, a linear feature (canal/ditch with blue/black markings) crosses or meets a brown embankment/road with interrupted bridge/culvert tick marks. Directly below the centre there are numerous orange-brown star/cogwheel-like symbols (vegetation/orchard or bush symbols), but the exact centre is just the intersection/gap of the embankment/road and blue ditch line."
     },
     "candidate_00125": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no map symbol at the center of this crop; it is completely black unmapped area or image margin padding.",
-      "best_alternative": "Black border or unmapped padding area",
-      "alternative_evidence": "The crop consists entirely of solid black fill at the center, with only a tiny sliver of content on the far left edge."
+      "mound_probability": 0.98,
+      "reasoning": "The candidate is part of a dense cluster of burial mounds (kurgans), represented by the standard Soviet topographic symbol of a small brown ring with outward-radiating hachures/points, explicitly identified by the text label '\u043a\u0443\u0440'.",
+      "best_alternative": "None",
+      "alternative_evidence": "The symbols in the centre are distinct brown gear/star sunburst shapes with elevation labels ('3', '2') and adjacent text label '\u043a\u0443\u0440...' (abbreviation for '\u043a\u0443\u0440\u0433\u0430\u043d' / kurgan)."
     },
     "candidate_00126": {
       "mound_probability": 0.0,
@@ -780,16 +780,16 @@
       "alternative_evidence": "It is a small brown star-like/gear-like symbol with a number '2' next to it, closely resembling other identical brown symbols nearby (cluster above)."
     },
     "candidate_00129": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no mound or any other symbol located at the center of the crop; it falls completely in empty/black space.",
-      "best_alternative": "Black border margin / off-map area",
-      "alternative_evidence": "The center of the crop is completely black (out of bounds or masked/collar region of the map). Only a narrow strip of map is visible along the far left edge."
+      "mound_probability": 0.98,
+      "reasoning": "The symbol is unmistakably a brown ring with distinct outward-radiating rays (sunburst/gear pattern), accompanied directly to its left by a brown numeral '1' indicating relative height in meters. This is the canonical Soviet topographic map symbol for a kurgan (burial mound). No plausible non-mound alternative explains the radiating rays and brown height figure.",
+      "best_alternative": "Depression or contour irregularity",
+      "alternative_evidence": "The symbol lies along a dashed blue/black boundary or linear feature with nearby contour lines, potentially representing an elevation ring or sinkhole."
     },
     "candidate_00130": {
-      "mound_probability": 0.0,
-      "reasoning": "Since the centre of the image contains no map features or mound symbols at all, this detection is an artefact near the edge/border of the map sheet.",
-      "best_alternative": "Image border / out-of-bounds collar area artefact",
-      "alternative_evidence": "The centre of the crop is completely black/empty. Only a thin sliver of the map is visible along the far left edge, and there is no visible symbol at the centre."
+      "mound_probability": 0.98,
+      "reasoning": "The black triangulation point triangle is clearly enclosed within prominent outward-radiating hachure marks/rays forming a sunburst pattern. This perfectly matches the standard topographic map symbology for a triangulation pillar situated on top of a burial mound (kurgan).",
+      "best_alternative": "Triangulation point alone",
+      "alternative_evidence": "The symbol contains a clear black triangle survey mark with a central dot and spot elevation 132.7 nearby."
     },
     "candidate_00131": {
       "mound_probability": 0.15,
@@ -798,22 +798,22 @@
       "alternative_evidence": "The symbol sits directly adjacent to a blue stream/canal line accompanied by a small structure footprint, matching the Soviet topographic map convention for a watermill (a cogwheel/gear-like wheel on water)."
     },
     "candidate_00132": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no visual data present to evaluate, making it impossible to identify any burial mound symbol.",
-      "best_alternative": "Black or corrupted image artifact",
-      "alternative_evidence": "The entire image is completely black with no visible symbols, lines, or map features."
+      "mound_probability": 0.98,
+      "reasoning": "The symbol displays the definitive brown sunburst/gear design with outward-radiating hachures surrounding a central ring, accompanied by a relative height numeral '2'. There is no plausible non-mound explanation; this is a textbook kurgan/burial mound symbol.",
+      "best_alternative": "Contour or vegetation spot symbol",
+      "alternative_evidence": "It is located adjacent to an elevation contour line and linear infrastructure lines (power/boundary line)."
     },
     "candidate_00133": {
-      "mound_probability": 0.0,
-      "reasoning": "There is completely no burial mound feature present. The image shows the edge of the map canvas, linear boundary infrastructure, and an elevation text label ('130,4').",
-      "best_alternative": "Map margin/neatline edge with adjacent boundary line and contour line",
-      "alternative_evidence": "The right half of the image is a solid black void/margin mask. The center falls directly along the edge of this black border where only an open area between an orange contour line and the border exists, with a boundary line featuring tick marks and circles to the left. No radiating rays or mound circle exist anywhere near the center."
+      "mound_probability": 0.99,
+      "reasoning": "This is an unmistakable textbook Soviet topographic representation of a burial mound (kurgan), characterized by the brown sunburst contour pattern and height annotation.",
+      "best_alternative": "None",
+      "alternative_evidence": "The symbol shows a distinct orange-brown sunburst/cog shape with outward-pointing rays, accompanied by a brown numeral '1' indicating mound height, and a black spot height '130.4' nearby."
     },
     "candidate_00134": {
-      "mound_probability": 0.0,
-      "reasoning": "Since there is no visible symbol whatsoever in the crop, it cannot be a burial mound.",
-      "best_alternative": "Blank or corrupted crop",
-      "alternative_evidence": "The entire image is completely black with no map features, lines, symbols, or text visible."
+      "mound_probability": 0.98,
+      "reasoning": "The symbol clearly has prominent outward-radiating hachure marks/rays surrounding the central benchmark square, along with a relative height annotation ('2') below it denoting a 2-meter mound height. This is a classic Soviet cartographic symbol for a benchmark on an artificial mound (kurgan).",
+      "best_alternative": "Benchmark without a mound",
+      "alternative_evidence": "The central feature is a survey benchmark (square with central dot) accompanied by an elevation number 132.4."
     },
     "candidate_00135": {
       "mound_probability": 0.98,
@@ -4080,10 +4080,10 @@
       "alternative_evidence": "The symbols are clustered together and accompanied by elevation/height relative numbers ('2') and the Russian text '\u043a\u0443\u0440\u0433...' (kurgan) nearby."
     },
     "candidate_00679": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no symbol to evaluate; the crop contains entirely black pixels, possibly from an unmapped border area or an extraction error.",
-      "best_alternative": "Black / blank border artefact or corrupted crop",
-      "alternative_evidence": "The entire image is completely black (solid pixel value 0) with no map features, contours, symbols, or rays visible whatsoever."
+      "mound_probability": 0.1,
+      "reasoning": "The mark lacks any definitive characteristics of a kurgan symbol, such as outward rays or a clear central circle/survey marker, and is most likely a printing flaw or stray dot.",
+      "best_alternative": "A random ink speckle or printing artifact",
+      "alternative_evidence": "The feature is just a tiny, blurry brownish dot or speckle without any ring structure or radiating rays (sunburst pattern)."
     },
     "candidate_00680": {
       "mound_probability": 0.95,
@@ -4440,10 +4440,10 @@
       "alternative_evidence": "The symbol sits directly in an interruption of an orange-brown contour line, which could theoretically be associated with a minor contour irregularity or pit."
     },
     "candidate_00739": {
-      "mound_probability": 0.0,
-      "reasoning": "There is no map content or candidate symbol visible in the crop; it is entirely solid black.",
-      "best_alternative": "Empty background or completely corrupted/blank crop",
-      "alternative_evidence": "The entire image is completely black with no features, contours, rays, or symbols present."
+      "mound_probability": 0.98,
+      "reasoning": "The symbols have distinct brown circular bodies with radiating short hachures (sunburst/cog pattern) typical of Soviet topographic map burial mound (kurgan) symbols. Furthermore, the Cyrillic text '\u043a\u0443\u0440' (abbreviation/start of '\u043a\u0443\u0440\u0433\u0430\u043d' - kurgan) is visibly present just to the right of the group, confirming a mound group.",
+      "best_alternative": "Vegetation symbol or sand/dune contour marker",
+      "alternative_evidence": "A cluster of multiple similar brown gear-like symbols clustered together in an area with sparse contours."
     },
     "candidate_00740": {
       "mound_probability": 0.05,
@@ -4639,9 +4639,9 @@
     },
     "candidate_00772": {
       "mound_probability": 0.0,
-      "reasoning": "There is no mound symbol present; the crop is entirely black pixels.",
-      "best_alternative": "Blank or corrupt image tile",
-      "alternative_evidence": "The entire image is completely black with zero visible cartographic features, contours, symbols, or text."
+      "reasoning": "The symbol represents a water source (well/cistern/spring) marked in standard blue ink, with zero characteristics of a burial mound (kurgan).",
+      "best_alternative": "A well or spring symbol (water source marker)",
+      "alternative_evidence": "The symbol near the center is a distinct blue ring with a central blue dot, located next to blue hydronymic/toponymic text. It completely lacks any hachures, radiating rays, or contour mounds."
     },
     "candidate_00773": {
       "mound_probability": 0.05,
@@ -4745,5 +4745,27 @@
     "n_changed": 0,
     "n_unrecovered_removed": 0,
     "removed_keys": []
+  },
+  "reverify_wrong_sheet": {
+    "record": "reverify-wrong-sheet-2026-10-13.json",
+    "n_merged": 12,
+    "keys": [
+      "candidate_00121",
+      "candidate_00122",
+      "candidate_00124",
+      "candidate_00125",
+      "candidate_00129",
+      "candidate_00130",
+      "candidate_00132",
+      "candidate_00133",
+      "candidate_00134",
+      "candidate_00679",
+      "candidate_00739",
+      "candidate_00772"
+    ],
+    "removed_unparseable": [],
+    "source": "outputs/wrong-sheet-reverify-2026-10-13",
+    "decision": "D62 (1) step 2, planning/pi-decisions-2026-09-20.md",
+    "base": "repaired copy"
   }
 }

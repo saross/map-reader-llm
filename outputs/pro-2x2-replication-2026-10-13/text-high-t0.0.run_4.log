@@ -1,0 +1,73 @@
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: detect_brief-text
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Output: outputs/pro-2x2-replication-2026-10-13/text-high-t0.0
+  Built JSONL: 487 lines (outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_4/batch_working/detections_detect_brief-text_run04.jsonl)
+  Submitted batch job: batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_RUNNING
+  Polling batches/sodqhhvy02n2yuc6ar936x8f7x12umfwfuwc: JOB_STATE_SUCCEEDED
+  Batch complete: 477 tiles, 434 detections, 10 failed, $0.9093
+  Accepting partial result: 10 tile(s) failed (≤ 97 threshold = 20% of 487)
+  Released request file files/fwl03wsj4nk6 (job terminal)
+
+Batch complete. Estimated cost: $0.9093
+Tiles processed: 477
+Tiles failed: 10

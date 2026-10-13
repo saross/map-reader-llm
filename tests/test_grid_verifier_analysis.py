@@ -219,6 +219,19 @@ def test_materialise_condition_coverage_record_and_provenance(tmp_path):
     assert all("vote_count" in f["properties"] for f in doc["features"])
 
 
+@pytest.mark.tier1
+def test_materialise_condition_writes_the_rows_origin(tmp_path):
+    """A union carrying member tiles writes them as ``origin_tiles`` (D62 (1))."""
+    union = _union()
+    union["origin_tiles"] = [TILE_1, TILE_1, TILE_2]
+    target = tmp_path / "detections.geojson"
+    gva.materialise_condition(union, {"prob_t": 0.2, "min_votes": 5}, target,
+                              _bounds())
+    doc = json.loads(target.read_text())
+    assert [f["properties"]["origin_tiles"] for f in doc["features"]] == [
+        TILE_1, TILE_2]
+
+
 def _smoke_tree(root: Path, monkeypatch) -> dict:
     """Build a full synthetic verifier tree and patch the module constants.
 
@@ -290,6 +303,18 @@ def _smoke_tree(root: Path, monkeypatch) -> dict:
     grid_analysis_path = root / "grid_analysis.json"
     grid_analysis_path.write_text(json.dumps({"sweep": sweep_rows}))
 
+    # The unions' passes (D62 (1)): main() rebuilds each union from them and
+    # books every row on its origin sheet. Ten passes reproduce _union():
+    # (50, 50) in all ten, (20, 20) in two, (150, 50) in five, in that order.
+    passes = [
+        [{"centroid": (50.0, 50.0), "cluster_size": 1, "source_tiles": [TILE_1]}]
+        + ([{"centroid": (20.0, 20.0), "cluster_size": 1,
+             "source_tiles": [TILE_1]}] if i < 2 else [])
+        + ([{"centroid": (150.0, 50.0), "cluster_size": 1,
+             "source_tiles": [TILE_2]}] if i < 5 else [])
+        for i in range(10)
+    ]
+    monkeypatch.setattr(gva, "load_cell_passes", lambda scoring_dir, cell: passes)
     monkeypatch.setattr(gva, "VERIFIER_DIR", verifier_dir)
     monkeypatch.setattr(gva, "COMMON_BOUNDS", bounds_path)
     monkeypatch.setattr(gva, "GRID_ANALYSIS", grid_analysis_path)

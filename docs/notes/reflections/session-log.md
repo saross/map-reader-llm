@@ -10144,3 +10144,65 @@ branch `w15-floors-drafts` (unmerged, for the PI).
 worktrees (about 9 GB each) accumulated; four merged worktrees were removed
 and later worktrees removed as soon as pushed. Run B's configuration agent
 was still running at close (branch `modality-bridge-2026-10-07`).
+
+## Session 163
+
+*2026-10-07 to 10-13; amd-tower + sapphire; Opus 5.5 driving, Opus subagents
+throughout; several compactions. This entry's account of 2026-10-11 onwards is
+first-hand; earlier work is summarised from the compaction summary and the
+records.*
+
+**Earlier in the session (from the summary and records).** Run B and Run C
+(modality-bridge replicates); D53–D58; the D57 (4) re-score plan and its
+census (2,123 of 2,216 committed evaluations reproduced exactly; every
+non-reproduction explained; `reports/s163-agent-records/d57-4-rescore-census.md`);
+Astra's D50 and D51 reviews; a sapphire memory fault (bit 34 at EXPO 5,600 MT/s)
+resolved by running at JEDEC 4,800 MT/s, confirmed by a 467-replay soak; D59;
+PRs #26, #28, #29, #31, and #32 merged; the httpx log redaction
+(`92a7e16b0`).
+
+**Rulings.** D60 (the four science decisions: a general `input_vintage` key;
+partial coverage a known limitation with per-reference vote counts and an
+area trigger; fix the consensus route, not H2 alone; rebuild W2.7's
+`FastScorer`). D61 (the stopped lines: tier-0 regenerated with a replay at
+the BCa fix; H2's single-pass arm traced to changed inputs; A-06 with
+permutation p and BH; A-09 re-derived on audited costs). D62 (merges; the
+origin gap fixed in all chains; A-09 and A-06 register texts approved;
+decisions 5–8 open). D63 (hash-seed-independent resampling). D64 (the Pro
+2×2 replication, US$100 cap).
+
+**Merged.** #30 (`7284d9089`), #34 (`0091e30c4`), #39 (`933b52ba0`), #37
+(`3359c314e`), #40 (`43ce20877`), #36 (`3d5061916`), #33 (`7a8a081e1`); each
+with `main` merged in, tier-1 on sapphire with 0 failures, and the merged tree
+identical to the tested head. Open as drafts: #35, #38, #41, #42, #43,
+PR #44, and #45.
+
+**Found.** The origin gap (bare cluster centroids scored with the legacy
+cross-sheet rule; the signed plateau incumbents +0.007 to +0.017 F1 on their
+recorded sheets, reproduced independently); wrong-sheet verifier crops (1,515
+rows, 275 places, re-verified on correct crops: 532 of 1,029 now at least
+0.5); the batch path's `include_example_images` default (text requests with
+the cache carried 17 example images; no committed pass affected); a dry run
+that created a billed cache (#34); hash-ordered bootstrap resampling (#45);
+Pro at HIGH thinking delivers no thinking (invoice-confirmed; Obs 509).
+
+**Model API.** Pro thinking probe v1–v3 (about US$0.10; v1 and v2 stopped
+for 503s); wrong-sheet re-verification (1,029 calls, US$0.82 audited); D64
+(32 passes, US$46.15, plus US$0.27 for smokes and the thinking-budget probe).
+All batch request uploads released.
+
+**Records.** The fault-window list (`b9064d36d`, overnight evidence
+`a970f7a9e`); the plateau reproduction (`8988a0743`); the wrong-sheet sweep
+(`4a6359883`); the probe report (`0f7480ebe`); Obs 509; the spatial-identity
+lessons (`planning/generalised-pipeline-roadmap.md` § WS2, `705caa8fd`),
+sent to map-reader-bench by agent mail; the S164 start-here block
+(`394b5958a`).
+
+**Contextual assumptions.** Sapphire has no ECC memory, so every committed
+number from it was required to come out byte-identical from two independent
+runs, and a kernel-log tripwire ran overnight until a local memory shortage
+stopped it. Gemini 3.1 Pro Preview's real-time service returned 503s on about
+80 % of requests on 2026-10-12, which shaped the move to the Batch API for
+D64. The PI asked for wind-down while approving the last re-verification;
+the re-scoring of the boards was deliberately left for one pass next session,
+so that each artefact moves once.

@@ -1,0 +1,41 @@
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: library_plus-hp
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: inputs/tiles_384/full_evaluation_manifest.json
+Output: outputs/pro-2x2-replication-2026-10-13/image-high-t0.0
+  Built JSONL: 487 lines (outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_2/batch_working/detections_library_plus-hp_run02.jsonl)
+  Submitted batch job: batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_RUNNING
+  Polling batches/wjtsuwwq1jonueczjxl0j0nk2x26z4b1vcb1: JOB_STATE_SUCCEEDED
+  Batch complete: 487 tiles, 528 detections, 0 failed, $2.1887
+  Released request file files/ntnd1ewx1h6u (job terminal)
+
+Batch complete. Estimated cost: $2.1887
+Tiles processed: 487

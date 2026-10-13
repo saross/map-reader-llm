@@ -52,6 +52,7 @@ from scripts.lib_advanced_metrics import (
     bootstrap_ci,
     bootstrap_effect_size_ci,
     calculate_f1_internal,
+    parse_tile_list,
 )
 
 # Script version
@@ -175,6 +176,18 @@ def build_candidate_gdf(
     Constructs Point geometries from manifest centroids and retains only
     candidates whose ``mound_probability`` meets or exceeds the threshold.
 
+    **The candidate's contributing tiles are kept** (PI ruling D60 (3),
+    2026-10-12). A candidate drawn from a consensus union records its
+    cluster's members' proposer tiles in ``properties.source_tiles``;
+    ``extract_candidates.py`` writes only the alphabetically first of
+    them into the top-level ``source_tile``, so for a cluster seen on two
+    sheets that sheet is an accident of naming. The shared scorer
+    (``lib_advanced_metrics.scope_detections_to_frame``, ruling D50)
+    reads ``source_tiles`` to score such a candidate on the origin sheet
+    whose tiles hold it; without the list it can only drop it as out of
+    frame. A candidate with no recorded list (a single-pass manifest)
+    gets an empty one, which the scorer treats as before.
+
     Args:
         manifest: Candidate manifest dict with ``candidates`` list.
         probabilities: Results dict from ``probabilities.json``, mapping
@@ -184,8 +197,9 @@ def build_candidate_gdf(
         crs: Coordinate Reference System (default: EPSG:32635).
 
     Returns:
-        GeoDataFrame with ``source_tile`` and ``geometry`` columns.
-        Empty GeoDataFrame if no candidates pass the threshold.
+        GeoDataFrame with ``source_tile``, ``source_tiles`` (a list of
+        tile names per row), ``mound_probability``, and ``geometry``
+        columns. Empty GeoDataFrame if no candidates pass the threshold.
     """
     rows: list[dict] = []
     geometries: list[Point] = []
@@ -214,15 +228,21 @@ def build_candidate_gdf(
         if prob < threshold:
             continue
 
+        # The origin record, in the form the shared scorer reads (a list
+        # of tile names); ``parse_tile_list`` raises on a malformed one.
+        props = candidate.get("properties") or {}
+        source_tiles = parse_tile_list(props.get("source_tiles"))
+
         geometries.append(Point(centroid_x, centroid_y))
         rows.append({
             "source_tile": source_tile or "unknown",
+            "source_tiles": source_tiles,
             "mound_probability": prob,
         })
 
     if not rows:
         return gpd.GeoDataFrame(
-            columns=["source_tile", "mound_probability", "geometry"],
+            columns=["source_tile", "source_tiles", "mound_probability", "geometry"],
             geometry="geometry",
             crs=crs,
         )

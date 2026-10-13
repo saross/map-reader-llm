@@ -97,6 +97,7 @@ from __future__ import annotations
 import json
 import logging
 import sys
+import zlib
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -280,8 +281,13 @@ def compute_sd_per_cell_per_k(df_passes: pd.DataFrame) -> pd.DataFrame:
         candidate_levels = TEXT_K_LEVELS if track == "text" else IMAGE_K_LEVELS
         k_levels = [k for k in candidate_levels if k <= k_max]
         for k_used in k_levels:
-            # Spawn an independent RNG seeded deterministically per cell+K
-            seed_offset = hash((track, thinking, temperature, k_used)) % (2**32)
+            # Spawn an independent RNG seeded deterministically per cell+K.
+            # CRC-32 of the cell key, not the built-in ``hash()``, which is
+            # salted per process for strings, so the old offset changed from
+            # run to run (ruling D63).
+            # (``float``/``int`` so the key does not depend on numpy's repr.)
+            cell_key = f"{track}|{thinking}|{float(temperature)!r}|{int(k_used)}"
+            seed_offset = zlib.crc32(cell_key.encode("utf-8"))
             rng = np.random.default_rng(int(rng_master.integers(0, 2**32)) ^ seed_offset)
             stats = _bootstrap_sd_at_k(f1_values, k_used, rng)
             rows.append({
