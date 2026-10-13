@@ -2771,8 +2771,9 @@ def _permutation_on_tile_metrics(
     """Paired tile-swap permutation test of A - B on per-tile counts (D42).
 
     Tiles are put in SORTED order first: the swap a tile receives depends
-    on its position, and ``common_tiles`` comes from a set intersection
-    whose order varies with the interpreter's hash seed.
+    on its position, so the order must not depend on the caller. (Until
+    ruling D63 the bootstrap callers built ``common_tiles`` from a set, whose
+    order followed the interpreter's hash seed; they now sort it as well.)
 
     Args:
         tile_metrics_a: Per-tile counts for condition A.
