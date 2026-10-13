@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-13T04:32:39Z",
+  "generated_at": "2026-10-13T05:49:48Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -1936,7 +1936,7 @@
       "predicted_outcome": "Registered rule: 'If alternative outperforms Flash-optimal by >=0.03 F1, flag factor for adjustment' (preregistration.md:677, no CI condition). H6's registered prediction is transfer with at most minor factor adjustments. Scope: no registered factor is cleanly evaluable; the available contrast confounds temperature with thinking (E40-class). [Authored before computation.]",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "TEMPERATURE IS THE DRIVER (verification round superseded the confounded-only framing): the full genuine-Pro thinking x temperature 2x2 exists (n1-pro-rerun-384 + pv-diag-384 Pro baselines, matched hashes and corpus, extended provenance gate), so the registered factor T is cleanly evaluable at matched thinking. The registered rule fires in ALL FOUR cells: text +0.0595 at HIGH (dCI [+0.0340, +0.0846]) and +0.0366 at MEDIUM ([+0.0113, +0.0620]); image +0.0750 at HIGH ([+0.0421, +0.1076]) and +0.0605 at MEDIUM ([+0.0299, +0.0888]) - Pro prefers T=0.0 over the carried T=0.7. The thinking contrast at matched temperature (not a registered Phase-2 factor) reaches 0.03 in none of four cells (every CI straddles zero). Consistent with H6's 'minor factor adjustments' prediction and the n1-baseline-matrix-384 temperature preference. M/E, H5, O remain unvaried; A-08 explicitly not computed (one factor of four; see findings.md). Estimator-reconciliation gate: manifest-vintage and pass-averaged deltas agree to <=0.0005 with identical verdicts. Replicate caveat: T=0.7 corners average 5-10 passes vs 3. Original confounded contrast retained in-artefact as a superseded record. Artefact: results/h6-registered-analyses/a06_decision_rule.json.",
+      "outcome": "TEMPERATURE IS THE DRIVER (verification round superseded the confounded-only framing): the full genuine-Pro thinking x temperature 2x2 exists (n1-pro-rerun-384 + pv-diag-384 Pro baselines, matched hashes and corpus, extended provenance gate), so the registered factor T is cleanly evaluable at matched thinking. The registered rule fires in ALL FOUR cells: text +0.0595 at HIGH (dCI [+0.0340, +0.0846]) and +0.0366 at MEDIUM ([+0.0113, +0.0620]); image +0.0750 at HIGH ([+0.0421, +0.1076]) and +0.0605 at MEDIUM ([+0.0299, +0.0888]) - Pro prefers T=0.0 over the carried T=0.7. The thinking contrast at matched temperature (not a registered Phase-2 factor) reaches 0.03 in none of four cells (every CI straddles zero). Consistent with H6's 'minor factor adjustments' prediction and the n1-baseline-matrix-384 temperature preference. M/E, H5, O remain unvaried; A-08 explicitly not computed (one factor of four; see findings.md). Estimator-reconciliation gate: manifest-vintage and pass-averaged deltas agree to <=0.0005 with identical verdicts. Replicate caveat: T=0.7 corners average 5-10 passes vs 3. Original confounded contrast retained in-artefact as a superseded record. Artefact: results/h6-registered-analyses/a06_decision_rule.json. Thinking disclosure (2026-10-13, D61 (4) and D62 (4)): the thinking level was requested but barely delivered. The Pro HIGH T=0.0 passes recorded zero thought tokens, confirmed by the June 2026 invoice (Obs 509); the Pro MEDIUM passes recorded 6\u20137 (T=0.0) and 20\u201343 (T=0.7) thought tokens per request; the T=0.7 Pro HIGH passes (pv-diag-384, March batch) recorded no usage and match no invoice line, so their thinking is unknown. A 2026-10-12 probe of the same model found zero thought tokens at HIGH at T 0.0, 0.7, and 1.0 (20 of 20 successful requests; outputs/pro-thinking-probe-2026-10-12/probe-report.md). So the thinking contrast compares near-zero with zero thinking and is not a test of thinking; on today's service the temperature verdict is not confounded by thinking, and the March passes cannot be checked.",
       "paper_section": "Methods",
       "output_path": "results/h6-registered-analyses",
       "working_notes_obs": [
@@ -1944,15 +1944,22 @@
       ],
       "manually_verified_at": "2026-08-17T13:02:16Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-17T07:01:26Z",
+        "status": "re-sign-pending",
+        "signed_at": null,
         "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A3, source commit 75a6b190c, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"H6 rows ratified post-hoc and stamped (S135 L4 walk)\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T13:02:16Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
-        "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
+        "presentation": "Pending re-signature: the thinking disclosure appended to the outcome text (D62 (4)); draft PR from branch d61-regenerations",
         "history": [
           {
             "stamped_at": "2026-08-17T13:02:16Z",
             "convention": "pre-2026-09-16: one field served authoring and signature",
             "note": "retained as an authoring stamp; not established as a PI signature"
+          },
+          {
+            "noted_at": "2026-10-13T05:49:42Z",
+            "kind": "signature lapse: thinking disclosure appended to the outcome (D62 (4), approved by the PI 2026-10-13)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-17T07:01:26Z",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A3, source commit 75a6b190c, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"H6 rows ratified post-hoc and stamped (S135 L4 walk)\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T13:02:16Z is retained in manually_verified_at and in history as the AUTHORING record it was."
           }
         ]
       },
@@ -1961,7 +1968,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-13T05:49:48Z",
         "extractor_version": "0.8.0"
       }
     },
