@@ -134,3 +134,34 @@ def test_flip_rates_count_pairs_and_splits() -> None:
     assert r["pairwise_mean_rate"] == pytest.approx(0.8 / 3)
     same = flip_rates([a, a, a])
     assert same["split"]["count"] == 0 and same["pairwise_mean_rate"] == 0.0
+
+
+def test_load_floors_reads_the_three_files_from_the_directory_given(tmp_path: Path) -> None:
+    from scripts.modality_bridge_verifier_sd import load_floors
+
+    for i, name in enumerate(("floors.json", "gates.json", "gap_change.json")):
+        (tmp_path / name).write_text(json.dumps({"which": i}))
+    assert load_floors(tmp_path) == ({"which": 0}, {"which": 1}, {"which": 2})
+
+
+def test_main_reads_the_floors_from_floors_dir_and_defaults_to_the_committed(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """``--floors-dir`` is what ``main`` reads, before anything heavy is loaded."""
+    from scripts import modality_bridge_floors as fl
+    from scripts import modality_bridge_verifier_sd as vsd
+
+    seen: list[Path] = []
+
+    class Stop(Exception):
+        pass
+
+    def fake_load(floors_dir: Path):
+        seen.append(floors_dir)
+        raise Stop
+
+    monkeypatch.setattr(vsd, "load_floors", fake_load)
+    with pytest.raises(Stop):
+        vsd.main(["--floors-dir", str(tmp_path), "--gate-only"])
+    with pytest.raises(Stop):
+        vsd.main(["--gate-only"])
+    assert seen == [tmp_path, fl.RESULTS / "floors"]

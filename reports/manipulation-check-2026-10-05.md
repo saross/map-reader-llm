@@ -1,7 +1,7 @@
 # Manipulation check: did each arm's manipulation reach the model?
 
-> **Last revised**: 2026-10-05 (§ B.2 and § B.5 group 19 corrected by the
-> Phase 2e ordering check). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-12 (thinking on Pro checked against the invoices).
+> See [§ Changelog](#changelog) for revision history.
 
 **Status**: evidence base for `planning/text-track-transmission-2026-10-05.md`,
 which tracks the work it leads to. Produced by a read-only Opus subagent of
@@ -324,14 +324,50 @@ null pixels) stands, so all are **labelling**:
 | **Instruction wording** | System-instruction hashes differ as intended: Phase 2a `e169`/`522f`/`f3ae`; Phase 2d `56aa` terse / `599e` verbose; Phase 3c B v1–v5 `7c40`/`fc2e`/`6382`/`1db4`/`2491`; E47 `d26e` (1,528 vs 1,502 tokens) |
 | **Model** | Model of record matches intent everywhere except E57's known `n1-outstanding-384` Pro→Flash cells. The four `pv-diag-384` "Pro" pools carry `configuration.model = gemini-3-flash` but price and per-item model as `gemini-3.1-pro-preview` (E57) |
 
-**Unverified: thinking on Pro.** Thinking on Gemini 3.1 Pro could not be
-confirmed from usage.
+**Thinking on Pro: absent where it can be checked** (revised 2026-10-12;
+first published as "unverified, probably a usage-reporting gap").
 
 - All six Pro HIGH metas with usage record **0** thought tokens. These are
-  the `n1-pro-rerun-384` `pro-{text,image}-high-t0` pools.
-- The Pro MEDIUM metas record 6–43 per request.
-- Thought counts this low are implausible for Pro, so this looks like a
-  usage-reporting gap. It may not be a dispatch failure. **Unverified.**
+  the `n1-pro-rerun-384` `pro-{text,image}-high-t0` pools (T 0.0, run
+  2026-06-03). The Pro MEDIUM metas record 6 to 43 per request (per-pass
+  means: 6 to 7 at T 0.0 on full passes, 20 to 43 at T 0.7). Flash at HIGH
+  records a median of 1,999 (row above), and its matched comparator
+  (`n1-outstanding-384` `pro-text-high-t0` run 1) 2,012,117 over 487
+  requests, about 4,100 each.
+- **Not a recording gap.** Google bills thought tokens as output. The
+  June 2026 invoice for `map-reader-llm` (its only Gemini 3 Pro output
+  rows that month, usage 2026-06-02 to 06-03) bills 693,527 output tokens.
+  The 16 Pro proposer passes run in that window (the 12 `n1-pro-rerun-384`
+  passes, and runs 2 and 3 of the two `pv-diag-384` MEDIUM T 0.0
+  baselines) record 686,307 output plus thought tokens in
+  `results/passes-manifest.json`: 7,220 apart (1.0 %), at most about 2.5
+  unrecorded tokens per HIGH request across 2,922. A text HIGH pass of 487
+  requests also finished in 31 to 48 seconds. The condition was requested
+  (`thinking_level: high`) but not delivered: at T 0.0, Pro produced no
+  thinking.
+- **The T 0.7 Pro HIGH pools cannot be checked.** `pv-diag-384`
+  `pro-high-text-n5` (10 passes) and `pro-high-image-n5` (5) ran through
+  the Batch API in March 2026; runs 6 to 10 of the text pool were five jobs
+  on `gemini-3.1-pro-preview` submitted 2026-03-29
+  (`logs/pro-n10-batch-20260329-120951.log`). That batch path booked no
+  usage (the log reports $0.0000 per job; every meta records zero tokens),
+  and no invoice line covers them. March's Pro rows (1,166,317 input and
+  472,406 output tokens, usage 2026-03-23 to 03-25) are smaller than the
+  runner's own estimate for the ten text passes alone (339,926 input
+  tokens each), and `map-reader-llm` billed nothing between 2026-03-27 and
+  2026-04-07. Whether those passes thought is unknown, and why they appear
+  on no invoice is unexplained.
+- **E57's evidence for these pools is the request, not the response.**
+  E57 classed the four `pv-diag-384` "Pro" pools as genuine Pro from
+  `pricing_used.model`, the runner's price lookup for the requested model.
+  The March batch pools record no per-response model, so their model of
+  record rests on the request (and the 29 March log's resolved model), not
+  on any response or bill.
+- Consequences for claims are ruled in
+  `planning/pi-decisions-2026-09-20.md` D61 (4): the H6 wording (the Pro
+  HIGH cells were Pro without thinking), and A-06's temperature contrast
+  at HIGH, which compares T 0.0 passes that did not think with T 0.7
+  passes whose thinking is unknown.
 
 ## E. The paper's description of the text condition
 
@@ -413,6 +449,22 @@ This is **correct as worded**: instruction alone vs instruction plus images.
 Its boundary sentence citing E48 is wrong (§ C.3).
 
 ## Changelog
+
+### 2026-10-12 — Thinking on Pro checked against the invoices
+
+Trigger: the D57 (4) Phase 3 test of h6 A-09 (Session 163), whose audited
+costs price a Pro pass that records no thinking. § D's "Unverified:
+thinking on Pro" is replaced in place. The June 2026 invoice matches the
+recorded Pro output plus thought tokens to 1.0 %, so the zero thought
+counts at HIGH T 0.0 are real, not a recording gap; the March T 0.7 Pro
+HIGH batch pools have neither recorded usage nor a matching invoice line.
+No figure elsewhere in this report moved.
+
+| Claim | Before | After |
+|---|---|---|
+| Pro HIGH zero thought counts | probably a usage-reporting gap, unverified | real: billed output matches recorded output plus thinking (686,307 vs 693,527) |
+| Pro MEDIUM thought counts | 6–43 per request | unchanged; split by temperature: 6–7 (T 0.0) and 20–43 (T 0.7) per-pass means |
+| `pv-diag-384` T 0.7 Pro HIGH pools | (not discussed) | thinking and billing unverifiable; model of record rests on the request |
 
 ### 2026-10-05 (later) — Phase 2e corrections
 

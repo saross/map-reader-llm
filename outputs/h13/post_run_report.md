@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — h13
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `d639b249e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h13` · **Registry status**: active · **Purpose**: Registered three-arm tile-overlap contrast (E75 remediation): arms B (25%) and C (50%) at 512 px, brief-text, three passes each. Arm A (12.5%) is the reused retest-phase2a::brief-text condition.
 
@@ -74,12 +74,12 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `arm-a-native-12-5` | single-pass | none | 3 | — | not supplied | 0.5576 [0.4948, 0.6175] | not supplied | 0.1477 |
-| `arm-a-overlap-12-5` | single-pass | none | 3 | — | not supplied | 0.5580 [0.4949, 0.6175] | not supplied | 0.1058 |
-| `arm-b-native-25` | single-pass | none | 3 | — | not supplied | 0.5222 [0.4692, 0.5718] | not supplied | 0.0123 |
-| `arm-b-overlap-25` | single-pass | none | 3 | — | not supplied | 0.5198 [0.4607, 0.5765] | not supplied | 0.2579 |
-| `arm-c-native-50` | single-pass | none | 3 | — | not supplied | 0.4067 [0.3667, 0.4461] | not supplied | 0.0342 |
-| `arm-c-overlap-50` | single-pass | none | 3 | — | not supplied | 0.4024 [0.3477, 0.4583] | not supplied | 0.0593 |
+| `arm-a-native-12-5` | single-pass | none | 3 | — | not supplied | 0.5731 [0.5126, 0.6294] | not supplied | 0.1477 |
+| `arm-a-overlap-12-5` | single-pass | none | 3 | — | not supplied | 0.5734 [0.5140, 0.6298] | not supplied | 0.1058 |
+| `arm-b-native-25` | single-pass | none | 3 | — | not supplied | 0.5277 [0.4747, 0.5770] | not supplied | 0.0123 |
+| `arm-b-overlap-25` | single-pass | none | 3 | — | not supplied | 0.5300 [0.4722, 0.5849] | not supplied | 0.2579 |
+| `arm-c-native-50` | single-pass | none | 3 | — | not supplied | 0.4130 [0.3733, 0.4519] | not supplied | 0.0342 |
+| `arm-c-overlap-50` | single-pass | none | 3 | — | not supplied | 0.4116 [0.3574, 0.4667] | not supplied | 0.0593 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -165,7 +165,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `d639b249e` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

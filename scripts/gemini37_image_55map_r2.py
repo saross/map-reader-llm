@@ -68,6 +68,17 @@ latter was called ``mcc_oracle`` until the ruling). Every cell either
 selection ever built stays on disk with its committed evaluation,
 re-labelled in ``cells_manifest.json``; nothing is deleted.
 
+Which probabilities a rung reads (added 2026-10-09)
+---------------------------------------------------
+A rung's probabilities come from ``verify_k{k}_{arm}_repaired/`` where that
+copy holds ``probabilities.json``, and from ``verify_k{k}_{arm}/`` otherwise
+(PI decisions D55 Q4 and D58 Q8; ``scripts/lib_verify_dirs.py``). On the
+Gemini 3 pool, three arm 2 legs carry seven re-verified rows that way.
+``sweeps.json`` (per rung) and ``cells_manifest.json`` (per cell) record the
+directory read, its SHA-256 and its repair counts as
+``verifier_probabilities``. ``MAP_READER_VERIFY_DIRS=fixed`` reads the
+fixed-name legs, as before, for a before/after comparison under one scorer.
+
 Usage::
 
     python scripts/gemini37_image_55map_r2.py --stage selftest
@@ -113,6 +124,10 @@ from scripts.final_board_sweeps import load_manifest_probs  # noqa: E402
 from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_tile_classification,
     compute_per_tile_tp_fp_fn,
+)
+from scripts.lib_verify_dirs import (  # noqa: E402
+    resolve_verify_dir,
+    verify_dir_provenance,
 )
 from scripts.mcc_tiering_55map import (  # noqa: E402
     mcc_from_confusion,
@@ -220,8 +235,10 @@ G37 = Campaign(
                  "point": (0.88, 3), "n": 433},
     },
     calibration_files={
-        "arm1": PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm1/analysis.json",
-        "arm2": PROJECT_ROOT / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm2/analysis.json",
+        "arm1": PROJECT_ROOT
+        / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm1/analysis.json",
+        "arm2": PROJECT_ROOT
+        / "results/gemini37-image-55map-2026-09-13/gs-calibration/arm2/analysis.json",
     },
 )
 
@@ -560,12 +577,35 @@ def assign_eval_frame_tiles(frame: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     return out
 
 
+def rung_verify_dir(arm: str, k: int) -> Path:
+    """The directory one rung's probabilities are read from.
+
+    The leg's fixed name is ``verify_k{k}_{arm}``; where a corrected copy
+    ``verify_k{k}_{arm}_repaired/`` holds ``probabilities.json`` (D55 Q4's
+    re-verified rows, Stage 2's parse repair), that copy is read instead
+    (D58 Q8; ``scripts/lib_verify_dirs.py``). ``MAP_READER_VERIFY_DIRS=fixed``
+    restores the fixed-name reading for a before/after comparison.
+
+    Args:
+        arm: ``arm1`` or ``arm2``.
+        k: The rung's first-N pass count.
+
+    Returns:
+        The verify directory under the campaign's verifier cell.
+    """
+    return resolve_verify_dir(CAMPAIGN_ROOT / "verifier" / CAMPAIGN_CELL, f"verify_k{k}_{arm}")
+
+
 def rung_frame(arm: str, k: int) -> gpd.GeoDataFrame:
     """The candidate frame for one rung: union geometry plus arm probabilities.
 
     ``source_tile`` is re-stamped onto the scoring frame's vocabulary by
     :func:`assign_eval_frame_tiles`; without that the per-tile machinery cannot
-    book the campaign's detections at all.
+    book the campaign's detections at all. The probabilities come from
+    :func:`rung_verify_dir`, and the frame's
+    ``attrs["verifier_probabilities"]`` records which directory that was, its
+    SHA-256 and its repair counts, so every stage can write it beside what it
+    derived.
 
     Args:
         arm: ``arm1`` or ``arm2``.
@@ -577,8 +617,10 @@ def rung_frame(arm: str, k: int) -> gpd.GeoDataFrame:
         ``origin_source_tile`` (proposer tiling), one row per candidate.
     """
     vroot = CAMPAIGN_ROOT / "verifier" / CAMPAIGN_CELL
-    raw = load_manifest_probs(vroot / f"crops_k{k}", vroot / f"verify_k{k}_{arm}")
-    return assign_eval_frame_tiles(raw)
+    vdir = rung_verify_dir(arm, k)
+    frame = assign_eval_frame_tiles(load_manifest_probs(vroot / f"crops_k{k}", vdir))
+    frame.attrs["verifier_probabilities"] = verify_dir_provenance(vdir, PROJECT_ROOT)
+    return frame
 
 
 def materialise(frame: gpd.GeoDataFrame, prob_t: float, min_votes: int) -> gpd.GeoDataFrame:
@@ -867,6 +909,7 @@ def stage_sweep(workers: int, rungs: tuple[int, ...] | None = None) -> int:
             "f1_oracle": f1_best,
             "mcc_argmax_at_carried_k": mcc_best,
             "mcc_argmax_unconstrained": mcc_free,
+            "verifier_probabilities": frames[label].attrs["verifier_probabilities"],
         }
         logger.info(
             "%-14s F1 oracle %.4f at (%.2f, k%d) | tile-MCC argmax at the "
@@ -947,6 +990,7 @@ def stage_materialise(rungs: tuple[int, ...] | None = None) -> int:
                 "point": f"({float(prob_t):.2f}, k{int(votes)})",
                 "n_detections": int(len(sub)),
                 "det": str(dest.relative_to(PROJECT_ROOT)),
+                "verifier_probabilities": frame.attrs["verifier_probabilities"],
             })
             logger.info("%-28s n=%5d -> %s", cell_label, len(sub),
                         dest.relative_to(PROJECT_ROOT))

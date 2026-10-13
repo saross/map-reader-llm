@@ -63,6 +63,16 @@ the leg, the configuration INHERITS its probabilities from a larger
 verification and the row says so; where it is larger, the point asks for
 candidates that were never verified, and the row says that instead.
 
+The image campaigns' sweeps read each leg's ``_repaired`` copy where that copy
+holds ``probabilities.json`` (PI decisions D55 Q4 and D58 Q8, added
+2026-10-09; ``scripts/lib_verify_dirs.py``). Such a leg is still PRICED at its
+own stage — the register keys its row to that directory, and the copy's
+``run.meta.json`` is a byte copy of the leg's — and the re-verification the
+copy books (``reverify-*.json``, audited per row) is added to its cost. Each
+image leg's record names the directory its configurations read
+(``verifier_probabilities``), and the cross-check with the published figure
+compares the leg's own cost, without the re-verification the report predates.
+
 The drift check
 ---------------
 ``--check`` regenerates the selected stage's files in memory from the
@@ -118,6 +128,7 @@ from scripts.lib_frontier_cost import (  # noqa: E402
     FrontierCostError,
     Priced,
 )
+from scripts.lib_verify_dirs import resolve_leg, verify_dir_provenance  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -167,6 +178,12 @@ for _k in (1, 3, 5):
         LEGS[f"G3IMG-ARM{_a}-K{_k}"] = (
             f"outputs/gemini3-image-55map-2026-09-16/verifier/"
             f"g384_ov192_55map_g3img/verify_k{_k}_arm{_a}",)
+
+#: The ``LEGS`` prefixes whose configurations' sweeps read a leg's
+#: ``_repaired`` copy where one holds ``probabilities.json``
+#: (``gemini37_image_55map_r2.rung_verify_dir``; D55 Q4, D58 Q8). The stage
+#: above stays the leg itself: it is what the register prices.
+REPAIRABLE_LEG_PREFIXES = ("IMG-ARM", "G3IMG-ARM")
 
 #: Audited verifier-leg costs as the campaigns' own post-run reports PUBLISH
 #: them, transcribed with their source. Since 2026-10-04 (D29) they price
@@ -303,6 +320,50 @@ def leg_key_for(config: str) -> str | None:
     """The ``LEGS`` prefix a configuration resolves to (longest wins), or ``None``."""
     matches = [p for p in LEGS if config.startswith(p)]
     return max(matches, key=len) if matches else None
+
+
+def probabilities_block(stages: tuple[str, ...] | list[str]) -> dict:
+    """Which probabilities an image leg's configurations read, and what repaired them.
+
+    The r2 campaign sweeps read a leg's ``_repaired`` copy where one holds
+    ``probabilities.json`` (``scripts/lib_verify_dirs.py``), so the copy's
+    re-verified rows are part of what the configuration's pool cost.
+
+    Args:
+        stages: The leg's stage directories (``LEGS``); an image leg has one.
+
+    Returns:
+        ``lib_verify_dirs.verify_dir_provenance`` of the directory read:
+        ``dir``, ``policy``, ``probabilities_sha256``, the repair counts and
+        ``reverify_usd``.
+    """
+    return verify_dir_provenance(resolve_leg(PROJECT_ROOT / stages[0]), PROJECT_ROOT)
+
+
+def add_reverify_cost(record: dict, block: dict | None) -> float:
+    """Attach an image leg's probabilities block and add its re-verification cost.
+
+    A leg whose ``usd`` is ``None`` (unpriced) stays unpriced: a
+    re-verification cost added to nothing would read as the leg's cost.
+
+    Args:
+        record: The leg's cost record (from :func:`collect_costs`); changed
+            in place.
+        block: :func:`probabilities_block`, or ``None`` for a leg outside
+            :data:`REPAIRABLE_LEG_PREFIXES` (left untouched).
+
+    Returns:
+        The US$ added to ``record["usd"]`` (0.0 when nothing was added), so
+        the cross-check can compare the leg's own cost with its report.
+    """
+    if block is None:
+        return 0.0
+    record["verifier_probabilities"] = block
+    extra = float(block.get("reverify_usd") or 0.0)
+    if record.get("usd") is None or not extra:
+        return 0.0
+    record["usd"] = round(record["usd"] + extra, 9)
+    return extra
 
 
 def pool_at_vote(rows: list[dict], min_votes: int) -> int | None:
@@ -709,6 +770,11 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
                            "scripts/lib_frontier_cost.py"),
                 "note": "; ".join(n for cost, _, _ in parts for n in cost.notes),
             }
+        # An image leg's configurations read its _repaired copy where one
+        # exists: record which, and add the copy's re-verification cost.
+        reverify_usd = add_reverify_cost(
+            record, probabilities_block(leg) if key.startswith(REPAIRABLE_LEG_PREFIXES)
+            else None)
         published = next((PUBLISHED_LEG_COST[m] for m in members
                           if m in PUBLISHED_LEG_COST), None)
         if published and record["usd"] is None:
@@ -722,7 +788,8 @@ def collect_costs() -> tuple[dict[str, dict], int, list[str]]:
             disagreements.append(f"{members[0]}: unpriced here, but its report publishes "
                                  f"US${published['usd']:.4f} ({published['source']})")
         elif published:
-            gap = record["usd"] - published["usd"]
+            # The report predates any re-verification: compare the leg's own cost.
+            gap = record["usd"] - reverify_usd - published["usd"]
             tolerance = AGREEMENT_USD[record["basis"]]
             same_n = published["candidates"] == record["candidates"]
             record["cross_check"] = {
@@ -815,7 +882,12 @@ def costs_payload(costs: dict[str, dict]) -> dict[Path, str]:
             "the campaign post-run report's "
             "figure, which must agree over the same candidates and within "
             "agreement_tolerance_usd for the leg's basis. unpriced_legs lists "
-            "every leg left unpriced, to be recovered by hand with the PI."),
+            "every leg left unpriced, to be recovered by hand with the PI. "
+            "verifier_probabilities (image campaign legs) = the directory the "
+            "campaign's sweeps read: the leg's _repaired copy where one holds "
+            "probabilities.json (D55 Q4, D58 Q8), with its SHA-256 and repair "
+            "counts; its reverify_usd is included in usd and excluded from the "
+            "cross-check, which compares the leg's own cost with its report."),
         "agreement_tolerance_usd": AGREEMENT_USD,
         "unpriced_legs": unpriced_legs(costs),
         "generated_by": "scripts/build_tile_presence_board.py --stage costs",

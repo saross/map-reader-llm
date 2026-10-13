@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — consensus-384-t1-0
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `d639b249e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/consensus-384-UNINTENDED-T1.0` · **Registry status**: active · **Purpose**: not supplied
 
@@ -98,11 +98,11 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `consensus-1of5` | consensus | consensus | 5 | k=1 | 974 | 0.3038 [0.2467, 0.3633] | 0.3137 [0.2558, 0.3736] | 0.0608 |
-| `consensus-2of5` | consensus | consensus | 5 | k=2 | 616 | 0.3977 [0.3322, 0.4654] | 0.4148 [0.3484, 0.4820] | 0.0951 |
-| `consensus-3of5` | consensus | consensus | 5 | k=3 | 484 | 0.4331 [0.3634, 0.5000] | 0.4548 [0.3853, 0.5232] | 0.1164 |
-| `consensus-4of5` | consensus | consensus | 5 | k=4 | 395 | 0.4554 [0.3868, 0.5232] | 0.4747 [0.4072, 0.5445] | 0.1458 |
-| `consensus-5of5` | consensus | consensus | 5 | k=5 | 295 | 0.4712 [0.4011, 0.5395] | 0.4849 [0.4151, 0.5525] | 0.2565 |
+| `consensus-1of5` | consensus | consensus | 5 | k=1 | 974 | 0.3052 [0.2477, 0.3650] | 0.3151 [0.2569, 0.3752] | 0.0608 |
+| `consensus-2of5` | consensus | consensus | 5 | k=2 | 616 | 0.3996 [0.3333, 0.4673] | 0.4167 [0.3506, 0.4841] | 0.0951 |
+| `consensus-3of5` | consensus | consensus | 5 | k=3 | 484 | 0.4353 [0.3659, 0.5026] | 0.4570 [0.3874, 0.5255] | 0.1164 |
+| `consensus-4of5` | consensus | consensus | 5 | k=4 | 395 | 0.4578 [0.3893, 0.5262] | 0.4771 [0.4094, 0.5468] | 0.1458 |
+| `consensus-5of5` | consensus | consensus | 5 | k=5 | 295 | 0.4740 [0.4037, 0.5418] | 0.4877 [0.4179, 0.5551] | 0.2565 |
 | `single-pass-run_1` | single-pass | none | 1 | — | 570 | 0.3900 [0.3217, 0.4557] | 0.4239 [0.3541, 0.4919] | 0.0341 |
 | `single-pass-run_10` | single-pass | none | 1 | — | 589 | 0.3730 [0.3054, 0.4421] | 0.4082 [0.3385, 0.4780] | 0.0298 |
 | `single-pass-run_11` | single-pass | none | 1 | — | 583 | 0.3831 [0.3153, 0.4516] | 0.4204 [0.3478, 0.4891] | 0.0298 |
@@ -191,7 +191,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `d639b249e` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

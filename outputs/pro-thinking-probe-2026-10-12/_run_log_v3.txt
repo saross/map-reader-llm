@@ -1,0 +1,307 @@
+=== 2026-10-12T13:10:45Z pro-thinking-probe v3 LAUNCH (model=gemini-3.1-pro, standard tier, workers=10) ===
+=== 2026-10-12T13:10:45Z cost so far (runner estimate) US$0.0000 ===
+=== 2026-10-12T13:10:45Z START text-t0.0 (temp=0.0 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.0
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=19 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=23 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=34 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=37 429s=0 avg_lat=N/A
+  5%|▌         | 1/20 [01:56<37:00, 116.88s/it] 10%|█         | 2/20 [01:58<14:48, 49.36s/it]                                                10%|█         | 2/20 [01:58<14:48, 49.36s/it] 20%|██        | 4/20 [01:59<04:56, 18.52s/it]                                               20%|██        | 4/20 [02:02<04:56, 18.52s/it] 25%|██▌       | 5/20 [02:02<03:25, 13.68s/it] 35%|███▌      | 7/20 [02:04<01:41,  7.84s/it] 40%|████      | 8/20 [02:06<01:15,  6.27s/it] 45%|████▌     | 9/20 [02:12<01:08,  6.26s/it]                                               45%|████▌     | 9/20 [02:12<01:08,  6.26s/it]                                               45%|████▌     | 9/20 [02:12<01:08,  6.26s/it] 50%|█████     | 10/20 [02:12<00:46,  4.69s/it] 55%|█████▌    | 11/20 [02:13<00:31,  3.53s/it] 60%|██████    | 12/20 [02:17<00:29,  3.66s/it] 65%|██████▌   | 13/20 [02:18<00:19,  2.76s/it] 70%|███████   | 14/20 [04:50<04:40, 46.69s/it] 75%|███████▌  | 15/20 [05:33<03:47, 45.52s/it] 80%|████████  | 16/20 [10:52<08:26, 126.67s/it]
+WARNING: 3 tiles have failed. Check API status.
+
+WARNING: 5 consecutive failures!
+
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+
+WARNING: 10 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=51 429s=0 avg_lat=612.6s
+ 85%|████████▌ | 17/20 [13:18<06:37, 132.51s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=53 429s=0 avg_lat=680.9s
+ 90%|█████████ | 18/20 [14:20<03:43, 111.55s/it] 95%|█████████▌| 19/20 [14:26<01:19, 79.93s/it]   [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=56 429s=0 avg_lat=727.2s
+100%|██████████| 20/20 [15:49<00:00, 80.73s/it]100%|██████████| 20/20 [15:49<00:00, 47.47s/it]
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t0.0/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Tiles processed: 3
+Tiles failed: 17
+Total detections: 0
+Tokens used: 4,536
+Estimated cost: $0.0047
+=== 2026-10-12T13:26:38Z END   text-t0.0 exit=2 ===
+=== 2026-10-12T13:26:38Z cost so far (runner estimate) US$0.0047 ===
+=== 2026-10-12T13:26:38Z START text-t0.7 (temp=0.7 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=14 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=26 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=26 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=28 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=38 429s=0 avg_lat=N/A
+  5%|▌         | 1/20 [01:57<37:12, 117.52s/it] 10%|█         | 2/20 [02:02<15:25, 51.40s/it]                                                10%|█         | 2/20 [02:08<15:25, 51.40s/it] 15%|█▌        | 3/20 [02:08<08:41, 30.67s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=40 429s=0 avg_lat=N/A
+ 20%|██        | 4/20 [02:14<05:33, 20.85s/it]                                               20%|██        | 4/20 [02:14<05:33, 20.85s/it] 25%|██▌       | 5/20 [02:14<03:22, 13.53s/it] 30%|███       | 6/20 [02:18<02:20, 10.07s/it] 35%|███▌      | 7/20 [02:38<02:54, 13.41s/it] 40%|████      | 8/20 [02:39<01:52,  9.36s/it] 45%|████▌     | 9/20 [02:51<01:52, 10.22s/it] 50%|█████     | 10/20 [02:53<01:17,  7.73s/it]                                                50%|█████     | 10/20 [03:00<01:17,  7.73s/it] 55%|█████▌    | 11/20 [03:00<01:07,  7.50s/it] 60%|██████    | 12/20 [03:27<01:46, 13.35s/it] 65%|██████▌   | 13/20 [03:54<02:02, 17.47s/it] 70%|███████   | 14/20 [04:01<01:25, 14.28s/it]
+WARNING: 5 consecutive failures!
+
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=48 429s=0 avg_lat=186.0s
+ 75%|███████▌  | 15/20 [04:46<01:58, 23.63s/it] 80%|████████  | 16/20 [04:53<01:15, 18.76s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=50 429s=0 avg_lat=196.6s
+ 85%|████████▌ | 17/20 [05:17<01:00, 20.08s/it] 90%|█████████ | 18/20 [06:03<00:55, 27.97s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=53 429s=0 avg_lat=208.8s
+ 95%|█████████▌| 19/20 [07:48<00:51, 51.28s/it]100%|██████████| 20/20 [07:49<00:00, 35.96s/it]100%|██████████| 20/20 [07:49<00:00, 23.46s/it]
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v3-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t0.7/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Tiles processed: 4
+Tiles failed: 16
+Total detections: 3
+Tokens used: 6,209
+Estimated cost: $0.0072
+=== 2026-10-12T13:34:30Z END   text-t0.7 exit=2 ===
+=== 2026-10-12T13:34:30Z cost so far (runner estimate) US$0.0119 ===
+=== 2026-10-12T13:34:30Z START text-t1.0 (temp=1.0 think=high) ===
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (1.0) with CLI Argument: 1.0
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+WARNING: --allow-inert-fields — launching prompts/configs/detect_brief-text.json with 1 inert field(s) (historical reproduction):
+  - examples is inert under include_example_images: false: 17 example(s) are configured, but with example images off the pipeline transmits nothing from the library — neither the images nor their labels (E90, the text-track transmission gap)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Loaded Version: detect_brief-text
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text.md
+Text-only modality: skipping example images
+Thinking level: high
+Service tier: flex
+WARNING: Cache creation failed (400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Cached content is too small. total_token_count=393, min_total_token_count=1024', 'status': 'INVALID_ARGUMENT'}}), proceeding without cache
+
+[intent-check] config diff vs base (detect_brief-text):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v3-text-t1.0/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v3-text-t1.0/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=1500
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=12 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=13 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=25 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=26 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=31 429s=0 avg_lat=N/A
+  5%|▌         | 1/20 [01:58<37:30, 118.46s/it] 10%|█         | 2/20 [02:10<16:49, 56.08s/it]   [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=34 429s=0 avg_lat=N/A
+                                               10%|█         | 2/20 [02:17<16:49, 56.08s/it] 15%|█▌        | 3/20 [02:17<09:26, 33.35s/it] 20%|██        | 4/20 [02:20<05:45, 21.61s/it]                                               20%|██        | 4/20 [02:30<05:45, 21.61s/it] 25%|██▌       | 5/20 [02:30<04:18, 17.22s/it] 30%|███       | 6/20 [02:31<02:45, 11.79s/it] 35%|███▌      | 7/20 [02:37<02:08,  9.88s/it]
+WARNING: 3 tiles have failed. Check API status.
+
+WARNING: 5 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=38 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=38 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=41 429s=0 avg_lat=N/A
+ 40%|████      | 8/20 [03:47<05:48, 29.01s/it] 45%|████▌     | 9/20 [04:00<04:25, 24.14s/it]                                               45%|████▌     | 9/20 [04:30<04:25, 24.14s/it]                                               45%|████▌     | 9/20 [04:30<04:25, 24.14s/it] 50%|█████     | 10/20 [04:30<04:19, 25.97s/it] 55%|█████▌    | 11/20 [04:43<03:16, 21.80s/it] 60%|██████    | 12/20 [04:48<02:13, 16.73s/it] 65%|██████▌   | 13/20 [04:49<01:23, 11.88s/it] 70%|███████   | 14/20 [05:24<01:54, 19.13s/it] 75%|███████▌  | 15/20 [05:34<01:21, 16.22s/it] 80%|████████  | 16/20 [05:41<00:53, 13.36s/it] 85%|████████▌ | 17/20 [07:35<02:11, 43.73s/it] 90%|█████████ | 18/20 [08:14<01:24, 42.32s/it]
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+
+WARNING: 10 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=52 429s=0 avg_lat=357.8s
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=53 429s=0 avg_lat=357.8s
+ 95%|█████████▌| 19/20 [09:33<00:53, 53.28s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=54 429s=0 avg_lat=357.8s
+100%|██████████| 20/20 [10:48<00:00, 59.96s/it]100%|██████████| 20/20 [10:48<00:00, 32.44s/it]
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t1.0/detections-detect_brief-text-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v3-text-t1.0/detections-detect_brief-text-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v3-text-t1.0/detections-detect_brief-text-3.1-pro-2026-10-13.meta.json
+Tiles processed: 4
+Tiles failed: 16
+Total detections: 6
+Tokens used: 6,395
+Estimated cost: $0.0083
+=== 2026-10-12T13:45:21Z END   text-t1.0 exit=2 ===
+=== 2026-10-12T13:45:21Z cost so far (runner estimate) US$0.0202 ===
+=== 2026-10-12T13:45:21Z START image-t0.0 (temp=0.0 think=high) ===
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (0.0) with CLI Argument: 0.0
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+Loaded Version: library_plus-hp
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: high
+Service tier: flex
+Context cache created: cachedContents/jbue5bi5q3rxp7tdsehvg89km20nrlt7sqarppbg (14549 tokens, TTL=86400s)
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.0/detections-library_plus-hp-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.0/detections-library_plus-hp-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=16 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=19 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=27 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=28 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=32 429s=0 avg_lat=N/A
+  5%|▌         | 1/20 [01:57<37:03, 117.01s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=39 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=41 429s=0 avg_lat=N/A
+ 10%|█         | 2/20 [02:18<18:13, 60.72s/it]                                                10%|█         | 2/20 [02:20<18:13, 60.72s/it] 15%|█▌        | 3/20 [02:20<09:41, 34.19s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=43 429s=0 avg_lat=N/A
+ 20%|██        | 4/20 [02:29<06:22, 23.90s/it]                                               20%|██        | 4/20 [02:36<06:22, 23.90s/it] 25%|██▌       | 5/20 [02:36<04:28, 17.87s/it]
+WARNING: 5 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=48 429s=0 avg_lat=N/A
+ 30%|███       | 6/20 [02:42<03:14, 13.91s/it] 35%|███▌      | 7/20 [02:49<02:30, 11.56s/it] 40%|████      | 8/20 [02:51<01:42,  8.55s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=50 429s=0 avg_lat=N/A
+ 45%|████▌     | 9/20 [03:02<01:41,  9.23s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=52 429s=0 avg_lat=N/A
+                                               45%|████▌     | 9/20 [03:06<01:41,  9.23s/it]                                               45%|████▌     | 9/20 [03:06<01:41,  9.23s/it] 50%|█████     | 10/20 [03:06<01:18,  7.82s/it]
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+
+WARNING: 10 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=52 429s=0 avg_lat=N/A
+ 55%|█████▌    | 11/20 [03:23<01:36, 10.72s/it] 60%|██████    | 12/20 [03:27<01:07,  8.41s/it] 65%|██████▌   | 13/20 [04:07<02:06, 18.00s/it] 70%|███████   | 14/20 [04:11<01:22, 13.79s/it] 75%|███████▌  | 15/20 [04:54<01:54, 22.81s/it] 80%|████████  | 16/20 [04:58<01:08, 17.02s/it] 85%|████████▌ | 17/20 [05:03<00:40, 13.45s/it] 90%|█████████ | 18/20 [05:06<00:20, 10.30s/it] 95%|█████████▌| 19/20 [05:14<00:09,  9.57s/it]100%|██████████| 20/20 [05:16<00:00,  7.34s/it]100%|██████████| 20/20 [05:16<00:00, 15.83s/it]
+Context cache deleted: cachedContents/jbue5bi5q3rxp7tdsehvg89km20nrlt7sqarppbg
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v3-image-t0.0/detections-library_plus-hp-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.0/detections-library_plus-hp-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v3-image-t0.0/detections-library_plus-hp-3.1-pro-2026-10-13.meta.json
+Tiles processed: 1
+Tiles failed: 19
+Total detections: 0
+Tokens used: 15,669
+Estimated cost: $0.0041
+=== 2026-10-12T13:50:43Z END   image-t0.0 exit=2 ===
+=== 2026-10-12T13:50:43Z cost so far (runner estimate) US$0.0243 ===
+=== 2026-10-12T13:50:43Z START image-t0.7 (temp=0.7 think=high) ===
+Overriding Config Model (gemini-3-flash) with CLI Argument: gemini-3.1-pro
+Overriding Config Temperature (0.0) with CLI Argument: 0.7
+Overriding Config Thinking Level (minimal) with CLI Argument: high
+Loaded Version: library_plus-hp
+Model: gemini-3.1-pro
+Workers: 10
+Tile size: 384 (overriding config default 512)
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+System Instruction: detect_brief-text-image.md
+Thinking level: high
+Service tier: flex
+Context cache created: cachedContents/88ty7pfi83rfjfwx2nwy65nvgg9cuba00a44ate6 (14549 tokens, TTL=86400s)
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Output: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.7/detections-library_plus-hp-3.1-pro-2026-10-13.geojson
+Metadata: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.7/detections-library_plus-hp-3.1-pro-2026-10-13.meta.json
+Using Manifest: outputs/pro-thinking-probe-2026-10-12/tiles-20-of-50-seed42.json
+Manifest loaded. Found 20 of 20 tiles (20 remaining to process).
+Processing 20 new tiles...
+Token Bucket: target_rpm=14400, target_tpm=14,400,000, tokens_per_request=20000
+Thread pool size: 60 (governor active)
+  0%|          | 0/20 [00:00<?, ?it/s]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=6 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=6 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=7 429s=0 avg_lat=N/A
+  5%|▌         | 1/20 [04:26<1:24:19, 266.31s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=15 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=16 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=18 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=19 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=19 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=21 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=21 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=23 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=25 429s=0 avg_lat=N/A
+ 10%|█         | 2/20 [15:40<2:31:57, 506.53s/it]                                                  10%|█         | 2/20 [16:00<2:31:57, 506.53s/it] 15%|█▌        | 3/20 [16:00<1:20:30, 284.13s/it]
+WARNING: 3 tiles have failed. Check API status.
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=29 429s=0 avg_lat=N/A
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=30 429s=0 avg_lat=N/A
+ 20%|██        | 4/20 [17:02<52:20, 196.29s/it]                                                  20%|██        | 4/20 [17:21<52:20, 196.29s/it] 25%|██▌       | 5/20 [17:21<33:06, 132.46s/it] 30%|███       | 6/20 [17:33<21:21, 91.55s/it]  35%|███▌      | 7/20 [18:03<15:27, 71.34s/it] 40%|████      | 8/20 [18:12<10:19, 51.64s/it] 45%|████▌     | 9/20 [18:21<07:00, 38.20s/it] 50%|█████     | 10/20 [18:25<04:38, 27.84s/it] 55%|█████▌    | 11/20 [18:38<03:28, 23.17s/it]
+WARNING: 5 consecutive failures!
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=39 429s=0 avg_lat=723.1s
+ 60%|██████    | 12/20 [19:23<03:59, 29.94s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=42 429s=0 avg_lat=703.7s
+ 70%|███████   | 14/20 [20:03<02:31, 25.19s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=48 429s=0 avg_lat=703.7s
+                                                70%|███████   | 14/20 [20:30<02:31, 25.19s/it] 75%|███████▌  | 15/20 [20:30<02:08, 25.73s/it]
+WARNING: 10 tiles failed. Consider stopping (Ctrl+C).
+  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=49 429s=0 avg_lat=703.7s
+ 80%|████████  | 16/20 [21:07<01:54, 28.58s/it]  [TokenBucket] RPM=14400/14400 TPM=14,400,000/14,400,000 requests=52 429s=0 avg_lat=703.7s
+                                                80%|████████  | 16/20 [21:10<01:54, 28.58s/it] 85%|████████▌ | 17/20 [21:10<01:04, 21.53s/it] 90%|█████████ | 18/20 [21:28<00:41, 20.55s/it] 95%|█████████▌| 19/20 [21:58<00:23, 23.24s/it]100%|██████████| 20/20 [23:38<00:00, 45.48s/it]100%|██████████| 20/20 [23:38<00:00, 70.90s/it]
+
+WARNING: 5 consecutive failures!
+Context cache deleted: cachedContents/88ty7pfi83rfjfwx2nwy65nvgg9cuba00a44ate6
+
+Finished. Saved to outputs/pro-thinking-probe-2026-10-12/v3-image-t0.7/detections-library_plus-hp-3.1-pro-2026-10-13.geojson
+Tile manifest: outputs/pro-thinking-probe-2026-10-12/v3-image-t0.7/detections-library_plus-hp-3.1-pro-2026-10-13.tiles.json
+Metadata saved to outputs/pro-thinking-probe-2026-10-12/v3-image-t0.7/detections-library_plus-hp-3.1-pro-2026-10-13.meta.json
+Tiles processed: 5
+Tiles failed: 15
+Total detections: 4
+Tokens used: 78,585
+Estimated cost: $0.0218
+=== 2026-10-12T14:14:27Z END   image-t0.7 exit=2 ===
+=== 2026-10-12T14:14:27Z ALL 5 ARMS COMPLETE; cost (runner estimate) US$0.0461 ===

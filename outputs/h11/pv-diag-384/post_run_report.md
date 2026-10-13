@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — pv-diag-384
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3b537582b`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `d639b249e`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/h11/pv-diag-384` · **Registry status**: active · **Purpose**: not supplied
 
@@ -421,36 +421,36 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 | `baseline-pro-image-medium-t-0-0` | single-pass | none | 1 | — | not supplied | 0.6555 [0.6128, 0.6965] | 0.8265 [0.7973, 0.8527] | 0.8677 |
 | `baseline-pro-text-high-t-0-7` | single-pass | none | 1 | — | not supplied | 0.7450 [0.7008, 0.7859] | 0.7994 [0.7600, 0.8336] | 0.7465 |
 | `baseline-pro-text-medium-t-0-0` | single-pass | none | 1 | — | not supplied | 0.7921 [0.7500, 0.8281] | 0.8252 [0.7892, 0.8560] | 0.7903 |
-| `flash-high-image-n5-image-t0.0-consensus-1of3` | consensus | consensus | 3 | k=1 | 889 | 0.4970 [0.4509, 0.5447] | 0.5997 [0.5498, 0.6475] | 0.4671 |
-| `flash-high-image-n5-image-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 782 | 0.5127 [0.4653, 0.5596] | 0.6179 [0.5677, 0.6651] | 0.4993 |
-| `flash-high-image-n5-image-t0.3-consensus-9of10` | consensus | consensus | 10 | k=9 | 361 | 0.7312 [0.6889, 0.7725] | 0.7940 [0.7573, 0.8288] | 0.6834 |
+| `flash-high-image-n5-image-t0.0-consensus-1of3` | consensus | consensus | 3 | k=1 | 889 | 0.4985 [0.4526, 0.5460] | 0.6012 [0.5514, 0.6491] | 0.4671 |
+| `flash-high-image-n5-image-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 782 | 0.5144 [0.4667, 0.5613] | 0.6196 [0.5693, 0.6668] | 0.4993 |
+| `flash-high-image-n5-image-t0.3-consensus-9of10` | consensus | consensus | 10 | k=9 | 361 | 0.7337 [0.6913, 0.7751] | 0.7965 [0.7603, 0.8311] | 0.6834 |
 | `flash-high-image-n5-image-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 346 | 0.7119 [0.6641, 0.7561] | 0.7759 [0.7353, 0.8141] | 0.6803 |
-| `flash-high-image-n5-image-t0.7-consensus-7of10` | consensus | consensus | 10 | k=7 | 405 | 0.7500 [0.7060, 0.7893] | 0.8238 [0.7874, 0.8557] | 0.6784 |
-| `flash-high-image-n5-image-t0.7-consensus-n5-3of5` | consensus | consensus | 5 | k=3 | 506 | 0.7269 [0.6870, 0.7638] | 0.8268 [0.7948, 0.8545] | 0.6648 |
-| `flash-high-image-n5-image-t1.0-consensus-6of10` | consensus | consensus | 10 | k=6 | 433 | 0.7350 [0.6899, 0.7760] | 0.8180 [0.7837, 0.8481] | 0.6456 |
-| `flash-high-image-n5-image-t1.0-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 357 | 0.6970 [0.6510, 0.7399] | 0.7702 [0.7315, 0.8053] | 0.6559 |
-| `flash-high-text-n5-text-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 796 | 0.6109 [0.5482, 0.6667] | 0.6401 [0.5764, 0.6965] | 0.4318 |
+| `flash-high-image-n5-image-t0.7-consensus-7of10` | consensus | consensus | 10 | k=7 | 405 | 0.7524 [0.7087, 0.7913] | 0.8262 [0.7903, 0.8578] | 0.6784 |
+| `flash-high-image-n5-image-t0.7-consensus-n5-3of5` | consensus | consensus | 5 | k=3 | 506 | 0.7290 [0.6892, 0.7655] | 0.8289 [0.7975, 0.8563] | 0.6648 |
+| `flash-high-image-n5-image-t1.0-consensus-6of10` | consensus | consensus | 10 | k=6 | 433 | 0.7373 [0.6921, 0.7780] | 0.8203 [0.7863, 0.8504] | 0.6456 |
+| `flash-high-image-n5-image-t1.0-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 357 | 0.6995 [0.6536, 0.7420] | 0.7727 [0.7341, 0.8072] | 0.6559 |
+| `flash-high-text-n5-text-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 796 | 0.6125 [0.5497, 0.6683] | 0.6418 [0.5777, 0.6982] | 0.4318 |
 | `flash-high-text-n5-text-t0.3-consensus-10of10` | consensus | consensus | 10 | k=10 | 409 | 0.7891 [0.7503, 0.8248] | 0.8104 [0.7744, 0.8434] | 0.5874 |
-| `flash-high-text-n5-text-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 498 | 0.7696 [0.7263, 0.8068] | 0.7889 [0.7482, 0.8237] | 0.5571 |
-| `flash-high-text-n5-text-t0.7-consensus-26of30` | consensus | consensus | 30 | k=26 | 415 | 0.8141 [0.7785, 0.8458] | 0.8259 [0.7921, 0.8558] | 0.6204 |
-| `flash-high-text-n5-text-t0.7-consensus-n10-9of10` | consensus | consensus | 10 | k=9 | 431 | 0.7968 [0.7589, 0.8303] | 0.8106 [0.7746, 0.8426] | 0.6207 |
-| `flash-high-text-n5-text-t0.7-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 415 | 0.7788 [0.7384, 0.8151] | 0.7882 [0.7492, 0.8228] | 0.5998 |
-| `flash-high-text-n5-text-t1.0-consensus-9of10` | consensus | consensus | 10 | k=9 | 414 | 0.7727 [0.7295, 0.8103] | 0.7892 [0.7493, 0.8243] | 0.5749 |
-| `flash-high-text-n5-text-t1.0-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 403 | 0.7279 [0.6809, 0.7692] | 0.7422 [0.6975, 0.7819] | 0.5461 |
-| `flash-minimal-text-n30-t07-text-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 799 | 0.5932 [0.5384, 0.6502] | 0.6126 [0.5580, 0.6677] | 0.2235 |
-| `flash-minimal-text-n30-t07-text-t0.3-consensus-10of10` | consensus | consensus | 10 | k=10 | 608 | 0.6424 [0.5916, 0.6904] | 0.6539 [0.6039, 0.7016] | 0.3129 |
-| `flash-minimal-text-n30-t07-text-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 659 | 0.6307 [0.5782, 0.6811] | 0.6399 [0.5881, 0.6893] | 0.2746 |
-| `flash-minimal-text-n30-t07-text-t0.7-consensus-29of30` | consensus | consensus | 30 | k=29 | 530 | 0.6611 [0.6109, 0.7076] | 0.6694 [0.6190, 0.7160] | 0.3814 |
-| `flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10` | consensus | consensus | 10 | k=10 | 560 | 0.6332 [0.5835, 0.6822] | 0.6412 [0.5912, 0.6907] | 0.3655 |
-| `flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 653 | 0.6397 [0.5870, 0.6911] | 0.6471 [0.5936, 0.6988] | 0.3148 |
-| `flash-minimal-text-n30-t07-text-t1.0-consensus-9of10` | consensus | consensus | 10 | k=9 | 549 | 0.6667 [0.6141, 0.7144] | 0.6748 [0.6225, 0.7214] | 0.4153 |
-| `flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 509 | 0.6610 [0.6068, 0.7106] | 0.6674 [0.6139, 0.7164] | 0.4065 |
-| `image-n5-image-t0.3-consensus-10of10` | consensus | consensus | 10 | k=10 | 517 | 0.6597 [0.6137, 0.7040] | 0.7185 [0.6767, 0.7579] | 0.3397 |
-| `image-n5-image-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 559 | 0.6539 [0.6070, 0.6987] | 0.7243 [0.6816, 0.7639] | 0.3222 |
-| `image-n5-image-t0.7-consensus-8of10` | consensus | consensus | 10 | k=8 | 494 | 0.6803 [0.6361, 0.7218] | 0.7470 [0.7062, 0.7839] | 0.4055 |
-| `image-n5-image-t0.7-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 523 | 0.6639 [0.6195, 0.7052] | 0.7495 [0.7102, 0.7864] | 0.3898 |
-| `image-n5-image-t1.0-consensus-8of10` | consensus | consensus | 10 | k=8 | 466 | 0.6459 [0.6006, 0.6888] | 0.7347 [0.6971, 0.7700] | 0.4424 |
-| `image-n5-image-t1.0-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 506 | 0.6461 [0.6017, 0.6896] | 0.7396 [0.7003, 0.7758] | 0.4188 |
+| `flash-high-text-n5-text-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 498 | 0.7717 [0.7281, 0.8089] | 0.7910 [0.7506, 0.8255] | 0.5571 |
+| `flash-high-text-n5-text-t0.7-consensus-26of30` | consensus | consensus | 30 | k=26 | 415 | 0.8165 [0.7812, 0.8477] | 0.8282 [0.7950, 0.8575] | 0.6204 |
+| `flash-high-text-n5-text-t0.7-consensus-n10-9of10` | consensus | consensus | 10 | k=9 | 431 | 0.7991 [0.7613, 0.8326] | 0.8129 [0.7767, 0.8447] | 0.6207 |
+| `flash-high-text-n5-text-t0.7-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 415 | 0.7812 [0.7407, 0.8170] | 0.7906 [0.7516, 0.8248] | 0.5998 |
+| `flash-high-text-n5-text-t1.0-consensus-9of10` | consensus | consensus | 10 | k=9 | 414 | 0.7750 [0.7316, 0.8123] | 0.7915 [0.7515, 0.8264] | 0.5749 |
+| `flash-high-text-n5-text-t1.0-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 403 | 0.7303 [0.6839, 0.7716] | 0.7446 [0.6997, 0.7840] | 0.5461 |
+| `flash-minimal-text-n30-t07-text-t0.0-consensus-3of3` | consensus | consensus | 3 | k=3 | 799 | 0.5948 [0.5400, 0.6523] | 0.6143 [0.5596, 0.6698] | 0.2235 |
+| `flash-minimal-text-n30-t07-text-t0.3-consensus-10of10` | consensus | consensus | 10 | k=10 | 608 | 0.6443 [0.5933, 0.6921] | 0.6558 [0.6056, 0.7035] | 0.3129 |
+| `flash-minimal-text-n30-t07-text-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 659 | 0.6325 [0.5799, 0.6831] | 0.6417 [0.5894, 0.6911] | 0.2746 |
+| `flash-minimal-text-n30-t07-text-t0.7-consensus-29of30` | consensus | consensus | 30 | k=29 | 530 | 0.6632 [0.6132, 0.7098] | 0.6715 [0.6215, 0.7180] | 0.3814 |
+| `flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10` | consensus | consensus | 10 | k=10 | 560 | 0.6352 [0.5854, 0.6844] | 0.6432 [0.5930, 0.6922] | 0.3655 |
+| `flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 653 | 0.6415 [0.5887, 0.6931] | 0.6489 [0.5957, 0.7005] | 0.3148 |
+| `flash-minimal-text-n30-t07-text-t1.0-consensus-9of10` | consensus | consensus | 10 | k=9 | 549 | 0.6687 [0.6162, 0.7172] | 0.6768 [0.6251, 0.7239] | 0.4153 |
+| `flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 509 | 0.6631 [0.6088, 0.7131] | 0.6695 [0.6161, 0.7184] | 0.4065 |
+| `image-n5-image-t0.3-consensus-10of10` | consensus | consensus | 10 | k=10 | 517 | 0.6618 [0.6159, 0.7059] | 0.7206 [0.6790, 0.7596] | 0.3397 |
+| `image-n5-image-t0.3-consensus-n5-5of5` | consensus | consensus | 5 | k=5 | 559 | 0.6559 [0.6092, 0.7011] | 0.7264 [0.6837, 0.7657] | 0.3222 |
+| `image-n5-image-t0.7-consensus-8of10` | consensus | consensus | 10 | k=8 | 494 | 0.6825 [0.6384, 0.7237] | 0.7492 [0.7088, 0.7855] | 0.4055 |
+| `image-n5-image-t0.7-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 523 | 0.6660 [0.6218, 0.7068] | 0.7516 [0.7127, 0.7882] | 0.3898 |
+| `image-n5-image-t1.0-consensus-8of10` | consensus | consensus | 10 | k=8 | 466 | 0.6482 [0.6032, 0.6911] | 0.7370 [0.6999, 0.7720] | 0.4424 |
+| `image-n5-image-t1.0-consensus-n5-4of5` | consensus | consensus | 5 | k=4 | 506 | 0.6482 [0.6037, 0.6912] | 0.7418 [0.7026, 0.7779] | 0.4188 |
 | `pv-high-image-t0.3-n1-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 469 | 0.6925 [0.6460, 0.7364] | 0.8429 [0.8117, 0.8692] | 0.8270 |
 | `pv-high-image-t0.3-n10-opmax` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 432 | 0.7705 [0.7317, 0.8052] | 0.8697 [0.8402, 0.8948] | 0.8294 |
 | `pv-high-image-t0.3-n3-carried-p0.15-k3` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 342 | 0.7207 [0.6729, 0.7638] | 0.8211 [0.7798, 0.8560] | 0.7788 |
@@ -1222,7 +1222,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `3b537582b` |
+| Source commit | `d639b249e` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

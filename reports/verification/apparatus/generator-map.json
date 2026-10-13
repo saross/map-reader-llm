@@ -1,6 +1,6 @@
 {
-  "map_version": "1.3",
-  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score; v1.3 2026-09-21: gen-tile-presence, for the tile-presence leaderboard and frontier renders",
+  "map_version": "1.4",
+  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score; v1.3 2026-09-21: gen-tile-presence, for the tile-presence leaderboard and frontier renders; v1.4 2026-10-08: gen-d51-ladder-provenance-summary, for the D57 ladder-provenance summary tables",
   "rules": [
     {
       "rule_id": "hw-paper-tables",
@@ -903,6 +903,15 @@
       "source_rule": "sibling:leaderboard.json / frontier/frontier.json",
       "write_site": "scripts/build_tile_presence_board.py:stage_leaderboard, stage_frontier",
       "notes": "The tile-presence presentation (PI ruling 2026-09-21): the tile-MCC optimum is off the boards under both definitions and tabled here instead, with its vote count as a column and its verifier pool priced. Both documents are rendered from the committed sweep records beside their own JSON. findings.md in the same directory is hand-written and is not covered by this rule. Added 2026-09-21."
+    },
+    {
+      "rule_id": "gen-d51-ladder-provenance-summary",
+      "match": "^reports/d51-ladder-provenance-2026-10-08-scripts/out/summary\\.md$",
+      "scope": "reports/d51-ladder-provenance-2026-10-08-scripts/out/",
+      "generator": "reports/d51-ladder-provenance-2026-10-08-scripts/summarise.py",
+      "source_rule": "sibling:gate_survey.json / clip_cost.json / rebuild_pools.json / t07_tilings.json / red_sentinel.json",
+      "write_site": "reports/d51-ladder-provenance-2026-10-08-scripts/summarise.py:main",
+      "notes": "Tables for reports/d51-ladder-provenance-2026-10-08.md (PI ruling D57 (2), (3)), rendered from the committed JSON outputs beside it so no number is hand-transcribed. The report itself is hand-written. Added 2026-10-08."
     }
   ]
 }
