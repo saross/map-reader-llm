@@ -1,0 +1,548 @@
+{
+ "cases": {
+  "bootstrap_ci": {
+   "digests": {
+    "0": "523a38b24917e2627d942fae42a86f2a9a62f5e6f376ee69aed4c634b4c948cf",
+    "1": "523a38b24917e2627d942fae42a86f2a9a62f5e6f376ee69aed4c634b4c948cf",
+    "2": "523a38b24917e2627d942fae42a86f2a9a62f5e6f376ee69aed4c634b4c948cf",
+    "3": "523a38b24917e2627d942fae42a86f2a9a62f5e6f376ee69aed4c634b4c948cf"
+   },
+   "status": "stable"
+  },
+  "bootstrap_effect_size_ci": {
+   "digests": {
+    "0": "8520bcf1b69835fae70f2401e07c2aa3a7bfc1da250962671b9e7712c9af377b",
+    "1": "443708ede0505d34f485ee2d159362aaaaee2fbb8858dbb1e4436635be0b2905",
+    "2": "49f897157512f3404f4b2a3765e98b9b88b464b1a37463b8ac7e9594251ade4f",
+    "3": "c5ca60967dbcdc922ae4a44f6f85608ffa875f4bfbdc1c842e5e017419e48d1b"
+   },
+   "outputs": {
+    "0": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "f1_difference": {
+      "ci_lower": -0.01991268486407912,
+      "ci_upper": 0.19019250111752523,
+      "mean": 0.06764339649221827,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.1979
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "permutation": {
+      "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_discordant_tiles": 39,
+      "n_permutations": 10000,
+      "n_tiles": 75,
+      "seed": 42
+     },
+     "precision_difference": {
+      "ci_lower": -0.1210323583442737,
+      "ci_upper": 0.060760661219435685,
+      "mean": -0.03256461682378776,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.4975
+     },
+     "recall_difference": {
+      "ci_lower": 0.04687439911039461,
+      "ci_upper": 0.3259053501980145,
+      "mean": 0.17494333832641432,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.0272
+     }
+    },
+    "1": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "f1_difference": {
+      "ci_lower": -0.023078629388223887,
+      "ci_upper": 0.158316108010597,
+      "mean": 0.06496240352832633,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.1979
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "permutation": {
+      "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_discordant_tiles": 39,
+      "n_permutations": 10000,
+      "n_tiles": 75,
+      "seed": 42
+     },
+     "precision_difference": {
+      "ci_lower": -0.11407775766019759,
+      "ci_upper": 0.06604743705214448,
+      "mean": -0.033144598843569885,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.4975
+     },
+     "recall_difference": {
+      "ci_lower": 0.02382857745815551,
+      "ci_upper": 0.28833231766675865,
+      "mean": 0.17040920154058609,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.0272
+     }
+    },
+    "2": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "f1_difference": {
+      "ci_lower": -0.02117120344306816,
+      "ci_upper": 0.1910220953090017,
+      "mean": 0.06024276287881634,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.1979
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "permutation": {
+      "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_discordant_tiles": 39,
+      "n_permutations": 10000,
+      "n_tiles": 75,
+      "seed": 42
+     },
+     "precision_difference": {
+      "ci_lower": -0.1279003543150237,
+      "ci_upper": 0.07367065727481374,
+      "mean": -0.03872536600099852,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.4975
+     },
+     "recall_difference": {
+      "ci_lower": 0.05233884507501829,
+      "ci_upper": 0.330423215625071,
+      "mean": 0.16744151011814715,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.0272
+     }
+    },
+    "3": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "f1_difference": {
+      "ci_lower": -0.037161558477625346,
+      "ci_upper": 0.16456043821194669,
+      "mean": 0.06536663034436357,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.1979
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "permutation": {
+      "method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_discordant_tiles": 39,
+      "n_permutations": 10000,
+      "n_tiles": 75,
+      "seed": 42
+     },
+     "precision_difference": {
+      "ci_lower": -0.13534382936480419,
+      "ci_upper": 0.0649480520087936,
+      "mean": -0.035570876199640535,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.4975
+     },
+     "recall_difference": {
+      "ci_lower": 0.0344520912911219,
+      "ci_upper": 0.3138481981577334,
+      "mean": 0.17321596003065973,
+      "method": "BCa",
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "p_value": 0.0272
+     }
+    }
+   },
+   "status": "VARIES"
+  },
+  "bootstrap_interaction_ci": {
+   "digests": {
+    "0": "47011f48ac92f7b914f02f4d8bd4a6b815282453bb04c0bb86b682ea4ad55256",
+    "1": "a7dba10c14ce0cd43782bc36b41b48e5a20d674d283578b50b1c241e4fd1c674",
+    "2": "41d21ea221065d560e14b829f4dd69ba768753e882a89624a937be2ab8ae5903",
+    "3": "ff54373a9b5bd271431298dcd498521a133c1da8b6fe32827000cfbfb75f054c"
+   },
+   "outputs": {
+    "0": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "factor_a_levels": [
+      "hi",
+      "lo"
+     ],
+     "factor_a_name": "factor_a",
+     "factor_b_levels": [
+      "x",
+      "y"
+     ],
+     "factor_b_name": "factor_b",
+     "interaction_contrasts": [
+      {
+       "ci_excludes_zero": false,
+       "difference_of_differences": {
+        "ci_lower": -0.06542033512597967,
+        "ci_upper": 0.16766062581860058,
+        "mean": 0.043670576893729454,
+        "method": "BCa"
+       },
+       "factor_a_level_1": "hi",
+       "factor_a_level_2": "lo"
+      }
+     ],
+     "interaction_detected": false,
+     "metric": "f1",
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "simple_effects": {
+      "hi": {
+       "ci_lower": -0.06151841389412746,
+       "ci_upper": 0.0904279757653998,
+       "mean": 0.008936543816437346,
+       "method": "BCa"
+      },
+      "lo": {
+       "ci_lower": -0.1287846094518128,
+       "ci_upper": 0.04484122855739294,
+       "mean": -0.034734033077292115,
+       "method": "BCa"
+      }
+     }
+    },
+    "1": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "factor_a_levels": [
+      "hi",
+      "lo"
+     ],
+     "factor_a_name": "factor_a",
+     "factor_b_levels": [
+      "x",
+      "y"
+     ],
+     "factor_b_name": "factor_b",
+     "interaction_contrasts": [
+      {
+       "ci_excludes_zero": false,
+       "difference_of_differences": {
+        "ci_lower": -0.079335806007272,
+        "ci_upper": 0.15146074506332283,
+        "mean": 0.03922385448696442,
+        "method": "BCa"
+       },
+       "factor_a_level_1": "hi",
+       "factor_a_level_2": "lo"
+      }
+     ],
+     "interaction_detected": false,
+     "metric": "f1",
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "simple_effects": {
+      "hi": {
+       "ci_lower": -0.07783421734718747,
+       "ci_upper": 0.0822083309399517,
+       "mean": 0.006814111730373225,
+       "method": "BCa"
+      },
+      "lo": {
+       "ci_lower": -0.11670241580916586,
+       "ci_upper": 0.04260523452600501,
+       "mean": -0.0324097427565912,
+       "method": "BCa"
+      }
+     }
+    },
+    "2": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "factor_a_levels": [
+      "hi",
+      "lo"
+     ],
+     "factor_a_name": "factor_a",
+     "factor_b_levels": [
+      "x",
+      "y"
+     ],
+     "factor_b_name": "factor_b",
+     "interaction_contrasts": [
+      {
+       "ci_excludes_zero": false,
+       "difference_of_differences": {
+        "ci_lower": -0.09108083886638317,
+        "ci_upper": 0.16904002918405656,
+        "mean": 0.038130827077628014,
+        "method": "BCa"
+       },
+       "factor_a_level_1": "hi",
+       "factor_a_level_2": "lo"
+      }
+     ],
+     "interaction_detected": false,
+     "metric": "f1",
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "simple_effects": {
+      "hi": {
+       "ci_lower": -0.0610555051470568,
+       "ci_upper": 0.08634127229848623,
+       "mean": 0.0058133193418070245,
+       "method": "BCa"
+      },
+      "lo": {
+       "ci_lower": -0.12909914912544235,
+       "ci_upper": 0.05648268659097565,
+       "mean": -0.032317507735821,
+       "method": "BCa"
+      }
+     }
+    },
+    "3": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "factor_a_levels": [
+      "hi",
+      "lo"
+     ],
+     "factor_a_name": "factor_a",
+     "factor_b_levels": [
+      "x",
+      "y"
+     ],
+     "factor_b_name": "factor_b",
+     "interaction_contrasts": [
+      {
+       "ci_excludes_zero": false,
+       "difference_of_differences": {
+        "ci_lower": -0.07093639966957661,
+        "ci_upper": 0.16957428025198285,
+        "mean": 0.03412205151981668,
+        "method": "BCa"
+       },
+       "factor_a_level_1": "hi",
+       "factor_a_level_2": "lo"
+      }
+     ],
+     "interaction_detected": false,
+     "metric": "f1",
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "simple_effects": {
+      "hi": {
+       "ci_lower": -0.05849424166340409,
+       "ci_upper": 0.07727178628991849,
+       "mean": 0.006000625770588425,
+       "method": "BCa"
+      },
+      "lo": {
+       "ci_lower": -0.14128961680146004,
+       "ci_upper": 0.055114659703691796,
+       "mean": -0.02812142574922826,
+       "method": "BCa"
+      }
+     }
+    }
+   },
+   "status": "VARIES"
+  },
+  "bootstrap_multi_run_ci": {
+   "digests": {
+    "0": "a05b3b82ecab53dc23a3031d1720818f5d9b04d6f7e8ec37e25684cf59fb0439",
+    "1": "a05b3b82ecab53dc23a3031d1720818f5d9b04d6f7e8ec37e25684cf59fb0439",
+    "2": "a05b3b82ecab53dc23a3031d1720818f5d9b04d6f7e8ec37e25684cf59fb0439",
+    "3": "a05b3b82ecab53dc23a3031d1720818f5d9b04d6f7e8ec37e25684cf59fb0439"
+   },
+   "status": "stable"
+  },
+  "bootstrap_multi_run_effect_size_ci": {
+   "digests": {
+    "0": "bf988683436cc64da5a33553ff66f9bc671a1ae9a29e9af7b1317470d28bdd0f",
+    "1": "bf988683436cc64da5a33553ff66f9bc671a1ae9a29e9af7b1317470d28bdd0f",
+    "2": "bf988683436cc64da5a33553ff66f9bc671a1ae9a29e9af7b1317470d28bdd0f",
+    "3": "bf988683436cc64da5a33553ff66f9bc671a1ae9a29e9af7b1317470d28bdd0f"
+   },
+   "status": "stable"
+  },
+  "bootstrap_tile_classification_ci": {
+   "digests": {
+    "0": "19916847e04ccd0c1424f375897dda3d6a29818c9aafeef1ce8a50a8a9142893",
+    "1": "19916847e04ccd0c1424f375897dda3d6a29818c9aafeef1ce8a50a8a9142893",
+    "2": "19916847e04ccd0c1424f375897dda3d6a29818c9aafeef1ce8a50a8a9142893",
+    "3": "19916847e04ccd0c1424f375897dda3d6a29818c9aafeef1ce8a50a8a9142893"
+   },
+   "status": "stable"
+  },
+  "bootstrap_tile_effect_size_ci": {
+   "digests": {
+    "0": "c5135ccad5ff0698bb1aa20e85f7079a00f19fac0d4c5f18040128bfc4701c34",
+    "1": "8fe15ec814eb230eeb807a757af7b8e4b0503715b43ff7e92ca383ba48f48c61",
+    "2": "657369ac059e189bfdecad92b2f32d0a5536e62774ecb77b3d0a7737912f7bea",
+    "3": "b2355ee47b34a6a5133d9f8494553b2b28556e08bf3d1c385305b977096a0956"
+   },
+   "outputs": {
+    "0": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "mcc_difference": {
+      "ci_lower": -0.16256470125983968,
+      "ci_upper": 0.28618401302761026,
+      "mean": 0.040526492796367476,
+      "method": "BCa"
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "sensitivity_difference": {
+      "ci_lower": 0.03516511014665213,
+      "ci_upper": 0.25,
+      "mean": 0.13732621346913765,
+      "method": "BCa"
+     },
+     "specificity_difference": {
+      "ci_lower": -0.4204177611515595,
+      "ci_upper": 0.0,
+      "mean": -0.17778371515991925,
+      "method": "BCa"
+     }
+    },
+    "1": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "mcc_difference": {
+      "ci_lower": -0.2021072613091527,
+      "ci_upper": 0.2843359575238254,
+      "mean": 0.04250995420477635,
+      "method": "BCa"
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "sensitivity_difference": {
+      "ci_lower": 0.021276595744680795,
+      "ci_upper": 0.2545454545454545,
+      "mean": 0.13198311712158228,
+      "method": "BCa"
+     },
+     "specificity_difference": {
+      "ci_lower": -0.3856031152643282,
+      "ci_upper": 0.0893297703469315,
+      "mean": -0.1641490499367733,
+      "method": "BCa"
+     }
+    },
+    "2": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "mcc_difference": {
+      "ci_lower": -0.1872287255762374,
+      "ci_upper": 0.2793681898690681,
+      "mean": 0.04025588068802502,
+      "method": "BCa"
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "sensitivity_difference": {
+      "ci_lower": 0.040000000000000036,
+      "ci_upper": 0.26889699472638795,
+      "mean": 0.1344294437383769,
+      "method": "BCa"
+     },
+     "specificity_difference": {
+      "ci_lower": -0.4071531960216047,
+      "ci_upper": 0.05882352941176472,
+      "mean": -0.1705217634099932,
+      "method": "BCa"
+     }
+    },
+    "3": {
+     "bootstrap_lib": "scipy.stats.bootstrap",
+     "bootstrap_method": "BCa",
+     "mcc_difference": {
+      "ci_lower": -0.1842809232341278,
+      "ci_upper": 0.28550766136147593,
+      "mean": 0.04863882053175245,
+      "method": "BCa"
+     },
+     "n_iterations": 300,
+     "n_tiles": 75,
+     "sensitivity_difference": {
+      "ci_lower": 0.019029938917560062,
+      "ci_upper": 0.25883857327832477,
+      "mean": 0.13925015962609166,
+      "method": "BCa"
+     },
+     "specificity_difference": {
+      "ci_lower": -0.3913043478260869,
+      "ci_upper": 0.06567630123085663,
+      "mean": -0.1658175562603285,
+      "method": "BCa"
+     }
+    }
+   },
+   "status": "VARIES"
+  },
+  "e45_paired_bootstrap": {
+   "digests": {
+    "0": "3e86e28a7bfacb935b12e19116b9b7535caf94851cfbf642ff420f304cfacde8",
+    "1": "3e86e28a7bfacb935b12e19116b9b7535caf94851cfbf642ff420f304cfacde8",
+    "2": "3e86e28a7bfacb935b12e19116b9b7535caf94851cfbf642ff420f304cfacde8",
+    "3": "3e86e28a7bfacb935b12e19116b9b7535caf94851cfbf642ff420f304cfacde8"
+   },
+   "status": "stable"
+  },
+  "n1_permutation_test_float": {
+   "digests": {
+    "0": "56267e8a375d459e5180d93ba6b95a04ca07f298e6559619b51cadafa879d890",
+    "1": "56267e8a375d459e5180d93ba6b95a04ca07f298e6559619b51cadafa879d890",
+    "2": "56267e8a375d459e5180d93ba6b95a04ca07f298e6559619b51cadafa879d890",
+    "3": "56267e8a375d459e5180d93ba6b95a04ca07f298e6559619b51cadafa879d890"
+   },
+   "status": "stable"
+  },
+  "paired_permutation_test": {
+   "digests": {
+    "0": "8df0ddefc775b6cdbe262b572a9b95a6aee40889dd9617d160171c0361c1e854",
+    "1": "8df0ddefc775b6cdbe262b572a9b95a6aee40889dd9617d160171c0361c1e854",
+    "2": "8df0ddefc775b6cdbe262b572a9b95a6aee40889dd9617d160171c0361c1e854",
+    "3": "8df0ddefc775b6cdbe262b572a9b95a6aee40889dd9617d160171c0361c1e854"
+   },
+   "status": "stable"
+  },
+  "pairwise_run_permutation_test": {
+   "digests": {
+    "0": "d4764414a1ae3ed21d00fa8c4b594e132aa2757d06bbfbb2336584fd11fdc2da",
+    "1": "d4764414a1ae3ed21d00fa8c4b594e132aa2757d06bbfbb2336584fd11fdc2da",
+    "2": "d4764414a1ae3ed21d00fa8c4b594e132aa2757d06bbfbb2336584fd11fdc2da",
+    "3": "d4764414a1ae3ed21d00fa8c4b594e132aa2757d06bbfbb2336584fd11fdc2da"
+   },
+   "status": "stable"
+  },
+  "selection_aware_run": {
+   "digests": {
+    "0": "0c7841fd1380dbe462b484009cdab8ebfea0b073defe46e3b4d116a92bf7edf0",
+    "1": "0c7841fd1380dbe462b484009cdab8ebfea0b073defe46e3b4d116a92bf7edf0",
+    "2": "0c7841fd1380dbe462b484009cdab8ebfea0b073defe46e3b4d116a92bf7edf0",
+    "3": "0c7841fd1380dbe462b484009cdab8ebfea0b073defe46e3b4d116a92bf7edf0"
+   },
+   "status": "stable"
+  }
+ },
+ "seeds": [
+  0,
+  1,
+  2,
+  3
+ ]
+}
