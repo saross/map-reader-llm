@@ -1,0 +1,80 @@
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/models?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files?<redacted> "HTTP/1.1 200 OK"
+INFO File storage preflight: 15 file(s) stored (1.73 GB) + 5 chunk(s) to upload (0.06 GB) = 1.79 GB projected against a 18.14 GB budget (20.00 GB cap less a 1.86 GB margin — one maximum chunk)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/mto0e0otm7id
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot
+Lodged batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot (818 requests, model gemini-3-flash-preview, gemini-3-flash-preview_t0.0_minimal)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/rl4ntedqxgbf
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3-flash-preview:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/vseaekbmvuz7uctz9de7n71tgstdv2plu8bf
+Lodged batches/vseaekbmvuz7uctz9de7n71tgstdv2plu8bf (3 requests, model gemini-3-flash-preview, gemini-3-flash-preview_t2.0_minimal)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/frxntjum273i
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.7-flash:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/3erqfy9dt45vdw30mm8kiibiycb01q1uinml
+Lodged batches/3erqfy9dt45vdw30mm8kiibiycb01q1uinml (191 requests, model gemini-3.7-flash, gemini-3.7-flash_t0.0_low)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/e9cnrd64d2ap
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.7-flash:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79
+Lodged batches/3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79 (6 requests, model gemini-3.7-flash, gemini-3.7-flash_t2.0_low)
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files "HTTP/1.1 200 OK"
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/upload/v1beta/files?<redacted> "HTTP/1.1 200 OK"
+INFO Uploaded JSONL as: files/fyc4ls1hb3r4
+INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1alpha/models/gemini-3.8-flash:batchGenerateContent "HTTP/1.1 200 OK"
+INFO Submitted batch job: batches/2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p
+Lodged batches/2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p (11 requests, model gemini-3.8-flash, gemini-3.8-flash_t0.0_low)
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot "HTTP/1.1 200 OK"
+INFO Batch job batches/jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-jgc4l7to2fa0puwe4r95o8hbucw8zz9ppvot:download?<redacted> "HTTP/1.1 200 OK"
+INFO Retrieved 818 result lines from batch job
+gemini-3-flash-preview_t0.0_minimal: JOB_STATE_SUCCEEDED, 818/818 rows, 0 missing or errored
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/vseaekbmvuz7uctz9de7n71tgstdv2plu8bf "HTTP/1.1 200 OK"
+INFO Batch job batches/vseaekbmvuz7uctz9de7n71tgstdv2plu8bf reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-vseaekbmvuz7uctz9de7n71tgstdv2plu8bf:download?<redacted> "HTTP/1.1 200 OK"
+INFO Retrieved 3 result lines from batch job
+gemini-3-flash-preview_t2.0_minimal: JOB_STATE_SUCCEEDED, 3/3 rows, 0 missing or errored
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3erqfy9dt45vdw30mm8kiibiycb01q1uinml "HTTP/1.1 200 OK"
+INFO Batch job batches/3erqfy9dt45vdw30mm8kiibiycb01q1uinml reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-3erqfy9dt45vdw30mm8kiibiycb01q1uinml:download?<redacted> "HTTP/1.1 200 OK"
+INFO Retrieved 191 result lines from batch job
+gemini-3.7-flash_t0.0_low: JOB_STATE_SUCCEEDED, 191/191 rows, 0 missing or errored
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79 "HTTP/1.1 200 OK"
+INFO Batch job batches/3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79 reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-3dll4zcx8n3arhwlm7q2m51hiia7pzodtq79:download?<redacted> "HTTP/1.1 200 OK"
+INFO Retrieved 6 result lines from batch job
+gemini-3.7-flash_t2.0_low: JOB_STATE_SUCCEEDED, 6/6 rows, 0 missing or errored
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p "HTTP/1.1 200 OK"
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/batches/2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p "HTTP/1.1 200 OK"
+INFO Batch job batches/2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p reached terminal state: JOB_STATE_SUCCEEDED
+INFO HTTP Request: GET https://generativelanguage.googleapis.com/v1alpha/files/batch-2pgh1c4ai6gyuu2e6q2gd8ve9sxk2w3euv4p:download?<redacted> "HTTP/1.1 200 OK"
+INFO Retrieved 11 result lines from batch job
+gemini-3.8-flash_t0.0_low: JOB_STATE_SUCCEEDED, 11/11 rows, 0 missing or errored
+REVERIFY LODGE COMPLETE: 1029/1029 rows in 5 jobs
