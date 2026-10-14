@@ -1,0 +1,34 @@
+tree head b044c486e; inputs from b044c486e^ (8ef4281c7)
+family          before     after  basis
+ARM2-N5        $158.58 $  158.58  measured
+ARM2-N3         $99.03 $   99.03  measured
+FOURTH-N10     $198.17 $  198.17  completed
+FOURTH-N3       $81.40 $   81.40  completed
+ARM1-N5        $153.16 $  153.16  measured
+ARM1-N3         $94.31 $   94.31  measured
+ARM2-N1         $38.33 $   38.33  measured
+B-N10          $172.67 $  172.67  measured
+B-N5            $96.67 $   96.67  measured
+B-N3            $65.10 $   65.10  measured
+A-N10          $103.42 $  103.42  completed
+ARM1-N1         $34.75 $   34.75  measured
+T03-oracle     $261.15 $  263.89  measured
+A-N5            $59.45 $   59.45  completed
+TH7-oracle     $207.35 $  210.32  measured
+FOURTH-N1       $42.14 $   42.14  completed
+A-N3            $41.00 $   41.00  completed
+T03            $261.15 $  261.15  measured
+UPL             $57.89 $   57.89  measured
+A-N1            $20.40 $   20.40  completed
+TH7            $207.35 $  207.35  measured
+TM-oracle       $30.40 $   31.91  completed
+B-N1            $30.79 $   30.79  measured
+IM             $200.80 $  200.80  completed
+TM              $30.40 $   30.40  completed
+
+carried frontier: A, N = 1 -> 3.7 arm 2, N = 1 -> B, N = 3 -> fourth cell, N = 3 -> 3.7 arm 2, N = 3 -> 3.7 arm 2: all-3.7 stack, N = 5
+oracle frontier:  A, N = 1 -> 3.7 arm 1, N = 1 -> 3.7 arm 2, N = 1 -> fourth cell, N = 3 -> 3.7 arm 2, N = 3 -> 3.7 arm 2: all-3.7 stack, N = 5
+
+wrote results/55map-final-board-r2-2026-09-06/final_board_50m.json and results/55map-final-board-r2-2026-09-06/final-board-50m.md
+final_board_50m.json: IDENTICAL to b044c486e
+final-board-50m.md: DIFFERS from b044c486e

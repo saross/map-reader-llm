@@ -1,0 +1,13 @@
+diff --git a/results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py b/results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+index bfeeacbc0..dd522265f 100644
+--- a/results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
++++ b/results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+@@ -93,7 +93,7 @@ import geopandas as gpd
+ import numpy as np
+ from scipy.spatial import cKDTree
+ 
+-PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
++PROJECT_ROOT = Path(__file__).resolve().parents[3]
+ sys.path.insert(0, str(PROJECT_ROOT))
+ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+ 

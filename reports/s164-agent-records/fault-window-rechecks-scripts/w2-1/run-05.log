@@ -1,0 +1,40 @@
+Previous HEAD position was 0569b0d2f data(g37-image): materialise the K=5 arm 2 replicate
+HEAD is now at 7351bcce8 results(g37-image): score the arm 2 K=5 replicate
+start 2026-10-14T01:10:28Z HEAD 7351bcce82fdc947b02834fcbd04b97ac59ba5f6
+?? results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/replicate_k5_arm2.py
+== PYTHONHASHSEED=0 2026-10-14T01:10:28Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:10:34,398 - INFO - loaded IMG-ARM2-K5-carried                n= 5219
+2026-10-14 01:10:39,492 - INFO - loaded IMG-ARM2-K5-f1-oracle-replicate    n= 5184
+2026-10-14 01:10:44,538 - INFO - loaded IMG-ARM2-K5-carried-replicate      n= 5202
+2026-10-14 01:10:49,691 - INFO - loaded IMG-ARM2-K3-carried                n= 5357
+2026-10-14 01:10:54,790 - INFO - loaded IMG-ARM2-K5-f1-oracle              n= 5197
+2026-10-14 01:11:06,926 - INFO - F1  (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.9278 vs 0.9270 d=+0.0008 p=0.4015
+2026-10-14 01:11:06,926 - INFO - F1  (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.9278 vs 0.9199 d=+0.0079 p=0.0000
+2026-10-14 01:11:06,926 - INFO - F1  (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.9270 vs 0.9199 d=+0.0071 p=0.0000
+2026-10-14 01:11:06,926 - INFO - F1  (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.9290 vs 0.9280 d=+0.0010 p=0.2861
+2026-10-14 01:11:06,926 - INFO - MCC (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.7655 vs 0.7659 d=-0.0005 p=0.8225
+2026-10-14 01:11:06,926 - INFO - MCC (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.7655 vs 0.7648 d=+0.0007 p=0.7459
+2026-10-14 01:11:06,926 - INFO - MCC (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.7659 vs 0.7648 d=+0.0012 p=0.6141
+2026-10-14 01:11:06,926 - INFO - MCC (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.7674 vs 0.7681 d=-0.0007 p=0.7100
+2026-10-14 01:11:06,926 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+bae7f851690504a8f12aa2b444cbfb41f8eebdd4a3915db4afb8e9ec830d9349  results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+== PYTHONHASHSEED=12345 2026-10-14T01:11:07Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:11:13,191 - INFO - loaded IMG-ARM2-K5-f1-oracle              n= 5197
+2026-10-14 01:11:18,324 - INFO - loaded IMG-ARM2-K5-f1-oracle-replicate    n= 5184
+2026-10-14 01:11:23,461 - INFO - loaded IMG-ARM2-K5-carried                n= 5219
+2026-10-14 01:11:28,422 - INFO - loaded IMG-ARM2-K3-carried                n= 5357
+2026-10-14 01:11:33,212 - INFO - loaded IMG-ARM2-K5-carried-replicate      n= 5202
+2026-10-14 01:11:44,716 - INFO - F1  (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.9278 vs 0.9270 d=+0.0008 p=0.4015
+2026-10-14 01:11:44,716 - INFO - F1  (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.9278 vs 0.9199 d=+0.0079 p=0.0000
+2026-10-14 01:11:44,716 - INFO - F1  (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.9270 vs 0.9199 d=+0.0071 p=0.0000
+2026-10-14 01:11:44,716 - INFO - F1  (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.9290 vs 0.9280 d=+0.0010 p=0.2861
+2026-10-14 01:11:44,716 - INFO - MCC (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.7655 vs 0.7659 d=-0.0005 p=0.8225
+2026-10-14 01:11:44,716 - INFO - MCC (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.7655 vs 0.7648 d=+0.0007 p=0.7459
+2026-10-14 01:11:44,716 - INFO - MCC (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.7659 vs 0.7648 d=+0.0012 p=0.6141
+2026-10-14 01:11:44,716 - INFO - MCC (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.7674 vs 0.7681 d=-0.0007 p=0.7100
+2026-10-14 01:11:44,716 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+25ac9e43d2f1cd2b4da54e4895628682deb92cc12df1fe3c2c89bf18e511014c  results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+3df0eb54881b618249eb82b514a964abb8ab3332eb134788708fc76c63350723  -
+end 2026-10-14T01:11:44Z

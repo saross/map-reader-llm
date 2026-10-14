@@ -1,0 +1,131 @@
+===== w1-1/status.tsv
+incumbents	0	11s
+grid	0	156s
+grid_verifier	0	256s
+stride	0	350s
+ALL-DONE
+===== w1-1/splice.log
+keys only in committed: ['conditions']
+results/grid-2026-08-18/verifier_analysis.json indent 2
+results/grid-2026-08-18/grid_analysis.json indent 2
+===== w1-2/status.tsv
+retest-phase2e	0	93s
+retest-phase2c-track1-image-exploratory	0	59s
+retest-phase2a	0	177s
+retest-phase2c-track2-text	0	134s
+retest-phase2d-track2-text	0	20s
+retest-phase2c-track1-image	0	143s
+retest-phase2b-track1-image	0	149s
+retest-phase2b-track2-text	0	140s
+retest-phase2d-track1-image	0	14s
+annotate	0	0s
+ALL-DONE
+===== w1-2/annotate.log
+phase2a-evaluation.json: max per-condition F1 drift 0.0004
+phase2b-track1-evaluation.json: max per-condition F1 drift 0.0019
+phase2b-track2-evaluation.json: max per-condition F1 drift 0.0007
+phase2c-exploratory-evaluation.json: max per-condition F1 drift 0.0023
+phase2c-track1-evaluation.json: max per-condition F1 drift 0.0059
+phase2c-track2-evaluation.json: max per-condition F1 drift 0.0006
+phase2d-track1-evaluation.json: max per-condition F1 drift 0.0005
+phase2d-track2-evaluation.json: max per-condition F1 drift 0.0000
+phase2e-evaluation.json: max per-condition F1 drift 0.0011
+61 pairwise rows; verdict changes (old CI-uncorrected -> new BH): 4
+   ('phase2a-evaluation.json', 'image-only', 'verbose-text', True, False, 0.0573, 0.14325)
+   ('phase2b-track1-evaluation.json', 'T0.7', 'T1.3', True, False, 0.0588, 0.09442857142857143)
+   ('phase2b-track2-evaluation.json', 'T0.7', 'T1.3', True, False, 0.0535, 0.08916666666666667)
+   ('phase2c-track2-evaluation.json', 'plus-hp', 'scale-4', True, False, 0.0588, 0.588)
+===== w1-3/status.tsv
+feb-phase2b-track1	0	1s
+feb-phase2b-track2	0	1s
+feb-phase2a	0	279s
+feb-phase2c-track1	0	293s
+feb-phase2c-exploratory	0	104s
+feb-phase2d-track1	0	116s
+feb-phase2d-track2	0	42s
+feb-phase2e	0	92s
+first-pass-done
+feb-phase2b-track1	0	252s
+feb-phase2b-track2	0	261s
+feb-phase2d-track2	0	112s
+feb-phase2e	0	169s
+feb_compare	0	1s
+ALL-DONE
+===== w1-3/repair.log
+phase2b geojson count: 100
+total 48
+drwxrwxr-x 2 shawn shawn 4096 Oct 14 01:09 .
+drwxrwxr-x 6 shawn shawn 4096 Oct 14 01:01 ..
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_1 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_1
+lrwxrwxrwx 1 shawn shawn  109 Oct 14 01:09 run_10 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_10
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_2 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_2
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_3 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_3
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_4 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_4
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_5 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_5
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_6 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_6
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_7 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_7
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_8 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_8
+lrwxrwxrwx 1 shawn shawn  108 Oct 14 01:09 run_9 -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-3/febdata/phase2c/track1-image/plus-hp/run_9
+===== w1-4/regen-b/status.tsv
+b18-asis	0	12s
+b17-asis	0	12s
+b17-resweep	0	21s
+384-march	1	170s
+384-e39	1	173s
+pes-v1	0	280s
+pes-v2	0	269s
+p3a-high	0	352s
+b17-resweep-compare	0	14s
+ALL-DONE
+ANNOTATED
+===== w1-4/regen-b/sed-e39.diff
+31c31
+<         return json.loads(subprocess.check_output(["git", "-C", str(REPO), "show", f"e686e695e:{I4_SWEEP}"]))
+---
+>         return json.loads((REPO / I4_SWEEP).read_text())  # E39 (current) sweep, D44 figure to cite
+===== w1-4/regen-b/sed-pes.diff
+7c7
+<         --output /tmp/regen-b/pairwise-effect-sizes-v2.json --workers 20
+---
+>         --output /home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/pairwise-effect-sizes-v2.json --workers 20
+26c26
+< SCR = Path("/tmp/regen-b/march-sweeps")  # the one sweep E39 (01c84b841) regenerated
+---
+> SCR = Path("/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/march-sweeps")  # the one sweep E39 (01c84b841) regenerated
+===== w1-4/annotate.log
+== results/h11-384-pv-diagnostic/pairwise/fair-384-vs-512.json
+   I1:loose_consensus: F1 p 0.004 -> 0.0049
+   I2:goldilocks: F1 p 0.002 -> 0.0019
+   I3:best_vs_best: F1 p 0.002 -> 0.001
+   I5:image_moderate: F1 p 0.001 -> 0.0
+   I6:image_baseline: F1 p 0.008 -> 0.0075
+   I4:deterministic: F1 p 0.006 -> 0.007
+   I4 (E39 sweep): f1_512 0.7701, F1 p 0.0111
+== results/pv/pairwise-effects/pairwise-effect-sizes.json
+   54 rows annotated; raw-alpha F1 flips: 1
+     raw-alpha flip: G:pv-checklist-text-150_vs_pv-brief-text-150 F1 p 0.034 -> 0.0527
+== results/pv/pairwise-effects/pairwise-effect-sizes-v2.json
+   52 rows annotated; raw-alpha F1 flips: 1
+     raw-alpha flip: G:pv-checklist-text-150_vs_pv-brief-text-150 F1 p 0.046 -> 0.0527
+== results/retest/phase3a-high-text/phase3a-high-text-pairwise.json
+   HIGH_T0.7_N5_best vs Minimal_T0.7_N5_best: F1 p 0.002 -> 0.0052
+   HIGH_best vs PV_text_5of10: F1 p 0.001 -> 0.0026
+   HIGH_best vs PV_text_3of10: F1 p 0.008 -> 0.0118
+   HIGH_T0.7_run1 vs Minimal_T0.7_run1: F1 p 0.001 -> 0.0
+   HIGH_T0.7_N30_best vs Minimal_T0.7_N30_best: F1 p 0.002 -> 0.0001
+   HIGH_T0.3_best vs HIGH_T0.7_best: F1 p 0.742 -> 0.7332
+   HIGH_T0.3_best vs HIGH_T1.0_best: F1 p 0.732 -> 0.7285
+   HIGH_T0.7_best vs HIGH_T1.0_best: F1 p 0.986 -> 0.9938
+== results/h11-384-pv-diagnostic/pairwise/pro-proposer-verifier-thinking-text/comparison.json
+   F1 p 0.001 -> 0.0047
+   re-sweep: minimal threshold 0.15, F1 0.7696; F1 p 0.0067
+== results/h11-384-pv-diagnostic/pairwise/pro-proposer-verifier-thinking-image/comparison.json
+   F1 p 0.166 -> 0.1626
+== results/h11-384-pv-diagnostic/pairwise/pairwise-384px.json: note added (not re-testable)
+annotate rc=0
+===== scratch-inventory-check.txt
+===== 384-march.log (tail)
+    ...<12 lines>...
+    )
+scripts.lib_advanced_metrics.TileJoinRefusalError: per-tile TP/FP/FN table refused: 72 of 558 in-frame detections were credited to a tile under the 'id' tile join, a shortfall of 486. (tile_join_detection_shortfall) Most often the cell's source_tile vocabulary is not this frame's; re-run with a geometric tile_join.
+===== scratch inventory: md5sum -c of ~/cc-scratch/bootstrap-cis against 7121c969f:archive/pre-patch-retest-detections-2026-03-21/scratch-inventory.md5 (570 entries): no failures (empty check file above)

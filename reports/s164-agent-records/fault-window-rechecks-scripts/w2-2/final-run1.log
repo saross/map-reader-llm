@@ -1,0 +1,46 @@
+job=final tree=/home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-2-22353e660 head=22353e660ada89a9bae8c9484e097c2904716ec2 PYTHONHASHSEED=0 start=2026-10-14T00:40:28Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 00:42:06,963 - INFO - G3 OK: 8-cell board reproduced (f1, 28 pairwise p-values, 5 tiers)
+2026-10-14 00:42:06,965 - INFO - coincidence OK TH7-oracle  F1@50 0.838000 == committed
+2026-10-14 00:42:06,966 - INFO - coincidence OK IM-oracle   F1@50 0.800800 == committed
+2026-10-14 00:42:06,966 - INFO - coincidence OK UPL-oracle  F1@50 0.827400 == committed
+2026-10-14 00:45:15,648 - INFO - assembled 35 cells
+2026-10-14 01:06:41,614 - INFO - 512/595 pairs significant -> 12 tiers
+2026-10-14 01:06:41,614 - INFO -  1. ARM2-N5-oracle T1 a      oracle   F1@50 0.8871  MCC 0.715  (0.95, k5)
+2026-10-14 01:06:41,614 - INFO -  2. ARM2-N3-oracle T1 ab     oracle   F1@50 0.8848  MCC 0.716  (0.95, k3)
+2026-10-14 01:06:41,614 - INFO -  3. ARM2-N5-carried T2 bc     carried  F1@50 0.8827  MCC 0.706  (0.80, k5)
+2026-10-14 01:06:41,614 - INFO -  4. FOURTH-N10-oracle T2 ab     oracle   F1@50 0.8813  MCC 0.736  (0.96, k9)
+2026-10-14 01:06:41,614 - INFO -  5. FOURTH-N3-oracle T3 cd     oracle   F1@50 0.8747  MCC 0.738  (0.96, k3)
+2026-10-14 01:06:41,614 - INFO -  6. FOURTH-N10-carried T3 d      carried  F1@50 0.8728  MCC 0.726  (0.98, k10)
+2026-10-14 01:06:41,614 - INFO -  7. ARM1-N5-oracle T3 d      oracle   F1@50 0.8727  MCC 0.715  (0.15, k5)
+2026-10-14 01:06:41,614 - INFO -  8. ARM1-N3-oracle T3 d      oracle   F1@50 0.8705  MCC 0.718  (0.15, k3)
+2026-10-14 01:06:41,614 - INFO -  9. ARM2-N1-oracle T4 e      oracle   F1@50 0.8610  MCC 0.742  (0.98, k1)
+2026-10-14 01:06:41,614 - INFO - 10. B-N10-oracle   T4 e      oracle   F1@50 0.8560  MCC 0.712  (0.20, k9)
+2026-10-14 01:06:41,614 - INFO - 11. ARM1-N5-carried T4 efg    carried  F1@50 0.8551  MCC 0.665  (0.10, k5)
+2026-10-14 01:06:41,614 - INFO - 12. B-N5-oracle    T5 fg     oracle   F1@50 0.8516  MCC 0.710  (0.20, k5)
+2026-10-14 01:06:41,614 - INFO - 13. B-N3-oracle    T5 g      oracle   F1@50 0.8507  MCC 0.713  (0.20, k3)
+2026-10-14 01:06:41,614 - INFO - 14. B-N5-carried   T5 fg     carried  F1@50 0.8503  MCC 0.701  (0.15, k5)
+2026-10-14 01:06:41,614 - INFO - 15. B-N10-carried  T5 fgh    carried  F1@50 0.8497  MCC 0.698  (0.15, k10)
+2026-10-14 01:06:41,614 - INFO - 16. B-N3-carried   T6 fhi    carried (post-hoc) F1@50 0.8477  MCC 0.702  (0.15, k3)
+2026-10-14 01:06:41,614 - INFO - 17. A-N10-oracle   T6 hij    oracle   F1@50 0.8419  MCC 0.695  (0.15, k7)
+2026-10-14 01:06:41,614 - INFO - 18. ARM1-N1-oracle T6 hijk   oracle   F1@50 0.8413  MCC 0.725  (0.20, k1)
+2026-10-14 01:06:41,614 - INFO - 19. T03-oracle     T6 ijkl   oracle   F1@50 0.8399  MCC 0.696  (0.20, k3)
+2026-10-14 01:06:41,614 - INFO - 20. A-N10-carried  T7 km     carried  F1@50 0.8391  MCC 0.693  (0.15, k8)
+2026-10-14 01:06:41,614 - INFO - 21. A-N5-oracle    T7 km     oracle   F1@50 0.8383  MCC 0.691  (0.15, k4)
+2026-10-14 01:06:41,614 - INFO - 22. A-N5-carried   T7 km     carried  F1@50 0.8383  MCC 0.691  (0.15, k4)
+2026-10-14 01:06:41,614 - INFO - 23. TH7-oracle     T7 jkl    oracle   F1@50 0.8380  MCC 0.679  (0.15, k3)
+2026-10-14 01:06:41,614 - INFO - 24. FOURTH-N1-oracle T7 jklmn  oracle   F1@50 0.8352  MCC 0.747  (0.96, k1)
+2026-10-14 01:06:41,614 - INFO - 25. A-N3-oracle    T8 ln     oracle   F1@50 0.8321  MCC 0.702  (0.20, k2)
+2026-10-14 01:06:41,614 - INFO - 26. A-N3-carried   T8 ln     carried (post-hoc) F1@50 0.8307  MCC 0.688  (0.15, k3)
+2026-10-14 01:06:41,614 - INFO - 27. T03-k4         T8 mno    carried  F1@50 0.8294  MCC 0.669  (0.15, k4)
+2026-10-14 01:06:41,614 - INFO - 28. UPL-oracle     T8 no     oracle   F1@50 0.8274  MCC 0.669  (0.15, k5)
+2026-10-14 01:06:41,614 - INFO - 29. A-N1-oracle    T9 op     oracle   F1@50 0.8227  MCC 0.701  (0.20, k1)
+2026-10-14 01:06:41,614 - INFO - 30. TH7-k4         T9 pq     carried  F1@50 0.8162  MCC 0.665  (0.15, k4)
+2026-10-14 01:06:41,614 - INFO - 31. TM-oracle      T10 qr     oracle   F1@50 0.8103  MCC 0.662  (0.20, k3)
+2026-10-14 01:06:41,614 - INFO - 32. B-N1-oracle    T10 r      oracle   F1@50 0.8013  MCC 0.709  (0.20, k1)
+2026-10-14 01:06:41,614 - INFO - 33. IM-oracle      T10 r      oracle   F1@50 0.8008  MCC 0.711  (0.15, k3)
+2026-10-14 01:06:41,614 - INFO - 34. TM-k4          T11 s      carried  F1@50 0.7826  MCC 0.640  (0.15, k4)
+2026-10-14 01:06:41,615 - INFO - 35. IM-k4          T12 t      carried  F1@50 0.7398  MCC 0.654  (0.15, k4)
+2026-10-14 01:06:42,483 - INFO - figure -> results/55map-final-board-r2-2026-09-06/significance-groups.png
+2026-10-14 01:06:42,487 - INFO - FINAL BOARD WRITTEN -> results/55map-final-board-r2-2026-09-06/final-board-50m.md
+job=final DONE end=2026-10-14T01:06:42Z

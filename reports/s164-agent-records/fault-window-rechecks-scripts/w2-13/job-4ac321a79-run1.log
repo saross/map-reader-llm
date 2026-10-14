@@ -1,0 +1,33 @@
+HEAD 4ac321a79
+== gate 2026-10-14T00:45:02Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 00:45:09,567 - INFO - carried (0.15, k3) re-stamped    n=4680  F1@50 0.8008  tile-MCC 0.7087
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 00:45:17,054 - INFO - carried (0.15, k3) as committed  n=4680  F1@50 0.8008  tile-MCC 0.7110
+2026-10-14 00:45:17,054 - INFO - reproduction gate PASS: |dF1| = 0.0000, |dMCC| = 0.0023 (tolerance 0.003)
+2026-10-14 00:45:17,054 - INFO - restamped     deltas vs committed IM-k3: F1 -0.0000  MCC -0.0023
+2026-10-14 00:45:17,054 - INFO - as-committed  deltas vs committed IM-k3: F1 -0.0000  MCC +0.0000
+exit=0
+== sweep 2026-10-14T00:45:17Z
+2026-10-14 00:45:18,801 - INFO - IM-5pass: 7878 candidates, votes {3: 2896, 4: 2159, 5: 2823}
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 00:45:19,041 - INFO - sweeping 51 points (1 workers)
+2026-10-14 00:49:15,701 - INFO - reproduction gate PASS: |dF1| = 0.0000, |dMCC| = 0.0023 (tolerance 0.003)
+2026-10-14 00:49:15,702 - INFO - wrote results/im-june-pool-grid-2026-09-20/sweep_IM-5pass.csv (51 points)
+2026-10-14 00:49:15,702 - INFO - votes >= 3: F1 oracle 0.8008 at p0.15 | MCC oracle 0.7139 at p0.20
+2026-10-14 00:49:15,702 - INFO - votes >= 4: F1 oracle 0.7398 at p0.15 | MCC oracle 0.6597 at p0.20
+2026-10-14 00:49:15,702 - INFO - votes >= 5: F1 oracle 0.5851 at p0.15 | MCC oracle 0.5459 at p0.15
+2026-10-14 00:49:15,703 - INFO - wrote results/im-june-pool-grid-2026-09-20/grid.json
+exit=0
+== materialise 2026-10-14T00:49:15Z
+2026-10-14 00:49:17,272 - INFO - Created 4,680 records
+2026-10-14 00:49:17,273 - INFO - IM-5pass-k3-f1-oracle    n= 4680 -> results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-f1-oracle/detections.geojson
+2026-10-14 00:49:17,319 - INFO - Created 4,561 records
+2026-10-14 00:49:17,320 - INFO - IM-5pass-k3-mcc-oracle   n= 4561 -> results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k3-mcc-oracle/detections.geojson
+2026-10-14 00:49:17,343 - INFO - Created 2,283 records
+2026-10-14 00:49:17,344 - INFO - IM-5pass-k5-carried      n= 2283 -> results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-carried/detections.geojson
+2026-10-14 00:49:17,370 - INFO - Created 2,283 records
+2026-10-14 00:49:17,371 - INFO - IM-5pass-k5-f1-oracle    n= 2283 -> results/im-june-pool-grid-2026-09-20/cells/IM-5pass-k5-f1-oracle/detections.geojson
+2026-10-14 00:49:17,371 - INFO - wrote results/im-june-pool-grid-2026-09-20/cells_manifest.json (4 cells)
+exit=0
+== done 2026-10-14T00:49:17Z

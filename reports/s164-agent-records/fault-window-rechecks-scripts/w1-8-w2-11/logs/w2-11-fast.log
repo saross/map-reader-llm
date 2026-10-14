@@ -1,0 +1,123 @@
+=== 2026-10-14T01:03:58+00:00 e9d1db0d0 consensus rebuilds at e9d1db0d0^
+HEAD 5a56ad248
+merge outputs/gemini37-screen-2026-08-28/g384_ov192_g37 consensus-n1 rc=0
+merge outputs/gemini37-screen-2026-08-28/g384_ov192_g37 consensus-n3 rc=0
+merge outputs/grid-2026-08-18/g384_ov192 consensus-n5 rc=0
+HEAD e9d1db0d0
+check_union_provenance rc=0
+=== 2026-10-14T01:04:51+00:00 185681674 merge_passes --sweep n1-outstanding-384::pro-image-high-t0
+HEAD 185681674
+pool dir outputs/h11/n1-outstanding-384/pro-image-high-t0; consensus outputs/h11/n1-outstanding-384/pro-image-high-t0/consensus
+rc=0
+=== 2026-10-14T01:04:52+00:00 185681674 merge_passes --sweep n1-outstanding-384::pro-text-high-t0
+HEAD 185681674
+pool dir outputs/h11/n1-outstanding-384/pro-text-high-t0; consensus outputs/h11/n1-outstanding-384/pro-text-high-t0/consensus
+rc=0
+=== 2026-10-14T01:04:54+00:00 e01b8617a merge_passes --sweep e47-propose-brief::propose_brief-text
+HEAD e01b8617a
+pool dir outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text; consensus outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/consensus
+rc=0
+=== 2026-10-14T01:05:03+00:00 e7ebc1695 merge_passes --sweep h12-v2::r3-hp-heavy
+HEAD e7ebc1695
+pool dir outputs/h12-v2/r3-hp-heavy; consensus outputs/h12-v2/greedy/r3-hp-heavy
+rc=0
+=== 2026-10-14T01:05:05+00:00 e7ebc1695 WBF fusion
+HEAD e7ebc1695
+wbf rc=1
+=== 2026-10-14T01:05:05+00:00 c053f5a41 meta completed_items vs GeoJSON processed_tiles
+{
+ "geojson_unchanged_by_commit": true,
+ "geojson_processed_tiles": 326,
+ "completed_before": 327,
+ "tiles_removed": [
+  "K-35-053-3_Elenovo_x672_y3360.png"
+ ],
+ "parsed_meta_equal": true,
+ "correction_numbers_consistent": true,
+ "reserialised_bytes_equal": false,
+ "reserialised_bytes_equal_ignoring_final_newline": true,
+ "tiles_sidecar_completed_equals_geojson": true,
+ "tiles_sidecar_counts": [
+  326,
+  327
+ ]
+}
+=== 2026-10-14T01:05:05+00:00 43516df9a extract + sweep for the three recovery stages
+HEAD 43516df9a
+pv-diag-image-t0.0-v1 extract rc=0
+pv-diag-image-t0.0-v1 sweep rc=0
+pv-diag-text-t0.0-v1 extract rc=0
+pv-diag-text-t0.0-v1 sweep rc=0
+e47-1of5-v1 extract rc=0
+e47-1of5-v1 sweep rc=0
+=== 2026-10-14T01:09:46+00:00 f8e0eb600 extracts, carries and sweeps
+HEAD f8e0eb600
+k1 extract rc=0
+k1 carry rc=0
+k3 extract rc=0
+k3 carry rc=0
+k5 extract rc=0
+k5 carry rc=0
+k1 sweep sweep_2d_era2b.json rc=0
+k1 sweep sweep_2d.json rc=0
+k3 sweep sweep_2d_era2b.json rc=0
+k3 sweep sweep_2d.json rc=0
+k5 sweep sweep_board.json rc=0
+k5 sweep sweep_era2.json rc=0
+=== 2026-10-14T01:16:38+00:00 image unions b9d4032bb g384_ov192_55map_g37img K=1 3
+HEAD b9d4032bb
+union k1 rc=0
+provenance k1 rc=0
+union k3 rc=0
+provenance k3 rc=0
+extract k1 rc=0
+manifest provenance k1 rc=2
+extract k3 rc=0
+manifest provenance k3 rc=2
+=== 2026-10-14T01:20:09+00:00 image unions bd5de9f80 g384_ov192_55map_g37img K=5
+HEAD bd5de9f80
+union k5 rc=0
+provenance k5 rc=0
+extract k5 rc=0
+manifest provenance k5 rc=2
+=== 2026-10-14T01:23:23+00:00 image unions 7d61f1ff9 g384_ov192_55map_g3img K=1 3 5
+HEAD 7d61f1ff9
+union k1 rc=0
+provenance k1 rc=0
+union k3 rc=0
+provenance k3 rc=0
+union k5 rc=0
+provenance k5 rc=0
+=== 2026-10-14T01:37:49+00:00 image runs 4-5 re-merged from chunks at bbdf4ba28
+HEAD bbdf4ba28
+outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1: 7 chunks; geojson IDENTICAL, meta IDENTICAL, tiles IDENTICAL
+outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1: 7 chunks; geojson IDENTICAL, meta IDENTICAL, tiles IDENTICAL
+=== 2026-10-14T01:37:52+00:00 REPARSE outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20 code@87b92878a added@5778b5569
+HEAD 87b92878a
+Failed to parse verifier result for candidate_06537: Extra data: line 7 column 1 (char 739)
+Failed to parse verifier result for candidate_08272: Extra data: line 7 column 1 (char 812)
+outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20: probs IDENTICAL; meta fields EQUAL; 9173/9173 matched; cost 12.981871
+=== 2026-10-14T01:37:54+00:00 REPARSE outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20 code@3ced9749c added@3f8af3a65
+HEAD 3ced9749c
+outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20: probs IDENTICAL; meta fields EQUAL; 9173/9173 matched; cost 20.406631
+=== 2026-10-14T01:37:55+00:00 REPARSE outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/verify_batch code@460b168b9 added@cab5d1b91
+HEAD 460b168b9
+outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/verify_batch: probs IDENTICAL; meta fields EQUAL; 200/200 matched; cost 0.449636
+=== 2026-10-14T01:37:56+00:00 REPARSE outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2 code@79a2afc0d added@cda04a952
+HEAD 79a2afc0d
+Failed to parse verifier result for candidate_14666: Expecting ',' delimiter: line 3 column 118 (char 235)
+outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2: probs IDENTICAL; meta fields EQUAL; 22785/22785 matched; cost 50.79567
+=== 2026-10-14T01:37:58+00:00 REPARSE outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2 code@7d587cf27 added@e21b5295a
+HEAD 7d587cf27
+Failed to parse verifier result for candidate_24301: Expecting ',' delimiter: line 3 column 155 (char 252)
+Failed to parse verifier result for candidate_25096: Expecting ',' delimiter: line 3 column 202 (char 310)
+Failed to parse verifier result for candidate_35486: Expecting ',' delimiter: line 3 column 113 (char 216)
+outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2: probs IDENTICAL; meta fields EQUAL; 36389/36389 matched; cost 81.162554
+=== 2026-10-14T01:38:00+00:00 REPARSE outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2 code@4d65c1f27 added@880c207f7
+HEAD 4d65c1f27
+Failed to parse verifier result for candidate_21916: Expecting ',' delimiter: line 3 column 96 (char 184)
+Failed to parse verifier result for candidate_26911: Expecting ',' delimiter: line 3 column 179 (char 253)
+Failed to parse verifier result for candidate_35350: Expecting ',' delimiter: line 3 column 140 (char 216)
+outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2: probs IDENTICAL; meta fields EQUAL; 45786/45786 matched; cost 102.18491
+HEAD 69eb32132
+=== 2026-10-14T01:38:05+00:00 W2-11 SEQUENCE DONE

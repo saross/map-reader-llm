@@ -1,0 +1,287 @@
+[
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json",
+    "commit": "58500a739",
+    "sha256_regen": "0f16717fc8d7e57f924207214417fb36ed1d3d7acddce5326fb4f209768c8fd3",
+    "sha256_committed": "0f16717fc8d7e57f924207214417fb36ed1d3d7acddce5326fb4f209768c8fd3",
+    "bytes_regen": 16174,
+    "bytes_committed": 16174,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json",
+    "commit": "90294a283",
+    "sha256_regen": "0f16717fc8d7e57f924207214417fb36ed1d3d7acddce5326fb4f209768c8fd3",
+    "sha256_committed": "04bf70ba0e16e1e169e04f3b5c4229ffc4982a9717f4532bb70606f030af2b95",
+    "bytes_regen": 16174,
+    "bytes_committed": 19669,
+    "ignored_keys": [],
+    "n_leaf_diffs": 8,
+    "leaf_diffs": [
+      {
+        "path": "/arms/arm1/1/ambiguity",
+        "regen": "<missing>",
+        "committed": {
+          "radius_m": 10.0,
+          "tie_break_rule": "nearest Euclidean neighbour wins (cKDTree.query k=1); exact distance ties fall to the tree's internal ordering, which is deterministic per build but undocumented, so they are counted rather than relied upon",
+          "neighbours_within_radius_mean": 0.9931,
+          "neighbours_within_radius_max": 2,
+          "n_ambiguous": 2,
+          "ambiguous_share_of_matched": 0.000288,
+          "n_exact_distance_ties": 0,
+          "margin_d2_minus_d1_p05_m": 17.903836,
+          "margin_d2_minus_d1_p50_m": 190.958196,
+          "decision_threshold": 0.1,
+          "n_decision_ambiguous": 1,
+          "decision_ambiguous_share_of_matched": 0.000144,
+          "prob_spread_within_radius_mean": 0.05,
+          "prob_spread_within_radius_max": 0.05
+        }
+      },
+      {
+        "path": "/arms/arm1/1/match_dist_p99_m",
+        "regen": "<missing>",
+        "committed": 9.448722
+      },
+      {
+        "path": "/arms/arm1/3/ambiguity",
+        "regen": "<missing>",
+        "committed": {
+          "radius_m": 10.0,
+          "tie_break_rule": "nearest Euclidean neighbour wins (cKDTree.query k=1); exact distance ties fall to the tree's internal ordering, which is deterministic per build but undocumented, so they are counted rather than relied upon",
+          "neighbours_within_radius_mean": 1.0,
+          "neighbours_within_radius_max": 2,
+          "n_ambiguous": 2,
+          "ambiguous_share_of_matched": 0.00024,
+          "n_exact_distance_ties": 0,
+          "margin_d2_minus_d1_p05_m": 17.860846,
+          "margin_d2_minus_d1_p50_m": 172.032069,
+          "decision_threshold": 0.1,
+          "n_decision_ambiguous": 0,
+          "decision_ambiguous_share_of_matched": 0.0,
+          "prob_spread_within_radius_mean": 0.075,
+          "prob_spread_within_radius_max": 0.1
+        }
+      },
+      {
+        "path": "/arms/arm1/3/match_dist_p99_m",
+        "regen": "<missing>",
+        "committed": 7.435579
+      },
+      {
+        "path": "/arms/arm2/1/ambiguity",
+        "regen": "<missing>",
+        "committed": {
+          "radius_m": 10.0,
+          "tie_break_rule": "nearest Euclidean neighbour wins (cKDTree.query k=1); exact distance ties fall to the tree's internal ordering, which is deterministic per build but undocumented, so they are counted rather than relied upon",
+          "neighbours_within_radius_mean": 0.9931,
+          "neighbours_within_radius_max": 2,
+          "n_ambiguous": 2,
+          "ambiguous_share_of_matched": 0.000288,
+          "n_exact_distance_ties": 0,
+          "margin_d2_minus_d1_p05_m": 17.903836,
+          "margin_d2_minus_d1_p50_m": 190.958196,
+          "decision_threshold": 0.88,
+          "n_decision_ambiguous": 0,
+          "decision_ambiguous_share_of_matched": 0.0,
+          "prob_spread_within_radius_mean": 0.0,
+          "prob_spread_within_radius_max": 0.0
+        }
+      },
+      {
+        "path": "/arms/arm2/1/match_dist_p99_m",
+        "regen": "<missing>",
+        "committed": 9.448722
+      },
+      {
+        "path": "/arms/arm2/3/ambiguity",
+        "regen": "<missing>",
+        "committed": {
+          "radius_m": 10.0,
+          "tie_break_rule": "nearest Euclidean neighbour wins (cKDTree.query k=1); exact distance ties fall to the tree's internal ordering, which is deterministic per build but undocumented, so they are counted rather than relied upon",
+          "neighbours_within_radius_mean": 1.0,
+          "neighbours_within_radius_max": 2,
+          "n_ambiguous": 2,
+          "ambiguous_share_of_matched": 0.00024,
+          "n_exact_distance_ties": 0,
+          "margin_d2_minus_d1_p05_m": 17.860846,
+          "margin_d2_minus_d1_p50_m": 172.032069,
+          "decision_threshold": 0.88,
+          "n_decision_ambiguous": 0,
+          "decision_ambiguous_share_of_matched": 0.0,
+          "prob_spread_within_radius_mean": 0.0,
+          "prob_spread_within_radius_max": 0.0
+        }
+      },
+      {
+        "path": "/arms/arm2/3/match_dist_p99_m",
+        "regen": "<missing>",
+        "committed": 7.435579
+      }
+    ],
+    "key_order_equal": false,
+    "verdict": "DIFFERS"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json",
+    "commit": "58500a739",
+    "sha256_regen": "1704f081f88008700cf329c046eab0931e206b555d4b7bd36f354e254b3ab7cd",
+    "sha256_committed": "1704f081f88008700cf329c046eab0931e206b555d4b7bd36f354e254b3ab7cd",
+    "bytes_regen": 1835,
+    "bytes_committed": 1835,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json",
+    "commit": "90294a283",
+    "sha256_regen": "1704f081f88008700cf329c046eab0931e206b555d4b7bd36f354e254b3ab7cd",
+    "sha256_committed": "1704f081f88008700cf329c046eab0931e206b555d4b7bd36f354e254b3ab7cd",
+    "bytes_regen": 1835,
+    "bytes_committed": 1835,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv",
+    "commit": "58500a739",
+    "sha256_regen": "bdf90d100d2600f1fcbb147eb7e2758298769db4a7048950b94274e206600dde",
+    "sha256_committed": "bdf90d100d2600f1fcbb147eb7e2758298769db4a7048950b94274e206600dde",
+    "bytes_regen": 2291,
+    "bytes_committed": 2291,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv",
+    "commit": "90294a283",
+    "sha256_regen": "bdf90d100d2600f1fcbb147eb7e2758298769db4a7048950b94274e206600dde",
+    "sha256_committed": "bdf90d100d2600f1fcbb147eb7e2758298769db4a7048950b94274e206600dde",
+    "bytes_regen": 2291,
+    "bytes_committed": 2291,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson",
+    "commit": "58500a739",
+    "sha256_regen": "6428d6ff3dcc093bdb832db34bcfe9d75732fbc034ab0dce523f8de083a9f025",
+    "sha256_committed": "6428d6ff3dcc093bdb832db34bcfe9d75732fbc034ab0dce523f8de083a9f025",
+    "bytes_regen": 2080696,
+    "bytes_committed": 2080696,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson",
+    "commit": "90294a283",
+    "sha256_regen": "6428d6ff3dcc093bdb832db34bcfe9d75732fbc034ab0dce523f8de083a9f025",
+    "sha256_committed": "6428d6ff3dcc093bdb832db34bcfe9d75732fbc034ab0dce523f8de083a9f025",
+    "bytes_regen": 2080696,
+    "bytes_committed": 2080696,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv",
+    "commit": "58500a739",
+    "sha256_regen": "9e9298c9253382744b6b0fde2a2a3062aa8ad3057b0f65413ad1ee2de343605b",
+    "sha256_committed": "9e9298c9253382744b6b0fde2a2a3062aa8ad3057b0f65413ad1ee2de343605b",
+    "bytes_regen": 6702,
+    "bytes_committed": 6702,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv",
+    "commit": "90294a283",
+    "sha256_regen": "9e9298c9253382744b6b0fde2a2a3062aa8ad3057b0f65413ad1ee2de343605b",
+    "sha256_committed": "9e9298c9253382744b6b0fde2a2a3062aa8ad3057b0f65413ad1ee2de343605b",
+    "bytes_regen": 6702,
+    "bytes_committed": 6702,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson",
+    "commit": "58500a739",
+    "sha256_regen": "42c0b48f62ff477e3805f952e5b865a8ac8f362c8266d0051f128e7907bcc676",
+    "sha256_committed": "42c0b48f62ff477e3805f952e5b865a8ac8f362c8266d0051f128e7907bcc676",
+    "bytes_regen": 1825334,
+    "bytes_committed": 1825334,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson",
+    "commit": "90294a283",
+    "sha256_regen": "42c0b48f62ff477e3805f952e5b865a8ac8f362c8266d0051f128e7907bcc676",
+    "sha256_committed": "42c0b48f62ff477e3805f952e5b865a8ac8f362c8266d0051f128e7907bcc676",
+    "bytes_regen": 1825334,
+    "bytes_committed": 1825334,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv",
+    "commit": "58500a739",
+    "sha256_regen": "0aa13fde8b7b93cfdf14dfae7f2091f25d961a7226d968738e2b441518613bd8",
+    "sha256_committed": "0aa13fde8b7b93cfdf14dfae7f2091f25d961a7226d968738e2b441518613bd8",
+    "bytes_regen": 2734,
+    "bytes_committed": 2734,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv",
+    "commit": "90294a283",
+    "sha256_regen": "0aa13fde8b7b93cfdf14dfae7f2091f25d961a7226d968738e2b441518613bd8",
+    "sha256_committed": "0aa13fde8b7b93cfdf14dfae7f2091f25d961a7226d968738e2b441518613bd8",
+    "bytes_regen": 2734,
+    "bytes_committed": 2734,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson",
+    "commit": "58500a739",
+    "sha256_regen": "5f7e9465297ac5b998aae0422d9ca0a48936961f9cd1e41eb93eb7e26e0b4893",
+    "sha256_committed": "5f7e9465297ac5b998aae0422d9ca0a48936961f9cd1e41eb93eb7e26e0b4893",
+    "bytes_regen": 2004026,
+    "bytes_committed": 2004026,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson",
+    "commit": "90294a283",
+    "sha256_regen": "5f7e9465297ac5b998aae0422d9ca0a48936961f9cd1e41eb93eb7e26e0b4893",
+    "sha256_committed": "5f7e9465297ac5b998aae0422d9ca0a48936961f9cd1e41eb93eb7e26e0b4893",
+    "bytes_regen": 2004026,
+    "bytes_committed": 2004026,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv",
+    "commit": "58500a739",
+    "sha256_regen": "1a9b26bccf0b175857826222c1788835a62d87ec1992f5167d6153802c1447f1",
+    "sha256_committed": "1a9b26bccf0b175857826222c1788835a62d87ec1992f5167d6153802c1447f1",
+    "bytes_regen": 8007,
+    "bytes_committed": 8007,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv",
+    "commit": "90294a283",
+    "sha256_regen": "1a9b26bccf0b175857826222c1788835a62d87ec1992f5167d6153802c1447f1",
+    "sha256_committed": "1a9b26bccf0b175857826222c1788835a62d87ec1992f5167d6153802c1447f1",
+    "bytes_regen": 8007,
+    "bytes_committed": 8007,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson",
+    "commit": "58500a739",
+    "sha256_regen": "7b2ee49e2fabbdb4401021d6099ab9b3fb6a11d66aaceec71863cb1e6af76187",
+    "sha256_committed": "7b2ee49e2fabbdb4401021d6099ab9b3fb6a11d66aaceec71863cb1e6af76187",
+    "bytes_regen": 1804585,
+    "bytes_committed": 1804585,
+    "verdict": "BYTE-IDENTICAL"
+  },
+  {
+    "path": "results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson",
+    "commit": "90294a283",
+    "sha256_regen": "7b2ee49e2fabbdb4401021d6099ab9b3fb6a11d66aaceec71863cb1e6af76187",
+    "sha256_committed": "7b2ee49e2fabbdb4401021d6099ab9b3fb6a11d66aaceec71863cb1e6af76187",
+    "bytes_regen": 1804585,
+    "bytes_committed": 1804585,
+    "verdict": "BYTE-IDENTICAL"
+  }
+]
