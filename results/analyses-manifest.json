@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-14T00:44:35Z",
+  "generated_at": "2026-10-14T01:39:00Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -2002,7 +2002,7 @@
       "predicted_outcome": "Registered: 'Compare Pro optimal threshold to Flash optimal threshold; Note any differences >10% relative'. Under the registered transfer prediction the relative difference is <=10%. The registered >20% extended-test trigger (preregistration.md:689) cannot fire an N=30 Pro run in a $0 block. [Authored before computation.]",
       "predicted_outcome_amended": null,
       "tie_set": [],
-      "outcome": "SPLIT VERDICT at matched N=3 (refreshed 2026-09-08 on the comparator sweeps rebuilt from the recovered passes; the 2026-08-17 verdicts stand unchanged). Text: Pro optimal k=1 (F1@20 0.8602 > 0.8558 > 0.8494) vs Flash-comparator optimal k=3 (0.5748 > 0.5203 > 0.4634) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5854), 0% relative - transfers, and on the recovered comparator the Flash winner leads its runner-up by 0.0094 (was 0.0015 on the pre-recovery sweeps), above the artefact's 0.005 fragility threshold: the S135 MEDIUM-3 fragility flag is retired. The Pro text winner still leads by 0.0045 (fragile). Flash comparator passes are 485-486/487 after recovery (the E71 residue). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8602 beats Pro single-pass 0.8045 (+0.056). Gates: model provenance 12 pools; comparator 6/6 at 5e-5 against the regenerated manifest; materialisation gates. Artefact: results/h6-registered-analyses/a07_voting_thresholds.json (pre-refresh copy: archive/pre-recovery-2026-09-08/h6-registered-analyses/).",
+      "outcome": "SPLIT VERDICT at matched N=3 (refreshed 2026-09-08 on the comparator sweeps rebuilt from the recovered passes; the 2026-08-17 verdicts stand unchanged; rescored 2026-10-14 under the D50 scorer, no optimum or verdict moved). Text: Pro optimal k=1 (F1@20 0.8626 > 0.8582 > 0.8519) vs Flash-comparator optimal k=3 (0.5764 > 0.5217 > 0.4647) - 67% relative, FLAGGED, robust (well clear of the 10% rule); the >20% level indicates the registered extended N=30 test (cannot execute here; the matched-N form is itself post-hoc and the message is operational wording, not a registered trigger). Image: both optimal at k=3 (Pro 0.7223; Flash 0.5873), 0% relative - transfers, and on the recovered comparator the Flash winner leads its runner-up by 0.0095 (was 0.0015 on the pre-recovery sweeps), above the artefact's 0.005 fragility threshold: the S135 MEDIUM-3 fragility flag is retired. The Pro text winner still leads by 0.0044 (fragile). Flash comparator passes are 485-486/487 after recovery (the E71 residue). The text-track optimum REVERSES between models at matched N (Pro prefers the union, Flash the intersection) - the vote threshold again behaves as a property of the pipeline-corpus-model encounter (cf. Obs 358). Also notable: Pro text N=3 union 0.8626 beats Pro single-pass 0.8045 (+0.058). Gates: model provenance 12 pools; comparator 6/6 at 5e-5 against the regenerated manifest; materialisation gates. Artefact: results/h6-registered-analyses/a07_voting_thresholds.json (pre-refresh copy: archive/pre-recovery-2026-09-08/h6-registered-analyses/).",
       "paper_section": "Methods",
       "output_path": "results/h6-registered-analyses",
       "working_notes_obs": [
@@ -2010,10 +2010,10 @@
       ],
       "manually_verified_at": "2026-09-10T06:56:15Z",
       "signature": {
-        "status": "re-sign-pending",
-        "signed_at": null,
-        "attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).\n\nSIGNATURE NOTE 2026-10-14 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-10T06:56:15Z has LAPSED and the row is re-sign-pending). A-07 regenerated under the D50 scorer (detections scoped per sheet by tile geometry, never re-keyed across sheets), executing D62 (5) as ruled in D65: results/h6-registered-analyses/a07_voting_thresholds.json regenerated on sapphire at 90294a283 in two independent runs, byte-identical apart from generated_at (468ada2fc, PR #47, branch d62-5-a07-d50). CHANGED (25 leaves): the Pro text curve 0.8602/0.8558/0.8494 -> 0.8626/0.8582/0.8519; the Flash comparator curves, text 0.4634/0.5203/0.5748 -> 0.4647/0.5217/0.5764 and image 0.5614/0.5760/0.5854 -> 0.5631/0.5778/0.5873; the margins over the runner-up, Pro text 0.004457 -> 0.004423, Flash text 0.054448 -> 0.054612, Flash image 0.009411 -> 0.00948 (the image caveat's 0.0094 -> 0.0095); the twelve comparator-gate fields (6/6 still pass at 5e-5). UNCHANGED: every optimal k (text: Pro 1, Flash 3; image: 3 and 3); both matched-N verdicts (text FLAGGED at 67 % relative, image transfers at 0 %); the fragility flags (the Pro text margin stays under 0.005, so text stays fragile; the Flash image margin stays above it, so the retired MEDIUM-3 flag stays retired); the Pro image curve (0.6909/0.7149/0.7223); the model-provenance gate (12 pools); the Pro N=3 consensus files (rewritten byte-identical). STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.8602 (twice), 0.8558, 0.8494, 0.5748, 0.5203, 0.4634, 0.5854, 0.0094, 0.0045, and the derived union gain +0.056 (now +0.058 against the unchanged single-pass 0.8045); a redraft with only these numbers updated, and a word-level diff, are in reports/s164-agent-records/a07-d50.md and the PR #47 body. Walkthrough material: results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14.",
-        "presentation": "Pending re-signature: draft PR #47 (branch d62-5-a07-d50); results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14; the redrafted outcome text in reports/s164-agent-records/a07-d50.md",
+        "status": "signed",
+        "signed_at": "2026-10-14T01:37:56Z",
+        "attests": "Re-signed 2026-10-14T01:37:56Z by the PI (Session 164: \"I approve the drafted outcome text\"; \"re-sign now\"), after the signature lapsed on 2026-10-14 when A-07 was regenerated under the D50 scorer (D62 (5), D65; PR #47). SCOPE: the outcome text as it stands at 2026-10-14T01:37:56Z, i.e. the draft in reports/s164-agent-records/a07-d50.md with the dating clause the PI approved; and results/h6-registered-analyses/a07_voting_thresholds.json as regenerated (25 values moved; three independent runs agree apart from generated_at; no optimal k, fragility flag, or verdict changed). The prior signature 2026-09-10T06:56:15Z and the lapse note are kept in history.",
+        "presentation": "Session 164 conversation (the drafted text shown in full with its changed numbers); PR #47; reports/s164-agent-records/a07-d50.md; results/h6-registered-analyses/findings.md changelog 2026-10-14",
         "history": [
           {
             "noted_at": "2026-10-14T00:39:56Z",
@@ -2022,6 +2022,13 @@
             "prior_signed_at": "2026-09-10T06:56:15Z",
             "prior_attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).",
             "prior_presentation": null
+          },
+          {
+            "noted_at": "2026-10-14T01:37:56Z",
+            "kind": "re-signed after lapse (Session 164; PI: \"I approve the drafted outcome text\", \"re-sign now\")",
+            "prior_status": "re-sign-pending",
+            "prior_attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).\n\nSIGNATURE NOTE 2026-10-14 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-10T06:56:15Z has LAPSED and the row is re-sign-pending). A-07 regenerated under the D50 scorer (detections scoped per sheet by tile geometry, never re-keyed across sheets), executing D62 (5) as ruled in D65: results/h6-registered-analyses/a07_voting_thresholds.json regenerated on sapphire at 90294a283 in two independent runs, byte-identical apart from generated_at (468ada2fc, PR #47, branch d62-5-a07-d50). CHANGED (25 leaves): the Pro text curve 0.8602/0.8558/0.8494 -> 0.8626/0.8582/0.8519; the Flash comparator curves, text 0.4634/0.5203/0.5748 -> 0.4647/0.5217/0.5764 and image 0.5614/0.5760/0.5854 -> 0.5631/0.5778/0.5873; the margins over the runner-up, Pro text 0.004457 -> 0.004423, Flash text 0.054448 -> 0.054612, Flash image 0.009411 -> 0.00948 (the image caveat's 0.0094 -> 0.0095); the twelve comparator-gate fields (6/6 still pass at 5e-5). UNCHANGED: every optimal k (text: Pro 1, Flash 3; image: 3 and 3); both matched-N verdicts (text FLAGGED at 67 % relative, image transfers at 0 %); the fragility flags (the Pro text margin stays under 0.005, so text stays fragile; the Flash image margin stays above it, so the retired MEDIUM-3 flag stays retired); the Pro image curve (0.6909/0.7149/0.7223); the model-provenance gate (12 pools); the Pro N=3 consensus files (rewritten byte-identical). STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.8602 (twice), 0.8558, 0.8494, 0.5748, 0.5203, 0.4634, 0.5854, 0.0094, 0.0045, and the derived union gain +0.056 (now +0.058 against the unchanged single-pass 0.8045); a redraft with only these numbers updated, and a word-level diff, are in reports/s164-agent-records/a07-d50.md and the PR #47 body. Walkthrough material: results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14.",
+            "prior_presentation": "Pending re-signature: draft PR #47 (branch d62-5-a07-d50); results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14; the redrafted outcome text in reports/s164-agent-records/a07-d50.md"
           }
         ]
       },
@@ -2030,7 +2037,7 @@
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-10-14T00:44:35Z",
+        "last_extracted_at": "2026-10-14T01:39:00Z",
         "extractor_version": "0.8.0"
       }
     },
