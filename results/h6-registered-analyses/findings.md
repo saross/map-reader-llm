@@ -186,9 +186,7 @@ remains robust (67 % against a 10 % rule). The Flash comparator passes are 485�
 after recovery — the E71 residue that failed both recovery tiers — and
 the curves now consume the post-recovery detections; the earlier
 one-sided gap (the pre-recovery scoring at 458–472 tiles, E71 rider
-2026-09-07) no longer applies. The image "transfers"
-verdict is therefore not robust at these margins; the text
-"flagged" verdict is (67 % against a 10 % rule). The matched-N form
+2026-09-07) no longer applies. The matched-N form
 is itself post-hoc; the library's "run extended N = 30 test"
 message is operational wording, not a registered trigger.
 
@@ -379,12 +377,14 @@ kept in `history`), and its outcome text is unchanged. A redraft with
 only those numbers updated is in `reports/s164-agent-records/a07-d50.md`,
 for the PI.
 
-**Not changed here, for the PI**: the fragility paragraph's closing
-sentences still say the image "transfers" verdict "is therefore not
-robust at these margins", which contradicts the same paragraph and the
-register row since the 2026-09-08 refresh retired the image flag. The
-sentence predates this revision and is not a number, so it is left for
-the PI's wording.
+**Removed at the PI's direction (Session 164)**: the fragility
+paragraph's closing sentence, "The image "transfers" verdict is
+therefore not robust at these margins; the text "flagged" verdict is
+(67 % against a 10 % rule).", contradicted the same paragraph and the
+register row from the 2026-09-08 refresh, which retired the image
+flag. The paragraph's earlier sentences already state both verdicts'
+robustness, so nothing replaces it. The register row's outcome text was
+updated with the PI-approved draft and re-signed.
 
 ### 2026-10-12 (later) — A-09 re-derived on the audited cost basis (PI rulings D16 and D61 (4))
 
