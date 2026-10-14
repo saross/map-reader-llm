@@ -40,6 +40,7 @@
 #   nohup bash scripts/run_pro_2x2_replication.sh smoke > /dev/null 2>&1 < /dev/null &
 #   nohup bash scripts/run_pro_2x2_replication.sh wave1 > /dev/null 2>&1 < /dev/null &
 #   nohup bash scripts/run_pro_2x2_replication.sh wave2 > /dev/null 2>&1 < /dev/null &
+#   nohup bash scripts/run_pro_2x2_replication.sh wave3 > /dev/null 2>&1 < /dev/null &   # D66 (4): image runs 4-6
 #
 # Author: Shawn Ross & Claude (Anthropic), Session 163, 2026-10-13
 # ============================================================================
@@ -52,7 +53,7 @@ BASE=outputs/pro-2x2-replication-2026-10-13
 FULL_MANIFEST=inputs/tiles_384/full_evaluation_manifest.json
 SMOKE_MANIFEST="$BASE/tiles-10-smoke-seed42.json"
 TILES_DIR=inputs/tiles_384
-STAGE=${1:?usage: run_pro_2x2_replication.sh smoke|wave1|wave2}
+STAGE=${1:?usage: run_pro_2x2_replication.sh smoke|wave1|wave2|wave3}
 LOG="$BASE/_run_log_${STAGE}.txt"
 mkdir -p "$BASE"
 echo $$ > "$BASE/${STAGE}.pid"
@@ -111,6 +112,18 @@ case "$STAGE" in
     for corner in "${!CORNERS[@]}"; do
       read -r _ _ _ passes <<< "${CORNERS[$corner]}"
       ( for run in $(seq 2 "$passes"); do
+          run_pass "$corner" "$FULL_MANIFEST" "$BASE/$corner" "$run"
+        done ) &
+    done
+    wait ;;
+  wave3)
+    # D66 (4), 2026-10-14: three more passes (runs 4-6) per IMAGE corner, so
+    # the image contrasts rest on 6 passes per corner as the text ones rest on
+    # 5. Same run_pass, configs, caching, temperature, and thinking as waves 1
+    # and 2; every image corner gets its runs 4-6 on the same day, so the date
+    # is crossed with the corners rather than confounded with any one of them.
+    for corner in image-high-t0.0 image-high-t0.7 image-medium-t0.0 image-medium-t0.7; do
+      ( for run in 4 5 6; do
           run_pass "$corner" "$FULL_MANIFEST" "$BASE/$corner" "$run"
         done ) &
     done
