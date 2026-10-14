@@ -1,0 +1,1339 @@
+[
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/52b0215a6/outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__e47-propose-brief__flash-high-text-n5__propose_brief-text__run_4",
+   "--label",
+   "detections-propose_brief-text-3-flash-2026-04-09",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/52b0215a6/outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__e47-propose-brief__flash-high-text-n5__propose_brief-text__run_4",
+   "--label",
+   "detections-propose_brief-text-3-flash-2026-04-09",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 1619,
+  "eval": "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 1619,
+   "n_in_scope": 1619,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 1619,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.2697,
+    "old_f1": 0.2697
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3905,
+    "old_f1": 0.3905
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3905,
+    "old_f1": 0.3905
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3281,
+    "old_f1": 0.3281
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3905,
+    "old_f1": 0.3905
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3544,
+    "old_f1": 0.3544
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3671,
+    "old_f1": 0.3671
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3749,
+    "old_f1": 0.3749
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3797,
+    "old_f1": 0.3797
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3836,
+    "old_f1": 0.3836
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3856,
+    "old_f1": 0.3856
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.1344,
+    "old_f1": 0.1344
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3856,
+    "old_f1": 0.3856
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3885,
+    "old_f1": 0.3885
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.2287,
+   "old": 0.2287
+  },
+  "today_n": 1641,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/detections-propose_brief-text-3-flash-2026-04-09.geojson",
+    "52b0215a6"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "99ae28ec4"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_1",
+   "--label",
+   "detections_pro-image-high-t0_run01",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_1",
+   "--label",
+   "detections_pro-image-high-t0_run01",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 692,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 692,
+   "n_in_scope": 692,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 692,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.2928,
+    "old_f1": 0.2928
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6477,
+    "old_f1": 0.6477
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6531,
+    "old_f1": 0.6531
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4383,
+    "old_f1": 0.4383
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6566,
+    "old_f1": 0.6566
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5288,
+    "old_f1": 0.5288
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.559,
+    "old_f1": 0.559
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5892,
+    "old_f1": 0.5892
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6158,
+    "old_f1": 0.6158
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.63,
+    "old_f1": 0.63
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6371,
+    "old_f1": 0.6371
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.0923,
+    "old_f1": 0.0923
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6371,
+    "old_f1": 0.6371
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6442,
+    "old_f1": 0.6442
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.6093,
+   "old": 0.6093
+  },
+  "today_n": 750,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_1/detections_pro-image-high-t0_run01.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "99ae28ec4"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_2",
+   "--label",
+   "detections_pro-image-high-t0_run02",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_2",
+   "--label",
+   "detections_pro-image-high-t0_run02",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 681,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 681,
+   "n_in_scope": 681,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 681,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.2939,
+    "old_f1": 0.2939
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6434,
+    "old_f1": 0.6434
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6487,
+    "old_f1": 0.6487
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4427,
+    "old_f1": 0.4427
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6505,
+    "old_f1": 0.6505
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5305,
+    "old_f1": 0.5305
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5645,
+    "old_f1": 0.5645
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.595,
+    "old_f1": 0.595
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6147,
+    "old_f1": 0.6147
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6272,
+    "old_f1": 0.6272
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6344,
+    "old_f1": 0.6344
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.086,
+    "old_f1": 0.086
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6344,
+    "old_f1": 0.6344
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6416,
+    "old_f1": 0.6416
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.6073,
+   "old": 0.6073
+  },
+  "today_n": 744,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_2/detections_pro-image-high-t0_run02.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "99ae28ec4"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_3",
+   "--label",
+   "detections_pro-image-high-t0_run03",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-image-high-t0__run_3",
+   "--label",
+   "detections_pro-image-high-t0_run03",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 677,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 677,
+   "n_in_scope": 677,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 677,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.2896,
+    "old_f1": 0.2896
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6403,
+    "old_f1": 0.6403
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6457,
+    "old_f1": 0.6457
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4317,
+    "old_f1": 0.4317
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6493,
+    "old_f1": 0.6493
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5234,
+    "old_f1": 0.5234
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5558,
+    "old_f1": 0.5558
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5863,
+    "old_f1": 0.5863
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6079,
+    "old_f1": 0.6079
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6223,
+    "old_f1": 0.6223
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6295,
+    "old_f1": 0.6295
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.0917,
+    "old_f1": 0.0917
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6295,
+    "old_f1": 0.6295
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.6367,
+    "old_f1": 0.6367
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.6021,
+   "old": 0.6021
+  },
+  "today_n": 741,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-image-high-t0/run_3/detections_pro-image-high-t0_run03.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "d01ea4412"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_1",
+   "--label",
+   "detections_pro-text-high-t0_run01",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_1",
+   "--label",
+   "detections_pro-text-high-t0_run01",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 1026,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 1026,
+   "n_in_scope": 1026,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 1026,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3915,
+    "old_f1": 0.3915
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.538,
+    "old_f1": 0.538
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5394,
+    "old_f1": 0.5394
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4723,
+    "old_f1": 0.4723
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5407,
+    "old_f1": 0.5407
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.501,
+    "old_f1": 0.501
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5106,
+    "old_f1": 0.5106
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5202,
+    "old_f1": 0.5202
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5243,
+    "old_f1": 0.5243
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5284,
+    "old_f1": 0.5284
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5284,
+    "old_f1": 0.5284
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.1766,
+    "old_f1": 0.1766
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5298,
+    "old_f1": 0.5298
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5366,
+    "old_f1": 0.5366
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.3916,
+   "old": 0.3916
+  },
+  "today_n": 1090,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_1/detections_pro-text-high-t0_run01.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "d01ea4412"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_2",
+   "--label",
+   "detections_pro-text-high-t0_run02",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_2",
+   "--label",
+   "detections_pro-text-high-t0_run02",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 1028,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 1028,
+   "n_in_scope": 1028,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 1028,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3814,
+    "old_f1": 0.3814
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5263,
+    "old_f1": 0.5263
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5277,
+    "old_f1": 0.5277
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4621,
+    "old_f1": 0.4621
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5277,
+    "old_f1": 0.5277
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4867,
+    "old_f1": 0.4867
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4976,
+    "old_f1": 0.4976
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5099,
+    "old_f1": 0.5099
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.514,
+    "old_f1": 0.514
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5181,
+    "old_f1": 0.5181
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5181,
+    "old_f1": 0.5181
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.1681,
+    "old_f1": 0.1681
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5195,
+    "old_f1": 0.5195
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5249,
+    "old_f1": 0.5249
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.3704,
+   "old": 0.3704
+  },
+  "today_n": 1112,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_2/detections_pro-text-high-t0_run02.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "99ae28ec4"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ },
+ {
+  "argv_new": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/new/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_3",
+   "--label",
+   "detections_pro-text-high-t0_run03",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "argv_old": [
+   "--detections",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/c3852ebad/outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+   "--buffers",
+   "5",
+   "10",
+   "15",
+   "20",
+   "25",
+   "30",
+   "35",
+   "40",
+   "45",
+   "50",
+   "75",
+   "100",
+   "125",
+   "150",
+   "--ground-truth",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/cfc10c133/inputs/vectors/references/mounds-reference.geojson",
+   "--bounds",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/blobs/8b52ab63b/inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+   "--bootstrap",
+   "10000",
+   "--seed",
+   "42",
+   "--output-dir",
+   "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/vintage-A/old/results__rescore-2026-05-31__n1-outstanding-384__pro-text-high-t0__run_3",
+   "--label",
+   "detections_pro-text-high-t0_run03",
+   "--mcc",
+   "--workers",
+   "1"
+  ],
+  "committed_n": 1004,
+  "eval": "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
+  "group": "s9-vintage",
+  "new_scope": {
+   "applied": true,
+   "n_detections": 1004,
+   "n_in_scope": 1004,
+   "n_origin_excluded": 0,
+   "n_origin_only": 0,
+   "n_origin_partly_excluded": 0,
+   "n_origin_restored": 0,
+   "n_origin_switched": 0,
+   "n_origin_unrecognised": 0,
+   "n_out_of_frame": 0,
+   "n_out_of_frame_cross_sheet": 0,
+   "n_unattributed": 0,
+   "n_unattributed_in_frame": 0,
+   "origin_columns": [],
+   "rule": "origin-sheet-geometric",
+   "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+  },
+  "old_misses": [],
+  "old_reproduces": true,
+  "pin_feature_count": 1004,
+  "pinned": true,
+  "rc_new": 0,
+  "rc_old": 0,
+  "recoverable": true,
+  "stage_a": {
+   "10": {
+    "delta_f1": 0.0,
+    "new_f1": 0.3794,
+    "old_f1": 0.3794
+   },
+   "100": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5323,
+    "old_f1": 0.5323
+   },
+   "125": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5337,
+    "old_f1": 0.5337
+   },
+   "15": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4684,
+    "old_f1": 0.4684
+   },
+   "150": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5351,
+    "old_f1": 0.5351
+   },
+   "20": {
+    "delta_f1": 0.0,
+    "new_f1": 0.4948,
+    "old_f1": 0.4948
+   },
+   "25": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5031,
+    "old_f1": 0.5031
+   },
+   "30": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5142,
+    "old_f1": 0.5142
+   },
+   "35": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5198,
+    "old_f1": 0.5198
+   },
+   "40": {
+    "delta_f1": 0.0,
+    "new_f1": 0.524,
+    "old_f1": 0.524
+   },
+   "45": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5254,
+    "old_f1": 0.5254
+   },
+   "5": {
+    "delta_f1": 0.0,
+    "new_f1": 0.171,
+    "old_f1": 0.171
+   },
+   "50": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5254,
+    "old_f1": 0.5254
+   },
+   "75": {
+    "delta_f1": 0.0,
+    "new_f1": 0.5309,
+    "old_f1": 0.5309
+   }
+  },
+  "stage_a_mcc": {
+   "new": 0.3805,
+   "old": 0.3805
+  },
+  "today_n": 1060,
+  "vintage": {
+   "bounds": [
+    "inputs/vectors/bounds/384/full_evaluation_bounds.geojson",
+    "8b52ab63b"
+   ],
+   "detections": [
+    "outputs/h11/n1-outstanding-384/pro-text-high-t0/run_3/detections_pro-text-high-t0_run03.geojson",
+    "c3852ebad"
+   ],
+   "ground_truth": [
+    "inputs/vectors/references/mounds-reference.geojson",
+    "cfc10c133"
+   ],
+   "head_detections": "99ae28ec4"
+  },
+  "vintage_rule": "e82_input_vintage pin"
+ }
+]

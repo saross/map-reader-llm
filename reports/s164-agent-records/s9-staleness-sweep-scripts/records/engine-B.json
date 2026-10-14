@@ -1,0 +1,3555 @@
+{
+ "cells": [
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/IM-k3"
+   ],
+   "committed_20": {
+    "F1": 0.5081688945469975,
+    "FN": 2351,
+    "FP": 2285,
+    "TP": 2395,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.5117521367521367,
+    "recall": 0.5046354825115887,
+    "tile_fn": 986,
+    "tile_fp": 269,
+    "tile_mcc": 0.6927303266774046,
+    "tile_sensitivity": 0.7083703046435965,
+    "tile_specificity": 0.9478682170542636,
+    "tile_tn": 4891,
+    "tile_tp": 2395
+   },
+   "committed_50": {
+    "F1": 0.7986993191748807,
+    "FN": 1231,
+    "FP": 750,
+    "TP": 3930,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.8397435897435898,
+    "recall": 0.7614803332687463,
+    "tile_fn": 1041,
+    "tile_fp": 181,
+    "tile_mcc": 0.7104103204864493,
+    "tile_sensitivity": 0.7045970488081725,
+    "tile_specificity": 0.9639226629459836,
+    "tile_tn": 4836,
+    "tile_tp": 2483
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8179210760557809,
+      0.8180019782393669
+     ],
+     "FN": [
+      1296,
+      1295
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.761369913459768,
+      0.7615101289134438
+     ]
+    },
+    "125": {
+     "F1": [
+      0.8183161004431314,
+      0.8183966909592278
+     ],
+     "FN": [
+      1320,
+      1319
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7589041095890411,
+      0.7590427475337961
+     ]
+    },
+    "150": {
+     "F1": [
+      0.818137206791638,
+      0.818217510797016
+     ],
+     "FN": [
+      1341,
+      1340
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7565801415864948,
+      0.756717501815541
+     ]
+    },
+    "50": {
+     "F1": [
+      0.7986993191748807,
+      0.7987804878048781
+     ],
+     "FN": [
+      1231,
+      1230
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7614803332687463,
+      0.7616279069767442
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8157684630738523,
+      0.8158498852180858
+     ],
+     "FN": [
+      1253,
+      1252
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7653558052434457,
+      0.7654991571455328
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/IM-k3/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.5081688945469975,
+    "FN": 2351,
+    "FP": 2285,
+    "TP": 2395,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.5117521367521367,
+    "recall": 0.5046354825115887,
+    "tile_fn": 986,
+    "tile_fp": 269,
+    "tile_mcc": 0.6927303266774046,
+    "tile_sensitivity": 0.7083703046435965,
+    "tile_specificity": 0.9478682170542636,
+    "tile_tn": 4891,
+    "tile_tp": 2395
+   },
+   "replay_50": {
+    "F1": 0.7987804878048781,
+    "FN": 1230,
+    "FP": 750,
+    "TP": 3930,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8397435897435898,
+    "recall": 0.7616279069767442,
+    "tile_fn": 1041,
+    "tile_fp": 181,
+    "tile_mcc": 0.7104103204864493,
+    "tile_sensitivity": 0.7045970488081725,
+    "tile_specificity": 0.9639226629459836,
+    "tile_tn": 4836,
+    "tile_tp": 2483
+   },
+   "seconds": 124.1,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/IM-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/T03-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6295720650709771,
+    "FN": 1708,
+    "FP": 1867,
+    "TP": 3038,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6193679918450561,
+    "recall": 0.640117994100295,
+    "tile_fn": 1012,
+    "tile_fp": 328,
+    "tile_mcc": 0.6703000738091267,
+    "tile_sensitivity": 0.7006802721088435,
+    "tile_specificity": 0.9364341085271318,
+    "tile_tn": 4832,
+    "tile_tp": 2369
+   },
+   "committed_50": {
+    "F1": 0.8476058017087225,
+    "FN": 895,
+    "FP": 639,
+    "TP": 4266,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.8697247706422019,
+    "recall": 0.8265839953497385,
+    "tile_fn": 1062,
+    "tile_fp": 235,
+    "tile_mcc": 0.6903302334580523,
+    "tile_sensitivity": 0.6986379114642451,
+    "tile_specificity": 0.9531592585210285,
+    "tile_tn": 4782,
+    "tile_tp": 2462
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8413312693498451,
+      0.8414126753749395
+     ],
+     "FN": [
+      1083,
+      1082
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.8005892100902228,
+      0.8007366482504604
+     ]
+    },
+    "125": {
+     "F1": [
+      0.841233140655106,
+      0.8413141921187013
+     ],
+     "FN": [
+      1109,
+      1108
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7974429223744293,
+      0.7975886006576544
+     ]
+    },
+    "150": {
+     "F1": [
+      0.8413673900518532,
+      0.8414481897627965
+     ],
+     "FN": [
+      1128,
+      1127
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7952441459430024,
+      0.7953885257806826
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8476058017087225,
+      0.8476900149031298
+     ],
+     "FN": [
+      895,
+      894
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.8265839953497385,
+      0.8267441860465117
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8435334309419229,
+      0.8436157750878562
+     ],
+     "FN": [
+      1019,
+      1018
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.8091760299625468,
+      0.809327589436224
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/T03-k3/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6295720650709771,
+    "FN": 1708,
+    "FP": 1867,
+    "TP": 3038,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6193679918450561,
+    "recall": 0.640117994100295,
+    "tile_fn": 1012,
+    "tile_fp": 328,
+    "tile_mcc": 0.6703000738091267,
+    "tile_sensitivity": 0.7006802721088435,
+    "tile_specificity": 0.9364341085271318,
+    "tile_tn": 4832,
+    "tile_tp": 2369
+   },
+   "replay_50": {
+    "F1": 0.8476900149031298,
+    "FN": 894,
+    "FP": 639,
+    "TP": 4266,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8697247706422019,
+    "recall": 0.8267441860465117,
+    "tile_fn": 1062,
+    "tile_fp": 235,
+    "tile_mcc": 0.6903302334580523,
+    "tile_sensitivity": 0.6986379114642451,
+    "tile_specificity": 0.9531592585210285,
+    "tile_tn": 4782,
+    "tile_tp": 2462
+   },
+   "seconds": 126.0,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/T03-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/T03-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6308267370272647,
+    "FN": 1877,
+    "FP": 1481,
+    "TP": 2869,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6595402298850574,
+    "recall": 0.6045090602612726,
+    "tile_fn": 1164,
+    "tile_fp": 254,
+    "tile_mcc": 0.6541033050370059,
+    "tile_sensitivity": 0.6557231588287489,
+    "tile_specificity": 0.9507751937984497,
+    "tile_tn": 4906,
+    "tile_tp": 2217
+   },
+   "committed_50": {
+    "F1": 0.8358742508674167,
+    "FN": 1186,
+    "FP": 375,
+    "TP": 3975,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.9137931034482759,
+    "recall": 0.7701995737260221,
+    "tile_fn": 1225,
+    "tile_fp": 172,
+    "tile_mcc": 0.6710705487171356,
+    "tile_sensitivity": 0.6523836549375709,
+    "tile_specificity": 0.9657165636834761,
+    "tile_tn": 4845,
+    "tile_tp": 2299
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8191391473264493,
+      0.8192229038854806
+     ],
+     "FN": [
+      1425,
+      1424
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.7376173816976616,
+      0.7377532228360958
+     ]
+    },
+    "125": {
+     "F1": [
+      0.8175063613231554,
+      0.8175895765472313
+     ],
+     "FN": [
+      1459,
+      1458
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7335159817351599,
+      0.7336499817318232
+     ]
+    },
+    "150": {
+     "F1": [
+      0.8161071102545897,
+      0.8161898965307365
+     ],
+     "FN": [
+      1486,
+      1485
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7302595752405155,
+      0.7303921568627451
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8358742508674167,
+      0.83596214511041
+     ],
+     "FN": [
+      1186,
+      1185
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7701995737260221,
+      0.7703488372093024
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8241486068111455,
+      0.8242336670451027
+     ],
+     "FN": [
+      1347,
+      1346
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7477528089887641,
+      0.7478928638321783
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/T03-k4/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6308267370272647,
+    "FN": 1877,
+    "FP": 1481,
+    "TP": 2869,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6595402298850574,
+    "recall": 0.6045090602612726,
+    "tile_fn": 1164,
+    "tile_fp": 254,
+    "tile_mcc": 0.6541033050370059,
+    "tile_sensitivity": 0.6557231588287489,
+    "tile_specificity": 0.9507751937984497,
+    "tile_tn": 4906,
+    "tile_tp": 2217
+   },
+   "replay_50": {
+    "F1": 0.83596214511041,
+    "FN": 1185,
+    "FP": 375,
+    "TP": 3975,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9137931034482759,
+    "recall": 0.7703488372093024,
+    "tile_fn": 1225,
+    "tile_fp": 172,
+    "tile_mcc": 0.6710705487171356,
+    "tile_sensitivity": 0.6523836549375709,
+    "tile_specificity": 0.9657165636834761,
+    "tile_tn": 4845,
+    "tile_tp": 2299
+   },
+   "seconds": 117.1,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/T03-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/TH7-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6307175828787243,
+    "FN": 1740,
+    "FP": 1780,
+    "TP": 3006,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6280819055578771,
+    "recall": 0.6333754740834386,
+    "tile_fn": 1051,
+    "tile_fp": 334,
+    "tile_mcc": 0.6591388042946786,
+    "tile_sensitivity": 0.689145223306714,
+    "tile_specificity": 0.9352713178294574,
+    "tile_tn": 4826,
+    "tile_tp": 2330
+   },
+   "committed_50": {
+    "F1": 0.8424650648436715,
+    "FN": 971,
+    "FP": 596,
+    "TP": 4190,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.8754701211867948,
+    "recall": 0.811858167021895,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8344915337183126,
+      0.8345732184808143
+     ],
+     "FN": [
+      1168,
+      1167
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.7849383170686798,
+      0.7850828729281768
+     ]
+    },
+    "125": {
+     "F1": [
+      0.8342266835591075,
+      0.8343079922027291
+     ],
+     "FN": [
+      1195,
+      1194
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7817351598173516,
+      0.7818779685787358
+     ]
+    },
+    "150": {
+     "F1": [
+      0.8339970859640602,
+      0.8340781037497572
+     ],
+     "FN": [
+      1216,
+      1215
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7792702849882012,
+      0.7794117647058824
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8424650648436715,
+      0.8425497687512566
+     ],
+     "FN": [
+      971,
+      970
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.811858167021895,
+      0.812015503875969
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8356705510566858,
+      0.8357530864197532
+     ],
+     "FN": [
+      1109,
+      1108
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7923220973782772,
+      0.7924705000936505
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/TH7-k3/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6307175828787243,
+    "FN": 1740,
+    "FP": 1780,
+    "TP": 3006,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6280819055578771,
+    "recall": 0.6333754740834386,
+    "tile_fn": 1051,
+    "tile_fp": 334,
+    "tile_mcc": 0.6591388042946786,
+    "tile_sensitivity": 0.689145223306714,
+    "tile_specificity": 0.9352713178294574,
+    "tile_tn": 4826,
+    "tile_tp": 2330
+   },
+   "replay_50": {
+    "F1": 0.8425497687512566,
+    "FN": 970,
+    "FP": 596,
+    "TP": 4190,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8754701211867948,
+    "recall": 0.812015503875969,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "seconds": 124.6,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/TH7-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/TH7-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6260381593714928,
+    "FN": 1957,
+    "FP": 1375,
+    "TP": 2789,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6697886647454371,
+    "recall": 0.5876527602191319,
+    "tile_fn": 1204,
+    "tile_fp": 242,
+    "tile_mcc": 0.6479659157116655,
+    "tile_sensitivity": 0.6438923395445134,
+    "tile_specificity": 0.9531007751937984,
+    "tile_tn": 4918,
+    "tile_tp": 2177
+   },
+   "committed_50": {
+    "F1": 0.8152278820375335,
+    "FN": 1360,
+    "FP": 363,
+    "TP": 3801,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.9128242074927954,
+    "recall": 0.7364851772912226,
+    "tile_fn": 1263,
+    "tile_fp": 158,
+    "tile_mcc": 0.6666252946918438,
+    "tile_sensitivity": 0.6416004540295119,
+    "tile_specificity": 0.9685070759417979,
+    "tile_tn": 4859,
+    "tile_tp": 2261
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8006253256904637,
+      0.8007087763185323
+     ],
+     "FN": [
+      1590,
+      1589
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.7072362364205487,
+      0.7073664825046041
+     ]
+    },
+    "125": {
+     "F1": [
+      0.7990455441435833,
+      0.7991284498858684
+     ],
+     "FN": [
+      1624,
+      1623
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7033789954337899,
+      0.7035074899525028
+     ]
+    },
+    "150": {
+     "F1": [
+      0.7976842758192908,
+      0.7977667493796528
+     ],
+     "FN": [
+      1651,
+      1650
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7003085859502632,
+      0.7004357298474946
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8152278820375335,
+      0.8153153153153153
+     ],
+     "FN": [
+      1360,
+      1359
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7364851772912226,
+      0.7366279069767442
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8045033670033671,
+      0.8045880248342628
+     ],
+     "FN": [
+      1517,
+      1516
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7159176029962547,
+      0.7160516950739839
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/TH7-k4/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6260381593714928,
+    "FN": 1957,
+    "FP": 1375,
+    "TP": 2789,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6697886647454371,
+    "recall": 0.5876527602191319,
+    "tile_fn": 1204,
+    "tile_fp": 242,
+    "tile_mcc": 0.6479659157116655,
+    "tile_sensitivity": 0.6438923395445134,
+    "tile_specificity": 0.9531007751937984,
+    "tile_tn": 4918,
+    "tile_tp": 2177
+   },
+   "replay_50": {
+    "F1": 0.8153153153153153,
+    "FN": 1359,
+    "FP": 363,
+    "TP": 3801,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9128242074927954,
+    "recall": 0.7366279069767442,
+    "tile_fn": 1263,
+    "tile_fp": 158,
+    "tile_mcc": 0.6666252946918438,
+    "tile_sensitivity": 0.6416004540295119,
+    "tile_specificity": 0.9685070759417979,
+    "tile_tn": 4859,
+    "tile_tp": 2261
+   },
+   "seconds": 115.4,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/TH7-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/TM-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6335734072022161,
+    "FN": 1887,
+    "FP": 1420,
+    "TP": 2859,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6681467632624445,
+    "recall": 0.6024020227560051,
+    "tile_fn": 1191,
+    "tile_fp": 281,
+    "tile_mcc": 0.6398474151700064,
+    "tile_sensitivity": 0.64773735581189,
+    "tile_specificity": 0.9455426356589147,
+    "tile_tn": 4879,
+    "tile_tp": 2190
+   },
+   "committed_50": {
+    "F1": 0.8127118644067797,
+    "FN": 1325,
+    "FP": 443,
+    "TP": 3836,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.8964711381163823,
+    "recall": 0.7432668087579927,
+    "tile_fn": 1250,
+    "tile_fp": 197,
+    "tile_mcc": 0.6579582748365398,
+    "tile_sensitivity": 0.6452894438138479,
+    "tile_specificity": 0.9607335060793303,
+    "tile_tn": 4820,
+    "tile_tp": 2274
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.799382080329557,
+      0.7994644144608095
+     ],
+     "FN": [
+      1550,
+      1549
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.7146013625483336,
+      0.7147329650092081
+     ]
+    },
+    "125": {
+     "F1": [
+      0.7978265327045315,
+      0.7979083358966472
+     ],
+     "FN": [
+      1584,
+      1583
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7106849315068493,
+      0.7108147606868834
+     ]
+    },
+    "150": {
+     "F1": [
+      0.7977114834491214,
+      0.7977929907019514
+     ],
+     "FN": [
+      1605,
+      1604
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7086585587220912,
+      0.7087872185911401
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8127118644067797,
+      0.8127979658862168
+     ],
+     "FN": [
+      1325,
+      1324
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7432668087579927,
+      0.7434108527131783
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8034099178708806,
+      0.8034934497816595
+     ],
+     "FN": [
+      1476,
+      1475
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7235955056179775,
+      0.7237310357744896
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/TM-k3/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6335734072022161,
+    "FN": 1887,
+    "FP": 1420,
+    "TP": 2859,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6681467632624445,
+    "recall": 0.6024020227560051,
+    "tile_fn": 1191,
+    "tile_fp": 281,
+    "tile_mcc": 0.6398474151700064,
+    "tile_sensitivity": 0.64773735581189,
+    "tile_specificity": 0.9455426356589147,
+    "tile_tn": 4879,
+    "tile_tp": 2190
+   },
+   "replay_50": {
+    "F1": 0.8127979658862168,
+    "FN": 1324,
+    "FP": 443,
+    "TP": 3836,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8964711381163823,
+    "recall": 0.7434108527131783,
+    "tile_fn": 1250,
+    "tile_fp": 197,
+    "tile_mcc": 0.6579582748365398,
+    "tile_sensitivity": 0.6452894438138479,
+    "tile_specificity": 0.9607335060793303,
+    "tile_tn": 4820,
+    "tile_tp": 2274
+   },
+   "seconds": 117.3,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/TM-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/TM-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6201370340262455,
+    "FN": 2076,
+    "FP": 1195,
+    "TP": 2670,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6908150064683053,
+    "recall": 0.5625790139064475,
+    "tile_fn": 1305,
+    "tile_fp": 233,
+    "tile_mcc": 0.6263694478766207,
+    "tile_sensitivity": 0.614019520851819,
+    "tile_specificity": 0.95484496124031,
+    "tile_tn": 4927,
+    "tile_tp": 2076
+   },
+   "committed_50": {
+    "F1": 0.7830711278528694,
+    "FN": 1627,
+    "FP": 331,
+    "TP": 3534,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.9143596377749029,
+    "recall": 0.68475101724472,
+    "tile_fn": 1374,
+    "tile_fp": 159,
+    "tile_mcc": 0.6411358134707998,
+    "tile_sensitivity": 0.6101021566401816,
+    "tile_specificity": 0.968307753637632,
+    "tile_tn": 4858,
+    "tile_tp": 2150
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.76592082616179,
+      0.7660032275416891
+     ],
+     "FN": [
+      1871,
+      1870
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.6554962253728596,
+      0.6556169429097606
+     ]
+    },
+    "125": {
+     "F1": [
+      0.7635974304068524,
+      0.7636791947746011
+     ],
+     "FN": [
+      1909,
+      1908
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.6513242009132421,
+      0.6514431859700401
+     ]
+    },
+    "150": {
+     "F1": [
+      0.7623213142735226,
+      0.7624026458977916
+     ],
+     "FN": [
+      1936,
+      1935
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.6485750589943728,
+      0.6486928104575164
+     ]
+    },
+    "50": {
+     "F1": [
+      0.7830711278528694,
+      0.7831578947368422
+     ],
+     "FN": [
+      1627,
+      1626
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.68475101724472,
+      0.6848837209302325
+     ]
+    },
+    "75": {
+     "F1": [
+      0.7717544812601846,
+      0.771838331160365
+     ],
+     "FN": [
+      1788,
+      1787
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.6651685393258427,
+      0.665293126053568
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/TM-k4/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6201370340262455,
+    "FN": 2076,
+    "FP": 1195,
+    "TP": 2670,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6908150064683053,
+    "recall": 0.5625790139064475,
+    "tile_fn": 1305,
+    "tile_fp": 233,
+    "tile_mcc": 0.6263694478766207,
+    "tile_sensitivity": 0.614019520851819,
+    "tile_specificity": 0.95484496124031,
+    "tile_tn": 4927,
+    "tile_tp": 2076
+   },
+   "replay_50": {
+    "F1": 0.7831578947368422,
+    "FN": 1626,
+    "FP": 331,
+    "TP": 3534,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9143596377749029,
+    "recall": 0.6848837209302325,
+    "tile_fn": 1374,
+    "tile_fp": 159,
+    "tile_mcc": 0.6411358134707998,
+    "tile_sensitivity": 0.6101021566401816,
+    "tile_specificity": 0.968307753637632,
+    "tile_tn": 4858,
+    "tile_tp": 2150
+   },
+   "seconds": 111.3,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/TM-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-extended-gt-2026-06-07/TM-n10-k5"
+   ],
+   "committed_20": {
+    "F1": 0.647194465795542,
+    "FN": 1799,
+    "FP": 1414,
+    "TP": 2947,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6757624398073836,
+    "recall": 0.6209439528023599,
+    "tile_fn": 1160,
+    "tile_fp": 263,
+    "tile_mcc": 0.6524849579410391,
+    "tile_sensitivity": 0.6569062407571724,
+    "tile_specificity": 0.9490310077519379,
+    "tile_tn": 4897,
+    "tile_tp": 2221
+   },
+   "committed_50": {
+    "F1": 0.8290275152278933,
+    "FN": 1214,
+    "FP": 414,
+    "TP": 3947,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.9050676450355423,
+    "recall": 0.7647742685526061,
+    "tile_fn": 1215,
+    "tile_fp": 175,
+    "tile_mcc": 0.6724579910368705,
+    "tile_sensitivity": 0.6552213393870602,
+    "tile_specificity": 0.9651185967709787,
+    "tile_tn": 4842,
+    "tile_tp": 2309
+   },
+   "committed_engine_commit": "7aa28475b9f525f7059d594dd2f286819dde1c85",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8133169934640524,
+      0.813400061280768
+     ],
+     "FN": [
+      1449,
+      1448
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.7331983060209906,
+      0.7333333333333333
+     ]
+    },
+    "125": {
+     "F1": [
+      0.8111020740138267,
+      0.8111845449923741
+     ],
+     "FN": [
+      1486,
+      1485
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7285844748858448,
+      0.7287175739861161
+     ]
+    },
+    "150": {
+     "F1": [
+      0.8099290780141845,
+      0.8100111460127671
+     ],
+     "FN": [
+      1512,
+      1511
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7255400254129606,
+      0.725671750181554
+     ]
+    },
+    "50": {
+     "F1": [
+      0.8290275152278933,
+      0.829114588803697
+     ],
+     "FN": [
+      1214,
+      1213
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7647742685526061,
+      0.764922480620155
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8184723224409856,
+      0.8185567010309279
+     ],
+     "FN": [
+      1370,
+      1369
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7434456928838952,
+      0.7435849410001873
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/TM-n10-k5/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.647194465795542,
+    "FN": 1799,
+    "FP": 1414,
+    "TP": 2947,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6757624398073836,
+    "recall": 0.6209439528023599,
+    "tile_fn": 1160,
+    "tile_fp": 263,
+    "tile_mcc": 0.6524849579410391,
+    "tile_sensitivity": 0.6569062407571724,
+    "tile_specificity": 0.9490310077519379,
+    "tile_tn": 4897,
+    "tile_tp": 2221
+   },
+   "replay_50": {
+    "F1": 0.829114588803697,
+    "FN": 1213,
+    "FP": 414,
+    "TP": 3947,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9050676450355423,
+    "recall": 0.764922480620155,
+    "tile_fn": 1215,
+    "tile_fp": 175,
+    "tile_mcc": 0.6724579910368705,
+    "tile_sensitivity": 0.6552213393870602,
+    "tile_specificity": 0.9651185967709787,
+    "tile_tn": 4842,
+    "tile_tp": 2309
+   },
+   "seconds": 118.0,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/TM-n10-k5/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/IM-k3"
+   ],
+   "committed_20": {
+    "F1": 0.5461300309597523,
+    "FN": 2364,
+    "FP": 2034,
+    "TP": 2646,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.5653846153846154,
+    "recall": 0.5281437125748503,
+    "tile_fn": 1038,
+    "tile_fp": 178,
+    "tile_mcc": 0.7119504066553468,
+    "tile_sensitivity": 0.7054483541430193,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2486
+   },
+   "committed_50": {
+    "F1": 0.8010319917440661,
+    "FN": 1129,
+    "FP": 799,
+    "TP": 3881,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8292735042735043,
+    "recall": 0.7746506986027945,
+    "tile_fn": 1038,
+    "tile_fp": 178,
+    "tile_mcc": 0.7119504066553468,
+    "tile_sensitivity": 0.7054483541430193,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2486
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/IM-k3/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.5461300309597523,
+    "FN": 2364,
+    "FP": 2034,
+    "TP": 2646,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.5653846153846154,
+    "recall": 0.5281437125748503,
+    "tile_fn": 1038,
+    "tile_fp": 178,
+    "tile_mcc": 0.7119504066553468,
+    "tile_sensitivity": 0.7054483541430193,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2486
+   },
+   "replay_50": {
+    "F1": 0.8010319917440661,
+    "FN": 1129,
+    "FP": 799,
+    "TP": 3881,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8292735042735043,
+    "recall": 0.7746506986027945,
+    "tile_fn": 1038,
+    "tile_fp": 178,
+    "tile_mcc": 0.7119504066553468,
+    "tile_sensitivity": 0.7054483541430193,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2486
+   },
+   "seconds": 110.6,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/IM-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-t0.3-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/T03-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6719112455874937,
+    "FN": 1679,
+    "FP": 1574,
+    "TP": 3331,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.6791029561671763,
+    "recall": 0.664870259481038,
+    "tile_fn": 1065,
+    "tile_fp": 238,
+    "tile_mcc": 0.6887952828707767,
+    "tile_sensitivity": 0.6977866061293984,
+    "tile_specificity": 0.952561291608531,
+    "tile_tn": 4779,
+    "tile_tp": 2459
+   },
+   "committed_50": {
+    "F1": 0.8393343419062027,
+    "FN": 849,
+    "FP": 744,
+    "TP": 4161,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8483180428134557,
+    "recall": 0.8305389221556886,
+    "tile_fn": 1065,
+    "tile_fp": 238,
+    "tile_mcc": 0.6887952828707767,
+    "tile_sensitivity": 0.6977866061293984,
+    "tile_specificity": 0.952561291608531,
+    "tile_tn": 4779,
+    "tile_tp": 2459
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/T03-k3/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6719112455874937,
+    "FN": 1679,
+    "FP": 1574,
+    "TP": 3331,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.6791029561671763,
+    "recall": 0.664870259481038,
+    "tile_fn": 1065,
+    "tile_fp": 238,
+    "tile_mcc": 0.6887952828707767,
+    "tile_sensitivity": 0.6977866061293984,
+    "tile_specificity": 0.952561291608531,
+    "tile_tn": 4779,
+    "tile_tp": 2459
+   },
+   "replay_50": {
+    "F1": 0.8393343419062027,
+    "FN": 849,
+    "FP": 744,
+    "TP": 4161,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8483180428134557,
+    "recall": 0.8305389221556886,
+    "tile_fn": 1065,
+    "tile_fp": 238,
+    "tile_mcc": 0.6887952828707767,
+    "tile_sensitivity": 0.6977866061293984,
+    "tile_specificity": 0.952561291608531,
+    "tile_tn": 4779,
+    "tile_tp": 2459
+   },
+   "seconds": 112.3,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/T03-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-high-t0.3-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/T03-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6728632478632478,
+    "FN": 1861,
+    "FP": 1201,
+    "TP": 3149,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7239080459770115,
+    "recall": 0.6285429141716566,
+    "tile_fn": 1229,
+    "tile_fp": 176,
+    "tile_mcc": 0.6689725848962402,
+    "tile_sensitivity": 0.6512485811577753,
+    "tile_specificity": 0.9649192744668128,
+    "tile_tn": 4841,
+    "tile_tp": 2295
+   },
+   "committed_50": {
+    "F1": 0.8303418803418802,
+    "FN": 1124,
+    "FP": 464,
+    "TP": 3886,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8933333333333333,
+    "recall": 0.7756487025948103,
+    "tile_fn": 1229,
+    "tile_fp": 176,
+    "tile_mcc": 0.6689725848962402,
+    "tile_sensitivity": 0.6512485811577753,
+    "tile_specificity": 0.9649192744668128,
+    "tile_tn": 4841,
+    "tile_tp": 2295
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/T03-k4/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6728632478632478,
+    "FN": 1861,
+    "FP": 1201,
+    "TP": 3149,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7239080459770115,
+    "recall": 0.6285429141716566,
+    "tile_fn": 1229,
+    "tile_fp": 176,
+    "tile_mcc": 0.6689725848962402,
+    "tile_sensitivity": 0.6512485811577753,
+    "tile_specificity": 0.9649192744668128,
+    "tile_tn": 4841,
+    "tile_tp": 2295
+   },
+   "replay_50": {
+    "F1": 0.8303418803418802,
+    "FN": 1124,
+    "FP": 464,
+    "TP": 3886,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8933333333333333,
+    "recall": 0.7756487025948103,
+    "tile_fn": 1229,
+    "tile_fp": 176,
+    "tile_mcc": 0.6689725848962402,
+    "tile_sensitivity": 0.6512485811577753,
+    "tile_specificity": 0.9649192744668128,
+    "tile_tn": 4841,
+    "tile_tp": 2295
+   },
+   "seconds": 106.7,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/T03-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-high-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/TH7-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6725193956717027,
+    "FN": 1716,
+    "FP": 1492,
+    "TP": 3294,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.6882574174676138,
+    "recall": 0.6574850299401198,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "committed_50": {
+    "F1": 0.8387096774193548,
+    "FN": 902,
+    "FP": 678,
+    "TP": 4108,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8583368157124948,
+    "recall": 0.8199600798403194,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/TH7-k3/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6725193956717027,
+    "FN": 1716,
+    "FP": 1492,
+    "TP": 3294,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.6882574174676138,
+    "recall": 0.6574850299401198,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "replay_50": {
+    "F1": 0.8387096774193548,
+    "FN": 902,
+    "FP": 678,
+    "TP": 4108,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8583368157124948,
+    "recall": 0.8199600798403194,
+    "tile_fn": 1101,
+    "tile_fp": 241,
+    "tile_mcc": 0.679608597108498,
+    "tile_sensitivity": 0.6875709421112373,
+    "tile_specificity": 0.9519633246960335,
+    "tile_tn": 4776,
+    "tile_tp": 2423
+   },
+   "seconds": 110.3,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/TH7-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/TH7-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6657946370176586,
+    "FN": 1956,
+    "FP": 1110,
+    "TP": 3054,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7334293948126801,
+    "recall": 0.6095808383233533,
+    "tile_fn": 1266,
+    "tile_fp": 161,
+    "tile_mcc": 0.6650417680321745,
+    "tile_sensitivity": 0.6407491486946651,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2258
+   },
+   "committed_50": {
+    "F1": 0.816873773708306,
+    "FN": 1263,
+    "FP": 417,
+    "TP": 3747,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8998559077809798,
+    "recall": 0.7479041916167665,
+    "tile_fn": 1266,
+    "tile_fp": 161,
+    "tile_mcc": 0.6650417680321745,
+    "tile_sensitivity": 0.6407491486946651,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2258
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/TH7-k4/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6657946370176586,
+    "FN": 1956,
+    "FP": 1110,
+    "TP": 3054,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7334293948126801,
+    "recall": 0.6095808383233533,
+    "tile_fn": 1266,
+    "tile_fp": 161,
+    "tile_mcc": 0.6650417680321745,
+    "tile_sensitivity": 0.6407491486946651,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2258
+   },
+   "replay_50": {
+    "F1": 0.816873773708306,
+    "FN": 1263,
+    "FP": 417,
+    "TP": 3747,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8998559077809798,
+    "recall": 0.7479041916167665,
+    "tile_fn": 1266,
+    "tile_fp": 161,
+    "tile_mcc": 0.6650417680321745,
+    "tile_sensitivity": 0.6407491486946651,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2258
+   },
+   "seconds": 103.1,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/TH7-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/k3-scoring/55maps-text-min-generalisation/k3_verified.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/TM-k3"
+   ],
+   "committed_20": {
+    "F1": 0.6709010657767251,
+    "FN": 1894,
+    "FP": 1163,
+    "TP": 3116,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7282075251226923,
+    "recall": 0.6219560878243513,
+    "tile_fn": 1252,
+    "tile_fp": 199,
+    "tile_mcc": 0.6569092929260921,
+    "tile_sensitivity": 0.64472190692395,
+    "tile_specificity": 0.9603348614709986,
+    "tile_tn": 4818,
+    "tile_tp": 2272
+   },
+   "committed_50": {
+    "F1": 0.8108515448379804,
+    "FN": 1244,
+    "FP": 513,
+    "TP": 3766,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8801121757419957,
+    "recall": 0.7516966067864271,
+    "tile_fn": 1252,
+    "tile_fp": 199,
+    "tile_mcc": 0.6569092929260921,
+    "tile_sensitivity": 0.64472190692395,
+    "tile_specificity": 0.9603348614709986,
+    "tile_tn": 4818,
+    "tile_tp": 2272
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/TM-k3/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6709010657767251,
+    "FN": 1894,
+    "FP": 1163,
+    "TP": 3116,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7282075251226923,
+    "recall": 0.6219560878243513,
+    "tile_fn": 1252,
+    "tile_fp": 199,
+    "tile_mcc": 0.6569092929260921,
+    "tile_sensitivity": 0.64472190692395,
+    "tile_specificity": 0.9603348614709986,
+    "tile_tn": 4818,
+    "tile_tp": 2272
+   },
+   "replay_50": {
+    "F1": 0.8108515448379804,
+    "FN": 1244,
+    "FP": 513,
+    "TP": 3766,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8801121757419957,
+    "recall": 0.7516966067864271,
+    "tile_fn": 1252,
+    "tile_fp": 199,
+    "tile_mcc": 0.6569092929260921,
+    "tile_sensitivity": 0.64472190692395,
+    "tile_specificity": 0.9603348614709986,
+    "tile_tn": 4818,
+    "tile_tp": 2272
+   },
+   "seconds": 104.0,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/TM-k3/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-text-min-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/TM-k4"
+   ],
+   "committed_20": {
+    "F1": 0.6548732394366197,
+    "FN": 2104,
+    "FP": 959,
+    "TP": 2906,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.751875808538163,
+    "recall": 0.5800399201596806,
+    "tile_fn": 1376,
+    "tile_fp": 161,
+    "tile_mcc": 0.6400648540183066,
+    "tile_sensitivity": 0.6095346197502838,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2148
+   },
+   "committed_50": {
+    "F1": 0.7833239436619718,
+    "FN": 1534,
+    "FP": 389,
+    "TP": 3476,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.899353169469599,
+    "recall": 0.693812375249501,
+    "tile_fn": 1376,
+    "tile_fp": 161,
+    "tile_mcc": 0.6400648540183066,
+    "tile_sensitivity": 0.6095346197502838,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2148
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/TM-k4/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6548732394366197,
+    "FN": 2104,
+    "FP": 959,
+    "TP": 2906,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.751875808538163,
+    "recall": 0.5800399201596806,
+    "tile_fn": 1376,
+    "tile_fp": 161,
+    "tile_mcc": 0.6400648540183066,
+    "tile_sensitivity": 0.6095346197502838,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2148
+   },
+   "replay_50": {
+    "F1": 0.7833239436619718,
+    "FN": 1534,
+    "FP": 389,
+    "TP": 3476,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.899353169469599,
+    "recall": 0.693812375249501,
+    "tile_fn": 1376,
+    "tile_fp": 161,
+    "tile_mcc": 0.6400648540183066,
+    "tile_sensitivity": 0.6095346197502838,
+    "tile_specificity": 0.9679091090293004,
+    "tile_tn": 4856,
+    "tile_tp": 2148
+   },
+   "seconds": 98.5,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/TM-k4/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55map-leaderboard/min11-uplift-5of10-pt0.15.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/student-mounds-55maps-standardised.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--extension-csv",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/standardised/extension-mounds-standardised.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/55maps-standardised-ref-2026-08-14/TM-n10-k5"
+   ],
+   "committed_20": {
+    "F1": 0.6878668231778892,
+    "FN": 1787,
+    "FP": 1138,
+    "TP": 3223,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7390506764503554,
+    "recall": 0.643313373253493,
+    "tile_fn": 1218,
+    "tile_fp": 178,
+    "tile_mcc": 0.670886957725763,
+    "tile_sensitivity": 0.6543700340522134,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2306
+   },
+   "committed_50": {
+    "F1": 0.8278732259097216,
+    "FN": 1131,
+    "FP": 482,
+    "TP": 3879,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8894748910800275,
+    "recall": 0.774251497005988,
+    "tile_fn": 1218,
+    "tile_fp": 178,
+    "tile_mcc": 0.670886957725763,
+    "tile_sensitivity": 0.6543700340522134,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2306
+   },
+   "committed_engine_commit": "6e38c0e5ff808da6475580085d2fcd408e1e57ac",
+   "diffs": {},
+   "eval": "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6878668231778892,
+    "FN": 1787,
+    "FP": 1138,
+    "TP": 3223,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.7390506764503554,
+    "recall": 0.643313373253493,
+    "tile_fn": 1218,
+    "tile_fp": 178,
+    "tile_mcc": 0.670886957725763,
+    "tile_sensitivity": 0.6543700340522134,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2306
+   },
+   "replay_50": {
+    "F1": 0.8278732259097216,
+    "FN": 1131,
+    "FP": 482,
+    "TP": 3879,
+    "n_ref_extended": 5010,
+    "n_ref_student_only": 4731,
+    "n_reviewer_promoted_at_R": 279,
+    "precision": 0.8894748910800275,
+    "recall": 0.774251497005988,
+    "tile_fn": 1218,
+    "tile_fp": 178,
+    "tile_mcc": 0.670886957725763,
+    "tile_sensitivity": 0.6543700340522134,
+    "tile_specificity": 0.9645206298584812,
+    "tile_tn": 4839,
+    "tile_tp": 2306
+   },
+   "seconds": 105.0,
+   "source_summary": "results/55maps-standardised-ref-2026-08-14/TM-n10-k5/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-55map-2026-08-31/arm1/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval"
+   ],
+   "committed_20": {
+    "F1": 0.7220050125313283,
+    "FN": 1145,
+    "FP": 1628,
+    "TP": 3601,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.688659399502773,
+    "recall": 0.7587442056468605,
+    "tile_fn": 943,
+    "tile_fp": 480,
+    "tile_mcc": 0.647627776348682,
+    "tile_sensitivity": 0.7210884353741497,
+    "tile_specificity": 0.9069767441860465,
+    "tile_tn": 4680,
+    "tile_tp": 2438
+   },
+   "committed_50": {
+    "F1": 0.8493598998941189,
+    "FN": 748,
+    "FP": 817,
+    "TP": 4412,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8437559762860968,
+    "recall": 0.8550387596899225,
+    "tile_fn": 991,
+    "tile_fp": 385,
+    "tile_mcc": 0.6664686403732362,
+    "tile_sensitivity": 0.7187854710556186,
+    "tile_specificity": 0.9232609128961531,
+    "tile_tn": 4632,
+    "tile_tp": 2533
+   },
+   "committed_engine_commit": "56ad9ddc7f8e505a7e2f5efcec11ae6400530a8d",
+   "diffs": {},
+   "eval": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.7220050125313283,
+    "FN": 1145,
+    "FP": 1628,
+    "TP": 3601,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.688659399502773,
+    "recall": 0.7587442056468605,
+    "tile_fn": 943,
+    "tile_fp": 480,
+    "tile_mcc": 0.647627776348682,
+    "tile_sensitivity": 0.7210884353741497,
+    "tile_specificity": 0.9069767441860465,
+    "tile_tn": 4680,
+    "tile_tp": 2438
+   },
+   "replay_50": {
+    "F1": 0.8493598998941189,
+    "FN": 748,
+    "FP": 817,
+    "TP": 4412,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8437559762860968,
+    "recall": 0.8550387596899225,
+    "tile_fn": 991,
+    "tile_fp": 385,
+    "tile_mcc": 0.6664686403732362,
+    "tile_sensitivity": 0.7187854710556186,
+    "tile_specificity": 0.9232609128961531,
+    "tile_tn": 4632,
+    "tile_tp": 2533
+   },
+   "seconds": 28.8,
+   "source_summary": "results/gemini37-55map-2026-08-31/arm1/g384_ov192_55map_g37/primary/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-55map-2026-08-31/arm2/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval"
+   ],
+   "committed_20": {
+    "F1": 0.7469484049646118,
+    "FN": 1105,
+    "FP": 1362,
+    "TP": 3641,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7277633419948031,
+    "recall": 0.7671723556679308,
+    "tile_fn": 956,
+    "tile_fp": 310,
+    "tile_mcc": 0.6888192490376541,
+    "tile_sensitivity": 0.7172434191067731,
+    "tile_specificity": 0.939922480620155,
+    "tile_tn": 4850,
+    "tile_tp": 2425
+   },
+   "committed_50": {
+    "F1": 0.8763160484109023,
+    "FN": 707,
+    "FP": 550,
+    "TP": 4453,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8900659604237458,
+    "recall": 0.862984496124031,
+    "tile_fn": 1008,
+    "tile_fp": 219,
+    "tile_mcc": 0.7072914415212007,
+    "tile_sensitivity": 0.713961407491487,
+    "tile_specificity": 0.9563484153876819,
+    "tile_tn": 4798,
+    "tile_tp": 2516
+   },
+   "committed_engine_commit": "56ad9ddc7f8e505a7e2f5efcec11ae6400530a8d",
+   "diffs": {},
+   "eval": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.7469484049646118,
+    "FN": 1105,
+    "FP": 1362,
+    "TP": 3641,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7277633419948031,
+    "recall": 0.7671723556679308,
+    "tile_fn": 956,
+    "tile_fp": 310,
+    "tile_mcc": 0.6888192490376541,
+    "tile_sensitivity": 0.7172434191067731,
+    "tile_specificity": 0.939922480620155,
+    "tile_tn": 4850,
+    "tile_tp": 2425
+   },
+   "replay_50": {
+    "F1": 0.8763160484109023,
+    "FN": 707,
+    "FP": 550,
+    "TP": 4453,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8900659604237458,
+    "recall": 0.862984496124031,
+    "tile_fn": 1008,
+    "tile_fp": 219,
+    "tile_mcc": 0.7072914415212007,
+    "tile_sensitivity": 0.713961407491487,
+    "tile_specificity": 0.9563484153876819,
+    "tile_tn": 4798,
+    "tile_tp": 2516
+   },
+   "seconds": 28.0,
+   "source_summary": "results/gemini37-55map-2026-08-31/arm2/g384_ov192_55map_g37/primary/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/gemini37-fourth-cell/55map/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval"
+   ],
+   "committed_20": {
+    "F1": 0.7084074733096085,
+    "FN": 1561,
+    "FP": 1061,
+    "TP": 3185,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7501177578897786,
+    "recall": 0.6710914454277286,
+    "tile_fn": 1102,
+    "tile_fp": 111,
+    "tile_mcc": 0.7108679773296488,
+    "tile_sensitivity": 0.6740609287193138,
+    "tile_specificity": 0.9784883720930233,
+    "tile_tn": 5049,
+    "tile_tp": 2279
+   },
+   "committed_50": {
+    "F1": 0.8656176908356368,
+    "FN": 1089,
+    "FP": 175,
+    "TP": 4071,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9587847385774847,
+    "recall": 0.788953488372093,
+    "tile_fn": 1166,
+    "tile_fp": 32,
+    "tile_mcc": 0.7268024827224564,
+    "tile_sensitivity": 0.6691259931895573,
+    "tile_specificity": 0.9936216862666932,
+    "tile_tn": 4985,
+    "tile_tp": 2358
+   },
+   "committed_engine_commit": "405b3901c15c5ada3e1604ab741b748f534e8244",
+   "diffs": {},
+   "eval": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.7084074733096085,
+    "FN": 1561,
+    "FP": 1061,
+    "TP": 3185,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7501177578897786,
+    "recall": 0.6710914454277286,
+    "tile_fn": 1102,
+    "tile_fp": 111,
+    "tile_mcc": 0.7108679773296488,
+    "tile_sensitivity": 0.6740609287193138,
+    "tile_specificity": 0.9784883720930233,
+    "tile_tn": 5049,
+    "tile_tp": 2279
+   },
+   "replay_50": {
+    "F1": 0.8656176908356368,
+    "FN": 1089,
+    "FP": 175,
+    "TP": 4071,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9587847385774847,
+    "recall": 0.788953488372093,
+    "tile_fn": 1166,
+    "tile_fp": 32,
+    "tile_mcc": 0.7268024827224564,
+    "tile_sensitivity": 0.6691259931895573,
+    "tile_specificity": 0.9936216862666932,
+    "tile_tn": 4985,
+    "tile_tp": 2358
+   },
+   "seconds": 26.2,
+   "source_summary": "results/gemini37-fourth-cell/55map/g384_ov192_55map/primary/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/g384_ov128_55map/oracle/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/stride55-2026-08-27/g384_ov128_55map/oracle/eval"
+   ],
+   "committed_20": {
+    "F1": 0.6685135855087907,
+    "FN": 1609,
+    "FP": 1502,
+    "TP": 3137,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6762233239922397,
+    "recall": 0.6609776654024442,
+    "tile_fn": 1037,
+    "tile_fp": 272,
+    "tile_mcc": 0.6795992709030481,
+    "tile_sensitivity": 0.6932860100561964,
+    "tile_specificity": 0.9472868217054263,
+    "tile_tn": 4888,
+    "tile_tp": 2344
+   },
+   "committed_50": {
+    "F1": 0.8362077763037044,
+    "FN": 1063,
+    "FP": 542,
+    "TP": 4097,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8831644751023927,
+    "recall": 0.7939922480620155,
+    "tile_fn": 1096,
+    "tile_fp": 188,
+    "tile_mcc": 0.6958294935087906,
+    "tile_sensitivity": 0.6889897843359818,
+    "tile_specificity": 0.9625274068168228,
+    "tile_tn": 4829,
+    "tile_tp": 2428
+   },
+   "committed_engine_commit": "cc6ede6dfc4713052081f5c01c2e5f9e50ad9a13",
+   "diffs": {},
+   "eval": "results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6685135855087907,
+    "FN": 1609,
+    "FP": 1502,
+    "TP": 3137,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6762233239922397,
+    "recall": 0.6609776654024442,
+    "tile_fn": 1037,
+    "tile_fp": 272,
+    "tile_mcc": 0.6795992709030481,
+    "tile_sensitivity": 0.6932860100561964,
+    "tile_specificity": 0.9472868217054263,
+    "tile_tn": 4888,
+    "tile_tp": 2344
+   },
+   "replay_50": {
+    "F1": 0.8362077763037044,
+    "FN": 1063,
+    "FP": 542,
+    "TP": 4097,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8831644751023927,
+    "recall": 0.7939922480620155,
+    "tile_fn": 1096,
+    "tile_fp": 188,
+    "tile_mcc": 0.6958294935087906,
+    "tile_sensitivity": 0.6889897843359818,
+    "tile_specificity": 0.9625274068168228,
+    "tile_tn": 4829,
+    "tile_tp": 2428
+   },
+   "seconds": 27.1,
+   "source_summary": "results/stride55-2026-08-27/g384_ov128_55map/oracle/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/g384_ov128_55map/primary/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/stride55-2026-08-27/g384_ov128_55map/primary/eval"
+   ],
+   "committed_20": {
+    "F1": 0.6689079275566642,
+    "FN": 1662,
+    "FP": 1391,
+    "TP": 3084,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6891620111731843,
+    "recall": 0.649810366624526,
+    "tile_fn": 1068,
+    "tile_fp": 254,
+    "tile_mcc": 0.6771766359882307,
+    "tile_sensitivity": 0.6841171251109139,
+    "tile_specificity": 0.9507751937984497,
+    "tile_tn": 4906,
+    "tile_tp": 2313
+   },
+   "committed_50": {
+    "F1": 0.8325895173845355,
+    "FN": 1149,
+    "FP": 464,
+    "TP": 4011,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8963128491620111,
+    "recall": 0.7773255813953488,
+    "tile_fn": 1128,
+    "tile_fp": 171,
+    "tile_mcc": 0.6934407564418507,
+    "tile_sensitivity": 0.6799091940976163,
+    "tile_specificity": 0.965915885987642,
+    "tile_tn": 4846,
+    "tile_tp": 2396
+   },
+   "committed_engine_commit": "dcbdb452a5136f3bd54b6fbe7ba481d24a558d69",
+   "diffs": {},
+   "eval": "results/stride55-2026-08-27/g384_ov128_55map/primary/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6689079275566642,
+    "FN": 1662,
+    "FP": 1391,
+    "TP": 3084,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6891620111731843,
+    "recall": 0.649810366624526,
+    "tile_fn": 1068,
+    "tile_fp": 254,
+    "tile_mcc": 0.6771766359882307,
+    "tile_sensitivity": 0.6841171251109139,
+    "tile_specificity": 0.9507751937984497,
+    "tile_tn": 4906,
+    "tile_tp": 2313
+   },
+   "replay_50": {
+    "F1": 0.8325895173845355,
+    "FN": 1149,
+    "FP": 464,
+    "TP": 4011,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8963128491620111,
+    "recall": 0.7773255813953488,
+    "tile_fn": 1128,
+    "tile_fp": 171,
+    "tile_mcc": 0.6934407564418507,
+    "tile_sensitivity": 0.6799091940976163,
+    "tile_specificity": 0.965915885987642,
+    "tile_tn": 4846,
+    "tile_tp": 2396
+   },
+   "seconds": 26.6,
+   "source_summary": "results/stride55-2026-08-27/g384_ov128_55map/primary/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55map-final-board-r2-2026-09-06/cells/B-N5-carried/detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval"
+   ],
+   "committed_20": {
+    "F1": 0.6796034591858258,
+    "FN": 1524,
+    "FP": 1514,
+    "TP": 3222,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6803209459459459,
+    "recall": 0.6788874841972187,
+    "tile_fn": 1006,
+    "tile_fp": 281,
+    "tile_mcc": 0.6845946772461463,
+    "tile_sensitivity": 0.7024548950014788,
+    "tile_specificity": 0.9455426356589147,
+    "tile_tn": 4879,
+    "tile_tp": 2375
+   },
+   "committed_50": {
+    "F1": 0.8437752627324171,
+    "FN": 985,
+    "FP": 561,
+    "TP": 4175,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8815456081081081,
+    "recall": 0.8091085271317829,
+    "tile_fn": 1063,
+    "tile_fp": 195,
+    "tile_mcc": 0.7013882811101221,
+    "tile_sensitivity": 0.6983541430192962,
+    "tile_specificity": 0.961132150687662,
+    "tile_tn": 4822,
+    "tile_tp": 2461
+   },
+   "committed_engine_commit": "cd4905ec38cdeda23a5ebc63180347d14f0e07c1",
+   "diffs": {},
+   "eval": "results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6796034591858258,
+    "FN": 1524,
+    "FP": 1514,
+    "TP": 3222,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6803209459459459,
+    "recall": 0.6788874841972187,
+    "tile_fn": 1006,
+    "tile_fp": 281,
+    "tile_mcc": 0.6845946772461463,
+    "tile_sensitivity": 0.7024548950014788,
+    "tile_specificity": 0.9455426356589147,
+    "tile_tn": 4879,
+    "tile_tp": 2375
+   },
+   "replay_50": {
+    "F1": 0.8437752627324171,
+    "FN": 985,
+    "FP": 561,
+    "TP": 4175,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8815456081081081,
+    "recall": 0.8091085271317829,
+    "tile_fn": 1063,
+    "tile_fp": 195,
+    "tile_mcc": 0.7013882811101221,
+    "tile_sensitivity": 0.6983541430192962,
+    "tile_specificity": 0.961132150687662,
+    "tile_tn": 4822,
+    "tile_tp": 2461
+   },
+   "seconds": 27.0,
+   "source_summary": "results/stride55-2026-08-27/g384_ov192_55map/n5-companion/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/g384_ov192_55map/oracle/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/stride55-2026-08-27/g384_ov192_55map/oracle/eval"
+   ],
+   "committed_20": {
+    "F1": 0.6883324453915822,
+    "FN": 1516,
+    "FP": 1409,
+    "TP": 3230,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6962707480060358,
+    "recall": 0.6805731142014327,
+    "tile_fn": 1025,
+    "tile_fp": 223,
+    "tile_mcc": 0.6962254859146758,
+    "tile_sensitivity": 0.696835255841467,
+    "tile_specificity": 0.9567829457364341,
+    "tile_tn": 4937,
+    "tile_tp": 2356
+   },
+   "committed_50": {
+    "F1": 0.8502908460046944,
+    "FN": 994,
+    "FP": 473,
+    "TP": 4166,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.898038370338435,
+    "recall": 0.8073643410852713,
+    "tile_fn": 1084,
+    "tile_fp": 139,
+    "tile_mcc": 0.7127495787794123,
+    "tile_sensitivity": 0.6923950056753689,
+    "tile_specificity": 0.9722941997209488,
+    "tile_tn": 4878,
+    "tile_tp": 2440
+   },
+   "committed_engine_commit": "cc6ede6dfc4713052081f5c01c2e5f9e50ad9a13",
+   "diffs": {},
+   "eval": "results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6883324453915822,
+    "FN": 1516,
+    "FP": 1409,
+    "TP": 3230,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.6962707480060358,
+    "recall": 0.6805731142014327,
+    "tile_fn": 1025,
+    "tile_fp": 223,
+    "tile_mcc": 0.6962254859146758,
+    "tile_sensitivity": 0.696835255841467,
+    "tile_specificity": 0.9567829457364341,
+    "tile_tn": 4937,
+    "tile_tp": 2356
+   },
+   "replay_50": {
+    "F1": 0.8502908460046944,
+    "FN": 994,
+    "FP": 473,
+    "TP": 4166,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.898038370338435,
+    "recall": 0.8073643410852713,
+    "tile_fn": 1084,
+    "tile_fp": 139,
+    "tile_mcc": 0.7127495787794123,
+    "tile_sensitivity": 0.6923950056753689,
+    "tile_specificity": 0.9722941997209488,
+    "tile_tn": 4878,
+    "tile_tp": 2440
+   },
+   "seconds": 26.9,
+   "source_summary": "results/stride55-2026-08-27/g384_ov192_55map/oracle/eval/summary.json"
+  },
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/g384_ov192_55map/primary/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/stride55-2026-08-27/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "20",
+    "30",
+    "50",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-B/cells/results/stride55-2026-08-27/g384_ov192_55map/primary/eval"
+   ],
+   "committed_20": {
+    "F1": 0.6846827370014053,
+    "FN": 1579,
+    "FP": 1338,
+    "TP": 3167,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7029966703662597,
+    "recall": 0.667298777918247,
+    "tile_fn": 1047,
+    "tile_fp": 256,
+    "tile_mcc": 0.681660426642785,
+    "tile_sensitivity": 0.6903283052351376,
+    "tile_specificity": 0.9503875968992248,
+    "tile_tn": 4904,
+    "tile_tp": 2334
+   },
+   "committed_50": {
+    "F1": 0.8422141748577341,
+    "FN": 1090,
+    "FP": 435,
+    "TP": 4070,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9034406215316315,
+    "recall": 0.7887596899224806,
+    "tile_fn": 1106,
+    "tile_fp": 172,
+    "tile_mcc": 0.6981604573921036,
+    "tile_sensitivity": 0.6861520998864926,
+    "tile_specificity": 0.9657165636834761,
+    "tile_tn": 4845,
+    "tile_tp": 2418
+   },
+   "committed_engine_commit": "dcbdb452a5136f3bd54b6fbe7ba481d24a558d69",
+   "diffs": {},
+   "eval": "results/stride55-2026-08-27/g384_ov192_55map/primary/eval/evaluation.json",
+   "identical_points": true,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.6846827370014053,
+    "FN": 1579,
+    "FP": 1338,
+    "TP": 3167,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.7029966703662597,
+    "recall": 0.667298777918247,
+    "tile_fn": 1047,
+    "tile_fp": 256,
+    "tile_mcc": 0.681660426642785,
+    "tile_sensitivity": 0.6903283052351376,
+    "tile_specificity": 0.9503875968992248,
+    "tile_tn": 4904,
+    "tile_tp": 2334
+   },
+   "replay_50": {
+    "F1": 0.8422141748577341,
+    "FN": 1090,
+    "FP": 435,
+    "TP": 4070,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.9034406215316315,
+    "recall": 0.7887596899224806,
+    "tile_fn": 1106,
+    "tile_fp": 172,
+    "tile_mcc": 0.6981604573921036,
+    "tile_sensitivity": 0.6861520998864926,
+    "tile_specificity": 0.9657165636834761,
+    "tile_tn": 4845,
+    "tile_tp": 2418
+   },
+   "seconds": 26.2,
+   "source_summary": "results/stride55-2026-08-27/g384_ov192_55map/primary/eval/summary.json"
+  }
+ ],
+ "code": "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt",
+ "extra": [],
+ "n": 24,
+ "n_bootstrap": 50,
+ "n_failed": 0,
+ "n_identical": 16,
+ "repo": "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt"
+}
