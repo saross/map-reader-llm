@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-13T21:50:57Z",
+  "generated_at": "2026-10-14T00:44:35Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -2010,18 +2010,27 @@
       ],
       "manually_verified_at": "2026-09-10T06:56:15Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-10T06:56:15Z",
-        "attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).",
-        "presentation": null,
-        "history": []
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).\n\nSIGNATURE NOTE 2026-10-14 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-10T06:56:15Z has LAPSED and the row is re-sign-pending). A-07 regenerated under the D50 scorer (detections scoped per sheet by tile geometry, never re-keyed across sheets), executing D62 (5) as ruled in D65: results/h6-registered-analyses/a07_voting_thresholds.json regenerated on sapphire at 90294a283 in two independent runs, byte-identical apart from generated_at (468ada2fc, PR #47, branch d62-5-a07-d50). CHANGED (25 leaves): the Pro text curve 0.8602/0.8558/0.8494 -> 0.8626/0.8582/0.8519; the Flash comparator curves, text 0.4634/0.5203/0.5748 -> 0.4647/0.5217/0.5764 and image 0.5614/0.5760/0.5854 -> 0.5631/0.5778/0.5873; the margins over the runner-up, Pro text 0.004457 -> 0.004423, Flash text 0.054448 -> 0.054612, Flash image 0.009411 -> 0.00948 (the image caveat's 0.0094 -> 0.0095); the twelve comparator-gate fields (6/6 still pass at 5e-5). UNCHANGED: every optimal k (text: Pro 1, Flash 3; image: 3 and 3); both matched-N verdicts (text FLAGGED at 67 % relative, image transfers at 0 %); the fragility flags (the Pro text margin stays under 0.005, so text stays fragile; the Flash image margin stays above it, so the retired MEDIUM-3 flag stays retired); the Pro image curve (0.6909/0.7149/0.7223); the model-provenance gate (12 pools); the Pro N=3 consensus files (rewritten byte-identical). STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.8602 (twice), 0.8558, 0.8494, 0.5748, 0.5203, 0.4634, 0.5854, 0.0094, 0.0045, and the derived union gain +0.056 (now +0.058 against the unchanged single-pass 0.8045); a redraft with only these numbers updated, and a word-level diff, are in reports/s164-agent-records/a07-d50.md and the PR #47 body. Walkthrough material: results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14.",
+        "presentation": "Pending re-signature: draft PR #47 (branch d62-5-a07-d50); results/h6-registered-analyses/findings.md section A-07 and changelog entry 2026-10-14; the redrafted outcome text in reports/s164-agent-records/a07-d50.md",
+        "history": [
+          {
+            "noted_at": "2026-10-14T00:39:56Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): A-07 regenerated under D50 (D62 (5), D65)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-10T06:56:15Z",
+            "prior_attests": "Re-signed 2026-09-10T06:56:15Z by the PI after the 2026-09-08 artefact regeneration (prose 0.0016 -> 0.0015; previous signature 2026-09-08T01:53:31Z).",
+            "prior_presentation": null
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/h6-registered-analyses"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-14T00:44:35Z",
         "extractor_version": "0.8.0"
       }
     },
