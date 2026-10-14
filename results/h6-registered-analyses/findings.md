@@ -1,15 +1,19 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-10-12 (A-09 re-derived on the audited cost
-> basis with the not-like-for-like caveat, PI ruling D61 (4): the
-> registered gate stays CLOSED, the matched-configuration text limb no
-> longer fires, and the row awaits re-signing; earlier the same day,
-> A-06 regenerated with the D42 permutation p and Benjamini–Hochberg,
-> D61 (3), and the finding that the Pro HIGH T = 0.0 passes did not
-> think recorded against A-06's HIGH-cell reading). 2026-09-08: A-07
-> and A-09 refreshed on the Flash comparator rebuilt from the
-> E71-recovered passes. See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-10-14 (A-07 regenerated under the D50 scorer,
+> PI rulings D62 (5) and D65: the Flash comparator curves rise by
+> 0.0012–0.0018 F1 and the Pro text curve by 0.0024, with no optimal
+> k, fragility flag, or verdict changing; the row awaits re-signing).
+> 2026-10-12: A-09 re-derived on the audited cost basis with the
+> not-like-for-like caveat, PI ruling D61 (4): the registered gate
+> stays CLOSED, the matched-configuration text limb no longer fires,
+> and the row awaited re-signing (re-signed 2026-10-13); earlier the
+> same day, A-06 regenerated with the D42 permutation p and
+> Benjamini–Hochberg, D61 (3), and the finding that the Pro HIGH
+> T = 0.0 passes did not think recorded against A-06's HIGH-cell
+> reading. 2026-09-08: A-07 and A-09 refreshed on the Flash comparator
+> rebuilt from the E71-recovered passes. See [§ Changelog](#changelog)
+> for revision history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -133,8 +137,8 @@ Flash-comparator N = 3 curves at the same configuration and corpus.
 
 | Modality | Pro curve (k = 1/2/3, F1@20 m) | Flash curve (E57 pools) | Pro optimal | Flash optimal | Relative diff | Verdict |
 |---|---|---|---|---|---|---|
-| Text | 0.8602 / 0.8558 / 0.8494 | 0.4634 / 0.5203 / 0.5748 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
-| Image | 0.6909 / 0.7149 / 0.7223 | 0.5614 / 0.5760 / 0.5854 | k = 3 | k = 3 | 0 % | transfers (robust: margin 0.0094 > 0.005 on the recovered sweeps) |
+| Text | 0.8626 / 0.8582 / 0.8519 | 0.4647 / 0.5217 / 0.5764 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
+| Image | 0.6909 / 0.7149 / 0.7223 | 0.5631 / 0.5778 / 0.5873 | k = 3 | k = 3 | 0 % | transfers (robust: margin 0.0095 > 0.005 on the recovered sweeps) |
 
 Flash curves refreshed 2026-09-08 on the comparator sweeps rebuilt from
 the E71-recovered passes (`185681674`, re-scored `10e933ded`); the
@@ -142,6 +146,15 @@ pre-recovery curves were 0.4726 / 0.5199 / 0.5665 (text) and 0.5509 /
 0.5499 / 0.5525 (image). Every recovered image cell rises (k = 3 by
 +0.033); text moves within ±0.01. Neither optimum nor either verdict
 moves.
+
+All curves rescored 2026-10-14 under the D50 scorer (detections
+scoped per sheet, never re-keyed across sheets; PI rulings D62 (5)
+and D65): the Flash comparator curves rise by 0.0012–0.0016 F1 (text)
+and 0.0017–0.0018 (image), the Pro text curve by 0.0024 at every k,
+and the Pro image curve does not move. Before D50 the table read
+0.8602 / 0.8558 / 0.8494 (Pro text), 0.4634 / 0.5203 / 0.5748 (Flash
+text), and 0.5614 / 0.5760 / 0.5854 (Flash image). Again neither
+optimum nor either verdict moves.
 
 Descriptive fraction-form only (no registered verdict attaches): the
 Flash production optimum is 26/30 = 0.867 of the pool; Pro text's
@@ -153,29 +166,27 @@ prefers the permissive union, the Flash comparator the strict
 intersection), so the vote threshold again behaves as a property of
 the pipeline–corpus–model encounter rather than of the
 configuration (cf. Obs 358's threshold-transfer lesson). Second, the
-Pro text N = 3 union (0.8602) clearly beats Pro single-pass
-(0.8045) — a +0.056 gain from three passes at k = 1, so consensus
+Pro text N = 3 union (0.8626) clearly beats Pro single-pass
+(0.8045) — a +0.058 gain from three passes at k = 1, so consensus
 volume helps Pro text even at tiny N; both are small-N observations
 on 487 tiles and neither carries a registered verdict.
 
-**Fragility (verification round; refreshed 2026-09-08).** On the
-pre-recovery comparator both optima sat on near-flat curves — the Flash
-image winner (k = 3) led its runner-up by 0.0015 F1 and the Pro text
+**Fragility (verification round; refreshed 2026-09-08 and, under
+D50, 2026-10-14).** On the pre-recovery comparator both optima sat
+on near-flat curves — the Flash image winner (k = 3) led its runner-up by 0.0015 F1 and the Pro text
 winner (k = 1) by 0.0045, both under the artefact's 0.005 fragility
 threshold — and had the Flash image optimum landed on k = 1 the image
 verdict would have flipped from "transfers" to flagged at 200 %
 relative. On the sweeps rebuilt from the recovered passes the Flash
-image winner leads by 0.0094 F1, above the threshold, so the
-image "transfers" verdict is robust to that margin and the S135
-MEDIUM-3 flag is retired; the Pro text winner still leads by 0.0045
-(fragile), and the text "flagged" verdict remains robust (67 % against
-a 10 % rule). The Flash comparator passes are 485–486 of 487 tiles
+image winner leads by 0.0095 F1 (0.0094 before D50), above the
+threshold, so the image "transfers" verdict is robust to that margin
+and the S135 MEDIUM-3 flag is retired; the Pro text winner still leads
+by 0.0044 (0.0045 before D50; fragile), and the text "flagged" verdict
+remains robust (67 % against a 10 % rule). The Flash comparator passes are 485–486 of 487 tiles
 after recovery — the E71 residue that failed both recovery tiers — and
 the curves now consume the post-recovery detections; the earlier
 one-sided gap (the pre-recovery scoring at 458–472 tiles, E71 rider
-2026-09-07) no longer applies. The image "transfers"
-verdict is therefore not robust at these margins; the text
-"flagged" verdict is (67 % against a 10 % rule). The matched-N form
+2026-09-07) no longer applies. The matched-N form
 is itself post-hoc; the library's "run extended N = 30 test"
 message is operational wording, not a registered trigger.
 
@@ -193,8 +204,8 @@ token-load audit basis, same corpus and buffer) as the Flash-optimal
 yardstick. Comparability windows below are operational choices, not
 registered. F1s are on today's scorer (D50), which raised the Flash
 comparator's N = 3 curves by about 0.002 and Pro's text union to
-0.8626; the A-07 table above still shows the pre-D50 values, because
-A-07 is not regenerated here.
+0.8626; the A-07 table above shows the same D50 values since A-07 was
+regenerated on 2026-10-14.
 
 **Matched-configuration basis (model swap at the Pro corners;
 re-derived on audited costs 2026-10-12):**
@@ -312,6 +323,68 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-10-14 — A-07 regenerated under the D50 scorer (PI rulings D62 (5) and D65)
+
+**Refresh trigger**: PI ruling D50 (2026-10-07) made the shared scorer
+scope detections per sheet by tile geometry and never re-key a
+detection across sheets. `a07_voting_thresholds.json` had not been
+regenerated since 2026-09-08; the D57 (4) Phase 3 re-score and the S164
+re-score (`reports/s164-agent-records/rescore-repaired-gs.md` § 3.4, on
+branch `rescore-repaired-gs`) both found 25 of its leaves moving under
+today's scorer. PI ruling D62 (5), "now", recorded in D65: regenerate
+A-07 as its own small PR. `scripts/h6_registered_analyses.py`
+(unchanged) was run on sapphire at `90294a283` in two independent runs
+(separate worktrees, new processes); they agree byte for byte apart
+from `generated_at`. The artefact landed in `468ada2fc`.
+`a06_decision_rule.json` and `a09_cost_gate.json`, which the same
+script writes, came out byte-identical to the committed files apart
+from `generated_at` and were not committed.
+
+**Before → after** (`a07_voting_thresholds.json`, the 25 leaves; F1 @
+20 m):
+
+| Quantity | Before (2026-09-08) | After (D50 scorer) |
+|---|---|---|
+| Pro text curve, k = 1 / 2 / 3 | 0.8602 / 0.8558 / 0.8494 | 0.8626 / 0.8582 / 0.8519 |
+| Flash comparator text curve | 0.4634 / 0.5203 / 0.5748 | 0.4647 / 0.5217 / 0.5764 |
+| Flash comparator image curve | 0.5614 / 0.5760 / 0.5854 | 0.5631 / 0.5778 / 0.5873 |
+| Pro text margin over runner-up | 0.004457 | 0.004423 |
+| Flash text margin over runner-up | 0.054448 | 0.054612 |
+| Flash image margin over runner-up | 0.009411 | 0.00948 |
+| Image fragility caveat (`scope_caveats`) | "leads its runner-up by 0.0094 F1" | "… by 0.0095 F1" |
+| Comparator gate, `committed` and `recomputed` (six cells each) | the pre-D50 values | the D50 values above; 6/6 still pass at 5e-5 |
+
+In this document: the A-07 table, a dated note under it, the union
+gain (0.8602 → 0.8626 against the unchanged single-pass 0.8045, so
++0.056 → +0.058), the fragility paragraph (0.0094 → 0.0095 and
+0.0045 → 0.0044, the earlier values kept in brackets), and the A-09
+section's pointer to the A-07 table.
+
+**What did NOT change**: every optimal k (text: Pro k = 1, Flash
+k = 3; image: both k = 3); both matched-N verdicts (text flagged at
+67 % relative, image transfers at 0 %); the fragility flags (the Pro
+text margin stays under 0.005, so text stays fragile; the Flash image
+margin stays above it, so the retired image flag stays retired); the
+Pro image curve (0.6909 / 0.7149 / 0.7223); the fraction-form
+descriptives; the model-provenance gate (12 pools); the Pro N = 3
+consensus files under `outputs/h11/n1-pro-rerun-384/`, rewritten
+byte-identical. The register row `h6-a07-voting-thresholds` quotes
+nine of the moved values and the derived union gain in its outcome
+text, so its signature of 2026-09-10T06:56:15Z lapses: the row is set
+to `re-sign-pending` with a dated D9-pattern note (the prior signature
+kept in `history`), and its outcome text is unchanged. A redraft with
+only those numbers updated is in `reports/s164-agent-records/a07-d50.md`,
+for the PI.
+
+**Removed at the PI's direction (Session 164)**: the fragility
+paragraph's closing sentence, "The image "transfers" verdict is
+therefore not robust at these margins; the text "flagged" verdict is
+(67 % against a 10 % rule).", contradicted the same paragraph and the
+register row from the 2026-09-08 refresh, which retired the image
+flag. The paragraph's earlier sentences already state both verdicts'
+robustness, so nothing replaces it. The register row's outcome text was
+updated with the PI-approved draft and re-signed.
 
 ### 2026-10-12 (later) — A-09 re-derived on the audited cost basis (PI rulings D16 and D61 (4))
 
