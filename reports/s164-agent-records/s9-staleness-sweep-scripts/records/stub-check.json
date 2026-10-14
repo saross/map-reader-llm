@@ -1,0 +1,107 @@
+[
+ {
+  "eval": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "stubcheck",
+  "reference_stub": true,
+  "unrounded_points_equal": true,
+  "seconds_stub": 11.91,
+  "seconds_reference": 31.78
+ },
+ {
+  "eval": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "stubcheck",
+  "reference_stub": true,
+  "unrounded_points_equal": true,
+  "seconds_stub": 40.49,
+  "seconds_reference": 108.72
+ },
+ {
+  "eval": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "s1-A",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 10.89,
+  "seconds_reference": 5.85
+ },
+ {
+  "eval": "results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-image-t1_0-n3-carried-p0_15-k3/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "s1-A",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 6.91,
+  "seconds_reference": 19.06
+ },
+ {
+  "eval": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "s1-A",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 10.46,
+  "seconds_reference": 27.7
+ },
+ {
+  "eval": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/flash35-pv-2x2__f35prop-f35vf-4of10/evaluation.json",
+  "stubbed": [
+   "scripts.evaluate_detections.bootstrap_ci",
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "s1-A",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 7.58,
+  "seconds_reference": 22.95
+ },
+ {
+  "eval": "outputs/55maps-image-generalisation/evaluation/evaluation.json",
+  "stubbed": [
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "pts-A (first block, no stub)",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 31.78,
+  "seconds_reference": 44.09
+ },
+ {
+  "eval": "outputs/55maps-image-generalisation/extended-buffer-eval/evaluation.json",
+  "stubbed": [
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "pts-A (first block, no stub)",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 24.48,
+  "seconds_reference": 34.27
+ },
+ {
+  "eval": "results/55map-final-board-2026-08-27/cells/B-N10-oracle/evaluation.json",
+  "stubbed": [
+   "scripts.lib_advanced_metrics"
+  ],
+  "reference_run": "pts-A (first block, no stub)",
+  "reference_stub": false,
+  "unrounded_points_equal": true,
+  "seconds_stub": 108.72,
+  "seconds_reference": 145.43
+ }
+]

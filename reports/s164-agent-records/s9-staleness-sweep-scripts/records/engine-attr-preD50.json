@@ -1,0 +1,237 @@
+{
+ "cells": [
+  {
+   "argv": [
+    "--verified-detections",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/outputs/55maps-image-generalisation/verified/verified_detections.geojson",
+    "--student-gt",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
+    "--bounds",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+    "--review-yesterday",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+    "--review-today",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv",
+    "--buffers",
+    "5",
+    "10",
+    "15",
+    "20",
+    "25",
+    "30",
+    "35",
+    "40",
+    "45",
+    "50",
+    "75",
+    "100",
+    "125",
+    "150",
+    "--n-bootstrap",
+    "50",
+    "--seed",
+    "42",
+    "--compute-mcc",
+    "--output-dir",
+    "/home/shawn/scratch/s164-s9-sweep-2026-10-14/runs/eng-attr-preD50/cells/results/55maps-extended-gt-2026-06-07/IM-k3"
+   ],
+   "committed_20": {
+    "F1": 0.5081688945469975,
+    "FN": 2351,
+    "FP": 2285,
+    "TP": 2395,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.5117521367521367,
+    "recall": 0.5046354825115887,
+    "tile_fn": 986,
+    "tile_fp": 269,
+    "tile_mcc": 0.6927303266774046,
+    "tile_sensitivity": 0.7083703046435965,
+    "tile_specificity": 0.9478682170542636,
+    "tile_tn": 4891,
+    "tile_tp": 2395
+   },
+   "committed_50": {
+    "F1": 0.7986993191748807,
+    "FN": 1231,
+    "FP": 750,
+    "TP": 3930,
+    "n_ref_extended": 5161,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 415,
+    "precision": 0.8397435897435898,
+    "recall": 0.7614803332687463,
+    "tile_fn": 1041,
+    "tile_fp": 181,
+    "tile_mcc": 0.7104103204864493,
+    "tile_sensitivity": 0.7045970488081725,
+    "tile_specificity": 0.9639226629459836,
+    "tile_tn": 4836,
+    "tile_tp": 2483
+   },
+   "committed_engine_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+   "diffs": {
+    "100": {
+     "F1": [
+      0.8179210760557809,
+      0.8180019782393669
+     ],
+     "FN": [
+      1296,
+      1295
+     ],
+     "n_ref_extended": [
+      5431,
+      5430
+     ],
+     "n_reviewer_promoted_at_R": [
+      685,
+      684
+     ],
+     "recall": [
+      0.761369913459768,
+      0.7615101289134438
+     ]
+    },
+    "125": {
+     "F1": [
+      0.8183161004431314,
+      0.8183966909592278
+     ],
+     "FN": [
+      1320,
+      1319
+     ],
+     "n_ref_extended": [
+      5475,
+      5474
+     ],
+     "n_reviewer_promoted_at_R": [
+      729,
+      728
+     ],
+     "recall": [
+      0.7589041095890411,
+      0.7590427475337961
+     ]
+    },
+    "150": {
+     "F1": [
+      0.818137206791638,
+      0.818217510797016
+     ],
+     "FN": [
+      1341,
+      1340
+     ],
+     "n_ref_extended": [
+      5509,
+      5508
+     ],
+     "n_reviewer_promoted_at_R": [
+      763,
+      762
+     ],
+     "recall": [
+      0.7565801415864948,
+      0.756717501815541
+     ]
+    },
+    "50": {
+     "F1": [
+      0.7986993191748807,
+      0.7987804878048781
+     ],
+     "FN": [
+      1231,
+      1230
+     ],
+     "n_ref_extended": [
+      5161,
+      5160
+     ],
+     "n_reviewer_promoted_at_R": [
+      415,
+      414
+     ],
+     "recall": [
+      0.7614803332687463,
+      0.7616279069767442
+     ]
+    },
+    "75": {
+     "F1": [
+      0.8157684630738523,
+      0.8158498852180858
+     ],
+     "FN": [
+      1253,
+      1252
+     ],
+     "n_ref_extended": [
+      5340,
+      5339
+     ],
+     "n_reviewer_promoted_at_R": [
+      594,
+      593
+     ],
+     "recall": [
+      0.7653558052434457,
+      0.7654991571455328
+     ]
+    }
+   },
+   "eval": "results/55maps-extended-gt-2026-06-07/IM-k3/evaluation.json",
+   "identical_points": false,
+   "rc": 0,
+   "replay_20": {
+    "F1": 0.5081688945469975,
+    "FN": 2351,
+    "FP": 2285,
+    "TP": 2395,
+    "n_ref_extended": 4746,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 0,
+    "precision": 0.5117521367521367,
+    "recall": 0.5046354825115887,
+    "tile_fn": 986,
+    "tile_fp": 269,
+    "tile_mcc": 0.6927303266774046,
+    "tile_sensitivity": 0.7083703046435965,
+    "tile_specificity": 0.9478682170542636,
+    "tile_tn": 4891,
+    "tile_tp": 2395
+   },
+   "replay_50": {
+    "F1": 0.7987804878048781,
+    "FN": 1230,
+    "FP": 750,
+    "TP": 3930,
+    "n_ref_extended": 5160,
+    "n_ref_student_only": 4746,
+    "n_reviewer_promoted_at_R": 414,
+    "precision": 0.8397435897435898,
+    "recall": 0.7616279069767442,
+    "tile_fn": 1041,
+    "tile_fp": 181,
+    "tile_mcc": 0.7104103204864493,
+    "tile_sensitivity": 0.7045970488081725,
+    "tile_specificity": 0.9639226629459836,
+    "tile_tn": 4836,
+    "tile_tp": 2483
+   },
+   "seconds": 121.7,
+   "source_summary": "results/55maps-extended-gt-2026-06-07/IM-k3/summary.json"
+  }
+ ],
+ "code": "/home/shawn/scratch/s164-s9-sweep-2026-10-14/codes/b3c52591d",
+ "extra": [],
+ "n": 1,
+ "n_bootstrap": 50,
+ "n_failed": 0,
+ "n_identical": 0,
+ "repo": "/home/shawn/scratch/s164-s9-sweep-2026-10-14/wt"
+}
