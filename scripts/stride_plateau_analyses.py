@@ -44,6 +44,13 @@ centroids booked to the nearest carrier tile on ANY sheet, which near a
 sheet edge re-keyed a detection to the neighbouring sheet
 (``reports/s163-agent-records/origin-gap-grid-plateau.md``).
 
+**Which probabilities (D62 (1) step 2, 2026-10-13).** Every verifier leg is
+read under the shared leg rule (``scripts/lib_verify_dirs.py``): its
+``_repaired`` copy, which holds the wrong-sheet rows re-verified on crops from
+their own sheet, when that copy holds ``probabilities.json``; the leg itself
+otherwise, and always under ``MAP_READER_VERIFY_DIRS=fixed``. The directory
+each leg was read from is written as ``verifier_probabilities``.
+
 Zero API. Run on sapphire (~40 sweeps, 78 permutation pairs at 10k).
 
 Usage::
@@ -136,6 +143,11 @@ CELL_SPECS: dict[str, dict[str, Any]] = {
 WINNER_CELL = "g384_ov128"
 WINNER_NS = (1, 3, 5)
 
+#: Which directory each verifier leg was read from, keyed ``<cell>/<leg>``
+#: (``scripts/lib_verify_dirs.py``; filled by the loaders, written beside
+#: the analysis as ``verifier_probabilities``).
+VERIFIER_PROBABILITIES: dict[str, dict[str, Any]] = {}
+
 #: Phase A incumbents on the common footprint (clip via as_gdf at load, each
 #: detection kept on the sheet of its own recorded ``source_tile``).
 INCUMBENTS: dict[str, str] = {
@@ -167,10 +179,14 @@ def load_k10_union(cell: str, bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """
     spec = CELL_SPECS[cell]
     if spec["grid"]:
-        gdf = reassignment_gate(load_verified_union(cell), bounds, cell)
+        joined = load_verified_union(cell)
+        VERIFIER_PROBABILITIES[f"{cell}/verify"] = joined.attrs["verifier_probabilities"]
+        gdf = reassignment_gate(joined, bounds, cell)
         passes = load_cell_passes(PROJECT_ROOT / spec["root"] / "scoring", cell)
         return union_on_origin(gdf, passes, bounds, label=cell, n_passes=10)
-    return load_stride_union_on_origin(cell, bounds)
+    gdf = load_stride_union_on_origin(cell, bounds)
+    VERIFIER_PROBABILITIES[f"{cell}/verify"] = gdf.attrs["verifier_probabilities"]
+    return gdf
 
 
 def load_incumbent(rel: str, bounds: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
@@ -386,6 +402,8 @@ def winner_ladder_exact(
         gdf = load_stride_union_on_origin(
             WINNER_CELL, bounds, union_name=union_name,
             verify_dir=f"verify_k{n}", n_passes=n)
+        VERIFIER_PROBABILITIES[f"{WINNER_CELL}/verify_k{n}"] = (
+            gdf.attrs["verifier_probabilities"])
         thresholds = sorted({0.0} | {float(v) for v in gdf["mound_probability"]})
         best = None
         for prob_t in thresholds:
@@ -456,6 +474,7 @@ def main() -> int:
         "bootstrap_config": {"n_permutations": N_PERMUTATIONS, "seed": SEED,
                              "fdr_q": FDR_Q},
         "winner_ladder_exact": exact,
+        "verifier_probabilities": dict(sorted(VERIFIER_PROBABILITIES.items())),
     }, indent=2) + "\n")
     logger.info("wrote %s", OUT_PATH.relative_to(PROJECT_ROOT))
     return 0

@@ -21,9 +21,14 @@ its members were seen on, and it is booked to a carrier tile on its OWN
 sheet; the stored ``source_tile`` was the nearest among all carrier tiles,
 which near a sheet edge can be the neighbouring sheet's.
 
+Each leg is read under the shared leg rule (``scripts/lib_verify_dirs.py``:
+``verify_repaired/`` when it holds ``probabilities.json``, else ``verify/``;
+``MAP_READER_VERIFY_DIRS=fixed`` reads ``verify/``), and the directory read is
+recorded as ``verifier_probabilities``.
+
 Outputs (under ``results/stride-2026-08-25/``):
     - stride_verifier_analysis.json — boards (20 m and 30 m), contrasts,
-      billing reconciliation
+      billing reconciliation, ``verifier_probabilities``
     - stride_verifier_sweep.csv — the full prob_t × k sweep, five cells
 
 Zero API. Run on sapphire: ~800 scorings plus B = 10,000 paired bootstraps.
@@ -64,6 +69,7 @@ from scripts.grid_verifier_analysis import (  # noqa: E402
 )
 from scripts.lib_advanced_metrics import score_detection_set  # noqa: E402
 from scripts.lib_cluster_origins import union_on_origin  # noqa: E402
+from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -121,10 +127,17 @@ def load_stride_union(label: str, *, union_name: str = "union_k10.geojson",
                       verify_dir: str = "verify") -> gpd.GeoDataFrame:
     """Load one stride cell's union joined to its verifier probabilities.
 
+    The probabilities are read under the shared leg rule
+    (``scripts/lib_verify_dirs.py``): from ``<verify_dir>_repaired/`` when
+    that copy holds ``probabilities.json`` (D62 (1) step 2's re-verified
+    wrong-sheet rows), from ``<verify_dir>/`` otherwise, or always from
+    ``<verify_dir>/`` under ``MAP_READER_VERIFY_DIRS=fixed``. The directory
+    read is recorded in ``gdf.attrs["verifier_probabilities"]``.
+
     Args:
         label: Cell label.
         union_name: The union file under ``verifier/<label>/``.
-        verify_dir: The verify-stage directory holding ``probabilities.json``.
+        verify_dir: The verify-stage directory's fixed name (the leg).
 
     Returns:
         GeoDataFrame in the project CRS with ``vote_count``,
@@ -135,7 +148,7 @@ def load_stride_union(label: str, *, union_name: str = "union_k10.geojson",
     """
     root = PROJECT_ROOT / STRIDE_CELLS[label][0] / "verifier" / label
     gdf = gpd.read_file(root / union_name).to_crs(CRS)
-    results = json.loads((root / verify_dir / "probabilities.json").read_text())["results"]
+    results, provenance = read_leg_results(root, verify_dir, PROJECT_ROOT)
     if len(results) != len(gdf):
         raise JoinGateError(
             f"{label}: {len(results)} probabilities vs {len(gdf)} union features")
@@ -146,6 +159,7 @@ def load_stride_union(label: str, *, union_name: str = "union_k10.geojson",
         float(results[f"candidate_{i:05d}"]["mound_probability"])
         for i in range(len(gdf))
     ]
+    gdf.attrs["verifier_probabilities"] = provenance
     return gdf
 
 
@@ -181,14 +195,20 @@ def load_stride_union_on_origin(
 
     Returns:
         The joined union with ``origin_tiles`` and an origin-sheet
-        ``source_tile``; index = the verifier's candidate number.
+        ``source_tile``; index = the verifier's candidate number;
+        ``attrs["verifier_probabilities"]`` the leg directory read
+        (:func:`load_stride_union`).
     """
     root = PROJECT_ROOT / STRIDE_CELLS[label][0]
-    gdf = reassign_gate(
-        load_stride_union(label, union_name=union_name, verify_dir=verify_dir),
-        bounds, label)
-    return union_on_origin(gdf, load_cell_passes(root / "scoring", label), bounds,
-                           label=f"{label}/{union_name}", n_passes=n_passes)
+    joined = load_stride_union(label, union_name=union_name, verify_dir=verify_dir)
+    provenance = joined.attrs["verifier_probabilities"]
+    gdf = reassign_gate(joined, bounds, label)
+    out = union_on_origin(gdf, load_cell_passes(root / "scoring", label), bounds,
+                          label=f"{label}/{union_name}", n_passes=n_passes)
+    # Carried explicitly: pandas does not promise to keep attrs through
+    # union_on_origin's merges.
+    out.attrs["verifier_probabilities"] = provenance
+    return out
 
 
 def score_at(gdf: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
@@ -217,9 +237,12 @@ def main() -> int:
     best: dict[str, dict[str, Any]] = {}
     best_sets: dict[str, gpd.GeoDataFrame] = {}
     union_scores: dict[str, dict[str, Any]] = {}
+    #: Which directory each cell's probabilities were read from (lib_verify_dirs).
+    verifier_probabilities: dict[str, dict[str, Any]] = {}
 
     for label, (_, stride, px, ov) in STRIDE_CELLS.items():
         gdf = load_stride_union_on_origin(label, bounds)
+        verifier_probabilities[label] = gdf.attrs["verifier_probabilities"]
         union_scores[label] = score(gdf, gdf_ref, bounds)
         thresholds = sorted({0.0} | {float(v) for v in gdf["mound_probability"]})
         rows = []
@@ -296,6 +319,7 @@ def main() -> int:
                             "prob_t", "min_votes")}
                    for label in best},
         "union_scores": union_scores,
+        "verifier_probabilities": verifier_probabilities,
         "contrasts": contrasts,
         "bootstrap_config": {"n_iterations": args.bootstrap, "seed": SEED},
         "billing_verifier": billing,

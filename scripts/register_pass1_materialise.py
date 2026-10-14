@@ -20,6 +20,13 @@ GATES (nothing written unless all pass):
   (A 0.836237-class / B 0.850294-class — read from the JSON, not
   hard-coded).
 
+Each rung's probabilities are read under the shared leg rule
+(``scripts/lib_verify_dirs.py``): ``verify_k<N>_repaired/`` when it holds
+``probabilities.json`` (D62 (1) step 2's re-verified wrong-sheet rows), else
+``verify_k<N>/``; ``MAP_READER_VERIFY_DIRS=fixed`` reproduces the committed
+rungs, whose counts the gates check. The directory read is written beside
+each rung as ``verifier_probabilities.json``.
+
 Rung evaluations mirror the committed conditions-verified cli_args
 (evaluate_detections, buffers 20, grid common bounds, curator GT,
 BCa 10k seed 42, --mcc). Oracle evaluations use the 55-map engine
@@ -52,6 +59,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 from scripts.grid_analysis import CRS  # noqa: E402
 from scripts.grid_verifier_analysis import JoinGateError  # noqa: E402
+from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.stride55_sweep_oracle import (  # noqa: E402
     RUNS as STRIDE55_RUNS,
     load_candidates,
@@ -75,8 +83,7 @@ GS_GT = "inputs/vectors/references/mounds-reference.geojson"
 def rung(n: int) -> None:
     best = WL[str(n)]["best"]
     union = gpd.read_file(VROOT / f"union_k{n}.geojson").to_crs(CRS)
-    probs = json.loads((VROOT / f"verify_k{n}" / "probabilities.json"
-                        ).read_text())["results"]
+    probs, provenance = read_leg_results(VROOT, f"verify_k{n}", PROJECT_ROOT)
     if len(probs) != len(union):
         raise JoinGateError(f"N={n}: {len(probs)} probs vs {len(union)}")
     if set(probs) != {f"candidate_{i:05d}" for i in range(len(union))}:
@@ -94,6 +101,8 @@ def rung(n: int) -> None:
     dest.mkdir(parents=True, exist_ok=True)
     sub.to_crs("EPSG:4326").to_file(dest / "detections.geojson",
                                     driver="GeoJSON")
+    (dest / "verifier_probabilities.json").write_text(
+        json.dumps(provenance, indent=2) + "\n")
     r = subprocess.run(
         [".venv/bin/python", "scripts/evaluate_detections.py",
          "--detections", str((dest / "detections.geojson"

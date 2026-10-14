@@ -126,6 +126,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     compute_per_tile_tp_fp_fn,
 )
 from scripts.lib_verify_dirs import (  # noqa: E402
+    POLICY_FIXED,
     resolve_verify_dir,
     verify_dir_provenance,
 )
@@ -1126,12 +1127,17 @@ def stage_selftest() -> int:
     failures: list[str] = []
 
     # Gate 1 — the materialiser reproduces the committed calibration counts.
+    # A mechanism gate, so it reads each GS calibration leg as the count was
+    # committed: by its fixed name, whatever MAP_READER_VERIFY_DIRS says. Both
+    # campaigns' K = 3 legs gained `_repaired` copies in D62 (1) step 2
+    # (wrong-sheet rows re-verified), which move the counts by design.
     if not GS_CALIBRATION:
         failures.append(f"campaign {CAMPAIGN.key}: no GS calibration recorded")
     for arm, spec in GS_CALIBRATION.items():
         try:
             frame = load_manifest_probs(GS_VERIFIER / spec.get("crops", "crops_k3"),
-                                        GS_VERIFIER / spec["verify"])
+                                        resolve_verify_dir(GS_VERIFIER, spec["verify"],
+                                                           POLICY_FIXED))
             got = len(materialise(frame, *spec["point"]))
         except Exception as exc:  # noqa: BLE001 - a gate reports, never raises
             failures.append(f"materialiser {arm}: {exc}")

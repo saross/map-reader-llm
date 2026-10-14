@@ -74,8 +74,11 @@ Usage::
 
 Inputs:
     - outputs/grid-2026-08-18/verifier/<cell>/union_k10.geojson
-    - outputs/grid-2026-08-18/verifier/<cell>/verify/probabilities.json
-    - outputs/grid-2026-08-18/verifier/<cell>/verify/run.meta.json
+    - outputs/grid-2026-08-18/verifier/<cell>/verify/probabilities.json, or
+      ``verify_repaired/`` under the shared leg rule (``lib_verify_dirs``;
+      recorded as ``verifier_probabilities`` in every JSON output)
+    - outputs/grid-2026-08-18/verifier/<cell>/verify/run.meta.json (the cost
+      of the run as made; a re-verification's cost is in the provenance)
     - outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson
     - results/grid-2026-08-18/grid_analysis.json (consensus-only anchors)
     - inputs/vectors/references/mounds-reference.geojson
@@ -126,6 +129,7 @@ from scripts.grid_analysis import (  # noqa: E402
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
 from scripts.lib_cluster_origins import ORIGIN_COLUMN, union_on_origin  # noqa: E402
+from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.materialise_grid_unions import EXPECTED  # noqa: E402
 from scripts.prepare_h13_scoring import assign_primary_tiles  # noqa: E402
 
@@ -174,6 +178,14 @@ def load_verified_union(cell: str) -> gpd.GeoDataFrame:
     Args:
         cell: Cell label (e.g. ``g512_ov064``).
 
+    The probabilities are read under the shared leg rule
+    (``scripts/lib_verify_dirs.py``): from ``verify_repaired/`` when that copy
+    holds ``probabilities.json`` (the D62 (1) step 2 re-verification of the
+    candidates whose crops were cut from the neighbouring sheet), from
+    ``verify/`` otherwise, or always from ``verify/`` under
+    ``MAP_READER_VERIFY_DIRS=fixed``. The directory read is recorded in
+    ``gdf.attrs["verifier_probabilities"]``.
+
     Returns:
         GeoDataFrame in the project Coordinate Reference System (CRS) with
         ``vote_count``, ``mound_probability`` and ``source_tile`` columns.
@@ -184,9 +196,8 @@ def load_verified_union(cell: str) -> gpd.GeoDataFrame:
             contiguous ``candidate_NNNNN`` range.
     """
     union_path = VERIFIER_DIR / cell / "union_k10.geojson"
-    probs_path = VERIFIER_DIR / cell / "verify" / "probabilities.json"
     gdf = gpd.read_file(union_path).to_crs(CRS)
-    results = json.loads(probs_path.read_text())["results"]
+    results, provenance = read_leg_results(VERIFIER_DIR / cell, "verify", PROJECT_ROOT)
 
     if len(gdf) != EXPECTED[cell]:
         raise JoinGateError(
@@ -203,6 +214,7 @@ def load_verified_union(cell: str) -> gpd.GeoDataFrame:
         float(results[f"candidate_{i:05d}"]["mound_probability"])
         for i in range(len(gdf))
     ]
+    gdf.attrs["verifier_probabilities"] = provenance
     return gdf
 
 
@@ -553,8 +565,11 @@ def main() -> int:
     unions: dict[str, gpd.GeoDataFrame] = {}
     union_scores: dict[str, dict[str, Any]] = {}
     sweep_rows: list[dict[str, Any]] = []
+    #: Which directory each cell's probabilities were read from (lib_verify_dirs).
+    verifier_probabilities: dict[str, dict[str, Any]] = {}
     for cell in CELL_ORDER:
         gdf = load_verified_union(cell)
+        verifier_probabilities[cell] = gdf.attrs["verifier_probabilities"]
         gdf = reassignment_gate(gdf, bounds, cell)
         # D62 (1): rebuild the union's clusters from its passes (gated row
         # for row), attach their member tiles, and book each row on its own
@@ -699,6 +714,7 @@ def main() -> int:
                 "detections": str(det.relative_to(PROJECT_ROOT)),
                 "evaluation": str(eval_path.relative_to(PROJECT_ROOT)),
                 "reproduces_sweep": ok,
+                "verifier_probabilities": verifier_probabilities[cell],
             })
     # --- Payload -----------------------------------------------------------
     def _board(rows: dict[str, dict[str, Any]]) -> dict[str, Any]:
@@ -730,6 +746,7 @@ def main() -> int:
             "union_scores_reproduced": {
                 c: union_scores[c]["f1"] for c in CELL_ORDER},
         },
+        "verifier_probabilities": verifier_probabilities,
         "board_best": _board(best),
         "board_pure_verifier_k1": _board(pure),
         "board_consensus_only_committed": {
@@ -783,6 +800,7 @@ def main() -> int:
                 "temperature": 0.0, "thinking_level": "minimal", "n": 1,
             },
             "bootstrap": {"n_iterations": args.bootstrap, "seed": SEED},
+            "verifier_probabilities": verifier_probabilities,
             "cells": conditions,
         }, indent=2) + "\n")
 

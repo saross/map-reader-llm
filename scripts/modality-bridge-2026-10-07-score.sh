@@ -17,6 +17,15 @@
 # Not built here (Stage 2 card § 6): the tile-level interaction permutation
 # for the gap change, and the D45/D46 floors.
 #
+# Leg names (PI decision D62 (1) step 2, 2026-10-13): the three Run B legs
+# g3-text, g3-image and g3-text-temp1 are named by their fixed name
+# `verify_g3`, which image_b_analysis.py reads under the shared leg rule
+# (scripts/lib_verify_dirs.py): their `verify_g3_repaired/` copies, which
+# now hold the wrong-sheet rows re-verified on crops from their own sheet,
+# by default, and `verify_g3/` under MAP_READER_VERIFY_DIRS=fixed. Before
+# that step the copies were uncommitted and changed no row. The other legs
+# keep their explicit `_repaired` names, which the rule reads as named.
+#
 # Usage:
 #   bash scripts/modality-bridge-2026-10-07-score.sh
 #
@@ -41,15 +50,15 @@ cell() {  # name root cellver k union verify [op]
 }
 mkdir -p $R/logs
 TI=detect_brief-text-image; TX=detect_brief-text
-cell g3-text-g3v          g3-text          $TX 10 union_k10.geojson verify_g3_repaired  0.15,10
-cell g3-image-g3v         g3-image         $TI 10 union_k10.geojson verify_g3_repaired  0.15,9
+cell g3-text-g3v          g3-text          $TX 10 union_k10.geojson verify_g3           0.15,10
+cell g3-image-g3v         g3-image         $TI 10 union_k10.geojson verify_g3           0.15,9
 cell g37-text-g3v         g37-text         $TX 5  union_k5.geojson  verify_g3_repaired  0.10,5
 cell g37-text-g37v        g37-text         $TX 5  union_k5.geojson  verify_g37_repaired 0.80,5
 cell g37-image-g3v        g37-image        $TI 5  union_k5.geojson  verify_g3_repaired  0.10,5
 cell g37-image-g37v       g37-image        $TI 5  union_k5.geojson  verify_g37_repaired 0.90,5
 cell g37-image-cache-g3v  g37-image-cache  $TI 5  union_k5.geojson  verify_g3_repaired  0.10,5
 cell g37-image-cache-g37v g37-image-cache  $TI 5  union_k5.geojson  verify_g37_repaired 0.90,5
-cell g3-text-temp1-g3v    g3-text-temp1    $TX 5  union_k5.geojson  verify_g3_repaired
+cell g3-text-temp1-g3v    g3-text-temp1    $TX 5  union_k5.geojson  verify_g3
 cell g3-image-temp1-g3v   g3-image-temp1   $TI 5  union_k5.geojson  verify_g3_repaired
 $PY scripts/gemini37_image_gap_test.py --six-cell-gate \
   --pair g3 $R/g3-text-g3v $R/g3-image-g3v \

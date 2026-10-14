@@ -85,6 +85,7 @@ from scripts.lib_cluster_origins import (  # noqa: E402
     points_on_origin,
     union_on_origin,
 )
+from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
 from scripts.n1_baseline_leaderboard_tiering import (  # noqa: E402
     permutation_test_float,
 )
@@ -114,13 +115,23 @@ SEED = 42
 
 
 def load_image_union(vroot: Path = None, union_name: str | None = None,
-                     verify_dir: str = "verify") -> gpd.GeoDataFrame:
+                     verify_dir: str = "verify",
+                     policy: str | None = None) -> gpd.GeoDataFrame:
     """The image union joined to its probabilities, join-gated.
 
     ``union_name``/``verify_dir`` select a specific union and verify
     stage when a cell holds more than one (e.g. the gemini37 K=5
     screen beside its K=10 escalation); the defaults preserve the
     original single-union behaviour.
+
+    The probabilities are read under the shared leg rule
+    (``scripts/lib_verify_dirs.py``): from ``<verify_dir>_repaired/`` when
+    that copy holds ``probabilities.json`` (D62 (1) step 2's re-verified
+    wrong-sheet rows, or Stage 2's parse repairs), from ``<verify_dir>/``
+    otherwise; a ``verify_dir`` already ending in ``_repaired`` is read as
+    named. ``policy`` overrides ``MAP_READER_VERIFY_DIRS`` for one call (the
+    six-cell anchor gate reads its originals ``"fixed"``). The directory read
+    is recorded in ``gdf.attrs["verifier_probabilities"]``.
     """
     vroot = VROOT if vroot is None else vroot
     if union_name is not None:
@@ -133,8 +144,7 @@ def load_image_union(vroot: Path = None, union_name: str | None = None,
             raise JoinGateError(
                 f"{vroot}: expected one union, found {len(unions)}")
     gdf = gpd.read_file(unions[0]).to_crs(CRS)
-    results = json.loads(
-        (vroot / verify_dir / "probabilities.json").read_text())["results"]
+    results, provenance = read_leg_results(vroot, verify_dir, PROJECT_ROOT, policy)
     if len(results) != len(gdf):
         raise JoinGateError(
             f"{CELL}: {len(results)} probabilities vs {len(gdf)} features")
@@ -143,6 +153,7 @@ def load_image_union(vroot: Path = None, union_name: str | None = None,
     gdf["mound_probability"] = [
         float(results[f"candidate_{i:05d}"]["mound_probability"])
         for i in range(len(gdf))]
+    gdf.attrs["verifier_probabilities"] = provenance
     return gdf
 
 
@@ -237,6 +248,7 @@ def main(argv: list[str] | None = None) -> int:
 
     # ---- Image union, gated. ----
     union = load_image_union(VROOT, args.union_name, args.verify_dir)
+    verifier_probabilities = union.attrs["verifier_probabilities"]
     union = reassign_gate(union, bounds, CELL)
     # D62 (1): the union's members from its K passes, each row on its sheet.
     passes = load_cell_passes(SCORING, CELL, n_passes=args.k)
@@ -284,7 +296,9 @@ def main(argv: list[str] | None = None) -> int:
         OUT / "verified_best_20m.geojson", driver="GeoJSON")
 
     # ---- A fixed operating point (Run B § 9 item 2), when asked. ----
-    extra: dict = {}
+    # Which directory the probabilities came from (lib_verify_dirs), written
+    # into every analysis.json this run produces.
+    extra: dict = {"verifier_probabilities": verifier_probabilities}
     if args.operating_point is not None:
         op_t, op_k = args.operating_point
         op_set = verified_subset(union, op_t, op_k)
