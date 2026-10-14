@@ -25,6 +25,16 @@ Gemini 3 image            10     (0.15, k9)      0.8412
 3.7 image, 3.7 verifier   5      (0.90, k5)      0.9308
 ========================  =====  ==============  =========================
 
+The gate checks the INSTRUMENT, so it reads each original leg as the cell
+was registered: by its fixed name, whatever ``MAP_READER_VERIFY_DIRS`` says
+(``scripts/lib_verify_dirs.py``, policy ``fixed``). The D62 (1) step 2
+re-verification booked corrected rows for all six originals in
+``<leg>_repaired/`` copies (``reports/s164-agent-records/rescore-repaired-gs.md``);
+under the shared rule those copies move the originals' F1, so reading them
+here would make the gate refuse every bridge cell for a change of data, not
+of instrument. Callers that compare a bridge cell with an original's CURRENT
+verified set read the original under the rule themselves.
+
 Each cell must reproduce its F1 to ``1e-3`` (the card's tolerance) through
 BOTH instruments — the sweep's scorer and the per-tile micro-F1 the gap
 test permutes — and its best point exactly. The three original gaps
@@ -113,8 +123,12 @@ ORIGINAL_GAPS: tuple[tuple[str, str, float], ...] = (
 )
 
 
+#: The leg rule the gate reads its originals under (module docstring).
+GATE_POLICY = "fixed"
+
+
 def score_cell(vroot: Path, union_name: str, verify_dir: str, k: int,
-               label: str) -> dict[str, Any]:
+               label: str, policy: str | None = GATE_POLICY) -> dict[str, Any]:
     """Score one cell through ``image_b_analysis``'s own path.
 
     Joins the union to its probabilities (join-gated), re-derives carrier
@@ -128,10 +142,14 @@ def score_cell(vroot: Path, union_name: str, verify_dir: str, k: int,
         verify_dir: Verify-stage directory under ``vroot``.
         k: Pass count (the sweep's vote range is 1..k).
         label: Name for error messages.
+        policy: The leg rule (``lib_verify_dirs``): :data:`GATE_POLICY`
+            (``"fixed"``) by default, so the gate reads each leg as it was
+            registered; ``None`` reads ``MAP_READER_VERIFY_DIRS``.
 
     Returns:
         ``best`` (the sweep's best row), ``best_set`` (the verified set),
-        ``counts`` (per-tile TP/FP/FN arrays) and ``micro_f1``.
+        ``counts`` (per-tile TP/FP/FN arrays), ``micro_f1``, and
+        ``verifier_probabilities`` (the directory read).
     """
     import geopandas as gpd
 
@@ -147,7 +165,8 @@ def score_cell(vroot: Path, union_name: str, verify_dir: str, k: int,
 
     bounds = gpd.read_file(COMMON_BOUNDS)
     gdf_ref = gpd.read_file(GROUND_TRUTH).to_crs(CRS)
-    union = iba.load_image_union(vroot, union_name, verify_dir)
+    union = iba.load_image_union(vroot, union_name, verify_dir, policy=policy)
+    provenance = union.attrs["verifier_probabilities"]
     union = reassign_gate(union, bounds, label)
     rows = iba.sweep(union, gdf_ref, bounds, range(1, k + 1))
     best = max(rows, key=lambda r: r["f1"])
@@ -161,6 +180,7 @@ def score_cell(vroot: Path, union_name: str, verify_dir: str, k: int,
         "counts": counts,
         "micro_f1": float(micro_f1(counts["tp"].sum(), counts["fp"].sum(),
                                    counts["fn"].sum())),
+        "verifier_probabilities": provenance,
     }
 
 
@@ -204,6 +224,7 @@ def run_six_cell_gate(tolerance: float = TOLERANCE,
             "precision": b["precision"], "recall": b["recall"], "mcc": b["mcc"],
             "n_detections": b["n_detections"], "union_n": int(len(s["union"])),
             "f1_ok": f1_ok, "micro_f1_ok": micro_ok, "point_ok": point_ok,
+            "verifier_probabilities": s.get("verifier_probabilities"),
         }
         record["cells"][c.label] = entry
         if not (f1_ok and micro_ok and point_ok):

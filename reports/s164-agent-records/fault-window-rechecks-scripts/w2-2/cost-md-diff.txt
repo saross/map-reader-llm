@@ -1,0 +1,44 @@
+3c3,7
+< > **Last revised**: 2026-10-04 (later: the cost-efficiency section now
+---
+> > **Last revised**: 2026-10-05 (the TH7, T03 and TM oracle cells add the
+> > vote-3 increment they drew on, PI ruling D33: US$207.35 → 210.32,
+> > 261.15 → 263.89 and 30.40 → 31.91; tiers, groups, F1 and both
+> > frontiers' membership unchanged; signature note given
+> > 2026-10-05T06:06:19Z). 2026-10-04 (later): the cost-efficiency section
+5c9
+< > groups, F1 and costs unchanged). Earlier the same day: the cost axis
+---
+> > groups, F1 and costs unchanged. Earlier the same day: the cost axis
+289a294,324
+> 
+> ### 2026-10-05 — The oracle cells' vote-3 increments priced (D33)
+> 
+> **Refresh trigger**: PI ruling D33 (`planning/pi-decisions-2026-09-20.md`).
+> The TH7, T03 and TM oracle cells (k3) score detections whose 3-of-5
+> candidates include the Session 104 vote-3 increment
+> (`results/deployment-oracle-2026-06-06/vote3-verify/`), but their cost
+> counted only the main verifier leg. The S160 register repair gave the three
+> increments their own rows (`<run>::vote3-increment::run1`); the frontier
+> mapping prices them for the oracle cells only (`5302693ed`). Applied by
+> `scripts/final_board_cost_refresh.py --write`.
+> 
+> | Cell | Cost before | Cost after |
+> |---|---:|---:|
+> | TH7-oracle | US$207.35 | US$210.32 |
+> | T03-oracle | US$261.15 | US$263.89 |
+> | TM-oracle | US$30.40† | US$31.91† |
+> 
+> The board's sentence defining `cost` now names the increment. In the
+> efficiency table the three rows' cost and $/mound moved, and text-min
+> (K = 5) now sorts after B, N = 1 ($32 against $31).
+> 
+> **What did NOT change**: the carried cells (k4), which never used the
+> increment; the IM and UPL oracle cells (IM's carried and oracle cells are
+> one shipped k3 cell and no image vote-3 increment was run; UPL's oracle is
+> priced by its own verifier leg); every other family's cost; every tier,
+> group, pairwise result, F1 and tile-MCC; the addendum; and both efficiency
+> frontiers' membership. The PI approved the re-priced cost axis by a
+> signature note (2026-10-05T06:06:19Z, Session 161), recorded in
+> `results/run-analyses.json`; the signature of 2026-09-17 stands for the
+> tiering.

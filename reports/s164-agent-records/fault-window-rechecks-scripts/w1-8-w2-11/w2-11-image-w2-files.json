@@ -1,0 +1,1378 @@
+{
+ "summary": {
+  "n_files_in_dirs": 295,
+  "n_last_changed_in_w2": 224,
+  "by_kind": {
+   "batch leg re-parsed (checked)": 12,
+   "chunk API output (NOT CHECKABLE; source of the re-merge)": 42,
+   "crop manifest re-extracted (checked)": 3,
+   "flex leg or earlier-state sidecar (NOT CHECKABLE)": 23,
+   "log or prose (not a computation)": 46,
+   "merged pass re-derived from chunks (checked)": 6,
+   "other (not attempted)": 12,
+   "proposer pass API output (NOT CHECKABLE)": 57,
+   "raw batch results or job record (NOT CHECKABLE)": 11,
+   "union or provenance sidecar (checked)": 12
+  },
+  "other": [
+   "outputs/gemini3-image-55map-2026-09-16/missing_run_1.json",
+   "outputs/gemini3-image-55map-2026-09-16/missing_run_2.json",
+   "outputs/gemini3-image-55map-2026-09-16/missing_run_3.json",
+   "outputs/gemini3-image-55map-2026-09-16/missing_run_4.json",
+   "outputs/gemini3-image-55map-2026-09-16/missing_run_5.json",
+   "outputs/gemini3-image-55map-2026-09-16/still_run_3.json",
+   "outputs/gemini3-image-55map-2026-09-16/still_run_5.json",
+   "outputs/gemini37-image-55map-2026-09-13/all_tiles_manifest.json",
+   "outputs/gemini37-image-55map-2026-09-13/residual_run_1.json",
+   "outputs/gemini37-image-55map-2026-09-13/residual_run_2.json",
+   "outputs/gemini37-image-55map-2026-09-13/residual_run_3.json",
+   "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/crops/candidate_manifest.json"
+  ]
+ },
+ "rows": [
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/driver.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/flex-watch.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/detections-detect_brief-text-image-3-flash-2026-09-16.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_1_recovery_rd1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/detections-detect_brief-text-image-3-flash-2026-09-16.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_2_recovery_rd1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/detections-detect_brief-text-image-3-flash-2026-09-16.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_3_recovery_rd2/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4/detections-detect_brief-text-image-3-flash-2026-09-16.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_4_recovery_rd1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5/detections-detect_brief-text-image-3-flash-2026-09-16.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5/detections-detect_brief-text-image-3-flash-2026-09-16.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5/detections-detect_brief-text-image-3-flash-2026-09-16.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd1/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd1/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.meta.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/detections-detect_brief-text-image-3-flash-2026-09-17.tiles.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/g384_ov192_55map_g3img/run_5_recovery_rd2/experiment_intent.md",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/missing_run_1.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/missing_run_2.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/missing_run_3.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/missing_run_4.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/missing_run_5.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/pass1.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/pass2.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/pass3.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/pass4.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/pass5.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/post_run_report.md",
+   "commit": "2f39fee7c",
+   "when": "2026-09-20T00:13:59+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover2_3.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover2_5.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover_1.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover_2.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover_3.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover_4.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recover_5.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/recovery.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/still_run_3.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/still_run_5.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k1.geojson",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k1_pass_provenance.json",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k3.geojson",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k3_pass_provenance.json",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k5.geojson",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/union_k5_pass_provenance.json",
+   "commit": "7d61f1ff9",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm1/probabilities.json",
+   "commit": "34fd61920",
+   "when": "2026-09-19T01:08:29+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm1/run.meta.json",
+   "commit": "34fd61920",
+   "when": "2026-09-19T01:08:29+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/batch_results.jsonl",
+   "commit": "cda04a952",
+   "when": "2026-09-19T04:10:39+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/probabilities.json",
+   "commit": "cda04a952",
+   "when": "2026-09-19T04:10:39+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.json",
+   "commit": "cda04a952",
+   "when": "2026-09-19T04:10:39+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k1_arm2/run.meta.pre-rerun-1.json",
+   "commit": "cda04a952",
+   "when": "2026-09-19T04:10:39+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm1/probabilities.json",
+   "commit": "fc5079d0a",
+   "when": "2026-09-19T01:48:37+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm1/run.meta.json",
+   "commit": "fc5079d0a",
+   "when": "2026-09-19T01:48:37+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/batch_jobs.json",
+   "commit": "e21b5295a",
+   "when": "2026-09-19T13:59:32+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/batch_results.jsonl",
+   "commit": "e21b5295a",
+   "when": "2026-09-19T13:59:32+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/probabilities.json",
+   "commit": "e21b5295a",
+   "when": "2026-09-19T13:59:32+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k3_arm2/run.meta.json",
+   "commit": "e21b5295a",
+   "when": "2026-09-19T13:59:32+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm1/probabilities.json",
+   "commit": "79a2afc0d",
+   "when": "2026-09-19T02:39:03+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm1/run.meta.json",
+   "commit": "79a2afc0d",
+   "when": "2026-09-19T02:39:03+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/batch_jobs.json",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/batch_jobs_relodged.json",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/batch_results.jsonl",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/probabilities.json",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/probabilities.json.pre-recover-20260919T221118.backup",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/run.meta.json",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/verify_k5_arm2/run.meta.pre-rerun-1.json",
+   "commit": "880c207f7",
+   "when": "2026-09-19T22:12:44+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/all_tiles_manifest.json",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/arms.nohup",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run4/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk0.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk1.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk2.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk3.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk4.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk5.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.geojson",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.meta.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch-staging-run5/detect_brief-text-image/run_1/detections_detect_brief-text-image_run01_chunk6.tiles.json",
+   "commit": "21d1b497d",
+   "when": "2026-09-17T22:50:30+00:00",
+   "kind": "chunk API output (NOT CHECKABLE; source of the re-merge)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch_run4.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/batch_run5.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/driver.log",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/driver.nohup",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_1_recovery_rd1/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_2_recovery_rd1/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_3_recovery_rd1/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-17.meta.json",
+   "commit": "bbdf4ba28",
+   "when": "2026-09-19T06:18:53+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_4/detections-detect_brief-text-image-3.7-flash-2026-09-17.tiles.json",
+   "commit": "31d59a8af",
+   "when": "2026-09-17T23:19:24+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.geojson",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.meta.json",
+   "commit": "bbdf4ba28",
+   "when": "2026-09-19T06:18:53+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/g384_ov192_55map_g37img/run_5/detections-detect_brief-text-image-3.7-flash-2026-09-17.tiles.json",
+   "commit": "31d59a8af",
+   "when": "2026-09-17T23:19:24+00:00",
+   "kind": "merged pass re-derived from chunks (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/overnight.log",
+   "commit": "1553a7b24",
+   "when": "2026-09-17T22:49:30+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/post_run_report.md",
+   "commit": "57d0aad4d",
+   "when": "2026-09-19T06:34:09+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/pre_launch_audit.md",
+   "commit": "bfccddc20",
+   "when": "2026-09-13T00:52:45+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/residual_run_1.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/residual_run_2.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/residual_run_3.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/score.log",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/smoke/detections-detect_brief-text-image-3.7-flash-2026-09-13.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/smoke/detections-detect_brief-text-image-3.7-flash-2026-09-13.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/smoke/detections-detect_brief-text-image-3.7-flash-2026-09-13.tiles.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "proposer pass API output (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/smoke/experiment_intent.md",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/sweep.log",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/crops_k1/candidate_manifest.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "crop manifest re-extracted (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/crops_k3/candidate_manifest.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "crop manifest re-extracted (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/crops_k5/candidate_manifest.json",
+   "commit": "bd5de9f80",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "crop manifest re-extracted (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/README.md",
+   "commit": "cab5d1b91",
+   "when": "2026-09-19T00:26:39+00:00",
+   "kind": "log or prose (not a computation)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/crops/candidate_manifest.json",
+   "commit": "cab5d1b91",
+   "when": "2026-09-19T00:26:39+00:00",
+   "kind": "other (not attempted)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/verify_batch/batch_results.jsonl",
+   "commit": "cab5d1b91",
+   "when": "2026-09-19T00:26:39+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/verify_batch/probabilities.json",
+   "commit": "cab5d1b91",
+   "when": "2026-09-19T00:26:39+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/probe-batch-vs-flex-2026-09-19/verify_batch/run.meta.json",
+   "commit": "cab5d1b91",
+   "when": "2026-09-19T00:26:39+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k1.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k1_pass_provenance.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k3.geojson",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k3_pass_provenance.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k5.geojson",
+   "commit": "bd5de9f80",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/union_k5_pass_provenance.json",
+   "commit": "bd5de9f80",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "union or provenance sidecar (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm1/probabilities.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm1/run.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2/probabilities.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k1_arm2/run.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm1/probabilities.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm1/run.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2/probabilities.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k3_arm2/run.meta.json",
+   "commit": "b9d4032bb",
+   "when": "2026-09-14T03:03:38+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1/probabilities.json",
+   "commit": "bd5de9f80",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1/run.meta.json",
+   "commit": "bd5de9f80",
+   "when": "2026-09-17T23:52:59+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20/batch_jobs.json",
+   "commit": "5778b5569",
+   "when": "2026-09-20T05:57:14+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20/batch_results.jsonl",
+   "commit": "5778b5569",
+   "when": "2026-09-20T05:57:14+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20/probabilities.json",
+   "commit": "5778b5569",
+   "when": "2026-09-20T05:57:14+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm1_replicate-batch-2026-09-20/run.meta.json",
+   "commit": "5778b5569",
+   "when": "2026-09-20T05:57:14+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2/probabilities.json",
+   "commit": "4900288ff",
+   "when": "2026-09-18T22:08:56+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2/run.meta.json",
+   "commit": "4900288ff",
+   "when": "2026-09-18T22:08:56+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2/run.meta.pre-cleanup-1.json",
+   "commit": "4900288ff",
+   "when": "2026-09-18T22:08:56+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2/run.meta.pre-cleanup-2.json",
+   "commit": "4900288ff",
+   "when": "2026-09-18T22:08:56+00:00",
+   "kind": "flex leg or earlier-state sidecar (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20/batch_jobs.json",
+   "commit": "3f8af3a65",
+   "when": "2026-09-19T23:57:05+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20/batch_results.jsonl",
+   "commit": "3f8af3a65",
+   "when": "2026-09-19T23:57:05+00:00",
+   "kind": "raw batch results or job record (NOT CHECKABLE)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20/probabilities.json",
+   "commit": "3f8af3a65",
+   "when": "2026-09-19T23:57:05+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  },
+  {
+   "path": "outputs/gemini37-image-55map-2026-09-13/verifier/g384_ov192_55map_g37img/verify_k5_arm2_replicate-batch-2026-09-20/run.meta.json",
+   "commit": "3f8af3a65",
+   "when": "2026-09-19T23:57:05+00:00",
+   "kind": "batch leg re-parsed (checked)"
+  }
+ ]
+}
