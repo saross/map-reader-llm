@@ -593,6 +593,8 @@ def build_sweep_tile_counts(
 
     union_path, verify_dir, bounds_path = Path(union_path), Path(verify_dir), Path(bounds_path)
     gdf = load_image_union(verify_dir.parent, union_path.name, verify_dir.name)
+    # The directory actually read under the shared leg rule (lib_verify_dirs).
+    verifier_probabilities = gdf.attrs["verifier_probabilities"]
     common = gpd.read_file(COMMON_BOUNDS)
     gdf = reassign_gate(gdf, common, union_path.stem)  # the screen's own gate
     bounds = gpd.read_file(bounds_path).to_crs(gdf.crs)
@@ -629,7 +631,8 @@ def build_sweep_tile_counts(
         s["f1"] = float(f)
     meta: dict[str, Any] = {"sweep_union": str(union_path), "sweep_verify": str(verify_dir),
                             "K": k_total, "bounds": str(bounds_path),
-                            "n_thresholds": len(thresholds)}
+                            "n_thresholds": len(thresholds),
+                            "verifier_probabilities": verifier_probabilities}
     if sweep_csv is not None:
         by_point = {(s["prob_t"], s["min_votes"]): s for s in specs}
         worst_f1, worst_n, n_rows = 0.0, 0, 0

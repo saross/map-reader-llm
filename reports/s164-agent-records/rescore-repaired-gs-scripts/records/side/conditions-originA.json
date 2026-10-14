@@ -1,0 +1,339 @@
+{
+ "stride_k10": {
+  "g512_ov176": {
+   "point": [
+    0.15,
+    6
+   ],
+   "n": 390,
+   "sweep_f1": 0.8655256723716381,
+   "f1": 0.8655,
+   "precision": 0.9077,
+   "recall": 0.8271,
+   "f1_ci": [
+    0.8305,
+    0.8934
+   ],
+   "tile_mcc": 0.7964,
+   "n_detections": 390,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g512_ov176/verify",
+    "policy": "fixed",
+    "probabilities_sha256": "88b67afb3dd0a5ffebcbb9f11d51592d607062f065fc85f36e6306d04dd137b5",
+    "n_results": 1981,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "g384_ov128": {
+   "point": [
+    0.15,
+    8
+   ],
+   "n": 387,
+   "sweep_f1": 0.898159509202454,
+   "f1": 0.8982,
+   "precision": 0.9457,
+   "recall": 0.8551,
+   "f1_ci": [
+    0.8698,
+    0.9213
+   ],
+   "tile_mcc": 0.8022,
+   "n_detections": 387,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify",
+    "policy": "fixed",
+    "probabilities_sha256": "5cb39f421f51284a807ceaa2b701a5a541a490aef343f0fad3055f8662aa9770",
+    "n_results": 2387,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "g256_ov064": {
+   "point": [
+    0.15,
+    8
+   ],
+   "n": 427,
+   "sweep_f1": 0.87953216374269,
+   "f1": 0.8795,
+   "precision": 0.8806,
+   "recall": 0.8785,
+   "f1_ci": [
+    0.8503,
+    0.9036
+   ],
+   "tile_mcc": 0.7959,
+   "n_detections": 427,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g256_ov064/verify",
+    "policy": "fixed",
+    "probabilities_sha256": "e59755bf37a29bee427bf9a48796b64ebabb02d2c69f43427e3ede8c88bb7e0b",
+    "n_results": 3570,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "g512_ov320": {
+   "point": [
+    0.15,
+    10
+   ],
+   "n": 397,
+   "sweep_f1": 0.8799999999999999,
+   "f1": 0.88,
+   "precision": 0.9144,
+   "recall": 0.8481,
+   "f1_ci": [
+    0.8478,
+    0.9055
+   ],
+   "tile_mcc": 0.8023,
+   "n_detections": 397,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g512_ov320/verify",
+    "policy": "fixed",
+    "probabilities_sha256": "0eb6a7f99239fcb447eecaf51d9e6919e4bfd62760c3873721da514f7135104f",
+    "n_results": 3778,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "g384_ov240": {
+   "point": [
+    0.15,
+    10
+   ],
+   "n": 423,
+   "sweep_f1": 0.8860164512338425,
+   "f1": 0.886,
+   "precision": 0.8913,
+   "recall": 0.8808,
+   "f1_ci": [
+    0.8588,
+    0.9093
+   ],
+   "tile_mcc": 0.791,
+   "n_detections": 423,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phasec-2026-08-25/verifier/g384_ov240/verify",
+    "policy": "fixed",
+    "probabilities_sha256": "eef5159955d7815b89816258b4fdb1977a54ca9b084cf2fc52aa91838673d401",
+    "n_results": 5250,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  }
+ },
+ "winner_ladder": {
+  "N1": {
+   "point": [
+    0.15,
+    1
+   ],
+   "n": 411,
+   "sweep_f1": 0.867699642431466,
+   "f1": 0.8677,
+   "precision": 0.8856,
+   "recall": 0.8505,
+   "f1_ci": [
+    0.8369,
+    0.8953
+   ],
+   "tile_mcc": 0.7894,
+   "n_detections": 411,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify_k1",
+    "policy": "fixed",
+    "probabilities_sha256": "baf5ffb5c047e3d410fa0ac84ff41270a616da939e18de0da0b33db941ebd6ee",
+    "n_results": 1290,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "N3": {
+   "point": [
+    0.15,
+    3
+   ],
+   "n": 380,
+   "sweep_f1": 0.8910891089108911,
+   "f1": 0.8911,
+   "precision": 0.9474,
+   "recall": 0.8411,
+   "f1_ci": [
+    0.8615,
+    0.9161
+   ],
+   "tile_mcc": 0.7814,
+   "n_detections": 380,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify_k3",
+    "policy": "fixed",
+    "probabilities_sha256": "24222ade152dbf8428ab39f2ca01a27b9bff9fbba46e2364cb0615779fcc992e",
+    "n_results": 1700,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  },
+  "N5": {
+   "point": [
+    0.15,
+    4
+   ],
+   "n": 394,
+   "sweep_f1": 0.8856447688564477,
+   "f1": 0.8856,
+   "precision": 0.9239,
+   "recall": 0.8505,
+   "f1_ci": [
+    0.8554,
+    0.9113
+   ],
+   "tile_mcc": 0.7805,
+   "n_detections": 394,
+   "verifier_probabilities": {
+    "dir": "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify_k5",
+    "policy": "fixed",
+    "probabilities_sha256": "9537e14f2612b4f646cce6d8046d7527a8d62a95e2439b156ba863c3a528f3e3",
+    "n_results": 1968,
+    "parse_error_rows": null,
+    "repaired": null,
+    "unrecovered": null,
+    "reverified": null,
+    "reverify_usd": null,
+    "reverify_records": []
+   }
+  }
+ },
+ "best_eval": {
+  "results/image-b-gs-2026-08-28": {
+   "f1": 0.8412,
+   "precision": 0.8741,
+   "recall": 0.8107,
+   "f1_ci": [
+    0.8011,
+    0.872
+   ],
+   "tile_mcc": 0.7985,
+   "n_detections": 397
+  },
+  "results/image-b-gs-2026-08-28/high": {
+   "f1": 0.8333,
+   "precision": 0.8625,
+   "recall": 0.8061,
+   "f1_ci": [
+    0.7973,
+    0.8638
+   ],
+   "tile_mcc": 0.7993,
+   "n_detections": 400
+  },
+  "results/gemini37-screen-2026-08-28": {
+   "f1": 0.9144,
+   "precision": 0.8826,
+   "recall": 0.9486,
+   "f1_ci": [
+    0.8896,
+    0.9339
+   ],
+   "tile_mcc": 0.7739,
+   "n_detections": 460
+  },
+  "results/gemini37-screen-2026-08-28/k10": {
+   "f1": 0.9213,
+   "precision": 0.8998,
+   "recall": 0.9439,
+   "f1_ci": [
+    0.8956,
+    0.941
+   ],
+   "tile_mcc": 0.7826,
+   "n_detections": 449
+  },
+  "results/gemini37-screen-2026-08-28/swap37": {
+   "f1": 0.9265,
+   "precision": 0.9254,
+   "recall": 0.9276,
+   "f1_ci": [
+    0.901,
+    0.9461
+   ],
+   "tile_mcc": 0.8078,
+   "n_detections": 429
+  },
+  "results/gemini38-screen-2026-09-04/armV": {
+   "f1": 0.9258,
+   "precision": 0.9335,
+   "recall": 0.9182,
+   "f1_ci": [
+    0.8995,
+    0.9458
+   ],
+   "tile_mcc": 0.8218,
+   "n_detections": 421
+  },
+  "results/gemini37-fourth-cell/gs-leg": {
+   "f1": 0.914,
+   "precision": 0.9637,
+   "recall": 0.8692,
+   "f1_ci": [
+    0.8853,
+    0.9366
+   ],
+   "tile_mcc": 0.8239,
+   "n_detections": 386
+  },
+  "results/gemini37-image-gs-2026-09-01/arm1": {
+   "f1": 0.937,
+   "precision": 0.9191,
+   "recall": 0.9556,
+   "f1_ci": [
+    0.913,
+    0.9544
+   ],
+   "tile_mcc": 0.8345,
+   "n_detections": 445
+  },
+  "results/gemini37-image-gs-2026-09-01/arm2": {
+   "f1": 0.937,
+   "precision": 0.9191,
+   "recall": 0.9556,
+   "f1_ci": [
+    0.913,
+    0.9544
+   ],
+   "tile_mcc": 0.8345,
+   "n_detections": 445
+  }
+ }
+}
