@@ -1,0 +1,109 @@
+at 82020b9419e17c3e657cf99b7bf0dd2c0d02f2c1 patch lines 2 2026-10-14T01:47:39Z
+2026-10-14 01:47:39,796 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+2026-10-14 01:47:39,889 - INFO - arm1: 7507/9173 identical (81.84 %), 268 |dp| > 0.5 (2.92 %)
+2026-10-14 01:47:39,889 - INFO -   flips at 0.10:  221 (2.41 %) Wilson95 [2.11 %, 2.74 %]
+2026-10-14 01:47:39,889 - INFO -   flips at 0.50:  332 (3.62 %) Wilson95 [3.26 %, 4.02 %]
+2026-10-14 01:47:39,889 - INFO -   flips at 0.90:  479 (5.22 %) Wilson95 [4.78 %, 5.70 %]
+2026-10-14 01:47:39,889 - INFO -   vocabulary: original 20 distinct, replicate 19 distinct; chance identical 20.06 %, kappa 0.7728
+2026-10-14 01:47:39,889 - INFO - arm2 (reference): 63.51 % identical (chance 27.64 %, kappa 0.4957), vocabulary 24 / 26 distinct
+2026-10-14 01:47:39,889 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+2026-10-14 01:47:40,611 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:47:41,030 - INFO - IMG-ARM1-K5-replicate: 9173 candidates
+2026-10-14 01:47:41,032 - INFO - sweeping 95 points (2 workers)
+2026-10-14 01:51:35,066 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweep_IMG-ARM1-K5-replicate.csv (95 points)
+2026-10-14 01:51:35,099 - INFO - Created 5,285 records
+2026-10-14 01:51:35,100 - INFO - IMG-ARM1-K5-carried-replicate      n= 5285 -> results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/detections.geojson
+2026-10-14 01:51:35,130 - INFO - Created 5,285 records
+2026-10-14 01:51:35,131 - INFO - IMG-ARM1-K5-f1-oracle-replicate    n= 5285 -> results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/detections.geojson
+2026-10-14 01:51:35,131 - INFO - carried  F1 0.9135 MCC 0.7530 at (0.10, k5), n=5285
+2026-10-14 01:51:35,131 - INFO - F1 oracle 0.9135 at (0.10, k5) | MCC oracle 0.7559 at (0.15, k5)
+ M results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+DIFFERS          90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweeps.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweeps.json
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweep_IMG-ARM1-K5-replicate.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweep_IMG-ARM1-K5-replicate.csv
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/detections.geojson
+BYTE-IDENTICAL   82020b941 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/detections.geojson
+compare A rc=1
+at d1134a707258069f4eacd4c8d364e21216d6e9ab patch lines 2 2026-10-14T01:51:35Z
+2026-10-14 01:51:36,417 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:51:41,347 - INFO - loaded IMG-ARM1-K5-f1-oracle-replicate    n= 5285
+2026-10-14 01:51:46,176 - INFO - loaded IMG-ARM1-K5-carried-replicate      n= 5285
+2026-10-14 01:51:51,018 - INFO - loaded IMG-ARM1-K5-carried                n= 5297
+2026-10-14 01:51:55,841 - INFO - loaded IMG-ARM1-K5-f1-oracle              n= 5297
+2026-10-14 01:52:00,630 - INFO - loaded IMG-ARM1-K3-carried                n= 5437
+2026-10-14 01:52:11,543 - INFO - F1  (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:52:11,543 - INFO - F1  (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.9135 vs 0.9025 d=+0.0110 p=0.0000
+2026-10-14 01:52:11,543 - INFO - F1  (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.9130 vs 0.9025 d=+0.0105 p=0.0000
+2026-10-14 01:52:11,543 - INFO - F1  (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:52:11,543 - INFO - MCC (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:52:11,543 - INFO - MCC (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.7530 vs 0.7490 d=+0.0040 p=0.1037
+2026-10-14 01:52:11,543 - INFO - MCC (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.7529 vs 0.7490 d=+0.0039 p=0.0990
+2026-10-14 01:52:11,543 - INFO - MCC (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:52:11,543 - WARNING - test (d) duplicates test (a): same cells on both sides, so its row carries no extra information
+2026-10-14 01:52:11,543 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+460f944e34c5267fbfa17b112793570be3c056914cf94885f863b11f17f49333  results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+FIELD-IDENTICAL  d1134a707 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+FIELD-IDENTICAL  90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+2026-10-14 01:52:12,303 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:52:17,287 - INFO - loaded IMG-ARM1-K5-f1-oracle-replicate    n= 5285
+2026-10-14 01:52:22,070 - INFO - loaded IMG-ARM1-K5-carried-replicate      n= 5285
+2026-10-14 01:52:26,711 - INFO - loaded IMG-ARM1-K3-carried                n= 5437
+2026-10-14 01:52:31,385 - INFO - loaded IMG-ARM1-K5-f1-oracle              n= 5297
+2026-10-14 01:52:36,211 - INFO - loaded IMG-ARM1-K5-carried                n= 5297
+2026-10-14 01:52:47,538 - INFO - F1  (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:52:47,538 - INFO - F1  (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.9135 vs 0.9025 d=+0.0110 p=0.0000
+2026-10-14 01:52:47,538 - INFO - F1  (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.9130 vs 0.9025 d=+0.0105 p=0.0000
+2026-10-14 01:52:47,538 - INFO - F1  (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:52:47,538 - INFO - MCC (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:52:47,538 - INFO - MCC (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.7530 vs 0.7490 d=+0.0040 p=0.1037
+2026-10-14 01:52:47,538 - INFO - MCC (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.7529 vs 0.7490 d=+0.0039 p=0.0990
+2026-10-14 01:52:47,538 - INFO - MCC (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:52:47,538 - WARNING - test (d) duplicates test (a): same cells on both sides, so its row carries no extra information
+2026-10-14 01:52:47,538 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+b6f0ac9aab00ff3535e61df9006791650f2f532dbf76f5d26e859923ffdfce60  results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+FIELD-IDENTICAL  d1134a707 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+FIELD-IDENTICAL  90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+seed found: 124
+2026-10-14 01:52:49,666 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:52:54,734 - INFO - loaded IMG-ARM1-K3-carried                n= 5437
+2026-10-14 01:52:59,554 - INFO - loaded IMG-ARM1-K5-f1-oracle-replicate    n= 5285
+2026-10-14 01:53:04,298 - INFO - loaded IMG-ARM1-K5-f1-oracle              n= 5297
+2026-10-14 01:53:08,945 - INFO - loaded IMG-ARM1-K5-carried-replicate      n= 5285
+2026-10-14 01:53:13,620 - INFO - loaded IMG-ARM1-K5-carried                n= 5297
+2026-10-14 01:53:24,622 - INFO - F1  (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:53:24,622 - INFO - F1  (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.9135 vs 0.9025 d=+0.0110 p=0.0000
+2026-10-14 01:53:24,622 - INFO - F1  (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.9130 vs 0.9025 d=+0.0105 p=0.0000
+2026-10-14 01:53:24,622 - INFO - F1  (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.9135 vs 0.9130 d=+0.0005 p=0.5773
+2026-10-14 01:53:24,622 - INFO - MCC (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:53:24,622 - INFO - MCC (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.7530 vs 0.7490 d=+0.0040 p=0.1037
+2026-10-14 01:53:24,622 - INFO - MCC (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.7529 vs 0.7490 d=+0.0039 p=0.0990
+2026-10-14 01:53:24,622 - INFO - MCC (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.7530 vs 0.7529 d=+0.0001 p=0.9310
+2026-10-14 01:53:24,622 - WARNING - test (d) duplicates test (a): same cells on both sides, so its row carries no extra information
+2026-10-14 01:53:24,622 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+BYTE-IDENTICAL   d1134a707 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+at 321dd4549cda14288bb863bea6b7f146f8ae6c72 patch lines 2 2026-10-14T01:53:24Z
+2026-10-14 01:53:25,585 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+2026-10-14 01:53:25,663 - INFO - arm1: 7507/9173 identical (81.84 %), 268 |dp| > 0.5 (2.92 %)
+2026-10-14 01:53:25,663 - INFO -   flips at 0.10:  221 (2.41 %) Wilson95 [2.11 %, 2.74 %]
+2026-10-14 01:53:25,663 - INFO -   flips at 0.50:  332 (3.62 %) Wilson95 [3.26 %, 4.02 %]
+2026-10-14 01:53:25,663 - INFO -   flips at 0.90:  479 (5.22 %) Wilson95 [4.78 %, 5.70 %]
+2026-10-14 01:53:25,663 - INFO -   vocabulary: original 20 distinct, replicate 19 distinct; chance identical 20.06 %, kappa 0.7728
+2026-10-14 01:53:25,663 - INFO - arm2 (reference): 63.51 % identical (chance 27.64 %, kappa 0.4957), vocabulary 24 / 26 distinct
+2026-10-14 01:53:25,663 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+BYTE-IDENTICAL   321dd4549 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json
+compare C rc=0
+ M results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py
+end 2026-10-14T01:53:25Z

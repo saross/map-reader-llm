@@ -1,0 +1,4 @@
+56c56
+< PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
+---
+> PROJECT_ROOT = Path(__file__).resolve().parents[3]

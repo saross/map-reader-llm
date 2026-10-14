@@ -1,0 +1,284 @@
+chain start 2026-10-14T01:11:54Z
+HEAD is now at 62b13e6fd results(ladder): inherit image K1/K3 from K5
+start 2026-10-14T01:11:55Z HEAD 62b13e6fdb09a511b3a70005ca805dfeabbfd2a7 patch lines 2
+== stage ladder  2026-10-14T01:11:55Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:11:57,063 - INFO - IMG-ARM1-K1-inherited    union  6985, matched  6935, unmatched  50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 67.3 %, flips 4.18 %
+2026-10-14 01:11:57,719 - INFO - IMG-ARM1-K3-inherited    union  8337, matched  8335, unmatched   2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 74.6 %, flips 3.64 %
+2026-10-14 01:11:58,304 - INFO - IMG-ARM2-K1-inherited    union  6985, matched  6935, unmatched  50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 62.7 %, flips 2.60 %
+2026-10-14 01:11:58,897 - INFO - IMG-ARM2-K3-inherited    union  8337, matched  8335, unmatched   2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 62.2 %, flips 2.71 %
+2026-10-14 01:11:58,905 - INFO - sweeping 176 points across 4 inherited rungs (2 workers)
+2026-10-14 01:19:12,839 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv (20 points)
+2026-10-14 01:19:12,886 - INFO - Created 6,236 records
+2026-10-14 01:19:12,887 - INFO - IMG-ARM1-K1-carried-inherited    n= 6236 (own-leg  6250) | inherited carried F1 0.8475 MCC 0.7300 vs own-leg F1 0.8477 MCC 0.7324 | inherited F1 oracle 0.8624 at (0.15, k1) vs own-leg 0.8606
+2026-10-14 01:19:12,888 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv (60 points)
+2026-10-14 01:19:12,925 - INFO - Created 5,456 records
+2026-10-14 01:19:12,925 - INFO - IMG-ARM1-K3-carried-inherited    n= 5456 (own-leg  5437) | inherited carried F1 0.9036 MCC 0.7475 vs own-leg F1 0.9025 MCC 0.7490 | inherited F1 oracle 0.9036 at (0.10, k3) vs own-leg 0.9025
+2026-10-14 01:19:12,925 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv (24 points)
+2026-10-14 01:19:12,966 - INFO - Created 5,982 records
+2026-10-14 01:19:12,967 - INFO - IMG-ARM2-K1-carried-inherited    n= 5982 (own-leg  5997) | inherited carried F1 0.8740 MCC 0.7574 vs own-leg F1 0.8719 MCC 0.7569 | inherited F1 oracle 0.8765 at (0.95, k1) vs own-leg 0.8742
+2026-10-14 01:19:12,967 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv (72 points)
+2026-10-14 01:19:13,005 - INFO - Created 5,374 records
+2026-10-14 01:19:13,005 - INFO - IMG-ARM2-K3-carried-inherited    n= 5374 (own-leg  5357) | inherited carried F1 0.9180 MCC 0.7621 vs own-leg F1 0.9199 MCC 0.7648 | inherited F1 oracle 0.9198 at (0.95, k3) vs own-leg 0.9206
+2026-10-14 01:19:13,005 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json and results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+== git status (only the patched driver should be listed if all outputs reproduce)
+ M results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+end 2026-10-14T01:19:13Z
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+DIFFERS          90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   62b13e6fd results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+compare A rc=1
+Previous HEAD position was 62b13e6fd results(ladder): inherit image K1/K3 from K5
+HEAD is now at 3fc3f0751 results(ladder): score and test inherited cells
+start 2026-10-14T01:19:13Z HEAD 3fc3f07517ae149479fe7d5ded1e229b5e670b72 patch lines 2
+== stage tests  2026-10-14T01:19:13Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:19:19,049 - INFO - loaded IMG-ARM1-K1-carried                n= 6250
+2026-10-14 01:19:23,696 - INFO - loaded IMG-ARM1-K1-carried-inherited      n= 6236
+2026-10-14 01:19:28,009 - INFO - loaded IMG-ARM1-K3-carried                n= 5437
+2026-10-14 01:19:32,300 - INFO - loaded IMG-ARM1-K3-carried-inherited      n= 5456
+2026-10-14 01:19:36,800 - INFO - loaded IMG-ARM2-K1-carried                n= 5997
+2026-10-14 01:19:41,287 - INFO - loaded IMG-ARM2-K1-carried-inherited      n= 5982
+2026-10-14 01:19:45,561 - INFO - loaded IMG-ARM2-K3-carried                n= 5357
+2026-10-14 01:19:49,818 - INFO - loaded IMG-ARM2-K3-carried-inherited      n= 5374
+2026-10-14 01:19:54,006 - INFO - loaded IMG-ARM2-K5-carried                n= 5219
+2026-10-14 01:20:14,049 - INFO - F1  (H1) IMG-ARM1-K1-carried                vs IMG-ARM1-K1-carried-inherited      0.8477 vs 0.8475 d=+0.0002 p=0.9030
+2026-10-14 01:20:14,049 - INFO - F1  (H2) IMG-ARM1-K3-carried                vs IMG-ARM1-K3-carried-inherited      0.9025 vs 0.9036 d=-0.0010 p=0.3475
+2026-10-14 01:20:14,049 - INFO - F1  (H3) IMG-ARM2-K1-carried                vs IMG-ARM2-K1-carried-inherited      0.8719 vs 0.8740 d=-0.0021 p=0.0869
+2026-10-14 01:20:14,049 - INFO - F1  (H4) IMG-ARM2-K3-carried                vs IMG-ARM2-K3-carried-inherited      0.9199 vs 0.9180 d=+0.0019 p=0.0735
+2026-10-14 01:20:14,049 - INFO - F1  (L1) IMG-ARM2-K3-carried                vs IMG-ARM2-K1-carried                0.9199 vs 0.8719 d=+0.0480 p=0.0000
+2026-10-14 01:20:14,049 - INFO - F1  (L2) IMG-ARM2-K3-carried-inherited      vs IMG-ARM2-K1-carried-inherited      0.9180 vs 0.8740 d=+0.0440 p=0.0000
+2026-10-14 01:20:14,049 - INFO - F1  (L3) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.9270 vs 0.9199 d=+0.0071 p=0.0000
+2026-10-14 01:20:14,049 - INFO - F1  (L4) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried-inherited      0.9270 vs 0.9180 d=+0.0090 p=0.0000
+2026-10-14 01:20:14,049 - INFO - MCC (H1) IMG-ARM1-K1-carried                vs IMG-ARM1-K1-carried-inherited      0.7324 vs 0.7300 d=+0.0024 p=0.3871
+2026-10-14 01:20:14,049 - INFO - MCC (H2) IMG-ARM1-K3-carried                vs IMG-ARM1-K3-carried-inherited      0.7490 vs 0.7475 d=+0.0015 p=0.4096
+2026-10-14 01:20:14,049 - INFO - MCC (H3) IMG-ARM2-K1-carried                vs IMG-ARM2-K1-carried-inherited      0.7569 vs 0.7574 d=-0.0005 p=0.8487
+2026-10-14 01:20:14,049 - INFO - MCC (H4) IMG-ARM2-K3-carried                vs IMG-ARM2-K3-carried-inherited      0.7648 vs 0.7621 d=+0.0027 p=0.1654
+2026-10-14 01:20:14,049 - INFO - MCC (L1) IMG-ARM2-K3-carried                vs IMG-ARM2-K1-carried                0.7648 vs 0.7569 d=+0.0078 p=0.0022
+2026-10-14 01:20:14,049 - INFO - MCC (L2) IMG-ARM2-K3-carried-inherited      vs IMG-ARM2-K1-carried-inherited      0.7621 vs 0.7574 d=+0.0046 p=0.0125
+2026-10-14 01:20:14,049 - INFO - MCC (L3) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.7659 vs 0.7648 d=+0.0012 p=0.6141
+2026-10-14 01:20:14,049 - INFO - MCC (L4) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried-inherited      0.7659 vs 0.7621 d=+0.0039 p=0.0061
+2026-10-14 01:20:14,049 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/tests.json
+== git status (only the patched driver should be listed if all outputs reproduce)
+ M results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+end 2026-10-14T01:20:14Z
+BYTE-IDENTICAL   3fc3f0751 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/tests.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/tests.json
+compare B rc=0
+Previous HEAD position was 3fc3f0751 results(ladder): score and test inherited cells
+HEAD is now at 58500a739 results(ladder): vote-gate the flip counts
+start 2026-10-14T01:20:14Z HEAD 58500a73916c5b734d908c3dc21d3401a0dca089 patch lines 2
+== stage ladder  2026-10-14T01:20:14Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:20:15,644 - INFO - IMG-ARM1-K1-inherited    union  6985, matched  6935, unmatched  50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 67.3 %, flips 4.18 %
+2026-10-14 01:20:16,128 - INFO - IMG-ARM1-K3-inherited    union  8337, matched  8335, unmatched   2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 74.6 %, flips 3.64 %
+2026-10-14 01:20:16,565 - INFO - IMG-ARM2-K1-inherited    union  6985, matched  6935, unmatched  50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 62.7 %, flips 2.60 %
+2026-10-14 01:20:17,014 - INFO - IMG-ARM2-K3-inherited    union  8337, matched  8335, unmatched   2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 62.2 %, flips 2.71 %
+2026-10-14 01:20:17,021 - INFO - sweeping 176 points across 4 inherited rungs (2 workers)
+2026-10-14 01:27:24,629 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv (20 points)
+2026-10-14 01:27:24,677 - INFO - Created 6,236 records
+2026-10-14 01:27:24,678 - INFO - IMG-ARM1-K1-carried-inherited    n= 6236 (own-leg  6250) | inherited carried F1 0.8475 MCC 0.7300 vs own-leg F1 0.8477 MCC 0.7324 | inherited F1 oracle 0.8624 at (0.15, k1) vs own-leg 0.8606
+2026-10-14 01:27:24,678 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv (60 points)
+2026-10-14 01:27:24,717 - INFO - Created 5,456 records
+2026-10-14 01:27:24,717 - INFO - IMG-ARM1-K3-carried-inherited    n= 5456 (own-leg  5437) | inherited carried F1 0.9036 MCC 0.7475 vs own-leg F1 0.9025 MCC 0.7490 | inherited F1 oracle 0.9036 at (0.10, k3) vs own-leg 0.9025
+2026-10-14 01:27:24,718 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv (24 points)
+2026-10-14 01:27:24,761 - INFO - Created 5,982 records
+2026-10-14 01:27:24,761 - INFO - IMG-ARM2-K1-carried-inherited    n= 5982 (own-leg  5997) | inherited carried F1 0.8740 MCC 0.7574 vs own-leg F1 0.8719 MCC 0.7569 | inherited F1 oracle 0.8765 at (0.95, k1) vs own-leg 0.8742
+2026-10-14 01:27:24,762 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv (72 points)
+2026-10-14 01:27:24,800 - INFO - Created 5,374 records
+2026-10-14 01:27:24,801 - INFO - IMG-ARM2-K3-carried-inherited    n= 5374 (own-leg  5357) | inherited carried F1 0.9180 MCC 0.7621 vs own-leg F1 0.9199 MCC 0.7648 | inherited F1 oracle 0.9198 at (0.95, k3) vs own-leg 0.9206
+2026-10-14 01:27:24,801 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json and results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+== git status (only the patched driver should be listed if all outputs reproduce)
+ M results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+end 2026-10-14T01:27:25Z
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+DIFFERS          90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   58500a739 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+compare C rc=1
+a62d6e3812dd487719a18a6e56d94a60031a1a26d7e51d2933d0523097d1ebe1  /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-1-inherit/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k1/candidate_manifest.json
+7ff150f9fc8b724863ffb90a4cbb5a41797bdec25ee687fbe12eb8d5c6a990cd  /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-1-inherit/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k3/candidate_manifest.json
+aee068aa3ffc2ea30e11975289135c66c4c25ce5def70d20eb061417743b4385  /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-1-inherit/outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k5/candidate_manifest.json
+Previous HEAD position was 58500a739 results(ladder): vote-gate the flip counts
+HEAD is now at 2ba1914b6 results(ladder): inherit G3 image K1/K3 from K5
+start 2026-10-14T01:27:25Z HEAD 2ba1914b6b69682462fd5fdd1494f434cad3fa9c patch lines 2
+== stage ladder  2026-10-14T01:27:25Z
+2026-10-14 01:27:26,285 - INFO - campaign g37: g384_ov192_55map_g37img -> results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:27:26,969 - INFO - IMG-ARM1-K1-inherited      union   6985, matched   6935, unmatched   50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 67.3 %, flips 4.18 % | ambiguous 2 (0.03 %, max 2 in radius), decision-ambiguous 1, exact ties 0
+2026-10-14 01:27:27,543 - INFO - IMG-ARM1-K3-inherited      union   8337, matched   8335, unmatched    2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 74.6 %, flips 3.64 % | ambiguous 2 (0.02 %, max 2 in radius), decision-ambiguous 0, exact ties 0
+2026-10-14 01:27:28,058 - INFO - IMG-ARM2-K1-inherited      union   6985, matched   6935, unmatched   50 (p50 1.49 m, p95 6.49 m, max 14.62 m) | identical 62.7 %, flips 2.60 % | ambiguous 2 (0.03 %, max 2 in radius), decision-ambiguous 0, exact ties 0
+2026-10-14 01:27:28,589 - INFO - IMG-ARM2-K3-inherited      union   8337, matched   8335, unmatched    2 (p50 0.56 m, p95 3.84 m, max 10.43 m) | identical 62.2 %, flips 2.71 % | ambiguous 2 (0.02 %, max 2 in radius), decision-ambiguous 0, exact ties 0
+2026-10-14 01:27:28,597 - INFO - sweeping 176 points across 4 inherited rungs (2 workers)
+2026-10-14 01:35:02,607 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv (20 points)
+2026-10-14 01:35:02,658 - INFO - Created 6,236 records
+2026-10-14 01:35:02,658 - INFO - IMG-ARM1-K1-carried-inherited    n= 6236 (own-leg  6250) | inherited carried F1 0.8475 MCC 0.7300 vs own-leg F1 0.8477 MCC 0.7324 | inherited F1 oracle 0.8624 at (0.15, k1) vs own-leg 0.8606
+2026-10-14 01:35:02,659 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv (60 points)
+2026-10-14 01:35:02,698 - INFO - Created 5,456 records
+2026-10-14 01:35:02,698 - INFO - IMG-ARM1-K3-carried-inherited    n= 5456 (own-leg  5437) | inherited carried F1 0.9036 MCC 0.7475 vs own-leg F1 0.9025 MCC 0.7490 | inherited F1 oracle 0.9036 at (0.10, k3) vs own-leg 0.9025
+2026-10-14 01:35:02,699 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv (24 points)
+2026-10-14 01:35:02,743 - INFO - Created 5,982 records
+2026-10-14 01:35:02,743 - INFO - IMG-ARM2-K1-carried-inherited    n= 5982 (own-leg  5997) | inherited carried F1 0.8740 MCC 0.7574 vs own-leg F1 0.8719 MCC 0.7569 | inherited F1 oracle 0.8765 at (0.95, k1) vs own-leg 0.8742
+2026-10-14 01:35:02,744 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv (72 points)
+2026-10-14 01:35:02,784 - INFO - Created 5,374 records
+2026-10-14 01:35:02,784 - INFO - IMG-ARM2-K3-carried-inherited    n= 5374 (own-leg  5357) | inherited carried F1 0.9180 MCC 0.7621 vs own-leg F1 0.9199 MCC 0.7648 | inherited F1 oracle 0.9198 at (0.95, k3) vs own-leg 0.9206
+2026-10-14 01:35:02,785 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json and results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+== stage separation  2026-10-14T01:35:02Z
+2026-10-14 01:35:03,585 - INFO - campaign g37: g384_ov192_55map_g37img -> results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20
+2026-10-14 01:35:03,603 - INFO - union k1: n=  6985 | nn min 20.01 m, p01 20.81 m, p05 23.59 m, p50 321.34 m | 0 (0.000 %) have a same-union neighbour within 10 m
+2026-10-14 01:35:03,625 - INFO - union k3: n=  8337 | nn min 10.43 m, p01 15.69 m, p05 20.84 m, p50 194.16 m | 0 (0.000 %) have a same-union neighbour within 10 m
+2026-10-14 01:35:03,649 - INFO - union k5: n=  9173 | nn min 8.50 m, p01 14.13 m, p05 19.19 m, p50 147.36 m | 8 (0.087 %) have a same-union neighbour within 10 m
+2026-10-14 01:35:03,649 - INFO - wrote results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/union_separation.json
+== stage ladder --campaign g3 2026-10-14T01:35:03Z
+2026-10-14 01:35:04,396 - INFO - campaign g3: g384_ov192_55map_g3img -> results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:35:05,941 - INFO - G3IMG-ARM1-K1-inherited    union  22785, matched  22219, unmatched  566 (p50 2.96 m, p95 9.11 m, max 14.81 m) | identical 65.1 %, flips 3.78 % | ambiguous 12 (0.05 %, max 2 in radius), decision-ambiguous 0, exact ties 0
+2026-10-14 01:35:07,596 - INFO - G3IMG-ARM1-K3-inherited    union  36389, matched  36308, unmatched   81 (p50 0.69 m, p95 6.35 m, max 12.67 m) | identical 74.3 %, flips 2.78 % | ambiguous 34 (0.09 %, max 2 in radius), decision-ambiguous 2, exact ties 0
+2026-10-14 01:35:08,858 - INFO - G3IMG-ARM2-K1-inherited    union  22785, matched  22219, unmatched  566 (p50 2.96 m, p95 9.11 m, max 14.81 m) | identical 57.8 %, flips 2.36 % | ambiguous 12 (0.05 %, max 2 in radius), decision-ambiguous 0, exact ties 0
+2026-10-14 01:35:10,303 - INFO - G3IMG-ARM2-K3-inherited    union  36389, matched  36308, unmatched   81 (p50 0.69 m, p95 6.35 m, max 12.67 m) | identical 58.0 %, flips 2.10 % | ambiguous 34 (0.09 %, max 2 in radius), decision-ambiguous 2, exact ties 0
+2026-10-14 01:35:10,333 - INFO - sweeping 194 points across 4 inherited rungs (2 workers)
+2026-10-14 01:45:34,058 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K1-inherited.csv (19 points)
+2026-10-14 01:45:34,124 - INFO - Created 8,317 records
+2026-10-14 01:45:34,125 - INFO - G3IMG-ARM1-K1-carried-inherited  n= 8317 (own-leg  8529) | inherited carried F1 0.6725 MCC 0.7112 vs own-leg F1 0.6664 MCC 0.7144 | inherited F1 oracle 0.6804 at (0.25, k1) vs own-leg 0.6753
+2026-10-14 01:45:34,125 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K3-inherited.csv (60 points)
+2026-10-14 01:45:34,165 - INFO - Created 5,531 records
+2026-10-14 01:45:34,166 - INFO - G3IMG-ARM1-K3-carried-inherited  n= 5531 (own-leg  5538) | inherited carried F1 0.8050 MCC 0.7250 vs own-leg F1 0.8024 MCC 0.7247 | inherited F1 oracle 0.8050 at (0.20, k3) vs own-leg 0.8024
+2026-10-14 01:45:34,166 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K1-inherited.csv (28 points)
+2026-10-14 01:45:34,229 - INFO - Created 8,911 records
+2026-10-14 01:45:34,230 - INFO - G3IMG-ARM2-K1-carried-inherited  n= 8911 (own-leg  9172) | inherited carried F1 0.6730 MCC 0.7129 vs own-leg F1 0.6644 MCC 0.7063 | inherited F1 oracle 0.6999 at (0.96, k1) vs own-leg 0.6923
+2026-10-14 01:45:34,231 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K3-inherited.csv (87 points)
+2026-10-14 01:45:34,274 - INFO - Created 5,958 records
+2026-10-14 01:45:34,275 - INFO - G3IMG-ARM2-K3-carried-inherited  n= 5958 (own-leg  5941) | inherited carried F1 0.8123 MCC 0.7236 vs own-leg F1 0.8127 MCC 0.7234 | inherited F1 oracle 0.8262 at (0.96, k3) vs own-leg 0.8263
+2026-10-14 01:45:34,275 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/ladder.json and results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells_manifest.json
+== stage separation --campaign g3 2026-10-14T01:45:34Z
+2026-10-14 01:45:35,039 - INFO - campaign g3: g384_ov192_55map_g3img -> results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20
+2026-10-14 01:45:35,113 - INFO - union k1: n= 22785 | nn min 20.00 m, p01 20.61 m, p05 22.96 m, p50 204.55 m | 0 (0.000 %) have a same-union neighbour within 10 m
+2026-10-14 01:45:35,257 - INFO - union k3: n= 36389 | nn min 9.16 m, p01 14.46 m, p05 19.49 m, p50 56.66 m | 6 (0.016 %) have a same-union neighbour within 10 m
+2026-10-14 01:45:35,389 - INFO - union k5: n= 45786 | nn min 6.67 m, p01 13.11 m, p05 17.55 m, p50 41.05 m | 66 (0.144 %) have a same-union neighbour within 10 m
+2026-10-14 01:45:35,390 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/union_separation.json
+== git status (only the patched driver should be listed if all outputs reproduce)
+ M results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k1/
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k3/
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k5/
+end 2026-10-14T01:45:35Z
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/sweep_IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/cells/IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/union_separation.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/union_separation.json
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/ladder.json
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells_manifest.json
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K1-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K3-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K1-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K3-inherited.csv
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/detections.geojson
+BYTE-IDENTICAL   2ba1914b6 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/union_separation.json
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/union_separation.json
+compare D rc=0
+Previous HEAD position was 2ba1914b6 results(ladder): inherit G3 image K1/K3 from K5
+HEAD is now at a14d218ee results(ladder): score and test G3 inherited cells
+start 2026-10-14T01:45:36Z HEAD a14d218eef4c8101a8fd0feac2f268c710e4d000 patch lines 2
+== stage tests --campaign g3 2026-10-14T01:45:36Z
+2026-10-14 01:45:36,990 - INFO - campaign g3: g384_ov192_55map_g3img -> results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:45:43,232 - INFO - loaded G3IMG-ARM1-K1-carried              n= 8529
+2026-10-14 01:45:49,163 - INFO - loaded G3IMG-ARM1-K1-carried-inherited    n= 8317
+2026-10-14 01:45:54,084 - INFO - loaded G3IMG-ARM1-K3-carried              n= 5538
+2026-10-14 01:45:59,000 - INFO - loaded G3IMG-ARM1-K3-carried-inherited    n= 5531
+2026-10-14 01:46:05,404 - INFO - loaded G3IMG-ARM2-K1-carried              n= 9172
+2026-10-14 01:46:11,615 - INFO - loaded G3IMG-ARM2-K1-carried-inherited    n= 8911
+2026-10-14 01:46:16,520 - INFO - loaded G3IMG-ARM2-K3-carried              n= 5941
+2026-10-14 01:46:21,389 - INFO - loaded G3IMG-ARM2-K3-carried-inherited    n= 5958
+2026-10-14 01:46:25,951 - INFO - loaded G3IMG-ARM2-K5-carried              n= 5155
+2026-10-14 01:46:48,358 - INFO - F1  (H1) G3IMG-ARM1-K1-carried              vs G3IMG-ARM1-K1-carried-inherited    0.6664 vs 0.6725 d=-0.0061 p=0.0025
+2026-10-14 01:46:48,358 - INFO - F1  (H2) G3IMG-ARM1-K3-carried              vs G3IMG-ARM1-K3-carried-inherited    0.8024 vs 0.8050 d=-0.0026 p=0.1328
+2026-10-14 01:46:48,358 - INFO - F1  (H3) G3IMG-ARM2-K1-carried              vs G3IMG-ARM2-K1-carried-inherited    0.6644 vs 0.6730 d=-0.0086 p=0.0000
+2026-10-14 01:46:48,358 - INFO - F1  (H4) G3IMG-ARM2-K3-carried              vs G3IMG-ARM2-K3-carried-inherited    0.8127 vs 0.8123 d=+0.0003 p=0.7773
+2026-10-14 01:46:48,358 - INFO - F1  (L1) G3IMG-ARM2-K3-carried              vs G3IMG-ARM2-K1-carried              0.8127 vs 0.6644 d=+0.1483 p=0.0000
+2026-10-14 01:46:48,358 - INFO - F1  (L2) G3IMG-ARM2-K3-carried-inherited    vs G3IMG-ARM2-K1-carried-inherited    0.8123 vs 0.6730 d=+0.1393 p=0.0000
+2026-10-14 01:46:48,358 - INFO - F1  (L3) G3IMG-ARM2-K5-carried              vs G3IMG-ARM2-K3-carried              0.8306 vs 0.8127 d=+0.0180 p=0.0000
+2026-10-14 01:46:48,358 - INFO - F1  (L4) G3IMG-ARM2-K5-carried              vs G3IMG-ARM2-K3-carried-inherited    0.8306 vs 0.8123 d=+0.0183 p=0.0000
+2026-10-14 01:46:48,358 - INFO - MCC (H1) G3IMG-ARM1-K1-carried              vs G3IMG-ARM1-K1-carried-inherited    0.7144 vs 0.7112 d=+0.0033 p=0.4426
+2026-10-14 01:46:48,358 - INFO - MCC (H2) G3IMG-ARM1-K3-carried              vs G3IMG-ARM1-K3-carried-inherited    0.7247 vs 0.7250 d=-0.0003 p=0.9285
+2026-10-14 01:46:48,358 - INFO - MCC (H3) G3IMG-ARM2-K1-carried              vs G3IMG-ARM2-K1-carried-inherited    0.7063 vs 0.7129 d=-0.0066 p=0.1083
+2026-10-14 01:46:48,358 - INFO - MCC (H4) G3IMG-ARM2-K3-carried              vs G3IMG-ARM2-K3-carried-inherited    0.7234 vs 0.7236 d=-0.0001 p=0.9849
+2026-10-14 01:46:48,358 - INFO - MCC (L1) G3IMG-ARM2-K3-carried              vs G3IMG-ARM2-K1-carried              0.7234 vs 0.7063 d=+0.0171 p=0.0004
+2026-10-14 01:46:48,358 - INFO - MCC (L2) G3IMG-ARM2-K3-carried-inherited    vs G3IMG-ARM2-K1-carried-inherited    0.7236 vs 0.7129 d=+0.0107 p=0.0030
+2026-10-14 01:46:48,358 - INFO - MCC (L3) G3IMG-ARM2-K5-carried              vs G3IMG-ARM2-K3-carried              0.7253 vs 0.7234 d=+0.0019 p=0.6372
+2026-10-14 01:46:48,358 - INFO - MCC (L4) G3IMG-ARM2-K5-carried              vs G3IMG-ARM2-K3-carried-inherited    0.7253 vs 0.7236 d=+0.0018 p=0.5639
+2026-10-14 01:46:48,358 - INFO - wrote results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/tests.json
+== git status (only the patched driver should be listed if all outputs reproduce)
+ M results/gemini37-image-55map-2026-09-13/inheritance-2026-09-20/inheritance_ladder.py
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k1/
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k3/
+?? outputs/gemini3-image-55map-2026-09-16/verifier/g384_ov192_55map_g3img/crops_k5/
+end 2026-10-14T01:46:48Z
+BYTE-IDENTICAL   a14d218ee results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/tests.json
+BYTE-IDENTICAL   90294a283 results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/tests.json
+compare E rc=0
+chain end 2026-10-14T01:46:48Z

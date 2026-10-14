@@ -1,0 +1,54 @@
+HEAD 61ab7a446
+== build_pareto_v2 2026-10-14T00:42:11Z
+=== rungs (gates vs committed records) ===
+  min6       F1=0.8784 (record 0.8784)  MCC=0.7903 (gated vs min6-true)  GS $2.43  55-map production ~$43
+  min11      F1=0.8835 (record 0.8835)  MCC=0.8068 (gated vs min11)  GS $4.00  55-map production ~$70
+  high6      F1=0.8641 (record 0.8641)  MCC=0.7693 (gated vs verified-adv-text-4of5)  GS $14.04  55-map production ~$246
+  high5+5vf  F1=0.8739 (record 0.8739)  MCC=0.7713 (gated vs verified-384-ge3of5-t0-3-n5)  GS $14.42  55-map production ~$253
+  high11     F1=0.8769 (record 0.8769)  MCC=0.7903 (gated vs verified-adv-text-6of10)  GS $26.97  55-map production ~$473
+  high31     F1=0.8902 (record 0.8902)  MCC=0.7903 (gated vs 384-consensus-text-high)  GS $69.25  55-map production ~$1214
+  high35     F1=0.8951 (record 0.8951)  MCC=0.7941 (gated vs verified-384-16of30-t0-3-n5-opmax)  GS $71.26  55-map production ~$1250
+
+=== round-robin (21 pairs, 10k, seed 42) ===
+0/21 significant -> 1 tier(s): [['high35', 'high31', 'min11', 'min6', 'high11', 'high5+5vf', 'high6']]
+
+=== round-robin on tile-MCC (21 pairs, 10k, seed 42) ===
+0/21 significant -> 1 MCC tier(s): [['min11', 'high35', 'min6', 'high11', 'high31', 'high5+5vf', 'high6']]
+Pareto-efficient set (F1):  ['min6', 'min11', 'high31', 'high35']
+Pareto-efficient set (MCC): ['min6', 'min11']
+Wrote results/verifier-robustness/pareto/pareto_v2.{json,png}
+== build_k_ladder_tables 2026-10-14T00:42:27Z
+8 ladder(s)
+  Gemini 3.7 arm, 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson]  rungs=4 priced=4
+  Gemini 3.7 arm, 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson]  rungs=4 priced=4
+  Stride A (g384 ov128), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson] rungs=7 priced=7
+  Stride A (g384 ov128), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps.geojson] rungs=7 priced=7
+  Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson] rungs=4 priced=4
+  Stride B (g384 ov192), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson] rungs=7 priced=7
+  Stride B (g384 ov192), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps-r2.geojson] rungs=4 priced=4
+  Stride B (g384 ov192), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps.geojson] rungs=7 priced=7
+== build_k_ladder_phase2_tables 2026-10-14T00:42:38Z
+2026-10-14 00:42:41,140 INFO compat inventory: 13 ladder(s) testable, 1 skipped -> results/k-ladder-2026-09-12/phase2/ladders-compat.json
+2026-10-14 00:42:41,140 WARNING   skipped Gemini 3.7 text, GS B geometry (carried basis, 4 rung(s)): tile-MCC is withheld on some rungs (source_tile vocabulary is not the frame's), and the instrument runs the F1 and MCC permutations together — tiering this ladder would compare a meaningless MCC against a sound one and manufacture a large spurious drop. The F1 ladder is still reported in full in the tables
+2026-10-14 00:42:41,737 INFO 14 ladder(s)
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL text 384 px, T 0.3      rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL text 384 px, T 0.7      rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL text 384 px, T 1.0      rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 HIGH text 384 px, T 0.3         rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 HIGH text 384 px, T 0.7         rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 HIGH text 384 px, T 1.0         rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL image 384 px, T 0.3     rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL image 384 px, T 0.7     rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 MINIMAL image 384 px, T 1.0     rungs=4 opmax-scored=4
+2026-10-14 00:42:41,737 INFO   Gemini 3 HIGH image 384 px, T 0.3        rungs=4 opmax-scored=4
+2026-10-14 00:42:41,738 INFO   Gemini 3 HIGH image 384 px, T 0.7        rungs=4 opmax-scored=4
+2026-10-14 00:42:41,738 INFO   Gemini 3 HIGH image 384 px, T 1.0        rungs=4 opmax-scored=4
+2026-10-14 00:42:41,738 INFO   Gemini 3 scale-4-optimal 487             rungs=4 opmax-scored=4
+2026-10-14 00:42:41,738 INFO   Gemini 3.7 text, GS B geometry           rungs=4 opmax-scored=4
+== done 2026-10-14T00:42:41Z
+ M results/k-ladder-2026-09-12/figures/k-ladder-pareto-phase2.png
+ M results/k-ladder-2026-09-12/ladders.json
+ M results/k-ladder-2026-09-12/phase2/ladder-tables.md
+ M results/k-ladder-2026-09-12/phase2/ladders-compat.json
+ M results/k-ladder-2026-09-12/phase2/ladders.json
+ M results/verifier-robustness/pareto/pareto_v2.json

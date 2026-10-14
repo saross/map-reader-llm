@@ -1,0 +1,39 @@
+job=lbmcc tree=/home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-2-22353e660 head=22353e660ada89a9bae8c9484e097c2904716ec2 PYTHONHASHSEED=0 start=2026-10-14T00:42:58Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+r2 reference (buffer-invariant): 5018 points; 8541 tiles
+  T03-k3 (oracle)          board F1@50=0.8387 eval=0.8387 ok
+  T03-k4                   board F1@50=0.8294 eval=0.8294 ok
+  TH7-k3                   board F1@50=0.8380 eval=0.8380 ok
+  TH7-k4 (carry-forward)   board F1@50=0.8162 eval=0.8162 ok
+  TM-k3                    board F1@50=0.8102 eval=0.8102 ok
+  TM-k4                    board F1@50=0.7826 eval=0.7826 ok
+  IM-k3                    board F1@50=0.8008 eval=0.8008 ok
+  TM-n10-k5 (uplift)       board F1@50=0.8274 eval=0.8274 ok
+
+=== round-robin (8 cells, 10k tile-swap, seed 42) ===
+24/28 pairs significant -> 5 tier(s)
+1. T03-k3 (oracle)          T1  F1@50 0.8387  MCC 0.689
+2. TH7-k3                   T1  F1@50 0.8380  MCC 0.679
+3. T03-k4                   T2  F1@50 0.8294  MCC 0.669
+4. TM-n10-k5 (uplift)       T2  F1@50 0.8274  MCC 0.669
+5. TH7-k4 (carry-forward)   T3  F1@50 0.8162  MCC 0.665
+6. TM-k3                    T3  F1@50 0.8102  MCC 0.656
+7. IM-k3                    T4  F1@50 0.8008  MCC 0.711
+8. TM-k4                    T5  F1@50 0.7826  MCC 0.640
+
+Wrote results/55map-leaderboard/
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+r2 reference (buffer-invariant): 5018 points; 8541 tiles
+  IM-k3                    rebuilt {'tp': 2486, 'tn': 4834, 'fp': 178, 'fn': 1043} == committed ok
+  T03-k3 (oracle)          rebuilt {'tp': 2461, 'tn': 4776, 'fp': 236, 'fn': 1068} == committed ok
+  T03-k4                   rebuilt {'tp': 2297, 'tn': 4838, 'fp': 174, 'fn': 1232} == committed ok
+  TH7-k3                   rebuilt {'tp': 2424, 'tn': 4772, 'fp': 240, 'fn': 1105} == committed ok
+  TH7-k4 (carry-forward)   rebuilt {'tp': 2259, 'tn': 4852, 'fp': 160, 'fn': 1270} == committed ok
+  TM-k3                    rebuilt {'tp': 2273, 'tn': 4814, 'fp': 198, 'fn': 1256} == committed ok
+  TM-k4                    rebuilt {'tp': 2149, 'tn': 4852, 'fp': 160, 'fn': 1380} == committed ok
+  TM-n10-k5 (uplift)       rebuilt {'tp': 2305, 'tn': 4833, 'fp': 179, 'fn': 1224} == committed ok
+
+=== round-robin (8 cells, 10k tile-swap on MCC, seed 42) ===
+20/28 pairs significant -> 5 tier(s)
+wrote results/metric-leaderboards/55map-mcc-tiering-r2.{json,md}
+job=lbmcc DONE end=2026-10-14T00:45:25Z

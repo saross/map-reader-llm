@@ -1,0 +1,37 @@
+HEAD 3d6b47e33
+== board-era2 2026-10-14T00:44:09Z
+INFO auditing 103 cell(s) under 3 join(s)
+INFO   20/103
+INFO   40/103
+INFO   60/103
+INFO   80/103
+INFO   100/103
+INFO EXACT        103
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/board-era2-2026-09-12.json
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/board-era2-2026-09-12.md
+exit=0
+== k-ladder-phase2-cells 2026-10-14T00:44:18Z
+INFO auditing 46 cell(s) under 3 join(s)
+WARNING REFUSED    g37-text-k1-verified-carried-p0.10-k1 (committed MCC 0.1422)
+WARNING REFUSED    g37-text-k1-verified-opmax (committed MCC 0.1337)
+WARNING REFUSED    g37-text-k3-verified-opmax (committed MCC 0.1337)
+INFO   20/46
+INFO   40/46
+INFO EXACT        43
+INFO REFUSED      3
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/k-ladder-phase2-cells-2026-09-12.json
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/k-ladder-phase2-cells-2026-09-12.md
+exit=0
+== k-ladder-phase2 2026-10-14T00:44:23Z
+INFO auditing 47 cell(s) under 3 join(s)
+WARNING REFUSED    g37-text-k1-verified-carried-p0.10-k1 (committed MCC None)
+WARNING REFUSED    g37-text-k1-verified-opmax (committed MCC None)
+WARNING REFUSED    g37-text-k3-verified-opmax (committed MCC None)
+INFO   20/47
+INFO   40/47
+INFO REFUSED      3
+INFO NO-BASELINE  44
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/k-ladder-phase2-2026-09-12.json
+INFO -> /home/shawn/scratch/s164-fw-recheck-2026-10-14/w2-13-out/3d6b47e33-run1/k-ladder-phase2-2026-09-12.md
+exit=0
+== done 2026-10-14T00:44:27Z

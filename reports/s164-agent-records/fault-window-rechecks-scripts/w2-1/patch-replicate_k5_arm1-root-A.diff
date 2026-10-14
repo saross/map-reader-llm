@@ -1,0 +1,13 @@
+diff --git a/results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py b/results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py
+index ec18f7b0a..818dd691b 100644
+--- a/results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py
++++ b/results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py
+@@ -85,7 +85,7 @@ from typing import Any
+ 
+ import numpy as np
+ 
+-PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
++PROJECT_ROOT = Path(__file__).resolve().parents[3]
+ sys.path.insert(0, str(PROJECT_ROOT))
+ sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
+ 
