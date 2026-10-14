@@ -21,7 +21,7 @@ import w27_55map_subset_replicates as w27  # noqa: E402
 import floors2_lib as L  # noqa: E402
 from scripts.build_55map_leaderboard import BOUNDS, reference_gt  # noqa: E402
 
-w27.cluster_votes = L.cluster_votes_fast
+w27.cluster_votes_origins = L.cluster_votes_fast_origins  # D62 (1): tiles carried
 fam = w27.build_families(gate_only=True)
 index = next(iter(fam.values()))["index"]
 ref = reference_gt("r2")
@@ -38,11 +38,10 @@ for f, s in (
     ("ARM2", (2, 3, 4)),
 ):
     cell = w27.inherit(w27.cluster_subset(fam[f]["passes"], s, index), fam[f]["union"])
-    xy = np.c_[cell.geometry.x, cell.geometry.y]
-    tiles = cell["source_tile"].to_numpy(dtype=object)
+    pi, pf = si.prepare(cell), sf.prepare(cell)
     for p in sorted(set(cell["mound_probability"].quantile([0.3, 0.5, 0.7, 0.9]).round(3))):
         m = cell["mound_probability"].to_numpy() >= p
-        a, c = si.per_tile(xy[m], tiles[m]), sf.per_tile(xy[m], tiles[m])
+        a, c = si.per_tile(pi, m), sf.per_tile(pf, m)
         n += 1
         n_tot_diff += int(not np.array_equal(a.sum(0), c.sum(0)))
         n_tile_diff += int((a != c).any(axis=1).sum())

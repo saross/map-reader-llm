@@ -1,29 +1,84 @@
 {
- "_README": "A-09 (registered: preregistration.md:691). Cost bases: audited per-pass cost_usd from results/passes-manifest.json (per-pass extractor) on both sides of the matched-configuration comparison; the all-Flash pareto_v2 frontier (results/verifier-robustness/pareto/, modelled token-load-audit flex dollars) as the Flash-optimal yardstick. The two bases are not identically constructed (audit M-8); if the Pro passes were billed above flex rates the Pro side is over-costed, which makes the CLOSED verdict conservative. Comparability windows are operational choices declared in the limb blocks, not registered.",
- "generated_at": "2026-09-08T13:00:39.499653+00:00",
+ "_README": "A-09 (registered: preregistration.md:691). Cost bases: audited per-pass cost_usd from results/passes-manifest.json (per-pass extractor) on both sides of the matched-configuration comparison; the all-Flash pareto_v2 frontier (results/verifier-robustness/pareto/, modelled token-load-audit flex dollars) as the Flash-optimal yardstick. The two bases are not identically constructed (audit M-8); if the Pro passes were billed above flex rates the Pro side is over-costed, which makes the CLOSED verdict conservative. Comparability windows are operational choices declared in the limb blocks, not registered. Since 2026-10-12 (PI ruling D61 (4), executing D16 / WP7) cost_usd is the audited basis (D11), and the matched-configuration costs are NOT like-for-like: see cost_comparability_caveat and each modality's like_for_like_cost block.",
+ "generated_at": "2026-10-12T12:56:45.158842+00:00",
  "registered_gate_verdict": "CLOSED",
  "verdict_basis": "the Flash-optimal frontier (min6, min11) \u2014 the yardstick the registered scope limitation implies. The matched-configuration comparison measures the pure model effect at Pro's preferred corner (Flash never optimised there) and does not decide the gate.",
+ "cost_comparability_caveat": "NOT LIKE-FOR-LIKE (PI ruling D61 (4); stated beside the cost figures before any re-signing). Text: the Flash comparator's audited $6.62 per pass (mean of 3) is standard-tier pricing that includes about 2.0 million thought tokens per pass ($0.60 without them), while Pro's $0.93 is the flex rate (its standard-tier price is $1.85) with no thinking delivered. Image: Pro's passes asked for flex but were served at standard (the cached path drops the service tier), $2.98 per pass with no thinking delivered; the Flash comparator's $4.49 is standard-tier pricing that includes about 1.2 million thought tokens per pass ($0.78 without them). On one tier (standard) with no thinking on either side, one Pro text pass costs 1.03 times the comparator's three-pass consensus (one pass against one, 3.1); for image, 1.27 (3.8). The audited gap therefore reflects Pro's undelivered thinking (Obs 509; reports/manipulation-check-2026-10-05.md \u00a7 D) and the tier difference, not a cheaper model.",
  "matched_configuration_comparison": {
   "text": {
    "pro_single_pass": {
     "f1_at_20m": 0.8045,
-    "cost_per_pass_usd": 1.8533
+    "cost_per_pass_usd": 0.9266
    },
    "flash_same_config_single_pass": {
     "f1_at_20m": 0.4919,
-    "cost_per_pass_usd": 0.5971
+    "cost_per_pass_usd": 6.6164
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.574785,
-    "cost_usd": 1.7913
+    "f1_at_20m": 0.576351,
+    "cost_usd": 19.8492
    },
    "limbs_vs_flash_same_config_n3": {
-    "f1_ratio_pro_over_other": 1.3997,
-    "cost_ratio_pro_over_other": 1.0346,
-    "cost_comparable_within_10pct": true,
+    "f1_ratio_pro_over_other": 1.3959,
+    "cost_ratio_pro_over_other": 0.0467,
+    "cost_comparable_within_10pct": false,
     "f1_comparable_within_0.02": false,
-    "limb1_fires (>=1.20 F1 at comparable cost)": true,
+    "limb1_fires (>=1.20 F1 at comparable cost)": false,
     "limb2_fires (comparable F1 at <=50% cost)": false
+   },
+   "like_for_like_cost (not the gate's basis; D61 (4))": {
+    "pro": {
+     "n_passes": 3,
+     "model": [
+      "gemini-3.1-pro-preview"
+     ],
+     "thinking_level_configured": [
+      "high"
+     ],
+     "audited_cost_per_pass_usd": 0.9266,
+     "tier_served": [
+      "flex"
+     ],
+     "tier_method": [
+      "run-log-inherited"
+     ],
+     "tier_requested_per_run_log": [
+      "flex"
+     ],
+     "thinking_tokens_per_pass": 0,
+     "standard_tier_cost_per_pass_usd": 1.8533,
+     "standard_tier_cost_per_pass_usd_without_thinking": 1.8533
+    },
+    "flash_comparator": {
+     "n_passes": 3,
+     "model": [
+      "gemini-3-flash-preview"
+     ],
+     "thinking_level_configured": [
+      "high"
+     ],
+     "audited_cost_per_pass_usd": 6.6164,
+     "tier_served": [
+      "standard"
+     ],
+     "tier_method": [
+      "attestation"
+     ],
+     "tier_requested_per_run_log": [],
+     "thinking_tokens_per_pass": 2006436,
+     "standard_tier_cost_per_pass_usd": 6.6164,
+     "standard_tier_cost_per_pass_usd_without_thinking": 0.5971
+    },
+    "one_tier_no_thinking": {
+     "tier": "standard",
+     "pro_one_pass_over_flash_n3_consensus": 1.0346,
+     "pro_one_pass_over_flash_one_pass": 3.1039
+    },
+    "rate_card": {
+     "path": "data/pricing/gemini-rate-card.json",
+     "version": "2026-09-21.2",
+     "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf"
+    }
    },
    "coverage_disclosure": {
     "pro": {
@@ -52,23 +107,77 @@
   "image": {
    "pro_single_pass": {
     "f1_at_20m": 0.6658,
-    "cost_per_pass_usd": 15.7365
+    "cost_per_pass_usd": 2.9828
    },
    "flash_same_config_single_pass": {
     "f1_at_20m": 0.5446,
-    "cost_per_pass_usd": 3.9717
+    "cost_per_pass_usd": 4.4917
    },
    "flash_same_config_n3_consensus_best": {
-    "f1_at_20m": 0.585411,
-    "cost_usd": 11.9151
+    "f1_at_20m": 0.587258,
+    "cost_usd": 13.4751
    },
    "limbs_vs_flash_same_config_n3": {
-    "f1_ratio_pro_over_other": 1.1373,
-    "cost_ratio_pro_over_other": 1.3207,
+    "f1_ratio_pro_over_other": 1.1337,
+    "cost_ratio_pro_over_other": 0.2214,
     "cost_comparable_within_10pct": false,
     "f1_comparable_within_0.02": false,
     "limb1_fires (>=1.20 F1 at comparable cost)": false,
     "limb2_fires (comparable F1 at <=50% cost)": false
+   },
+   "like_for_like_cost (not the gate's basis; D61 (4))": {
+    "pro": {
+     "n_passes": 3,
+     "model": [
+      "gemini-3.1-pro-preview"
+     ],
+     "thinking_level_configured": [
+      "high"
+     ],
+     "audited_cost_per_pass_usd": 2.9828,
+     "tier_served": [
+      "standard"
+     ],
+     "tier_method": [
+      "cached-path"
+     ],
+     "tier_requested_per_run_log": [
+      "flex"
+     ],
+     "thinking_tokens_per_pass": 0,
+     "standard_tier_cost_per_pass_usd": 2.9828,
+     "standard_tier_cost_per_pass_usd_without_thinking": 2.9828
+    },
+    "flash_comparator": {
+     "n_passes": 3,
+     "model": [
+      "gemini-3-flash-preview"
+     ],
+     "thinking_level_configured": [
+      "high"
+     ],
+     "audited_cost_per_pass_usd": 4.4917,
+     "tier_served": [
+      "standard"
+     ],
+     "tier_method": [
+      "cached-path"
+     ],
+     "tier_requested_per_run_log": [],
+     "thinking_tokens_per_pass": 1236137,
+     "standard_tier_cost_per_pass_usd": 4.4917,
+     "standard_tier_cost_per_pass_usd_without_thinking": 0.7833
+    },
+    "one_tier_no_thinking": {
+     "tier": "standard",
+     "pro_one_pass_over_flash_n3_consensus": 1.2694,
+     "pro_one_pass_over_flash_one_pass": 3.8083
+    },
+    "rate_card": {
+     "path": "data/pricing/gemini-rate-card.json",
+     "version": "2026-09-21.2",
+     "sha256": "9abc13beea8e52621e1cc2d683cf8134791ad0e5933c48d38ca5745a070fe4cf"
+    }
    },
    "coverage_disclosure": {
     "pro": {
@@ -111,15 +220,15 @@
    "text": {
     "pro_single_pass_vs_min6": {
      "f1_ratio_pro_over_other": 0.9159,
-     "cost_ratio_pro_over_other": 0.7627,
+     "cost_ratio_pro_over_other": 0.3813,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
      "limb2_fires (comparable F1 at <=50% cost)": false
     },
     "pro_n3_union_vs_min6": {
-     "f1_ratio_pro_over_other": 0.9793,
-     "cost_ratio_pro_over_other": 2.288,
+     "f1_ratio_pro_over_other": 0.982,
+     "cost_ratio_pro_over_other": 1.144,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": true,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
@@ -127,15 +236,15 @@
     },
     "pro_single_pass_vs_min11": {
      "f1_ratio_pro_over_other": 0.9106,
-     "cost_ratio_pro_over_other": 0.4633,
+     "cost_ratio_pro_over_other": 0.2316,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
      "limb2_fires (comparable F1 at <=50% cost)": false
     },
     "pro_n3_union_vs_min11": {
-     "f1_ratio_pro_over_other": 0.9736,
-     "cost_ratio_pro_over_other": 1.39,
+     "f1_ratio_pro_over_other": 0.9763,
+     "cost_ratio_pro_over_other": 0.6949,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
@@ -145,7 +254,7 @@
    "image": {
     "pro_single_pass_vs_min6": {
      "f1_ratio_pro_over_other": 0.758,
-     "cost_ratio_pro_over_other": 6.4759,
+     "cost_ratio_pro_over_other": 1.2275,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
@@ -153,7 +262,7 @@
     },
     "pro_n3_union_vs_min6": {
      "f1_ratio_pro_over_other": 0.8223,
-     "cost_ratio_pro_over_other": 19.4278,
+     "cost_ratio_pro_over_other": 3.6825,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
@@ -161,7 +270,7 @@
     },
     "pro_single_pass_vs_min11": {
      "f1_ratio_pro_over_other": 0.7536,
-     "cost_ratio_pro_over_other": 3.9341,
+     "cost_ratio_pro_over_other": 0.7457,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,
@@ -169,7 +278,7 @@
     },
     "pro_n3_union_vs_min11": {
      "f1_ratio_pro_over_other": 0.8175,
-     "cost_ratio_pro_over_other": 11.8024,
+     "cost_ratio_pro_over_other": 2.2371,
      "cost_comparable_within_10pct": false,
      "f1_comparable_within_0.02": false,
      "limb1_fires (>=1.20 F1 at comparable cost)": false,

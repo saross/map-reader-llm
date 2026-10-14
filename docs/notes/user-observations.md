@@ -119,7 +119,7 @@ finding, a mislabelled comparator). His verdict cadence ("accept, next?")
 kept it fast; the format's value was that every signature now has a
 verification trail behind it.
 
-## Session 114–117 — 2026-06-13/23 (candidates — pending Shawn's review on return)
+## Session 114–117 — 2026-06-13/23 (candidates — closed unreviewed 2026-10-14, user-obs redesign)
 
 **The structure correction: he wants in on organisation before prose, not
 after.** I had resolved three framing decisions in the Results draft and
@@ -146,7 +146,7 @@ guarantee — a fresh instance lands on the right task with everything it needs
 overwrite it. The steer for me: a hand-crafted launch artefact is
 authoritative; defer to it, do not clobber it.
 
-## Session 118 — 2026-07-28 (candidates — pending Shawn's review)
+## Session 118 — 2026-07-28 (candidates — closed unreviewed 2026-10-14, user-obs redesign)
 
 *Drafted at handoff by Claude Opus 5. Accept / edit / discard / replace. Silence
 holds these over; it does not discard them.*
@@ -176,7 +176,7 @@ paper verification itself," and later asked whether we should close the session.
 I read both as a signal I had over-invested in the manifest machinery while the
 22 false attributions sat untouched. Was that the intent, or am I over-reading?
 
-## Session 119 — 2026-07-29 (candidates — pending Shawn's review)
+## Session 119 — 2026-07-29 (candidates — closed unreviewed 2026-10-14, user-obs redesign)
 
 - **Candidate A**: "You've done excellent work" — said after the review +
   correction pass, immediately followed by the decision to escalate me from
@@ -191,7 +191,7 @@ I read both as a signal I had over-invested in the manifest machinery while the
   third option that dissolves a binary is more useful to him than
   arguing either side.
 
-## Pending review — 2026-07-30 (Session 120 handoff candidates)
+## Closed unreviewed 2026-10-14, user-obs redesign — 2026-07-30 (Session 120 handoff candidates)
 
 Candidates drafted at handoff; accept / edit / discard / replace.
 Silence holds them over (2026-07-05 rule).
@@ -262,7 +262,7 @@ confidence *rebuilt on checking rather than assumed*. The
 generalisation he calls a bonus is charter § 1's designed-in
 reusability (next targets: inscriptions, llm-reproducibility).
 
-## Session 122 — 2026-07-31 (candidates — pending Shawn's review)
+## Session 122 — 2026-07-31 (candidates — closed unreviewed 2026-10-14, user-obs redesign)
 
 Phase 3 (C4) claimed and executed at fleet scale: registry, machinery,
 calibration, 18 subagents, generated stratum ~80 % verified, US$0.00
@@ -926,7 +926,7 @@ a headline you are waiting on. **Confirmed at review (2026-08-28)**:
 corroborations (the −0.05 map-attribution catch; the H9 artefact
 audit) ran the same cadence.
 
-## Pending review — Session 143 candidates (2026-08-29, drafted at handoff)
+## Closed unreviewed 2026-10-14, user-obs redesign — Session 143 candidates (2026-08-29, drafted at handoff)
 
 Accept / edit / discard / replace; silence never discards.
 
@@ -960,7 +960,7 @@ fix is upstream: I should artefact-check any "never done" claim
 before it reaches you, and you may want to treat my status-ledger
 citations as weaker evidence than my artefact citations.
 
-## Pending review — Session 144 candidates (2026-08-31, drafted at handoff)
+## Closed unreviewed 2026-10-14, user-obs redesign — Session 144 candidates (2026-08-31, drafted at handoff)
 
 - **S144-C1 — the diagnostic question again outran the monitoring.**
   "What is the delay? 503s? iterative failures?" named the exact
@@ -978,7 +978,7 @@ citations as weaker evidence than my artefact citations.
   had not raised it and was mid-launch on new work. Claude should
   track and surface session-scale risk before the human has to.
 
-## S145 candidates (pending review, 2026-09-02) — silence never discards
+## S145 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-02) — silence never discards
 
 - **S145-C1 — the live adjudication loop.** During the empty-tile
   audit Claude polled the verdicts file between messages and
@@ -1096,7 +1096,7 @@ Drafted at handoff; reviewed by the PI on 2026-09-08 together with S148.
   instance to *review* the old one's work rather than continue it.
   **Ruling: keep.**
 
-## S150 candidates (pending review, 2026-09-08, drafted at handoff) — silence never discards
+## S150 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-08, drafted at handoff) — silence never discards
 
 S148 and S149 above were reviewed on 2026-09-08; S150 is still pending.
 
@@ -1122,7 +1122,7 @@ S148 and S149 above were reviewed on 2026-09-08; S150 is still pending.
   The slip was reported unprompted in the recap; the reaction is data that
   reporting one's own process errors plainly costs nothing here.
 
-## S151 candidates (pending review, 2026-09-08, drafted at close) — silence never discards
+## S151 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-08, drafted at close) — silence never discards
 
 S150 above is still pending (S148–S149 reviewed 2026-09-08). This session ran
 without in-session interaction: a resume brief, then the card's after-run
@@ -1143,7 +1143,7 @@ steps and the PR merge.
   probabilities; a "refresh and move on" would have recorded a +0.41
   recovery effect that was really a partial-verification artefact.
 
-## S151-d candidates (pending review, 2026-09-10, drafted at handoff) — silence never discards
+## S151-d candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-10, drafted at handoff) — silence never discards
 
 S150 and S151 above are still pending.
 
@@ -1166,7 +1166,7 @@ S150 and S151 above are still pending.
   attempting them in a tired context. Candidate: keep the scheduled-start
   block as a standing beacon device.
 
-## S152 candidates (pending review, 2026-09-10, drafted at close) — silence never discards
+## S152 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-10, drafted at close) — silence never discards
 
 S150, S151 and S151-d above are still pending. This session ran without
 in-session interaction: the scheduled start-of-session block from S151-d,
@@ -1229,7 +1229,7 @@ PI on C4: "I really appreciate you taking the initiative to chase up an issue on
   listed as unpursued. Candidate: an invitation to use idle time on the
   session's open question is productive; he can offer it deliberately.
 
-## S153 candidates (pending review, 2026-09-12, drafted at handoff) — silence never discards
+## S153 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-12, drafted at handoff) — silence never discards
 
 S150, S151, S151-d and S152 above are still pending (the PI deferred the
 user-obs review on 2026-09-12). This session ran as an all-day interactive
@@ -1280,7 +1280,7 @@ sequence, and an overnight close-out job.
   and routes every unruled one to a numbered morning list. Candidate:
   the morning-questions list is the handoff unit for overnight work.
 
-## S153-b/c candidates (pending review, 2026-09-14, drafted at handoff) — silence never discards
+## S153-b/c candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-14, drafted at handoff) — silence never discards
 
 S150 → S153 above are still pending (the PI deferred the review). This
 stretch: the rulings day of 2026-09-13, the benchmark repository's errata
@@ -1313,7 +1313,7 @@ arriving from another instance, the modality audit, and the handover.
   one state gets one signature. Candidate: a re-signature is presented
   once per stable state, never per rebuild.
 
-## S154 candidates (pending review, 2026-09-18, drafted at handoff) — silence never discards
+## S154 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-18, drafted at handoff) — silence never discards
 
 *Things Shawn observed about Claude this session. Accept / edit / discard /
 replace. Two earlier pending sections (S153, S153-b/c) are still awaiting a
@@ -1349,7 +1349,7 @@ learnings"*, followed by three specific generalisations he wanted encoded
 metadata capture). Relayed here per the protocol's exception for reactions I
 notice rather than observe about myself.
 
-## S156 candidates (pending review, 2026-09-21, drafted at handoff) — silence never discards
+## S156 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-21, drafted at handoff) — silence never discards
 
 Things Shawn observed about Claude this session. Accept / edit / discard /
 replace. The S153, S153-b/c and S154 pending sections above are still
@@ -1376,7 +1376,7 @@ unreviewed and hold over with these.
   cells existed. Both were raised before the underlying artefact or rule had
   been read; both had to be walked back the same day.
 
-## S157 candidates (pending review, 2026-09-21, drafted at handoff) — silence never discards
+## S157 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-09-21, drafted at handoff) — silence never discards
 
 *Things Shawn may have observed about Claude this session. Accept / edit /
 discard / replace; an unanswered gate holds over.*
@@ -1399,7 +1399,7 @@ discard / replace; an unanswered gate holds over.*
   and produced nothing. Did the plan make clear early enough that the
   export was optional and the fallback already existed?
 
-## S158 candidates (pending review, 2026-10-04, drafted at handoff) — silence never discards
+## S158 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-04, drafted at handoff) — silence never discards
 
 *Things Shawn may have observed about Claude this session. Accept / edit /
 discard / replace; an unanswered gate holds over.*
@@ -1425,7 +1425,7 @@ discard / replace; an unanswered gate holds over.*
   at the end of a long session. Useful to have it then, or would he rather
   defects in signed claims were batched for a separate review?
 
-## S159 candidates (pending review, 2026-10-04, drafted at handoff) — silence never discards
+## S159 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-04, drafted at handoff) — silence never discards
 
 *Things Shawn may have observed about Claude this session. Accept / edit /
 discard / replace; an unanswered gate holds over.*
@@ -1451,7 +1451,7 @@ discard / replace; an unanswered gate holds over.*
   re-audit found 46 plus 2. Caught before merge, but it reached his
   decisions log.
 
-## S160 candidates (pending review, 2026-10-05, drafted at handoff) — silence never discards
+## S160 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-05, drafted at handoff) — silence never discards
 
 *Things Shawn may have observed about Claude this session. Accept / edit /
 discard / replace; an unanswered gate holds over.*
@@ -1479,7 +1479,7 @@ discard / replace; an unanswered gate holds over.*
   "needs your words now", "has a default I will apply", and "can wait" have
   served better?
 
-## S161 candidates (pending review, 2026-10-06, drafted at handoff) — silence never discards
+## S161 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-06, drafted at handoff) — silence never discards
 
 *Things Shawn may have observed about Claude this session. Accept / edit /
 discard / replace; an unanswered gate holds over.*
@@ -1511,7 +1511,7 @@ discard / replace; an unanswered gate holds over.*
   outward-facing draft come to him already with that pass done and the
   expanded phrases named (claude-obs 144)?
 
-## S162 candidates (pending review, 2026-10-07, drafted at handoff) — silence never discards
+## S162 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-07, drafted at handoff) — silence never discards
 
 Things Shawn may have observed about how Claude worked in Session 162. For
 accept / edit / discard / replace.
@@ -1541,7 +1541,7 @@ accept / edit / discard / replace.
   visible to him as disruption, and does he want such incidents reported as
   they happen or only at close? (claude-obs 148 is my side.)
 
-## S163 candidates (pending review, 2026-10-13, drafted at handoff) — silence never discards
+## S163 candidates (closed unreviewed 2026-10-14, user-obs redesign, 2026-10-13, drafted at handoff) — silence never discards
 
 Things Shawn may have observed about how Claude worked in Session 163 (this
 instance worked from 2026-10-11 onwards; earlier S163 work is not covered).
@@ -1570,3 +1570,48 @@ For accept / edit / discard / replace.
   mid-run (lower process caps, duplicate runs, a kernel tripwire) when a side
   note flagged the sapphire load. Was the amount of autonomous work, and its
   safeguards, about right?
+
+## 2026-10-14 — Remarks carried from the closed backlog
+
+When the user-obs backlog closed on 2026-10-14 (handoff redesign; see
+`~/personal-assistant/global-claude-md/handoff-protocol.md`, step 4), these
+candidates quoted a remark Shawn made in passing about something Claude did.
+The quotes are as recorded in the candidate sets; they have not been re-
+checked against the transcripts. Shawn reviews them (keep, correct, or delete)
+from the personal-assistant inbox. Under the redesign, new entries here are
+only his remarks, quoted, and nothing awaits a verdict.
+
+- S114–117 ¶1: "work with me on an outline first, then drafting … be more
+  directly and consistently involved in the organisation/structure phase." —
+  Claude had resolved three structural framing decisions in the Results draft
+  on its own and marked them "[Resolved]".
+- S119 Candidate A: "You've done excellent work" — Claude had completed a
+  review and correction pass that overturned several conclusions of the
+  previous session (P2, C5, the timestamp).
+- S119 Candidate B: "more elegant" — Claude had proposed a hybrid for the H4b
+  trigger (pin the interpretation, buy off the evidence) over either single
+  reading.
+- S120 item 3: "This is great" — Claude had designed a blind defence pass that
+  used Shawn's own two gate catches as calibration probes.
+- S143-C1: "That was explained perfectly, thanks" … and "great ideas! thank
+  you" — Claude had explained statistical power and the minimum detectable
+  effect (MDE), and proposed a strata-enforcement design.
+- S150 C4: "Your recovery from the 'process slip' seems fine to me." — Claude
+  had reported, unprompted in the recap, an uncommitted-script slip and its
+  repair.
+- S153 C3: "thanks, I thought we were talking 55-map, thanks for the
+  correction." — Claude had corrected ruling R4, which conflated the moving
+  55-map reference with the candidate-vintage question.
+- S154 Candidate B: "that's fine that you stopped before the verifier legs" —
+  Asked to initiate overnight runs, Claude chained the deterministic stages
+  and stopped before the paid verifier stage.
+- S154 Candidate D: "ok, this is a great outcome, we should remember and apply
+  these learnings" — Claude had reported the results of validating the
+  batch-plus-explicit-cache route.
+- S156 C1: "It's very hard to find all of the 'bottom line' messages in the
+  terminal amidst everything else … I'll be asking you to repeat things that I
+  cannot find." — Claude had been relaying long reports in the terminal in
+  which the bottom-line rulings were buried.
+- S156 C3: "That's a welcome sharpening of my point" — Claude had answered
+  Shawn's remark that "3.7 is a step change" with a frontier test (the pool
+  and the images, not the model) and held the generational claim back.

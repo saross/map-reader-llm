@@ -1,9 +1,19 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-09-08 (A-07 and A-09 refreshed on the Flash
-> comparator rebuilt from the E71-recovered passes, PI instruction S150;
-> no verdict changes, the image fragility flag retired). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-14 (A-07 regenerated under the D50 scorer,
+> PI rulings D62 (5) and D65: the Flash comparator curves rise by
+> 0.0012–0.0018 F1 and the Pro text curve by 0.0024, with no optimal
+> k, fragility flag, or verdict changing; the row awaits re-signing).
+> 2026-10-12: A-09 re-derived on the audited cost basis with the
+> not-like-for-like caveat, PI ruling D61 (4): the registered gate
+> stays CLOSED, the matched-configuration text limb no longer fires,
+> and the row awaited re-signing (re-signed 2026-10-13); earlier the
+> same day, A-06 regenerated with the D42 permutation p and
+> Benjamini–Hochberg, D61 (3), and the finding that the Pro HIGH
+> T = 0.0 passes did not think recorded against A-06's HIGH-cell
+> reading. 2026-09-08: A-07 and A-09 refreshed on the Flash comparator
+> rebuilt from the E71-recovered passes. See [§ Changelog](#changelog)
+> for revision history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -74,6 +84,44 @@ pass-averaged micro) are reconciled by an in-script gate and agree
 to ≤ 0.0005. The original confounded contrast is retained in the
 artefact as a superseded record.
 
+**Note, 2026-10-12 (PI rulings D61 (3) and D61 (4)).** Two additions;
+the table above, the four rule verdicts, and the registered outcome
+text are unchanged.
+
+*p-values (D61 (3)).* The artefact now carries the paired tile-swap
+permutation p that PI ruling D42 adopted (10,000 permutations, seed 42,
+through the shared helper `e45_bootstrap_pairings.paired_bootstrap`,
+`3c3023f51`), in place of the retired bootstrap p, which sat at its
+floor of 0.001 in all four cells. Benjamini–Hochberg (BH) is applied
+across the four registered factor-T contrasts as one family. The
+registered rule has no p condition, so BH is reported beside it and
+decides nothing:
+
+| Contrast (T = 0.0 − T = 0.7) | Bootstrap p (retired) | Permutation p | BH-adjusted p | Discordant tiles |
+|---|---:|---:|---:|---:|
+| Text, HIGH | 0.001 (floor) | 0 (< 0.0001) | 0 | 175 |
+| Text, MEDIUM | 0.001 (floor) | 0.0019 | 0.0019 | 147 |
+| Image, HIGH | 0.001 (floor) | 0 (< 0.0001) | 0 | 218 |
+| Image, MEDIUM | 0.001 (floor) | 0.0002 | 0.00027 | 192 |
+
+All four reject at q = 0.05. Deltas, intervals, and the four flags are
+unchanged.
+
+*Pro HIGH did not think (D61 (4)).* The Pro HIGH T = 0.0 passes
+(`n1-pro-rerun-384`, `pro-{text,image}-high-t0`) delivered no thinking:
+they record zero thought tokens, and the June 2026 invoice confirms it
+(`reports/manipulation-check-2026-10-05.md` § D; Obs 509). Whether the
+T = 0.7 Pro HIGH comparators (`pv-diag-384`,
+`pro-high-{text,image}-n5`) thought is unknown: they carry no recorded
+usage and no matching invoice line. At HIGH, therefore, the factor-T
+contrast compares T = 0.0 without thinking against T = 0.7 with
+thinking unknown, and the reading "temperature is the driver" is open
+there: the gap is temperature, or thinking delivered at T = 0.7 and not
+at T = 0.0. The thinking context at T = 0.0 (HIGH − MEDIUM) likewise
+compares Pro without thinking against MEDIUM thinking. Nothing is
+re-labelled here; the register row's outcome text is the PI's to
+revise.
+
 ## A-07 — the Phase 3 voting-threshold comparison
 
 Registered: "Compare Pro optimal threshold to Flash optimal
@@ -89,8 +137,8 @@ Flash-comparator N = 3 curves at the same configuration and corpus.
 
 | Modality | Pro curve (k = 1/2/3, F1@20 m) | Flash curve (E57 pools) | Pro optimal | Flash optimal | Relative diff | Verdict |
 |---|---|---|---|---|---|---|
-| Text | 0.8602 / 0.8558 / 0.8494 | 0.4634 / 0.5203 / 0.5748 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
-| Image | 0.6909 / 0.7149 / 0.7223 | 0.5614 / 0.5760 / 0.5854 | k = 3 | k = 3 | 0 % | transfers (robust: margin 0.0094 > 0.005 on the recovered sweeps) |
+| Text | 0.8626 / 0.8582 / 0.8519 | 0.4647 / 0.5217 / 0.5764 | **k = 1** | k = 3 | 67 % | **flagged**; > 20 % ⇒ the registered extended N = 30 test is indicated but cannot execute in a $0 block |
+| Image | 0.6909 / 0.7149 / 0.7223 | 0.5631 / 0.5778 / 0.5873 | k = 3 | k = 3 | 0 % | transfers (robust: margin 0.0095 > 0.005 on the recovered sweeps) |
 
 Flash curves refreshed 2026-09-08 on the comparator sweeps rebuilt from
 the E71-recovered passes (`185681674`, re-scored `10e933ded`); the
@@ -98,6 +146,15 @@ pre-recovery curves were 0.4726 / 0.5199 / 0.5665 (text) and 0.5509 /
 0.5499 / 0.5525 (image). Every recovered image cell rises (k = 3 by
 +0.033); text moves within ±0.01. Neither optimum nor either verdict
 moves.
+
+All curves rescored 2026-10-14 under the D50 scorer (detections
+scoped per sheet, never re-keyed across sheets; PI rulings D62 (5)
+and D65): the Flash comparator curves rise by 0.0012–0.0016 F1 (text)
+and 0.0017–0.0018 (image), the Pro text curve by 0.0024 at every k,
+and the Pro image curve does not move. Before D50 the table read
+0.8602 / 0.8558 / 0.8494 (Pro text), 0.4634 / 0.5203 / 0.5748 (Flash
+text), and 0.5614 / 0.5760 / 0.5854 (Flash image). Again neither
+optimum nor either verdict moves.
 
 Descriptive fraction-form only (no registered verdict attaches): the
 Flash production optimum is 26/30 = 0.867 of the pool; Pro text's
@@ -109,29 +166,27 @@ prefers the permissive union, the Flash comparator the strict
 intersection), so the vote threshold again behaves as a property of
 the pipeline–corpus–model encounter rather than of the
 configuration (cf. Obs 358's threshold-transfer lesson). Second, the
-Pro text N = 3 union (0.8602) clearly beats Pro single-pass
-(0.8045) — a +0.056 gain from three passes at k = 1, so consensus
+Pro text N = 3 union (0.8626) clearly beats Pro single-pass
+(0.8045) — a +0.058 gain from three passes at k = 1, so consensus
 volume helps Pro text even at tiny N; both are small-N observations
 on 487 tiles and neither carries a registered verdict.
 
-**Fragility (verification round; refreshed 2026-09-08).** On the
-pre-recovery comparator both optima sat on near-flat curves — the Flash
-image winner (k = 3) led its runner-up by 0.0015 F1 and the Pro text
+**Fragility (verification round; refreshed 2026-09-08 and, under
+D50, 2026-10-14).** On the pre-recovery comparator both optima sat
+on near-flat curves — the Flash image winner (k = 3) led its runner-up by 0.0015 F1 and the Pro text
 winner (k = 1) by 0.0045, both under the artefact's 0.005 fragility
 threshold — and had the Flash image optimum landed on k = 1 the image
 verdict would have flipped from "transfers" to flagged at 200 %
 relative. On the sweeps rebuilt from the recovered passes the Flash
-image winner leads by 0.0094 F1, above the threshold, so the
-image "transfers" verdict is robust to that margin and the S135
-MEDIUM-3 flag is retired; the Pro text winner still leads by 0.0045
-(fragile), and the text "flagged" verdict remains robust (67 % against
-a 10 % rule). The Flash comparator passes are 485–486 of 487 tiles
+image winner leads by 0.0095 F1 (0.0094 before D50), above the
+threshold, so the image "transfers" verdict is robust to that margin
+and the S135 MEDIUM-3 flag is retired; the Pro text winner still leads
+by 0.0044 (0.0045 before D50; fragile), and the text "flagged" verdict
+remains robust (67 % against a 10 % rule). The Flash comparator passes are 485–486 of 487 tiles
 after recovery — the E71 residue that failed both recovery tiers — and
 the curves now consume the post-recovery detections; the earlier
 one-sided gap (the pre-recovery scoring at 458–472 tiles, E71 rider
-2026-09-07) no longer applies. The image "transfers"
-verdict is therefore not robust at these margins; the text
-"flagged" verdict is (67 % against a 10 % rule). The matched-N form
+2026-09-07) no longer applies. The matched-N form
 is itself post-hoc; the library's "run extended N = 30 test"
 message is operational wording, not a registered trigger.
 
@@ -140,21 +195,55 @@ message is operational wording, not a registered trigger.
 Registered: "Full per-model optimisation only if Pro demonstrates
 substantially superior cost-effectiveness (≥20% higher F1 at
 comparable cost, OR comparable F1 at ≤50% cost)"
-(`…/preregistration.md:691`). Cost basis per the audit adjudication:
-audited per-pass `cost_usd` from `results/passes-manifest.json` on
-both sides for the matched-configuration comparison; the audited
-all-Flash Pareto v2 frontier
-(`results/verifier-robustness/pareto/pareto_v2.json`, token-load
-audit basis, same corpus and buffer) as the Flash-optimal yardstick.
-Comparability windows below are operational choices, not registered.
+(`…/preregistration.md:691`). Cost basis: the register's audited
+per-pass `cost_usd` from `results/passes-manifest.json` (PI ruling D11;
+re-derived on it 2026-10-12 under D16 and D61 (4)) on both sides of the
+matched-configuration comparison; the audited all-Flash Pareto v2
+frontier (`results/verifier-robustness/pareto/pareto_v2.json`,
+token-load audit basis, same corpus and buffer) as the Flash-optimal
+yardstick. Comparability windows below are operational choices, not
+registered. F1s are on today's scorer (D50), which raised the Flash
+comparator's N = 3 curves by about 0.002 and Pro's text union to
+0.8626; the A-07 table above shows the same D50 values since A-07 was
+regenerated on 2026-10-14.
 
 **Matched-configuration basis (model swap at the Pro corners;
-corrected at the verification round):**
+re-derived on audited costs 2026-10-12):**
 
 | Modality | Pro single pass | Flash same-config N = 3 best | F1 ratio | Cost ratio | Limb 1 |
 |---|---|---|---:|---:|---|
-| Text | 0.8045 @ $1.85/pass | 0.5748 @ $1.79 (3 × $0.60) | 1.40 | 1.03 | fires (cost within the declared 10 % window) |
-| Image | 0.6658 @ $15.74/pass | 0.5854 @ $11.92 (3 × $3.97) | 1.14 | 1.32 | **does not fire** on either count — the F1 ratio is under 1.20 on the recovered comparator (1.21 on the pre-recovery sweeps) and a 32 % cost premium is not "comparable cost" (the original run mislabelled this "within ~5 %") |
+| Text | 0.8045 @ $0.93/pass (flex; no thinking delivered) | 0.5764 @ $19.85 (3 × $6.62; standard, about 2.0 M thought tokens per pass) | 1.40 | 0.05 | **does not fire**: Pro is 95 % cheaper, which is not "comparable cost" |
+| Image | 0.6658 @ $2.98/pass (standard; no thinking delivered) | 0.5873 @ $13.48 (3 × $4.49; standard, about 1.2 M thought tokens per pass) | 1.13 | 0.22 | **does not fire** on either count: the F1 ratio is under 1.20 and the cost is not comparable |
+
+Limb 2 fires in neither modality (the F1s are not within 0.02). At its
+own corner Pro is better and, on audited costs, far cheaper: a case
+neither registered limb is worded for.
+
+**Not like-for-like (PI ruling D61 (4); stated here, beside the cost
+figures, before the row is re-signed).** The audited matched-configuration
+costs compare different service tiers and different thinking. The Flash
+comparator's audited $6.62 per text pass (mean of three) is
+standard-tier pricing that includes about 2.0 million thought tokens per
+pass ($0.60 without them), while Pro's $0.93 is the flex rate (its
+standard-tier price is $1.85) with no thinking delivered. Pro's image
+passes asked for flex but were served at standard, because the cached
+path drops the service tier; they too delivered no thinking. Re-priced
+on one tier with no thinking on either side, from the same recorded
+tokens and the same rate card (`a09_cost_gate.json`,
+`like_for_like_cost` under each modality and `cost_comparability_caveat`):
+
+| Standard tier, no thinking on either side | Text | Image |
+|---|---:|---:|
+| Pro, one pass | $1.85 | $2.98 |
+| Flash comparator, one pass | $0.60 | $0.78 |
+| One Pro pass ÷ the comparator's three-pass consensus | 1.03 | 1.27 |
+| One Pro pass ÷ one comparator pass | 3.1 | 3.8 |
+
+The text ratio of 1.03 is the figure the 2026-09-08 artefact carried
+on the estimate basis. The audited gap therefore reflects Pro's
+undelivered thinking (Obs 509; `reports/manipulation-check-2026-10-05.md`
+§ D) and the tier difference, not a cheaper model. (The image figures
+are this re-derivation's; the ruling states the text case.)
 
 Comparator basis (refreshed 2026-09-08): the Flash same-configuration
 single-pass aggregates are the `-post-e71` rows (text F1
@@ -167,33 +256,37 @@ manifest. The gate verdict does not rest on this basis.
 **Flash-optimal frontier basis (the registered gate's yardstick):**
 the audited frontier offers min6 **F1 0.8784 at $2.43** and min11
 **0.8835 at $4.00** (487-tile corpus, F1@20 m). Pro's candidate
-points are single-pass **0.8045 at $1.85** and the text N = 3 union
-at **0.8602 for $5.56** (3 × $1.85). Both limbs are now computed in
-code against both rungs (the artefact carries
-`registered_gate_verdict` so machine readers and prose cannot
-diverge). Limb 1 never fires: Pro's F1 is below every frontier F1,
-so no ≥ 20 % advantage exists at any cost. Limb 2 never fires: no
-Pro point is within 0.02 F1 of a frontier point, and no Pro point
-reaches ≤ 50 % of a frontier cost (the nearest case, Pro
-single-pass at 76 % of min6's cost, gives up 0.0739 F1 — far
-outside "comparable"). One arithmetic correction from the
-verification round: Pro single-pass text is *cheaper* than min6 in
-absolute and per-F1-point terms, so the original "dearer per unit
-of F1 throughout" wording was wrong; the verdict rests on the limbs
-as registered, not on dominance. Cost-basis note: the frontier's
-dollars are modelled token-load-audit flex rates while the Pro
-side is the per-pass extractor's `cost_usd`; if Pro was billed
-above flex, the Pro side is over-costed and the verdict is
-conservative.
+points are single-pass **0.8045 at $0.93** and the text N = 3 union
+at **0.8626 for $2.78** (3 × $0.93); on image, single-pass 0.6658 at
+$2.98. Both limbs are computed in code against both rungs (the
+artefact carries `registered_gate_verdict` so machine readers and
+prose cannot diverge). Limb 1 never fires: Pro's F1 is below every
+frontier F1 (2 to 25 % lower), so no ≥ 20 % advantage exists at any
+cost. Limb 2 never fires: the one Pro point within 0.02 F1 of a
+frontier point, the text union against min6 (0.8626 against 0.8784),
+costs 1.14 times min6; and the Pro points at or under half a frontier
+cost, single-pass text at 38 % of min6's cost and 23 % of min11's,
+give up 0.0739 and 0.0790 F1, far outside "comparable". One
+arithmetic correction from the verification round stands: Pro
+single-pass text is *cheaper* than min6 in absolute and per-F1-point
+terms, so the original "dearer per unit of F1 throughout" wording was
+wrong; the verdict rests on the limbs as registered, not on
+dominance. Cost-basis note: the frontier's dollars are modelled
+token-load-audit flex rates, while Pro's are audited: text at flex,
+image at standard. Pro image is therefore over-costed against the
+frontier's flex basis, which is conservative for CLOSED. All Pro
+figures here are Pro without thinking (D61 (4)); what Pro with
+thinking delivered would score or cost is not measured.
 
 **Verdict: the registered gate is CLOSED**
 (`registered_gate_verdict` in `a09_cost_gate.json`) on the basis it
-was written for — Pro versus Flash as actually optimised. The
-matched-configuration text limb-1 firing measures something real
-but different: the pure model effect at Pro's preferred corner,
-where Flash was never optimised (E57's own narrative). Reporting
-both bases keeps the gate honest without letting a strawman
-comparison open it.
+was written for — Pro versus Flash as actually optimised. On audited
+costs neither matched-configuration limb fires; the matched
+comparison measures something real but different: the pure model
+effect at Pro's preferred corner, where Flash was never optimised
+(E57's own narrative), on a cost gap that is not like-for-like.
+Reporting both bases keeps the gate honest without letting a
+strawman comparison open it.
 
 ## A-08 — explicitly not computed
 
@@ -218,7 +311,9 @@ Report, not decision. Inputs the walk asked for:
 2. **The factor question is now answered at $0** (verification
    round): temperature is the driver (fires in all four 2 × 2
    cells with CIs excluding zero), thinking level is not
-   (reaches 0.03 nowhere). What a ~US$48 re-run would still add:
+   (reaches 0.03 nowhere). Open at HIGH since 2026-10-12: the Pro
+   HIGH T = 0.0 passes did not think (see the A-06 note). What a
+   ~US$48 re-run would still add:
    the three unvaried registered factors (M/E, H5, O), the
    registered scope, and an N = 30 Pro voting curve to settle
    A-07's text reversal (currently a fragile small-N result).
@@ -228,6 +323,158 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-10-14 — A-07 regenerated under the D50 scorer (PI rulings D62 (5) and D65)
+
+**Refresh trigger**: PI ruling D50 (2026-10-07) made the shared scorer
+scope detections per sheet by tile geometry and never re-key a
+detection across sheets. `a07_voting_thresholds.json` had not been
+regenerated since 2026-09-08; the D57 (4) Phase 3 re-score and the S164
+re-score (`reports/s164-agent-records/rescore-repaired-gs.md` § 3.4, on
+branch `rescore-repaired-gs`) both found 25 of its leaves moving under
+today's scorer. PI ruling D62 (5), "now", recorded in D65: regenerate
+A-07 as its own small PR. `scripts/h6_registered_analyses.py`
+(unchanged) was run on sapphire at `90294a283` in two independent runs
+(separate worktrees, new processes); they agree byte for byte apart
+from `generated_at`. The artefact landed in `468ada2fc`.
+`a06_decision_rule.json` and `a09_cost_gate.json`, which the same
+script writes, came out byte-identical to the committed files apart
+from `generated_at` and were not committed.
+
+**Before → after** (`a07_voting_thresholds.json`, the 25 leaves; F1 @
+20 m):
+
+| Quantity | Before (2026-09-08) | After (D50 scorer) |
+|---|---|---|
+| Pro text curve, k = 1 / 2 / 3 | 0.8602 / 0.8558 / 0.8494 | 0.8626 / 0.8582 / 0.8519 |
+| Flash comparator text curve | 0.4634 / 0.5203 / 0.5748 | 0.4647 / 0.5217 / 0.5764 |
+| Flash comparator image curve | 0.5614 / 0.5760 / 0.5854 | 0.5631 / 0.5778 / 0.5873 |
+| Pro text margin over runner-up | 0.004457 | 0.004423 |
+| Flash text margin over runner-up | 0.054448 | 0.054612 |
+| Flash image margin over runner-up | 0.009411 | 0.00948 |
+| Image fragility caveat (`scope_caveats`) | "leads its runner-up by 0.0094 F1" | "… by 0.0095 F1" |
+| Comparator gate, `committed` and `recomputed` (six cells each) | the pre-D50 values | the D50 values above; 6/6 still pass at 5e-5 |
+
+In this document: the A-07 table, a dated note under it, the union
+gain (0.8602 → 0.8626 against the unchanged single-pass 0.8045, so
++0.056 → +0.058), the fragility paragraph (0.0094 → 0.0095 and
+0.0045 → 0.0044, the earlier values kept in brackets), and the A-09
+section's pointer to the A-07 table.
+
+**What did NOT change**: every optimal k (text: Pro k = 1, Flash
+k = 3; image: both k = 3); both matched-N verdicts (text flagged at
+67 % relative, image transfers at 0 %); the fragility flags (the Pro
+text margin stays under 0.005, so text stays fragile; the Flash image
+margin stays above it, so the retired image flag stays retired); the
+Pro image curve (0.6909 / 0.7149 / 0.7223); the fraction-form
+descriptives; the model-provenance gate (12 pools); the Pro N = 3
+consensus files under `outputs/h11/n1-pro-rerun-384/`, rewritten
+byte-identical. The register row `h6-a07-voting-thresholds` quotes
+nine of the moved values and the derived union gain in its outcome
+text, so its signature of 2026-09-10T06:56:15Z lapses: the row is set
+to `re-sign-pending` with a dated D9-pattern note (the prior signature
+kept in `history`), and its outcome text is unchanged. A redraft with
+only those numbers updated is in `reports/s164-agent-records/a07-d50.md`,
+for the PI.
+
+**Removed at the PI's direction (Session 164)**: the fragility
+paragraph's closing sentence, "The image "transfers" verdict is
+therefore not robust at these margins; the text "flagged" verdict is
+(67 % against a 10 % rule).", contradicted the same paragraph and the
+register row from the 2026-09-08 refresh, which retired the image
+flag. The paragraph's earlier sentences already state both verdicts'
+robustness, so nothing replaces it. The register row's outcome text was
+updated with the PI-approved draft and re-signed.
+
+### 2026-10-12 (later) — A-09 re-derived on the audited cost basis (PI rulings D16 and D61 (4))
+
+**Refresh trigger**: PI ruling D11 made the register's `cost_usd` the
+audited basis, and D16 (WP7 of
+`planning/cost-accounting-fix-plan-2026-09-21.md`, open since
+2026-09-21) required the signed A-09 to be re-derived on it; the D57 (4)
+Phase 3 re-score found 18 cost fields that no longer reproduce
+(`reports/s163-agent-records/d57-4-rescore-s3-deltas.md` § Stopped
+lines). PI ruling D61 (4): re-derive, keep the registered verdict, report
+the matched-configuration comparison as it stands, and state beside the
+cost figures, before re-signing, that the cost gap is not like-for-like.
+`scripts/h6_registered_analyses.py` gained `like_for_like_costs` (it
+re-prices each pass's recorded tokens at the served tier, halting unless
+that reproduces the audited `cost_usd`, then at the standard tier with
+and without thought tokens) and `cost_caveat_statement`, with tier-1
+tests. The artefact was regenerated on sapphire in two independent
+runs, byte-identical apart from `generated_at`.
+
+**Before → after** (`a09_cost_gate.json`: the 18 cost leaves, the 6 F1
+leaves D50 moves, and the new caveat blocks):
+
+| Quantity | Before (2026-09-08, estimate basis) | After (audited, D11; F1 on the D50 scorer) |
+|---|---|---|
+| Pro cost per pass, text / image | $1.85 / $15.74 | $0.93 (flex) / $2.98 (standard) |
+| Flash comparator cost per pass, text / image | $0.60 / $3.97 | $6.62 / $4.49 (standard, with thinking) |
+| Flash N = 3 best F1, text / image | 0.5748 / 0.5854 | 0.5764 / 0.5873 |
+| Matched text: F1 ratio, cost ratio, limb 1 | 1.40, 1.03, fires | 1.40, 0.05, does not fire |
+| Matched image: F1 ratio, cost ratio, limb 1 | 1.14, 1.32, does not fire | 1.13, 0.22, does not fire |
+| Frontier, Pro single-pass text: cost ratio vs min6 / min11 | 0.76 / 0.46 | 0.38 / 0.23 |
+| Frontier, Pro text union: cost ratio vs min6 / min11 | 2.29 / 1.39 | 1.14 / 0.69 |
+| Frontier, Pro text union: F1 ratio vs min6 / min11 | 0.979 / 0.974 | 0.982 / 0.976 |
+| Frontier, Pro image single pass: cost ratio vs min6 / min11 | 6.48 / 3.93 | 1.23 / 0.75 |
+| Frontier, Pro image union: cost ratio vs min6 / min11 | 19.43 / 11.80 | 3.68 / 2.24 |
+
+**Correction found on re-derivation**: the frontier paragraph said that
+no Pro point was within 0.02 F1 of a frontier point and none reached
+50 % of a frontier cost. Both were already untrue of the 2026-09-08
+artefact: the text union was 0.0182 F1 from min6 (its
+`f1_comparable_within_0.02` was true), and single-pass text was at 46 %
+of min11's cost. Neither moved a limb, because the union cost 2.29
+times min6 and single-pass text gave up 0.0790 F1. The paragraph now
+gives the limbs' actual reasons. The register row's outcome text
+repeats the "76 % of min6's cost" case and is left for the PI.
+
+**What did NOT change**: the registered verdict (CLOSED); limbs 1 and 2
+never fire against the frontier; Pro's F1s (0.8045 text, 0.6658
+image); the frontier rungs; the image matched-configuration limb; the
+coverage disclosure. The register row `h6-a09-cost-gate` is set to
+`re-sign-pending` with a dated signature note in the D9 pattern; its
+outcome text (which quotes cost ratio 1.03, a firing text limb, and
+1.32) is unchanged, for the PI's wording. The re-run section's item 2
+gains a pointer to the A-06 note.
+
+### 2026-10-12 — A-06 regenerated: permutation p with BH; the thinking finding recorded (PI ruling D61 (3) and (4))
+
+**Refresh trigger**: the shared helper `paired_bootstrap` took the D42
+permutation p on 2026-10-05 (`3c3023f51`), and `a06_decision_rule.json`
+(2026-09-08) was never regenerated, so the D57 (4) Phase 3 re-score found
+it still carrying the bootstrap p fields
+(`reports/s163-agent-records/d57-4-rescore-s3-deltas.md` § Stopped lines).
+PI ruling D61 (3), which records it as the only file under `results/`
+still carrying `p_at_floor`: regenerate on today's script and add BH
+across the four registered contrasts. PI ruling D61 (4) adds the thinking finding.
+`scripts/h6_registered_analyses.py` gained `apply_bh_to_factor_t` with
+tier-1 tests; the artefact was regenerated on sapphire in two
+independent runs, byte-identical apart from `generated_at`.
+
+**Before → after** (`a06_decision_rule.json`, the 28 leaves the Phase 3
+diff predicted, plus the BH fields):
+
+| Field, per contrast (text HIGH / text MEDIUM / image HIGH / image MEDIUM) | Before | After |
+|---|---|---|
+| `p_value` | 0.001 / 0.001 / 0.001 / 0.001 (bootstrap floor) | 0 / 0.0019 / 0 / 0.0002 (permutation) |
+| `p_at_floor`, `prop_gt_zero`, `prop_le_zero` | present | removed (bootstrap p retired) |
+| `p_method`, `n_permutations`, `n_discordant_tiles` | absent | permutation test, 10,000, 175 / 147 / 218 / 192 |
+| `p_bh_adjusted` (new) | absent | 0 / 0.0019 / 0 / 0.000267 |
+
+**What did NOT change**: every F1, delta, and delta interval; all four
+rule verdicts (fires); the thinking-context deltas and intervals; the
+estimator-reconciliation gate. The register row `h6-a06-decision-rule`
+quotes no p-value, so none of its numbers moved and its signature is
+not lapsed by this regeneration; whether the D61 (4) finding bears on
+its outcome text ("TEMPERATURE IS THE DRIVER") is for the PI.
+`a07_voting_thresholds.json`, which the same script writes, was not
+committed: under today's scorer (D50) it moves 25 leaves, a separate
+Phase 5 item. The two consensus `voting_summary.json` files under
+`outputs/h11/n1-pro-rerun-384/` gain only the `pass_provenance_schema`
+tag `merge_passes` has written since `ac7d393c7`; their counts and the
+consensus GeoJSON files are unchanged.
 
 ### 2026-09-08 (later, S151) — A-07's retired-flag prose corrected: 0.0015, not 0.0016
 

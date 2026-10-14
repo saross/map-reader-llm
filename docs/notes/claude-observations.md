@@ -3205,3 +3205,62 @@ back in when the bound is threatened, not before.
 pass alone, a cost guard between stages, halting at twice the estimate), and
 report the running total against the cap at each stage, so that the "rethink"
 moment is visible before it is reached.
+
+<!-- claude-obs 154–156: converted 2026-10-14 from the closed user-obs backlog; each is dated by its original observation. -->
+
+## claude-obs 154 — 2026-08-31: Self-critique — I reported a slow run before breaking its retries down by cause
+
+**Pattern.** During a slow API campaign Shawn asked "What is the delay? 503s?
+iterative failures?" before I had pulled the retry breakdown. The question
+named the fork that mattered: server errors, timeouts, or rate limits. Once
+pulled, the breakdown (30,545 server errors, zero timeouts, positionally
+clustered) reshaped the recovery policy within minutes. The same gap came back
+on 2026-10-13, when I read slow probe requests as heavy thinking and they were
+503s ([[claude-obs 152]]).
+
+**Lesson.** When a run slows, the failure-class breakdown is the first fact
+the PI needs, and it is cheap to compute. A delay reported without it leaves
+him to ask for it.
+
+**How to apply.** Before reporting that a campaign is slow or stalled, count
+retries by cause (server error, timeout, rate limit, other), check whether
+they cluster in time or by position, and lead the status message with that
+table. Source: converted 2026-10-14 from user-obs candidate S144-C1,
+2026-08-31 (docs/notes/user-observations.md).
+
+## claude-obs 155 — 2026-09-14: He offers recovery routes before I ask, so I list them before calling a loss unrecoverable
+
+**Pattern.** Twice in Session 153 I presented a gap as unrecoverable, and
+Shawn's first move was to offer more data. For a verifier cost lost to
+overwritten metadata: "Can I provide any other billing information to clarify
+this matter?" The project-filtered daily exports he then downloaded isolated
+the cost on its billing day. Later, for other lost metadata: "Can any of the
+other metadata be recovered via git history? Otherwise, do you need more
+Google Cloud reports?"
+
+**Lesson.** "Unrecoverable" was my verdict on the repository alone. The
+billing console had a finer grain, and git history keeps what a later write
+overwrote. He expects the alternatives listed before a loss is declared.
+
+**How to apply.** Before reporting a loss as unrecoverable, check git history
+for the overwritten file, ask which billing or console exports Shawn can pull,
+and say which routes were tried and which remain. Source: converted 2026-10-14
+from user-obs candidates S153-b/c C4, 2026-09-14, and S153 C1, 2026-09-12
+(docs/notes/user-observations.md).
+
+## claude-obs 156 — 2026-09-14: He holds a re-signature until the state is stable, so I ask once per stable state
+
+**Pattern.** During Sessions 153-b/c Shawn put off a board re-signature four
+times with "I'll wait", each time because a change he had already ruled was
+about to land in the board. He signed once, when the state had stopped moving,
+not once per rebuild.
+
+**Lesson.** A signature attests a state, not a build. Asking him to sign while
+ruled changes are still queued for the same artefact spends his review on a
+state that will not last, and invites a second signature soon after.
+
+**How to apply.** Before requesting a signature, list the ruled changes still
+due to land in that artefact. If any remain, land them first and present the
+re-signature once, with what changed since the last signature
+([[claude-obs 108]]). Source: converted 2026-10-14 from user-obs candidate
+S153-b/c C5, 2026-09-14 (docs/notes/user-observations.md).

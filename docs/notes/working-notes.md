@@ -38007,3 +38007,83 @@ only witness outside the chain), Obs 508 (same-model drift); errata E57
 `results/passes-manifest.json`;
 `outputs/h11/n1-pro-rerun-384/` metas and `_run_log.txt`;
 `logs/pro-n10-batch-20260329-120951.log`.
+
+## Observation 510: Correction to Obs 416 — the aggregation reversal stands, but every F1 it quotes has moved: the tier-0 cells and the grid's best cell under the origin route, the raw single-pass arms under D50 (Session 164, 2026-10-14)
+
+**Context.** The Principal Investigator (PI) asked in Session 164 for an
+addendum to Obs 416 or a new Obs cross-referencing it. Obs 416 is not
+edited; this entry corrects its figures and says what survives. Obs 416
+("Cross-tile corroboration is a precision lever that exists only under
+overlap — and it inverts the overlap ranking", Session 136, 2026-08-18)
+computed its numbers before two scoring fixes.
+
+**Why the figures moved.**
+
+1. **D50, sheet-scoped scoring** (PI ruling D50; merged in PR #29)
+   changed how detections are attributed to map sheets. It moves the raw
+   single-pass arms.
+2. **D62 (1), the "origin gap"** (PRs #41 and #42, merged 2026-10-13 as
+   `602593ecb` and `dddfcc0af`). Aggregated clusters built from
+   overlapping tiles were tiled by their centroid's location alone, so a
+   cluster near a sheet seam could be scored against the neighbouring
+   sheet. Clusters now carry the tiles they were seen on and are scored
+   on their own sheet.
+
+**The finding: before and now.**
+
+| Quantity | Obs 416 | Now | Source | Status |
+|---|---|---|---|---|
+| Arm C best tier-0 cell (`c ≥ 2`, `k ≥ 3`), n = 505 | F1 0.7114 (P 0.7347, R 0.6896) | F1 0.7191 (P 0.7426, R 0.6970) | `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.md` (regenerated on the origin route, PR #35, `3a5e5c453`; changelog 2026-10-13 in `results/h13-overlap-2026-08-18/findings.md`) | Published |
+| Arm A best tier-0 cell (`c ≥ 1`, `k ≥ 3`) | 0.6264 | 0.6426 | same | Published |
+| Arm B best tier-0 cell (`c ≥ 1`, `k ≥ 3`) | 0.6331 | 0.6415 | same | Published |
+| Raw single-pass F1, 12.5 / 25 / 50 % overlap (arms A / B / C) | 0.5578 / 0.5198 / 0.4025 | 0.5733 / 0.5301 / 0.4116 | `reports/s163-agent-records/origin-gap-h13-copies.md` § 1.3 (D50's movement of the registered H13 overlap analysis, reproduced exactly) | Measured; restatement and re-signing of `h13-overlap-2026-08-18`, which D50 requires, are pending |
+| Grid best cell, 512 px / 50 %, `c ≥ 2`, `k ≥ 8`, K = 10 | F1 0.7518 (P 0.7535, R 0.7500, tile MCC 0.5897) | F1 0.7611 (P 0.7629, R 0.7593, tile MCC 0.5853) | `reports/s163-agent-records/origin-gap-grid-plateau.md` (claim R1b-05 and the grid table); reproduced exactly by the Session 164 re-score (draft PR #46, `reports/s164-agent-records/rescore-repaired-gs.md`) | Measured; restatement pending the PI's decision on PR #46 |
+| Grid cell 512 px / 12.5 % | 0.6759 | 0.6845 | same | same |
+
+Obs 416's "0.4025 → 0.7114 for the arm itself" now reads
+0.4116 → 0.7191.
+
+**What still holds.**
+
+1. **The headline.** Overlap's ranking inverts under aggregation: raw
+   single-pass A > B > C, and after aggregation arm C is best.
+2. **"Tile size's never does."** 512 px beats 384 px in both regimes;
+   R1b-05's ranking survives, with its numbers restated.
+
+**What changes in the reading.**
+
+1. **Arm A now edges arm B** at the best tier-0 cell (0.6426 against
+   0.6415; before, B led by 0.0067). The sweep tests no contrast between
+   arms and the two intervals ([0.5858, 0.6938] and [0.5860, 0.6933])
+   overlap almost entirely, so this is a change of order inside noise.
+   "B ahead of A after aggregation" should not be read from the sweep.
+2. **The grid cell's tile MCC falls slightly** (0.5897 → 0.5853) while
+   its F1 rises, so the correction is not a uniform improvement.
+
+**Methodological note.** The corrections came from carrying spatial
+identity (which sheet a detection was seen on) through every aggregation
+step. Values computed before a scoring rule changed keep the old rule
+until re-scored, so quoted figures need re-checking whenever the scorer
+changes.
+
+**Caveats.** Rows marked "pending" are not yet restated in their source
+analyses; cite the "Now" figures with that status. The PR #46 re-score
+report sits on a draft branch (`origin/rescore-repaired-gs`) and is not
+yet on `main`.
+
+**Findable later.** Obs 416 correction, origin gap, D62 (1), D50
+sheet-scoped scoring, tier-0 sweep 0.7191, 0.7114 → 0.7191, 0.4025 →
+0.4116, 0.7518 → 0.7611, tile MCC 0.5853, arm A edges arm B 0.6426
+0.6415, aggregation reversal, R1b-05, centroid-only tiling, seam
+attribution.
+
+**Related.** Obs 416 (corrected here; the headline stands, the figures
+moved); Obs 508 (its caveat records that the pending D50/D51 scorer
+change may move Run B's cells slightly, the same class of change).
+
+**Artefacts**: `results/h13-overlap-2026-08-18/tier0-aggregation/tier0_sweep.md`;
+`results/h13-overlap-2026-08-18/findings.md` (changelog 2026-10-13);
+`reports/s163-agent-records/origin-gap-h13-copies.md`;
+`reports/s163-agent-records/origin-gap-grid-plateau.md`;
+`reports/s164-agent-records/rescore-repaired-gs.md` (draft PR #46);
+`602593ecb`, `dddfcc0af`, `3a5e5c453`.

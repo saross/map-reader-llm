@@ -1,0 +1,71 @@
+{
+ "ruling": "D64 top-up, PI-approved 2026-10-14 (AEDT)",
+ "started_utc": "2026-10-13T21:49:05.499341+00:00",
+ "finished_utc": "2026-10-13T22:38:47.120584+00:00",
+ "service_tier": "flex",
+ "second_tier_max_output_tokens": "each pass's own (no reduction)",
+ "units": [
+  {
+   "pass": "text-high-t0.7/detect_brief-text/run_3",
+   "failed_before": [
+    "K-35-053-3_Elenovo_x3024_y1344.png",
+    "K-35-062-2_Rakovski_x672_y1344.png"
+   ],
+   "recovered": [
+    "K-35-062-2_Rakovski_x672_y1344.png",
+    "K-35-053-3_Elenovo_x3024_y1344.png"
+   ],
+   "recovered_second_tier": [],
+   "still_failed": [],
+   "archived_to": "archive/pre-topup-2026-10-13/text-high-t0.7__detect_brief-text__run_3"
+  },
+  {
+   "pass": "text-high-t0.0/detect_brief-text/run_3",
+   "failed_before": [
+    "K-35-062-2_Rakovski_x1680_y2688.png",
+    "K-35-078-1_Lesovo_x2688_y1344.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png"
+   ],
+   "recovered": [
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-062-2_Rakovski_x1680_y2688.png"
+   ],
+   "recovered_second_tier": [
+    "K-35-078-1_Lesovo_x2688_y1344.png"
+   ],
+   "still_failed": [],
+   "archived_to": "archive/pre-topup-2026-10-13/text-high-t0.0__detect_brief-text__run_3"
+  },
+  {
+   "pass": "text-high-t0.0/detect_brief-text/run_4",
+   "failed_before": [
+    "K-35-053-3_Elenovo_x1680_y3696.png",
+    "K-35-062-2_Rakovski_x2352_y2688.png",
+    "K-35-062-2_Rakovski_x2688_y1344.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-078-1_Lesovo_x1680_y2016.png",
+    "K-35-078-1_Lesovo_x2352_y1344.png",
+    "K-35-078-1_Lesovo_x3360_y1680.png"
+   ],
+   "recovered": [
+    "K-35-053-3_Elenovo_x1680_y3696.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-078-1_Lesovo_x1680_y2016.png",
+    "K-35-078-1_Lesovo_x2352_y1344.png",
+    "K-35-062-2_Rakovski_x2688_y1344.png"
+   ],
+   "recovered_second_tier": [
+    "K-35-078-1_Lesovo_x3360_y1680.png",
+    "K-35-062-2_Rakovski_x2352_y2688.png"
+   ],
+   "still_failed": [],
+   "archived_to": "archive/pre-topup-2026-10-13/text-high-t0.0__detect_brief-text__run_4"
+  }
+ ]
+}
