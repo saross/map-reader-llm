@@ -1,0 +1,872 @@
+[
+ {
+  "label": "g3-text union",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.geojson",
+  "commit": "2b6edde9a",
+  "regen_sha256": "2974818d2621b1363ec12a8899031230a15b904125620247683d1c8bfe3df544",
+  "committed_sha256": "2974818d2621b1363ec12a8899031230a15b904125620247683d1c8bfe3df544",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "2974818d2621b1363ec12a8899031230a15b904125620247683d1c8bfe3df544"
+ },
+ {
+  "label": "g3-text union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/union_k10.build.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "0ffbaf89ac22713ff8c89a06bc8675b82da91ac99c0aa000d4144ae05317bc67",
+  "committed_sha256": "0ffbaf89ac22713ff8c89a06bc8675b82da91ac99c0aa000d4144ae05317bc67",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "0ffbaf89ac22713ff8c89a06bc8675b82da91ac99c0aa000d4144ae05317bc67"
+ },
+ {
+  "label": "g3-text crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/crops/candidate_manifest.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "cbbda88087121edde22dc5ab2a25756c02d29236fd94ae794d7925dca0fd4298",
+  "committed_sha256": "cbbda88087121edde22dc5ab2a25756c02d29236fd94ae794d7925dca0fd4298",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "cbbda88087121edde22dc5ab2a25756c02d29236fd94ae794d7925dca0fd4298"
+ },
+ {
+  "label": "g3-text provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-provenance.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "68372f3b826171e7cc8873fee41228959668f1000eabac332ca9fabe12da7b2b",
+  "committed_sha256": "68372f3b826171e7cc8873fee41228959668f1000eabac332ca9fabe12da7b2b",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "68372f3b826171e7cc8873fee41228959668f1000eabac332ca9fabe12da7b2b"
+ },
+ {
+  "label": "g3-text coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-coverage.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "21ec6a2493bd07525cbf2029f3aa0644949b95c9e936afaf79cee689d9d58130",
+  "committed_sha256": "21ec6a2493bd07525cbf2029f3aa0644949b95c9e936afaf79cee689d9d58130",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "21ec6a2493bd07525cbf2029f3aa0644949b95c9e936afaf79cee689d9d58130"
+ },
+ {
+  "label": "g3-text metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-metas.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "bb59c2d1376f1219e1f96ce096cd62183972dc7fcfb887a9083e1055564752a8",
+  "committed_sha256": "bb59c2d1376f1219e1f96ce096cd62183972dc7fcfb887a9083e1055564752a8",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "bb59c2d1376f1219e1f96ce096cd62183972dc7fcfb887a9083e1055564752a8"
+ },
+ {
+  "label": "g3-text union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g3-text.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "8c827219991d0571ca156582da72621ed6f35b9fa24362f04251eca5ccf15a61",
+  "committed_sha256": "3fedf4948f96199a5f5cb2a6c5c8d765b138f190943e1678be49bdfbc1a15700",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "3fedf4948f96199a5f5cb2a6c5c8d765b138f190943e1678be49bdfbc1a15700",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g3-text extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g3-text.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "c5ef2b6293fbbe936041b206412e28ca61e52865cd5eb93033ebc8788a4bb8d8",
+  "committed_sha256": "67d2ecb2d856666a7d42bf1b0201c5a6106b812e1a93cdd379c63d188d641bfd",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "67d2ecb2d856666a7d42bf1b0201c5a6106b812e1a93cdd379c63d188d641bfd",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g3-image union",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/union_k10.geojson",
+  "commit": "2b6edde9a",
+  "regen_sha256": "1202a495f72f26723a7f623bb8a7c658b8cdbd623a6f4ff8639cb03cfe9f4440",
+  "committed_sha256": "1202a495f72f26723a7f623bb8a7c658b8cdbd623a6f4ff8639cb03cfe9f4440",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "1202a495f72f26723a7f623bb8a7c658b8cdbd623a6f4ff8639cb03cfe9f4440"
+ },
+ {
+  "label": "g3-image union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/union_k10.build.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "b1a56b7ecb08b3359ee52563ea9a736574ef6939ac07ab206a07f10874203ca3",
+  "committed_sha256": "b1a56b7ecb08b3359ee52563ea9a736574ef6939ac07ab206a07f10874203ca3",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "b1a56b7ecb08b3359ee52563ea9a736574ef6939ac07ab206a07f10874203ca3"
+ },
+ {
+  "label": "g3-image crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/crops/candidate_manifest.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "92b06d31911571ae40854e2f7a78f1ec81b9b04ecf8390aa818bd090ef59b012",
+  "committed_sha256": "92b06d31911571ae40854e2f7a78f1ec81b9b04ecf8390aa818bd090ef59b012",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "92b06d31911571ae40854e2f7a78f1ec81b9b04ecf8390aa818bd090ef59b012"
+ },
+ {
+  "label": "g3-image provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-provenance.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "c866a85d79ab94edd9aaf32d0fbf4686bc6e711236d09ecdaa64dbfd4b44cff0",
+  "committed_sha256": "c866a85d79ab94edd9aaf32d0fbf4686bc6e711236d09ecdaa64dbfd4b44cff0",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "c866a85d79ab94edd9aaf32d0fbf4686bc6e711236d09ecdaa64dbfd4b44cff0"
+ },
+ {
+  "label": "g3-image coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-coverage.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "8fc66f419a2a8fc9bf4274cf0c85f1d7204afbb510c5cc93416aeb8d38682c28",
+  "committed_sha256": "8fc66f419a2a8fc9bf4274cf0c85f1d7204afbb510c5cc93416aeb8d38682c28",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "8fc66f419a2a8fc9bf4274cf0c85f1d7204afbb510c5cc93416aeb8d38682c28"
+ },
+ {
+  "label": "g3-image metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-metas.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "2f95b7c81c7974fe2e735c6844b1786604cfbe702b13907c7f005915b08cb0db",
+  "committed_sha256": "2f95b7c81c7974fe2e735c6844b1786604cfbe702b13907c7f005915b08cb0db",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "2f95b7c81c7974fe2e735c6844b1786604cfbe702b13907c7f005915b08cb0db"
+ },
+ {
+  "label": "g3-image union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g3-image.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "824ef54d3a5911e57ea7f10658f75c41fc84d66a3a9f84d28a58610d79313754",
+  "committed_sha256": "0121620dd4d1785ceb4438049ab5e897f95d2e54cead3193a95b2a59db75267b",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "0121620dd4d1785ceb4438049ab5e897f95d2e54cead3193a95b2a59db75267b",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g3-image extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g3-image.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "ac91ffafda710c4ff65801501bf4fe05fe20bdade485897d07df7c1854f1e930",
+  "committed_sha256": "56cfecd0320118b27cc5237b2c99c5b853a196068385e3869440752e1be195d0",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "56cfecd0320118b27cc5237b2c99c5b853a196068385e3869440752e1be195d0",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g3-text-temp1 union",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/union_k5.geojson",
+  "commit": "2b6edde9a",
+  "regen_sha256": "33f90a741801a88074bdfea32580ce625356eabc34d6bbf3eee51cbe2e3299e7",
+  "committed_sha256": "33f90a741801a88074bdfea32580ce625356eabc34d6bbf3eee51cbe2e3299e7",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "33f90a741801a88074bdfea32580ce625356eabc34d6bbf3eee51cbe2e3299e7"
+ },
+ {
+  "label": "g3-text-temp1 union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/union_k5.build.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "7635d312e0ac2e12aa3f642c0bf3baeab02447f56b85be749c31ccd7cbd6d39f",
+  "committed_sha256": "7635d312e0ac2e12aa3f642c0bf3baeab02447f56b85be749c31ccd7cbd6d39f",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "7635d312e0ac2e12aa3f642c0bf3baeab02447f56b85be749c31ccd7cbd6d39f"
+ },
+ {
+  "label": "g3-text-temp1 crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/crops/candidate_manifest.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "c97386dedebb6e8ebdc711e23ed9be2b6de22fcdedb24e916e5e8faf714c2b8e",
+  "committed_sha256": "c97386dedebb6e8ebdc711e23ed9be2b6de22fcdedb24e916e5e8faf714c2b8e",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "c97386dedebb6e8ebdc711e23ed9be2b6de22fcdedb24e916e5e8faf714c2b8e"
+ },
+ {
+  "label": "g3-text-temp1 provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-temp1-provenance.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "0230ca19cf8fbe5c5e34ff849d61f5d0f22557093aa11f6d2b23b93e4f6a7674",
+  "committed_sha256": "0230ca19cf8fbe5c5e34ff849d61f5d0f22557093aa11f6d2b23b93e4f6a7674",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "0230ca19cf8fbe5c5e34ff849d61f5d0f22557093aa11f6d2b23b93e4f6a7674"
+ },
+ {
+  "label": "g3-text-temp1 coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-temp1-coverage.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "25fadfa4ac07291e5be8c50a3d5b8b2d4dcbb8efc8fd304ded99ebd6d0dd3bce",
+  "committed_sha256": "25fadfa4ac07291e5be8c50a3d5b8b2d4dcbb8efc8fd304ded99ebd6d0dd3bce",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "25fadfa4ac07291e5be8c50a3d5b8b2d4dcbb8efc8fd304ded99ebd6d0dd3bce"
+ },
+ {
+  "label": "g3-text-temp1 metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-text-temp1-metas.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "35aeefcc0de516e9b5d1dca7625a0812a7af7c0f2e5bb8a10ab15534bbd07c83",
+  "committed_sha256": "35aeefcc0de516e9b5d1dca7625a0812a7af7c0f2e5bb8a10ab15534bbd07c83",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "35aeefcc0de516e9b5d1dca7625a0812a7af7c0f2e5bb8a10ab15534bbd07c83"
+ },
+ {
+  "label": "g3-text-temp1 union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g3-text-temp1.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "2a6d720f7b66592e85b0c203063e45374967618e696401e2c070baf7bf688144",
+  "committed_sha256": "17403e2ec00a3071abde1fb9022bb5a227aec08d775a9bbb2f5a6970537eb1b6",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "17403e2ec00a3071abde1fb9022bb5a227aec08d775a9bbb2f5a6970537eb1b6",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g3-text-temp1 extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g3-text-temp1.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "4b0958627bdfebc3650fb814412f536f25539df08f5ca5a24e5fae4cbe43e528",
+  "committed_sha256": "696e443f799c76713156f1445a4860911fee55c1d8210303a98c2bedc8e87928",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "696e443f799c76713156f1445a4860911fee55c1d8210303a98c2bedc8e87928",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g3-image-temp1 union",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/union_k5.geojson",
+  "commit": "2b6edde9a",
+  "regen_sha256": "52b4d78b3332b86914076114503f9f1d302d60ab51d9ec7504ecf5670d136b8e",
+  "committed_sha256": "52b4d78b3332b86914076114503f9f1d302d60ab51d9ec7504ecf5670d136b8e",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "52b4d78b3332b86914076114503f9f1d302d60ab51d9ec7504ecf5670d136b8e"
+ },
+ {
+  "label": "g3-image-temp1 union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/union_k5.build.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "639d635a3412b08acf097aa17319357e4d5021ade110340db67e59fe986b3dc3",
+  "committed_sha256": "639d635a3412b08acf097aa17319357e4d5021ade110340db67e59fe986b3dc3",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "639d635a3412b08acf097aa17319357e4d5021ade110340db67e59fe986b3dc3"
+ },
+ {
+  "label": "g3-image-temp1 crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/crops/candidate_manifest.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "5a0fd41f17dca2e298ee96e1dd590579ae2bbe7dc31d2b02aafb1e855bc6df0f",
+  "committed_sha256": "5a0fd41f17dca2e298ee96e1dd590579ae2bbe7dc31d2b02aafb1e855bc6df0f",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "5a0fd41f17dca2e298ee96e1dd590579ae2bbe7dc31d2b02aafb1e855bc6df0f"
+ },
+ {
+  "label": "g3-image-temp1 provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-temp1-provenance.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "e49ede8855e3cbc5471d442fd7714e10dcd7364506e2af7801fe98b266f979b6",
+  "committed_sha256": "e49ede8855e3cbc5471d442fd7714e10dcd7364506e2af7801fe98b266f979b6",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "e49ede8855e3cbc5471d442fd7714e10dcd7364506e2af7801fe98b266f979b6"
+ },
+ {
+  "label": "g3-image-temp1 coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-temp1-coverage.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "a6c1b21e39187a9b7d7baa03786f78365b01a26d64d66af33e952ead81f626e2",
+  "committed_sha256": "a6c1b21e39187a9b7d7baa03786f78365b01a26d64d66af33e952ead81f626e2",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "a6c1b21e39187a9b7d7baa03786f78365b01a26d64d66af33e952ead81f626e2"
+ },
+ {
+  "label": "g3-image-temp1 metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g3-image-temp1-metas.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "f1f56612c84f9a2a22b3ef2e7b2e4dd4191fb16b917e882219e01d510a691b11",
+  "committed_sha256": "f1f56612c84f9a2a22b3ef2e7b2e4dd4191fb16b917e882219e01d510a691b11",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "f1f56612c84f9a2a22b3ef2e7b2e4dd4191fb16b917e882219e01d510a691b11"
+ },
+ {
+  "label": "g3-image-temp1 union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g3-image-temp1.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "6015b8ce0f37d11d9eac8b835110c4f4deb8d948a152e79aa96a4e0d75249140",
+  "committed_sha256": "4897dd1d752aa75196d473e9784ebc3d7a49420d7579f711e0635496bde963e1",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "4897dd1d752aa75196d473e9784ebc3d7a49420d7579f711e0635496bde963e1",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g3-image-temp1 extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g3-image-temp1.log",
+  "commit": "2b6edde9a",
+  "regen_sha256": "e4f2eea7fca2fbf32aa158d410e4f80172b7b46ebaeb15581c55a3b9f148e804",
+  "committed_sha256": "c8542fab68b4598d7dee251bf38f675a0ba82a9ae5040a60cd498093dacd4c4e",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "c8542fab68b4598d7dee251bf38f675a0ba82a9ae5040a60cd498093dacd4c4e",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g37-text union",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/union_k5.geojson",
+  "commit": "a3ea389c2",
+  "regen_sha256": "41b072eae0b8a64b7bf6be6ffd2885782241aff83aec56aa99a8e72a7ec82dcf",
+  "committed_sha256": "41b072eae0b8a64b7bf6be6ffd2885782241aff83aec56aa99a8e72a7ec82dcf",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "41b072eae0b8a64b7bf6be6ffd2885782241aff83aec56aa99a8e72a7ec82dcf"
+ },
+ {
+  "label": "g37-text union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/union_k5.build.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "85e6564031a271171860e08ea5aecf8e80285b37a13a841e5eac5e694883e34e",
+  "committed_sha256": "85e6564031a271171860e08ea5aecf8e80285b37a13a841e5eac5e694883e34e",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "85e6564031a271171860e08ea5aecf8e80285b37a13a841e5eac5e694883e34e"
+ },
+ {
+  "label": "g37-text crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/crops/candidate_manifest.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "f327f10a80bae02ebcb478a0db37ddc232eaac7a7c3dae27888f9a27c7d8c2bc",
+  "committed_sha256": "f327f10a80bae02ebcb478a0db37ddc232eaac7a7c3dae27888f9a27c7d8c2bc",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "f327f10a80bae02ebcb478a0db37ddc232eaac7a7c3dae27888f9a27c7d8c2bc"
+ },
+ {
+  "label": "g37-text provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-text-provenance.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "f05c8c8ca9592dc30ecaf72893bcab734f23cd69f3c612cb6c78774250bf5f3f",
+  "committed_sha256": "f05c8c8ca9592dc30ecaf72893bcab734f23cd69f3c612cb6c78774250bf5f3f",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "f05c8c8ca9592dc30ecaf72893bcab734f23cd69f3c612cb6c78774250bf5f3f"
+ },
+ {
+  "label": "g37-text coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-text-coverage.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "d7723e9ce5cb41efb4c31c6366fc1dcf65c369b9520cc22c1b4ba82bcbe9261a",
+  "committed_sha256": "d7723e9ce5cb41efb4c31c6366fc1dcf65c369b9520cc22c1b4ba82bcbe9261a",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "d7723e9ce5cb41efb4c31c6366fc1dcf65c369b9520cc22c1b4ba82bcbe9261a"
+ },
+ {
+  "label": "g37-text metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-text-metas.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "9a9b8ed9e8da8e94d3d54a8a3488ee5933dab799f37020b0dbc7be673a7ac6c9",
+  "committed_sha256": "9a9b8ed9e8da8e94d3d54a8a3488ee5933dab799f37020b0dbc7be673a7ac6c9",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "9a9b8ed9e8da8e94d3d54a8a3488ee5933dab799f37020b0dbc7be673a7ac6c9"
+ },
+ {
+  "label": "g37-text union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g37-text.log",
+  "commit": "a3ea389c2",
+  "regen_sha256": "7b85ea432091db698088c7fccb20b528abafdbaec4c02edd8ad20e566cd00522",
+  "committed_sha256": "1557dbc85891cf1afa4375bf73fb2d2c747edd89e9496b84725ac8cecdcf71a7",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "1557dbc85891cf1afa4375bf73fb2d2c747edd89e9496b84725ac8cecdcf71a7",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g37-text extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g37-text.log",
+  "commit": "a3ea389c2",
+  "regen_sha256": "13d4842b3d63aedb7b2c61883639d33532cfffb9ae361a2af3dc3692d4bbcc73",
+  "committed_sha256": "925aeae021cf69fad4e66a5b619799c79fd3db07852635a7c3186a95d88a7277",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "925aeae021cf69fad4e66a5b619799c79fd3db07852635a7c3186a95d88a7277",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g37-image-cache union",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/union_k5.geojson",
+  "commit": "94be8b01a",
+  "regen_sha256": "43e6a9544134d5e7b96f53ad9540555bd7295cf4c594b62c3c9811b3209665ef",
+  "committed_sha256": "43e6a9544134d5e7b96f53ad9540555bd7295cf4c594b62c3c9811b3209665ef",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "43e6a9544134d5e7b96f53ad9540555bd7295cf4c594b62c3c9811b3209665ef"
+ },
+ {
+  "label": "g37-image-cache union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/union_k5.build.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "54d67556ef5c9c065a2dba8be5fb777ab9b2f2aee56426265ff164e5c51bf64a",
+  "committed_sha256": "54d67556ef5c9c065a2dba8be5fb777ab9b2f2aee56426265ff164e5c51bf64a",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "54d67556ef5c9c065a2dba8be5fb777ab9b2f2aee56426265ff164e5c51bf64a"
+ },
+ {
+  "label": "g37-image-cache crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/crops/candidate_manifest.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "7d7027325812c47ab73f2a0eb4f61006c59fde277143addac4707d6ed630eb57",
+  "committed_sha256": "7d7027325812c47ab73f2a0eb4f61006c59fde277143addac4707d6ed630eb57",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "7d7027325812c47ab73f2a0eb4f61006c59fde277143addac4707d6ed630eb57"
+ },
+ {
+  "label": "g37-image-cache provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-cache-provenance.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "6369b759223aba635300e783cb9485e08ae54340d215d4a91a4d42c664fc5ba9",
+  "committed_sha256": "6369b759223aba635300e783cb9485e08ae54340d215d4a91a4d42c664fc5ba9",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "6369b759223aba635300e783cb9485e08ae54340d215d4a91a4d42c664fc5ba9"
+ },
+ {
+  "label": "g37-image-cache coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-cache-coverage.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "c13f0d801b5d946b99b5bd8a28c48f31ef4c421782035ea24caaed80b41a230a",
+  "committed_sha256": "c13f0d801b5d946b99b5bd8a28c48f31ef4c421782035ea24caaed80b41a230a",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "c13f0d801b5d946b99b5bd8a28c48f31ef4c421782035ea24caaed80b41a230a"
+ },
+ {
+  "label": "g37-image-cache metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-cache-metas.json",
+  "commit": "a3ea389c2",
+  "regen_sha256": "e9bbc8047de0525ba525c9780b722f1f188440dca695438386cf9081dba9ecd7",
+  "committed_sha256": "e9bbc8047de0525ba525c9780b722f1f188440dca695438386cf9081dba9ecd7",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "e9bbc8047de0525ba525c9780b722f1f188440dca695438386cf9081dba9ecd7"
+ },
+ {
+  "label": "g37-image-cache union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g37-image-cache.log",
+  "commit": "94be8b01a",
+  "regen_sha256": "241f4409226fd316e2a202e75addd12c6bca7cc0483007e05a4ba18a5211c497",
+  "committed_sha256": "a70ca25b6cd496d61e6dadf76f6d65bc7287d3925ecb4eb414b9c89db4502615",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "a70ca25b6cd496d61e6dadf76f6d65bc7287d3925ecb4eb414b9c89db4502615",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g37-image-cache extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g37-image-cache.log",
+  "commit": "94be8b01a",
+  "regen_sha256": "c586ed4000db1e94652b6e3fd36a5b423dab11ce53f25795f33a7b9b0fe94e5c",
+  "committed_sha256": "dc7cc8787950c09c12c502cbe00fc944f37c198a07b374946e44b8ffa3cd0922",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "dc7cc8787950c09c12c502cbe00fc944f37c198a07b374946e44b8ffa3cd0922",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g37-image union",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/union_k5.geojson",
+  "commit": "69eb32132",
+  "regen_sha256": "c2d2af6f6614e54feaabf4352f16b2955863a33e80e28e958c50e2be3802a2dc",
+  "committed_sha256": "c2d2af6f6614e54feaabf4352f16b2955863a33e80e28e958c50e2be3802a2dc",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "c2d2af6f6614e54feaabf4352f16b2955863a33e80e28e958c50e2be3802a2dc"
+ },
+ {
+  "label": "g37-image union build record",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/union_k5.build.json",
+  "commit": "69eb32132",
+  "regen_sha256": "142c1b32dd5fd0edd95e52359f499c4b946217f26f3a6ac9cf9b55646ee8bb9a",
+  "committed_sha256": "142c1b32dd5fd0edd95e52359f499c4b946217f26f3a6ac9cf9b55646ee8bb9a",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "142c1b32dd5fd0edd95e52359f499c4b946217f26f3a6ac9cf9b55646ee8bb9a"
+ },
+ {
+  "label": "g37-image crop manifest",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/crops/candidate_manifest.json",
+  "commit": "69eb32132",
+  "regen_sha256": "4118883936cd659ad55b10f424051f9d8e867df7fd4792f76c092cf12d30fe9f",
+  "committed_sha256": "4118883936cd659ad55b10f424051f9d8e867df7fd4792f76c092cf12d30fe9f",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "4118883936cd659ad55b10f424051f9d8e867df7fd4792f76c092cf12d30fe9f"
+ },
+ {
+  "label": "g37-image provenance check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-provenance.json",
+  "commit": "69eb32132",
+  "regen_sha256": "c46fabdad9651f91d2b2f9d25b6737e7185472a5d2b5381a4f8d254e781631f8",
+  "committed_sha256": "c46fabdad9651f91d2b2f9d25b6737e7185472a5d2b5381a4f8d254e781631f8",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "c46fabdad9651f91d2b2f9d25b6737e7185472a5d2b5381a4f8d254e781631f8"
+ },
+ {
+  "label": "g37-image coverage check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-coverage.json",
+  "commit": "69eb32132",
+  "regen_sha256": "6b9abb29517f29797a66f26e7755755194237c6ea01ddb1ae7cf7d052bdad252",
+  "committed_sha256": "6b9abb29517f29797a66f26e7755755194237c6ea01ddb1ae7cf7d052bdad252",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "6b9abb29517f29797a66f26e7755755194237c6ea01ddb1ae7cf7d052bdad252"
+ },
+ {
+  "label": "g37-image metas check",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/g37-image-metas.json",
+  "commit": "69eb32132",
+  "regen_sha256": "d112cc7edd75519a9a211cd90836d6871fc12c79ef0b68ca37713bfeceda3952",
+  "committed_sha256": "d112cc7edd75519a9a211cd90836d6871fc12c79ef0b68ca37713bfeceda3952",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "d112cc7edd75519a9a211cd90836d6871fc12c79ef0b68ca37713bfeceda3952"
+ },
+ {
+  "label": "g37-image union log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/union-g37-image.log",
+  "commit": "69eb32132",
+  "regen_sha256": "2f9efa2b1573dbc78ec1c2f82659c58691ac85b8caa94c71ff04fd7e2b241d13",
+  "committed_sha256": "daa4ecfd114c6ce236417df7c205ff47e74945a37f365a4d3dc0e0c12a3788ac",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "daa4ecfd114c6ce236417df7c205ff47e74945a37f365a4d3dc0e0c12a3788ac",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": null
+ },
+ {
+  "label": "g37-image extract log",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/logs/extract-g37-image.log",
+  "commit": "69eb32132",
+  "regen_sha256": "94b6d06f7b8aa3d6ac6fdab229ee4bf6b66075fc2bca6066b8dc0f1968abfea8",
+  "committed_sha256": "710d3d40216980afd76a07b37f2afec2edba7cd57c584d6638db1f6b52f47840",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "710d3d40216980afd76a07b37f2afec2edba7cd57c584d6638db1f6b52f47840",
+  "text_equal_after_strip": true,
+  "strip_re": "^=== ",
+  "sub_re": "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}"
+ },
+ {
+  "label": "g3-image-temp1:g3 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3_repaired/parse_repair.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "951667c6101ca5a3f74e95b500bcc5a3bf65c83ae7b63951cd26594f3635558c",
+  "committed_sha256": "951667c6101ca5a3f74e95b500bcc5a3bf65c83ae7b63951cd26594f3635558c",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "951667c6101ca5a3f74e95b500bcc5a3bf65c83ae7b63951cd26594f3635558c"
+ },
+ {
+  "label": "g3-image-temp1:g3 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3_repaired/probabilities.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "a8df2d00175e864ca5d8cce6b52da642037ac7d502f7053260394282cd9d115d",
+  "committed_sha256": "a8df2d00175e864ca5d8cce6b52da642037ac7d502f7053260394282cd9d115d",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "4c4d8bcdc02f2d57e250c503d03ccf6e8e63ef3c36984010359d79474e6a9977",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g3-image-temp1:g3 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3_repaired/run.meta.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "b07063641b769d0e17af956c1507f049f76bd6859a426c85d6ad509d3b870a4b",
+  "committed_sha256": "b07063641b769d0e17af956c1507f049f76bd6859a426c85d6ad509d3b870a4b",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "b07063641b769d0e17af956c1507f049f76bd6859a426c85d6ad509d3b870a4b"
+ },
+ {
+  "label": "g37-text:g3 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g3_repaired/parse_repair.json",
+  "commit": "3c155685a",
+  "regen_sha256": "a4597d9e5335aab27283a87a6d3230b24464c6823f73e9425b6cb747886f9636",
+  "committed_sha256": "a4597d9e5335aab27283a87a6d3230b24464c6823f73e9425b6cb747886f9636",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "a4597d9e5335aab27283a87a6d3230b24464c6823f73e9425b6cb747886f9636"
+ },
+ {
+  "label": "g37-text:g3 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g3_repaired/probabilities.json",
+  "commit": "3c155685a",
+  "regen_sha256": "07563b37a0d2d6a3abf914028c7d4277c59bf73df4503b464d5d74cd3d7f64a2",
+  "committed_sha256": "07563b37a0d2d6a3abf914028c7d4277c59bf73df4503b464d5d74cd3d7f64a2",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "e750459cf1dbeee46f91cdbda15188122e755ae41cea12f3b76c6ad6305cf49f",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-text:g3 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g3_repaired/run.meta.json",
+  "commit": "3c155685a",
+  "regen_sha256": "515b69421bf013c64fdf4ae31248354f8b3a5494697681388653ffcd9e74e2e0",
+  "committed_sha256": "515b69421bf013c64fdf4ae31248354f8b3a5494697681388653ffcd9e74e2e0",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "515b69421bf013c64fdf4ae31248354f8b3a5494697681388653ffcd9e74e2e0"
+ },
+ {
+  "label": "g37-text:g37 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g37_repaired/parse_repair.json",
+  "commit": "3c155685a",
+  "regen_sha256": "0fcfcfd290acd52832db8e185926ba6d78b63fd5c8928e8d3da563036b69bfcd",
+  "committed_sha256": "0fcfcfd290acd52832db8e185926ba6d78b63fd5c8928e8d3da563036b69bfcd",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "0fcfcfd290acd52832db8e185926ba6d78b63fd5c8928e8d3da563036b69bfcd"
+ },
+ {
+  "label": "g37-text:g37 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g37_repaired/probabilities.json",
+  "commit": "3c155685a",
+  "regen_sha256": "8c92bb89453d015138d6f497f69c0b1af2828464e229606df84e21a79484ae1c",
+  "committed_sha256": "8c92bb89453d015138d6f497f69c0b1af2828464e229606df84e21a79484ae1c",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "a79a37032fd705e93cc0e21a5cb6c3273b458a255eb42bac97fa3f5a3c29eeb1",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-text:g37 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g37_repaired/run.meta.json",
+  "commit": "3c155685a",
+  "regen_sha256": "07fcdad908eee5cc692bfea7298ae4d776895ef7a653049078f7082a2efa1125",
+  "committed_sha256": "07fcdad908eee5cc692bfea7298ae4d776895ef7a653049078f7082a2efa1125",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "07fcdad908eee5cc692bfea7298ae4d776895ef7a653049078f7082a2efa1125"
+ },
+ {
+  "label": "g37-image-cache:g3 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g3_repaired/parse_repair.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "ae107583893bdae8f6c60cc39c8700ec8d5fd0f395062d1df8bc84f707fa3f58",
+  "committed_sha256": "ae107583893bdae8f6c60cc39c8700ec8d5fd0f395062d1df8bc84f707fa3f58",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "ae107583893bdae8f6c60cc39c8700ec8d5fd0f395062d1df8bc84f707fa3f58"
+ },
+ {
+  "label": "g37-image-cache:g3 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g3_repaired/probabilities.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "b7d40d66cfe3715589a1bcdae98a9b162c4c9c193bd185e898c565fdbeb844e1",
+  "committed_sha256": "b7d40d66cfe3715589a1bcdae98a9b162c4c9c193bd185e898c565fdbeb844e1",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "ed999488e4ca03ec70dee704c827ddccd419b3c26022379f4839c61ef9a31c1c",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-image-cache:g3 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g3_repaired/run.meta.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "55ea423f9f15c5a849223dcac772fa56853e15b6cbebaf0c15aaf44a3781b911",
+  "committed_sha256": "55ea423f9f15c5a849223dcac772fa56853e15b6cbebaf0c15aaf44a3781b911",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "55ea423f9f15c5a849223dcac772fa56853e15b6cbebaf0c15aaf44a3781b911"
+ },
+ {
+  "label": "g37-image-cache:g37 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g37_repaired/parse_repair.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "910da1e9d57fb49cc0a7852c2a511fc0f2080c4b80d3bc46d3b7433583ca094b",
+  "committed_sha256": "910da1e9d57fb49cc0a7852c2a511fc0f2080c4b80d3bc46d3b7433583ca094b",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "910da1e9d57fb49cc0a7852c2a511fc0f2080c4b80d3bc46d3b7433583ca094b"
+ },
+ {
+  "label": "g37-image-cache:g37 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g37_repaired/probabilities.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "545e1e00bde3d282e9c2b8f43a7f186a883cafc2d19b5a12e63503a189d40cba",
+  "committed_sha256": "545e1e00bde3d282e9c2b8f43a7f186a883cafc2d19b5a12e63503a189d40cba",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "cc2d8ccf55fb6a4a61166f3e8dece9f2a3bfa0cc49b97ae1d21d89d611e61147",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-image-cache:g37 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g37_repaired/run.meta.json",
+  "commit": "94be8b01a",
+  "regen_sha256": "35a65a3662b20af3d8c0c12bf725cf7099c869eb9f92dc1df11bd8839c5a904b",
+  "committed_sha256": "35a65a3662b20af3d8c0c12bf725cf7099c869eb9f92dc1df11bd8839c5a904b",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "35a65a3662b20af3d8c0c12bf725cf7099c869eb9f92dc1df11bd8839c5a904b"
+ },
+ {
+  "label": "g37-image:g3 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g3_repaired/parse_repair.json",
+  "commit": "69eb32132",
+  "regen_sha256": "bfa9f03955a89f15f472d3e652473da7cc07c704154db0f649c912caa01b979d",
+  "committed_sha256": "bfa9f03955a89f15f472d3e652473da7cc07c704154db0f649c912caa01b979d",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "bfa9f03955a89f15f472d3e652473da7cc07c704154db0f649c912caa01b979d"
+ },
+ {
+  "label": "g37-image:g3 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g3_repaired/probabilities.json",
+  "commit": "69eb32132",
+  "regen_sha256": "c2c2b1d72f383f53bdeeedf311da2077a292818873e4034a488c4dac77bb4da4",
+  "committed_sha256": "c2c2b1d72f383f53bdeeedf311da2077a292818873e4034a488c4dac77bb4da4",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "1b1a5d1866c2bf33a3bd3266bfdea3f1203f81b53d8dc95bb3071e053ab40a1c",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-image:g3 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g3_repaired/run.meta.json",
+  "commit": "69eb32132",
+  "regen_sha256": "5acc9b8b187f3afa2c7ceeee4e8bc9706a68f70db33f6879b4606b4fa23b733f",
+  "committed_sha256": "5acc9b8b187f3afa2c7ceeee4e8bc9706a68f70db33f6879b4606b4fa23b733f",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "5acc9b8b187f3afa2c7ceeee4e8bc9706a68f70db33f6879b4606b4fa23b733f"
+ },
+ {
+  "label": "g37-image:g37 repaired parse_repair.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g37_repaired/parse_repair.json",
+  "commit": "69eb32132",
+  "regen_sha256": "4bff31d6e12da7c29c64169f4729c7104bf862201201907935fbc2203df38d4d",
+  "committed_sha256": "4bff31d6e12da7c29c64169f4729c7104bf862201201907935fbc2203df38d4d",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "4bff31d6e12da7c29c64169f4729c7104bf862201201907935fbc2203df38d4d"
+ },
+ {
+  "label": "g37-image:g37 repaired probabilities.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g37_repaired/probabilities.json",
+  "commit": "69eb32132",
+  "regen_sha256": "38e8ba8df17c3d37c0103826af35b23d066ab922b30ce7442c32b42e9dc16d52",
+  "committed_sha256": "38e8ba8df17c3d37c0103826af35b23d066ab922b30ce7442c32b42e9dc16d52",
+  "byte_identical": true,
+  "head_equals_generating": false,
+  "head_sha256": "6c07a4ebe36d1258ff63379e9450271e74ac57e4e9aea477070a84da6fd764e3",
+  "changed_since_by": [
+   "f2256f7c7 2026-10-13 data(reverify): book 1,029 wrong-sheet re-verifications"
+  ]
+ },
+ {
+  "label": "g37-image:g37 repaired run.meta.json",
+  "path": "outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g37_repaired/run.meta.json",
+  "commit": "69eb32132",
+  "regen_sha256": "71138dea46a545919239156601930c2d68ced3181fdd2c031dd2a3d210d868cd",
+  "committed_sha256": "71138dea46a545919239156601930c2d68ced3181fdd2c031dd2a3d210d868cd",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "71138dea46a545919239156601930c2d68ced3181fdd2c031dd2a3d210d868cd"
+ },
+ {
+  "label": "validate-chain",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/validate-chain.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "7cab5f53ff05e97ddab417536062f89a85f381b4b559e580c5e6f0197b784a88",
+  "committed_sha256": "918e8906575d9ece82c3c949fb078d8619d2f7f3a34e35525a153c75bca05315",
+  "byte_identical": false,
+  "head_equals_generating": true,
+  "head_sha256": "918e8906575d9ece82c3c949fb078d8619d2f7f3a34e35525a153c75bca05315",
+  "json": {
+   "n_leaves_regen": 361,
+   "n_leaves_committed": 361,
+   "n_differing": 0,
+   "first": [],
+   "ignored_differing": [
+    "originals.g3-image.batch.comparison.built",
+    "originals.g3-image.legacy.comparison.built",
+    "originals.g3-text.batch.comparison.built",
+    "originals.g3-text.legacy.comparison.built",
+    "originals.g37-image.batch.comparison.built",
+    "originals.g37-image.legacy.comparison.built",
+    "originals.g37-text.batch.comparison.built",
+    "originals.g37-text.legacy.comparison.built"
+   ],
+   "equal_ignoring": true
+  }
+ },
+ {
+  "label": "anchor-gate",
+  "path": "outputs/modality-bridge-2026-10-07/stage2/checks/anchor-gate.json",
+  "commit": "2b6edde9a",
+  "regen_sha256": "d29cc3bf4fcf9e20ce88d31efc2c52d1a66753325456ba7d83b8ded231edd218",
+  "committed_sha256": "d29cc3bf4fcf9e20ce88d31efc2c52d1a66753325456ba7d83b8ded231edd218",
+  "byte_identical": true,
+  "head_equals_generating": true,
+  "head_sha256": "d29cc3bf4fcf9e20ce88d31efc2c52d1a66753325456ba7d83b8ded231edd218"
+ }
+]
