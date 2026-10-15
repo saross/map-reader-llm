@@ -1,0 +1,47 @@
+# K-ladder step 5 (Phase 2 tables, clipped basis): runs at 2012ff6a8, whole-tree copies
+## run A vs run B
+ladders.json, ladders-compat.json: only generated_at_utc differs; ladder-tables.md: only line 3 (the generation timestamp); figure byte-identical.
+
+## trial (lane-kladder/out/builder/clip, before 64382beea, a9eb8ff83 and f6f10d605) -> run A
+### ladders.json
+differing leaves: 118
+   1 /ladders[13] .../candidates: 757 -> 759
+   6 /ladders[13] .../f1: 0.9066 -> 0.9165; 0.9066 -> 0.9165
+  18 /ladders[13] .../f1_20: 0.8338 -> 0.8616; 0.8338 -> 0.8616
+  17 /ladders[13] .../n_detections: 494 -> 495; 494 -> 495
+   6 /ladders[13] .../precision: 0.8984 -> 0.9002; 0.8984 -> 0.9002
+  18 /ladders[13] .../precision_20: 0.7419 -> 0.7871; 0.7419 -> 0.7871
+   6 /ladders[13] .../recall: 0.9149 -> 0.9333; 0.9149 -> 0.9333
+  12 /ladders[13] .../recall_20: 0.9149 -> 0.9333; 0.9149 -> 0.9333
+   6 /ladders[13] .../tile_mcc: 0.7651 -> 0.7767; 0.7651 -> 0.7767
+   6 /ladders[13] .../tile_mcc_ci: <absent> -> None; <absent> -> None
+  12 /ladders[13] .../tile_mcc_ci[]: 0.0679 -> <absent>; 0.198 -> <absent>
+   2 /ladders[13] .../tile_mcc_raw: 0.1337 -> None; 0.1337 -> None
+   1 /ladders[13] .../verifier_stage: g384_ov192_g37-union-k3-verify -> g384_ov192_g37-union-k3-verify-recovery-fixed
+   1 /summary[13] .../best_k: 3 -> 10
+   2 /summary[13] .../f1_best: 0.9073 -> 0.9169; 0.9068 -> 0.9169
+   1 /summary[13] .../f1_k1: 0.8495 -> 0.8747
+   2 /summary[13] .../gain: 0.0391 -> 0.0487; 0.0573 -> 0.0422
+   1 /summary[13] .../share_at_k3: 1.0 -> 0.8029
+### ladders-compat.json
+differing leaves: 6
+   2 /skipped[6] .../f1_20: 0.9066 -> 0.9165; 0.9068 -> 0.9169
+   4 /skipped[6] .../f1_20_as_evaluated_historical: 0.8338 -> 0.8616; 0.887 -> 0.9135
+
+## committed (HEAD) -> run A, ladder summaries
+Gemini 3 MINIMAL text 384 px, T 0.3 {'mcc_k1': (0.7986, None), 'mcc_best': (0.7735, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 MINIMAL text 384 px, T 0.7 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 MINIMAL text 384 px, T 1.0 {'mcc_k1': (0.8095, None), 'mcc_best': (0.7881, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 HIGH text 384 px, T 0.3 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 HIGH text 384 px, T 0.7 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 HIGH text 384 px, T 1.0 {'f1_best': (0.8804, 0.8765), 'gain': (0.0994, 0.0955), 'share_at_k3': (0.7354, 0.7236), 'mcc_k1': (0.8162, None), 'mcc_best': (0.791, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 MINIMAL image 384 px, T 0.3 {'mcc_k1': (0.8443, None), 'mcc_best': (0.8377, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 MINIMAL image 384 px, T 0.7 {'f1_best': (0.7881, 0.7852), 'gain': (0.0629, 0.06), 'share_at_k3': (0.5517, 0.53), 'mcc_k1': (0.8437, None), 'mcc_best': (0.8223, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 MINIMAL image 384 px, T 1.0 {'mcc_k1': (0.836, None), 'mcc_best': (0.8078, None), 'mcc_verdict': ('down', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+Gemini 3 HIGH image 384 px, T 0.3 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 HIGH image 384 px, T 0.7 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 HIGH image 384 px, T 1.0 {'score_basis': (None, 'as-evaluated')}
+Gemini 3 scale-4-optimal 487 {'score_basis': (None, 'as-evaluated')}
+Gemini 3.7 text, GS B geometry {'f1_k1': (0.8495, 0.8682), 'f1_best': (0.9068, 0.9169), 'gain': (0.0573, 0.0487), 'share_at_k3': (0.6545, 0.8029), 'mcc_best': (0.7675, None), 'mcc_verdict': ('—', 'withheld'), 'score_basis': (None, 'clip-to-common-assessed-area')}
+
+## the four failed pairs before it (not used): 1 no geopandas (venv link), 2 data/pricing missing, 3 frontier metadata missing, 4 finished with every assessed area UNDETERMINED (0 clipped); logs in lead2/p2/failed*/ on sapphire
