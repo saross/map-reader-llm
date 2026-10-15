@@ -24,7 +24,8 @@ mkdir -p "$LOGDIR"; echo $$ > "$LOGDIR/$TAG.pid"; echo RUNNING > "$LOGDIR/$TAG.s
 mkdir -p "$DEST"
 git -C "$REPO" archive "$REF" -- scripts config.py pyproject.toml pytest.ini inputs/vectors \
   results outputs/gemini37-screen-2026-08-28 | tar -x -C "$DEST"
-mkdir -p "$DEST/.venv/bin"; ln -sf "$SHARED/.venv/bin/python" "$DEST/.venv/bin/python"
+# The whole venv is linked: a linked interpreter alone loses its site-packages.
+ln -s "$SHARED/.venv" "$DEST/.venv"
 printf 'ref %s\n' "$(git -C "$REPO" rev-parse "$REF")" > "$DEST/.source-commit"
 cd "$DEST" || exit 9
 .venv/bin/python scripts/build_k_ladder_phase2_tables.py --clip-to-common-area \
