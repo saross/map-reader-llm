@@ -341,7 +341,46 @@ reported as surprises (§ 5) rather than absorbed:
   excluded). It also empties `cost_usd` on 126 rows, which is not yet
   attributed: **the flatten is not regenerated until that is attributed**.
 
-### 1.7 Modality bridge lane (sub-agent; inventory pending)
+### 1.7 Modality bridge lane (sub-agent)
+
+Inventory by an Opus sub-agent (`~/scratch/s164-restate-2026-10-15/lane-bridge/`),
+with a trial of every generator on the re-verified rows. The bridge
+(`results/modality-bridge-2026-10-07/`, unregistered; claim rows R7.3-22 and
+R7.3-23) has three generators:
+
+| Artefact | Generator | Prediction |
+|---|---|---|
+| the ten cells (44 files), `gap_test.json`, `k5/`, `additions/`, 13 logs | `scripts/modality-bridge-2026-10-07-score.sh` (ten `image_b_analysis.py --six-cell-gate` calls, three `gemini37_image_gap_test.py --six-cell-gate` calls; the text-B anchor is the dated default 0.9017) | re-score § 3.3 REPAIRED; file level the REPAIRED copy's bridge directory, except `g3_gap_committed` (now the dated +0.0559) |
+| `floors/` (§§ 5–7: gap changes, date components, floors) | `modality_bridge_floors.py --scoring-root outputs/modality-bridge-2026-10-07 --out-dir …/floors` | the sub-agent's trial (no record measured them) |
+| `verifier-sd/` (§ 7a) | `modality_bridge_verifier_sd.py --floors-dir …/floors --out-dir …/verifier-sd` | the sub-agent's trial |
+
+**The floors and verifier-SD scripts are off the origin route** (as
+`scorer-restatement-inventory.md` listed for the bridge): they rebuild the
+cells' sets from unions with a legacy `source_tile` and cluster their rungs
+without members, so on the re-verified rows their gate 1 refuses (replicate 1
+scores 0.010–0.018 below the restated cells), and the rows they re-key to the
+neighbouring sheet are exactly the re-verified rows (17, 34, 12, 8, 10, 16
+and 35 per arm). They are fixed before they run: each union through
+`union_on_origin` after `load_image_union`, and each rung clustered with its
+members and booked on its origin sheet (`image_b_analysis.py`'s own ladder
+mechanism), with a tier-1 test and a red sentinel. The six-cell anchor gate
+keeps reading the legs as run. Under D58 Q6 the fixed scripts must first
+reproduce the committed floors and verifier SD on the bridge's data as run
+(data at `be252e57b`); the sub-agent's quick check reproduced all 20 sets.
+
+**D65 (6)'s date caveat.** The only date field in the bridge's outputs is the
+verifier-SD script's `replicate_dates` (2026-10-07 and 2026-10-08); the 486
+re-verified rows of the 30 bridge legs (162 per replicate; US$0.383286) were
+re-verified on 2026-10-13, in one batch job. Both scripts gain a
+`reverification` record beside it (date, record path, rows per leg), and the
+findings say it where the dates are used (§§ 1, 7, 7a).
+
+The trial changes readings, not only numbers, and they are reported as
+surprises (§ 5): § 7's "none clears its upper bound" fails (the two
+K-matched gap changes clear theirs, 1.09 and 1.01), the Gemini 3 T 1.0 text
+advantage falls inside its upper bound (1.03 → 0.98), § 7a's three
+sub-unit "each cell at its upper" readings become one, and the 3.7 image
+carried original's § 6 "oracle" is its registered point, not its new best.
 
 ### 1.8 Register, manifests, and documents (this agent, last)
 
