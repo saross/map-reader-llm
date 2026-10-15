@@ -13,41 +13,41 @@
   "bootstrap": 10000,
   "selected_index": 0,
   "apparent_f1": 0.8210934183675437,
-  "optimism": 0.008039280438709653,
-  "optimism_mcse": 0.00024460534048522607,
+  "optimism": 0.00900895404262941,
+  "optimism_mcse": 0.00024477505982424026,
   "optimism_spread_p2_5_p97_5": [
-    -0.04000269451692732,
-    0.05508725152307868
+    -0.03916247395806441,
+    0.05588384756800459
   ],
-  "corrected_f1": 0.8130541379288341,
+  "corrected_f1": 0.8120844643249143,
   "naive_ci": [
     0.768719661103276,
     0.8695042232615502
   ],
   "selection_aware_ci": [
-    0.7606803806645664,
-    0.8614649428228406
+    0.7597107070606467,
+    0.8604952692189208
   ],
-  "argmax_stability": 0.5186,
+  "argmax_stability": 0.5011,
   "n_distinct_argmax": 4,
-  "mcb_critical_width": 0.037325808305449036,
+  "mcb_critical_width": 0.03913789052606267,
   "mcb_theta": [
     0.004420397907802798,
     -0.004420397907802798,
     -0.00714778593685883,
-    -0.030841034531311817
+    -0.023836549956467445
   ],
   "mcb_lower": [
-    -0.03290541039764624,
-    -0.041746206213251834,
-    -0.044473594242307866,
-    -0.06816684283676086
+    -0.03471749261825987,
+    -0.043558288433865465,
+    -0.0462856764629215,
+    -0.06297444048253012
   ],
   "mcb_upper": [
-    0.041746206213251834,
-    0.03290541039764624,
-    0.030178022368590206,
-    0.006484773774137219
+    0.043558288433865465,
+    0.03471749261825987,
+    0.03199010458920384,
+    0.015301340569595222
   ],
   "mcb_not_ruled_out": [
     0,
@@ -55,51 +55,52 @@
     2,
     3
   ],
-  "hsu_w_upper": 0.025910331475689927,
-  "hsu_w_lower": 0.03720685392164535,
+  "hsu_w_upper": 0.027563326817628908,
+  "hsu_w_lower": 0.03873535355014874,
   "hsu_lower": [
-    -0.03278645601384255,
-    -0.041627251829448146,
-    -0.04435463985850418,
-    -0.06804788845295717
+    -0.03431495564234594,
+    -0.04315575145795154,
+    -0.04588313948700757,
+    -0.06257190350661618
   ],
   "hsu_upper": [
-    0.030330729383492724,
-    0.02148993356788713,
-    0.018762545538831096,
-    0.0
+    0.031983724725431706,
+    0.02314292890982611,
+    0.020415540880770078,
+    0.0037267768611614627
   ],
   "hsu_not_ruled_out": [
     0,
     1,
-    2
+    2,
+    3
   ],
-  "hsu_vs_band_delta": -1,
+  "hsu_vs_band_delta": 0,
   "board": "k-ladder-tier-e-2026-09-12",
-  "bounds_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
-  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
-  "conditions_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+  "bounds_override": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/Code/map-reader-llm/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+  "conditions_override": "/home/shawn/Code/map-reader-llm/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
   "m_frac": 1.0,
   "candidates": [
     {
       "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
       "label": "g384-ov192-k1-verified-opmax",
-      "eval_f1": 0.8546
+      "eval_f1": 0.868
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
       "label": "g384-ov192-k3-verified-opmax",
-      "eval_f1": 0.884
+      "eval_f1": 0.8979
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
       "label": "g384-ov192-k5-verified-opmax",
-      "eval_f1": 0.8905
+      "eval_f1": 0.9046
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
       "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
-      "eval_f1": 0.8886
+      "eval_f1": 0.8942
     }
   ],
   "seed": 42,

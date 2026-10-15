@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-12T13:59:02+00:00",
+  "generated_at_utc": "2026-10-15T12:04:08+00:00",
   "source": "results/grid-2026-08-18/sweep.csv",
   "scope": "consensus-only K ladders at four (tile size x overlap) geometries, fixed MINIMAL text T 0.7, best F1@20 over the (corroboration, vote) grid per K, on the grid-common 487-tile footprint",
   "n_cells": 4,
@@ -17,27 +17,27 @@
           "n_detections": 365
         },
         "3": {
-          "f1_20": 0.683744,
+          "f1_20": 0.693596,
           "mcc": 0.448508,
           "operating_point": "c>=2, k>=3",
           "n_detections": 587
         },
         "5": {
-          "f1_20": 0.704545,
-          "mcc": 0.457593,
+          "f1_20": 0.71281,
+          "mcc": 0.462565,
           "operating_point": "c>=2, k>=5",
           "n_detections": 540
         },
         "10": {
-          "f1_20": 0.720524,
+          "f1_20": 0.729258,
           "mcc": 0.490858,
           "operating_point": "c>=2, k>=10",
           "n_detections": 488
         }
       },
       "K_best": 10,
-      "delta_f1_k1_to_best": 0.05722,
-      "delta_f1_k1_to_k10": 0.05722,
+      "delta_f1_k1_to_best": 0.065954,
+      "delta_f1_k1_to_k10": 0.065954,
       "delta_mcc_k1_to_best": 0.044361
     },
     {
@@ -47,34 +47,34 @@
       "overlap_frac": 0.5,
       "rungs": {
         "1": {
-          "f1_20": 0.712121,
-          "mcc": 0.551535,
+          "f1_20": 0.718615,
+          "mcc": 0.556214,
           "operating_point": "c>=2, k>=1",
           "n_detections": 496
         },
         "3": {
-          "f1_20": 0.742857,
-          "mcc": 0.606201,
+          "f1_20": 0.75,
+          "mcc": 0.601819,
           "operating_point": "c>=2, k>=3",
           "n_detections": 412
         },
         "5": {
-          "f1_20": 0.743972,
-          "mcc": 0.568185,
+          "f1_20": 0.750861,
+          "mcc": 0.563704,
           "operating_point": "c>=2, k>=4",
           "n_detections": 443
         },
         "10": {
-          "f1_20": 0.751756,
-          "mcc": 0.589723,
+          "f1_20": 0.761124,
+          "mcc": 0.58534,
           "operating_point": "c>=2, k>=8",
           "n_detections": 426
         }
       },
       "K_best": 10,
-      "delta_f1_k1_to_best": 0.039635,
-      "delta_f1_k1_to_k10": 0.039635,
-      "delta_mcc_k1_to_best": 0.038189
+      "delta_f1_k1_to_best": 0.042509,
+      "delta_f1_k1_to_k10": 0.042509,
+      "delta_mcc_k1_to_best": 0.029126
     },
     {
       "cell": "g384_ov048",
@@ -83,34 +83,34 @@
       "overlap_frac": 0.125,
       "rungs": {
         "1": {
-          "f1_20": 0.502104,
-          "mcc": 0.159408,
+          "f1_20": 0.513324,
+          "mcc": 0.174508,
           "operating_point": "c>=1, k>=1",
           "n_detections": 998
         },
         "3": {
-          "f1_20": 0.597603,
-          "mcc": 0.293556,
+          "f1_20": 0.609589,
+          "mcc": 0.286362,
           "operating_point": "c>=1, k>=3",
           "n_detections": 740
         },
         "5": {
-          "f1_20": 0.61762,
-          "mcc": 0.286417,
+          "f1_20": 0.630336,
+          "mcc": 0.279215,
           "operating_point": "c>=1, k>=5",
           "n_detections": 673
         },
         "10": {
-          "f1_20": 0.647525,
-          "mcc": 0.313715,
+          "f1_20": 0.657426,
+          "mcc": 0.306588,
           "operating_point": "c>=1, k>=10",
           "n_detections": 582
         }
       },
       "K_best": 10,
-      "delta_f1_k1_to_best": 0.145421,
-      "delta_f1_k1_to_k10": 0.145421,
-      "delta_mcc_k1_to_best": 0.154307
+      "delta_f1_k1_to_best": 0.144102,
+      "delta_f1_k1_to_k10": 0.144102,
+      "delta_mcc_k1_to_best": 0.13208
     },
     {
       "cell": "g512_ov064",
@@ -119,35 +119,52 @@
       "overlap_frac": 0.125,
       "rungs": {
         "1": {
-          "f1_20": 0.584507,
-          "mcc": 0.445819,
+          "f1_20": 0.589789,
+          "mcc": 0.456551,
           "operating_point": "c>=1, k>=1",
           "n_detections": 708
         },
         "3": {
-          "f1_20": 0.676275,
-          "mcc": 0.505504,
+          "f1_20": 0.682927,
+          "mcc": 0.510155,
           "operating_point": "c>=1, k>=3",
           "n_detections": 474
         },
         "5": {
-          "f1_20": 0.673554,
-          "mcc": 0.500813,
+          "f1_20": 0.681818,
+          "mcc": 0.505692,
           "operating_point": "c>=1, k>=4",
           "n_detections": 540
         },
         "10": {
-          "f1_20": 0.675936,
-          "mcc": 0.538328,
+          "f1_20": 0.684492,
+          "mcc": 0.543071,
           "operating_point": "c>=1, k>=8",
           "n_detections": 507
         }
       },
-      "K_best": 3,
-      "delta_f1_k1_to_best": 0.091768,
-      "delta_f1_k1_to_k10": 0.091429,
-      "delta_mcc_k1_to_best": 0.059685
+      "K_best": 10,
+      "delta_f1_k1_to_best": 0.094703,
+      "delta_f1_k1_to_k10": 0.094703,
+      "delta_mcc_k1_to_best": 0.086521
     }
   ],
-  "tier_e_verified_b_geometry": null
+  "tier_e_verified_b_geometry": {
+    "source": "results/k-ladder-2026-09-12/tier-e/scores.json",
+    "note": "the same B geometry (384 px / 50 %) and the same MINIMAL text pool as grid cell g384_ov192, but VERIFIED and scored on the board frame at 20 m, so its F1 is not comparable with the consensus-only column above \u2014 only its SHAPE across K is",
+    "rungs": {
+      "1": {
+        "f1_20": 0.868,
+        "tile_mcc": 0.8211
+      },
+      "3": {
+        "f1_20": 0.8979,
+        "tile_mcc": 0.8167
+      },
+      "5": {
+        "f1_20": 0.9046,
+        "tile_mcc": 0.8139
+      }
+    }
+  }
 }

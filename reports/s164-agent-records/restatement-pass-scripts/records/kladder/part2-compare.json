@@ -1,0 +1,1720 @@
+{
+ "changed_files_A": [
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d.json",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d_era2b.json",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d.json",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d_era2b.json",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.csv",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.json",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.md",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.csv",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.json",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.md",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.csv",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.json",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.md",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.csv",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.json",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.md",
+  "results/k-ladder-2026-09-12/figures/k-ladder-pareto.png",
+  "results/k-ladder-2026-09-12/inventory-tables.md",
+  "results/k-ladder-2026-09-12/inventory.json",
+  "results/k-ladder-2026-09-12/ladders.json",
+  "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_b20_m1.json",
+  "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_mcc_b20_m1.json",
+  "results/k-ladder-2026-09-12/mcb/summary.json",
+  "results/k-ladder-2026-09-12/mcb/table.md",
+  "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_b20_m1.json",
+  "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_mcc_b20_m1.json",
+  "results/k-ladder-2026-09-12/mcc-test/gs-stride-a.json",
+  "results/k-ladder-2026-09-12/mcc-test/summary.json",
+  "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json",
+  "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.md",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.csv",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.md",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.csv",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.md",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/common-assessed-area.geojson",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/crosscheck/k5-carried.geojson",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/operating-points.json",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/scores.json",
+  "results/k-ladder-2026-09-12/phase2/scores.json",
+  "results/k-ladder-2026-09-12/tension/effect-sizes.json",
+  "results/k-ladder-2026-09-12/tension/grid-overlap.json",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.csv",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.md",
+  "results/k-ladder-2026-09-12/tier-e/ladder.json",
+  "results/k-ladder-2026-09-12/tier-e/scores.json",
+  "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+  "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json",
+  "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.md"
+ ],
+ "changed_sets_equal": true,
+ "A_vs_B": {
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d.json": "identical",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d_era2b.json": "identical",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d.json": "identical",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d_era2b.json": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/figures/k-ladder-pareto.png": "identical",
+  "results/k-ladder-2026-09-12/inventory-tables.md": "identical",
+  "results/k-ladder-2026-09-12/inventory.json": [
+   "/values_refreshed/at_utc"
+  ],
+  "results/k-ladder-2026-09-12/ladders.json": "identical",
+  "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_b20_m1.json": "identical",
+  "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_mcc_b20_m1.json": "identical",
+  "results/k-ladder-2026-09-12/mcb/summary.json": "identical",
+  "results/k-ladder-2026-09-12/mcb/table.md": "identical",
+  "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_b20_m1.json": "identical",
+  "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_mcc_b20_m1.json": "identical",
+  "results/k-ladder-2026-09-12/mcc-test/gs-stride-a.json": "identical",
+  "results/k-ladder-2026-09-12/mcc-test/summary.json": "identical",
+  "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json": "identical",
+  "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.md": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/common-assessed-area.geojson": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/crosscheck/k5-carried.geojson": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/operating-points.json": "identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/scores.json": "identical",
+  "results/k-ladder-2026-09-12/phase2/scores.json": "identical",
+  "results/k-ladder-2026-09-12/tension/effect-sizes.json": "identical",
+  "results/k-ladder-2026-09-12/tension/grid-overlap.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.csv": "identical",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.md": "identical",
+  "results/k-ladder-2026-09-12/tier-e/ladder.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/scores.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json": "identical",
+  "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.md": "identical"
+ },
+ "A_vs_B_all_identical": false,
+ "board_frame_cells": {
+  "stride-phaseb__g384-ov128-ladder-n1": {
+   "f1_20": 0.8665,
+   "n": 419,
+   "mcc": 0.7948,
+   "leaves": 461,
+   "diff_vs_rescore": []
+  },
+  "stride-phaseb__g384-ov128-ladder-n3": {
+   "f1_20": 0.8916,
+   "n": 386,
+   "mcc": 0.7873,
+   "leaves": 461,
+   "diff_vs_rescore": []
+  },
+  "stride-phaseb__g384-ov128-ladder-n5": {
+   "f1_20": 0.8862,
+   "n": 400,
+   "mcc": 0.7862,
+   "leaves": 461,
+   "diff_vs_rescore": []
+  },
+  "stride-phaseb__g384-ov128-k10": {
+   "f1_20": 0.8999,
+   "n": 394,
+   "mcc": 0.8079,
+   "leaves": 461,
+   "diff_vs_rescore": []
+  },
+  "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe": {
+   "f1_20": 0.8942,
+   "n": 406,
+   "mcc": 0.7973,
+   "leaves": 461,
+   "diff_vs_rescore": []
+  }
+ },
+ "tierings": {
+  "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json": {
+   "f1_pairs_equal": true,
+   "mcc_pairs_equal": true,
+   "tiers_equal": true,
+   "tie_set_equal": true,
+   "ranking": [
+    [
+     "g384-ov192-k5-verified-opmax",
+     null,
+     0.904594,
+     0.8139,
+     1
+    ],
+    [
+     "g384-ov192-k3-verified-opmax",
+     null,
+     0.897912,
+     0.8167,
+     1
+    ],
+    [
+     "g384-ov192-k10-verified-p0.15-k10-boardframe",
+     null,
+     0.894174,
+     0.7973,
+     1
+    ],
+    [
+     "g384-ov192-k1-verified-opmax",
+     null,
+     0.868009,
+     0.8211,
+     2
+    ]
+   ],
+   "pairs_f1": {
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k3-verified-opmax": [
+     0.029903,
+     0.0012,
+     0.0036,
+     true
+    ],
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k5-verified-opmax": [
+     0.036585,
+     0.0001,
+     0.0006,
+     true
+    ],
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k10-verified-p0.15-k10-boardframe": [
+     0.026165,
+     0.0146,
+     0.0292,
+     true
+    ],
+    "g384-ov192-k3-verified-opmax vs g384-ov192-k5-verified-opmax": [
+     0.006682,
+     0.3538,
+     0.42456,
+     false
+    ],
+    "g384-ov192-k10-verified-p0.15-k10-boardframe vs g384-ov192-k3-verified-opmax": [
+     0.003738,
+     0.6559,
+     0.6559,
+     false
+    ],
+    "g384-ov192-k10-verified-p0.15-k10-boardframe vs g384-ov192-k5-verified-opmax": [
+     0.01042,
+     0.1385,
+     0.20775,
+     false
+    ]
+   },
+   "pairs_mcc": {
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k3-verified-opmax": [
+     0.00442,
+     0.8794,
+     1.0,
+     false
+    ],
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k5-verified-opmax": [
+     0.007148,
+     0.7765,
+     1.0,
+     false
+    ],
+    "g384-ov192-k1-verified-opmax vs g384-ov192-k10-verified-p0.15-k10-boardframe": [
+     0.023837,
+     0.2619,
+     0.8094,
+     false
+    ],
+    "g384-ov192-k3-verified-opmax vs g384-ov192-k5-verified-opmax": [
+     0.002727,
+     1.0,
+     1.0,
+     false
+    ],
+    "g384-ov192-k10-verified-p0.15-k10-boardframe vs g384-ov192-k3-verified-opmax": [
+     0.019416,
+     0.3568,
+     0.8094,
+     false
+    ],
+    "g384-ov192-k10-verified-p0.15-k10-boardframe vs g384-ov192-k5-verified-opmax": [
+     0.016689,
+     0.4047,
+     0.8094,
+     false
+    ]
+   }
+  },
+  "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json": {
+   "f1_pairs_equal": true,
+   "mcc_pairs_equal": true,
+   "tiers_equal": true,
+   "tie_set_equal": true,
+   "ranking": [
+    [
+     "g384-ov128-k10-verified-p0.15-k8",
+     null,
+     0.899879,
+     0.8079,
+     1
+    ],
+    [
+     "g384-ov128-ladder-n3-verified-p0.15-k3",
+     null,
+     0.891596,
+     0.7873,
+     1
+    ],
+    [
+     "g384-ov128-ladder-n5-verified-p0.15-k4",
+     null,
+     0.886228,
+     0.7862,
+     1
+    ],
+    [
+     "g384-ov128-ladder-n1-verified-p0.15-k1",
+     null,
+     0.866511,
+     0.7948,
+     2
+    ]
+   ],
+   "pairs_f1": {
+    "g384-ov128-ladder-n1-verified-p0.15-k1 vs g384-ov128-ladder-n3-verified-p0.15-k3": [
+     0.025085,
+     0.0272,
+     0.0816,
+     false
+    ],
+    "g384-ov128-ladder-n1-verified-p0.15-k1 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.019717,
+     0.0814,
+     0.1221,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n1-verified-p0.15-k1": [
+     0.033369,
+     0.0004,
+     0.0024,
+     true
+    ],
+    "g384-ov128-ladder-n3-verified-p0.15-k3 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.005368,
+     0.4274,
+     0.4274,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n3-verified-p0.15-k3": [
+     0.008284,
+     0.2275,
+     0.273,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.013652,
+     0.0427,
+     0.0854,
+     false
+    ]
+   },
+   "pairs_mcc": {
+    "g384-ov128-ladder-n1-verified-p0.15-k1 vs g384-ov128-ladder-n3-verified-p0.15-k3": [
+     0.00755,
+     0.6361,
+     0.76332,
+     false
+    ],
+    "g384-ov128-ladder-n1-verified-p0.15-k1 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.008601,
+     0.6031,
+     0.76332,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n1-verified-p0.15-k1": [
+     0.013043,
+     0.3839,
+     0.76332,
+     false
+    ],
+    "g384-ov128-ladder-n3-verified-p0.15-k3 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.00105,
+     1.0,
+     1.0,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n3-verified-p0.15-k3": [
+     0.020593,
+     0.0624,
+     0.1947,
+     false
+    ],
+    "g384-ov128-k10-verified-p0.15-k8 vs g384-ov128-ladder-n5-verified-p0.15-k4": [
+     0.021644,
+     0.0649,
+     0.1947,
+     false
+    ]
+   }
+  },
+  "s6_1_vs_mcc_test_run": {
+   "f1_pairs_equal": true,
+   "mcc_pairs_equal": true,
+   "ranking_equal": true
+  }
+ },
+ "mcb": {
+  "gs-stride-a": {
+   "f1": {
+    "best_K": [
+     10,
+     true
+    ],
+    "best_statistic": [
+     0.899879,
+     true
+    ],
+    "hsu_admissible_K": [
+     [
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "hsu_w_upper": [
+     0.01676213275353074,
+     true
+    ],
+    "hsu_w_lower": [
+     0.018463384269604144,
+     true
+    ],
+    "two_sided_band_K": [
+     [
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "theta_by_K": [
+     {
+      "1": -0.033369,
+      "3": -0.008284,
+      "5": -0.013652,
+      "10": 0.008284
+     },
+     true
+    ],
+    "statistic_by_K": [
+     {
+      "1": 0.866511,
+      "3": 0.891596,
+      "5": 0.886228,
+      "10": 0.899879
+     },
+     true
+    ],
+    "contains_K3": [
+     true,
+     true
+    ],
+    "excludes_K10": [
+     false,
+     true
+    ],
+    "whole_ladder": [
+     false,
+     true
+    ]
+   },
+   "mcc": {
+    "best_K": [
+     10,
+     true
+    ],
+    "best_statistic": [
+     0.807855,
+     true
+    ],
+    "hsu_admissible_K": [
+     [
+      1,
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "hsu_w_upper": [
+     0.02407748022262212,
+     true
+    ],
+    "hsu_w_lower": [
+     0.030523268808684032,
+     true
+    ],
+    "two_sided_band_K": [
+     [
+      1,
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "theta_by_K": [
+     {
+      "1": -0.013043,
+      "3": -0.020593,
+      "5": -0.021644,
+      "10": 0.013043
+     },
+     true
+    ],
+    "statistic_by_K": [
+     {
+      "1": 0.794812,
+      "3": 0.787262,
+      "5": 0.786211,
+      "10": 0.807855
+     },
+     true
+    ],
+    "contains_K3": [
+     true,
+     true
+    ],
+    "excludes_K10": [
+     false,
+     true
+    ],
+    "whole_ladder": [
+     true,
+     true
+    ]
+   },
+   "gates_passed": [
+    true,
+    true
+   ]
+  },
+  "tier-e": {
+   "f1": {
+    "best_K": [
+     5,
+     true
+    ],
+    "best_statistic": [
+     0.904594,
+     true
+    ],
+    "hsu_admissible_K": [
+     [
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "hsu_w_upper": [
+     0.015866739130419975,
+     true
+    ],
+    "hsu_w_lower": [
+     0.018002846828537436,
+     true
+    ],
+    "two_sided_band_K": [
+     [
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "theta_by_K": [
+     {
+      "1": -0.036585,
+      "3": -0.006682,
+      "5": 0.006682,
+      "10": -0.01042
+     },
+     true
+    ],
+    "statistic_by_K": [
+     {
+      "1": 0.868009,
+      "3": 0.897912,
+      "5": 0.904594,
+      "10": 0.894174
+     },
+     true
+    ],
+    "contains_K3": [
+     true,
+     true
+    ],
+    "excludes_K10": [
+     false,
+     true
+    ],
+    "whole_ladder": [
+     false,
+     true
+    ]
+   },
+   "mcc": {
+    "best_K": [
+     1,
+     true
+    ],
+    "best_statistic": [
+     0.821093,
+     true
+    ],
+    "hsu_admissible_K": [
+     [
+      1,
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "hsu_w_upper": [
+     0.027563326817628908,
+     true
+    ],
+    "hsu_w_lower": [
+     0.03873535355014874,
+     true
+    ],
+    "two_sided_band_K": [
+     [
+      1,
+      3,
+      5,
+      10
+     ],
+     true
+    ],
+    "theta_by_K": [
+     {
+      "1": 0.00442,
+      "3": -0.00442,
+      "5": -0.007148,
+      "10": -0.023837
+     },
+     true
+    ],
+    "statistic_by_K": [
+     {
+      "1": 0.821093,
+      "3": 0.816673,
+      "5": 0.813946,
+      "10": 0.797257
+     },
+     true
+    ],
+    "contains_K3": [
+     true,
+     true
+    ],
+    "excludes_K10": [
+     false,
+     true
+    ],
+    "whole_ladder": [
+     true,
+     true
+    ]
+   },
+   "gates_passed": [
+    true,
+    true
+   ]
+  },
+  "other_ladders_identical_to_committed": true,
+  "n_kept": 20,
+  "roll_up_committed": {
+   "ladders_whose_F1_admissible_set_contains_K3": [
+    "gs-stride-a",
+    "tier-e",
+    "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-7",
+    "37arm1-r2",
+    "37arm2-r2"
+   ],
+   "ladders_whose_F1_admissible_set_excludes_K10": [],
+   "ladders_whose_F1_admissible_set_is_the_whole_ladder": [
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-image-n5-image-t0-3"
+   ],
+   "ladders_whose_MCC_admissible_set_is_the_whole_ladder": [
+    "gs-stride-a",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t0-7",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t0-7",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-3",
+    "55map-stride-b-r2",
+    "55map-stride-b-standardised"
+   ],
+   "ladders_whose_MCC_admissible_set_contains_K1": [
+    "gs-stride-a",
+    "tier-e",
+    "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t0-7",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t0-7",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-3",
+    "phase2-flash-high-image-n5-image-t0-7",
+    "phase2-flash-high-image-n5-image-t1-0",
+    "phase2-scale-4-optimal-487",
+    "55map-stride-a-r2",
+    "55map-stride-a-standardised",
+    "55map-stride-b-r2",
+    "55map-stride-b-standardised",
+    "55map-stride-b-g37vf-r2",
+    "37arm1-r2",
+    "37arm2-r2"
+   ]
+  },
+  "roll_up_new": {
+   "ladders_whose_F1_admissible_set_contains_K3": [
+    "gs-stride-a",
+    "tier-e",
+    "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-7",
+    "37arm1-r2",
+    "37arm2-r2"
+   ],
+   "ladders_whose_F1_admissible_set_excludes_K10": [],
+   "ladders_whose_F1_admissible_set_is_the_whole_ladder": [
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-image-n5-image-t0-3"
+   ],
+   "ladders_whose_MCC_admissible_set_is_the_whole_ladder": [
+    "gs-stride-a",
+    "tier-e",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t0-7",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t0-7",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-3",
+    "55map-stride-b-r2",
+    "55map-stride-b-standardised"
+   ],
+   "ladders_whose_MCC_admissible_set_contains_K1": [
+    "gs-stride-a",
+    "tier-e",
+    "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t0-3",
+    "phase2-flash-high-text-n5-text-t0-7",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t0-7",
+    "phase2-image-n5-image-t1-0",
+    "phase2-flash-high-image-n5-image-t0-3",
+    "phase2-flash-high-image-n5-image-t0-7",
+    "phase2-flash-high-image-n5-image-t1-0",
+    "phase2-scale-4-optimal-487",
+    "55map-stride-a-r2",
+    "55map-stride-a-standardised",
+    "55map-stride-b-r2",
+    "55map-stride-b-standardised",
+    "55map-stride-b-g37vf-r2",
+    "37arm1-r2",
+    "37arm2-r2"
+   ]
+  },
+  "gate_all_passed": true
+ },
+ "mcc_test": {
+  "gs_entry": {
+   "ladder": "gs-stride-a",
+   "family": "Stride A (g384 ov128), GS, exact re-verification",
+   "buffer_m": 20,
+   "gate_passed": true,
+   "n_pairs_gated": 0,
+   "n_pairs": 4,
+   "mcc_direction_k1_to_best": 0.013043,
+   "mcc_p_bh_k1_to_best": 0.76332,
+   "f1_delta_k1_to_best": 0.033369,
+   "f1_p_bh_k1_to_best": 0.0024,
+   "any_mcc_pair_significant": false
+  },
+  "gs_entry_committed": {
+   "ladder": "gs-stride-a",
+   "family": "Stride A (g384 ov128), GS, exact re-verification",
+   "buffer_m": 20,
+   "gate_passed": true,
+   "n_pairs_gated": 0,
+   "n_pairs": 4,
+   "mcc_direction_k1_to_best": 0.013419,
+   "mcc_p_bh_k1_to_best": 0.7678,
+   "f1_delta_k1_to_best": 0.029991,
+   "f1_p_bh_k1_to_best": 0.0072,
+   "any_mcc_pair_significant": false
+  },
+  "others_identical": true,
+  "gate_all_passed": true
+ },
+ "g37_opmax": {
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d.json": "equal",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/sweep_2d_era2b.json": "equal",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d.json": "equal",
+  "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/sweep_2d_era2b.json": "equal",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.csv": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json": "summary equal",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.md": "n/a (render)",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.csv": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json": "summary equal",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.md": "n/a (render)",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/common-assessed-area.geojson": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/crosscheck/k5-carried.geojson": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson": "byte-identical",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/operating-points.json": "equal",
+  "results/k-ladder-2026-09-12/phase2/g37-opmax/scores.json": "equal",
+  "_stages": [
+   [
+    5,
+    5,
+    0.1,
+    0.9165,
+    0.7767,
+    451
+   ],
+   [
+    10,
+    10,
+    0.1,
+    0.9169,
+    0.7826,
+    431
+   ]
+  ]
+ },
+ "tier_e_scores": [
+  [
+   1,
+   0.868,
+   0.8211,
+   482,
+   0.8673
+  ],
+  [
+   3,
+   0.8979,
+   0.8167,
+   450,
+   0.8979
+  ],
+  [
+   5,
+   0.9046,
+   0.8139,
+   435,
+   0.9046
+  ]
+ ],
+ "tier_e_ladder": {
+  "rungs": [
+   [
+    1,
+    0.868,
+    0.8211
+   ],
+   [
+    3,
+    0.8979,
+    0.8167
+   ],
+   [
+    5,
+    0.9046,
+    0.8139
+   ],
+   [
+    10,
+    0.8942,
+    0.7973
+   ]
+  ],
+  "n_significant_f1": 3,
+  "n_significant_mcc": 0,
+  "n_tiers": 2
+ },
+ "phase2_scores_g37": [
+  [
+   1,
+   640,
+   "g384_ov192_g37-union-k1-verify",
+   0.8747,
+   502,
+   0.8616,
+   null
+  ],
+  [
+   3,
+   759,
+   "g384_ov192_g37-union-k3-verify-recovery-fixed",
+   0.9135,
+   495,
+   0.9135,
+   null
+  ]
+ ],
+ "phase2_scores_other_rows_identical": true,
+ "inventory_moved": {
+  "moved": [
+   {
+    "family": "Gemini 3 HIGH image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
+    "key": "f1_20",
+    "old": 0.8333,
+    "new": 0.8389
+   },
+   {
+    "family": "Gemini 3 HIGH image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
+    "key": "f1_50",
+    "old": 0.8696,
+    "new": 0.875
+   },
+   {
+    "family": "Gemini 3 HIGH image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
+    "key": "mcc",
+    "old": 0.7993,
+    "new": 0.8108
+   },
+   {
+    "family": "Gemini 3 HIGH image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8",
+    "key": "n_detections",
+    "old": 400,
+    "new": 404
+   },
+   {
+    "family": "Gemini 3 MINIMAL image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "key": "f1_20",
+    "old": 0.8412,
+    "new": 0.8458
+   },
+   {
+    "family": "Gemini 3 MINIMAL image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "key": "f1_50",
+    "old": 0.8776,
+    "new": 0.8843
+   },
+   {
+    "family": "Gemini 3 MINIMAL image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "key": "mcc",
+    "old": 0.7985,
+    "new": 0.8139
+   },
+   {
+    "family": "Gemini 3 MINIMAL image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9",
+    "key": "n_detections",
+    "old": 397,
+    "new": 402
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "key": "f1_20",
+    "old": 0.9254,
+    "new": 0.9353
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "key": "f1_50",
+    "old": 0.9347,
+    "new": 0.9446
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "key": "mcc",
+    "old": 0.8192,
+    "new": 0.8307
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "key": "n_detections",
+    "old": 430,
+    "new": 438
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+    "key": "f1_20",
+    "old": 0.9308,
+    "new": 0.9408
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+    "key": "f1_50",
+    "old": 0.9402,
+    "new": 0.9501
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+    "key": "mcc",
+    "old": 0.8322,
+    "new": 0.8436
+   },
+   {
+    "family": "Gemini 3.7 image, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5",
+    "key": "n_detections",
+    "old": 425,
+    "new": 433
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "key": "f1_20",
+    "old": 0.9139,
+    "new": 0.9238
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "key": "f1_50",
+    "old": 0.9277,
+    "new": 0.9374
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "key": "mcc",
+    "old": 0.7797,
+    "new": 0.7914
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5",
+    "key": "n_detections",
+    "old": 443,
+    "new": 451
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+    "key": "f1_20",
+    "old": 0.9142,
+    "new": 0.9243
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+    "key": "f1_50",
+    "old": 0.9377,
+    "new": 0.9476
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+    "key": "mcc",
+    "old": 0.7817,
+    "new": 0.7971
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10",
+    "key": "n_detections",
+    "old": 423,
+    "new": 431
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "key": "f1_20",
+    "old": 0.9265,
+    "new": 0.9364
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "key": "f1_50",
+    "old": 0.9405,
+    "new": 0.9503
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "key": "mcc",
+    "old": 0.8078,
+    "new": 0.8192
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5",
+    "key": "n_detections",
+    "old": 429,
+    "new": 437
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "key": "f1_20",
+    "old": 0.9258,
+    "new": 0.9358
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "key": "f1_50",
+    "old": 0.9399,
+    "new": 0.9498
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "key": "mcc",
+    "old": 0.8218,
+    "new": 0.8331
+   },
+   {
+    "family": "Gemini 3.7 text, GS B geometry [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5",
+    "key": "n_detections",
+    "old": 421,
+    "new": 429
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7",
+    "key": "f1_20",
+    "old": 0.8677,
+    "new": 0.8752
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7",
+    "key": "mcc",
+    "old": 0.7751,
+    "new": 0.7852
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7",
+    "key": "n_detections",
+    "old": 358,
+    "new": 365
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10",
+    "key": "f1_20",
+    "old": 0.8961,
+    "new": 0.9017
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10",
+    "key": "mcc",
+    "old": 0.7965,
+    "new": 0.8037
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10",
+    "key": "n_detections",
+    "old": 400,
+    "new": 406
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5",
+    "key": "f1_20",
+    "old": 0.8311,
+    "new": 0.8368
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5",
+    "key": "mcc",
+    "old": 0.7937,
+    "new": 0.8011
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov064-k10-verified-p0.15-k5",
+    "key": "n_detections",
+    "old": 383,
+    "new": 387
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9",
+    "key": "f1_20",
+    "old": 0.8815,
+    "new": 0.887
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9",
+    "key": "mcc",
+    "old": 0.8011,
+    "new": 0.8087
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g512-ov256-k10-verified-p0.15-k9",
+    "key": "n_detections",
+    "old": 382,
+    "new": 386
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+    "key": "f1_20",
+    "old": 0.914,
+    "new": 0.922
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+    "key": "f1_50",
+    "old": 0.9263,
+    "new": 0.9341
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+    "key": "mcc",
+    "old": 0.8239,
+    "new": 0.835
+   },
+   {
+    "family": "Grid campaign text (geometry in the label) [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10",
+    "key": "n_detections",
+    "old": 386,
+    "new": 392
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 1,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+    "key": "f1_20",
+    "old": 0.8677,
+    "new": 0.8737
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 1,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+    "key": "mcc",
+    "old": 0.7894,
+    "new": 0.801
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 1,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+    "key": "n_detections",
+    "old": 411,
+    "new": 419
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 3,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+    "key": "f1_20",
+    "old": 0.8911,
+    "new": 0.8993
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 3,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+    "key": "mcc",
+    "old": 0.7814,
+    "new": 0.7927
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 3,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+    "key": "n_detections",
+    "old": 380,
+    "new": 386
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+    "key": "f1_20",
+    "old": 0.8856,
+    "new": 0.8937
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+    "key": "mcc",
+    "old": 0.7805,
+    "new": 0.7918
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 5,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+    "key": "n_detections",
+    "old": 394,
+    "new": 400
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+    "key": "f1_20",
+    "old": 0.8982,
+    "new": 0.9075
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+    "key": "mcc",
+    "old": 0.8022,
+    "new": 0.8134
+   },
+   {
+    "family": "Stride A (g384 ov128), GS, exact re-verification [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+    "key": "n_detections",
+    "old": 387,
+    "new": 394
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g256_ov064 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8",
+    "key": "f1_20",
+    "old": 0.8795,
+    "new": 0.8876
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g256_ov064 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8",
+    "key": "mcc",
+    "old": 0.7959,
+    "new": 0.8033
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g256_ov064 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g256-ov064-k10-verified-p0.15-k8",
+    "key": "n_detections",
+    "old": 427,
+    "new": 435
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov176 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6",
+    "key": "f1_20",
+    "old": 0.8655,
+    "new": 0.8714
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov176 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6",
+    "key": "mcc",
+    "old": 0.7964,
+    "new": 0.8116
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov176 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov176-k10-verified-p0.15-k6",
+    "key": "n_detections",
+    "old": 390,
+    "new": 396
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov320 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov320-k10-verified-p0.15-k10",
+    "key": "f1_20",
+    "old": 0.88,
+    "new": 0.8854
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov320 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov320-k10-verified-p0.15-k10",
+    "key": "mcc",
+    "old": 0.8023,
+    "new": 0.81
+   },
+   {
+    "family": "stride-phaseb-2026-08-25 / g512_ov320 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phaseb-2026-08-25::g512-ov320-k10-verified-p0.15-k10",
+    "key": "n_detections",
+    "old": 397,
+    "new": 401
+   },
+   {
+    "family": "stride-phasec-2026-08-25 / g384_ov240 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+    "key": "f1_20",
+    "old": 0.886,
+    "new": 0.8938
+   },
+   {
+    "family": "stride-phasec-2026-08-25 / g384_ov240 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+    "key": "mcc",
+    "old": 0.791,
+    "new": 0.8029
+   },
+   {
+    "family": "stride-phasec-2026-08-25 / g384_ov240 [grid_common_bounds.geojson / mounds-reference.geojson]",
+    "K": 10,
+    "condition_id": "stride-phasec-2026-08-25::g384-ov240-k10-verified-p0.15-k10",
+    "key": "n_detections",
+    "old": 423,
+    "new": 429
+   }
+  ],
+  "repointed": [
+   {
+    "condition_id": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "old": "results/gemini37-image-gs-2026-09-01/arm1/best-eval/evaluation.json",
+    "new": "results/gemini37-image-gs-2026-09-01/arm1/op-eval/evaluation.json"
+   }
+  ]
+ },
+ "ladders_json_gs": [
+  [
+   1,
+   0.8737,
+   0.801,
+   419,
+   0.8665,
+   0.7948,
+   419,
+   -0.0072
+  ],
+  [
+   3,
+   0.8993,
+   0.7927,
+   386,
+   0.8916,
+   0.7873,
+   386,
+   -0.0077
+  ],
+  [
+   5,
+   0.8937,
+   0.7918,
+   400,
+   0.8862,
+   0.7862,
+   400,
+   -0.0075
+  ],
+  [
+   10,
+   0.9075,
+   0.8134,
+   394,
+   0.8999,
+   0.8079,
+   394,
+   -0.0076
+  ]
+ ],
+ "ladders_json_other_ladders_identical": true,
+ "grid_overlap": {
+  "g384_ov192": [
+   {
+    "1": [
+     0.663304,
+     0.446497
+    ],
+    "3": [
+     0.693596,
+     0.448508
+    ],
+    "5": [
+     0.71281,
+     0.462565
+    ],
+    "10": [
+     0.729258,
+     0.490858
+    ]
+   },
+   10,
+   0.065954,
+   0.044361
+  ],
+  "g512_ov256": [
+   {
+    "1": [
+     0.718615,
+     0.556214
+    ],
+    "3": [
+     0.75,
+     0.601819
+    ],
+    "5": [
+     0.750861,
+     0.563704
+    ],
+    "10": [
+     0.761124,
+     0.58534
+    ]
+   },
+   10,
+   0.042509,
+   0.029126
+  ],
+  "g384_ov048": [
+   {
+    "1": [
+     0.513324,
+     0.174508
+    ],
+    "3": [
+     0.609589,
+     0.286362
+    ],
+    "5": [
+     0.630336,
+     0.279215
+    ],
+    "10": [
+     0.657426,
+     0.306588
+    ]
+   },
+   10,
+   0.144102,
+   0.13208
+  ],
+  "g512_ov064": [
+   {
+    "1": [
+     0.589789,
+     0.456551
+    ],
+    "3": [
+     0.682927,
+     0.510155
+    ],
+    "5": [
+     0.681818,
+     0.505692
+    ],
+    "10": [
+     0.684492,
+     0.543071
+    ]
+   },
+   10,
+   0.094703,
+   0.086521
+  ]
+ },
+ "grid_overlap_tier_e": {
+  "1": {
+   "f1_20": 0.868,
+   "tile_mcc": 0.8211
+  },
+  "3": {
+   "f1_20": 0.8979,
+   "tile_mcc": 0.8167
+  },
+  "5": {
+   "f1_20": 0.9046,
+   "tile_mcc": 0.8139
+  }
+ },
+ "effect_sizes": [
+  [
+   "Gemini 3 MINIMAL text 384 px, T 0.3",
+   0.8555,
+   0.8778,
+   0.0223,
+   0.2768
+  ],
+  [
+   "Gemini 3 MINIMAL text 384 px, T 0.7",
+   0.8575,
+   0.8739,
+   0.0164,
+   0.578
+  ],
+  [
+   "Gemini 3 MINIMAL text 384 px, T 1.0",
+   0.8235,
+   0.8781,
+   0.0546,
+   0.0012
+  ],
+  [
+   "Gemini 3 MINIMAL image 384 px, T 0.3",
+   0.768,
+   0.7819,
+   0.0139,
+   0.7803
+  ],
+  [
+   "Gemini 3 MINIMAL image 384 px, T 0.7",
+   0.7252,
+   0.7881,
+   0.0629,
+   0.0006
+  ],
+  [
+   "Gemini 3 MINIMAL image 384 px, T 1.0",
+   0.7044,
+   0.7428,
+   0.0384,
+   0.1236
+  ],
+  [
+   "Stride A (g384 ov128), 55-map [55maps_evaluation",
+   0.8227,
+   0.8419,
+   0.0192,
+   0.0
+  ],
+  [
+   "Stride A (g384 ov128), GS, exact re-verification",
+   0.8737,
+   0.9075,
+   0.0338,
+   0.0024
+  ],
+  [
+   "Stride B (g384 ov192), 55-map [55maps_evaluation",
+   0.8013,
+   0.856,
+   0.0547,
+   0.0
+  ]
+ ]
+}

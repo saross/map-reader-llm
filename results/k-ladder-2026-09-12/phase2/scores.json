@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-12T08:41:22+00:00",
+  "generated_at_utc": "2026-10-15T11:43:18+00:00",
   "script": "scripts/score_k_ladder_phase2_rungs.py",
   "script_version": "1.0.0",
   "recipe": {
@@ -1432,15 +1432,12 @@
         "vote_t": 1,
         "prob_t": 0.15,
         "n_detections": 502,
-        "f1_20": 0.8495,
-        "precision_20": 0.7928,
+        "f1_20": 0.8747,
+        "precision_20": 0.8379,
         "recall_20": 0.9149,
         "f1_20_ci": null,
-        "tile_mcc": 0.1337,
-        "tile_mcc_ci": [
-          0.0552,
-          0.1884
-        ],
+        "tile_mcc": null,
+        "tile_mcc_ci": null,
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-opmax.geojson"
       },
@@ -1448,15 +1445,12 @@
         "vote_t": 1,
         "prob_t": 0.1,
         "n_detections": 558,
-        "f1_20": 0.8338,
-        "precision_20": 0.7419,
+        "f1_20": 0.8616,
+        "precision_20": 0.7871,
         "recall_20": 0.9517,
         "f1_20_ci": null,
-        "tile_mcc": 0.1422,
-        "tile_mcc_ci": [
-          0.0679,
-          0.198
-        ],
+        "tile_mcc": null,
+        "tile_mcc_ci": null,
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k1-verified-carried-p0.10-k1.geojson"
       }
@@ -1468,8 +1462,8 @@
       "run_id": "gemini37-screen-2026-08-28",
       "pool_slug": "g384_ov192_g37",
       "n_passes": 3,
-      "candidates": 757,
-      "verifier_stage": "g384_ov192_g37-union-k3-verify",
+      "candidates": 759,
+      "verifier_stage": "g384_ov192_g37-union-k3-verify-recovery-fixed",
       "frames_agree_on_argmax": true,
       "carried_identical_to_opmax": true,
       "labels": {
@@ -1484,32 +1478,26 @@
       "opmax": {
         "vote_t": 3,
         "prob_t": 0.1,
-        "n_detections": 494,
-        "f1_20": 0.887,
-        "precision_20": 0.834,
+        "n_detections": 495,
+        "f1_20": 0.9135,
+        "precision_20": 0.8822,
         "recall_20": 0.9471,
         "f1_20_ci": null,
-        "tile_mcc": 0.1337,
-        "tile_mcc_ci": [
-          0.0552,
-          0.1884
-        ],
+        "tile_mcc": null,
+        "tile_mcc_ci": null,
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson"
       },
       "carried": {
         "vote_t": 3,
         "prob_t": 0.1,
-        "n_detections": 494,
-        "f1_20": 0.887,
-        "precision_20": 0.834,
+        "n_detections": 495,
+        "f1_20": 0.9135,
+        "precision_20": 0.8822,
         "recall_20": 0.9471,
         "f1_20_ci": null,
-        "tile_mcc": 0.1337,
-        "tile_mcc_ci": [
-          0.0552,
-          0.1884
-        ],
+        "tile_mcc": null,
+        "tile_mcc_ci": null,
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson"
       }
