@@ -4,7 +4,7 @@
 # =============================================================================
 # Part of the S164 restatement pass (reports/s164-agent-records/
 # restatement-pass.md § 1.4, step 5, run after the Era-2 board lane). Builds a
-# disposable real-file copy of REF (code, results/, inputs/vectors and the
+# disposable real-file copy of REF (code, results/, inputs/vectors, data/, prompts/, reports/ and the
 # Gemini 3.7 screen's outputs, which the builder reads for the 3.7 ladder's
 # unions), then runs scripts/build_k_ladder_phase2_tables.py with
 # --clip-to-common-area --allow-undetermined-area (D57 (2), (3); D67 (5)),
@@ -22,7 +22,7 @@ export PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg
 mkdir -p "$LOGDIR"; echo $$ > "$LOGDIR/$TAG.pid"; echo RUNNING > "$LOGDIR/$TAG.state"
 [ -e "$DEST" ] && { echo "FAILED dest exists" > "$LOGDIR/$TAG.state"; exit 2; }
 mkdir -p "$DEST"
-git -C "$REPO" archive "$REF" -- scripts config.py pyproject.toml pytest.ini inputs/vectors \
+git -C "$REPO" archive "$REF" -- scripts config.py pyproject.toml pytest.ini inputs/vectors data prompts reports \
   results outputs/gemini37-screen-2026-08-28 | tar -x -C "$DEST"
 # The whole venv is linked: a linked interpreter alone loses its site-packages.
 ln -s "$SHARED/.venv" "$DEST/.venv"
