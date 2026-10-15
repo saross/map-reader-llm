@@ -1,0 +1,7 @@
+# Sentinel for the rewritten Phase 2 table tests (S164 restatement pass, 2026-10-15)
+# harness: the step 5 run copy A (git archive of 2012ff6a8; real files, no symlink
+# under tests/ or scripts/), with the edited tests/test_k_ladder_phase2.py copied in.
+red:   "| **+0.0223** | 69 % |" -> "70 %" in phase2/ladder-tables.md (Gemini 3 MINIMAL text T 0.3)
+       FAILED tests/test_k_ladder_phase2.py::test_committed_gain_shares_are_rounded_once
+       (AssertionError: Gemini 3 MINIMAL text 384 px, T 0.3)
+green: cell restored; tests/test_k_ladder_phase2.py and tests/test_k_ladder_mcb.py: 58 passed
