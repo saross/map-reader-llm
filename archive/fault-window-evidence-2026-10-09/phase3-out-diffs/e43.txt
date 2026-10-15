@@ -1,0 +1,94 @@
+## regen_e43_board
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e43-board-regen/bh-families/families_recomputed.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/bh-families/families_recomputed.json
+3c3
+<     "timestamp": "2026-08-02T12:26:28.545603+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.225002+00:00",
+5c5
+<     "git_commit": "bc45133b4",
+---
+>     "git_commit": "unknown",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e43-board-regen/leaderboard-20m/run_manifest.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/leaderboard-20m/run_manifest.json
+3c3
+<     "timestamp": "2026-08-02T12:26:28.538452+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.216284+00:00",
+6c6
+<     "git_commit": "bc45133b4",
+---
+>     "git_commit": "unknown",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e43-board-regen/leaderboard-30m/run_manifest.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/leaderboard-30m/run_manifest.json
+3c3
+<     "timestamp": "2026-08-02T12:26:28.542967+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.222041+00:00",
+6c6
+<     "git_commit": "bc45133b4",
+---
+>     "git_commit": "unknown",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e43-board-regen/summary.md /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/summary.md
+7c7
+< **Produced**: 2026-08-02, on sapphire, from repository commit `bc45133b4` by `scripts/regen_e43_board.py`. Zero application programming interface (API) calls; zero permutation tests re-run.
+---
+> **Produced**: 2026-08-02, on sapphire, from repository commit `unknown` by `scripts/regen_e43_board.py`. Zero application programming interface (API) calls; zero permutation tests re-run.
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/bh-families/families_recomputed.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/e43-board-regen/bh-families/families_recomputed.json
+3c3
+<     "timestamp": "2026-10-09T12:46:02.225002+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.492249+00:00",
+5c5
+<     "git_commit": "unknown",
+---
+>     "git_commit": "e1e8f444a",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/leaderboard-20m/run_manifest.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/e43-board-regen/leaderboard-20m/run_manifest.json
+3c3
+<     "timestamp": "2026-10-09T12:46:02.216284+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.478366+00:00",
+6c6
+<     "git_commit": "unknown",
+---
+>     "git_commit": "e1e8f444a",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/leaderboard-30m/run_manifest.json /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/e43-board-regen/leaderboard-30m/run_manifest.json
+3c3
+<     "timestamp": "2026-10-09T12:46:02.222041+00:00",
+---
+>     "timestamp": "2026-10-09T12:46:02.486514+00:00",
+6c6
+<     "git_commit": "unknown",
+---
+>     "git_commit": "e1e8f444a",
+diff -r /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e43-board-regen/summary.md /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/e43-board-regen/summary.md
+7c7
+< **Produced**: 2026-08-02, on sapphire, from repository commit `unknown` by `scripts/regen_e43_board.py`. Zero application programming interface (API) calls; zero permutation tests re-run.
+---
+> **Produced**: 2026-08-02, on sapphire, from repository commit `e1e8f444a` by `scripts/regen_e43_board.py`. Zero application programming interface (API) calls; zero permutation tests re-run.
+## matched-temperature F1 tests
+n10-20m                OLD reproduces: True; F1 A 0.633166 -> 0.635176, B 0.666667 -> 0.668699; dF1 -0.033501 -> -0.033523; p 0.0815 -> 0.0815
+n10-30m                OLD reproduces: True; F1 A 0.641206 -> 0.643216, B 0.672764 -> 0.674797; dF1 -0.031558 -> -0.031581; p 0.0963 -> 0.0976
+n5-20m                 OLD reproduces: True; F1 A 0.639706 -> 0.641544, B 0.661017 -> 0.663136; dF1 -0.021311 -> -0.021591; p 0.3352 -> 0.3293
+n5-30m                 OLD reproduces: True; F1 A 0.647059 -> 0.648897, B 0.667373 -> 0.669492; dF1 -0.020314 -> -0.020594; p 0.3577 -> 0.3486
+t03-vs-t07-n10-20m     OLD reproduces: True; F1 A 0.642378 -> 0.644295, B 0.633166 -> 0.635176; dF1 0.009212 -> 0.009119; p 0.595 -> 0.5958
+t03-vs-t07-n10-30m     OLD reproduces: True; F1 A 0.64813 -> 0.650048, B 0.641206 -> 0.643216; dF1 0.006924 -> 0.006832; p 0.6907 -> 0.6964
+t03-vs-t10-n10-20m     OLD reproduces: True; F1 A 0.642378 -> 0.644295, B 0.666667 -> 0.668699; dF1 -0.024289 -> -0.024404; p 0.0624 -> 0.0624
+t03-vs-t10-n10-30m     OLD reproduces: True; F1 A 0.64813 -> 0.650048, B 0.672764 -> 0.674797; dF1 -0.024634 -> -0.024749; p 0.0563 -> 0.0563
+t07n10-vs-t10n5-20m    OLD reproduces: True; F1 A 0.633166 -> 0.635176, B 0.661017 -> 0.663136; dF1 -0.027851 -> -0.02796; p 0.1744 -> 0.1727
+t07n10-vs-t10n5-30m    OLD reproduces: True; F1 A 0.641206 -> 0.643216, B 0.667373 -> 0.669492; dF1 -0.026167 -> -0.026275; p 0.2053 -> 0.2055
+t07n30-vs-t10n5-20m    OLD reproduces: True; F1 A 0.66114 -> 0.663212, B 0.661017 -> 0.663136; dF1 0.000123 -> 7.7e-05; p 0.9793 -> 0.9798
+t07n30-vs-t10n5-30m    OLD reproduces: True; F1 A 0.66943 -> 0.671503, B 0.667373 -> 0.669492; dF1 0.002057 -> 0.002011; p 0.9353 -> 0.9363
+## author_e43 dry run
+All 4 cells pass every gate (14 buffers + MCC; F1@20 m reproduces findings.md; n_detections matches the GeoJSON; registered sibling agrees to 1e-9).
+
+PLAN
+  analysis 'e43-matched-temperature': skip
+  conditions minted: 0 (the four cells are already registered: pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5, pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5, pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10, pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10)
+  _ignored_evals to add (0):
+
+DRY-RUN (no files written). Re-run with --execute to author.
+exit 0
+VALIDATION FAILURES:
+  - t07-n5-5of5 (T=0.7, N=5, 5-of-5): F1@20 m 0.6415 does not reproduce findings.md's 0.6397
+  - t10-n5-5of5 (T=1.0, N=5, 5-of-5): F1@20 m 0.6631 does not reproduce findings.md's 0.661
+  - t07-n10-10of10 (T=0.7, N=10, 10-of-10): F1@20 m 0.6352 does not reproduce findings.md's 0.6332
+  - t10-n10-9of10 (T=1.0, N=10, 9-of-10): F1@20 m 0.6687 does not reproduce findings.md's 0.6667
+exit 1

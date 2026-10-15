@@ -1,0 +1,200 @@
+{
+ "rev": "494b5a7af",
+ "dispositions": {
+  "archive": 54,
+  "replay": 2216,
+  "verified-bytediff": 432,
+  "replay-adapter": 24,
+  "unclassified": 49,
+  "verified-q2": 25
+ },
+ "replayed": 2216,
+ "replayed_phase2": 737,
+ "replayed_other": 1479,
+ "reproduced_exactly": 2123,
+ "reproduced_phase2": 695,
+ "reproduced_other": 1428,
+ "pending": 0,
+ "not_reproduced": 93,
+ "not_reproduced_phase2": 42,
+ "not_reproduced_other": 51,
+ "phase2_intervals_reproduce": 695,
+ "causes_phase2": {
+  "W-tile-join-withheld": 42
+ },
+ "causes_other": {
+  "D-points (vintage replay reproduces)": 26,
+  "B-interval": 2,
+  "W-tile-join-withheld": 23
+ },
+ "by_dir_cause": {
+  "outputs/55maps-image-generalisation": {
+   "D-points (vintage replay reproduces)": 3
+  },
+  "outputs/55maps-text-high-generalisation": {
+   "D-points (vintage replay reproduces)": 3
+  },
+  "outputs/55maps-text-high-t0.3-generalisation": {
+   "B-interval": 2
+  },
+  "outputs/55maps-text-min-generalisation": {
+   "D-points (vintage replay reproduces)": 3
+  },
+  "results/k-ladder-2026-09-12/phase2": {
+   "W-tile-join-withheld": 2
+  },
+  "results/pairwise/tile-size-30m": {
+   "W-tile-join-withheld": 5
+  },
+  "results/paper-eval/mcc": {
+   "D-points (vintage replay reproduces)": 4
+  },
+  "results/paper-eval/n1": {
+   "D-points (vintage replay reproduces)": 6
+  },
+  "results/rescore-2026-05-31/e47-propose-brief": {
+   "D-points (vintage replay reproduces)": 1
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384": {
+   "D-points (vintage replay reproduces)": 6
+  },
+  "results/uplift-supplement/k1-gapfill": {
+   "W-tile-join-withheld": 41
+  },
+  "results/uplift-supplement/verifier-pairing": {
+   "W-tile-join-withheld": 17
+  }
+ },
+ "nonrep_registered": [
+  "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+  "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+  "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+  "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
+  "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json"
+ ],
+ "nonrep_in_analyses": [
+  "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+  "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+  "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json",
+  "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json",
+  "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json",
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json"
+ ],
+ "vintage": {
+  "outputs/55maps-text-high-generalisation/extended-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-image-generalisation/full-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-text-min-generalisation/extended-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-text-high-generalisation/full-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-image-generalisation/extended-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-text-min-generalisation/evaluation/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-text-min-generalisation/full-buffer-eval/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-text-high-generalisation/evaluation/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "outputs/55maps-image-generalisation/evaluation/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/mcc/384px/pro-image-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/mcc/384px/pro-text-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/mcc/384px/pro-image-medium-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/mcc/384px/pro-text-medium-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-14buf-mcc/pro-image-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-14buf-mcc/pro-text-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-all-buffers/pro-image-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-all-buffers/pro-text-high-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-all-buffers/pro-text-medium-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/paper-eval/n1/384px-all-buffers/pro-image-medium-t-0-0/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/e47-propose-brief/flash-high-text-n5/propose_brief-text/run_4/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_3/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_2/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-image-high-t0/run_1/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_3/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_2/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  },
+  "results/rescore-2026-05-31/n1-outstanding-384/pro-text-high-t0/run_1/evaluation.json": {
+   "reproduces": true,
+   "kinds": {}
+  }
+ }
+}
