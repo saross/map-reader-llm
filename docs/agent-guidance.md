@@ -218,3 +218,9 @@ correct ones, and the next leg's count gate passed on the wrong pair.
 Redirect all three descriptors on the launch (`> log 2>&1 < /dev/null &`),
 put NOTHING after a launch on the same line, and treat a launch call that
 "timed out" as still holding an unexecuted tail until its process is gone.
+Separate any setup from the launch with `;`, not `&&`: in `ssh host 'cd X
+&& nohup job > log 2>&1 < /dev/null &'` the `&` backgrounds the whole `cd
+&& nohup` list, which still holds the session's descriptors, so the call
+blocks until the job ends even with every redirect in place (D67 (4); the
+S164 wave-3 launch and the fault-window agent both hit it); write
+`ssh host 'cd X; nohup job > log 2>&1 < /dev/null &'`.
