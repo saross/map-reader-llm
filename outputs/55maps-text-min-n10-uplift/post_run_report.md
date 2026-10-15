@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-min-n10-uplift
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-min-n10-uplift` · **Registry status**: active · **Purpose**: Run B: does PASS COUNT close the -0.030 deployment thinking gap (Obs 362)? 10 minimal passes + band verifier vs TM-k3 and TH7-k3 at the canonical 50 m buffer.
 
@@ -85,7 +85,7 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `verified-5of10-canonical-gt` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 4361 | 0.6472 [0.6325, 0.6618] | 0.8290 [0.8190, 0.8385] | 0.6725 |
+| `verified-5of10-canonical-gt` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 4361 | 0.6472 [0.6325, 0.6618] | 0.8291 [0.8191, 0.8386] | 0.6725 |
 | `verified-5of10-r2-gt` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 4361 | 0.6877 [0.6734, 0.7012] | 0.8274 [0.8174, 0.8367] | 0.6695 |
 | `verified-5of10-standardised-gt` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 4361 | 0.6879 [0.6738, 0.7016] | 0.8279 [0.8181, 0.8374] | 0.6709 |
 
@@ -182,7 +182,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 
