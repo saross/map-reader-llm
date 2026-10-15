@@ -1,6 +1,7 @@
 # Sapphire fault windows: what was computed there, and what is still unverified
 
-> **Last revised**: 2026-10-14 (D62 (7) re-check verdicts marked; record
+> **Last revised**: 2026-10-15 (D67 (2) re-check verdicts for W2-3, W2-4,
+> W2-7, and W2-8 marked; record
 > `reports/s164-agent-records/fault-window-rechecks.md`). See
 > [§ Changelog](#changelog) for revision history.
 
@@ -148,12 +149,12 @@ that quote the groups above.
 |---|---|---|---|---|---|
 | W2-1 | **Gemini 3.7 image 55-map statistics**: the five-test family `tests_IMG-ARM2-K3-carried.json`; sweeps `sweep_IMG-ARM*-K*.csv`; arm 2 K = 5 replicate `tests.json`, `agreement.json`, `sweeps.json`; inheritance `ladder.json`, `tests.json`, `union_separation.json` (61 files with materialised cells) | 2026-09-14 to 09-20; saross (`392a06933`, `e0f9a4d03`, `8d800f2d6`, `0569b0d2f`, `62b13e6fd`, `3fc3f0751`, `2ba1914b6`); `7351bcce8` from amd-tower | No (cells yes, census). **2026-10-14: VERIFIED** (S164 record) | Signed `gemini37-image-55map-2026-09-13` and `-k5-replicate-2x2-2026-09-20`; **D53** (P3: 0.9199 against 0.8848, +0.0351, BH p < 0.0001; ladder 0.8719 / 0.9199 / 0.9270) | Re-run the test family and replicate/inheritance tests at their commits (10,000 permutations, seed 42) and the sweeps from committed probabilities; compare exactly; minutes to tens of minutes |
 | W2-2 | **55-map r2 boards**: `final_board_50m.json` (+ `.md`), `55map_leaderboard_50m_r2.json` (+ `.md`), `55map-mcc-tiering-r2.json` (+ `.md`) | Tiering 2026-09-07T04:29Z, "sapphire, $0" (`22353e660`, saross); rows added on sapphire 2026-09-20 (`de009ed5d`, `892633660`); cost fields 10-04/05 (`927d99ced`, `61870d9e7`, `b044c486e`, amd-tower) | No: cell values come from census-verified evaluations; tiers and p values do not. **2026-10-14: VERIFIED** (S164 record) | Signed `55map-final-board-r2-2026-09-06`, `55map-r2-leaderboard-50m`, `55map-r2-leaderboard-mcc-50m`; R0-02, R1-11, R6-06, R6-12, R6-14, R7.1-01/-04/-05/-06/-10/-12/-13, R7.2-02/-17/-18/-23; the headline 0.8827 / 0.8871; D53's text P and R | (a) Cross-read each board cell's F1 and MCC against its verified `evaluation.json` (read-only, seconds); (b) rebuild the three boards at `22353e660` (`final_board_build.py`, `build_55map_leaderboard.py`, `mcc_tiering_55map.py`, `--reference r2`) and compare tiering exactly; tens of minutes (not recorded) |
-| W2-3 | K-ladder: Phase 2 verifier stages, unions, carried-point derivations, tier E, MCB sets, MCC test, ladder tables (547 files, 170 of them materialised cells) | 2026-09-12/13, "executed on sapphire" (`326181bcd`), unions "on sapphire" (`e3232d65b`), MCB "all compute on sapphire" (`b7e2821ba`); ladder tables regenerated on sapphire 2026-10-04 (`0f484491c`, `2e0c2941d`, `32d0c6445`) | Cells yes (105 replayed, 3 byte-diff); MCB gated against the committed ranking within 4.958e-05 (a tolerance, not exact); rest no | Signed `k-ladder-2026-09-12`; R1b-17, R3-10 to R3-15, R6-11, R6-14 to R6-18; frontier costs | `check_union_provenance.py` on the 28 unions; tiering and MCB at their commits (seed 42) compared exactly; table builders' `--check`; about an hour (estimate). Phase 6 recomputes the 3.7 ladders anyway |
-| W2-4 | Tile-MCC re-sweeps of 23 families and the carried-analogue and MCC-oracle cells on the r2 board (52 files) | 2026-09-20; saross, "on sapphire, 20 workers, 51 min" (`a1c4bf2c3`) and "50 min" (`03b8496ed`) | Cells yes; sweeps no | D6, D6a ("every family's tile-MCC argmax at the lowest vote count"), D6c; tile-presence presentation | Re-run the sweeps; about 100 min on 20 workers (recorded) |
+| W2-3 | K-ladder: Phase 2 verifier stages, unions, carried-point derivations, tier E, MCB sets, MCC test, ladder tables (547 files, 170 of them materialised cells) | 2026-09-12/13, "executed on sapphire" (`326181bcd`), unions "on sapphire" (`e3232d65b`), MCB "all compute on sapphire" (`b7e2821ba`); ladder tables regenerated on sapphire 2026-10-04 (`0f484491c`, `2e0c2941d`, `32d0c6445`) | Cells yes (105 replayed, 3 byte-diff); MCB gated against the committed ranking within 4.958e-05 (a tolerance, not exact); rest no. **2026-10-15: VERIFIED** for every checkable file, MCB exact; real-time verifier outputs NOT CHECKABLE (S164 record) | Signed `k-ladder-2026-09-12`; R1b-17, R3-10 to R3-15, R6-11, R6-14 to R6-18; frontier costs | `check_union_provenance.py` on the 28 unions; tiering and MCB at their commits (seed 42) compared exactly; table builders' `--check`; about an hour (estimate). Phase 6 recomputes the 3.7 ladders anyway |
+| W2-4 | Tile-MCC re-sweeps of 23 families and the carried-analogue and MCC-oracle cells on the r2 board (52 files) | 2026-09-20; saross, "on sapphire, 20 workers, 51 min" (`a1c4bf2c3`) and "50 min" (`03b8496ed`) | Cells yes; sweeps no. **2026-10-15: VERIFIED** (S164 record) | D6, D6a ("every family's tile-MCC argmax at the lowest vote count"), D6c; tile-presence presentation | Re-run the sweeps; about 100 min on 20 workers (recorded) |
 | W2-5 | Uplift supplement: flatten `conditions.csv`, `conditions-by-buffer.csv`, `strata.csv`, `column-spec.json`; verifier-pairing engine summaries; twin materialisations (177) | 2026-09-08 to 09-12; twins "scored on sapphire" (`d23596c78`), saross (`51392bc59`) | Partly: the flatten's OLD rerun differs only through 66 later registrations and `cost_usd` (S3 stopped line) | Signed `uplift-supplement-flatten`; the paper's 55-map uplift | Fold into D61 (5): replay the flatten at `741a4eaff` and require an exact match; re-materialise twins and byte-compare; minutes |
 | W2-6 | Era-2 board extras: optimism sweeps (`3097e9bbe`), opmax re-materialisations (`2c3132edc`) and staleness re-sweep (`fe84765d8`), admission scoring (`7ea38de6e`) (65) | 2026-09-10 to 09-12; `fe84765d8` and `7ea38de6e` name sapphire; the others record no host | No | R4-25 (optimism); signed `gs-era2-verified-board-2026-09-10` | Re-run the optimism sweeps; minutes. Phase 6 rebuilds the board (S3 flag 5) |
-| W2-7 | Modality-track audit recomputation (`recomputation.json`, recomputed tile-size and working-precision files) | 2026-09-13T23:48Z, "Run on sapphire" (`d5eaeb1ee`) | No | R2-06 (image-bearing tile MCC 0.0665 to 0.291); E88 amendments (`70b47979a`); R0-04, R1-01, R1-02, R1-06 via `gs-plateau-characterisation` | Re-run the recomputation; minutes |
-| W2-8 | E70 bootstrap interval re-run: `results/all-bootstrap-cis.json` (85 entries), `ci-metadata-registry.md` | 2026-09-12, "37.6 s wall on 16 workers on sapphire" (`8c89ccebb`) | No | The interval registry the paper cites from | Re-run; under a minute |
+| W2-7 | Modality-track audit recomputation (`recomputation.json`, recomputed tile-size and working-precision files) | 2026-09-13T23:48Z, "Run on sapphire" (`d5eaeb1ee`) | No. **2026-10-15: VERIFIED** (S164 record) | R2-06 (image-bearing tile MCC 0.0665 to 0.291); E88 amendments (`70b47979a`); R0-04, R1-01, R1-02, R1-06 via `gs-plateau-characterisation` | Re-run the recomputation; minutes |
+| W2-8 | E70 bootstrap interval re-run: `results/all-bootstrap-cis.json` (85 entries), `ci-metadata-registry.md` | 2026-09-12, "37.6 s wall on 16 workers on sapphire" (`8c89ccebb`) | No. **2026-10-15: VERIFIED** (S164 record) | The interval registry the paper cites from | Re-run; under a minute |
 | W2-9 | h6 A-06 and A-09 (`a06_decision_rule.json`, `a09_cost_gate.json`) | 2026-09-08T13:01Z; saross (`cd8dc5591`) | Partly: Phase 3's OLD rerun differs from A-06 only in its 28 p-method fields and from A-09 only in 18 cost fields. **2026-10-14: DONE** (D65; PR #35, `3a5e5c453`) | Signed `h6-a06-decision-rule`, `h6-a09-cost-gate` | Already superseded by D61 (3) and D61 (4); require the regenerated non-p and non-cost fields to equal the committed ones |
 | W2-10 | Rulings 2 and 3a re-scores: Track-2 engine outputs under `results/stride55-rescore-2026-09-07/` (19) | 2026-09-07T04:42Z, "sapphire, $0" (`26cc430ad`, saross) | No (not evaluation cells) | Stride rows' evidence homes | Re-run the engine (B = 10,000, seed 42); minutes |
 | W2-11 | Inputs written on sapphire: r2 sweep materialisations (`7894b5b5a`, 31), union rebuilds (`e9d1db0d0`, `f8e0eb600`), recovery verifier stages and consensus rebuilds of 2026-09-08 (`43516df9a` and four others), and the API outputs of the image campaigns (227 files) | 2026-09-07 to 09-20; saross or bodies naming sapphire | No: the census verifies scoring given these files, not the files. **2026-10-14: VERIFIED** for every checkable file; raw API outputs NOT CHECKABLE (S164 record) | Every cell built on them | Unions: `check_union_provenance.py`; materialisations and consensus: rebuild and byte-compare (seconds each); API outputs: re-parse from committed per-chunk results where kept (`21d1b497d`), otherwise not without spend |
@@ -257,6 +258,31 @@ committed artefact was produced twice and compared byte for byte.
   files that covers is to be checked against the inventory before ticking.
 
 ## Changelog
+
+### 2026-10-15 — D67 (2) re-check verdicts
+
+PI ruling D67 (2) re-checked rows W2-3, W2-4, W2-7, and W2-8 on the fixed
+sapphire by exact reproduction at each file's generating commit, with no
+API call. Record: `reports/s164-agent-records/fault-window-rechecks.md`
+(changelog entry 2026-10-15); drivers in
+`reports/s164-agent-records/fault-window-rechecks-scripts/{w2-3,w2-4,w2-7,w2-8}/`.
+As before, the dated mark in each row's "Verified?" cell is the only
+change to the tables. No unexplained difference was found, and the
+kernel's "Bad page state" count stayed 0 before and after.
+
+| Row | Verdict (2026-10-15) |
+|---|---|
+| W2-3 | VERIFIED for 512 of 920 files; 324 cell evaluations census-verified; 66 real-time verifier outputs NOT CHECKABLE; 18 prose or code. The MCB sets reproduce exactly, so this row's "within 4.958e-05" caveat can be dropped |
+| W2-4 | VERIFIED: all 52 files byte for byte (23 sweep CSVs, `sweeps.json`, 27 cell detection sets, `cells_manifest.json`), each at its own commit |
+| W2-7 | VERIFIED: 8 files byte for byte, 2 after `generated_at_utc` |
+| W2-8 | VERIFIED: both stores byte for byte after the 85 entries' `recomputed_at` and `elapsed_seconds` |
+
+Within W2-3, the two registered K-ladder cells of W2-14 (the
+tile-join-withheld 3.7 K = 1 cells) were re-scored at `326181bcd` and
+reproduce every number, intervals and tile MCC included; W2-14's 21
+uplift cells were not checked, and its row is not marked. Still not
+re-checked: W1-6, W1-7, W1-9 to W1-12, W1-14, W2-5, W2-6, W2-10, W2-12,
+W2-14 (but for those two cells), and W3.
 
 ### 2026-10-14 — D62 (7) re-check verdicts
 
