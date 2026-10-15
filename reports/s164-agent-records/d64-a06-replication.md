@@ -231,6 +231,30 @@ topped-up wave-3 tiles from both sides.
 the confirmatory verdicts for C1 and C2 from passes 4–6, not the pooled p
 values.
 
+### P12.1 Wording for each replication verdict (added 2026-10-15, before any pass 4–6 F1 was computed)
+
+**Power, stated in advance** (a side agent's note relayed by the PI; an
+approximation from passes 1–3's own figures, not a simulation): passes 4–6
+are no larger than passes 1–3, so the replication has the same noise
+(standard error about 0.015 for C1, 0.016 for C2). If the true effects were
+exactly as first observed, a replication |Δ| of at least 0.03 would appear
+about 69 % (C1) and 59 % (C2) of the time, and all four criteria together
+roughly 55–65 % and about 50 %; if the true effects are smaller, as
+borderline first results often prove, the odds fall to about 40 % or less.
+PARTLY REPLICATES is therefore a likely outcome even for a real effect.
+
+**Wording (approved by the PI, 2026-10-15)**, used in this record, A-06's
+outcome text, and the new Observation, for each of C1 and C2:
+
+| Verdict | Condition | Wording |
+|---|---|---|
+| REPLICATES | all four criteria met | "confirmed on three independent passes run the next day" |
+| PARTLY | same sign; not all of p, 0.03, and floor | "same direction on three further passes but not confirmed; the check had roughly even odds of passing even if the effect were as large as first seen", with which criteria failed, and the pooled six-pass estimate as secondary |
+| FAILS | opposite sign | "not replicated: the direction reversed on three further passes" |
+
+**A-06 headline for each C1 verdict**: pending the PI's choice (recorded
+here before any pass 4–6 F1 is computed).
+
 ## Bottom line
 
 1. **A-06's registered verdict reproduces on same-day data.** With the
