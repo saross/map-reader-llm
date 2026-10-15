@@ -188,6 +188,49 @@ on the 0.03 rule; a failed gate; a factor-T Δ inside its floor where the
 committed A-06 read a clear effect; a D64 corner that differs from its
 committed counterpart by more than the floor.
 
+### P12. Confirmatory test on image passes 4–6 (added 2026-10-15, before any pass 4–6 F1 was computed)
+
+**Why.** After this record's first results (passes 1–3), the PI approved
+three more passes per image corner (runs 4–6, wave 3, committed
+`9664f1094`; PI ruling D66 (4)), and the case for them rested partly on the
+two borderline image results below. Data collected because a result looked
+borderline cannot be pooled with it without overstating that result. So,
+following a side agent's note relayed by the PI (D67), passes 4–6 are a
+separate replication, specified here before any of their F1 values were
+computed (the only figures read from them so far are cost, thought tokens,
+and failed-tile counts, for the run's stop rule). Passes 4–6 ran on
+2026-10-14, one day after passes 1–3, all four image corners on that day.
+
+**Data.** The 12 wave-3 image passes after the D67 (1) batch-mode top-up
+restores every pass to 487 of 487 tiles; scored exactly as in P2 (the D50
+scorer, 20 m, all 487 GS tiles, pass-averaged micro-F1).
+
+**The two confirmatory contrasts** (the borderline image results of passes
+1–3): **C1**, image HIGH − MEDIUM at T 0.0 (passes 1–3: +0.0374, BH-adjusted
+p 0.043); **C2**, image T 0.0 − T 0.7 at MEDIUM (passes 1–3: +0.0336, BH p
+0.0318). Each is estimated on passes 4–6 alone, with the paired tile-swap
+permutation test as in P3 (D42; tiles in sorted order, D63), and BH across
+C1 and C2 only.
+
+**Replication criterion, fixed in advance.** A contrast REPLICATES if all
+four hold on passes 4–6 alone: (a) its sign matches passes 1–3; (b) its
+BH-adjusted p < 0.05; (c) |Δ| ≥ 0.03 (A-06's rule); (d) |Δ| exceeds the
+image replicate floor computed from passes 4–6 alone as in P6 (K = 1, 12
+pairs). It PARTLY replicates if (a) holds but not all of (b)–(d), and FAILS
+to replicate if (a) does not hold. Each criterion is reported separately.
+
+**Secondary, labelled as such.** The pooled six-pass estimates for all eight
+contrasts (with the note that the extension was data-dependent, so their p
+values are not used for C1 or C2); the other two image factor-T contrasts on
+passes 4–6 alone, for completeness; a day-effect check (per image corner,
+passes 1–3 against passes 4–6, as a K = 3 disjoint-subset difference,
+against the K = 1 floor); and the P7-style sensitivity dropping the
+topped-up wave-3 tiles from both sides.
+
+**What A-06 quotes.** The A-06 outcome text and the new Observation quote
+the confirmatory verdicts for C1 and C2 from passes 4–6, not the pooled p
+values.
+
 ## Bottom line
 
 1. **A-06's registered verdict reproduces on same-day data.** With the
