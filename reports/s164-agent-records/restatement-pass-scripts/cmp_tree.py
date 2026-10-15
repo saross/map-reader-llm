@@ -8,7 +8,9 @@ Every file present in either tree is compared. A byte mismatch is re-checked
 after (a) dropping JSON keys whose name is in --ignore (default: timestamp,
 generated_at_utc, generated_at) at any depth and (b) replacing each --roots
 prefix with "<ROOT>" in every string, so two runs that read the same files
-from different checkouts compare equal. Anything else that differs is listed
+from different checkouts compare equal, and (c) for Markdown, dropping the
+"**Generated**" line a rendered evaluation.md stamps (S164 restatement pass
+addition). Anything else that differs is listed
 with up to 20 of its differing JSON leaves. Exit 1 on any mismatch.
 
 Author: Shawn Ross, Claude Code (S164). Licence: Apache 2.0
@@ -85,6 +87,12 @@ def main() -> int:
         ta, tb = ba.decode(errors="replace"), bb.decode(errors="replace")
         for r in roots:
             ta, tb = ta.replace(r, "<ROOT>"), tb.replace(r, "<ROOT>")
+        if rel.suffix == ".md":
+            # A rendered evaluation.md stamps its generation time on one line.
+            ta = "\n".join(x for x in ta.splitlines()
+                           if not x.startswith("**Generated**"))
+            tb = "\n".join(x for x in tb.splitlines()
+                           if not x.startswith("**Generated**"))
         if ta == tb:
             same_norm += 1
             continue

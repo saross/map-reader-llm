@@ -3,61 +3,192 @@
     "n_iterations": 10000,
     "seed": 42
   },
+  "note": "Each stride K = 10 condition at its REGISTERED operating point (its register label), with the regenerated board's best point beside it. Regenerated 2026-10-15 by the S164 restatement pass with the D62 (1) re-verified rows; a registered condition keeps its point when the best point moves (PI ruling D65 (3)). Driver: reports/s164-agent-records/restatement-pass-scripts/gs_conditions.py.",
   "cells": [
     {
       "cell": "g512_ov176",
-      "n": 390,
-      "sweep_f1": 0.8655256723716381,
-      "rescored_f1": 0.8655,
-      "ci": [
-        0.8305,
-        0.8934
+      "condition_label": "g512-ov176-k10-verified-p0.15-k6",
+      "point": [
+        0.15,
+        6
       ],
-      "reproduces": true
+      "n": 396,
+      "sweep_f1": 0.8713592233009708,
+      "rescored_f1": 0.8714,
+      "ci": [
+        0.8377,
+        0.8984
+      ],
+      "reproduces": true,
+      "registered_point_is_best": false,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 7,
+        "n_detections": 391,
+        "sweep_f1_at_20m": 0.8717948717948718
+      },
+      "verifier_probabilities": {
+        "dir": "outputs/stride-phaseb-2026-08-25/verifier/g512_ov176/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "34433011e344679f27ce37339930e6ad8b4ca5a18fb86539a2518b3720ecf132",
+        "n_results": 1981,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 24,
+        "reverify_usd": 0.017093,
+        "reverify_records": [
+          "outputs/stride-phaseb-2026-08-25/verifier/g512_ov176/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      }
     },
     {
       "cell": "g384_ov128",
-      "n": 387,
-      "sweep_f1": 0.898159509202454,
-      "rescored_f1": 0.8982,
-      "ci": [
-        0.8698,
-        0.9213
+      "condition_label": "g384-ov128-k10-verified-p0.15-k8",
+      "point": [
+        0.15,
+        8
       ],
-      "reproduces": true
+      "n": 394,
+      "sweep_f1": 0.9075425790754257,
+      "rescored_f1": 0.9075,
+      "ci": [
+        0.8816,
+        0.929
+      ],
+      "reproduces": true,
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 8,
+        "n_detections": 394,
+        "sweep_f1_at_20m": 0.9075425790754257
+      },
+      "verifier_probabilities": {
+        "dir": "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "19109d0e4a8c251ba11fe6d7acc53782fa03c494fb198e8c4ba4964bbaae87f4",
+        "n_results": 2387,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 11,
+        "reverify_usd": 0.007998,
+        "reverify_records": [
+          "outputs/stride-phaseb-2026-08-25/verifier/g384_ov128/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      }
     },
     {
       "cell": "g256_ov064",
-      "n": 427,
-      "sweep_f1": 0.87953216374269,
-      "rescored_f1": 0.8795,
-      "ci": [
-        0.8503,
-        0.9036
+      "condition_label": "g256-ov064-k10-verified-p0.15-k8",
+      "point": [
+        0.15,
+        8
       ],
-      "reproduces": true
+      "n": 435,
+      "sweep_f1": 0.8876013904982618,
+      "rescored_f1": 0.8876,
+      "ci": [
+        0.8602,
+        0.9101
+      ],
+      "reproduces": true,
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 8,
+        "n_detections": 435,
+        "sweep_f1_at_20m": 0.8876013904982618
+      },
+      "verifier_probabilities": {
+        "dir": "outputs/stride-phaseb-2026-08-25/verifier/g256_ov064/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "795035169bd1ba34a462d6f285860fe907fc941781bf9cce9af3168782529f11",
+        "n_results": 3570,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 22,
+        "reverify_usd": 0.015071,
+        "reverify_records": [
+          "outputs/stride-phaseb-2026-08-25/verifier/g256_ov064/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      }
     },
     {
       "cell": "g512_ov320",
-      "n": 397,
-      "sweep_f1": 0.8799999999999999,
-      "rescored_f1": 0.88,
-      "ci": [
-        0.8478,
-        0.9055
+      "condition_label": "g512-ov320-k10-verified-p0.15-k10",
+      "point": [
+        0.15,
+        10
       ],
-      "reproduces": true
+      "n": 401,
+      "sweep_f1": 0.8854041013268998,
+      "rescored_f1": 0.8854,
+      "ci": [
+        0.8532,
+        0.9101
+      ],
+      "reproduces": true,
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 10,
+        "n_detections": 401,
+        "sweep_f1_at_20m": 0.8854041013268998
+      },
+      "verifier_probabilities": {
+        "dir": "outputs/stride-phaseb-2026-08-25/verifier/g512_ov320/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "349258e0a80fbbcea4def3707297ea5cd341403f4685f0c1450ecdb9738dbc3f",
+        "n_results": 3778,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 38,
+        "reverify_usd": 0.027111,
+        "reverify_records": [
+          "outputs/stride-phaseb-2026-08-25/verifier/g512_ov320/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      }
     },
     {
       "cell": "g384_ov240",
-      "n": 423,
-      "sweep_f1": 0.8860164512338425,
-      "rescored_f1": 0.886,
-      "ci": [
-        0.8588,
-        0.9093
+      "condition_label": "g384-ov240-k10-verified-p0.15-k10",
+      "point": [
+        0.15,
+        10
       ],
-      "reproduces": true
+      "n": 429,
+      "sweep_f1": 0.8938156359393231,
+      "rescored_f1": 0.8938,
+      "ci": [
+        0.8679,
+        0.9154
+      ],
+      "reproduces": true,
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 10,
+        "n_detections": 429,
+        "sweep_f1_at_20m": 0.8938156359393231
+      },
+      "verifier_probabilities": {
+        "dir": "outputs/stride-phasec-2026-08-25/verifier/g384_ov240/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "9e52224a15ae93c31ab9c29f83c734d5347fe91fed5f43f5bfb30a02401e910f",
+        "n_results": 5250,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 19,
+        "reverify_usd": 0.0134,
+        "reverify_records": [
+          "outputs/stride-phasec-2026-08-25/verifier/g384_ov240/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      }
     }
   ]
 }
