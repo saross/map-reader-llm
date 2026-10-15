@@ -783,7 +783,7 @@ the bridge flips no more tiles than an execution does, Gemini 3 text the
 exception); Run C's three flags; the 55-map paragraph of § 4 item 4; the
 W2.7 § 3 floors; the six-cell anchor gate, which still reads the originals
 as registered. Commits: `02339bd98` (the origin-route fix and its tests)
-and `OUTPUTS_COMMIT` (these outputs and this entry).
+and `d6111dafb` (these outputs and this entry).
 
 ### 2026-10-08 — Run C: the verifier's re-invocation noise, measured
 
