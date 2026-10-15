@@ -1,8 +1,23 @@
 # VLM Burial Mound Detection: Comprehensive Leaderboard
 
-> **Last revised**: 2026-08-02 (E72 — superseded-figures banner added and the
+> **Last revised**: 2026-10-15 (restated-figures banner added for the 20 m
+> pairwise run regenerated on the consensus route, PI ruling D60 (3); tables
+> unchanged). Prior: 2026-08-02 (E72 — superseded-figures banner added and the
 > temperature-interpretation prose corrected). See
 > [§ Changelog](#changelog) for revision history.
+>
+> **Restated figures (2026-10-15, D60 (3))**: the 325-pair run under
+> `results/pairwise/leaderboard-20m/` was regenerated with the consensus route
+> that keeps each cluster's contributing tiles (PR #37). Sixteen consensus and
+> single-pass cells' F1 rise by +0.0018 to +0.0033; no proposer–verifier cell
+> moves. Among them, #9 (FH text 26/30) reads 0.816 and now sits above #8
+> (0.814) inside Tier 3, and #23 (single-pass T=0 5/5) reads 0.547 on 954
+> detections (D61 (2); its March per-pair files stay as records, with today's
+> runs beside them under `results/rescore-2026-10-15/pairwise/`). The nine
+> tiers keep their members, 265 of 325 pairs are still significant (two pairs
+> swap in opposite directions), and #1 against #2 keeps raw p = 0.0398 with
+> q = 0.0490 (was 0.0488). The tables below keep their 2026-03-29 values; the
+> changelog lists every moved row.
 >
 > **⚠ Superseded figures (2026-08-02, E72)**: the three `FM text T=1.0` rows
 > (#24 in Tier 8; #25 and #26 in Tier 9) derive from
@@ -82,7 +97,8 @@ from the large proposer pool.
 
 **[corrected 2026-08-02, E72]** The solitary Tier 1 does not survive the
 regenerated board. The separation from #2 was marginal — raw p = 0.0398,
-BH-adjusted q = 0.0488 against the 325-member family — and dropping the
+BH-adjusted q = 0.0488 against the 325-member family (0.0490 on the
+2026-10-15 regeneration) — and dropping the
 three confounded cells shrinks that family to 253, lifting the same
 raw p-value to q = 0.0503. On the regenerated 23-condition board
 (`results/e43-board-regen/leaderboard-20m/`) #1 and #2 share Tier 1,
@@ -456,6 +472,63 @@ benefits significantly from doubling the consensus pool beyond N=5.
 > significant after BH, 8 tiers (`results/e43-board-regen/`).
 
 ## Changelog
+
+### 2026-10-15 — Restated-figures banner for the regenerated 20 m run (PI ruling D60 (3))
+
+**Trigger**: PI rulings D60 (3) and D62 (2)
+(`planning/pi-decisions-2026-09-20.md`), executed by the S164
+restatement pass (`reports/s164-agent-records/restatement-pass.md`,
+§ 1.5). PR #37 (fix `4e9d659ab`;
+`reports/s163-agent-records/d60-3-consensus-route.md`) made the
+in-memory consensus route keep each cluster's contributing tiles, so a
+consensus detection is scored on its origin sheet. `run_pairwise_tests.py
+--leaderboard configs/condition-registry.yaml --metrics
+results/paper-tables/metrics_master.csv --top-n 26 --buffer-metres 20`
+and `apply_fdr_correction.py` were re-run on sapphire in two
+independent copies that agree apart from timestamps and run roots, and
+committed at `08af04cf3`. The 49 per-pair files that read the
+single-pass 5-of-5 or 10-of-10 arm stay in `group_8/` as March records,
+and today's runs sit beside them; the manifest and `fdr/` are today's
+complete run. This document is a dated snapshot, so, as under E72, its
+tables keep their values and a banner carries the restatement.
+
+| Row | F1 @ 20 m before | after |
+|---|---:|---:|
+| #6 Pro H text 3/5 (N=5 cons.) | 0.840 | 0.843 |
+| #9 FH text 26/30 (consensus) | 0.814 (0.814118) | 0.816 (0.816471) |
+| #11 FH text 9/10 (consensus) | 0.797 | 0.799 |
+| #12 FH text 5/5 (consensus) | 0.779 | 0.781 |
+| #13 FH image 7/10 (consensus) | 0.750 | 0.752 |
+| #14 FH image 3/5 (consensus) | 0.727 | 0.729 |
+| #17 FM image 8/10 (consensus) | 0.680 | 0.682 |
+| #18 FM image 4/5 (consensus) | 0.664 | 0.666 |
+| #19 FM text T=0.7 29/30 | 0.661 | 0.663 |
+| #20 FM text T=0.7 5/5 | 0.640 | 0.642 |
+| #21 FM text T=0.7 10/10 | 0.633 | 0.635 |
+| #22 Single-pass T=0 10/10 | 0.552 (898 detections) | 0.555 (901) |
+| #23 Single-pass T=0 5/5 | 0.544 (951 detections) | 0.547 (954) |
+| #24 to #26 FM text T=1.0 (void under E72) | 0.471, 0.467, 0.462 | 0.474, 0.469, 0.464 |
+| #1 against #2: raw p; q | 0.0398; 0.0488 | 0.0398; 0.0490 |
+| Pairs that change significance | — | FM text T=0.7 29/30 against image baseline + PV: q 0.0472 → 0.0569 (no longer significant); single-pass 5/5 against FM text T=1.0 22/30: q 0.0509 → 0.0495 (now significant) |
+
+Source: `results/pairwise/leaderboard-20m/fdr/pairwise_results_fdr.json`
+(`comparisons[]`: `f1_a`, `f1_b`, `p_value_raw`, `p_value_adj`,
+`significant`), read at `718d0ee08` (before) and at the pass's head
+(after). The tiers were checked by applying the greedy-clique rule to
+both files: nine tiers with the same members, #8 and #9 swapping order
+inside Tier 3.
+
+**What did NOT change**: every table and every proposer–verifier row
+(#1 to #5, #8, #10, #15), #7 and #16; 26 conditions, 325 tests, 265
+significant, 9 tiers; #1 against #3 on this board (raw p 0.0207,
+q 0.0263); the
+E72 banner and corrections, and the regenerated 23-condition board
+(`results/e43-board-regen/`, not regenerated in this pass). The
+confidence intervals, precision, recall and tile metrics in the tables
+come from evaluations this pass did not re-run.
+
+**Commit**: `08af04cf3` (the regenerated 20 m leaderboard run); this
+document refresh in the restatement pass's document commit.
 
 ### 2026-08-02 — Temperature interpretation corrected under E72
 
