@@ -1,31 +1,31 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-09-08T13:13:55.917567+00:00",
+  "timestamp": "2026-10-15T11:42:32.856538+00:00",
   "summary": {
     "label": "stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10-unverified",
     "n_detections": 1215,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.4857,
-        "f1_point": 0.4857,
-        "f1_ci_lower": 0.4331,
-        "f1_ci_upper": 0.5394,
+        "f1": 0.4954,
+        "f1_point": 0.4954,
+        "f1_ci_lower": 0.4425,
+        "f1_ci_upper": 0.5486,
         "f1_ci_method": "BCa",
-        "precision": 0.3284,
-        "p_point": 0.3284,
-        "p_ci_lower": 0.2823,
-        "p_ci_upper": 0.378,
+        "precision": 0.335,
+        "p_point": 0.335,
+        "p_ci_lower": 0.2885,
+        "p_ci_upper": 0.3848,
         "p_ci_method": "BCa",
-        "recall": 0.9322,
-        "r_point": 0.9322,
-        "r_ci_lower": 0.8987,
-        "r_ci_upper": 0.9565,
+        "recall": 0.9509,
+        "r_point": 0.9509,
+        "r_ci_lower": 0.9235,
+        "r_ci_upper": 0.9703,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
-          "n_zero_count_tiles": 81,
-          "zero_fraction": 0.16632443531827515,
+          "n_zero_count_tiles": 77,
+          "zero_fraction": 0.15811088295687886,
           "threshold": 0.5,
           "coverage_status": "normal",
           "coverage_source": "zero_fraction_heuristic",
@@ -42,42 +42,63 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 1215,
+      "n_in_scope": 1215,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 0,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_origin_excluded": 0,
+      "n_origin_partly_excluded": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "origin_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
-        "tp": 211,
-        "tn": 67,
-        "fp": 195,
-        "fn": 14
+        "tp": 214,
+        "tn": 66,
+        "fp": 196,
+        "fn": 11
       },
       "mcc": {
-        "point": 0.2591,
-        "mean": 0.2582,
-        "ci_lower": 0.1775,
-        "ci_upper": 0.3295,
+        "point": 0.2774,
+        "mean": 0.2766,
+        "ci_lower": 0.1993,
+        "ci_upper": 0.3431,
         "method": "BCa"
       },
       "sensitivity": {
-        "point": 0.9378,
-        "mean": 0.9376,
-        "ci_lower": 0.899,
-        "ci_upper": 0.9648,
+        "point": 0.9511,
+        "mean": 0.951,
+        "ci_lower": 0.9148,
+        "ci_upper": 0.9749,
         "method": "BCa"
       },
       "specificity": {
-        "point": 0.2557,
-        "mean": 0.2555,
-        "ci_lower": 0.2053,
-        "ci_upper": 0.3123,
+        "point": 0.2519,
+        "mean": 0.2516,
+        "ci_lower": 0.2022,
+        "ci_upper": 0.3086,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "c1d6424b7",
+    "script_git_commit": "98ab69abc",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-09-08T13:13:53.015432+00:00",
+    "generated_at_utc": "2026-10-15T11:42:30.549438+00:00",
     "cli_args": {
       "detections": [
         "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/twin-10of10.geojson"
@@ -95,6 +116,7 @@
       "output_dir": "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10",
       "label": "stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10-unverified",
       "mcc": true,
+      "tile_join": "id",
       "require_clean_inputs": false,
       "workers": 1
     },
@@ -117,11 +139,16 @@
       "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
     },
     "input_git_state": {
-      "head": "c1d6424b7",
+      "head": "98ab69abc",
       "inputs": {
-        "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/twin-10of10.geojson": "untracked",
+        "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/twin-10of10.geojson": "modified",
         "inputs/vectors/references/mounds-reference.geojson": "clean",
         "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/twin-10of10.geojson": "c101ee1d05877a0444e29250e41785e431f79feb",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "7600bff7ccf8403d6fb3458bd73d9da61287c768"
       }
     },
     "spatial": {
