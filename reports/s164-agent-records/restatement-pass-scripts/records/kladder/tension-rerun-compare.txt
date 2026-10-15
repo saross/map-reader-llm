@@ -1,0 +1,54 @@
+# K-ladder step 7 re-run after step 5 (kl_tension_run.sh at 4660c0549, two whole-tree copies)
+## run A vs run B: grid-overlap.json and effect-sizes.json, 0 differing leaves (generation fields ignored)
+## committed (f53f6e97c) -> run A: grid-overlap.json 0 differing leaves; effect-sizes.json:
+differing leaves: 70
+   1 /rows[0] .../f1_best_ci: <absent> -> the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections
+   1 /rows[0] .../f1_low_ci: <absent> -> the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections
+   1 /rows[0] .../n_tiers: <absent> -> the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells
+   2 /rows[0] .../one_tier: False -> None; <absent> -> the tier classification derived from n_tiers, which is withheld
+   2 /rows[0] .../p_bh: 0.2768 -> None; <absent> -> the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutati
+   1 /rows[0] .../score_basis: <absent> -> clip-to-common-assessed-area
+   2 /rows[0] .../tile_mcc_best: 0.7735 -> None; <absent> -> tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections
+   2 /rows[0] .../tile_mcc_low: 0.7986 -> None; <absent> -> tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections
+   1 /rows[1] .../score_basis: <absent> -> as-evaluated
+   1 /rows[2] .../f1_best_ci: <absent> -> the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections
+   1 /rows[2] .../f1_low_ci: <absent> -> the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections
+   1 /rows[2] .../n_tiers: <absent> -> the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells
+   2 /rows[2] .../one_tier: False -> None; <absent> -> the tier classification derived from n_tiers, which is withheld
+   2 /rows[2] .../p_bh: 0.0012 -> None; <absent> -> the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutati
+   1 /rows[2] .../score_basis: <absent> -> clip-to-common-assessed-area
+   2 /rows[2] .../tile_mcc_best: 0.7881 -> None; <absent> -> tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections
+   2 /rows[2] .../tile_mcc_low: 0.8095 -> None; <absent> -> tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections
+   1 /rows[3] .../f1_best_ci: <absent> -> the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections
+   1 /rows[3] .../f1_low_ci: <absent> -> the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections
+   1 /rows[3] .../n_tiers: <absent> -> the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells
+   2 /rows[3] .../one_tier: False -> None; <absent> -> the tier classification derived from n_tiers, which is withheld
+   2 /rows[3] .../p_bh: 0.7803 -> None; <absent> -> the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutati
+   1 /rows[3] .../score_basis: <absent> -> clip-to-common-assessed-area
+   2 /rows[3] .../tile_mcc_best: 0.8377 -> None; <absent> -> tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections
+   2 /rows[3] .../tile_mcc_low: 0.8443 -> None; <absent> -> tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections
+   1 /rows[4] .../delta_f1: 0.0629 -> 0.06
+   1 /rows[4] .../f1_best: 0.7881 -> 0.7852
+   1 /rows[4] .../f1_best_ci: <absent> -> the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections
+   1 /rows[4] .../f1_low_ci: <absent> -> the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections
+   1 /rows[4] .../n_tiers: <absent> -> the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells
+   2 /rows[4] .../one_tier: False -> None; <absent> -> the tier classification derived from n_tiers, which is withheld
+   2 /rows[4] .../p_bh: 0.0006 -> None; <absent> -> the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutati
+   1 /rows[4] .../score_basis: <absent> -> clip-to-common-assessed-area
+   2 /rows[4] .../tile_mcc_best: 0.8223 -> None; <absent> -> tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections
+   2 /rows[4] .../tile_mcc_low: 0.8437 -> None; <absent> -> tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections
+   1 /rows[5] .../f1_best_ci: <absent> -> the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections
+   1 /rows[5] .../f1_low_ci: <absent> -> the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections
+   1 /rows[5] .../n_tiers: <absent> -> the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells
+   2 /rows[5] .../one_tier: False -> None; <absent> -> the tier classification derived from n_tiers, which is withheld
+   2 /rows[5] .../p_bh: 0.1236 -> None; <absent> -> the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutati
+   1 /rows[5] .../score_basis: <absent> -> clip-to-common-assessed-area
+   2 /rows[5] .../tile_mcc_best: 0.8078 -> None; <absent> -> tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections
+   2 /rows[5] .../tile_mcc_low: 0.836 -> None; <absent> -> tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections
+   1 /rows[6] .../score_basis: <absent> -> as-evaluated
+   1 /rows[7] .../score_basis: <absent> -> as-evaluated
+   1 /rows[8] .../score_basis: <absent> -> as-evaluated
+   1 /score_basis .../clip: <absent> -> clip-to-common-assessed-area
+   1 /score_basis .../clip_requested: <absent> -> True
+   1 /score_basis .../n_withheld: <absent> -> 5
+   1 /score_basis .../per_row: <absent> -> each row names its score basis. A gold-standard row reported 'clip-to-common-assessed-area' carries its ladder's clipped F1@20 values; every field computed o
