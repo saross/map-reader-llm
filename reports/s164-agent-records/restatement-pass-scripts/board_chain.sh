@@ -15,9 +15,13 @@
 #   4. era1_leaderboard_tiering.py --permute-mcc (tiering_20m.json and .md);
 #   5. selection_aware_intervals.py --board, F1 and tile-MCC (mcb/);
 #   6. the twenty sweep-optimism runs (optimism/), then
-#      summarise_sweep_optimism.py; the 3.7 image carried arm's board-frame
-#      run takes no anchor gate, because under PI ruling D65 (3) its board
-#      cell is its registered point, not the sweep's argmax;
+#      summarise_sweep_optimism.py; two board-frame runs take no anchor gate,
+#      because their board cell is no longer the board-frame sweep's argmax:
+#      the 3.7 image carried arm (under PI ruling D65 (3) its board cell is
+#      its registered (0.10, k5), the argmax (0.05, k5)) and the fourth cell
+#      (its board cell is the registered (0.98, k10), 0.9141 on the board
+#      frame; the board-frame argmax is (0.95, k10), 0.9144, though the GS
+#      frame's stays (0.98, k10));
 #   7. build_gs_era2_board.py finalise --no-analysis-row (README.md,
 #      provenance.json; the proposed outcome goes to provenance only).
 # Single-threaded, one process at a time. Legs under the default rule.
@@ -54,6 +58,9 @@ grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10
 grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10
 image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8
 image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9"
+# FROM=optimism resumes a copy whose earlier steps completed (S164: the
+# first runs stopped at the fourth cell's board-frame anchor gate).
+if [ "${FROM:-}" != optimism ]; then
 step membership "$PY" "$TOOLS/board_membership.py" "$COPY"
 step jobs "$PY" scripts/build_gs_era2_board.py jobs
 : > "$LOGDIR/moved-jobs.sh"
@@ -72,6 +79,8 @@ for m in f1 mcc; do
     --analyses $B/tiering-input/run-analyses.json --metric $m --bootstrap 10000 \
     --m-frac 1.0 --out $B/mcb
 done
+fi
+rm -f $B/optimism/*_b20_m1.json
 while IFS=$'\t' read -r stem union verify k bounds csv anchor; do
   extra=()
   # The committed-frame runs used the default bounds (grid-common), so they

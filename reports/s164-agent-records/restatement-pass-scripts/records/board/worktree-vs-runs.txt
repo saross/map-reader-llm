@@ -1,0 +1,7 @@
+# worktree files vs board runs A and B (which_run.py; run roots and ISO timestamps normalised)
+1 A:DIFF B:DIFF
+20 A:norm B:norm
+44 A:raw B:norm
+28 A:raw B:raw
+The 93 files are run A's, with run A's scratch root rewritten to the shared checkout's root.
+The one A:DIFF B:DIFF file is README.md after the hand restoration of its banner, E86 disclosure and changelog (record § 1.3); before that edit the generated README equalled both runs byte for byte.

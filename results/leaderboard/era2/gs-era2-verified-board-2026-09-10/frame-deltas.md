@@ -1,24 +1,24 @@
 # G6 — committed-frame versus board-frame F1 at 20 m (gs-era2-verified-board-2026-09-10)
 
-> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `70b47979a`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
+> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `unknown`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope") this projection carries provenance instead of a hand changelog.
 
-> Generated 2026-09-14T02:26:23+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
+> Generated 2026-10-15T11:43:13+00:00 by `scripts/build_gs_era2_board.py gates`. G2: 0 reproduction failures; G3: 0 frame failures; G4: 110 cells of 110 members.
 
 | condition | committed frame | committed F1@20 | board F1@20 | Δ (board − committed) | n features | n det. committed | n det. board |
 |---|---|---:|---:|---:|---:|---:|---:|
-| `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5` | grid_common_bounds.geojson | 0.9308 | 0.9233 | -0.0075 | 425 | 425 | 425 |
-| `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5` | grid_common_bounds.geojson | 0.9265 | 0.9190 | -0.0075 | 429 | 429 | 429 |
-| `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` | grid_common_bounds.geojson | 0.9258 | 0.9182 | -0.0076 | 421 | 421 | 421 |
-| `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5` | grid_common_bounds.geojson | 0.9254 | 0.9179 | -0.0075 | 430 | 430 | 430 |
-| `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | grid_common_bounds.geojson | 0.9142 | 0.9068 | -0.0074 | 423 | 423 | 423 |
-| `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | grid_common_bounds.geojson | 0.9139 | 0.9066 | -0.0073 | 443 | 443 | 443 |
-| `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10` | grid_common_bounds.geojson | 0.9140 | 0.9062 | -0.0078 | 386 | 386 | 386 |
+| `gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5` | grid_common_bounds.geojson | 0.9408 | 0.9332 | -0.0076 | 433 | 433 | 433 |
+| `gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5` | grid_common_bounds.geojson | 0.9364 | 0.9289 | -0.0075 | 437 | 437 | 437 |
+| `gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5` | grid_common_bounds.geojson | 0.9358 | 0.9282 | -0.0076 | 429 | 429 | 429 |
+| `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5` | grid_common_bounds.geojson | 0.9353 | 0.9278 | -0.0075 | 438 | 438 | 438 |
+| `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | grid_common_bounds.geojson | 0.9243 | 0.9169 | -0.0074 | 431 | 431 | 431 |
+| `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | grid_common_bounds.geojson | 0.9238 | 0.9165 | -0.0073 | 451 | 451 | 451 |
+| `grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10` | grid_common_bounds.geojson | 0.9220 | 0.9141 | -0.0079 | 392 | 392 | 392 |
+| `gemini37-screen-2026-08-28::g37-text-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.9135 | 0.9135 | +0.0000 | 495 | 495 | 495 |
+| `grid-2026-08-18::g384-ov192-k5-verified-opmax` | era2_b_intersection_bounds.geojson | 0.9046 | 0.9046 | +0.0000 | 435 | 435 | 435 |
+| `grid-2026-08-18::g384-ov192-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8979 | 0.8979 | +0.0000 | 450 | 450 | 450 |
 | `verifier-robustness::verified-384-16of30-t0-3-n5-opmax` | full_evaluation_bounds.geojson | 0.8951 | 0.8951 | +0.0000 | 423 | 423 | 423 |
-| `grid-2026-08-18::g384-ov192-k5-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8905 | 0.8905 | +0.0000 | 435 | 435 | 435 |
+| `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | grid_common_bounds.geojson | 0.9017 | 0.8942 | -0.0075 | 406 | 406 | 406 |
 | `pv-diag-384::verified-adv-text-consensus-16of30` | full_evaluation_bounds.geojson | 0.8902 | 0.8902 | +0.0000 | 412 | 412 | 412 |
-| `grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10` | grid_common_bounds.geojson | 0.8961 | 0.8886 | -0.0075 | 400 | 400 | 400 |
-| `gemini37-screen-2026-08-28::g37-text-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8860 | 0.8860 | +0.0000 | 495 | 495 | 495 |
-| `grid-2026-08-18::g384-ov192-k3-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8840 | 0.8840 | +0.0000 | 450 | 450 | 450 |
 | `pv-diag-384::verified-adv-text-min-6of10` | full_evaluation_bounds.geojson | 0.8835 | 0.8835 | +0.0000 | 389 | 389 | 389 |
 | `pv-diag-384::verified-adv-text-pro-vf-4of5` | full_evaluation_bounds.geojson | 0.8792 | 0.8792 | +0.0000 | 393 | 393 | 393 |
 | `pv-diag-384::verified-adv-text-min-true-3of5` | full_evaluation_bounds.geojson | 0.8784 | 0.8784 | +0.0000 | 412 | 412 | 412 |
@@ -26,6 +26,7 @@
 | `pv-diag-384::verified-adv-text-t03-4of5` | full_evaluation_bounds.geojson | 0.8783 | 0.8783 | +0.0000 | 403 | 403 | 403 |
 | `pv-diag-384::verified-adv-text-6of10` | full_evaluation_bounds.geojson | 0.8769 | 0.8769 | +0.0000 | 418 | 418 | 418 |
 | `verifier-robustness::verified-384-ge3of5-t0-3-high-n5` | full_evaluation_bounds.geojson | 0.8764 | 0.8764 | +0.0000 | 398 | 398 | 398 |
+| `gemini37-screen-2026-08-28::g37-text-k1-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8747 | 0.8747 | +0.0000 | 502 | 502 | 502 |
 | `verifier-robustness::verified-384-ge3of5-t0-3-n5` | full_evaluation_bounds.geojson | 0.8739 | 0.8739 | +0.0000 | 398 | 398 | 398 |
 | `verifier-robustness::verified-384-ge3of5-t0-7-high-n5` | full_evaluation_bounds.geojson | 0.8739 | 0.8739 | +0.0000 | 398 | 398 | 398 |
 | `pv-diag-384::pv-min-text-t0.7-n3-opmax` | era2_b_intersection_bounds.geojson | 0.8725 | 0.8725 | +0.0000 | 404 | 404 | 404 |
@@ -34,35 +35,34 @@
 | `pv-diag-384::pv-min-text-t0.3-n3-opmax` | era2_b_intersection_bounds.geojson | 0.8708 | 0.8708 | +0.0000 | 401 | 401 | 401 |
 | `pv-diag-384::verified-adv-text-min-n30lineage-4of5` | full_evaluation_bounds.geojson | 0.8708 | 0.8708 | +0.0000 | 378 | 378 | 378 |
 | `flash35-pv-2x2::f3prop-f35vf-6of10` | full_evaluation_bounds.geojson | 0.8689 | 0.8689 | +0.0000 | 389 | 389 | 389 |
+| `grid-2026-08-18::g384-ov192-k1-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8680 | 0.8680 | +0.0000 | 482 | 482 | 482 |
+| `grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1` | era2_b_intersection_bounds.geojson | 0.8673 | 0.8673 | +0.0000 | 493 | 493 | 493 |
 | `pv-diag-384::pv-min-text-t1.0-n3-opmax` | era2_b_intersection_bounds.geojson | 0.8647 | 0.8647 | +0.0000 | 400 | 400 | 400 |
 | `pv-diag-384::verified-adv-text-4of5` | full_evaluation_bounds.geojson | 0.8641 | 0.8641 | +0.0000 | 389 | 389 | 389 |
 | `pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3` | era2_b_intersection_bounds.geojson | 0.8629 | 0.8629 | +0.0000 | 360 | 360 | 360 |
+| `gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1` | era2_b_intersection_bounds.geojson | 0.8616 | 0.8616 | +0.0000 | 558 | 558 | 558 |
 | `pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3` | era2_b_intersection_bounds.geojson | 0.8586 | 0.8586 | +0.0000 | 364 | 364 | 364 |
 | `pv-diag-384::pv-min-text-t0.7-n1-opmax` | era2_b_intersection_bounds.geojson | 0.8575 | 0.8575 | +0.0000 | 414 | 414 | 414 |
 | `verifier-t-pilot::verified-t0-5` | full_evaluation_bounds.geojson | 0.8561 | 0.8561 | +0.0000 | 371 | 371 | 371 |
 | `pv-diag-384::pv-min-text-t0.3-n1-opmax` | era2_b_intersection_bounds.geojson | 0.8555 | 0.8555 | +0.0000 | 409 | 409 | 409 |
-| `grid-2026-08-18::g384-ov192-k1-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8546 | 0.8546 | +0.0000 | 482 | 482 | 482 |
 | `pv-diag-384::verified-adv-text-medium-vf-4of5` | full_evaluation_bounds.geojson | 0.8545 | 0.8545 | +0.0000 | 424 | 424 | 424 |
 | `pv-diag-384::pv-high-text-t1.0-n3-opmax` | era2_b_intersection_bounds.geojson | 0.8541 | 0.8541 | +0.0000 | 422 | 422 | 422 |
-| `grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1` | era2_b_intersection_bounds.geojson | 0.8540 | 0.8540 | +0.0000 | 493 | 493 | 493 |
 | `pv-diag-384::verified-adv-text-high-vf-4of5` | full_evaluation_bounds.geojson | 0.8519 | 0.8519 | +0.0000 | 429 | 429 | 429 |
 | `pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax` | full_evaluation_bounds.geojson | 0.8508 | 0.8508 | +0.0000 | 423 | 423 | 423 |
 | `verifier-t-pilot::verified-t0-0` | full_evaluation_bounds.geojson | 0.8507 | 0.8507 | +0.0000 | 369 | 369 | 369 |
 | `pv-diag-384::verified-adv-pro-text-pro-vf-3of5` | full_evaluation_bounds.geojson | 0.8506 | 0.8506 | +0.0000 | 348 | 348 | 348 |
-| `gemini37-screen-2026-08-28::g37-text-k1-verified-opmax` | era2_b_intersection_bounds.geojson | 0.8495 | 0.8495 | +0.0000 | 502 | 502 | 502 |
 | `pv-diag-384::verified-adv-pro-text-medium-vf-3of5` | full_evaluation_bounds.geojson | 0.8495 | 0.8495 | +0.0000 | 349 | 349 | 349 |
 | `pv-diag-384::pv-high-text-t0.7-n3-opmax` | era2_b_intersection_bounds.geojson | 0.8492 | 0.8492 | +0.0000 | 427 | 427 | 427 |
 | `pv-diag-384::verified-adv-pro-text-flash-vf-3of5` | full_evaluation_bounds.geojson | 0.8491 | 0.8491 | +0.0000 | 347 | 347 | 347 |
 | `flash35-pv-2x2::f35prop-f3vf-4of10` | full_evaluation_bounds.geojson | 0.8480 | 0.8480 | +0.0000 | 374 | 374 | 374 |
 | `verifier-t-pilot::verified-t1-0` | full_evaluation_bounds.geojson | 0.8422 | 0.8422 | +0.0000 | 370 | 370 | 370 |
 | `pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3` | era2_b_intersection_bounds.geojson | 0.8408 | 0.8408 | +0.0000 | 369 | 369 | 369 |
+| `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | grid_common_bounds.geojson | 0.8458 | 0.8387 | -0.0071 | 402 | 402 | 402 |
 | `flash35-pv-2x2::f35prop-f35vf-4of10` | full_evaluation_bounds.geojson | 0.8362 | 0.8362 | +0.0000 | 371 | 371 | 371 |
-| `image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9` | grid_common_bounds.geojson | 0.8412 | 0.8341 | -0.0071 | 397 | 397 | 397 |
-| `gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1` | era2_b_intersection_bounds.geojson | 0.8338 | 0.8338 | +0.0000 | 558 | 558 | 558 |
+| `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | grid_common_bounds.geojson | 0.8389 | 0.8319 | -0.0070 | 404 | 404 | 404 |
 | `pv-diag-384::pv-high-text-t0.3-n1-opmax` | era2_b_intersection_bounds.geojson | 0.8314 | 0.8314 | +0.0000 | 443 | 443 | 443 |
 | `pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1` | era2_b_intersection_bounds.geojson | 0.8301 | 0.8301 | +0.0000 | 454 | 454 | 454 |
 | `pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3` | era2_b_intersection_bounds.geojson | 0.8279 | 0.8279 | +0.0000 | 338 | 338 | 338 |
-| `image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8` | grid_common_bounds.geojson | 0.8333 | 0.8263 | -0.0070 | 400 | 400 | 400 |
 | `pv-diag-384::verified-adv-text-baseline-pro-vf` | full_evaluation_bounds.geojson | 0.8263 | 0.8263 | +0.0000 | 463 | 463 | 463 |
 | `pv-diag-384::verified-adv-text-baseline-medium-vf` | full_evaluation_bounds.geojson | 0.8244 | 0.8244 | +0.0000 | 465 | 465 | 465 |
 | `pv-diag-384::pv-min-text-t1.0-n1-opmax` | era2_b_intersection_bounds.geojson | 0.8235 | 0.8235 | +0.0000 | 415 | 415 | 415 |
