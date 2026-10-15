@@ -257,3 +257,21 @@ recovered. The three passes' pre-top-up `.geojson`, `.meta.json`, and
 `.tiles.json` files are preserved here, one directory per pass
 (`<corner>__detect_brief-text__run_<n>/`); the live files carry a
 `recovery_history` entry with the patch's own usage.
+
+## 2026-10-15 addition: `pre-topup-2026-10-15/`
+
+Wave 3 of the D64 same-day Gemini 3.1 Pro replication (image runs 4-6,
+D66 (4); `9664f1094`) finished with 152 tiles failed as `batch_api_error`
+in eight of its twelve passes. PI ruling D67 (1) (Session 164) approved a
+top-up in BATCH mode, the passes' own mode. On 2026-10-15 UTC,
+`scripts/topup_batch_failed_tiles.py` sent each pass's failed tiles as their
+own Batch API job with the pass's own command. It gated each result on the
+pass's recorded configuration, caching, and request file, then merged it
+through the project's resume merge. All 152 tiles were recovered. The eight
+passes' pre-top-up `.geojson`, `.meta.json`, and `.tiles.json` files are
+preserved here, one directory per pass (`<corner>__library_plus-hp__run_<n>/`).
+The live files carry a `recovery_history` entry naming the batch job.
+`topup-batch-outputs/` keeps each top-up's own outputs and failed-tile
+manifest as the detector wrote them. They sit outside `outputs/` so that no
+tool summing every meta under a run directory counts the top-up twice.
+Record: `outputs/pro-2x2-replication-2026-10-13/topup-2026-10-15.json`.
