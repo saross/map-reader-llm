@@ -164,7 +164,67 @@ in § 1.4 first. Prediction: re-score § 3.1, REPAIRED column (8,075 of
 order; F1 MCB set 52; tile-MCC 3,001 / 6 / 34 / 60; leaders 0.9332, 0.9289,
 0.9282, 0.9278, 0.9169).
 
-### 1.4 K-ladder lane (sub-agent; inventory pending)
+### 1.4 K-ladder lane (sub-agent)
+
+Inventory by an Opus sub-agent (`~/scratch/s164-restate-2026-10-15/lane-kladder/`;
+its per-sweep records are `out/kladder-lane-summary.json`). Four of its
+findings change the plan:
+
+- **The 3.7 opmax derivation is not on the origin route.**
+  `derive_g37_gs_opmax_rungs.py` sweeps and materialises from
+  `union_k{5,10}.geojson`, which records only a legacy `source_tile`, so the
+  re-verified wrong-sheet rows score on the wrong sheet: run as it stands it
+  gives 0.8984 at (0.10, k5) and (0.10, k10), against the origin-routed board
+  cells' 0.9165 and 0.9169 at the same points. It is fixed first (the union
+  through `image_b_analysis.load_image_union` and the origin step, with a
+  tier-1 test and a red sentinel), and its committed-count cross-check
+  (`CARRIED_CROSSCHECK`, K = 5, 443 features) gets a dated update to 451, the
+  restated `verified_best_20m.geojson`'s count.
+- **No opmax argmax moves** on the REPAIRED reading (decision 2 has nothing
+  to move): tier E K = 1 (0.20, k1), K = 3 (0.15, k3), K = 5 (0.15, k5); the
+  3.7 ladder's K = 1 (0.15, k1), K = 3 (0.10, k3), K = 5 (0.10, k5) and
+  K = 10 (0.10, k10), each on the board frame, clipped and unclipped.
+- **Today's Phase 2 builder refuses seven ladders on the D51 area gate**
+  (`build_k_ladder_phase2_tables.py` v1.4.0; the committed tables are
+  v1.2.1, before the gate): the 3.7 ladder and six Gemini 3 `pv-diag-384`
+  ladders. Their clip is ruled (D57 (2) and (3) for the six, D67 (5) for the
+  3.7 ladder) and was deferred to a ladder step that never ran, so the
+  builder runs with `--clip-to-common-area --allow-undetermined-area`: the
+  3.7 ladder reads 0.8682 / 0.9073 / 0.9165 / 0.9169 clipped (unclipped
+  0.8747 / 0.9135 / 0.9165 / 0.9169 beside), two Gemini 3 ladders' F1 move
+  by about 0.003–0.004 (HIGH text T 1.0, MINIMAL image T 0.7; within D57
+  (2)'s severity estimate), and the builder withholds tile-MCC on the seven
+  clipped ladders. These values were measured by the sub-agent's trial, not
+  by the S9 or re-score records, and are flagged as such. The Phase 2
+  tile-MCC test (`phase2/mcc-test/`) is not re-run: its cells do not move,
+  and against the clipped compatibility inventory it would drop six
+  ladders; that is for the PI (§ 10).
+- **Tier E fails the same gate** (its area is the 3.7 ladder's), and D51's
+  text says tier E "takes the same rule", while D67 (5) and this pass's
+  brief restate tier E on today's scorer. This pass follows the brief
+  (unclipped: K = 1 / 3 / 5 / 10 0.8680 / 0.8979 / 0.9046 / 0.8942, the
+  S9 and re-score values) and reports the clipped reading beside it
+  (0.8604 / 0.8902 / 0.8968 / 0.8942; § 8.6's share 48.8 % clipped against
+  60.3 % unclipped) for the PI. `run_k_ladder_tier_e.py prepare`, which now
+  refuses without the clip and would rewrite the registered tier E cells,
+  is not re-run; the cells are re-scored in place and `collect` rebuilds
+  the scores.
+
+Generators, in order (after the GS lane; part 2 after the board lane):
+
+| Step | Artefact (under `results/k-ladder-2026-09-12/`) | Generator | Prediction |
+|---|---|---|---|
+| 1 | the eight S9 cells (`tier-e/cells/` ×4, `phase2/cells/` 3.7 ×3, `recovery-fix-2026-09-13/reproduced-k5-evaluation/`) | `evaluate_detections.py` with each cell's recorded arguments (the recovery-fix copy's detections from its committed `materialised/k5.geojson`) | S9 § 3.1 |
+| 2 | `tier-e/cells/…-k10-verified-p0_15-k10-boardframe/`, `board-frame/stride-phaseb__g384-ov128-{ladder-n1,n3,n5,k10}/` | the same, on the GS lane's regenerated sets | re-score § 3.2 |
+| 3 | `tier-e/scores.json`, `tier-e/ladder.json`, `tier-e/tiering/`; `phase2/scores.json`; `phase2/g37-opmax/` | `run_k_ladder_tier_e.py collect`; `tier_e_ladder_tiering.py`; `score_k_ladder_phase2_rungs.py collect`; the fixed `derive_g37_gs_opmax_rungs.py prepare --clip-to-common-area`, its jobs, `collect` | re-score § 3.2; the sub-agent's trial for the 3.7 opmax rungs |
+| 4 | `mcc-test/tiering/gs-stride-a/`, `mcc-test/gs-stride-a.json`, `mcc-test/summary.json`; `mcb/gs-stride-a/`, `mcb/tier-e/`, `mcb/summary.json`, `mcb/table.md` | `era1_leaderboard_tiering.py … --permute-mcc` (findings § 6.1); `k_ladder_mcc_test.py`; `k_ladder_mcb.py` | re-score § 3.2 (GS stride A +0.0131, BH p 0.7633; tier E MCC set adds K = 10) |
+| 5 (after the board) | `phase2/{ladders.json, ladder-tables.md, ladders-compat.json}`, `figures/k-ladder-pareto-phase2.png` | `build_k_ladder_phase2_tables.py --clip-to-common-area --allow-undetermined-area` | as above |
+| 6 | `ladders.json`, `figures/k-ladder-pareto.png`; `inventory.json` values | `build_k_ladder_tables.py`; the inventory's values refreshed for its existing membership only (regenerating it would add every ladder registered since, a structural change this pass does not make) | re-score § 3.2 |
+| 7 | `tension/grid-overlap.json`, `tension/effect-sizes.json` | `k_ladder_tension_analyses.py --grid-overlap --effect-sizes` | re-score § 3.2 (§ 8.6: 60.3 %, swing 0.0682); § 8.3's grid table from the GS lane's `sweep.csv` |
+
+One stale input gets a dated fix first: `phase2/operating-points.json` row
+28 (the 3.7 K = 3 rung) still records 494 detections from before the
+recovery fix; the cell holds 495.
 
 ### 1.5 Pairwise lane: PR #37's moved artefacts (sub-agent)
 
