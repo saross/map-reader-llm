@@ -166,7 +166,50 @@ order; F1 MCB set 52; tile-MCC 3,001 / 6 / 34 / 60; leaders 0.9332, 0.9289,
 
 ### 1.4 K-ladder lane (sub-agent; inventory pending)
 
-### 1.5 Pairwise lane: PR #37's moved artefacts (sub-agent; inventory pending)
+### 1.5 Pairwise lane: PR #37's moved artefacts (sub-agent)
+
+Inventory by an Opus sub-agent (`~/scratch/s164-restate-2026-10-15/lane-pairwise/`),
+including a trial of every generator; its 1,260 arm instances equal PR #37's
+`sources-new.json`, and the per-directory move counts equal #37's (280 of
+325, 264 of 300, 5 of 12, 1 of 1). Generators (10,000 permutations, seed
+42), each replicating the committed run's flags exactly:
+
+| Artefact | Generator | Prediction |
+|---|---|---|
+| `results/pairwise/20m/`, `30m/` (32 each, manifest, `fdr/`) | `run_pairwise_tests.py --config configs/pairwise-comparisons.yaml --buffer-metres {20,30} --quiet`, then `apply_fdr_correction.py` | PR #37's NEW run (`d60-3-consensus-route.md` § 3; H2 at 20 m: arm B 0.816471, ΔF1 0.073730) |
+| `results/pairwise/leaderboard-20m/` (325, manifest, `fdr/`) | `run_pairwise_tests.py --leaderboard configs/condition-registry.yaml --metrics results/paper-tables/metrics_master.csv --top-n 26 --buffer-metres 20`, then FDR | #37's arms; trial: 265 of 325 significant before and after (two pairs flip in opposite directions), tiers unchanged |
+| `results/pairwise/leaderboard-30m/` (300) | as above at 30 m with `--top-n 25 --quiet` and `--metrics` pinned to the March file (`71d81cd5e`), because `metrics_master.csv` gained rows after that board ran | trial: 243 → 240 significant, tiers unchanged |
+| `results/pairwise/factor-analysis-20m/` (12), then `results/factor-analysis/factor_analysis_results.{json,csv}` and `_autogen.md` | `run_pairwise_tests.py --config configs/factor-analysis-comparisons.yaml --buffer-metres 20`; `collect-factor-analysis.py` | trial: 23 of 61 rows change, no BH status flips |
+| `results/e45-bootstrap-pairings/h2-rerun/`, `e45_bootstrap_pairings.json` | the rerun's `comparison.yaml`; `e45_bootstrap_pairings.py` | trial: H2 ΔF1 +0.073730, B = 10,000 CI [+0.048250, +0.101597]; H3 +0.429693 (the S3 record's) |
+
+**In place and beside (decision 4).** The single-pass 5-of-5 and 10-of-10
+arms' inputs changed before tracking (D61 (2): 951 → 954 and 898 → 901
+detections), so every committed per-pair file that reads one stays at its
+path as a March historical record: #7 and #8 in `20m/` and `30m/`
+(`group_1_architecture/`), and 49 and 47 files in the two leaderboards'
+`group_8/`. Today's runs of those pairs go beside them, labelled, under
+`results/rescore-2026-10-15/pairwise/` (outside `results/pairwise/`, which
+`regen_e43_board.py` scans), with a README naming the vintage. Every other
+per-pair file is regenerated in place. A run's manifest and its BH family
+belong to one run, so each directory's `run_manifest.json` and `fdr/` are
+today's complete run; for #7 and #8 nothing in them moves (p 0.0 before and
+after).
+
+**Not regenerated in this pass, for the PI**:
+`results/e43-board-regen/` (the E72 board, `regen_e43_board.py`). Under the
+in-place-and-beside layout its gates A and C refuse a `group_8/` that mixes
+vintages, its gate B pins the March 30 m count (243), and its renderers
+rewrite a 2026-08-02 banner over any revision trail; each needs a ruling or
+a code change this pass does not make. The trial's values are reported in
+§ 5 (the committed 20 m confirmatory family's status change for #30 no
+longer happens).
+
+**e45's other prerequisite.** `e45_bootstrap_pairings.py` also gates H3
+against `results/diversity-dividend-384/tiering-champions/tiering_20m.json`,
+committed 2026-06-06 and still reading the 26-of-30 arm's pre-D50 0.814118.
+e45 is regenerated only if that file's regeneration is a committed
+command whose moved values are all predicted (the S3 record); otherwise e45
+and its rerun are left, and the reason recorded.
 
 ### 1.6 Uplift supplement and extended-reference lane (sub-agent, then this agent)
 
