@@ -164,6 +164,28 @@ in § 1.4 first. Prediction: re-score § 3.1, REPAIRED column (8,075 of
 order; F1 MCB set 52; tile-MCC 3,001 / 6 / 34 / 60; leaders 0.9332, 0.9289,
 0.9282, 0.9278, 0.9169).
 
+Three details, settled before the board runs (drivers `mkcopy_board.sh`,
+`board_chain.sh`, `board_membership.py`, `board_optimism_runs.tsv`):
+
+- **The membership is kept, its snapshot fields refreshed.** Re-deriving
+  `membership.json` today changes the membership itself (the derivation now
+  reads later register edits: 98 members instead of 110), a board change this
+  pass does not make. So each member's `committed_f1_20` is re-read from its
+  evaluation and the 3.7 image carried arm's paths follow its register row,
+  recorded in a `_restated` block; the drift of the derivation rule is for the
+  PI (§ 10).
+- **The board's sweep-optimism tables** (`optimism/`, ten screen cells on two
+  frames; `selection_aware_intervals.py --sweep-union`) read the same legs and
+  are regenerated too. Their builder was off the origin route (fixed in
+  `92889e0e5`); no record predicted them. The 3.7 image carried arm's
+  board-frame run takes no anchor gate: the gate checks that the sweep's
+  argmax is the board cell, and under D65 (3) the board cell is now the
+  registered point. `summarise_sweep_optimism.py` rewrites the README's
+  changelog, which is restored by hand.
+- **`finalise --no-analysis-row`** writes the README and provenance and puts
+  its proposed outcome into `provenance.json`; the register row is not
+  touched. The README's banner and changelog are restored by hand.
+
 ### 1.4 K-ladder lane (sub-agent)
 
 Inventory by an Opus sub-agent (`~/scratch/s164-restate-2026-10-15/lane-kladder/`;
