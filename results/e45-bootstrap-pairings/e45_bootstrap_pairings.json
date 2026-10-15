@@ -1,6 +1,6 @@
 {
  "_README": "E45 bootstrap pairings: the registered bootstrap construction computed for the two family-FDR primary contrasts that entered the family on permutation floors (H2, H3; H8's family input is also permutation-sourced but is a Simes minimum over seven contrasts, for which a paired delta is not defined). REGISTERED quantities: the percentile CI95 from tile-level resampling and the CI-excludes-zero significance reading (Decision 10, decisions-log.md:335-345; B=1,000 registered, B=10,000 per E54). The p-value beside each CI is the paired tile-swap permutation test's (PI ruling D42, 2026-10-05); the 2*min-tail bootstrap p this artefact first carried is retired. The permutation p remains the family input; this artefact is the paired disclosure, not a replacement.",
- "generated_at": "2026-10-05T06:53:03.848599+00:00",
+ "generated_at": "2026-10-15T11:17:12.907269+00:00",
  "registration_anchors": {
   "registered_inference": "docs/methodology/preregistration/osf/preregistration.md:293 (95% bootstrapped CIs); parameters Decision 10, docs/methodology/preregistration/decisions-log.md:335-345 (parameter row :345)",
   "family_construction": "reports/verification/family-fdr-registration.md \u00a7 6 (H2, H3 primary rows)",
@@ -38,13 +38,13 @@
      "pass": true
     },
     "f1_b": {
-     "recomputed": 0.8141176470588235,
-     "committed": 0.814118,
+     "recomputed": 0.8164705882352942,
+     "committed": 0.816471,
      "pass": true
     },
     "observed_f1_diff": {
-     "recomputed": 0.076083,
-     "committed": 0.076083,
+     "recomputed": 0.07373,
+     "committed": 0.07373,
      "pass": true
     },
     "p_value": {
@@ -53,13 +53,13 @@
      "pass": true
     },
     "wins_a": {
-     "recomputed": 52.0,
-     "committed": 52.0,
+     "recomputed": 51.0,
+     "committed": 51.0,
      "pass": true
     },
     "losses_a": {
-     "recomputed": 27.0,
-     "committed": 27.0,
+     "recomputed": 28.0,
+     "committed": 28.0,
      "pass": true
     }
    },
@@ -67,31 +67,31 @@
     "registered_b1000": {
      "n_iterations": 1000,
      "seed": 42,
-     "observed_delta": 0.076083,
-     "bootstrap_delta_mean": 0.076391,
+     "observed_delta": 0.07373,
+     "bootstrap_delta_mean": 0.073962,
      "ci95": {
-      "lower": 0.051787,
-      "upper": 0.104642
+      "lower": 0.04952,
+      "upper": 0.101772
      },
      "p_value": 0.0,
      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
      "n_permutations": 10000,
-     "n_discordant_tiles": 170,
+     "n_discordant_tiles": 169,
      "ci_excludes_zero": true
     },
     "e54_sensitivity_b10000": {
      "n_iterations": 10000,
      "seed": 42,
-     "observed_delta": 0.076083,
-     "bootstrap_delta_mean": 0.07622,
+     "observed_delta": 0.07373,
+     "bootstrap_delta_mean": 0.07388,
      "ci95": {
-      "lower": 0.050771,
-      "upper": 0.103945
+      "lower": 0.04825,
+      "upper": 0.101597
      },
      "p_value": 0.0,
      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
      "n_permutations": 10000,
-     "n_discordant_tiles": 170,
+     "n_discordant_tiles": 169,
      "ci_excludes_zero": true
     }
    }
@@ -104,8 +104,8 @@
      "pass": true
     },
     "f1_a": {
-     "recomputed": 0.814118,
-     "committed": 0.814118,
+     "recomputed": 0.816471,
+     "committed": 0.816471,
      "pass": true
     },
     "f1_b": {
@@ -114,8 +114,8 @@
      "pass": true
     },
     "observed_f1_diff": {
-     "recomputed": 0.42734,
-     "committed": 0.42734,
+     "recomputed": 0.42969299999999994,
+     "committed": 0.429693,
      "pass": true
     }
    },
@@ -123,11 +123,11 @@
     "registered_b1000": {
      "n_iterations": 1000,
      "seed": 42,
-     "observed_delta": 0.42734,
-     "bootstrap_delta_mean": 0.427219,
+     "observed_delta": 0.429693,
+     "bootstrap_delta_mean": 0.429648,
      "ci95": {
-      "lower": 0.38964,
-      "upper": 0.468082
+      "lower": 0.392114,
+      "upper": 0.470439
      },
      "p_value": 0.0,
      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
@@ -138,11 +138,11 @@
     "e54_sensitivity_b10000": {
      "n_iterations": 10000,
      "seed": 42,
-     "observed_delta": 0.42734,
-     "bootstrap_delta_mean": 0.42751,
+     "observed_delta": 0.429693,
+     "bootstrap_delta_mean": 0.429851,
      "ci95": {
-      "lower": 0.385608,
-      "upper": 0.469544
+      "lower": 0.38806,
+      "upper": 0.472072
      },
      "p_value": 0.0,
      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",

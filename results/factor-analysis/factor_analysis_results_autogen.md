@@ -7,37 +7,37 @@ Buffer: 20m | Permutations: 10,000 | Seed: 42
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
-| N=1 vs consensus (FH text) | FH text run_1 (N=1) | FH text 5-of-5 consensus | 0.392 | 0.779 | -0.387 | 0.0000 | 0.0000 | *** |
-| PV on single-pass text | Text baseline + PV | Single-pass text 5-of-5 | 0.814 | 0.544 | +0.270 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (FH image) | FH image run_1 (N=1) | FH image 3-of-5 consensus | 0.515 | 0.727 | -0.212 | 0.0000 | 0.0000 | *** |
-| PV on single-pass image | Image baseline + PV | Single-pass text 5-of-5 | 0.717 | 0.544 | +0.173 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (FM text) | FM text run_1 (N=1) | FM text 5-of-5 consensus | 0.493 | 0.640 | -0.147 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (Pro text) | Pro text run_1 (N=1) | Pro text 3-of-5 consensus | 0.738 | 0.840 | -0.102 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 4-of-5 + PV | Flash HIGH text 5-of-5 | 0.864 | 0.779 | +0.085 | 0.0000 | 0.0000 | *** |
-| PV verifier thinking | Flash HIGH text 4-of-5 + medium vf | Flash HIGH text 5-of-5 | 0.859 | 0.779 | +0.080 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 16-of-30 + PV | Flash HIGH text 26-of-30 | 0.890 | 0.814 | +0.076 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 9-of-10 + PV | Flash HIGH text 9-of-10 | 0.856 | 0.797 | +0.060 | 0.0000 | 0.0000 | *** |
-| PV vs consensus (image) | Flash HIGH image 3-of-5 + PV | Flash HIGH image 3-of-5 | 0.778 | 0.727 | +0.051 | 0.0004 | 0.0004 | *** |
-| PV vs consensus (Pro) | Pro HIGH text 3-of-5 + PV | Pro HIGH text 3-of-5 | 0.849 | 0.840 | +0.009 | 0.2580 | 0.2580 | ns |
+| N=1 vs consensus (FH text) | FH text run_1 (N=1) | FH text 5-of-5 consensus | 0.392 | 0.781 | -0.389 | 0.0000 | 0.0000 | *** |
+| PV on single-pass text | Text baseline + PV | Single-pass text 5-of-5 | 0.814 | 0.547 | +0.267 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (FH image) | FH image run_1 (N=1) | FH image 3-of-5 consensus | 0.515 | 0.729 | -0.214 | 0.0000 | 0.0000 | *** |
+| PV on single-pass image | Image baseline + PV | Single-pass text 5-of-5 | 0.717 | 0.547 | +0.170 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (FM text) | FM text run_1 (N=1) | FM text 5-of-5 consensus | 0.493 | 0.642 | -0.148 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (Pro text) | Pro text run_1 (N=1) | Pro text 3-of-5 consensus | 0.738 | 0.843 | -0.105 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 4-of-5 + PV | Flash HIGH text 5-of-5 | 0.864 | 0.781 | +0.083 | 0.0000 | 0.0000 | *** |
+| PV verifier thinking | Flash HIGH text 4-of-5 + medium vf | Flash HIGH text 5-of-5 | 0.859 | 0.781 | +0.078 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 16-of-30 + PV | Flash HIGH text 26-of-30 | 0.890 | 0.816 | +0.074 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 9-of-10 + PV | Flash HIGH text 9-of-10 | 0.856 | 0.799 | +0.057 | 0.0000 | 0.0000 | *** |
+| PV vs consensus (image) | Flash HIGH image 3-of-5 + PV | Flash HIGH image 3-of-5 | 0.778 | 0.729 | +0.049 | 0.0004 | 0.0004 | *** |
+| PV vs consensus (Pro) | Pro HIGH text 3-of-5 + PV | Pro HIGH text 3-of-5 | 0.849 | 0.843 | +0.006 | 0.4128 | 0.4128 | ns |
 
 ## Thinking (5/6 significant)
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
-| HIGH vs MINIMAL (text N=10) | Flash HIGH text 9-of-10 | Flash MIN text 10-of-10 | 0.797 | 0.633 | +0.164 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (text N=30) | Flash HIGH text 26-of-30 | Flash MIN text 29-of-30 | 0.814 | 0.661 | +0.153 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (text N=5) | Flash HIGH text 5-of-5 | Flash MIN text 5-of-5 | 0.779 | 0.640 | +0.139 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=10) | Flash HIGH text 9-of-10 | Flash MIN text 10-of-10 | 0.799 | 0.635 | +0.164 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=30) | Flash HIGH text 26-of-30 | Flash MIN text 29-of-30 | 0.816 | 0.663 | +0.153 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=5) | Flash HIGH text 5-of-5 | Flash MIN text 5-of-5 | 0.781 | 0.642 | +0.140 | 0.0000 | 0.0000 | *** |
 | HIGH vs MINIMAL (N=1 text) | FH text run_1 (N=1) | FM text run_1 (N=1) | 0.392 | 0.493 | -0.101 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (image N=5) | Flash HIGH image 3-of-5 | Flash MIN image 4-of-5 | 0.727 | 0.664 | +0.063 | 0.0003 | 0.0004 | *** |
+| HIGH vs MINIMAL (image N=5) | Flash HIGH image 3-of-5 | Flash MIN image 4-of-5 | 0.729 | 0.666 | +0.063 | 0.0003 | 0.0004 | *** |
 | HIGH vs MINIMAL (N=1 image) | FH image run_1 (N=1) | FM image run_1 (N=1) | 0.515 | 0.560 | -0.045 | 0.0588 | 0.0588 | ns |
 
 ## Temperature (5/6 significant)
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
-| T=0.7 vs T=1.0 (N=30) | Flash MIN text T=0.7 29-of-30 | Flash MIN text T=1.0 22-of-30 | 0.661 | 0.467 | +0.194 | 0.0000 | 0.0000 | *** |
-| T=0.7 vs T=1.0 (N=10) | Flash MIN text T=0.7 10-of-10 | Flash MIN text T=1.0 9-of-10 | 0.633 | 0.462 | +0.172 | 0.0000 | 0.0000 | *** |
-| T=0.7 vs T=1.0 (N=5) | Flash MIN text T=0.7 5-of-5 | Flash MIN text T=1.0 5-of-5 | 0.640 | 0.471 | +0.168 | 0.0000 | 0.0000 | *** |
+| T=0.7 vs T=1.0 (N=30) | Flash MIN text T=0.7 29-of-30 | Flash MIN text T=1.0 22-of-30 | 0.663 | 0.469 | +0.194 | 0.0000 | 0.0000 | *** |
+| T=0.7 vs T=1.0 (N=10) | Flash MIN text T=0.7 10-of-10 | Flash MIN text T=1.0 9-of-10 | 0.635 | 0.464 | +0.171 | 0.0000 | 0.0000 | *** |
+| T=0.7 vs T=1.0 (N=5) | Flash MIN text T=0.7 5-of-5 | Flash MIN text T=1.0 5-of-5 | 0.642 | 0.474 | +0.168 | 0.0000 | 0.0000 | *** |
 | T=0.7 vs T=1.0 (N=1, 384px) | FM text T=0.7 run_1 (N=1) | FM text T=1.0 run_1 (N=1) | 0.493 | 0.390 | +0.103 | 0.0034 | 0.0051 | ** |
 | T=0.7 vs T=1.0 (N=1, Phase 2b text) | P2b text T=0.7 run_1 | P2b text T=1.0 run_1 | 0.584 | 0.510 | +0.074 | 0.0055 | 0.0066 | ** |
 | T=0.7 vs T=1.0 (N=1, Phase 2b image) | P2b image T=0.7 run_1 | P2b image T=1.0 run_1 | 0.536 | 0.521 | +0.015 | 0.4763 | 0.4763 | ns |
@@ -47,14 +47,14 @@ Buffer: 20m | Permutations: 10,000 | Seed: 42
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
 | Text vs image (N=1, Pro) | Pro text run_1 (N=1) | Pro image run_1 (N=1) | 0.738 | 0.590 | +0.149 | 0.0000 | 0.0000 | *** |
-| Text vs image (Pro consensus N=5) | Pro text 3-of-5 consensus | Pro image 3-of-5 consensus | 0.840 | 0.700 | +0.141 | 0.0000 | 0.0000 | *** |
+| Text vs image (Pro consensus N=5) | Pro text 3-of-5 consensus | Pro image 3-of-5 consensus | 0.843 | 0.700 | +0.143 | 0.0000 | 0.0000 | *** |
 | Text vs image (N=1, FH) | FH text run_1 (N=1) | FH image run_1 (N=1) | 0.392 | 0.515 | -0.123 | 0.0001 | 0.0002 | *** |
 | Text vs image (baseline + PV) | Text baseline + PV | Image baseline + PV | 0.814 | 0.717 | +0.098 | 0.0000 | 0.0000 | *** |
 | Text vs image (PV) | Flash HIGH text 4-of-5 + PV | Flash HIGH image 3-of-5 + PV | 0.864 | 0.778 | +0.086 | 0.0000 | 0.0000 | *** |
 | Text vs image (N=1, FM) | FM text run_1 (N=1) | FM image run_1 (N=1) | 0.493 | 0.560 | -0.067 | 0.0158 | 0.0178 | * |
-| Text vs image (N=10) | Flash HIGH text 9-of-10 | Flash HIGH image 6-of-10 | 0.797 | 0.740 | +0.057 | 0.0054 | 0.0081 | ** |
-| Text vs image | Flash HIGH text 5-of-5 | Flash HIGH image 3-of-5 | 0.779 | 0.727 | +0.052 | 0.0143 | 0.0178 | * |
-| Text vs image (MINIMAL) | Flash MIN text 5-of-5 | Flash MIN image 4-of-5 | 0.640 | 0.664 | -0.024 | 0.3604 | 0.3604 | ns |
+| Text vs image (N=10) | Flash HIGH text 9-of-10 | Flash HIGH image 6-of-10 | 0.799 | 0.742 | +0.057 | 0.0050 | 0.0075 | ** |
+| Text vs image | Flash HIGH text 5-of-5 | Flash HIGH image 3-of-5 | 0.781 | 0.729 | +0.052 | 0.0141 | 0.0178 | * |
+| Text vs image (MINIMAL) | Flash MIN text 5-of-5 | Flash MIN image 4-of-5 | 0.642 | 0.666 | -0.024 | 0.3554 | 0.3554 | ns |
 
 ## Prompt Engineering (0/28 significant)
 

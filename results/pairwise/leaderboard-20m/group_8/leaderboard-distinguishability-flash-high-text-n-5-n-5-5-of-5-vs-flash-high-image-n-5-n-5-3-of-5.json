@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-29T10:52:06.460146+00:00",
+    "timestamp": "2026-10-15T11:02:09.472637+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -19,13 +19,13 @@
       "pool_size": 5,
       "threshold": 5
     },
-    "f1": 0.778824,
-    "precision": 0.79759,
-    "recall": 0.76092,
+    "f1": 0.781176,
+    "precision": 0.8,
+    "recall": 0.763218,
     "n_detections": 415,
-    "tp": 331,
-    "fp": 84,
-    "fn": 104
+    "tp": 332,
+    "fp": 83,
+    "fn": 103
   },
   "condition_b": {
     "label": "flash-high-image N=5 N=5, 3-of-5",
@@ -36,27 +36,27 @@
       "pool_size": 5,
       "threshold": 3
     },
-    "f1": 0.726886,
-    "precision": 0.675889,
-    "recall": 0.786207,
+    "f1": 0.729012,
+    "precision": 0.677866,
+    "recall": 0.788506,
     "n_detections": 506,
-    "tp": 342,
-    "fp": 164,
-    "fn": 93
+    "tp": 343,
+    "fp": 163,
+    "fn": 92
   },
   "permutation_test": {
-    "observed_f1_diff": 0.051937,
-    "p_value": 0.0143,
+    "observed_f1_diff": 0.052165,
+    "p_value": 0.0141,
     "n_permutations": 10000,
     "n_tiles": 487,
-    "wins_a": 61,
+    "wins_a": 62,
     "losses_a": 38,
-    "ties": 388,
+    "ties": 387,
     "null_distribution": {
       "mean": 6.2e-05,
-      "std": 0.021309,
-      "percentile_2.5": -0.041596,
-      "percentile_97.5": 0.041626
+      "std": 0.021319,
+      "percentile_2.5": -0.041594,
+      "percentile_97.5": 0.041663
     }
   },
   "per_tile": [
@@ -1517,17 +1517,17 @@
     },
     {
       "tile_name": "K-35-052-4_32635_x4032_y2016.png",
-      "f1_a": 0.0,
-      "precision_a": 0.0,
-      "recall_a": 0.0,
-      "tp_a": 0,
-      "fp_a": 1,
+      "f1_a": 1.0,
+      "precision_a": 1.0,
+      "recall_a": 1.0,
+      "tp_a": 1,
+      "fp_a": 0,
       "fn_a": 0,
-      "f1_b": 0.0,
-      "precision_b": 0.0,
-      "recall_b": 0.0,
-      "tp_b": 0,
-      "fp_b": 2,
+      "f1_b": 0.666667,
+      "precision_b": 0.5,
+      "recall_b": 1.0,
+      "tp_b": 1,
+      "fp_b": 1,
       "fn_b": 0
     },
     {
@@ -1862,18 +1862,18 @@
     },
     {
       "tile_name": "K-35-053-3_Elenovo_x0_y1680.png",
-      "f1_a": 0.727273,
+      "f1_a": 0.8,
       "precision_a": 1.0,
-      "recall_a": 0.571429,
+      "recall_a": 0.666667,
       "tp_a": 4,
       "fp_a": 0,
-      "fn_a": 3,
-      "f1_b": 0.5,
+      "fn_a": 2,
+      "f1_b": 0.545455,
       "precision_b": 0.6,
-      "recall_b": 0.428571,
+      "recall_b": 0.5,
       "tp_b": 3,
       "fp_b": 2,
-      "fn_b": 4
+      "fn_b": 3
     },
     {
       "tile_name": "K-35-053-3_Elenovo_x0_y2016.png",
