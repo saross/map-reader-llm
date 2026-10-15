@@ -1265,36 +1265,36 @@
       "run_id": "gemini37-screen-2026-08-28",
       "pool_slug": "g384_ov192_g37",
       "n_passes": 3,
-      "candidates": 757,
-      "verifier_stage": "g384_ov192_g37-union-k3-verify",
-      "verify_dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3",
+      "candidates": 759,
+      "verifier_stage": "g384_ov192_g37-union-k3-verify-recovery-fixed",
+      "verify_dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed",
       "union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
-      "sweep_board_frame": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3/sweep_2d_era2b.json",
-      "sweep_era2_frame": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3/sweep_2d.json",
+      "sweep_board_frame": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed/sweep_2d_era2b.json",
+      "sweep_era2_frame": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed/sweep_2d.json",
       "opmax_selected_on": "era2-b-487 (board frame, per R2)",
       "opmax": {
         "vote_t": 3,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.887,
-        "sweep_n": 494,
+        "sweep_f1_20": 0.886,
+        "sweep_n": 495,
         "n_ties_at_argmax": 0,
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
-        "n_detections": 494,
+        "n_detections": 495,
         "cell": "gemini37-screen-2026-08-28__g37-text-k3-verified-opmax",
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json"
       },
       "opmax_on_era2_frame": {
         "vote_t": 3,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.887,
-        "sweep_n": 494
+        "sweep_f1_20": 0.886,
+        "sweep_n": 495
       },
       "frames_agree_on_argmax": true,
       "carried": {
         "vote_t": 3,
         "prob_t": 0.1,
         "detections": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
-        "n_detections": 494,
+        "n_detections": 495,
         "cell": "gemini37-screen-2026-08-28__g37-text-k3-verified-opmax",
         "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
         "_note": "identical to the sweep-optimal point; one cell, scored once, transfer tax 0.0000 by construction"
@@ -1303,7 +1303,8 @@
         "opmax": "g37-text-k3-verified-opmax",
         "carried": "g37-text-k3-verified-carried-p0.10-k3"
       },
-      "carried_identical_to_opmax": true
+      "carried_identical_to_opmax": true,
+      "_note": "DATED FIX 2026-10-15 (S164 restatement pass, reports/s164-agent-records/restatement-pass.md \u00a7 1.4; recorded as stale in results/k-ladder-2026-09-12/findings.md, changelog 2026-10-07): the live cell scores the recovery-fixed stage (manipulation-gate binding g37-kladder-k3-verify-k3-recovery-fixed: verify_k3_recovery-fixed over the rebuilt 759-candidate consensus-n3, fix 75d7c8d4c), whose (3, 0.10) set holds 495 features. verifier_stage, verify_dir, the two sweep paths, candidates (757 -> 759), sweep_f1_20 (0.887 -> 0.886) and sweep_n and n_detections (494 -> 495) now name it; the sweep figures are that stage's committed sweeps (f8e0eb600, 2026-09-13, pre-D50 scorer), whose argmax on both frames is the same point (3, 0.10). Today's board-frame sweep of the stage (D50 scorer) gives F1@20 0.9135 at (3, 0.10), n 495, still the argmax, unclipped and clipped to the D51 common area (0.9073). The spend ledger keys this row by row number (row28-g384_ov192_g37-union-k3-verify), so its verifier cost is unchanged."
     }
   ]
 }
