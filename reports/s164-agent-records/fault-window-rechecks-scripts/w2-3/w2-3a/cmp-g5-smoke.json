@@ -1,0 +1,56 @@
+{
+  "ignore_keys": [
+    "rasters_dir",
+    "tiles_dir"
+  ],
+  "ignore_lines": [],
+  "today": "718d0ee08",
+  "n_files": 2,
+  "summary": {
+    "BYTE-IDENTICAL": 1,
+    "FIELD-IDENTICAL": 1
+  },
+  "n_today_blob_differs": 0,
+  "files": [
+    {
+      "repo_path": "outputs/k-ladder-2026-09-12/smoke/union_smoke5.geojson",
+      "commit": "9a934eaef",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-9a934eaef/outputs/k-ladder-2026-09-12/smoke/union_smoke5.geojson",
+      "sha256_regen": "cdece1d1af8313bff859180d0b803334fdb4d9b788151e30740dcb51e4bc38bc",
+      "sha256_committed": "cdece1d1af8313bff859180d0b803334fdb4d9b788151e30740dcb51e4bc38bc",
+      "bytes_regen": 1504,
+      "bytes_committed": 1504,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "0ab1cf284aad7bb1f41386a55f483b39c4ce82d3"
+    },
+    {
+      "repo_path": "outputs/k-ladder-2026-09-12/smoke/crops/candidate_manifest.json",
+      "commit": "9a934eaef",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-9a934eaef/outputs/k-ladder-2026-09-12/smoke/crops/candidate_manifest.json",
+      "sha256_regen": "ddf1f0c1f3109460fe8a537135500dc965dab1a1c5becdcf2ec27f38d3f54419",
+      "sha256_committed": "52ed2185c2b0e14a332356b962bbd3860f613ae98ebd3cd6568b1d3cf0201a87",
+      "bytes_regen": 3600,
+      "bytes_committed": 3536,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "path": "/rasters_dir",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-9a934eaef/inputs/rasters",
+          "committed": "/home/shawn/Code/map-reader-llm/inputs/rasters"
+        },
+        {
+          "path": "/tiles_dir",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-9a934eaef/inputs/tiles",
+          "committed": "/home/shawn/Code/map-reader-llm/inputs/tiles"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "f8e82529ce490465458feaf6b7a8aa161a0b66f1"
+    }
+  ]
+}

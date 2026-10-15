@@ -1,0 +1,1708 @@
+{
+ "ruling": "D67 (1), PI-approved 2026-10-15 (Session 164): the wave-3 tiles that failed as batch_api_error topped up in BATCH mode with each pass's own command",
+ "tool": "scripts/topup_batch_failed_tiles.py",
+ "mode": "batch",
+ "passes": {
+  "image-high-t0.0/run_5": {
+   "pass": "image-high-t0.0/library_plus-hp/run_5",
+   "started_utc": "2026-10-15T10:26:22.392187+00:00",
+   "finished_utc": "2026-10-15T10:34:24.442201+00:00",
+   "failed_before": [
+    "K-35-053-3_Elenovo_x0_y1008.png",
+    "K-35-062-2_Rakovski_x4032_y0.png"
+   ],
+   "recovered": [
+    "K-35-053-3_Elenovo_x0_y1008.png",
+    "K-35-062-2_Rakovski_x4032_y0.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.0",
+    "--thinking-level",
+    "high",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.0__run_5.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.0",
+    "--mode",
+    "batch",
+    "--run",
+    "5",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0.run_5.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/s7gdrwwnejkik1wf4h6ubt6we2esd8j3qdcl",
+   "request_file": "files/t5by8my3pdq8",
+   "context_cache": {
+    "name": "cachedContents/jeatvgqewk6uaigfrznenjzdob60e4v8exki9s32",
+    "create_time": "2026-10-15 10:26:27.627924+00:00",
+    "expire_time": "2026-10-16 10:26:26.280393+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:34:24.409048+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-high-t0.0__library_plus-hp__run_5",
+   "features_added": 1,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.0,
+      "topup": 0.0,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "high",
+      "topup": "high",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 485
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 2
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/jeatvgqewk6uaigfrznenjzdob60e4v8exki9s32",
+    "n_lines": 2
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-high-t0.0__library_plus-hp__run_5",
+   "topup_run_id": "c3ea16a3-4421-4a42-bcc5-c96e7a02830a",
+   "usage": {
+    "total_input_tokens": 31320,
+    "total_output_tokens": 83,
+    "total_cached_tokens": 29098,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 31403,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 2,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.00854,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.037769,
+    "total_usd": 0.046309
+   },
+   "upload_released": {
+    "file": "files/t5by8my3pdq8",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:09.289091+00:00"
+   }
+  },
+  "image-high-t0.0/run_4": {
+   "pass": "image-high-t0.0/library_plus-hp/run_4",
+   "started_utc": "2026-10-15T10:35:05.865746+00:00",
+   "finished_utc": "2026-10-15T10:44:10.557795+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x672_y0.png",
+    "K-35-052-4_32635_x672_y672.png",
+    "K-35-053-3_Elenovo_x0_y672.png",
+    "K-35-053-3_Elenovo_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x1008_y1680.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y2688.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x4032_y336.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x672_y0.png",
+    "K-35-052-4_32635_x672_y672.png",
+    "K-35-053-3_Elenovo_x0_y672.png",
+    "K-35-053-3_Elenovo_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x1008_y1680.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y2688.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x4032_y336.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.0",
+    "--thinking-level",
+    "high",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.0__run_4.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.0",
+    "--mode",
+    "batch",
+    "--run",
+    "4",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0.run_4.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k",
+   "request_file": "files/1m9bycfcp5gt",
+   "context_cache": {
+    "name": "cachedContents/1zyujms9kwwaxjef5l76achq6mxxhdqr51qf8zha",
+    "create_time": "2026-10-15 10:35:10.756138+00:00",
+    "expire_time": "2026-10-16 10:35:09.094151+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:44:10.526519+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-high-t0.0__library_plus-hp__run_4",
+   "features_added": 6,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.0,
+      "topup": 0.0,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "high",
+      "topup": "high",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 478
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 9
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/1zyujms9kwwaxjef5l76achq6mxxhdqr51qf8zha",
+    "n_lines": 9
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-high-t0.0__library_plus-hp__run_4",
+   "topup_run_id": "d924af28-1634-40e1-b3d2-cafe6656b49d",
+   "usage": {
+    "total_input_tokens": 140940,
+    "total_output_tokens": 470,
+    "total_cached_tokens": 130941,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 141410,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 9,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.039007,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.038914,
+    "total_usd": 0.077921
+   },
+   "upload_released": {
+    "file": "files/1m9bycfcp5gt",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:11.624574+00:00"
+   }
+  },
+  "image-high-t0.7/run_4": {
+   "pass": "image-high-t0.7/library_plus-hp/run_4",
+   "started_utc": "2026-10-15T10:35:05.866730+00:00",
+   "finished_utc": "2026-10-15T10:44:11.219989+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x1008_y336.png",
+    "K-35-052-4_32635_x1680_y0.png",
+    "K-35-052-4_32635_x1680_y336.png",
+    "K-35-052-4_32635_x4032_y3024.png",
+    "K-35-053-3_Elenovo_x672_y3360.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x1008_y336.png",
+    "K-35-052-4_32635_x1680_y0.png",
+    "K-35-052-4_32635_x1680_y336.png",
+    "K-35-052-4_32635_x4032_y3024.png",
+    "K-35-053-3_Elenovo_x672_y3360.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.7",
+    "--thinking-level",
+    "high",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.7__run_4.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.7",
+    "--mode",
+    "batch",
+    "--run",
+    "4",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7.run_4.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/uztud5h0kya3ja1k1m97zh63ru1csdoccud3",
+   "request_file": "files/wd9z0o21tkwc",
+   "context_cache": {
+    "name": "cachedContents/8oo88hyfrlgpn5axtbxr8tezc0q6vrrjvom0p7fy",
+    "create_time": "2026-10-15 10:35:11.742123+00:00",
+    "expire_time": "2026-10-16 10:35:10.204373+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:44:11.163036+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-high-t0.7__library_plus-hp__run_4",
+   "features_added": 9,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.7,
+      "topup": 0.7,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "high",
+      "topup": "high",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 482
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 5
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/8oo88hyfrlgpn5axtbxr8tezc0q6vrrjvom0p7fy",
+    "n_lines": 5
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-high-t0.7__library_plus-hp__run_4",
+   "topup_run_id": "4192130b-deaa-45eb-87cd-63c747fc7f04",
+   "usage": {
+    "total_input_tokens": 78300,
+    "total_output_tokens": 618,
+    "total_cached_tokens": 72745,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 1665,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 80583,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 5,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.033802,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.038908,
+    "total_usd": 0.07271
+   },
+   "upload_released": {
+    "file": "files/wd9z0o21tkwc",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:14.016468+00:00"
+   }
+  },
+  "image-high-t0.7/run_5": {
+   "pass": "image-high-t0.7/library_plus-hp/run_5",
+   "started_utc": "2026-10-15T10:44:10.559956+00:00",
+   "finished_utc": "2026-10-15T10:53:46.417701+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x4032_y3696.png",
+    "K-35-053-3_Elenovo_x2016_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y672.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x4032_y3696.png",
+    "K-35-053-3_Elenovo_x2016_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y672.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.7",
+    "--thinking-level",
+    "high",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.7__run_5.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.7",
+    "--mode",
+    "batch",
+    "--run",
+    "5",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7.run_5.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/6eec6f5um0sdskeedccx8q1n4gftn90lzcqo",
+   "request_file": "files/b66b2wzcabeb",
+   "context_cache": {
+    "name": "cachedContents/xmvtrek6081bcj6xx52f6ooz9x5p3y0dt7hh90vv",
+    "create_time": "2026-10-15 10:44:16.000272+00:00",
+    "expire_time": "2026-10-16 10:44:14.510312+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:53:46.388485+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-high-t0.7__library_plus-hp__run_5",
+   "features_added": 1,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.7,
+      "topup": 0.7,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "high",
+      "topup": "high",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 484
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 3
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/xmvtrek6081bcj6xx52f6ooz9x5p3y0dt7hh90vv",
+    "n_lines": 3
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-high-t0.7__library_plus-hp__run_5",
+   "topup_run_id": "7967f752-e3d0-4625-8a3d-4a6c35818add",
+   "usage": {
+    "total_input_tokens": 46980,
+    "total_output_tokens": 97,
+    "total_cached_tokens": 43647,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 47077,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 3,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.012644,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.039471,
+    "total_usd": 0.052115
+   },
+   "upload_released": {
+    "file": "files/b66b2wzcabeb",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:16.217653+00:00"
+   }
+  },
+  "image-high-t0.7/run_6": {
+   "pass": "image-high-t0.7/library_plus-hp/run_6",
+   "started_utc": "2026-10-15T10:44:11.221177+00:00",
+   "finished_utc": "2026-10-15T10:53:46.948110+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x1008_y672.png",
+    "K-35-052-4_32635_x3360_y1680.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x2016_y3360.png",
+    "K-35-062-2_Rakovski_x672_y1008.png",
+    "K-35-078-1_Lesovo_x1680_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x1008_y672.png",
+    "K-35-052-4_32635_x3360_y1680.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x2016_y3360.png",
+    "K-35-062-2_Rakovski_x672_y1008.png",
+    "K-35-078-1_Lesovo_x1680_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.7",
+    "--thinking-level",
+    "high",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.7__run_6.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.7",
+    "--mode",
+    "batch",
+    "--run",
+    "6",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7.run_6.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/auvd268bseipg9kogga2ccarglqfgvj4czzr",
+   "request_file": "files/cdbfenlogry5",
+   "context_cache": {
+    "name": "cachedContents/pq64g4zolzn8yi22qibt5c0ot0fyg3zvolbvl6bb",
+    "create_time": "2026-10-15 10:44:16.936117+00:00",
+    "expire_time": "2026-10-16 10:44:15.466590+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:53:46.911077+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-high-t0.7__library_plus-hp__run_6",
+   "features_added": 4,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.7,
+      "topup": 0.7,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "high",
+      "topup": "high",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 480
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 7
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/pq64g4zolzn8yi22qibt5c0ot0fyg3zvolbvl6bb",
+    "n_lines": 7
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-high-t0.7__library_plus-hp__run_6",
+   "topup_run_id": "88dc7d07-0c69-4e16-9185-58db7b4133d1",
+   "usage": {
+    "total_input_tokens": 109620,
+    "total_output_tokens": 316,
+    "total_cached_tokens": 101843,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 109936,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 7,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.030042,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.039464,
+    "total_usd": 0.069506
+   },
+   "upload_released": {
+    "file": "files/cdbfenlogry5",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:18.538130+00:00"
+   }
+  },
+  "image-medium-t0.0/run_5": {
+   "pass": "image-medium-t0.0/library_plus-hp/run_5",
+   "started_utc": "2026-10-15T10:53:46.950177+00:00",
+   "finished_utc": "2026-10-15T10:58:24.380042+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x1344_y3360.png",
+    "K-35-052-4_32635_x2688_y1680.png",
+    "K-35-052-4_32635_x336_y0.png",
+    "K-35-052-4_32635_x336_y1008.png",
+    "K-35-052-4_32635_x336_y672.png",
+    "K-35-052-4_32635_x3696_y1680.png",
+    "K-35-053-3_Elenovo_x1008_y2016.png",
+    "K-35-053-3_Elenovo_x1008_y3024.png",
+    "K-35-053-3_Elenovo_x2016_y1680.png",
+    "K-35-053-3_Elenovo_x3024_y2688.png",
+    "K-35-053-3_Elenovo_x3696_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y672.png",
+    "K-35-062-2_Rakovski_x1344_y336.png",
+    "K-35-062-2_Rakovski_x1680_y336.png",
+    "K-35-062-2_Rakovski_x2016_y336.png",
+    "K-35-062-2_Rakovski_x2352_y0.png",
+    "K-35-062-2_Rakovski_x2352_y1008.png",
+    "K-35-062-2_Rakovski_x2352_y1344.png",
+    "K-35-062-2_Rakovski_x2352_y1680.png",
+    "K-35-062-2_Rakovski_x2352_y2016.png",
+    "K-35-062-2_Rakovski_x2352_y3024.png",
+    "K-35-062-2_Rakovski_x2352_y336.png",
+    "K-35-062-2_Rakovski_x2688_y0.png",
+    "K-35-062-2_Rakovski_x2688_y2016.png",
+    "K-35-062-2_Rakovski_x2688_y2688.png",
+    "K-35-062-2_Rakovski_x2688_y672.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x3024_y1008.png",
+    "K-35-062-2_Rakovski_x3024_y1680.png",
+    "K-35-062-2_Rakovski_x3024_y2016.png",
+    "K-35-062-2_Rakovski_x3024_y3360.png",
+    "K-35-062-2_Rakovski_x3024_y3696.png",
+    "K-35-062-2_Rakovski_x3360_y1008.png",
+    "K-35-062-2_Rakovski_x3360_y2352.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x336_y3696.png",
+    "K-35-062-2_Rakovski_x3696_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-062-2_Rakovski_x3696_y336.png",
+    "K-35-062-2_Rakovski_x3696_y3360.png",
+    "K-35-062-2_Rakovski_x4032_y1680.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-062-2_Rakovski_x4032_y2352.png",
+    "K-35-062-2_Rakovski_x4032_y672.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-062-2_Rakovski_x672_y1008.png",
+    "K-35-062-2_Rakovski_x672_y1680.png",
+    "K-35-062-2_Rakovski_x672_y2016.png",
+    "K-35-062-2_Rakovski_x672_y3696.png",
+    "K-35-078-1_Lesovo_x0_y2352.png",
+    "K-35-078-1_Lesovo_x0_y3024.png",
+    "K-35-078-1_Lesovo_x1008_y2352.png",
+    "K-35-078-1_Lesovo_x1008_y2688.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2352_y0.png",
+    "K-35-078-1_Lesovo_x2352_y3360.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y1008.png",
+    "K-35-078-1_Lesovo_x2688_y1680.png",
+    "K-35-078-1_Lesovo_x2688_y2016.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y336.png",
+    "K-35-078-1_Lesovo_x3024_y1008.png",
+    "K-35-078-1_Lesovo_x3024_y1344.png",
+    "K-35-078-1_Lesovo_x3024_y1680.png",
+    "K-35-078-1_Lesovo_x336_y2688.png",
+    "K-35-078-1_Lesovo_x336_y3360.png",
+    "K-35-078-1_Lesovo_x3696_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x4032_y0.png",
+    "K-35-078-1_Lesovo_x4032_y1008.png",
+    "K-35-078-1_Lesovo_x4032_y1680.png",
+    "K-35-078-1_Lesovo_x4032_y2016.png",
+    "K-35-078-1_Lesovo_x4032_y2352.png",
+    "K-35-078-1_Lesovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x672_y2688.png",
+    "K-35-078-1_Lesovo_x672_y336.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x1344_y3360.png",
+    "K-35-052-4_32635_x2688_y1680.png",
+    "K-35-052-4_32635_x336_y0.png",
+    "K-35-052-4_32635_x336_y1008.png",
+    "K-35-052-4_32635_x336_y672.png",
+    "K-35-052-4_32635_x3696_y1680.png",
+    "K-35-053-3_Elenovo_x1008_y2016.png",
+    "K-35-053-3_Elenovo_x1008_y3024.png",
+    "K-35-053-3_Elenovo_x2016_y1680.png",
+    "K-35-053-3_Elenovo_x3024_y2688.png",
+    "K-35-053-3_Elenovo_x3696_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y672.png",
+    "K-35-062-2_Rakovski_x1344_y336.png",
+    "K-35-062-2_Rakovski_x1680_y336.png",
+    "K-35-062-2_Rakovski_x2016_y336.png",
+    "K-35-062-2_Rakovski_x2352_y0.png",
+    "K-35-062-2_Rakovski_x2352_y1008.png",
+    "K-35-062-2_Rakovski_x2352_y1344.png",
+    "K-35-062-2_Rakovski_x2352_y1680.png",
+    "K-35-062-2_Rakovski_x2352_y2016.png",
+    "K-35-062-2_Rakovski_x2352_y3024.png",
+    "K-35-062-2_Rakovski_x2352_y336.png",
+    "K-35-062-2_Rakovski_x2688_y0.png",
+    "K-35-062-2_Rakovski_x2688_y2016.png",
+    "K-35-062-2_Rakovski_x2688_y2688.png",
+    "K-35-062-2_Rakovski_x2688_y672.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x3024_y1008.png",
+    "K-35-062-2_Rakovski_x3024_y1680.png",
+    "K-35-062-2_Rakovski_x3024_y2016.png",
+    "K-35-062-2_Rakovski_x3024_y3360.png",
+    "K-35-062-2_Rakovski_x3024_y3696.png",
+    "K-35-062-2_Rakovski_x3360_y1008.png",
+    "K-35-062-2_Rakovski_x3360_y2352.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x336_y3696.png",
+    "K-35-062-2_Rakovski_x3696_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-062-2_Rakovski_x3696_y336.png",
+    "K-35-062-2_Rakovski_x3696_y3360.png",
+    "K-35-062-2_Rakovski_x4032_y1680.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-062-2_Rakovski_x4032_y2352.png",
+    "K-35-062-2_Rakovski_x4032_y672.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-062-2_Rakovski_x672_y1008.png",
+    "K-35-062-2_Rakovski_x672_y1680.png",
+    "K-35-062-2_Rakovski_x672_y2016.png",
+    "K-35-062-2_Rakovski_x672_y3696.png",
+    "K-35-078-1_Lesovo_x0_y2352.png",
+    "K-35-078-1_Lesovo_x0_y3024.png",
+    "K-35-078-1_Lesovo_x1008_y2352.png",
+    "K-35-078-1_Lesovo_x1008_y2688.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2352.png",
+    "K-35-078-1_Lesovo_x2016_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2352_y0.png",
+    "K-35-078-1_Lesovo_x2352_y3360.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y1008.png",
+    "K-35-078-1_Lesovo_x2688_y1680.png",
+    "K-35-078-1_Lesovo_x2688_y2016.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y336.png",
+    "K-35-078-1_Lesovo_x3024_y1008.png",
+    "K-35-078-1_Lesovo_x3024_y1344.png",
+    "K-35-078-1_Lesovo_x3024_y1680.png",
+    "K-35-078-1_Lesovo_x336_y2688.png",
+    "K-35-078-1_Lesovo_x336_y3360.png",
+    "K-35-078-1_Lesovo_x3696_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x4032_y0.png",
+    "K-35-078-1_Lesovo_x4032_y1008.png",
+    "K-35-078-1_Lesovo_x4032_y1680.png",
+    "K-35-078-1_Lesovo_x4032_y2016.png",
+    "K-35-078-1_Lesovo_x4032_y2352.png",
+    "K-35-078-1_Lesovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x672_y2688.png",
+    "K-35-078-1_Lesovo_x672_y336.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.0",
+    "--thinking-level",
+    "medium",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-medium-t0.0__run_5.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-medium-t0.0",
+    "--mode",
+    "batch",
+    "--run",
+    "5",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0.run_5.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/l3sqlxno1susmvknq92m51izli9xfut23rkv",
+   "request_file": "files/t0da5u73a0e7",
+   "context_cache": {
+    "name": "cachedContents/nshtcdly40p0q6f9sahi39q9otru40j7av5am7h1",
+    "create_time": "2026-10-15 10:53:52.784113+00:00",
+    "expire_time": "2026-10-16 10:53:51.381139+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T10:58:24.327454+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-medium-t0.0__library_plus-hp__run_5",
+   "features_added": 83,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.0,
+      "topup": 0.0,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "medium",
+      "topup": "medium",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 404
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 83
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/nshtcdly40p0q6f9sahi39q9otru40j7av5am7h1",
+    "n_lines": 83
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-medium-t0.0__library_plus-hp__run_5",
+   "topup_run_id": "8263e449-7c33-4cd5-bcde-f6922234f0b5",
+   "usage": {
+    "total_input_tokens": 1299780,
+    "total_output_tokens": 6061,
+    "total_cached_tokens": 1207567,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 568,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 1306409,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 83,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.3735,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.034036,
+    "total_usd": 0.407536
+   },
+   "upload_released": {
+    "file": "files/t0da5u73a0e7",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:20.788327+00:00"
+   }
+  },
+  "image-medium-t0.0/run_4": {
+   "pass": "image-medium-t0.0/library_plus-hp/run_4",
+   "started_utc": "2026-10-15T10:53:46.419278+00:00",
+   "finished_utc": "2026-10-15T11:01:50.334641+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x1680_y3024.png",
+    "K-35-052-4_32635_x4032_y3696.png",
+    "K-35-053-3_Elenovo_x2016_y1344.png",
+    "K-35-053-3_Elenovo_x2352_y3024.png",
+    "K-35-053-3_Elenovo_x336_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y672.png",
+    "K-35-062-2_Rakovski_x1680_y0.png",
+    "K-35-062-2_Rakovski_x1680_y3696.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-078-1_Lesovo_x1344_y2016.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x2016_y1344.png",
+    "K-35-078-1_Lesovo_x2688_y1008.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x3696_y336.png",
+    "K-35-078-1_Lesovo_x4032_y1680.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x1680_y3024.png",
+    "K-35-052-4_32635_x4032_y3696.png",
+    "K-35-053-3_Elenovo_x2016_y1344.png",
+    "K-35-053-3_Elenovo_x2352_y3024.png",
+    "K-35-053-3_Elenovo_x336_y1680.png",
+    "K-35-053-3_Elenovo_x3696_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y1008.png",
+    "K-35-062-2_Rakovski_x1008_y672.png",
+    "K-35-062-2_Rakovski_x1680_y0.png",
+    "K-35-062-2_Rakovski_x1680_y3696.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-078-1_Lesovo_x1344_y2016.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x2016_y1344.png",
+    "K-35-078-1_Lesovo_x2688_y1008.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x3696_y336.png",
+    "K-35-078-1_Lesovo_x4032_y1680.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.0",
+    "--thinking-level",
+    "medium",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-medium-t0.0__run_4.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-medium-t0.0",
+    "--mode",
+    "batch",
+    "--run",
+    "4",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0.run_4.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/vlktlkrhbvm7dryry40eofxzthraflqkt694",
+   "request_file": "files/wglgqls09uf8",
+   "context_cache": {
+    "name": "cachedContents/rcon5rs5uuninaovi4f2twu8fdecl40m6cw77ymb",
+    "create_time": "2026-10-15 10:53:51.619510+00:00",
+    "expire_time": "2026-10-16 10:53:49.935751+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T11:01:50.310890+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-medium-t0.0__library_plus-hp__run_4",
+   "features_added": 8,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.0,
+      "topup": 0.0,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "medium",
+      "topup": "medium",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 468
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 19
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/rcon5rs5uuninaovi4f2twu8fdecl40m6cw77ymb",
+    "n_lines": 19
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-medium-t0.0__library_plus-hp__run_4",
+   "topup_run_id": "38fab00f-3447-4ae9-ad15-fa78dd26df33",
+   "usage": {
+    "total_input_tokens": 297540,
+    "total_output_tokens": 697,
+    "total_cached_tokens": 276431,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 0,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 298237,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 19,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.080577,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.037804,
+    "total_usd": 0.118381
+   },
+   "upload_released": {
+    "file": "files/wglgqls09uf8",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:23.067279+00:00"
+   }
+  },
+  "image-medium-t0.7/run_4": {
+   "pass": "image-medium-t0.7/library_plus-hp/run_4",
+   "started_utc": "2026-10-15T10:58:24.381592+00:00",
+   "finished_utc": "2026-10-15T11:01:52.677681+00:00",
+   "failed_before": [
+    "K-35-052-4_32635_x1680_y336.png",
+    "K-35-052-4_32635_x1680_y672.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x2688_y1008.png",
+    "K-35-052-4_32635_x3024_y2016.png",
+    "K-35-052-4_32635_x3024_y2688.png",
+    "K-35-052-4_32635_x3360_y3024.png",
+    "K-35-052-4_32635_x336_y1680.png",
+    "K-35-052-4_32635_x4032_y2016.png",
+    "K-35-053-3_Elenovo_x1344_y3696.png",
+    "K-35-053-3_Elenovo_x1680_y0.png",
+    "K-35-053-3_Elenovo_x2352_y1344.png",
+    "K-35-053-3_Elenovo_x3024_y2352.png",
+    "K-35-053-3_Elenovo_x3360_y336.png",
+    "K-35-053-3_Elenovo_x336_y3696.png",
+    "K-35-053-3_Elenovo_x4032_y0.png",
+    "K-35-062-2_Rakovski_x2688_y672.png",
+    "K-35-062-2_Rakovski_x3360_y2352.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y3360.png",
+    "K-35-078-1_Lesovo_x0_y1680.png",
+    "K-35-078-1_Lesovo_x0_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y336.png",
+    "K-35-078-1_Lesovo_x336_y1008.png"
+   ],
+   "recovered": [
+    "K-35-052-4_32635_x1680_y336.png",
+    "K-35-052-4_32635_x1680_y672.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x2688_y1008.png",
+    "K-35-052-4_32635_x3024_y2016.png",
+    "K-35-052-4_32635_x3024_y2688.png",
+    "K-35-052-4_32635_x3360_y3024.png",
+    "K-35-052-4_32635_x336_y1680.png",
+    "K-35-052-4_32635_x4032_y2016.png",
+    "K-35-053-3_Elenovo_x1344_y3696.png",
+    "K-35-053-3_Elenovo_x1680_y0.png",
+    "K-35-053-3_Elenovo_x2352_y1344.png",
+    "K-35-053-3_Elenovo_x3024_y2352.png",
+    "K-35-053-3_Elenovo_x3360_y336.png",
+    "K-35-053-3_Elenovo_x336_y3696.png",
+    "K-35-053-3_Elenovo_x4032_y0.png",
+    "K-35-062-2_Rakovski_x2688_y672.png",
+    "K-35-062-2_Rakovski_x3360_y2352.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x3696_y3360.png",
+    "K-35-078-1_Lesovo_x0_y1680.png",
+    "K-35-078-1_Lesovo_x0_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y336.png",
+    "K-35-078-1_Lesovo_x336_y1008.png"
+   ],
+   "still_failing": [],
+   "command": [
+    "/home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python",
+    "scripts/4_detect_mounds_batch.py",
+    "--config",
+    "prompts/configs/library_plus-hp.json",
+    "--model",
+    "gemini-3.1-pro",
+    "--temperature",
+    "0.7",
+    "--thinking-level",
+    "medium",
+    "--manifest",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-medium-t0.7__run_4.json",
+    "--tiles-dir",
+    "inputs/tiles_384",
+    "--tile-size",
+    "384",
+    "--output-dir",
+    "/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-medium-t0.7",
+    "--mode",
+    "batch",
+    "--run",
+    "4",
+    "--use-cache",
+    "--skip-intent-check",
+    "--allow-inert-fields",
+    "--service-tier",
+    "flex"
+   ],
+   "exit_code": 0,
+   "log": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7.run_4.topup-2026-10-15.log",
+   "log_failure_lines": [],
+   "batch_job": "batches/45spddh5rj2bo3fc5hoi3ju6xy3cv27p2rr3",
+   "request_file": "files/teaoq2ho0xv2",
+   "context_cache": {
+    "name": "cachedContents/u9f7r5il1fea15e4fhe9zfx9djy0zdubu0re7bwj",
+    "create_time": "2026-10-15 10:58:30.093240+00:00",
+    "expire_time": "2026-10-16 10:58:28.398669+00:00",
+    "tokens": 14549,
+    "deleted_at": "2026-10-15T11:01:52.655261+00:00"
+   },
+   "merged": true,
+   "reason": "merged",
+   "raw_outputs_archived_to": "archive/pre-topup-2026-10-15/topup-batch-outputs/image-medium-t0.7__library_plus-hp__run_4",
+   "features_added": 39,
+   "gate": {
+    "passed": true,
+    "fields": {
+     "model": {
+      "pass": "gemini-3.1-pro-preview",
+      "topup": "gemini-3.1-pro-preview",
+      "equal": true
+     },
+     "system_instruction_hash": {
+      "pass": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "topup": "e169b7237b853eeaad990fc2e54fbd7214afb435d85c8e444a4a784432200e12",
+      "equal": true
+     },
+     "library_hash": {
+      "pass": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "topup": "b6962f2322582b90f3c705027cf61ab2fe7f884fad4a5ce3a7bda0630109cd8f",
+      "equal": true
+     },
+     "temperature": {
+      "pass": 0.7,
+      "topup": 0.7,
+      "equal": true
+     },
+     "thinking_level": {
+      "pass": "medium",
+      "topup": "medium",
+      "equal": true
+     },
+     "include_example_images": {
+      "pass": true,
+      "topup": true,
+      "equal": true
+     },
+     "version": {
+      "pass": "library_plus-hp",
+      "topup": "library_plus-hp",
+      "equal": true
+     },
+     "instruction_file": {
+      "pass": "detect_brief-text-image.md",
+      "topup": "detect_brief-text-image.md",
+      "equal": true
+     },
+     "max_output_tokens": {
+      "pass": 8192,
+      "topup": 8192,
+      "equal": true
+     },
+     "library_hash_basis": {
+      "pass": "example-bytes+path-label-category/1",
+      "topup": "example-bytes+path-label-category/1",
+      "equal": true
+     },
+     "example_count": {
+      "pass": 13,
+      "topup": 13,
+      "equal": true
+     },
+     "caching": {
+      "pass": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 463
+      },
+      "topup": {
+       "cached": true,
+       "cached_tokens_per_response": 14549.0,
+       "n_responses_with_usage": 24
+      },
+      "equal": true
+     },
+     "execution_mode": {
+      "pass": "batch",
+      "topup": "batch",
+      "equal": true
+     }
+    },
+    "advisory_config_diff": []
+   },
+   "request_gate": {
+    "passed": true,
+    "problems": [],
+    "context_cache": "cachedContents/u9f7r5il1fea15e4fhe9zfx9djy0zdubu0re7bwj",
+    "n_lines": 24
+   },
+   "archived_to": "archive/pre-topup-2026-10-15/image-medium-t0.7__library_plus-hp__run_4",
+   "topup_run_id": "20137355-5b57-4d1e-aaf1-21e52b00fb3a",
+   "usage": {
+    "total_input_tokens": 375840,
+    "total_output_tokens": 2680,
+    "total_cached_tokens": 349176,
+    "total_reasoning_tokens": 0,
+    "total_thoughts_tokens": 2274,
+    "total_tool_use_tokens": 0,
+    "total_tokens": 380794,
+    "by_provider": {},
+    "served_tier_counts": {},
+    "n_responses_with_usage": 24,
+    "usage_source": "batch results file (per-response usageMetadata)",
+    "cached_share": 0.9290549169859514
+   },
+   "retry_usage": null,
+   "cost_usd": {
+    "batch_tokens_usd": 0.126223,
+    "in_batch_retries_usd": 0.0,
+    "cache_estimate_usd": 0.032782,
+    "total_usd": 0.159005
+   },
+   "upload_released": {
+    "file": "files/teaoq2ho0xv2",
+    "job_state": "JOB_STATE_SUCCEEDED",
+    "deleted": true,
+    "errors": 0,
+    "at": "2026-10-15T11:04:25.320640+00:00"
+   }
+  }
+ },
+ "untouched": [
+  "image-high-t0.0/run_6",
+  "image-medium-t0.0/run_6",
+  "image-medium-t0.7/run_5",
+  "image-medium-t0.7/run_6"
+ ],
+ "invocations": [
+  {
+   "started_utc": "2026-10-15T10:26:21.883044+00:00",
+   "passes": [
+    "image-high-t0.0/run_5"
+   ],
+   "max_parallel": 2,
+   "cost_cap_usd": 2.0
+  },
+  {
+   "started_utc": "2026-10-15T10:35:05.163596+00:00",
+   "passes": [
+    "image-high-t0.0/run_4",
+    "image-high-t0.7/run_4",
+    "image-high-t0.7/run_5",
+    "image-high-t0.7/run_6",
+    "image-medium-t0.0/run_4",
+    "image-medium-t0.0/run_5",
+    "image-medium-t0.7/run_4"
+   ],
+   "max_parallel": 2,
+   "cost_cap_usd": 2.0
+  }
+ ],
+ "totals": {
+  "passes_topped_up": 8,
+  "failed_before": 152,
+  "recovered": 152,
+  "still_failing": 0,
+  "cost_usd": 1.003483
+ }
+}

@@ -8,34 +8,37 @@ project state.
 
 ---
 
-## 🔍 S164 PROGRESS (2026-10-13/14 UTC, Opus) — MERGES DONE; D65/D66 RULED; STEPS 1–4 OF THE SEQUENCE DONE; RESTATEMENT PASS NEXT
+## 🔍 S164 PROGRESS (2026-10-13 to 10-16 UTC, Opus) — RULINGS D65–D67; STEPS 1–4 DONE; RESTATEMENT PASS FINISHING; D64 DRAFTS AWAIT THE PI
 
-Rulings: `planning/pi-decisions-2026-09-20.md` D65 (#46's six questions, D62 (5)–(8), the
-execution sequence) and D66 (PR descriptions, A-06's D64 revision, more image passes). Gemini
-3.5 and 3.7 Flash are DEPRECATED (no more runs; 3.8 non-regression runs to plan later).
+Rulings: `planning/pi-decisions-2026-09-20.md` D65, D66, D67 (and the D64 entry). Gemini 3.5 and
+3.7 Flash are DEPRECATED. Standing exception D66 (2): factual draft PR descriptions in this
+repository need no per-text approval.
 
-**Done**: the seven S163 PRs merged in order (#45 `d9866f49e` … #35 `3a5e5c453`); A-06 and A-09
-re-signed (`d064e9d57`, `2bba84ab5`); Obs 510 corrects Obs 416 (`c7b444c80`); D64 top-up of 15
-tiles (`41212b986`); sapphire housekeeping 97 % → 71 % (D65); A-07 regenerated, text approved,
-re-signed (#47 `5f6a35bce`); fault-window re-checks all reproduce (#49 `98514975b`); S9 sweep:
-only eight K-ladder cells move (#50 `c4606da85`); GS reader routing merged (#46 `77402d640`);
-D64 wave 3, image runs 4–6, US$26.08, committed (`9664f1094`), 152 tiles failed
-(`batch_api_error`, mostly MEDIUM corners).
+**Done and merged**: the seven S163 PRs; A-06, A-07, A-09 re-signed; Obs 510 (corrects Obs 416);
+housekeeping; fault-window re-checks, every claim-bearing row reproduces (#49, #53); the S9 sweep,
+eight K-ladder cells (#50); GS reader routing (#46); D64 wave 3 (`9664f1094`, US$26.08) and its
+batch top-up (#51, `8988bc6f7`, US$1.00); three crop manifests (`294e33a91`); the launch-pattern
+sentence in `docs/agent-guidance.md` (`718d0ee08`).
 
-**Open, awaiting the PI** (asked in conversation): (1) D64 wave-3 top-up mode — B, batch via a
-small new tool (recommended), or A, real-time; (2) re-check fault-window rows W2-3, W2-4, W2-7,
-W2-8 (dropped from the walkthrough summary by mistake); (3) commit the three uncommitted Gemini 3
-crop manifests; (4) a launch-pattern sentence for `docs/agent-guidance.md` (`ssh 'cd X && nohup
-… &'` blocks; use `cd X; nohup …`); (5) the 3.7 text ladder rungs on D51's clipped basis
-(recommended) or unclipped; (6) regenerate the eight extended-reference cells (recommended).
+**In flight**: the restatement pass, branch `restatement-pass-s164` (25 commits pushed; a second
+lead agent finishing the Era-2 board commit, the bridge lane, the record's results half, and the
+drafted outcome texts for ten lapsed rows; then a draft PR). Its first lead stopped on a context
+overflow; brief successors to keep raw output out of their context.
 
-**Next in the sequence**: the single restatement pass (on `main`, which now reads repaired
-legs): #46's restatements plus the eight S9 cells, the uplift supplement (twins on the origin route, the
-flatten replayed at `741a4eaff` then regenerated), the bridge floors and verifier SD, opmax cells
-moved to their new argmax, registered cells kept at their points; new wordings drafted for the
-PI; then null-exemplar (assemble defect first); then one re-signing walk-through. D64: after the
-top-up, extend draft PR #48's analysis to 6 image passes (day-effect sensitivity), redraft A-06's
-paragraph with the final numbers, findings note, and an Obs qualifying Obs 415.
+**Awaiting the PI** (asked in conversation, not yet answered): (1) approve the three D64 drafts on
+branch `d64-a06-analysis` (draft PR #48, record § For the PI: (a) A-06's appended paragraph, headline
+stays "TEMPERATURE IS THE DRIVER" since C1 only PARTLY replicated (+0.0202, p 0.138) and C2
+REPLICATED (+0.0653, p 0.0002); (b) the findings note; (c) Obs 511), and whether to re-sign A-06 now
+or with the restatement batch; (2) D48 after a one-day image shift about the size of the floor; (3)
+the cache proposals: the Batch path never deletes its 24-hour context cache (code at
+`scripts/lib_batch_api.py:1134`), D64's estimated unbooked storage about US$41, putting D64 at about
+US$115 against its US$100 cap (unverified until the invoice): fix the path, book the estimate, sweep
+earlier cached runs.
+
+**Next**: the restatement PR to the PI (drafted texts → approval → apply → re-sign walk-through);
+null-exemplar re-run last (fix its assemble defect first); after the restatement pass, preserve the
+cited small evidence files from `~/scratch/d57-4-rescore-2026-10-09/` and `q4-*` into `archive/` and
+remove those trees (about 95 GB, D65 (8)).
 
 ---
 

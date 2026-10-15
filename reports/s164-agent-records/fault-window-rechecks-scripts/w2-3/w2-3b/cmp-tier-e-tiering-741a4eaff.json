@@ -1,0 +1,75 @@
+{
+  "commit": "741a4eaff",
+  "tree": "w2-3b-741a4eaff",
+  "ignore_key": [
+    "^generated_at_utc$",
+    "^git_commit$"
+  ],
+  "substitute": [],
+  "n_files": 5,
+  "counts": {
+    "EQUAL-AFTER-IGNORES": 2,
+    "BYTE-IDENTICAL": 3
+  },
+  "n_today_is_generating_blob": 5,
+  "files": [
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/ladder.json",
+      "sha256_regenerated": "b4d960c71b8789a2a0134e832a8d883f293cb7c9067b213bc9e89660a4ed8a80",
+      "sha256_committed": "43273c387d9ca82f1bd89d54e8c2a9cc633a42555a705227fbc109699579d8c6",
+      "today_is_generating_blob": true,
+      "detail": {
+        "kind": "json",
+        "n_leaves": 303,
+        "n_differing": 0,
+        "differing": [],
+        "n_ignored": 1,
+        "ignored": [
+          "generated_at_utc"
+        ],
+        "key_order_identical": true
+      },
+      "status": "EQUAL-AFTER-IGNORES"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+      "sha256_regenerated": "1456693d6bc414a8e4d742af74a180f2f132e37ca49d34f48ae0548751b02d20",
+      "sha256_committed": "1456693d6bc414a8e4d742af74a180f2f132e37ca49d34f48ae0548751b02d20",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+      "sha256_regenerated": "d2148e620dd715ef319465ee8c2f7b47d4af0b56918fa5721b45302a743cb8e5",
+      "sha256_committed": "d2148e620dd715ef319465ee8c2f7b47d4af0b56918fa5721b45302a743cb8e5",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json",
+      "sha256_regenerated": "70cfae2b8f5a6b6d0a789be7b9952ca0b10860ef0e905ee4ae7c824f12c6c4b3",
+      "sha256_committed": "24d29251f18b39727c6835deabec9c4e4989a2a80e99e192061ba233f5477260",
+      "today_is_generating_blob": true,
+      "detail": {
+        "kind": "json",
+        "n_leaves": 320,
+        "n_differing": 0,
+        "differing": [],
+        "n_ignored": 2,
+        "ignored": [
+          "generated_at_utc",
+          "git_commit"
+        ],
+        "key_order_identical": true
+      },
+      "status": "EQUAL-AFTER-IGNORES"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.md",
+      "sha256_regenerated": "44da75973b404e5aa28a06da23cbefea3d8139b5d3cda1c29838a6f19b97b533",
+      "sha256_committed": "44da75973b404e5aa28a06da23cbefea3d8139b5d3cda1c29838a6f19b97b533",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    }
+  ]
+}

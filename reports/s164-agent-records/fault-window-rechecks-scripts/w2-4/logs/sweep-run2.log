@@ -1,0 +1,71 @@
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-15 11:11:26,929 - INFO - G4 OK TH7-k4   micro 0.8169 vs committed 0.8169 (d +0.0000)
+2026-10-15 11:11:30,768 - INFO - G4 OK TH7-k3   micro 0.8387 vs committed 0.8387 (d +0.0000)
+2026-10-15 11:11:34,585 - INFO - G4 OK T03-k4   micro 0.8303 vs committed 0.8303 (d +0.0000)
+2026-10-15 11:11:38,456 - INFO - G4 OK T03-k3   micro 0.8393 vs committed 0.8393 (d +0.0000)
+2026-10-15 11:11:41,949 - INFO - G4 OK TM-k4    micro 0.7833 vs committed 0.7833 (d +0.0000)
+2026-10-15 11:11:45,742 - INFO - G4 OK TM-k3    micro 0.8109 vs committed 0.8109 (d +0.0000)
+2026-10-15 11:11:49,747 - INFO - G4 OK IM-k3    micro 0.8010 vs committed 0.8010 (d +0.0000)
+2026-10-15 11:11:53,660 - INFO - G4 OK TM-n10-k5 micro 0.8279 vs committed 0.8279 (d +0.0000)
+2026-10-15 11:11:57,133 - INFO - G4 OK IM-k4    micro 0.7400 vs committed 0.7400 (d +0.0000)
+2026-10-15 11:12:01,259 - INFO - G4 OK ARM1-N5-carried micro 0.8550 vs committed 0.8550 (d -0.0000)
+2026-10-15 11:12:05,373 - INFO - G4 OK ARM2-N5-carried micro 0.8825 vs committed 0.8825 (d -0.0000)
+2026-10-15 11:12:09,225 - INFO - G4 OK FOURTH-N10-carried micro 0.8732 vs committed 0.8732 (d -0.0000)
+2026-10-15 11:12:11,787 - INFO - pass pin OK stride:g384_ov128_55map (K=10, 19 files)
+2026-10-15 11:20:32,167 - INFO - pass pin OK stride:g384_ov192_55map (K=10, 19 files)
+2026-10-15 11:42:16,629 - INFO - pass pin OK g37:g384_ov192_55map_g37 (K=5, 11 files)
+2026-10-15 11:43:36,904 - INFO - pass pin OK stride:g384_ov192_55map (K=10, 19 files)
+2026-10-15 12:12:39,511 - INFO - identity OK TH7    (0.15, k3) -> 4786
+2026-10-15 12:12:39,511 - INFO - identity OK T03    (0.15, k3) -> 4905
+2026-10-15 12:12:39,511 - INFO - identity OK TM     (0.15, k3) -> 4279
+2026-10-15 12:12:39,511 - INFO - identity OK IM     (0.15, k3) -> 4680
+2026-10-15 12:12:39,511 - INFO - identity OK UPL    (0.15, k5) -> 4361
+2026-10-15 12:12:39,512 - INFO - identity OK A-N10  (0.15, k8) -> 4475
+2026-10-15 12:12:39,512 - INFO - identity OK B-N10  (0.15, k10) -> 4505
+2026-10-15 12:12:39,512 - INFO - identity OK A-N5   (0.15, k4) -> 4597
+2026-10-15 12:12:39,512 - INFO - identity OK B-N5   (0.15, k5) -> 4736
+2026-10-15 12:12:39,512 - INFO - identity OK ARM1-N5 (0.10, k5) -> 5229
+2026-10-15 12:12:39,512 - INFO - identity OK ARM2-N5 (0.80, k5) -> 5003
+2026-10-15 12:12:39,512 - INFO - identity OK FOURTH-N10 (0.98, k10) -> 4246
+2026-10-15 12:12:43,155 - INFO - mechanism OK TH7    == TH7-k3 (4108, 678, 902)
+2026-10-15 12:12:46,835 - INFO - mechanism OK T03    == T03-k3 (4161, 744, 849)
+2026-10-15 12:12:50,310 - INFO - mechanism OK TM     == TM-k3 (3766, 513, 1244)
+2026-10-15 12:12:53,942 - INFO - mechanism OK IM     == IM-k3 (3881, 799, 1129)
+2026-10-15 12:12:57,456 - INFO - mechanism OK UPL    == TM-n10-k5 (3879, 482, 1131)
+2026-10-15 12:13:01,276 - INFO - mechanism OK ARM1-N5 == ARM1-N5-carried (4377, 852, 633)
+2026-10-15 12:13:05,010 - INFO - mechanism OK ARM2-N5 == ARM2-N5-carried (4418, 585, 592)
+2026-10-15 12:13:08,501 - INFO - mechanism OK FOURTH-N10 == FOURTH-N10-carried (4041, 205, 969)
+2026-10-15 12:13:08,570 - INFO - geometry OK A-N10  n=4475 max NN 0.0000 m
+2026-10-15 12:13:08,604 - INFO - geometry OK B-N10  n=4505 max NN 0.0000 m
+2026-10-15 12:13:08,644 - INFO - geometry OK ARM1-N5 n=5229 max NN 0.0000 m
+2026-10-15 12:13:08,681 - INFO - geometry OK ARM2-N5 n=5003 max NN 0.0000 m
+2026-10-15 12:13:08,715 - INFO - geometry OK FOURTH-N10 n=4246 max NN 0.0000 m
+2026-10-15 12:13:08,715 - INFO - FILTERED sweep: 13 of 23 families (TH7, T03, TM, IM, UPL, A-N10, A-N1, A-N3, A-N5, B-N10, B-N1, B-N3, B-N5)
+2026-10-15 12:13:08,795 - INFO - sweeping 1122 points across 13 families (4 workers)
+2026-10-15 12:34:44,549 - INFO - TH7    oracle: micro 0.8380 at (0.15, k3) | runners: 0.8376@(0.20,k3), 0.8269@(0.30,k3)
+2026-10-15 12:34:44,549 - INFO - TH7    MCC oracle: 0.6954 at (0.30, k3), micro 0.8269
+2026-10-15 12:34:44,549 - INFO - T03    oracle: micro 0.8399 at (0.20, k3) | runners: 0.8387@(0.15,k3), 0.8294@(0.15,k4)
+2026-10-15 12:34:44,549 - INFO - T03    MCC oracle: 0.7051 at (0.30, k3), micro 0.8256
+2026-10-15 12:34:44,549 - INFO - TM     oracle: micro 0.8103 at (0.20, k3) | runners: 0.8102@(0.15,k3), 0.7908@(0.30,k3)
+2026-10-15 12:34:44,549 - INFO - TM     MCC oracle: 0.6620 at (0.20, k3), micro 0.8103
+2026-10-15 12:34:44,550 - INFO - IM     oracle: micro 0.8008 at (0.15, k3) | runners: 0.7999@(0.20,k3), 0.7796@(0.30,k3)
+2026-10-15 12:34:44,550 - INFO - IM     MCC oracle: 0.7173 at (0.20, k3), micro 0.7999
+2026-10-15 12:34:44,550 - INFO - UPL    oracle: micro 0.8274 at (0.15, k5) | runners: 0.8263@(0.20,k5), 0.8227@(0.20,k4)
+2026-10-15 12:34:44,550 - INFO - UPL    MCC oracle: 0.6895 at (0.30, k3), micro 0.8080
+2026-10-15 12:34:44,551 - INFO - A-N10  oracle: micro 0.8419 at (0.15, k7) | runners: 0.8405@(0.20,k7), 0.8391@(0.15,k8)
+2026-10-15 12:34:44,551 - INFO - A-N10  MCC oracle: 0.7215 at (0.30, k1), micro 0.7277
+2026-10-15 12:34:44,551 - INFO - A-N1   oracle: micro 0.8227 at (0.20, k1) | runners: 0.8198@(0.15,k1), 0.8110@(0.30,k1)
+2026-10-15 12:34:44,551 - INFO - A-N1   MCC oracle: 0.7073 at (0.30, k1), micro 0.8110
+2026-10-15 12:34:44,552 - INFO - A-N3   oracle: micro 0.8321 at (0.20, k2) | runners: 0.8312@(0.15,k2), 0.8307@(0.15,k3)
+2026-10-15 12:34:44,552 - INFO - A-N3   MCC oracle: 0.7159 at (0.30, k1), micro 0.7785
+2026-10-15 12:34:44,552 - INFO - A-N5   oracle: micro 0.8383 at (0.15, k4) | runners: 0.8368@(0.20,k4), 0.8355@(0.20,k3)
+2026-10-15 12:34:44,552 - INFO - A-N5   MCC oracle: 0.7188 at (0.30, k1), micro 0.7619
+2026-10-15 12:34:44,553 - INFO - B-N10  oracle: micro 0.8560 at (0.20, k9) | runners: 0.8549@(0.15,k9), 0.8528@(0.20,k8)
+2026-10-15 12:34:44,553 - INFO - B-N10  MCC oracle: 0.7270 at (0.40, k1), micro 0.6754
+2026-10-15 12:34:44,553 - INFO - B-N1   oracle: micro 0.8013 at (0.20, k1) | runners: 0.7987@(0.25,k1), 0.7986@(0.30,k1)
+2026-10-15 12:34:44,553 - INFO - B-N1   MCC oracle: 0.7203 at (0.40, k1), micro 0.7974
+2026-10-15 12:34:44,553 - INFO - B-N3   oracle: micro 0.8507 at (0.20, k3) | runners: 0.8477@(0.15,k3), 0.8365@(0.25,k3)
+2026-10-15 12:34:44,553 - INFO - B-N3   MCC oracle: 0.7252 at (0.35, k1), micro 0.7485
+2026-10-15 12:34:44,554 - INFO - B-N5   oracle: micro 0.8516 at (0.20, k5) | runners: 0.8503@(0.15,k5), 0.8476@(0.20,k4)
+2026-10-15 12:34:44,554 - INFO - B-N5   MCC oracle: 0.7258 at (0.35, k1), micro 0.7198
+2026-10-15 12:34:44,554 - INFO - FILTERED STAGE 1 COMPLETE: 13 families re-swept; sweeps.json merged, no cell written and cells_manifest.json untouched

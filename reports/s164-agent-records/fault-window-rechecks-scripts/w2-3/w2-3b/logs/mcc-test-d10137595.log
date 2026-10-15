@@ -1,0 +1,166 @@
+start 2026-10-15T10:25:56Z head d10137595 PYTHONHASHSEED=unset
+
+=== 37arm1-r2: K = [1, 3, 5] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-37arm1-r2-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2 --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps-r2.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  arm1-n1-oracle-p0.20-k1-r2-gt      passes= 1 eval-F1=0.8413 micro-F1-of-mean=0.8413 gap=-0.0000 MCC=0.7246
+  verified-PV  arm1-n3-oracle-p0.15-k3-r2-gt      passes= 1 eval-F1=0.8705 micro-F1-of-mean=0.8705 gap=-0.0000 MCC=0.7179
+  verified-PV  arm1-n5-oracle-p0.15-k5-r2-gt      passes= 1 eval-F1=0.8727 micro-F1-of-mean=0.8727 gap=+0.0000 MCC=0.7147
+Loaded 3 cells (0 single-pass + 0 consensus + 3 verified-PV)
+Running 3 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 3 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 3/3 pairs significant at q=0.05
+FDR: 2/3 pairs significant at q=0.05 -> 2 tiers; tie_set (Tier 1) = 2 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.md
+  K1-vs-K5       dF1 +0.0315 (p_bh 0.0000) | dMCC -0.0099 (p_bh 0.0168) | F1 up (sig), MCC down (sig)
+  K1-vs-K3       dF1 +0.0292 (p_bh 0.0000) | dMCC -0.0067 (p_bh 0.0498) | F1 up (sig), MCC down (sig)
+  K3-vs-K5       dF1 +0.0023 (p_bh 0.1088) | dMCC -0.0032 (p_bh 0.0498) | F1 up n.s., MCC down (sig)
+  gate: 3 pair(s) against a committed board -> PASS
+
+=== 37arm2-r2: K = [1, 3, 5] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-37arm2-r2-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2 --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps-r2.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  arm2-n1-oracle-p0.98-k1-r2-gt      passes= 1 eval-F1=0.8610 micro-F1-of-mean=0.8610 gap=+0.0000 MCC=0.7422
+  verified-PV  arm2-n3-oracle-p0.95-k3-r2-gt      passes= 1 eval-F1=0.8848 micro-F1-of-mean=0.8848 gap=+0.0000 MCC=0.7163
+  verified-PV  arm2-n5-oracle-p0.95-k5-r2-gt      passes= 1 eval-F1=0.8871 micro-F1-of-mean=0.8871 gap=+0.0000 MCC=0.7147
+Loaded 3 cells (0 single-pass + 0 consensus + 3 verified-PV)
+Running 3 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 3 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 2/3 pairs significant at q=0.05
+FDR: 2/3 pairs significant at q=0.05 -> 2 tiers; tie_set (Tier 1) = 2 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.md
+  K1-vs-K5       dF1 +0.0261 (p_bh 0.0000) | dMCC -0.0275 (p_bh 0.0000) | F1 up (sig), MCC down (sig)
+  K1-vs-K3       dF1 +0.0238 (p_bh 0.0000) | dMCC -0.0258 (p_bh 0.0000) | F1 up (sig), MCC down (sig)
+  K3-vs-K5       dF1 +0.0023 (p_bh 0.1208) | dMCC -0.0017 (p_bh 0.3580) | neither separates
+  gate: 3 pair(s) against a committed board -> PASS
+
+=== 55map-stride-a-r2: K = [1, 3, 5, 10] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-55map-stride-a-r2-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-r2/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2 --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps-r2.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt passes= 1 eval-F1=0.8227 micro-F1-of-mean=0.8227 gap=-0.0000 MCC=0.7006
+  verified-PV  g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt passes= 1 eval-F1=0.8321 micro-F1-of-mean=0.8321 gap=-0.0000 MCC=0.7018
+  verified-PV  g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt passes= 1 eval-F1=0.8383 micro-F1-of-mean=0.8383 gap=-0.0000 MCC=0.6907
+  verified-PV  g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt passes= 1 eval-F1=0.8419 micro-F1-of-mean=0.8419 gap=-0.0000 MCC=0.6954
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 3/6 pairs significant at q=0.05
+FDR: 6/6 pairs significant at q=0.05 -> 4 tiers; tie_set (Tier 1) = 1 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.md
+  K1-vs-K10      dF1 +0.0192 (p_bh 0.0000) | dMCC -0.0052 (p_bh 0.1984) | F1 up (sig), MCC down n.s.
+  K1-vs-K3       dF1 +0.0094 (p_bh 0.0000) | dMCC +0.0012 (p_bh 0.6391) | F1 up (sig), MCC up n.s.
+  K3-vs-K5       dF1 +0.0062 (p_bh 0.0079) | dMCC -0.0111 (p_bh 0.0066) | F1 up (sig), MCC down (sig)
+  K5-vs-K10      dF1 +0.0036 (p_bh 0.0079) | dMCC +0.0047 (p_bh 0.0300) | F1 up (sig), MCC up (sig)
+  gate: 4 pair(s) against a committed board -> PASS
+
+=== 55map-stride-a-standardised: K = [1, 3, 5, 10] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-55map-stride-a-standardised-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-standardised/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt passes= 1 eval-F1=0.8231 micro-F1-of-mean=0.8231 gap=+0.0000 MCC=0.701
+  verified-PV  g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt passes= 1 eval-F1=0.8326 micro-F1-of-mean=0.8326 gap=-0.0000 MCC=0.7022
+  verified-PV  g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt passes= 1 eval-F1=0.8383 micro-F1-of-mean=0.8383 gap=+0.0000 MCC=0.6911
+  verified-PV  g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt passes= 1 eval-F1=0.8420 micro-F1-of-mean=0.8420 gap=-0.0000 MCC=0.6958
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 3/6 pairs significant at q=0.05
+FDR: 6/6 pairs significant at q=0.05 -> 4 tiers; tie_set (Tier 1) = 1 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.md
+  K1-vs-K10      dF1 +0.0188 (p_bh 0.0000) | dMCC -0.0052 (p_bh 0.1984) | F1 up (sig), MCC down n.s.
+  K1-vs-K3       dF1 +0.0094 (p_bh 0.0000) | dMCC +0.0012 (p_bh 0.6391) | F1 up (sig), MCC up n.s.
+  K3-vs-K5       dF1 +0.0058 (p_bh 0.0132) | dMCC -0.0111 (p_bh 0.0066) | F1 up (sig), MCC down (sig)
+  K5-vs-K10      dF1 +0.0036 (p_bh 0.0092) | dMCC +0.0047 (p_bh 0.0300) | F1 up (sig), MCC up (sig)
+  gate: 4 pair(s) against a committed board -> PASS
+
+=== gs-stride-a: K = [1, 3, 5, 10] @ 20 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-gs-stride-a-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json --analyses /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a --buffer 20 --n-permutations 10000 --seed 42 --permute-mcc --bounds /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  g384-ov128-ladder-n1-verified-p0.15-k1 passes= 1 eval-F1=0.8605 micro-F1-of-mean=0.8605 gap=+0.0000 MCC=0.7834
+  verified-PV  g384-ov128-ladder-n3-verified-p0.15-k3 passes= 1 eval-F1=0.8834 micro-F1-of-mean=0.8834 gap=+0.0000 MCC=0.7762
+  verified-PV  g384-ov128-ladder-n5-verified-p0.15-k4 passes= 1 eval-F1=0.8782 micro-F1-of-mean=0.8782 gap=-0.0000 MCC=0.7751
+  verified-PV  g384-ov128-k10-verified-p0.15-k8   passes= 1 eval-F1=0.8905 micro-F1-of-mean=0.8905 gap=+0.0000 MCC=0.7969
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 0/6 pairs significant at q=0.05
+FDR: 1/6 pairs significant at q=0.05 -> 2 tiers; tie_set (Tier 1) = 3 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.md
+  K1-vs-K10      dF1 +0.0300 (p_bh 0.0072) | dMCC +0.0134 (p_bh 0.7678) | F1 up (sig), MCC up n.s.
+  K1-vs-K3       dF1 +0.0229 (p_bh 0.1056) | dMCC -0.0072 (p_bh 0.8081) | neither separates
+  K3-vs-K5       dF1 -0.0053 (p_bh 0.4693) | dMCC -0.0011 (p_bh 1.0000) | neither separates
+  K5-vs-K10      dF1 +0.0123 (p_bh 0.1296) | dMCC +0.0217 (p_bh 0.1947) | neither separates
+  gate: 0 pair(s) against a committed board -> PASS
+
+=== 55map-stride-b-r2: K = [1, 3, 5, 10] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-55map-stride-b-r2-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2 --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps-r2.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt passes= 1 eval-F1=0.8013 micro-F1-of-mean=0.8013 gap=-0.0000 MCC=0.7092
+  verified-PV  g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt passes= 1 eval-F1=0.8507 micro-F1-of-mean=0.8507 gap=-0.0000 MCC=0.7128
+  verified-PV  g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt passes= 1 eval-F1=0.8516 micro-F1-of-mean=0.8516 gap=+0.0000 MCC=0.7098
+  verified-PV  g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt passes= 1 eval-F1=0.8560 micro-F1-of-mean=0.8560 gap=-0.0000 MCC=0.7123
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 0/6 pairs significant at q=0.05
+FDR: 5/6 pairs significant at q=0.05 -> 3 tiers; tie_set (Tier 1) = 1 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.md
+  K1-vs-K10      dF1 +0.0547 (p_bh 0.0000) | dMCC +0.0031 (p_bh 0.5592) | F1 up (sig), MCC up n.s.
+  K1-vs-K3       dF1 +0.0494 (p_bh 0.0000) | dMCC +0.0035 (p_bh 0.5592) | F1 up (sig), MCC up n.s.
+  K3-vs-K5       dF1 +0.0010 (p_bh 0.5086) | dMCC -0.0030 (p_bh 0.4122) | neither separates
+  K5-vs-K10      dF1 +0.0043 (p_bh 0.0035) | dMCC +0.0025 (p_bh 0.4395) | F1 up (sig), MCC up n.s.
+  gate: 4 pair(s) against a committed board -> PASS
+
+=== 55map-stride-b-g37vf-r2: K = [1, 3, 10] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-g37vf-r2/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2 --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps-r2.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt passes= 1 eval-F1=0.8352 micro-F1-of-mean=0.8352 gap=-0.0000 MCC=0.7471
+  verified-PV  g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt passes= 1 eval-F1=0.8747 micro-F1-of-mean=0.8747 gap=+0.0000 MCC=0.7376
+  verified-PV  g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt passes= 1 eval-F1=0.8813 micro-F1-of-mean=0.8813 gap=+0.0000 MCC=0.7359
+Loaded 3 cells (0 single-pass + 0 consensus + 3 verified-PV)
+Running 3 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 3 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 2/3 pairs significant at q=0.05
+FDR: 3/3 pairs significant at q=0.05 -> 3 tiers; tie_set (Tier 1) = 1 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.md
+  K1-vs-K10      dF1 +0.0462 (p_bh 0.0000) | dMCC -0.0112 (p_bh 0.0000) | F1 up (sig), MCC down (sig)
+  K1-vs-K3       dF1 +0.0396 (p_bh 0.0000) | dMCC -0.0095 (p_bh 0.0000) | F1 up (sig), MCC down (sig)
+  K3-vs-K10      dF1 +0.0066 (p_bh 0.0000) | dMCC -0.0017 (p_bh 0.2644) | F1 up (sig), MCC down n.s.
+  gate: 3 pair(s) against a committed board -> PASS
+
+=== 55map-stride-b-standardised: K = [1, 3, 5, 10] @ 50 m ===
+  $ /home/shawn/Code/map-reader-llm/.venv/bin/python /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/scripts/era1_leaderboard_tiering.py --analysis-id k-ladder-mcc-55map-stride-b-standardised-2026-09-12 --conditions /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-d10137595/results/run-conditions.json --analyses results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-standardised/run-analyses.json --output-dir results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised --buffer 50 --n-permutations 10000 --seed 42 --permute-mcc
+Loading references best-available-gt-55maps.geojson and bounds 55maps_evaluation_bounds.geojson ...
+  8541 evaluation tiles
+  verified-PV  g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt passes= 1 eval-F1=0.8013 micro-F1-of-mean=0.8013 gap=+0.0000 MCC=0.7097
+  verified-PV  g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt passes= 1 eval-F1=0.8505 micro-F1-of-mean=0.8505 gap=+0.0000 MCC=0.7132
+  verified-PV  g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt passes= 1 eval-F1=0.8515 micro-F1-of-mean=0.8515 gap=+0.0000 MCC=0.7102
+  verified-PV  g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt passes= 1 eval-F1=0.8558 micro-F1-of-mean=0.8558 gap=+0.0000 MCC=0.7127
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 0/6 pairs significant at q=0.05
+FDR: 5/6 pairs significant at q=0.05 -> 3 tiers; tie_set (Tier 1) = 1 cell(s)
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.json
+Wrote results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.md
+  K1-vs-K10      dF1 +0.0545 (p_bh 0.0000) | dMCC +0.0031 (p_bh 0.5832) | F1 up (sig), MCC up n.s.
+  K1-vs-K3       dF1 +0.0492 (p_bh 0.0000) | dMCC +0.0035 (p_bh 0.5686) | F1 up (sig), MCC up n.s.
+  K3-vs-K5       dF1 +0.0010 (p_bh 0.5156) | dMCC -0.0030 (p_bh 0.4122) | neither separates
+  K5-vs-K10      dF1 +0.0043 (p_bh 0.0035) | dMCC +0.0025 (p_bh 0.4395) | F1 up (sig), MCC up n.s.
+  gate: 4 pair(s) against a committed board -> PASS
+
+Wrote results/k-ladder-2026-09-12/mcc-test/summary.json
+exit=0 end 2026-10-15T10:35:29Z

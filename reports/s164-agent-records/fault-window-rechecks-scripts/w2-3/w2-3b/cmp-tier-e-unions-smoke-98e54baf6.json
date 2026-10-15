@@ -1,0 +1,93 @@
+{
+  "commit": "98e54baf6",
+  "tree": "w2-3b-98e54baf6",
+  "ignore_key": [
+    "^generated_at_utc$"
+  ],
+  "substitute": [
+    "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-98e54baf6=/home/shawn/worktrees/map-reader-llm/claude-closeout"
+  ],
+  "n_files": 9,
+  "counts": {
+    "BYTE-IDENTICAL": 7,
+    "BYTE-IDENTICAL-AFTER-SUBSTITUTION": 1,
+    "EQUAL-AFTER-IGNORES": 1
+  },
+  "n_today_is_generating_blob": 9,
+  "files": [
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/consensus_t1.geojson",
+      "sha256_regenerated": "fc3a90197356725c1ef07f1f683bfdd50ad59382fff0511cb55a051fe9d1dc66",
+      "sha256_committed": "fc3a90197356725c1ef07f1f683bfdd50ad59382fff0511cb55a051fe9d1dc66",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/voting_summary.json",
+      "sha256_regenerated": "914ff3bd30782cec3cb52a1171d5ba4e076f67353defa287633b2898860c554d",
+      "sha256_committed": "914ff3bd30782cec3cb52a1171d5ba4e076f67353defa287633b2898860c554d",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t1.geojson",
+      "sha256_regenerated": "0c6720c53282c3ceb4d2e9cce39cb8594bb17bba90a79646a2d9ce637df1c990",
+      "sha256_committed": "0c6720c53282c3ceb4d2e9cce39cb8594bb17bba90a79646a2d9ce637df1c990",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t2.geojson",
+      "sha256_regenerated": "5bae5c7ce21fe4c1f7832f2f964850fd0178229c965b5cb913ac9dfa7163f291",
+      "sha256_committed": "5bae5c7ce21fe4c1f7832f2f964850fd0178229c965b5cb913ac9dfa7163f291",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t3.geojson",
+      "sha256_regenerated": "ce8ac25a5e8615ae1ebeaf8252c6935d823c94e309b4725e1635a0e1fa48313b",
+      "sha256_committed": "ce8ac25a5e8615ae1ebeaf8252c6935d823c94e309b4725e1635a0e1fa48313b",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/voting_summary.json",
+      "sha256_regenerated": "6c44d5bba9f75819a6885e12398eed97ba65faf16c1a3958eb0e7cfd8a06983d",
+      "sha256_committed": "6c44d5bba9f75819a6885e12398eed97ba65faf16c1a3958eb0e7cfd8a06983d",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/crops/candidate_manifest.json",
+      "sha256_regenerated": "7d7c889ffc30330da342f262489174759166c4307af3a2dc4ae644a2c0d23633",
+      "sha256_committed": "7219e39b03559e815f152b9865366a8ad051be1243add4f8ff3757af35465c6d",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL-AFTER-SUBSTITUTION"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/union_first5.geojson",
+      "sha256_regenerated": "04759a309d1d4b73f4572fa0870ea7a890983bda3a20f4735cce0f66612f92e1",
+      "sha256_committed": "04759a309d1d4b73f4572fa0870ea7a890983bda3a20f4735cce0f66612f92e1",
+      "today_is_generating_blob": true,
+      "status": "BYTE-IDENTICAL"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/unions.json",
+      "sha256_regenerated": "62e73bedbe5c7da8e162f62fc932f99585b900a62db9737febd33084ab8d4d6a",
+      "sha256_committed": "5cd218180138c0a4382a7aa4178eac6bf0f90e8130e5c7ac02a26624934de352",
+      "today_is_generating_blob": true,
+      "detail": {
+        "kind": "json",
+        "n_leaves": 80,
+        "n_differing": 0,
+        "differing": [],
+        "n_ignored": 1,
+        "ignored": [
+          "generated_at_utc"
+        ],
+        "key_order_identical": true
+      },
+      "status": "EQUAL-AFTER-IGNORES"
+    }
+  ]
+}

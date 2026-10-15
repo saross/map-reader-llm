@@ -1,0 +1,102 @@
+start 2026-10-15T10:37:05Z head 5167b9a5c PYTHONHASHSEED=unset
+=== 1. tension analyses (tier-e/scores.json held aside) 10:37:08
+2026-10-15 10:37:09,480 - INFO - 9 MINIMAL ladder(s) -> results/k-ladder-2026-09-12/tension/effect-sizes.json
+2026-10-15 10:37:09,482 - WARNING - tier E scores not present yet: /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3b-5167b9a5c/results/k-ladder-2026-09-12/tier-e/scores.json
+2026-10-15 10:37:09,482 - INFO - 4 grid cell(s) -> results/k-ladder-2026-09-12/tension/grid-overlap.json
+2026-10-15 10:37:09,725 - INFO - reference 5018 records; frame 8541 tiles
+2026-10-15 10:37:16,042 - INFO - 55map-stride-a-r2 K=1: rebuilt 0.822674 against committed 0.822700 (gap -0.000026)
+2026-10-15 10:37:21,178 - INFO - 55map-stride-a-r2 K=3: rebuilt 0.832077 against committed 0.832100 (gap -0.000023)
+2026-10-15 10:37:27,127 - INFO - 55map-stride-a-r2 K=5: rebuilt 0.838274 against committed 0.838300 (gap -0.000026)
+2026-10-15 10:37:31,834 - INFO - 55map-stride-a-r2 K=10: rebuilt 0.841876 against committed 0.841900 (gap -0.000024)
+2026-10-15 10:37:50,098 - INFO - 55map-stride-a-r2: 25/200 draws, 7 significant so far
+2026-10-15 10:38:15,641 - INFO - 55map-stride-a-r2: 50/200 draws, 11 significant so far
+2026-10-15 10:38:38,162 - INFO - 55map-stride-a-r2: 75/200 draws, 17 significant so far
+2026-10-15 10:38:59,448 - INFO - 55map-stride-a-r2: 100/200 draws, 21 significant so far
+2026-10-15 10:39:22,959 - INFO - 55map-stride-a-r2: 125/200 draws, 28 significant so far
+2026-10-15 10:39:49,025 - INFO - 55map-stride-a-r2: 150/200 draws, 31 significant so far
+2026-10-15 10:40:09,078 - INFO - 55map-stride-a-r2: 175/200 draws, 35 significant so far
+2026-10-15 10:40:28,908 - INFO - 55map-stride-a-r2: 200/200 draws, 39 significant so far
+2026-10-15 10:40:36,038 - INFO - 55map-stride-b-r2 K=1: rebuilt 0.801274 against committed 0.801300 (gap -0.000026)
+2026-10-15 10:40:40,776 - INFO - 55map-stride-b-r2 K=3: rebuilt 0.850664 against committed 0.850700 (gap -0.000036)
+2026-10-15 10:40:45,404 - INFO - 55map-stride-b-r2 K=5: rebuilt 0.851628 against committed 0.851600 (gap +0.000028)
+2026-10-15 10:40:51,214 - INFO - 55map-stride-b-r2 K=10: rebuilt 0.855959 against committed 0.856000 (gap -0.000041)
+2026-10-15 10:41:10,618 - INFO - 55map-stride-b-r2: 25/200 draws, 25 significant so far
+2026-10-15 10:41:29,699 - INFO - 55map-stride-b-r2: 50/200 draws, 49 significant so far
+2026-10-15 10:41:48,866 - INFO - 55map-stride-b-r2: 75/200 draws, 74 significant so far
+2026-10-15 10:42:08,314 - INFO - 55map-stride-b-r2: 100/200 draws, 99 significant so far
+2026-10-15 10:42:27,510 - INFO - 55map-stride-b-r2: 125/200 draws, 123 significant so far
+2026-10-15 10:42:46,457 - INFO - 55map-stride-b-r2: 150/200 draws, 147 significant so far
+2026-10-15 10:43:05,817 - INFO - 55map-stride-b-r2: 175/200 draws, 172 significant so far
+2026-10-15 10:43:26,510 - INFO - 55map-stride-b-r2: 200/200 draws, 197 significant so far
+2026-10-15 10:43:33,207 - INFO - -> results/k-ladder-2026-09-12/tension/subsample.json
+tension exit=0
+=== 2. h10 consensus rebuild 10:43:33
+merge exit=0
+=== 3. prepare: sweeps on both frames, operating points, materialise 10:43:34
+INFO: Created 482 records
+INFO:   re-keyed detections.geojson: 482 feature(s), 23 outside the frame's tile union
+INFO: row 1 opmax: (k>=1, p>=0.20) -> 482 detections, cell grid-2026-08-18__g384-ov192-k1-verified-opmax
+INFO: Created 493 records
+INFO:   re-keyed detections.geojson: 493 feature(s), 24 outside the frame's tile union
+INFO: row 1 carried: (k>=1, p>=0.15) -> 493 detections, cell grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1
+INFO: Created 450 records
+INFO:   re-keyed detections.geojson: 450 feature(s), 23 outside the frame's tile union
+INFO: row 2 opmax: (k>=3, p>=0.15) -> 450 detections, cell grid-2026-08-18__g384-ov192-k3-verified-opmax
+INFO: Created 435 records
+INFO:   re-keyed detections.geojson: 435 feature(s), 21 outside the frame's tile union
+INFO: row 3 opmax: (k>=5, p>=0.15) -> 435 detections, cell grid-2026-08-18__g384-ov192-k5-verified-opmax
+INFO: 4 evaluation job(s) -> results/k-ladder-2026-09-12/tier-e/score-jobs.txt
+prepare exit=0
+=== 4. collect (reads the committed, census-verified evaluations) 10:49:56
+INFO: K=1  opmax F1@20 0.8546  MCC 0.8211  | carried F1@20 0.854
+INFO: K=3  opmax F1@20 0.8840  MCC 0.8167  | carried F1@20 0.884
+INFO: K=5  opmax F1@20 0.8905  MCC 0.8139  | carried F1@20 0.8905
+INFO: -> results/k-ladder-2026-09-12/tier-e/scores.json
+collect exit=0
+=== 5. crop extraction for the three verifier stages (no verify) 10:49:57
+2026-10-15 10:49:57,196 - INFO - Extracting candidates from: outputs/grid-2026-08-18/g384_ov192/consensus-n1/consensus_t1.geojson
+2026-10-15 10:49:57,196 - INFO - Output directory: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/crops
+2026-10-15 10:49:57,196 - INFO - Padding: 75 px (crop size: 150×150)
+Loading proposer detections: outputs/grid-2026-08-18/g384_ov192/consensus-n1/consensus_t1.geojson
+Found 1826 detections
+
+Manifest written to: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/crops/candidate_manifest.json
+
+Extraction Summary:
+  Total detections: 1826
+  Successful:       1826
+  Failed:           0
+  From rasters:     1826
+  From tiles (fallback): 0
+extract k1 exit=0
+2026-10-15 10:50:11,816 - INFO - Extracting candidates from: outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t1.geojson
+2026-10-15 10:50:11,816 - INFO - Output directory: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/crops
+2026-10-15 10:50:11,816 - INFO - Padding: 75 px (crop size: 150×150)
+Loading proposer detections: outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t1.geojson
+Found 2481 detections
+
+Manifest written to: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/crops/candidate_manifest.json
+
+Extraction Summary:
+  Total detections: 2481
+  Successful:       2481
+  Failed:           0
+  From rasters:     2481
+  From tiles (fallback): 0
+extract k3 exit=0
+2026-10-15 10:50:27,318 - INFO - Extracting candidates from: outputs/grid-2026-08-18/g384_ov192/consensus-n5/consensus_t1.geojson
+2026-10-15 10:50:27,318 - INFO - Output directory: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/crops
+2026-10-15 10:50:27,318 - INFO - Padding: 75 px (crop size: 150×150)
+Loading proposer detections: outputs/grid-2026-08-18/g384_ov192/consensus-n5/consensus_t1.geojson
+Found 2932 detections
+
+Manifest written to: outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/crops/candidate_manifest.json
+
+Extraction Summary:
+  Total detections: 2932
+  Successful:       2932
+  Failed:           0
+  From rasters:     2932
+  From tiles (fallback): 0
+extract k5 exit=0
+end 2026-10-15T10:50:43Z
