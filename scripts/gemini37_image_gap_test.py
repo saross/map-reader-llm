@@ -5,8 +5,10 @@ The within-3.7 modality gap: text vs image, both verifier arms.
 The image-GS card's I2 test (`planning/gemini37-image-gs-2026-08-30.md`)
 is a difference-in-differences: (text − image) WITHIN Gemini 3.7
 against the committed (text − image) within Gemini 3 (+0.0549 @20 m,
-p = 0.001). `image_b_analysis.py`'s built-in head-to-head pairs the
-image cell against the GEMINI-3 text anchor (its original campaign
+p = 0.001, as first committed; +0.0559, p 0.0005, after the 2026-10-15
+restatement with the D62 (1) re-verified rows). `image_b_analysis.py`'s
+built-in head-to-head pairs the image cell against the GEMINI-3 text
+anchor (its original campaign
 design), so this script runs the correct within-family pairs:
 
 - carried-verifier pair: 3.7-text screen best vs 3.7-image arm 1
@@ -84,16 +86,22 @@ OUT = PROJECT_ROOT / "results/gemini37-image-gs-2026-09-01"
 
 #: (pair label, text set, committed text F1@20, image set, committed
 #: image F1@20). Committed values re-read from the cells' analyses.
+#: Dated update 2026-10-15 (restatement pass, D65 (2); D58 Q6): the four
+#: values were 0.9139 / 0.9254 / 0.9265 / 0.9308 until the cells were
+#: re-scored with the D62 (1) re-verified rows on PR #42's origin route
+#: (reports/s164-agent-records/restatement-pass.md).
 PAIRS = [
     ("carried-verifier",
-     PROJECT_ROOT / "results/gemini37-screen-2026-08-28/verified_best_20m.geojson", 0.9139,
-     OUT / "arm1/verified_best_20m.geojson", 0.9254),
+     PROJECT_ROOT / "results/gemini37-screen-2026-08-28/verified_best_20m.geojson", 0.9238,
+     OUT / "arm1/verified_best_20m.geojson", 0.9381),
     ("all-3.7",
-     PROJECT_ROOT / "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson", 0.9265,
-     OUT / "arm2/verified_best_20m.geojson", 0.9308),
+     PROJECT_ROOT / "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson", 0.9364,
+     OUT / "arm2/verified_best_20m.geojson", 0.9408),
 ]
 
-G3_GAP = {"delta_f1": 0.0549, "p": 0.001,
+#: The Gemini 3 (text − image) gap, re-read from Image-B's head-to-head.
+#: Dated update 2026-10-15 (as above): +0.0549 until the restatement pass.
+G3_GAP = {"delta_f1": 0.0559, "p": 0.001,
           "source": "results/image-b-gs-2026-08-28/analysis.json"}
 
 
