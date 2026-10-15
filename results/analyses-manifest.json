@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-10-14T01:39:00Z",
+  "generated_at": "2026-10-15T12:09:10Z",
   "generator_version": "0.8.0",
   "analyses": [
     {
@@ -1885,10 +1885,10 @@
       "working_notes_obs": [],
       "manually_verified_at": "2026-08-17T10:24:40Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-17T07:01:26Z",
-        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A2, source commit 6a97da344, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"S135 L4 walk part 1 \u2014 three PI rulings applied\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T10:24:40Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: H2 and H3, 0.001 / 0.0001 (bootstrap floors at B = 1,000 / 10,000) -> < 0.0001. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-17T07:01:26Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
-        "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A2, source commit 6a97da344, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"S135 L4 walk part 1 \u2014 three PI rulings applied\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T10:24:40Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: H2 and H3, 0.001 / 0.0001 (bootstrap floors at B = 1,000 / 10,000) -> < 0.0001. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-17T07:01:26Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-17T07:01:26Z has LAPSED and the row is re-sign-pending). results/e45-bootstrap-pairings/e45_bootstrap_pairings.json and its h2-rerun were regenerated in the S164 restatement pass's pairwise lane (D62 (2), D65 (2); branch restatement-pass-s164, commit 08af04cf3), after PR #37 put the consensus arms on the D60 (3) consensus route (the 26-of-30 arm 0.814118 -> 0.816471); seed 42, B = 1,000 and 10,000; the reproduction gates pass 7/7 and 4/4 against the regenerated h2-rerun and tiering inputs. CHANGED: H2 dF1 +0.076083 -> +0.073730, B = 1,000 CI95 [+0.051787, +0.104642] -> [+0.049520, +0.101772], B = 10,000 [+0.050771, +0.103945] -> [+0.048250, +0.101597]; H3 dF1 +0.427340 -> +0.429693, B = 1,000 [+0.389640, +0.468082] -> [+0.392114, +0.470439], B = 10,000 [+0.385608, +0.469544] -> [+0.388060, +0.472072]. UNCHANGED: AS PREDICTED (all four intervals exclude zero in the permutation direction); the gates 7/7 and 4/4; both permutation p values < 0.0001 (D42); the scoping and the division of labour with the family adjudication. FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: +0.076083, +0.051787, +0.104642, +0.050771, +0.103945, +0.427340, +0.389640, +0.468082, +0.385608, +0.469544; the sentence on the blind verifier's bit-for-bit reproduction describes the 2026-08-17 values, which the regenerated ones replace without a new blind verification; the predicted_outcome, authored before computation, quotes +0.076083 and is left as registered. A redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/e45-bootstrap-pairings/findings.md, changelog 2026-10-15",
         "history": [
           {
             "stamped_at": "2026-08-17T10:24:40Z",
@@ -1900,6 +1900,14 @@
             "kind": "signature note (D9 pattern): re-testing under D42 (permutation p-values)",
             "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A2, source commit 6a97da344, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"S135 L4 walk part 1 \u2014 three PI rulings applied\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T10:24:40Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
             "presentation": "Session 161 conversation; reports/d42-implementation-2026-10-05.md \u00a7 7"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-17T07:01:26Z",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A2, source commit 6a97da344, 2026-08-17). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"S135 L4 walk part 1 \u2014 three PI rulings applied\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-17T10:24:40Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: H2 and H3, 0.001 / 0.0001 (bootstrap floors at B = 1,000 / 10,000) -> < 0.0001. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-17T07:01:26Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
+            "prior_presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md"
           }
         ]
       },
@@ -1908,7 +1916,7 @@
           "results/run-analyses.json",
           "results/e45-bootstrap-pairings"
         ],
-        "last_extracted_at": "2026-10-05T11:35:31Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2128,16 +2136,24 @@
       "working_notes_obs": [],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: overlap at 512 px, overlap at 384 px and tile size at 50 %, 0.0001 (floor) -> < 0.0001; tile size at 12.5 %, 0.0001 (floor) -> 0.0002; interaction 0.4902 -> 0.4681. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
-        "presentation": null,
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: overlap at 512 px, overlap at 384 px and tile size at 50 %, 0.0001 (floor) -> < 0.0001; tile size at 12.5 %, 0.0001 (floor) -> 0.0002; interaction 0.4902 -> 0.4681. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). The consensus-only grid board (results/grid-2026-08-18/{grid_analysis.json, sweep.csv, per_tile_counts.json} and the four conditions under conditions/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605), in two independent runs that agree apart from timestamps and run roots. The board reads no verifier leg, so it moves by PR #42's origin route alone (D62 (1): each consensus cluster scored on the sheet it came from); the re-verified rows do not enter it, and the values equal PR #42's ORIGIN and the 2026-10-13 re-score's REPAIRED reading. CHANGED: K = 10 best F1 [CI95] and tile MCC, 512 px / 12.5 % 0.6759 [0.6239,0.7237] 0.5383 -> 0.6845 [0.6336,0.7313] 0.5431; 512 px / 50 % 0.7518 [0.7026,0.7938] 0.5897 -> 0.7611 [0.7126,0.8023] 0.5853; 384 px / 12.5 % 0.6475 [0.5935,0.6966] 0.3137 -> 0.6574 [0.6038,0.7056] 0.3066; 384 px / 50 % 0.7205 [0.6749,0.7618] -> 0.7293 [0.6841,0.7686]; single-pass tile size (384 - 512) -0.0824 [-0.1243,-0.0429] -> -0.0803 [-0.1236,-0.0394] at 12.5 % and -0.0972 [-0.1196,-0.0753] -> -0.0976 [-0.1206,-0.0752] at 50 %; single-pass overlap (12.5 % - 50 %) +0.1200 -> +0.1207 at 512 px and +0.1348 -> +0.1381 at 384 px, so 'about 0.12-0.13' -> 'about 0.12-0.14'; the passes-versus-overlap best-F1 shortfall 0.0953 -> 0.0926; the interaction -0.0148 [-0.0552,+0.0268] -> -0.0173 [-0.0580,+0.0248], p 0.4902 (the text's bootstrap p; 0.4681 under the 2026-10-05 D42 note) -> 0.4033. UNCHANGED: every verdict (512 px wins at every overlap and every K; both single-pass tile-size effects exclude zero; tile size never reverses; overlap costs F1 at a single pass and wins once corroboration is on; the best cell is 512 px / 50 %; passes do not substitute for overlap; the interaction is unresolved); the 384 px / 50 % tile MCC 0.4909; the union-recall shortfall 0.0304; 30,130 calls and $18.53; 228 swept cells, two with undefined tile MCC; the $6.33 Phase 1 costing the text quotes (the artefact's own verifier_costing block now sums to $6.32, because the regeneration picked up the D19 uniform-tier cost basis, not because of any repaired row). FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.6759, 0.6239, 0.7237, 0.5383, 0.7518, 0.7026, 0.7938, 0.5897, 0.6475, 0.5935, 0.6966, 0.3137, 0.7205, 0.6749, 0.7618, -0.0824, -0.1243, -0.0429, -0.0972, -0.1196, -0.0753, 0.0953, +0.1200, +0.1348, 0.12-0.13, -0.0148, -0.0552, +0.0268, 0.4902; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/grid-2026-08-18/findings.md, changelog 2026-10-15",
         "history": [
           {
             "noted_at": "2026-10-05T11:34:51Z",
             "kind": "signature note (D9 pattern): re-testing under D42 (permutation p-values)",
             "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
             "presentation": "Session 161 conversation; reports/d42-implementation-2026-10-05.md \u00a7 7"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: overlap at 512 px, overlap at 384 px and tile size at 50 %, 0.0001 (floor) -> < 0.0001; tile size at 12.5 %, 0.0001 (floor) -> 0.0002; interaction 0.4902 -> 0.4681. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
+            "prior_presentation": null
           }
         ]
       },
@@ -2146,7 +2162,7 @@
           "results/run-analyses.json",
           "results/grid-2026-08-18"
         ],
-        "last_extracted_at": "2026-10-05T11:35:31Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2176,16 +2192,24 @@
       ],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: post-verifier tile size at 12.5 % / 50 %, 0.034 / 0.2308 -> 0.0373 / 0.2353; overlap at 512 / 384 px, 0.0004 / 0.0208 -> 0.0003 / 0.0235; interaction 0.2336 -> 0.2257; K = 10 consensus baseline tile size at 12.5 % / 50 %, 0.2808 / 0.0886 -> 0.2975 / 0.0939, overlap at 512 / 384 px, 0.0004 / 0.0026 -> 0.0008 / 0.0032. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
-        "presentation": null,
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: post-verifier tile size at 12.5 % / 50 %, 0.034 / 0.2308 -> 0.0373 / 0.2353; overlap at 512 / 384 px, 0.0004 / 0.0208 -> 0.0003 / 0.0235; interaction 0.2336 -> 0.2257; K = 10 consensus baseline tile size at 12.5 % / 50 %, 0.2808 / 0.0886 -> 0.2975 / 0.0939, overlap at 512 / 384 px, 0.0004 / 0.0026 -> 0.0008 / 0.0032. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). The post-verifier grid board (results/grid-2026-08-18/{verifier_analysis.json, verifier_sweep.csv}, conditions-verified/ and the new verified-best/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots; its values equal the 2026-10-13 re-score's REPAIRED prediction. The analysis re-selects each cell's best point; under D65 (3) the registered 384/12.5 condition keeps its point (0.20, k7) (F1 0.8752 [0.8424,0.9017], 365 detections) while the cell's best moves to (0.15, k7) (0.8761, 371). CHANGED: best F1 [CI95] and tile MCC, 384/50 0.8961 [0.8657,0.9198] 0.7965 -> 0.9017 [0.8727,0.9244] 0.8037; 512/50 0.8815 [0.8518,0.9073] 0.8011 -> 0.8870 [0.8583,0.9118] 0.8087; 384/12.5 0.8677 [0.8335,0.8957] 0.7751 at (0.20, k7) -> best 0.8761 at (0.15, k7), registered 0.8752 [0.8424,0.9017], MCC 0.7852; 512/12.5 0.8311 [0.7938,0.8624] 0.7937 -> 0.8368 [0.7995,0.8676] 0.8011; tile size (384 - 512) at 12.5 % +0.0366 [+0.0026,+0.0717] p 0.034 (0.0373 under D42) -> +0.0393 [+0.0052,+0.0741] p 0.0266, against the consensus-only -0.0824 -> -0.0803; at 50 % +0.0147 [-0.0093,+0.0393] p 0.231 (0.2353) -> +0.0147 [-0.0095,+0.0394] p 0.2454; union-recall ceilings 0.8925/0.9509 vs 0.8715/0.9416 -> 0.9112/0.9696 vs 0.8879/0.9603; overlap (12.5 % - 50 %) at 512 px -0.0504 [-0.0781,-0.0224] p 0.0004 (0.0003) -> -0.0502 [-0.0778,-0.0224] p 0.0003; interaction -0.0220 [-0.0581,+0.0141] p 0.234 (0.2257) -> -0.0246 [-0.0613,+0.0114] p 0.1831; pure-verifier maximum 0.8153 -> 0.8187, its deficit 0.052-0.203 -> 0.057-0.207; best-point MCC range 0.775-0.801 -> 0.785-0.809; verifier gain +0.130..+0.220 -> +0.126..+0.219. FAILED: the overlap reversal at 384 px (claim R1b-09; D65 (2)): (12.5 % - 50 %) -0.0285 [-0.0530,-0.0045] p 0.0208 (0.0235 under D42) -> -0.0256 [-0.0517,+0.0001] p 0.0541, no longer significant; at 512 px it survives. UNCHANGED: the ranking 384/50 > 512/50 > 384/12.5 > 512/12.5; the tile-size reversal (significant at 12.5 %, unresolved at 50 %); the interaction unresolved; every best point keeps a vote threshold (k >= 5..10); consensus and verifier are complements; the 384 px MCC pathology dissolves; the gates; union counts 1,402/2,585/1,827/3,319; 9,133 verified with zero failures; $12.5428 list, $6.2714 flex, $6.33 costed; the 580-row sweep. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.8961, 0.8657, 0.9198, 0.7965, 0.8815, 0.8518, 0.9073, 0.8011 (as 512/50's MCC), 0.8677, 0.8335, 0.8957, 0.7751, p>=0.20 (as 384/12.5's best point), 0.8311, 0.7938, 0.8624, 0.7937, +0.0366, +0.0026, +0.0717, 0.034, -0.0824, -0.0093, +0.0393, 0.231, 0.8925, 0.9509, 0.8715, 0.9416, '50% wins at both sizes', -0.0504, -0.0781, 0.0004, -0.0285, -0.0530, -0.0045, 0.0208, -0.0220, -0.0581, +0.0141, 0.234, 0.8153, 0.052-0.203, 0.775-0.801, +0.130..+0.220; the dated [REVISED 2026-08-24] block's figures (-0.0284 p=0.281, -0.0312 p=0.089, +0.0366 p=0.034, -0.0758 p=0.0004, -0.0730 p=0.0026) are history and are not restated; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/grid-2026-08-18/findings.md, changelog 2026-10-15",
         "history": [
           {
             "noted_at": "2026-10-05T11:34:51Z",
             "kind": "signature note (D9 pattern): re-testing under D42 (permutation p-values)",
             "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
             "presentation": "Session 161 conversation; reports/d42-implementation-2026-10-05.md \u00a7 7"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-05 (D9 pattern; re-testing; ruling D42, approved by the PI 2026-10-05T11:34:51Z, Session 161). Every p-value in this analysis's artefact is now the paired tile-swap permutation test's (scripts/lib_permutation.py; 10,000 permutations, seed 42; for a 2 x 2 interaction, a per-tile swap of the two factor-level pairs), not the bootstrap's 2 x min-tail p, which D42 retired; the artefact was regenerated on sapphire (5986316b5). CHANGED: post-verifier tile size at 12.5 % / 50 %, 0.034 / 0.2308 -> 0.0373 / 0.2353; overlap at 512 / 384 px, 0.0004 / 0.0208 -> 0.0003 / 0.0235; interaction 0.2336 -> 0.2257; K = 10 consensus baseline tile size at 12.5 % / 50 %, 0.2808 / 0.0886 -> 0.2975 / 0.0939, overlap at 512 / 384 px, 0.0004 / 0.0026 -> 0.0008 / 0.0032. UNCHANGED: every delta, CI, F1 and verdict at 0.05. The outcome text keeps its signed figures; the regenerated JSON carries these. The signature of 2026-09-12T09:03:09Z stands; the PI approves the re-tested p-values as of this note. Walkthrough: reports/d42-implementation-2026-10-05.md.",
+            "prior_presentation": null
           }
         ]
       },
@@ -2194,7 +2218,7 @@
           "results/run-analyses.json",
           "results/grid-2026-08-18"
         ],
-        "last_extracted_at": "2026-10-05T11:35:31Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2368,15 +2392,23 @@
       ],
       "manually_verified_at": "2026-08-28T12:16:45Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-17T07:01:26Z",
-        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A5, source commit b2949c27e, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass1): PI sign-off \u2014 all five analyses verified\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:16:45Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
-        "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A5, source commit b2949c27e, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass1): PI sign-off \u2014 all five analyses verified\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:16:45Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-17T07:01:26Z has LAPSED and the row is re-sign-pending). The exact winner ladder (results/stride-2026-08-25/plateau_analyses.json winner_ladder_exact, and the rung conditions under conditions-verified/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots; the rungs' points are unchanged ((0.15, k1), (0.15, k3), (0.15, k4); the K = 10 winner (0.15, k8)). CHANGED: N = 1 0.8677 -> 0.8737; N = 3 0.8911 -> 0.8993; N = 5 0.8856 -> 0.8937; K = 10 0.8982 -> 0.9075. UNCHANGED: the all-in costs ($1.38, $2.64, $3.81); the points; 'N = 3 within noise of K = 10' (on this frame N = 3 - K = 10 = -0.0083; the K-ladder's board-frame test it rests on is predicted at -0.0083, p 0.2275 by the 2026-10-13 re-score and is regenerated in the K-ladder lane). FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.8677, 0.8911, 0.8856, 0.8982; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/stride-2026-08-25/findings.md, changelog 2026-10-15",
         "history": [
           {
             "stamped_at": "2026-08-28T12:16:45Z",
             "convention": "pre-2026-09-16: one field served authoring and signature",
             "note": "retained as an authoring stamp; not established as a PI signature"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-17T07:01:26Z",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A5, source commit b2949c27e, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass1): PI sign-off \u2014 all five analyses verified\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:16:45Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
+            "prior_presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md"
           }
         ]
       },
@@ -2385,7 +2417,7 @@
           "results/run-analyses.json",
           "results/stride-2026-08-25/plateau_analyses.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2676,15 +2708,23 @@
       ],
       "manually_verified_at": "2026-08-28T12:43:12Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-17T07:01:26Z",
-        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
-        "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-17T07:01:26Z has LAPSED and the row is re-sign-pending). results/image-b-gs-2026-08-28/analysis.json (with sweep_20m.csv, verified_best_20m.geojson and best-eval/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots, against the regenerated text-B anchor 0.9017 (image_b_analysis.ANCHOR_F1_20 took a dated update from 0.8961, D58 Q6, commit 3b240a4ac). CHANGED: IP1 text - image +0.0549, p 0.0010 -> +0.0559, p 0.0005; IP2 gap 0.0549 -> 0.0258 (20 to 75 m) -> 0.0559 -> 0.0245, still monotone; IP3 MCC 0.7985 vs 0.7965 -> 0.8139 vs 0.8037; IP5 N3 - N10 -0.0159, p 0.069 -> -0.0136, p 0.1189; image N = 1 0.6974 -> 0.6998. UNCHANGED: IP1-IP4 confirmed (IP3 within \u00b10.02 at +0.0101; IP4 at 0.15); IP5 indeterminate (inside the GS verified-set MDE50 of 0.0172); the N = 1 collapse. FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: +0.0549, 0.0010, 0.0549, 0.0258, 0.7985, 0.7965, -0.0159, 0.069, 0.6974; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/image-b-gs-2026-08-28/findings.md, changelog 2026-10-15",
         "history": [
           {
             "stamped_at": "2026-08-28T12:43:12Z",
             "convention": "pre-2026-09-16: one field served authoring and signature",
             "note": "retained as an authoring stamp; not established as a PI signature"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-17T07:01:26Z",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
+            "prior_presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md"
           }
         ]
       },
@@ -2693,7 +2733,7 @@
           "results/run-analyses.json",
           "results/image-b-gs-2026-08-28/analysis.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2720,15 +2760,23 @@
       ],
       "manually_verified_at": "2026-08-28T12:43:12Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-17T07:01:26Z",
-        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
-        "presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md",
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-17T07:01:26Z has LAPSED and the row is re-sign-pending). results/image-b-gs-2026-08-28/high/ (analysis, sweep, best set, best-eval/) and high/pair_verdicts.json were regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots. CHANGED: HP1 HIGH - MIN -0.0079, p 0.62 -> -0.0068, p 0.668; HP3 MCC +0.0008 -> -0.0031 (HIGH 0.8108 against MIN 0.8139; the sign turns, inside the registered \u00b10.02). UNCHANGED: HP1-HP4 confirmed; HP2 union +126 % (4,065 -> 9,189); HP4 (0.20, k8); HP5 a narrow miss at 2.91x; the verifier absorbs the thinking dividend. FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: -0.0079, 0.62, +0.0008; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/image-b-gs-2026-08-28/findings.md, changelog 2026-10-15",
         "history": [
           {
             "stamped_at": "2026-08-28T12:43:12Z",
             "convention": "pre-2026-09-16: one field served authoring and signature",
             "note": "retained as an authoring stamp; not established as a PI signature"
+          },
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-17T07:01:26Z",
+            "prior_attests": "Signed 2026-09-17T07:01:26Z by the PI after a written batch walkthrough of Part A of planning/legacy-signature-queue-2026-09-16.md (queue batch A4, source commit 667561e65, 2026-08-28). WHAT THE BATCH REVIEW RESTS ON: every Part A row's substance is UNCHANGED since it was stamped \u2014 established by walking all 103 commits of the register, hashing each row's substantive fields and comparing commit POSITIONS rather than dates \u2014 so the text signed today is the text the stamp was applied to, and the review is of that text as it stands. Evidence behind this batch's stamp: commit \"registry(pass3): PI sign-off \u2014 registration backlog CLEAR\". The PI was shown each row's outcome in gist, its disposition class (finding / NOT EXECUTED / NULL) and this evidence, and approved the batch. SCOPE: this signature covers the row's outcome text and its preregistration linkage as they stand at 2026-09-17T07:01:26Z; it does not re-verify the underlying artefacts, which were verified when the row was authored. The original stamp 2026-08-28T12:43:12Z is retained in manually_verified_at and in history as the AUTHORING record it was.",
+            "prior_presentation": "Session 154 (2026-09-17), Part A batch walkthrough in conversation; grouping and evidence in planning/legacy-signature-queue-2026-09-16.md"
           }
         ]
       },
@@ -2737,7 +2785,7 @@
           "results/run-analyses.json",
           "results/image-b-gs-2026-08-28/high/pair_verdicts.json"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2812,18 +2860,27 @@
       ],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
-        "presentation": null,
-        "history": []
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). results/gemini37-screen-2026-08-28/ (the K = 5 cell, k10/ and swap37/: analyses, sweeps, best sets and best-eval/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots, against the regenerated text-B anchor 0.9017; every best point is unchanged ((0.10, k5), (0.10, k10), (0.80, k5), the last still tied with 0.85). The mean probabilities are plain means of mound_probability over each leg's 791 rows, which reproduce the text's 0.687 and 0.587 on the legs as run; under the leg rule (verify_swap37_repaired, verify_repaired) they are 0.699 and 0.594. CHANGED: carried K = 5 0.9139 -> 0.9238, against the anchor +0.0178, p 0.1697, null SD 0.0129 -> +0.0221, p 0.0971, null SD 0.0134; K = 10 0.9142 -> 0.9243, its gain over K = 5 +0.0003 -> +0.0006 (twice in the text), p 0.2076 -> 0.1231; N5 - N10 -0.0011, p 0.7928 -> -0.0013, p 0.7921; the ladder 0.8588 / 0.9018 / 0.9131 / 0.9142 -> 0.8652 / 0.9118 / 0.9231 / 0.9243; the role swap 0.9265, P 0.9254, R 0.9276, tile MCC 0.8078, +0.0304, p 0.0105 -> 0.9364, P 0.9268, R 0.9463, tile MCC 0.8192, +0.0347, p 0.0065; mean probability 0.687 against 0.587 -> 0.699 against 0.594. UNCHANGED: G1 fired and G2 falsified; saturation by N = 5; the swap the only cell above the anchor on F1 and MCC together; the swap's +0.0126 over the same union; the 791-candidate union; ~$5.4 and ~$0.9; ~276 thinking tokens per tile. FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.9139, +0.0178, 0.1697, 0.0129, +0.0003 (twice), 0.9142 (twice), 0.2076, -0.0011, 0.7928, 0.8588, 0.9018, 0.9131, 0.9265, 0.9254, 0.9276, 0.8078, +0.0304, 0.0105, 0.687, 0.587, and the citation planning/gemini37-screen-2026-08-28.md:110, which records the earlier means; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; planning/gemini37-screen-2026-08-28.md (not restated; the card), changelog 2026-10-15",
+        "history": [
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+            "prior_presentation": null
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-screen-2026-08-28"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2937,18 +2994,27 @@
       ],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
-        "presentation": null,
-        "history": []
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). results/gemini37-image-gs-2026-09-01/{arm1/, arm2/, gap_test.json} were regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots; the gap test's hand-typed PAIRS and G3_GAP took dated updates (D58 Q6, commit 3b240a4ac). The analysis re-selects each arm's best point; under D65 (3) the carried arm's registered condition keeps (0.10, k5) (F1 0.9353, 438 detections, arm1/op-eval/; register commit 41acb3d50) while the arm's best moves to (0.05, k5) (0.9381, 444). CHANGED: the Gemini 3 gap +0.0549, p 0.001 -> +0.0559, p 0.0005; the carried-verifier 3.7 gap -0.0115, p 0.2533 -> -0.0143, p 0.158; the gap change -0.059 to -0.066 -> -0.060 to -0.070; MDE80 ~0.024 -> ~0.025 (0.0243 -> 0.0246); I1, 0.9254 / 0.9308 against 0.8412 (+0.0842 / +0.0896) -> 0.9381 / 0.9408 against 0.8458 (+0.0923 / +0.0950), with the text-side step +0.018 -> +0.022, so 'about five times' -> 'about four times' (4.2 and 4.3; 4.05 at the registered point); the escalation pair 0.9308 against 0.9265 -> 0.9408 against 0.9364. FAILED: I3 on the carried-verifier arm (D65 (2)): its optimum moves from (0.10, k5) to (0.05, k5), outside the predicted 0.10-0.20; I3's 3.7-verifier limb holds at (0.90, k5). UNCHANGED: the all-3.7 gap -0.0043, p 0.6767 (gap_test.json -0.004345 -> -0.00435, the same at four places) and so the escalation margin +0.0043, p 0.677; parity (both 3.7 gaps non-significant, image nominally ahead in both); I1 and I2 confirmed; I4 (88-157 t/call) and I5 (79.5 % cached; $22.50 against $32-36); the escalation trigger not met; 'roughly 2.5x' (2.4 to 2.8 times the new MDE80). STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: +0.0549, 0.001, -0.0115, 0.2533, -0.059, -0.066, 0.024, 'five times', 0.9254, 0.9308 (twice), 0.8412, +0.0842, +0.0896, +0.018, 'I3 is confirmed exactly at (0.10, k5)', 0.9265; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; results/gemini37-image-gs-2026-09-01/findings.md, changelog 2026-10-15",
+        "history": [
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+            "prior_presentation": null
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-image-gs-2026-09-01"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -2973,18 +3039,27 @@
       ],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
-        "presentation": null,
-        "history": []
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). results/gemini37-fourth-cell/gs-leg/ (analysis, sweep, best set, best-eval/) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots, against the regenerated text-B anchor 0.9017; the point (0.98, k10) is unchanged. CHANGED: F1 0.9140 -> 0.9220; P 0.9637 -> 0.9643; R 0.8692 -> 0.8832; tile MCC 0.8239 -> 0.8350; the anchor 0.8961 -> 0.9017; the head-to-head +0.0179, p 0.0563 -> +0.0203, p 0.0311; the 3.7 verifier's mean probability 0.209 on the Gemini-3 pool against 0.687 on its own union -> 0.214 against 0.699 (plain means over each leg's rows under the leg rule; the cited planning/gemini37-55map-2026-08-29.md:200 records the earlier values). UNCHANGED: (0.98, k10) and its commitment as the 55-map fourth cell's carried point before deployment scoring; the 3,319-candidate union; the reading that one verifier calibrates differently against different candidate pools. FAILED: none. The head-to-head p now falls below 0.05; the outcome text makes no significance claim, so no verdict changes, but a reader of the old text would have inferred non-significance. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.9140, 0.9637, 0.8692, 0.8239, 0.8961, +0.0179, 0.0563, 0.209, 0.687; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; planning/gemini37-55map-2026-08-29.md (not restated; the card), changelog 2026-10-15",
+        "history": [
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+            "prior_presentation": null
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini37-fourth-cell/gs-leg"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
@@ -3013,18 +3088,27 @@
       ],
       "manually_verified_at": "2026-09-12T09:03:09Z",
       "signature": {
-        "status": "signed",
-        "signed_at": "2026-09-12T09:03:09Z",
-        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
-        "presentation": null,
-        "history": []
+        "status": "re-sign-pending",
+        "signed_at": null,
+        "attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.\n\nSIGNATURE NOTE 2026-10-15 (D9 pattern; drafted by Claude for the PI and NOT YET APPROVED; the signature of 2026-09-12T09:03:09Z has LAPSED and the row is re-sign-pending). results/gemini38-screen-2026-09-04/armV/ (analysis, sweep, best set, best-eval/, pair_test.json) was regenerated on sapphire in the S164 restatement pass (D65 (2); branch restatement-pass-s164, commit f6f10d605) with the D62 (1) re-verified wrong-sheet verifier rows read on PR #42's origin route, in two independent runs that agree apart from timestamps and run roots; the pair test's hand-typed INCUMBENTS took a dated update (0.9265 / 0.9139 -> 0.9364 / 0.9238; D58 Q6, commit 3b240a4ac). The point (0.88, k5) is unchanged. CHANGED: F1 0.9258 -> 0.9358; P 0.9335 -> 0.9347; R 0.9182 -> 0.9369; tile MCC 0.8218 -> 0.8331 (twice in the text); detections 421 -> 429; against the all-3.7 stack -0.0007 -> -0.0006 (p 0.7769 unchanged); against the carried verifier +0.0119, p 0.0969 -> +0.0120, p 0.0764; the MCC trade-off +0.0140 (0.8218 vs 0.8078) for 0.0007 of F1 -> +0.0139 (0.8331 vs 0.8192) for 0.0006; the E4 bands, 3.7 0.9243-0.9265 -> 0.9343-0.9364 (spread 0.0022 unchanged) and carried 0.8446-0.8942, spread 0.0497 -> 0.8520-0.9021, spread 0.0502. UNCHANGED: E1 confirmed, a tie; the pre-named informative outcome did not fire; E3 falsified (76 against 106 thinking tokens; 307 against 275 t/tile); E4 partly confirmed (argmax 0.88; 3.8's band within 0.0022; 3.7 equally flat; the carried verifier sharply peaked); E2 untested; ~$0.85; the recorded gotchas (803 = retries_total). FAILED: none. STALE IN THE OUTCOME TEXT, left unchanged for the PI's wording: 0.9258, 0.9335, 0.9182, 0.8218 (twice), 421, -0.0007, +0.0119, 0.0969, +0.0140, 0.8078, 0.0007, 0.9243, 0.9265 (in the band), 0.8446, 0.8942, 0.0497; a redraft with a word-level diff is in reports/s164-agent-records/restatement-pass.md \u00a7 4.",
+        "presentation": "Pending re-signature: draft PR #52 (branch restatement-pass-s164); the redrafted outcome and its word-level diff in reports/s164-agent-records/restatement-pass.md \u00a7 4; planning/gemini38-screen-2026-09-04.md (not restated; the card), changelog 2026-10-15",
+        "history": [
+          {
+            "noted_at": "2026-10-15T11:59:34Z",
+            "kind": "signature lapse (D9-pattern note, not yet approved): restated in the S164 restatement pass (D65 (2); PR #52)",
+            "prior_status": "signed",
+            "prior_signed_at": "2026-09-12T09:03:09Z",
+            "prior_attests": "Signed 2026-09-12T09:03:09Z by the PI (S153, 2026-09-12) after a written walkthrough of each unsigned row's outcome; approved as drafted.",
+            "prior_presentation": null
+          }
+        ]
       },
       "provenance": {
         "source_files": [
           "results/run-analyses.json",
           "results/gemini38-screen-2026-09-04/armV"
         ],
-        "last_extracted_at": "2026-10-03T07:57:28Z",
+        "last_extracted_at": "2026-10-15T12:09:10Z",
         "extractor_version": "0.8.0"
       }
     },
