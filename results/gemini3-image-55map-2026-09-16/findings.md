@@ -1,6 +1,10 @@
 # Gemini 3 image at deployment scale, K = 1, 3 and 5: findings
 
-> **Last revised**: 2026-09-21, second pass (the phrase "MCC oracle"
+> **Last revised**: 2026-10-15 (§ 6: row A's two Gold Standard K = 5
+> values and both K = 5 gaps restated from the re-verified 3.7 image cells,
+> S164 restatement pass, PI ruling D65 (2); arm 1 read at its registered
+> point under D65 (3); no 55-map figure moved). Prior: 2026-09-21, second
+> pass (the phrase "MCC oracle"
 > retired from the prose of §§ 3 and 8 — those points are now named as
 > unconstrained tile-MCC optima on the tile-presence leaderboard; no
 > number changed). Earlier the same day: the six `*-mcc-oracle` rows
@@ -297,8 +301,18 @@ registered GS K = 5 cells `g37-image-k5-verified-carried-p0.10-k5` and
 |---|---:|---:|---:|---|
 | K = 3 arm 1 | 0.9197 | 0.8200 | **0.0997** | (0.15, k3) |
 | K = 3 arm 2 | 0.9245 | 0.8408 | **0.0837** | (0.88, k3) |
-| K = 5 arm 1 | 0.9254 | 0.8431 | **0.0823** | (0.15, k5) |
-| K = 5 arm 2 | 0.9308 | 0.8551 | **0.0757** | (0.95, k5) |
+| K = 5 arm 1 | 0.9353 | 0.8431 | **0.0922** | (0.15, k5) |
+| K = 5 arm 2 | 0.9408 | 0.8551 | **0.0856** | (0.95, k5) |
+
+Row A's K = 5 values are the registered cells as restated on 2026-10-15
+from the re-verified wrong-sheet rows (PI ruling D65 (2)). Arm 1 is read at
+its registered point (0.10, k5) under D65 (3); its re-verified sweep now
+peaks at (0.05, k5), F1 0.9381. Gaps are taken on unrounded F1, so arm 2's
+reads 0.0856 although the rounded cells differ by 0.0857. The K = 3 rows
+and row B's columns come from the two runs' GS calibration analyses, which
+read re-verified K = 3 arms but were not re-run in the pass
+(`reports/s164-agent-records/rescore-repaired-gs.md`); they stand as run on
+2026-09-17/18.
 
 The deployment-scale gaps at K = 3 (T1 +0.1072 F1, T2 +0.1001 F1) are close to
 the matched Gold Standard gaps at the same rung (0.0837 and 0.0997), so the
@@ -372,6 +386,36 @@ in a way a 487-tile Gold Standard leg cannot show.
   K = 5 ladder in § 2 is descriptive.
 
 ## Changelog
+
+### 2026-10-15 — Row A's GS K = 5 values restated (S164 restatement pass)
+
+**Refresh trigger**: the S164 restatement pass under PI ruling D65 (2)
+(`reports/s164-agent-records/restatement-pass.md`). The 3.7 image GS legs
+were re-scored with their wrong-sheet rows re-verified, and the registered
+conditions were republished in `results/conditions-manifest.json`. Under
+D65 (3) the carried-verifier cell keeps its registered point (0.10, k5)
+rather than its moved argmax (0.05, k5).
+
+| § 6 value | before | after | source (at the pass's head) |
+|---|---:|---:|---|
+| Row A GS F1 @ 20 m, K = 5 arm 1 (0.10, k5) | 0.9254 | 0.9353 | `results/conditions-manifest.json`, `gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5`, `metrics.per_buffer["20"].f1`; unrounded 0.935335 in `results/gemini37-image-gs-2026-09-01/arm1/analysis.json` `operating_point.f1` (438 detections) |
+| Gap, K = 5 arm 1 | 0.0823 | 0.0922 | 0.935335 − 0.843114 (`results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm1/analysis.json`, F1 0.8431137725) |
+| Row A GS F1 @ 20 m, K = 5 arm 2 (0.90, k5) | 0.9308 | 0.9408 | manifest `…::g37-image-k5-verified-swap37-p0.90-k5`, `metrics.per_buffer["20"].f1`; unrounded 0.940767 in `…/arm2/analysis.json` `image_best.f1` (433 detections) |
+| Gap, K = 5 arm 2 | 0.0757 | 0.0856 | 0.940767 − 0.855124 (`…/gs-calibration/k5/arm2/analysis.json`, F1 0.8551236749) |
+
+Before values: the same keys at `718d0ee08` (0.925408 and 0.930832
+unrounded).
+
+**What did NOT change**: every 55-map figure in §§ 1–5, 7 and 8; row B's
+GS columns and every K = 3 row of § 6 (the GS calibration analyses were not
+re-run, `reports/s164-agent-records/rescore-repaired-gs.md`); the K = 3
+comparison and the K = 1 paragraph below the table; both carried points.
+Both K = 5 gaps widen by about 0.01 F1 and arm 1 still carries the larger
+gap, so the reading of § 6 holds.
+
+**Commits**: `f6f10d605` (the 3.7 image GS legs re-scored, including the
+registered-point set `arm1/verified_op_20m.geojson`) and `459657e18` (the
+restated manifests).
 
 ### 2026-09-21, second pass — "MCC oracle" retired from the prose
 
