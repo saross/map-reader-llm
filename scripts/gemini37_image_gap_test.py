@@ -100,8 +100,9 @@ PAIRS = [
 ]
 
 #: The Gemini 3 (text − image) gap, re-read from Image-B's head-to-head.
-#: Dated update 2026-10-15 (as above): +0.0549 until the restatement pass.
-G3_GAP = {"delta_f1": 0.0559, "p": 0.001,
+#: Dated update 2026-10-15 (as above): +0.0549, p 0.001 until the restatement
+#: pass; now +0.0559, p 0.0005 (``head_to_head_20m``: 0.055896, p 0.0005).
+G3_GAP = {"delta_f1": 0.0559, "p": 0.0005,
           "source": "results/image-b-gs-2026-08-28/analysis.json"}
 
 
@@ -203,9 +204,9 @@ def main(argv: list[str] | None = None) -> int:
         res["convention"] = "delta = text - image @20m"
         payload["pairs"][label] = res
         logger.info("%s: text-image dF1=%+.4f p=%.4f (G3 committed "
-                    "+0.0549 p=0.001 -> gap change %+.4f)", label,
-                    res["observed_diff"], res["p_value"],
-                    res["observed_diff"] - G3_GAP["delta_f1"])
+                    "%+.4f p=%g -> gap change %+.4f)", label,
+                    res["observed_diff"], res["p_value"], G3_GAP["delta_f1"],
+                    G3_GAP["p"], res["observed_diff"] - G3_GAP["delta_f1"])
 
     if args.reference_pair is not None:
         ref = payload["pairs"][args.reference_pair]["observed_diff"]
