@@ -1,0 +1,27 @@
+HEAD is now at 9a934eaef docs(k-ladder): Phase 2 pre-launch audit — READY, 0 blockers, 3 warnings
+9a934eaef55746c4f06288bcc4959ef50a5008c6
+
+##### a1. the five-feature smoke union (2026-10-15T10:44:55Z) #####
+wrote outputs/k-ladder-2026-09-12/smoke/union_smoke5.geojson 5 features
+##### exit=0 #####
+
+##### a2. the smoke crops (rasters copied in, read-only source) (2026-10-15T10:44:55Z) #####
+##### exit=0 #####
+  Successful:       5
+  Failed:           0
+  From rasters:     5
+  From tiles (fallback): 0
+
+##### b. today's checker: 28 unions and 28 manifests as of 326181bcd (2026-10-15T10:44:56Z) #####
+##### exit=1 #####
+
+STALE: outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson
+  re-derivation from the declared sub-pool (1 passes) gives 640 features against 640 committed; 1 committed features have no re-derived match within 1 m and 1 re-derived features have no committed match
+
+STALE: outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson
+  re-derivation from the declared sub-pool (3 passes) gives 759 features against 757 committed; 4 committed features have no re-derived match within 1 m and 6 re-derived features have no committed match
+
+Wrote /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g5/today-checker-unions.json
+28
+
+##### ALL STAGES ATTEMPTED (2026-10-15T10:45:34Z) #####

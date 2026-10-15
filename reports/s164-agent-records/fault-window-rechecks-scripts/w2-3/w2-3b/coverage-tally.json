@@ -1,0 +1,1959 @@
+{
+  "n_files": 318,
+  "verdicts": {
+    "VERIFIED": 230,
+    "NOT CHECKABLE": 8,
+    "CENSUS": 79,
+    "PROSE": 1
+  },
+  "by_commit": {
+    "326181bcd": {
+      "VERIFIED": 53
+    },
+    "3d9c64807": {
+      "VERIFIED": 1
+    },
+    "5167b9a5c": {
+      "VERIFIED": 23,
+      "NOT CHECKABLE": 6,
+      "CENSUS": 15
+    },
+    "5b2f2c05d": {
+      "PROSE": 1
+    },
+    "741a4eaff": {
+      "VERIFIED": 5
+    },
+    "9457b2689": {
+      "VERIFIED": 53,
+      "CENSUS": 52
+    },
+    "98e54baf6": {
+      "VERIFIED": 13,
+      "NOT CHECKABLE": 2
+    },
+    "b7e2821ba": {
+      "VERIFIED": 46
+    },
+    "d10137595": {
+      "VERIFIED": 32
+    },
+    "d900ed1d5": {
+      "VERIFIED": 2
+    },
+    "f31e7470e": {
+      "CENSUS": 12,
+      "VERIFIED": 2
+    }
+  },
+  "files": [
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/consensus_t1.geojson",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/experiment_intent.md",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-intent-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n1/voting_summary.json",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t1.geojson",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t2.geojson",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/consensus_t3.geojson",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/experiment_intent.md",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-intent-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n3/voting_summary.json",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/g384_ov192/consensus-n5/experiment_intent.md",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-intent-98e54baf6.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/crops/candidate_manifest.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/probabilities.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/run.meta.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/sweep_board.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k1/sweep_era2.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/crops/candidate_manifest.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/probabilities.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/run.meta.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/sweep_board.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k3/sweep_era2.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/crops/candidate_manifest.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/probabilities.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/run.meta.json",
+      "commit": "5167b9a5c",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/sweep_board.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5/sweep_era2.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/consensus_t1.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/consensus_t2.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "outputs/h10/evaluation-v2/pool_160_hp4hn4/consensus/voting_summary.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.csv",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.json",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.md",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.csv",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.json",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.md",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.csv",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.json",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.md",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.csv",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.json",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.md",
+      "commit": "f31e7470e",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/37arm1-r2/k-ladder-mcc-37arm1-r2-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/37arm1-r2/k-ladder-mcc-37arm1-r2-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/37arm2-r2/k-ladder-mcc-37arm2-r2-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/37arm2-r2/k-ladder-mcc-37arm2-r2-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-a-r2/k-ladder-mcc-55map-stride-a-r2-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-a-r2/k-ladder-mcc-55map-stride-a-r2-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-a-standardised/k-ladder-mcc-55map-stride-a-standardised-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-a-standardised/k-ladder-mcc-55map-stride-a-standardised-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-g37vf-r2/k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-g37vf-r2/k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-r2/k-ladder-mcc-55map-stride-b-r2-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-r2/k-ladder-mcc-55map-stride-b-r2-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-standardised/k-ladder-mcc-55map-stride-b-standardised-2026-09-12_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/55map-stride-b-standardised/k-ladder-mcc-55map-stride-b-standardised-2026-09-12_mcc_b50_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-3/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-3/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-7/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t0-7/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t1-0/k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-image-n5-image-t1-0/k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-3/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-3/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-7/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t0-7/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-7/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t0-7/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-3/k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-3/k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-7/k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t0-7/k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t1-0/k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-image-n5-image-t1-0/k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-scale-4-optimal-487/k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/phase2-scale-4-optimal-487/k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/summary.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/table.md",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcb/tier-e/k-ladder-tier-e-2026-09-12_mcc_b20_m1.json",
+      "commit": "b7e2821ba",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-mcb-b7e2821ba.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/37arm1-r2.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/37arm2-r2.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/55map-stride-a-r2.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/55map-stride-a-standardised.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/55map-stride-b-g37vf-r2.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/55map-stride-b-r2.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/55map-stride-b-standardised.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/gs-stride-a.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/sign-swap/ladder_pairs.json",
+      "commit": "d900ed1d5",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-signswap-d900ed1d5.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/sign-swap/rebuild/ladder.json",
+      "commit": "d900ed1d5",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-signswap-d900ed1d5.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/summary.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-r2/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-standardised/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-g37vf-r2/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-standardised/run-analyses.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.md",
+      "commit": "d10137595",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-mcc-test-d10137595.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tension/effect-sizes.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tension/grid-overlap.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tension/subsample.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.csv",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.md",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/evaluation.csv",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/evaluation.json",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/evaluation.md",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.csv",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.md",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.csv",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.json",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.md",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.csv",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.md",
+      "commit": "5167b9a5c",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-opmax/detections.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/detections.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k3-verified-opmax/detections.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/materialised/grid-2026-08-18__g384-ov192-k5-verified-opmax/detections.geojson",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/operating-points.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/pre_launch_audit.md",
+      "commit": "5b2f2c05d",
+      "verdict": "PROSE",
+      "how": "hand-written audit document"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/score-jobs.txt",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/scores.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-5167b9a5c.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/crops/candidate_manifest.json",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/smoke.json",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-smoke-json-rederived.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/union_first5.geojson",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/verify/probabilities.json",
+      "commit": "98e54baf6",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/smoke/verify/run.meta.json",
+      "commit": "98e54baf6",
+      "verdict": "NOT CHECKABLE",
+      "how": "real-time verifier output, no raw responses"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/spend-ledger.json",
+      "commit": "5167b9a5c",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-spend-ledger-rederived.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/unions.json",
+      "commit": "98e54baf6",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-unions-smoke-98e54baf6.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json",
+      "commit": "f31e7470e",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tiering-input-f31e7470e.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json",
+      "commit": "f31e7470e",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-tiering-input-f31e7470e.json)"
+    },
+    {
+      "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/k-ladder/membership.json",
+      "commit": "3d9c64807",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL-AFTER-SUBSTITUTION (cmp-membership-3d9c64807.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-image-n5-image-t0-3.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-image-n5-image-t0-7.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-image-n5-image-t1-0.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-text-n5-text-t0-3.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-text-n5-text-t0-7.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-text-n5-text-t1-0.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-minimal-text-n30-t07-text-t0-3.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-minimal-text-n30-t07-text-t0-7.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-minimal-text-n30-t07-text-t1-0.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t0-3.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t0-7.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t1-0.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-scale-4-optimal-487.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/summary.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-3/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-7/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t1-0/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-3/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-7/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-3/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-7/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-3/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-7/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t1-0/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-scale-4-optimal-487/run-analyses.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m.json",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m.md",
+      "commit": "326181bcd",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-phase2-mcc-test-326181bcd.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried-jobs.txt",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_3-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_3-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_3-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_3-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_7-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_7-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_7-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t0_7-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t1_0-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t1_0-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t1_0-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-image-t1_0-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_3-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_3-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_3-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_3-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_7-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_7-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_7-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t0_7-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-high-text-t1_0-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_3-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t0_7-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-image-t1_0-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_3-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_7-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_7-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_7-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t0_7-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-min-text-t1_0-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-scale4-optimal-n10-carried-p0_15-k10/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-scale4-optimal-n10-carried-p0_15-k8/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-scale4-optimal-n5-carried-p0_15-k4/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/cells/pv-diag-384__pv-scale4-optimal-n5-carried-p0_15-k5/evaluation.csv",
+      "commit": "9457b2689",
+      "verdict": "CENSUS",
+      "how": "cell evaluation replayed by the census"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.3-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.3-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.3-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.3-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.7-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.7-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.7-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t0.7-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t1.0-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t1.0-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t1.0-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-image-t1.0-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.3-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.3-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.3-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.3-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.7-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.7-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.7-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t0.7-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t1.0-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t1.0-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t1.0-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-high-text-t1.0-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.3-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.3-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.3-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.3-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.7-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.7-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.7-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t0.7-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t1.0-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t1.0-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t1.0-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-image-t1.0-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.3-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.3-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.3-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.3-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.7-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.7-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.7-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t0.7-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t1.0-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t1.0-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t1.0-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-min-text-t1.0-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-scale4-optimal-n10-carried-p0.15-k10.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-scale4-optimal-n10-carried-p0.15-k8.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-scale4-optimal-n5-carried-p0.15-k4.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/phase2/committed-carried/materialised/pv-scale4-optimal-n5-carried-p0.15-k5.geojson",
+      "commit": "9457b2689",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-carried-9457b2689.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/ladder.json",
+      "commit": "741a4eaff",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-tiering-741a4eaff.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+      "commit": "741a4eaff",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-tiering-741a4eaff.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+      "commit": "741a4eaff",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-tiering-741a4eaff.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json",
+      "commit": "741a4eaff",
+      "verdict": "VERIFIED",
+      "how": "EQUAL-AFTER-IGNORES (cmp-tier-e-tiering-741a4eaff.json)"
+    },
+    {
+      "path": "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.md",
+      "commit": "741a4eaff",
+      "verdict": "VERIFIED",
+      "how": "BYTE-IDENTICAL (cmp-tier-e-tiering-741a4eaff.json)"
+    }
+  ]
+}

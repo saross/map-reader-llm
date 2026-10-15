@@ -1,0 +1,103 @@
+2026-10-15 10:31:10,003 INFO k5 sweep board: /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-63f4cac1c/outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5_recovery-fixed/sweep_board.json --bounds inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson --buffer-m 20 30 40 50
+2026-10-15 10:33:11,849 INFO k5 sweep era2: /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-63f4cac1c/outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5_recovery-fixed/sweep_era2.json --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson --buffer-m 20 30 40 50
+2026-10-15 10:35:19,068 INFO k5 materialise: --probabilities /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-63f4cac1c/outputs/grid-2026-08-18/verifier/g384_ov192/k-ladder/k5_recovery-fixed/probabilities.json --vote-t 5 --prob-t 0.15 --output /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson
+2026-10-15 10:35:19,350 INFO Created 435 records
+2026-10-15 10:35:19,350 INFO   re-keyed k5.geojson: 435 feature(s), 21 outside the frame's tile union
+2026-10-15 10:35:19,350 INFO k5 re-keyed 435 features
+2026-10-15 10:35:19,350 INFO k5 evaluate: 10000 --seed 42 --mcc --output-dir /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax --label g384-ov192-k5-verified-opmax
+2026-10-15 10:35:45,767 INFO k5 DONE: {
+  "key": "k5",
+  "run_id": "grid-2026-08-18",
+  "label": "g384-ov192-k5-verified-opmax",
+  "committed_point": [
+    5,
+    0.15
+  ],
+  "new_point": [
+    5,
+    0.15
+  ],
+  "point_moved": false,
+  "board_argmax": {
+    "vote_t": 5,
+    "prob_t": 0.15,
+    "f1": 0.8828,
+    "n": 435
+  },
+  "era2_argmax": {
+    "vote_t": 5,
+    "prob_t": 0.15,
+    "f1": 0.8828
+  },
+  "frames_agree": true,
+  "committed_f1_20": 0.8905,
+  "new_f1_20": 0.8905,
+  "new_f1_ci_20": [
+    0.8595,
+    0.9149
+  ],
+  "new_precision_20": 0.913,
+  "new_recall_20": 0.869,
+  "committed_n_detections": 435,
+  "new_n_detections": 435,
+  "new_tile_mcc": 0.8139,
+  "new_tile_confusion": {
+    "tp": 193,
+    "tn": 248,
+    "fp": 10,
+    "fn": 36
+  },
+  "tile_mcc_withheld": null,
+  "tile_mcc_withheld_reason": null,
+  "cell_dir": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax",
+  "materialised": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson"
+}
+[
+  {
+    "key": "k5",
+    "run_id": "grid-2026-08-18",
+    "label": "g384-ov192-k5-verified-opmax",
+    "committed_point": [
+      5,
+      0.15
+    ],
+    "new_point": [
+      5,
+      0.15
+    ],
+    "point_moved": false,
+    "board_argmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.8828,
+      "n": 435
+    },
+    "era2_argmax": {
+      "vote_t": 5,
+      "prob_t": 0.15,
+      "f1": 0.8828
+    },
+    "frames_agree": true,
+    "committed_f1_20": 0.8905,
+    "new_f1_20": 0.8905,
+    "new_f1_ci_20": [
+      0.8595,
+      0.9149
+    ],
+    "new_precision_20": 0.913,
+    "new_recall_20": 0.869,
+    "committed_n_detections": 435,
+    "new_n_detections": 435,
+    "new_tile_mcc": 0.8139,
+    "new_tile_confusion": {
+      "tp": 193,
+      "tn": 248,
+      "fp": 10,
+      "fn": 36
+    },
+    "tile_mcc_withheld": null,
+    "tile_mcc_withheld_reason": null,
+    "cell_dir": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax",
+    "materialised": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson"
+  }
+]

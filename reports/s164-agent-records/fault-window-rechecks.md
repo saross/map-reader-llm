@@ -1,12 +1,15 @@
 # Fault-window re-checks by exact reproduction
 
-> **Last revised**: 2026-10-14 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-15 (rows W2-3, W2-4, W2-7, and W2-8 added,
+> PI ruling D67 (2)). See [§ Changelog](#changelog) for revision history.
 
 - **Prepared by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), a background agent of the main Session 164 (S164)
   session, with five Opus 5.5 sub-agents, one per row group. 2026-10-14,
-  00:31 to 04:19 UTC.
+  00:31 to 04:19 UTC. Rows W2-3, W2-4, W2-7, and W2-8 were added on
+  2026-10-15, 10:07 to 12:39 UTC, by a second background agent of S164
+  (same model lane), with two Opus 5.5 sub-agents for W2-3, on branch
+  `fault-window-rechecks-2`, cut from `origin/main` at `718d0ee08`.
 - **Repository**: `map-reader-llm`, branch `fault-window-rechecks`, cut
   from `origin/main` at `90294a283`. Every re-run was on sapphire.
 - **Task**: PI ruling D65, item D62 (7) "as recommended"
@@ -16,6 +19,11 @@
   and W2-13; the inputs W1-8 and W2-11 through the provenance and rebuild
   tools. Each must reproduce the committed file exactly. W1-5 and W2-9
   are to be marked done on PR #38's and PR #35's evidence. Report only.
+  Then PI ruling D67 (2) (2026-10-15, "yes re-check"): rows W2-3 (the
+  K-ladder Phase 2), W2-4 (the tile-MCC re-sweeps), W2-7 (the
+  modality-audit recomputation), and W2-8 (the E70 interval registry),
+  which the main session had dropped from its walkthrough summary, by the
+  same method. Report only.
 - **Guarantees**: no model Application Programming Interface (API) call
   was made. Every replay ran in a disposable git worktree, or in scratch
   copies, outside the live checkout. No committed result, output,
@@ -25,7 +33,8 @@
 - **Drivers, logs, and comparisons**:
   `reports/s164-agent-records/fault-window-rechecks-scripts/<row>/`.
   Regenerated bulk outputs stay on sapphire under
-  `~/scratch/s164-fw-recheck-2026-10-14/*-out/` (not committed).
+  `~/scratch/s164-fw-recheck-2026-10-14/*-out/` (not committed); those of
+  2026-10-15 under `~/scratch/s164-fw-recheck2-2026-10-15/*-out/`.
 
 ## Bottom line
 
@@ -59,6 +68,38 @@ The kernel's "Bad page state" count on sapphire was 0 before the first
 re-run (2026-10-14T00:31Z) and 0 after the last (2026-10-14T04:19Z), on
 the boot that began 2026-10-10T05:09:43Z with the memory at JEDEC
 4,800 MT/s (D59).
+
+**Added 2026-10-15 (D67 (2)): rows W2-3, W2-4, W2-7, and W2-8.** Every
+file in them that can be regenerated without API spend reproduces at its
+generating commit. Again there is **no unexplained difference**.
+
+- **W2-3** (the signed K-ladder): of 920 files last written in W2 by the
+  K-ladder's commits, 512 reproduce byte for byte or field for field,
+  324 are cell evaluations the census already verifies, 66 are real-time
+  verifier outputs (NOT CHECKABLE), and 18 are prose or code. That
+  includes the two registered cells of W2-14 whose intervals and tile MCC
+  the census could not reproduce: re-scored at their own commit, every
+  number reproduces. The MCB sets reproduce exactly, so the list's "within
+  4.958e-05 (a tolerance, not exact)" caveat can be dropped. The four tier E cells and the other S9
+  movers reproduce their pre-D50 values at their generating commits, so
+  their later moves are D50's scorer, not the fault window.
+- **W2-4** (D6a's tile-MCC record): all 52 files reproduce byte for byte at
+  their own commits: the 23 tile-MCC re-sweep CSVs (2,048 points),
+  `sweeps.json` as each of the three commits that rewrote it left it, the
+  27 post-hoc cells' detection sets, and `cells_manifest.json` as each of
+  the four commits that rewrote it left it.
+  Every family's tile-MCC argmax sits at the lowest vote count its sweep
+  offers, as D6a says.
+- **W2-7** (R2-06): all ten files reproduce, eight byte for byte and two
+  after `generated_at_utc`. The image-bearing tile MCC range 0.0665 to
+  0.2907 is confirmed.
+- **W2-8** (the interval registry): both stores are byte for byte the
+  committed file once the 85 re-run entries' `recomputed_at` and
+  `elapsed_seconds` are copied in.
+
+Kernel "Bad page state" count: 0 at 2026-10-15T10:07:58Z, before the
+first replay, and 0 at 2026-10-15T12:38:40Z, after the last, on the same
+boot.
 
 ## 1. Method
 
@@ -122,6 +163,10 @@ the boot that began 2026-10-10T05:09:43Z with the memory at JEDEC
 | W2-13 | Tile-join audit, June pool grid, union-staleness retrospective, frontier, tile-presence costs, register regeneration | `3d6b47e33`, `4ac321a79`, `30609d5c8`, `61870d9e7`, `6fc63546e`, `7c9499846` | **VERIFIED** |
 | W1-8 | Run B inputs, `outputs/modality-bridge-2026-10-07/` | `92b151058`, `2718be084`, `60aceebdd`, `987718a66`, `2b6edde9a`, `a3ea389c2`, `94be8b01a`, `69eb32132`, `2cff16c91` | **VERIFIED** for all 100 checkable files (90 byte for byte, 10 metas field for field); 212 raw API outputs **NOT CHECKABLE** |
 | W2-11 | Inputs written on sapphire in W2 | `7894b5b5a`, `e9d1db0d0`, `185681674`, `e01b8617a`, `e7ebc1695`, `c053f5a41`, `43516df9a`, `f8e0eb600`, image campaigns | **VERIFIED** for every checkable file; raw API outputs **NOT CHECKABLE** |
+| W2-3 (2026-10-15) | K-ladder: Phase 2 unions, verifier stages, materialisations, carried points, recovery fix, tier E, MCC test, MCB, tiering | `e3232d65b`, `19e56ed80`, `eb6d797e0`, `326181bcd`, `9457b2689`, `d10137595`, `d900ed1d5`, `b7e2821ba`, `98e54baf6`, `5167b9a5c`, `741a4eaff`, `f31e7470e`, `3d9c64807`, recovery fix `20c0a053f` to `a8c03bb9e`, small items | **VERIFIED** for every checkable file (512); 66 real-time verifier outputs **NOT CHECKABLE**; 324 evaluations census-verified |
+| W2-4 (2026-10-15) | r2 board tile-MCC re-sweeps of 23 families; carried-analogue and MCC-oracle cells; carried-k record; relabel | `a1c4bf2c3`, `03b8496ed`, `cca6ccda5`, `1ed3e54cb`, `539372938`, `681b4e246`, `1bbba2e21` | **VERIFIED** (all 52 byte for byte) |
+| W2-7 (2026-10-15) | Modality-track audit recomputation | `d5eaeb1ee`, `aa1d9bd5b` | **VERIFIED** (8 files byte for byte, 2 after `generated_at_utc`) |
+| W2-8 (2026-10-15) | E70 bootstrap-interval re-run, both stores; the registry's figures | `8c89ccebb` | **VERIFIED** (byte for byte after `recomputed_at` and `elapsed_seconds`) |
 
 ## 3. Per-row detail
 
@@ -466,10 +511,199 @@ count cannot change the output: `Pool.map` keeps task order, and rows are
 sorted before writing. The stopped run's log is kept
 (`logs/w2-11-r2-stopped-1worker.log`).
 
+### W2-3 — the K-ladder (Phase 2, tier E, MCC test, MCB)
+
+Two sub-agents, drivers and comparisons in
+`fault-window-rechecks-scripts/w2-3/w2-3a/` (the Phase 2 pipeline) and
+`w2-3/w2-3b/` (the statistics), each with a `coverage-tally.json` that
+accounts for every file in its list. The scope is every tracked file
+whose last change (at `718d0ee08`) was a W2 commit that also wrote under
+`results/k-ladder-2026-09-12/` or `outputs/k-ladder-2026-09-12/`, plus the
+K-ladder reports and the board's K-ladder membership file, less seven
+files that belong to other rows (four uplift-supplement files of
+`741a4eaff`, W2-5; `pareto_v2.{json,png}`, W2-13; one census-verified r2
+board evaluation of `c2060da40`): 920 files. The list's "547" counted
+differently. My first split of the scope missed 57 of the 920, the five
+tier E tiering files and 52 union files of `e3232d65b`; a completeness
+check caught them, and both groups were then replayed (below).
+
+Coverage: 512 VERIFIED (6 of them already by the first batch, under
+W2-13), 324 cell evaluations census-verified, 66 NOT CHECKABLE, and 18
+prose or code.
+
+| Group | Generating commit → replayed at | Result |
+|---|---|---|
+| The 28 Phase 2 first-N unions | `e3232d65b` and `19e56ed80`, each at itself (`build_k_ladder_phase2_unions.py`); `unions.json` at `eb6d797e0` | 56 consensus GeoJSONs and 28 `voting_summary.json` byte for byte at both commits; 28 `experiment_intent.md` line for line apart from their two date lines; `unions.json` field for field after `generated_at_utc`. `check_union_provenance.py` at `19e56ed80`: 28 SUBPOOL-CONSISTENT, as committed. The 52 `consensus_t*.geojson` last changed by `e3232d65b` (outside my enumeration) reproduce too |
+| Phase 2 run, offline stages | `326181bcd` → `326181bcd` (`/tmp/final_downstream.sh`, recovered from the transcript: `--recompute-ledger`, `score … prepare --fresh`, `collect --strict`, the carried and 3.7 opmax derivations, `check_tile_vocabulary_match.py`, `run_pv.py extract` for 28 rungs) | 173 files compared: 166 byte for byte, 7 field for field after `generated_at_utc` / `updated_at_utc`. That includes 60 sweeps, 46 materialised detection sets, the job lists, and `tile-vocabulary-match.json`. The 28 crop manifests equal byte for byte once the one `rasters_dir` path is substituted, and all 35,844 re-extracted crops are byte-identical to the September crops still on sapphire, so the images the verifier was sent are exactly reproducible |
+| Phase 2 verifier outputs | `326181bcd` | 28 `probabilities.json` and 28 `run.meta.json`: real-time flex output, no raw responses kept, **NOT CHECKABLE**. Offline consistency holds on all 28: keys equal manifest ids equal union features (35,844), 0 failures, `gemini-3-flash-preview` at T 0.0, MINIMAL thinking, and each meta's tokens give its ledger entry (US$24.8065 in all) |
+| The 2026-09-13 recovery fix | `20c0a053f`, `63f4cac1c`, `5166ddeda`, `987534c03` (harness at `63f4cac1c`, `fix_op_points.py` at `5166ddeda`, K = 3 re-score at `987534c03`) | 4 materialised sets byte for byte; 3 `f1-only` records after one machine path; both `operating-points.json` versions; the K = 3 detection set byte for byte at two commits. The `reproduced-k5-evaluation` summary reproduces exactly at its generating code |
+| Small items | `b949d5644`, `3013171cd`, `f4a1011a8`; smoke `9a934eaef` | all field for field after `generated_at_utc` (tables line for line after their "Generated" line); smoke union byte for byte; its 2 API outputs NOT CHECKABLE |
+| MCC test | `d10137595` → itself; sign-swap `d900ed1d5` → itself | 32 files: 15 byte for byte, 17 after `generated_at_utc` and the tiering `git_commit` stamp; sign-swap 2 of 2 byte for byte. GS ΔMCC +0.0134 at BH p 0.7678 reproduced |
+| Phase 2 MCC test | `326181bcd` → `3c5de3f23` (note a) | 53 files: 26 byte for byte, 27 after `generated_at_utc` and `git_commit` |
+| MCB sets | `b7e2821ba` → `cebae7868` (where it ran; `b7e2821ba` changes only a table builder the driver does not import) | 46 of 46 exact: 44 byte for byte after substituting the run root, `table.md` byte for byte, `summary.json` after `generated_at_utc`. 10,000 resamples, seed 42 (note b) |
+| Tier E unions, smoke, outputs | `98e54baf6` → itself; `5167b9a5c` → itself | unions, voting summaries, sweeps, the h10 rebuild, 4 materialised sets and `score-jobs.txt` byte for byte; crop manifests after `rasters_dir`; tension, `operating-points.json`, `scores.json` after `generated_at_utc`; `smoke.json` and `spend-ledger.json` re-derived offline from the committed metas, byte for byte (US$4.9595 flex); 8 API outputs NOT CHECKABLE |
+| Tier E tiering (the enumeration slip) | `741a4eaff` → itself (`tier_e_ladder_tiering.py`, as last run at 14:28:43Z in the original worktree; 10,000 permutations, seed 42) | both tiering inputs and `tiering_20m.md` byte for byte; `ladder.json` after `generated_at_utc`; `tiering_20m.json` after `generated_at_utc` and the `git_commit` stamp. The pre-D50 values reproduce (K = 1 F1@20 0.854586) |
+| Carried points | `9457b2689` → itself | 52 materialised sets and the job list byte for byte |
+| Board frame | `f31e7470e`, `3d9c64807` (both written on amd-tower) | byte for byte after the build timestamp |
+| Ladder tables and figures | `61870d9e7`, `32d0c6445`, `2e0c2941d`, `0f484491c` | already VERIFIED by the first batch (row W2-13) |
+| The two 3.7 K = 1 cells the census could not fully reproduce | `326181bcd` → itself: their two `evaluate_detections.py` lines of `phase2/score-jobs.txt` (`replay_withheld_cells.sh`) | 6 files: both `evaluation.csv` byte for byte; both `evaluation.json` after `generated_at_utc`, `timestamp`, `output_dir`, and the git-state stamps (7 of 498 leaves); both `.md` after their "Generated" line. The intervals and tile MCC reproduce (0.1337, interval 0.0552 to 0.1884; 0.1422, 0.0679 to 0.198) (note f) |
+| Cell evaluations | various | 324 files census-verified, each checked against the census table (`census_cells.csv`): 315 `replay` reproducing, 9 `verified-bytediff`; not re-scored |
+
+Notes:
+
+- (a) The Phase 2 MCC test ran as stage 12 of `/tmp/final_downstream.sh`
+  in sapphire's live checkout (HEAD `f724b7a10`, the branch's scripts
+  copied in) and resolved its rungs through `results/run-conditions.json`
+  as stage 8 had just written it. Those 46 rows were committed only in
+  `3c5de3f23`, the child of `326181bcd`, which changes nothing but the
+  register, the manifests, and the uplift files; at `326181bcd` itself
+  the rungs do not resolve.
+- (b) The list's MCB caveat ("gated against the committed ranking within
+  4.958e-05, a tolerance, not exact") describes the MCB's own internal
+  gate. Its largest delta is on the MCC arm against a committed ranking
+  rounded to four places (0.71275 against 0.7127); the F1 arm's largest
+  is 5e-07. The 46 MCB files themselves reproduce exactly, so the caveat
+  can be dropped.
+- (c) The originals did not run at commits. They ran in sapphire's live
+  checkout or in agent worktrees, with scripts rsynced or copied in and,
+  for the recovery fix, with inputs committed minutes later. Each replay
+  ran at the committing commit (or the commit named above), after
+  `git diff --stat` showed no difference in the scripts and inputs used;
+  the byte identity confirms it. For the same reason the `git_commit`
+  stamps inside several outputs (`f724b7a10`, `156bddf36`, `5167b9a5c`)
+  do not identify the code that ran.
+- (d) S9's eight D50 movers reproduce their committed, pre-D50 values at
+  their generating commits: the four tier E cells (K = 1 / 3 / 5 F1@20
+  0.8546 / 0.884 / 0.8905, unrounded K = 1 0.854586, and the K = 1
+  carried cell's 0.854), the recovery-fix K = 5 evaluation's whole
+  summary, the two 3.7 K = 1 cells re-scored in full (note f), and the
+  3.7 K = 3 cell's detection set (its evaluation census-verified). Their
+  later moves are D50's scorer, not fault-window damage.
+- (e) No patch was needed: no script these replays load hard-codes the
+  live checkout's root. Five unrelated scripts in the tree do
+  (`scripts/ab_plus/tail/*.py` and `scripts/run_bootstrap_10k.py`); none
+  ran.
+- (f) The sub-agents first filed these two cells under the census. A
+  cross-check of every census-attributed file against the census table
+  found their rows marked `W-tile-join-withheld`: the census re-scored them
+  with code that has the tile-join invariant (`7ba47b63b`), which
+  withholds the name-based tile MCC they were scored with, so only their
+  points could reproduce there. Neither `326181bcd` nor the original HEAD
+  `f724b7a10` has that invariant, and the re-score at `326181bcd`
+  reproduces every number. These are the two registered K-ladder cells of
+  row W2-14, which is otherwise not re-checked.
+
+### W2-4 — the r2 board's tile-MCC re-sweeps and post-hoc cells
+
+Driver and comparisons in `fault-window-rechecks-scripts/w2-4/`
+(`replay_cells.sh`, `replay_sweep.sh`, `compare_steps.py`, `cap_guard.sh`,
+`cmp-*.json`, logs). The 52 files are those whose last change was one of
+the seven commits below; each step ran at sapphire's HEAD when the
+original ran (reflog of the live checkout), with the command from the
+session archive (2026-09-19T07-27). Every step started from a fresh tree,
+and every file it wrote was compared with the generating commit's blob.
+
+| Generating commit | Replayed at, and command | Files | Result |
+|---|---|---|---|
+| `cca6ccda5` (the seven carried-analogue cells) | `3ced9749c`: `final_board_posthoc_cells.py --set carried-analogue` | 7 detections + `cells_manifest.json` | 8 of 8 byte for byte |
+| `a1c4bf2c3` (tile-MCC re-sweep, ten families) | `835c2f3a0`: `final_board_sweeps.py --reference r2 --families ARM1-N1 … FOURTH-N10` | 10 sweep CSVs + `sweeps.json` | 11 of 11 byte for byte (926 points) |
+| `1ed3e54cb` (the ten MCC-oracle cells) | `a1c4bf2c3`: `final_board_posthoc_cells.py --set mcc-oracle` | 10 detections + `cells_manifest.json` | 11 of 11 byte for byte |
+| `03b8496ed` (tile-MCC re-sweep, the other 13 families) | `c9131e757` (committed on sapphire as `a9e4279cc`, rebased before the push): `final_board_sweeps.py --reference r2 --families TH7 … B-N5` | 13 sweep CSVs + `sweeps.json` | 14 of 14 byte for byte (1,122 points) |
+| `539372938` (the carried-k MCC record) | `d7e0c741d`: `final_board_sweeps.py --reference r2 --record-carried-k` | `sweeps.json` | byte for byte |
+| `681b4e246` (the ten carried-k MCC-oracle cells) | `4a8d157cb`: `final_board_posthoc_cells.py --set mcc-oracle-at-carried-k --reference r2` | 10 detections + `cells_manifest.json` | 11 of 11 byte for byte |
+| `1bbba2e21` (the relabel) | `182a414f2`: `build_tile_presence_board.py --stage relabel` | `cells_manifest.json` (and the campaign files it also writes) | 5 of 5 byte for byte: the r2 manifest and the four Gemini 3 and 3.7 campaign manifests and sweep records the stage also relabels. The commit's two board documents come from a separate renderer (W2-2's files) and were not replayed |
+
+- **D6a reproduced.** Every one of the 23 families puts its tile-MCC
+  argmax at the lowest vote count its sweep space offers: 18 at k1 and
+  the five incumbents (TH7, T03, TM, IM, UPL), which never sweep below
+  k3, at k3. The ten 3.7 families' MCC oracles and their micro-F1 equal
+  the commit body of `a1c4bf2c3` (for example ARM2-N5 0.7487 at (0.96, k1),
+  micro 0.8055).
+- **Today's files.** All 52 are their generating commits' blobs, and
+  today's `sweeps.json` is the `539372938` version, whose replay read the
+  CSVs and the `03b8496ed` record that the sweep replays had reproduced.
+  So every tile-MCC column and argmax block on the board's record is
+  verified.
+- **Worker count.** The originals used 20 workers, the replays 3 and 4.
+  `Pool.map` with a fixed chunk size returns rows in task order and rows
+  are sorted before writing, so the count cannot change the output; the
+  byte identity confirms it. The gates (G4 12 cells, identity counts,
+  mechanism triples, geometry, and pass pins) passed on the way in both
+  runs.
+- **Rebased commit.** `03b8496ed` was committed on sapphire as `a9e4279cc`
+  at 03:23:42Z and rebased onto `f1b9b48ff` before the push; the replay
+  ran at the HEAD of the launch (`c9131e757`, pulled at 02:31:14Z).
+- No step touched sapphire's live checkout: a canary on its
+  `git status` stayed unchanged from start to end
+  (`../kernel-bad-page-2026-10-15.txt`).
+
+### W2-8 — the E70 bootstrap-interval re-run
+
+Driver and comparisons in `fault-window-rechecks-scripts/w2-8/`
+(`replay.sh`, `run1.log`, `compare-run1.jsonl`, `crosscheck.py`,
+`crosscheck-run1.json`); the comparison helper is
+`fault-window-rechecks-scripts/compare_json.py`.
+
+- **Replayed at `c50bd5f19`**, the parent of `8c89ccebb` and sapphire's
+  HEAD when the original ran (reflog, 2026-09-12T05:15:40Z). The original
+  command, from the session archive (2026-09-11T04-35, 2026-09-12T05:16:03Z),
+  was `scripts/repair_bootstrap_cis.py rerun --workers 16
+  results/all-bootstrap-cis.json results/pv/all-bootstrap-cis.json`; the
+  replay used 2 workers. The script's `ProcessPoolExecutor.map` keeps job
+  order and seeds every entry with 42, so the worker count cannot change
+  the output. Its gate ran first, as originally: 5 of 5 already-matching
+  entries reproduce at |Δ| = 0.
+- **Both stores** (`results/all-bootstrap-cis.json` and
+  `results/pv/all-bootstrap-cis.json`): of 7,549 leaves, 170 differ, all of
+  them the 85 re-run entries' `recomputed_at` and `elapsed_seconds`; key
+  order is equal. With those two fields copied from the committed file and
+  the store serialised as `write_store` does, the regeneration is byte for
+  byte the `8c89ccebb` blob (`crosscheck-run1.json`). The two regenerated
+  stores are byte-identical to each other, as committed. Today's files are
+  the `8c89ccebb` blob.
+- **The registry's figures** (`results/ci-metadata-registry.md`, last
+  changed by `8c89ccebb`; hand-written prose) re-derived from the
+  regeneration: 85 entries re-run across 16 run families, the largest
+  `phase3a/track1-image` (44); median |ΔF1 mean| 0.000583; maximum 0.027611
+  (`single:phase3c/track2-text/h9-E-p2/run_5`, 1,114 → 1,233 detections,
+  +119); 81 of 85 below 0.005; 59 fell and 26 rose (commit body).
+  `check_bootstrap_cis.py --check` reports 472 resolved, 472 match,
+  0 mismatch, and 24 known unresolved `consensus:` entries, as the commit
+  body says (its exit code is 1 because of the 24 annotated entries; the
+  registry names `--allow-annotated` as the drift gate).
+
+### W2-7 — the modality-track audit recomputation
+
+Driver and comparisons in `fault-window-rechecks-scripts/w2-7/`
+(`replay.sh`, `run1.log`, `compare-run1.jsonl`).
+
+- **Step 1, `d5eaeb1ee`**, replayed at its parent `c1b151bce`, which the
+  original worktree had just pulled. The five commands are the ones the
+  session archive records (2026-09-13T23:46:10Z and 23:46:18Z):
+  `characterise_gs_plateau.py` and `tile_size_sweep.py`, each with and
+  without `--legacy-modality`, into `recomputed/`, then
+  `compare_modality_recomputation.py`. The replay tree had no
+  `recomputed/` directory and no `recomputation.*` before the run, so every
+  file compared was written by the replay. Of the ten files, eight are byte
+  for byte the `d5eaeb1ee` blobs (both plateau tabulations and their `.md`,
+  both sweep `.md`, `recomputation.json`, and `recomputation.md` as first
+  committed); the two `tile_size_sweep.json` differ only in
+  `generated_at_utc`.
+- **Step 2, `aa1d9bd5b`** ("re-render recomputation.md with blanks
+  collapsed"), replayed at its parent `6dfe7cbeb`:
+  `compare_modality_recomputation.py` gives `recomputation.md` byte for
+  byte the `aa1d9bd5b` blob and `recomputation.json` byte for byte the
+  `d5eaeb1ee` blob. Today's files are those blobs.
+- **R2-06 confirmed**: the regenerated recomputation gives the phase-2
+  text group 14 cells, 6 with a defined tile MCC, all 0.0665, and the
+  image group 22 cells, 21 defined, 0.0665 to 0.2907; two of fifteen
+  tile-size legs move, and the three isolation views are identical.
+
 ## 4. Surprises and things worth knowing
 
 None of these is a difference in a committed number. They are provenance
-and procedure findings met on the way.
+and procedure findings met on the way: items 1 to 9 in the rows of
+2026-10-14, items 10 to 17 in those of 2026-10-15.
 
 1. **Three Gemini 3 crop manifests were never committed** (W2-1 note d).
    The Gemini 3 inheritance row reads
@@ -535,6 +769,49 @@ and procedure findings met on the way.
    union step regenerated all 45 byte for byte, so they are sound. They
    are regenerable intermediates, not inputs that exist nowhere else.
 
+10. **An orphan detection set.**
+    `results/k-ladder-2026-09-12/phase2/materialised/pv-min-text-t0.7-n1-carried-p0.15-k1.geojson`
+    was committed in `326181bcd` but not written by the final run. No cell
+    or operating point refers to it. It is left over from a trial at
+    06:29Z, before the driver gained its carried-equals-opmax rule, and it
+    is the same blob as the regenerated `pv-min-text-t0.7-n1-opmax.geojson`
+    (sha256 `582c9d1d…`), so it is harmless.
+11. **Tier E `smoke.json` says `probabilities_returned: 6`.** The true count
+    is 5; 6 is the envelope's key count, the driver defect `5b2f2c05d`
+    fixed. Today's file still carries the 6, and the replay reproduces it
+    exactly with the pre-fix expression.
+12. **Today's union checker calls two of the 28 Phase 2 unions STALE** as
+    they stood at `326181bcd`: the Gemini 3.7 K = 1 and K = 3 unions. This
+    is the documented recovery-fragment drop, repaired on 2026-09-13
+    (`e9d1db0d0`, verified under W2-11), not fault-window damage. All 28
+    crop manifests agree with their unions (`--manifest` mode).
+13. **A slip in `eb6d797e0`'s body.** It says the rewritten intent files
+    changed "only their dates"; the 3.7 K = 3 intent would also change its
+    count line (757 to 759). The intents were not committed, so no file is
+    affected.
+14. **An input-state dependency in the tension analyses.** The committed
+    `tension/grid-overlap.json` has `tier_e_verified_b_geometry: null`
+    because `tier-e/scores.json` did not yet exist when it ran (13:59Z). A
+    replay at `5167b9a5c` with that file present fills the block, so it was
+    held aside for that step.
+15. **`check_bootstrap_cis.py --check` exits 1** on the regenerated store,
+    with 472 resolved, 472 match, and 0 mismatch: the 24 annotated
+    `consensus:` entries count as unresolved. The registry names
+    `--check --allow-annotated` as the drift gate, so this is expected.
+16. **My own scoping slip.** My first split of the K-ladder files dropped
+    `741a4eaff` whole, because four of its files belong to W2-5, and with
+    it five tier E tiering files; the 52 union files of `e3232d65b` were
+    also outside the split. A completeness check against every W2 commit
+    that wrote under the K-ladder directories caught both, and both were
+    replayed (§ 3, W2-3).
+17. **The worker cap needed a guard.** With two sweep replays on 3 and 4
+    workers and the short W2-4 steps on one process, a small guard
+    (`w2-4/cap_guard.sh`) was ready to pause the short steps with SIGSTOP
+    whenever the total would pass 8; it logged no pause. A first sweep
+    launch on 2 workers was stopped during its gates when the W2-3
+    sub-agents finished, and relaunched on 3; its log is kept
+    (`sweep-run1-stopped-2workers.log`), and nothing it wrote was used.
+
 ## 5. Not done, and why
 
 - **Rows outside D65's limit.** W1-6, W1-7, W1-9 to W1-12, W1-14, W2-3 to
@@ -542,10 +819,16 @@ and procedure findings met on the way.
   limited this pass to the rows above. Several of the others are
   claim-bearing: W2-3 (the signed K-ladder), W2-4 (D6a), W2-7 (R2-06), and
   W2-8 (the interval registry) are in the list's suggested-order item 3.
+  Those four were re-checked on 2026-10-15 under D67 (2) (§ 3). Still not
+  re-checked: W1-6, W1-7, W1-9 to W1-12, W1-14, W2-5, W2-6, W2-10, W2-12,
+  W2-14 (but for its two K-ladder cells, § 3 W2-3 note f), and W3.
 - **W1-5 residue.** Five W1-era files in W1-5's group were outside PR
   #38's regeneration (§ 3, W1-5).
 - **Cell evaluations were not re-scored.** The census already verifies
-  them, and the brief excluded the BCa engine runs.
+  them, and the brief excluded the BCa engine runs. The exception is the
+  two W2-3 cells whose census rows could not reproduce their intervals
+  and tile MCC (§ 3, W2-3 note f): they were re-scored at their own
+  commit on 2026-10-15.
 - **Raw API responses** (Stage 1 passes, verifier responses) cannot be
   re-obtained without spend, and none was spent. In W1-8 that is 212 of Run B's 331 non-log files. In W2-11 it is 133 image-campaign files, the 6 real-time verifier outputs of `43516df9a`, and the newly called rows and 2 metas of `f8e0eb600`. The 10 Run B `rehearse-*.json` records were not run, because they need `run_pv.py verify --dry-run`, which the no-API rule bars. In W2-11, 12 image-campaign files (worklists, `all_tiles_manifest.json`, the probe's sampled manifest) were not attempted.
 - **No second run of a DIFFERS file**, because nothing differed.
@@ -563,19 +846,58 @@ and procedure findings met on the way.
    provenance. The first closes the gap; the second documents it.
 3. **Optional:** sort the replicate drivers' set iteration (§ 4 item 2),
    and add the launch-pattern line to the agent guidance (§ 4 item 6).
-4. **Next re-checks, if wanted.** The claim-bearing rows outside this pass
-   are W2-3, W2-4, W2-7, and W2-8. By the list's own figures, W2-4's
-   sweeps took about 100 minutes on 20 workers (recorded), W2-3 is
-   estimated at about an hour, and W2-7 and W2-8 at minutes. Of the W1
-   rows left, the list calls W1-11 and W1-12 superseded, and W1-6, W1-7,
-   W1-9, and W1-10 are re-parses or re-scores of minutes each.
-5. **Housekeeping.** This exercise no longer needs
-   `~/scratch/d57-4-rescore-2026-10-09/` or the `q4-*` directories, which
-   D62 (8) kept until these re-checks finished. The regenerated outputs
-   under `~/scratch/s164-fw-recheck-2026-10-14/*-out/` can go once this
-   record is accepted.
+4. **Next re-checks, if wanted.** W2-3, W2-4, W2-7, and W2-8 were done on
+   2026-10-15 (D67 (2)) and need nothing restated: the signed K-ladder,
+   D6a's tile-MCC record, R2-06's range, and the interval registry all
+   reproduce. The list's W2-3 caveat on the MCB tolerance can be dropped
+   (§ 3, W2-3 note b). Of the W1 rows left, the list calls W1-11 and W1-12
+   superseded, and W1-6, W1-7, W1-9, and W1-10 are re-parses or re-scores
+   of minutes each; W2-5, W2-6, W2-10, W2-12, and W2-14 are minutes each
+   too.
+5. **Housekeeping.** The re-checks no longer need the working trees in
+   `~/scratch/d57-4-rescore-2026-10-09/` (`old/`, `new/`, `phase3-*/`, and
+   `rerun-check/`, most of its 77 GB) or the `q4-*` directories, which
+   D62 (8) kept until the re-checks finished. Two cautions. The
+   `phase3-new/` worktree holds nine uncommitted Phase 3 NEW outputs (the
+   h6 A-06, A-07, and A-09 files, four null-exemplar files, and two
+   voting summaries), the only copies of the W1 values W1-14 lists; W1-14's
+   re-check compares against the S3 and S4 records' quoted values, so they
+   are not strictly needed. And a few small files there are
+   evidence that both re-check records and the fault-window list cite,
+   and they are not committed anywhere: the census table
+   `census-old/out/census_cells.csv` (1.7 MB, with `census_summary.json`
+   and `compare.csv`), which is what "census-verified" rests on; Phase 3's
+   `phase3-out/diffs/` (232 KB); Q4's `q4-repaired-readers-2026-10-09/q4/compare-*.json`
+   (and `q4/before/`, 62 MB); and the Q4 drivers in `q4-tools/` (52 KB),
+   which are not in the repository. Commit or archive those before the
+   directories go. The regenerated outputs under
+   `~/scratch/s164-fw-recheck-2026-10-14/*-out/` and
+   `~/scratch/s164-fw-recheck2-2026-10-15/*-out/` can go once this record
+   is accepted.
 
 ## Changelog
+
+### 2026-10-15 — D67 (2): rows W2-3, W2-4, W2-7, and W2-8
+
+Refresh trigger: PI ruling D67 (2) ("yes re-check"), for the four
+claim-bearing rows the main session had dropped from its walkthrough
+summary. Each was re-run on the fixed sapphire at its generating commits
+and compared exactly, with no API call; branch `fault-window-rechecks-2`
+from `718d0ee08`, drivers in `fault-window-rechecks-scripts/{w2-3,w2-4,w2-7,w2-8}/`.
+
+| Row | Before | After |
+|---|---|---|
+| W2-3 | not re-checked (cells census-verified; MCB within a tolerance) | VERIFIED for 512 files; 66 NOT CHECKABLE; 324 census; MCB exact |
+| W2-4 | not re-checked (cells census-verified; sweeps no) | VERIFIED (52 files byte for byte) |
+| W2-7 | not re-checked | VERIFIED (10 files) |
+| W2-8 | not re-checked | VERIFIED (both stores) |
+
+What did not change: every verdict of 2026-10-14; no committed result,
+output, document, or register row; no claim, signature, or ruling. The
+additions are the header bullets, a paragraph in the bottom line, the
+four rows' entries in § 2 and § 3, § 4 items 10 to 17, and the refreshed
+§ 5 and § 6 items 4 and 5. Kernel "Bad page state" count 0 before and
+after. Commits: `ed21afc21` and later commits on the branch.
 
 ### 2026-10-14 — Original publication
 
