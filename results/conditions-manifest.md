@@ -2,7 +2,7 @@
 
 # Conditions manifest
 
-> Generated 2026-10-15T12:09:10Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `f53f6e97c`.
+> Generated 2026-10-15T14:08:00Z · 658 row(s) · schema v1.0 · rendered from `results/conditions-manifest.json` at commit `92a66089d`.
 >
 > **Coverage**: 658 condition(s) across the decomposed runs (sub-step 3b in progress).
 
@@ -508,8 +508,8 @@
 | grid-2026-08-18::g384-ov048-k10-verified-p0.20-k7 | proposer-verifier | verified | 7 | 10 | 0.8752 | 0.7852 | 365 |
 | grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10 | proposer-verifier | verified | 10 | 10 | 0.9017 | 0.8037 | 406 |
 | grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10 | proposer-verifier | verified | 10 | 10 | 0.922 | 0.835 | 392 |
-| grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.8886 | 0.7903 | 400 |
-| grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.9062 | 0.8102 | 386 |
+| grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.8942 | 0.7973 | 406 |
+| grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.9141 | 0.8211 | 392 |
 | grid-2026-08-18::g384-ov192-k1-verified-opmax | proposer-verifier | verified | 1 | 1 | 0.868 | 0.8211 | 482 |
 | grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1 | proposer-verifier | verified | 1 | 1 | 0.8673 | 0.8079 | 493 |
 | grid-2026-08-18::g384-ov192-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.8979 | 0.8167 | 450 |
@@ -580,18 +580,18 @@
 | stride-55map-2026-08-25::g384-ov192-55map-n5-verified37-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.6457 | 0.7555 | 6852 |
 | image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9 | proposer-verifier | verified | 9 | 10 | 0.8458 | 0.8139 | 402 |
 | image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8 | proposer-verifier | verified | 8 | 10 | 0.8389 | 0.8108 | 404 |
-| image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b | proposer-verifier | verified | 8 | 10 | 0.8263 | 0.7937 | 400 |
-| image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b | proposer-verifier | verified | 9 | 10 | 0.8341 | 0.7927 | 397 |
+| image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b | proposer-verifier | verified | 8 | 10 | 0.8319 | 0.8049 | 404 |
+| image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b | proposer-verifier | verified | 9 | 10 | 0.8387 | 0.8078 | 402 |
 | h7-escalation-2026-08-28::text-t1.6 | single-pass | none | — | 3 | 0.4738 | 0.085 | — |
 | h7-escalation-2026-08-28::text-t2.0 | single-pass | none | — | 3 | 0.4744 | 0.0942 | — |
 | gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9238 | 0.7914 | 451 |
 | gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10 | proposer-verifier | verified | 10 | 10 | 0.9243 | 0.7971 | 431 |
 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5 | proposer-verifier | verified | 5 | 5 | 0.9364 | 0.8192 | 437 |
 | gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5 | proposer-verifier | verified | 5 | 5 | 0.9358 | 0.8331 | 429 |
-| gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.9068 | 0.7675 | 423 |
-| gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9066 | 0.7651 | 443 |
-| gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.919 | 0.7937 | 429 |
-| gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9182 | 0.8079 | 421 |
+| gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b | proposer-verifier | verified | 10 | 10 | 0.9169 | 0.7826 | 431 |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9165 | 0.7767 | 451 |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9289 | 0.8049 | 437 |
+| gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9282 | 0.8189 | 429 |
 | gemini37-screen-2026-08-28::g37-text-k1-verified-opmax | proposer-verifier | verified | 1 | 1 | 0.8747 | withheld | 502 |
 | gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1 | proposer-verifier | verified | 1 | 1 | 0.8616 | withheld | 558 |
 | gemini37-screen-2026-08-28::g37-text-k3-verified-opmax | proposer-verifier | verified | 3 | 3 | 0.9135 | withheld | 495 |
@@ -623,8 +623,8 @@
 | gemini37-55map-2026-08-29::arm2-n5-mcc-oracle-posthoc-p0.96-k1-r2-gt | proposer-verifier | verified | 1 | 5 | 0.7229 | 0.7487 | 5924 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5 | proposer-verifier | verified | 5 | 5 | 0.9353 | 0.8307 | 438 |
 | gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5 | proposer-verifier | verified | 5 | 5 | 0.9408 | 0.8436 | 433 |
-| gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9179 | 0.8133 | 430 |
-| gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9233 | 0.8264 | 425 |
+| gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9278 | 0.8245 | 438 |
+| gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b | proposer-verifier | verified | 5 | 5 | 0.9332 | 0.8376 | 433 |
 | gemini37-image-55map-2026-09-13::img-arm1-k1-carried-p0.10-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.765 | 0.7324 | 6250 |
 | gemini37-image-55map-2026-09-13::img-arm1-k1-f1-oracle-p0.15-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7777 | 0.7523 | 5582 |
 | gemini37-image-55map-2026-09-13::img-arm1-k1-mcc-oracle-p0.15-k1-r2-gt | proposer-verifier | verified | 1 | 1 | 0.7777 | 0.7523 | 5582 |
