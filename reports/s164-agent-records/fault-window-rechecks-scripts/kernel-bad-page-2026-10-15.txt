@@ -1,0 +1,5 @@
+Kernel "Bad page state" count on sapphire (journalctl -k -b | grep -c "Bad page state"), boot since 2026-10-10T05:09:43Z:
+2026-10-15T10:07:58Z  0  (before the first replay of rows W2-3, W2-4, W2-7, W2-8)
+2026-10-15T12:38:40Z  0  (after the last)
+Sub-agents w2-3a and w2-3b recorded 0 at their own starts and ends (w2-3/w2-3a/kernel-bad-page-*.txt; w2-3b report).
+Live-checkout canary (sha256 of git status --porcelain of ~/Code/map-reader-llm, first 16): 980bd7cad4969608 at 10:22:42Z and at 12:38:40Z.
