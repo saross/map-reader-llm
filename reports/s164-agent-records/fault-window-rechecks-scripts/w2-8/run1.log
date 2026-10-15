@@ -1,0 +1,66 @@
+=== 2026-10-15T10:17:57Z HEAD c50bd5f19 workers 2
+Gate: 5 already-matching entries, 1000 iterations, seed 42
+Frame: reference mounds-reference.geojson, bounds full_evaluation_bounds.geojson, buffer 20 m, percentile method
+
+  single:phase2a/brief-text/run_2: REPRODUCES (f1 max|Δ|=0.000e+00; precision max|Δ|=0.000e+00; recall max|Δ|=0.000e+00)
+  single:phase3a/track1-image/T1.0/run_25: REPRODUCES (f1 max|Δ|=0.000e+00; precision max|Δ|=0.000e+00; recall max|Δ|=0.000e+00)
+  single:phase3a/track2-text/T1.0/run_25: REPRODUCES (f1 max|Δ|=0.000e+00; precision max|Δ|=0.000e+00; recall max|Δ|=0.000e+00)
+  single:phase3a-high/track2-text/T1.0/run_12: REPRODUCES (f1 max|Δ|=0.000e+00; precision max|Δ|=0.000e+00; recall max|Δ|=0.000e+00)
+  single:phase3a-replication/minimal/run_28: REPRODUCES (f1 max|Δ|=0.000e+00; precision max|Δ|=0.000e+00; recall max|Δ|=0.000e+00)
+
+Wall time 12.4 s on 2 worker(s).
+GATE PASSED: 5/5 entries reproduce to <= 1e-09.
+gate rc=0
+Re-running 85 mismatching entries (1000 iterations, seed 42, 2 workers)
+Wall time 179.2 s on 2 worker(s).
+  wrote results/all-bootstrap-cis.json
+  wrote results/pv/all-bootstrap-cis.json
+
+Largest F1-mean shifts (before -> after):
+  single:phase3c/track2-text/h9-E-p2/run_5                 0.453595 -> 0.425984 (-0.027611); n 1114 -> 1233
+  single:phase3c/track2-text/h9-B-v4/run_2                 0.402443 -> 0.386963 (-0.015480); n 1340 -> 1421
+  single:phase3a/track1-image/T1.0/run_26                  0.525698 -> 0.531425 (+0.005727); n 763 -> 775
+  single:phase2c/track1-image/canonical/run_1              0.574498 -> 0.580225 (+0.005726); n 712 -> 720
+  single:phase3c/track2-text/h9-E-p1/run_3                 0.485275 -> 0.480658 (-0.004617); n 1210 -> 1226
+  single:phase3a-high/track2-text/T0.3/run_19              0.488229 -> 0.484341 (-0.003888); n 1189 -> 1202
+  single:phase3c/track2-text/h9-E-p2/run_3                 0.437480 -> 0.434049 (-0.003431); n 1226 -> 1259
+  single:phase2b/track1-image/T1.3/run_3                   0.468612 -> 0.472012 (+0.003400); n 833 -> 836
+  single:phase3a/track1-image/T0.7/run_20                  0.556330 -> 0.559297 (+0.002967); n 781 -> 785
+  single:phase3a/track2-text/T0.7/run_17                   0.580688 -> 0.583602 (+0.002914); n 903 -> 906
+rerun rc=0
+Bootstrap CI source check: results/all-bootstrap-cis.json
+  entries        : 496
+  resolved       : 472
+  unresolved     : 24 (annotated 24, new 0)
+  match          : 472
+  mismatch       : 0 (annotated 0, new 0)
+
+Unresolved entries (24):
+  consensus-n30:text/5of30                                   condition label, not a file path  known=yes
+  consensus-n30:text/8of30                                   condition label, not a file path  known=yes
+  consensus-n30:image/8of30                                  condition label, not a file path  known=yes
+  consensus-n30:image/5of30                                  condition label, not a file path  known=yes
+  consensus-n30:image/10of30                                 condition label, not a file path  known=yes
+  consensus-n30:image/15of30                                 condition label, not a file path  known=yes
+  consensus-n30:image/20of30                                 condition label, not a file path  known=yes
+  consensus-n30:image/25of30                                 condition label, not a file path  known=yes
+  consensus-n30:text/25of30                                  condition label, not a file path  known=yes
+  consensus-n30:text/20of30                                  condition label, not a file path  known=yes
+  consensus-n30:text/15of30                                  condition label, not a file path  known=yes
+  consensus-n30:text/10of30                                  condition label, not a file path  known=yes
+  consensus-n30:minimal/5of30                                condition label, not a file path  known=yes
+  consensus-n30:minimal/8of30                                condition label, not a file path  known=yes
+  consensus-n30:minimal/10of30                               condition label, not a file path  known=yes
+  consensus-n30:minimal/15of30                               condition label, not a file path  known=yes
+  consensus-n30:minimal/20of30                               condition label, not a file path  known=yes
+  consensus-n30:minimal/25of30                               condition label, not a file path  known=yes
+  consensus-n30:high/8of30                                   condition label, not a file path  known=yes
+  consensus-n30:high/20of30                                  condition label, not a file path  known=yes
+  consensus-n30:high/10of30                                  condition label, not a file path  known=yes
+  consensus-n30:high/5of30                                   condition label, not a file path  known=yes
+  consensus-n30:high/25of30                                  condition label, not a file path  known=yes
+  consensus-n30:high/15of30                                  condition label, not a file path  known=yes
+
+FAIL: 24 unresolved or mismatching entries.
+check rc=1
+=== 2026-10-15T10:21:13Z DONE
