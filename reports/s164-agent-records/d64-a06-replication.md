@@ -252,8 +252,25 @@ outcome text, and the new Observation, for each of C1 and C2:
 | PARTLY | same sign; not all of p, 0.03, and floor | "same direction on three further passes but not confirmed; the check had roughly even odds of passing even if the effect were as large as first seen", with which criteria failed, and the pooled six-pass estimate as secondary |
 | FAILS | opposite sign | "not replicated: the direction reversed on three further passes" |
 
-**A-06 headline for each C1 verdict**: pending the PI's choice (recorded
-here before any pass 4–6 F1 is computed).
+**A-06 headline for each verdict (approved by the PI, 2026-10-15, before
+any pass 4–6 F1 was computed)**:
+
+- C1 REPLICATES → headline (b): "TEMPERATURE IS THE DRIVER IN TEXT; IN IMAGE
+  THE MAIN DRIVER, WITH THE REQUESTED THINKING LEVEL ALSO MATTERING AT T=0.0
+  (D64 same-day replication)".
+- C1 PARTLY or FAILS → headline (a): "TEMPERATURE IS THE DRIVER", with the
+  dated paragraph carrying the thinking result in the wording above.
+- If C2 FAILS (the image temperature effect at MEDIUM reverses), whichever
+  headline applies gains "; IN IMAGE AT MEDIUM THINKING, NOT REPLICATED".
+
+Reasons (the main session's recommendation, approved): the headline answers
+the question A-06 was registered for (temperature; thinking is not a
+registered factor in A-06); (a) stays true whatever C1 does, since
+temperature fires the rule in all four cells and explains most of each
+corner gap; a hedged headline invites misquotation; and an effect of the
+*requested* thinking level, when HIGH delivered about 1 and MEDIUM about 11
+thought tokens per request, should reach the headline only once confirmed.
+The new Observation's title follows the same mapping.
 
 ## Bottom line
 
