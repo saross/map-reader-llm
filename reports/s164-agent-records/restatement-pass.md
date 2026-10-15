@@ -168,7 +168,75 @@ order; F1 MCB set 52; tile-MCC 3,001 / 6 / 34 / 60; leaders 0.9332, 0.9289,
 
 ### 1.5 Pairwise lane: PR #37's moved artefacts (sub-agent; inventory pending)
 
-### 1.6 Uplift supplement and extended-reference lane (sub-agent; inventory pending)
+### 1.6 Uplift supplement and extended-reference lane (sub-agent, then this agent)
+
+Inventory by an Opus sub-agent (`~/scratch/s164-restate-2026-10-15/lane-uplift/`
+on sapphire); every path and count below was re-read by this agent before
+it was written here.
+
+**A. The eight 55-map extended-reference cells** (D67 (6);
+`results/55maps-extended-gt-2026-06-07/`). Generators, in order:
+`score_55maps_extended_gt_canonical.py --output-base
+results/55maps-extended-gt-2026-06-07 --workers 7` (IM-k3, T03-k3, T03-k4,
+TH7-k3, TH7-k4, TM-k3, TM-k4: each `summary.json`, `corrected-f1.csv`,
+`report_autogen.md`, and the top-level `validation-gate.json`,
+`consolidated-track2.csv`, `TRACK2-SUMMARY.md`); `score_uplift_canonical_gt.py`
+(TM-n10-k5); `adapt_track2_evals_for_manifest.py` (the eight
+`evaluation.json`; on the committed summaries it reproduces all eight
+byte for byte). Prediction: S9 § 4.3 and
+`s9-staleness-sweep-scripts/records/engine-A.json` (one reviewer-promoted
+phantom fewer at every R ≥ 50 m; F1 at 50 m, for example IM-k3 0.798699 →
+0.798780). The engine's MCC intervals have **no prediction** (the
+sub-agent saw them move at every buffer in one 10,000-resample run; the
+adapter does not carry them into `evaluation.json`).
+
+**B. The uplift supplement** (`results/uplift-supplement/`; D62 (6),
+D65 (4)), last in the pass:
+
+1. **Replay of the flatten at `741a4eaff`** (D62 (6), closing W2-5): run
+   twice by the sub-agent on that commit's code and data. `conditions.csv`,
+   `conditions-by-buffer.csv`, `strata.csv` and `transfer-pairs.csv` are
+   byte-identical across both runs, to `741a4eaff`, and to `main`;
+   `column-spec.json` differs only in `generated_at`, and
+   `notation-extension-proposal.md` and `build-report.md` only in their
+   dated banner lines (`main`'s `build-report.md` adds 13 hand-written
+   lines, the 2026-09-20 IM-k4 note). This agent re-checks the replay's
+   records before the record states it as done.
+2. **The 21 grid-common verifier-uplift twins on the origin route**
+   (D65 (4)): 19 are union twins (16 cells' unions at their condition's
+   vote threshold, and the three winner-ladder rungs), made by
+   `materialise_pairing_twin.py --union` from unions that hold only a
+   legacy `source_tile`; 2 read the registered 384/50 K = 10 consensus
+   condition, which the GS chain regenerates. No committed generator has an
+   origin mode, so a pass driver re-materialises each union twin through
+   its cell's own origin-route loader at probability 0 and vote ≥ k and
+   scores it with its committed recipe, in place (D58 Q4). Prediction: the
+   re-score's `twins.py` (16 twins) and the sub-agent's probe (the three
+   ladder twins: 0.4459 → 0.4552, 0.5436 → 0.5553, 0.5256 → 0.5367).
+3. **The pairing statistics** (`compute_verifier_uplift.py --metric F1`
+   and `--metric MCC`) on the committed 170-pair worklist (not rebuilt:
+   rebuilding would add 66 pairs, a membership change this pass does not
+   make), with the 21 verified conditions at their registered points.
+4. **The flatten, regenerated once** (`build_uplift_supplement.py`, after
+   the manifests are regenerated), with the 2026-09-20 note moved into
+   `REVISION_ENTRIES` so the build keeps it.
+
+Two findings of the inventory change what this lane can predict, and are
+reported as surprises (§ 5) rather than absorbed:
+
+- the committed pairing CSVs are stale against their own committed twin
+  evaluations (D57 (4) re-scored 33 pairing twins and 36 gap-fill cells on
+  2026-10-09 without re-running `compute_verifier_uplift.py`), so the
+  re-score's "+0.2631 median unchanged", computed by substituting into the
+  committed CSV, is not the prediction; the sub-agent's recomputation is
+  (F1 median +0.2562, range −0.0366 to +0.5232, 3 negative; tile-MCC 167 of
+  170 computed, median +0.4936, range −0.0038 to +0.8410, 1 negative);
+- the flatten's signed counts were stale before this pass (the outcome's
+  441 conditions and 79 board-frame exclusions match the 2026-09-10 build;
+  the committed artefact has 439 and 153), and today's generator adds the
+  66 conditions registered since (505 conditions, 130 strata, 153
+  excluded). It also empties `cost_usd` on 126 rows, which is not yet
+  attributed: **the flatten is not regenerated until that is attributed**.
 
 ### 1.7 Modality bridge lane (sub-agent; inventory pending)
 
