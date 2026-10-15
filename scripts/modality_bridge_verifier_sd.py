@@ -50,20 +50,35 @@ Gates (nothing is written unless every one passes)
    the floors used (SHA-256 against ``floors/gates.json``).
 3. The committed floors re-derive from the committed cell SDs (every gap and
    gap-change floor, to 1e-12), so the cells read are the cells § 7 used.
-4. Every replicate covers every union candidate (the join gate), and its
+4. Every replicate covers every union candidate (the join gate), its
    probabilities come from the repaired copy (``_repaired``), as Stage 2
-   scored replicate 1.
+   scored replicate 1, and its union rebuilds from the arm's passes row for
+   row (the origin step's gate).
+
+On the origin route (PI decision D62 (1); restatement pass, D65 (6),
+2026-10-15): every replicate's union is read as the cells were scored,
+``modality_bridge_floors.load_union_on_origin`` (each row booked on the sheet
+its members were seen on), and the ``ladder5`` rungs are clustered by
+``modality_bridge_floors.build_rung`` (members kept, each cluster on its
+origin sheet). Before, the unions kept their stored nearest-carrier tiles, so
+once the 2026-10-13 re-verified rows carried real probabilities replicate 1
+no longer reproduced the committed sets (gate 1). Those rows were
+re-verified on 2026-10-13, in all three replicates, not on the replicates'
+dates; ``meta.reverification`` (``modality_bridge_floors.reverification_record``)
+records them per leg beside ``meta.replicate_dates``.
 
 Usage::
 
     python scripts/modality_bridge_verifier_sd.py \\
+        --floors-dir results/modality-bridge-2026-10-07/floors \\
         --out-dir results/modality-bridge-2026-10-07/verifier-sd
 
-Zero API. Run on sapphire (the ``ladder5`` rungs need the arm's deduplicated
-passes, under ``<arm>/scoring/`` there; ``--scoring-root`` points elsewhere).
-``--floors-dir`` reads the floors from another directory than the committed
-``floors/`` (added 2026-10-09 for the D57 (4) re-score, so the verifier SD can
-be re-derived from floors just regenerated in scratch under the same scorer).
+Zero API. Run on sapphire (every union's origin step and the ``ladder5``
+rungs need the arms' deduplicated passes, under ``<arm>/scoring/`` there;
+``--scoring-root`` points elsewhere). ``--floors-dir`` reads the floors from
+another directory than the committed ``floors/`` (added 2026-10-09 for the
+D57 (4) re-score, so the verifier SD can be re-derived from floors just
+regenerated in scratch under the same scorer).
 
 Created: 2026-10-08
 Author: Shawn Ross, Claude Code
@@ -345,43 +360,56 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load_replicates(reps: Sequence[int] = REPS
+def load_replicates(reps: Sequence[int] = REPS, scoring_root: Path | None = None
                     ) -> tuple[dict[tuple[str, str, int], Any], dict[str, Any], list[str]]:
-    """Every leg's gated union joined to each replicate's probabilities.
+    """Every leg's gated union, on its origin sheets, joined to each replicate's probabilities.
+
+    Each union is read as ``image_b_analysis.py`` scored the cells
+    (``modality_bridge_floors.load_union_on_origin``: join gate, stored-tile
+    gate, then the rebuild from the arm's passes with every row booked on
+    the sheet its members were seen on).
 
     Args:
         reps: The replicates to load (``--gate-only`` loads replicate 1).
+        scoring_root: Root holding ``<arm>/scoring/common/<cell>/run_<N>/``
+            (default: ``modality_bridge_floors.OUTPUTS``).
 
     Returns:
         ``(unions, provenance, failures)``: per (arm, leg, rep) the gated union;
         per leg and replicate the directory, the probabilities file's SHA-256
-        and its repair record; gate 4's failures (a replicate that does not
-        cover its union).
+        and its repair and re-verification records; gate 4's failures (a
+        replicate that does not cover its union, or a union its passes do
+        not rebuild).
     """
-    from scripts import image_b_analysis as iba
     from scripts.grid_verifier_analysis import JoinGateError
-    from scripts.stride_verifier_analysis import reassign_gate
+    from scripts.lib_cluster_origins import OriginGateError
 
+    root = fl.OUTPUTS if scoring_root is None else scoring_root
     unions: dict[tuple[str, str, int], Any] = {}
     prov: dict[str, Any] = {}
     failures: list[str] = []
     for name, arm in fl.ARMS.items():
         vroot = fl.OUTPUTS / name / "verifier" / arm.cell
+        try:
+            passes = fl.load_passes(root / name / "scoring", arm.cell, arm.n_passes)
+        except FileNotFoundError as exc:
+            failures.append(f"{name}: {exc}")
+            continue
         for leg, base in arm.legs:
             for rep in reps:
                 vdir = rep_dir(base, rep)
                 key = f"{name}/{leg}/rep{rep}"
                 try:
-                    joined = iba.load_image_union(vroot, arm.union_name, vdir)
-                    u = reassign_gate(joined, fl._G["bounds"], key)
-                except (JoinGateError, FileNotFoundError) as exc:
+                    u = fl.load_union_on_origin(vroot, arm.union_name, vdir, passes,
+                                                arm.n_passes, key)
+                except (JoinGateError, OriginGateError, FileNotFoundError) as exc:
                     failures.append(f"{key}: {exc}")
                     continue
                 unions[(name, leg, rep)] = u
                 # The directory the rule actually read (lib_verify_dirs), not
                 # the name asked for: replicate 1 of the three Run B legs is
                 # asked for as ``verify_g3`` and read from its repaired copy.
-                prov[key] = {**joined.attrs["verifier_probabilities"], "n": int(len(u))}
+                prov[key] = {**u.attrs["verifier_probabilities"], "n": int(len(u))}
     return unions, prov, failures
 
 
@@ -404,6 +432,10 @@ def load_floors(floors_dir: Path) -> tuple[dict[str, Any], dict[str, Any], dict[
 
 def first_five_rung(name: str, scoring_root: Path) -> tuple[Any, np.ndarray, np.ndarray]:
     """The first-five rung of a ten-pass arm and its inheritance into the union.
+
+    The rung is ``modality_bridge_floors.build_rung`` (each cluster on its
+    origin sheet) and inherits from the replicate-1 union on origin
+    (``fl._G["union_xy"]``), as ``image_b_analysis``'s ladder does.
 
     Returns:
         ``(rung, idx, matched)`` as ``modality_bridge_floors.subset_job`` builds
@@ -681,7 +713,7 @@ def main(argv: list[str] | None = None) -> int:
     failures: list[str] = []
 
     # Gate 4 first: every replicate covers its union (join gate).
-    unions, prov, fail4 = load_replicates(reps)
+    unions, prov, fail4 = load_replicates(reps, args.scoring_root)
     gates["replicates"] = prov
     failures += fail4
     # Gate 3: the committed floors re-derive from the committed cell SDs.
@@ -735,6 +767,9 @@ def main(argv: list[str] | None = None) -> int:
     out.mkdir(parents=True, exist_ok=True)
     meta = {"script": "scripts/modality_bridge_verifier_sd.py", "replicates": list(REPS),
             "replicate_dates": {"1": "2026-10-07", "2": "2026-10-08", "3": "2026-10-08"},
+            # D65 (6): rows re-verified after the replicates ran (2026-10-13),
+            # per leg and replicate, read from the legs' own records.
+            "reverification": fl.reverification_record(prov),
             "z": fl.Z, "ci_level": CI_LEVEL, "june_g3_single_run_sd_range": JUNE_G3_RANGE,
             "scoring_root": str(args.scoring_root), "floors_dir": str(args.floors_dir),
             "wall_seconds": round(time.time() - t0, 1)}

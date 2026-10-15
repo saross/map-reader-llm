@@ -78,12 +78,40 @@ rule (``scripts/lib_verify_dirs.py``): the repaired copy by default, the
 fixed-name leg under ``MAP_READER_VERIFY_DIRS=fixed``. The other legs keep
 their explicit ``_repaired`` names, which the rule reads as named.
 
+On the origin route (PI decision D62 (1); restatement pass, D65 (6),
+2026-10-15)
+---------------------------------------------------------------------------
+``image_b_analysis.py``, which scores the cells this script gates against,
+books every union row and every ladder cluster to a carrier tile on the
+sheet its members were seen on. This script used to read each union with
+its stored (nearest-carrier-on-any-sheet) ``source_tile`` and to cluster its
+rungs as bare centroids, so near a sheet edge it booked a row to the
+neighbouring sheet. While those rows held the probability of a crop cut from
+the wrong sheet (at most 0.05) no point the cells use admitted them; the
+2026-10-13 re-verification gave them real probabilities, and the legacy
+booking then failed gate 4 (and the verifier SD's gate 1). Both steps now
+follow ``image_b_analysis.py`` exactly: each union is
+:func:`load_union_on_origin` (``load_image_union``, ``reassign_gate``, then
+``lib_cluster_origins.union_on_origin`` with the cell's prepared passes), and
+each rung is :func:`build_rung` (``cluster_votes_with_members``, then
+``points_on_origin``, the ladder's own mechanism). On the legs as run the
+change moves no set (those rows sit below every point used). The six-cell
+anchor gate keeps reading its originals as registered
+(``modality_bridge_anchors.GATE_POLICY = "fixed"``, no origin step).
+
+The re-verified rows were verified on 2026-10-13, not on the legs' dates
+(2026-10-07 and 2026-10-08). ``meta.reverification`` records it from the legs'
+own ``reverify-*.json`` records (:func:`reverification_record`): per leg read,
+the rows and cost, and per re-verification run its record and booking date.
+
 Usage::
 
-    python scripts/modality_bridge_floors.py --scoring-root /tmp/runb-floors \\
+    python scripts/modality_bridge_floors.py \\
+        --scoring-root outputs/modality-bridge-2026-10-07 \\
         --workers 20 --out-dir results/modality-bridge-2026-10-07/floors
 
-Zero API. Run on sapphire (about ten minutes on 20 workers).
+Zero API. Run on sapphire (about ten minutes on 20 workers; about 45 minutes
+on one).
 
 Created: 2026-10-08
 Author: Shawn Ross, Claude Code
@@ -640,26 +668,153 @@ def micro(counts: Mapping[str, np.ndarray]) -> float:
 def build_rung(passes: list[list[dict]]) -> Any:
     """Cluster a pass subset exactly as ``image_b_analysis``'s ladder does.
 
+    Since D62 (1) the ladder keeps each cluster's member tiles
+    (``lib_cluster_origins.cluster_votes_with_members``, whose centroids and
+    votes are ``h13_k_sensitivity.cluster_votes`` exactly) and books the
+    cluster to a carrier tile on the sheet those members were seen on
+    (``points_on_origin``), never to the nearest tile on any sheet. A cluster
+    on no tile of its own sheet keeps a null ``source_tile``, as in the
+    ladder, so the scorer leaves it unattributed.
+
     Args:
-        passes: The subset's passes, in ascending run order.
+        passes: The subset's passes, in ascending run order (each detection
+            with ``source_tiles``, as :func:`load_passes` reads them).
 
     Returns:
-        GeoDataFrame (project CRS) with ``vote_count`` and ``source_tile``;
-        no row is dropped here (the ladder drops only unmatched clusters).
+        GeoDataFrame (project CRS) with ``vote_count``, ``origin_tiles`` and
+        ``source_tile``, indexed by cluster position; no row is dropped here
+        (the ladder drops only unmatched clusters).
     """
-    import geopandas as gpd
-
     from scripts.grid_analysis import CRS
-    from scripts.h13_k_sensitivity import cluster_votes
-    from scripts.prepare_h13_scoring import assign_primary_tiles
+    from scripts.lib_cluster_origins import cluster_votes_with_members, points_on_origin
 
-    centroids, votes = cluster_votes(passes, 1)
-    gdf = gpd.GeoDataFrame(
-        {"vote_count": np.asarray(votes)},
-        geometry=gpd.points_from_xy([c[0] for c in centroids], [c[1] for c in centroids]),
-        crs=CRS)
-    gdf["source_tile"] = assign_primary_tiles(gdf, _G["bounds"])
+    centroids, votes, members = cluster_votes_with_members(passes, 1)
+    gdf, _diag = points_on_origin(
+        np.asarray(centroids), _G["bounds"], members, CRS,
+        columns={"vote_count": np.asarray(votes)}, drop_unassigned=False)
     return gdf
+
+
+def load_union_on_origin(vroot: Path, union_name: str, verify_dir: str,
+                         passes: list[list[dict]], n_passes: int, label: str) -> Any:
+    """A verified union, gated and booked on its members' sheets, as ``image_b_analysis`` reads it.
+
+    ``image_b_analysis.load_image_union`` (join-gated, read under the shared
+    leg rule), ``stride_verifier_analysis.reassign_gate`` on the stored
+    ``source_tile``, then ``lib_cluster_origins.union_on_origin``, which
+    rebuilds the union from its passes row for row and re-tiles each row on
+    its origin sheet (PI decision D62 (1)). The six-cell anchor gate does not
+    come through here: it reads its originals as registered.
+
+    Args:
+        vroot: ``<outputs root>/verifier/<cell>``.
+        union_name: Union filename under ``vroot``.
+        verify_dir: Verify-stage directory under ``vroot`` (the leg rule
+            applies).
+        passes: The prepared passes the union was built from (at least
+            ``n_passes``), in run order.
+        n_passes: How many passes the union was built from.
+        label: Name for error messages.
+
+    Returns:
+        The union with ``mound_probability``, ``origin_tiles`` and an
+        origin-sheet ``source_tile``, index = the verifier's candidate number;
+        ``attrs["verifier_probabilities"]`` the directory read.
+
+    Raises:
+        JoinGateError: If the probabilities do not join the union, or the
+            stored tiles do not reproduce.
+        OriginGateError: If the passes do not rebuild the union.
+    """
+    from scripts import image_b_analysis as iba
+    from scripts.lib_cluster_origins import union_on_origin
+    from scripts.stride_verifier_analysis import reassign_gate
+
+    joined = iba.load_image_union(vroot, union_name, verify_dir)
+    provenance = joined.attrs.get("verifier_probabilities")
+    gated = reassign_gate(joined, _G["bounds"], label)
+    out = union_on_origin(gated, passes, _G["bounds"], label=label, n_passes=n_passes)
+    out.attrs["verifier_probabilities"] = provenance
+    return out
+
+
+def _record_run(record: Mapping[str, Any], path: Path
+                ) -> tuple[str | None, str | None, str | None]:
+    """The run record, booking time and date behind one ``reverify-*.json`` record.
+
+    Args:
+        record: The parsed leg record (its ``run_dir`` names the run).
+        path: Its path; the date is read from the file name when the run
+            record is missing.
+
+    Returns:
+        ``(run record path relative to the repository, booked_at, ISO date)``;
+        each ``None`` when it cannot be read.
+
+    Examples:
+        >>> _record_run({}, Path("reverify-wrong-sheet-2026-10-13.json"))
+        (None, None, '2026-10-13')
+    """
+    import re
+
+    run_dir = record.get("run_dir")
+    run_rec = f"{run_dir}/record.json" if run_dir else None
+    booked = None
+    if run_rec and (PROJECT_ROOT / run_rec).is_file():
+        booked = json.loads((PROJECT_ROOT / run_rec).read_text()).get("booked_at")
+    if booked:
+        return run_rec, str(booked), str(booked)[:10]
+    m = re.search(r"(\d{4}-\d{2}-\d{2})", path.name)
+    return run_rec, None, (m.group(1) if m else None)
+
+
+def reverification_record(provenance: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
+    """Which rows of the legs read were re-verified after the legs ran, when, and at what cost.
+
+    PI decision D65 (6): the floors and verifier SD are re-run with the rows
+    D62 (1) step 2 re-verified, recording that those rows were re-verified on
+    2026-10-13, not on the legs' dates. Read from each leg's own
+    ``reverify-*.json`` records (the ``reverify_records`` its
+    ``lib_verify_dirs`` provenance lists), never from hard-coded counts.
+
+    Args:
+        provenance: Per leg read (any label), its
+            ``lib_verify_dirs.verify_dir_provenance`` record.
+
+    Returns:
+        ``legs`` (per leg: directory read, re-verified rows, their cost,
+        records, dates), ``runs`` (per re-verification run record: its
+        booking time and date, script and decision), and totals ``rows``,
+        ``cost_usd`` and ``dates``. A leg read as run has 0 rows.
+    """
+    legs: dict[str, Any] = {}
+    runs: dict[str, Any] = {}
+    total_rows, total_cost = 0, 0.0
+    for key, prov in provenance.items():
+        records = list((prov or {}).get("reverify_records") or [])
+        rows, cost, dates = 0, 0.0, set()
+        for rel in records:
+            path = Path(rel) if Path(rel).is_absolute() else PROJECT_ROOT / rel
+            rec = json.loads(path.read_text())
+            rec_rows = rec.get("rows", [])
+            rows += len(rec_rows)
+            cost += sum(float(r.get("cost_usd") or 0.0) for r in rec_rows)
+            run_rec, booked, date = _record_run(rec, path)
+            if date:
+                dates.add(date)
+            if run_rec is not None and run_rec not in runs:
+                runs[run_rec] = {"booked_at": booked, "date": date,
+                                 "script": rec.get("script"), "decision": rec.get("decision")}
+        total_rows += rows
+        total_cost += cost
+        legs[key] = {"dir": (prov or {}).get("dir"), "rows": rows,
+                     "cost_usd": round(cost, 6), "records": records, "dates": sorted(dates)}
+    return {
+        "note": ("rows re-verified after the legs ran (PI decision D62 (1) step 2); "
+                 "their date is the re-verification run's booking date, not the leg's"),
+        "legs": legs, "runs": runs, "rows": total_rows, "cost_usd": round(total_cost, 6),
+        "dates": sorted({d for v in legs.values() for d in v["dates"]}),
+    }
 
 
 def subset_job(job: tuple[str, tuple[int, ...]]) -> dict[str, Any]:
@@ -717,6 +872,62 @@ def subset_job(job: tuple[str, tuple[int, ...]]) -> dict[str, Any]:
 def sha256(path: Path) -> str:
     """Hex SHA-256 of a file."""
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def load_arm(name: str, arm: Arm, scoring_root: Path,
+             sets: Mapping[tuple[str, str], Any]) -> tuple[dict[str, Any], dict[str, str],
+                                                           dict[str, Any]]:
+    """One arm's worker state: passes, its legs' unions on origin, and the points to score.
+
+    Every leg's union is :func:`load_union_on_origin` with the arm's own
+    prepared passes, so the union candidates the rungs inherit from carry the
+    same origin-sheet tiles as the cells ``image_b_analysis.py`` wrote.
+
+    Args:
+        name: Arm name (a key of :data:`ARMS`).
+        arm: The arm.
+        scoring_root: Root holding ``<arm>/scoring/common/<cell>/run_<N>/``.
+        sets: The committed sets (:func:`load_committed_sets`), whose points
+            each leg is scored at.
+
+    Returns:
+        ``(state, passes_sha256, verifier_probabilities)``: the worker state
+        (``passes``, ``union_xy``, ``union_votes``, ``probs`` per leg,
+        ``points`` per leg), the SHA-256 of each pass file, and per
+        ``<arm>/<leg>`` the directory its probabilities were read from.
+    """
+    vroot = OUTPUTS / name / "verifier" / arm.cell
+    sdir = scoring_root / name / "scoring"
+    passes = load_passes(sdir, arm.cell, arm.n_passes)
+    probs: dict[str, np.ndarray] = {}
+    legs_read: dict[str, Any] = {}
+    union_ref = None
+    for leg, vdir in arm.legs:
+        u = load_union_on_origin(vroot, arm.union_name, vdir, passes, arm.n_passes,
+                                 f"{name}/{leg}")
+        legs_read[f"{name}/{leg}"] = u.attrs["verifier_probabilities"]
+        probs[leg] = u["mound_probability"].to_numpy()
+        union_ref = u
+    points: dict[str, list[tuple[float, float]]] = {}
+    for cell, (a, leg) in CELLS.items():
+        if a != name:
+            continue
+        for kind in SET_KINDS:
+            if (cell, kind) in sets:
+                p, k = sets[(cell, kind)]["point"]
+                big_k = 5 if kind == "ladder5" else arm.n_passes
+                pt = (p, k / big_k)
+                if pt not in points.setdefault(leg, []):
+                    points[leg].append(pt)
+    state = {
+        "passes": passes,
+        "union_xy": np.c_[union_ref.geometry.x.to_numpy(), union_ref.geometry.y.to_numpy()],
+        "union_votes": union_ref["vote_count"].to_numpy(),
+        "probs": probs, "points": points}
+    passes_sha = {f"run_{i}": sha256(sdir / "common" / arm.cell / f"run_{i}"
+                                     / "detections_dedup.geojson")
+                  for i in range(1, arm.n_passes + 1)}
+    return state, passes_sha, legs_read
 
 
 # --------------------------------------------------------------------------- #
@@ -838,25 +1049,33 @@ def gap_change_tests(sets: Mapping[tuple[str, str], Any]) -> dict[str, Any]:
 
 
 def original_sets() -> dict[str, Any]:
-    """Each original cell's set at its registered point (= its sweep best, gate 1).
+    """Each original cell's CURRENT set at its registered point.
+
+    Unlike the six-cell gate, which reads the originals as registered, this
+    reads each original under the shared leg rule (its re-verified rows by
+    default) and on its origin sheet (:func:`load_union_on_origin`, with the
+    original campaign's prepared passes), so the date component compares the
+    bridge with the original as it now scores. On the legs as run the
+    registered point is each original's sweep best (gate 1).
 
     Returns:
-        Per original label: counts, micro-F1, point and set size.
+        Per original label: counts, micro-F1, point, set size and
+        ``verifier_probabilities`` (the directory read).
     """
-    from scripts import image_b_analysis as iba
     from scripts.grid_verifier_analysis import verified_subset
     from scripts.modality_bridge_anchors import ORIGINAL_CELLS
-    from scripts.stride_verifier_analysis import reassign_gate
 
     out = {}
     for c in ORIGINAL_CELLS:
-        vroot = PROJECT_ROOT / c.outputs_root / "verifier" / c.cell
-        union = reassign_gate(iba.load_image_union(vroot, c.union_name, c.verify_dir),
-                              _G["bounds"], c.label)
+        root = PROJECT_ROOT / c.outputs_root
+        passes = load_passes(root / "scoring", c.cell, c.k)
+        union = load_union_on_origin(root / "verifier" / c.cell, c.union_name, c.verify_dir,
+                                     passes, c.k, c.label)
         sub = verified_subset(union, c.prob_t, c.min_votes)
         counts = counts_of(sub)
         out[c.label] = {"counts": counts, "f1": micro(counts), "registered_f1": c.f1,
-                        "point": [c.prob_t, c.min_votes], "n": int(len(sub))}
+                        "point": [c.prob_t, c.min_votes], "n": int(len(sub)),
+                        "verifier_probabilities": union.attrs.get("verifier_probabilities")}
     return out
 
 
@@ -864,9 +1083,11 @@ def date_components(sets: Mapping[tuple[str, str], Any],
                     originals: Mapping[str, Any]) -> dict[str, Any]:
     """Item 6: bridge minus original per D49 cell at the original point and the oracle.
 
-    The original's operating point is its sweep best (gate 1), so its set
-    serves both rows; the bridge contributes its set at the original's point
-    (``op``) and at its own best (``best``).
+    The original contributes its set at its registered point to both rows
+    (on the legs as run that point is its sweep best, gate 1; on re-verified
+    rows an original's own best can move, and its registered set is still
+    used); the bridge contributes its set at the original's point (``op``)
+    and at its own best (``best``).
 
     Returns:
         Per cell and point: both F1s, the difference, the tile-swap p and the
@@ -1237,42 +1458,14 @@ def main(argv: list[str] | None = None) -> int:
     dates = date_components(sets, originals)
 
     # Item 7: subset rungs (worker state first, so the pool's fork inherits it).
-    from scripts import image_b_analysis as iba
-    from scripts.stride_verifier_analysis import reassign_gate
-
     _G["arms"] = {}
     provenance: dict[str, Any] = {}
     #: Which directory each leg was read from under the shared rule.
     verifier_probabilities: dict[str, Any] = {}
     for name, arm in ARMS.items():
-        vroot = OUTPUTS / name / "verifier" / arm.cell
-        probs, union_ref = {}, None
-        for leg, vdir in arm.legs:
-            joined = iba.load_image_union(vroot, arm.union_name, vdir)
-            verifier_probabilities[f"{name}/{leg}"] = joined.attrs["verifier_probabilities"]
-            u = reassign_gate(joined, _G["bounds"], f"{name}/{leg}")
-            probs[leg] = u["mound_probability"].to_numpy()
-            union_ref = u
-        points: dict[str, list[tuple[float, float]]] = {}
-        for cell, (a, leg) in CELLS.items():
-            if a != name:
-                continue
-            for kind in SET_KINDS:
-                if (cell, kind) in sets:
-                    p, k = sets[(cell, kind)]["point"]
-                    big_k = 5 if kind == "ladder5" else arm.n_passes
-                    pt = (p, k / big_k)
-                    if pt not in points.setdefault(leg, []):
-                        points[leg].append(pt)
-        sdir = args.scoring_root / name / "scoring"
-        _G["arms"][name] = {
-            "passes": load_passes(sdir, arm.cell, arm.n_passes),
-            "union_xy": np.c_[union_ref.geometry.x.to_numpy(), union_ref.geometry.y.to_numpy()],
-            "union_votes": union_ref["vote_count"].to_numpy(),
-            "probs": probs, "points": points}
-        provenance[name] = {
-            f"run_{i}": sha256(sdir / "common" / arm.cell / f"run_{i}" / "detections_dedup.geojson")
-            for i in range(1, arm.n_passes + 1)}
+        _G["arms"][name], provenance[name], legs_read = load_arm(
+            name, arm, args.scoring_root, sets)
+        verifier_probabilities.update(legs_read)
     gates["scoring_passes_sha256"] = provenance
     gates["verifier_probabilities"] = verifier_probabilities
     rows, counts, tops = run_subsets(args.workers)
@@ -1300,9 +1493,14 @@ def main(argv: list[str] | None = None) -> int:
     # Everything gated: write.
     out = args.out_dir
     out.mkdir(parents=True, exist_ok=True)
+    # D65 (6): the legs read (the arms' and the originals') with the rows
+    # re-verified after they ran, read from their own records.
+    legs_read = {**verifier_probabilities,
+                 **{f"original/{lab}": o["verifier_probabilities"] for lab, o in originals.items()}}
     meta = {"script": "scripts/modality_bridge_floors.py",
             "scoring_root": str(args.scoring_root), "z": Z, "verifier_band": VERIFIER_BAND,
-            "inherit_tol_m": INHERIT_TOL_M, "wall_seconds": round(time.time() - t0, 1)}
+            "inherit_tol_m": INHERIT_TOL_M, "wall_seconds": round(time.time() - t0, 1),
+            "reverification": reverification_record(legs_read)}
     (out / "gates.json").write_text(json.dumps({"meta": meta, **gates}, indent=1,
                                                default=float) + "\n")
     (out / "gap_change.json").write_text(json.dumps(gap_changes, indent=1, default=float) + "\n")
