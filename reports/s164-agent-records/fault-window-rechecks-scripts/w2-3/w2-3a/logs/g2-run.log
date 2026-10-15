@@ -1,0 +1,209 @@
+
+##### 0. inputs: real copies of the four GS rasters and the 192 px tile set (2026-10-15T10:24:45Z) #####
+total 265592
+drwxrwxr-x  2 shawn shawn     4096 Oct 15 10:24 .
+drwxrwxr-x 19 shawn shawn     4096 Oct 15 10:24 ..
+-rw-rw-r--  1 shawn shawn 67984742 Dec 10  2025 K-35-052-4_32635.tif
+-rw-rw-r--  1 shawn shawn     1170 Dec 21  2025 K-35-052-4_32635.tif.aux.xml
+-rw-rw-r--  1 shawn shawn 67984742 Dec 10  2025 K-35-053-3_Elenovo.tif
+-rw-rw-r--  1 shawn shawn     1166 Dec 21  2025 K-35-053-3_Elenovo.tif.aux.xml
+-rw-rw-r--  1 shawn shawn 67984742 Dec 10  2025 K-35-062-2_Rakovski.tif
+-rw-rw-r--  1 shawn shawn     1167 Dec 21  2025 K-35-062-2_Rakovski.tif.aux.xml
+-rw-rw-r--  1 shawn shawn 67984742 Dec 10  2025 K-35-078-1_Lesovo.tif
+tiles_384_ov192: 4
+326181bcdbe93a4ed55c713d4b27c3243f332788
+
+##### 1. normalise the spend ledger from the committed metas (2026-10-15T10:24:47Z) #####
+2026-10-15 10:24:47,773 INFO Ledger rebuilt from 28 metas: US$24.8065 flex
+##### exit=0 #####
+
+##### 2. sweep, choose operating points, materialise (all 28 rungs) (2026-10-15T10:24:47Z) #####
+2026-10-15 10:24:47,808 INFO 28 rung(s) with a verifier output
+2026-10-15 10:24:47,808 INFO sweeping 56 (rung, frame) pair(s) with 2 worker(s)
+2026-10-15 10:25:02,379 INFO   swept row 3 -> sweep_2d_era2b.json
+2026-10-15 10:25:02,574 INFO   swept row 3 -> sweep_2d.json
+2026-10-15 10:25:45,555 INFO   swept row 4 -> sweep_2d.json
+2026-10-15 10:25:45,698 INFO   swept row 4 -> sweep_2d_era2b.json
+2026-10-15 10:26:03,225 INFO   swept row 9 -> sweep_2d.json
+2026-10-15 10:26:03,323 INFO   swept row 9 -> sweep_2d_era2b.json
+2026-10-15 10:26:58,084 INFO   swept row 10 -> sweep_2d.json
+2026-10-15 10:26:58,659 INFO   swept row 10 -> sweep_2d_era2b.json
+2026-10-15 10:27:15,628 INFO   swept row 1 -> sweep_2d.json
+2026-10-15 10:27:15,798 INFO   swept row 1 -> sweep_2d_era2b.json
+2026-10-15 10:28:05,459 INFO   swept row 2 -> sweep_2d_era2b.json
+2026-10-15 10:28:09,197 INFO   swept row 2 -> sweep_2d.json
+2026-10-15 10:28:23,659 INFO   swept row 5 -> sweep_2d_era2b.json
+2026-10-15 10:28:27,698 INFO   swept row 5 -> sweep_2d.json
+2026-10-15 10:29:16,096 INFO   swept row 6 -> sweep_2d_era2b.json
+2026-10-15 10:29:19,842 INFO   swept row 6 -> sweep_2d.json
+2026-10-15 10:29:35,585 INFO   swept row 7 -> sweep_2d_era2b.json
+2026-10-15 10:29:39,426 INFO   swept row 7 -> sweep_2d.json
+2026-10-15 10:30:34,415 INFO   swept row 8 -> sweep_2d_era2b.json
+2026-10-15 10:30:44,216 INFO   swept row 8 -> sweep_2d.json
+2026-10-15 10:30:59,894 INFO   swept row 11 -> sweep_2d_era2b.json
+2026-10-15 10:31:04,070 INFO   swept row 11 -> sweep_2d.json
+2026-10-15 10:32:02,220 INFO   swept row 12 -> sweep_2d_era2b.json
+2026-10-15 10:32:02,242 INFO   swept row 12 -> sweep_2d.json
+2026-10-15 10:32:22,110 INFO   swept row 13 -> sweep_2d_era2b.json
+2026-10-15 10:32:26,402 INFO   swept row 13 -> sweep_2d.json
+2026-10-15 10:33:20,836 INFO   swept row 14 -> sweep_2d_era2b.json
+2026-10-15 10:33:33,537 INFO   swept row 14 -> sweep_2d.json
+2026-10-15 10:33:45,788 INFO   swept row 15 -> sweep_2d_era2b.json
+2026-10-15 10:33:54,288 INFO   swept row 15 -> sweep_2d.json
+2026-10-15 10:34:57,808 INFO   swept row 16 -> sweep_2d_era2b.json
+2026-10-15 10:35:03,668 INFO   swept row 16 -> sweep_2d.json
+2026-10-15 10:35:29,857 INFO   swept row 17 -> sweep_2d_era2b.json
+2026-10-15 10:35:32,634 INFO   swept row 17 -> sweep_2d.json
+2026-10-15 10:36:32,623 INFO   swept row 18 -> sweep_2d_era2b.json
+2026-10-15 10:36:45,090 INFO   swept row 18 -> sweep_2d.json
+2026-10-15 10:37:02,638 INFO   swept row 19 -> sweep_2d_era2b.json
+2026-10-15 10:37:08,027 INFO   swept row 19 -> sweep_2d.json
+2026-10-15 10:38:13,326 INFO   swept row 20 -> sweep_2d_era2b.json
+2026-10-15 10:38:19,612 INFO   swept row 20 -> sweep_2d.json
+2026-10-15 10:38:40,325 INFO   swept row 21 -> sweep_2d.json
+2026-10-15 10:38:42,612 INFO   swept row 21 -> sweep_2d_era2b.json
+2026-10-15 10:39:43,005 INFO   swept row 22 -> sweep_2d.json
+2026-10-15 10:39:51,857 INFO   swept row 22 -> sweep_2d_era2b.json
+2026-10-15 10:40:13,420 INFO   swept row 23 -> sweep_2d.json
+2026-10-15 10:40:14,815 INFO   swept row 23 -> sweep_2d_era2b.json
+2026-10-15 10:41:12,039 INFO   swept row 24 -> sweep_2d_era2b.json
+2026-10-15 10:41:22,472 INFO   swept row 24 -> sweep_2d.json
+2026-10-15 10:41:34,465 INFO   swept row 25 -> sweep_2d_era2b.json
+2026-10-15 10:41:43,161 INFO   swept row 25 -> sweep_2d.json
+2026-10-15 10:42:38,012 INFO   swept row 26 -> sweep_2d_era2b.json
+2026-10-15 10:42:41,658 INFO   swept row 26 -> sweep_2d.json
+2026-10-15 10:42:59,695 INFO   swept row 27 -> sweep_2d_era2b.json
+2026-10-15 10:43:02,079 INFO   swept row 27 -> sweep_2d.json
+2026-10-15 10:44:03,721 INFO   swept row 28 -> sweep_2d.json
+2026-10-15 10:44:04,675 INFO   swept row 28 -> sweep_2d_era2b.json
+2026-10-15 10:44:04,776 INFO row  3 Gemini 3 MINIMAL text 384 px, T 0.7      K=1  opmax (1, 0.15) n=414  carried (1, 0.15) n=414  frames agree: True
+2026-10-15 10:44:04,974 INFO row  4 Gemini 3 MINIMAL text 384 px, T 0.7      K=3  opmax (2, 0.15) n=404  carried (3, 0.15) n=360  frames agree: True
+2026-10-15 10:44:05,079 WARNING row 9: 1 point(s) tie with the argmax at F1 0.8009; the tie-break (lowest vote_t, then lowest prob_t) chose (1, 0.15)
+2026-10-15 10:44:05,079 INFO row  9 Gemini 3 HIGH text 384 px, T 0.7         K=1  opmax (1, 0.15) n=464  carried (1, 0.15) n=464  frames agree: True
+2026-10-15 10:44:05,283 INFO row 10 Gemini 3 HIGH text 384 px, T 0.7         K=3  opmax (2, 0.15) n=427  carried (3, 0.15) n=369  frames agree: True
+2026-10-15 10:44:05,376 INFO row  1 Gemini 3 MINIMAL text 384 px, T 0.3      K=1  opmax (1, 0.15) n=409  carried (1, 0.15) n=409  frames agree: True
+2026-10-15 10:44:05,561 INFO row  2 Gemini 3 MINIMAL text 384 px, T 0.3      K=3  opmax (2, 0.15) n=401  carried (3, 0.15) n=364  frames agree: True
+2026-10-15 10:44:05,746 INFO row  5 Gemini 3 MINIMAL text 384 px, T 1.0      K=1  opmax (1, 0.20) n=415  carried (1, 0.15) n=423  frames agree: True
+2026-10-15 10:44:05,949 INFO row  6 Gemini 3 MINIMAL text 384 px, T 1.0      K=3  opmax (2, 0.15) n=400  carried (3, 0.15) n=338  frames agree: True
+2026-10-15 10:44:06,137 INFO row  7 Gemini 3 HIGH text 384 px, T 0.3         K=1  opmax (1, 0.20) n=443  carried (1, 0.15) n=454  frames agree: True
+2026-10-15 10:44:06,235 INFO row  8 Gemini 3 HIGH text 384 px, T 0.3         K=3  opmax (3, 0.15) n=387  carried (3, 0.15) n=387  frames agree: True
+2026-10-15 10:44:06,425 INFO row 11 Gemini 3 HIGH text 384 px, T 1.0         K=1  opmax (1, 0.20) n=451  carried (1, 0.15) n=469  frames agree: True
+2026-10-15 10:44:06,631 INFO row 12 Gemini 3 HIGH text 384 px, T 1.0         K=3  opmax (2, 0.15) n=422  carried (3, 0.15) n=346  frames agree: True
+2026-10-15 10:44:06,810 INFO row 13 Gemini 3 MINIMAL image 384 px, T 0.3     K=1  opmax (1, 0.20) n=440  carried (1, 0.15) n=456  frames agree: True
+2026-10-15 10:44:06,901 INFO row 14 Gemini 3 MINIMAL image 384 px, T 0.3     K=3  opmax (3, 0.15) n=396  carried (3, 0.15) n=396  frames agree: True
+2026-10-15 10:44:06,992 INFO row 15 Gemini 3 MINIMAL image 384 px, T 0.7     K=1  opmax (1, 0.15) n=453  carried (1, 0.15) n=453  frames agree: True
+2026-10-15 10:44:07,175 INFO row 16 Gemini 3 MINIMAL image 384 px, T 0.7     K=3  opmax (2, 0.15) n=423  carried (3, 0.15) n=344  frames agree: True
+2026-10-15 10:44:07,266 INFO row 17 Gemini 3 MINIMAL image 384 px, T 1.0     K=1  opmax (1, 0.15) n=465  carried (1, 0.15) n=465  frames agree: True
+2026-10-15 10:44:07,450 INFO row 18 Gemini 3 MINIMAL image 384 px, T 1.0     K=3  opmax (2, 0.20) n=424  carried (3, 0.15) n=329  frames agree: True
+2026-10-15 10:44:07,543 INFO row 19 Gemini 3 HIGH image 384 px, T 0.3        K=1  opmax (1, 0.15) n=469  carried (1, 0.15) n=469  frames agree: True
+2026-10-15 10:44:07,735 INFO row 20 Gemini 3 HIGH image 384 px, T 0.3        K=3  opmax (2, 0.15) n=441  carried (3, 0.15) n=342  frames agree: True
+2026-10-15 10:44:07,826 INFO row 21 Gemini 3 HIGH image 384 px, T 0.7        K=1  opmax (1, 0.15) n=474  carried (1, 0.15) n=474  frames agree: True
+2026-10-15 10:44:08,015 INFO row 22 Gemini 3 HIGH image 384 px, T 0.7        K=3  opmax (2, 0.20) n=426  carried (3, 0.15) n=303  frames agree: True
+2026-10-15 10:44:08,199 INFO row 23 Gemini 3 HIGH image 384 px, T 1.0        K=1  opmax (1, 0.20) n=490  carried (1, 0.15) n=503  frames agree: True
+2026-10-15 10:44:08,390 INFO row 24 Gemini 3 HIGH image 384 px, T 1.0        K=3  opmax (2, 0.15) n=418  carried (3, 0.15) n=281  frames agree: True
+2026-10-15 10:44:08,573 INFO row 25 Gemini 3 scale-4-optimal 487             K=1  opmax (1, 0.20) n=484  carried (1, 0.15) n=491  frames agree: True
+2026-10-15 10:44:08,766 INFO row 26 Gemini 3 scale-4-optimal 487             K=3  opmax (2, 0.15) n=412  carried (3, 0.15) n=283  frames agree: True
+2026-10-15 10:44:08,949 INFO row 27 Gemini 3.7 text, GS B geometry           K=1  opmax (1, 0.15) n=502  carried (1, 0.10) n=558  frames agree: True
+2026-10-15 10:44:09,043 INFO row 28 Gemini 3.7 text, GS B geometry           K=3  opmax (3, 0.10) n=494  carried (3, 0.10) n=494  frames agree: True
+2026-10-15 10:44:09,045 INFO 46 evaluation job(s) -> results/k-ladder-2026-09-12/phase2/score-jobs.txt ; operating points -> results/k-ladder-2026-09-12/phase2/operating-points.json
+##### exit=0 #####
+
+##### 4. collect the committed cells (2026-10-15T10:44:09Z) #####
+2026-10-15 10:44:09,109 INFO collected 28 rung(s); 0 evaluation(s) still missing -> results/k-ladder-2026-09-12/phase2/scores.json
+##### exit=0 #####
+
+##### 5. re-derive the committed rungs' carried points (2026-10-15T10:44:09Z) #####
+2026-10-15 10:44:09,162 WARNING pv-high-image-t0.3-n5: vintage verdict is 'probabilities-grew', not same-vintage — the carried point is still derived, and the verdict is recorded
+2026-10-15 10:44:09,416 INFO pv-high-image-t0.3-n5        K= 5  k=K ( 5) n= 299 | stride-shell ( 4) n= 373 | opmax (4, 0.15)
+2026-10-15 10:44:09,635 INFO pv-high-image-t0.3-n10       K=10  k=K (10) n= 256 | stride-shell ( 8) n= 352 | opmax (5, 0.15)
+2026-10-15 10:44:09,635 WARNING pv-high-image-t0.7-n5: vintage verdict is 'probabilities-grew', not same-vintage — the carried point is still derived, and the verdict is recorded
+2026-10-15 10:44:09,832 INFO pv-high-image-t0.7-n5        K= 5  k=K ( 5) n= 261 | stride-shell ( 4) n= 341 | opmax (3, 0.15)
+2026-10-15 10:44:10,054 INFO pv-high-image-t0.7-n10       K=10  k=K (10) n= 198 | stride-shell ( 8) n= 310 | opmax (7, 0.2)
+2026-10-15 10:44:10,054 WARNING pv-high-image-t1.0-n5: vintage verdict is 'probabilities-grew', not same-vintage — the carried point is still derived, and the verdict is recorded
+2026-10-15 10:44:10,262 INFO pv-high-image-t1.0-n5        K= 5  k=K ( 5) n= 231 | stride-shell ( 4) n= 316 | opmax (3, 0.15)
+2026-10-15 10:44:10,495 INFO pv-high-image-t1.0-n10       K=10  k=K (10) n= 161 | stride-shell ( 8) n= 287 | opmax (5, 0.2)
+2026-10-15 10:44:10,729 INFO pv-high-text-t0.3-n5         K= 5  k=K ( 5) n= 374 | stride-shell ( 4) n= 409 | opmax (4, 0.2)
+2026-10-15 10:44:11,044 INFO pv-high-text-t0.3-n10        K=10  k=K (10) n= 346 | stride-shell ( 8) n= 402 | opmax (8, 0.15)
+2026-10-15 10:44:11,308 INFO pv-high-text-t0.7-n5         K= 5  k=K ( 5) n= 345 | stride-shell ( 4) n= 392 | opmax (4, 0.15)
+2026-10-15 10:44:11,573 INFO pv-high-text-t0.7-n10        K=10  k=K (10) n= 311 | stride-shell ( 8) n= 378 | opmax (8, 0.2)
+2026-10-15 10:44:11,808 INFO pv-high-text-t1.0-n5         K= 5  k=K ( 5) n= 314 | stride-shell ( 4) n= 376 | opmax (3, 0.2)
+2026-10-15 10:44:12,125 INFO pv-high-text-t1.0-n10        K=10  k=K (10) n= 272 | stride-shell ( 8) n= 370 | opmax (5, 0.2)
+2026-10-15 10:44:12,312 INFO pv-min-text-t0.3-n5          K= 5  k=K ( 5) n= 354 | stride-shell ( 4) n= 378 | opmax (3, 0.15)
+2026-10-15 10:44:12,506 INFO pv-min-text-t0.3-n10         K=10  k=K (10) n= 339 | stride-shell ( 8) n= 369 | opmax (3, 0.15)
+2026-10-15 10:44:12,699 INFO pv-min-text-t0.7-n5          K= 5  k=K ( 5) n= 347 | stride-shell ( 4) n= 385 | opmax (4, 0.2)
+2026-10-15 10:44:12,901 INFO pv-min-text-t0.7-n10         K=10  k=K (10) n= 322 | stride-shell ( 8) n= 370 | opmax (6, 0.15)
+2026-10-15 10:44:13,155 INFO pv-min-text-t1.0-n5          K= 5  k=K ( 5) n= 315 | stride-shell ( 4) n= 367 | opmax (3, 0.15)
+2026-10-15 10:44:13,409 INFO pv-min-text-t1.0-n10         K=10  k=K (10) n= 283 | stride-shell ( 8) n= 363 | opmax (5, 0.15)
+2026-10-15 10:44:13,588 INFO pv-min-image-t0.3-n5         K= 5  k=K ( 5) n= 373 | stride-shell ( 4) n= 407 | opmax (4, 0.15)
+2026-10-15 10:44:13,774 INFO pv-min-image-t0.3-n10        K=10  k=K (10) n= 352 | stride-shell ( 8) n= 395 | opmax (7, 0.15)
+2026-10-15 10:44:13,967 INFO pv-min-image-t0.7-n5         K= 5  k=K ( 5) n= 318 | stride-shell ( 4) n= 375 | opmax (3, 0.15)
+2026-10-15 10:44:14,154 INFO pv-min-image-t0.7-n10        K=10  k=K (10) n= 276 | stride-shell ( 8) n= 359 | opmax (6, 0.15)
+2026-10-15 10:44:14,342 INFO pv-min-image-t1.0-n5         K= 5  k=K ( 5) n= 280 | stride-shell ( 4) n= 364 | opmax (4, 0.15)
+2026-10-15 10:44:14,540 INFO pv-min-image-t1.0-n10        K=10  k=K (10) n= 237 | stride-shell ( 8) n= 339 | opmax (6, 0.2)
+2026-10-15 10:44:14,768 INFO pv-scale4-optimal-n5         K= 5  k=K ( 5) n= 239 | stride-shell ( 4) n= 330 | opmax (3, 0.15)
+2026-10-15 10:44:14,768 WARNING pv-scale4-optimal-n10: vintage verdict is 'probabilities-grew', not same-vintage — the carried point is still derived, and the verdict is recorded
+2026-10-15 10:44:14,983 INFO pv-scale4-optimal-n10        K=10  k=K (10) n= 180 | stride-shell ( 8) n= 299 | opmax (5, 0.15)
+2026-10-15 10:44:14,984 INFO 26 carried cell(s) materialised; 52 eval job(s) -> results/k-ladder-2026-09-12/phase2/committed-carried-jobs.txt
+##### exit=0 #####
+2026-10-15 10:44:15,036 INFO collected 26 cell(s), 0 evaluation(s) missing -> results/k-ladder-2026-09-12/phase2/committed-carried/scores.json
+##### exit=0 #####
+
+##### 6. re-derive the 3.7 family's opmax rungs (2026-10-15T10:44:15Z) #####
+2026-10-15 10:44:15,156 INFO K=5 cross-check OK: (5, 0.10) reproduces 443 features
+2026-10-15 10:47:18,195 INFO K= 5  opmax (5, 0.10) sweep F1 0.9066 n=443  frames agree: True
+2026-10-15 10:53:06,949 INFO K=10  opmax (10, 0.10) sweep F1 0.9068 n=423  frames agree: True
+2026-10-15 10:53:06,949 INFO 2 eval job(s) -> results/k-ladder-2026-09-12/phase2/g37-opmax-jobs.txt
+##### exit=0 #####
+2026-10-15 10:53:06,986 INFO K= 5  F1@20 0.9066  tile-MCC 0.7651
+2026-10-15 10:53:06,986 INFO K=10  F1@20 0.9068  tile-MCC 0.7675
+2026-10-15 10:53:06,986 INFO -> results/k-ladder-2026-09-12/phase2/g37-opmax/scores.json
+##### exit=0 #####
+
+##### 6b. tile-vocabulary audit (original command of 08:44:33Z) (2026-10-15T10:53:06Z) #####
+INFO frame era2_b_intersection_bounds.geojson: 487 tile name(s)
+WARNING MISMATCH     g37-text-k1-verified-carried-p0.10-k1.geojson  22/558 matching (339 distinct unmatched tile(s), e.g. K-35-052-4_32635_x0_y1152.png, K-35-052-4_32635_x0_y1536.png, K-35-052-4_32635_x0_y192.png)
+WARNING MISMATCH     g37-text-k1-verified-opmax.geojson  21/502 matching (308 distinct unmatched tile(s), e.g. K-35-052-4_32635_x0_y1152.png, K-35-052-4_32635_x0_y1536.png, K-35-052-4_32635_x0_y192.png)
+WARNING MISMATCH     g37-text-k3-verified-opmax.geojson  20/494 matching (294 distinct unmatched tile(s), e.g. K-35-052-4_32635_x0_y1152.png, K-35-052-4_32635_x0_y1536.png, K-35-052-4_32635_x0_y192.png)
+INFO MATCH      44
+INFO MISMATCH   3
+INFO -> results/k-ladder-2026-09-12/phase2/tile-vocabulary-match.json
+##### exit=0 #####
+
+##### 7. re-extract the 28 crop manifests into the out directory (2026-10-15T10:53:07Z) #####
+1 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n1/crops exit 0
+2 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/verified-v1-n3/crops exit 0
+3 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n1/crops exit 0
+4 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/verified-v1-n3/crops exit 0
+5 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n1/crops exit 0
+6 outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/verified-v1-n3/crops exit 0
+7 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n1/crops exit 0
+8 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/verified-v1-n3/crops exit 0
+9 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n1/crops exit 0
+10 outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/verified-v1-n3/crops exit 0
+11 outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n1/crops exit 0
+12 outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/verified-v1-n3/crops exit 0
+13 outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n1/crops exit 0
+14 outputs/h11/pv-diag-384/image-n5/image-t0.3/verified-v1-n3/crops exit 0
+15 outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n1/crops exit 0
+16 outputs/h11/pv-diag-384/image-n5/image-t0.7/verified-v1-n3/crops exit 0
+17 outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n1/crops exit 0
+18 outputs/h11/pv-diag-384/image-n5/image-t1.0/verified-v1-n3/crops exit 0
+19 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n1/crops exit 0
+20 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/verified-v1-n3/crops exit 0
+21 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n1/crops exit 0
+22 outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/verified-v1-n3/crops exit 0
+23 outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n1/crops exit 0
+24 outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/verified-v1-n3/crops exit 0
+25 outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n1/crops exit 0
+26 outputs/h11/pv-diag-384/scale-4-optimal-487/verified-v1-n3/crops exit 0
+27 outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k1 exit 0
+28 outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k3 exit 0
+##### exit=0 #####
+
+##### 8. copy regenerated files to the out directory (2026-10-15T10:56:38Z) #####
+##### exit=0 #####
+   60 /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g2/regen-sweeps.txt
+  112 /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g2/regen-results.txt
+  172 total
+
+##### ALL STAGES ATTEMPTED (2026-10-15T10:56:40Z) #####

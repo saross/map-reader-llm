@@ -1,0 +1,16 @@
+start 2026-10-15T10:35:53Z head 98e54baf6 PYTHONHASHSEED=unset
+fe541d2c846d6eba20929f12741d264426809ee54f3ee30b5da0517ec9f3a92f  inputs/rasters/K-35-052-4_32635.tif
+49ed5bfb93a8739c48567613de3806ae2c141d5a027f7aca8d06046607185dab  inputs/rasters/K-35-053-3_Elenovo.tif
+fc753dc694897a3c0c08b5f703d2b3e3ff669cf9508a60fde64b21631af32a6a  inputs/rasters/K-35-062-2_Rakovski.tif
+9ba0354afd606f0f5ce183723873267edc9638cb63ab90ec667d5896b98b101a  inputs/rasters/K-35-078-1_Lesovo.tif
+2026-10-15 10:35:56,281 INFO row 1  K=1  building union from passes 1
+2026-10-15 10:35:58,285 INFO row 1  K=1  union 1826 (expected 1826, delta +0, 0.000 %)  OK
+2026-10-15 10:35:58,285 INFO row 2  K=3  building union from passes 1,2,3
+2026-10-15 10:36:03,057 INFO row 2  K=3  union 2481 (expected 2481, delta +0, 0.000 %)  OK
+2026-10-15 10:36:03,057 INFO row 3  K=5  building union from passes 1,2,3,4,5
+2026-10-15 10:36:09,733 INFO row 3  K=5  union 2932 (expected 2932, delta +0, 0.000 %)  OK
+2026-10-15 10:36:09,734 INFO 3 rung(s), 7239 candidates, US$5.0166 estimated, 0 STOP -> results/k-ladder-2026-09-12/tier-e/unions.json
+unions exit=0
+2026-10-15 10:36:10,201 INFO smoke crops: 5 extracted, 5 raster, 0 tile-fallback
+2026-10-15 10:36:10,201 INFO plan-only: not calling the API
+smoke exit=0 end 2026-10-15T10:36:10Z

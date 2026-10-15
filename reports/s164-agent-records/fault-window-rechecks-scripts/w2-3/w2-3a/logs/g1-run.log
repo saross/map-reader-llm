@@ -1,0 +1,37 @@
+HEAD is now at e3232d65b feat(k-ladder): build the 28 Phase 2 first-N unions at US$0
+HEAD is now at 19e56ed80 fix(k-ladder): rebuild the 28 unions so they carry pass_provenance
+HEAD is now at eb6d797e0 data(k-ladder): regenerate the Phase 2 unions summary
+
+##### 1. e3232d65b: full build (2026-10-15T10:27:02Z) #####
+e3232d65bcd9ed3913ffd3594e3a12749d142971
+##### exit=0 #####
+INFO  row 27  Gemini 3.7 text, GS B geometry N=1  640 candidates (expected 640, delta +0)  ~US$0.44
+INFO  row 28  tier D  Gemini 3.7 text, GS B geometry  N=3  building union
+INFO  row 28  Gemini 3.7 text, GS B geometry N=3  757 candidates (expected 757, delta +0)  ~US$0.52
+INFO  28 of 28 rungs OK; 35844 candidates; ~US$24.84; summary -> results/k-ladder-2026-09-12/phase2/unions.json
+
+##### 2. 19e56ed80: full rebuild, then --check-only, then the provenance check (2026-10-15T10:27:24Z) #####
+19e56ed80ef00af07e213652d30fa4ef3d46b475
+##### exit=0 #####
+INFO  row 27  Gemini 3.7 text, GS B geometry N=1  640 candidates (expected 640, delta +0)  ~US$0.44
+INFO  row 28  tier D  Gemini 3.7 text, GS B geometry  N=3  building union
+INFO  row 28  Gemini 3.7 text, GS B geometry N=3  757 candidates (expected 757, delta +0)  ~US$0.52
+INFO  28 of 28 rungs OK; 35844 candidates; ~US$24.84; summary -> results/k-ladder-2026-09-12/phase2/unions.json
+##### exit=0 #####
+INFO  row 27  Gemini 3.7 text, GS B geometry N=1  640 candidates (expected 640, delta +0)  ~US$0.44
+INFO  row 28  Gemini 3.7 text, GS B geometry N=3  757 candidates (expected 757, delta +0)  ~US$0.52
+INFO  28 of 28 rungs OK; 35844 candidates; ~US$24.84; summary -> results/k-ladder-2026-09-12/phase2/unions.json
+unions: 28
+##### exit=0 #####
+SUBPOOL-CONSISTENT   28
+
+Wrote results/k-ladder-2026-09-12/phase2/union-provenance.json
+
+##### 3. eb6d797e0: --check-only (2026-10-15T10:28:02Z) #####
+eb6d797e0b654cdb6367a23e47cf76af005954ed
+##### exit=0 #####
+INFO  row 27  Gemini 3.7 text, GS B geometry N=1  640 candidates (expected 640, delta +0)  ~US$0.44
+INFO  row 28  Gemini 3.7 text, GS B geometry N=3  759 candidates (expected 757, delta +2)  ~US$0.53
+INFO  28 of 28 rungs OK; 35846 candidates; ~US$24.84; summary -> results/k-ladder-2026-09-12/phase2/unions.json
+
+##### ALL STAGES ATTEMPTED (2026-10-15T10:28:03Z) #####

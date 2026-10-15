@@ -1,0 +1,27 @@
+HEAD is now at b949d5644 results(k-ladder): step 1 inventory — eight ladders, no free gaps
+HEAD is now at 3013171cd reports(k-ladder): Phase 2 costing — US$24.84 for all 28 rungs
+HEAD is now at f4a1011a8 fix(k-ladder): read each ladder at its own headline buffer
+script identity (empty = identical):
+
+##### 1. b949d5644: sub-pool coverage probe (2026-10-15T10:43:55Z) #####
+b949d56444bc559fa7352cacee85297980b03532
+##### exit=0 #####
+  outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus/consensus_t1.geojson
+  2840 vs 4638; 412 of 2840 positions agree; set-present 1805; prefix=False
+wrote results/k-ladder-2026-09-12/subpool-coverage-probe.json
+
+##### 2. 3013171cd: first-N union sizes (2026-10-15T10:43:55Z) #####
+3013171cdf017ab6a8a9e39539ddf2717b6cbcfa
+##### exit=0 #####
+INFO:   Loaded 1568 detections from run_3
+INFO: Gemini 3.7 text, GS B geometry N=3: 757 candidates (raw 4684, deduped 1914)
+wrote results/k-ladder-2026-09-12/first-n-union-sizes.json
+
+##### 3. f4a1011a8: the inventory (2026-10-15T10:44:12Z) #####
+f4a1011a87c1c53be9c2c00be12e0371ec0f4170
+##### exit=0 #####
+  Stride B (g384 ov192), 55-map [55maps_evaluation_bounds.geojson / best-available-gt-55maps.geojson] K=[1, 3, 5, 10] R1=True recipes=1
+  Stride B (g384 ov192), 55-map [no-committed-evaluation / no-reference] K=[5, 10] R1=True recipes=1
+  pv-diag-384 / scale-4-optimal-487 [era2_b_intersection_bounds.geojson / mounds-reference.geojson] K=[5, 10] R1=True recipes=1
+
+##### ALL STAGES ATTEMPTED (2026-10-15T10:44:13Z) #####

@@ -1,0 +1,108 @@
+{
+  "ignore_keys": [
+    "generated_at_utc"
+  ],
+  "ignore_lines": [
+    "^Generated 20[0-9T:+-]+ from "
+  ],
+  "today": "718d0ee08",
+  "n_files": 4,
+  "summary": {
+    "FIELD-IDENTICAL": 3,
+    "LINE-IDENTICAL": 1
+  },
+  "n_today_blob_differs": 0,
+  "files": [
+    {
+      "repo_path": "results/k-ladder-2026-09-12/subpool-coverage-probe.json",
+      "commit": "b949d5644",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-b949d5644/results/k-ladder-2026-09-12/subpool-coverage-probe.json",
+      "sha256_regen": "1c1e1b8829395264604c8a4555cb5200cdf1d8d28f1e425fa2b390a7be71ede4",
+      "sha256_committed": "cee923a450e84e358878bdda433f778c0d2748e96b44ab61c160dc7c0c9ab057",
+      "bytes_regen": 6622,
+      "bytes_committed": 6622,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/generated_at_utc",
+          "regen": "2026-10-15T10:43:55+00:00",
+          "committed": "2026-09-12T00:27:11+00:00"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "940b3d54213f951efe809bf3b3aca96c747d245a"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/first-n-union-sizes.json",
+      "commit": "3013171cd",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-3013171cd/results/k-ladder-2026-09-12/first-n-union-sizes.json",
+      "sha256_regen": "cb14a48488ed487edfdbcc7816b93aedfba2d444760429a4dbff3f3be89271d6",
+      "sha256_committed": "f27c694829e12a6b9da27b2c69ff285b6e8c1f51053b20e928067d333b7feede",
+      "bytes_regen": 11989,
+      "bytes_committed": 11989,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/generated_at_utc",
+          "regen": "2026-10-15T10:44:12+00:00",
+          "committed": "2026-09-12T00:49:33+00:00"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "5f861555e5d1af0a0410c6ea81309fc7ef6fb244"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/inventory.json",
+      "commit": "f4a1011a8",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-f4a1011a8/results/k-ladder-2026-09-12/inventory.json",
+      "sha256_regen": "072353266a74b1fba3f13b7a85b697b917e20d0021e66b794a13d6671e550fe2",
+      "sha256_committed": "94d2a600aebd020d9d626d9b4682fa30309c186012ff8955136ebac6668c5d7c",
+      "bytes_regen": 739850,
+      "bytes_committed": 739850,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/generated_at_utc",
+          "regen": "2026-10-15T10:44:13+00:00",
+          "committed": "2026-09-12T01:16:06+00:00"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "6c16698d078a2ca6038fb1d1d9c1c43a83e37cbc"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/inventory-tables.md",
+      "commit": "f4a1011a8",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-f4a1011a8/results/k-ladder-2026-09-12/inventory-tables.md",
+      "sha256_regen": "565302ae89f822b0b9d29a17d6b047c8c5771f4459c99b07899212e6801bc3f8",
+      "sha256_committed": "07b22ef0a92201b53cd6565bff877ed6107c18a1f8257e43b81be0e991a7a14a",
+      "bytes_regen": 44133,
+      "bytes_committed": 44133,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "line": 5,
+          "regen": "Generated 2026-10-15T10:44:13+00:00 from `results/conditions-manifest.json`. 187 (run, pool, verifier) groups hold at least one verified condition.",
+          "committed": "Generated 2026-09-12T01:16:06+00:00 from `results/conditions-manifest.json`. 187 (run, pool, verifier) groups hold at least one verified condition."
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "d67d36d549131cd2be8ff18a34102297546489a1"
+    }
+  ]
+}
