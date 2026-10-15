@@ -100,9 +100,13 @@ def main() -> int:
     bmin, bhigh = a_min["image_best"], a_high["image_best"]
 
     sets = {}
+    #: Which directory each cell's probabilities were read from (lib_verify_dirs).
+    verifier_probabilities = {}
     for tag, cell, best in (("min", "g384_ov192_image", bmin),
                             ("high", "g384_ov192_image_high", bhigh)):
-        u = reassign_gate(load_image_union(VBASE / cell, UNION_NAME), bounds, cell)
+        joined = load_image_union(VBASE / cell, UNION_NAME)
+        verifier_probabilities[cell] = joined.attrs["verifier_probabilities"]
+        u = reassign_gate(joined, bounds, cell)
         # D62 (1): members from the cell's ten passes, each row on its sheet.
         u = union_on_origin(u, load_cell_passes(SCORING, cell), bounds,
                             label=cell, n_passes=10)
@@ -151,6 +155,7 @@ def main() -> int:
         "hp5_cost": {"high_proposer_audited_usd": cost_high,
                      "min_proposer_audited_usd": MIN_PROPOSER_AUDITED,
                      "ratio": ratio},
+        "verifier_probabilities": verifier_probabilities,
     }
     (RES / "high/pair_verdicts.json").write_text(
         json.dumps(payload, indent=2, default=float) + "\n")

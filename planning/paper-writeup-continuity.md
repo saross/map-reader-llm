@@ -8,34 +8,34 @@ project state.
 
 ---
 
-## 🔍 S164 PROGRESS (2026-10-13/14 UTC, Opus) — ALL SEVEN PRs MERGED; RE-SCORE REPORTED ON DRAFT PR #46; PI DECISIONS PENDING
+## 🔍 S164 PROGRESS (2026-10-13/14 UTC, Opus) — MERGES DONE; D65/D66 RULED; STEPS 1–4 OF THE SEQUENCE DONE; RESTATEMENT PASS NEXT
 
-**Merged in the recorded order** (each with `main` merged in and the registry
-rebuilt, tier-1 on sapphire 0 failed, kernel bad-page count 0 before and after,
-merged tree identical to the tested head; recorded in D62 and D63): #45
-`d9866f49e`, #42 `dddfcc0af`, #41 `602593ecb`, #43 `0e8a1fa7a`, #44 into #38's
-branch `e2a424fea`, #38 `446171b97` (W2.7 § 6/§ 6b regenerated once with #44
-and #33's library: § 6 unchanged, 132 § 6b cells back to pre-D50, no quoted floor
-moves), #35 `3a5e5c453` (tier-0 regenerated on the origin route: 18 of 27 cells
-+0.0050 to +0.0162, A now edges B inside noise; H13 findings changelog
-2026-10-13). `h6-a06-decision-rule` and `h6-a09-cost-gate` are re-sign-pending.
+Rulings: `planning/pi-decisions-2026-09-20.md` D65 (#46's six questions, D62 (5)–(8), the
+execution sequence) and D66 (PR descriptions, A-06's D64 revision, more image passes). Gemini
+3.5 and 3.7 Flash are DEPRECATED (no more runs; 3.8 non-regression runs to plan later).
 
-**Step 1 re-score DONE, not published**: draft PR #46 (`rescore-repaired-gs`,
-`655d012d7`; record `reports/s164-agent-records/rescore-repaired-gs.md`, § 8 =
-the PI's six questions). Main session re-checked at source: plateau significant
-pairs committed 6 → origin-only 8 → repaired 6; post-verifier overlap at 384 px
-−0.0285 p 0.0235 → −0.0256 p 0.0541 (both repaired runs). Fails: R1b-09 /
-grid overlap reversal at 384 px; I3 on the 3.7 image carried arm; R1b-15's 30 m
-sentence; R1b-16's shelf; the grid Phase A paragraph. Surprise S9: four Era-2
-members move on today's code with no repaired row (pre-D50 evaluations).
+**Done**: the seven S163 PRs merged in order (#45 `d9866f49e` … #35 `3a5e5c453`); A-06 and A-09
+re-signed (`d064e9d57`, `2bba84ab5`); Obs 510 corrects Obs 416 (`c7b444c80`); D64 top-up of 15
+tiles (`41212b986`); sapphire housekeeping 97 % → 71 % (D65); A-07 regenerated, text approved,
+re-signed (#47 `5f6a35bce`); fault-window re-checks all reproduce (#49 `98514975b`); S9 sweep:
+only eight K-ladder cells move (#50 `c4606da85`); GS reader routing merged (#46 `77402d640`);
+D64 wave 3, image runs 4–6, US$26.08, committed (`9664f1094`), 152 tiles failed
+(`batch_api_error`, mostly MEDIUM corners).
 
-**Waiting on the PI**: #46's § 8 questions (merge the routing; publish the
-restatements and re-sign; which point a registered condition takes when its
-argmax moves; uplift twins; null-exemplar re-run; bridge floors/SD); the D64
-top-up API approval (15 tiles, `gemini-3.1-pro-preview`, real-time flex via
-`lib_batch_api.patch_failed_tiles`, about US$0.03); Obs 416's moved tier-0
-values; A-06/A-09 re-signing; D62 (5)–(8). Sapphire disk 97 % (30 GB free);
-the S164 merge worktree removed, its logs in `~/scratch/s164-merges-2026-10-13/`.
+**Open, awaiting the PI** (asked in conversation): (1) D64 wave-3 top-up mode — B, batch via a
+small new tool (recommended), or A, real-time; (2) re-check fault-window rows W2-3, W2-4, W2-7,
+W2-8 (dropped from the walkthrough summary by mistake); (3) commit the three uncommitted Gemini 3
+crop manifests; (4) a launch-pattern sentence for `docs/agent-guidance.md` (`ssh 'cd X && nohup
+… &'` blocks; use `cd X; nohup …`); (5) the 3.7 text ladder rungs on D51's clipped basis
+(recommended) or unclipped; (6) regenerate the eight extended-reference cells (recommended).
+
+**Next in the sequence**: the single restatement pass (on `main`, which now reads repaired
+legs): #46's restatements plus the eight S9 cells, the uplift supplement (twins on the origin route, the
+flatten replayed at `741a4eaff` then regenerated), the bridge floors and verifier SD, opmax cells
+moved to their new argmax, registered cells kept at their points; new wordings drafted for the
+PI; then null-exemplar (assemble defect first); then one re-signing walk-through. D64: after the
+top-up, extend draft PR #48's analysis to 6 image passes (day-effect sensitivity), redraft A-06's
+paragraph with the final numbers, findings note, and an Obs qualifying Obs 415.
 
 ---
 

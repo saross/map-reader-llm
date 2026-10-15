@@ -49,6 +49,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from scripts.lib_verify_dirs import resolve_leg, verify_dir_provenance  # noqa: E402
+
 # Legs per model: two T 0.0 replicates and one at the model's maximum.
 MODELS: dict[str, str] = {
     "g3": "gemini-3-flash-preview",
@@ -140,6 +146,29 @@ def models(out: Path) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(record, indent=2, default=str) + "\n")
     print(json.dumps(record, indent=2, default=str))
+
+
+def _leg_probs(root: Path, name: str,
+               provenance: dict[str, Any]) -> dict[str, float]:
+    """One leg's probabilities under the shared leg rule, its directory recorded.
+
+    The leg is read from ``<name>_repaired/`` when that copy holds
+    ``probabilities.json`` (D62 (1) step 2 booked the probe's wrong-sheet rows,
+    re-verified on crops from their own sheet, there), from ``<name>/``
+    otherwise, and always from ``<name>/`` under
+    ``MAP_READER_VERIFY_DIRS=fixed`` (``scripts/lib_verify_dirs.py``).
+
+    Args:
+        root: Probe root.
+        name: The leg's directory name, e.g. ``g37-t0a``.
+        provenance: Filled with ``name`` -> the directory read.
+
+    Returns:
+        :func:`_load_probs` of the directory read.
+    """
+    vdir = resolve_leg(root / name)
+    provenance[name] = verify_dir_provenance(vdir, PROJECT_ROOT)
+    return _load_probs(vdir / "probabilities.json")
 
 
 def _load_probs(path: Path) -> dict[str, float]:
@@ -240,8 +269,9 @@ def analyse(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
         seed: Bootstrap seed.
     """
     record: dict[str, Any] = {"root": str(root), "models": {}}
+    provenance: dict[str, Any] = {}
     for key, model in MODELS.items():
-        legs = {leg: _load_probs(root / f"{key}-{leg}" / "probabilities.json") for leg in LEGS}
+        legs = {leg: _leg_probs(root, f"{key}-{leg}", provenance) for leg in LEGS}
         common = sorted(set.intersection(*(set(v) for v in legs.values())))
         vec = {leg: [legs[leg][c] for c in common] for leg in LEGS}
         record["models"][model] = {
@@ -253,6 +283,7 @@ def analyse(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
             "t0b_vs_tmax": _agreement(vec["t0b"], vec["tmax"]),
             "agreement_drop": _bootstrap_drop(vec["t0a"], vec["t0b"], vec["tmax"], reps, seed),
         }
+    record["verifier_probabilities"] = provenance
     out.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record, indent=2))
 
@@ -339,7 +370,8 @@ def followup(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
         seed: Bootstrap seed.
     """
     names = (*FOLLOWUP_T0, *FOLLOWUP_TMAX)
-    legs = {leg: _load_probs(root / f"g37-{leg}" / "probabilities.json") for leg in names}
+    provenance: dict[str, Any] = {}
+    legs = {leg: _leg_probs(root, f"g37-{leg}", provenance) for leg in names}
     common = sorted(set.intersection(*(set(v) for v in legs.values())))
     vec = {leg: [legs[leg][c] for c in common] for leg in names}
 
@@ -374,6 +406,7 @@ def followup(root: Path, out: Path, reps: int = 10000, seed: int = 42) -> None:
             diffs([("tmax", "tmax2")]), diffs(t0_t0), reps, seed,
         ),
         "verdict": _followup_verdict(primary, pooled),
+        "verifier_probabilities": provenance,
     }
     out.write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record, indent=2))

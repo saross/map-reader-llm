@@ -1,0 +1,42 @@
+=== 2026-10-15T10:35:05.866762+00:00 START /home/shawn/scratch/s164-topup-2026-10-15/wt/.venv/bin/python scripts/4_detect_mounds_batch.py --config prompts/configs/library_plus-hp.json --model gemini-3.1-pro --temperature 0.0 --thinking-level high --manifest /home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.0__run_4.json --tiles-dir inputs/tiles_384 --tile-size 384 --output-dir /home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.0 --mode batch --run 4 --use-cache --skip-intent-check --allow-inert-fields --service-tier flex
+  Model 'gemini-3.1-pro' not found; resolved to 'gemini-3.1-pro-preview'
+
+[intent-check] config diff vs base (library_plus-hp):
+  (no base_config recorded, or no differing fields)
+
+[intent-check] all fields that differ from the base will reach the API payload. OK.
+Mode: BATCH API (50% cost discount)
+Config: library_plus-hp
+Model: gemini-3.1-pro-preview
+System instruction: detect_brief-text-image.md
+Tile size: 384
+Tiles dir: inputs/tiles_384
+Manifest: /home/shawn/scratch/s164-topup-2026-10-15/topup/manifests/image-high-t0.0__run_4.json
+Output: /home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.0
+  Built JSONL: 9 lines (/home/shawn/scratch/s164-topup-2026-10-15/topup/runs/image-high-t0.0/library_plus-hp/run_4/batch_working/detections_library_plus-hp_run04.jsonl)
+  Submitted batch job: batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_RUNNING
+  Polling batches/z92ypwibw2z0858t1x5j3e3g5ii1dgx9s55k: JOB_STATE_SUCCEEDED
+  Batch complete: 9 tiles, 6 detections, 0 failed, $0.0390
+  Released request file files/1m9bycfcp5gt (job terminal)
+
+Batch complete. Estimated cost: $0.0390
+Tiles processed: 9
+
+=== 2026-10-15T10:44:08.799923+00:00 END exit=0

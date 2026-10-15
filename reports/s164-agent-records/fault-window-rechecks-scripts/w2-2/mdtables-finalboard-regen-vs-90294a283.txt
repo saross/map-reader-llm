@@ -1,0 +1,12 @@
+MATCH 35 rows, ignoring ['cost']: | rank | cell | basis | tier | group | cost | point | F1@50 | 95% CI | P@50 | R@50 | t
+MATCH 23 rows, ignoring []: | run | carried F1@50 (tier) | oracle F1@50 (tier) | oracle point |
+ROWS 14 vs 22: | run | basis | cost | F1@50 (tier) | TP mounds | $/mound | frontier | marginal $/+0.01 F1 |
+DIFF  14 rows, ignoring ['cost']: | run | basis | cost | F1@50 (tier) | TP mounds | $/mound | frontier | marginal $/+0.0
+ONLY IN B: | cell | basis | point | F1@50 | 95% CI | P@50 | R@50 | tile-MCC | 95% CI | n |
+ONLY IN B: | Cell | Cost before | Cost after |
+ONLY IN B: | Frontier | Members, cheapest first |
+ONLY IN B: | Family | Before (US$) | After (US$) | Why |
+ONLY IN B: | | before (2026-09-20) | after (2026-09-21) |
+ONLY IN B: | family | superseded point | its F1@50 | its tile-MCC | carried-k point | its F1@50 | its tile-MCC 
+ONLY IN B: | family | F1 oracle | its F1@50 | MCC oracle | its F1@50 | its tile-MCC |
+ONLY IN B: | rung | before (image carried − text **oracle**) | after (carried − carried), arm 2 | after, arm 1 

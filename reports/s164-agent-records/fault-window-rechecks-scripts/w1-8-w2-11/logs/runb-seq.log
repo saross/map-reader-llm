@@ -1,0 +1,84 @@
+=== 2026-10-14T00:49:55+00:00 ARM g3-image union@92b151058 check@fd07fd61b
+=== 2026-10-14T00:50:39+00:00 ARM g3-text-temp1 union@92b151058 check@fd07fd61b
+=== 2026-10-14T00:51:18+00:00 ARM g3-image-temp1 union@92b151058 check@fd07fd61b
+=== 2026-10-14T00:51:47+00:00 ARM g37-text union@2718be084 check@2718be084
+=== 2026-10-14T00:51:59+00:00 ARM g37-image-cache union@60aceebdd check@a3ea389c2
+=== 2026-10-14T00:52:10+00:00 ARM g37-image union@987718a66 check@987718a66
+=== 2026-10-14T00:52:20+00:00 REPARSE g3-text:g3 code@fd07fd61b added@2b6edde9a
+HEAD fd07fd61b
+outputs/modality-bridge-2026-10-07/g3-text/verifier/detect_brief-text/verify_g3: probs IDENTICAL; meta fields EQUAL; 3258/3258 matched; cost 2.230242
+=== 2026-10-14T00:52:21+00:00 REPARSE g3-image:g3 code@fd07fd61b added@2b6edde9a
+HEAD fd07fd61b
+outputs/modality-bridge-2026-10-07/g3-image/verifier/detect_brief-text-image/verify_g3: probs IDENTICAL; meta fields EQUAL; 3456/3456 matched; cost 2.382897
+=== 2026-10-14T00:52:22+00:00 REPARSE g3-text-temp1:g3 code@fd07fd61b added@2b6edde9a
+HEAD fd07fd61b
+outputs/modality-bridge-2026-10-07/g3-text-temp1/verifier/detect_brief-text/verify_g3: probs IDENTICAL; meta fields EQUAL; 3179/3179 matched; cost 2.178572
+=== 2026-10-14T00:52:23+00:00 REPARSE g3-image-temp1:g3 code@fd07fd61b added@2b6edde9a
+HEAD fd07fd61b
+Failed to parse verifier result for candidate_02479: Extra data: line 7 column 1 (char 606)
+outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3: probs IDENTICAL; meta fields EQUAL; 3085/3085 matched; cost 2.126989
+=== 2026-10-14T00:52:24+00:00 REPARSE g37-text:g3 code@2718be084 added@a3ea389c2
+HEAD 2718be084
+outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g3: probs IDENTICAL; meta fields EQUAL; 789/789 matched; cost 0.554118
+=== 2026-10-14T00:52:25+00:00 REPARSE g37-text:g37 code@2718be084 added@a3ea389c2
+HEAD 2718be084
+outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g37: probs IDENTICAL; meta fields EQUAL; 789/789 matched; cost 0.870228
+=== 2026-10-14T00:52:25+00:00 REPARSE g37-image-cache:g3 code@60aceebdd added@94be8b01a
+HEAD 60aceebdd
+outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g3: probs IDENTICAL; meta fields EQUAL; 644/644 matched; cost 0.456671
+=== 2026-10-14T00:52:26+00:00 REPARSE g37-image-cache:g37 code@a3ea389c2 added@94be8b01a
+HEAD a3ea389c2
+outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g37: probs IDENTICAL; meta fields EQUAL; 644/644 matched; cost 0.701561
+=== 2026-10-14T00:52:26+00:00 REPARSE g37-image:g3 code@987718a66 added@69eb32132
+HEAD 987718a66
+outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g3: probs IDENTICAL; meta fields EQUAL; 661/661 matched; cost 0.468388
+=== 2026-10-14T00:52:27+00:00 REPARSE g37-image:g37 code@987718a66 added@69eb32132
+HEAD 987718a66
+outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g37: probs IDENTICAL; meta fields EQUAL; 661/661 matched; cost 0.722376
+=== 2026-10-14T00:52:28+00:00 REPAIR g3-image-temp1:g3 at@2b6edde9a
+HEAD 2b6edde9a
+outputs/modality-bridge-2026-10-07/g3-image-temp1/verifier/detect_brief-text-image/verify_g3: 1 PARSE_ERROR row(s); 1 recovered, 0 not
+    candidate_02479: 0.0 -> 0.0
+=== 2026-10-14T00:52:28+00:00 REPAIR g37-text:g3 at@3c155685a
+HEAD 3c155685a
+outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g3: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:29+00:00 REPAIR g37-text:g37 at@3c155685a
+HEAD 3c155685a
+outputs/modality-bridge-2026-10-07/g37-text/verifier/detect_brief-text/verify_g37: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:30+00:00 REPAIR g37-image-cache:g3 at@94be8b01a
+HEAD 94be8b01a
+outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g3: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:30+00:00 REPAIR g37-image-cache:g37 at@94be8b01a
+HEAD 94be8b01a
+outputs/modality-bridge-2026-10-07/g37-image-cache/verifier/detect_brief-text-image/verify_g37: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:31+00:00 REPAIR g37-image:g3 at@69eb32132
+HEAD 69eb32132
+outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g3: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:31+00:00 REPAIR g37-image:g37 at@69eb32132
+HEAD 69eb32132
+outputs/modality-bridge-2026-10-07/g37-image/verifier/detect_brief-text-image/verify_g37: 0 PARSE_ERROR row(s); 0 recovered, 0 not
+=== 2026-10-14T00:52:32+00:00 REMERGE g37-image at 987718a66
+HEAD 987718a66
+outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image/run_1: 3 chunks; geojson IDENTICAL, meta.json IDENTICAL, tiles.json IDENTICAL
+outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image/run_2: 3 chunks; geojson IDENTICAL, meta.json IDENTICAL, tiles.json IDENTICAL
+outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image/run_3: 3 chunks; geojson IDENTICAL, meta.json IDENTICAL, tiles.json IDENTICAL
+outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image/run_4: 3 chunks; geojson IDENTICAL, meta.json IDENTICAL, tiles.json IDENTICAL
+outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image/run_5: 3 chunks; geojson IDENTICAL, meta.json IDENTICAL, tiles.json IDENTICAL
+=== 2026-10-14T00:52:33+00:00 VALIDATE-CHAIN at 2cff16c91
+HEAD 2cff16c91
+validate rc=0
+=== 2026-10-14T00:53:13+00:00 COST AUDITS at 69eb32132
+HEAD 69eb32132
+stage1 g3-text roots=outputs/modality-bridge-2026-10-07/g3-text/detect_brief-text outputs/modality-bridge-2026-10-07/g3-text/recovery_rd1/detect_brief-text rc=0
+stage1 g3-image roots=outputs/modality-bridge-2026-10-07/g3-image/detect_brief-text-image rc=0
+stage1 g37-text roots=outputs/modality-bridge-2026-10-07/g37-text/detect_brief-text rc=0
+stage1 g37-image roots=outputs/modality-bridge-2026-10-07/g37-image/detect_brief-text-image rc=0
+stage1 g37-image-cache roots=outputs/modality-bridge-2026-10-07/g37-image-cache/detect_brief-text-image rc=0
+stage1 g3-text-temp1 roots=outputs/modality-bridge-2026-10-07/g3-text-temp1/detect_brief-text outputs/modality-bridge-2026-10-07/g3-text-temp1/recovery_rd1/detect_brief-text rc=0
+stage1 g3-image-temp1 roots=outputs/modality-bridge-2026-10-07/g3-image-temp1/detect_brief-text-image rc=0
+stage2 rc=0
+=== 2026-10-14T00:53:15+00:00 ANCHOR GATE at 2b6edde9a
+HEAD 2b6edde9a
+anchor rc=0
+HEAD 69eb32132
+=== 2026-10-14T00:58:36+00:00 SEQUENCE DONE

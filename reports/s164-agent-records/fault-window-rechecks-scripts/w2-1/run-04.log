@@ -1,0 +1,17 @@
+start 2026-10-14T01:04:11Z HEAD 0569b0d2f3fec17a97939ab7246790ea1ee81e1c
+2026-10-14 01:04:12,278 - INFO - agreement: 5826/9173 identical (63.5 %), 226 flips at 0.90 (2.46 %), 186 |dp| > 0.5
+2026-10-14 01:04:12,278 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/agreement.json
+agree done 2026-10-14T01:04:12Z
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:04:14,443 - INFO - IMG-ARM2-K5-replicate: 9173 candidates
+2026-10-14 01:04:14,449 - INFO - sweeping 130 points (2 workers)
+2026-10-14 01:10:15,098 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/sweep_IMG-ARM2-K5-replicate.csv (130 points)
+2026-10-14 01:10:15,143 - INFO - Created 5,202 records
+2026-10-14 01:10:15,144 - INFO - IMG-ARM2-K5-carried-replicate      n= 5202 -> results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-carried-replicate/detections.geojson
+2026-10-14 01:10:15,175 - INFO - Created 5,184 records
+2026-10-14 01:10:15,176 - INFO - IMG-ARM2-K5-f1-oracle-replicate    n= 5184 -> results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/cells/IMG-ARM2-K5-f1-oracle-replicate/detections.geojson
+2026-10-14 01:10:15,176 - INFO - carried  F1 0.9278 MCC 0.7655 at (0.90, k5), n=5202
+2026-10-14 01:10:15,176 - INFO - F1 oracle 0.9290 at (0.95, k5) | MCC oracle 0.7674 at (0.95, k5)
+materialise done 2026-10-14T01:10:15Z
+?? results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/replicate_k5_arm2.py
+end 2026-10-14T01:10:15Z

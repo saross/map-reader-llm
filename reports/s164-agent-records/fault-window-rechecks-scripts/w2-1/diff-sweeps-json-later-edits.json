@@ -1,0 +1,27 @@
+{
+  "path": "results/gemini37-image-55map-2026-09-13/sweeps.json",
+  "transitions": [
+    {
+      "from": "8d800f2d6",
+      "to": "4a8d157cb",
+      "leaves_added": 78,
+      "leaves_removed": 0,
+      "leaves_changed": 12,
+      "equal_under_rename": false,
+      "rename": {
+        "mcc_oracle": "mcc_argmax_at_carried_k"
+      }
+    },
+    {
+      "from": "4a8d157cb",
+      "to": "1bbba2e21",
+      "leaves_added": 78,
+      "leaves_removed": 78,
+      "leaves_changed": 0,
+      "equal_under_rename": true,
+      "rename": {
+        "mcc_oracle": "mcc_argmax_at_carried_k"
+      }
+    }
+  ]
+}

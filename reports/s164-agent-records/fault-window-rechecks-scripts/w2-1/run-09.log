@@ -1,0 +1,26 @@
+56c56
+< PROJECT_ROOT = Path("/home/shawn/Code/map-reader-llm")
+---
+> PROJECT_ROOT = Path(__file__).resolve().parents[3]
+start 2026-10-14T01:53:49Z HEAD 7351bcce82fdc947b02834fcbd04b97ac59ba5f6
+seed found: 202
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-14 01:53:57,425 - INFO - loaded IMG-ARM2-K5-f1-oracle              n= 5197
+2026-10-14 01:54:02,013 - INFO - loaded IMG-ARM2-K5-f1-oracle-replicate    n= 5184
+2026-10-14 01:54:06,593 - INFO - loaded IMG-ARM2-K5-carried                n= 5219
+2026-10-14 01:54:11,182 - INFO - loaded IMG-ARM2-K5-carried-replicate      n= 5202
+2026-10-14 01:54:15,846 - INFO - loaded IMG-ARM2-K3-carried                n= 5357
+2026-10-14 01:54:26,903 - INFO - F1  (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.9278 vs 0.9270 d=+0.0008 p=0.4015
+2026-10-14 01:54:26,903 - INFO - F1  (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.9278 vs 0.9199 d=+0.0079 p=0.0000
+2026-10-14 01:54:26,903 - INFO - F1  (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.9270 vs 0.9199 d=+0.0071 p=0.0000
+2026-10-14 01:54:26,903 - INFO - F1  (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.9290 vs 0.9280 d=+0.0010 p=0.2861
+2026-10-14 01:54:26,903 - INFO - MCC (a) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K5-carried                0.7655 vs 0.7659 d=-0.0005 p=0.8225
+2026-10-14 01:54:26,903 - INFO - MCC (b) IMG-ARM2-K5-carried-replicate      vs IMG-ARM2-K3-carried                0.7655 vs 0.7648 d=+0.0007 p=0.7459
+2026-10-14 01:54:26,903 - INFO - MCC (c) IMG-ARM2-K5-carried                vs IMG-ARM2-K3-carried                0.7659 vs 0.7648 d=+0.0012 p=0.6141
+2026-10-14 01:54:26,903 - INFO - MCC (d) IMG-ARM2-K5-f1-oracle-replicate    vs IMG-ARM2-K5-f1-oracle              0.7674 vs 0.7681 d=-0.0007 p=0.7100
+2026-10-14 01:54:26,903 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+3df0eb54881b618249eb82b514a964abb8ab3332eb134788708fc76c63350723  results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+3df0eb54881b618249eb82b514a964abb8ab3332eb134788708fc76c63350723  -
+BYTE-IDENTICAL   7351bcce8 results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+BYTE-IDENTICAL   90294a283 results/gemini37-image-55map-2026-09-13/replicate-k5-arm2-batch-2026-09-20/tests.json
+end 2026-10-14T01:54:27Z

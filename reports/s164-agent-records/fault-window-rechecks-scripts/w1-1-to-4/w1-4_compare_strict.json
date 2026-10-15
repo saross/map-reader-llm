@@ -1,0 +1,497 @@
+{
+ "ignored_keys": [
+  "dir",
+  "elapsed_seconds",
+  "manifest_file",
+  "probabilities_file",
+  "total_elapsed_seconds",
+  "workers"
+ ],
+ "unordered_lists": [
+  "comparisons"
+ ],
+ "files": [
+  {
+   "label": "cb:b17-minimal-resweep-threshold-sweep",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/b17-minimal-resweep-threshold-sweep.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/b17-minimal-resweep-threshold-sweep.json",
+   "sha256_regenerated": "d3fc1eff7cb820ac6a7827afda179b73a29c5b81f0698eccea302bfa339d8606",
+   "sha256_committed": "6c9de66e3309d5770e350de4f19f85b0c275eb689f080a280cc14cd54dd53450",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 318,
+   "n_leaves_regenerated": 318,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 2,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    ],
+    [
+     "probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json"
+    ]
+   ]
+  },
+  {
+   "label": "cb:b17-text-as-is-comparison",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/b17-text-as-is-comparison.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/b17-text-as-is-comparison.json",
+   "sha256_regenerated": "c7bce7e9a57ea02b043451e8b6c9a671dcc92ada13c0140cc9d7ff5fc7cd4703",
+   "sha256_committed": "f10f46431633fe6bd55caef18bb80a754fc3f66749764a4b759fbef8a766c9f1",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 58,
+   "n_leaves_regenerated": 58,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 6,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "variants/[0]/dir",
+     "/tmp/regen-b/h11-384-pv-diagnostic/pro-text-flash-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/h11-384-pv-diagnostic/pro-text-flash-verifier"
+    ],
+    [
+     "variants/[0]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[0]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json"
+    ],
+    [
+     "variants/[1]/dir",
+     "/tmp/regen-b/h11-384-pv-diagnostic/pro-text-pro-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/h11-384-pv-diagnostic/pro-text-pro-verifier"
+    ],
+    [
+     "variants/[1]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[1]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json"
+    ]
+   ]
+  },
+  {
+   "label": "cb:b17-text-resweep-comparison",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/b17-text-resweep-comparison.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/b17-text-resweep-comparison.json",
+   "sha256_regenerated": "81d98f3eec8d1e0344b72ecdef41c4fef0a5ae2dd0d90460da2e5ef5f0a1cfbb",
+   "sha256_committed": "8b2e1418608714d41e49ae279f89365d76bc107e1c05c696aa78dd096b3075d5",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 58,
+   "n_leaves_regenerated": 58,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 6,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "variants/[0]/dir",
+     "/tmp/regen-b/resweep/pro-text-flash-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/resweep/pro-text-flash-verifier"
+    ],
+    [
+     "variants/[0]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[0]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-text-minimal-verifier/probabilities.json"
+    ],
+    [
+     "variants/[1]/dir",
+     "/tmp/regen-b/resweep/pro-text-pro-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/resweep/pro-text-pro-verifier"
+    ],
+    [
+     "variants/[1]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-text-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[1]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-text-medium-verifier/probabilities.json"
+    ]
+   ]
+  },
+  {
+   "label": "cb:b18-image-as-is-comparison",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/b18-image-as-is-comparison.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/b18-image-as-is-comparison.json",
+   "sha256_regenerated": "00f9fc7b11e121fa89f75ec3b8261de4faf0e983c7470bbcaa2cf779f0d29dd0",
+   "sha256_committed": "a0558364f2862bbb72b9a87bb91cee83e86871e63fdc0bfec0114143ef18af52",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 58,
+   "n_leaves_regenerated": 58,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 6,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "variants/[0]/dir",
+     "/tmp/regen-b/h11-384-pv-diagnostic/pro-image-flash-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/h11-384-pv-diagnostic/pro-image-flash-verifier"
+    ],
+    [
+     "variants/[0]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[0]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-image-minimal-verifier/probabilities.json"
+    ],
+    [
+     "variants/[1]/dir",
+     "/tmp/regen-b/h11-384-pv-diagnostic/pro-image-pro-verifier",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-out/w1-4/regen-b/h11-384-pv-diagnostic/pro-image-pro-verifier"
+    ],
+    [
+     "variants/[1]/manifest_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/crops/pro-medium-image-baseline/candidate_manifest.json"
+    ],
+    [
+     "variants/[1]/probabilities_file",
+     "/home/shawn/Code/map-reader-llm/outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json",
+     "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/outputs/h11/pv-diag-384/verified/pro-image-medium-verifier/probabilities.json"
+    ]
+   ]
+  },
+  {
+   "label": "cb:pairwise-effect-sizes-v1-inputs",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/pairwise-effect-sizes-v1-inputs.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/pairwise-effect-sizes-v1-inputs.json",
+   "sha256_regenerated": "b4b558d8fe4c333fa4c8997d0cce1a612080526ec9a05b99a6e86a3532461fa7",
+   "sha256_committed": "712b65494a559785669deeacfebbe0a18719a9f5e8ef28c5b24d1ee69801f06c",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 1721,
+   "n_leaves_regenerated": 1721,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 54,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "comparisons/A:pv-01-adversarial-text_vs_proposer-text-t0.0/elapsed_seconds",
+     22.5,
+     10.6
+    ],
+    [
+     "comparisons/A:pv-02-canonical-last_vs_proposer-canonical-last/elapsed_seconds",
+     22.9,
+     13.8
+    ],
+    [
+     "comparisons/A:pv-03-high-text-t0.3_vs_proposer-high-t0.3/elapsed_seconds",
+     23.1,
+     15.2
+    ],
+    [
+     "comparisons/A:pv-04-rep-high_vs_proposer-rep-high/elapsed_seconds",
+     22.6,
+     11.0
+    ],
+    [
+     "comparisons/A:pv-05-image-terse_vs_proposer-image-terse/elapsed_seconds",
+     22.9,
+     10.4
+    ],
+    [
+     "comparisons/A:pv-06-text-1of10_vs_consensus-text-1of10/elapsed_seconds",
+     23.9,
+     11.0
+    ],
+    [
+     "comparisons/A:pv-07-text-2of10_vs_consensus-text-2of10/elapsed_seconds",
+     23.5,
+     10.9
+    ],
+    [
+     "comparisons/A:pv-08-text-3of10_vs_consensus-text-3of10/elapsed_seconds",
+     22.2,
+     10.1
+    ],
+    [
+     "comparisons/A:pv-09-text-5of10_vs_consensus-text-5of10/elapsed_seconds",
+     20.7,
+     11.9
+    ],
+    [
+     "comparisons/A:pv-10-image-1of10_vs_consensus-image-1of10/elapsed_seconds",
+     23.2,
+     11.3
+    ],
+    [
+     "comparisons/A:pv-11-image-2of10_vs_consensus-image-2of10/elapsed_seconds",
+     23.3,
+     10.7
+    ],
+    [
+     "comparisons/A:pv-12-image-3of10_vs_consensus-image-3of10/elapsed_seconds",
+     21.4,
+     10.0
+    ],
+    [
+     "comparisons/A:pv-13-image-5of10_vs_consensus-image-5of10/elapsed_seconds",
+     21.0,
+     9.8
+    ],
+    [
+     "comparisons/A:pv-14-rep-min-1of10_vs_consensus-rep-min-1of10/elapsed_seconds",
+     22.7,
+     10.9
+    ],
+    [
+     "comparisons/A:pv-15-text-t0.7_vs_proposer-text-t0.7/elapsed_seconds",
+     21.4,
+     10.0
+    ],
+    [
+     "comparisons/A:pv-16-text-t1.0_vs_proposer-text-t1.0/elapsed_seconds",
+     21.2,
+     10.4
+    ],
+    [
+     "comparisons/A:pv-17-image-t0.0_vs_proposer-image-t0.0/elapsed_seconds",
+     20.3,
+     12.1
+    ],
+    [
+     "comparisons/A:pv-18-high-text-t0.7_vs_proposer-high-t0.7/elapsed_seconds",
+     20.9,
+     10.7
+    ],
+    [
+     "comparisons/A:pv-19-brief-text_vs_proposer-brief-text/elapsed_seconds",
+     21.0,
+     10.0
+    ],
+    [
+     "comparisons/A:pv-20-image-t0.7-n1_vs_proposer-image-t0.7/elapsed_seconds",
+     20.3,
+     10.3
+    ],
+    [
+     "comparisons/A:pv-21-text-25of30_vs_consensus-text-25of30/elapsed_seconds",
+     19.0,
+     9.7
+    ],
+    [
+     "comparisons/A:pv-22-text-1of30_vs_consensus-text-1of30/elapsed_seconds",
+     21.2,
+     11.4
+    ],
+    [
+     "comparisons/A:pv-23-image-20of30_vs_consensus-image-20of30/elapsed_seconds",
+     19.0,
+     9.6
+    ],
+    [
+     "comparisons/A:pv-24-image-1of30_vs_consensus-image-1of30/elapsed_seconds",
+     24.7,
+     12.3
+    ],
+    [
+     "comparisons/A:pv-25-high-20of30_vs_consensus-high-20of30/elapsed_seconds",
+     19.8,
+     9.7
+    ]
+   ]
+  },
+  {
+   "label": "cb:pairwise-effect-sizes-v2",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/pairwise-effect-sizes-v2.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/pairwise-effect-sizes-v2.json",
+   "sha256_regenerated": "8cb8b0caf45d67b03c53b0ded7a1717735fbd90b0c8cd29656f41963738e3f54",
+   "sha256_committed": "9ac28f172af69dcdb7906e08987b1d8e87cb3134a766ad60c0ef9c469c39da1c",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 1721,
+   "n_leaves_regenerated": 1721,
+   "equal_ignoring_key_order": false,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 54,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": [
+    [
+     "comparisons/A:pv-01-adversarial-text_vs_proposer-text-t0.0/elapsed_seconds",
+     21.3,
+     10.0
+    ],
+    [
+     "comparisons/A:pv-02-canonical-last_vs_proposer-canonical-last/elapsed_seconds",
+     20.8,
+     10.0
+    ],
+    [
+     "comparisons/A:pv-03-high-text-t0.3_vs_proposer-high-t0.3/elapsed_seconds",
+     22.9,
+     10.3
+    ],
+    [
+     "comparisons/A:pv-04-rep-high_vs_proposer-rep-high/elapsed_seconds",
+     21.5,
+     10.3
+    ],
+    [
+     "comparisons/A:pv-05-image-terse_vs_proposer-image-terse/elapsed_seconds",
+     20.6,
+     10.5
+    ],
+    [
+     "comparisons/A:pv-06-text-1of10_vs_consensus-text-1of10/elapsed_seconds",
+     22.8,
+     10.4
+    ],
+    [
+     "comparisons/A:pv-07-text-2of10_vs_consensus-text-2of10/elapsed_seconds",
+     22.7,
+     9.9
+    ],
+    [
+     "comparisons/A:pv-08-text-3of10_vs_consensus-text-3of10/elapsed_seconds",
+     23.1,
+     10.2
+    ],
+    [
+     "comparisons/A:pv-09-text-5of10_vs_consensus-text-5of10/elapsed_seconds",
+     20.2,
+     9.6
+    ],
+    [
+     "comparisons/A:pv-10-image-1of10_vs_consensus-image-1of10/elapsed_seconds",
+     22.0,
+     10.9
+    ],
+    [
+     "comparisons/A:pv-11-image-2of10_vs_consensus-image-2of10/elapsed_seconds",
+     20.6,
+     10.3
+    ],
+    [
+     "comparisons/A:pv-12-image-3of10_vs_consensus-image-3of10/elapsed_seconds",
+     21.9,
+     10.3
+    ],
+    [
+     "comparisons/A:pv-13-image-5of10_vs_consensus-image-5of10/elapsed_seconds",
+     21.3,
+     9.8
+    ],
+    [
+     "comparisons/A:pv-14-rep-min-1of10_vs_consensus-rep-min-1of10/elapsed_seconds",
+     21.4,
+     11.4
+    ],
+    [
+     "comparisons/A:pv-15-text-t0.7_vs_proposer-text-t0.7/elapsed_seconds",
+     21.9,
+     9.9
+    ],
+    [
+     "comparisons/A:pv-16-text-t1.0_vs_proposer-text-t1.0/elapsed_seconds",
+     20.9,
+     11.1
+    ],
+    [
+     "comparisons/A:pv-17-image-t0.0_vs_proposer-image-t0.0/elapsed_seconds",
+     19.5,
+     9.9
+    ],
+    [
+     "comparisons/A:pv-18-high-text-t0.7_vs_proposer-high-t0.7/elapsed_seconds",
+     19.8,
+     10.8
+    ],
+    [
+     "comparisons/A:pv-19-brief-text_vs_proposer-brief-text/elapsed_seconds",
+     18.8,
+     9.9
+    ],
+    [
+     "comparisons/A:pv-20-image-t0.7-n1_vs_proposer-image-t0.7/elapsed_seconds",
+     18.8,
+     10.6
+    ],
+    [
+     "comparisons/A:pv-21-text-25of30_vs_consensus-text-25of30/elapsed_seconds",
+     19.7,
+     9.6
+    ],
+    [
+     "comparisons/A:pv-22-text-1of30_vs_consensus-text-1of30/elapsed_seconds",
+     22.2,
+     11.6
+    ],
+    [
+     "comparisons/A:pv-23-image-20of30_vs_consensus-image-20of30/elapsed_seconds",
+     19.3,
+     9.6
+    ],
+    [
+     "comparisons/A:pv-24-image-1of30_vs_consensus-image-1of30/elapsed_seconds",
+     23.0,
+     12.2
+    ],
+    [
+     "comparisons/A:pv-25-high-20of30_vs_consensus-high-20of30/elapsed_seconds",
+     18.4,
+     9.6
+    ]
+   ]
+  },
+  {
+   "label": "cb:phase3a-high-text-pairwise",
+   "local": "/home/shawn/scratch/s164-fw-recheck-2026-10-14/w1-1-to-4-7121c969f/results/d42-retest-2026-10-05/class-b/phase3a-high-text-pairwise.json",
+   "committed": "e7b32de0b:results/d42-retest-2026-10-05/class-b/phase3a-high-text-pairwise.json",
+   "sha256_regenerated": "f037382a3d5545c3a9ec9ee42a2859043b4dae1290c8c38575c95751ec24c32f",
+   "sha256_committed": "d1e325153a5cff1156b0e47e82730dd7fbc9d7cc4ab6af6e576289677d48e386",
+   "byte_identical": false,
+   "today_equals_generating_commit": true,
+   "json": true,
+   "n_leaves_committed": 313,
+   "n_leaves_regenerated": 313,
+   "equal_ignoring_key_order": true,
+   "n_differing_leaves": 0,
+   "n_ignored_differing_leaves": 0,
+   "max_abs_numeric_diff": 0.0,
+   "first_differences": [],
+   "ignored_differences": []
+  }
+ ]
+}

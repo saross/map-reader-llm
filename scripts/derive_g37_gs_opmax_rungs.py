@@ -22,6 +22,14 @@ Description:
     carried Gemini 3 verifier, not by a 3.7 one (the ``verify_swap37`` and
     ``verify_swap38`` stages beside them are the swaps, and are excluded).
 
+    **Which probabilities (D62 (1) step 2, 2026-10-13).** Both stages' wrong-
+    sheet rows were re-verified on crops from their own sheet and booked in
+    ``verify_repaired/`` and ``verify_k10_repaired/``. Each stage is read under
+    the shared leg rule (``scripts/lib_verify_dirs.py``): the repaired copy by
+    default, the fixed-name leg under ``MAP_READER_VERIFY_DIRS=fixed`` (which
+    reproduces the committed rungs and the carried cross-check). The directory
+    read is recorded per stage as ``verifier_probabilities``.
+
     **Same assessed area (PI ruling D51, 2026-10-07).** These two stages'
     unions were clipped to the grid-common footprint upstream; the family's
     K = 1 and K = 3 rungs were not. Before sweeping, the four rungs' assessed
@@ -56,6 +64,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from scripts.build_k_ladder_phase2_tables import new_rung_pools  # noqa: E402
+from scripts.lib_verify_dirs import (  # noqa: E402
+    resolve_verify_dir,
+    verify_dir_provenance,
+)
 from scripts.lib_assessed_area import (  # noqa: E402
     COMMON_AREA_CLIP_NAME,
     add_area_gate_arguments,
@@ -193,7 +205,12 @@ def cmd_prepare(args: argparse.Namespace) -> None:
     )
     clip_area = comparison.record.get("clip_geojson")
 
-    for stage in STAGES:
+    for fixed_stage in STAGES:
+        # The shared leg rule picks the directory; everything below reads it.
+        vdir = resolve_verify_dir(BASE_DIR / VERIFIER_ROOT,
+                                  Path(fixed_stage["verify_dir"]).name)
+        stage = {**fixed_stage, "verify_dir": str(vdir.relative_to(BASE_DIR))}
+        provenance = verify_dir_provenance(vdir, BASE_DIR)
         # Before trusting the join, reproduce a point whose feature count is
         # already committed (the feedback_feature_count_crosscheck rule).
         check = CARRIED_CROSSCHECK.get(stage["k"])
@@ -288,6 +305,7 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                     f"{cell}/evaluation.json"
                 ),
                 "carried_condition_id": stage["carried_condition_id"],
+                "verifier_probabilities": provenance,
             }
         )
         logger.info(

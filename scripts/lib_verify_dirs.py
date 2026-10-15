@@ -16,14 +16,22 @@ leg rather than over it, so the committed leg stays as it was run:
   the rows no repair could parse and books the answers into the same
   ``<leg>_repaired/`` (``reverify-<date>.json`` records each row and its cost).
 
+* ``scripts/reverify_wrong_sheet_crops.py`` (PI decision D62 (1), step 2)
+  re-sends the gold-standard (GS) and bridge rows whose verifier crop was cut
+  from the neighbouring sheet's raster, on crops from their own sheet, and
+  books them into ``<leg>_repaired/`` (``reverify-wrong-sheet-<date>.json``).
+
 Run B's Stage 2 scored from those copies, and Run C's verifier-SD script reads
 them by name (``modality_bridge_verifier_sd.load_replicates``). The 55-map
 image scorers read their legs by fixed name, ``verify_k{k}_{arm}``, so the
 corrections D55 Q4 paid for never reached them. PI decision D58 Q8 extends the
 adoption to every 55-map reader of those legs (the r2 campaign sweeps and
 cells, the 3.7 K = 5 replicate, the inheritance ladder, the W2.7 subset
-floors, and the tile-presence cost legs). This module is the one rule they
-share, so it is stated once:
+floors, and the tile-presence cost legs), and the S164 re-score extends it to
+every reader of the 95 legs the wrong-sheet sweep found (the GS grid, stride,
+plateau, winner-ladder, Image-B, Gemini 3.7 and 3.8 screen, and bridge
+readers; ``reports/s164-agent-records/rescore-repaired-gs.md``). This module
+is the one rule they share, so it is stated once:
 
     a leg's probabilities are read from ``<leg>_repaired/`` when that
     directory holds ``probabilities.json``, and from ``<leg>/`` otherwise.
@@ -48,6 +56,9 @@ Usage::
     vdir = resolve_verify_dir(vroot, "verify_k5_arm2")
     probs = json.loads((vdir / "probabilities.json").read_text())
     record["verifier_probabilities"] = verify_dir_provenance(vdir, PROJECT_ROOT)
+
+    # or, in one step (the union loaders' form):
+    results, prov = read_leg_results(vroot, "verify", PROJECT_ROOT)
 
 Created: 2026-10-09
 Author: Shawn Ross, Claude Code
@@ -193,3 +204,29 @@ def verify_dir_provenance(vdir: Path, root: Path | None = None,
                          if reverify_files else None),
         "reverify_records": [_display(f, root) for f in reverify_files],
     }
+
+
+def read_leg_results(vroot: Path, name: str, root: Path | None = None,
+                     policy: str | None = None) -> tuple[dict[str, Any], dict[str, Any]]:
+    """A leg's per-candidate ``results`` under the rule, and where they came from.
+
+    The one call the union loaders make (``grid_verifier_analysis``,
+    ``stride_verifier_analysis``, ``image_b_analysis``): resolve the leg with
+    :func:`resolve_verify_dir`, read its ``results`` block, and describe the
+    directory read with :func:`verify_dir_provenance`, so a caller cannot read
+    a leg without being handed the record it must write beside its output.
+
+    Args:
+        vroot: The directory holding the leg (``verifier/<cell>/``).
+        name: The leg's fixed name, e.g. ``verify`` or ``verify_k10``.
+        root: The repository root, for a relative ``dir`` in the record.
+        policy: ``"repaired"`` or ``"fixed"``; ``None`` reads the environment.
+
+    Returns:
+        ``(results, provenance)``: the ``results`` mapping of
+        ``probabilities.json`` (``candidate_NNNNN`` -> row) and the
+        :func:`verify_dir_provenance` record of the directory it came from.
+    """
+    vdir = resolve_verify_dir(vroot, name, policy)
+    results = json.loads((vdir / PROBABILITIES).read_text())["results"]
+    return results, verify_dir_provenance(vdir, root, policy)

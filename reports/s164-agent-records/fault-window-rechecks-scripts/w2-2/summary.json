@@ -1,0 +1,36 @@
+{
+  "row": "W2-2 (55-map r2 boards)",
+  "agent": "Claude Opus 5.5 (claude-opus-5-5), Session 164 re-check sub-agent, 2026-10-14",
+  "host": "sapphire (fixed boot 0)",
+  "python": "~/Code/map-reader-llm/.venv/bin/python (3.13.3)",
+  "env": {"PYTHONHASHSEED": "0", "OMP/OPENBLAS/MKL/NUMEXPR_NUM_THREADS": "1"},
+  "builders_replayed_at": "22353e660",
+  "builder_runs": {
+    "final_board_build.py --reference r2": {"start": "2026-10-14T00:40:28Z", "end": "2026-10-14T01:06:42Z", "log": "final-run1.log",
+      "gates": "G3 8-cell r1 board reproduced (f1, 28 p, 5 tiers); coincidence TH7/IM/UPL OK", "result": "512/595 significant, 12 tiers"},
+    "build_55map_leaderboard.py --reference r2 + mcc_tiering_55map.py --reference r2": {"start": "2026-10-14T00:42:58Z", "end": "2026-10-14T00:45:25Z", "log": "lbmcc-run1.log",
+      "result": "F1 board 24/28, 5 tiers; MCC board 20/28, 5 tiers; 8/8 confusion gates exact"}
+  },
+  "byte_compare_vs_22353e660": {
+    "results/55map-final-board-r2-2026-09-06/final_board_50m.json": "IDENTICAL (sha256 441978aad9860380...)",
+    "results/55map-final-board-r2-2026-09-06/final-board-50m.md": "IDENTICAL (sha256 7d6f242e8223a1b4...)",
+    "results/55map-final-board-r2-2026-09-06/significance-groups.png": "IDENTICAL (sha256 010c944b5d9f23c9...)",
+    "results/55map-leaderboard/55map_leaderboard_50m_r2.json": "IDENTICAL (sha256 f864e33a594fe356...)",
+    "results/55map-leaderboard/55map-leaderboard-50m-r2.md": "IDENTICAL (sha256 ac89cbaf0e3f37df...)",
+    "results/metric-leaderboards/55map-mcc-tiering-r2.json": "IDENTICAL (sha256 33d179560984ea62...)",
+    "results/metric-leaderboards/55map-mcc-tiering-r2.md": "IDENTICAL (sha256 3d03c3b197f889ac...)"
+  },
+  "today_90294a283": {
+    "unchanged_since_22353e660": ["55map_leaderboard_50m_r2.json", "55map-mcc-tiering-r2.json", "55map-mcc-tiering-r2.md", "significance-groups.png"],
+    "55map-leaderboard-50m-r2.md": "80e897049 added a 2-line provenance banner only",
+    "final_board_50m.json": "74 differing leaves vs regeneration, all in addendum, addendum_cells, cost_axis, efficiency_frontiers, cells[].cost_usd (35), cells[].cost_basis (35); 0 differing leaves elsewhere (diff-finalboard-regen-vs-90294a283-noncost.json)",
+    "final-board-50m.md": "ranked table (35 rows, cost column ignored) and run table (23 rows) match cell for cell; efficiency section rewritten by the cost refresh; addendum and changelog tables added (mdtables-finalboard-regen-vs-90294a283.txt)"
+  },
+  "later_writer_replays": {
+    "final_board_addendum_render.py at de009ed5d (input: board at 2fcc7ef3e)": "JSON IDENTICAL; MD differs only in hand-written banner + changelog (addendum-md-diffs.txt)",
+    "final_board_addendum_render.py at 892633660 (input: board at 89d7f7e7c)": "JSON IDENTICAL; MD differs only in hand-written banner + changelog (addendum-md-diffs.txt)",
+    "final_board_cost_refresh.py --write at b044c486e (input: board at 8ef4281c7)": "JSON IDENTICAL; MD differs only in hand-written banner + D33 changelog entry (cost-md-diff.txt); today's JSON/MD unchanged since b044c486e"
+  },
+  "crossread": "every board cell's published F1/CI/P/R/MCC/n (MCC board: MCC, CI, sens, spec, confusion) equals its cited evaluation.json exactly: board@22353e660 vs evals@22353e660 35+8+8; board@90294a283 vs evals@90294a283 42 (35 tiered + 7 addendum)+8+8; none of the cited evaluations was modified after 22353e660 (only additions)",
+  "ignored_keys": "none for byte comparisons; structured final-board diff against today ignores only cost_usd, cost_basis, addendum, addendum_cells, cost_axis, efficiency_frontiers (documented later non-tiering edits)"
+}
