@@ -1,0 +1,4725 @@
+{
+ "_README": "D64 plan P12: the confirmatory replication of the two borderline image contrasts on passes 4-6, with the secondary analyses (report only; plan reports/s164-agent-records/d64-a06-replication.md P12 and P12.1, commits e783ed3ac, 751525d7e, 2d5cb991c).",
+ "generated_at": "2026-10-15T11:34:23.999647+00:00",
+ "git_head": "f54eb4ca9f497b65dd9e20e3b2fd44e302caf293",
+ "settings": {
+  "buffer_m": 20,
+  "bootstrap_B": 1000,
+  "seed": 42,
+  "permutations": 10000,
+  "rule": 0.03,
+  "criterion_b": "BH-adjusted p < 0.05 across C1 and C2 only",
+  "tiles": 487,
+  "tile_order": "bounds file order (sorted)",
+  "scorer": "lib_advanced_metrics.compute_per_tile_tp_fp_fn (D50, main)"
+ },
+ "gates": {
+  "text_and_image_runs_1_3_metas": "pass (original driver's gate)",
+  "image_metas_24_passes": "pass (model, temperature, thinking level, configuration, 487 processed, 0 failed, batch tier, start date, coverage, 487 responses with usage)",
+  "topup_2026_10_15_record": "pass",
+  "aggregation_identity": {
+   "text-high-t0.0": true,
+   "text-high-t0.7": true,
+   "text-medium-t0.0": true,
+   "text-medium-t0.7": true,
+   "image-high-t0.0": true,
+   "image-high-t0.7": true,
+   "image-medium-t0.0": true,
+   "image-medium-t0.7": true
+  },
+  "passes_1_3_replay_against_committed": {
+   "main": true,
+   "floors": true,
+   "corners": true
+  }
+ },
+ "pass_files": {
+  "text-high-t0.0": [
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.0/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson"
+  ],
+  "text-high-t0.7": [
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.7/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.7/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.7/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.7/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-high-t0.7/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson"
+  ],
+  "text-medium-t0.0": [
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.0/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.0/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.0/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.0/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.0/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson"
+  ],
+  "text-medium-t0.7": [
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_1/detections_detect_brief-text_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_2/detections_detect_brief-text_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_3/detections_detect_brief-text_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_4/detections_detect_brief-text_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/text-medium-t0.7/detect_brief-text/run_5/detections_detect_brief-text_run05.geojson"
+  ],
+  "image-high-t0.0": [
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_1/detections_library_plus-hp_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_2/detections_library_plus-hp_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_3/detections_library_plus-hp_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_4/detections_library_plus-hp_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_5/detections_library_plus-hp_run05.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_6/detections_library_plus-hp_run06.geojson"
+  ],
+  "image-high-t0.7": [
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_1/detections_library_plus-hp_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_2/detections_library_plus-hp_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_3/detections_library_plus-hp_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_4/detections_library_plus-hp_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_5/detections_library_plus-hp_run05.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_6/detections_library_plus-hp_run06.geojson"
+  ],
+  "image-medium-t0.0": [
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_1/detections_library_plus-hp_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_2/detections_library_plus-hp_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_3/detections_library_plus-hp_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_4/detections_library_plus-hp_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_5/detections_library_plus-hp_run05.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_6/detections_library_plus-hp_run06.geojson"
+  ],
+  "image-medium-t0.7": [
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_1/detections_library_plus-hp_run01.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_2/detections_library_plus-hp_run02.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_3/detections_library_plus-hp_run03.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_4/detections_library_plus-hp_run04.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_5/detections_library_plus-hp_run05.geojson",
+   "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_6/detections_library_plus-hp_run06.geojson"
+  ]
+ },
+ "thought_tokens_image": {
+  "image-high-t0.0": {
+   "passes": [
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_1/detections_library_plus-hp_run01.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:30:19.744464+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 0,
+     "thought_tokens_per_request": 0.0,
+     "total_detections": 537,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_2/detections_library_plus-hp_run02.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:51:00.235556+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 0,
+     "thought_tokens_per_request": 0.0,
+     "total_detections": 528,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_3/detections_library_plus-hp_run03.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T07:02:17.189201+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 1902,
+     "thought_tokens_per_request": 3.9055,
+     "total_detections": 541,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_4/detections_library_plus-hp_run04.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T03:58:43.782383+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 0,
+     "thought_tokens_per_request": 0.0,
+     "total_detections": 540,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_5/detections_library_plus-hp_run05.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:22:49.226723+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 0,
+     "thought_tokens_per_request": 0.0,
+     "total_detections": 540,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.0/library_plus-hp/run_6/detections_library_plus-hp_run06.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:40:48.211701+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 0,
+     "thought_tokens_per_request": 0.0,
+     "total_detections": 534,
+     "topped_up": false
+    }
+   ],
+   "thought_tokens_per_request": {
+    "passes 1-3": 1.3018,
+    "passes 4-6": 0.0,
+    "passes 1-6": 0.6509
+   },
+   "thought_tokens_per_request_range": [
+    0.0,
+    3.9055
+   ]
+  },
+  "image-high-t0.7": {
+   "passes": [
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_1/detections_library_plus-hp_run01.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:30:58.189973+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 972,
+     "thought_tokens_per_request": 1.9959,
+     "total_detections": 534,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_2/detections_library_plus-hp_run02.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:53:26.710160+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 1913,
+     "thought_tokens_per_request": 3.9281,
+     "total_detections": 540,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_3/detections_library_plus-hp_run03.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T07:25:41.558543+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 447,
+     "thought_tokens_per_request": 0.9179,
+     "total_detections": 540,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_4/detections_library_plus-hp_run04.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:16:00.650614+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 1665,
+     "thought_tokens_per_request": 3.4189,
+     "total_detections": 542,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_5/detections_library_plus-hp_run05.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:38:34.952028+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 794,
+     "thought_tokens_per_request": 1.6304,
+     "total_detections": 537,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-high-t0.7/library_plus-hp/run_6/detections_library_plus-hp_run06.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T05:02:40.437369+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 2043,
+     "thought_tokens_per_request": 4.1951,
+     "total_detections": 544,
+     "topped_up": true
+    }
+   ],
+   "thought_tokens_per_request": {
+    "passes 1-3": 2.2806,
+    "passes 4-6": 3.0815,
+    "passes 1-6": 2.681
+   },
+   "thought_tokens_per_request_range": [
+    0.9179,
+    4.1951
+   ]
+  },
+  "image-medium-t0.0": {
+   "passes": [
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_1/detections_library_plus-hp_run01.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:29:47.688128+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 4337,
+     "thought_tokens_per_request": 8.9055,
+     "total_detections": 529,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_2/detections_library_plus-hp_run02.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:43:26.956220+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 3620,
+     "thought_tokens_per_request": 7.4333,
+     "total_detections": 529,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_3/detections_library_plus-hp_run03.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:58:52.097435+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 8384,
+     "thought_tokens_per_request": 17.2156,
+     "total_detections": 531,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_4/detections_library_plus-hp_run04.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:00:04.706358+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 5068,
+     "thought_tokens_per_request": 10.4066,
+     "total_detections": 530,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_5/detections_library_plus-hp_run05.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:43:05.168283+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 7198,
+     "thought_tokens_per_request": 14.7803,
+     "total_detections": 529,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.0/library_plus-hp/run_6/detections_library_plus-hp_run06.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:57:31.191458+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 3809,
+     "thought_tokens_per_request": 7.8214,
+     "total_detections": 529,
+     "topped_up": false
+    }
+   ],
+   "thought_tokens_per_request": {
+    "passes 1-3": 11.1848,
+    "passes 4-6": 11.0027,
+    "passes 1-6": 11.0938
+   },
+   "thought_tokens_per_request_range": [
+    7.4333,
+    17.2156
+   ]
+  },
+  "image-medium-t0.7": {
+   "passes": [
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_1/detections_library_plus-hp_run01.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:29:48.577084+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 23388,
+     "thought_tokens_per_request": 48.0246,
+     "total_detections": 540,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_2/detections_library_plus-hp_run02.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:44:10.424576+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 20633,
+     "thought_tokens_per_request": 42.3676,
+     "total_detections": 538,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_3/detections_library_plus-hp_run03.meta.json",
+     "wave": "passes 1-3",
+     "start_utc": "2026-10-13T06:50:19.286002+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 20822,
+     "thought_tokens_per_request": 42.7556,
+     "total_detections": 539,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_4/detections_library_plus-hp_run04.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:35:28.403337+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 20631,
+     "thought_tokens_per_request": 42.3634,
+     "total_detections": 538,
+     "topped_up": true
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_5/detections_library_plus-hp_run05.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T04:58:31.824375+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 22533,
+     "thought_tokens_per_request": 46.269,
+     "total_detections": 539,
+     "topped_up": false
+    },
+    {
+     "pass": "outputs/pro-2x2-replication-2026-10-13/image-medium-t0.7/library_plus-hp/run_6/detections_library_plus-hp_run06.meta.json",
+     "wave": "passes 4-6",
+     "start_utc": "2026-10-14T05:02:41.254423+00:00",
+     "n_responses_with_usage": 487,
+     "total_thoughts_tokens": 21510,
+     "thought_tokens_per_request": 44.1684,
+     "total_detections": 536,
+     "topped_up": false
+    }
+   ],
+   "thought_tokens_per_request": {
+    "passes 1-3": 44.3826,
+    "passes 4-6": 44.2669,
+    "passes 1-6": 44.3248
+   },
+   "thought_tokens_per_request_range": [
+    42.3634,
+    48.0246
+   ]
+  }
+ },
+ "topup_2026_10_15": {
+  "passes": {
+   "image-high-t0.0/run_4": {
+    "tiles": [
+     "K-35-052-4_32635_x672_y0.png",
+     "K-35-052-4_32635_x672_y672.png",
+     "K-35-053-3_Elenovo_x0_y672.png",
+     "K-35-053-3_Elenovo_x3024_y2688.png",
+     "K-35-062-2_Rakovski_x1008_y1680.png",
+     "K-35-062-2_Rakovski_x3024_y2688.png",
+     "K-35-062-2_Rakovski_x3360_y2688.png",
+     "K-35-078-1_Lesovo_x1344_y2688.png",
+     "K-35-078-1_Lesovo_x4032_y336.png"
+    ],
+    "n_tiles": 9,
+    "topup_thoughts_tokens": 0,
+    "topup_responses": 9
+   },
+   "image-high-t0.0/run_5": {
+    "tiles": [
+     "K-35-053-3_Elenovo_x0_y1008.png",
+     "K-35-062-2_Rakovski_x4032_y0.png"
+    ],
+    "n_tiles": 2,
+    "topup_thoughts_tokens": 0,
+    "topup_responses": 2
+   },
+   "image-high-t0.7/run_4": {
+    "tiles": [
+     "K-35-052-4_32635_x1008_y336.png",
+     "K-35-052-4_32635_x1680_y0.png",
+     "K-35-052-4_32635_x1680_y336.png",
+     "K-35-052-4_32635_x4032_y3024.png",
+     "K-35-053-3_Elenovo_x672_y3360.png"
+    ],
+    "n_tiles": 5,
+    "topup_thoughts_tokens": 1665,
+    "topup_responses": 5
+   },
+   "image-high-t0.7/run_5": {
+    "tiles": [
+     "K-35-052-4_32635_x4032_y3696.png",
+     "K-35-053-3_Elenovo_x2016_y1344.png",
+     "K-35-062-2_Rakovski_x3696_y672.png"
+    ],
+    "n_tiles": 3,
+    "topup_thoughts_tokens": 0,
+    "topup_responses": 3
+   },
+   "image-high-t0.7/run_6": {
+    "tiles": [
+     "K-35-052-4_32635_x1008_y672.png",
+     "K-35-052-4_32635_x3360_y1680.png",
+     "K-35-062-2_Rakovski_x0_y2688.png",
+     "K-35-062-2_Rakovski_x2016_y3360.png",
+     "K-35-062-2_Rakovski_x672_y1008.png",
+     "K-35-078-1_Lesovo_x1680_y3024.png",
+     "K-35-078-1_Lesovo_x2352_y3024.png"
+    ],
+    "n_tiles": 7,
+    "topup_thoughts_tokens": 0,
+    "topup_responses": 7
+   },
+   "image-medium-t0.0/run_4": {
+    "tiles": [
+     "K-35-052-4_32635_x1680_y3024.png",
+     "K-35-052-4_32635_x4032_y3696.png",
+     "K-35-053-3_Elenovo_x2016_y1344.png",
+     "K-35-053-3_Elenovo_x2352_y3024.png",
+     "K-35-053-3_Elenovo_x336_y1680.png",
+     "K-35-053-3_Elenovo_x3696_y1344.png",
+     "K-35-053-3_Elenovo_x4032_y1008.png",
+     "K-35-062-2_Rakovski_x1008_y672.png",
+     "K-35-062-2_Rakovski_x1680_y0.png",
+     "K-35-062-2_Rakovski_x1680_y3696.png",
+     "K-35-062-2_Rakovski_x3024_y2688.png",
+     "K-35-062-2_Rakovski_x3360_y3024.png",
+     "K-35-078-1_Lesovo_x1344_y2016.png",
+     "K-35-078-1_Lesovo_x1680_y3360.png",
+     "K-35-078-1_Lesovo_x2016_y1344.png",
+     "K-35-078-1_Lesovo_x2688_y1008.png",
+     "K-35-078-1_Lesovo_x3696_y2688.png",
+     "K-35-078-1_Lesovo_x3696_y336.png",
+     "K-35-078-1_Lesovo_x4032_y1680.png"
+    ],
+    "n_tiles": 19,
+    "topup_thoughts_tokens": 0,
+    "topup_responses": 19
+   },
+   "image-medium-t0.0/run_5": {
+    "tiles": [
+     "K-35-052-4_32635_x1344_y3360.png",
+     "K-35-052-4_32635_x2688_y1680.png",
+     "K-35-052-4_32635_x336_y0.png",
+     "K-35-052-4_32635_x336_y1008.png",
+     "K-35-052-4_32635_x336_y672.png",
+     "K-35-052-4_32635_x3696_y1680.png",
+     "K-35-053-3_Elenovo_x1008_y2016.png",
+     "K-35-053-3_Elenovo_x1008_y3024.png",
+     "K-35-053-3_Elenovo_x2016_y1680.png",
+     "K-35-053-3_Elenovo_x3024_y2688.png",
+     "K-35-053-3_Elenovo_x3696_y1008.png",
+     "K-35-062-2_Rakovski_x1008_y672.png",
+     "K-35-062-2_Rakovski_x1344_y336.png",
+     "K-35-062-2_Rakovski_x1680_y336.png",
+     "K-35-062-2_Rakovski_x2016_y336.png",
+     "K-35-062-2_Rakovski_x2352_y0.png",
+     "K-35-062-2_Rakovski_x2352_y1008.png",
+     "K-35-062-2_Rakovski_x2352_y1344.png",
+     "K-35-062-2_Rakovski_x2352_y1680.png",
+     "K-35-062-2_Rakovski_x2352_y2016.png",
+     "K-35-062-2_Rakovski_x2352_y3024.png",
+     "K-35-062-2_Rakovski_x2352_y336.png",
+     "K-35-062-2_Rakovski_x2688_y0.png",
+     "K-35-062-2_Rakovski_x2688_y2016.png",
+     "K-35-062-2_Rakovski_x2688_y2688.png",
+     "K-35-062-2_Rakovski_x2688_y672.png",
+     "K-35-062-2_Rakovski_x3024_y0.png",
+     "K-35-062-2_Rakovski_x3024_y1008.png",
+     "K-35-062-2_Rakovski_x3024_y1680.png",
+     "K-35-062-2_Rakovski_x3024_y2016.png",
+     "K-35-062-2_Rakovski_x3024_y3360.png",
+     "K-35-062-2_Rakovski_x3024_y3696.png",
+     "K-35-062-2_Rakovski_x3360_y1008.png",
+     "K-35-062-2_Rakovski_x3360_y2352.png",
+     "K-35-062-2_Rakovski_x3360_y3024.png",
+     "K-35-062-2_Rakovski_x336_y0.png",
+     "K-35-062-2_Rakovski_x336_y3696.png",
+     "K-35-062-2_Rakovski_x3696_y0.png",
+     "K-35-062-2_Rakovski_x3696_y1680.png",
+     "K-35-062-2_Rakovski_x3696_y2352.png",
+     "K-35-062-2_Rakovski_x3696_y336.png",
+     "K-35-062-2_Rakovski_x3696_y3360.png",
+     "K-35-062-2_Rakovski_x4032_y1680.png",
+     "K-35-062-2_Rakovski_x4032_y2016.png",
+     "K-35-062-2_Rakovski_x4032_y2352.png",
+     "K-35-062-2_Rakovski_x4032_y672.png",
+     "K-35-062-2_Rakovski_x672_y0.png",
+     "K-35-062-2_Rakovski_x672_y1008.png",
+     "K-35-062-2_Rakovski_x672_y1680.png",
+     "K-35-062-2_Rakovski_x672_y2016.png",
+     "K-35-062-2_Rakovski_x672_y3696.png",
+     "K-35-078-1_Lesovo_x0_y2352.png",
+     "K-35-078-1_Lesovo_x0_y3024.png",
+     "K-35-078-1_Lesovo_x1008_y2352.png",
+     "K-35-078-1_Lesovo_x1008_y2688.png",
+     "K-35-078-1_Lesovo_x1344_y1680.png",
+     "K-35-078-1_Lesovo_x1344_y2352.png",
+     "K-35-078-1_Lesovo_x2016_y1680.png",
+     "K-35-078-1_Lesovo_x2016_y2352.png",
+     "K-35-078-1_Lesovo_x2352_y0.png",
+     "K-35-078-1_Lesovo_x2352_y3360.png",
+     "K-35-078-1_Lesovo_x2352_y672.png",
+     "K-35-078-1_Lesovo_x2688_y1008.png",
+     "K-35-078-1_Lesovo_x2688_y1680.png",
+     "K-35-078-1_Lesovo_x2688_y2016.png",
+     "K-35-078-1_Lesovo_x2688_y3024.png",
+     "K-35-078-1_Lesovo_x2688_y336.png",
+     "K-35-078-1_Lesovo_x3024_y1008.png",
+     "K-35-078-1_Lesovo_x3024_y1344.png",
+     "K-35-078-1_Lesovo_x3024_y1680.png",
+     "K-35-078-1_Lesovo_x336_y2688.png",
+     "K-35-078-1_Lesovo_x336_y3360.png",
+     "K-35-078-1_Lesovo_x3696_y0.png",
+     "K-35-078-1_Lesovo_x3696_y1344.png",
+     "K-35-078-1_Lesovo_x3696_y2352.png",
+     "K-35-078-1_Lesovo_x4032_y0.png",
+     "K-35-078-1_Lesovo_x4032_y1008.png",
+     "K-35-078-1_Lesovo_x4032_y1680.png",
+     "K-35-078-1_Lesovo_x4032_y2016.png",
+     "K-35-078-1_Lesovo_x4032_y2352.png",
+     "K-35-078-1_Lesovo_x672_y2352.png",
+     "K-35-078-1_Lesovo_x672_y2688.png",
+     "K-35-078-1_Lesovo_x672_y336.png"
+    ],
+    "n_tiles": 83,
+    "topup_thoughts_tokens": 568,
+    "topup_responses": 83
+   },
+   "image-medium-t0.7/run_4": {
+    "tiles": [
+     "K-35-052-4_32635_x1680_y336.png",
+     "K-35-052-4_32635_x1680_y672.png",
+     "K-35-052-4_32635_x2016_y0.png",
+     "K-35-052-4_32635_x2688_y1008.png",
+     "K-35-052-4_32635_x3024_y2016.png",
+     "K-35-052-4_32635_x3024_y2688.png",
+     "K-35-052-4_32635_x3360_y3024.png",
+     "K-35-052-4_32635_x336_y1680.png",
+     "K-35-052-4_32635_x4032_y2016.png",
+     "K-35-053-3_Elenovo_x1344_y3696.png",
+     "K-35-053-3_Elenovo_x1680_y0.png",
+     "K-35-053-3_Elenovo_x2352_y1344.png",
+     "K-35-053-3_Elenovo_x3024_y2352.png",
+     "K-35-053-3_Elenovo_x3360_y336.png",
+     "K-35-053-3_Elenovo_x336_y3696.png",
+     "K-35-053-3_Elenovo_x4032_y0.png",
+     "K-35-062-2_Rakovski_x2688_y672.png",
+     "K-35-062-2_Rakovski_x3360_y2352.png",
+     "K-35-062-2_Rakovski_x336_y1344.png",
+     "K-35-062-2_Rakovski_x3696_y3360.png",
+     "K-35-078-1_Lesovo_x0_y1680.png",
+     "K-35-078-1_Lesovo_x0_y3024.png",
+     "K-35-078-1_Lesovo_x2352_y336.png",
+     "K-35-078-1_Lesovo_x336_y1008.png"
+    ],
+    "n_tiles": 24,
+    "topup_thoughts_tokens": 2274,
+    "topup_responses": 24
+   }
+  },
+  "untouched": [
+   "image-high-t0.0/run_6",
+   "image-medium-t0.0/run_6",
+   "image-medium-t0.7/run_5",
+   "image-medium-t0.7/run_6"
+  ],
+  "tile_pass_instances": 152,
+  "n_distinct_tiles": 138
+ },
+ "corners": {
+  "text-high-t0.0": {
+   "passes 1-5": {
+    "pass_averaged_micro": {
+     "f1": 0.800819,
+     "precision": 0.792173,
+     "recall": 0.809655
+    },
+    "per_pass_f1": [
+     0.800451,
+     0.800915,
+     0.797727,
+     0.801822,
+     0.803185
+    ],
+    "mean_of_pass_f1": 0.80082,
+    "n_passes": 5,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 352.2,
+     "fp": 92.4,
+     "fn": 82.8
+    }
+   }
+  },
+  "text-high-t0.7": {
+   "passes 1-5": {
+    "pass_averaged_micro": {
+     "f1": 0.75079,
+     "precision": 0.737472,
+     "recall": 0.764598
+    },
+    "per_pass_f1": [
+     0.748869,
+     0.755605,
+     0.75761,
+     0.742664,
+     0.749149
+    ],
+    "mean_of_pass_f1": 0.750779,
+    "n_passes": 5,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 332.6,
+     "fp": 118.4,
+     "fn": 102.4
+    }
+   }
+  },
+  "text-medium-t0.0": {
+   "passes 1-5": {
+    "pass_averaged_micro": {
+     "f1": 0.798206,
+     "precision": 0.778993,
+     "recall": 0.818391
+    },
+    "per_pass_f1": [
+     0.80315,
+     0.806742,
+     0.797297,
+     0.788483,
+     0.795506
+    ],
+    "mean_of_pass_f1": 0.798236,
+    "n_passes": 5,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 356.0,
+     "fp": 101.0,
+     "fn": 79.0
+    }
+   }
+  },
+  "text-medium-t0.7": {
+   "passes 1-5": {
+    "pass_averaged_micro": {
+     "f1": 0.751836,
+     "precision": 0.728645,
+     "recall": 0.776552
+    },
+    "per_pass_f1": [
+     0.747178,
+     0.757475,
+     0.747253,
+     0.747228,
+     0.76009
+    ],
+    "mean_of_pass_f1": 0.751845,
+    "n_passes": 5,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 337.8,
+     "fp": 125.8,
+     "fn": 97.2
+    }
+   }
+  },
+  "image-high-t0.0": {
+   "passes 1-3": {
+    "pass_averaged_micro": {
+     "f1": 0.687736,
+     "precision": 0.623288,
+     "recall": 0.76705
+    },
+    "per_pass_f1": [
+     0.685185,
+     0.685358,
+     0.692623
+    ],
+    "mean_of_pass_f1": 0.687722,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 333.6667,
+     "fp": 201.6667,
+     "fn": 101.3333
+    }
+   },
+   "passes 4-6": {
+    "pass_averaged_micro": {
+     "f1": 0.676259,
+     "precision": 0.611524,
+     "recall": 0.756322
+    },
+    "per_pass_f1": [
+     0.678974,
+     0.672821,
+     0.676987
+    ],
+    "mean_of_pass_f1": 0.676261,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 329.0,
+     "fp": 209.0,
+     "fn": 106.0
+    }
+   },
+   "passes 1-6": {
+    "pass_averaged_micro": {
+     "f1": 0.68199,
+     "precision": 0.617391,
+     "recall": 0.761686
+    },
+    "per_pass_f1": [
+     0.685185,
+     0.685358,
+     0.692623,
+     0.678974,
+     0.672821,
+     0.676987
+    ],
+    "mean_of_pass_f1": 0.681991,
+    "n_passes": 6,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 331.3333,
+     "fp": 205.3333,
+     "fn": 103.6667
+    }
+   }
+  },
+  "image-high-t0.7": {
+   "passes 1-3": {
+    "pass_averaged_micro": {
+     "f1": 0.618705,
+     "precision": 0.55948,
+     "recall": 0.691954
+    },
+    "per_pass_f1": [
+     0.610939,
+     0.625641,
+     0.619487
+    ],
+    "mean_of_pass_f1": 0.618689,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 301.0,
+     "fp": 237.0,
+     "fn": 134.0
+    }
+   },
+   "passes 4-6": {
+    "pass_averaged_micro": {
+     "f1": 0.597678,
+     "precision": 0.539125,
+     "recall": 0.670498
+    },
+    "per_pass_f1": [
+     0.595701,
+     0.609053,
+     0.588355
+    ],
+    "mean_of_pass_f1": 0.597703,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 291.6667,
+     "fp": 249.3333,
+     "fn": 143.3333
+    }
+   },
+   "passes 1-6": {
+    "pass_averaged_micro": {
+     "f1": 0.608175,
+     "precision": 0.549274,
+     "recall": 0.681226
+    },
+    "per_pass_f1": [
+     0.610939,
+     0.625641,
+     0.619487,
+     0.595701,
+     0.609053,
+     0.588355
+    ],
+    "mean_of_pass_f1": 0.608196,
+    "n_passes": 6,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 296.3333,
+     "fp": 243.1667,
+     "fn": 138.6667
+    }
+   }
+  },
+  "image-medium-t0.0": {
+   "passes 1-3": {
+    "pass_averaged_micro": {
+     "f1": 0.650311,
+     "precision": 0.592196,
+     "recall": 0.721073
+    },
+    "per_pass_f1": [
+     0.661826,
+     0.653527,
+     0.635611
+    ],
+    "mean_of_pass_f1": 0.650321,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 313.6667,
+     "fp": 216.0,
+     "fn": 121.3333
+    }
+   },
+   "passes 4-6": {
+    "pass_averaged_micro": {
+     "f1": 0.656066,
+     "precision": 0.597607,
+     "recall": 0.727203
+    },
+    "per_pass_f1": [
+     0.648705,
+     0.6639,
+     0.655602
+    ],
+    "mean_of_pass_f1": 0.656069,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 316.3333,
+     "fp": 213.0,
+     "fn": 118.6667
+    }
+   },
+   "passes 1-6": {
+    "pass_averaged_micro": {
+     "f1": 0.653188,
+     "precision": 0.594901,
+     "recall": 0.724138
+    },
+    "per_pass_f1": [
+     0.661826,
+     0.653527,
+     0.635611,
+     0.648705,
+     0.6639,
+     0.655602
+    ],
+    "mean_of_pass_f1": 0.653195,
+    "n_passes": 6,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 315.0,
+     "fp": 214.5,
+     "fn": 120.0
+    }
+   }
+  },
+  "image-medium-t0.7": {
+   "passes 1-3": {
+    "pass_averaged_micro": {
+     "f1": 0.616701,
+     "precision": 0.557205,
+     "recall": 0.690421
+    },
+    "per_pass_f1": [
+     0.598974,
+     0.618705,
+     0.632444
+    ],
+    "mean_of_pass_f1": 0.616708,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 300.3333,
+     "fp": 238.6667,
+     "fn": 134.6667
+    }
+   },
+   "passes 4-6": {
+    "pass_averaged_micro": {
+     "f1": 0.590816,
+     "precision": 0.534408,
+     "recall": 0.660536
+    },
+    "per_pass_f1": [
+     0.589928,
+     0.581109,
+     0.601442
+    ],
+    "mean_of_pass_f1": 0.590826,
+    "n_passes": 3,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 287.3333,
+     "fp": 250.3333,
+     "fn": 147.6667
+    }
+   },
+   "passes 1-6": {
+    "pass_averaged_micro": {
+     "f1": 0.603767,
+     "precision": 0.54582,
+     "recall": 0.675479
+    },
+    "per_pass_f1": [
+     0.598974,
+     0.618705,
+     0.632444,
+     0.589928,
+     0.581109,
+     0.601442
+    ],
+    "mean_of_pass_f1": 0.603767,
+    "n_passes": 6,
+    "n_tiles": 487,
+    "pass_mean_totals": {
+     "tp": 293.8333,
+     "fp": 244.5,
+     "fn": 141.1667
+    }
+   }
+  }
+ },
+ "confirmatory": {
+  "passes_1_3_deltas": {
+   "C1": 0.037425,
+   "C2": 0.03361
+  },
+  "floor_passes_4_6": {
+   "pooled": {
+    "pairs": 12,
+    "p95": 0.020497,
+    "median": 0.008559,
+    "max": 0.020698,
+    "tile_swap_reject_rate": 0.0
+   },
+   "per_corner": {
+    "image-high-t0.0": {
+     "pairs": 3,
+     "p95": 0.005955,
+     "median": 0.004166,
+     "max": 0.006154,
+     "tile_swap_reject_rate": 0.0
+    },
+    "image-high-t0.7": {
+     "pairs": 3,
+     "p95": 0.019963,
+     "median": 0.013352,
+     "max": 0.020698,
+     "tile_swap_reject_rate": 0.0
+    },
+    "image-medium-t0.0": {
+     "pairs": 3,
+     "p95": 0.014506,
+     "median": 0.008299,
+     "max": 0.015196,
+     "tile_swap_reject_rate": 0.0
+    },
+    "image-medium-t0.7": {
+     "pairs": 3,
+     "p95": 0.019451,
+     "median": 0.011514,
+     "max": 0.020333,
+     "tile_swap_reject_rate": 0.0
+    }
+   }
+  },
+  "C1": {
+   "delta (pass-averaged micro)": 0.020193,
+   "delta (mean of per-pass F1)": 0.020192,
+   "delta_ci95_paired_bootstrap": {
+    "lower": -0.007278,
+    "upper": 0.047856
+   },
+   "delta_bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "observed_delta": 0.020193,
+    "bootstrap_delta_mean": 0.020079,
+    "ci95": {
+     "lower": -0.007278,
+     "upper": 0.047856
+    },
+    "p_value": 0.1383,
+    "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+    "n_permutations": 10000,
+    "n_discordant_tiles": 129,
+    "ci_excludes_zero": false
+   },
+   "a": {
+    "f1": 0.676259,
+    "precision": 0.611524,
+    "recall": 0.756322
+   },
+   "b": {
+    "f1": 0.656066,
+    "precision": 0.597607,
+    "recall": 0.727203
+   },
+   "a_mean_of_pass_f1": 0.676261,
+   "b_mean_of_pass_f1": 0.656069,
+   "n_tiles": 487,
+   "contrast": "image HIGH minus MEDIUM at T 0.0",
+   "per_pass_f1_a": [
+    0.678974,
+    0.672821,
+    0.676987
+   ],
+   "per_pass_f1_b": [
+    0.648705,
+    0.6639,
+    0.655602
+   ],
+   "floor_verdict (P6 three-valued, K = 1, n = 3)": {
+    "floor": 0.020497,
+    "floor_k": 1,
+    "n_per_arm": 3,
+    "scaled_floor": 0.011834,
+    "verdict": "clears only the scaled floor"
+   },
+   "p_bh_adjusted (C1 and C2)": 0.1383,
+   "criteria": {
+    "a_sign_matches_passes_1_3": {
+     "delta_4_6": 0.020193,
+     "delta_1_3": 0.037425,
+     "met": true
+    },
+    "b_bh_adjusted_p_below_0.05": {
+     "p_bh_adjusted": 0.1383,
+     "met": false
+    },
+    "c_abs_delta_at_least_0.03": {
+     "abs_delta": 0.020193,
+     "met": false
+    },
+    "d_abs_delta_above_floor_4_6": {
+     "abs_delta": 0.020193,
+     "floor": 0.020497,
+     "met": false
+    }
+   },
+   "criteria_failed": [
+    "b_bh_adjusted_p_below_0.05",
+    "c_abs_delta_at_least_0.03",
+    "d_abs_delta_above_floor_4_6"
+   ],
+   "verdict": "PARTLY",
+   "wording": "same direction on three further passes but not confirmed; the check had roughly even odds of passing even if the effect were as large as first seen",
+   "mean_of_per_pass_reading": {
+    "sign": true,
+    "abs_at_least_0.03": false,
+    "above_floor": false
+   }
+  },
+  "C2": {
+   "delta (pass-averaged micro)": 0.065251,
+   "delta (mean of per-pass F1)": 0.065243,
+   "delta_ci95_paired_bootstrap": {
+    "lower": 0.035193,
+    "upper": 0.095433
+   },
+   "delta_bootstrap": {
+    "n_iterations": 1000,
+    "seed": 42,
+    "observed_delta": 0.065251,
+    "bootstrap_delta_mean": 0.064863,
+    "ci95": {
+     "lower": 0.035193,
+     "upper": 0.095433
+    },
+    "p_value": 0.0001,
+    "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+    "n_permutations": 10000,
+    "n_discordant_tiles": 165,
+    "ci_excludes_zero": true
+   },
+   "a": {
+    "f1": 0.656066,
+    "precision": 0.597607,
+    "recall": 0.727203
+   },
+   "b": {
+    "f1": 0.590816,
+    "precision": 0.534408,
+    "recall": 0.660536
+   },
+   "a_mean_of_pass_f1": 0.656069,
+   "b_mean_of_pass_f1": 0.590826,
+   "n_tiles": 487,
+   "contrast": "image T 0.0 minus T 0.7 at MEDIUM",
+   "per_pass_f1_a": [
+    0.648705,
+    0.6639,
+    0.655602
+   ],
+   "per_pass_f1_b": [
+    0.589928,
+    0.581109,
+    0.601442
+   ],
+   "floor_verdict (P6 three-valued, K = 1, n = 3)": {
+    "floor": 0.020497,
+    "floor_k": 1,
+    "n_per_arm": 3,
+    "scaled_floor": 0.011834,
+    "verdict": "clears"
+   },
+   "p_bh_adjusted (C1 and C2)": 0.0002,
+   "criteria": {
+    "a_sign_matches_passes_1_3": {
+     "delta_4_6": 0.065251,
+     "delta_1_3": 0.03361,
+     "met": true
+    },
+    "b_bh_adjusted_p_below_0.05": {
+     "p_bh_adjusted": 0.0002,
+     "met": true
+    },
+    "c_abs_delta_at_least_0.03": {
+     "abs_delta": 0.065251,
+     "met": true
+    },
+    "d_abs_delta_above_floor_4_6": {
+     "abs_delta": 0.065251,
+     "floor": 0.020497,
+     "met": true
+    }
+   },
+   "criteria_failed": [],
+   "verdict": "REPLICATES",
+   "wording": "confirmed on three independent passes run the next day",
+   "mean_of_per_pass_reading": {
+    "sign": true,
+    "abs_at_least_0.03": true,
+    "above_floor": true
+   }
+  },
+  "bh": {
+   "family": [
+    "C1",
+    "C2"
+   ],
+   "p_permutation": {
+    "C1": 0.1383,
+    "C2": 0.0001
+   },
+   "p_bh_adjusted": {
+    "C1": 0.1383,
+    "C2": 0.0002
+   }
+  },
+  "headline_selected": "TEMPERATURE IS THE DRIVER",
+  "headline_rule": "P12.1: C1 REPLICATES -> (b); PARTLY or FAILS -> (a); C2 FAILS adds the suffix"
+ },
+ "secondary": {
+  "_note": "Secondary, labelled as such (P12). The pooled six-pass extension was data-dependent (passes 4-6 were added partly because C1 and C2 looked borderline), so the pooled p values are not used for C1 or C2.",
+  "other_image_contrasts_passes_4_6": {
+   "image T 0.0 minus T 0.7 at HIGH": {
+    "delta (pass-averaged micro)": 0.078581,
+    "delta (mean of per-pass F1)": 0.078558,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.047801,
+     "upper": 0.108703
+    },
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.078581,
+     "bootstrap_delta_mean": 0.078409,
+     "ci95": {
+      "lower": 0.047801,
+      "upper": 0.108703
+     },
+     "p_value": 0.0,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 161,
+     "ci_excludes_zero": true
+    },
+    "a": {
+     "f1": 0.676259,
+     "precision": 0.611524,
+     "recall": 0.756322
+    },
+    "b": {
+     "f1": 0.597678,
+     "precision": 0.539125,
+     "recall": 0.670498
+    },
+    "a_mean_of_pass_f1": 0.676261,
+    "b_mean_of_pass_f1": 0.597703,
+    "n_tiles": 487,
+    "contrast": "image T 0.0 minus T 0.7 at HIGH",
+    "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+     "floor": 0.020497,
+     "floor_k": 1,
+     "n_per_arm": 3,
+     "scaled_floor": 0.011834,
+     "verdict": "clears"
+    },
+    "_note": "secondary; raw permutation p, in no BH family"
+   },
+   "image HIGH minus MEDIUM at T 0.7": {
+    "delta (pass-averaged micro)": 0.006862,
+    "delta (mean of per-pass F1)": 0.006877,
+    "delta_ci95_paired_bootstrap": {
+     "lower": -0.02441,
+     "upper": 0.036947
+    },
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.006862,
+     "bootstrap_delta_mean": 0.006533,
+     "ci95": {
+      "lower": -0.02441,
+      "upper": 0.036947
+     },
+     "p_value": 0.6706,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 179,
+     "ci_excludes_zero": false
+    },
+    "a": {
+     "f1": 0.597678,
+     "precision": 0.539125,
+     "recall": 0.670498
+    },
+    "b": {
+     "f1": 0.590816,
+     "precision": 0.534408,
+     "recall": 0.660536
+    },
+    "a_mean_of_pass_f1": 0.597703,
+    "b_mean_of_pass_f1": 0.590826,
+    "n_tiles": 487,
+    "contrast": "image HIGH minus MEDIUM at T 0.7",
+    "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+     "floor": 0.020497,
+     "floor_k": 1,
+     "n_per_arm": 3,
+     "scaled_floor": 0.011834,
+     "verdict": "inside"
+    },
+    "_note": "secondary; raw permutation p, in no BH family"
+   },
+   "image corner gap (HIGH T 0.0 minus MEDIUM T 0.7)": {
+    "delta (pass-averaged micro)": 0.085443,
+    "delta (mean of per-pass F1)": 0.085435,
+    "delta_ci95_paired_bootstrap": {
+     "lower": 0.055233,
+     "upper": 0.114742
+    },
+    "delta_bootstrap": {
+     "n_iterations": 1000,
+     "seed": 42,
+     "observed_delta": 0.085443,
+     "bootstrap_delta_mean": 0.084942,
+     "ci95": {
+      "lower": 0.055233,
+      "upper": 0.114742
+     },
+     "p_value": 0.0,
+     "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+     "n_permutations": 10000,
+     "n_discordant_tiles": 174,
+     "ci_excludes_zero": true
+    },
+    "a": {
+     "f1": 0.676259,
+     "precision": 0.611524,
+     "recall": 0.756322
+    },
+    "b": {
+     "f1": 0.590816,
+     "precision": 0.534408,
+     "recall": 0.660536
+    },
+    "a_mean_of_pass_f1": 0.676261,
+    "b_mean_of_pass_f1": 0.590826,
+    "n_tiles": 487,
+    "contrast": "image corner gap (HIGH T 0.0 minus MEDIUM T 0.7)",
+    "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+     "floor": 0.020497,
+     "floor_k": 1,
+     "n_per_arm": 3,
+     "scaled_floor": 0.011834,
+     "verdict": "clears"
+    },
+    "_note": "secondary; raw permutation p, in no BH family"
+   }
+  },
+  "pooled_six_pass": {
+   "floors": {
+    "text": {
+     "k": 2,
+     "p95": 0.011559,
+     "by_k": {
+      "1": {
+       "pooled": {
+        "pairs": 40,
+        "p95": 0.014681,
+        "median": 0.006331,
+        "max": 0.018259,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "text-high-t0.0": {
+         "pairs": 10,
+         "p95": 0.004845,
+         "median": 0.002497,
+         "max": 0.005458,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-high-t0.7": {
+         "pairs": 10,
+         "p95": 0.014044,
+         "median": 0.006611,
+         "max": 0.014946,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.0": {
+         "pairs": 10,
+         "p95": 0.016643,
+         "median": 0.008229,
+         "max": 0.018259,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.7": {
+         "pairs": 10,
+         "p95": 0.012889,
+         "median": 0.010235,
+         "max": 0.012911,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      },
+      "2": {
+       "pooled": {
+        "pairs": 60,
+        "p95": 0.011559,
+        "median": 0.002829,
+        "max": 0.012978,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "text-high-t0.0": {
+         "pairs": 15,
+         "p95": 0.003255,
+         "median": 0.001823,
+         "max": 0.00341,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-high-t0.7": {
+         "pairs": 15,
+         "p95": 0.010748,
+         "median": 0.004237,
+         "max": 0.010842,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.0": {
+         "pairs": 15,
+         "p95": 0.012358,
+         "median": 0.006266,
+         "max": 0.012978,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.7": {
+         "pairs": 15,
+         "p95": 0.011562,
+         "median": 0.005139,
+         "max": 0.011571,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      }
+     }
+    },
+    "image": {
+     "k": 3,
+     "p95": 0.02127,
+     "by_k": {
+      "1": {
+       "pooled": {
+        "pairs": 60,
+        "p95": 0.037302,
+        "median": 0.013108,
+        "max": 0.051335,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 15,
+         "p95": 0.016886,
+         "median": 0.007438,
+         "max": 0.019802,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 15,
+         "p95": 0.032978,
+         "median": 0.015238,
+         "max": 0.037286,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.0": {
+         "pairs": 15,
+         "p95": 0.026837,
+         "median": 0.010373,
+         "max": 0.02829,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.7": {
+         "pairs": 15,
+         "p95": 0.045161,
+         "median": 0.019731,
+         "max": 0.051335,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      },
+      "2": {
+       "pooled": {
+        "pairs": 180,
+        "p95": 0.02632,
+        "median": 0.008775,
+        "max": 0.040062,
+        "tile_swap_reject_rate": 0.0278
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 45,
+         "p95": 0.013097,
+         "median": 0.005782,
+         "max": 0.014118,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 45,
+         "p95": 0.025048,
+         "median": 0.01099,
+         "max": 0.03054,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.0": {
+         "pairs": 45,
+         "p95": 0.017531,
+         "median": 0.008299,
+         "max": 0.020709,
+         "tile_swap_reject_rate": 0.0222
+        },
+        "image-medium-t0.7": {
+         "pairs": 45,
+         "p95": 0.033744,
+         "median": 0.01427,
+         "max": 0.040062,
+         "tile_swap_reject_rate": 0.0889
+        }
+       }
+      },
+      "3": {
+       "pooled": {
+        "pairs": 40,
+        "p95": 0.02127,
+        "median": 0.006364,
+        "max": 0.027539,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 10,
+         "p95": 0.00961,
+         "median": 0.004568,
+         "max": 0.011477,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 10,
+         "p95": 0.020465,
+         "median": 0.007942,
+         "max": 0.021027,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.0": {
+         "pairs": 10,
+         "p95": 0.013879,
+         "median": 0.006672,
+         "max": 0.014501,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.7": {
+         "pairs": 10,
+         "p95": 0.026795,
+         "median": 0.011166,
+         "max": 0.027539,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      }
+     }
+    }
+   },
+   "factor_T": {
+    "text HIGH": {
+     "delta (pass-averaged micro)": 0.050028,
+     "delta (mean of per-pass F1)": 0.050041,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.026174,
+      "upper": 0.072334
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.050028,
+      "bootstrap_delta_mean": 0.05006,
+      "ci95": {
+       "lower": 0.026174,
+       "upper": 0.072334
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 168,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.800819,
+      "precision": 0.792173,
+      "recall": 0.809655
+     },
+     "b": {
+      "f1": 0.75079,
+      "precision": 0.737472,
+      "recall": 0.764598
+     },
+     "a_mean_of_pass_f1": 0.80082,
+     "b_mean_of_pass_f1": 0.750779,
+     "n_tiles": 487,
+     "contrast": "T 0.0 minus T 0.7 at HIGH (text)",
+     "rule_fires (pass-averaged)": true,
+     "rule_fires (mean of per-pass)": true,
+     "estimator_split": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.011559,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007311,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.009323,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.005897,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted": 0.0,
+     "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "bh_rejects_at_q_0.05": true,
+     "p_bh_adjusted (all eight)": 0.0
+    },
+    "text MEDIUM": {
+     "delta (pass-averaged micro)": 0.04637,
+     "delta (mean of per-pass F1)": 0.046391,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.021802,
+      "upper": 0.070435
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.04637,
+      "bootstrap_delta_mean": 0.046293,
+      "ci95": {
+       "lower": 0.021802,
+       "upper": 0.070435
+      },
+      "p_value": 0.0002,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 206,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.798206,
+      "precision": 0.778993,
+      "recall": 0.818391
+     },
+     "b": {
+      "f1": 0.751836,
+      "precision": 0.728645,
+      "recall": 0.776552
+     },
+     "a_mean_of_pass_f1": 0.798236,
+     "b_mean_of_pass_f1": 0.751845,
+     "n_tiles": 487,
+     "contrast": "T 0.0 minus T 0.7 at MEDIUM (text)",
+     "rule_fires (pass-averaged)": true,
+     "rule_fires (mean of per-pass)": true,
+     "estimator_split": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.011559,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007311,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.011858,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.0075,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted": 0.000267,
+     "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "bh_rejects_at_q_0.05": true,
+     "p_bh_adjusted (all eight)": 0.000533
+    },
+    "image HIGH": {
+     "delta (pass-averaged micro)": 0.073815,
+     "delta (mean of per-pass F1)": 0.073795,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.048021,
+      "upper": 0.099049
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.073815,
+      "bootstrap_delta_mean": 0.073673,
+      "ci95": {
+       "lower": 0.048021,
+       "upper": 0.099049
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 204,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.68199,
+      "precision": 0.617391,
+      "recall": 0.761686
+     },
+     "b": {
+      "f1": 0.608175,
+      "precision": 0.549274,
+      "recall": 0.681226
+     },
+     "a_mean_of_pass_f1": 0.681991,
+     "b_mean_of_pass_f1": 0.608196,
+     "n_tiles": 487,
+     "contrast": "T 0.0 minus T 0.7 at HIGH (image)",
+     "rule_fires (pass-averaged)": true,
+     "rule_fires (mean of per-pass)": true,
+     "estimator_split": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.02127,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01504,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.019841,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01403,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted": 0.0,
+     "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "bh_rejects_at_q_0.05": true,
+     "p_bh_adjusted (all eight)": 0.0
+    },
+    "image MEDIUM": {
+     "delta (pass-averaged micro)": 0.049421,
+     "delta (mean of per-pass F1)": 0.049428,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.023462,
+      "upper": 0.076141
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.049421,
+      "bootstrap_delta_mean": 0.049382,
+      "ci95": {
+       "lower": 0.023462,
+       "upper": 0.076141
+      },
+      "p_value": 0.0005,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 195,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.653188,
+      "precision": 0.594901,
+      "recall": 0.724138
+     },
+     "b": {
+      "f1": 0.603767,
+      "precision": 0.54582,
+      "recall": 0.675479
+     },
+     "a_mean_of_pass_f1": 0.653195,
+     "b_mean_of_pass_f1": 0.603767,
+     "n_tiles": 487,
+     "contrast": "T 0.0 minus T 0.7 at MEDIUM (image)",
+     "rule_fires (pass-averaged)": true,
+     "rule_fires (mean of per-pass)": true,
+     "estimator_split": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.02127,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01504,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.025968,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.018362,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted": 0.0005,
+     "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "bh_rejects_at_q_0.05": true,
+     "p_bh_adjusted (all eight)": 0.001
+    }
+   },
+   "thinking": {
+    "text thinking at T 0.0": {
+     "delta (pass-averaged micro)": 0.002612,
+     "delta (mean of per-pass F1)": 0.002584,
+     "delta_ci95_paired_bootstrap": {
+      "lower": -0.023766,
+      "upper": 0.027645
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.002612,
+      "bootstrap_delta_mean": 0.002761,
+      "ci95": {
+       "lower": -0.023766,
+       "upper": 0.027645
+      },
+      "p_value": 0.839,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 103,
+      "ci_excludes_zero": false
+     },
+     "a": {
+      "f1": 0.800819,
+      "precision": 0.792173,
+      "recall": 0.809655
+     },
+     "b": {
+      "f1": 0.798206,
+      "precision": 0.778993,
+      "recall": 0.818391
+     },
+     "a_mean_of_pass_f1": 0.80082,
+     "b_mean_of_pass_f1": 0.798236,
+     "n_tiles": 487,
+     "contrast": "HIGH minus MEDIUM at T 0.0 (text)",
+     "reaches_0.03 (pass-averaged)": false,
+     "reaches_0.03 (mean of per-pass)": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.011559,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007311,
+       "verdict": "inside"
+      },
+      "two_corners_pooled": {
+       "floor": 0.011176,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007069,
+       "verdict": "inside"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted (all eight)": 0.9239,
+     "p_bh_adjusted (thinking family)": 0.9239,
+     "bh_rejects_at_q (thinking family)": false
+    },
+    "text thinking at T 0.7": {
+     "delta (pass-averaged micro)": -0.001046,
+     "delta (mean of per-pass F1)": -0.001066,
+     "delta_ci95_paired_bootstrap": {
+      "lower": -0.023557,
+      "upper": 0.020142
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": -0.001046,
+      "bootstrap_delta_mean": -0.001006,
+      "ci95": {
+       "lower": -0.023557,
+       "upper": 0.020142
+      },
+      "p_value": 0.9239,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 205,
+      "ci_excludes_zero": false
+     },
+     "a": {
+      "f1": 0.75079,
+      "precision": 0.737472,
+      "recall": 0.764598
+     },
+     "b": {
+      "f1": 0.751836,
+      "precision": 0.728645,
+      "recall": 0.776552
+     },
+     "a_mean_of_pass_f1": 0.750779,
+     "b_mean_of_pass_f1": 0.751845,
+     "n_tiles": 487,
+     "contrast": "HIGH minus MEDIUM at T 0.7 (text)",
+     "reaches_0.03 (pass-averaged)": false,
+     "reaches_0.03 (mean of per-pass)": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.011559,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007311,
+       "verdict": "inside"
+      },
+      "two_corners_pooled": {
+       "floor": 0.011547,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007303,
+       "verdict": "inside"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted (all eight)": 0.9239,
+     "p_bh_adjusted (thinking family)": 0.9239,
+     "bh_rejects_at_q (thinking family)": false
+    },
+    "image thinking at T 0.0": {
+     "delta (pass-averaged micro)": 0.028802,
+     "delta (mean of per-pass F1)": 0.028796,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.00453,
+      "upper": 0.054002
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.028802,
+      "bootstrap_delta_mean": 0.028768,
+      "ci95": {
+       "lower": 0.00453,
+       "upper": 0.054002
+      },
+      "p_value": 0.0252,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 150,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.68199,
+      "precision": 0.617391,
+      "recall": 0.761686
+     },
+     "b": {
+      "f1": 0.653188,
+      "precision": 0.594901,
+      "recall": 0.724138
+     },
+     "a_mean_of_pass_f1": 0.681991,
+     "b_mean_of_pass_f1": 0.653195,
+     "n_tiles": 487,
+     "contrast": "HIGH minus MEDIUM at T 0.0 (image)",
+     "reaches_0.03 (pass-averaged)": false,
+     "reaches_0.03 (mean of per-pass)": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.02127,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01504,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.013188,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.009325,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted (all eight)": 0.04032,
+     "p_bh_adjusted (thinking family)": 0.1008,
+     "bh_rejects_at_q (thinking family)": false
+    },
+    "image thinking at T 0.7": {
+     "delta (pass-averaged micro)": 0.004408,
+     "delta (mean of per-pass F1)": 0.004429,
+     "delta_ci95_paired_bootstrap": {
+      "lower": -0.017612,
+      "upper": 0.027212
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.004408,
+      "bootstrap_delta_mean": 0.004476,
+      "ci95": {
+       "lower": -0.017612,
+       "upper": 0.027212
+      },
+      "p_value": 0.7208,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 195,
+      "ci_excludes_zero": false
+     },
+     "a": {
+      "f1": 0.608175,
+      "precision": 0.549274,
+      "recall": 0.681226
+     },
+     "b": {
+      "f1": 0.603767,
+      "precision": 0.54582,
+      "recall": 0.675479
+     },
+     "a_mean_of_pass_f1": 0.608196,
+     "b_mean_of_pass_f1": 0.603767,
+     "n_tiles": 487,
+     "contrast": "HIGH minus MEDIUM at T 0.7 (image)",
+     "reaches_0.03 (pass-averaged)": false,
+     "reaches_0.03 (mean of per-pass)": false,
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.02127,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01504,
+       "verdict": "inside"
+      },
+      "two_corners_pooled": {
+       "floor": 0.025968,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.018362,
+       "verdict": "inside"
+      },
+      "verdicts_differ": false
+     },
+     "p_bh_adjusted (all eight)": 0.9239,
+     "p_bh_adjusted (thinking family)": 0.9239,
+     "bh_rejects_at_q (thinking family)": false
+    }
+   },
+   "corner_gap": {
+    "text": {
+     "delta (pass-averaged micro)": 0.048982,
+     "delta (mean of per-pass F1)": 0.048975,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.024096,
+      "upper": 0.073025
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.048982,
+      "bootstrap_delta_mean": 0.049054,
+      "ci95": {
+       "lower": 0.024096,
+       "upper": 0.073025
+      },
+      "p_value": 0.0002,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 207,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.800819,
+      "precision": 0.792173,
+      "recall": 0.809655
+     },
+     "b": {
+      "f1": 0.751836,
+      "precision": 0.728645,
+      "recall": 0.776552
+     },
+     "a_mean_of_pass_f1": 0.80082,
+     "b_mean_of_pass_f1": 0.751845,
+     "n_tiles": 487,
+     "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (text); no BH family",
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.011559,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007311,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.011547,
+       "floor_k": 2,
+       "n_per_arm": 5,
+       "scaled_floor": 0.007303,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "decomposition": {
+      "T at HIGH + thinking at T 0.7": [
+       0.050028,
+       -0.001046,
+       0.048982
+      ],
+      "T at MEDIUM + thinking at T 0.0": [
+       0.04637,
+       0.002612,
+       0.048982
+      ],
+      "temperature share (via HIGH)": 1.0214,
+      "temperature share (via MEDIUM)": 0.9467,
+      "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+     }
+    },
+    "image": {
+     "delta (pass-averaged micro)": 0.078223,
+     "delta (mean of per-pass F1)": 0.078224,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.050222,
+      "upper": 0.104337
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.078223,
+      "bootstrap_delta_mean": 0.07815,
+      "ci95": {
+       "lower": 0.050222,
+       "upper": 0.104337
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 208,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.68199,
+      "precision": 0.617391,
+      "recall": 0.761686
+     },
+     "b": {
+      "f1": 0.603767,
+      "precision": 0.54582,
+      "recall": 0.675479
+     },
+     "a_mean_of_pass_f1": 0.681991,
+     "b_mean_of_pass_f1": 0.603767,
+     "n_tiles": 487,
+     "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (image); no BH family",
+     "floor": {
+      "modality_pooled": {
+       "floor": 0.02127,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.01504,
+       "verdict": "clears"
+      },
+      "two_corners_pooled": {
+       "floor": 0.025968,
+       "floor_k": 3,
+       "n_per_arm": 6,
+       "scaled_floor": 0.018362,
+       "verdict": "clears"
+      },
+      "verdicts_differ": false
+     },
+     "decomposition": {
+      "T at HIGH + thinking at T 0.7": [
+       0.073815,
+       0.004408,
+       0.078223
+      ],
+      "T at MEDIUM + thinking at T 0.0": [
+       0.049421,
+       0.028802,
+       0.078223
+      ],
+      "temperature share (via HIGH)": 0.9436,
+      "temperature share (via MEDIUM)": 0.6318,
+      "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+     }
+    }
+   },
+   "bh_factor_T": {
+    "method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+    "q": 0.05,
+    "family": [
+     "text HIGH",
+     "text MEDIUM",
+     "image HIGH",
+     "image MEDIUM"
+    ],
+    "p_permutation": {
+     "text HIGH": 0.0,
+     "text MEDIUM": 0.0002,
+     "image HIGH": 0.0,
+     "image MEDIUM": 0.0005
+    },
+    "p_bh_adjusted": {
+     "text HIGH": 0.0,
+     "text MEDIUM": 0.000267,
+     "image HIGH": 0.0,
+     "image MEDIUM": 0.0005
+    },
+    "rejected_at_q": {
+     "text HIGH": true,
+     "text MEDIUM": true,
+     "image HIGH": true,
+     "image MEDIUM": true
+    },
+    "_note": "The registered A-06 rule (delta >= 0.03, no CI or p condition) decides the flag; the BH-adjusted permutation p is the D42 testing convention reported beside it. A p of 0 means no permutation of 10,000 reached the observed |delta| (p < 0.0001)."
+   },
+   "bh_thinking": {
+    "family": [
+     "text thinking at T 0.0",
+     "text thinking at T 0.7",
+     "image thinking at T 0.0",
+     "image thinking at T 0.7"
+    ],
+    "q": 0.05,
+    "p_permutation": {
+     "text thinking at T 0.0": 0.839,
+     "text thinking at T 0.7": 0.9239,
+     "image thinking at T 0.0": 0.0252,
+     "image thinking at T 0.7": 0.7208
+    },
+    "p_bh_adjusted": {
+     "text thinking at T 0.0": 0.9239,
+     "text thinking at T 0.7": 0.9239,
+     "image thinking at T 0.0": 0.1008,
+     "image thinking at T 0.7": 0.9239
+    }
+   },
+   "bh_all_eight": {
+    "text HIGH": 0.0,
+    "text MEDIUM": 0.000533,
+    "image HIGH": 0.0,
+    "image MEDIUM": 0.001,
+    "text thinking at T 0.0": 0.9239,
+    "text thinking at T 0.7": 0.9239,
+    "image thinking at T 0.0": 0.04032,
+    "image thinking at T 0.7": 0.9239
+   },
+   "answer": {
+    "text": {
+     "label": "temperature is the driver",
+     "factor_T_flags": {
+      "high": {
+       "R": true,
+       "P": true,
+       "F": true
+      },
+      "medium": {
+       "R": true,
+       "P": true,
+       "F": true
+      }
+     },
+     "thinking_flags": {
+      "0.0": {
+       "R": false,
+       "P": false,
+       "F": false
+      },
+      "0.7": {
+       "R": false,
+       "P": false,
+       "F": false
+      }
+     },
+     "thinking_configuration_claim": false
+    },
+    "image": {
+     "label": "temperature is the driver",
+     "factor_T_flags": {
+      "high": {
+       "R": true,
+       "P": true,
+       "F": true
+      },
+      "medium": {
+       "R": true,
+       "P": true,
+       "F": true
+      }
+     },
+     "thinking_flags": {
+      "0.0": {
+       "R": false,
+       "P": false,
+       "F": true
+      },
+      "0.7": {
+       "R": false,
+       "P": false,
+       "F": false
+      }
+     },
+     "thinking_configuration_claim": false
+    }
+   }
+  },
+  "day_effect": {
+   "within_day_floor_k1": {
+    "pairs": 24,
+    "p95": 0.025387,
+    "median": 0.008684,
+    "max": 0.033469,
+    "tile_swap_reject_rate": 0.0
+   },
+   "floor_passes_1_3": {
+    "pairs": 12,
+    "p95": 0.029479,
+    "median": 0.011143,
+    "max": 0.033469,
+    "tile_swap_reject_rate": 0.0
+   },
+   "floor_passes_4_6": {
+    "pairs": 12,
+    "p95": 0.020497,
+    "median": 0.008559,
+    "max": 0.020698,
+    "tile_swap_reject_rate": 0.0
+   },
+   "corners": {
+    "image-high-t0.0": {
+     "f1_passes_1_3": 0.687736,
+     "f1_passes_4_6": 0.676259,
+     "delta (4-6 minus 1-3)": -0.011477,
+     "abs_delta": 0.011477,
+     "p_tile_swap": 0.3123,
+     "n_discordant_tiles": 115,
+     "verdict_vs_within_day_floor": {
+      "floor": 0.025387,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.014657,
+      "verdict": "inside"
+     },
+     "exceeds_floor_1_3": false,
+     "exceeds_floor_4_6": false,
+     "day_split_rank_of_10": 1
+    },
+    "image-high-t0.7": {
+     "f1_passes_1_3": 0.618705,
+     "f1_passes_4_6": 0.597678,
+     "delta (4-6 minus 1-3)": -0.021027,
+     "abs_delta": 0.021027,
+     "p_tile_swap": 0.1467,
+     "n_discordant_tiles": 180,
+     "verdict_vs_within_day_floor": {
+      "floor": 0.025387,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.014657,
+      "verdict": "clears only the scaled floor"
+     },
+     "exceeds_floor_1_3": false,
+     "exceeds_floor_4_6": true,
+     "day_split_rank_of_10": 1
+    },
+    "image-medium-t0.0": {
+     "f1_passes_1_3": 0.650311,
+     "f1_passes_4_6": 0.656066,
+     "delta (4-6 minus 1-3)": 0.005755,
+     "abs_delta": 0.005755,
+     "p_tile_swap": 0.4059,
+     "n_discordant_tiles": 82,
+     "verdict_vs_within_day_floor": {
+      "floor": 0.025387,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.014657,
+      "verdict": "inside"
+     },
+     "exceeds_floor_1_3": false,
+     "exceeds_floor_4_6": false,
+     "day_split_rank_of_10": 6
+    },
+    "image-medium-t0.7": {
+     "f1_passes_1_3": 0.616701,
+     "f1_passes_4_6": 0.590816,
+     "delta (4-6 minus 1-3)": -0.025885,
+     "abs_delta": 0.025885,
+     "p_tile_swap": 0.0547,
+     "n_discordant_tiles": 159,
+     "verdict_vs_within_day_floor": {
+      "floor": 0.025387,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.014657,
+      "verdict": "clears"
+     },
+     "exceeds_floor_1_3": false,
+     "exceeds_floor_4_6": true,
+     "day_split_rank_of_10": 2
+    }
+   }
+  },
+  "sensitivity_realtime_15": {
+   "dropped_tiles": [
+    "K-35-053-3_Elenovo_x1680_y3696.png",
+    "K-35-053-3_Elenovo_x3024_y1344.png",
+    "K-35-062-2_Rakovski_x1680_y2688.png",
+    "K-35-062-2_Rakovski_x2352_y2688.png",
+    "K-35-062-2_Rakovski_x2688_y1344.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-062-2_Rakovski_x672_y1344.png",
+    "K-35-078-1_Lesovo_x1680_y2016.png",
+    "K-35-078-1_Lesovo_x2352_y1344.png",
+    "K-35-078-1_Lesovo_x2688_y1344.png",
+    "K-35-078-1_Lesovo_x3360_y1680.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png"
+   ],
+   "n_dropped": 15,
+   "applies_to": [
+    "text HIGH",
+    "text corner gap",
+    "text thinking at T 0.0",
+    "text thinking at T 0.7"
+   ],
+   "confirmatory": "unchanged by construction (no text corner in C1 or C2)",
+   "pooled_six_pass": {
+    "floors_text": {
+     "k": 2,
+     "p95": 0.013475,
+     "by_k": {
+      "1": {
+       "pooled": {
+        "pairs": 40,
+        "p95": 0.016854,
+        "median": 0.006043,
+        "max": 0.018959,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "text-high-t0.0": {
+         "pairs": 10,
+         "p95": 0.005621,
+         "median": 0.00281,
+         "max": 0.005621,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-high-t0.7": {
+         "pairs": 10,
+         "p95": 0.016277,
+         "median": 0.008408,
+         "max": 0.016817,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.0": {
+         "pairs": 10,
+         "p95": 0.016664,
+         "median": 0.007861,
+         "max": 0.018959,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.7": {
+         "pairs": 10,
+         "p95": 0.016938,
+         "median": 0.010037,
+         "max": 0.017556,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      },
+      "2": {
+       "pooled": {
+        "pairs": 60,
+        "p95": 0.013475,
+        "median": 0.003785,
+        "max": 0.013801,
+        "tile_swap_reject_rate": 0.0
+       },
+       "per_corner": {
+        "text-high-t0.0": {
+         "pairs": 15,
+         "p95": 0.004051,
+         "median": 0.001654,
+         "max": 0.004223,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-high-t0.7": {
+         "pairs": 15,
+         "p95": 0.012085,
+         "median": 0.005379,
+         "max": 0.013617,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.0": {
+         "pairs": 15,
+         "p95": 0.012825,
+         "median": 0.006031,
+         "max": 0.013468,
+         "tile_swap_reject_rate": 0.0
+        },
+        "text-medium-t0.7": {
+         "pairs": 15,
+         "p95": 0.013786,
+         "median": 0.005735,
+         "max": 0.013801,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      }
+     }
+    },
+    "factor_T": {
+     "text HIGH": {
+      "delta (pass-averaged micro)": 0.050675,
+      "delta (mean of per-pass F1)": 0.050695,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.027409,
+       "upper": 0.072725
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.050675,
+       "bootstrap_delta_mean": 0.050712,
+       "ci95": {
+        "lower": 0.027409,
+        "upper": 0.072725
+       },
+       "p_value": 0.0001,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 163,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.803463,
+       "precision": 0.790152,
+       "recall": 0.81723
+      },
+      "b": {
+       "f1": 0.752788,
+       "precision": 0.738041,
+       "recall": 0.768137
+      },
+      "a_mean_of_pass_f1": 0.803465,
+      "b_mean_of_pass_f1": 0.75277,
+      "n_tiles": 472,
+      "contrast": "T 0.0 minus T 0.7 at HIGH (text)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.013475,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008522,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011063,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.006997,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0002,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.0004
+     },
+     "text MEDIUM": {
+      "delta (pass-averaged micro)": 0.04637,
+      "delta (mean of per-pass F1)": 0.046391,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.021802,
+       "upper": 0.070435
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.04637,
+       "bootstrap_delta_mean": 0.046293,
+       "ci95": {
+        "lower": 0.021802,
+        "upper": 0.070435
+       },
+       "p_value": 0.0002,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 206,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.798206,
+       "precision": 0.778993,
+       "recall": 0.818391
+      },
+      "b": {
+       "f1": 0.751836,
+       "precision": 0.728645,
+       "recall": 0.776552
+      },
+      "a_mean_of_pass_f1": 0.798236,
+      "b_mean_of_pass_f1": 0.751845,
+      "n_tiles": 487,
+      "contrast": "T 0.0 minus T 0.7 at MEDIUM (text)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011858,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.0075,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.000267,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.000533
+     },
+     "image HIGH": {
+      "delta (pass-averaged micro)": 0.073815,
+      "delta (mean of per-pass F1)": 0.073795,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.048021,
+       "upper": 0.099049
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.073815,
+       "bootstrap_delta_mean": 0.073673,
+       "ci95": {
+        "lower": 0.048021,
+        "upper": 0.099049
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 204,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.68199,
+       "precision": 0.617391,
+       "recall": 0.761686
+      },
+      "b": {
+       "f1": 0.608175,
+       "precision": 0.549274,
+       "recall": 0.681226
+      },
+      "a_mean_of_pass_f1": 0.681991,
+      "b_mean_of_pass_f1": 0.608196,
+      "n_tiles": 487,
+      "contrast": "T 0.0 minus T 0.7 at HIGH (image)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.02127,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01504,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.019841,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01403,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.0
+     },
+     "image MEDIUM": {
+      "delta (pass-averaged micro)": 0.049421,
+      "delta (mean of per-pass F1)": 0.049428,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.023462,
+       "upper": 0.076141
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.049421,
+       "bootstrap_delta_mean": 0.049382,
+       "ci95": {
+        "lower": 0.023462,
+        "upper": 0.076141
+       },
+       "p_value": 0.0005,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 195,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.653188,
+       "precision": 0.594901,
+       "recall": 0.724138
+      },
+      "b": {
+       "f1": 0.603767,
+       "precision": 0.54582,
+       "recall": 0.675479
+      },
+      "a_mean_of_pass_f1": 0.653195,
+      "b_mean_of_pass_f1": 0.603767,
+      "n_tiles": 487,
+      "contrast": "T 0.0 minus T 0.7 at MEDIUM (image)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.02127,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01504,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.025968,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.018362,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0005,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.001
+     }
+    },
+    "thinking": {
+     "text thinking at T 0.0": {
+      "delta (pass-averaged micro)": 0.001512,
+      "delta (mean of per-pass F1)": 0.001486,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.021741,
+       "upper": 0.025591
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.001512,
+       "bootstrap_delta_mean": 0.001849,
+       "ci95": {
+        "lower": -0.021741,
+        "upper": 0.025591
+       },
+       "p_value": 0.9023,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 100,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.803463,
+       "precision": 0.790152,
+       "recall": 0.81723
+      },
+      "b": {
+       "f1": 0.80195,
+       "precision": 0.78322,
+       "recall": 0.821598
+      },
+      "a_mean_of_pass_f1": 0.803465,
+      "b_mean_of_pass_f1": 0.801979,
+      "n_tiles": 472,
+      "contrast": "HIGH minus MEDIUM at T 0.0 (text)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.013475,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008522,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011602,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007338,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.9702,
+      "p_bh_adjusted (thinking family)": 0.9702,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "text thinking at T 0.7": {
+      "delta (pass-averaged micro)": -0.000429,
+      "delta (mean of per-pass F1)": -0.000461,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.021861,
+       "upper": 0.02163
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": -0.000429,
+       "bootstrap_delta_mean": 0.000228,
+       "ci95": {
+        "lower": -0.021861,
+        "upper": 0.02163
+       },
+       "p_value": 0.9702,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 200,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.752788,
+       "precision": 0.738041,
+       "recall": 0.768137
+      },
+      "b": {
+       "f1": 0.753217,
+       "precision": 0.730392,
+       "recall": 0.777514
+      },
+      "a_mean_of_pass_f1": 0.75277,
+      "b_mean_of_pass_f1": 0.753231,
+      "n_tiles": 472,
+      "contrast": "HIGH minus MEDIUM at T 0.7 (text)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.013475,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008522,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.013706,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008668,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.9702,
+      "p_bh_adjusted (thinking family)": 0.9702,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "image thinking at T 0.0": {
+      "delta (pass-averaged micro)": 0.028802,
+      "delta (mean of per-pass F1)": 0.028796,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.00453,
+       "upper": 0.054002
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.028802,
+       "bootstrap_delta_mean": 0.028768,
+       "ci95": {
+        "lower": 0.00453,
+        "upper": 0.054002
+       },
+       "p_value": 0.0252,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 150,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.68199,
+       "precision": 0.617391,
+       "recall": 0.761686
+      },
+      "b": {
+       "f1": 0.653188,
+       "precision": 0.594901,
+       "recall": 0.724138
+      },
+      "a_mean_of_pass_f1": 0.681991,
+      "b_mean_of_pass_f1": 0.653195,
+      "n_tiles": 487,
+      "contrast": "HIGH minus MEDIUM at T 0.0 (image)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.02127,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01504,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.013188,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.009325,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.04032,
+      "p_bh_adjusted (thinking family)": 0.1008,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "image thinking at T 0.7": {
+      "delta (pass-averaged micro)": 0.004408,
+      "delta (mean of per-pass F1)": 0.004429,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.017612,
+       "upper": 0.027212
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.004408,
+       "bootstrap_delta_mean": 0.004476,
+       "ci95": {
+        "lower": -0.017612,
+        "upper": 0.027212
+       },
+       "p_value": 0.7208,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 195,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.608175,
+       "precision": 0.549274,
+       "recall": 0.681226
+      },
+      "b": {
+       "f1": 0.603767,
+       "precision": 0.54582,
+       "recall": 0.675479
+      },
+      "a_mean_of_pass_f1": 0.608196,
+      "b_mean_of_pass_f1": 0.603767,
+      "n_tiles": 487,
+      "contrast": "HIGH minus MEDIUM at T 0.7 (image)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.02127,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01504,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.025968,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.018362,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.961067,
+      "p_bh_adjusted (thinking family)": 0.9702,
+      "bh_rejects_at_q (thinking family)": false
+     }
+    },
+    "corner_gap": {
+     "text": {
+      "delta (pass-averaged micro)": 0.050246,
+      "delta (mean of per-pass F1)": 0.050234,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.026367,
+       "upper": 0.076117
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.050246,
+       "bootstrap_delta_mean": 0.050939,
+       "ci95": {
+        "lower": 0.026367,
+        "upper": 0.076117
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 201,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.803463,
+       "precision": 0.790152,
+       "recall": 0.81723
+      },
+      "b": {
+       "f1": 0.753217,
+       "precision": 0.730392,
+       "recall": 0.777514
+      },
+      "a_mean_of_pass_f1": 0.803465,
+      "b_mean_of_pass_f1": 0.753231,
+      "n_tiles": 472,
+      "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (text); no BH family",
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.013475,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008522,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.013468,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.008518,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "decomposition": {
+       "T at HIGH + thinking at T 0.7": [
+        0.050675,
+        -0.000429,
+        0.050246
+       ],
+       "T at MEDIUM + thinking at T 0.0": [
+        0.04637,
+        0.001512,
+        0.047882
+       ],
+       "temperature share (via HIGH)": 1.0085,
+       "temperature share (via MEDIUM)": 0.9229,
+       "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+      }
+     },
+     "image": {
+      "delta (pass-averaged micro)": 0.078223,
+      "delta (mean of per-pass F1)": 0.078224,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.050222,
+       "upper": 0.104337
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.078223,
+       "bootstrap_delta_mean": 0.07815,
+       "ci95": {
+        "lower": 0.050222,
+        "upper": 0.104337
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 208,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.68199,
+       "precision": 0.617391,
+       "recall": 0.761686
+      },
+      "b": {
+       "f1": 0.603767,
+       "precision": 0.54582,
+       "recall": 0.675479
+      },
+      "a_mean_of_pass_f1": 0.681991,
+      "b_mean_of_pass_f1": 0.603767,
+      "n_tiles": 487,
+      "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (image); no BH family",
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.02127,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.01504,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.025968,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.018362,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "decomposition": {
+       "T at HIGH + thinking at T 0.7": [
+        0.073815,
+        0.004408,
+        0.078223
+       ],
+       "T at MEDIUM + thinking at T 0.0": [
+        0.049421,
+        0.028802,
+        0.078223
+       ],
+       "temperature share (via HIGH)": 0.9436,
+       "temperature share (via MEDIUM)": 0.6318,
+       "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+      }
+     }
+    },
+    "bh_factor_T": {
+     "method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "q": 0.05,
+     "family": [
+      "text HIGH",
+      "text MEDIUM",
+      "image HIGH",
+      "image MEDIUM"
+     ],
+     "p_permutation": {
+      "text HIGH": 0.0001,
+      "text MEDIUM": 0.0002,
+      "image HIGH": 0.0,
+      "image MEDIUM": 0.0005
+     },
+     "p_bh_adjusted": {
+      "text HIGH": 0.0002,
+      "text MEDIUM": 0.000267,
+      "image HIGH": 0.0,
+      "image MEDIUM": 0.0005
+     },
+     "rejected_at_q": {
+      "text HIGH": true,
+      "text MEDIUM": true,
+      "image HIGH": true,
+      "image MEDIUM": true
+     },
+     "_note": "The registered A-06 rule (delta >= 0.03, no CI or p condition) decides the flag; the BH-adjusted permutation p is the D42 testing convention reported beside it. A p of 0 means no permutation of 10,000 reached the observed |delta| (p < 0.0001)."
+    },
+    "bh_thinking": {
+     "family": [
+      "text thinking at T 0.0",
+      "text thinking at T 0.7",
+      "image thinking at T 0.0",
+      "image thinking at T 0.7"
+     ],
+     "q": 0.05,
+     "p_permutation": {
+      "text thinking at T 0.0": 0.9023,
+      "text thinking at T 0.7": 0.9702,
+      "image thinking at T 0.0": 0.0252,
+      "image thinking at T 0.7": 0.7208
+     },
+     "p_bh_adjusted": {
+      "text thinking at T 0.0": 0.9702,
+      "text thinking at T 0.7": 0.9702,
+      "image thinking at T 0.0": 0.1008,
+      "image thinking at T 0.7": 0.9702
+     }
+    },
+    "bh_all_eight": {
+     "text HIGH": 0.0004,
+     "text MEDIUM": 0.000533,
+     "image HIGH": 0.0,
+     "image MEDIUM": 0.001,
+     "text thinking at T 0.0": 0.9702,
+     "text thinking at T 0.7": 0.9702,
+     "image thinking at T 0.0": 0.04032,
+     "image thinking at T 0.7": 0.961067
+    },
+    "answer": {
+     "text": {
+      "label": "temperature is the driver",
+      "factor_T_flags": {
+       "high": {
+        "R": true,
+        "P": true,
+        "F": true
+       },
+       "medium": {
+        "R": true,
+        "P": true,
+        "F": true
+       }
+      },
+      "thinking_flags": {
+       "0.0": {
+        "R": false,
+        "P": false,
+        "F": false
+       },
+       "0.7": {
+        "R": false,
+        "P": false,
+        "F": false
+       }
+      },
+      "thinking_configuration_claim": false
+     },
+     "image": {
+      "label": "temperature is the driver",
+      "factor_T_flags": {
+       "high": {
+        "R": true,
+        "P": true,
+        "F": true
+       },
+       "medium": {
+        "R": true,
+        "P": true,
+        "F": true
+       }
+      },
+      "thinking_flags": {
+       "0.0": {
+        "R": false,
+        "P": false,
+        "F": true
+       },
+       "0.7": {
+        "R": false,
+        "P": false,
+        "F": false
+       }
+      },
+      "thinking_configuration_claim": false
+     }
+    }
+   }
+  },
+  "sensitivity_wave3_topup": {
+   "dropped_tiles": [
+    "K-35-052-4_32635_x1008_y336.png",
+    "K-35-052-4_32635_x1008_y672.png",
+    "K-35-052-4_32635_x1344_y3360.png",
+    "K-35-052-4_32635_x1680_y0.png",
+    "K-35-052-4_32635_x1680_y3024.png",
+    "K-35-052-4_32635_x1680_y336.png",
+    "K-35-052-4_32635_x1680_y672.png",
+    "K-35-052-4_32635_x2016_y0.png",
+    "K-35-052-4_32635_x2688_y1008.png",
+    "K-35-052-4_32635_x2688_y1680.png",
+    "K-35-052-4_32635_x3024_y2016.png",
+    "K-35-052-4_32635_x3024_y2688.png",
+    "K-35-052-4_32635_x3360_y1680.png",
+    "K-35-052-4_32635_x3360_y3024.png",
+    "K-35-052-4_32635_x336_y0.png",
+    "K-35-052-4_32635_x336_y1008.png",
+    "K-35-052-4_32635_x336_y1680.png",
+    "K-35-052-4_32635_x336_y672.png",
+    "K-35-052-4_32635_x3696_y1680.png",
+    "K-35-052-4_32635_x4032_y2016.png",
+    "K-35-052-4_32635_x4032_y3024.png",
+    "K-35-052-4_32635_x4032_y3696.png",
+    "K-35-052-4_32635_x672_y0.png",
+    "K-35-052-4_32635_x672_y672.png",
+    "K-35-053-3_Elenovo_x0_y1008.png",
+    "K-35-053-3_Elenovo_x0_y672.png",
+    "K-35-053-3_Elenovo_x1008_y2016.png",
+    "K-35-053-3_Elenovo_x1008_y3024.png",
+    "K-35-053-3_Elenovo_x1344_y3696.png",
+    "K-35-053-3_Elenovo_x1680_y0.png",
+    "K-35-053-3_Elenovo_x2016_y1344.png",
+    "K-35-053-3_Elenovo_x2016_y1680.png",
+    "K-35-053-3_Elenovo_x2352_y1344.png",
+    "K-35-053-3_Elenovo_x2352_y3024.png",
+    "K-35-053-3_Elenovo_x3024_y2352.png",
+    "K-35-053-3_Elenovo_x3024_y2688.png",
+    "K-35-053-3_Elenovo_x3360_y336.png",
+    "K-35-053-3_Elenovo_x336_y1680.png",
+    "K-35-053-3_Elenovo_x336_y3696.png",
+    "K-35-053-3_Elenovo_x3696_y1008.png",
+    "K-35-053-3_Elenovo_x3696_y1344.png",
+    "K-35-053-3_Elenovo_x4032_y0.png",
+    "K-35-053-3_Elenovo_x4032_y1008.png",
+    "K-35-053-3_Elenovo_x672_y3360.png",
+    "K-35-062-2_Rakovski_x0_y2688.png",
+    "K-35-062-2_Rakovski_x1008_y1680.png",
+    "K-35-062-2_Rakovski_x1008_y672.png",
+    "K-35-062-2_Rakovski_x1344_y336.png",
+    "K-35-062-2_Rakovski_x1680_y0.png",
+    "K-35-062-2_Rakovski_x1680_y336.png",
+    "K-35-062-2_Rakovski_x1680_y3696.png",
+    "K-35-062-2_Rakovski_x2016_y336.png",
+    "K-35-062-2_Rakovski_x2016_y3360.png",
+    "K-35-062-2_Rakovski_x2352_y0.png",
+    "K-35-062-2_Rakovski_x2352_y1008.png",
+    "K-35-062-2_Rakovski_x2352_y1344.png",
+    "K-35-062-2_Rakovski_x2352_y1680.png",
+    "K-35-062-2_Rakovski_x2352_y2016.png",
+    "K-35-062-2_Rakovski_x2352_y3024.png",
+    "K-35-062-2_Rakovski_x2352_y336.png",
+    "K-35-062-2_Rakovski_x2688_y0.png",
+    "K-35-062-2_Rakovski_x2688_y2016.png",
+    "K-35-062-2_Rakovski_x2688_y2688.png",
+    "K-35-062-2_Rakovski_x2688_y672.png",
+    "K-35-062-2_Rakovski_x3024_y0.png",
+    "K-35-062-2_Rakovski_x3024_y1008.png",
+    "K-35-062-2_Rakovski_x3024_y1680.png",
+    "K-35-062-2_Rakovski_x3024_y2016.png",
+    "K-35-062-2_Rakovski_x3024_y2688.png",
+    "K-35-062-2_Rakovski_x3024_y3360.png",
+    "K-35-062-2_Rakovski_x3024_y3696.png",
+    "K-35-062-2_Rakovski_x3360_y1008.png",
+    "K-35-062-2_Rakovski_x3360_y2352.png",
+    "K-35-062-2_Rakovski_x3360_y2688.png",
+    "K-35-062-2_Rakovski_x3360_y3024.png",
+    "K-35-062-2_Rakovski_x336_y0.png",
+    "K-35-062-2_Rakovski_x336_y1344.png",
+    "K-35-062-2_Rakovski_x336_y3696.png",
+    "K-35-062-2_Rakovski_x3696_y0.png",
+    "K-35-062-2_Rakovski_x3696_y1680.png",
+    "K-35-062-2_Rakovski_x3696_y2352.png",
+    "K-35-062-2_Rakovski_x3696_y336.png",
+    "K-35-062-2_Rakovski_x3696_y3360.png",
+    "K-35-062-2_Rakovski_x3696_y672.png",
+    "K-35-062-2_Rakovski_x4032_y0.png",
+    "K-35-062-2_Rakovski_x4032_y1680.png",
+    "K-35-062-2_Rakovski_x4032_y2016.png",
+    "K-35-062-2_Rakovski_x4032_y2352.png",
+    "K-35-062-2_Rakovski_x4032_y672.png",
+    "K-35-062-2_Rakovski_x672_y0.png",
+    "K-35-062-2_Rakovski_x672_y1008.png",
+    "K-35-062-2_Rakovski_x672_y1680.png",
+    "K-35-062-2_Rakovski_x672_y2016.png",
+    "K-35-062-2_Rakovski_x672_y3696.png",
+    "K-35-078-1_Lesovo_x0_y1680.png",
+    "K-35-078-1_Lesovo_x0_y2352.png",
+    "K-35-078-1_Lesovo_x0_y3024.png",
+    "K-35-078-1_Lesovo_x1008_y2352.png",
+    "K-35-078-1_Lesovo_x1008_y2688.png",
+    "K-35-078-1_Lesovo_x1344_y1680.png",
+    "K-35-078-1_Lesovo_x1344_y2016.png",
+    "K-35-078-1_Lesovo_x1344_y2352.png",
+    "K-35-078-1_Lesovo_x1344_y2688.png",
+    "K-35-078-1_Lesovo_x1680_y3024.png",
+    "K-35-078-1_Lesovo_x1680_y3360.png",
+    "K-35-078-1_Lesovo_x2016_y1344.png",
+    "K-35-078-1_Lesovo_x2016_y1680.png",
+    "K-35-078-1_Lesovo_x2016_y2352.png",
+    "K-35-078-1_Lesovo_x2352_y0.png",
+    "K-35-078-1_Lesovo_x2352_y3024.png",
+    "K-35-078-1_Lesovo_x2352_y336.png",
+    "K-35-078-1_Lesovo_x2352_y3360.png",
+    "K-35-078-1_Lesovo_x2352_y672.png",
+    "K-35-078-1_Lesovo_x2688_y1008.png",
+    "K-35-078-1_Lesovo_x2688_y1680.png",
+    "K-35-078-1_Lesovo_x2688_y2016.png",
+    "K-35-078-1_Lesovo_x2688_y3024.png",
+    "K-35-078-1_Lesovo_x2688_y336.png",
+    "K-35-078-1_Lesovo_x3024_y1008.png",
+    "K-35-078-1_Lesovo_x3024_y1344.png",
+    "K-35-078-1_Lesovo_x3024_y1680.png",
+    "K-35-078-1_Lesovo_x336_y1008.png",
+    "K-35-078-1_Lesovo_x336_y2688.png",
+    "K-35-078-1_Lesovo_x336_y3360.png",
+    "K-35-078-1_Lesovo_x3696_y0.png",
+    "K-35-078-1_Lesovo_x3696_y1344.png",
+    "K-35-078-1_Lesovo_x3696_y2352.png",
+    "K-35-078-1_Lesovo_x3696_y2688.png",
+    "K-35-078-1_Lesovo_x3696_y336.png",
+    "K-35-078-1_Lesovo_x4032_y0.png",
+    "K-35-078-1_Lesovo_x4032_y1008.png",
+    "K-35-078-1_Lesovo_x4032_y1680.png",
+    "K-35-078-1_Lesovo_x4032_y2016.png",
+    "K-35-078-1_Lesovo_x4032_y2352.png",
+    "K-35-078-1_Lesovo_x4032_y336.png",
+    "K-35-078-1_Lesovo_x672_y2352.png",
+    "K-35-078-1_Lesovo_x672_y2688.png",
+    "K-35-078-1_Lesovo_x672_y336.png"
+   ],
+   "n_dropped": 138,
+   "n_tiles_left": 349,
+   "confirmatory": {
+    "floor_passes_4_6": {
+     "pooled": {
+      "pairs": 12,
+      "p95": 0.030589,
+      "median": 0.017058,
+      "max": 0.035144,
+      "tile_swap_reject_rate": 0.0
+     },
+     "per_corner": {
+      "image-high-t0.0": {
+       "pairs": 3,
+       "p95": 0.020342,
+       "median": 0.019503,
+       "max": 0.020435,
+       "tile_swap_reject_rate": 0.0
+      },
+      "image-high-t0.7": {
+       "pairs": 3,
+       "p95": 0.02616,
+       "median": 0.019839,
+       "max": 0.026862,
+       "tile_swap_reject_rate": 0.0
+      },
+      "image-medium-t0.0": {
+       "pairs": 3,
+       "p95": 0.012519,
+       "median": 0.007428,
+       "max": 0.013085,
+       "tile_swap_reject_rate": 0.0
+      },
+      "image-medium-t0.7": {
+       "pairs": 3,
+       "p95": 0.033683,
+       "median": 0.020531,
+       "max": 0.035144,
+       "tile_swap_reject_rate": 0.0
+      }
+     }
+    },
+    "C1": {
+     "delta (pass-averaged micro)": 0.018963,
+     "delta (mean of per-pass F1)": 0.018995,
+     "delta_ci95_paired_bootstrap": {
+      "lower": -0.011147,
+      "upper": 0.048761
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.018963,
+      "bootstrap_delta_mean": 0.018596,
+      "ci95": {
+       "lower": -0.011147,
+       "upper": 0.048761
+      },
+      "p_value": 0.2283,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 94,
+      "ci_excludes_zero": false
+     },
+     "a": {
+      "f1": 0.67006,
+      "precision": 0.606365,
+      "recall": 0.748707
+     },
+     "b": {
+      "f1": 0.651098,
+      "precision": 0.59471,
+      "recall": 0.719298
+     },
+     "a_mean_of_pass_f1": 0.67009,
+     "b_mean_of_pass_f1": 0.651095,
+     "n_tiles": 349,
+     "contrast": "image HIGH minus MEDIUM at T 0.0",
+     "per_pass_f1_a": [
+      0.662968,
+      0.6639,
+      0.683403
+     ],
+     "per_pass_f1_b": [
+      0.644258,
+      0.657343,
+      0.651685
+     ],
+     "floor_verdict (P6 three-valued, K = 1, n = 3)": {
+      "floor": 0.030589,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.017661,
+      "verdict": "clears only the scaled floor"
+     },
+     "p_bh_adjusted (C1 and C2)": 0.2283,
+     "criteria": {
+      "a_sign_matches_passes_1_3": {
+       "delta_4_6": 0.018963,
+       "delta_1_3": 0.037425,
+       "met": true
+      },
+      "b_bh_adjusted_p_below_0.05": {
+       "p_bh_adjusted": 0.2283,
+       "met": false
+      },
+      "c_abs_delta_at_least_0.03": {
+       "abs_delta": 0.018963,
+       "met": false
+      },
+      "d_abs_delta_above_floor_4_6": {
+       "abs_delta": 0.018963,
+       "floor": 0.030589,
+       "met": false
+      }
+     },
+     "criteria_failed": [
+      "b_bh_adjusted_p_below_0.05",
+      "c_abs_delta_at_least_0.03",
+      "d_abs_delta_above_floor_4_6"
+     ],
+     "verdict": "PARTLY",
+     "wording": "same direction on three further passes but not confirmed; the check had roughly even odds of passing even if the effect were as large as first seen",
+     "mean_of_per_pass_reading": {
+      "sign": true,
+      "abs_at_least_0.03": false,
+      "above_floor": false
+     }
+    },
+    "C2": {
+     "delta (pass-averaged micro)": 0.07848,
+     "delta (mean of per-pass F1)": 0.078493,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.041546,
+      "upper": 0.115306
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.07848,
+      "bootstrap_delta_mean": 0.078926,
+      "ci95": {
+       "lower": 0.041546,
+       "upper": 0.115306
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 120,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.651098,
+      "precision": 0.59471,
+      "recall": 0.719298
+     },
+     "b": {
+      "f1": 0.572618,
+      "precision": 0.520168,
+      "recall": 0.636831
+     },
+     "a_mean_of_pass_f1": 0.651095,
+     "b_mean_of_pass_f1": 0.572602,
+     "n_tiles": 349,
+     "contrast": "image T 0.0 minus T 0.7 at MEDIUM",
+     "per_pass_f1_a": [
+      0.644258,
+      0.657343,
+      0.651685
+     ],
+     "per_pass_f1_b": [
+      0.570629,
+      0.556017,
+      0.59116
+     ],
+     "floor_verdict (P6 three-valued, K = 1, n = 3)": {
+      "floor": 0.030589,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.017661,
+      "verdict": "clears"
+     },
+     "p_bh_adjusted (C1 and C2)": 0.0,
+     "criteria": {
+      "a_sign_matches_passes_1_3": {
+       "delta_4_6": 0.07848,
+       "delta_1_3": 0.03361,
+       "met": true
+      },
+      "b_bh_adjusted_p_below_0.05": {
+       "p_bh_adjusted": 0.0,
+       "met": true
+      },
+      "c_abs_delta_at_least_0.03": {
+       "abs_delta": 0.07848,
+       "met": true
+      },
+      "d_abs_delta_above_floor_4_6": {
+       "abs_delta": 0.07848,
+       "floor": 0.030589,
+       "met": true
+      }
+     },
+     "criteria_failed": [],
+     "verdict": "REPLICATES",
+     "wording": "confirmed on three independent passes run the next day",
+     "mean_of_per_pass_reading": {
+      "sign": true,
+      "abs_at_least_0.03": true,
+      "above_floor": true
+     }
+    },
+    "bh": {
+     "family": [
+      "C1",
+      "C2"
+     ],
+     "p_permutation": {
+      "C1": 0.2283,
+      "C2": 0.0
+     },
+     "p_bh_adjusted": {
+      "C1": 0.2283,
+      "C2": 0.0
+     }
+    },
+    "headline_selected": "TEMPERATURE IS THE DRIVER",
+    "headline_rule": "P12.1: C1 REPLICATES -> (b); PARTLY or FAILS -> (a); C2 FAILS adds the suffix"
+   },
+   "other_image_contrasts_passes_4_6": {
+    "image T 0.0 minus T 0.7 at HIGH": {
+     "delta (pass-averaged micro)": 0.079821,
+     "delta (mean of per-pass F1)": 0.079848,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.045655,
+      "upper": 0.114237
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.079821,
+      "bootstrap_delta_mean": 0.080174,
+      "ci95": {
+       "lower": 0.045655,
+       "upper": 0.114237
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 122,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.67006,
+      "precision": 0.606365,
+      "recall": 0.748707
+     },
+     "b": {
+      "f1": 0.590239,
+      "precision": 0.535058,
+      "recall": 0.658111
+     },
+     "a_mean_of_pass_f1": 0.67009,
+     "b_mean_of_pass_f1": 0.590242,
+     "n_tiles": 349,
+     "contrast": "image T 0.0 minus T 0.7 at HIGH",
+     "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+      "floor": 0.030589,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.017661,
+      "verdict": "clears"
+     },
+     "_note": "secondary; raw permutation p, in no BH family"
+    },
+    "image HIGH minus MEDIUM at T 0.7": {
+     "delta (pass-averaged micro)": 0.017621,
+     "delta (mean of per-pass F1)": 0.01764,
+     "delta_ci95_paired_bootstrap": {
+      "lower": -0.019792,
+      "upper": 0.054855
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.017621,
+      "bootstrap_delta_mean": 0.017349,
+      "ci95": {
+       "lower": -0.019792,
+       "upper": 0.054855
+      },
+      "p_value": 0.3728,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 137,
+      "ci_excludes_zero": false
+     },
+     "a": {
+      "f1": 0.590239,
+      "precision": 0.535058,
+      "recall": 0.658111
+     },
+     "b": {
+      "f1": 0.572618,
+      "precision": 0.520168,
+      "recall": 0.636831
+     },
+     "a_mean_of_pass_f1": 0.590242,
+     "b_mean_of_pass_f1": 0.572602,
+     "n_tiles": 349,
+     "contrast": "image HIGH minus MEDIUM at T 0.7",
+     "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+      "floor": 0.030589,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.017661,
+      "verdict": "inside"
+     },
+     "_note": "secondary; raw permutation p, in no BH family"
+    },
+    "image corner gap (HIGH T 0.0 minus MEDIUM T 0.7)": {
+     "delta (pass-averaged micro)": 0.097442,
+     "delta (mean of per-pass F1)": 0.097488,
+     "delta_ci95_paired_bootstrap": {
+      "lower": 0.061521,
+      "upper": 0.132671
+     },
+     "delta_bootstrap": {
+      "n_iterations": 1000,
+      "seed": 42,
+      "observed_delta": 0.097442,
+      "bootstrap_delta_mean": 0.097522,
+      "ci95": {
+       "lower": 0.061521,
+       "upper": 0.132671
+      },
+      "p_value": 0.0,
+      "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+      "n_permutations": 10000,
+      "n_discordant_tiles": 127,
+      "ci_excludes_zero": true
+     },
+     "a": {
+      "f1": 0.67006,
+      "precision": 0.606365,
+      "recall": 0.748707
+     },
+     "b": {
+      "f1": 0.572618,
+      "precision": 0.520168,
+      "recall": 0.636831
+     },
+     "a_mean_of_pass_f1": 0.67009,
+     "b_mean_of_pass_f1": 0.572602,
+     "n_tiles": 349,
+     "contrast": "image corner gap (HIGH T 0.0 minus MEDIUM T 0.7)",
+     "floor_verdict (K = 1, n = 3, floor of passes 4-6)": {
+      "floor": 0.030589,
+      "floor_k": 1,
+      "n_per_arm": 3,
+      "scaled_floor": 0.017661,
+      "verdict": "clears"
+     },
+     "_note": "secondary; raw permutation p, in no BH family"
+    }
+   },
+   "pooled_six_pass": {
+    "applies_to": [
+     "image HIGH",
+     "image MEDIUM",
+     "image corner gap",
+     "image thinking at T 0.0",
+     "image thinking at T 0.7"
+    ],
+    "floors_image": {
+     "k": 3,
+     "p95": 0.027558,
+     "by_k": {
+      "1": {
+       "pooled": {
+        "pairs": 60,
+        "p95": 0.043631,
+        "median": 0.016175,
+        "max": 0.061508,
+        "tile_swap_reject_rate": 0.0167
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 15,
+         "p95": 0.021386,
+         "median": 0.013023,
+         "max": 0.022039,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 15,
+         "p95": 0.041523,
+         "median": 0.019839,
+         "max": 0.043459,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.0": {
+         "pairs": 15,
+         "p95": 0.028811,
+         "median": 0.010284,
+         "max": 0.030769,
+         "tile_swap_reject_rate": 0.0667
+        },
+        "image-medium-t0.7": {
+         "pairs": 15,
+         "p95": 0.055834,
+         "median": 0.026364,
+         "max": 0.061508,
+         "tile_swap_reject_rate": 0.0
+        }
+       }
+      },
+      "2": {
+       "pooled": {
+        "pairs": 180,
+        "p95": 0.032615,
+        "median": 0.010913,
+        "max": 0.050181,
+        "tile_swap_reject_rate": 0.0222
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 45,
+         "p95": 0.017612,
+         "median": 0.007025,
+         "max": 0.020776,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 45,
+         "p95": 0.030975,
+         "median": 0.012343,
+         "max": 0.038553,
+         "tile_swap_reject_rate": 0.0222
+        },
+        "image-medium-t0.0": {
+         "pairs": 45,
+         "p95": 0.018831,
+         "median": 0.008862,
+         "max": 0.020535,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.7": {
+         "pairs": 45,
+         "p95": 0.041014,
+         "median": 0.017611,
+         "max": 0.050181,
+         "tile_swap_reject_rate": 0.0667
+        }
+       }
+      },
+      "3": {
+       "pooled": {
+        "pairs": 40,
+        "p95": 0.027558,
+        "median": 0.008699,
+        "max": 0.036078,
+        "tile_swap_reject_rate": 0.025
+       },
+       "per_corner": {
+        "image-high-t0.0": {
+         "pairs": 10,
+         "p95": 0.013943,
+         "median": 0.00428,
+         "max": 0.014484,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-high-t0.7": {
+         "pairs": 10,
+         "p95": 0.025901,
+         "median": 0.011256,
+         "max": 0.027391,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.0": {
+         "pairs": 10,
+         "p95": 0.013854,
+         "median": 0.008374,
+         "max": 0.015238,
+         "tile_swap_reject_rate": 0.0
+        },
+        "image-medium-t0.7": {
+         "pairs": 10,
+         "p95": 0.033675,
+         "median": 0.013728,
+         "max": 0.036078,
+         "tile_swap_reject_rate": 0.1
+        }
+       }
+      }
+     }
+    },
+    "factor_T": {
+     "text HIGH": {
+      "delta (pass-averaged micro)": 0.050028,
+      "delta (mean of per-pass F1)": 0.050041,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.026174,
+       "upper": 0.072334
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.050028,
+       "bootstrap_delta_mean": 0.05006,
+       "ci95": {
+        "lower": 0.026174,
+        "upper": 0.072334
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 168,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.800819,
+       "precision": 0.792173,
+       "recall": 0.809655
+      },
+      "b": {
+       "f1": 0.75079,
+       "precision": 0.737472,
+       "recall": 0.764598
+      },
+      "a_mean_of_pass_f1": 0.80082,
+      "b_mean_of_pass_f1": 0.750779,
+      "n_tiles": 487,
+      "contrast": "T 0.0 minus T 0.7 at HIGH (text)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.009323,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.005897,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.0
+     },
+     "text MEDIUM": {
+      "delta (pass-averaged micro)": 0.04637,
+      "delta (mean of per-pass F1)": 0.046391,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.021802,
+       "upper": 0.070435
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.04637,
+       "bootstrap_delta_mean": 0.046293,
+       "ci95": {
+        "lower": 0.021802,
+        "upper": 0.070435
+       },
+       "p_value": 0.0002,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 206,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.798206,
+       "precision": 0.778993,
+       "recall": 0.818391
+      },
+      "b": {
+       "f1": 0.751836,
+       "precision": 0.728645,
+       "recall": 0.776552
+      },
+      "a_mean_of_pass_f1": 0.798236,
+      "b_mean_of_pass_f1": 0.751845,
+      "n_tiles": 487,
+      "contrast": "T 0.0 minus T 0.7 at MEDIUM (text)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011858,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.0075,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.000267,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.000533
+     },
+     "image HIGH": {
+      "delta (pass-averaged micro)": 0.072891,
+      "delta (mean of per-pass F1)": 0.072886,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.042943,
+       "upper": 0.102422
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.072891,
+       "bootstrap_delta_mean": 0.073155,
+       "ci95": {
+        "lower": 0.042943,
+        "upper": 0.102422
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 153,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.67515,
+       "precision": 0.612768,
+       "recall": 0.751674
+      },
+      "b": {
+       "f1": 0.60226,
+       "precision": 0.546901,
+       "recall": 0.670087
+      },
+      "a_mean_of_pass_f1": 0.675154,
+      "b_mean_of_pass_f1": 0.602268,
+      "n_tiles": 349,
+      "contrast": "T 0.0 minus T 0.7 at HIGH (image)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.027558,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.019486,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.024245,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.017144,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.0
+     },
+     "image MEDIUM": {
+      "delta (pass-averaged micro)": 0.056251,
+      "delta (mean of per-pass F1)": 0.056258,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.023366,
+       "upper": 0.087304
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.056251,
+       "bootstrap_delta_mean": 0.056773,
+       "ci95": {
+        "lower": 0.023366,
+        "upper": 0.087304
+       },
+       "p_value": 0.0007,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 139,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.646908,
+       "precision": 0.591549,
+       "recall": 0.713697
+      },
+      "b": {
+       "f1": 0.590657,
+       "precision": 0.536329,
+       "recall": 0.657231
+      },
+      "a_mean_of_pass_f1": 0.646911,
+      "b_mean_of_pass_f1": 0.590653,
+      "n_tiles": 349,
+      "contrast": "T 0.0 minus T 0.7 at MEDIUM (image)",
+      "rule_fires (pass-averaged)": true,
+      "rule_fires (mean of per-pass)": true,
+      "estimator_split": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.027558,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.019486,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.031005,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.021924,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted": 0.0007,
+      "p_adjust_method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+      "bh_rejects_at_q_0.05": true,
+      "p_bh_adjusted (all eight)": 0.0014
+     }
+    },
+    "thinking": {
+     "text thinking at T 0.0": {
+      "delta (pass-averaged micro)": 0.002612,
+      "delta (mean of per-pass F1)": 0.002584,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.023766,
+       "upper": 0.027645
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.002612,
+       "bootstrap_delta_mean": 0.002761,
+       "ci95": {
+        "lower": -0.023766,
+        "upper": 0.027645
+       },
+       "p_value": 0.839,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 103,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.800819,
+       "precision": 0.792173,
+       "recall": 0.809655
+      },
+      "b": {
+       "f1": 0.798206,
+       "precision": 0.778993,
+       "recall": 0.818391
+      },
+      "a_mean_of_pass_f1": 0.80082,
+      "b_mean_of_pass_f1": 0.798236,
+      "n_tiles": 487,
+      "contrast": "HIGH minus MEDIUM at T 0.0 (text)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011176,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007069,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.9239,
+      "p_bh_adjusted (thinking family)": 0.9239,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "text thinking at T 0.7": {
+      "delta (pass-averaged micro)": -0.001046,
+      "delta (mean of per-pass F1)": -0.001066,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.023557,
+       "upper": 0.020142
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": -0.001046,
+       "bootstrap_delta_mean": -0.001006,
+       "ci95": {
+        "lower": -0.023557,
+        "upper": 0.020142
+       },
+       "p_value": 0.9239,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 205,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.75079,
+       "precision": 0.737472,
+       "recall": 0.764598
+      },
+      "b": {
+       "f1": 0.751836,
+       "precision": 0.728645,
+       "recall": 0.776552
+      },
+      "a_mean_of_pass_f1": 0.750779,
+      "b_mean_of_pass_f1": 0.751845,
+      "n_tiles": 487,
+      "contrast": "HIGH minus MEDIUM at T 0.7 (text)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011547,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007303,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.9239,
+      "p_bh_adjusted (thinking family)": 0.9239,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "image thinking at T 0.0": {
+      "delta (pass-averaged micro)": 0.028243,
+      "delta (mean of per-pass F1)": 0.028243,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.000109,
+       "upper": 0.055203
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.028243,
+       "bootstrap_delta_mean": 0.027831,
+       "ci95": {
+        "lower": 0.000109,
+        "upper": 0.055203
+       },
+       "p_value": 0.0514,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 109,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.67515,
+       "precision": 0.612768,
+       "recall": 0.751674
+      },
+      "b": {
+       "f1": 0.646908,
+       "precision": 0.591549,
+       "recall": 0.713697
+      },
+      "a_mean_of_pass_f1": 0.675154,
+      "b_mean_of_pass_f1": 0.646911,
+      "n_tiles": 349,
+      "contrast": "HIGH minus MEDIUM at T 0.0 (image)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.027558,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.019486,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.014522,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.010268,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.08224,
+      "p_bh_adjusted (thinking family)": 0.2056,
+      "bh_rejects_at_q (thinking family)": false
+     },
+     "image thinking at T 0.7": {
+      "delta (pass-averaged micro)": 0.011603,
+      "delta (mean of per-pass F1)": 0.011615,
+      "delta_ci95_paired_bootstrap": {
+       "lower": -0.015932,
+       "upper": 0.039579
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.011603,
+       "bootstrap_delta_mean": 0.011449,
+       "ci95": {
+        "lower": -0.015932,
+        "upper": 0.039579
+       },
+       "p_value": 0.4272,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 145,
+       "ci_excludes_zero": false
+      },
+      "a": {
+       "f1": 0.60226,
+       "precision": 0.546901,
+       "recall": 0.670087
+      },
+      "b": {
+       "f1": 0.590657,
+       "precision": 0.536329,
+       "recall": 0.657231
+      },
+      "a_mean_of_pass_f1": 0.602268,
+      "b_mean_of_pass_f1": 0.590653,
+      "n_tiles": 349,
+      "contrast": "HIGH minus MEDIUM at T 0.7 (image)",
+      "reaches_0.03 (pass-averaged)": false,
+      "reaches_0.03 (mean of per-pass)": false,
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.027558,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.019486,
+        "verdict": "inside"
+       },
+       "two_corners_pooled": {
+        "floor": 0.031005,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.021924,
+        "verdict": "inside"
+       },
+       "verdicts_differ": false
+      },
+      "p_bh_adjusted (all eight)": 0.5696,
+      "p_bh_adjusted (thinking family)": 0.8544,
+      "bh_rejects_at_q (thinking family)": false
+     }
+    },
+    "corner_gap": {
+     "text": {
+      "delta (pass-averaged micro)": 0.048982,
+      "delta (mean of per-pass F1)": 0.048975,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.024096,
+       "upper": 0.073025
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.048982,
+       "bootstrap_delta_mean": 0.049054,
+       "ci95": {
+        "lower": 0.024096,
+        "upper": 0.073025
+       },
+       "p_value": 0.0002,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 207,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.800819,
+       "precision": 0.792173,
+       "recall": 0.809655
+      },
+      "b": {
+       "f1": 0.751836,
+       "precision": 0.728645,
+       "recall": 0.776552
+      },
+      "a_mean_of_pass_f1": 0.80082,
+      "b_mean_of_pass_f1": 0.751845,
+      "n_tiles": 487,
+      "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (text); no BH family",
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.011559,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007311,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.011547,
+        "floor_k": 2,
+        "n_per_arm": 5,
+        "scaled_floor": 0.007303,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "decomposition": {
+       "T at HIGH + thinking at T 0.7": [
+        0.050028,
+        -0.001046,
+        0.048982
+       ],
+       "T at MEDIUM + thinking at T 0.0": [
+        0.04637,
+        0.002612,
+        0.048982
+       ],
+       "temperature share (via HIGH)": 1.0214,
+       "temperature share (via MEDIUM)": 0.9467,
+       "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+      }
+     },
+     "image": {
+      "delta (pass-averaged micro)": 0.084494,
+      "delta (mean of per-pass F1)": 0.084501,
+      "delta_ci95_paired_bootstrap": {
+       "lower": 0.053837,
+       "upper": 0.115129
+      },
+      "delta_bootstrap": {
+       "n_iterations": 1000,
+       "seed": 42,
+       "observed_delta": 0.084494,
+       "bootstrap_delta_mean": 0.084605,
+       "ci95": {
+        "lower": 0.053837,
+        "upper": 0.115129
+       },
+       "p_value": 0.0,
+       "p_method": "paired tile-swap permutation test (PI ruling D42): per-tile label swap with probability 0.5, two-sided p = mean(|null| >= |observed|)",
+       "n_permutations": 10000,
+       "n_discordant_tiles": 151,
+       "ci_excludes_zero": true
+      },
+      "a": {
+       "f1": 0.67515,
+       "precision": 0.612768,
+       "recall": 0.751674
+      },
+      "b": {
+       "f1": 0.590657,
+       "precision": 0.536329,
+       "recall": 0.657231
+      },
+      "a_mean_of_pass_f1": 0.675154,
+      "b_mean_of_pass_f1": 0.590653,
+      "n_tiles": 349,
+      "contrast": "HIGH T 0.0 minus MEDIUM T 0.7 (image); no BH family",
+      "floor": {
+       "modality_pooled": {
+        "floor": 0.027558,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.019486,
+        "verdict": "clears"
+       },
+       "two_corners_pooled": {
+        "floor": 0.031005,
+        "floor_k": 3,
+        "n_per_arm": 6,
+        "scaled_floor": 0.021924,
+        "verdict": "clears"
+       },
+       "verdicts_differ": false
+      },
+      "decomposition": {
+       "T at HIGH + thinking at T 0.7": [
+        0.072891,
+        0.011603,
+        0.084494
+       ],
+       "T at MEDIUM + thinking at T 0.0": [
+        0.056251,
+        0.028243,
+        0.084494
+       ],
+       "temperature share (via HIGH)": 0.8627,
+       "temperature share (via MEDIUM)": 0.6657,
+       "_note": "Shares from 6-dp deltas; the sums equal the gap to rounding because micro-F1 differences are additive."
+      }
+     }
+    },
+    "bh_factor_T": {
+     "method": "Benjamini-Hochberg step-up across A-06's four registered factor-T contrasts (text HIGH, text MEDIUM, image HIGH, image MEDIUM), applied to each contrast's paired tile-swap permutation p (PI rulings D42 and D61 (3)); scripts/lib_permutation.bh_adjust",
+     "q": 0.05,
+     "family": [
+      "text HIGH",
+      "text MEDIUM",
+      "image HIGH",
+      "image MEDIUM"
+     ],
+     "p_permutation": {
+      "text HIGH": 0.0,
+      "text MEDIUM": 0.0002,
+      "image HIGH": 0.0,
+      "image MEDIUM": 0.0007
+     },
+     "p_bh_adjusted": {
+      "text HIGH": 0.0,
+      "text MEDIUM": 0.000267,
+      "image HIGH": 0.0,
+      "image MEDIUM": 0.0007
+     },
+     "rejected_at_q": {
+      "text HIGH": true,
+      "text MEDIUM": true,
+      "image HIGH": true,
+      "image MEDIUM": true
+     },
+     "_note": "The registered A-06 rule (delta >= 0.03, no CI or p condition) decides the flag; the BH-adjusted permutation p is the D42 testing convention reported beside it. A p of 0 means no permutation of 10,000 reached the observed |delta| (p < 0.0001)."
+    },
+    "bh_thinking": {
+     "family": [
+      "text thinking at T 0.0",
+      "text thinking at T 0.7",
+      "image thinking at T 0.0",
+      "image thinking at T 0.7"
+     ],
+     "q": 0.05,
+     "p_permutation": {
+      "text thinking at T 0.0": 0.839,
+      "text thinking at T 0.7": 0.9239,
+      "image thinking at T 0.0": 0.0514,
+      "image thinking at T 0.7": 0.4272
+     },
+     "p_bh_adjusted": {
+      "text thinking at T 0.0": 0.9239,
+      "text thinking at T 0.7": 0.9239,
+      "image thinking at T 0.0": 0.2056,
+      "image thinking at T 0.7": 0.8544
+     }
+    },
+    "bh_all_eight": {
+     "text HIGH": 0.0,
+     "text MEDIUM": 0.000533,
+     "image HIGH": 0.0,
+     "image MEDIUM": 0.0014,
+     "text thinking at T 0.0": 0.9239,
+     "text thinking at T 0.7": 0.9239,
+     "image thinking at T 0.0": 0.08224,
+     "image thinking at T 0.7": 0.5696
+    },
+    "answer": {
+     "text": {
+      "label": "temperature is the driver",
+      "factor_T_flags": {
+       "high": {
+        "R": true,
+        "P": true,
+        "F": true
+       },
+       "medium": {
+        "R": true,
+        "P": true,
+        "F": true
+       }
+      },
+      "thinking_flags": {
+       "0.0": {
+        "R": false,
+        "P": false,
+        "F": false
+       },
+       "0.7": {
+        "R": false,
+        "P": false,
+        "F": false
+       }
+      },
+      "thinking_configuration_claim": false
+     },
+     "image": {
+      "label": "temperature is the driver",
+      "factor_T_flags": {
+       "high": {
+        "R": true,
+        "P": true,
+        "F": true
+       },
+       "medium": {
+        "R": true,
+        "P": true,
+        "F": true
+       }
+      },
+      "thinking_flags": {
+       "0.0": {
+        "R": false,
+        "P": false,
+        "F": true
+       },
+       "0.7": {
+        "R": false,
+        "P": false,
+        "F": false
+       }
+      },
+      "thinking_configuration_claim": false
+     }
+    }
+   },
+   "day_effect": {
+    "within_day_floor_k1": {
+     "pairs": 24,
+     "p95": 0.027805,
+     "median": 0.013849,
+     "max": 0.035144,
+     "tile_swap_reject_rate": 0.0
+    },
+    "floor_passes_1_3": {
+     "pairs": 12,
+     "p95": 0.024452,
+     "median": 0.009178,
+     "max": 0.027972,
+     "tile_swap_reject_rate": 0.0
+    },
+    "floor_passes_4_6": {
+     "pairs": 12,
+     "p95": 0.030589,
+     "median": 0.017058,
+     "max": 0.035144,
+     "tile_swap_reject_rate": 0.0
+    },
+    "corners": {
+     "image-high-t0.0": {
+      "f1_passes_1_3": 0.680241,
+      "f1_passes_4_6": 0.67006,
+      "delta (4-6 minus 1-3)": -0.01018,
+      "abs_delta": 0.01018,
+      "p_tile_swap": 0.4436,
+      "n_discordant_tiles": 85,
+      "verdict_vs_within_day_floor": {
+       "floor": 0.027805,
+       "floor_k": 1,
+       "n_per_arm": 3,
+       "scaled_floor": 0.016053,
+       "verdict": "inside"
+      },
+      "exceeds_floor_1_3": false,
+      "exceeds_floor_4_6": false,
+      "day_split_rank_of_10": 3
+     },
+     "image-high-t0.7": {
+      "f1_passes_1_3": 0.614319,
+      "f1_passes_4_6": 0.590239,
+      "delta (4-6 minus 1-3)": -0.024079,
+      "abs_delta": 0.024079,
+      "p_tile_swap": 0.17,
+      "n_discordant_tiles": 134,
+      "verdict_vs_within_day_floor": {
+       "floor": 0.027805,
+       "floor_k": 1,
+       "n_per_arm": 3,
+       "scaled_floor": 0.016053,
+       "verdict": "clears only the scaled floor"
+      },
+      "exceeds_floor_1_3": false,
+      "exceeds_floor_4_6": false,
+      "day_split_rank_of_10": 2
+     },
+     "image-medium-t0.0": {
+      "f1_passes_1_3": 0.642724,
+      "f1_passes_4_6": 0.651098,
+      "delta (4-6 minus 1-3)": 0.008374,
+      "abs_delta": 0.008374,
+      "p_tile_swap": 0.2619,
+      "n_discordant_tiles": 59,
+      "verdict_vs_within_day_floor": {
+       "floor": 0.027805,
+       "floor_k": 1,
+       "n_per_arm": 3,
+       "scaled_floor": 0.016053,
+       "verdict": "inside"
+      },
+      "exceeds_floor_1_3": false,
+      "exceeds_floor_4_6": false,
+      "day_split_rank_of_10": 5
+     },
+     "image-medium-t0.7": {
+      "f1_passes_1_3": 0.608696,
+      "f1_passes_4_6": 0.572618,
+      "delta (4-6 minus 1-3)": -0.036078,
+      "abs_delta": 0.036078,
+      "p_tile_swap": 0.0253,
+      "n_discordant_tiles": 109,
+      "verdict_vs_within_day_floor": {
+       "floor": 0.027805,
+       "floor_k": 1,
+       "n_per_arm": 3,
+       "scaled_floor": 0.016053,
+       "verdict": "clears"
+      },
+      "exceeds_floor_1_3": true,
+      "exceeds_floor_4_6": true,
+      "day_split_rank_of_10": 1
+     }
+    }
+   }
+  }
+ }
+}

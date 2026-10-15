@@ -22,6 +22,15 @@ Plan sections implemented (P-numbers refer to the record):
   P5 corner gap and decomposition; P6 replicate floors; P7 the
   15-tile top-up sensitivity; P8 side by side; P9 thought tokens.
 
+Extended 2026-10-15 (plan P12) without changing any output: the image
+pools gained runs 4-6 (wave 3) after this analysis ran, so P1-P11 now
+select image runs 1-3 explicitly (``P1_RUNS``) while every pass in a pool
+is still scored for the aggregation-identity gate; the floor subset sizes
+and the passes per arm are read from the stacks rather than from
+``N_PASSES``. Run on the merged tree, the driver reproduces its
+2026-10-14 outputs (the record's § Integrity). The P12 analysis is
+``d64_p12_replication.py``, which imports this module.
+
 Usage (repository root, on sapphire; a few minutes, one process)::
 
     PYTHONHASHSEED=0 .venv/bin/python \\
@@ -79,6 +88,10 @@ TOPUP = REPO / D64_DIR / "topup-2026-10-13.json"
 MODEL = "gemini-3.1-pro-preview"
 CONFIG = {"text": "detect_brief-text", "image": "library_plus-hp"}
 N_PASSES = {"text": 5, "image": 3}
+#: The passes P1-P11 analyse per modality (None = every pass in the pool).
+#: Image runs 4-6 (wave 3, 2026-10-14) belong to P12, not to this analysis.
+P1_RUNS: dict[str, tuple[str, ...] | None] = {
+    "text": None, "image": ("run_1", "run_2", "run_3")}
 THINKS = ("high", "medium")
 TEMPS = ("0.0", "0.7")
 RULE = 0.03  # A-06's registered threshold (preregistration.md:677)
@@ -174,6 +187,29 @@ def score_pool(pool_dir: Path, gdf_ref: gpd.GeoDataFrame,
             stack[k, 1, i] += float(row["fp"])
             stack[k, 2, i] += float(row["fn"])
     return [str(p.relative_to(REPO)) for p in pass_files], stack
+
+
+def select_runs(files: list[str], stack: np.ndarray,
+                runs: tuple[str, ...] | None) -> tuple[list[str], np.ndarray]:
+    """Keep the passes whose ``run_N`` directory is in ``runs``, in order.
+
+    Args:
+        files: Pass file paths, as ``score_pool`` returns them (sorted).
+        stack: The matching (n_passes, 3, n_tiles) array.
+        runs: Run directory names to keep, or None to keep every pass.
+
+    Returns:
+        (the kept file paths, the matching rows of ``stack``).
+
+    Example:
+        >>> f = ["p/run_1/a.geojson", "p/run_4/b.geojson"]
+        >>> select_runs(f, np.zeros((2, 3, 1)), ("run_1",))[0]
+        ['p/run_1/a.geojson']
+    """
+    if runs is None:
+        return files, stack
+    keep = [i for i, f in enumerate(files) if Path(f).parent.name in runs]
+    return [files[i] for i in keep], stack[keep]
 
 
 def pass_mean(stack: np.ndarray) -> np.ndarray:
@@ -340,6 +376,8 @@ def gate_metas(tile_names: set[str]) -> dict:
                 corner = f"{modality}-{think}-t{temp}"
                 pool = REPO / D64_DIR / corner / CONFIG[modality]
                 metas = sorted(pool.glob("run_*/*.meta.json"))
+                if P1_RUNS[modality] is not None:
+                    metas = [m for m in metas if m.parent.name in P1_RUNS[modality]]
                 if len(metas) != N_PASSES[modality]:
                     failures.append(f"{corner}: {len(metas)} metas")
                 rows = []
@@ -485,7 +523,9 @@ def analyse(stacks: dict, floors: dict, mask: np.ndarray | None,
                   delta: float) -> dict:
         masked = use_mask(label) is not None and floors_masked and modality in floors_masked
         f = floors_masked[modality] if masked else floors[modality]
-        n = N_PASSES[modality]
+        # Passes per arm, read from the stack (N_PASSES before P12; equal
+        # for P1-P11, and 6 for the pooled image passes of P12).
+        n = stacks[(modality, THINKS[0], TEMPS[0])].shape[0]
         primary = floor_verdict(delta, f["p95"], f["k"], n)
         own = floor_verdict(delta, pct([r["abs_delta"] for c in corners
                                         for r in f["corner_rows"][c]], 0.95), f["k"], n)
@@ -605,7 +645,11 @@ def build_floors(stacks: dict, mask: np.ndarray | None,
     """
     floors, flat = {}, []
     for modality in modalities:
-        ks = (1, 2) if N_PASSES[modality] >= 4 else (1,)
+        # Every subset size the corners allow (two disjoint k-subsets need
+        # 2k passes): (1, 2) for five passes and (1,) for three, as before
+        # P12; (1, 2, 3) for six.
+        n = stacks[(modality, THINKS[0], TEMPS[0])].shape[0]
+        ks = tuple(range(1, n // 2 + 1))
         by_k = {}
         for k in ks:
             corner_rows = {}
@@ -653,13 +697,17 @@ def main() -> int:
             for temp in TEMPS:
                 corner = f"{modality}-{think}-t{temp}"
                 pool = D64_DIR / corner / CONFIG[modality]
-                files[corner], stack = score_pool(pool, gdf_ref, gdf_bounds, tile_order)
+                # Every pass in the pool is scored, so the identity gate
+                # still checks the A-06 helper over the whole pool; P1-P11
+                # then keep the runs in P1_RUNS (image runs 1-3).
+                files_all, stack_all = score_pool(pool, gdf_ref, gdf_bounds, tile_order)
+                tp, fp, fn, n = pass_averaged_per_tile(pool, gdf_ref, gdf_bounds, tile_order)
+                ours = pass_mean(stack_all)
+                same = (n == stack_all.shape[0] and np.array_equal(ours[0], tp)
+                        and np.array_equal(ours[1], fp) and np.array_equal(ours[2], fn))
+                files[corner], stack = select_runs(files_all, stack_all, P1_RUNS[modality])
                 if len(files[corner]) != N_PASSES[modality]:
                     sys.exit(f"GATE FAIL: {corner} has {len(files[corner])} passes")
-                tp, fp, fn, n = pass_averaged_per_tile(pool, gdf_ref, gdf_bounds, tile_order)
-                ours = pass_mean(stack)
-                same = (n == stack.shape[0] and np.array_equal(ours[0], tp)
-                        and np.array_equal(ours[1], fp) and np.array_equal(ours[2], fn))
                 identity[corner] = same
                 if not same:
                     sys.exit(f"AGGREGATION-IDENTITY GATE FAIL: {corner}")
