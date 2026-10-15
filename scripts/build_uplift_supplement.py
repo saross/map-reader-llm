@@ -156,6 +156,34 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 #: restamped on every build.
 REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
     (
+        "2026-10-15",
+        "Restatement pass (S164): regenerated once on the restated corpus",
+        "**Refresh trigger**: the S164 restatement pass (PI rulings D65 (2) and "
+        "(4), D62 (6), D67 (6); `reports/s164-agent-records/"
+        "restatement-pass.md`). The flatten was first replayed at its build "
+        "commit `741a4eaff` (D62 (6), closing fault-window row W2-5): two runs "
+        "reproduce the committed `conditions.csv`, `conditions-by-buffer.csv`, "
+        "`strata.csv` and `transfer-pairs.csv` byte for byte. It is then rebuilt "
+        "once, after the pass restated its inputs: the 21 gold-standard verified "
+        "conditions read the D62 (1) re-verified rows on PR #42's origin route "
+        "(each at its registered point, PI ruling D65 (3); e.g. 384/50 % "
+        "0.8961 -> 0.9017, the Gemini 3.7 screen 0.9139 -> 0.9238, the 3.7 "
+        "image carried arm 0.9254 -> 0.9353 at its registered (0.10, k5)), the "
+        "four grid consensus conditions moved by PR #42 (512/50 % 0.7518 -> "
+        "0.7611), the eight 55-map extended-reference cells were re-scored with "
+        "today's engine (one reviewer-promoted phantom fewer at R >= 50 m; F1 "
+        "+8e-05 to +9e-05), and the conditions registered since 2026-09-12 join "
+        "(the 55-map image and Gemini 3.7 55-map campaigns). **Counts**: "
+        "conditions 439 -> 505; by-buffer rows 5,448 -> 6,372; strata 130 -> "
+        "130; rows with a headline F1 439 -> 505, with tile MCC 430 -> 496, with "
+        "a proposer cost 346 -> 286 (D12's nulls replace recorded zeros since "
+        "2026-10-03); runs 41 -> 43; board-frame rows excluded 153 -> 153. The "
+        "cost label now names each sum's per-pass bases and any partial sum "
+        "(decision 3). **What did not change**: the strata and their MDE joins; "
+        "the headline references (r2 on the 55-map corpus, curator on the gold "
+        "standard); the board-frame exclusion rule.",
+    ),
+    (
         # Hand-added to build-report.md on 2026-09-20 (bcf1169f7, 8a143963d);
         # moved here by the S164 restatement pass (2026-10-15) so a rebuild
         # keeps it.
