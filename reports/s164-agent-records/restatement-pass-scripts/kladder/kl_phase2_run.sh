@@ -6,7 +6,8 @@
 # restatement-pass.md § 1.4, step 5, run after the Era-2 board lane). Builds a
 # disposable real-file copy of REF (code, results/, inputs/vectors, data/, prompts/, reports/ and the
 # Gemini 3.7 screen's outputs, which the builder reads for the 3.7 ladder's
-# unions), then runs scripts/build_k_ladder_phase2_tables.py with
+# unions, with the per-pass metadata the frontier cost library reads, listed in
+# frontier-files.txt by the lane's inventory), then runs scripts/build_k_ladder_phase2_tables.py with
 # --clip-to-common-area --allow-undetermined-area (D57 (2), (3); D67 (5)),
 # writing phase2/{ladders.json, ladder-tables.md, ladders-compat.json} and
 # figures/k-ladder-pareto-phase2.png in the copy. Single-threaded; no API call.
@@ -23,7 +24,8 @@ mkdir -p "$LOGDIR"; echo $$ > "$LOGDIR/$TAG.pid"; echo RUNNING > "$LOGDIR/$TAG.s
 [ -e "$DEST" ] && { echo "FAILED dest exists" > "$LOGDIR/$TAG.state"; exit 2; }
 mkdir -p "$DEST"
 git -C "$REPO" archive "$REF" -- scripts config.py pyproject.toml pytest.ini inputs/vectors data prompts reports \
-  results outputs/gemini37-screen-2026-08-28 | tar -x -C "$DEST"
+  results outputs/gemini37-screen-2026-08-28 $(cat "$(dirname "$0")/frontier-files.txt") \
+  | tar -x -C "$DEST"
 # The whole venv is linked: a linked interpreter alone loses its site-packages.
 ln -s "$SHARED/.venv" "$DEST/.venv"
 printf 'ref %s\n' "$(git -C "$REPO" rev-parse "$REF")" > "$DEST/.source-commit"
