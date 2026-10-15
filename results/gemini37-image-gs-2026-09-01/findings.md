@@ -48,7 +48,7 @@ Within-family (text − image) at 20 m, tile-swap paired
 |---|---:|---:|---|
 | Gemini 3 (committed) | **+0.0559** | 0.0005 | text significantly ahead |
 | Gemini 3.7, carried-verifier pair | −0.0143 | 0.158 | statistically zero |
-| Gemini 3.7, all-3.7 pair | −0.0043 | 0.677 | statistically zero |
+| Gemini 3.7, all-3.7 pair | −0.0044 | 0.677 | statistically zero |
 
 **The modality gap is ELIMINATED at 3.7** (gap change −0.060 to
 −0.070, roughly 2.4–2.8× the GS verified-set resolution, MDE₈₀
@@ -68,7 +68,7 @@ is parity, not inversion. I2 predicted "narrower by more than the resolution
 
 ## The escalation question (PI economics rule)
 
-All-3.7 image 0.9408 vs the all-3.7 text swap 0.9364: **+0.0043, not
+All-3.7 image 0.9408 vs the all-3.7 text swap 0.9364: **+0.0044, not
 significant** (and under the MDE80 ≈ 0.025). There is **no
 resolvable new F1 high**, so the pre-agreed trigger for considering
 the expensive 55-map image extension is NOT met. (Arm 2's image MCC
@@ -140,10 +140,10 @@ is new wording, not a new verdict.
 | G3 image anchor (0.15, k9); P; R; MCC | 0.8412; 0.8741; 0.8107; 0.7985 | 0.8458; 0.8731; 0.8201; 0.8139 |
 | Gemini 3 gap (text − image) | +0.0549, p 0.001 | +0.0559, p 0.0005 |
 | 3.7 gap, carried-verifier pair | −0.0115, p 0.253 | −0.0143, p 0.158 |
-| 3.7 gap, all-3.7 pair | −0.0043, p 0.677 | −0.0043, p 0.677 (Δ −0.004345 → −0.004350) |
+| 3.7 gap, all-3.7 pair | −0.0043, p 0.677 | −0.0044, p 0.677 (Δ −0.004345 → −0.004350; unrounded −0.0043504) |
 | Gap change against Gemini 3; multiple of the resolution | −0.059 to −0.066; roughly 2.5× | −0.060 to −0.070; roughly 2.4–2.8× (MDE₈₀ 0.0246) |
 | I1 gains over the G3 image anchor (arm 1, arm 2); text-side gain; ratio | +0.0842, +0.0896; +0.0178; ~5× | +0.0923, +0.0950; +0.0221; about four times |
-| Escalation: all-3.7 image against the all-3.7 text swap | 0.9308 against 0.9265, +0.0043 | 0.9408 against 0.9364, +0.0043 (p 0.677) |
+| Escalation: all-3.7 image against the all-3.7 text swap | 0.9308 against 0.9265, +0.0043 | 0.9408 against 0.9364, +0.0044 (p 0.677) |
 | MDE₈₀ quoted in the escalation section | ≈ 0.024 | ≈ 0.025 |
 | Arm 2's image MCC (escalation, addendum) | 0.8322 | 0.8436 |
 
@@ -173,6 +173,12 @@ entries keep the figures they reported.
 (the regenerated arms, gap test, and evaluations); `41acb3d50` (the
 register's carried-arm rows re-pointed to the registered set); this
 document refresh in the restatement pass's document commit.
+
+**Corrected the same day** (review of the pass's outputs): the all-3.7
+gap and the escalation delta were first printed as −0.0043 and +0.0043.
+The unrounded value is −0.0043504 (`gap_test.json` stores −0.00435), which
+rounds to −0.0044, as the drafted register outcome prints it; the four
+places above now read −0.0044 / +0.0044. The p value (0.677) is unchanged.
 
 ### 2026-09-13 — Escalation-section addendum (no findings changed)
 
