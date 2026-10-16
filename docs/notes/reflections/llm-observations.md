@@ -8595,3 +8595,41 @@ the summary); primary for everything after.*
   when the two copies were made to run on the same input. One builder and one
   scorer, with any fast copy gated against the live one in tests, is the
   durable fix.
+
+## Session 164 — 2026-10-13 to 10-16 (seven PRs merged; D65–D67; A-06/A-07/A-09 re-signed; the D64 confirmatory test; the restatement pass)
+
+- **I asked for more data to "firm up" a borderline result without
+  designing the test that such a request requires.** Independent side agents,
+  relayed by the PI, caught it twice: pooling the extra passes would overstate
+  the result, and a replication no larger than the discovery set gives a real
+  effect roughly even odds. The pre-specified test then changed the reading
+  (pooled six-pass thinking contrast +0.0288, p 0.025; confirmatory passes 4–6
+  alone +0.0202, p 0.138). An assistant proposing extra data after a
+  borderline result should propose the confirmatory design, its power, and
+  its verdict wording in the same breath.
+- **Long-running orchestrator agents fail by context exhaustion, not by
+  error.** The restatement lead stopped with "prompt is too long" near the
+  end, after 25 pushed commits; because it committed lane by lane, a fresh
+  successor could finish from the record and the branch. One of its
+  sub-agents outlived it and reported to the main session, which relayed the
+  findings to the successor. Briefs for long agents should say: commit after
+  each step, keep raw output out of your own context, delegate bulky reads.
+- **Gemini 3.1 Pro's service varied in ways no single run would show.** On
+  flex, one real-time request waited about 20 minutes in Google's queue; Batch
+  failures (`batch_api_error`) clustered in the MEDIUM-thinking corners (19,
+  83, 24 tiles against 0–9 at HIGH); and delivered thinking changed by day
+  (five HIGH tiles topped up on 2026-10-15 thought for 333 tokens per request
+  where 482 tiles of the same pass on 2026-10-14 thought for none). Image F1
+  shifted by up to the replicate floor between consecutive days.
+- **A library default carried an unbooked cost.** The batch path creates its
+  context cache with a 24-hour TTL and never deletes it; only the real-time
+  path does. About US$41 of storage across D64's 26 cached passes is in no
+  meta, so per-run costs computed from tokens alone understate cached batch
+  runs. Found by a top-up agent reading its own cache lifecycle, confirmed in
+  code.
+- **My remote shell commands kept failing on quoting.** Apostrophes inside a
+  single-quoted `ssh` string, `&&` before a backgrounded `nohup` (which blocks
+  the session), and a lint step chained with `;` before a commit all recurred
+  across the session. The robust pattern: write files locally and copy them
+  across, separate setup from a launch with `;`, and gate a commit on the
+  lint result.

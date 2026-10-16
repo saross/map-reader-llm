@@ -10206,3 +10206,63 @@ stopped it. Gemini 3.1 Pro Preview's real-time service returned 503s on about
 D64. The PI asked for wind-down while approving the last re-verification;
 the re-scoring of the boards was deliberately left for one pass next session,
 so that each artefact moves once.
+
+## Session 164
+
+*2026-10-13 to 10-16; amd-tower + sapphire; Opus 5.5 driving, with Opus
+background agents (and Sonnet for one Observation); no compaction. First-hand.*
+
+**Merged, in the PI's order** (each with `main` merged in and the registry
+rebuilt, tier-1 on sapphire 0 failed, the kernel bad-page count 0 before and
+after, the merged tree identical to its tested head): #45 (`d9866f49e`), #42
+(`dddfcc0af`), #41 (`602593ecb`), #43 (`0e8a1fa7a`), #44 into the branch of
+PR #38, then #38 (`446171b97`; W2.7 § 6 and § 6b regenerated once), #35 (`3a5e5c453`;
+tier-0 regenerated on the origin route); later #47 (`5f6a35bce`; A-07), #49
+(`98514975b`) and #53 (`5db7c7d79`; fault-window re-checks), #50
+(`c4606da85`; S9 sweep), #46 (`77402d640`; GS reader routing), #51
+(`8988bc6f7`; D64 wave-3 batch top-up).
+
+**Rulings.** D65 (#46's six questions; D62 (5)–(8); the execution
+sequence; Gemini 3.5 and 3.7 Flash deprecated). D66 (PR descriptions posted
+unreviewed left as they are; a standing exception for factual draft PR
+descriptions in this repository; A-06's D64 headline and paragraph accepted;
+more image passes). D67 (batch-mode top-up; four more fault-window rows; crop
+manifests committed; the launch-pattern sentence; the 3.7 text ladder on D51's
+clipped basis; extended-reference cells regenerated; the confirmatory test on
+passes 4–6, its verdict wording and A-06 headline mapping fixed in advance).
+
+**Re-signed.** A-06 and A-09 (`d064e9d57`, manifests `2bba84ab5`); A-07 after
+its D50 regeneration and the PI's text approval (#47). Obs 510 corrects Obs
+416's figures (`c7b444c80`).
+
+**API spend.** D64 top-up of 15 text tiles, real-time flex, about US$0.027
+(`41212b986`); D64 wave 3, 12 image passes, US$26.08 (`9664f1094`); wave-3
+batch top-up of 152 tiles, US$1.00 (#51). Booked D64 total about US$73.5; a
+further unbooked about US$41 of context-cache storage is probable (the batch
+path never deletes its 24-hour cache), which would put D64 at about US$115
+against its US$100 cap; unverified until the invoice.
+
+**Results.** Re-score of the GS boards on the repaired probabilities (#46
+record): two registered verdicts fail (the 384 px overlap reversal; I3).
+Fault-window re-checks (#49, #53): every claim-bearing row reproduces. S9
+sweep (#50): only eight K-ladder cells move under D50. D64 confirmatory test
+(draft PR #48): C1, the image thinking contrast, PARTLY replicates (+0.0202, p
+0.138); C2, image temperature at MEDIUM, REPLICATES (+0.0653, p 0.0002); a
+one-day shift in the image corners about the size of the floor. Restatement
+pass (draft PR #52): every lane matched its prediction; 15 signatures lapse,
+with drafted outcome texts; 39 claim rows affected.
+
+**Housekeeping.** Sapphire 97 % → 71 % (14 clones and 5 worktrees of merged
+PRs removed after an audit, uncommitted work saved first); the fault-window
+trees kept because they fail the same audit; their cited evidence copied to
+`archive/fault-window-evidence-2026-10-09/` (`eb6b9b9de`).
+
+**Open for the PI.** PR #52's 15 drafted texts and 16 questions; the three D64
+drafts on PR #48 and A-06's re-signing; D48 after the one-day shift; the
+cache-cost proposals; the fault-window trees.
+
+**Contextual assumptions.** The PI was concerned that the `gemini-3.1-pro-preview`
+endpoint might not last, which is why the extra image passes ran at once. Pro's
+flex tier queued real-time requests for minutes (one for about 20), which is why
+the second top-up went to the Batch API. The restatement lead agent stopped on a
+context overflow near the end; its 25 pushed commits let a successor finish.
