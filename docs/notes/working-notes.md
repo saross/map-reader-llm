@@ -38087,3 +38087,129 @@ change may move Run B's cells slightly, the same class of change).
 `reports/s163-agent-records/origin-gap-grid-plateau.md`;
 `reports/s164-agent-records/rescore-repaired-gs.md` (draft PR #46);
 `602593ecb`, `dddfcc0af`, `3a5e5c453`.
+
+## Observation 511: On same-day data temperature still drives the genuine-Pro corner gap in text and image; the image thinking-level effect seen on 2026-10-13 was not confirmed the next day (Session 165, 2026-10-17)
+
+**Context.** The Principal Investigator (PI) asked in Session 164 for a
+new Observation qualifying Obs 415 for image (ruling D66 (4)), and fixed
+under D67 that it quotes the confirmatory verdicts and that its title
+follows A-06's headline mapping. Obs 415 is not edited. Obs 415
+("Temperature, not thinking level, drives the genuine-Pro corner gap",
+Session 135, 2026-08-17) read A-06's thinking × temperature 2 × 2 from
+committed corners run on different dates and in different modes, two of
+them with no recorded thinking. Obs 509 then found that Pro at HIGH and
+T = 0.0 did not think. Ruling D64 re-ran the 2 × 2 to remove those
+confounds. Below, T is temperature, "thinking" is HIGH − MEDIUM, Δ is a
+difference in micro-F1 at 20 m on the 487 gold-standard tiles, and "Pro"
+is `gemini-3.1-pro-preview`.
+
+**What was established.** All eight corners ran on 2026-10-13 through
+the Batch API with thinking booked per pass (five passes per text
+corner, three per image corner). Three more passes per image corner ran
+on 2026-10-14 as a confirmatory test of the two image contrasts that
+were borderline on the first day. Its four criteria were committed
+before any of their F1 values were computed: the first day's sign,
+Benjamini–Hochberg (BH) adjusted p < 0.05 across the two, |Δ| ≥ 0.03
+(A-06's rule), and |Δ| above the replicate floor of the new passes (the
+95th percentile of the F1 differences between repeat passes of the same
+corner: ordinary run-to-run variation).
+
+**Text** (five passes per corner, all on 2026-10-13):
+
+| Contrast | Obs 415 (committed) | D64 |
+|---|---:|---:|
+| T = 0.0 − T = 0.7 at HIGH | +0.0595 | +0.0500 |
+| T = 0.0 − T = 0.7 at MEDIUM | +0.0366 | +0.0464 |
+| HIGH − MEDIUM at T = 0.0 | +0.0124 | +0.0026 |
+| HIGH − MEDIUM at T = 0.7 | −0.0105 | −0.0010 |
+
+**Image** (three passes per corner on each of two days):
+
+| Contrast | Obs 415 (committed) | 2026-10-13 (passes 1–3) | 2026-10-14 (passes 4–6, the confirmatory test) | All six passes (secondary) |
+|---|---:|---:|---:|---:|
+| T = 0.0 − T = 0.7 at HIGH | +0.0750 | +0.0690 | +0.0786 | +0.0738 |
+| **T = 0.0 − T = 0.7 at MEDIUM** | +0.0605 | +0.0336 | **+0.0653, replicates** | +0.0494 |
+| **HIGH − MEDIUM at T = 0.0** | +0.0103 | +0.0374 | **+0.0202, partly** | +0.0288 |
+| HIGH − MEDIUM at T = 0.7 | −0.0042 | +0.0020 | +0.0069 | +0.0044 |
+
+The two bold rows were borderline on the first day and were the subject
+of the confirmatory test. The six-pass column is reported for
+completeness but does not decide replication. Passes 4–6 were added
+because the first day's results looked borderline, so pooling them with
+the first day would overstate the evidence.
+
+1. **Text: Obs 415 holds with the confounds removed.** Both temperature
+   contrasts fire the rule, reject after BH, and clear the same-day
+   replicate floor (0.0116); the thinking contrasts are +0.0026 and
+   −0.0010.
+2. **Image temperature: Obs 415 holds, and the borderline cell is
+   confirmed.** At MEDIUM the first day's +0.0336 cleared the rule by
+   0.0036. On the next day it was +0.0653 (BH-adjusted p 0.0002, above
+   that day's floor of 0.0205), confirmed on three independent passes
+   run the next day.
+3. **Image thinking at T = 0.0: not confirmed.** The first day's +0.0374
+   (BH-adjusted p 0.043, above the floor) contradicted Obs 415's "the
+   thinking contrast at matched temperature reaches 0.03 in no cell". On
+   the next day it was +0.0202, with BH-adjusted p 0.138, below 0.03,
+   and below the floor: same direction on three further passes but not
+   confirmed; the check had roughly even odds of passing even if the
+   effect were as large as first seen. Over six passes it is +0.0288
+   (secondary).
+4. **Thinking was requested, not delivered.** Corner means were 0–2.7
+   thought tokens per request at HIGH and 11–44 at MEDIUM, and image
+   HIGH at T = 0.0 delivered none on the second day.
+
+**Reading.** Obs 415's title holds on same-day data in both modalities,
+provided "thinking level" is read as the requested level. Neither Obs
+415 nor this entry tests thinking, since Pro delivered a few tokens at
+most. The image thinking contrast at T = 0.0 is the one open item. It
+favoured HIGH on both days, with every HIGH pass above every MEDIUM
+pass, but its size halved and it missed three of the four criteria, so
+it stands as unconfirmed.
+
+**Methodological note.**
+
+1. **Pre-specifying the confirmatory test changed the reading.** Passes
+   4–6 were requested partly because two image results looked
+   borderline. Pooled with the first day, the thinking contrast is
+   +0.0288 with permutation p 0.025, which would reject in an all-eight
+   BH family (0.040). The criteria fixed in advance read the new passes
+   alone, and they do not support it.
+2. **A one-day term about the size of the floor.** Between 2026-10-13
+   and 2026-10-14 three image corners fell by 0.011–0.026 F1 and one
+   rose by 0.006. The largest move (image MEDIUM, T 0.7; 0.0259) is just
+   above the within-day replicate floor (0.0254), and single passes from
+   different days differ more than single passes from one day (median
+   0.0144 against 0.0087). That term shrank one confirmatory contrast by
+   0.017 and grew the other by 0.032, so a borderline contrast between
+   corners run on one day can move by about the floor when re-run the
+   next. The second day's corners sit within 0.011 of the committed
+   March and June corners, which suggests the first day was the outlier;
+   this is not tested (compare Obs 497 and Obs 508).
+
+**Caveats.** Two days and one model version; 384 px and 487 tiles (Era
+2), not the registered Phase-4 scope. The image floors rest on 12 pairs
+per day and sit near their maxima, and the day effect rests on 24
+within-day pairs and sits at the edge of the floor. 152 of the second
+day's 5,844 requests were topped up through the Batch API a day later;
+dropping their 138 tiles changes no verdict. Five of those top-ups, at
+image HIGH T 0.7, delivered real thinking (333 thought tokens per
+request).
+
+**Findable later.** Obs 415 qualification, D64, same-day replication,
+genuine-Pro 2 × 2, A-06, confirmatory test, passes 4–6, C1 partly
+replicates, C2 replicates, temperature is the driver, requested thinking
+level, thought tokens, day effect, 0.0374 → 0.0202, 0.0336 → 0.0653,
+pooled 0.0288, within-day floor 0.0254.
+
+**Related.** Obs 415 (qualified here; its title holds); Obs 509 (Pro at
+HIGH and T = 0.0 did not think); Obs 508 (same-model drift is a standing
+condition); Obs 497 (the run date is a factor).
+
+**Artefacts**: `reports/s164-agent-records/d64-a06-replication.md`
+(PR #48: plan items P12 and P12.1, results, and these drafts);
+`reports/s164-agent-records/d64-a06-replication-scripts/out-p12/d64_p12_results.json`;
+`outputs/pro-2x2-replication-2026-10-13/` (`topup-2026-10-13.json`,
+`topup-2026-10-15.json`); `planning/pi-decisions-2026-09-20.md` D64,
+D66, and D67; plan commits `e783ed3ac`, `751525d7e`, `2d5cb991c`;
+results `b77624e15`.

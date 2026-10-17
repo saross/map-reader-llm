@@ -1,0 +1,27 @@
+# P12 integrity, 2026-10-15T11:38:26Z
+# run r3: PYTHONHASHSEED 0; run r4: PYTHONHASHSEED 1; both run-p12.sh, concurrently, exit 0
+# compare_runs.py r3/a06 r4/a06 (extended original driver):
+identical d64_a06_results.json 4b102586c9071367
+identical d64_per_pass_counts.npz 735c70f172bf79a8
+identical floor_pairs.csv 3284a8b97bda372f
+identical floor_pairs_sensitivity.csv e70419bdd442073c
+identical posthoc_interaction.json b7a003204a0c9e75
+ALL IDENTICAL
+# compare_runs.py r3/p12 r4/p12 (P12 driver):
+identical d64_p12_per_pass_counts.npz b1b3ff88df039b1c
+identical d64_p12_results.json 2373df225cebadf1
+identical p12_floor_pairs.csv 7562ba3da3172b96
+ALL IDENTICAL
+# raw diff of each results JSON with the generated_at line removed:
+a06: no difference
+p12: no difference
+# r3/a06 (extended driver, merged tree) against the committed 2026-10-14 outputs in out/:
+d64_a06_results.json keys that differ: ['generated_at', 'git_head']
+posthoc_interaction.json keys that differ: []
+floor_pairs.csv byte-identical: True
+floor_pairs_sensitivity.csv byte-identical: True
+d64_per_pass_counts.npz members identical: True
+# warning, error, or traceback lines in the six logs: 0
+# kernel Bad page state count (journalctl -k -b | grep -c):
+2026-10-15T11:21:48Z before (P12 session): 0
+2026-10-15T11:34:42Z after both P12 runs: 0
