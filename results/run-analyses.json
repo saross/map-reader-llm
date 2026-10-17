@@ -1728,10 +1728,10 @@
    ],
    "manually_verified_at": "2026-08-17T13:02:16Z",
    "signature": {
-    "status": "re-sign-pending",
-    "signed_at": null,
-    "attests": "Re-signed 2026-10-13T21:50:21Z by the PI (Session 164: \"Yes, re-sign\"), after the signature lapsed on 2026-10-13 when the dated thinking disclosure was appended under D62 (4). SCOPE: the outcome text as it stands at 2026-10-13T21:50:21Z, i.e. the text signed 2026-09-17T07:01:26Z plus the thinking disclosure the PI approved in D62 (4) (b7e27d54c); and results/h6-registered-analyses/a06_decision_rule.json as regenerated under D61 (3) (the D42 paired permutation p with Benjamini-Hochberg across the four factor-T contrasts; deltas, intervals, and all four flags unchanged), merged in PR #35 (3a5e5c453). NOT COVERED: the D64 same-day genuine-Pro replication (outputs/pro-2x2-replication-2026-10-13/, f53ae836b), whose A-06 analysis is pending; if it moves the reading, the row is revised and re-signed. The prior signature and the lapse are kept in history.\n\nSIGNATURE NOTE 2026-10-17 (the signature of 2026-10-13T21:50:21Z has LAPSED and the row is re-sign-pending). The PI approved the D64 same-day replication paragraph in Session 165 (D68: \"I approve the wording with the recommended floor fix\"), and it is appended to the outcome text; the earlier text is unchanged. Source: reports/s164-agent-records/d64-a06-replication.md section For the PI (a), PR #48. The artefact results/h6-registered-analyses/a06_decision_rule.json is unchanged.",
-    "presentation": "Pending re-signature: PR #48 (branch d64-a06-analysis); the paragraph as approved in the Session 165 conversation (D68); results/h6-registered-analyses/findings.md section A-06, note 2026-10-15, and changelog 2026-10-17",
+    "status": "signed",
+    "signed_at": "2026-10-17T06:38:37Z",
+    "attests": "Re-signed 2026-10-17T06:38:37Z by the PI (Session 165: \"yes\" to re-sign A-06), after the signature lapsed on 2026-10-17 when the D64 same-day replication paragraph was appended (D68; PR #48). SCOPE: the outcome text as it stands at 2026-10-17T06:38:37Z, i.e. the text signed 2026-10-13T21:50:21Z plus the D64 paragraph the PI approved in D68 (\"I approve the wording with the recommended floor fix\"); and results/h6-registered-analyses/a06_decision_rule.json, unchanged. The prior signature 2026-10-13T21:50:21Z and the lapse note are kept in history.",
+    "presentation": "Session 165 conversation (the paragraph shown in full, every figure re-read against the D64 results JSON first); PR #48; reports/s164-agent-records/d64-a06-replication.md section For the PI; results/h6-registered-analyses/findings.md section A-06, note 2026-10-15",
     "history": [
      {
       "stamped_at": "2026-08-17T13:02:16Z",
@@ -1759,6 +1759,13 @@
       "prior_signed_at": "2026-10-13T21:50:21Z",
       "prior_attests": "Re-signed 2026-10-13T21:50:21Z by the PI (Session 164: \"Yes, re-sign\"), after the signature lapsed on 2026-10-13 when the dated thinking disclosure was appended under D62 (4). SCOPE: the outcome text as it stands at 2026-10-13T21:50:21Z, i.e. the text signed 2026-09-17T07:01:26Z plus the thinking disclosure the PI approved in D62 (4) (b7e27d54c); and results/h6-registered-analyses/a06_decision_rule.json as regenerated under D61 (3) (the D42 paired permutation p with Benjamini-Hochberg across the four factor-T contrasts; deltas, intervals, and all four flags unchanged), merged in PR #35 (3a5e5c453). NOT COVERED: the D64 same-day genuine-Pro replication (outputs/pro-2x2-replication-2026-10-13/, f53ae836b), whose A-06 analysis is pending; if it moves the reading, the row is revised and re-signed. The prior signature and the lapse are kept in history.",
       "prior_presentation": "Session 164 conversation; D62 (3) and (4) texts as approved in Session 163; PR #35 (merged 3a5e5c453); results/h6-registered-analyses/findings.md"
+     },
+     {
+      "noted_at": "2026-10-17T06:38:37Z",
+      "kind": "re-signed after lapse (Session 165; PI: \"yes\" to re-sign A-06)",
+      "prior_status": "re-sign-pending",
+      "prior_attests": "Re-signed 2026-10-13T21:50:21Z by the PI (Session 164: \"Yes, re-sign\"), after the signature lapsed on 2026-10-13 when the dated thinking disclosure was appended under D62 (4). SCOPE: the outcome text as it stands at 2026-10-13T21:50:21Z, i.e. the text signed 2026-09-17T07:01:26Z plus the thinking disclosure the PI approved in D62 (4) (b7e27d54c); and results/h6-registered-analyses/a06_decision_rule.json as regenerated under D61 (3) (the D42 paired permutation p with Benjamini-Hochberg across the four factor-T contrasts; deltas, intervals, and all four flags unchanged), merged in PR #35 (3a5e5c453). NOT COVERED: the D64 same-day genuine-Pro replication (outputs/pro-2x2-replication-2026-10-13/, f53ae836b), whose A-06 analysis is pending; if it moves the reading, the row is revised and re-signed. The prior signature and the lapse are kept in history.\n\nSIGNATURE NOTE 2026-10-17 (the signature of 2026-10-13T21:50:21Z has LAPSED and the row is re-sign-pending). The PI approved the D64 same-day replication paragraph in Session 165 (D68: \"I approve the wording with the recommended floor fix\"), and it is appended to the outcome text; the earlier text is unchanged. Source: reports/s164-agent-records/d64-a06-replication.md section For the PI (a), PR #48. The artefact results/h6-registered-analyses/a06_decision_rule.json is unchanged.",
+      "prior_presentation": "Pending re-signature: PR #48 (branch d64-a06-analysis); the paragraph as approved in the Session 165 conversation (D68); results/h6-registered-analyses/findings.md section A-06, note 2026-10-15, and changelog 2026-10-17"
      }
     ]
    }

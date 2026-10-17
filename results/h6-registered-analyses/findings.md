@@ -143,7 +143,7 @@ corner: ordinary run-to-run variation. Record:
 
 **Text** (five passes per corner, all on 2026-10-13):
 
-| Contrast | Committed (table above) | D64 |
+| Contrast | Committed (A-06 table) | D64 |
 |---|---:|---:|
 | T = 0.0 − T = 0.7 at HIGH | +0.0595 | +0.0500 |
 | T = 0.0 − T = 0.7 at MEDIUM | +0.0366 | +0.0464 |
@@ -152,7 +152,7 @@ corner: ordinary run-to-run variation. Record:
 
 **Image** (three passes per corner on each of two days):
 
-| Contrast | Committed (table above) | 2026-10-13 (passes 1–3) | 2026-10-14 (passes 4–6, the confirmatory test) | All six passes (secondary) |
+| Contrast | Committed (A-06 table) | 2026-10-13 (passes 1–3) | 2026-10-14 (passes 4–6, the confirmatory test) | All six passes (secondary) |
 |---|---:|---:|---:|---:|
 | T = 0.0 − T = 0.7 at HIGH | +0.0750 | +0.0690 | +0.0786 | +0.0738 |
 | **T = 0.0 − T = 0.7 at MEDIUM** | +0.0605 | +0.0336 | **+0.0653, replicates** | +0.0494 |
