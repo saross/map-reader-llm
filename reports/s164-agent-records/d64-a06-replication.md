@@ -1,13 +1,15 @@
 # D64: A-06's registered rule on the same-day genuine-Pro 2 × 2
 
-> **Last revised**: 2026-10-15 (P12 results: the confirmatory test on
-> image passes 4–6 finds C1, the image thinking contrast at T 0.0, PARTLY
-> replicated and C2, the image temperature contrast at MEDIUM, REPLICATED,
-> so the approved mapping selects headline (a), "TEMPERATURE IS THE
-> DRIVER"; the drafts for the PI are replaced). 2026-10-14: original
-> publication (the pre-specified plan, committed first in `7ae996ce6`
-> before any number was computed, then the results). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-17 (the PI approved the three drafts in §
+> For the PI with agreed changes, D68, and they are applied on this
+> branch; A-06 awaits re-signing). 2026-10-15: P12 results: the
+> confirmatory test on image passes 4–6 finds C1, the image thinking
+> contrast at T 0.0, PARTLY replicated and C2, the image temperature
+> contrast at MEDIUM, REPLICATED, so the approved mapping selects
+> headline (a), "TEMPERATURE IS THE DRIVER"; the drafts for the PI are
+> replaced. 2026-10-14: original publication (the pre-specified plan,
+> committed first in `7ae996ce6` before any number was computed, then
+> the results). See [§ Changelog](#changelog) for revision history.
 
 - **Executed by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), background subagents of the main Session 164
@@ -988,6 +990,23 @@ corner differs from its committed counterpart by more than the floor.
 
 ## For the PI
 
+**Applied 2026-10-17 (D68).** The PI approved all three drafts below in
+Session 165, with these changes: (a) the A-06 paragraph: the day
+effect's largest move is stated as "(0.0259) just above the within-day
+floor (0.0254)", not "at" it; (b) the findings note: the same floor fix;
+the closing clause states what the register carries, not that the
+revision is pending; the banner and changelog are dated 2026-10-17 (the
+note keeps the analysis date); the single eight-row table is split by
+modality, with a sentence saying why the six-pass column does not decide
+replication; "replicate floor" is glossed at first use; "draft PR #48"
+becomes "PR #48"; (c) Obs 511: the shorter title, Session 165 and
+2026-10-17 in the heading, and the same floor fix, tables, gloss, and PR
+reference. The texts as applied are in `results/run-analyses.json`
+(`h6-a06-decision-rule`'s outcome),
+`results/h6-registered-analyses/findings.md` § A-06, and
+`docs/notes/working-notes.md` (Obs 511). The drafts below are kept as
+drafted, for the record of what was approved and changed.
+
 **Updated 2026-10-15 for P12.** Three drafts follow, for approval; none
 is applied. The numbers are read from `out-p12/d64_p12_results.json` and
 `out/d64_a06_results.json`. Under P12.1's mapping, C1 PARTLY selects
@@ -1338,6 +1357,31 @@ Four consequential items are for the PI to decide; none is done here.
    decision, and nothing here asks for it.
 
 ## Changelog
+
+### 2026-10-17 — The three drafts approved and applied (D68)
+
+**Trigger.** The PI's walk-through of § For the PI in Session 165, after
+the main session re-read every figure in the drafts against
+`out/d64_a06_results.json` and `out-p12/d64_p12_results.json` (all
+match; the cross-day median 0.0144, which has no field of its own, was
+re-derived from `out-p12/p12_floor_pairs.csv`).
+
+**What changed.** (a) the A-06 paragraph: the day effect's largest move
+is stated as "(0.0259) just above the within-day floor (0.0254)", not
+"at" it; (b) the findings note: the same floor fix; the closing clause
+states what the register carries, not that the revision is pending; the
+banner and changelog are dated 2026-10-17 (the note keeps the analysis
+date); the single eight-row table is split by modality, with a sentence
+saying why the six-pass column does not decide replication; "replicate
+floor" is glossed at first use; "draft PR #48" becomes "PR #48"; (c) Obs
+511: the shorter title, Session 165 and 2026-10-17 in the heading, and
+the same floor fix, tables, gloss, and PR reference. The texts are
+applied to the register, the findings, and the working notes, and § For
+the PI gains a dated "applied" paragraph.
+
+**What did not change.** Every number, both confirmatory verdicts (C1
+PARTLY, C2 REPLICATES), and the headline (a), "TEMPERATURE IS THE
+DRIVER". Commit: the one that applies this entry.
 
 ### 2026-10-15 — P12: the confirmatory test on image passes 4–6
 
