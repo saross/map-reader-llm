@@ -1,0 +1,1287 @@
+{
+ "label": "committed-vs-before",
+ "identical": [
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle-unconstrained/score.pre-move-2026-09-20.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle-unconstrained/score.pre-move-2026-09-20.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-votes3-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle-unconstrained/score.pre-move-2026-09-20.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.csv",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.json",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/evaluation.pre-move-2026-09-20.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/score.log",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle-unconstrained/score.pre-move-2026-09-20.log",
+  "results/gemini3-image-55map-2026-09-16/findings.md",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm1/analysis.json",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm1/sweep_20m.csv",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm1/verified_best_20m.geojson",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm2/analysis.json",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm2/sweep_20m.csv",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k3/arm2/verified_best_20m.geojson",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm1/analysis.json",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm1/sweep_20m.csv",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm1/verified_best_20m.geojson",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm2/analysis.json",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm2/sweep_20m.csv",
+  "results/gemini3-image-55map-2026-09-16/gs-calibration/k5/arm2/verified_best_20m.geojson",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K1-carried-inherited/score.log",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM1-K3-carried-inherited/score.log",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K1-carried-inherited/score.log",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/detections.geojson",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/evaluation.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/evaluation.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells/G3IMG-ARM2-K3-carried-inherited/score.log",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/cells_manifest.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/findings.md",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/ladder.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K1-inherited.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM1-K3-inherited.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K1-inherited.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/sweep_G3IMG-ARM2-K3-inherited.csv",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/tests.json",
+  "results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20/union_separation.json",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM1-K1.csv",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM1-K3.csv",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM1-K5.csv",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM2-K1.csv",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM2-K3.csv",
+  "results/gemini3-image-55map-2026-09-16/sweep_G3IMG-ARM2-K5.csv",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/detections.geojson",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/evaluation.csv",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/score.log",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/detections.geojson",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/evaluation.csv",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/score.log",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells_manifest.json",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/findings.md",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/replicate_k5_arm1.py",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweep_IMG-ARM1-K5-replicate.csv",
+  "results/image-2x2-2026-09-19/tests_2x2_K1.json",
+  "results/image-2x2-2026-09-19/tests_2x2_K5.json",
+  "results/image-2x2-2026-09-19/tests_t5m_K3.json",
+  "results/tile-presence-2026-09-21/findings.md",
+  "results/tile-presence-2026-09-21/frontier/frontier-board.png",
+  "results/tile-presence-2026-09-21/frontier/frontier-g3-image.png",
+  "results/tile-presence-2026-09-21/frontier/frontier-g37-image.png",
+  "results/tile-presence-2026-09-21/frontier/frontier.json",
+  "results/tile-presence-2026-09-21/frontier/frontier.md",
+  "results/tile-presence-2026-09-21/leaderboard.json",
+  "results/tile-presence-2026-09-21/leaderboard.md"
+ ],
+ "only_A": [],
+ "only_B": [],
+ "json": {
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/cells_manifest.json": {
+   "n_diffs": 152,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/cells[6]/basis",
+     "A": "carried",
+     "B": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)"
+    },
+    {
+     "path": "/cells[6]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[6]/label",
+     "A": "G3IMG-ARM1-K1-carried",
+     "B": "G3IMG-ARM1-K1-mcc-oracle"
+    },
+    {
+     "path": "/cells[6]/n_detections",
+     "A": 8529,
+     "B": 7543,
+     "delta": -986
+    },
+    {
+     "path": "/cells[6]/point",
+     "A": "(0.15, k1)",
+     "B": "(0.30, k1)"
+    },
+    {
+     "path": "/cells[6]/presentation",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[7]/arm",
+     "A": "arm1",
+     "B": "arm2"
+    },
+    {
+     "path": "/cells[7]/basis",
+     "A": "f1-oracle",
+     "B": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)"
+    },
+    {
+     "path": "/cells[7]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[7]/label",
+     "A": "G3IMG-ARM1-K1-f1-oracle",
+     "B": "G3IMG-ARM2-K1-mcc-oracle"
+    },
+    {
+     "path": "/cells[7]/n_detections",
+     "A": 7466,
+     "B": 7931,
+     "delta": 465
+    },
+    {
+     "path": "/cells[7]/point",
+     "A": "(0.40, k1)",
+     "B": "(0.98, k1)"
+    },
+    {
+     "path": "/cells[7]/presentation",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[7]/rung",
+     "A": "G3IMG-ARM1-K1",
+     "B": "G3IMG-ARM2-K1"
+    },
+    {
+     "path": "/cells[7]/verifier_model",
+     "A": "gemini-3-flash-preview",
+     "B": "gemini-3.7-flash"
+    },
+    {
+     "path": "/cells[7]/verifier_thinking",
+     "A": "minimal",
+     "B": "low"
+    },
+    {
+     "path": "/cells[8]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[8]/k",
+     "A": 1,
+     "B": 3,
+     "delta": 2
+    },
+    {
+     "path": "/cells[8]/label",
+     "A": "G3IMG-ARM1-K1-mcc-oracle",
+     "B": "G3IMG-ARM1-K3-mcc-oracle"
+    },
+    {
+     "path": "/cells[8]/n_detections",
+     "A": 7543,
+     "B": 5370,
+     "delta": -2173
+    },
+    {
+     "path": "/cells[8]/point",
+     "A": "(0.30, k1)",
+     "B": "(0.20, k3)"
+    },
+    {
+     "path": "/cells[8]/rung",
+     "A": "G3IMG-ARM1-K1",
+     "B": "G3IMG-ARM1-K3"
+    },
+    {
+     "path": "/cells[9]/basis",
+     "A": "carried",
+     "B": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)"
+    },
+    {
+     "path": "/cells[9]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[9]/k",
+     "A": 1,
+     "B": 3,
+     "delta": 2
+    },
+    {
+     "path": "/cells[9]/label",
+     "A": "G3IMG-ARM2-K1-carried",
+     "B": "G3IMG-ARM2-K3-mcc-oracle"
+    },
+    {
+     "path": "/cells[9]/n_detections",
+     "A": 9172,
+     "B": 5266,
+     "delta": -3906
+    },
+    {
+     "path": "/cells[9]/point",
+     "A": "(0.88, k1)",
+     "B": "(0.96, k3)"
+    },
+    {
+     "path": "/cells[9]/presentation",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[9]/rung",
+     "A": "G3IMG-ARM2-K1",
+     "B": "G3IMG-ARM2-K3"
+    },
+    {
+     "path": "/cells[10]/arm",
+     "A": "arm2",
+     "B": "arm1"
+    },
+    {
+     "path": "/cells[10]/basis",
+     "A": "f1-oracle",
+     "B": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)"
+    },
+    {
+     "path": "/cells[10]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[10]/k",
+     "A": 1,
+     "B": 5,
+     "delta": 4
+    },
+    {
+     "path": "/cells[10]/label",
+     "A": "G3IMG-ARM2-K1-f1-oracle",
+     "B": "G3IMG-ARM1-K5-mcc-oracle"
+    },
+    {
+     "path": "/cells[10]/n_detections",
+     "A": 7931,
+     "B": 4729,
+     "delta": -3202
+    },
+    {
+     "path": "/cells[10]/point",
+     "A": "(0.98, k1)",
+     "B": "(0.20, k5)"
+    },
+    {
+     "path": "/cells[10]/presentation",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[10]/rung",
+     "A": "G3IMG-ARM2-K1",
+     "B": "G3IMG-ARM1-K5"
+    },
+    {
+     "path": "/cells[10]/verifier_model",
+     "A": "gemini-3.7-flash",
+     "B": "gemini-3-flash-preview"
+    },
+    {
+     "path": "/cells[10]/verifier_thinking",
+     "A": "low",
+     "B": "minimal"
+    },
+    {
+     "path": "/cells[11]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[11]/k",
+     "A": 1,
+     "B": 5,
+     "delta": 4
+    },
+    {
+     "path": "/cells[11]/label",
+     "A": "G3IMG-ARM2-K1-mcc-oracle",
+     "B": "G3IMG-ARM2-K5-mcc-oracle"
+    },
+    {
+     "path": "/cells[11]/n_detections",
+     "A": 7931,
+     "B": 4660,
+     "delta": -3271
+    },
+    {
+     "path": "/cells[11]/point",
+     "A": "(0.98, k1)",
+     "B": "(0.98, k5)"
+    },
+    {
+     "path": "/cells[11]/rung",
+     "A": "G3IMG-ARM2-K1",
+     "B": "G3IMG-ARM2-K5"
+    },
+    {
+     "path": "/cells[12]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[12]/k",
+     "A": 3,
+     "B": 1,
+     "delta": -2
+    },
+    {
+     "path": "/cells[12]/label",
+     "A": "G3IMG-ARM1-K3-carried",
+     "B": "G3IMG-ARM1-K1-carried"
+    },
+    {
+     "path": "/cells[12]/n_detections",
+     "A": 5538,
+     "B": 8529,
+     "delta": 2991
+    },
+    {
+     "path": "/cells[12]/point",
+     "A": "(0.15, k3)",
+     "B": "(0.15, k1)"
+    },
+    {
+     "path": "/cells[12]/rung",
+     "A": "G3IMG-ARM1-K3",
+     "B": "G3IMG-ARM1-K1"
+    },
+    {
+     "path": "/cells[12]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[13]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K1-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[13]/k",
+     "A": 3,
+     "B": 1,
+     "delta": -2
+    },
+    {
+     "path": "/cells[13]/label",
+     "A": "G3IMG-ARM1-K3-f1-oracle",
+     "B": "G3IMG-ARM1-K1-f1-oracle"
+    },
+    {
+     "path": "/cells[13]/n_detections",
+     "A": 5538,
+     "B": 7466,
+     "delta": 1928
+    },
+    {
+     "path": "/cells[13]/point",
+     "A": "(0.15, k3)",
+     "B": "(0.40, k1)"
+    },
+    {
+     "path": "/cells[13]/rung",
+     "A": "G3IMG-ARM1-K3",
+     "B": "G3IMG-ARM1-K1"
+    },
+    {
+     "path": "/cells[13]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[14]/arm",
+     "A": "arm1",
+     "B": "arm2"
+    },
+    {
+     "path": "/cells[14]/basis",
+     "A": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
+     "B": "carried"
+    },
+    {
+     "path": "/cells[14]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[14]/k",
+     "A": 3,
+     "B": 1,
+     "delta": -2
+    },
+    {
+     "path": "/cells[14]/label",
+     "A": "G3IMG-ARM1-K3-mcc-oracle",
+     "B": "G3IMG-ARM2-K1-carried"
+    },
+    {
+     "path": "/cells[14]/n_detections",
+     "A": 5370,
+     "B": 9172,
+     "delta": 3802
+    },
+    {
+     "path": "/cells[14]/point",
+     "A": "(0.20, k3)",
+     "B": "(0.88, k1)"
+    },
+    {
+     "path": "/cells[14]/presentation",
+     "only_in": "A"
+    },
+    {
+     "path": "/cells[14]/rung",
+     "A": "G3IMG-ARM1-K3",
+     "B": "G3IMG-ARM2-K1"
+    },
+    {
+     "path": "/cells[14]/verifier_model",
+     "A": "gemini-3-flash-preview",
+     "B": "gemini-3.7-flash"
+    },
+    {
+     "path": "/cells[14]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[14]/verifier_thinking",
+     "A": "minimal",
+     "B": "low"
+    },
+    {
+     "path": "/cells[15]/basis",
+     "A": "carried",
+     "B": "f1-oracle"
+    },
+    {
+     "path": "/cells[15]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[15]/k",
+     "A": 3,
+     "B": 1,
+     "delta": -2
+    },
+    {
+     "path": "/cells[15]/label",
+     "A": "G3IMG-ARM2-K3-carried",
+     "B": "G3IMG-ARM2-K1-f1-oracle"
+    },
+    {
+     "path": "/cells[15]/n_detections",
+     "A": 5941,
+     "B": 7931,
+     "delta": 1990
+    },
+    {
+     "path": "/cells[15]/point",
+     "A": "(0.88, k3)",
+     "B": "(0.98, k1)"
+    },
+    {
+     "path": "/cells[15]/rung",
+     "A": "G3IMG-ARM2-K3",
+     "B": "G3IMG-ARM2-K1"
+    },
+    {
+     "path": "/cells[15]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[16]/arm",
+     "A": "arm2",
+     "B": "arm1"
+    },
+    {
+     "path": "/cells[16]/basis",
+     "A": "f1-oracle",
+     "B": "carried"
+    },
+    {
+     "path": "/cells[16]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[16]/label",
+     "A": "G3IMG-ARM2-K3-f1-oracle",
+     "B": "G3IMG-ARM1-K3-carried"
+    },
+    {
+     "path": "/cells[16]/n_detections",
+     "A": 5266,
+     "B": 5538,
+     "delta": 272
+    },
+    {
+     "path": "/cells[16]/point",
+     "A": "(0.96, k3)",
+     "B": "(0.15, k3)"
+    },
+    {
+     "path": "/cells[16]/rung",
+     "A": "G3IMG-ARM2-K3",
+     "B": "G3IMG-ARM1-K3"
+    },
+    {
+     "path": "/cells[16]/verifier_model",
+     "A": "gemini-3.7-flash",
+     "B": "gemini-3-flash-preview"
+    },
+    {
+     "path": "/cells[16]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[16]/verifier_thinking",
+     "A": "low",
+     "B": "minimal"
+    },
+    {
+     "path": "/cells[17]/arm",
+     "A": "arm2",
+     "B": "arm1"
+    },
+    {
+     "path": "/cells[17]/basis",
+     "A": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
+     "B": "f1-oracle"
+    },
+    {
+     "path": "/cells[17]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K3-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[17]/label",
+     "A": "G3IMG-ARM2-K3-mcc-oracle",
+     "B": "G3IMG-ARM1-K3-f1-oracle"
+    },
+    {
+     "path": "/cells[17]/n_detections",
+     "A": 5266,
+     "B": 5538,
+     "delta": 272
+    },
+    {
+     "path": "/cells[17]/point",
+     "A": "(0.96, k3)",
+     "B": "(0.15, k3)"
+    },
+    {
+     "path": "/cells[17]/presentation",
+     "only_in": "A"
+    },
+    {
+     "path": "/cells[17]/rung",
+     "A": "G3IMG-ARM2-K3",
+     "B": "G3IMG-ARM1-K3"
+    },
+    {
+     "path": "/cells[17]/verifier_model",
+     "A": "gemini-3.7-flash",
+     "B": "gemini-3-flash-preview"
+    },
+    {
+     "path": "/cells[17]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[17]/verifier_thinking",
+     "A": "low",
+     "B": "minimal"
+    },
+    {
+     "path": "/cells[18]/arm",
+     "A": "arm1",
+     "B": "arm2"
+    },
+    {
+     "path": "/cells[18]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[18]/k",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/cells[18]/label",
+     "A": "G3IMG-ARM1-K5-carried",
+     "B": "G3IMG-ARM2-K3-carried"
+    },
+    {
+     "path": "/cells[18]/n_detections",
+     "A": 4858,
+     "B": 5941,
+     "delta": 1083
+    },
+    {
+     "path": "/cells[18]/point",
+     "A": "(0.15, k5)",
+     "B": "(0.88, k3)"
+    },
+    {
+     "path": "/cells[18]/rung",
+     "A": "G3IMG-ARM1-K5",
+     "B": "G3IMG-ARM2-K3"
+    },
+    {
+     "path": "/cells[18]/verifier_model",
+     "A": "gemini-3-flash-preview",
+     "B": "gemini-3.7-flash"
+    },
+    {
+     "path": "/cells[18]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[18]/verifier_thinking",
+     "A": "minimal",
+     "B": "low"
+    },
+    {
+     "path": "/cells[19]/arm",
+     "A": "arm1",
+     "B": "arm2"
+    },
+    {
+     "path": "/cells[19]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[19]/k",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/cells[19]/label",
+     "A": "G3IMG-ARM1-K5-f1-oracle",
+     "B": "G3IMG-ARM2-K3-f1-oracle"
+    },
+    {
+     "path": "/cells[19]/n_detections",
+     "A": 4858,
+     "B": 5266,
+     "delta": 408
+    },
+    {
+     "path": "/cells[19]/point",
+     "A": "(0.15, k5)",
+     "B": "(0.96, k3)"
+    },
+    {
+     "path": "/cells[19]/rung",
+     "A": "G3IMG-ARM1-K5",
+     "B": "G3IMG-ARM2-K3"
+    },
+    {
+     "path": "/cells[19]/verifier_model",
+     "A": "gemini-3-flash-preview",
+     "B": "gemini-3.7-flash"
+    },
+    {
+     "path": "/cells[19]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[19]/verifier_thinking",
+     "A": "minimal",
+     "B": "low"
+    },
+    {
+     "path": "/cells[20]/basis",
+     "A": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
+     "B": "carried"
+    },
+    {
+     "path": "/cells[20]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[20]/label",
+     "A": "G3IMG-ARM1-K5-mcc-oracle",
+     "B": "G3IMG-ARM1-K5-carried"
+    },
+    {
+     "path": "/cells[20]/n_detections",
+     "A": 4729,
+     "B": 4858,
+     "delta": 129
+    },
+    {
+     "path": "/cells[20]/point",
+     "A": "(0.20, k5)",
+     "B": "(0.15, k5)"
+    },
+    {
+     "path": "/cells[20]/presentation",
+     "only_in": "A"
+    },
+    {
+     "path": "/cells[20]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[21]/arm",
+     "A": "arm2",
+     "B": "arm1"
+    },
+    {
+     "path": "/cells[21]/basis",
+     "A": "carried",
+     "B": "f1-oracle"
+    },
+    {
+     "path": "/cells[21]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM1-K5-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[21]/label",
+     "A": "G3IMG-ARM2-K5-carried",
+     "B": "G3IMG-ARM1-K5-f1-oracle"
+    },
+    {
+     "path": "/cells[21]/n_detections",
+     "A": 5155,
+     "B": 4858,
+     "delta": -297
+    },
+    {
+     "path": "/cells[21]/point",
+     "A": "(0.95, k5)",
+     "B": "(0.15, k5)"
+    },
+    {
+     "path": "/cells[21]/rung",
+     "A": "G3IMG-ARM2-K5",
+     "B": "G3IMG-ARM1-K5"
+    },
+    {
+     "path": "/cells[21]/verifier_model",
+     "A": "gemini-3.7-flash",
+     "B": "gemini-3-flash-preview"
+    },
+    {
+     "path": "/cells[21]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[21]/verifier_thinking",
+     "A": "low",
+     "B": "minimal"
+    },
+    {
+     "path": "/cells[22]/basis",
+     "A": "f1-oracle",
+     "B": "carried"
+    },
+    {
+     "path": "/cells[22]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/detections.geojson"
+    },
+    {
+     "path": "/cells[22]/label",
+     "A": "G3IMG-ARM2-K5-f1-oracle",
+     "B": "G3IMG-ARM2-K5-carried"
+    },
+    {
+     "path": "/cells[22]/n_detections",
+     "A": 4664,
+     "B": 5155,
+     "delta": 491
+    },
+    {
+     "path": "/cells[22]/point",
+     "A": "(0.96, k5)",
+     "B": "(0.95, k5)"
+    },
+    {
+     "path": "/cells[22]/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/cells[23]/basis",
+     "A": "mcc-oracle at carried k \u2014 retained, not presented (PI ruling 2026-09-21)",
+     "B": "f1-oracle"
+    },
+    {
+     "path": "/cells[23]/det",
+     "A": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-mcc-oracle/detections.geojson",
+     "B": "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/detections.geojson"
+    },
+    {
+     "path": "/cells[23]/label",
+     "A": "G3IMG-ARM2-K5-mcc-oracle",
+     "B": "G3IMG-ARM2-K5-f1-oracle"
+    },
+    {
+     "path": "/cells[23]/n_detections",
+     "A": 4660,
+     "B": 4664,
+     "delta": 4
+    },
+    {
+     "path": "/cells[23]/point",
+     "A": "(0.98, k5)",
+     "B": "(0.96, k5)"
+    },
+    {
+     "path": "/cells[23]/presentation",
+     "only_in": "A"
+    },
+    {
+     "path": "/cells[23]/verifier_probabilities",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini3-image-55map-2026-09-16/sweeps.json": {
+   "n_diffs": 6,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/rungs/G3IMG-ARM1-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/rungs/G3IMG-ARM1-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/rungs/G3IMG-ARM1-K5/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/rungs/G3IMG-ARM2-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/rungs/G3IMG-ARM2-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/rungs/G3IMG-ARM2-K5/verifier_probabilities",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/arm2_reference/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/verifier_probabilities",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/evaluation.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 4,
+   "diffs": [
+    {
+     "path": "/_metadata/cli_args/workers",
+     "A": 5,
+     "B": 3,
+     "delta": -2
+    },
+    {
+     "path": "/summary/detection_scope",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweeps.json": {
+   "n_diffs": 1,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/verifier_probabilities",
+     "only_in": "B"
+    }
+   ]
+  },
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json": {
+   "n_diffs": 0,
+   "n_stamps_ignored": 0,
+   "diffs": []
+  },
+  "results/image-2x2-2026-09-19/tests_2x2_K3.json": {
+   "n_diffs": 2,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/f1_tests[3]/null_mean",
+     "A": -5.962207876505059e-05,
+     "B": -5.9622078765049766e-05,
+     "delta": 8.267041565201971e-19
+    },
+    {
+     "path": "/f1_tests[3]/null_std",
+     "A": 0.0029145121331264,
+     "B": 0.0029145121331264003,
+     "delta": 4.336808689942018e-19
+    }
+   ]
+  },
+  "results/tile-presence-2026-09-21/verifier-costs.json": {
+   "n_diffs": 13,
+   "n_stamps_ignored": 0,
+   "diffs": [
+    {
+     "path": "/_README",
+     "A": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register, priced from their own metas (none since the S160 repair extracted the S104 vote-3 increments as rows of their parent runs, D32). cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis. unpriced_legs lists every leg left unpriced, to be recovered by hand with the PI.",
+     "B": "Verifier-leg cost per configuration, at the uniform discounted tier from the passes register (PI rulings D19 amended, D29 and D30, 2026-10-04; scripts/lib_frontier_cost.py), as the r2 board and the K-ladders are priced. basis 'measured' = the leg's own tokens; 'completed' = a floor (a cleanup-overwritten leg, or a register row on the published basis) whose calls are priced at nominated comparable legs' unit, listed in sources; 'unpriced' = no rule prices the leg whole, so nothing derived from it is priced. stages_outside_register = stages absent from the register, priced from their own metas (none since the S160 repair extracted the S104 vote-3 increments as rows of their parent runs, D32). cross_check compares the campaign post-run report's figure, which must agree over the same candidates and within agreement_tolerance_usd for the leg's basis. unpriced_legs lists every leg left unpriced, to be recovered by hand with the PI. verifier_probabilities (image campaign legs) = the directory the campaign's sweeps read: the leg's _repaired copy where one holds probabilities.json (D55 Q4, D58 Q8), with its SHA-256 and repair counts; its reverify_usd is included in usd and excluded from the cross-check, which compares the leg's own cost with its report."
+    },
+    {
+     "path": "/legs/G3IMG-ARM1-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/G3IMG-ARM1-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/G3IMG-ARM1-K5/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/G3IMG-ARM2-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/G3IMG-ARM2-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/G3IMG-ARM2-K5/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM1-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM1-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM1-K5/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM2-K1/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM2-K3/verifier_probabilities",
+     "only_in": "B"
+    },
+    {
+     "path": "/legs/IMG-ARM2-K5/verifier_probabilities",
+     "only_in": "B"
+    }
+   ]
+  }
+ },
+ "csv": {},
+ "other": [
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.md",
+  "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.md",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/evaluation.md",
+  "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/evaluation.md"
+ ],
+ "summary": {
+  "files": 216,
+  "identical": 193,
+  "only_A": [],
+  "only_B": [],
+  "json_stamps_only": [
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json"
+  ],
+  "json_with_diffs": {
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.json": 2,
+   "results/gemini3-image-55map-2026-09-16/cells_manifest.json": 152,
+   "results/gemini3-image-55map-2026-09-16/sweeps.json": 6,
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/agreement.json": 2,
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/evaluation.json": 2,
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/evaluation.json": 2,
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/sweeps.json": 1,
+   "results/image-2x2-2026-09-19/tests_2x2_K3.json": 2,
+   "results/tile-presence-2026-09-21/verifier-costs.json": 13
+  },
+  "csv_with_diffs": {},
+  "other_differs": [
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-carried/evaluation.md",
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K1-f1-oracle/evaluation.md",
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-carried/evaluation.md",
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K3-f1-oracle/evaluation.md",
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-carried/evaluation.md",
+   "results/gemini3-image-55map-2026-09-16/cells/G3IMG-ARM2-K5-f1-oracle/evaluation.md",
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-carried-replicate/evaluation.md",
+   "results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/cells/IMG-ARM1-K5-f1-oracle-replicate/evaluation.md"
+  ]
+ }
+}

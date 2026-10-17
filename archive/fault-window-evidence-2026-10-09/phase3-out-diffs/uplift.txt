@@ -1,0 +1,631 @@
+## conditions.csv OLD vs committed
+rows 439 -> 505; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 66
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-f1-oracle-p0.40-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-mcc-oracle-p0.30-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt',)
+shared rows changed: 335; by column: {'cost_usd': 332, 'notes': 5, 'cost_basis': 126, 'thinking': 1, 'temperature': 1, 'proposer_pool': 1, 'K': 1}
+   ('55maps-generalisation::verified-paired',)
+      cost_usd: 0.033927 -> 0.105049
+   ('55maps-image-generalisation::verified',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-canonical-gt',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-r2-gt',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-standardised-gt',)
+      cost_usd: 707.45658 -> 359.64679
+## conditions-by-buffer.csv OLD vs committed
+rows 439 -> 505; duplicate keys 5009/5867; header equal True
+only in A: 0; only in B: 66
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-carried-p0.15-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-f1-oracle-p0.40-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k1-mcc-oracle-p0.30-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-carried-p0.15-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-f1-oracle-p0.15-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.20-k3-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k3-mcc-oracle-p0.35-k1-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-carried-p0.15-k5-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-f1-oracle-p0.15-k5-r2-gt',)
+   + ('gemini3-image-55map-2026-09-16::g3img-arm1-k5-mcc-oracle-p0.20-k5-r2-gt',)
+shared rows changed: 335; by column: {'cost_usd': 332, 'notes': 5, 'cost_basis': 126, 'thinking': 1, 'temperature': 1, 'proposer_pool': 1, 'K': 1}
+   ('55maps-generalisation::verified-paired',)
+      cost_usd: 0.033927 -> 0.105049
+   ('55maps-image-generalisation::verified',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-canonical-gt',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-r2-gt',)
+      cost_usd: 707.45658 -> 359.64679
+   ('55maps-image-generalisation::verified-k3-standardised-gt',)
+      cost_usd: 707.45658 -> 359.64679
+## strata.csv OLD vs committed
+Traceback (most recent call last):
+  File "/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/bin/csv_delta.py", line 38, in <module>
+    ha, ra, da = load(args.a)
+                 ~~~~^^^^^^^^
+  File "/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/bin/csv_delta.py", line 31, in load
+    k = tuple(r[c] for c in keys)
+  File "/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/bin/csv_delta.py", line 31, in <genexpr>
+    k = tuple(r[c] for c in keys)
+              ~^^^
+KeyError: 'condition_id'
+## conditions.csv NEW vs OLD rerun
+rows 505 -> 505; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 0
+shared rows changed: 61; by column: {'F1': 61, 'F1_CI_lo': 61, 'F1_CI_hi': 61, 'precision': 61, 'recall': 61}
+   ('consensus-384-t1-0::consensus-1of5',)
+      F1: 0.3038 -> 0.3052
+      F1_CI_lo: 0.2467 -> 0.2477
+      F1_CI_hi: 0.3633 -> 0.365
+      precision: 0.2197 -> 0.2207
+      recall: 0.492 -> 0.4943
+   ('consensus-384-t1-0::consensus-2of5',)
+      F1: 0.3977 -> 0.3996
+      F1_CI_lo: 0.3322 -> 0.3333
+      F1_CI_hi: 0.4654 -> 0.4673
+      precision: 0.3393 -> 0.3409
+      recall: 0.4805 -> 0.4828
+   ('consensus-384-t1-0::consensus-3of5',)
+      F1: 0.4331 -> 0.4353
+      F1_CI_lo: 0.3634 -> 0.3659
+      F1_CI_hi: 0.5 -> 0.5026
+      precision: 0.4112 -> 0.4132
+      recall: 0.4575 -> 0.4598
+   ('consensus-384-t1-0::consensus-4of5',)
+      F1: 0.4554 -> 0.4578
+      F1_CI_lo: 0.3868 -> 0.3893
+      F1_CI_hi: 0.5232 -> 0.5262
+      precision: 0.4785 -> 0.481
+      recall: 0.4345 -> 0.4368
+   ('consensus-384-t1-0::consensus-5of5',)
+      F1: 0.4712 -> 0.474
+      F1_CI_lo: 0.4011 -> 0.4037
+      F1_CI_hi: 0.5395 -> 0.5418
+      precision: 0.5831 -> 0.5864
+      recall: 0.3954 -> 0.3977
+   ('e47-propose-brief::consensus-1of5',)
+      F1: 0.1798 -> 0.1802
+      F1_CI_lo: 0.1502 -> 0.1506
+      F1_CI_hi: 0.2137 -> 0.2141
+      precision: 0.0993 -> 0.0995
+      recall: 0.9471 -> 0.9494
+   ('e47-propose-brief::consensus-2of5',)
+      F1: 0.4128 -> 0.4138
+      F1_CI_lo: 0.3606 -> 0.3617
+      F1_CI_hi: 0.4657 -> 0.4668
+      precision: 0.2648 -> 0.2655
+      recall: 0.9356 -> 0.9379
+   ('e47-propose-brief::consensus-3of5',)
+      F1: 0.5471 -> 0.5485
+      F1_CI_lo: 0.4899 -> 0.4916
+      F1_CI_hi: 0.6015 -> 0.6031
+      precision: 0.3928 -> 0.3938
+      recall: 0.9011 -> 0.9034
+   ('e47-propose-brief::consensus-4of5',)
+      F1: 0.6543 -> 0.6561
+      F1_CI_lo: 0.5986 -> 0.6006
+      F1_CI_hi: 0.7047 -> 0.7064
+      precision: 0.5308 -> 0.5322
+      recall: 0.8529 -> 0.8552
+   ('e47-propose-brief::consensus-5of5',)
+      F1: 0.7326 -> 0.7348
+      F1_CI_lo: 0.6843 -> 0.6863
+      F1_CI_hi: 0.7755 -> 0.7773
+      precision: 0.7165 -> 0.7187
+      recall: 0.7494 -> 0.7517
+   ('gold-standard-v2::consensus-3of5',)
+      F1: 0.5925 -> 0.594
+      F1_CI_lo: 0.5387 -> 0.5404
+      F1_CI_hi: 0.6421 -> 0.6435
+      precision: 0.4447 -> 0.4459
+      recall: 0.8874 -> 0.8897
+   ('gold-standard-v2::consensus-4of5',)
+      F1: 0.6999 -> 0.7018
+      F1_CI_lo: 0.6486 -> 0.6508
+      F1_CI_hi: 0.7455 -> 0.7473
+      precision: 0.6003 -> 0.602
+      recall: 0.8391 -> 0.8414
+   ('gold-standard-v2::consensus-5of5',)
+      F1: 0.7649 -> 0.7673
+      F1_CI_lo: 0.7192 -> 0.7216
+      F1_CI_hi: 0.804 -> 0.806
+      precision: 0.7786 -> 0.781
+      recall: 0.7517 -> 0.754
+   ('h13::arm-a-native-12-5',)
+      F1: 0.5576 -> 0.5731
+      F1_CI_lo: 0.4948 -> 0.5126
+      F1_CI_hi: 0.6175 -> 0.6294
+      precision: 0.4487 -> 0.4611
+      recall: 0.7365 -> 0.757
+   ('h13::arm-a-overlap-12-5',)
+      F1: 0.558 -> 0.5734
+      F1_CI_lo: 0.4949 -> 0.514
+      F1_CI_hi: 0.6175 -> 0.6298
+      precision: 0.4487 -> 0.4611
+      recall: 0.7379 -> 0.7584
+   ('h13::arm-b-native-25',)
+      F1: 0.5222 -> 0.5277
+      F1_CI_lo: 0.4692 -> 0.4747
+      F1_CI_hi: 0.5718 -> 0.577
+      precision: 0.3906 -> 0.3947
+      recall: 0.7875 -> 0.7957
+   ('h13::arm-b-overlap-25',)
+      F1: 0.5198 -> 0.53
+      F1_CI_lo: 0.4607 -> 0.4722
+      F1_CI_hi: 0.5765 -> 0.5849
+      precision: 0.3887 -> 0.3964
+      recall: 0.7844 -> 0.7999
+   ('h13::arm-c-native-50',)
+      F1: 0.4067 -> 0.413
+      F1_CI_lo: 0.3667 -> 0.3733
+      F1_CI_hi: 0.4461 -> 0.4519
+      precision: 0.2648 -> 0.2689
+      recall: 0.8761 -> 0.8897
+   ('h13::arm-c-overlap-50',)
+      F1: 0.4024 -> 0.4116
+      F1_CI_lo: 0.3477 -> 0.3574
+      F1_CI_hi: 0.4583 -> 0.4667
+      precision: 0.2616 -> 0.2676
+      recall: 0.8718 -> 0.8916
+   ('n1-outstanding-384::brief-text-t03-consensus-1of3',)
+      F1: 0.4663 -> 0.4675
+      F1_CI_lo: 0.4085 -> 0.41
+      F1_CI_hi: 0.5255 -> 0.527
+      precision: 0.3157 -> 0.3165
+      recall: 0.892 -> 0.8943
+   ('n1-outstanding-384::brief-text-t03-consensus-2of3',)
+      F1: 0.5537 -> 0.5552
+      F1_CI_lo: 0.497 -> 0.4982
+      F1_CI_hi: 0.6097 -> 0.6113
+      precision: 0.4034 -> 0.4044
+      recall: 0.8828 -> 0.8851
+   ('n1-outstanding-384::brief-text-t03-consensus-3of3',)
+      F1: 0.5907 -> 0.5924
+      F1_CI_lo: 0.5346 -> 0.5358
+      F1_CI_hi: 0.6443 -> 0.6461
+      precision: 0.4572 -> 0.4584
+      recall: 0.8345 -> 0.8368
+   ('n1-outstanding-384::image-t0-consensus-1of3',)
+      F1: 0.624 -> 0.6258
+      F1_CI_lo: 0.5816 -> 0.5834
+      F1_CI_hi: 0.6661 -> 0.6679
+      precision: 0.5087 -> 0.5101
+      recall: 0.8069 -> 0.8092
+   ('n1-outstanding-384::image-t0-consensus-2of3',)
+      F1: 0.629 -> 0.6308
+      F1_CI_lo: 0.5863 -> 0.5885
+      F1_CI_hi: 0.671 -> 0.6732
+      precision: 0.5154 -> 0.5169
+      recall: 0.8069 -> 0.8092
+   ('n1-outstanding-384::image-t0-consensus-3of3',)
+      F1: 0.6288 -> 0.6306
+      F1_CI_lo: 0.5866 -> 0.5883
+      F1_CI_hi: 0.6708 -> 0.6727
+      precision: 0.517 -> 0.5185
+      recall: 0.8023 -> 0.8046
+   ('n1-outstanding-384::image-t03-consensus-1of3',)
+      F1: 0.5822 -> 0.5838
+      F1_CI_lo: 0.5395 -> 0.5407
+      F1_CI_hi: 0.627 -> 0.6282
+      precision: 0.447 -> 0.4483
+      recall: 0.8345 -> 0.8368
+   ('n1-outstanding-384::image-t03-consensus-2of3',)
+      F1: 0.6424 -> 0.6442
+      F1_CI_lo: 0.6002 -> 0.6025
+      F1_CI_hi: 0.6843 -> 0.686
+      precision: 0.5316 -> 0.5331
+      recall: 0.8115 -> 0.8138
+   ('n1-outstanding-384::pro-image-high-t0-consensus-1of3',)
+      F1: 0.5614 -> 0.5631
+      F1_CI_lo: 0.5176 -> 0.5195
+      F1_CI_hi: 0.6033 -> 0.6053
+      precision: 0.4479 -> 0.4493
+      recall: 0.7517 -> 0.754
+   ('n1-outstanding-384::pro-image-high-t0-consensus-2of3',)
+      F1: 0.576 -> 0.5778
+      F1_CI_lo: 0.5326 -> 0.5341
+      F1_CI_hi: 0.6176 -> 0.619
+      precision: 0.4696 -> 0.471
+      recall: 0.7448 -> 0.7471
+   ('n1-outstanding-384::pro-image-high-t0-consensus-3of3',)
+      F1: 0.5854 -> 0.5873
+      F1_CI_lo: 0.5401 -> 0.5421
+      F1_CI_hi: 0.6282 -> 0.6299
+      precision: 0.4892 -> 0.4907
+      recall: 0.7287 -> 0.731
+   ('n1-outstanding-384::pro-text-high-t0-consensus-1of3',)
+      F1: 0.4634 -> 0.4647
+      F1_CI_lo: 0.4092 -> 0.4104
+      F1_CI_hi: 0.5167 -> 0.5178
+      precision: 0.3163 -> 0.3171
+      recall: 0.8667 -> 0.869
+   ('n1-outstanding-384::pro-text-high-t0-consensus-2of3',)
+      F1: 0.5203 -> 0.5217
+      F1_CI_lo: 0.4649 -> 0.4661
+      F1_CI_hi: 0.5736 -> 0.5748
+      precision: 0.3744 -> 0.3754
+      recall: 0.8529 -> 0.8552
+   ('n1-outstanding-384::pro-text-high-t0-consensus-3of3',)
+      F1: 0.5748 -> 0.5764
+      F1_CI_lo: 0.5212 -> 0.5228
+      F1_CI_hi: 0.6281 -> 0.6295
+      precision: 0.4359 -> 0.4371
+      recall: 0.8437 -> 0.846
+   ('pv-diag-384::flash-high-image-n5-image-t0.0-consensus-1of3',)
+      F1: 0.497 -> 0.4985
+      F1_CI_lo: 0.4509 -> 0.4526
+      F1_CI_hi: 0.5447 -> 0.546
+      precision: 0.3701 -> 0.3712
+      recall: 0.7563 -> 0.7586
+   ('pv-diag-384::flash-high-image-n5-image-t0.0-consensus-3of3',)
+      F1: 0.5127 -> 0.5144
+      F1_CI_lo: 0.4653 -> 0.4667
+      F1_CI_hi: 0.5596 -> 0.5613
+      precision: 0.399 -> 0.4003
+      recall: 0.7172 -> 0.7195
+   ('pv-diag-384::flash-high-image-n5-image-t0.3-consensus-9of10',)
+      F1: 0.7312 -> 0.7337
+      F1_CI_lo: 0.6889 -> 0.6913
+      F1_CI_hi: 0.7725 -> 0.7751
+      precision: 0.8061 -> 0.8089
+      recall: 0.669 -> 0.6713
+   ('pv-diag-384::flash-high-image-n5-image-t0.7-consensus-7of10',)
+      F1: 0.75 -> 0.7524
+      F1_CI_lo: 0.706 -> 0.7087
+      F1_CI_hi: 0.7893 -> 0.7913
+      precision: 0.7778 -> 0.7802
+      recall: 0.7241 -> 0.7264
+   ('pv-diag-384::flash-high-image-n5-image-t0.7-consensus-n5-3of5',)
+      F1: 0.7269 -> 0.729
+      F1_CI_lo: 0.687 -> 0.6892
+      F1_CI_hi: 0.7638 -> 0.7655
+      precision: 0.6759 -> 0.6779
+      recall: 0.7862 -> 0.7885
+   ('pv-diag-384::flash-high-image-n5-image-t1.0-consensus-6of10',)
+      F1: 0.735 -> 0.7373
+      F1_CI_lo: 0.6899 -> 0.6921
+      F1_CI_hi: 0.776 -> 0.778
+      precision: 0.7367 -> 0.739
+      recall: 0.7333 -> 0.7356
+   ('pv-diag-384::flash-high-image-n5-image-t1.0-consensus-n5-4of5',)
+      F1: 0.697 -> 0.6995
+      F1_CI_lo: 0.651 -> 0.6536
+      F1_CI_hi: 0.7399 -> 0.742
+      precision: 0.7731 -> 0.7759
+      recall: 0.6345 -> 0.6368
+   ('pv-diag-384::flash-high-text-n5-text-t0.0-consensus-3of3',)
+      F1: 0.6109 -> 0.6125
+      F1_CI_lo: 0.5482 -> 0.5497
+      F1_CI_hi: 0.6667 -> 0.6683
+      precision: 0.4724 -> 0.4736
+      recall: 0.8644 -> 0.8667
+   ('pv-diag-384::flash-high-text-n5-text-t0.3-consensus-n5-5of5',)
+      F1: 0.7696 -> 0.7717
+      F1_CI_lo: 0.7263 -> 0.7281
+      F1_CI_hi: 0.8068 -> 0.8089
+      precision: 0.7209 -> 0.7229
+      recall: 0.8253 -> 0.8276
+   ('pv-diag-384::flash-high-text-n5-text-t0.7-consensus-26of30',)
+      F1: 0.8141 -> 0.8165
+      F1_CI_lo: 0.7785 -> 0.7812
+      F1_CI_hi: 0.8458 -> 0.8477
+      precision: 0.8337 -> 0.8361
+      recall: 0.7954 -> 0.7977
+   ('pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n10-9of10',)
+      F1: 0.7968 -> 0.7991
+      F1_CI_lo: 0.7589 -> 0.7613
+      F1_CI_hi: 0.8303 -> 0.8326
+      precision: 0.8005 -> 0.8028
+      recall: 0.7931 -> 0.7954
+   ('pv-diag-384::flash-high-text-n5-text-t0.7-consensus-n5-5of5',)
+      F1: 0.7788 -> 0.7812
+      F1_CI_lo: 0.7384 -> 0.7407
+      F1_CI_hi: 0.8151 -> 0.817
+      precision: 0.7976 -> 0.8
+      recall: 0.7609 -> 0.7632
+   ('pv-diag-384::flash-high-text-n5-text-t1.0-consensus-9of10',)
+      F1: 0.7727 -> 0.775
+      F1_CI_lo: 0.7295 -> 0.7316
+      F1_CI_hi: 0.8103 -> 0.8123
+      precision: 0.7923 -> 0.7947
+      recall: 0.754 -> 0.7563
+   ('pv-diag-384::flash-high-text-n5-text-t1.0-consensus-n5-5of5',)
+      F1: 0.7279 -> 0.7303
+      F1_CI_lo: 0.6809 -> 0.6839
+      F1_CI_hi: 0.7692 -> 0.7716
+      precision: 0.7568 -> 0.7593
+      recall: 0.7011 -> 0.7034
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.0-consensus-3of3',)
+      F1: 0.5932 -> 0.5948
+      F1_CI_lo: 0.5384 -> 0.54
+      F1_CI_hi: 0.6502 -> 0.6523
+      precision: 0.4581 -> 0.4593
+      recall: 0.8414 -> 0.8437
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-10of10',)
+      F1: 0.6424 -> 0.6443
+      F1_CI_lo: 0.5916 -> 0.5933
+      F1_CI_hi: 0.6904 -> 0.6921
+      precision: 0.551 -> 0.5526
+      recall: 0.7701 -> 0.7724
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.3-consensus-n5-5of5',)
+      F1: 0.6307 -> 0.6325
+      F1_CI_lo: 0.5782 -> 0.5799
+      F1_CI_hi: 0.6811 -> 0.6831
+      precision: 0.5235 -> 0.525
+      recall: 0.7931 -> 0.7954
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-29of30',)
+      F1: 0.6611 -> 0.6632
+      F1_CI_lo: 0.6109 -> 0.6132
+      F1_CI_hi: 0.7076 -> 0.7098
+      precision: 0.6019 -> 0.6038
+      recall: 0.7333 -> 0.7356
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n10-10of10',)
+      F1: 0.6332 -> 0.6352
+      F1_CI_lo: 0.5835 -> 0.5854
+      F1_CI_hi: 0.6822 -> 0.6844
+      precision: 0.5625 -> 0.5643
+      recall: 0.7241 -> 0.7264
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t0.7-consensus-n5-5of5',)
+      F1: 0.6397 -> 0.6415
+      F1_CI_lo: 0.587 -> 0.5887
+      F1_CI_hi: 0.6911 -> 0.6931
+      precision: 0.5329 -> 0.5345
+      recall: 0.8 -> 0.8023
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-9of10',)
+      F1: 0.6667 -> 0.6687
+      F1_CI_lo: 0.6141 -> 0.6162
+      F1_CI_hi: 0.7144 -> 0.7172
+      precision: 0.5974 -> 0.5993
+      recall: 0.754 -> 0.7563
+   ('pv-diag-384::flash-minimal-text-n30-t07-text-t1.0-consensus-n5-5of5',)
+      F1: 0.661 -> 0.6631
+      F1_CI_lo: 0.6068 -> 0.6088
+      F1_CI_hi: 0.7106 -> 0.7131
+      precision: 0.613 -> 0.6149
+      recall: 0.7172 -> 0.7195
+   ('pv-diag-384::image-n5-image-t0.3-consensus-10of10',)
+      F1: 0.6597 -> 0.6618
+      F1_CI_lo: 0.6137 -> 0.6159
+      F1_CI_hi: 0.704 -> 0.7059
+      precision: 0.6074 -> 0.6093
+      recall: 0.7218 -> 0.7241
+   ('pv-diag-384::image-n5-image-t0.3-consensus-n5-5of5',)
+      F1: 0.6539 -> 0.6559
+      F1_CI_lo: 0.607 -> 0.6092
+      F1_CI_hi: 0.6987 -> 0.7011
+      precision: 0.5814 -> 0.5832
+      recall: 0.7471 -> 0.7494
+   ('pv-diag-384::image-n5-image-t0.7-consensus-8of10',)
+      F1: 0.6803 -> 0.6825
+      F1_CI_lo: 0.6361 -> 0.6384
+      F1_CI_hi: 0.7218 -> 0.7237
+      precision: 0.6397 -> 0.6417
+      recall: 0.7264 -> 0.7287
+   ('pv-diag-384::image-n5-image-t0.7-consensus-n5-4of5',)
+      F1: 0.6639 -> 0.666
+      F1_CI_lo: 0.6195 -> 0.6218
+      F1_CI_hi: 0.7052 -> 0.7068
+      precision: 0.608 -> 0.6099
+      recall: 0.731 -> 0.7333
+   ('pv-diag-384::image-n5-image-t1.0-consensus-8of10',)
+      F1: 0.6459 -> 0.6482
+      F1_CI_lo: 0.6006 -> 0.6032
+      F1_CI_hi: 0.6888 -> 0.6911
+      precision: 0.6245 -> 0.6266
+      recall: 0.669 -> 0.6713
+   ('pv-diag-384::image-n5-image-t1.0-consensus-n5-4of5',)
+      F1: 0.6461 -> 0.6482
+      F1_CI_lo: 0.6017 -> 0.6037
+      F1_CI_hi: 0.6896 -> 0.6912
+      precision: 0.6008 -> 0.6028
+      recall: 0.6989 -> 0.7011
+## verifier-uplift.csv OLD
+IDENTICAL
+## verifier-uplift.csv NEW vs committed
+rows 170 -> 170; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 0
+shared rows changed: 30; by column: {'unverified_value': 30, 'uplift': 30}
+   ('pair::55maps-generalisation::verified-paired',)
+      unverified_value: 0.5063 -> 0.5381
+      uplift: 0.2858 -> 0.254
+   ('pair::55maps-image-generalisation::verified',)
+      unverified_value: 0.5768 -> 0.6126
+      uplift: 0.1979 -> 0.1621
+   ('pair::55maps-image-generalisation::verified-k3-r2-gt',)
+      unverified_value: 0.5994 -> 0.6376
+      uplift: 0.2014 -> 0.1632
+   ('pair::55maps-text-high-generalisation::verified',)
+      unverified_value: 0.5047 -> 0.5351
+      uplift: 0.2874 -> 0.257
+   ('pair::55maps-text-high-generalisation::verified-k4-r2-gt',)
+      unverified_value: 0.5252 -> 0.5575
+      uplift: 0.291 -> 0.2587
+   ('pair::55maps-text-high-t0-3-generalisation::verified',)
+      unverified_value: 0.4967 -> 0.5263
+      uplift: 0.308 -> 0.2784
+   ('pair::55maps-text-high-t0-3-generalisation::verified-k4-r2-gt',)
+      unverified_value: 0.5169 -> 0.5486
+      uplift: 0.3125 -> 0.2808
+   ('pair::55maps-text-min-generalisation::verified',)
+      unverified_value: 0.4364 -> 0.463
+      uplift: 0.3254 -> 0.2988
+   ('pair::55maps-text-min-generalisation::verified-k4-r2-gt',)
+      unverified_value: 0.4547 -> 0.483
+      uplift: 0.3279 -> 0.2996
+   ('pair::gold-standard-v2::verified-v1',)
+      unverified_value: 0.6999 -> 0.7018
+      uplift: 0.1664 -> 0.1645
+   ('pair::pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax',)
+      unverified_value: 0.6109 -> 0.6125
+      uplift: 0.2399 -> 0.2383
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt',)
+      unverified_value: 0.3774 -> 0.3798
+      uplift: 0.4453 -> 0.4429
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt',)
+      unverified_value: 0.3773 -> 0.3796
+      uplift: 0.4458 -> 0.4435
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt',)
+      unverified_value: 0.4463 -> 0.4464
+      uplift: 0.3957 -> 0.3956
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt',)
+      unverified_value: 0.4647 -> 0.4648
+      uplift: 0.3661 -> 0.366
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt',)
+      unverified_value: 0.4026 -> 0.4029
+      uplift: 0.4295 -> 0.4292
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt',)
+      unverified_value: 0.4024 -> 0.4027
+      uplift: 0.4302 -> 0.4299
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt',)
+      unverified_value: 0.4488 -> 0.4489
+      uplift: 0.3895 -> 0.3894
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt',)
+      unverified_value: 0.4488 -> 0.4489
+      uplift: 0.3895 -> 0.3894
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt',)
+      unverified_value: 0.3087 -> 0.312
+      uplift: 0.4926 -> 0.4893
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt',)
+      unverified_value: 0.3086 -> 0.3119
+      uplift: 0.4927 -> 0.4894
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt',)
+      unverified_value: 0.3087 -> 0.312
+      uplift: 0.5265 -> 0.5232
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt',)
+      unverified_value: 0.4148 -> 0.4149
+      uplift: 0.4329 -> 0.4328
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt',)
+      unverified_value: 0.4146 -> 0.4147
+      uplift: 0.433 -> 0.4329
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt',)
+      unverified_value: 0.4148 -> 0.4149
+      uplift: 0.4359 -> 0.4358
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt',)
+      unverified_value: 0.4146 -> 0.4147
+      uplift: 0.4359 -> 0.4358
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt',)
+      unverified_value: 0.4148 -> 0.4149
+      uplift: 0.4599 -> 0.4598
+   ('pair::verifier-t-pilot::verified-t0-0',)
+      unverified_value: 0.6999 -> 0.7018
+      uplift: 0.1508 -> 0.1489
+   ('pair::verifier-t-pilot::verified-t0-5',)
+      unverified_value: 0.6999 -> 0.7018
+      uplift: 0.1562 -> 0.1543
+   ('pair::verifier-t-pilot::verified-t1-0',)
+      unverified_value: 0.6999 -> 0.7018
+      uplift: 0.1423 -> 0.1404
+## verifier-uplift-mcc.csv OLD
+IDENTICAL
+## verifier-uplift-mcc.csv NEW vs committed
+rows 170 -> 170; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 0
+shared rows changed: 20; by column: {'unverified_value': 20, 'uplift': 20, 'status': 2, 'notes': 2}
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt',)
+      unverified_value: 0.1216 -> 0.1214
+      uplift: 0.579 -> 0.5792
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt',)
+      unverified_value: 0.1218 -> 0.1216
+      uplift: 0.5792 -> 0.5794
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt',)
+      unverified_value: 0.0121 -> 
+      uplift: 0.6833 -> 
+      status: computed -> pending
+      notes: verified from conditions.csv, unverified from results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-oracle-p0_15-k7-r2-gt/evaluation.json -> unverified side has no score (ready-after-materialise; union)
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt',)
+      unverified_value: 0.0122 -> 
+      uplift: 0.6836 -> 
+      status: computed -> pending
+      notes: verified from conditions.csv, unverified from results/uplift-supplement/verifier-pairing/stride-55map-2026-08-25__g384-ov128-55map-n10-oracle-p0_15-k7-standardised-gt/evaluation.json -> unverified side has no score (ready-after-materialise; union)
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-r2-gt',)
+      unverified_value: 0.1783 -> 0.1785
+      uplift: 0.5093 -> 0.5091
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-carried-posthoc-p0.15-k3-standardised-gt',)
+      unverified_value: 0.1782 -> 0.1784
+      uplift: 0.5098 -> 0.5096
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt',)
+      unverified_value: 0.1281 -> 0.1279
+      uplift: 0.5737 -> 0.5739
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt',)
+      unverified_value: 0.1283 -> 0.1281
+      uplift: 0.5739 -> 0.5741
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-r2-gt',)
+      unverified_value: 0.1606 -> 0.1608
+      uplift: 0.5301 -> 0.5299
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-carried-p0.15-k4-standardised-gt',)
+      unverified_value: 0.1606 -> 0.1608
+      uplift: 0.5305 -> 0.5303
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt',)
+      unverified_value: 0.1606 -> 0.1608
+      uplift: 0.5301 -> 0.5299
+   ('pair::stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt',)
+      unverified_value: 0.1606 -> 0.1608
+      uplift: 0.5305 -> 0.5303
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt',)
+      unverified_value: 0.0895 -> 0.0898
+      uplift: 0.6197 -> 0.6194
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt',)
+      unverified_value: 0.0891 -> 0.0894
+      uplift: 0.6206 -> 0.6203
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt',)
+      unverified_value: 0.0895 -> 0.0898
+      uplift: 0.6576 -> 0.6573
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-r2-gt',)
+      unverified_value: 0.1318 -> 0.132
+      uplift: 0.5702 -> 0.57
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-carried-posthoc-p0.15-k3-standardised-gt',)
+      unverified_value: 0.1312 -> 0.1315
+      uplift: 0.5713 -> 0.571
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt',)
+      unverified_value: 0.1318 -> 0.132
+      uplift: 0.581 -> 0.5808
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt',)
+      unverified_value: 0.1312 -> 0.1315
+      uplift: 0.582 -> 0.5817
+   ('pair::stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt',)
+      unverified_value: 0.1318 -> 0.132
+      uplift: 0.6058 -> 0.6056
+## strata.csv OLD vs committed (key stratum_id)
+rows 130 -> 130; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 0
+shared rows changed: 14; by column: {'n_conditions': 14}
+   ('55-map|r2|100m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|10m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|125m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|150m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|15m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|20m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|25m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|30m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|35m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|40m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|45m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|50m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|5m|55maps-8541',)
+      n_conditions: 37 -> 103
+   ('55-map|r2|75m|55maps-8541',)
+      n_conditions: 37 -> 103
+## strata.csv NEW vs OLD rerun
+rows 130 -> 130; duplicate keys 0/0; header equal True
+only in A: 0; only in B: 0
+shared rows changed: 0; by column: {}

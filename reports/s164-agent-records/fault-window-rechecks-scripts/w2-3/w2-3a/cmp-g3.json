@@ -1,0 +1,331 @@
+{
+  "ignore_keys": [
+    "materialised",
+    "cell_dir",
+    "path",
+    "generated_at_utc",
+    "timestamp"
+  ],
+  "ignore_lines": [],
+  "today": "718d0ee08",
+  "n_files": 15,
+  "summary": {
+    "BYTE-IDENTICAL": 9,
+    "FIELD-IDENTICAL": 4,
+    "DIFFERS": 2
+  },
+  "n_today_blob_differs": 1,
+  "files": [
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k1-carried.geojson",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-carried.geojson",
+      "sha256_regen": "67b318d6a906883a4c00042d6e658c7d322dec00654f823b71fe0da19b3678c9",
+      "sha256_committed": "67b318d6a906883a4c00042d6e658c7d322dec00654f823b71fe0da19b3678c9",
+      "bytes_regen": 264648,
+      "bytes_committed": 264648,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "2dc2e2df53b772f3030fc98ab565ccac84793df3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k1-opmax.geojson",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-opmax.geojson",
+      "sha256_regen": "352f6fb0a7dc17ede4737ca3c17a0e88bef06a8e8eb46180327d03c487845552",
+      "sha256_committed": "352f6fb0a7dc17ede4737ca3c17a0e88bef06a8e8eb46180327d03c487845552",
+      "bytes_regen": 240237,
+      "bytes_committed": 240237,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "8e11c271911417822984155bc2bed6cda4f42e2c"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k3-opmax.geojson",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k3-opmax.geojson",
+      "sha256_regen": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "sha256_committed": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "bytes_regen": 249690,
+      "bytes_committed": 249690,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "4d8725b6d0d574797a212f0203dd7598451510a3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/materialised/k5.geojson",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson",
+      "sha256_regen": "d92a01d27805b4adb8e6387fa798a194f176a2f8416c9fdbe8e467e4d300c0c9",
+      "sha256_committed": "d92a01d27805b4adb8e6387fa798a194f176a2f8416c9fdbe8e467e4d300c0c9",
+      "bytes_regen": 236251,
+      "bytes_committed": 236251,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "2ba8984063b3bf05aae844994a7628ca932467e5"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k1-carried.json",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/f1only-k1-carried.json",
+      "sha256_regen": "22b3e4e8bc3f4c5c9297361a837dbaf079e12348820857872eb8358378064c04",
+      "sha256_committed": "93a38ac74c42625c2f5e35ad053e78a056732f25c12b15b692e8daf82db765d1",
+      "bytes_regen": 5705,
+      "bytes_committed": 5682,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/sets/after/path",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-carried.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-carried.geojson"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "832ac52821534404ece8ae4d640d1e7124688d1a"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k1-opmax.json",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/f1only-k1-opmax.json",
+      "sha256_regen": "a10ef6aab6fab02d57f9ff7b1baff6f1dcdbc6a3ad733d2dcb344c20ee1a3092",
+      "sha256_committed": "f219d2498b064dba55e43fe495bd699805852ee50d53d6a67a82c3b68aada9c6",
+      "bytes_regen": 5690,
+      "bytes_committed": 5667,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/sets/after/path",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-opmax.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-opmax.geojson"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "b3f028aa54ccf2cb349251ac3cab47b7aa68eb66"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/f1-only/k3-opmax.json",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/f1only-k3-opmax.json",
+      "sha256_regen": "cc5ca309f5254f2b3f98919005af4f7c99d810fa630537f0de5605f411a00eaf",
+      "sha256_committed": "d3be2824dbf3142ff6f9eba1403f85cab5f9982e2e94c79186100aa9662b3d23",
+      "bytes_regen": 5792,
+      "bytes_committed": 5769,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/sets/after/path",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k3-opmax.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k3-opmax.geojson"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "276fb5756ecde382030abd7140e25f146be9d034"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/operating-points.json",
+      "sha256_regen": "bcb0e279ba7dfd545ed13d5b9bb94909d1b8ca9e82a9c99c91bf81834d9c4114",
+      "sha256_committed": "c75e217853d1e5954d8ba839eabd42c259e8b100feb1b5ad90e60c5b7ec09f18",
+      "bytes_regen": 2397,
+      "bytes_committed": 2328,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 3,
+      "set_aside": [
+        {
+          "path": "[0]/materialised",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-opmax.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-opmax.geojson"
+        },
+        {
+          "path": "[1]/materialised",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k1-carried.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k1-carried.geojson"
+        },
+        {
+          "path": "[2]/materialised",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k3-opmax.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k3-opmax.geojson"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "b0be07ef4f59c6fe143f0f7f0f85ccbbec35afc3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json",
+      "commit": "5166ddeda",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/fixed-from-committed.json",
+      "sha256_regen": "40603f01cc1611608e25d9d5b85fac6349312540d7575a87df9d091f9d026874",
+      "sha256_committed": "40603f01cc1611608e25d9d5b85fac6349312540d7575a87df9d091f9d026874",
+      "bytes_regen": 5351,
+      "bytes_committed": 5351,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "b0be07ef4f59c6fe143f0f7f0f85ccbbec35afc3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/operating-points.json",
+      "commit": "5166ddeda",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/fixed-from-regen.json",
+      "sha256_regen": "40603f01cc1611608e25d9d5b85fac6349312540d7575a87df9d091f9d026874",
+      "sha256_committed": "40603f01cc1611608e25d9d5b85fac6349312540d7575a87df9d091f9d026874",
+      "bytes_regen": 5351,
+      "bytes_committed": 5351,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "b0be07ef4f59c6fe143f0f7f0f85ccbbec35afc3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+      "commit": "987534c03",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore-987534c03/k3-opmax.geojson",
+      "sha256_regen": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "sha256_committed": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "bytes_regen": 249690,
+      "bytes_committed": 249690,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "4d8725b6d0d574797a212f0203dd7598451510a3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/phase2/materialised/g37-text-k3-verified-opmax.geojson",
+      "commit": "987534c03",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k3-opmax.geojson",
+      "sha256_regen": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "sha256_committed": "981e4df7ebcde885551a7fb18d287e2dee090cd555c915403b37caac376b1df2",
+      "bytes_regen": 249690,
+      "bytes_committed": 249690,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "4d8725b6d0d574797a212f0203dd7598451510a3"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/reproduced-k5-evaluation/evaluation.json",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json",
+      "sha256_regen": "985bd47e57a03371d567ba43a1ce551cd228cb60df745ef1786464b8b3071973",
+      "sha256_committed": "083bb2419899ae40b68da3659b11a302a5ae897d4c91c05863ebe6364d4dbcbe",
+      "bytes_regen": 18769,
+      "bytes_committed": 18654,
+      "n_leaf_diffs": 10,
+      "leaf_diffs": [
+        {
+          "path": "/_metadata/cli_args/detections[0]",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k5.geojson"
+        },
+        {
+          "path": "/_metadata/cli_args/output_dir",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax"
+        },
+        {
+          "path": "/_metadata/input_files/detections[0]",
+          "regen": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson",
+          "committed": "/home/shawn/scratch/recovery-drop-fix/rescore/k5.geojson"
+        },
+        {
+          "path": "/_metadata/input_git_state/blob_hashes//home/shawn/scratch/recovery-drop-fix/rescore/k5.geojson",
+          "regen": "<missing>",
+          "committed": "2ba8984063b3bf05aae844994a7628ca932467e5"
+        },
+        {
+          "path": "/_metadata/input_git_state/blob_hashes//home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson",
+          "regen": "2ba8984063b3bf05aae844994a7628ca932467e5",
+          "committed": "<missing>"
+        },
+        {
+          "path": "/_metadata/input_git_state/head",
+          "regen": "63f4cac1c",
+          "committed": "5a56ad248"
+        },
+        {
+          "path": "/_metadata/input_git_state/inputs//home/shawn/scratch/recovery-drop-fix/rescore/k5.geojson",
+          "regen": "<missing>",
+          "committed": "outside-repo"
+        },
+        {
+          "path": "/_metadata/input_git_state/inputs//home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson",
+          "regen": "outside-repo",
+          "committed": "<missing>"
+        },
+        {
+          "path": "/_metadata/script_git_commit",
+          "regen": "63f4cac1c",
+          "committed": "5a56ad248"
+        },
+        {
+          "path": "/_metadata/script_git_status",
+          "regen": "clean",
+          "committed": "dirty"
+        }
+      ],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "path": "/_metadata/generated_at_utc",
+          "regen": "2026-10-15T10:35:21.241548+00:00",
+          "committed": "2026-09-13T07:36:36.282790+00:00"
+        },
+        {
+          "path": "/timestamp",
+          "regen": "2026-10-15T10:35:45.652698+00:00",
+          "committed": "2026-09-13T07:36:51.834576+00:00"
+        }
+      ],
+      "key_order_equal": false,
+      "verdict": "DIFFERS",
+      "today_same_blob": true,
+      "today_blob": "d9d1279b50ff9f099403a711a949773540fb275c"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/reproduced-k5-evaluation/evaluation.csv",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.csv",
+      "sha256_regen": "05659dcd6f9ba52fad6f03c262e6e6a2dfb1b3b91e0bd0075f7b6faa9a7975e3",
+      "sha256_committed": "05659dcd6f9ba52fad6f03c262e6e6a2dfb1b3b91e0bd0075f7b6faa9a7975e3",
+      "bytes_regen": 3446,
+      "bytes_committed": 3446,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "5dab998aaeb95e9881f43e574a8bdf2659004077"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/reproduced-k5-evaluation/evaluation.md",
+      "commit": "20c0a053f",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.md",
+      "sha256_regen": "8f40df0481703c8e7d47530fd867ec2a5541a0bada19a7ae93c917e8603a2d14",
+      "sha256_committed": "cf702e86df4e49b2ae3f5645690f629fccdf405d76112b78336ca92b554e409e",
+      "bytes_regen": 1977,
+      "bytes_committed": 1977,
+      "n_line_diffs": 1,
+      "line_diffs": [
+        {
+          "line": 3,
+          "regen": "**Generated**: 2026-10-15T10:35:45.653567+00:00  ",
+          "committed": "**Generated**: 2026-09-13T07:36:51.835242+00:00  "
+        }
+      ],
+      "n_set_aside": 0,
+      "set_aside": [],
+      "verdict": "DIFFERS",
+      "today_same_blob": true,
+      "today_blob": "505f7c7cf9282091e480306f0cd35fcd20918acd"
+    }
+  ]
+}

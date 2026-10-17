@@ -9292,3 +9292,58 @@ When a count changes, hold one side fixed before attributing: old code on
 today's data tests the data, today's code on old data tests the code.
 Metadata that agrees with a file is evidence it was written then, not that it
 was never rewritten.
+
+## Entry — 2026-10-14/15 (Session 164, map-reader-llm): The thinking effect that one more day erased
+
+**Session:** d5a6e9b9-a530-4695-a354-9e9e36b3e36e
+**Instance:** primary
+
+### Surprising fact
+
+The D64 same-day replication of A-06 removed the date, mode, and thinking
+confounds from the genuine-Pro 2 × 2, and in image it produced a result the
+committed analysis had not: at T = 0.0, HIGH thinking beat MEDIUM by +0.0374
+F1 (BH-adjusted p 0.043, above the replicate floor). That contradicted A-06's
+signed sentence that the thinking contrast "reaches 0.03 in none of four
+cells", and it was strange on its face, because HIGH delivered about one
+thought token per request and MEDIUM about eleven. Something other than
+thinking, or a fluke, had to be producing it.
+
+### Probe
+
+Three more passes per image corner, approved partly to firm the result up.
+Two side-agent notes, relayed by the PI, turned that into a proper test
+before any of the new passes' numbers were read: the new passes were made a
+separate confirmatory set (C1, the thinking contrast; C2, the also-borderline
+temperature contrast at MEDIUM) with a four-part criterion (same sign, BH
+p < 0.05 across the two, |Δ| ≥ 0.03, above the new passes' own floor), and
+the wording for each verdict and the A-06 headline for each outcome were
+fixed in advance, with a stated power of roughly even odds.
+
+### Belief revision
+
+C1 came back PARTLY: +0.0202 on passes 4–6, p 0.138, below the 0.03 rule and
+0.0003 short of the floor. C2 REPLICATED, nearly doubling (+0.0653, p
+0.0002). The cause of both moves was not in either contrast: between the
+two days three image corners fell by 0.011–0.026 and one rose, the largest
+move at the within-day floor, and those shifts shrank one contrast and
+grew the other by exactly the amounts observed. The first day's thinking
+"effect" is best read as one day's configuration of corners, not a property
+of the requested thinking level; the reading "temperature is the driver"
+holds in both modalities. Pooled over six passes the thinking contrast would
+have rejected at p 0.025, so the conclusion turned on the decision, made
+before the data, not to pool.
+
+### What would change this belief
+
+A third day on which C1 again clears all four criteria, or evidence that
+the 2026-10-13 corners were not unusual (day 2's sit within 0.011 of the
+committed March and June corners, which points the other way, untested).
+
+### Implications for practice
+
+When a borderline result prompts more data, the confirmatory design, its
+power, and the wording of every verdict belong in the request for the data,
+not after it. And on a service that drifts by day, a contrast between
+corners run on one day can move by about the replicate floor when re-run on
+the next, so "same-day" removes one confound and exposes another.

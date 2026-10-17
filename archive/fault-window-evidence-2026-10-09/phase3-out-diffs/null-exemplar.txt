@@ -1,0 +1,706 @@
+## detections_manifest.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/detections_manifest.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/null-exemplar-sensitivity-2026-09-13/detections_manifest.json)
+## detections_manifest.json NEW
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-new/detections_manifest.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-new/results/null-exemplar-sensitivity-2026-09-13/detections_manifest.json)
+## leak_signature.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/leak_signature.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/null-exemplar-sensitivity-2026-09-13/leak_signature.json)
+## leak_signature.json NEW
+20 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-new/leak_signature.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-new/results/null-exemplar-sensitivity-2026-09-13/leak_signature.json)
+  /boards[0]/cells[63]/fp_per_tile_rest: 0.15846 -> 0.14561
+  /boards[0]/cells[63]/fp_rest: 74.0 -> 68.0
+  /boards[0]/cells[63]/log_ratio: -0.012929 -> 0.006776
+  /boards[0]/cells[63]/tp_rest: 374.0 -> 380.0
+  /boards[0]/cells[64]/fp_per_tile_rest: 0.17131 -> 0.15846
+  /boards[0]/cells[64]/fp_rest: 80.0 -> 74.0
+  /boards[0]/cells[64]/log_ratio: -0.032253 -> -0.012929
+  /boards[0]/cells[64]/tp_rest: 378.0 -> 384.0
+  /boards[0]/cells[65]/fp_per_tile_rest: 0.09636 -> 0.08351
+  /boards[0]/cells[65]/fp_rest: 45.0 -> 39.0
+  /boards[0]/cells[65]/log_ratio: -0.080926 -> -0.059146
+  /boards[0]/cells[65]/tp_rest: 373.0 -> 379.0
+  /boards[0]/cells[66]/fp_per_tile_rest: 0.07495 -> 0.0621
+  /boards[0]/cells[66]/fp_rest: 35.0 -> 29.0
+  /boards[0]/cells[66]/log_ratio: -0.044359 -> -0.021759
+  /boards[0]/cells[66]/tp_rest: 370.0 -> 376.0
+  /boards[0]/test/mean_log_ratio_text: -0.055169 -> -0.054252
+  /boards[0]/test/observed_image_minus_text: -0.088143 -> -0.08906
+  /boards[0]/test/pooled_text/fp_per_tile_rest: 0.10274 -> 0.10217
+  /boards[0]/test/pooled_text/ratio: 0.68456 -> 0.68835
+## paired_tile_swap.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/paired_tile_swap.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/null-exemplar-sensitivity-2026-09-13/paired_tile_swap.json)
+## paired_tile_swap.json NEW
+74 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-new/paired_tile_swap.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-new/results/null-exemplar-sensitivity-2026-09-13/paired_tile_swap.json)
+  /boards[1]/pairs[8]/reduced/delta_f1: 0.016471 -> 0.001476
+  /boards[1]/pairs[8]/reduced/f1_text: 0.646673 -> 0.661668
+  /boards[1]/pairs[8]/reduced/p_value_f1: 0.6104 -> 0.964
+  /boards[1]/pairs[23]/reduced/delta_f1: 0.005322 -> -0.001198
+  /boards[1]/pairs[23]/reduced/f1_image: 0.638806 -> 0.646766
+  /boards[1]/pairs[23]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[23]/reduced/p_value_f1: 0.8367 -> 0.9656
+  /boards[1]/pairs[24]/reduced/delta_f1: 0.003452 -> -0.001623
+  /boards[1]/pairs[24]/reduced/f1_image: 0.642857 -> 0.650794
+  /boards[1]/pairs[24]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[24]/reduced/p_value_f1: 0.8958 -> 0.9566
+  /boards[1]/pairs[25]/reduced/delta_f1: 0.003058 -> -0.003563
+  /boards[1]/pairs[25]/reduced/f1_image: 0.636542 -> 0.644401
+  /boards[1]/pairs[25]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[25]/reduced/p_value_f1: 0.9104 -> 0.8999
+  /boards[1]/pairs[26]/reduced/delta_f1: 0.007837 -> 0.00107
+  /boards[1]/pairs[26]/reduced/f1_image: 0.647242 -> 0.653486
+  /boards[1]/pairs[26]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[26]/reduced/p_value_f1: 0.763 -> 0.9737
+  /boards[1]/pairs[27]/reduced/delta_f1: 0.006629 -> -0.005544
+  /boards[1]/pairs[27]/reduced/f1_image: 0.66599 -> 0.672081
+  /boards[1]/pairs[27]/reduced/f1_text: 0.659361 -> 0.677626
+  /boards[1]/pairs[27]/reduced/p_value_f1: 0.7976 -> 0.8232
+  /boards[1]/pairs[28]/reduced/delta_f1: 0.003165 -> -0.005032
+  /boards[1]/pairs[28]/reduced/f1_image: 0.636649 -> 0.642932
+  /boards[1]/pairs[28]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[28]/reduced/p_value_f1: 0.9056 -> 0.8576
+  /boards[1]/pairs[29]/reduced/delta_f1: -0.002248 -> -0.01022
+  /boards[1]/pairs[29]/reduced/f1_image: 0.631236 -> 0.637744
+  /boards[1]/pairs[29]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[29]/reduced/p_value_f1: 0.9334 -> 0.7112
+  /boards[1]/pairs[30]/reduced/delta_f1: 0.007675 -> -0.000799
+  /boards[1]/pairs[30]/reduced/f1_image: 0.654348 -> 0.66087
+  /boards[1]/pairs[30]/reduced/f1_text: 0.646673 -> 0.661668
+  /boards[1]/pairs[30]/reduced/p_value_f1: 0.7598 -> 0.9776
+  /boards[1]/pairs[31]/reduced/delta_f1: -0.019469 -> -0.027274
+  /boards[1]/pairs[31]/reduced/f1_image: 0.614016 -> 0.62069
+  /boards[1]/pairs[31]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[31]/reduced/p_value_f1: 0.5045 -> 0.3563
+  /boards[1]/pairs[32]/reduced/delta_f1: 0.015609 -> 0.00125
+  /boards[1]/pairs[32]/reduced/f1_text: 0.699487 -> 0.713846
+  /boards[1]/pairs[32]/reduced/p_value_f1: 0.5012 -> 0.9514
+  /boards[1]/pairs[33]/reduced/delta_f1: 0.006879 -> -0.000577
+  /boards[1]/pairs[33]/reduced/f1_image: 0.640364 -> 0.647387
+  /boards[1]/pairs[33]/reduced/f1_text: 0.633484 -> 0.647964
+  /boards[1]/pairs[33]/reduced/p_value_f1: 0.8075 -> 0.9848
+  /boards[1]/pairs[34]/reduced/delta_f1: 0.003437 -> -0.00251
+  /boards[1]/pairs[34]/reduced/f1_image: 0.642842 -> 0.649907
+  /boards[1]/pairs[34]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[34]/reduced/p_value_f1: 0.8956 -> 0.9271
+  /boards[1]/pairs[35]/reduced/delta_f1: 0.010961 -> 0.005055
+  /boards[1]/pairs[35]/reduced/f1_image: 0.650366 -> 0.657471
+  /boards[1]/pairs[35]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[35]/reduced/p_value_f1: 0.6697 -> 0.8426
+  /boards[1]/pairs[36]/reduced/delta_f1: 0.006196 -> 0.001446
+  /boards[1]/pairs[36]/reduced/f1_image: 0.645601 -> 0.653862
+  /boards[1]/pairs[36]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[36]/reduced/p_value_f1: 0.8095 -> 0.9564
+  /boards[1]/pairs[37]/reduced/delta_f1: 0.007727 -> 0.002251
+  /boards[1]/pairs[37]/reduced/f1_image: 0.647133 -> 0.654667
+  /boards[1]/pairs[37]/reduced/f1_text: 0.639405 -> 0.652416
+  /boards[1]/pairs[37]/reduced/p_value_f1: 0.7662 -> 0.932
+  /boards[3]/pairs[4]/reduced/delta_f1: -0.015444 -> -0.019091
+  /boards[3]/pairs[4]/reduced/f1_image: 0.642857 -> 0.650794
+  /boards[3]/pairs[4]/reduced/f1_text: 0.658301 -> 0.669884
+  /boards[3]/pairs[4]/reduced/p_value_f1: 0.5432 -> 0.4513
+  /boards[3]/pairs[5]/reduced/delta_f1: 0.002345 -> -0.004256
+  /boards[3]/pairs[5]/reduced/f1_image: 0.66599 -> 0.672081
+  /boards[3]/pairs[5]/reduced/f1_text: 0.663645 -> 0.676337
+  /boards[3]/pairs[5]/reduced/p_value_f1: 0.9371 -> 0.853
+  /boards[3]/pairs[6]/reduced/delta_f1: -0.003953 -> -0.009015
+  /boards[3]/pairs[6]/reduced/f1_image: 0.654348 -> 0.66087
+  /boards[3]/pairs[6]/reduced/f1_text: 0.658301 -> 0.669884
+  /boards[3]/pairs[6]/reduced/p_value_f1: 0.8815 -> 0.7167
+## swap summary NEW
+== era2-verified (59 pairs)
+  comparator re-paired: []
+  pairs with any change: 0
+  p crossing 0.05: []
+  full-vs-reduced f1 verdict flips: 5 -> 5; before ['pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3', 'pv-diag-384::pv-high-image-t0.3-n3-opmax', 'pv-diag-384::verified-adv-image-baseline-era2b', 'pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b', 'pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b']; after ['pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3', 'pv-diag-384::pv-high-image-t0.3-n3-opmax', 'pv-diag-384::verified-adv-image-baseline-era2b', 'pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b', 'pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b']
+  full-vs-reduced mcc verdict flips: 1 -> 1; before ['n1-outstanding-384::pv-n1-image-t0-n3-opmax']; after ['n1-outstanding-384::pv-n1-image-t0-n3-opmax']
+== era1-leaderboard (38 pairs)
+  comparator re-paired: []
+  pairs with any change: 16
+  max |change| reduced delta_f1     0.014995  (retest-phase2b::verified-adv-image-t0.0: 0.016471 -> 0.001476)
+  max |change| reduced p_value_f1   0.450200  (retest-phase3a::verified-adv-image-t0.7-n30-18of30: 0.5012 -> 0.9514)
+  p crossing 0.05: []
+  full-vs-reduced f1 verdict flips: 0 -> 0; before []; after []
+  full-vs-reduced mcc verdict flips: 0 -> 0; before []; after []
+== era1-single-pass (22 pairs)
+  comparator re-paired: []
+  pairs with any change: 0
+  p crossing 0.05: []
+  full-vs-reduced f1 verdict flips: 0 -> 0; before []; after []
+  full-vs-reduced mcc verdict flips: 0 -> 0; before []; after []
+== tile-size-sweep-512 (7 pairs)
+  comparator re-paired: []
+  pairs with any change: 3
+  max |change| reduced delta_f1     0.006601  (retest-phase3a::image-t0.7-n30-18of30: 0.002345 -> -0.004256)
+  max |change| reduced p_value_f1   0.164800  (retest-phase3a::image-t1.0-n30-19of30: 0.8815 -> 0.7167)
+  p crossing 0.05: []
+  full-vs-reduced f1 verdict flips: 0 -> 0; before []; after []
+  full-vs-reduced mcc verdict flips: 0 -> 0; before []; after []
+## MCB f1 OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/mcb-reduced/reduced_f1_b20_m1.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/null-exemplar/mcb-reduced/gs-era2-verified-board-2026-09-10_b20_m1.json)
+## MCB f1 NEW
+metric f1 -> f1 | candidates 150 -> 150 | tiles 467 -> 467
+selected: gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b -> gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b
+  apparent_f1: 0.9170616113744076 -> 0.9170616113744076
+  optimism: 0.005598648132114654 -> 0.006429529527226043
+  corrected_f1: 0.9114629632422929 -> 0.9106320818471815
+  naive_ci: [0.891566265060241, 0.9395348837209302] -> [0.891566265060241, 0.9395348837209302]
+  selection_aware_ci: [0.8859676169281263, 0.9339362355888156] -> [0.8851367355330149, 0.9331053541937041]
+  argmax_stability: 0.559 -> 0.537
+  n_distinct_argmax: 27 -> 24
+  mcb_critical_width: 0.09122658695349249 -> 0.09138688415469975
+  hsu_w_upper: 0.07525246433564423 -> 0.0748860311389086
+  hsu_w_lower: 0.08506140935129651 -> 0.08551741553638675
+Hsu admissible: 66 -> 66
+  left: []
+  joined: []
+## MCB mcc OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/mcb-reduced/reduced_mcc_b20_m1.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/null-exemplar/mcb-reduced/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json)
+## MCB mcc NEW
+metric mcc -> mcc | candidates 150 -> 150 | tiles 467 -> 467
+selected: pv-diag-384::verified-adv-image-baseline-pro-vf-era2b -> pv-diag-384::verified-adv-image-baseline-pro-vf-era2b
+  apparent_f1: 0.88846012020502 -> 0.88846012020502
+  optimism: 0.016442919513341755 -> 0.016442919513341755
+  corrected_f1: 0.8720172006916782 -> 0.8720172006916782
+  naive_ci: [0.8456988185761084, 0.9273686601168076] -> [0.8456988185761084, 0.9273686601168076]
+  selection_aware_ci: [0.8292558990627666, 0.9109257406034659] -> [0.8292558990627666, 0.9109257406034659]
+  argmax_stability: 0.3836 -> 0.3836
+  n_distinct_argmax: 37 -> 37
+  mcb_critical_width: 0.10534582030152559 -> 0.10534582030152559
+  hsu_w_upper: 0.0824275981144558 -> 0.0824275981144558
+  hsu_w_lower: 0.1023552250084981 -> 0.1023552250084981
+Hsu admissible: 57 -> 57
+  left: []
+  joined: []
+## tiering OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/tiering-reduced/tiering_20m.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/null-exemplar/tiering-reduced/tiering_20m.json)
+## tiering NEW
+tie_set: 4 -> 5; left []; joined ['grid-2026-08-18::g384-ov192-k5-verified-opmax']
+--- F1 ---
+tiers: 13 -> 13
+tier 1: 4 -> 5 members; left []; joined ['grid-2026-08-18::g384-ov192-k5-verified-opmax']
+cells changing tier: 3
+    ('grid-2026-08-18::g384-ov192-k5-verified-opmax', 2, 1)
+    ('grid-2026-08-18::g384-ov192-k1-verified-opmax', 4, 3)
+    ('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 4, 3)
+cells changing rank: 26 (max shift 12)
+    ('gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b', 5, 6)
+    ('gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b', 6, 7)
+    ('grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b', 7, 8)
+    ('verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b', 8, 10)
+    ('pv-diag-384::verified-adv-text-consensus-16of30-era2b', 9, 11)
+    ('grid-2026-08-18::g384-ov192-k5-verified-opmax', 10, 5)
+    ('pv-diag-384::pv-high-text-t0.3-n5-opmax', 11, 12)
+    ('grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b', 12, 13)
+    ('pv-diag-384::verified-adv-text-min-6of10-era2b', 13, 14)
+    ('pv-diag-384::session-78-text-comparative-opmax', 14, 15)
+    ('pv-diag-384::session-78-text-adversarial-opmax', 15, 16)
+    ('grid-2026-08-18::g384-ov192-k3-verified-opmax', 16, 9)
+    ('pv-diag-384::pv-high-text-t1.0-n5-opmax', 42, 44)
+    ('pv-diag-384::verified-adv-text-4of5-era2b', 43, 45)
+    ('pv-diag-384::pv-min-text-t1.0-n3-opmax', 44, 46)
+    ('pv-diag-384::pv-high-text-t0.7-n5-opmax', 45, 47)
+    ('pv-diag-384::session-78-text-checklist-text-opmax', 46, 48)
+    ('pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3', 47, 49)
+    ('pv-diag-384::session-78-text-adversarial-text-opmax', 48, 50)
+    ('pv-diag-384::pv-min-text-t0.0-n3-opmax', 49, 51)
+pairwise 'significant' flips: 82 of 11175
+    (('flash35-pv-2x2::f35prop-f3vf-4of10-era2b', 'grid-2026-08-18::g384-ov192-k3-verified-opmax'), False, True, 0.038, 0.002, 0.053442, 0.003436)
+    (('flash35-pv-2x2::f3prop-f35vf-6of10-era2b', 'grid-2026-08-18::g384-ov192-k5-verified-opmax'), False, True, 0.2291, 0.0125, 0.276509, 0.018877)
+    (('gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b', 'grid-2026-08-18::g384-ov192-k3-verified-opmax'), True, False, 0.0291, 0.2387, 0.041723, 0.286271)
+    (('gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b', 'grid-2026-08-18::g384-ov192-k3-verified-opmax'), True, False, 0.0087, 0.1209, 0.013562, 0.153897)
+    (('gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b', 'grid-2026-08-18::g384-ov192-k5-verified-opmax'), True, False, 0.028, 0.2662, 0.04025, 0.31613)
+    (('gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b', 'grid-2026-08-18::g384-ov192-k3-verified-opmax'), True, False, 0.0102, 0.1462, 0.015718, 0.18318)
+    (('gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b', 'grid-2026-08-18::g384-ov192-k3-verified-opmax'), True, False, 0.0079, 0.1478, 0.012429, 0.18504)
+    (('gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b', 'grid-2026-08-18::g384-ov192-k5-verified-opmax'), True, False, 0.0331, 0.3648, 0.04706, 0.420836)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b'), True, False, 0.0082, 0.1635, 0.012857, 0.20254)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b'), True, False, 0.005, 0.1376, 0.008131, 0.173201)
+    (('grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b', 'grid-2026-08-18::g384-ov192-k5-verified-opmax'), False, True, 0.5611, 0.0155, 0.618738, 0.023046)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b'), False, True, 0.0469, 0.0034, 0.064913, 0.005641)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b'), False, True, 0.0564, 0.0065, 0.076881, 0.01033)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b'), False, True, 0.1471, 0.0248, 0.184992, 0.035732)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b'), False, True, 0.1585, 0.0269, 0.197683, 0.038569)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b'), False, True, 0.0672, 0.0072, 0.090455, 0.011372)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b'), False, True, 0.0718, 0.0079, 0.095988, 0.012361)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b'), False, True, 0.0838, 0.0111, 0.110667, 0.016923)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b'), False, True, 0.0375, 0.0032, 0.052765, 0.005326)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'pv-diag-384::verified-adv-text-4of5-era2b'), False, True, 0.1498, 0.0128, 0.188007, 0.019285)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::verified-adv-text-baseline-medium-vf-era2b'), False, True, 0.1502, 0.0196, 0.188446, 0.028691)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'pv-diag-384::verified-adv-text-baseline-medium-vf-era2b'), False, True, 0.1453, 0.0187, 0.182893, 0.027449)
+    (('pv-diag-384::pv-high-text-t1.0-n1-opmax', 'pv-diag-384::verified-adv-text-baseline-medium-vf-era2b'), False, True, 0.0355, 0.0355, 0.050172, 0.049845)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::verified-adv-text-baseline-pro-vf-era2b'), False, True, 0.1792, 0.0294, 0.220936, 0.041858)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'pv-diag-384::verified-adv-text-baseline-pro-vf-era2b'), False, True, 0.1769, 0.0276, 0.218365, 0.039492)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::verified-adv-text-consensus-16of30-era2b'), True, False, 0.0096, 0.0964, 0.014869, 0.125148)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'pv-diag-384::verified-adv-text-consensus-16of30-era2b'), True, False, 0.0109, 0.104, 0.01672, 0.134141)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-text-high-vf-4of5-era2b'), False, True, 0.0685, 0.0039, 0.092028, 0.00641)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-text-medium-vf-4of5-era2b'), False, True, 0.0885, 0.0062, 0.116228, 0.009885)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'pv-diag-384::verified-adv-text-medium-vf-4of5-era2b'), False, True, 0.0453, 0.0032, 0.062807, 0.005326)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b'), False, True, 0.3825, 0.034, 0.440165, 0.047943)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b'), False, True, 0.2352, 0.0187, 0.283259, 0.027449)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b'), True, False, 0.0037, 0.0456, 0.006134, 0.062787)
+    (('grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1', 'verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b'), True, False, 0.0036, 0.04, 0.005978, 0.055639)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b'), False, True, 0.2647, 0.0316, 0.314918, 0.044779)
+    (('grid-2026-08-18::g384-ov192-k3-verified-opmax', 'verifier-t-pilot::verified-t0-5-era2b'), False, True, 0.0752, 0.004, 0.100126, 0.006564)
+    (('grid-2026-08-18::g384-ov192-k5-verified-opmax', 'verifier-t-pilot::verified-t0-5-era2b'), False, True, 0.0385, 0.0021, 0.054104, 0.003594)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1'), False, True, 0.1075, 0.0103, 0.139073, 0.015772)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::pv-high-text-t0.3-n1-opmax'), False, True, 0.1184, 0.0105, 0.151751, 0.016063)
+    (('grid-2026-08-18::g384-ov192-k1-verified-opmax', 'pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3'), False, True, 0.0354, 0.0019, 0.050037, 0.003275)
+   significant count 7905 -> 7959
+--- MCC ---
+tiers: 7 -> 7
+tier 1: 28 -> 28 members; left []; joined []
+cells changing tier: 0
+cells changing rank: 0 (max shift 0)
+pairwise 'significant' flips: 0 of 11175
+   significant count 3118 -> 3118
+mcc tie_set: True
+## analysis OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-old/analysis.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/null-exemplar-sensitivity-2026-09-13/analysis.json)
+## analysis NEW
+449 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/null-exemplar-new/analysis.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-newchain/results/null-exemplar-sensitivity-2026-09-13/analysis.json)
+  /era2_tiering/cells_changing_tier[len]: 130 -> 131
+  /era2_tiering/cells_changing_tier[4]/tier_after: 4 -> 3
+  /era2_tiering/cells_changing_tier[5]/tier_after: 4 -> 3
+  /era2_tiering/cells_changing_tier[7]/ref: "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b" -> "grid-2026-08-18::g384-ov192-k5-verified-opmax"
+  /era2_tiering/cells_changing_tier[7]/tier_after: 5 -> 1
+  /era2_tiering/cells_changing_tier[7]/tier_before: 6 -> 2
+  /era2_tiering/cells_changing_tier[8]/ref: "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b" -> "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b"
+  /era2_tiering/cells_changing_tier[9]/ref: "n1-outstanding-384::pv-n1-image-t0-n3-opmax" -> "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b"
+  /era2_tiering/cells_changing_tier[9]/tier_after: 7 -> 5
+  /era2_tiering/cells_changing_tier[9]/tier_before: 8 -> 6
+  /era2_tiering/cells_changing_tier[10]/ref: "proposer-verifier-384::verified-adversarial-text-era2b" -> "n1-outstanding-384::pv-n1-image-t0-n3-opmax"
+  /era2_tiering/cells_changing_tier[10]/tier_after: 13 -> 7
+  /era2_tiering/cells_changing_tier[10]/tier_before: 14 -> 8
+  /era2_tiering/cells_changing_tier[11]/ref: "proposer-verifier-384::verified-brief-image-era2b" -> "proposer-verifier-384::verified-adversarial-text-era2b"
+  /era2_tiering/cells_changing_tier[11]/tier_after: 12 -> 13
+  /era2_tiering/cells_changing_tier[11]/tier_before: 13 -> 14
+  /era2_tiering/cells_changing_tier[12]/ref: "proposer-verifier-384::verified-brief-text-era2b" -> "proposer-verifier-384::verified-brief-image-era2b"
+  /era2_tiering/cells_changing_tier[13]/ref: "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b" -> "proposer-verifier-384::verified-brief-text-era2b"
+  /era2_tiering/cells_changing_tier[14]/ref: "proposer-verifier-384::verified-checklist-text-era2b" -> "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b"
+  /era2_tiering/cells_changing_tier[15]/ref: "pv-diag-384::pv-high-image-t0.3-n1-opmax" -> "proposer-verifier-384::verified-checklist-text-era2b"
+  /era2_tiering/cells_changing_tier[15]/tier_after: 9 -> 12
+  /era2_tiering/cells_changing_tier[15]/tier_before: 10 -> 13
+  /era2_tiering/cells_changing_tier[16]/ref: "pv-diag-384::pv-high-image-t0.3-n10-opmax" -> "pv-diag-384::pv-high-image-t0.3-n1-opmax"
+  /era2_tiering/cells_changing_tier[16]/tier_after: 7 -> 9
+  /era2_tiering/cells_changing_tier[16]/tier_before: 8 -> 10
+  /era2_tiering/cells_changing_tier[17]/ref: "pv-diag-384::pv-high-image-t0.3-n3-opmax" -> "pv-diag-384::pv-high-image-t0.3-n10-opmax"
+  /era2_tiering/cells_changing_tier[17]/tier_after: 8 -> 7
+  /era2_tiering/cells_changing_tier[17]/tier_before: 9 -> 8
+  /era2_tiering/cells_changing_tier[18]/ref: "pv-diag-384::pv-high-image-t0.3-n5-opmax" -> "pv-diag-384::pv-high-image-t0.3-n3-opmax"
+  /era2_tiering/cells_changing_tier[18]/tier_after: 7 -> 8
+  /era2_tiering/cells_changing_tier[18]/tier_before: 8 -> 9
+  /era2_tiering/cells_changing_tier[19]/ref: "pv-diag-384::pv-high-image-t0.7-n1-opmax" -> "pv-diag-384::pv-high-image-t0.3-n5-opmax"
+  /era2_tiering/cells_changing_tier[19]/tier_after: 9 -> 7
+  /era2_tiering/cells_changing_tier[19]/tier_before: 10 -> 8
+  /era2_tiering/cells_changing_tier[20]/ref: "pv-diag-384::pv-high-image-t0.7-n10-opmax" -> "pv-diag-384::pv-high-image-t0.7-n1-opmax"
+  /era2_tiering/cells_changing_tier[20]/tier_after: 6 -> 9
+  /era2_tiering/cells_changing_tier[20]/tier_before: 7 -> 10
+  /era2_tiering/cells_changing_tier[21]/ref: "pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3" -> "pv-diag-384::pv-high-image-t0.7-n10-opmax"
+  /era2_tiering/cells_changing_tier[21]/tier_after: 9 -> 6
+  /era2_tiering/cells_changing_tier[21]/tier_before: 10 -> 7
+  /era2_tiering/cells_changing_tier[22]/ref: "pv-diag-384::pv-high-image-t0.7-n3-opmax" -> "pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[22]/tier_after: 7 -> 9
+  /era2_tiering/cells_changing_tier[22]/tier_before: 8 -> 10
+  /era2_tiering/cells_changing_tier[23]/ref: "pv-diag-384::pv-high-image-t0.7-n5-opmax" -> "pv-diag-384::pv-high-image-t0.7-n3-opmax"
+  /era2_tiering/cells_changing_tier[23]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[23]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[24]/ref: "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1" -> "pv-diag-384::pv-high-image-t0.7-n5-opmax"
+  /era2_tiering/cells_changing_tier[24]/tier_after: 11 -> 6
+  /era2_tiering/cells_changing_tier[24]/tier_before: 12 -> 7
+  /era2_tiering/cells_changing_tier[25]/ref: "pv-diag-384::pv-high-image-t1.0-n1-opmax" -> "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[26]/ref: "pv-diag-384::pv-high-image-t1.0-n10-opmax" -> "pv-diag-384::pv-high-image-t1.0-n1-opmax"
+  /era2_tiering/cells_changing_tier[26]/tier_after: 7 -> 11
+  /era2_tiering/cells_changing_tier[26]/tier_before: 8 -> 12
+  /era2_tiering/cells_changing_tier[27]/ref: "pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3" -> "pv-diag-384::pv-high-image-t1.0-n10-opmax"
+  /era2_tiering/cells_changing_tier[27]/tier_after: 9 -> 7
+  /era2_tiering/cells_changing_tier[27]/tier_before: 10 -> 8
+  /era2_tiering/cells_changing_tier[28]/ref: "pv-diag-384::pv-high-image-t1.0-n3-opmax" -> "pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[28]/tier_after: 8 -> 9
+  /era2_tiering/cells_changing_tier[28]/tier_before: 9 -> 10
+  /era2_tiering/cells_changing_tier[29]/ref: "pv-diag-384::pv-high-image-t1.0-n5-opmax" -> "pv-diag-384::pv-high-image-t1.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[30]/ref: "pv-diag-384::pv-high-text-t0.0-n3-opmax" -> "pv-diag-384::pv-high-image-t1.0-n5-opmax"
+  /era2_tiering/cells_changing_tier[30]/tier_after: 5 -> 8
+  /era2_tiering/cells_changing_tier[30]/tier_before: 6 -> 9
+  /era2_tiering/cells_changing_tier[31]/ref: "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b" -> "pv-diag-384::pv-high-text-t0.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[31]/tier_after: 4 -> 5
+  /era2_tiering/cells_changing_tier[31]/tier_before: 5 -> 6
+  /era2_tiering/cells_changing_tier[32]/ref: "pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1" -> "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b"
+  /era2_tiering/cells_changing_tier[32]/tier_after: 5 -> 4
+  /era2_tiering/cells_changing_tier[32]/tier_before: 6 -> 5
+  /era2_tiering/cells_changing_tier[33]/ref: "pv-diag-384::pv-high-text-t0.3-n1-opmax" -> "pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[34]/ref: "pv-diag-384::pv-high-text-t0.3-n10-opmax" -> "pv-diag-384::pv-high-text-t0.3-n1-opmax"
+  /era2_tiering/cells_changing_tier[34]/tier_after: 3 -> 5
+  /era2_tiering/cells_changing_tier[34]/tier_before: 4 -> 6
+  /era2_tiering/cells_changing_tier[35]/ref: "pv-diag-384::pv-high-text-t0.7-n1-opmax" -> "pv-diag-384::pv-high-text-t0.3-n10-opmax"
+  /era2_tiering/cells_changing_tier[35]/tier_after: 6 -> 3
+  /era2_tiering/cells_changing_tier[35]/tier_before: 7 -> 4
+  /era2_tiering/cells_changing_tier[36]/ref: "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3" -> "pv-diag-384::pv-high-text-t0.7-n1-opmax"
+  /era2_tiering/cells_changing_tier[36]/tier_after: 5 -> 6
+  /era2_tiering/cells_changing_tier[36]/tier_before: 6 -> 7
+  /era2_tiering/cells_changing_tier[37]/ref: "pv-diag-384::pv-high-text-t0.7-n3-opmax" -> "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[37]/tier_after: 4 -> 5
+  /era2_tiering/cells_changing_tier[37]/tier_before: 5 -> 6
+  /era2_tiering/cells_changing_tier[38]/ref: "pv-diag-384::pv-high-text-t0.7-n5-opmax" -> "pv-diag-384::pv-high-text-t0.7-n3-opmax"
+  /era2_tiering/cells_changing_tier[38]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[39]/ref: "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1" -> "pv-diag-384::pv-high-text-t0.7-n5-opmax"
+  /era2_tiering/cells_changing_tier[39]/tier_after: 6 -> 3
+  /era2_tiering/cells_changing_tier[39]/tier_before: 7 -> 5
+  /era2_tiering/cells_changing_tier[40]/ref: "pv-diag-384::pv-high-text-t1.0-n1-opmax" -> "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[41]/ref: "pv-diag-384::pv-high-text-t1.0-n10-opmax" -> "pv-diag-384::pv-high-text-t1.0-n1-opmax"
+  /era2_tiering/cells_changing_tier[41]/tier_after: 2 -> 6
+  /era2_tiering/cells_changing_tier[41]/tier_before: 3 -> 7
+  /era2_tiering/cells_changing_tier[42]/ref: "pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3" -> "pv-diag-384::pv-high-text-t1.0-n10-opmax"
+  /era2_tiering/cells_changing_tier[42]/tier_after: 5 -> 2
+  /era2_tiering/cells_changing_tier[42]/tier_before: 6 -> 3
+  /era2_tiering/cells_changing_tier[43]/ref: "pv-diag-384::pv-high-text-t1.0-n3-opmax" -> "pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[43]/tier_after: 4 -> 5
+  /era2_tiering/cells_changing_tier[43]/tier_before: 5 -> 6
+  /era2_tiering/cells_changing_tier[44]/ref: "pv-diag-384::pv-high-text-t1.0-n5-opmax" -> "pv-diag-384::pv-high-text-t1.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[44]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[44]/tier_before: 4 -> 5
+  /era2_tiering/cells_changing_tier[45]/ref: "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1" -> "pv-diag-384::pv-high-text-t1.0-n5-opmax"
+  /era2_tiering/cells_changing_tier[45]/tier_after: 7 -> 3
+  /era2_tiering/cells_changing_tier[45]/tier_before: 8 -> 4
+  /era2_tiering/cells_changing_tier[46]/ref: "pv-diag-384::pv-min-image-t0.3-n1-opmax" -> "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[47]/ref: "pv-diag-384::pv-min-image-t0.3-n10-opmax" -> "pv-diag-384::pv-min-image-t0.3-n1-opmax"
+  /era2_tiering/cells_changing_tier[47]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[47]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[48]/ref: "pv-diag-384::pv-min-image-t0.3-n3-opmax" -> "pv-diag-384::pv-min-image-t0.3-n10-opmax"
+  /era2_tiering/cells_changing_tier[49]/ref: "pv-diag-384::pv-min-image-t0.3-n5-opmax" -> "pv-diag-384::pv-min-image-t0.3-n3-opmax"
+  /era2_tiering/cells_changing_tier[50]/ref: "pv-diag-384::pv-min-image-t0.7-n1-opmax" -> "pv-diag-384::pv-min-image-t0.3-n5-opmax"
+  /era2_tiering/cells_changing_tier[50]/tier_after: 8 -> 6
+  /era2_tiering/cells_changing_tier[50]/tier_before: 9 -> 7
+  /era2_tiering/cells_changing_tier[51]/ref: "pv-diag-384::pv-min-image-t0.7-n10-opmax" -> "pv-diag-384::pv-min-image-t0.7-n1-opmax"
+  /era2_tiering/cells_changing_tier[51]/tier_after: 6 -> 8
+  /era2_tiering/cells_changing_tier[51]/tier_before: 7 -> 9
+  /era2_tiering/cells_changing_tier[52]/ref: "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3" -> "pv-diag-384::pv-min-image-t0.7-n10-opmax"
+  /era2_tiering/cells_changing_tier[52]/tier_after: 7 -> 6
+  /era2_tiering/cells_changing_tier[52]/tier_before: 8 -> 7
+  /era2_tiering/cells_changing_tier[53]/ref: "pv-diag-384::pv-min-image-t0.7-n3-opmax" -> "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[54]/ref: "pv-diag-384::pv-min-image-t1.0-n1-opmax" -> "pv-diag-384::pv-min-image-t0.7-n3-opmax"
+  /era2_tiering/cells_changing_tier[54]/tier_after: 9 -> 7
+  /era2_tiering/cells_changing_tier[54]/tier_before: 10 -> 8
+  /era2_tiering/cells_changing_tier[55]/ref: "pv-diag-384::pv-min-image-t1.0-n10-opmax" -> "pv-diag-384::pv-min-image-t1.0-n1-opmax"
+  /era2_tiering/cells_changing_tier[55]/tier_after: 7 -> 9
+  /era2_tiering/cells_changing_tier[55]/tier_before: 8 -> 10
+  /era2_tiering/cells_changing_tier[56]/ref: "pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3" -> "pv-diag-384::pv-min-image-t1.0-n10-opmax"
+  /era2_tiering/cells_changing_tier[56]/tier_after: 9 -> 7
+  /era2_tiering/cells_changing_tier[56]/tier_before: 10 -> 8
+  /era2_tiering/cells_changing_tier[57]/ref: "pv-diag-384::pv-min-image-t1.0-n3-opmax" -> "pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[57]/tier_after: 8 -> 9
+  /era2_tiering/cells_changing_tier[57]/tier_before: 9 -> 10
+  /era2_tiering/cells_changing_tier[58]/ref: "pv-diag-384::pv-min-image-t1.0-n5-opmax" -> "pv-diag-384::pv-min-image-t1.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[58]/tier_after: 7 -> 8
+  /era2_tiering/cells_changing_tier[58]/tier_before: 8 -> 9
+  /era2_tiering/cells_changing_tier[59]/ref: "pv-diag-384::pv-min-text-t0.0-n3-opmax" -> "pv-diag-384::pv-min-image-t1.0-n5-opmax"
+  /era2_tiering/cells_changing_tier[59]/tier_after: 4 -> 7
+  /era2_tiering/cells_changing_tier[59]/tier_before: 5 -> 8
+  /era2_tiering/cells_changing_tier[60]/ref: "pv-diag-384::pv-min-text-t0.3-n1-opmax" -> "pv-diag-384::pv-min-text-t0.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[61]/ref: "pv-diag-384::pv-min-text-t0.3-n10-opmax" -> "pv-diag-384::pv-min-text-t0.3-n1-opmax"
+  /era2_tiering/cells_changing_tier[61]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[61]/tier_before: 4 -> 5
+  /era2_tiering/cells_changing_tier[62]/ref: "pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3" -> "pv-diag-384::pv-min-text-t0.3-n10-opmax"
+  /era2_tiering/cells_changing_tier[62]/tier_after: 4 -> 3
+  /era2_tiering/cells_changing_tier[62]/tier_before: 5 -> 4
+  /era2_tiering/cells_changing_tier[63]/ref: "pv-diag-384::pv-min-text-t0.3-n3-opmax" -> "pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[63]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[63]/tier_before: 4 -> 5
+  /era2_tiering/cells_changing_tier[64]/ref: "pv-diag-384::pv-min-text-t0.3-n5-opmax" -> "pv-diag-384::pv-min-text-t0.3-n3-opmax"
+  /era2_tiering/cells_changing_tier[64]/tier_after: 2 -> 3
+  /era2_tiering/cells_changing_tier[64]/tier_before: 3 -> 4
+  /era2_tiering/cells_changing_tier[65]/ref: "pv-diag-384::pv-min-text-t0.7-n1-opmax" -> "pv-diag-384::pv-min-text-t0.3-n5-opmax"
+  /era2_tiering/cells_changing_tier[65]/tier_after: 4 -> 2
+  /era2_tiering/cells_changing_tier[65]/tier_before: 5 -> 3
+  /era2_tiering/cells_changing_tier[66]/ref: "pv-diag-384::pv-min-text-t0.7-n10-opmax" -> "pv-diag-384::pv-min-text-t0.7-n1-opmax"
+  /era2_tiering/cells_changing_tier[66]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[66]/tier_before: 4 -> 5
+  /era2_tiering/cells_changing_tier[67]/ref: "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3" -> "pv-diag-384::pv-min-text-t0.7-n10-opmax"
+  /era2_tiering/cells_changing_tier[67]/tier_after: 4 -> 3
+  /era2_tiering/cells_changing_tier[67]/tier_before: 5 -> 4
+  /era2_tiering/cells_changing_tier[68]/ref: "pv-diag-384::pv-min-text-t0.7-n3-opmax" -> "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[68]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[68]/tier_before: 4 -> 5
+  /era2_tiering/cells_changing_tier[69]/ref: "pv-diag-384::pv-min-text-t0.7-n5-opmax" -> "pv-diag-384::pv-min-text-t0.7-n3-opmax"
+  /era2_tiering/cells_changing_tier[70]/ref: "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1" -> "pv-diag-384::pv-min-text-t0.7-n5-opmax"
+  /era2_tiering/cells_changing_tier[70]/tier_after: 5 -> 3
+  /era2_tiering/cells_changing_tier[70]/tier_before: 6 -> 4
+  /era2_tiering/cells_changing_tier[71]/ref: "pv-diag-384::pv-min-text-t1.0-n1-opmax" -> "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[72]/ref: "pv-diag-384::pv-min-text-t1.0-n10-opmax" -> "pv-diag-384::pv-min-text-t1.0-n1-opmax"
+  /era2_tiering/cells_changing_tier[72]/tier_after: 2 -> 5
+  /era2_tiering/cells_changing_tier[72]/tier_before: 3 -> 6
+  /era2_tiering/cells_changing_tier[73]/ref: "pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3" -> "pv-diag-384::pv-min-text-t1.0-n10-opmax"
+  /era2_tiering/cells_changing_tier[73]/tier_after: 5 -> 2
+  /era2_tiering/cells_changing_tier[73]/tier_before: 6 -> 3
+  /era2_tiering/cells_changing_tier[74]/ref: "pv-diag-384::pv-min-text-t1.0-n3-opmax" -> "pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[74]/tier_after: 3 -> 5
+  /era2_tiering/cells_changing_tier[74]/tier_before: 4 -> 6
+  /era2_tiering/cells_changing_tier[75]/ref: "pv-diag-384::pv-min-text-t1.0-n5-opmax" -> "pv-diag-384::pv-min-text-t1.0-n3-opmax"
+  /era2_tiering/cells_changing_tier[76]/ref: "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1" -> "pv-diag-384::pv-min-text-t1.0-n5-opmax"
+  /era2_tiering/cells_changing_tier[76]/tier_after: 10 -> 3
+  /era2_tiering/cells_changing_tier[76]/tier_before: 11 -> 4
+  /era2_tiering/cells_changing_tier[77]/ref: "pv-diag-384::pv-scale4-optimal-n1-opmax" -> "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1"
+  /era2_tiering/cells_changing_tier[78]/ref: "pv-diag-384::pv-scale4-optimal-n10-opmax" -> "pv-diag-384::pv-scale4-optimal-n1-opmax"
+  /era2_tiering/cells_changing_tier[78]/tier_after: 7 -> 10
+  /era2_tiering/cells_changing_tier[78]/tier_before: 8 -> 11
+  /era2_tiering/cells_changing_tier[79]/ref: "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3" -> "pv-diag-384::pv-scale4-optimal-n10-opmax"
+  /era2_tiering/cells_changing_tier[79]/tier_after: 9 -> 7
+  /era2_tiering/cells_changing_tier[79]/tier_before: 10 -> 8
+  /era2_tiering/cells_changing_tier[80]/ref: "pv-diag-384::pv-scale4-optimal-n3-opmax" -> "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3"
+  /era2_tiering/cells_changing_tier[80]/tier_after: 8 -> 9
+  /era2_tiering/cells_changing_tier[80]/tier_before: 9 -> 10
+  /era2_tiering/cells_changing_tier[81]/ref: "pv-diag-384::pv-scale4-optimal-n5-opmax" -> "pv-diag-384::pv-scale4-optimal-n3-opmax"
+  /era2_tiering/cells_changing_tier[81]/tier_after: 7 -> 8
+  /era2_tiering/cells_changing_tier[81]/tier_before: 8 -> 9
+  /era2_tiering/cells_changing_tier[82]/ref: "pv-diag-384::session-78-image-adversarial-opmax" -> "pv-diag-384::pv-scale4-optimal-n5-opmax"
+  /era2_tiering/cells_changing_tier[82]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[82]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[83]/ref: "pv-diag-384::session-78-image-adversarial-text-opmax" -> "pv-diag-384::session-78-image-adversarial-opmax"
+  /era2_tiering/cells_changing_tier[83]/tier_after: 7 -> 6
+  /era2_tiering/cells_changing_tier[83]/tier_before: 8 -> 7
+  /era2_tiering/cells_changing_tier[84]/ref: "pv-diag-384::session-78-image-brief-opmax" -> "pv-diag-384::session-78-image-adversarial-text-opmax"
+  /era2_tiering/cells_changing_tier[84]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[84]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[85]/ref: "pv-diag-384::session-78-image-brief-text-opmax" -> "pv-diag-384::session-78-image-brief-opmax"
+  /era2_tiering/cells_changing_tier[86]/ref: "pv-diag-384::session-78-image-checklist-opmax" -> "pv-diag-384::session-78-image-brief-text-opmax"
+  /era2_tiering/cells_changing_tier[87]/ref: "pv-diag-384::session-78-image-checklist-text-opmax" -> "pv-diag-384::session-78-image-checklist-opmax"
+  /era2_tiering/cells_changing_tier[88]/ref: "pv-diag-384::session-78-image-comparative-opmax" -> "pv-diag-384::session-78-image-checklist-text-opmax"
+  /era2_tiering/cells_changing_tier[89]/ref: "pv-diag-384::session-78-text-adversarial-opmax" -> "pv-diag-384::session-78-image-comparative-opmax"
+  /era2_tiering/cells_changing_tier[89]/tier_after: 2 -> 6
+  /era2_tiering/cells_changing_tier[89]/tier_before: 3 -> 7
+  /era2_tiering/cells_changing_tier[90]/ref: "pv-diag-384::session-78-text-adversarial-text-opmax" -> "pv-diag-384::session-78-text-adversarial-opmax"
+  /era2_tiering/cells_changing_tier[90]/tier_after: 4 -> 2
+  /era2_tiering/cells_changing_tier[90]/tier_before: 5 -> 3
+  /era2_tiering/cells_changing_tier[91]/ref: "pv-diag-384::session-78-text-brief-text-opmax" -> "pv-diag-384::session-78-text-adversarial-text-opmax"
+  /era2_tiering/cells_changing_tier[92]/ref: "pv-diag-384::session-78-text-checklist-opmax" -> "pv-diag-384::session-78-text-brief-text-opmax"
+  /era2_tiering/cells_changing_tier[92]/tier_after: 2 -> 4
+  /era2_tiering/cells_changing_tier[92]/tier_before: 3 -> 5
+  /era2_tiering/cells_changing_tier[93]/ref: "pv-diag-384::session-78-text-checklist-text-opmax" -> "pv-diag-384::session-78-text-checklist-opmax"
+  /era2_tiering/cells_changing_tier[93]/tier_after: 4 -> 2
+  /era2_tiering/cells_changing_tier[93]/tier_before: 5 -> 3
+  /era2_tiering/cells_changing_tier[94]/ref: "pv-diag-384::verified-adv-image-3of5-era2b" -> "pv-diag-384::session-78-text-checklist-text-opmax"
+  /era2_tiering/cells_changing_tier[94]/tier_after: 6 -> 4
+  /era2_tiering/cells_changing_tier[94]/tier_before: 7 -> 5
+  /era2_tiering/cells_changing_tier[95]/ref: "pv-diag-384::verified-adv-image-baseline-era2b" -> "pv-diag-384::verified-adv-image-3of5-era2b"
+  /era2_tiering/cells_changing_tier[95]/tier_after: 9 -> 6
+  /era2_tiering/cells_changing_tier[95]/tier_before: 10 -> 7
+  /era2_tiering/cells_changing_tier[96]/ref: "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b" -> "pv-diag-384::verified-adv-image-baseline-era2b"
+  /era2_tiering/cells_changing_tier[96]/tier_after: 8 -> 9
+  /era2_tiering/cells_changing_tier[96]/tier_before: 9 -> 10
+  /era2_tiering/cells_changing_tier[97]/ref: "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b" -> "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b"
+  /era2_tiering/cells_changing_tier[98]/ref: "pv-diag-384::verified-adv-image-min-3of5-era2b" -> "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b"
+  /era2_tiering/cells_changing_tier[98]/tier_after: 7 -> 8
+  /era2_tiering/cells_changing_tier[98]/tier_before: 8 -> 9
+  /era2_tiering/cells_changing_tier[99]/ref: "pv-diag-384::verified-adv-image-min-6of10-era2b" -> "pv-diag-384::verified-adv-image-min-3of5-era2b"
+  /era2_tiering/cells_changing_tier[99]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[99]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[100]/ref: "pv-diag-384::verified-adv-pro-image-baseline-era2b" -> "pv-diag-384::verified-adv-image-min-6of10-era2b"
+  /era2_tiering/cells_changing_tier[100]/tier_after: 10 -> 6
+  /era2_tiering/cells_changing_tier[100]/tier_before: 11 -> 7
+  /era2_tiering/cells_changing_tier[101]/ref: "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b" -> "pv-diag-384::verified-adv-pro-image-baseline-era2b"
+  /era2_tiering/cells_changing_tier[102]/ref: "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b" -> "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b"
+  /era2_tiering/cells_changing_tier[102]/tier_after: 11 -> 10
+  /era2_tiering/cells_changing_tier[102]/tier_before: 12 -> 11
+  /era2_tiering/cells_changing_tier[103]/ref: "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b" -> "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b"
+  /era2_tiering/cells_changing_tier[103]/tier_after: 9 -> 11
+  /era2_tiering/cells_changing_tier[103]/tier_before: 10 -> 12
+  /era2_tiering/cells_changing_tier[104]/ref: "pv-diag-384::verified-adv-pro-text-baseline-era2b" -> "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b"
+  /era2_tiering/cells_changing_tier[104]/tier_after: 7 -> 9
+  /era2_tiering/cells_changing_tier[104]/tier_before: 8 -> 10
+  /era2_tiering/cells_changing_tier[105]/ref: "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b" -> "pv-diag-384::verified-adv-pro-text-baseline-era2b"
+  /era2_tiering/cells_changing_tier[105]/tier_after: 6 -> 7
+  /era2_tiering/cells_changing_tier[105]/tier_before: 7 -> 8
+  /era2_tiering/cells_changing_tier[106]/ref: "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b" -> "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b"
+  /era2_tiering/cells_changing_tier[107]/ref: "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b" -> "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b"
+  /era2_tiering/cells_changing_tier[107]/tier_after: 4 -> 6
+  /era2_tiering/cells_changing_tier[107]/tier_before: 5 -> 7
+  /era2_tiering/cells_changing_tier[108]/ref: "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b" -> "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b"
+  /era2_tiering/cells_changing_tier[109]/ref: "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b" -> "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b"
+  /era2_tiering/cells_changing_tier[110]/ref: "pv-diag-384::verified-adv-text-4of5-era2b" -> "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b"
+  /era2_tiering/cells_changing_tier[110]/tier_after: 3 -> 4
+  /era2_tiering/cells_changing_tier[111]/ref: "pv-diag-384::verified-adv-text-6of10-era2b" -> "pv-diag-384::verified-adv-text-4of5-era2b"
+  /era2_tiering/cells_changing_tier[111]/tier_after: 2 -> 3
+  /era2_tiering/cells_changing_tier[111]/tier_before: 3 -> 5
+  /era2_tiering/cells_changing_tier[112]/ref: "pv-diag-384::verified-adv-text-baseline-era2b" -> "pv-diag-384::verified-adv-text-6of10-era2b"
+  /era2_tiering/cells_changing_tier[112]/tier_after: 5 -> 2
+  /era2_tiering/cells_changing_tier[112]/tier_before: 6 -> 3
+  /era2_tiering/cells_changing_tier[113]/ref: "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b" -> "pv-diag-384::verified-adv-text-baseline-era2b"
+  /era2_tiering/cells_changing_tier[114]/ref: "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b" -> "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b"
+  /era2_tiering/cells_changing_tier[115]/ref: "pv-diag-384::verified-adv-text-high-vf-4of5-era2b" -> "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b"
+  /era2_tiering/cells_changing_tier[115]/tier_after: 4 -> 5
+  /era2_tiering/cells_changing_tier[115]/tier_before: 5 -> 6
+  /era2_tiering/cells_changing_tier[116]/ref: "pv-diag-384::verified-adv-text-medium-vf-4of5-era2b" -> "pv-diag-384::verified-adv-text-high-vf-4of5-era2b"
+  /era2_tiering/cells_changing_tier[117]/ref: "pv-diag-384::verified-adv-text-min-6of10-era2b" -> "pv-diag-384::verified-adv-text-medium-vf-4of5-era2b"
+  /era2_tiering/cells_changing_tier[117]/tier_after: 2 -> 4
+  /era2_tiering/cells_changing_tier[117]/tier_before: 3 -> 5
+  /era2_tiering/cells_changing_tier[118]/ref: "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b" -> "pv-diag-384::verified-adv-text-min-6of10-era2b"
+  /era2_tiering/cells_changing_tier[118]/tier_after: 3 -> 2
+  /era2_tiering/cells_changing_tier[118]/tier_before: 4 -> 3
+  /era2_tiering/cells_changing_tier[119]/ref: "pv-diag-384::verified-adv-text-min-true-3of5-era2b" -> "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b"
+  /era2_tiering/cells_changing_tier[119]/tier_after: 2 -> 3
+  /era2_tiering/cells_changing_tier[119]/tier_before: 3 -> 4
+  /era2_tiering/cells_changing_tier[120]/ref: "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b" -> "pv-diag-384::verified-adv-text-min-true-3of5-era2b"
+  /era2_tiering/cells_changing_tier[121]/ref: "pv-diag-384::verified-adv-text-t03-4of5-era2b" -> "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b"
+  /era2_tiering/cells_changing_tier[122]/ref: "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b" -> "pv-diag-384::verified-adv-text-t03-4of5-era2b"
+  /era2_tiering/cells_changing_tier[123]/ref: "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b" -> "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b"
+  /era2_tiering/cells_changing_tier[123]/tier_after: 3 -> 2
+  /era2_tiering/cells_changing_tier[123]/tier_before: 4 -> 3
+  /era2_tiering/cells_changing_tier[124]/ref: "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b" -> "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b"
+  /era2_tiering/cells_changing_tier[125]/ref: "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b" -> "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b"
+  /era2_tiering/cells_changing_tier[126]/ref: "verifier-robustness::verified-384-union-t0-0-n5-era2b" -> "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b"
+  /era2_tiering/cells_changing_tier[127]/ref: "verifier-t-pilot::verified-t0-0-era2b" -> "verifier-robustness::verified-384-union-t0-0-n5-era2b"
+  /era2_tiering/cells_changing_tier[127]/tier_after: 4 -> 3
+  /era2_tiering/cells_changing_tier[127]/tier_before: 5 -> 4
+  /era2_tiering/cells_changing_tier[128]/ref: "verifier-t-pilot::verified-t0-5-era2b" -> "verifier-t-pilot::verified-t0-0-era2b"
+  /era2_tiering/cells_changing_tier[129]/ref: "verifier-t-pilot::verified-t1-0-era2b" -> "verifier-t-pilot::verified-t0-5-era2b"
+  /era2_tiering/n_cells_changing_tier: 130 -> 131
+  /era2_tiering/n_pairs_significant_after: 7905 -> 7959
+  /era2_tiering/rank_stability/max_abs_rank_shift: 8 -> 14
+  /era2_tiering/rank_stability/n_moving_more_than_3_ranks: 13 -> 17
+  /era2_tiering/rank_stability/n_moving_more_than_one_tier: 2 -> 4
+  /era2_tiering/rank_stability/spearman: 0.998852 -> 0.998091
+  /era2_tiering/tie_set_after[len]: 4 -> 5
+  /era2_tiering/tier1_after[len]: 4 -> 5
+  /era2_tiering/tier1_joined[len]: 0 -> 1
+  /leak_signature/boards[0]/mean_log_ratio_text: -0.055169 -> -0.054252
+  /leak_signature/boards[0]/observed_image_minus_text: -0.088143 -> -0.08906
+  /leak_signature/boards[0]/pooled_text/fp_per_tile_rest: 0.10274 -> 0.10217
+  /leak_signature/boards[0]/pooled_text/ratio: 0.68456 -> 0.68835
+  /per_cell[0]/cells[60]/delta_f1: -0.0071 -> 0.0279
+  /per_cell[0]/cells[60]/f1_after: 0.8267 -> 0.8617
+  /per_cell[0]/cells[61]/delta_f1: -0.0074 -> 0.0245
+  /per_cell[0]/cells[61]/f1_after: 0.8421 -> 0.874
+  /per_cell[0]/cells[62]/delta_f1: -0.0072 -> 0.0274
+  /per_cell[0]/cells[62]/f1_after: 0.8788 -> 0.9134
+  /per_cell[0]/cells[63]/delta_f1: -0.0017 -> 0.012
+  /per_cell[0]/cells[63]/f1_after: 0.8529 -> 0.8666
+  /per_cell[0]/cells[64]/delta_f1: -0.0017 -> 0.0118
+  /per_cell[0]/cells[64]/f1_after: 0.8523 -> 0.8658
+  /per_cell[0]/cells[65]/delta_f1: -0.0032 -> 0.0109
+  /per_cell[0]/cells[65]/f1_after: 0.8808 -> 0.8949
+  /per_cell[0]/cells[66]/delta_f1: -0.0032 -> 0.0112
+  /per_cell[0]/cells[66]/f1_after: 0.8873 -> 0.9017
+  /per_cell[0]/delta_f1/image_minus_text_mean: 0.000623 -> -0.001049
+  /per_cell[0]/delta_f1/text/largest_absolute/delta: -0.0074 -> 0.0279
+  /per_cell[0]/delta_f1/text/largest_absolute/ref: "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax" -> "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1"
+  /per_cell[0]/delta_f1/text/max: 0.0036 -> 0.0279
+  /per_cell[0]/delta_f1/text/mean: -0.002752 -> -0.00108
+  /per_cell[0]/delta_f1/text/median: -0.00245 -> -0.00225
+  /per_cell[0]/delta_f1/text/min: -0.0074 -> -0.0068
+  /per_cell[1]/cells[36]/delta_f1: -0.026 -> -0.0181
+  /per_cell[1]/cells[36]/f1_after: 0.6365 -> 0.6444
+  /per_cell[1]/cells[37]/delta_f1: -0.023 -> -0.015
+  /per_cell[1]/cells[37]/f1_after: 0.6388 -> 0.6468
+  /per_cell[1]/cells[38]/delta_f1: -0.0232 -> -0.0153
+  /per_cell[1]/cells[38]/f1_after: 0.6429 -> 0.6508
+  /per_cell[1]/cells[39]/delta_f1: -0.0211 -> -0.0148
+  /per_cell[1]/cells[39]/f1_after: 0.6366 -> 0.6429
+  /per_cell[1]/cells[40]/delta_f1: -0.022 -> -0.0157
+  /per_cell[1]/cells[40]/f1_after: 0.6472 -> 0.6535
+  /per_cell[1]/cells[41]/delta_f1: -0.0249 -> -0.0188
+  /per_cell[1]/cells[41]/f1_after: 0.666 -> 0.6721
+  /per_cell[1]/cells[42]/delta_f1: -0.0249 -> -0.0182
+  /per_cell[1]/cells[42]/f1_after: 0.614 -> 0.6207
+  /per_cell[1]/cells[43]/delta_f1: -0.0242 -> -0.0177
+  /per_cell[1]/cells[43]/f1_after: 0.6312 -> 0.6377
+  /per_cell[1]/cells[44]/delta_f1: -0.0249 -> -0.0183
+  /per_cell[1]/cells[44]/f1_after: 0.6543 -> 0.6609
+  /per_cell[1]/cells[45]/delta_f1: -0.0279 -> -0.0163
+  /per_cell[1]/cells[45]/f1_after: 0.6564 -> 0.668
+  /per_cell[1]/cells[46]/delta_f1: -0.0265 -> -0.0156
+  /per_cell[1]/cells[46]/f1_after: 0.6606 -> 0.6715
+  /per_cell[1]/cells[47]/delta_f1: -0.0285 -> -0.0158
+  /per_cell[1]/cells[47]/f1_after: 0.6636 -> 0.6763
+  /per_cell[1]/cells[48]/delta_f1: -0.0293 -> -0.0148
+  /per_cell[1]/cells[48]/f1_after: 0.6335 -> 0.648
+  /per_cell[1]/cells[49]/delta_f1: -0.0285 -> -0.0135
+  /per_cell[1]/cells[49]/f1_after: 0.6467 -> 0.6617
+  /per_cell[1]/cells[50]/delta_f1: -0.0312 -> -0.014
+  /per_cell[1]/cells[50]/f1_after: 0.6603 -> 0.6775
+  /per_cell[1]/cells[51]/delta_f1: -0.029 -> -0.016
+  /per_cell[1]/cells[51]/f1_after: 0.6394 -> 0.6524
+  /per_cell[1]/cells[52]/delta_f1: -0.0241 -> -0.0131
+  /per_cell[1]/cells[52]/f1_after: 0.6593 -> 0.6703
+  /per_cell[1]/cells[53]/delta_f1: -0.0277 -> -0.0161
+  /per_cell[1]/cells[53]/f1_after: 0.6583 -> 0.6699
+  /per_cell[1]/cells[54]/delta_f1: -0.0252 -> -0.0153
+  /per_cell[1]/cells[54]/f1_after: 0.7069 -> 0.7168
+  /per_cell[1]/cells[55]/delta_f1: -0.0245 -> -0.0142
+  /per_cell[1]/cells[55]/f1_after: 0.735 -> 0.7453
+  /per_cell[1]/cells[56]/delta_f1: -0.0249 -> -0.0143
+  /per_cell[1]/cells[56]/f1_after: 0.7495 -> 0.7601
+  /per_cell[1]/cells[57]/delta_f1: -0.03 -> -0.0198
+  /per_cell[1]/cells[57]/f1_after: 0.7 -> 0.7102
+  /per_cell[1]/cells[58]/delta_f1: -0.029 -> -0.0171
+  /per_cell[1]/cells[58]/f1_after: 0.7112 -> 0.7231
+  /per_cell[1]/cells[59]/delta_f1: -0.0291 -> -0.0161
+  /per_cell[1]/cells[59]/f1_after: 0.7438 -> 0.7568
+  /per_cell[1]/cells[60]/delta_f1: -0.0266 -> -0.0123
+  /per_cell[1]/cells[60]/f1_after: 0.6995 -> 0.7138
+  /per_cell[1]/cells[61]/delta_f1: -0.0266 -> -0.0134
+  /per_cell[1]/cells[61]/f1_after: 0.7456 -> 0.7588
+  /per_cell[1]/cells[62]/delta_f1: -0.0258 -> -0.0146
+  /per_cell[1]/cells[62]/f1_after: 0.7489 -> 0.7601
+  /per_cell[1]/cells[63]/delta_f1: -0.029 -> -0.0171
+  /per_cell[1]/cells[63]/f1_after: 0.6839 -> 0.6958
+  /per_cell[1]/cells[64]/delta_f1: -0.0276 -> -0.0149
+  /per_cell[1]/cells[64]/f1_after: 0.719 -> 0.7317
+  /per_cell[1]/cells[65]/delta_f1: -0.0301 -> -0.0177
+  /per_cell[1]/cells[65]/f1_after: 0.7404 -> 0.7528
+  /per_cell[1]/cells[66]/delta_f1: -0.0311 -> -0.0129
+  /per_cell[1]/cells[66]/f1_after: 0.6594 -> 0.6776
+  /per_cell[1]/cells[67]/delta_f1: -0.033 -> -0.016
+  /per_cell[1]/cells[67]/f1_after: 0.6679 -> 0.6849
+  /per_cell[1]/cells[68]/delta_f1: -0.0308 -> -0.0152
+  /per_cell[1]/cells[68]/f1_after: 0.6725 -> 0.6881
+  /per_cell[1]/cells[69]/delta_f1: -0.0236 -> -0.0166
+  /per_cell[1]/cells[69]/f1_after: 0.6404 -> 0.6474
+  /per_cell[1]/cells[70]/delta_f1: -0.0254 -> -0.0183
+  /per_cell[1]/cells[70]/f1_after: 0.6428 -> 0.6499
+  /per_cell[1]/cells[71]/delta_f1: -0.0209 -> -0.0138
+  /per_cell[1]/cells[71]/f1_after: 0.6504 -> 0.6575
+  /per_cell[1]/cells[72]/delta_f1: -0.0232 -> -0.015
+  /per_cell[1]/cells[72]/f1_after: 0.6456 -> 0.6538
+  /per_cell[1]/cells[73]/delta_f1: -0.0234 -> -0.0159
+  /per_cell[1]/cells[73]/f1_after: 0.6471 -> 0.6546
+  /per_cell[1]/cells[74]/delta_f1: -0.0246 -> -0.0138
+  /per_cell[1]/cells[74]/f1_after: 0.6925 -> 0.7033
+  /per_cell[1]/cells[75]/delta_f1: -0.0294 -> -0.0175
+  /per_cell[1]/cells[75]/f1_after: 0.6568 -> 0.6687
+  /per_cell[1]/cells[76]/delta_f1: -0.0262 -> -0.0141
+  /per_cell[1]/cells[76]/f1_after: 0.7039 -> 0.716
+  /per_cell[1]/cells[77]/delta_f1: -0.0266 -> -0.016
+  /per_cell[1]/cells[77]/f1_after: 0.6677 -> 0.6783
+  /per_cell[1]/delta_f1/image/largest_absolute/delta: -0.026 -> -0.0188
+  /per_cell[1]/delta_f1/image/largest_absolute/ref: "retest-phase3a::image-t0.3-n5-4of5" -> "retest-phase3a::image-t0.7-n30-18of30"
+  /per_cell[1]/delta_f1/image/mean: -0.014584 -> -0.011974
+  /per_cell[1]/delta_f1/image/min: -0.026 -> -0.0188
+  /per_cell[1]/delta_f1/image_minus_text_mean: 0.006618 -> 0.001153
+  /per_cell[1]/delta_f1/text/largest_absolute/delta: -0.033 -> -0.0198
+  /per_cell[1]/delta_f1/text/largest_absolute/ref: "retest-phase3a-replication::text-minimal-t0.7-n10-8of10" -> "retest-phase3a-high::text-high-t0.7-n5-4of5"
+  /per_cell[1]/delta_f1/text/mean: -0.021202 -> -0.013127
+  /per_cell[1]/delta_f1/text/median: -0.026 -> -0.01405
+  /per_cell[1]/delta_f1/text/min: -0.033 -> -0.0198
+  /per_cell[3]/cells[6]/delta_f1: -0.0249 -> -0.0143
+  /per_cell[3]/cells[6]/f1_after: 0.7495 -> 0.7601
+  /per_cell[3]/cells[7]/delta_f1: -0.0291 -> -0.0161
+  /per_cell[3]/cells[7]/f1_after: 0.7438 -> 0.7568
+  /per_cell[3]/cells[8]/delta_f1: -0.0258 -> -0.0146
+  /per_cell[3]/cells[8]/f1_after: 0.7489 -> 0.7601
+  /per_cell[3]/cells[10]/delta_f1: -0.0308 -> -0.0152
+  /per_cell[3]/cells[10]/f1_after: 0.6725 -> 0.6881
+  /per_cell[3]/cells[11]/delta_f1: -0.0232 -> -0.0153
+  /per_cell[3]/cells[11]/f1_after: 0.6429 -> 0.6508
+  /per_cell[3]/cells[12]/delta_f1: -0.0249 -> -0.0188
+  /per_cell[3]/cells[12]/f1_after: 0.666 -> 0.6721
+  /per_cell[3]/cells[13]/delta_f1: -0.0249 -> -0.0183
+  /per_cell[3]/cells[13]/f1_after: 0.6543 -> 0.6609
+  /per_cell[3]/cells[14]/delta_f1: -0.0285 -> -0.0158
+  /per_cell[3]/cells[14]/f1_after: 0.6636 -> 0.6763
+  /per_cell[3]/cells[15]/delta_f1: -0.0277 -> -0.0161
+  /per_cell[3]/cells[15]/f1_after: 0.6583 -> 0.6699
+  /per_cell[3]/delta_f1/image/largest_absolute/delta: -0.0249 -> -0.0188
+  /per_cell[3]/delta_f1/image/mean: -0.015557 -> -0.012614
+  /per_cell[3]/delta_f1/image/min: -0.0249 -> -0.0188
+  /per_cell[3]/delta_f1/image_minus_text_mean: 0.006721 -> 0.001364
+  /per_cell[3]/delta_f1/text/largest_absolute/delta: -0.0308 -> -0.0161
+  /per_cell[3]/delta_f1/text/largest_absolute/ref: "retest-phase3a-replication::text-minimal-t0.7-n30-25of30" -> "retest-phase3a-high::text-high-t0.7-n30-22of30"
+  /per_cell[3]/delta_f1/text/mean: -0.022278 -> -0.013978
+  /per_cell[3]/delta_f1/text/median: -0.0258 -> -0.0151
+  /per_cell[3]/delta_f1/text/min: -0.0308 -> -0.0161

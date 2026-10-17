@@ -1,0 +1,38 @@
+2026-10-15 10:40:35,998 INFO k3-opmax sweep board: /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-987534c03/outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed/sweep_2d_era2b.json --bounds inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson --buffer-m 20 30 40 50
+2026-10-15 10:41:37,700 INFO k3-opmax sweep era2: /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-987534c03/outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed/sweep_2d.json --bounds inputs/vectors/bounds/384/full_evaluation_bounds.geojson --buffer-m 20 30 40 50
+2026-10-15 10:42:41,529 INFO k3-opmax materialise: --probabilities /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-987534c03/outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k3_recovery-fixed/probabilities.json --vote-t 3 --prob-t 0.1 --output /home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore-987534c03/k3-opmax.geojson
+2026-10-15 10:42:41,627 INFO k3-opmax MATERIALISED ONLY
+[
+  {
+    "key": "k3-opmax",
+    "run_id": "gemini37-screen-2026-08-28",
+    "label": "g37-text-k3-verified-opmax",
+    "committed_point": [
+      3,
+      0.1
+    ],
+    "new_point": [
+      3,
+      0.1
+    ],
+    "point_moved": false,
+    "board_argmax": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "f1": 0.886,
+      "n": 495,
+      "n_ties": 0
+    },
+    "era2_argmax": {
+      "vote_t": 3,
+      "prob_t": 0.1,
+      "f1": 0.886
+    },
+    "frames_agree": true,
+    "committed_f1_20": 0.887,
+    "committed_n_detections": 494,
+    "materialised": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore-987534c03/k3-opmax.geojson",
+    "evaluated": false,
+    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py"
+  }
+]

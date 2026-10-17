@@ -1,0 +1,1807 @@
+{
+  "ignore_keys": [
+    "generated_at_utc",
+    "seconds"
+  ],
+  "ignore_lines": [
+    "^> \\*\\*Last revised\\*\\*: 20[0-9-]+ \\(original publication",
+    "^### 20[0-9-]+ \u2014 Original publication$"
+  ],
+  "today": "718d0ee08",
+  "n_files": 113,
+  "summary": {
+    "BYTE-IDENTICAL": 84,
+    "LINE-IDENTICAL": 28,
+    "FIELD-IDENTICAL": 1
+  },
+  "n_today_blob_differs": 61,
+  "files": [
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "c7e0fdb5866b886186f15800054409745c54c836b5f7642a1a3425c8029f8775",
+      "sha256_committed": "c7e0fdb5866b886186f15800054409745c54c836b5f7642a1a3425c8029f8775",
+      "bytes_regen": 353736,
+      "bytes_committed": 353736,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "0ba7e42dff6f319f71d0347a69841a102d70aa44"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/experiment_intent.md",
+      "sha256_regen": "21416da1913443bb8066f4380bcb933452ad1a6ed64737f6ead85b6ba2a50085",
+      "sha256_committed": "e3e9d64e94dbac91d54b2ab0250a168bd7ceffa87056bdeea726459e9369cca1",
+      "bytes_regen": 3276,
+      "bytes_committed": 3276,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "60fecd5ac5d299fb827d6acfc5b9fcd671a5685b"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/voting_summary.json",
+      "sha256_regen": "f461832f4183c501a0ad9708c4169da16bcf317a7019487478eea049b3c89576",
+      "sha256_committed": "f461832f4183c501a0ad9708c4169da16bcf317a7019487478eea049b3c89576",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "be23302160b58258169040f7451a6f5296735dc0"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "adeda297c92a2a58fe1daae10cb3dd936f1974247a6a078381923f467c86d4d0",
+      "sha256_committed": "adeda297c92a2a58fe1daae10cb3dd936f1974247a6a078381923f467c86d4d0",
+      "bytes_regen": 439557,
+      "bytes_committed": 439557,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "0a79692471f934e0b528a1caa9e58b9bb0b096fa"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "e6674eb8e87ffb7efb49bad075d953bdaffa924d49a2af91a39f1dfa1f01d4df",
+      "sha256_committed": "e6674eb8e87ffb7efb49bad075d953bdaffa924d49a2af91a39f1dfa1f01d4df",
+      "bytes_regen": 365145,
+      "bytes_committed": 365145,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "490b77810ff63c1cb762ae9b0643bee5da82cb11"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "72294e5adf2712968ab23fc0ef92f51c5621050508e7bb415cf49f018ee142dd",
+      "sha256_committed": "72294e5adf2712968ab23fc0ef92f51c5621050508e7bb415cf49f018ee142dd",
+      "bytes_regen": 323373,
+      "bytes_committed": 323373,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "9b20b9a87f91591fc94ef4bb091c562d5e962b9c"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/experiment_intent.md",
+      "sha256_regen": "bcde627c3a8519ee61587ce1a5d814ef485924067ab76d48bba4a36b4ca1ba6f",
+      "sha256_committed": "93caee81db4aff7535d97f8c0b09ac37b9c1ad2ae81d5f990ef9497f4cf88724",
+      "bytes_regen": 3302,
+      "bytes_committed": 3302,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "c92fdd31dab55034f7ca57cdf1d13ebc5bc71533"
+    },
+    {
+      "repo_path": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/voting_summary.json",
+      "sha256_regen": "1f02acaf2e2137c53406404070ee4884afc8e2f2cd98c2c5d47ea5ce120d7c1b",
+      "sha256_committed": "1f02acaf2e2137c53406404070ee4884afc8e2f2cd98c2c5d47ea5ce120d7c1b",
+      "bytes_regen": 87,
+      "bytes_committed": 87,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "02cd476b01785d7439318fad031052499cbe113a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "5cf32f30a1914bc9c1bd52176865044aab2b12dd40dd875c89b661dc25802095",
+      "sha256_committed": "5cf32f30a1914bc9c1bd52176865044aab2b12dd40dd875c89b661dc25802095",
+      "bytes_regen": 425011,
+      "bytes_committed": 425011,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "5b7dd4d736d9a844afc88dff7ed03ebf87560dac"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/experiment_intent.md",
+      "sha256_regen": "e3d04be8732f7eed24c1d1f29e3e68be3cdc86f18dea298155e53e67b8cc7ded",
+      "sha256_committed": "679f86dd877e8b64ceb59fc7c2d94be62bb381b8590756d3cd1a194993836501",
+      "bytes_regen": 3311,
+      "bytes_committed": 3311,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "353496c86423e02ac79f4dcc487a17e7abde5eca"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n1/voting_summary.json",
+      "sha256_regen": "4d9dce4ec1098428d01f8d1adf50d2c8c51fa0d3b8defefe64297bba2b68a080",
+      "sha256_committed": "4d9dce4ec1098428d01f8d1adf50d2c8c51fa0d3b8defefe64297bba2b68a080",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "2fceed93243ae402cba7f846e2aa63c2b275b89d"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "3b48228e38ed604f0eb64722467afb6b29eadbd3b73ce1df1b8cb9c16f03bc01",
+      "sha256_committed": "3b48228e38ed604f0eb64722467afb6b29eadbd3b73ce1df1b8cb9c16f03bc01",
+      "bytes_regen": 825495,
+      "bytes_committed": 825495,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "350e356c822a0deeddd84dc6c2cfbff6c3dcbbce"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "a3bd466829ee123523febeb6d6cf378bade10944374e38da03bf00348e2db3db",
+      "sha256_committed": "a3bd466829ee123523febeb6d6cf378bade10944374e38da03bf00348e2db3db",
+      "bytes_regen": 332941,
+      "bytes_committed": 332941,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "ae3d3e518c6b9c6cb904d9764e93b0330988aa36"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "bb09e866d13411d11c5c40e3782211e16e6b79ab040f475aae928ec2f2e94b46",
+      "sha256_committed": "bb09e866d13411d11c5c40e3782211e16e6b79ab040f475aae928ec2f2e94b46",
+      "bytes_regen": 217094,
+      "bytes_committed": 217094,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "a1a0b05206970b9873559b4a4b4d438d2a93fcd4"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/experiment_intent.md",
+      "sha256_regen": "1054f345745c224f9911a0db2be6dbf0687cb3d0ca513eb4c9e68e152136f38a",
+      "sha256_committed": "496ed192902f74fd6b1736931d9d0151f4d034ced8a60a318d9806c6d04679e6",
+      "bytes_regen": 3339,
+      "bytes_committed": 3339,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "1c646fb918a31c5a30ef5a2de0aec9fd2bae9ba0"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.3/consensus-n3/voting_summary.json",
+      "sha256_regen": "81acc963accd0718488bf5f99b4a4c7bfcf69b5da47617e00b802a9f5316aa83",
+      "sha256_committed": "81acc963accd0718488bf5f99b4a4c7bfcf69b5da47617e00b802a9f5316aa83",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "8b0d6072be7e10f2ec89cf47e4abcf133bd14296"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "951706b9b9df32ea4c6411983f33e1398c7ab4cbcc952eebcb9910b1d64ed777",
+      "sha256_committed": "951706b9b9df32ea4c6411983f33e1398c7ab4cbcc952eebcb9910b1d64ed777",
+      "bytes_regen": 375535,
+      "bytes_committed": 375535,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "d281f3d343193cf942f60fdef3963edaa46852ce"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/experiment_intent.md",
+      "sha256_regen": "11842d2178ff632456c39e727f3192a02d73a08c9c4416defdc3bc04818dfc1c",
+      "sha256_committed": "1aad14bd75d018a3d2793ecb1488d1ff58cb3d6c01d9c93ade0e04f6f9e098b7",
+      "bytes_regen": 3311,
+      "bytes_committed": 3311,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "6632883a6cf79a6e778ba70f257527e2a7340dd3"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n1/voting_summary.json",
+      "sha256_regen": "868346997a0c8b57522ba73f0bc01799211e369d6b98b2d61a6beb5299541fe0",
+      "sha256_committed": "868346997a0c8b57522ba73f0bc01799211e369d6b98b2d61a6beb5299541fe0",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "1b9b08cd86b576c0be0fa34f01ebcb24e645ee37"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "d9d45c066e4873adc359875e457e480d0fd8da7e1935de52c5936143b7a5c530",
+      "sha256_committed": "d9d45c066e4873adc359875e457e480d0fd8da7e1935de52c5936143b7a5c530",
+      "bytes_regen": 774265,
+      "bytes_committed": 774265,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "9d6574ae1562ee9dfe6dce503ffb5f27657d767c"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "60c16233c87460c939f614c60617058f6f76c0d16dd0b2a5ff5c63239ffa7a86",
+      "sha256_committed": "60c16233c87460c939f614c60617058f6f76c0d16dd0b2a5ff5c63239ffa7a86",
+      "bytes_regen": 286240,
+      "bytes_committed": 286240,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "df6cbf682b2e9c656ee50f9d5e61757eac94b360"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "d28a103f7052f185a58ee38aacc39d2a6e696b7d72135c053a4ac4f6af4ced01",
+      "sha256_committed": "d28a103f7052f185a58ee38aacc39d2a6e696b7d72135c053a4ac4f6af4ced01",
+      "bytes_regen": 181520,
+      "bytes_committed": 181520,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "9f5febb0892b5f421993fba229df1c6b890899e7"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/experiment_intent.md",
+      "sha256_regen": "2be7e04b823c48610fe1f8ec4f7c0dc7849137e687977d28ca95187a76e2613d",
+      "sha256_committed": "d20e9d5df9f005c4b7634b3245fe9bc594a34fc352e116b646d71248a07905ef",
+      "bytes_regen": 3339,
+      "bytes_committed": 3339,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "0f05a0d9877449d5608521e92ca558cbec1d3b7e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t0.7/consensus-n3/voting_summary.json",
+      "sha256_regen": "5a8de616cf420a133f3013ceb94ada5760e63e5ac8209f2064cbd21be4c25855",
+      "sha256_committed": "5a8de616cf420a133f3013ceb94ada5760e63e5ac8209f2064cbd21be4c25855",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "3310d0d4b39d6d6600d7a75a8d292eb49edc2f0c"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "d19d99a9edf7530b747e5ab2f31240a9a54e0f2fe26b84bb3866195139a2d64c",
+      "sha256_committed": "d19d99a9edf7530b747e5ab2f31240a9a54e0f2fe26b84bb3866195139a2d64c",
+      "bytes_regen": 477154,
+      "bytes_committed": 477154,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "bd5fd2634864de50c8a50db14c6ded0c8ec9f804"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/experiment_intent.md",
+      "sha256_regen": "5add664b96ee8b49fb255ec214b90c51ecad01c81cb6864a7c16905f72229066",
+      "sha256_committed": "1fe252cbd9cdc37559b91c353167cea06786cab700798e9ade321800da32251b",
+      "bytes_regen": 3311,
+      "bytes_committed": 3311,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "a2014ab88a47d2e577894155486ff1847518e472"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n1/voting_summary.json",
+      "sha256_regen": "0cceb95a1fdac8c88829ae44121b10dd70eade6c028c7cac3268b843552280c0",
+      "sha256_committed": "0cceb95a1fdac8c88829ae44121b10dd70eade6c028c7cac3268b843552280c0",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "a5e6709c64dfeea890fb2dd3effcec7142c92f2a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "55e335a7cbd8f6585d05dd0ff1a3fec933d156dafacf6e94636c0051af7c9371",
+      "sha256_committed": "55e335a7cbd8f6585d05dd0ff1a3fec933d156dafacf6e94636c0051af7c9371",
+      "bytes_regen": 957126,
+      "bytes_committed": 957126,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "f73fe08c5e2a6efc36d2bd2a98341777524ffc1e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "34a0cc0c20817cf97f2ec92cca5864fd39ee66d0b6768e1e13fd9386d00d501a",
+      "sha256_committed": "34a0cc0c20817cf97f2ec92cca5864fd39ee66d0b6768e1e13fd9386d00d501a",
+      "bytes_regen": 294620,
+      "bytes_committed": 294620,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "9c7b399e39a1715283c27f08c681993a788d985f"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "c9645d9c7be0a5f1ec4c31c31ae9f3c319f0b67a3b7073a84110b68ce81f0547",
+      "sha256_committed": "c9645d9c7be0a5f1ec4c31c31ae9f3c319f0b67a3b7073a84110b68ce81f0547",
+      "bytes_regen": 167881,
+      "bytes_committed": 167881,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "c7db20ce79117085a450252c69fedcb89089cc17"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/experiment_intent.md",
+      "sha256_regen": "271e3efa627ad6e42265f7d08d4422276ef3c0d8b036e8c393b528efb13d861e",
+      "sha256_committed": "a89c24c629035ecd3d11df987e9ab362f9fb168f47c6dc1d62185decb273830c",
+      "bytes_regen": 3339,
+      "bytes_committed": 3339,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "5ccc410a65834cf036787abb112d849936289b9e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-image-n5/image-t1.0/consensus-n3/voting_summary.json",
+      "sha256_regen": "20aa310d6f7d5a45fc880df850473a51eee97caa445a19c3fadb5fa357833c5c",
+      "sha256_committed": "20aa310d6f7d5a45fc880df850473a51eee97caa445a19c3fadb5fa357833c5c",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "bc356e8654c7ad8fcbb8e96e3552ff39c7d81c7d"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "a38b85d1a1ee1212bbffdeaabf923e9b74abd0f27e0e0439f0d24ae0d84e82f8",
+      "sha256_committed": "a38b85d1a1ee1212bbffdeaabf923e9b74abd0f27e0e0439f0d24ae0d84e82f8",
+      "bytes_regen": 645012,
+      "bytes_committed": 645012,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "411321f9e993f1a2908ff8046c2c07bf5c34ea7c"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/experiment_intent.md",
+      "sha256_regen": "c3eac0975a54e72104b1908987c7ba7c51f9b42db2a0e7ed73deb133b3f02b50",
+      "sha256_committed": "7573e78a32baf7db8cf24a01173a77a8a68e99ee8aa4d55a1445baade05378e8",
+      "bytes_regen": 3300,
+      "bytes_committed": 3300,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "5db7eba3be3fd8718361c60ac3d3f5e81472c854"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n1/voting_summary.json",
+      "sha256_regen": "316d6b241540587d8e84a9339e5453801cec29abd66da5d4880ce8bb3c7a4bce",
+      "sha256_committed": "316d6b241540587d8e84a9339e5453801cec29abd66da5d4880ce8bb3c7a4bce",
+      "bytes_regen": 60,
+      "bytes_committed": 60,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "85321e12fce7347f1e070bd4b1c6ef7031dc4028"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "28b7e0d5509c7a257c054c8ad162e83b6958fd5fc5f3b150aa3466dc32993aa4",
+      "sha256_committed": "28b7e0d5509c7a257c054c8ad162e83b6958fd5fc5f3b150aa3466dc32993aa4",
+      "bytes_regen": 1122107,
+      "bytes_committed": 1122107,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "ed1537dd53352b775ca2df2a67bd24fec483e1cf"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "f97c3cc7a94f57d35f7212225b229926b8f3ce8237af11c0e0f9286e7428ca67",
+      "sha256_committed": "f97c3cc7a94f57d35f7212225b229926b8f3ce8237af11c0e0f9286e7428ca67",
+      "bytes_regen": 480013,
+      "bytes_committed": 480013,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "a7d827fbb65d608183b346f80dc967f7ab82ec86"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "8c044b850a54ff8235b9d66423ba90a63fccb00e6c5b1b0e5a9e6948f558d71c",
+      "sha256_committed": "8c044b850a54ff8235b9d66423ba90a63fccb00e6c5b1b0e5a9e6948f558d71c",
+      "bytes_regen": 320986,
+      "bytes_committed": 320986,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "84e7d088ce70e5f834582dc574853293541f0c76"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/experiment_intent.md",
+      "sha256_regen": "ceca3e1f82e29ec8613549ee0aaa0950783867a9bfe4db8b1fc5289e83d27d56",
+      "sha256_committed": "a76689f391dcce4dbb92886b1b11dd4e7ebc94b5489ca6447fa77ea68ec91021",
+      "bytes_regen": 3326,
+      "bytes_committed": 3326,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "24eb16ffa88cc0ea1fdfe8f501a595cf3f69cc77"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.3/consensus-n3/voting_summary.json",
+      "sha256_regen": "bb0c362fca7d8329030aa5d2f94af48f0d13c4d4bf1ea02ebbd2602a6f76c343",
+      "sha256_committed": "bb0c362fca7d8329030aa5d2f94af48f0d13c4d4bf1ea02ebbd2602a6f76c343",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "23d41eee6ac7bac651c1ea1de792c1d20c808dc2"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "2d34e49cb278907dcddbb94d2108d9952afcffd3f5e5189ad7bf7c1deb4676d5",
+      "sha256_committed": "2d34e49cb278907dcddbb94d2108d9952afcffd3f5e5189ad7bf7c1deb4676d5",
+      "bytes_regen": 665980,
+      "bytes_committed": 665980,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "07a3acb7ab26b3df5abdc3a946f9b895bd374f0b"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/experiment_intent.md",
+      "sha256_regen": "809af91c588632e8a4283bd3a1a59b92913392b84e0b3068d85b5ec2f286f347",
+      "sha256_committed": "50cfa0d38dfdf2d96201b2327a51b82f083097dc299d42ddd5684dfbe4ae29e1",
+      "bytes_regen": 3300,
+      "bytes_committed": 3300,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "7560dd1cfc102026320ec24b996b8f3f8d6fe048"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n1/voting_summary.json",
+      "sha256_regen": "eecc5616e7c2f8d5741eee6b61aa55ef0257fc74f1b4aa8de1749cb757a51b55",
+      "sha256_committed": "eecc5616e7c2f8d5741eee6b61aa55ef0257fc74f1b4aa8de1749cb757a51b55",
+      "bytes_regen": 60,
+      "bytes_committed": 60,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "a81fd036a6968756b586bc7201c1295fe47d05fe"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "30ae279632c58d112dc8ba502b3f1fa5c26958e8e9c64813c29e08d0bbe4e069",
+      "sha256_committed": "30ae279632c58d112dc8ba502b3f1fa5c26958e8e9c64813c29e08d0bbe4e069",
+      "bytes_regen": 1398495,
+      "bytes_committed": 1398495,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "db13d17c385ac507c8578aab91a5d706561b5002"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "8e58cd4252a2a9ce0a11322a4b92bb7a37847f3b8a551a7222f80f458c6d65cc",
+      "sha256_committed": "8e58cd4252a2a9ce0a11322a4b92bb7a37847f3b8a551a7222f80f458c6d65cc",
+      "bytes_regen": 493200,
+      "bytes_committed": 493200,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "f5703ac5a33e00221a6a0578206a1cc274a9aefb"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "1dfa68443a108e7513cbcd7480df0e8753222cd2527797d5328ebe773d1a4ff2",
+      "sha256_committed": "1dfa68443a108e7513cbcd7480df0e8753222cd2527797d5328ebe773d1a4ff2",
+      "bytes_regen": 280399,
+      "bytes_committed": 280399,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "677383519774c3dde4b2ac85e3a5fcb735697e29"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/experiment_intent.md",
+      "sha256_regen": "9a291432f83b1e28907282d7c213a492056b21ff1b9e2c2f270e738173fc47fc",
+      "sha256_committed": "e743c7f0cd0c7fa40447155413cc00480ec39f10212928635fc14d0f91bc39cd",
+      "bytes_regen": 3328,
+      "bytes_committed": 3328,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "f2f14acdd6ab969172d5df5eea66f5c193445f9d"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t0.7/consensus-n3/voting_summary.json",
+      "sha256_regen": "6d3a1e441a081a93dd8e16b92a7abcd32d61f94aff73726114eebc681c7db25e",
+      "sha256_committed": "6d3a1e441a081a93dd8e16b92a7abcd32d61f94aff73726114eebc681c7db25e",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "852dce15fb41dc3e99682fb3b43e1d5a070baca1"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "f3307c2f0b4fdcc069e84304538b81dc8aaa45ee568fc8bf74159f6cf2f6669b",
+      "sha256_committed": "f3307c2f0b4fdcc069e84304538b81dc8aaa45ee568fc8bf74159f6cf2f6669b",
+      "bytes_regen": 726199,
+      "bytes_committed": 726199,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "f33edcbc08ae1e9448320553772d4ab65e03c025"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/experiment_intent.md",
+      "sha256_regen": "012446ff8f3eba6f8be307fdf4302e7faac6f35e48f2932b3333985d608736c6",
+      "sha256_committed": "423685caa404de7217d4405377bc3d888f3924224a995f2861ea3d300b250b29",
+      "bytes_regen": 3302,
+      "bytes_committed": 3302,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "7873a0474891283d0ab850fb942039c02fdf33e0"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n1/voting_summary.json",
+      "sha256_regen": "aa1992a475d3cc3521e54cfe4dbcdf4be7c26bb8c56a3df68c571dd5e9ee4f9a",
+      "sha256_committed": "aa1992a475d3cc3521e54cfe4dbcdf4be7c26bb8c56a3df68c571dd5e9ee4f9a",
+      "bytes_regen": 60,
+      "bytes_committed": 60,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "f77f07a16afdfdda35be36992d6858f72ee313e8"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "62fcfcecb1abd241afbb5560523a575043e7c03a897f8a6f3e5fd673cc0496fc",
+      "sha256_committed": "62fcfcecb1abd241afbb5560523a575043e7c03a897f8a6f3e5fd673cc0496fc",
+      "bytes_regen": 1445514,
+      "bytes_committed": 1445514,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "ee7b1c48dd71e0fa159d7da060f16acf2cc6c57a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "fe3325199e36e098dce66b681b4d0f0b59b04ce2531f326f2932619de7422d8c",
+      "sha256_committed": "fe3325199e36e098dce66b681b4d0f0b59b04ce2531f326f2932619de7422d8c",
+      "bytes_regen": 518020,
+      "bytes_committed": 518020,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "92c88a68434a2e0cb38f564404b4db1a1fb8a1e6"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "c9f472a0234686d1d82aa16b9a727f95863e6c8d90048d242c0dde50c8c0dc84",
+      "sha256_committed": "c9f472a0234686d1d82aa16b9a727f95863e6c8d90048d242c0dde50c8c0dc84",
+      "bytes_regen": 294284,
+      "bytes_committed": 294284,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "98c07b699d89e1194b3f9173e7d938ada4b74744"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/experiment_intent.md",
+      "sha256_regen": "cf1adfe95585302b3033c225489c24e37ef586ca099e490e6e96a88e0eb0ca39",
+      "sha256_committed": "eea1a1f49291a367338bd9c1d2006f1166ebb90e3e17a0ceadd35a4225f72d45",
+      "bytes_regen": 3328,
+      "bytes_committed": 3328,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "997c727545a2379d50a4b4facb69fafd41266c11"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-high-text-n5/text-t1.0/consensus-n3/voting_summary.json",
+      "sha256_regen": "a753542edadba74ec246b1291df142d28360a299597d3c807f7cc1bdf1b2a9c4",
+      "sha256_committed": "a753542edadba74ec246b1291df142d28360a299597d3c807f7cc1bdf1b2a9c4",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "495fa7f258ce3732ae0cab2af88591ef0e7932cc"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "caa832172ce72e0b083fecf02c66ad89035fc577e69510e83f2bf628df58a48c",
+      "sha256_committed": "caa832172ce72e0b083fecf02c66ad89035fc577e69510e83f2bf628df58a48c",
+      "bytes_regen": 456593,
+      "bytes_committed": 456593,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "32bda7fa428790908859ab34daa12bdf7dd8da09"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/experiment_intent.md",
+      "sha256_regen": "7b870192dcfb69081d24f34ad6173e3464bd43c9308f06bb1ca1d50311f6e1cd",
+      "sha256_committed": "2d4b449f5f4ef38c8a8f63dd53cc065b6ea898872ac507e8c1f61451995ee865",
+      "bytes_regen": 3341,
+      "bytes_committed": 3341,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "118ca2ebfa20eabe84d003de0930ae5e2acca45b"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n1/voting_summary.json",
+      "sha256_regen": "ed957fd2873e0f5a7d775fbb602f3db4bfce57deb5aeff599dc095c186f425e0",
+      "sha256_committed": "ed957fd2873e0f5a7d775fbb602f3db4bfce57deb5aeff599dc095c186f425e0",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "22254c3a854a8a0d2072e7c33980ac7a9f3b3bf0"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "9b8af98a3bb56a58b5adcbfd3734fa786fb64011fcf0a8a559f34083584c1ec6",
+      "sha256_committed": "9b8af98a3bb56a58b5adcbfd3734fa786fb64011fcf0a8a559f34083584c1ec6",
+      "bytes_regen": 644376,
+      "bytes_committed": 644376,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "405fc9c4f6642cd292c86003355429f47247a0b8"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "cfac0878a0bf975af02d74fb6629211944c3ee2f1f6b18996f9b5282e43be3a9",
+      "sha256_committed": "cfac0878a0bf975af02d74fb6629211944c3ee2f1f6b18996f9b5282e43be3a9",
+      "bytes_regen": 487624,
+      "bytes_committed": 487624,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "03135499c3a9c5a373e85af9c5f3905fbf1d3527"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "6072272653e10e3c216bbd1e921b785ed5822d9d3156626a7dfdb4c096d35009",
+      "sha256_committed": "6072272653e10e3c216bbd1e921b785ed5822d9d3156626a7dfdb4c096d35009",
+      "bytes_regen": 385132,
+      "bytes_committed": 385132,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "921129d75ee0a229908434d70839bd8d6e44679a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/experiment_intent.md",
+      "sha256_regen": "ed2f42c8368051ea8354c8e2677c716a517c406734ce29150196d5eebe973a9a",
+      "sha256_committed": "5180b8a35b6976f61472f972e59fb848dd6a647a5d4747cc4b51ce60d728d007",
+      "bytes_regen": 3369,
+      "bytes_committed": 3369,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "4e098b30c7b123d3b25b6878f39b939affbecf3a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.3/consensus-n3/voting_summary.json",
+      "sha256_regen": "a5fa608eb54c3c7d94a75376e488bef5162fe3de73892e74e8ee44e1341a46b6",
+      "sha256_committed": "a5fa608eb54c3c7d94a75376e488bef5162fe3de73892e74e8ee44e1341a46b6",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "32f85d229e49f744b47404982f0a581fb6bc98fb"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "3a989deffc01cb91af1b32b15898ac5cd5806f2ecedaceb920413422239c39c5",
+      "sha256_committed": "3a989deffc01cb91af1b32b15898ac5cd5806f2ecedaceb920413422239c39c5",
+      "bytes_regen": 492433,
+      "bytes_committed": 492433,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "80a08435110aedb4e0a4cc7953edec2cd1c560c9"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/experiment_intent.md",
+      "sha256_regen": "87a07f146e2495fbdd1c23a353ac3a059b55dc4461ccbe497d3eeb8d86f402a6",
+      "sha256_committed": "0306557277fea4f2b236522ce56a192e9d62a2bfa3e3298b371f0bb73ca7427f",
+      "bytes_regen": 3343,
+      "bytes_committed": 3343,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "236885640b1f3a2c559cf2fb9a422b5e76d5a061"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n1/voting_summary.json",
+      "sha256_regen": "f8ca90973786ef6069d7ff65c385d687e0ac8a266f3e1e245051da0e79ca73b8",
+      "sha256_committed": "f8ca90973786ef6069d7ff65c385d687e0ac8a266f3e1e245051da0e79ca73b8",
+      "bytes_regen": 60,
+      "bytes_committed": 60,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "7380b8cc188f141090b0d04e7256b0b455e3118e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "f28a99accc72894e5fa6730a32425e9cefda93ff6ccc0189487344eb4817241b",
+      "sha256_committed": "f28a99accc72894e5fa6730a32425e9cefda93ff6ccc0189487344eb4817241b",
+      "bytes_regen": 701106,
+      "bytes_committed": 701106,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "0f5052e5b61cf6fd53e550790eff553e800e18f9"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "579e89ff2bed7b2063b0d450a7787eb9b3e0feb4f76de6f1a9c41c6704af0ea0",
+      "sha256_committed": "579e89ff2bed7b2063b0d450a7787eb9b3e0feb4f76de6f1a9c41c6704af0ea0",
+      "bytes_regen": 510308,
+      "bytes_committed": 510308,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "2f7907d3a61beb27368465a954a7e71512cbfc60"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "e15872366190219cf240cb6af1638509b00b64a55d3963d22aafd7e3822d4d18",
+      "sha256_committed": "e15872366190219cf240cb6af1638509b00b64a55d3963d22aafd7e3822d4d18",
+      "bytes_regen": 388546,
+      "bytes_committed": 388546,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "5490b508b240ca695ce4839b5d896367cba0bf92"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/experiment_intent.md",
+      "sha256_regen": "1717745968001a3d92cbb16168438795f48b89dd6293ecfa8a61aaa4c9034fd5",
+      "sha256_committed": "65685ef9c0fae65e70627277bb0b6243c8241eafaaaddfa1048261d720ec858a",
+      "bytes_regen": 3369,
+      "bytes_committed": 3369,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "fc5acf9cce7abdb89c3d0d27f5e7779552fbf4d8"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t0.7/consensus-n3/voting_summary.json",
+      "sha256_regen": "4c7e5efd7f080774a95bcaf0d3bd79e615f6a24724efd786fe1ee33f4d143264",
+      "sha256_committed": "4c7e5efd7f080774a95bcaf0d3bd79e615f6a24724efd786fe1ee33f4d143264",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "fc1ae09ed2b9c741669d053bce6909953726f178"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "c317b477c85b3a65f6ec85d7a6d16d332e82dacc5cd8f0fdedae93a25db030b2",
+      "sha256_committed": "c317b477c85b3a65f6ec85d7a6d16d332e82dacc5cd8f0fdedae93a25db030b2",
+      "bytes_regen": 496896,
+      "bytes_committed": 496896,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "0342d64d0c087518470808e5d06544169ff1bdee"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/experiment_intent.md",
+      "sha256_regen": "333da91b7a4019f8934325282138d67e4d9288af5bcafa7a9d5d8a0b74b7b99d",
+      "sha256_committed": "7c47115b96a1a4f17585a8ddebfdb318fbb6af2eb5c78609e5658c9888fac89a",
+      "bytes_regen": 3343,
+      "bytes_committed": 3343,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "dac46adbc08fa95a17dc67a18c76e80f1b883c8e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n1/voting_summary.json",
+      "sha256_regen": "4bbdd98c820c43f61a2d4c4e304fa1cf042b5f65e7d351d57cb342732deff1dc",
+      "sha256_committed": "4bbdd98c820c43f61a2d4c4e304fa1cf042b5f65e7d351d57cb342732deff1dc",
+      "bytes_regen": 60,
+      "bytes_committed": 60,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "d88af60942c13ee615fb92702819e322a07fa3a3"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "295d4d121d56826a5afd5b92c215fccd525bd69653739c2447bf60abda0555b3",
+      "sha256_committed": "295d4d121d56826a5afd5b92c215fccd525bd69653739c2447bf60abda0555b3",
+      "bytes_regen": 815602,
+      "bytes_committed": 815602,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "9df29624ea9f985e6eb865284281b710a27059c9"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "3e4adf46cdee8f6992c421cfd7d91ca7b429c15b3efd9ffe6d027666efe81773",
+      "sha256_committed": "3e4adf46cdee8f6992c421cfd7d91ca7b429c15b3efd9ffe6d027666efe81773",
+      "bytes_regen": 478249,
+      "bytes_committed": 478249,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "2cc84a590d4ef2c42848b117b9168f7063663694"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "96245f118cc8be56e92a131d4d29dd853111d3beb4dd748bb87eaacc5c5bdb02",
+      "sha256_committed": "96245f118cc8be56e92a131d4d29dd853111d3beb4dd748bb87eaacc5c5bdb02",
+      "bytes_regen": 317417,
+      "bytes_committed": 317417,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "37917ec72791732dd4bac9f273fd2bcc6baa0c3a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/experiment_intent.md",
+      "sha256_regen": "ce10168c9e6afb3b74c0ee7c4fc0a9118fd393d349b2bcd0b161ecc1a7b9d0dc",
+      "sha256_committed": "2ffb72b257f4c326704e59f3b8656459097a6d44ee689cf36244b531aaae77af",
+      "bytes_regen": 3369,
+      "bytes_committed": 3369,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "ead01f669416ff4b0fef6c3d6eb85af8278f638a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/flash-minimal-text-n30-t07/text-t1.0/consensus-n3/voting_summary.json",
+      "sha256_regen": "e97b2fb7ce82defc2cf05e1a32c6eb2fb952e8478959b623a6f6a396282977b3",
+      "sha256_committed": "e97b2fb7ce82defc2cf05e1a32c6eb2fb952e8478959b623a6f6a396282977b3",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "97544cb2eed7b71b84fbc2d326352a3221a1aef5"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "0e4755cee9c9a60e134fcecb87f094f314393b989a0707421e45177921ebb0ab",
+      "sha256_committed": "0e4755cee9c9a60e134fcecb87f094f314393b989a0707421e45177921ebb0ab",
+      "bytes_regen": 356053,
+      "bytes_committed": 356053,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "7dbafb16a74cfc5e234612715196940b5d9e700c"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/experiment_intent.md",
+      "sha256_regen": "91f4e622afe676999cf05bc0aa8d7af936c0df508aceb277d0d9fde85be1d9a6",
+      "sha256_committed": "6eab3b0c852cb30ae302939c269c7806715d1b0641c3a026ac37dd2acd9b5d99",
+      "bytes_regen": 3259,
+      "bytes_committed": 3259,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "58dd7e3381a688a2fed1625016451662ee5674b4"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n1/voting_summary.json",
+      "sha256_regen": "7aad3dd6fd0a3ecf328451c923b479fe697a605bae5192f714130aef2a6ebdd5",
+      "sha256_committed": "7aad3dd6fd0a3ecf328451c923b479fe697a605bae5192f714130aef2a6ebdd5",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "97ad9dcba3dbf52ac2485036f0c91d721a4a934b"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "61127eee28dafe1c03605f831840bfc9048ba57adcff7328201642161509905b",
+      "sha256_committed": "61127eee28dafe1c03605f831840bfc9048ba57adcff7328201642161509905b",
+      "bytes_regen": 461260,
+      "bytes_committed": 461260,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "c3c2aa2757d8c39352baf2456884e1efcea28fd4"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "d6e9ec551a8acc2ef80f5cfdfc1f84c4103d3a5bdf606d9df989e9066a0dd7fc",
+      "sha256_committed": "d6e9ec551a8acc2ef80f5cfdfc1f84c4103d3a5bdf606d9df989e9066a0dd7fc",
+      "bytes_regen": 374615,
+      "bytes_committed": 374615,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "60a704fc7ceac3301b740398e19c0510bfc30ed6"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "f23e92f49d2afe8200eb492b0ab4b4a4e8a749666c137d41a741e9b191bc8266",
+      "sha256_committed": "f23e92f49d2afe8200eb492b0ab4b4a4e8a749666c137d41a741e9b191bc8266",
+      "bytes_regen": 318675,
+      "bytes_committed": 318675,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "b6fbc70e45f179aebf91f31230fd5eaf34f0c227"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/experiment_intent.md",
+      "sha256_regen": "ba9d4ee97191a1ecd060990bcb3e590da498ec14053febe71b7e7a7bf083cc99",
+      "sha256_committed": "56e1d5c0ffcfbabc4cb8c5503db76ecb0285b5f5c418aa30710a3827956a00a6",
+      "bytes_regen": 3285,
+      "bytes_committed": 3285,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "cfb975d8f0f66b31a2cd22b104b5c782774d7a92"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.3/consensus-n3/voting_summary.json",
+      "sha256_regen": "ba2d1f71fdb4ae5b4d6451d45388add2e2bb138def9bea49cbb1596a3edb3b52",
+      "sha256_committed": "ba2d1f71fdb4ae5b4d6451d45388add2e2bb138def9bea49cbb1596a3edb3b52",
+      "bytes_regen": 87,
+      "bytes_committed": 87,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "1ac368ceeee79802f7d1e4f6af48785957bc9721"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "63d1144fd25e4c73b52ec99faea5190b61fea4a14f6e0288fa9d71d05e2d5a9b",
+      "sha256_committed": "63d1144fd25e4c73b52ec99faea5190b61fea4a14f6e0288fa9d71d05e2d5a9b",
+      "bytes_regen": 338621,
+      "bytes_committed": 338621,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "1c3c9de5a86913803755c14dbc574efb41dfd89f"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/experiment_intent.md",
+      "sha256_regen": "3c0294fc4d358ef397b9a2c21c1a1e0308250f8cade40a096746902a02ca672b",
+      "sha256_committed": "b385a5a471adfe0d17ea2c8559527472828b29e162e04f41c0a65e87b99d4cd9",
+      "bytes_regen": 3259,
+      "bytes_committed": 3259,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "c169ec90ed9dfa7d9dbbc9ccfcf143d2f82637a3"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n1/voting_summary.json",
+      "sha256_regen": "a5e7a3300a3cdf32c900c86bb69b120309b37ed93c4b1ab88346fe044276dc4e",
+      "sha256_committed": "a5e7a3300a3cdf32c900c86bb69b120309b37ed93c4b1ab88346fe044276dc4e",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "3d5bd9e6344f503f6b8707255eda908235f08ec0"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "dc2b70e84cc954f1b31d6ed467a0b2c3ea568acd3a2130b198f8cc756342d9a9",
+      "sha256_committed": "dc2b70e84cc954f1b31d6ed467a0b2c3ea568acd3a2130b198f8cc756342d9a9",
+      "bytes_regen": 491601,
+      "bytes_committed": 491601,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "8579eb9aec51c61baab221e680140f60be39f461"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "6c9fd09689ef61b848981b36fbd28f8ac071526975f349f50f1536b5dd84d76a",
+      "sha256_committed": "6c9fd09689ef61b848981b36fbd28f8ac071526975f349f50f1536b5dd84d76a",
+      "bytes_regen": 338617,
+      "bytes_committed": 338617,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "430430c726c5b24306a057629b0f709b13e89a29"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "59ca57871afabe67d4154f30fa896ca6b03603376b6fd74104ea408e194b9609",
+      "sha256_committed": "59ca57871afabe67d4154f30fa896ca6b03603376b6fd74104ea408e194b9609",
+      "bytes_regen": 256102,
+      "bytes_committed": 256102,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "6398aa2e7380e6784578a1187c2988845efe7a49"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/experiment_intent.md",
+      "sha256_regen": "aba02e4ee4973c2fa7fdd793b8c5840b0cda52fa32ce1f4b9fc9f651ca67290d",
+      "sha256_committed": "30f04168883e0e33a875ab3c2c4cbf1ae5988d5aa3e81bb14a310bf7ef03afcf",
+      "bytes_regen": 3285,
+      "bytes_committed": 3285,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "595306afd44ab843b8c1168215ed279ac07bafe1"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t0.7/consensus-n3/voting_summary.json",
+      "sha256_regen": "4ddaa1c23baa5004e0d356069faed48d10bdaff858ce5f4243d2f8ea6beaf715",
+      "sha256_committed": "4ddaa1c23baa5004e0d356069faed48d10bdaff858ce5f4243d2f8ea6beaf715",
+      "bytes_regen": 87,
+      "bytes_committed": 87,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "fb27f54eb3c7d6075de61464aa00224dbd73bd77"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "722c3e21ebfd047c1c9443798a559d264bfdb495697d1366ca2b97d9ab3ba3e4",
+      "sha256_committed": "722c3e21ebfd047c1c9443798a559d264bfdb495697d1366ca2b97d9ab3ba3e4",
+      "bytes_regen": 385532,
+      "bytes_committed": 385532,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "a7006ea207ab910f08a8bef92fbf272c243b1f48"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/experiment_intent.md",
+      "sha256_regen": "2b7c1b46a9f9b18faa93ce2145ddda2d689811709c6c8ce191b1d86b41647391",
+      "sha256_committed": "706941d18f8ae19769ec88e913195185b243e2b8d618d916e499a48ffbfae8c1",
+      "bytes_regen": 3259,
+      "bytes_committed": 3259,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "ea94ba056b6a9474a28e68cfcb20834e83578954"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n1/voting_summary.json",
+      "sha256_regen": "9989b849e16ed18a76dd22f9d77517753eb2b0db0923e1bdd6375e99aaf4274a",
+      "sha256_committed": "9989b849e16ed18a76dd22f9d77517753eb2b0db0923e1bdd6375e99aaf4274a",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "6651f6b72e2a9ed64c1c50535682deb52ec589e1"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "11c24d1e36c96a879fa3448560970b0a4cf441cf8edf91dc2675e6cafb941e58",
+      "sha256_committed": "11c24d1e36c96a879fa3448560970b0a4cf441cf8edf91dc2675e6cafb941e58",
+      "bytes_regen": 603577,
+      "bytes_committed": 603577,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "231b515022518d74779a7045919da2b75393bb39"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "0f340cb935b763de6432ea839b34f18742fe5ae44c7afb5c5aaadd543eadc4f1",
+      "sha256_committed": "0f340cb935b763de6432ea839b34f18742fe5ae44c7afb5c5aaadd543eadc4f1",
+      "bytes_regen": 345456,
+      "bytes_committed": 345456,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "de9a88b7ecaa17ce07d3fccdc0c497382e7bd81b"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "98a16c74bb1305da4d4b2d67a7457b85dd2ffbc48aa222580789094e24cd5768",
+      "sha256_committed": "98a16c74bb1305da4d4b2d67a7457b85dd2ffbc48aa222580789094e24cd5768",
+      "bytes_regen": 241626,
+      "bytes_committed": 241626,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "8b1ea63205a4517e22eee89a68d39339bf15710f"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/experiment_intent.md",
+      "sha256_regen": "b87fa184ff756f702f3855bb30d1670e628f0d823c78259a16aa81f25f020d36",
+      "sha256_committed": "128bf9d2ad266f5eb1a420020bec670e28365c756c325ec38c6faee8df641176",
+      "bytes_regen": 3287,
+      "bytes_committed": 3287,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "6d31136414b7b1102afdfb472f3d3ad82d25c450"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/image-n5/image-t1.0/consensus-n3/voting_summary.json",
+      "sha256_regen": "a4089fdf474e364f1315802bcb704a4ab8e195b4ab47f39ae76227e4dfecc77f",
+      "sha256_committed": "a4089fdf474e364f1315802bcb704a4ab8e195b4ab47f39ae76227e4dfecc77f",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "71adb70895eaa0eb15196fbd93c484bc01eba95a"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/consensus_t1.geojson",
+      "sha256_regen": "ceb847f5f8517d2d9454cf33ffbef84543c67acd2acafada88d165c189f95748",
+      "sha256_committed": "ceb847f5f8517d2d9454cf33ffbef84543c67acd2acafada88d165c189f95748",
+      "bytes_regen": 403233,
+      "bytes_committed": 403233,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "c6165e5a4a789530af8cbc565b4f68ea43eefabe"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/experiment_intent.md",
+      "sha256_regen": "73be8a08b0fd40be04b215222149fbae0d7e104e91217b5d2de3eaeebf41dd5c",
+      "sha256_committed": "d03c96987626178f5e99e7386d5cc7116fc3e5279a8853436f43f4011023e8db",
+      "bytes_regen": 3251,
+      "bytes_committed": 3251,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "774fd57cfdddddc168d8cca4e39dca0e72ee8fd8"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n1/voting_summary.json",
+      "sha256_regen": "24ce5529e9ec0d21e64dbac549fd7a9e3c9197615b0b5474ffde3f4560bb5803",
+      "sha256_committed": "24ce5529e9ec0d21e64dbac549fd7a9e3c9197615b0b5474ffde3f4560bb5803",
+      "bytes_regen": 59,
+      "bytes_committed": 59,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "aadbdbfca87a3b52471d152067570ea843fdd382"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t1.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t1.geojson",
+      "sha256_regen": "1d6935282db09ad97b000c5f0d2457338e72dbf3d3a64327416ff000697f8d9f",
+      "sha256_committed": "1d6935282db09ad97b000c5f0d2457338e72dbf3d3a64327416ff000697f8d9f",
+      "bytes_regen": 804842,
+      "bytes_committed": 804842,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "09115f746fda9db6fd18c65210c22c96010c550e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t2.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t2.geojson",
+      "sha256_regen": "443d3afeedec986e43ba90f690277730bb9414d8cd2b1fff506d7b1c1cf19024",
+      "sha256_committed": "443d3afeedec986e43ba90f690277730bb9414d8cd2b1fff506d7b1c1cf19024",
+      "bytes_regen": 268092,
+      "bytes_committed": 268092,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "f52bd0bdc5e70b8cc719b9924903dcd7118be3e7"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t3.geojson",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/consensus_t3.geojson",
+      "sha256_regen": "b54153c501c3cbd665c2449c10da49d4c5328ee7a3cfefa0347588cb6e573b49",
+      "sha256_committed": "b54153c501c3cbd665c2449c10da49d4c5328ee7a3cfefa0347588cb6e573b49",
+      "bytes_regen": 160973,
+      "bytes_committed": 160973,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": true,
+      "today_blob": "560c49c1c5ad6a04ceb57787f03316918c3002b5"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/experiment_intent.md",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/experiment_intent.md",
+      "sha256_regen": "8c6a6d07971f57a2b082e1689e4a8b6b494a2bf0f54c15980f1dc6103b9ba475",
+      "sha256_committed": "1e3ff4598c00020e1ce7534c33949cf36bcc9366caa62b19dd0a4966014a3027",
+      "bytes_regen": 3279,
+      "bytes_committed": 3279,
+      "n_line_diffs": 0,
+      "line_diffs": [],
+      "n_set_aside": 2,
+      "set_aside": [
+        {
+          "line": 3,
+          "regen": "> **Last revised**: 2026-10-15 (original publication \u2014 K-ladder Phase 2 step 1,",
+          "committed": "> **Last revised**: 2026-09-12 (original publication \u2014 K-ladder Phase 2 step 1,"
+        },
+        {
+          "line": 77,
+          "regen": "### 2026-10-15 \u2014 Original publication",
+          "committed": "### 2026-09-12 \u2014 Original publication"
+        }
+      ],
+      "verdict": "LINE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "bc82fd5c8b9b89b242f12bba8c7dd43ea67d111e"
+    },
+    {
+      "repo_path": "outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/voting_summary.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/outputs/h11/pv-diag-384/scale-4-optimal-487/consensus-n3/voting_summary.json",
+      "sha256_regen": "c1f8b0e8450eb6ac7fbf40698df80ced9d5577b023f17cadaeeee63049fe30fb",
+      "sha256_committed": "c1f8b0e8450eb6ac7fbf40698df80ced9d5577b023f17cadaeeee63049fe30fb",
+      "bytes_regen": 88,
+      "bytes_committed": 88,
+      "verdict": "BYTE-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "ce1b8975d96167d9b62d87db701ee06e2c10165b"
+    },
+    {
+      "repo_path": "results/k-ladder-2026-09-12/phase2/unions.json",
+      "commit": "e3232d65b",
+      "regen_path": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-e3232d65b/results/k-ladder-2026-09-12/phase2/unions.json",
+      "sha256_regen": "df7082da9cee9bb26718cd6d28271f04042e035206cb633859a3bf659ff9516b",
+      "sha256_committed": "8fc7807b76cbf245b9bd79620b7d126588c1016d3c4ebdfe9acab793d433c663",
+      "bytes_regen": 24286,
+      "bytes_committed": 24286,
+      "n_leaf_diffs": 0,
+      "leaf_diffs": [],
+      "n_set_aside": 1,
+      "set_aside": [
+        {
+          "path": "/generated_at_utc",
+          "regen": "2026-10-15T10:27:24+00:00",
+          "committed": "2026-09-12T06:13:57+00:00"
+        }
+      ],
+      "key_order_equal": true,
+      "verdict": "FIELD-IDENTICAL",
+      "today_same_blob": false,
+      "today_blob": "b16a9d05370680a532534dd64f97ab0b5507cd16"
+    }
+  ]
+}

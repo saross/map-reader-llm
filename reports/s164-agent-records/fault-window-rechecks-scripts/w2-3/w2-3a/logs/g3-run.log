@@ -1,0 +1,32 @@
+HEAD is now at 63f4cac1c chore(k-ladder): commit the recovery-fix measurement harness
+HEAD is now at 5166ddeda fix(k-ladder): restore the tier-E row to operating-points.json
+HEAD is now at 987534c03 data(k-ladder): install the rebuilt K = 3 detection set, archive the 494
+63f4cac1cf27b9707e28f40cf0d5e184765d4150
+
+##### 1. k5 (tier E) with its evaluation (2026-10-15T10:31:09Z) #####
+##### exit=0 #####
+    "materialised": "/home/shawn/scratch/s164-fw-recheck2-2026-10-15/w2-3a-out/g3/rescore/k5.geojson"
+  }
+]
+
+##### 2. the three 3.7 cells, materialised only (2026-10-15T10:35:45Z) #####
+##### exit=0 #####
+    "evaluation_note": "per-tile table refused by the tile-join invariant; scored on the F1 arm only by f1_only.py"
+  }
+]
+
+##### 3. F1 arm, before and after, for the three 3.7 cells (2026-10-15T10:39:49Z) #####
+##### exit=0 #####
+##### exit=0 #####
+##### exit=0 #####
+
+##### 4. fix_op_points.py at 5166ddeda, from the 20c0a053f file and from the regenerated one (2026-10-15T10:40:35Z) #####
+5166ddeda58fccd993c7b30bb16db2d20d663cf9
+##### exit=0 #####
+##### exit=0 #####
+
+##### 5. the K = 3 detection set at 987534c03 (3eeaf96f4's scripts) (2026-10-15T10:40:35Z) #####
+987534c0308ea0324fb61e42537f1ed260904d5f
+##### exit=0 #####
+
+##### ALL STAGES ATTEMPTED (2026-10-15T10:42:42Z) #####
