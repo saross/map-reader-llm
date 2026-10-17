@@ -3264,3 +3264,74 @@ due to land in that artefact. If any remain, land them first and present the
 re-signature once, with what changed since the last signature
 ([[claude-obs 108]]). Source: converted 2026-10-14 from user-obs candidate
 S153-b/c C5, 2026-09-14 (docs/notes/user-observations.md).
+
+## claude-obs 157 — 2026-10-16: He relays independent reviewers' notes with his rulings, and asks me to recommend where the trade-off is mine to weigh
+
+**Pattern.** Twice in Session 164 Shawn passed on a side agent's note
+together with his rulings, not as a separate question: first that pooling
+the extra image passes would overstate a borderline result, then that a
+three-pass replication had roughly even odds even for a real effect. He did
+not rule on the notes himself; he let them change the design, approved the
+wording table the second one prompted, and then asked "can you make a
+recommendation about the A-06 headline?" rather than choosing.
+
+**Lesson.** A relayed note is his concern, not background: he uses
+independent reviewers as a check on my statistical framing and expects me
+to act on them, then to give a reasoned recommendation where the choice
+weighs readability against overclaiming.
+
+**How to apply.** When he relays a note, adopt or answer it in that turn, and
+if it changes a pre-specified test, fix the change before any affected number
+exists. When he asks for a recommendation, give one with its reasons and the
+conditions under which it changes, not a menu.
+
+## claude-obs 158 — 2026-10-16: He scopes exceptions by who owns the repository, not by relaxing the rule
+
+**Pattern.** When three draft PR descriptions had gone out under his name on
+the public `map-reader-llm` repository without his review, Shawn left them
+and granted a standing exception for factual draft PR descriptions "in this
+repository", adding "we can have looser rules in repositories that are
+primarily mine (as opposed to FAIMS3, e.g.)". The outbound rule itself
+stayed as it was.
+
+**Lesson.** He calibrates review cost to who else reads the work: his own
+repositories can carry agent-authored working records; collaborative ones
+cannot.
+
+**How to apply.** Before an agent posts anything under his name, check the
+repository's ownership and visibility; apply the exception only in
+repositories that are primarily his, keep comments, reviews, and anything
+addressed to other people under the strict rule, and say which rule applies
+when briefing an agent.
+
+## claude-obs 159 — 2026-10-16: Self-critique — my summary of a list for his ruling dropped four of its items
+
+**Pattern.** Walking Shawn through the fault-window decisions, I compressed
+the record's suggested order and left out four claim-bearing rows (W2-3,
+W2-4, W2-7, W2-8). He ruled "as recommended" on my shortened list; I noticed
+the gap only when the first agent's report listed what it had not done.
+
+**Lesson.** A ruling on a summary covers only what the summary shows, so a
+silent omission becomes a ruled exclusion.
+
+**How to apply.** When I summarise a list for a decision, either carry every
+item or end with an explicit "not included: …" line, and diff my summary
+against the source list before sending it.
+
+## claude-obs 160 — 2026-10-16: Self-critique — I asked for more data to firm up a borderline result without designing the test
+
+**Pattern.** Proposing three more image passes per corner, I said they would
+"firm up" the two borderline image results and gave the cost, but proposed no
+confirmatory design. Side agents, relayed by Shawn, supplied the separation of
+passes 4–6, the criterion, the power, and the verdict wording, all before any
+new number was read; C1 then came back PARTLY, as the power warning
+anticipated.
+
+**Lesson.** A request for data motivated by a borderline result is a request
+for a confirmatory test; leaving its design to after the run invites the
+pooling error it was meant to avoid.
+
+**How to apply.** Whenever I propose more data because a result is
+borderline, put the confirmatory contrasts, the criterion, an approximate
+power, and the wording for each verdict in the same message as the API gate,
+so Shawn approves the test and the spend together.

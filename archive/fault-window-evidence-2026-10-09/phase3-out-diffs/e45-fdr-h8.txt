@@ -1,0 +1,38 @@
+## e45 OLD
+1 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e45-bootstrap-pairings/e45_bootstrap_pairings.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/e45/e45_bootstrap_pairings.json)
+  /contrasts/H2/h2_rerun_json: "results/e45-bootstrap-pairings/h2-rerun/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high- -> "/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/old/h2/e45-h2-rerun/group_1_architecture/pv-vs-consensus-flash-
+## e45 NEW
+13 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/e45-bootstrap-pairings/e45_bootstrap_pairings.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/e45/e45_bootstrap_pairings.json)
+  /contrasts/H2/h2_rerun_json: "results/e45-bootstrap-pairings/h2-rerun/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high- -> "/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/new/h2/e45-h2-rerun/group_1_architecture/pv-vs-consensus-flash-
+  /results/H3/bootstrap/e54_sensitivity_b10000/bootstrap_delta_mean: 0.42751 -> 0.429851
+  /results/H3/bootstrap/e54_sensitivity_b10000/ci95/lower: 0.385608 -> 0.38806
+  /results/H3/bootstrap/e54_sensitivity_b10000/ci95/upper: 0.469544 -> 0.472072
+  /results/H3/bootstrap/e54_sensitivity_b10000/observed_delta: 0.42734 -> 0.429693
+  /results/H3/bootstrap/registered_b1000/bootstrap_delta_mean: 0.427219 -> 0.429648
+  /results/H3/bootstrap/registered_b1000/ci95/lower: 0.38964 -> 0.392114
+  /results/H3/bootstrap/registered_b1000/ci95/upper: 0.468082 -> 0.470439
+  /results/H3/bootstrap/registered_b1000/observed_delta: 0.42734 -> 0.429693
+  /results/H3/reproduction_gate/f1_a/committed: 0.814118 -> 0.816471
+  /results/H3/reproduction_gate/f1_a/recomputed: 0.814118 -> 0.816471
+  /results/H3/reproduction_gate/observed_f1_diff/committed: 0.42734 -> 0.429693
+  /results/H3/reproduction_gate/observed_f1_diff/recomputed: 0.42734 -> 0.42969299999999994
+## fdr h1_cmt0106_pooled_modality.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/family-fdr/h1_cmt0106_pooled_modality.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/family-fdr/h1_cmt0106_pooled_modality.json)
+## fdr h1_cmt0106_pooled_modality.json NEW
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/new/results/family-fdr/h1_cmt0106_pooled_modality.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-newchain/results/family-fdr/h1_cmt0106_pooled_modality.json)
+## fdr family_fdr.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/family-fdr/family_fdr.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/family-fdr/family_fdr.json)
+## fdr family_fdr.json NEW
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/new/results/family-fdr/family_fdr.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-newchain/results/family-fdr/family_fdr.json)
+## fdr family_fdr.metadata.json OLD
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/old/results/family-fdr/family_fdr.metadata.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-old/results/family-fdr/family_fdr.metadata.json)
+## fdr family_fdr.metadata.json NEW
+0 differing leaves (/home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-out/committed/new/results/family-fdr/family_fdr.metadata.json vs /home/shawn/scratch/d57-4-rescore-2026-10-09/phase3-newchain/results/family-fdr/family_fdr.metadata.json)
+## H8 permutation-t4
+B1-plus-hp-vs-scale-4  OLD reproduces: True; F1 A 0.705061 -> 0.705061, B 0.732639 -> 0.732639; dF1 -0.027578 -> -0.027578; p 0.1636 -> 0.1636
+C1-pure-positive-canon-vs-canonical OLD reproduces: True; F1 A 0.69697 -> 0.69697, B 0.707106 -> 0.707106; dF1 -0.010136 -> -0.010136; p 0.6594 -> 0.6594
+C2-canonical-vs-plus-hp OLD reproduces: True; F1 A 0.707106 -> 0.707106, B 0.705061 -> 0.705061; dF1 0.002045 -> 0.002045; p 0.932 -> 0.932
+C3-plus-hp-vs-scale-8  OLD reproduces: True; F1 A 0.705061 -> 0.705061, B 0.710018 -> 0.710018; dF1 -0.004956 -> -0.004956; p 0.8538 -> 0.8538
+S1-scale-4-vs-scale-8  OLD reproduces: True; F1 A 0.732639 -> 0.732639, B 0.710018 -> 0.710018; dF1 0.022621 -> 0.022621; p 0.3298 -> 0.3298
+S2-scale-8-vs-scale-16 OLD reproduces: True; F1 A 0.710018 -> 0.710018, B 0.692998 -> 0.692998; dF1 0.017019 -> 0.017019; p 0.4768 -> 0.4768
+S3-scale-16-vs-scale-32 OLD reproduces: True; F1 A 0.692998 -> 0.692998, B 0.713012 -> 0.713012; dF1 -0.020014 -> -0.020014; p 0.3941 -> 0.3941

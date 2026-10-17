@@ -275,3 +275,9 @@ The live files carry a `recovery_history` entry naming the batch job.
 manifest as the detector wrote them. They sit outside `outputs/` so that no
 tool summing every meta under a run directory counts the top-up twice.
 Record: `outputs/pro-2x2-replication-2026-10-13/topup-2026-10-15.json`.
+
+## 2026-10-16 addition: `fault-window-evidence-2026-10-09/`
+
+Small evidence files cited by the S163 and S164 records that existed only in
+sapphire's fault-window scratch directories, copied before any clean-up of
+those directories (D65 (8)); see the directory's README.

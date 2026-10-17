@@ -1,0 +1,40 @@
+2026-10-08 11:15:36,047 - INFO - scoring 11 named cell(s): G3IMG-ARM2-K3-mcc-oracle-unconstrained, G3IMG-ARM2-K5-mcc-oracle-unconstrained, G3IMG-ARM2-K1-carried, G3IMG-ARM2-K1-f1-oracle, G3IMG-ARM2-K1-mcc-oracle, G3IMG-ARM2-K3-carried, G3IMG-ARM2-K3-f1-oracle, G3IMG-ARM2-K3-mcc-oracle, G3IMG-ARM2-K5-carried, G3IMG-ARM2-K5-f1-oracle, G3IMG-ARM2-K5-mcc-oracle
+2026-10-08 11:24:14,744 - INFO - scored G3IMG-ARM2-K3-mcc-oracle-unconstrained rc=0
+2026-10-08 11:24:56,798 - INFO - scored G3IMG-ARM2-K5-mcc-oracle-unconstrained rc=0
+2026-10-08 11:24:56,798 - INFO - scored G3IMG-ARM2-K1-carried        rc=0
+2026-10-08 11:24:56,798 - INFO - scored G3IMG-ARM2-K1-f1-oracle      rc=0
+2026-10-08 11:26:53,739 - INFO - scored G3IMG-ARM2-K1-mcc-oracle     rc=0
+2026-10-08 11:26:53,739 - INFO - scored G3IMG-ARM2-K3-carried        rc=0
+2026-10-08 11:26:57,700 - INFO - scored G3IMG-ARM2-K3-f1-oracle      rc=0
+2026-10-08 11:27:30,196 - INFO - scored G3IMG-ARM2-K3-mcc-oracle     rc=0
+2026-10-08 11:28:54,478 - INFO - scored G3IMG-ARM2-K5-carried        rc=0
+2026-10-08 11:29:11,390 - INFO - scored G3IMG-ARM2-K5-f1-oracle      rc=0
+2026-10-08 11:29:15,844 - INFO - scored G3IMG-ARM2-K5-mcc-oracle     rc=0
+2026-10-08 11:29:15,844 - INFO - scored 11 cells
+STEP g3-score exit=0
+2026-10-08 11:29:16,456 - INFO - campaign g3: g384_ov192_55map_g3img -> results/gemini3-image-55map-2026-09-16/inheritance-2026-09-20
+2026-10-08 11:32:32,496 - INFO - scored G3IMG-ARM1-K1-carried-inherited    rc=0
+2026-10-08 11:32:32,496 - INFO - scored G3IMG-ARM1-K3-carried-inherited    rc=0
+2026-10-08 11:32:38,341 - INFO - scored G3IMG-ARM2-K1-carried-inherited    rc=0
+2026-10-08 11:32:38,341 - INFO - scored G3IMG-ARM2-K3-carried-inherited    rc=0
+2026-10-08 11:32:38,341 - INFO - scored 4 cells
+STEP inheritance-score exit=0
+2026-10-08 11:32:38,924 - INFO - arm arm1: gemini-3-flash-preview / minimal, carried (0.10, k5)
+r2 reference: 5018 points (4726 student + 278 extension + 14 audit-reviewed); min separation 15.48 m
+2026-10-08 11:32:43,141 - INFO - loaded IMG-ARM1-K5-f1-oracle              n= 5297
+2026-10-08 11:32:47,208 - INFO - loaded IMG-ARM1-K5-f1-oracle-replicate    n= 5286
+2026-10-08 11:32:51,324 - INFO - loaded IMG-ARM1-K3-carried                n= 5437
+2026-10-08 11:32:55,408 - INFO - loaded IMG-ARM1-K5-carried                n= 5297
+2026-10-08 11:32:59,454 - INFO - loaded IMG-ARM1-K5-carried-replicate      n= 5286
+2026-10-08 11:33:09,099 - INFO - F1  (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.9134 vs 0.9130 d=+0.0004 p=0.6508
+2026-10-08 11:33:09,099 - INFO - F1  (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.9134 vs 0.9025 d=+0.0109 p=0.0000
+2026-10-08 11:33:09,099 - INFO - F1  (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.9130 vs 0.9025 d=+0.0105 p=0.0000
+2026-10-08 11:33:09,099 - INFO - F1  (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.9134 vs 0.9130 d=+0.0004 p=0.6508
+2026-10-08 11:33:09,099 - INFO - MCC (a) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K5-carried                0.7527 vs 0.7529 d=-0.0001 p=0.9700
+2026-10-08 11:33:09,099 - INFO - MCC (b) IMG-ARM1-K5-carried-replicate      vs IMG-ARM1-K3-carried                0.7527 vs 0.7490 d=+0.0037 p=0.1288
+2026-10-08 11:33:09,099 - INFO - MCC (c) IMG-ARM1-K5-carried                vs IMG-ARM1-K3-carried                0.7529 vs 0.7490 d=+0.0039 p=0.0990
+2026-10-08 11:33:09,099 - INFO - MCC (d) IMG-ARM1-K5-f1-oracle-replicate    vs IMG-ARM1-K5-f1-oracle              0.7527 vs 0.7529 d=-0.0001 p=0.9700
+2026-10-08 11:33:09,099 - WARNING - test (d) duplicates test (a): same cells on both sides, so its row carries no extra information
+2026-10-08 11:33:09,099 - INFO - wrote results/gemini37-image-55map-2026-09-13/replicate-k5-arm1-batch-2026-09-20/tests.json
+STEP replicate-tests exit=0
+SCORE JOB FINISHED
