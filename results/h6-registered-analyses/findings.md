@@ -1,19 +1,23 @@
 # H6 registered $0 analyses — A-06, A-07, A-09 on the existing genuine-Pro data
 
-> **Last revised**: 2026-10-14 (A-07 regenerated under the D50 scorer,
-> PI rulings D62 (5) and D65: the Flash comparator curves rise by
-> 0.0012–0.0018 F1 and the Pro text curve by 0.0024, with no optimal
-> k, fragility flag, or verdict changing; the row awaits re-signing).
-> 2026-10-12: A-09 re-derived on the audited cost basis with the
-> not-like-for-like caveat, PI ruling D61 (4): the registered gate
-> stays CLOSED, the matched-configuration text limb no longer fires,
-> and the row awaited re-signing (re-signed 2026-10-13); earlier the
-> same day, A-06 regenerated with the D42 permutation p and
-> Benjamini–Hochberg, D61 (3), and the finding that the Pro HIGH
-> T = 0.0 passes did not think recorded against A-06's HIGH-cell
-> reading. 2026-09-08: A-07 and A-09 refreshed on the Flash comparator
-> rebuilt from the E71-recovered passes. See [§ Changelog](#changelog)
-> for revision history.
+> **Last revised**: 2026-10-17 (A-06 gains a dated note on the D64
+> same-day replication, PI rulings D64, D66, and D67: temperature is the
+> driver in text and image on same-day data, and the first day's image
+> thinking contrast at T = 0.0 was not confirmed the next day; nothing
+> registered changes). 2026-10-14: A-07 regenerated under the D50
+> scorer, PI rulings D62 (5) and D65: the Flash comparator curves rise
+> by 0.0012–0.0018 F1 and the Pro text curve by 0.0024, with no optimal
+> k, fragility flag, or verdict changing; the row awaited re-signing
+> (re-signed 2026-10-14). 2026-10-12: A-09 re-derived on the audited
+> cost basis with the not-like-for-like caveat, PI ruling D61 (4): the
+> registered gate stays CLOSED, the matched-configuration text limb no
+> longer fires, and the row awaited re-signing (re-signed 2026-10-13);
+> earlier the same day, A-06 regenerated with the D42 permutation p and
+> Benjamini–Hochberg, D61 (3), and the finding that the Pro HIGH T = 0.0
+> passes did not think recorded against A-06's HIGH-cell reading.
+> 2026-09-08: A-07 and A-09 refreshed on the Flash comparator rebuilt
+> from the E71-recovered passes. See [§ Changelog](#changelog) for
+> revision history.
 
 **What this is.** The S134 walk (Group E) ruled that H6's three
 registered analysis components run first, on the Pro data that
@@ -121,6 +125,70 @@ at T = 0.0. The thinking context at T = 0.0 (HIGH − MEDIUM) likewise
 compares Pro without thinking against MEDIUM thinking. Nothing is
 re-labelled here; the register row's outcome text is the PI's to
 revise.
+
+**Note, 2026-10-15 (PI rulings D64, D66, and D67): the same-day
+genuine-Pro replication.** The table above, the four rule verdicts, the
+artefact, and the registered outcome text are unchanged. D64 re-ran the
+2 × 2 on one date, in one mode, with thinking booked per pass
+(`outputs/pro-2x2-replication-2026-10-13/`): five passes per text corner
+and three per image corner on 2026-10-13, then three more per image
+corner on 2026-10-14. Those three were a confirmatory test of the two
+image contrasts that were borderline on the first day, with criteria
+fixed before any of their F1 values were computed (the first day's sign,
+BH-adjusted p < 0.05 across the two, |Δ| ≥ 0.03, and |Δ| above the
+replicate floor of the new passes). The replicate floor is the 95th
+percentile of the F1 differences between repeat passes of the same
+corner: ordinary run-to-run variation. Record:
+`reports/s164-agent-records/d64-a06-replication.md` (PR #48).
+
+**Text** (five passes per corner, all on 2026-10-13):
+
+| Contrast | Committed (A-06 table) | D64 |
+|---|---:|---:|
+| T = 0.0 − T = 0.7 at HIGH | +0.0595 | +0.0500 |
+| T = 0.0 − T = 0.7 at MEDIUM | +0.0366 | +0.0464 |
+| HIGH − MEDIUM at T = 0.0 | +0.0124 | +0.0026 |
+| HIGH − MEDIUM at T = 0.7 | −0.0105 | −0.0010 |
+
+**Image** (three passes per corner on each of two days):
+
+| Contrast | Committed (A-06 table) | 2026-10-13 (passes 1–3) | 2026-10-14 (passes 4–6, the confirmatory test) | All six passes (secondary) |
+|---|---:|---:|---:|---:|
+| T = 0.0 − T = 0.7 at HIGH | +0.0750 | +0.0690 | +0.0786 | +0.0738 |
+| **T = 0.0 − T = 0.7 at MEDIUM** | +0.0605 | +0.0336 | **+0.0653, replicates** | +0.0494 |
+| **HIGH − MEDIUM at T = 0.0** | +0.0103 | +0.0374 | **+0.0202, partly** | +0.0288 |
+| HIGH − MEDIUM at T = 0.7 | −0.0042 | +0.0020 | +0.0069 | +0.0044 |
+
+The two bold rows were borderline on the first day and were the subject
+of the confirmatory test. The six-pass column is reported for
+completeness but does not decide replication. Passes 4–6 were added
+because the first day's results looked borderline, so pooling them with
+the first day would overstate the evidence.
+
+In text, "temperature is the driver" holds with the date, mode, and
+thinking confounds removed. Both temperature contrasts fire the rule,
+reject after BH, and exceed the same-day replicate floor (0.0116), and
+the thinking contrasts are near zero. In image, the temperature contrast
+fires and exceeds the floor at both thinking levels on both days. At
+MEDIUM, borderline on the first day (BH-adjusted p 0.032, 0.0036 above
+the rule), it was confirmed on three independent passes run the next day
+(BH-adjusted p 0.0002). On the first day the image thinking contrast at
+T = 0.0 reached 0.03 and rejected after BH (BH-adjusted p 0.043),
+against this section's reading that the thinking contrast "reaches 0.03
+in none of the four cells". On the next day it was +0.0202 (BH-adjusted
+p 0.138, below 0.03 and below that day's floor of 0.0205): same
+direction on three further passes but not confirmed; the check had
+roughly even odds of passing even if the effect were as large as first
+seen. Across the six image passes it is +0.0288, below 0.03 (secondary).
+The thinking level was requested rather than delivered (image HIGH
+delivered under one thought token per request at T = 0.0, and MEDIUM
+about 11), so the contrast cannot test thinking. Between the two days
+three image corners fell by 0.011–0.026 F1 and one rose by 0.006, the
+largest move (0.0259) just above the within-day replicate floor
+(0.0254); that change moved the two confirmatory contrasts in opposite
+directions. Under the mapping the PI fixed before the confirmatory test
+(D67), A-06's headline stays "temperature is the driver"; and the
+register row's outcome carries the same reading in a dated paragraph.
 
 ## A-07 — the Phase 3 voting-threshold comparison
 
@@ -323,6 +391,15 @@ Report, not decision. Inputs the walk asked for:
    ~US$48 (`studies/phase4-transfer.yaml:165` estimate vintage).
 
 ## Changelog
+
+### 2026-10-17 — A-06: the D64 same-day replication noted (PI rulings D64, D66, and D67)
+
+A dated note is added under A-06. It records the D64 same-day
+replication and its confirmatory test on image passes 4–6
+(`reports/s164-agent-records/d64-a06-replication.md`, PR #48). Nothing
+above it changes: the table, the four rule verdicts,
+`a06_decision_rule.json`, and the registered outcome text. Commit: the
+one that applies it.
 
 ### 2026-10-14 — A-07 regenerated under the D50 scorer (PI rulings D62 (5) and D65)
 
