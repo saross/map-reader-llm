@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — image-b-gs-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/image-b-gs-2026-08-28` · **Registry status**: active · **Purpose**: Image variant of the leading configuration on the GS corpus: the modality head-to-head under matched everything (vs the committed text-B anchor), plus the first matched MINIMAL-vs-HIGH image thinking pair. Card planning/image-b-gs-2026-08-28.md.
 
@@ -101,10 +101,10 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g384-ov192-image-high-k10-verified-p0.20-k8` | proposer-verifier | verified | 10 | k=8/pt=0.2 | 400 | 0.8333 [0.7973, 0.8638] | 0.8696 [0.8388, 0.8948] | 0.7993 |
-| `g384-ov192-image-high-k10-verified-p0.20-k8-era2b` | proposer-verifier | verified | 10 | k=8/pt=0.2 | 400 | 0.8263 [0.7896, 0.8575] | 0.8623 [0.8310, 0.8887] | 0.7937 |
-| `g384-ov192-image-min-k10-verified-p0.15-k9` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 397 | 0.8412 [0.8011, 0.8720] | 0.8776 [0.8482, 0.9022] | 0.7985 |
-| `g384-ov192-image-min-k10-verified-p0.15-k9-era2b` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 397 | 0.8341 [0.7942, 0.8657] | 0.8702 [0.8401, 0.8954] | 0.7927 |
+| `g384-ov192-image-high-k10-verified-p0.20-k8` | proposer-verifier | verified | 10 | k=8/pt=0.2 | 404 | 0.8389 [0.8034, 0.8688] | 0.8750 [0.8451, 0.8999] | 0.8108 |
+| `g384-ov192-image-high-k10-verified-p0.20-k8-era2b` | proposer-verifier | verified | 10 | k=8/pt=0.2 | 404 | 0.8319 [0.7957, 0.8623] | 0.8677 [0.8369, 0.8936] | 0.8049 |
+| `g384-ov192-image-min-k10-verified-p0.15-k9` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 402 | 0.8458 [0.8069, 0.8762] | 0.8843 [0.8558, 0.9077] | 0.8139 |
+| `g384-ov192-image-min-k10-verified-p0.15-k9-era2b` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 402 | 0.8387 [0.8004, 0.8703] | 0.8769 [0.8481, 0.9015] | 0.8078 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -201,7 +201,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

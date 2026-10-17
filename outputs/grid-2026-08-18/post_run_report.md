@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — grid-2026-08-18
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/grid-2026-08-18` · **Registry status**: active · **Purpose**: Post-hoc (E41-class) 2x2 crossing tile size (512/384 px) with tile overlap (12.5/50 %), proposer stage only, ten passes per cell, one configuration throughout. Tests whether the 384 px sweet spot reproduces under a single footprint, and whether extra passes substitute for extra overlap.
 
@@ -125,21 +125,21 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g384-ov048-k10-c1-k10` | consensus | consensus | 10 | k=10 | 582 | 0.6475 [0.5935, 0.6966] | not supplied | 0.3137 |
-| `g384-ov048-k10-verified-p0.20-k7` | proposer-verifier | verified | 10 | k=7/pt=0.2 | 358 | 0.8677 [0.8335, 0.8957] | not supplied | 0.7751 |
-| `g384-ov192-k1-verified-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.2 | 482 | 0.8546 [0.8246, 0.8797] | 0.8658 [0.8376, 0.8896] | 0.8211 |
-| `g384-ov192-k1-verified-p0.15-k1` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 493 | 0.8540 [0.8244, 0.8787] | 0.8650 [0.8368, 0.8886] | 0.8079 |
-| `g384-ov192-k10-c2-k10` | consensus | consensus | 10 | k=10 | 488 | 0.7205 [0.6749, 0.7618] | not supplied | 0.4909 |
-| `g384-ov192-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 400 | 0.8961 [0.8657, 0.9198] | not supplied | 0.7965 |
-| `g384-ov192-k10-verified-p0.15-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 400 | 0.8886 [0.8575, 0.9133] | not supplied | 0.7903 |
-| `g384-ov192-k10-verified37-p0.98-k10` | proposer-verifier | verified | 10 | k=10/pt=0.98 | 386 | 0.9140 [0.8853, 0.9366] | 0.9263 [0.8998, 0.9470] | 0.8239 |
-| `g384-ov192-k10-verified37-p0.98-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.98 | 386 | 0.9062 [0.8769, 0.9293] | 0.9184 [0.8911, 0.9393] | 0.8102 |
-| `g384-ov192-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 450 | 0.8840 [0.8523, 0.9084] | 0.8933 [0.8649, 0.9156] | 0.8167 |
-| `g384-ov192-k5-verified-opmax` | proposer-verifier | verified | 5 | k=5/pt=0.15 | 435 | 0.8905 [0.8595, 0.9149] | 0.8999 [0.8704, 0.9229] | 0.8139 |
-| `g512-ov064-k10-c1-k8` | consensus | consensus | 10 | k=8 | 507 | 0.6759 [0.6239, 0.7237] | not supplied | 0.5383 |
-| `g512-ov064-k10-verified-p0.15-k5` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 383 | 0.8311 [0.7938, 0.8624] | not supplied | 0.7937 |
-| `g512-ov256-k10-c2-k8` | consensus | consensus | 10 | k=8 | 426 | 0.7518 [0.7026, 0.7938] | not supplied | 0.5897 |
-| `g512-ov256-k10-verified-p0.15-k9` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 382 | 0.8815 [0.8518, 0.9073] | not supplied | 0.8011 |
+| `g384-ov048-k10-c1-k10` | consensus | consensus | 10 | k=10 | 582 | 0.6574 [0.6038, 0.7056] | not supplied | 0.3066 |
+| `g384-ov048-k10-verified-p0.20-k7` | proposer-verifier | verified | 10 | k=7/pt=0.2 | 365 | 0.8752 [0.8424, 0.9017] | not supplied | 0.7852 |
+| `g384-ov192-k1-verified-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.2 | 482 | 0.8680 [0.8429, 0.8903] | 0.8792 [0.8558, 0.9004] | 0.8211 |
+| `g384-ov192-k1-verified-p0.15-k1` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 493 | 0.8673 [0.8423, 0.8896] | 0.8783 [0.8553, 0.8995] | 0.8079 |
+| `g384-ov192-k10-c2-k10` | consensus | consensus | 10 | k=10 | 488 | 0.7293 [0.6841, 0.7686] | not supplied | 0.4909 |
+| `g384-ov192-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 406 | 0.9017 [0.8727, 0.9244] | not supplied | 0.8037 |
+| `g384-ov192-k10-verified-p0.15-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 406 | 0.8942 [0.8640, 0.9179] | not supplied | 0.7973 |
+| `g384-ov192-k10-verified37-p0.98-k10` | proposer-verifier | verified | 10 | k=10/pt=0.98 | 392 | 0.9220 [0.8958, 0.9433] | 0.9341 [0.9098, 0.9528] | 0.8350 |
+| `g384-ov192-k10-verified37-p0.98-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.98 | 392 | 0.9141 [0.8875, 0.9358] | 0.9262 [0.9017, 0.9455] | 0.8211 |
+| `g384-ov192-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 450 | 0.8979 [0.8708, 0.9196] | 0.9072 [0.8847, 0.9267] | 0.8167 |
+| `g384-ov192-k5-verified-opmax` | proposer-verifier | verified | 5 | k=5/pt=0.15 | 435 | 0.9046 [0.8779, 0.9259] | 0.9140 [0.8897, 0.9332] | 0.8139 |
+| `g512-ov064-k10-c1-k8` | consensus | consensus | 10 | k=8 | 507 | 0.6845 [0.6336, 0.7313] | not supplied | 0.5431 |
+| `g512-ov064-k10-verified-p0.15-k5` | proposer-verifier | verified | 10 | k=5/pt=0.15 | 387 | 0.8368 [0.7995, 0.8676] | not supplied | 0.8011 |
+| `g512-ov256-k10-c2-k8` | consensus | consensus | 10 | k=8 | 426 | 0.7611 [0.7126, 0.8023] | not supplied | 0.5853 |
+| `g512-ov256-k10-verified-p0.15-k9` | proposer-verifier | verified | 10 | k=9/pt=0.15 | 386 | 0.8870 [0.8583, 0.9118] | not supplied | 0.8087 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -258,7 +258,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

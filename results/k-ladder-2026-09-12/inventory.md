@@ -1,6 +1,9 @@
 # K-ladder inventory: the fixed-parameter pass-count ladders that exist
 
-> **Last revised**: 2026-09-12 (later — the ladder tables now carry each
+> **Last revised**: 2026-10-15 (§ 2's stride `g384_ov128` GS ladder
+> restated from its re-scored evaluations, S164 restatement pass, PI
+> ruling D65 (2); every rung moves; no ladder, rung or gap class changes).
+> Prior: 2026-09-12 (later — the ladder tables now carry each
 > family's OWN headline buffer, 50 m on the 55-map corpus, and the group count
 > moves with the 21 board rows step 4 registered; prior: original publication,
 > step 1 of the K-ladder Phase-1 run,
@@ -71,10 +74,10 @@ verifier, on one frame and one reference:
 
 | K | condition | k | prob_t | F1@20 | tile-MCC | n |
 |---:|---|---:|---:|---:|---:|---:|
-| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | 0.8677 | 0.7894 | 411 |
-| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | 0.8911 | 0.7814 | 380 |
-| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | 0.8856 | 0.7805 | 394 |
-| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | 0.8982 | 0.8022 | 387 |
+| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | 0.8737 | 0.8010 | 419 |
+| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | 0.8993 | 0.7927 | 386 |
+| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | 0.8937 | 0.7918 | 400 |
+| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | 0.9075 | 0.8134 | 394 |
 
 Anchors: `results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json`
 and its three siblings, `summary.buffers[buffer_metres=20].f1` and
@@ -192,6 +195,46 @@ reference, one frame, and — at the carried point — one prob_t; k moves with 
 construction, and the review says so rather than claiming otherwise.
 
 ## Changelog
+
+### 2026-10-15 — Stride GS ladder restated (S164 restatement pass)
+
+**Trigger**: the S164 restatement pass under PI ruling D65 (2)
+(`reports/s164-agent-records/restatement-pass.md`). The GS chain was
+re-scored with the re-verified wrong-sheet rows, and the inventory's
+values were refreshed for its existing membership
+(`reports/s164-agent-records/restatement-pass-scripts/kladder/kl_inventory_refresh.py`;
+`inventory.json` `values_refreshed`): each cell's `f1_20`, `f1_50`, `mcc`
+and `n_detections` re-read from its `eval_path` with
+`build_k_ladder_inventory.eval_recipe`, while membership, frames,
+references and gaps stay the committed build's. This document is
+hand-written, so § 2's ladder table is restated here by hand.
+
+| § 2 stride `g384_ov128` rung | before | after |
+|---|---:|---:|
+| K = 1: F1@20; tile-MCC; n | 0.8677; 0.7894; 411 | 0.8737; 0.8010; 419 |
+| K = 3: F1@20; tile-MCC; n | 0.8911; 0.7814; 380 | 0.8993; 0.7927; 386 |
+| K = 5: F1@20; tile-MCC; n | 0.8856; 0.7805; 394 | 0.8937; 0.7918; 400 |
+| K = 10: F1@20; tile-MCC; n | 0.8982; 0.8022; 387 | 0.9075; 0.8134; 394 |
+
+Source: the four anchors named under the table,
+`results/stride-2026-08-25/conditions-verified/<cell>/eval/evaluation.json`
+(`summary.buffers[buffer_metres=20].f1`,
+`summary.tile_classification.mcc.point`, `summary.n_detections`), at
+`718d0ee08` (before) and `4660c0549` (after); the same values sit in
+`inventory.json` (`f1_20`, `mcc`, `n_detections`) and
+`inventory-tables.md` at `4660c0549`.
+
+**What did NOT change**: the ladder's shape (K = 5 still dips below
+K = 3 on F1 and K = 10 still leads on F1 and tile-MCC); which families
+are ladders, which rungs are committed, and any gap's class (the refresh
+keeps the committed build's membership and gaps); the coverage probe's
+verdict and the § 4 conclusion. The 3.7 text screen's K = 5
+and K = 10 rungs also moved in `inventory-tables.md` but are not quoted
+here.
+
+**Commits**: `f6f10d605` (the stride evaluations re-scored),
+`f53f6e97c` (the inventory rebuilt) and `459657e18` (the restated
+manifests).
 
 ### 2026-09-12 (later) — Headline buffer corrected; group count refreshed
 

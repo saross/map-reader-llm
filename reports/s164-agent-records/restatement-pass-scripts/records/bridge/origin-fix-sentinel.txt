@@ -1,0 +1,12 @@
+# red sentinel: tests/test_modality_bridge_origin.py in a real-file copy (no symlinks) of the base scripts (d083d3c99)
+# harness: /home/shawn/scratch/s164-restate-2026-10-15/lane-bridge/harness-red (re-run by the lead agent 2026-10-15)
+FAILED tests/test_modality_bridge_origin.py::test_rung_cluster_stays_on_its_origin_sheet
+FAILED tests/test_modality_bridge_origin.py::test_union_loader_books_rows_on_their_origin_sheet
+FAILED tests/test_modality_bridge_origin.py::test_floors_arm_state_is_on_origin
+FAILED tests/test_modality_bridge_origin.py::test_floors_originals_are_read_on_origin
+FAILED tests/test_modality_bridge_origin.py::test_verifier_sd_replicates_are_read_on_origin
+FAILED tests/test_modality_bridge_origin.py::test_reverification_record_reads_the_legs_records
+FAILED tests/test_modality_bridge_origin.py::test_reverification_date_falls_back_to_the_record_name
+============================== 7 failed in 0.61s ===============================
+# green at the patched worktree:
+============================== 15 passed in 0.56s ==============================

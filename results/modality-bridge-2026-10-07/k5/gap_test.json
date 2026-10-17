@@ -1,20 +1,20 @@
 {
   "buffer_m": 20,
   "g3_gap_committed": {
-    "delta_f1": 0.0549,
-    "p": 0.001,
+    "delta_f1": 0.0559,
+    "p": 0.0005,
     "source": "results/image-b-gs-2026-08-28/analysis.json"
   },
   "pairs": {
     "g3-k5": {
-      "f1_a": 0.884892,
-      "f1_b": 0.823944,
-      "observed_diff": 0.060948,
-      "p_value": 0.0002,
+      "f1_a": 0.891795,
+      "f1_b": 0.829439,
+      "observed_diff": 0.062356,
+      "p_value": 0.0001,
       "n_permutations": 10000,
       "n_tiles": 487,
-      "null_mean": -0.000199,
-      "null_std": 0.017824,
+      "null_mean": -0.000193,
+      "null_std": 0.017848,
       "convention": "delta = text - image @20m"
     }
   },

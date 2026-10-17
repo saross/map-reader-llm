@@ -1,31 +1,31 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-09-08T13:13:47.665638+00:00",
+  "timestamp": "2026-10-15T11:42:00.398692+00:00",
   "summary": {
     "label": "grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9-unverified",
     "n_detections": 713,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.6486,
-        "f1_point": 0.6486,
-        "f1_ci_lower": 0.592,
-        "f1_ci_upper": 0.6988,
+        "f1": 0.6556,
+        "f1_point": 0.6556,
+        "f1_ci_lower": 0.5998,
+        "f1_ci_upper": 0.7048,
         "f1_ci_method": "BCa",
-        "precision": 0.5189,
-        "p_point": 0.5189,
-        "p_ci_lower": 0.4542,
-        "p_ci_upper": 0.5807,
+        "precision": 0.5245,
+        "p_point": 0.5245,
+        "p_ci_lower": 0.4593,
+        "p_ci_upper": 0.5852,
         "p_ci_method": "BCa",
-        "recall": 0.8645,
-        "r_point": 0.8645,
-        "r_ci_lower": 0.8246,
-        "r_ci_upper": 0.8995,
+        "recall": 0.8738,
+        "r_point": 0.8738,
+        "r_ci_lower": 0.8348,
+        "r_ci_upper": 0.9072,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
-          "n_zero_count_tiles": 150,
-          "zero_fraction": 0.3080082135523614,
+          "n_zero_count_tiles": 148,
+          "zero_fraction": 0.30390143737166325,
           "threshold": 0.5,
           "coverage_status": "normal",
           "coverage_source": "zero_fraction_heuristic",
@@ -42,25 +42,45 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 713,
+      "n_in_scope": 713,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 0,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_origin_excluded": 0,
+      "n_origin_partly_excluded": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "origin_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
-        "tp": 202,
+        "tp": 204,
         "tn": 129,
         "fp": 133,
-        "fn": 23
+        "fn": 21
       },
       "mcc": {
-        "point": 0.4198,
-        "mean": 0.4193,
-        "ci_lower": 0.343,
-        "ci_upper": 0.4911,
+        "point": 0.4309,
+        "mean": 0.4304,
+        "ci_lower": 0.3571,
+        "ci_upper": 0.5018,
         "method": "BCa"
       },
       "sensitivity": {
-        "point": 0.8978,
-        "mean": 0.8975,
-        "ci_lower": 0.852,
-        "ci_upper": 0.9324,
+        "point": 0.9067,
+        "mean": 0.9065,
+        "ci_lower": 0.863,
+        "ci_upper": 0.9404,
         "method": "BCa"
       },
       "specificity": {
@@ -69,15 +89,16 @@
         "ci_lower": 0.4314,
         "ci_upper": 0.5525,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "c1d6424b7",
+    "script_git_commit": "98ab69abc",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-09-08T13:13:45.217498+00:00",
+    "generated_at_utc": "2026-10-15T11:41:58.383017+00:00",
     "cli_args": {
       "detections": [
         "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/twin-9of10.geojson"
@@ -95,6 +116,7 @@
       "output_dir": "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9",
       "label": "grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9-unverified",
       "mcc": true,
+      "tile_join": "id",
       "require_clean_inputs": false,
       "workers": 1
     },
@@ -117,11 +139,16 @@
       "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
     },
     "input_git_state": {
-      "head": "c1d6424b7",
+      "head": "98ab69abc",
       "inputs": {
-        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/twin-9of10.geojson": "untracked",
+        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/twin-9of10.geojson": "modified",
         "inputs/vectors/references/mounds-reference.geojson": "clean",
         "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/twin-9of10.geojson": "a5780f45cca4cadc4f9ec59900422854cee0141f",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "7600bff7ccf8403d6fb3458bd73d9da61287c768"
       }
     },
     "spatial": {

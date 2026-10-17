@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-29T10:53:52.053835+00:00",
+    "timestamp": "2026-10-15T11:04:29.452129+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -19,13 +19,13 @@
       "pool_size": 30,
       "threshold": 22
     },
-    "f1": 0.466993,
-    "precision": 0.498695,
-    "recall": 0.43908,
+    "f1": 0.469438,
+    "precision": 0.501305,
+    "recall": 0.441379,
     "n_detections": 383,
-    "tp": 191,
-    "fp": 192,
-    "fn": 244
+    "tp": 192,
+    "fp": 191,
+    "fn": 243
   },
   "condition_b": {
     "label": "flash-min-text-t10 N=10 N=10, 9-of-10",
@@ -36,17 +36,17 @@
       "pool_size": 10,
       "threshold": 9
     },
-    "f1": 0.461538,
-    "precision": 0.545455,
-    "recall": 0.4,
+    "f1": 0.464191,
+    "precision": 0.548589,
+    "recall": 0.402299,
     "n_detections": 319,
-    "tp": 174,
-    "fp": 145,
-    "fn": 261
+    "tp": 175,
+    "fp": 144,
+    "fn": 260
   },
   "permutation_test": {
-    "observed_f1_diff": 0.005454,
-    "p_value": 0.6915,
+    "observed_f1_diff": 0.005247,
+    "p_value": 0.7107,
     "n_permutations": 10000,
     "n_tiles": 487,
     "wins_a": 13,
@@ -54,9 +54,9 @@
     "ties": 472,
     "null_distribution": {
       "mean": -2.9e-05,
-      "std": 0.013595,
-      "percentile_2.5": -0.026446,
-      "percentile_97.5": 0.026446
+      "std": 0.01361,
+      "percentile_2.5": -0.026465,
+      "percentile_97.5": 0.026465
     }
   },
   "per_tile": [
@@ -1517,17 +1517,17 @@
     },
     {
       "tile_name": "K-35-052-4_32635_x4032_y2016.png",
-      "f1_a": 0.0,
-      "precision_a": 0.0,
-      "recall_a": 0.0,
-      "tp_a": 0,
-      "fp_a": 1,
+      "f1_a": 0.666667,
+      "precision_a": 1.0,
+      "recall_a": 0.5,
+      "tp_a": 1,
+      "fp_a": 0,
       "fn_a": 1,
-      "f1_b": 0.0,
-      "precision_b": 0.0,
-      "recall_b": 0.0,
-      "tp_b": 0,
-      "fp_b": 1,
+      "f1_b": 0.666667,
+      "precision_b": 1.0,
+      "recall_b": 0.5,
+      "tp_b": 1,
+      "fp_b": 0,
       "fn_b": 1
     },
     {
@@ -1862,18 +1862,18 @@
     },
     {
       "tile_name": "K-35-053-3_Elenovo_x0_y1680.png",
-      "f1_a": 0.769231,
+      "f1_a": 0.833333,
       "precision_a": 1.0,
-      "recall_a": 0.625,
+      "recall_a": 0.714286,
       "tp_a": 5,
       "fp_a": 0,
-      "fn_a": 3,
-      "f1_b": 0.769231,
+      "fn_a": 2,
+      "f1_b": 0.833333,
       "precision_b": 1.0,
-      "recall_b": 0.625,
+      "recall_b": 0.714286,
       "tp_b": 5,
       "fp_b": 0,
-      "fn_b": 3
+      "fn_b": 2
     },
     {
       "tile_name": "K-35-053-3_Elenovo_x0_y2016.png",

@@ -1,0 +1,46 @@
+{
+ "counts": {
+  "IDENTICAL": 4,
+  "EQUAL-NORM": 1,
+  "DIFFER": 1,
+  "MISSING": 0
+ },
+ "files": {
+  "date_component.json": {
+   "status": "IDENTICAL",
+   "detail": []
+  },
+  "floors.json": {
+   "status": "EQUAL-NORM",
+   "detail": [
+    "/meta/reverification",
+    "/meta/scoring_root",
+    "/meta/wall_seconds"
+   ]
+  },
+  "gap_change.json": {
+   "status": "IDENTICAL",
+   "detail": []
+  },
+  "gates.json": {
+   "status": "DIFFER",
+   "detail": [
+    "/six_cell/cells/g3-image/verifier_probabilities: only in B",
+    "/six_cell/cells/g3-text/verifier_probabilities: only in B",
+    "/six_cell/cells/g37-image-g37v/verifier_probabilities: only in B",
+    "/six_cell/cells/g37-image-g3v/verifier_probabilities: only in B",
+    "/six_cell/cells/g37-text-g37v/verifier_probabilities: only in B",
+    "/six_cell/cells/g37-text-g3v/verifier_probabilities: only in B",
+    "/verifier_probabilities: only in B"
+   ]
+  },
+  "subset_cells.csv": {
+   "status": "IDENTICAL",
+   "detail": []
+  },
+  "summary.csv": {
+   "status": "IDENTICAL",
+   "detail": []
+  }
+ }
+}

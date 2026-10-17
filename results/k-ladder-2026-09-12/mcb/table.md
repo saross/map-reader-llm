@@ -1,7 +1,7 @@
 | ladder | rungs (K) | F1-admissible set | tile-MCC-admissible set | w_upper (F1 / MCC) |
 |---|---|---|---|---|
-| GS stride A, exact re-verification (board frame) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0160 / 0.0242 |
-| Grid 384 px / 50 % MINIMAL text, verified (tier E) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5** | 0.0151 / 0.0259 |
+| GS stride A, exact re-verification (board frame) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0168 / 0.0241 |
+| Grid 384 px / 50 % MINIMAL text, verified (tier E) | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0159 / 0.0276 |
 | Gemini 3 MINIMAL text 384 px, T 0.3 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **10** | 0.0185 / 0.0270 |
 | Gemini 3 MINIMAL text 384 px, T 0.7 | 1, 3, 5, 10 | **1**, **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0181 / 0.0253 |
 | Gemini 3 MINIMAL text 384 px, T 1.0 | 1, 3, 5, 10 | **3**, **5**, **10** | **1**, **3**, **5**, **10** | 0.0231 / 0.0313 |

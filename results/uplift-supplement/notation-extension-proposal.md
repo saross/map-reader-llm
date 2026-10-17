@@ -1,13 +1,13 @@
 # Notation-key extension proposal — uplift supplement
 
-> **Last revised**: 2026-09-12 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-15 (regenerated from committed artefacts by `scripts/build_uplift_supplement.py`; original publication; proposed § 7 additions). See [§ Changelog](#changelog) for revision history.
 >
-> **First published**: 2026-08-29. Regenerated 2026-09-12T14:24:23Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
+> **First published**: 2026-08-29. Regenerated 2026-10-15T12:10:45Z. This document is generated in full from committed artefacts, so its body always reflects the current corpus; git carries the content history.
 
 The canonical key `docs/methodology/notation-key.md` requires that
 "new tables and dataset builders must conform to it or extend it here
 first". The uplift-supplement builder validates every column it writes
-against §§ 6-7, which sanction 156 names. A builder must not
+against §§ 6-7, which sanction 160 names. A builder must not
 amend the canonical key unilaterally, so columns the key does not name
 are declared in `scripts/lib_uplift_supplement.py` (`COLUMN_EXTENSIONS`)
 and proposed here for the PI to fold into § 7; an undeclared column
@@ -115,9 +115,17 @@ validation and the key cannot drift apart silently.
 
 ## The § 6 frame table against the registered runs
 
-Complete: every frame the registered runs use (7) is named in § 6.
+§ 6 does not name these frames the registered runs use (`results/run-facts.json`): `cal-20-512`.
 
 ## Changelog
+
+### 2026-10-15 — Restatement pass (S164): regenerated once on the restated corpus
+
+**Refresh trigger**: the S164 restatement pass (PI rulings D65 (2) and (4), D62 (6), D67 (6); `reports/s164-agent-records/restatement-pass.md`). The flatten was first replayed at its build commit `741a4eaff` (D62 (6), closing fault-window row W2-5): two runs reproduce the committed `conditions.csv`, `conditions-by-buffer.csv`, `strata.csv` and `transfer-pairs.csv` byte for byte. It is then rebuilt once, after the pass restated its inputs: the 21 gold-standard verified conditions read the D62 (1) re-verified rows on PR #42's origin route (each at its registered point, PI ruling D65 (3); e.g. 384/50 % 0.8961 -> 0.9017, the Gemini 3.7 screen 0.9139 -> 0.9238, the 3.7 image carried arm 0.9254 -> 0.9353 at its registered (0.10, k5)), the four grid consensus conditions moved by PR #42 (512/50 % 0.7518 -> 0.7611), the eight 55-map extended-reference cells were re-scored with today's engine (one reviewer-promoted phantom fewer at R >= 50 m; F1 +8e-05 to +9e-05), and the conditions registered since 2026-09-12 join (the 55-map image and Gemini 3.7 55-map campaigns). **Counts**: conditions 439 -> 505; by-buffer rows 5,448 -> 6,372; strata 130 -> 130; rows with a headline F1 439 -> 505, with tile MCC 430 -> 496, with a proposer cost 346 -> 286 (D12's nulls replace recorded zeros since 2026-10-03); runs 41 -> 43; board-frame rows excluded 153 -> 153. The cost label now names each sum's per-pass bases and any partial sum (decision 3). **What did not change**: the strata and their MDE joins; the headline references (r2 on the 55-map corpus, curator on the gold standard); the board-frame exclusion rule.
+
+### 2026-09-20 — Correction note: IM-k4's vote counts predate the May recovery
+
+Trigger: `results/im-june-pool-grid-2026-09-20/findings.md` § 7 (f859646ba). The June image run's crop manifest carries pre-recovery vote counts on 16 of 7,878 candidates (each one vote low), because the 2026-05-03 recovery re-cut crops with an incremental extractor that never refreshed matched entries' properties. IM-k4 (rows `verified-k4-standardised-gt` and `verified-k4-r2-gt`) is the only committed cell built on those counts: on the consensus votes it would hold 3,544 detections instead of 3,541, F1@50 m 0.7402 instead of 0.7398, tile-MCC +0.0002 — an order of magnitude inside the board's 0.003 mechanism bound. (The June note quotes the tile-MCC level as 0.6577 by its own light scorer; the cell's committed r2 level is 0.654 — a tile-convention difference between the two instruments, so only the delta is claimed.) **PI ruling 2026-09-20: documented, not rebuilt.** No number in this supplement changes. IM-k3 and every other cell are unaffected (no candidate crosses the 2 → 3 vote boundary).
 
 ### 2026-09-08 — Verifier pairing completed on the current register (S151): 69 of 169 pairs computed
 

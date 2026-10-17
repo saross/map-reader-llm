@@ -1,6 +1,12 @@
 {
-  "generated_at_utc": "2026-09-12T13:59:02+00:00",
+  "generated_at_utc": "2026-10-15T14:05:23+00:00",
   "scope": "every MINIMAL-thinking K ladder in the corpus, K = 1 to its best rung, both corpora side by side. Figures are re-read from the committed ladder inventories and permutation summaries, not recomputed.",
+  "score_basis": {
+    "clip_requested": true,
+    "clip": "clip-to-common-assessed-area",
+    "per_row": "each row names its score basis. A gold-standard row reported 'clip-to-common-assessed-area' carries its ladder's clipped F1@20 values; every field computed on the unclipped cells (the bootstrap intervals, tile-MCC, and the permutation p-value and tier count joined from phase2/mcc-test/summary.json) is null and listed under 'withheld'. The as-evaluated values remain in phase2/ladders.json under 'historical_as_evaluated'. Every other row is 'as-evaluated'",
+    "n_withheld": 5
+  },
   "n_rows": 9,
   "rows": [
     {
@@ -17,12 +23,22 @@
       "delta_f1": 0.0223,
       "f1_low_ci": null,
       "f1_best_ci": null,
-      "tile_mcc_low": 0.7986,
-      "tile_mcc_best": 0.7735,
-      "p_bh": 0.2768,
+      "tile_mcc_low": null,
+      "tile_mcc_best": null,
+      "p_bh": null,
       "n_tiers": null,
-      "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "one_tier": null,
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "withheld": {
+        "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections",
+        "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections",
+        "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections",
+        "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections",
+        "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutation test exists on the clipped basis",
+        "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells",
+        "one_tier": "the tier classification derived from n_tiers, which is withheld"
+      },
+      "score_basis": "clip-to-common-assessed-area"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -43,7 +59,8 @@
       "p_bh": 0.578,
       "n_tiers": null,
       "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "score_basis": "as-evaluated"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -59,12 +76,22 @@
       "delta_f1": 0.0546,
       "f1_low_ci": null,
       "f1_best_ci": null,
-      "tile_mcc_low": 0.8095,
-      "tile_mcc_best": 0.7881,
-      "p_bh": 0.0012,
+      "tile_mcc_low": null,
+      "tile_mcc_best": null,
+      "p_bh": null,
       "n_tiers": null,
-      "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "one_tier": null,
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "withheld": {
+        "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections",
+        "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections",
+        "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections",
+        "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections",
+        "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutation test exists on the clipped basis",
+        "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells",
+        "one_tier": "the tier classification derived from n_tiers, which is withheld"
+      },
+      "score_basis": "clip-to-common-assessed-area"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -80,12 +107,22 @@
       "delta_f1": 0.0139,
       "f1_low_ci": null,
       "f1_best_ci": null,
-      "tile_mcc_low": 0.8443,
-      "tile_mcc_best": 0.8377,
-      "p_bh": 0.7803,
+      "tile_mcc_low": null,
+      "tile_mcc_best": null,
+      "p_bh": null,
       "n_tiers": null,
-      "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "one_tier": null,
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "withheld": {
+        "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections",
+        "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections",
+        "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections",
+        "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections",
+        "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutation test exists on the clipped basis",
+        "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells",
+        "one_tier": "the tier classification derived from n_tiers, which is withheld"
+      },
+      "score_basis": "clip-to-common-assessed-area"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -97,16 +134,26 @@
       "K_low": 1,
       "K_best": 10,
       "f1_low": 0.7252,
-      "f1_best": 0.7881,
-      "delta_f1": 0.0629,
+      "f1_best": 0.7852,
+      "delta_f1": 0.06,
       "f1_low_ci": null,
       "f1_best_ci": null,
-      "tile_mcc_low": 0.8437,
-      "tile_mcc_best": 0.8223,
-      "p_bh": 0.0006,
+      "tile_mcc_low": null,
+      "tile_mcc_best": null,
+      "p_bh": null,
       "n_tiers": null,
-      "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "one_tier": null,
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "withheld": {
+        "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections",
+        "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections",
+        "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections",
+        "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections",
+        "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutation test exists on the clipped basis",
+        "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells",
+        "one_tier": "the tier classification derived from n_tiers, which is withheld"
+      },
+      "score_basis": "clip-to-common-assessed-area"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -122,12 +169,22 @@
       "delta_f1": 0.0384,
       "f1_low_ci": null,
       "f1_best_ci": null,
-      "tile_mcc_low": 0.836,
-      "tile_mcc_best": 0.8078,
-      "p_bh": 0.1236,
+      "tile_mcc_low": null,
+      "tile_mcc_best": null,
+      "p_bh": null,
       "n_tiers": null,
-      "one_tier": false,
-      "source": "results/k-ladder-2026-09-12/phase2/ladders.json"
+      "one_tier": null,
+      "source": "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "withheld": {
+        "f1_low_ci": "the bootstrap interval of the unclipped K = 1 cell; not regenerated on the clipped detections",
+        "f1_best_ci": "the bootstrap interval of the unclipped best-rung cell; not regenerated on the clipped detections",
+        "tile_mcc_low": "tile-MCC of the unclipped K = 1 cell's tile table; not regenerated on the clipped detections",
+        "tile_mcc_best": "tile-MCC of the unclipped best-rung cell's tile table; not regenerated on the clipped detections",
+        "p_bh": "the BH-adjusted K = 1 -> best-rung permutation p-value of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells; no permutation test exists on the clipped basis",
+        "n_tiers": "the statistical tier count of phase2/mcc-test/summary.json, computed on the as-evaluated (unclipped) cells",
+        "one_tier": "the tier classification derived from n_tiers, which is withheld"
+      },
+      "score_basis": "clip-to-common-assessed-area"
     },
     {
       "corpus": "deployment (55 maps, 8,541 tiles)",
@@ -143,7 +200,8 @@
       "tile_mcc_low": 0.7006,
       "tile_mcc_best": 0.6954,
       "p_bh": 0.0,
-      "source": "results/k-ladder-2026-09-12/ladders.json"
+      "source": "results/k-ladder-2026-09-12/ladders.json",
+      "score_basis": "as-evaluated"
     },
     {
       "corpus": "gold standard (4 maps, 487 tiles)",
@@ -153,13 +211,14 @@
       "modality": "text",
       "K_low": 1,
       "K_best": 10,
-      "f1_low": 0.8677,
-      "f1_best": 0.8982,
-      "delta_f1": 0.0305,
-      "tile_mcc_low": 0.7894,
-      "tile_mcc_best": 0.8022,
-      "p_bh": 0.0072,
-      "source": "results/k-ladder-2026-09-12/ladders.json"
+      "f1_low": 0.8737,
+      "f1_best": 0.9075,
+      "delta_f1": 0.0338,
+      "tile_mcc_low": 0.801,
+      "tile_mcc_best": 0.8134,
+      "p_bh": 0.0024,
+      "source": "results/k-ladder-2026-09-12/ladders.json",
+      "score_basis": "as-evaluated"
     },
     {
       "corpus": "deployment (55 maps, 8,541 tiles)",
@@ -175,7 +234,8 @@
       "tile_mcc_low": 0.7092,
       "tile_mcc_best": 0.7123,
       "p_bh": 0.0,
-      "source": "results/k-ladder-2026-09-12/ladders.json"
+      "source": "results/k-ladder-2026-09-12/ladders.json",
+      "score_basis": "as-evaluated"
     }
   ]
 }

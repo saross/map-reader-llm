@@ -1,0 +1,239 @@
+### grid-2026-08-18
+45 files: 19 byte-identical, 16 identical after normalising, 10 mismatched
+  differs: conditions-verified/g384_ov048/detections.geojson (2052 leaves)
+      /features[100]/geometry/coordinates[0]: 431770.27823850035 | 427089.28711580025
+      /features[100]/geometry/coordinates[1]: 4700450.258611499 | 4704824.0124975
+      /features[100]/properties/candidate_id: 197 | 193
+      /features[100]/properties/origin_tiles: 'K-35-053-3_Elenovo_x2688_y1008.png' | 'K-35-053-3_Elenovo_x1680_y0.png'
+      /features[100]/properties/source_tile: 'K-35-053-3_Elenovo_x2688_y1008.png' | 'K-35-053-3_Elenovo_x1680_y0.png'
+      /features[101]/geometry/coordinates[0]: 434469.56994644995 | 428436.45602599997
+      /features[101]/geometry/coordinates[1]: 4702129.049429449 | 4703364.972295799
+      /features[101]/properties/candidate_id: 202 | 194
+      /features[101]/properties/origin_tiles: 'K-35-053-3_Elenovo_x3024_y672.png;K-35-053-3_Elenovo_x3360_y672.png' | 'K-35-053-3_Elenovo_x2016_y336.png'
+      /features[101]/properties/source_tile: 'K-35-053-3_Elenovo_x3360_y672.png' | 'K-35-053-3_Elenovo_x2016_y336.png'
+      /features[102]/geometry/coordinates[0]: 398955.0170159501 | 431989.30741450016
+      /features[102]/geometry/coordinates[1]: 4693540.949886851 | 4696532.935748802
+      /features[102]/properties/candidate_id: 204 | 196
+      /features[102]/properties/mound_probability: 1.0 | 0.85
+      /features[102]/properties/origin_tiles: 'K-35-052-4_32635_x336_y2352.png' | 'K-35-053-3_Elenovo_x2688_y1680.png'
+      /features[102]/properties/source_tile: 'K-35-052-4_32635_x336_y2352.png' | 'K-35-053-3_Elenovo_x2688_y1680.png'
+      /features[103]/geometry/coordinates[0]: 399205.89621524996 | 431770.27823850035
+      /features[103]/geometry/coordinates[1]: 4693481.500751549 | 4700450.258611499
+      /features[103]/properties/candidate_id: 205 | 197
+      /features[103]/properties/origin_tiles: 'K-35-052-4_32635_x336_y2352.png' | 'K-35-053-3_Elenovo_x2688_y1008.png'
+  differs (text): conditions-verified/g384_ov048/eval/evaluation.csv
+  differs: conditions-verified/g384_ov048/eval/evaluation.json (16 leaves)
+      /_metadata/input_git_state/blob_hashes/results/grid-2026-08-18/conditions-verified/g384_ov048/detections.geojson: 'e856e2b81ba1ca89e04b65c54e01ad19f833560e' | 'abe7e258fe50d1c91bf003fb89f9c78f8e4b344d'
+      /summary/buffers[0]/f1: 0.8752 | 0.8761
+      /summary/buffers[0]/f1_ci_lower: 0.8424 | 0.8423
+      /summary/buffers[0]/f1_ci_upper: 0.9017 | 0.9027
+      /summary/buffers[0]/f1_point: 0.8752 | 0.8761
+      /summary/buffers[0]/p_ci_lower: 0.9215 | 0.9101
+      /summary/buffers[0]/p_ci_upper: 0.9707 | 0.9659
+      /summary/buffers[0]/p_point: 0.9507 | 0.9434
+      /summary/buffers[0]/precision: 0.9507 | 0.9434
+      /summary/buffers[0]/r_ci_lower: 0.7634 | 0.7708
+      /summary/buffers[0]/r_ci_upper: 0.8511 | 0.8571
+      /summary/buffers[0]/r_point: 0.8107 | 0.8178
+      /summary/buffers[0]/recall: 0.8107 | 0.8178
+      /summary/detection_scope/n_detections: 365 | 371
+      /summary/detection_scope/n_in_scope: 365 | 371
+      /summary/n_detections: 365 | 371
+  differs (text): conditions-verified/g384_ov048/eval/evaluation.md
+  differs: conditions-verified/grid_verified_conditions.json (34 leaves)
+      /cells[0]/best_point/detections: 'results/grid-2026-08-18/verified-best/g512_ov064/detections.geojson' | '<absent>'
+      /cells[0]/best_point/min_votes: 5 | '<absent>'
+      /cells[0]/best_point/n_detections: 387 | '<absent>'
+      /cells[0]/best_point/prob_t: 0.15 | '<absent>'
+      /cells[0]/best_point/sweep_f1_at_20m: 0.8368098159509203 | '<absent>'
+      /cells[0]/registered_point_is_best: True | '<absent>'
+      /cells[1]/best_point/detections: 'results/grid-2026-08-18/verified-best/g512_ov256/detections.geojson' | '<absent>'
+      /cells[1]/best_point/min_votes: 9 | '<absent>'
+      /cells[1]/best_point/n_detections: 386 | '<absent>'
+      /cells[1]/best_point/prob_t: 0.15 | '<absent>'
+      /cells[1]/best_point/sweep_f1_at_20m: 0.886977886977887 | '<absent>'
+      /cells[1]/registered_point_is_best: True | '<absent>'
+      /cells[2]/best_point/detections: 'results/grid-2026-08-18/verified-best/g384_ov048/detections.geojson' | '<absent>'
+      /cells[2]/best_point/min_votes: 7 | '<absent>'
+      /cells[2]/best_point/n_detections: 371 | '<absent>'
+      /cells[2]/best_point/prob_t: 0.15 | '<absent>'
+      /cells[2]/best_point/sweep_f1_at_20m: 0.8760951188986232 | '<absent>'
+      /cells[2]/condition_label: 'g384-ov048-k10-verified-p0.20-k7' | 'g384-ov048-k10-verified-p0.15-k7'
+      /cells[2]/f1_ci_lower: 0.8424 | 0.8423
+      /cells[2]/f1_ci_upper: 0.9017 | 0.9027
+  missing in b: verified-best/g384_ov048/detections.geojson
+  missing in b: verified-best/g384_ov192/detections.geojson
+  missing in b: verified-best/g512_ov064/detections.geojson
+  missing in b: verified-best/g512_ov256/detections.geojson
+  differs: verifier_analysis.json (33 leaves)
+      /conditions[0]/best_point/detections: 'results/grid-2026-08-18/verified-best/g512_ov064/detections.geojson' | '<absent>'
+      /conditions[0]/best_point/min_votes: 5 | '<absent>'
+      /conditions[0]/best_point/n_detections: 387 | '<absent>'
+      /conditions[0]/best_point/prob_t: 0.15 | '<absent>'
+      /conditions[0]/best_point/sweep_f1_at_20m: 0.8368098159509203 | '<absent>'
+      /conditions[0]/registered_point_is_best: True | '<absent>'
+      /conditions[1]/best_point/detections: 'results/grid-2026-08-18/verified-best/g512_ov256/detections.geojson' | '<absent>'
+      /conditions[1]/best_point/min_votes: 9 | '<absent>'
+      /conditions[1]/best_point/n_detections: 386 | '<absent>'
+      /conditions[1]/best_point/prob_t: 0.15 | '<absent>'
+      /conditions[1]/best_point/sweep_f1_at_20m: 0.886977886977887 | '<absent>'
+      /conditions[1]/registered_point_is_best: True | '<absent>'
+      /conditions[2]/best_point/detections: 'results/grid-2026-08-18/verified-best/g384_ov048/detections.geojson' | '<absent>'
+      /conditions[2]/best_point/min_votes: 7 | '<absent>'
+      /conditions[2]/best_point/n_detections: 371 | '<absent>'
+      /conditions[2]/best_point/prob_t: 0.15 | '<absent>'
+      /conditions[2]/best_point/sweep_f1_at_20m: 0.8760951188986232 | '<absent>'
+      /conditions[2]/condition_label: 'g384-ov048-k10-verified-p0.20-k7' | 'g384-ov048-k10-verified-p0.15-k7'
+      /conditions[2]/f1_ci_lower: 0.8424 | 0.8423
+      /conditions[2]/f1_ci_upper: 0.9017 | 0.9027
+### stride-2026-08-25
+37 files: 16 byte-identical, 16 identical after normalising, 5 mismatched
+  differs: conditions-verified/g512_ov176/detections.geojson (1811 leaves)
+      /features[100]/geometry/coordinates[0]: 422852.63986056065 | 427088.1969399001
+      /features[100]/geometry/coordinates[1]: 4690228.833914005 | 4704824.910289499
+      /features[100]/properties/candidate_id: 184 | 185
+      /features[100]/properties/mound_probability: 0.75 | 1.0
+      /features[100]/properties/origin_tiles: 'K-35-053-3_Elenovo_x1008_y2688.png;K-35-053-3_Elenovo_x1008_y3024.png;K-35-053-3_Elenovo_x672_y2688.png;K-35-053-3_Elenovo_x672_y3024.png' | 'K-35-053-3_Elenovo_x1680_y0.png'
+      /features[100]/properties/source_tile: 'K-35-053-3_Elenovo_x1008_y3024.png' | 'K-35-053-3_Elenovo_x1680_y0.png'
+      /features[101]/geometry/coordinates[0]: 427088.1969399001 | 427763.46475495456
+      /features[101]/geometry/coordinates[1]: 4704824.910289499 | 4705250.137211775
+      /features[101]/properties/candidate_id: 185 | 186
+      /features[101]/properties/mound_probability: 1.0 | 0.95
+      /features[101]/properties/origin_tiles: 'K-35-053-3_Elenovo_x1680_y0.png' | 'K-35-053-3_Elenovo_x1680_y0.png;K-35-053-3_Elenovo_x2016_y0.png'
+      /features[101]/properties/source_tile: 'K-35-053-3_Elenovo_x1680_y0.png' | 'K-35-053-3_Elenovo_x2016_y0.png'
+      /features[102]/geometry/coordinates[0]: 427763.46475495456 | 427865.87716740003
+      /features[102]/geometry/coordinates[1]: 4705250.137211775 | 4704724.6141013
+      /features[102]/properties/candidate_id: 186 | 187
+      /features[102]/properties/mound_probability: 0.95 | 1.0
+      /features[103]/geometry/coordinates[0]: 427865.87716740003 | 427517.0849883249
+      /features[103]/geometry/coordinates[1]: 4704724.6141013 | 4703543.889409075
+      /features[103]/properties/candidate_id: 187 | 188
+      /features[103]/properties/origin_tiles: 'K-35-053-3_Elenovo_x1680_y0.png;K-35-053-3_Elenovo_x2016_y0.png' | 'K-35-053-3_Elenovo_x1680_y0.png;K-35-053-3_Elenovo_x1680_y336.png'
+  differs (text): conditions-verified/g512_ov176/eval/evaluation.csv
+  differs: conditions-verified/g512_ov176/eval/evaluation.json (28 leaves)
+      /_metadata/input_git_state/blob_hashes/results/stride-2026-08-25/conditions-verified/g512_ov176/detections.geojson: '43817bbc7b375461026eaf4862043416b40ea12e' | '1710c5940135a106cf6a742b3913d098dfa306d9'
+      /summary/buffers[0]/coverage/n_zero_count_tiles: 284 | 285
+      /summary/buffers[0]/coverage/zero_fraction: 0.5831622176591376 | 0.5852156057494866
+      /summary/buffers[0]/f1: 0.8714 | 0.8718
+      /summary/buffers[0]/f1_ci_lower: 0.8377 | 0.8372
+      /summary/buffers[0]/f1_ci_upper: 0.8984 | 0.8999
+      /summary/buffers[0]/f1_point: 0.8714 | 0.8718
+      /summary/buffers[0]/p_ci_lower: 0.8718 | 0.8783
+      /summary/buffers[0]/p_ci_upper: 0.9344 | 0.9403
+      /summary/buffers[0]/p_point: 0.9066 | 0.913
+      /summary/buffers[0]/precision: 0.9066 | 0.913
+      /summary/buffers[0]/r_ci_lower: 0.7919 | 0.786
+      /summary/buffers[0]/r_ci_upper: 0.8769 | 0.8722
+      /summary/buffers[0]/r_point: 0.8388 | 0.8341
+      /summary/buffers[0]/recall: 0.8388 | 0.8341
+      /summary/detection_scope/n_detections: 396 | 391
+      /summary/detection_scope/n_in_scope: 396 | 391
+      /summary/n_detections: 396 | 391
+      /summary/tile_classification/confusion/fn: 40 | 41
+      /summary/tile_classification/confusion/tp: 185 | 184
+  differs (text): conditions-verified/g512_ov176/eval/evaluation.md
+  differs: conditions-verified/stride_verified_conditions.json (116 leaves)
+      /cells[0]/best_point/min_votes: 7 | '<absent>'
+      /cells[0]/best_point/n_detections: 391 | '<absent>'
+      /cells[0]/best_point/prob_t: 0.15 | '<absent>'
+      /cells[0]/best_point/sweep_f1_at_20m: 0.8717948717948718 | '<absent>'
+      /cells[0]/ci[0]: 0.8377 | 0.8305
+      /cells[0]/ci[1]: 0.8984 | 0.8934
+      /cells[0]/condition_label: 'g512-ov176-k10-verified-p0.15-k6' | '<absent>'
+      /cells[0]/n: 396 | 390
+      /cells[0]/point[0]: 0.15 | '<absent>'
+      /cells[0]/point[1]: 6 | '<absent>'
+      /cells[0]/registered_point_is_best: False | '<absent>'
+      /cells[0]/rescored_f1: 0.8714 | 0.8655
+      /cells[0]/sweep_f1: 0.8713592233009708 | 0.8655256723716381
+      /cells[0]/verifier_probabilities/dir: 'outputs/stride-phaseb-2026-08-25/verifier/g512_ov176/verify_repaired' | '<absent>'
+      /cells[0]/verifier_probabilities/n_results: 1981 | '<absent>'
+      /cells[0]/verifier_probabilities/parse_error_rows: None | '<absent>'
+      /cells[0]/verifier_probabilities/policy: 'repaired' | '<absent>'
+      /cells[0]/verifier_probabilities/probabilities_sha256: '34433011e344679f27ce37339930e6ad8b4ca5a18fb86539a2518b3720ecf132' | '<absent>'
+      /cells[0]/verifier_probabilities/repaired: None | '<absent>'
+      /cells[0]/verifier_probabilities/reverified: 24 | '<absent>'
+### image-b-gs-2026-08-28
+16 files: 8 byte-identical, 4 identical after normalising, 4 mismatched
+  differs: analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  differs: high/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: high/verified_reg_20m.geojson
+  missing in a: verified_reg_20m.geojson
+### gemini37-screen-2026-08-28
+21 files: 9 byte-identical, 6 identical after normalising, 6 mismatched
+  differs: analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  differs: k10/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: k10/verified_reg_20m.geojson
+  differs: swap37/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: swap37/verified_reg_20m.geojson
+  missing in a: verified_reg_20m.geojson
+### gemini37-image-gs-2026-09-01
+20 files: 8 byte-identical, 4 identical after normalising, 8 mismatched
+  differs: arm1/analysis.json (8 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+      /operating_point/f1: 0.9353348729792148 | '<absent>'
+      /operating_point/mcc: 0.8306500019986415 | '<absent>'
+      /operating_point/min_votes: 5 | '<absent>'
+      /operating_point/n_detections: 438 | '<absent>'
+      /operating_point/precision: 0.9246575342465754 | '<absent>'
+      /operating_point/prob_t: 0.1 | '<absent>'
+      /operating_point/recall: 0.9462616822429907 | '<absent>'
+  missing in b: arm1/op-eval/evaluation.csv
+  missing in b: arm1/op-eval/evaluation.json
+  missing in b: arm1/op-eval/evaluation.md
+  missing in b: arm1/verified_op_20m.geojson
+  missing in a: arm1/verified_reg_20m.geojson
+  differs: arm2/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: arm2/verified_reg_20m.geojson
+### gemini37-fourth-cell
+18 files: 14 byte-identical, 2 identical after normalising, 2 mismatched
+  differs: gs-leg/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: gs-leg/verified_reg_20m.geojson
+### gemini38-screen-2026-09-04
+10 files: 6 byte-identical, 2 identical after normalising, 2 mismatched
+  differs: armV/analysis.json (1 leaves)
+      /anchor/registered: 0.9017 | 0.9016786570743405
+  missing in a: armV/verified_reg_20m.geojson
+### selection-aware
+27 files: 0 byte-identical, 0 identical after normalising, 27 mismatched
+  missing in b: 55map-canonical-leaderboard-50m_b50_m1.json
+  missing in b: 55map-canonical-leaderboard-mcc-50m_mcc_b50_m1.json
+  missing in b: 55map-standardised-leaderboard-50m_b50_m1.json
+  missing in b: 55map-standardised-leaderboard-mcc-50m_mcc_b50_m1.json
+  missing in b: diversity-dividend-384_b20_m1.json
+  missing in b: e56-consensus-pv-threshold_b20_m1.json
+  missing in b: era1-leaderboard_b20_m1.json
+  missing in b: era1-leaderboard_mcc_b20_m1.json
+  missing in b: era1-single-pass-baseline-matrix_b20_m1.json
+  missing in b: era1-single-pass-baseline-matrix_mcc_b20_m1.json
+  missing in b: findings.md
+  missing in b: flash35-model-roles_b20_m1.json
+  missing in b: g384_ov048_K10_b20_m1.json
+  missing in b: g384_ov192_K10_b20_m1.json
+  missing in b: g512_ov064_K10_b20_m0.25.json
+  missing in b: g512_ov064_K10_b20_m0.5.json
+  missing in b: g512_ov064_K10_b20_m1.json
+  missing in b: g512_ov256_K10_b20_m1.json
+  missing in b: h12-v2-hp-hn-ratio_b20_m1.json
+  missing in b: min-vs-high-thinking-pv_b20_m1.json
+  missing in b: n1-baseline-matrix-384_b20_m1.json
+  missing in b: pass-budget-pareto-v2_b20_m1.json
+  missing in b: pass-budget-pareto_b20_m1.json
+  missing in b: pvalue-counts-both-levels.json
+  missing in b: tier1-clique-audit.json
+  missing in b: verifier-robustness-matrix_b20_m1.json
+  missing in b: verifier-robustness-matrix_mcc_b20_m1.json
+### sensitivity-mde-2026-08-28
+3 files: 0 byte-identical, 0 identical after normalising, 3 mismatched
+  missing in b: sensitivity-mde.md
+  missing in b: sensitivity-r2.json
+  missing in b: sensitivity.json
+### verifier-robustness
+216 files: 216 byte-identical, 0 identical after normalising, 0 mismatched

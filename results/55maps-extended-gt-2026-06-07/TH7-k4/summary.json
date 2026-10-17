@@ -1,16 +1,16 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-06-07T06:21:48.569594+00:00",
+  "timestamp": "2026-10-15T10:46:57.236906+00:00",
   "methodology": "Approach B \u2014 extended-GT-at-R Hungarian matching",
   "metadata": {
     "seed": 42,
     "bootstrap_n": 10000,
-    "git_commit": "bb7d5279e818cd52f7b9925e5f19790adf537676",
+    "git_commit": "98ab69abc5e677480b0fa56b129419779cf063d0",
     "input_paths": {
       "detections": "/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson",
       "student_gt": "/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson",
       "bounds": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
-      "review_yesterday": "/home/shawn/Code/map-reader-llm/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
+      "review_yesterday": "results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv",
       "review_today": "/home/shawn/Code/map-reader-llm/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv"
     }
   },
@@ -28,6 +28,7 @@
       "FN": 4365,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.0914985590778098,
       "precision_CI": [
@@ -47,8 +48,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -65,6 +66,7 @@
       "FN": 3519,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.2946685878962536,
       "precision_CI": [
@@ -84,8 +86,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -102,6 +104,7 @@
       "FN": 2613,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.5122478386167147,
       "precision_CI": [
@@ -121,8 +124,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -139,6 +142,7 @@
       "FN": 1957,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.6697886647454371,
       "precision_CI": [
@@ -158,8 +162,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -176,6 +180,7 @@
       "FN": 1582,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.7598463016330451,
       "precision_CI": [
@@ -195,8 +200,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -213,6 +218,7 @@
       "FN": 1374,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.8097982708933718,
       "precision_CI": [
@@ -232,8 +238,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -250,6 +256,7 @@
       "FN": 1281,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.8321325648414986,
       "precision_CI": [
@@ -269,8 +276,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -287,6 +294,7 @@
       "FN": 1241,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.8417387127761767,
       "precision_CI": [
@@ -306,8 +314,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -324,6 +332,7 @@
       "FN": 1225,
       "n_ref_student_only": 4746,
       "n_reviewer_promoted_at_R": 0,
+      "n_phantom_duplicates_dropped": 0,
       "n_ref_extended": 4746,
       "precision": 0.845581171950048,
       "precision_CI": [
@@ -343,8 +352,8 @@
       "tile_classification": {
         "mcc": 0.6479659157116655,
         "mcc_CI": [
-          0.6333673327857082,
-          0.6622952138049987
+          0.6320698460962573,
+          0.6639740282119457
         ],
         "tp": 2177,
         "tn": 4918,
@@ -358,30 +367,31 @@
       "R_m": 50,
       "TP": 3801,
       "FP": 363,
-      "FN": 1360,
+      "FN": 1359,
       "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 415,
-      "n_ref_extended": 5161,
+      "n_reviewer_promoted_at_R": 414,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5160,
       "precision": 0.9128242074927954,
       "precision_CI": [
         0.9035087188951824,
         0.9218937755347272
       ],
-      "recall": 0.7364851772912226,
+      "recall": 0.7366279069767442,
       "recall_CI": [
-        0.7222982327197809,
-        0.7502376659394782
+        0.7224878216232508,
+        0.7504108001477858
       ],
-      "F1": 0.8152278820375335,
+      "F1": 0.8153153153153153,
       "F1_CI": [
-        0.8050636523327125,
-        0.8250979654306435
+        0.8050921133791799,
+        0.8251354435267524
       ],
       "tile_classification": {
         "mcc": 0.6666252946918438,
         "mcc_CI": [
-          0.652793282496057,
-          0.6801483385507795
+          0.6519360825917355,
+          0.6813820753940858
         ],
         "tp": 2261,
         "tn": 4859,
@@ -395,30 +405,31 @@
       "R_m": 75,
       "TP": 3823,
       "FP": 341,
-      "FN": 1517,
+      "FN": 1516,
       "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 594,
-      "n_ref_extended": 5340,
+      "n_reviewer_promoted_at_R": 593,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5339,
       "precision": 0.9181075888568684,
       "precision_CI": [
         0.9090475193706471,
         0.926852073754624
       ],
-      "recall": 0.7159176029962547,
+      "recall": 0.7160516950739839,
       "recall_CI": [
-        0.701523664949851,
-        0.7299849846570574
+        0.7016328808261179,
+        0.7301237117947856
       ],
-      "F1": 0.8045033670033671,
+      "F1": 0.8045880248342628,
       "F1_CI": [
-        0.7940951103183003,
-        0.8144298547869712
+        0.7941934559949317,
+        0.8144895368363622
       ],
       "tile_classification": {
         "mcc": 0.6646680432994254,
         "mcc_CI": [
-          0.6508222248511979,
-          0.6781132727263767
+          0.6499716874259718,
+          0.6795468748294063
         ],
         "tp": 2263,
         "tn": 4844,
@@ -432,30 +443,31 @@
       "R_m": 100,
       "TP": 3841,
       "FP": 323,
-      "FN": 1590,
+      "FN": 1589,
       "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 685,
-      "n_ref_extended": 5431,
+      "n_reviewer_promoted_at_R": 684,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5430,
       "precision": 0.9224303554274735,
       "precision_CI": [
         0.9135160856699475,
         0.9310771637573351
       ],
-      "recall": 0.7072362364205487,
+      "recall": 0.7073664825046041,
       "recall_CI": [
-        0.6927362939020644,
-        0.7211489741258708
+        0.6928486655043695,
+        0.7212968557490399
       ],
-      "F1": 0.8006253256904637,
+      "F1": 0.8007087763185323,
       "F1_CI": [
-        0.7902555405107581,
-        0.8106253154037167
+        0.7903106014089901,
+        0.8107086811044129
       ],
       "tile_classification": {
         "mcc": 0.6634301808532641,
         "mcc_CI": [
-          0.6497267160141649,
-          0.677040049297075
+          0.6485689318154606,
+          0.6781886536361595
         ],
         "tp": 2264,
         "tn": 4835,
@@ -469,30 +481,31 @@
       "R_m": 125,
       "TP": 3851,
       "FP": 313,
-      "FN": 1624,
+      "FN": 1623,
       "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 729,
-      "n_ref_extended": 5475,
+      "n_reviewer_promoted_at_R": 728,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5474,
       "precision": 0.9248318924111432,
       "precision_CI": [
         0.9160304427773952,
         0.9334405661262809
       ],
-      "recall": 0.7033789954337899,
+      "recall": 0.7035074899525028,
       "recall_CI": [
-        0.6887564144426639,
-        0.7175880248959831
+        0.688843167123003,
+        0.7177025255291006
       ],
-      "F1": 0.7990455441435833,
+      "F1": 0.7991284498858684,
       "F1_CI": [
-        0.788508298508053,
-        0.8092174773365238
+        0.7885937784540759,
+        0.8093195232219659
       ],
       "tile_classification": {
         "mcc": 0.6630766457760425,
         "mcc_CI": [
-          0.6494137444887085,
-          0.6766170244978151
+          0.6483587306930492,
+          0.6778475512492658
         ],
         "tp": 2265,
         "tn": 4831,
@@ -506,30 +519,31 @@
       "R_m": 150,
       "TP": 3858,
       "FP": 306,
-      "FN": 1651,
+      "FN": 1650,
       "n_ref_student_only": 4746,
-      "n_reviewer_promoted_at_R": 763,
-      "n_ref_extended": 5509,
+      "n_reviewer_promoted_at_R": 762,
+      "n_phantom_duplicates_dropped": 1,
+      "n_ref_extended": 5508,
       "precision": 0.9265129682997119,
       "precision_CI": [
         0.917778236107881,
         0.9349460299252312
       ],
-      "recall": 0.7003085859502632,
+      "recall": 0.7004357298474946,
       "recall_CI": [
-        0.6856670849311979,
-        0.7144693650793651
+        0.6857350873963147,
+        0.7145446090827113
       ],
-      "F1": 0.7976842758192908,
+      "F1": 0.7977667493796528,
       "F1_CI": [
-        0.7871205061881007,
-        0.8078036070744056
+        0.7871846589512999,
+        0.8079442664279413
       ],
       "tile_classification": {
         "mcc": 0.6630766457760425,
         "mcc_CI": [
-          0.6494137444887085,
-          0.6766170244978151
+          0.6483587306930492,
+          0.6778475512492658
         ],
         "tp": 2265,
         "tn": 4831,

@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-28T07:02:02.200976+00:00",
+    "timestamp": "2026-10-15T11:09:27.838505+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -19,13 +19,13 @@
       "pool_size": 30,
       "threshold": 26
     },
-    "f1": 0.825882,
-    "precision": 0.845783,
-    "recall": 0.806897,
+    "f1": 0.828235,
+    "precision": 0.848193,
+    "recall": 0.809195,
     "n_detections": 415,
-    "tp": 351,
-    "fp": 64,
-    "fn": 84
+    "tp": 352,
+    "fp": 63,
+    "fn": 83
   },
   "condition_b": {
     "label": "flash-high-text N=5 N=5, 5-of-5",
@@ -36,13 +36,13 @@
       "pool_size": 5,
       "threshold": 5
     },
-    "f1": 0.788235,
-    "precision": 0.807229,
-    "recall": 0.770115,
+    "f1": 0.790588,
+    "precision": 0.809639,
+    "recall": 0.772414,
     "n_detections": 415,
-    "tp": 335,
-    "fp": 80,
-    "fn": 100
+    "tp": 336,
+    "fp": 79,
+    "fn": 99
   },
   "permutation_test": {
     "observed_f1_diff": 0.037647,
@@ -54,9 +54,9 @@
     "ties": 459,
     "null_distribution": {
       "mean": -0.000215,
-      "std": 0.01206,
+      "std": 0.012065,
       "percentile_2.5": -0.023529,
-      "percentile_97.5": 0.023449
+      "percentile_97.5": 0.023422
     }
   }
 }

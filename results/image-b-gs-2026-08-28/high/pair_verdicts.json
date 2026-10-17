@@ -1,30 +1,30 @@
 {
   "hp1_high_vs_min_20m": {
-    "f1_a": 0.833333,
-    "f1_b": 0.841212,
-    "observed_diff": -0.007879,
-    "p_value": 0.6216,
+    "f1_a": 0.838942,
+    "f1_b": 0.845783,
+    "observed_diff": -0.006841,
+    "p_value": 0.668,
     "n_permutations": 10000,
     "n_tiles": 487,
-    "null_mean": -5.8e-05,
-    "null_std": 0.015612
+    "null_mean": -5.9e-05,
+    "null_std": 0.015544
   },
   "hp1_bests": {
     "min": {
-      "precision": 0.8740554156171285,
-      "recall": 0.8107476635514018,
-      "f1": 0.8412121212121211,
-      "n_detections": 397,
-      "mcc": 0.7985238948380223,
+      "precision": 0.8731343283582089,
+      "recall": 0.8200934579439252,
+      "f1": 0.8457831325301205,
+      "n_detections": 402,
+      "mcc": 0.813866408969979,
       "prob_t": 0.15,
       "min_votes": 9
     },
     "high": {
-      "precision": 0.8625,
-      "recall": 0.8060747663551402,
-      "f1": 0.8333333333333334,
-      "n_detections": 400,
-      "mcc": 0.7993364508831269,
+      "precision": 0.8638613861386139,
+      "recall": 0.8154205607476636,
+      "f1": 0.8389423076923077,
+      "n_detections": 404,
+      "mcc": 0.8107603138719564,
       "prob_t": 0.2,
       "min_votes": 8
     }
@@ -35,9 +35,9 @@
     "growth": 1.2605166051660515
   },
   "hp3_mcc": {
-    "min": 0.7985238948380223,
-    "high": 0.7993364508831269,
-    "delta": 0.000812556045104551
+    "min": 0.813866408969979,
+    "high": 0.8107603138719564,
+    "delta": -0.003106095098022621
   },
   "hp4_points": {
     "min": [
@@ -53,5 +53,35 @@
     "high_proposer_audited_usd": 59.06687240000001,
     "min_proposer_audited_usd": 20.3,
     "ratio": 2.9096981477832515
+  },
+  "verifier_probabilities": {
+    "g384_ov192_image": {
+      "dir": "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "f0d8efe6e5a8f095b7ea5a3ab4bf44e1ffd9936a823d7ab3b2cc3c9546f26f64",
+      "n_results": 4065,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 31,
+      "reverify_usd": 0.021722,
+      "reverify_records": [
+        "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    },
+    "g384_ov192_image_high": {
+      "dir": "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image_high/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "378d7796b6643b71efd516ed247c2c821d145273e13c9be05cb10ce0ee290ce9",
+      "n_results": 9189,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 64,
+      "reverify_usd": 0.044977,
+      "reverify_records": [
+        "outputs/image-b-gs-2026-08-28/verifier/g384_ov192_image_high/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    }
   }
 }

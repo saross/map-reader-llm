@@ -251,18 +251,22 @@ def test_rebuilt_grid_union_equals_its_committed_geometry():
     assert moved == 25
 
 
-#: The independent reproduction's recorded-sheet F1 @ 20 m, and the committed
-#: board's (legacy) F1 (``board_13cell.f1``), per incumbent.
+#: The independent reproduction's recorded-sheet F1 @ 20 m per incumbent,
+#: which the committed board (``board_13cell.f1``) holds since the restatement
+#: pass of 2026-10-15.
 RECORDED_SHEET_F1 = {"opmax": 0.895981, "headline": 0.891018,
                      "min11": 0.884236, "min6": 0.879042}
 
 
 def test_plateau_incumbents_score_on_their_recorded_sheets():
-    """The fix gives the reproduction's F1; the legacy path gives the committed.
+    """The fix gives the committed F1; the legacy path does not.
 
     The red sentinel for D62 (1) on the signed plateau board: if the
-    incumbents lose their recorded sheet again, the first assertion fails;
-    if the scorer or the inputs drift, the second does.
+    incumbents lose their recorded sheet again, the first or third assertion
+    fails; if the scorer or the inputs drift, the second does. Until the
+    restatement pass (2026-10-15, reports/s164-agent-records/
+    restatement-pass.md) the committed board still held the legacy path's
+    values, and this test pinned the legacy score to it instead.
     """
     import stride_plateau_analyses as sp
     from scripts.grid_analysis import as_gdf, score
@@ -275,6 +279,9 @@ def test_plateau_incumbents_score_on_their_recorded_sheets():
     for name, rel in sp.INCUMBENTS.items():
         fixed = score(sp.load_incumbent(rel, bounds), ref, bounds)["f1"]
         assert round(fixed, 6) == RECORDED_SHEET_F1[name], name
+        assert abs(fixed - committed[name]) < 1e-12, name
         inc = gpd.read_file(PROJECT_ROOT / rel).to_crs(CRS)
         legacy = as_gdf(np.asarray([[g.x, g.y] for g in inc.geometry]), bounds)
-        assert abs(score(legacy, ref, bounds)["f1"] - committed[name]) < 1e-12, name
+        # The legacy path re-keys rows across sheets; it scored 0.0072 to
+        # 0.0168 lower on these four sets (PI ruling D62 (1)).
+        assert abs(score(legacy, ref, bounds)["f1"] - committed[name]) > 1e-3, name

@@ -9,7 +9,8 @@ the common footprint, derives its verified best point from the full
 first-N ladder (N ∈ {1, 3, 5}, inherited K = 10 verification), and
 answers IP1–IP5 against the committed text-B anchor
 (`results/grid-2026-08-18/conditions-verified/g384_ov192`,
-F1@20 0.8961 registered).
+F1@20 0.8961 registered; 0.9017 from the 2026-10-15 restatement with the
+D62 (1) re-verified rows, :data:`ANCHOR_F1_20`).
 
 GATES (nothing written unless all pass):
 
@@ -23,8 +24,8 @@ GATES (nothing written unless all pass):
    tile on ANY sheet, which near a sheet edge re-keyed it to the
    neighbouring sheet.
 2. Anchor gate: the text-B registered detections re-scored through
-   THIS script's path must reproduce the registered F1@20 (0.8961)
-   within 0.0005 (the board showed mechanism identity at this cell).
+   THIS script's path must reproduce the registered F1@20
+   (:data:`ANCHOR_F1_20`) within 0.0005 (the board showed mechanism identity at this cell).
 
 Instruments: per-tile counts + round-robin tile-swap permutation
 (10,000, seed 42) for text-vs-image and the saturation tests — the
@@ -105,7 +106,13 @@ VROOT = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/verifier" / CELL
 SCORING = PROJECT_ROOT / "outputs/image-b-gs-2026-08-28/scoring"
 ANCHOR_DIR = (PROJECT_ROOT
               / "results/grid-2026-08-18/conditions-verified/g384_ov192")
-ANCHOR_F1_20 = 0.8961  # registered text-B verified best (eval committed)
+#: The registered text-B verified best's F1@20 (its committed evaluation).
+#: 0.8961 until 2026-10-15; 0.9017 from the restatement pass (D65 (2)), when
+#: the anchor set was re-materialised with the D62 (1) re-verified rows
+#: (reports/s164-agent-records/restatement-pass.md). The bridge's six-cell
+#: anchor gate keeps 0.8961: it checks the legs as run
+#: (scripts/modality_bridge_anchors.py, GATE_POLICY = "fixed").
+ANCHOR_F1_20 = 0.9017
 OUT = PROJECT_ROOT / "results/image-b-gs-2026-08-28"
 BUFFER_PRIMARY = 20
 CURVE_BUFFERS = (20, 30, 50, 75)

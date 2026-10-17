@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-09-12T08:51:03+00:00",
+  "generated_at_utc": "2026-10-15T11:52:20+00:00",
   "recipe": {
     "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
     "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
@@ -32,27 +32,42 @@
       "run_id": "gemini37-screen-2026-08-28",
       "stage_id": "g384_ov192_g37-union-k5-verify",
       "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
-      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify/probabilities.json",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/probabilities.json",
       "opmax": {
         "vote_t": 5,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9066,
-        "sweep_n": 443,
+        "sweep_f1_20": 0.9165,
+        "sweep_n": 451,
         "n_ties_at_argmax": 0
       },
       "opmax_on_era2_frame": {
         "vote_t": 5,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9066
+        "sweep_f1_20": 0.9165
       },
       "frames_agree_on_argmax": true,
-      "n_detections": 443,
+      "n_detections": 451,
       "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson",
       "cell": "gemini37-screen-2026-08-28__g37-text-k5-verified-opmax",
       "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json",
       "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
-      "f1_20": 0.9066,
-      "tile_mcc": 0.7651
+      "verifier_probabilities": {
+        "dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "01a9617825d5fe22b31220890f0e066a6dcacfd89133320fe1ebc6882f6a38ec",
+        "n_results": 791,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 11,
+        "reverify_usd": 0.007728,
+        "reverify_records": [
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "scoring_route": "origin: image_b_analysis.load_image_union, stride_verifier_analysis.reassign_gate, lib_cluster_origins.union_on_origin over outputs/gemini37-screen-2026-08-28/scoring/common/g384_ov192_g37 runs 1-5 (PR #42, D62 (1))",
+      "f1_20": 0.9165,
+      "tile_mcc": 0.7767
     },
     {
       "k": 10,
@@ -60,27 +75,42 @@
       "run_id": "gemini37-screen-2026-08-28",
       "stage_id": "g384_ov192_g37-union-k10-verify",
       "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
-      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10/probabilities.json",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/probabilities.json",
       "opmax": {
         "vote_t": 10,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9068,
-        "sweep_n": 423,
+        "sweep_f1_20": 0.9169,
+        "sweep_n": 431,
         "n_ties_at_argmax": 0
       },
       "opmax_on_era2_frame": {
         "vote_t": 10,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9068
+        "sweep_f1_20": 0.9169
       },
       "frames_agree_on_argmax": true,
-      "n_detections": 423,
+      "n_detections": 431,
       "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson",
       "cell": "gemini37-screen-2026-08-28__g37-text-k10-verified-opmax",
       "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json",
       "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
-      "f1_20": 0.9068,
-      "tile_mcc": 0.7675
+      "verifier_probabilities": {
+        "dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "88ca247be33742d8f7d6f7799d8d61562b87506b35d541055baf367212679391",
+        "n_results": 913,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 14,
+        "reverify_usd": 0.009873,
+        "reverify_records": [
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "scoring_route": "origin: image_b_analysis.load_image_union, stride_verifier_analysis.reassign_gate, lib_cluster_origins.union_on_origin over outputs/gemini37-screen-2026-08-28/scoring/common/g384_ov192_g37 runs 1-10 (PR #42, D62 (1))",
+      "f1_20": 0.9169,
+      "tile_mcc": 0.7826
     }
   ]
 }
