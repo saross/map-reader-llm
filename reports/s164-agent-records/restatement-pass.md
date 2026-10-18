@@ -1,6 +1,8 @@
 # D65 (2): the restatement pass (S164)
 
-> **Last revised**: 2026-10-15 (the results half: lanes, verdicts, drafted
+> **Last revised**: 2026-10-18 (§ 1.3 and § 5 item 9 corrected: the board's
+> membership does not drift; the 98 was an artefact of a partial copy).
+> 2026-10-15 (the results half: lanes, verdicts, drafted
 > outcomes, claim rows, surprises; the pass complete apart from § 11). See
 > [§ Changelog](#changelog) for revision history.
 
@@ -212,6 +214,20 @@ Three details, settled before the board runs (drivers `mkcopy_board.sh`,
   evaluation and the 3.7 image carried arm's paths follow its register row,
   recorded in a `_restated` block; the drift of the derivation rule is for the
   PI (§ 10).
+
+  **Corrected 2026-10-18 (Session 165):** the 98 is not a drift in the
+  rule. Re-derived read-only on the full branch checkout
+  (`build_gs_era2_board.derive_membership()` at `26deb34a3`), the
+  membership is the same 110 members, none dropped or added. The 98 came
+  from running the derivation inside the board's partial copy
+  (`mkcopy_board.sh`), where exactly 12 members' detection files lie
+  outside the copied directories (eight `proposer-verifier-384` cells,
+  three `verifier-t-pilot` cells, and
+  `pv-diag-384::verified-adv-text-consensus-16of30`), so the derivation
+  skipped them as missing on disk; all 110 files are tracked. The match
+  is by count, since the 98-member list was not recorded. The PI
+  accepted keeping the membership (D69).
+
 - **The board's sweep-optimism tables** (`optimism/`, ten screen cells on two
   frames; `selection_aware_intervals.py --sweep-union`) read the same legs and
   are regenerated too. Their builder was off the origin route (fixed in
@@ -2031,6 +2047,20 @@ explained away.
    derivation reads register edits made since 2026-09-14. The pass kept
    the membership and refreshed only its snapshot fields; the drift of the
    rule is for the PI (§ 10).
+
+   **Corrected 2026-10-18 (Session 165):** the 98 is not a drift in the
+   rule. Re-derived read-only on the full branch checkout
+   (`build_gs_era2_board.derive_membership()` at `26deb34a3`), the
+   membership is the same 110 members, none dropped or added. The 98
+   came from running the derivation inside the board's partial copy
+   (`mkcopy_board.sh`), where exactly 12 members' detection files lie
+   outside the copied directories (eight `proposer-verifier-384` cells,
+   three `verifier-t-pilot` cells, and
+   `pv-diag-384::verified-adv-text-consensus-16of30`), so the derivation
+   skipped them as missing on disk; all 110 files are tracked. The match
+   is by count, since the 98-member list was not recorded. The PI
+   accepted keeping the membership (D69).
+
 10. **Two stalenesses older than the pass** surfaced in the uplift lane:
     the committed pairing CSV predated D57 (4)'s twin re-scores (it
     disagreed with its own twin evaluations on 28 F1 and 20 MCC rows), and
@@ -2398,6 +2428,18 @@ planning cards that quote moved values as of their dates; the list is
   item 14), kept on sapphire at `lead2/plateauA/`.
 
 ## Changelog
+
+### 2026-10-18 — The membership drift corrected (Session 165)
+
+§ 1.3 and § 5 item 9 said that re-deriving the Era-2 board's membership
+today gives 98 members instead of 110 because the derivation reads later
+register edits. A read-only re-derivation on the full checkout gives the
+same 110; the 98 came from the board lane's partial copy, which lacked
+12 members' detection files. Both passages gain a dated correction;
+nothing else in the record changes. The PI accepted keeping the
+membership, a record correction, and a to-do for the builder to refuse
+rather than skip a frozen member whose file is missing (D69, § 10 Q5).
+Commit: the one that applies this entry.
 
 ### 2026-10-15 (later) — Results half; the pass complete apart from § 11
 
