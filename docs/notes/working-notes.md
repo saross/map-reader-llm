@@ -38220,14 +38220,20 @@ results `b77624e15`.
 this to be recorded as a finding for the paper's Results, while
 approving the restated register outcome of
 `grid-postverifier-2026-08-18` (PR #52,
-`reports/s164-agent-records/restatement-pass.md` § 4.2). The
-restatement pass (PI rulings D62 (1) and D65 (2)) re-scored the grid
-with each consensus cluster scored on the tiles it was seen on (the
-"origin route"), and p values are now those of the paired tile-swap
-permutation test (D42). Obs 433 (Session 142, 2026-08-24) is corrected
-here, not edited. It headed its overlap paragraph "Overlap SURVIVES, at
-roughly half the margin" and wrote that "50 % overlap wins at both tile
-sizes under the full pipeline".
+`reports/s164-agent-records/restatement-pass.md` § 4.2). The restatement
+pass (PI rulings D62 (1) and D65 (2)) applied two repairs: each
+consensus cluster is scored on the tiles it was seen on (the "origin
+route"), and candidates the verifier had been shown on crops cut from
+the neighbouring map sheet, largely blank, were re-verified on crops
+from their own sheet (2026-10-13). The re-score record separates them
+(`reports/s164-agent-records/rescore-repaired-gs.md` § 3): the origin
+route moved the recall ceilings and the consensus-only baseline; the
+re-verification moved every post-verifier contrast, including the 384 px
+failure. p values are now those of the paired tile-swap permutation test
+(D42). Obs 433 (Session 142, 2026-08-24) is corrected here, not edited.
+It headed its overlap paragraph "Overlap SURVIVES, at roughly half the
+margin" and wrote that "50 % overlap wins at both tile sizes under the
+full pipeline".
 
 **What was established.** The overlap contrast (12.5 % − 50 %) in F1 at
 20 m on the grid's common 487-tile footprint; brackets are 95 %
@@ -38257,7 +38263,10 @@ any vote, corroboration, or probability threshold.
    512 px (0.0504 / 0.0759) and 0.39 at 384 px (0.0285 / 0.0730). The
    rider Obs 434 later gave the published 512 px baseline as 0.0758,
    which leaves the share at 0.66. The restatement widened the gap (the
-   shares are now 0.655 and 0.356) and moved 384 px just past p 0.05.
+   shares are now 0.655 and 0.356) and moved 384 px just past p 0.05:
+   the re-verification lifted the 384 px / 12.5 % best point most
+   (0.8677 to 0.8761, +0.0084, against about +0.0056 in each of the
+   other three cells), narrowing the 384 px overlap margin.
 3. **Mechanism.** Before verification, overlap's advantage is almost
    the same at both sizes (−0.0766 and −0.0718). The verifier removes
    more of it at 384 px, where the 12.5 % tiling already had the higher
@@ -38277,20 +38286,23 @@ providing.
 **Caveats.** Two tile sizes and one configuration, so "tracks" is
 suggestive, not tested. Best-F1 operating points are selected on the
 same ground truth they are scored on (E41-class). The 384 px failure is
-a near miss: the interval's upper bound is +0.0001. The p values
-changed test between August and now (bootstrap to the D42 permutation
-test), so part of 0.0208 → 0.0541 is the change of test, not the
-restatement. That part is small: on the August sets the permutation p
-was 0.0235 and the interval still ended at −0.0045 (`5986316b5`), so
-most of the move, and the interval reaching zero, come from the
-restatement. The ceilings are the restated ones; Obs 433 quoted ceilings
-of 0.8925 / 0.9509 at 384 px against 0.8715 / 0.9416 at 512 px, in the
-same order.
+a near miss: the interval's upper bound is +0.0001. The p values changed
+test between August and now (bootstrap to the D42 permutation test), but
+that part of 0.0208 → 0.0541 is small: on the August sets the
+permutation p was 0.0235 and the interval still ended at −0.0045
+(`5986316b5`), and under the origin route alone the contrast stays at
+−0.0285, p 0.0235 (`rescore-repaired-gs.md` § 3), so the move to 0.0541,
+and the interval reaching zero, come from the re-verified candidates.
+The ceilings moved with the origin route; Obs 433 quoted ceilings of
+0.8925 / 0.9509 at 384 px against 0.8715 / 0.9416 at 512 px, in the same
+order. Corrected 2026-10-18, before merge: the Context first attributed
+every move to the origin route.
 
 **Findable later.** overlap reversal, grid post-verifier, 384 px fails,
 512 px survives, Obs 433 correction, recall ceiling, corroboration
-filter, verifier redundancy, origin route, D62 (1), 0.0541, permutation
-p 0.0235, share 0.655 / 0.356, ceiling gain +0.0724 / +0.0584.
+filter, verifier redundancy, origin route, re-verified wrong-sheet
+crops, D62 (1), 0.0541, permutation p 0.0235, share 0.655 / 0.356,
+ceiling gain +0.0724 / +0.0584.
 
 **Related.** Obs 433 (corrected here: overlap survives the verifier at
 512 px only); Obs 434 (Obs 433's same-day rider, which supplied the
