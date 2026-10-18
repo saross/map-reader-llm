@@ -88,6 +88,13 @@ them; record corrected on PR #52, `062f92239`). Make the `membership` command re
 of the existing `membership.json` would be dropped for a missing file, with a tier-1 test and a red
 sentinel.
 
+**To do after PR #52 merges (added S165, PI: "a re-score after #52 merges")**: re-score the
+per-student GS baseline on sapphire, $0 API (`scripts/student_perstudent_gs4.py`, then
+`scripts/student_ranking_significance.py`), against the restated Era-2 cells; report what moves
+before any document changes, above all Student A's zone at 20 m (0.8718 against the model's 0.8646,
+which the +0.0099 lift may reverse) and the 50 m cohort lead's significance. A dated note on its
+findings (`71c00d126`, PR #52) holds the old figures meanwhile.
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
