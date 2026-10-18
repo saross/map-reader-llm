@@ -1,0 +1,337 @@
+"""Companion edits to keep findings.md and the MCB deltas report consistent with the
+v2 register outcome. Data plus a validator: each edit is applied, in order, to a
+scratch copy of the committed file (git show HEAD:<path>), and must match once.
+
+Usage: python companion.py <worktree> <outdir>
+Writes <outdir>/<option>/<basename> for option-1 and option-2, and edits.json.
+Placeholders: DXX (the PI's ruling number) and <landing-commit>.
+"""
+import json
+import subprocess
+import sys
+from pathlib import Path
+
+W, OUT = Path(sys.argv[1]), Path(sys.argv[2])
+F = "results/k-ladder-2026-09-12/findings.md"
+D = "reports/k-ladder-mcb-deltas-2026-09-13.md"
+
+# Each edit: (file, options, id, old, new). options: "both", "1" or "2".
+EDITS = [
+    # ---------- findings.md: banner ----------
+    (F, "1", "F-banner",
+     "> **Last revised**: 2026-10-15 (S164 restatement pass, PI ruling D65 (2):",
+     "> **Last revised**: 2026-10-18 (re-signing of the register row\n"
+     "> `k-ladder-2026-09-12`, PI ruling DXX: §§ 8.4 and 8.6 now lead with tier E\n"
+     "> on PI ruling D51's clipped basis, so the verifier absorbs about half of K's\n"
+     "> F1 return, 48.7 %, with 60.3 % as evaluated beside it, and § 8.6 states that\n"
+     "> the two stages are scored against different reference sets (428 and 435\n"
+     "> mounds); § 6.1 corrected to ten ladders, not nine, on which a K = 3 rung can\n"
+     "> be ruled out as best, with its 'never worth its price' and withheld-rung\n"
+     "> wording corrected). Prior: 2026-10-15 (S164 restatement pass, PI ruling D65 (2):"),
+    (F, "2", "F-banner",
+     "> **Last revised**: 2026-10-15 (S164 restatement pass, PI ruling D65 (2):",
+     "> **Last revised**: 2026-10-18 (re-signing of the register row\n"
+     "> `k-ladder-2026-09-12`, PI ruling DXX: tier E keeps the unclipped reading in\n"
+     "> §§ 8.4 and 8.6, with D51's clipped share corrected to 48.7 % beside it and the\n"
+     "> two stages' different reference sets (428 and 435 mounds) stated; § 6.1\n"
+     "> corrected to ten ladders, not nine, on which a K = 3 rung can be ruled out as\n"
+     "> best, with its 'never worth its price' and withheld-rung wording corrected).\n"
+     "> Prior: 2026-10-15 (S164 restatement pass, PI ruling D65 (2):"),
+    # ---------- findings.md § 6.1 ----------
+    (F, "both", "F-6.1-item1",
+     "   cheapest admissible rung is K = 1), nine admit nothing below K = 5, and one\n"
+     "   admits nothing below K = 10. So the review's Pareto reading — K = 3 is on the\n"
+     "   efficient set of every ladder — is a *cost* statement that the simultaneous\n"
+     "   instrument endorses on roughly half the corpus and declines on the other\n"
+     "   half: on nine ladders a K = 3 rung **can** be ruled out as best, even though\n"
+     "   it remains the efficient buy.",
+     "   cheapest admissible rung is K = 1), nine have K = 5 as their cheapest\n"
+     "   admissible rung, and one admits nothing below K = 10. So the review's Pareto\n"
+     "   reading — K = 3 is on the efficient set of every ladder — is a *cost*\n"
+     "   statement that the simultaneous instrument endorses on roughly half the\n"
+     "   corpus and declines on the other half: on ten ladders a K = 3 rung **can** be\n"
+     "   ruled out as best, even though it remains the efficient buy."),
+    (F, "both", "F-6.1-item2",
+     "   have a K = 10 rung admit it. That is the formal counterpart of § 7.4's\n"
+     "   economic finding: the top rung is never statistically *excluded*, it is only\n"
+     "   never *worth* its price.",
+     "   have a K = 10 rung admit it. That is the formal counterpart of § 7.4's\n"
+     "   economic finding: the top rung is never statistically *excluded*, and\n"
+     "   whether it is *worth* its price is a cost question, which §§ 5 and 7.4 answer\n"
+     "   ladder by ladder (the last step is the worst buy on most ladders, not all)."),
+    (F, "both", "F-6.1-withheld",
+     "The tile-join invariant refuses the per-tile TP/FP/FN table of\n"
+     "three of its four rungs on this frame",
+     "The tile-join invariant refuses the per-tile TP/FP/FN table of\n"
+     "three cells on two of its four rungs, K = 1 and K = 3, on this frame"),
+    # ---------- findings.md § 8.4 ----------
+    (F, "1", "F-8.4-restated",
+     "These are the unclipped readings, which this pass restates. Tier E's rungs\n"
+     "searched different areas, and D51's text extends its clip to tier E; on that\n"
+     "clipped basis K = 1 / 3 / 5 / 10 read 0.8604 / 0.8902 / 0.8968 / 0.8942\n"
+     "(K = 1 to 5: `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,\n"
+     "`tier_e` → `d51_clipped`; K = 10, whose clip removes nothing, is recorded in\n"
+     "`reports/s164-agent-records/restatement-pass.md` § 1.4). Which reading tier E\n"
+     "reports is for the PI; the tile-MCC column and the tests below are unclipped.",
+     "These are the unclipped readings, which this pass restates. Tier E's rungs\n"
+     "searched different areas: K = 1, 3 and 5 searched a 37.94 km² band that the\n"
+     "K = 10 union, filtered upstream to the grid study's common footprint, does not\n"
+     "cover. PI ruling D51 compares a ladder's rungs on the area every rung searched\n"
+     "and extends that rule to tier E, so § 8.6 leads with the clipped reading (PI\n"
+     "ruling DXX): K = 1 / 3 / 5 / 10 read 0.8604 / 0.8902 / 0.8968 / 0.8942\n"
+     "(K = 1 to 5: `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,\n"
+     "`tier_e` → `d51_clipped`; that file's K = 10 row, 0.8886, predates the\n"
+     "re-verification, and the restated K = 10 rung's clip removes nothing, since\n"
+     "its `area_removed_km2` is 0, so its clipped value is the 0.8942 below). No\n"
+     "committed artefact yet holds the clipped ladder whole. D51 keeps the frame's\n"
+     "435 reference mounds, 7 of which lie in the band, so every clipped rung is\n"
+     "also scored against 7 mounds outside the area it was clipped to. The table,\n"
+     "the tile-MCC column and the tests below are the unclipped readings, because\n"
+     "no clipped per-tile table exists."),
+    (F, "2", "F-8.4-restated",
+     "`tier_e` → `d51_clipped`; K = 10, whose clip removes nothing, is recorded in\n"
+     "`reports/s164-agent-records/restatement-pass.md` § 1.4). Which reading tier E\n"
+     "reports is for the PI; the tile-MCC column and the tests below are unclipped.",
+     "`tier_e` → `d51_clipped`; that file's K = 10 row, 0.8886, predates the\n"
+     "re-verification, and the restated K = 10 rung's clip removes nothing, since\n"
+     "its `area_removed_km2` is 0, so its clipped value is the 0.8942 below; no\n"
+     "committed artefact yet holds the clipped ladder whole). The PI ruled (DXX)\n"
+     "that tier E reports the unclipped reading, with the clipped one beside it;\n"
+     "the tile-MCC column and the tests below are unclipped."),
+    (F, "1", "F-8.4-item2",
+     "2. **The verifier absorbs about 60 % of K's F1 return and reverses tile-MCC's\n"
+     "   response to it.** § 8.3's consensus-only ladder on this same pool and\n"
+     "   geometry gains **+0.0660** F1 from K = 1 to K = 10 with tile-MCC **rising**\n"
+     "   +0.0444; verified, the same pool gains **+0.0262** with tile-MCC **falling**\n"
+     "   −0.0238. So the verifier takes roughly three-fifths of what extra passes buy\n"
+     "   on F1 — because it was already removing much of what extra passes remove —\n"
+     "   and turns a tile-level *gain* into a tile-level *loss*, a swing of 0.068\n"
+     "   MCC. Before the 2026-10-15 restatement this read about 40 % (+0.0340\n"
+     "   against +0.0572) with a swing of 0.075; on D51's clipped basis the share is\n"
+     "   about 49 % (§ 8.6).",
+     "2. **The verifier absorbs about half of K's F1 return and reverses tile-MCC's\n"
+     "   response to it.** § 8.3's consensus-only ladder on this same pool and\n"
+     "   geometry gains **+0.0660** F1 from K = 1 to K = 10 with tile-MCC **rising**\n"
+     "   +0.0444; verified, the same pool gains **+0.0338** on D51's clipped basis\n"
+     "   (+0.0262 as evaluated) with tile-MCC **falling** −0.0238 (as evaluated). So\n"
+     "   the verifier takes about half of what extra passes buy on F1 (48.7 %; about\n"
+     "   three-fifths, 60.3 %, as evaluated) — because it was already removing much\n"
+     "   of what extra passes remove — and turns a tile-level *gain* into a\n"
+     "   tile-level *loss*, a swing of 0.068 MCC. Before the 2026-10-15 restatement\n"
+     "   this read about 40 % (+0.0340 against +0.0572) with a swing of 0.075\n"
+     "   (§ 8.6)."),
+    (F, "2", "F-8.4-item2",
+     "   against +0.0572) with a swing of 0.075; on D51's clipped basis the share is\n"
+     "   about 49 % (§ 8.6).",
+     "   against +0.0572) with a swing of 0.075; on D51's clipped basis the share is\n"
+     "   48.7 % (§ 8.6)."),
+    # ---------- findings.md § 8.6 ----------
+    (F, "1", "F-8.6-heading",
+     "### 8.6 CLAIM — the verifier absorbs about 60 % of K's F1 return and reverses the sign of "
+     "its tile-MCC effect",
+     "### 8.6 CLAIM — the verifier absorbs about half of K's F1 return and reverses the sign of "
+     "its tile-MCC effect"),
+    (F, "1", "F-8.6-claim",
+     "| **verified** (Gemini 3 verifier) | **+0.0262** | **−0.0238** |\n"
+     "\n"
+     "The verifier therefore **absorbs 60.3 % of K's F1 return** (1 − 0.0262 / 0.0660)\n"
+     "and **reverses the sign of K's tile-MCC effect**, a swing of **0.0682** MCC.",
+     "| **verified** (Gemini 3 verifier), D51's clipped basis | **+0.0338** | **−0.0238** (as "
+     "evaluated) |\n"
+     "| verified, as evaluated | +0.0262 | −0.0238 |\n"
+     "\n"
+     "The verifier therefore **absorbs 48.7 % of K's F1 return** on D51's clipped\n"
+     "basis (1 − 0.033840 / 0.065954, on unrounded values; 60.3 % as evaluated,\n"
+     "1 − 0.026191 / 0.065954) and **reverses the sign of K's tile-MCC effect**, a\n"
+     "swing of **0.0682** MCC. Tile-MCC exists only as evaluated, so the swing is\n"
+     "the same on both readings."),
+    (F, "1", "F-8.6-restated",
+     "(0.8886 → 0.8942; tile-MCC 0.7903 → 0.7973). On PI ruling D51's clipped\n"
+     "basis, which D51's text extends to tier E and which the PI has not yet\n"
+     "applied to it, the verified gain is +0.0338 (0.8604 → 0.8942) and the share\n"
+     "**48.8 %** (1 − 0.0338 / 0.0660); the reading above is the unclipped one, as\n"
+     "this pass restates tier E (§ 8.4), and the choice between them is the PI's.\n"
+     "The tile-MCC figures are the unclipped cells' on either reading (no clipped\n"
+     "tile-MCC exists), so the sign reversal is the same on both.",
+     "(0.8886 → 0.8942; tile-MCC 0.7903 → 0.7973). The 2026-10-15 restatement led\n"
+     "with the unclipped reading. PI ruling D51 compares a ladder's rungs on the\n"
+     "area every rung searched and extends that rule to tier E, so this section\n"
+     "now leads with the clipped reading (PI ruling DXX): the verified gain is\n"
+     "+0.0338 (0.8604 → 0.8942) and the share **48.7 %** (§ 8.4 gives the anchors\n"
+     "and why the clipped K = 10 value is the restated rung's). The tile-MCC\n"
+     "figures are the unclipped cells' on either reading (no clipped tile-MCC\n"
+     "exists), so the sign reversal is the same on both.\n"
+     "\n"
+     "**The two stages are not scored against the same reference set.** The\n"
+     "consensus-only side is scored on the grid study's common footprint against\n"
+     "the 428 reference mounds inside it\n"
+     "(`results/grid-2026-08-18/grid_analysis.json`,\n"
+     "`scope.footprint_audit.common_ground_truth`); tier E is scored against the\n"
+     "frame's 435, which D51 keeps, so each clipped tier E rung is also scored\n"
+     "against 7 mounds outside the area it was clipped to. The clipped reading\n"
+     "matches the consensus side's area but not its references, and the unclipped\n"
+     "reading matches neither."),
+    (F, "2", "F-8.6-restated",
+     "basis, which D51's text extends to tier E and which the PI has not yet\n"
+     "applied to it, the verified gain is +0.0338 (0.8604 → 0.8942) and the share\n"
+     "**48.8 %** (1 − 0.0338 / 0.0660); the reading above is the unclipped one, as\n"
+     "this pass restates tier E (§ 8.4), and the choice between them is the PI's.\n"
+     "The tile-MCC figures are the unclipped cells' on either reading (no clipped\n"
+     "tile-MCC exists), so the sign reversal is the same on both.",
+     "basis, which D51 extends to tier E, the verified gain is +0.0338\n"
+     "(0.8604 → 0.8942) and the share **48.7 %** (1 − 0.033840 / 0.065954, on\n"
+     "unrounded values); the reading above is the unclipped one, which the PI ruled\n"
+     "(DXX) that tier E reports (§ 8.4). The tile-MCC figures are the unclipped\n"
+     "cells' on either reading (no clipped tile-MCC exists), so the sign reversal\n"
+     "is the same on both.\n"
+     "\n"
+     "**The two stages are not scored against the same reference set.** The\n"
+     "consensus-only side is scored on the grid study's common footprint against\n"
+     "the 428 reference mounds inside it\n"
+     "(`results/grid-2026-08-18/grid_analysis.json`,\n"
+     "`scope.footprint_audit.common_ground_truth`); tier E is scored against the\n"
+     "frame's 435, and its K = 1, 3 and 5 rungs also searched the 37.94 km² band\n"
+     "outside that footprint. The clipped reading matches the consensus side's area\n"
+     "but not its references, and the unclipped reading matches neither."),
+    (F, "both", "F-8.6-anchor",
+     "  detections. These are the first and last rows of § 8.4's table.",
+     "  detections. These are the first and last rows of § 8.4's table.\n"
+     "- Verified, D51's clipped basis — **K = 1**\n"
+     "  `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,\n"
+     "  `tier_e.rungs[0].points.opmax.d51_clipped.f1` **0.8604** (453 detections,\n"
+     "  29 removed); **K = 10** the restated rung above, **0.8942**, whose clip\n"
+     "  removes nothing (`tier_e.assessed_area.clip.area_removed_km2` is 0 at\n"
+     "  K = 10). That file's own K = 10 row (0.8886) predates the re-verification;\n"
+     "  read with it, the share would be 57.1 %."),
+    # ---------- findings.md changelog ----------
+    (F, "1", "F-changelog",
+     "## Changelog\n\n### 2026-10-15 — S164 restatement pass:",
+     "## Changelog\n\n"
+     "### 2026-10-18 — Re-signing: tier E on D51's clipped basis, and four corrections\n\n"
+     "**Trigger**: the PI's re-signing of the register row `k-ladder-2026-09-12`\n"
+     "after the S164 restatement (PI ruling DXX). Its redrafted outcome leads with\n"
+     "tier E on PI ruling D51's clipped basis and corrects statements that were\n"
+     "wrong from first publication; this document is brought into line. Landed in\n"
+     "`<landing-commit>`.\n\n"
+     "| Claim | Before | After |\n"
+     "|---|---|---|\n"
+     "| § 8.6 heading; the share the verifier absorbs, leading reading | about 60 %; 60.3 % "
+     "(unclipped) | about half; 48.7 % (D51's clipped basis), with 60.3 % as evaluated beside it "
+     "|\n"
+     "| § 8.6 clipped share | 48.8 % (1 − 0.0338 / 0.0660, on rounded gains) | 48.7 % (1 − "
+     "0.033840 / 0.065954) |\n"
+     "| § 8.4 item 2, verified gain | +0.0262 (about 60 %) | +0.0338 clipped, +0.0262 as evaluated "
+     "(about half) |\n"
+     "| § 6.1 item 1, ladders on which a K = 3 rung can be ruled out as best | nine | ten (nine "
+     "whose cheapest admissible rung is K = 5, one with only K = 10) |\n"
+     "| § 6.1, the withheld family's refused rungs | three of its four rungs | three cells on two "
+     "rungs (K = 1 and K = 3) |\n\n"
+     "**Also**: § 6.1 item 2's \"it is only never *worth* its price\" is replaced,\n"
+     "because the last step is not the worst buy on six of the 23 ladders (the row's\n"
+     "signature note of 2026-10-04, ruling D25). §§ 8.4 and 8.6 now state that the\n"
+     "consensus-only side is scored against 428 reference mounds and tier E against\n"
+     "435, anchor the clipped K = 1 value, and say why the clipped K = 10 value is\n"
+     "the restated rung's.\n\n"
+     "**What did NOT change**: every F1, tile-MCC, cost, tier, admissible set and\n"
+     "test; the sign reversal and the 0.0682 swing; § 8.4's table, which stays on\n"
+     "the unclipped readings. No artefact was regenerated.\n\n"
+     "### 2026-10-15 — S164 restatement pass:"),
+    (F, "2", "F-changelog",
+     "## Changelog\n\n### 2026-10-15 — S164 restatement pass:",
+     "## Changelog\n\n"
+     "### 2026-10-18 — Re-signing: tier E stays unclipped, and four corrections\n\n"
+     "**Trigger**: the PI's re-signing of the register row `k-ladder-2026-09-12`\n"
+     "after the S164 restatement (PI ruling DXX, which keeps tier E on the\n"
+     "unclipped reading with D51's clipped reading beside it). The redrafted\n"
+     "outcome corrects statements that were wrong from first publication; this\n"
+     "document is brought into line. Landed in `<landing-commit>`.\n\n"
+     "| Claim | Before | After |\n"
+     "|---|---|---|\n"
+     "| § 8.6 and § 8.4 item 2, clipped share | 48.8 % (1 − 0.0338 / 0.0660, on rounded gains); "
+     "about 49 % | 48.7 % (1 − 0.033840 / 0.065954) |\n"
+     "| § 6.1 item 1, ladders on which a K = 3 rung can be ruled out as best | nine | ten (nine "
+     "whose cheapest admissible rung is K = 5, one with only K = 10) |\n"
+     "| § 6.1, the withheld family's refused rungs | three of its four rungs | three cells on two "
+     "rungs (K = 1 and K = 3) |\n\n"
+     "**Also**: § 6.1 item 2's \"it is only never *worth* its price\" is replaced,\n"
+     "because the last step is not the worst buy on six of the 23 ladders (the row's\n"
+     "signature note of 2026-10-04, ruling D25). §§ 8.4 and 8.6 record the PI's\n"
+     "choice, state that the consensus-only side is scored against 428 reference\n"
+     "mounds and tier E against 435, and anchor the clipped readings.\n\n"
+     "**What did NOT change**: every F1, tile-MCC, cost, tier, admissible set and\n"
+     "test; § 8.6's leading 60.3 %, the sign reversal and the 0.0682 swing. No\n"
+     "artefact was regenerated.\n\n"
+     "### 2026-10-15 — S164 restatement pass:"),
+    # ---------- MCB deltas report ----------
+    (D, "both", "D-banner",
+     "> **Last revised**: 2026-10-04 (the quoted last-step prices corrected for the K-ladder's "
+     "1,000x units slip). Prior: 2026-09-13 (original publication). See",
+     "> **Last revised**: 2026-10-18 (three statements corrected that were wrong on their own "
+     "date: ten ladders, not nine, admit nothing below K = 5; the top rung is not \"only never "
+     "worth its price\"; and the withheld family's refusal falls on three cells on two rungs, "
+     "not three rungs. § 2's claims table stays as of 2026-09-13). Prior: 2026-10-04 (the quoted "
+     "last-step prices corrected for the K-ladder's 1,000x units slip). Prior: 2026-09-13 "
+     "(original publication). See"),
+    (D, "both", "D-2a-nine",
+     "roughly half the corpus and declined on the other half: on nine ladders nothing\n"
+     "below K = 5 is admissible, even though K = 3 remains the efficient *buy*, so",
+     "roughly half the corpus and declined on the other half: on ten ladders nothing\n"
+     "below K = 5 is admissible (nine whose cheapest admissible rung is K = 5, and\n"
+     "one with only K = 10), even though K = 3 remains the efficient *buy*, so"),
+    (D, "both", "D-2b-worth",
+     "*(b)* The top rung is never statistically excluded, only never worth its price —\n"
+     "the formal counterpart of § 7.4's",
+     "*(b)* The top rung is never statistically excluded; whether it is worth its price\n"
+     "is the cost question answered by § 7.4's"),
+    (D, "both", "D-5-withheld",
+     "- **The withheld cells stay withheld.** The three Gemini 3.7 gold-standard text\n"
+     "  rungs' per-tile table is still refused on this frame,",
+     "- **The withheld cells stay withheld.** The per-tile table of three Gemini 3.7\n"
+     "  gold-standard text cells, on two rungs (K = 1 and K = 3), is still refused on\n"
+     "  this frame,"),
+    (D, "both", "D-changelog",
+     "## Changelog\n\n### 2026-10-04 — WP4b straggler correction",
+     "## Changelog\n\n"
+     "### 2026-10-18 — Three statements wrong on their own date\n\n"
+     "**Trigger**: the re-signing of the register row `k-ladder-2026-09-12` (PI\n"
+     "ruling DXX), whose redrafted outcome corrects the first two. Landed in\n"
+     "`<landing-commit>`.\n\n"
+     "| Claim | Before | After |\n"
+     "|---|---|---|\n"
+     "| ladders on which nothing below K = 5 is admissible, § 2 (a) | nine | ten: nine whose "
+     "cheapest admissible rung is K = 5, and one with only K = 10 (`summary.json` at `b7e2821ba`) "
+     "|\n"
+     "| the withheld family's refusal, § 5 | three rungs | three cells on two rungs (K = 1 and K = "
+     "3) |\n\n"
+     "Reading (b)'s \"only never worth its price\" is replaced: on this document's own\n"
+     "figures the last step was not the worst buy on six of the 23 ladders (the\n"
+     "row's signature note of 2026-10-04, ruling D25). **What did NOT change**:\n"
+     "§ 2's claims table, which stays as of 2026-09-13 (the S164 restatement moved\n"
+     "three of its rows, and the restated values are in\n"
+     "`results/k-ladder-2026-09-12/findings.md` § 6.1), and every MCB set.\n\n"
+     "### 2026-10-04 — WP4b straggler correction"),
+]
+
+
+def apply(option: str):
+    """Apply the edits for one option to scratch copies; return the edited texts."""
+    texts = {p: subprocess.run(["git", "-C", str(W), "show", f"HEAD:{p}"], check=True,
+                               capture_output=True, text=True).stdout for p in (F, D)}
+    for path, opt, eid, old, new in EDITS:
+        if opt not in ("both", option):
+            continue
+        n = texts[path].count(old)
+        assert n == 1, (option, eid, n)
+        texts[path] = texts[path].replace(old, new)
+    return texts
+
+
+for option in ("1", "2"):
+    out = OUT / f"option-{option}"
+    out.mkdir(parents=True, exist_ok=True)
+    for path, text in apply(option).items():
+        (out / Path(path).name).write_text(text)
+    print("option", option, "applied OK")
+(OUT / "edits.json").write_text(json.dumps(
+    [dict(file=f, options=o, id=i, old=a, new=b) for f, o, i, a, b in EDITS],
+    ensure_ascii=False, indent=1))

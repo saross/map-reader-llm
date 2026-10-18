@@ -24,9 +24,14 @@ in `c24d5a04f`.
 | `verify-v1.md` | The independent verification of version 1 (PASS WITH FIXES), whose findings version 2 addresses |
 | `restatement-drafts-verify.md` | The independent verification of all fifteen restatement drafts; § 4.12 is the brief the redraft started from |
 | `scripts/recount.py` | Recounts the SHAPE clause on the restated tables: `python scripts/recount.py <repository root>` |
-| `scripts/build.py` | Builds the outcome from the signed text by exact replacements, each required to match once: `python scripts/build.py <repository root> <output directory>` |
+| `scripts/build2.py` | Builds the version 2 outcome (§ 1) from the signed text by 25 exact replacements, each required to match once: `python scripts/build2.py <repository root> <output directory>` |
+| `scripts/build2_opt2.py` | Builds decision A's Option 2 text (tier E unclipped leads) from `build2.py`'s edits: same arguments |
+| `scripts/companion.py` | Builds the § 7 companion edits for both options and their edit list: same arguments |
+| `scripts/data/companion-edits.json` | The companion edit list as the redraft agent produced it (`companion.py` reproduces it byte for byte) |
 
-Both scripts read only committed files under `results/`.
+The scripts read committed files only (the restated tables under `results/`,
+the register, and the two companion documents) and write only to the output
+directory given.
 
 ## Changelog
 

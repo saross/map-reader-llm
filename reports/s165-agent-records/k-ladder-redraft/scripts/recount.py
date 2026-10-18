@@ -99,8 +99,16 @@ def report(label, ladders):
     rows = analyse(ladders)
     print(f"\n===== {label}: {len(rows)} ladders")
     for r in rows:
-        st = "; ".join(f"{s[0]} {s[1]:+.4f}/${s[2]:.2f}=" + ("LOSS" if s[3] == math.inf else f"${s[3]:.2f}") for s in r["steps"])
-        print(f"{r['name'][:38]:38s} last_dearest={str(r['last_dearest']):5s} loses={str(r['last_loses']):5s} tie={r['tie_inf']} share3={r['share3']:.4f} cost3={r['cshare3']:.4f} | {st}")
+        st = "; ".join(
+            f"{s[0]} {s[1]:+.4f}/${s[2]:.2f}="
+            + ("LOSS" if s[3] == math.inf else f"${s[3]:.2f}")
+            for s in r["steps"]
+        )
+        print(
+            f"{r['name'][:38]:38s} last_dearest={str(r['last_dearest']):5s} "
+            f"loses={str(r['last_loses']):5s} tie={r['tie_inf']} "
+            f"share3={r['share3']:.4f} cost3={r['cshare3']:.4f} | {st}"
+        )
     n = len(rows)
     nd = sum(r["last_dearest"] for r in rows)
     nl = [r["name"] for r in rows if r["last_loses"]]
@@ -109,8 +117,10 @@ def report(label, ladders):
     print(f"-> last step dearest on {nd} of {n}; exceptions: {exc}")
     print(f"-> last step loses F1 on {len(nl)}: {nl}")
     print(f"-> last-step price where it gains: {min(gp):.3f} .. {max(gp):.3f}")
-    print(f"-> K=3 gain share {min(r['share3'] for r in rows):.4f} .. {max(r['share3'] for r in rows):.4f}")
-    print(f"-> K=3 cost share {min(r['cshare3'] for r in rows):.4f} .. {max(r['cshare3'] for r in rows):.4f}")
+    g3 = [r["share3"] for r in rows]
+    print(f"-> K=3 gain share {min(g3):.4f} .. {max(g3):.4f}")
+    c3 = [r["cshare3"] for r in rows]
+    print(f"-> K=3 cost share {min(c3):.4f} .. {max(c3):.4f}")
 
 
 report("RESTATED, GS own frame, P2 reported basis, tier E unclipped",
