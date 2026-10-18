@@ -57,6 +57,14 @@ issues); `floors2_integrity_recheck.py:157` installs the old fast clustering; fr
 55-map GS calibration legs unchecked, the per-student GS baseline; a reply from map-reader-bench to the
 2026-10-13 lessons mail.
 
+**Planned (added S165, 2026-10-18, PI)**: a final readability check of the register's outcome texts
+before the paper draws on them. (a) Texts so terse they are hard to understand (PI: "let's make sure
+that we don't make things so terse that they are hard to understand, later we may need to do a
+readability check"); the PR #52 walk-through glosses labels and units row by row as it goes. (b) PI:
+"check for gotchas and other potentially extraneous or misplaced commentary when we do the final
+readability check", for example `gemini38-screen-armv-2026-09-04`'s closing "Gotchas recorded on the
+card" sentence (cost stamps, retry counting, a meta overwrite).
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
