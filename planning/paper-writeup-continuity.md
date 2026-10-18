@@ -65,6 +65,21 @@ readability check"); the PR #52 walk-through glosses labels and units row by row
 readability check", for example `gemini38-screen-armv-2026-09-04`'s closing "Gotchas recorded on the
 card" sentence (cost stamps, retry counting, a meta overwrite).
 
+**Planned and Observation candidate (added S165, 2026-10-18; PI: "log it as an Observation candidate
+and a to-do and don't do it now ... I think it's worth doing later")**: tile-MCC rankings are
+sensitive to the tile-join convention. The name (`id`) join is the published convention (S153 ruling
+6) and is well defined, and the refusal invariant catches name mismatches; but on the overlapping
+scoring frame (384 px tiles on a 336 px stride, about 31 % of detections in two tiles) the two
+geometric joins raise MCC by about +0.08 to +0.11 on every cell
+(`reports/tile-mcc-geometric-join-2026-09-12.md` § 0) and, measured in S165 from
+`results/tile-join-audit/board-era2-2026-09-12.json` (103 cells), rank agreement with `id` is
+Spearman 0.85 (geometric-primary) and 0.77 (geometric-contains). Against the signed board's MCC Tier
+1, the primary join's top ten are 9 of 10 Tier 1 cells, the contains join's include five Tier 2 and
+one Tier 3 cell, and its leader changes (indicative: only 66 of 103 cells matched to tiers, the two
+files format labels differently). F1 is unaffected. To do: an MCC tiering sensitivity under both
+geometric joins (sapphire, $0 API), then decide how the paper words MCC-ranking claims (MCC Tier 1,
+the MCC crown, 4.11's MCC leader).
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
