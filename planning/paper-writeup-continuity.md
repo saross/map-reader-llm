@@ -80,6 +80,14 @@ files format labels differently). F1 is unaffected. To do: an MCC tiering sensit
 geometric joins (sapphire, $0 API), then decide how the paper words MCC-ranking claims (MCC Tier 1,
 the MCC crown, 4.11's MCC leader).
 
+**To do (added S165, 2026-10-18, PI accepted)**: `scripts/build_gs_era2_board.py`
+`derive_membership()` skips a condition whose detections file is missing on disk and only prints a
+reason, so a run in a partial copy silently shrinks the Era-2 board (the restatement lane's copy
+dropped 12 of 110 members, the headline `pv-diag-384::verified-adv-text-consensus-16of30` among
+them; record corrected on PR #52, `062f92239`). Make the `membership` command refuse when a member
+of the existing `membership.json` would be dropped for a missing file, with a tier-1 test and a red
+sentinel.
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
