@@ -82,13 +82,18 @@ an MCC tiering under both geometric joins, then decide how the paper words MCC-r
 Tier 1, the MCC crown, 4.11's MCC leader, Obs 482's "image leads tile-MCC" in 4.15, and R6-18, whose
 board-level reading already fails at the restated head). F1 is unaffected.
 
-**To do (added S165, 2026-10-18, PI accepted)**: `scripts/build_gs_era2_board.py`
-`derive_membership()` skips a condition whose detections file is missing on disk and only prints a
-reason, so a run in a partial copy silently shrinks the Era-2 board (the restatement lane's copy
-dropped 12 of 110 members, the headline `pv-diag-384::verified-adv-text-consensus-16of30` among
-them; record corrected on PR #52, `062f92239`). Make the `membership` command refuse when a member
-of the existing `membership.json` would be dropped for a missing file, with a tier-1 test and a red
-sentinel.
+**To do: one "partial-copy guards" PR after PR #52 (S165; PI accepted Q5 and Q12, "refuse,
+bundle")**: two tools report success while doing the wrong thing in a partial copy. (1)
+`scripts/build_gs_era2_board.py` `derive_membership()` skips a condition whose detections file is
+missing on disk and only prints a reason, so a partial copy silently shrinks the Era-2 board (the
+restatement lane's copy dropped 12 of 110 members, the headline
+`pv-diag-384::verified-adv-text-consensus-16of30` among them; record corrected on PR #52,
+`062f92239`): make the `membership` command refuse when a member of the existing `membership.json`
+would be dropped for a missing file. (2) `--allow-undetermined-area`
+(`scripts/lib_assessed_area.py`, used by `build_k_ladder_phase2_tables.py`,
+`score_k_ladder_phase2_rungs.py`, `derive_g37_gs_opmax_rungs.py`) let all 14 ladders through
+unclipped, exiting 0, when every area was undetermined: make it exit non-zero when no rung of a
+ladder has a determined area. Each with a tier-1 test and a red sentinel.
 
 **To do after PR #52 merges (added S165, PI: "a re-score after #52 merges")**: re-score the
 per-student GS baseline on sapphire, $0 API (`scripts/student_perstudent_gs4.py`, then
