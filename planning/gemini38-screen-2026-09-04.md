@@ -4,6 +4,15 @@
 > PI approval; Arm V ties the all-3.7 stack, E1 as predicted; PI ruled
 > STOP, Arms P and S not run). See [§ Changelog](#changelog).
 
+**Note, 2026-10-18 (PI ruling D69, restatement record § 10 Q9): figures
+superseded.** The S164 restatement (PR #52) regenerated this screen's
+analyses and pair tests on 2026-10-15; every verdict holds, but the F1
+values and p values quoted below are the originals. The current values
+are in the register row `gemini38-screen-armv-2026-09-04`
+(`results/run-analyses.json`), which is this screen's restated record;
+this card is kept as the design and decision record and is not restated
+figure by figure.
+
 **Question**: does Gemini 3.8 Flash (released 2 September 2026, model id
 `gemini-3.8-flash`) move the Gold Standard (GS) text-only optimum above
 the Gemini 3.7 stack? The 3.7 screen (`planning/gemini37-screen-2026-08-28.md`)
