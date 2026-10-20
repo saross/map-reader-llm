@@ -1,6 +1,9 @@
 # The 55-map generalisation runs — identities, relationships, and assessment coverage
 
-> **Last revised**: 2026-08-20 (the `uuid` hazard's rationale corrected — the
+> **Last revised**: 2026-10-18 (a dated note in the Track-2 results: the
+> regenerated extended-reference cells differ in the fourth decimal on six
+> cells, PI ruling D69). 2026-08-20:
+> (the `uuid` hazard's rationale corrected — the
 > field is float64-mangled record identifiers, not a symbol code; the merged
 > references' column renamed `symbol_code` → `source_id_lossy`, values
 > unchanged; defect D29). See [§ Changelog](#changelog) for revision history.
@@ -178,6 +181,20 @@ Provenance: `results/55maps-extended-gt-2026-06-07/` (`TRACK2-SUMMARY.md`,
 `consolidated-track2.csv`, per-cell `summary.json`); driver
 `scripts/score_55maps_extended_gt_canonical.py`.
 
+**Note, 2026-10-18 (PI ruling D69, restatement record § 10 Q14): a
+fourth-decimal seam.** The S164 restatement regenerated the eight
+extended-reference cells with today's scoring engine (D67 (6)), which promotes
+one fewer reviewer phantom into the extended reference at buffers of 50 m and
+above. F1 at 50 m rises by 8e-05 to 9e-05, so the regenerated
+`TRACK2-SUMMARY.md` and `consolidated-track2.csv` differ in the fourth decimal
+on six cells from this table and from documents that quote the registered
+conditions: IM-k3 0.7987 → 0.7988, T03-k3 0.8476 → 0.8477, T03-k4 0.8359 →
+0.8360, TH7-k4 0.8152 → 0.8153, TM-k3 0.8127 → 0.8128, TM-k4 0.7831 → 0.7832.
+Precision, the tile confusion, MCC, every three-decimal value, every ranking,
+and every tier are unchanged. Those documents keep their values until the
+55-map conditions are next regenerated for a substantive reason; this note is
+the seam's record.
+
 | cell | config | k | role | F1@50m | MCC@50m |
 |---|---|---:|---|---:|---:|
 | TH7-k4 | text-high T0.7 | 4 | carry-forward | 0.8152 | 0.6666 |
@@ -259,6 +276,15 @@ optimism across the four is between +0.0000 and +0.0014, negligible against the
 effects reported.
 
 ## Changelog
+
+### 2026-10-18 — The Track-2 fourth-decimal seam noted
+
+The S164 restatement regenerated the eight extended-reference cells (D67 (6));
+one fewer reviewer phantom at buffers of 50 m and above lifts F1 at 50 m by
+8e-05 to 9e-05, which changes the fourth decimal on six cells. A dated note
+before the Track-2 table records the seam; the table keeps its values, and
+nothing at three decimals moves (PI ruling D69, restatement record § 10 Q14).
+Commit: the one that applies this entry.
 
 ### 2026-08-20 — D29: the uuid diagnosis corrected; column renamed
 
