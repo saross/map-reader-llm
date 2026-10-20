@@ -1,6 +1,6 @@
 # The K-ladder MCB job: what changed, with anchors
 
-> **Last revised**: 2026-10-04 (the quoted last-step prices corrected for the K-ladder's 1,000x units slip). Prior: 2026-09-13 (original publication). See
+> **Last revised**: 2026-10-18 (three statements corrected that were wrong on their own date: ten ladders, not nine, admit nothing below K = 5; the top rung is not "only never worth its price"; and the withheld family's refusal falls on three cells on two rungs, not three rungs. § 2's claims table stays as of 2026-09-13). Prior: 2026-10-04 (the quoted last-step prices corrected for the K-ladder's 1,000x units slip). Prior: 2026-09-13 (original publication). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this reports.** The Principal Investigator (PI) gave two rulings on
@@ -93,11 +93,12 @@ Every figure here is from `results/k-ladder-2026-09-12/mcb/summary.json` (the
 
 **What these say, in four sentences.** *(a)* The review's Pareto reading — K = 3
 on every ladder's efficient set — is endorsed by the simultaneous instrument on
-roughly half the corpus and declined on the other half: on nine ladders nothing
-below K = 5 is admissible, even though K = 3 remains the efficient *buy*, so
+roughly half the corpus and declined on the other half: on ten ladders nothing
+below K = 5 is admissible (nine whose cheapest admissible rung is K = 5, and
+one with only K = 10), even though K = 3 remains the efficient *buy*, so
 "K = 3 is on the efficient set" is a cost claim rather than a statistical one.
-*(b)* The top rung is never statistically excluded, only never worth its price —
-the formal counterpart of § 7.4's US$1,100-to-US$43,000 per 0.001 F1 figures
+*(b)* The top rung is never statistically excluded; whether it is worth its price
+is the cost question answered by § 7.4's US$1,100-to-US$43,000 per 0.001 F1 figures
 (**corrected 2026-10-04**: those are per unit of F1; per 0.001 F1 the last
 steps cost about US$0.21 to US$43, and the last step is the dearest on 17 of
 the 23 ladders, not all — findings §§ 5 and 7.4).
@@ -198,8 +199,9 @@ never be misread as "no rung can be the best".
   change. **The 55-map final board**: untouched.
 - **Every signature field.** The review row's `manually_verified_at` is still
   `null` — it is the PI's to set — and no other register row was edited.
-- **The withheld cells stay withheld.** The three Gemini 3.7 gold-standard text
-  rungs' per-tile table is still refused on this frame, so that family has no
+- **The withheld cells stay withheld.** The per-tile table of three Gemini 3.7
+  gold-standard text cells, on two rungs (K = 1 and K = 3), is still refused on
+  this frame, so that family has no
   admissible set on either metric and is listed rather than dropped
   (`mcb/summary.json` key `withheld`). Lifting it needs the corpus-wide
   tile-join decision, still open.
@@ -223,6 +225,24 @@ never be misread as "no rung can be the best".
 --check` reports up to date.
 
 ## Changelog
+
+### 2026-10-18 — Three statements wrong on their own date
+
+**Trigger**: the re-signing of the register row `k-ladder-2026-09-12` (PI
+ruling D69), whose redrafted outcome corrects the first two.
+Landed in the commit that applies this entry.
+
+| Claim | Before | After |
+|---|---|---|
+| ladders on which nothing below K = 5 is admissible, § 2 (a) | nine | ten: nine whose cheapest admissible rung is K = 5, and one with only K = 10 (`summary.json` at `b7e2821ba`) |
+| the withheld family's refusal, § 5 | three rungs | three cells on two rungs (K = 1 and K = 3) |
+
+Reading (b)'s "only never worth its price" is replaced: on this document's own
+figures the last step was not the worst buy on six of the 23 ladders (the
+row's signature note of 2026-10-04, ruling D25). **What did NOT change**:
+§ 2's claims table, which stays as of 2026-09-13 (the S164 restatement moved
+three of its rows, and the restated values are in
+`results/k-ladder-2026-09-12/findings.md` § 6.1), and every MCB set.
 
 ### 2026-10-04 — WP4b straggler correction
 

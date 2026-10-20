@@ -1,6 +1,17 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-10-15 (S164 restatement pass, PI ruling D65 (2):
+> **Last revised**: 2026-10-18 (re-signing of the register row
+> `k-ladder-2026-09-12`, PI ruling D69: §§ 8.4 and 8.6 now lead with tier E on
+> PI ruling D51's clipped basis, on which verification makes K's observed F1
+> gain 48.7 % smaller, with 60.3 % as evaluated beside it; § 8.6 states that
+> its tile-MCC reversal is the as-evaluated cells' alone, that the two stages
+> are scored against different reference sets (428 and 435 mounds), and that
+> the comparison is consistent with the proposed mechanism rather than a
+> direct measurement of it; § 8.1 restates the 487-tile resolution as two
+> detection rates, not a threshold; § 6.1 corrected to ten ladders, not nine,
+> on which a K = 3 rung can be ruled out as best, with its 'never worth its
+> price' and withheld-rung wording corrected). Prior: 2026-10-15 (S164
+> restatement pass, PI ruling D65 (2):
 > the gold-standard stride A ladder, tier E, the Gemini 3.7 ladder, and § 8's
 > grid and verifier-share figures restated on the pass's regenerated
 > artefacts; seven Phase 2 ladders now reported on PI ruling D51's clipped
@@ -53,7 +64,9 @@
 > (**§ 8 added**: the MINIMAL-ladder
 > tension measured rather than described. The two corpora agree once resolution
 > is accounted for — 487 tiles resolve a ΔF1 of about 0.03 and above, and the
-> nine MINIMAL ladders sort by effect size rather than by corpus — and § 8.4 adds
+> nine MINIMAL ladders sort by effect size rather than by corpus (both corrected
+> 2026-10-18: § 8.1 measures two detection rates, not a threshold, and the
+> sorting holds on the gold-standard ladders, § 8.2) — and § 8.4 adds
 > the verified B-geometry ladder tier E bought for US$4.9595, which is the
 > corpus's 23rd and the first verified MINIMAL ladder on the deployment
 > geometry. Before that: **§ 7.3 amended**: the withheld
@@ -841,16 +854,17 @@ which has no per-tile table (for the PI).
 
 1. **K = 3 is admissible on 12 of the 22 ladders, and is the CHEAPEST
    admissible rung on 10 of them.** Two more admit K = 1 as well (so their
-   cheapest admissible rung is K = 1), nine admit nothing below K = 5, and one
-   admits nothing below K = 10. So the review's Pareto reading — K = 3 is on the
-   efficient set of every ladder — is a *cost* statement that the simultaneous
-   instrument endorses on roughly half the corpus and declines on the other
-   half: on nine ladders a K = 3 rung **can** be ruled out as best, even though
-   it remains the efficient buy.
+   cheapest admissible rung is K = 1), nine have K = 5 as their cheapest
+   admissible rung, and one admits nothing below K = 10. So the review's Pareto
+   reading — K = 3 is on the efficient set of every ladder — is a *cost*
+   statement that the simultaneous instrument endorses on roughly half the
+   corpus and declines on the other half: on ten ladders a K = 3 rung **can** be
+   ruled out as best, even though it remains the efficient buy.
 2. **No ladder's F1-admissible set excludes K = 10.** All twenty ladders that
    have a K = 10 rung admit it. That is the formal counterpart of § 7.4's
-   economic finding: the top rung is never statistically *excluded*, it is only
-   never *worth* its price.
+   economic finding: the top rung is never statistically *excluded*, and
+   whether it is *worth* its price is a cost question, which §§ 5 and 7.4 answer
+   ladder by ladder (the last step is the worst buy on most ladders, not all).
 3. **K = 1 is ruled out on F1 on 20 of 22 ladders, and admissible on tile-MCC on
    22 of 22.** It holds the highest tile-MCC on 13 of the 22 and is never ruled
    out on it. This is the review's "the two objectives select different rungs"
@@ -889,7 +903,7 @@ one", and on two of those four ladders it is not.
 **Withheld, and listed.** The twenty-third ladder — the Gemini 3.7
 gold-standard text screen (`g384_ov192_g37`) — has **no admissible set on
 either metric**. The tile-join invariant refuses the per-tile TP/FP/FN table of
-three of its four rungs on this frame
+three cells on two of its four rungs, K = 1 and K = 3, on this frame
 (`gemini37-screen-2026-08-28::g37-text-k1-verified-opmax`,
 `…::g37-text-k1-verified-carried-p0.10-k1`, `…::g37-text-k3-verified-opmax`),
 and the refusal falls on the **F1** arm as well as the MCC arm, leaving two
@@ -1270,9 +1284,14 @@ standard deviation of ΔF1 is the same on both ladders, ≈ 0.0114, because it i
 property of scoring 487 tiles rather than of the ladder. An effect of +0.019
 therefore sits about 1.7 standard deviations from zero and is detected in fewer
 than one draw in five; an effect of +0.055 sits about 4.7 out and is detected in
-almost every draw. **At 487 tiles this instrument resolves a ΔF1 of roughly
-0.03 and above, and does not resolve one below it** — and that is measured on
-cells whose full-corpus p-value is below the permutation floor.
+almost every draw. **These are detection rates for two effects, not a
+threshold**: at 487 tiles a gain of +0.055 is detected in 98.5 % of draws and
+one of +0.019 in 19.5 %, both measured on cells whose full-corpus p-value is
+below the permutation floor. They place the 487-tile resolution limit between
+the two effects without fixing it, and § 8.2's gold-standard ladders show
+effects between them falling on either side (+0.0338 separates, +0.0384 does
+not). Until 2026-10-18 this paragraph read the two rates as a threshold,
+"roughly 0.03 and above", which they do not establish.
 
 ### 8.2 The effect sizes, both corpora side by side
 
@@ -1384,12 +1403,20 @@ regenerated verified set (PI ruling D62 (1)'s re-verified rows; `f6f10d605`,
 re-scored `f53f6e97c`). Every rung keeps its operating point: no opmax argmax
 moved, and the K = 10 rung keeps its registered point (PI ruling D65 (3)).
 These are the unclipped readings, which this pass restates. Tier E's rungs
-searched different areas, and D51's text extends its clip to tier E; on that
-clipped basis K = 1 / 3 / 5 / 10 read 0.8604 / 0.8902 / 0.8968 / 0.8942
+searched different areas: K = 1, 3 and 5 searched a 37.94 km² band that the
+K = 10 union, filtered upstream to the grid study's common footprint, does not
+cover. PI ruling D51 compares a ladder's rungs on the area every rung searched
+and extends that rule to tier E, so § 8.6 leads with the clipped reading (PI
+ruling D69): K = 1 / 3 / 5 / 10 read 0.8604 / 0.8902 / 0.8968 / 0.8942
 (K = 1 to 5: `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,
-`tier_e` → `d51_clipped`; K = 10, whose clip removes nothing, is recorded in
-`reports/s164-agent-records/restatement-pass.md` § 1.4). Which reading tier E
-reports is for the PI; the tile-MCC column and the tests below are unclipped.
+`tier_e` → `d51_clipped`; that file's K = 10 row, 0.8886, predates the
+re-verification, and the restated K = 10 rung's clip removes nothing, since
+its `area_removed_km2` is 0, so its clipped value is the 0.8942 below). No
+committed artefact yet holds the clipped ladder whole. D51 keeps the frame's
+435 reference mounds, 7 of which lie in the band, so every clipped rung is
+also scored against 7 mounds outside the area it was clipped to. The table,
+the tile-MCC column and the tests below are the unclipped readings, because
+no clipped per-tile table exists.
 
 | K | candidates | opmax (k, p) | n | F1@20 | tile-MCC | verifier leg, audited flex |
 |---:|---:|---|---:|---:|---:|---:|
@@ -1435,23 +1462,24 @@ on none**, while falling **monotonically across all four rungs**: 0.8211 →
    significantly. § 4's mechanism predicts exactly this, and the monotone MCC
    decline across four rungs is the cleanest instance of it in the corpus —
    every one of the three MCC steps is negative.
-2. **The verifier absorbs about 60 % of K's F1 return and reverses tile-MCC's
-   response to it.** § 8.3's consensus-only ladder on this same pool and
-   geometry gains **+0.0660** F1 from K = 1 to K = 10 with tile-MCC **rising**
-   +0.0444; verified, the same pool gains **+0.0262** with tile-MCC **falling**
-   −0.0238. So the verifier takes roughly three-fifths of what extra passes buy
-   on F1 — because it was already removing much of what extra passes remove —
-   and turns a tile-level *gain* into a tile-level *loss*, a swing of 0.068
-   MCC. Before the 2026-10-15 restatement this read about 40 % (+0.0340
-   against +0.0572) with a swing of 0.075; on D51's clipped basis the share is
-   about 49 % (§ 8.6).
+2. **After the verifier, K's observed F1 gain is about half as large, and its
+   tile-MCC effect reverses on the cells as evaluated.** § 8.3's consensus-only
+   ladder on this same pool and geometry gains **+0.0660** F1 from K = 1 to
+   K = 10 with tile-MCC **rising** +0.0444; verified, the same pool gains
+   **+0.0338** on D51's clipped basis (+0.0262 as evaluated) with tile-MCC
+   **falling** −0.0238 (as evaluated). So the observed F1 gain from extra
+   passes is 48.7 % smaller once verified (60.3 % as evaluated), consistent
+   with the verifier already removing much of what extra passes remove, and
+   on the cells as evaluated a tile-level *gain* becomes a tile-level *loss*,
+   a swing of 0.068 MCC. Before the 2026-10-15 restatement this read about
+   40 % (+0.0340 against +0.0572) with a swing of 0.075 (§ 8.6).
    This is the measurement § 8.3 asked for, and it is consistent with the grid
    study's own registered finding that consensus and the verifier are partial
    substitutes.
 3. **It refines § 8.1's resolution estimate rather than confirming it exactly.**
    This ladder resolves **+0.0299** at BH p = 0.0036 and, for K = 1 → 10,
-   **+0.0262** at BH p = 0.0292, both below the ≈ 0.03 § 8.1 measured,
-   while MINIMAL image T 1.0 does not resolve **+0.0384**. So the
+   **+0.0262** at BH p = 0.0292, both between § 8.1's two measured effects
+   (+0.019 and +0.055), while MINIMAL image T 1.0 does not resolve **+0.0384**. So the
    487-tile limit is a band, not a threshold, and it varies between ladders with
    their variance — which is what § 8.5 says and why it is stated as a
    resolution rather than a cut-off.
@@ -1521,7 +1549,7 @@ What is **not** established, stated so the reading is not over-claimed:
   the verified ladders.** It is measured at one thinking level, one temperature,
   one corpus and one modality, and the verified ladders order the other way.
 
-### 8.6 CLAIM — the verifier absorbs about 60 % of K's F1 return and reverses the sign of its tile-MCC effect
+### 8.6 CLAIM — after the verifier, K's observed F1 gain is about half as large and its tile-MCC effect reverses (as evaluated)
 
 Stated as a claim of its own on the PI's ruling of 2026-09-13, because § 8.3 and
 § 8.4 each measure one half of it and neither is the comparison. The four
@@ -1534,10 +1562,15 @@ are given so the next reader need not trust the prose.
 | stage | ΔF1@20, K = 1 → 10 | Δtile-MCC, K = 1 → 10 |
 |---|---:|---:|
 | **consensus only** (no verifier) | **+0.0660** | **+0.0444** |
-| **verified** (Gemini 3 verifier) | **+0.0262** | **−0.0238** |
+| **verified** (Gemini 3 verifier), D51's clipped basis | **+0.0338** | **−0.0238** (as evaluated) |
+| verified, as evaluated | +0.0262 | −0.0238 |
 
-The verifier therefore **absorbs 60.3 % of K's F1 return** (1 − 0.0262 / 0.0660)
-and **reverses the sign of K's tile-MCC effect**, a swing of **0.0682** MCC.
+On these scoring bases the observed F1 gain from extra passes is therefore
+**48.7 % smaller** once verified (1 − 0.033840 / 0.065954, on unrounded values;
+60.3 % as evaluated, 1 − 0.026191 / 0.065954), and on the cells as evaluated
+**the sign of K's tile-MCC effect reverses**, a swing of **0.0682** MCC. The
+0.0682 MCC swing and sign reversal refer only to the as-evaluated cells.
+Clipped tile-MCC has not been computed, so its sign and magnitude are unknown.
 
 **Restated 2026-10-15: the size changes, the direction does not.** Before the
 S164 restatement this section read **40.6 %** (1 − 0.0340 / 0.0572) and a
@@ -1545,13 +1578,25 @@ swing of **0.0752**, so the claim's "about 40 %" **no longer holds**. Both
 stages moved: the consensus-only K = 10 rung on the regenerated grid sweep
 (0.7205 → 0.7293), the verified K = 1 rung under PI ruling D50
 (0.8546 → 0.8680), and the verified K = 10 rung on the re-verified set
-(0.8886 → 0.8942; tile-MCC 0.7903 → 0.7973). On PI ruling D51's clipped
-basis, which D51's text extends to tier E and which the PI has not yet
-applied to it, the verified gain is +0.0338 (0.8604 → 0.8942) and the share
-**48.8 %** (1 − 0.0338 / 0.0660); the reading above is the unclipped one, as
-this pass restates tier E (§ 8.4), and the choice between them is the PI's.
-The tile-MCC figures are the unclipped cells' on either reading (no clipped
-tile-MCC exists), so the sign reversal is the same on both.
+(0.8886 → 0.8942; tile-MCC 0.7903 → 0.7973). The 2026-10-15 restatement led
+with the unclipped reading. PI ruling D51 compares a ladder's rungs on the
+area every rung searched and extends that rule to tier E, so this section
+now leads with the clipped reading (PI ruling D69): the verified gain is
++0.0338 (0.8604 → 0.8942) and the reduction **48.7 %** (§ 8.4 gives the
+anchors and why the clipped K = 10 value is the restated rung's).
+The tile-MCC figures are the as-evaluated cells' on either reading: clipped
+tile-MCC has not been computed, so whether the sign reversal holds on the
+clipped basis is unknown.
+
+**The two stages are not scored against the same reference set.** The
+consensus-only side is scored on the grid study's common footprint against
+the 428 reference mounds inside it
+(`results/grid-2026-08-18/grid_analysis.json`,
+`scope.footprint_audit.common_ground_truth`); tier E is scored against the
+frame's 435, which D51 keeps, so each clipped tier E rung is also scored
+against 7 mounds outside the area it was clipped to. The clipped reading
+matches the consensus side's area but not its references, and the unclipped
+reading matches neither.
 
 **Anchors, one per number.**
 
@@ -1569,8 +1614,15 @@ tile-MCC exists), so the sign reversal is the same on both.
   `results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json`,
   F1@20 **0.8942**, `summary.tile_classification.mcc.point` **0.7973**, 406
   detections. These are the first and last rows of § 8.4's table.
+- Verified, D51's clipped basis — **K = 1**
+  `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,
+  `tier_e.rungs[0].points.opmax.d51_clipped.f1` **0.8604** (453 detections,
+  29 removed); **K = 10** the restated rung above, **0.8942**, whose clip
+  removes nothing (`tier_e.assessed_area.clip.area_removed_km2` is 0 at
+  K = 10). That file's own K = 10 row (0.8886) predates the re-verification;
+  read with it, the reduction would be 57.1 %.
 
-**The mechanism, in two sentences.** A consensus-only union at a tuned vote
+**The proposed mechanism, in two sentences.** A consensus-only union at a tuned vote
 threshold is precision-starved, so an extra pass mostly adds true positives in
 tiles that were predicted negative, which raises F1 and tile-MCC together. Once
 a verifier has already removed most of the false positives that extra passes
@@ -1579,8 +1631,10 @@ disproportionately false positives in tiles that were correctly negative — so
 tile-MCC falls while F1 still rises.
 
 **What it is evidence for, and its limits.** This is the corpus's cleanest
-evidence that **tile-MCC's response to K is a property of the pipeline stage
-rather than of K** — compare § 4 and § 4.3, where tile-MCC falls on 16 of 21
+evidence that, on this pool, **tile-MCC's response to K depends on the pipeline
+stage rather than on K alone**. It is consistent with the proposed mechanism
+above but does not measure it directly, and its tile-MCC half rests on the
+as-evaluated cells — compare § 4 and § 4.3, where tile-MCC falls on 16 of 21
 verified ladders (as evaluated; 10 of 15 on D51's clipped basis), against
 § 8.3's four consensus-only ladders, where it rises at every geometry. It is
 also the first measurement on a K ladder of the partial
@@ -1593,6 +1647,36 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-18 — Re-signing: tier E on D51's clipped basis; claims qualified
+
+**Trigger**: the PI's re-signing of the register row `k-ladder-2026-09-12`
+after the S164 restatement (PI ruling D69). Its redrafted outcome leads with
+tier E on PI ruling D51's clipped basis and corrects statements that were
+wrong or too broad from first publication; this document is brought into
+line. Landed in the commit that applies this entry.
+
+| Claim | Before | After |
+|---|---|---|
+| § 8.6 heading and claim | the verifier absorbs about 60 % (60.3 %, unclipped); the sign reversal "the same on both" readings | K's observed F1 gain about half as large: 48.7 % smaller on D51's clipped basis, 60.3 % as evaluated; the reversal stated for the as-evaluated cells only |
+| § 8.6 clipped reduction | 48.8 % (1 − 0.0338 / 0.0660, on rounded gains) | 48.7 % (1 − 0.033840 / 0.065954) |
+| § 8.4 item 2, verified gain | +0.0262 (about 60 %) | +0.0338 clipped, +0.0262 as evaluated (about half) |
+| § 8.1, 487-tile resolution | "resolves a ΔF1 of roughly 0.03 and above, and does not resolve one below it" | two detection rates, 98.5 % at +0.055 and 19.5 % at +0.019, not a threshold |
+| § 6.1 item 1, ladders on which a K = 3 rung can be ruled out as best | nine | ten (nine whose cheapest admissible rung is K = 5, one with only K = 10) |
+| § 6.1, the withheld family's refused rungs | three of its four rungs | three cells on two rungs (K = 1 and K = 3) |
+
+**Also**: § 6.1 item 2's "it is only never *worth* its price" is replaced,
+because the last step is not the worst buy on six of the 23 ladders (the row's
+signature note of 2026-10-04, ruling D25). § 8.6 calls its mechanism proposed
+and the comparison consistent with it rather than a direct measurement, and
+with § 8.4 states that the consensus-only side is scored against 428
+reference mounds and tier E against 435. § 8.4 item 3 refers to § 8.1's two
+measured effects. The banner's 2026-09-12 summary of § 8 carries a
+correction tag rather than a rewrite.
+
+**What did NOT change**: every F1, tile-MCC, cost, tier, admissible set and
+test; the 0.0682 swing on the as-evaluated cells; § 8.4's table, which stays
+on the unclipped readings. No artefact was regenerated.
 
 ### 2026-10-15 — S164 restatement pass: the GS ladders, tier E, the 3.7 ladder, and § 8 restated
 
