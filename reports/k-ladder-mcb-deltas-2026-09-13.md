@@ -1,6 +1,12 @@
 # The K-ladder MCB job: what changed, with anchors
 
-> **Last revised**: 2026-10-18 (three statements corrected that were wrong on their own date: ten ladders, not nine, admit nothing below K = 5; the top rung is not "only never worth its price"; and the withheld family's refusal falls on three cells on two rungs, not three rungs. § 2's claims table stays as of 2026-09-13). Prior: 2026-10-04 (the quoted last-step prices corrected for the K-ladder's 1,000x units slip). Prior: 2026-09-13 (original publication). See
+> **Last revised**: 2026-10-18 (three statements corrected that were
+> wrong on their own date: ten ladders, not nine, admit nothing below K
+> = 5; the top rung is not "only never worth its price"; and the
+> withheld family's refusal falls on three cells on two rungs, not three
+> rungs. § 2's claims table stays as of 2026-09-13). Prior: 2026-10-04
+> (the quoted last-step prices corrected for the K-ladder's 1,000x units
+> slip). Prior: 2026-09-13 (original publication). See
 > [§ Changelog](#changelog) for revision history.
 
 **What this reports.** The Principal Investigator (PI) gave two rulings on
