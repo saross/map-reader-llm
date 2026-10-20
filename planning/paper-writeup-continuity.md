@@ -112,6 +112,12 @@ tests; regenerate the E72 board and report Group 7 before any document changes. 
 than the MCC robustness job (an exploratory family at the 0.05 edge; the registered family FDR does
 not move).
 
+**To do (S165, PI "queue the 'Nonepx' glitch for fixing later")**:
+`results/working-precision/gs-plateau-characterisation.md` groups six conditions under a "Nonepx"
+label because their tile size is missing (`None`) where `scripts/characterise_gs_plateau.py` reads
+it; find the six, fill the tile size from the conditions' provenance (or label the group "tile size
+not recorded"), and regenerate.
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
