@@ -1,6 +1,7 @@
 # D65 (2): the restatement pass (S164)
 
-> **Last revised**: 2026-10-18 (§ 1.3 and § 5 item 9 corrected: the board's
+> **Last revised**: 2026-10-20 (§ 5 item 14 corrected: the plateau
+> characterisation drops no row). 2026-10-18 (§ 1.3 and § 5 item 9 corrected: the board's
 > membership does not drift; the 98 was an artefact of a partial copy).
 > 2026-10-15 (the results half: lanes, verdicts, drafted
 > outcomes, claim rows, surprises; the pass complete apart from § 11). See
@@ -2087,6 +2088,15 @@ explained away.
     which the pass restates to 0.8747) from the analysed set without an
     explanation found. It was not committed; § 10 item 16.
 
+    **Corrected 2026-10-20 (Session 165):** nothing is dropped.
+    Regenerated on the full branch checkout, the characterisation
+    analyses the same 459 conditions as the committed file,
+    `g37-text-k1-verified-opmax` among them; that cell only leaves the
+    late-plateau table (onset at 50 m or later), because its restated
+    curve plateaus earlier. The 65 extra skipped conditions are the
+    non-GS registrations since the file was built. The PI ruled to
+    regenerate it in this PR (D69, § 10 Q16).
+
 ## 6. Claim rows affected (the inventory is not edited)
 
 The Results claims inventory
@@ -2428,6 +2438,16 @@ planning cards that quote moved values as of their dates; the list is
   item 14), kept on sapphire at `lead2/plateauA/`.
 
 ## Changelog
+
+### 2026-10-20 — The plateau characterisation's "dropped" row corrected (Session 165)
+
+§ 5 item 14 said the GS plateau characterisation drops
+`g37-text-k1-verified-opmax` from its analysed set without an
+explanation. Regenerated on the full checkout, it analyses the same 459
+conditions; the cell only leaves the late-plateau table because its
+restated curve plateaus earlier. § 5 item 14 gains a dated correction,
+and the characterisation is regenerated in this PR on the PI's ruling
+(D69, § 10 Q16). Commit: the one that applies this entry.
 
 ### 2026-10-18 — The membership drift corrected (Session 165)
 
