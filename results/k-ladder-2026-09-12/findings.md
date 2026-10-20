@@ -1,6 +1,8 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-10-18 (re-signing of the register row
+> **Last revised**: 2026-10-18 (later: §§ 1, 4.3 and 7.2 no longer say § 4.1
+> found no significant tile-MCC change; it found three significant falls, PI
+> ruling D69). Earlier the same day: (re-signing of the register row
 > `k-ladder-2026-09-12`, PI ruling D69: §§ 8.4 and 8.6 now lead with tier E on
 > PI ruling D51's clipped basis, on which verification makes K's observed F1
 > gain 48.7 % smaller, with 60.3 % as evaluated beside it; § 8.6 states that
@@ -11,85 +13,82 @@
 > detection rates, not a threshold; § 6.1 corrected to ten ladders, not nine,
 > on which a K = 3 rung can be ruled out as best, with its 'never worth its
 > price' and withheld-rung wording corrected). Prior: 2026-10-15 (S164
-> restatement pass, PI ruling D65 (2):
-> the gold-standard stride A ladder, tier E, the Gemini 3.7 ladder, and § 8's
-> grid and verifier-share figures restated on the pass's regenerated
-> artefacts; seven Phase 2 ladders now reported on PI ruling D51's clipped
-> basis with their tile-MCC withheld. **Readings that change**: the verifier
-> absorbs 60.3 % of K's F1 return on tier E, not 40.6 % (§ 8.6); the 3.7
-> family's last step costs about US$22 per 0.001 F1, not US$43, and is no
-> longer the corpus's dearest step (§ 7.4); tier E's tile-MCC admissible set
-> now admits K = 10 (§ 6.1); and § 7.3's "cannot be run at all" no longer
-> holds. The 55-map ladders do not move.) Prior: 2026-10-07 (a stale cell in
-> `phase2/operating-points.json` recorded in the changelog; no number in
-> this document moved; the cell is fixed in the 2026-10-15 pass).
-> Prior: 2026-10-04 (later: § 1's "six of the eight" corrected to
-> five, and § 7.4's Phase 2 gain-share ceiling to 91 %, after the builder's
-> double rounding was fixed under PI ruling D27). Earlier the same day:
-> (**every cost re-priced** from the passes
-> register at the uniform discounted tier, under PI ruling D19 as amended
-> 2026-10-04 and the row's signature note of that day: §§ 1, 2, 3.1–3.4, 5
-> and 7.4. The fourth cell's ladder (§ 3.3) now carries its own costs rather
-> than stride B's; the 3.7 arms' K = 1 and K = 3 rungs price their own unions.
-> **Two corrections**: a 1,000× units slip in §§ 5 and 7.4 (US$17,400 and
-> US$43,000 per 0.001 F1 were per unit of F1: US$17 and US$43), and two
-> universal claims that the data do not support — K = 10's step is not the
-> smallest on every ladder (§ 5), and the last step is not the worst buy on
-> every ladder (§ 7.4). No F1, tile-MCC, tier or admissible set moves.)
-> Prior: 2026-09-13 (latest — **§ 7.3 amended** after the
-> recovery-fragment fix `75d7c8d4c` rebuilt the three refused rungs' proposer
-> unions: **no number in this document moves**, and the amendment records the
-> sharper finding that the tile-join refusal now **blocks correction** as well as
-> reporting, because `evaluate_detections.py` cannot run on those three cells at
-> all — so the open tile-join ruling is a prerequisite for repairing them. The
-> one figure that did move, the K = 3 rung's F1@20 0.8870 → 0.8860, is not quoted
-> anywhere here. Measured:
+> restatement pass, PI ruling D65 (2): the gold-standard stride A ladder, tier
+> E, the Gemini 3.7 ladder, and § 8's grid and verifier-share figures restated
+> on the pass's regenerated artefacts; seven Phase 2 ladders now reported on
+> PI ruling D51's clipped basis with their tile-MCC withheld. **Readings that
+> change**: the verifier absorbs 60.3 % of K's F1 return on tier E, not 40.6 %
+> (§ 8.6); the 3.7 family's last step costs about US$22 per 0.001 F1, not
+> US$43, and is no longer the corpus's dearest step (§ 7.4); tier E's tile-MCC
+> admissible set now admits K = 10 (§ 6.1); and § 7.3's "cannot be run at all"
+> no longer holds. The 55-map ladders do not move.) Prior: 2026-10-07 (a stale
+> cell in `phase2/operating-points.json` recorded in the changelog; no number
+> in this document moved; the cell is fixed in the 2026-10-15 pass). Prior:
+> 2026-10-04 (later: § 1's "six of the eight" corrected to five, and § 7.4's
+> Phase 2 gain-share ceiling to 91 %, after the builder's double rounding was
+> fixed under PI ruling D27). Earlier the same day: (**every cost re-priced**
+> from the passes register at the uniform discounted tier, under PI ruling D19
+> as amended 2026-10-04 and the row's signature note of that day: §§ 1, 2,
+> 3.1–3.4, 5 and 7.4. The fourth cell's ladder (§ 3.3) now carries its own
+> costs rather than stride B's; the 3.7 arms' K = 1 and K = 3 rungs price
+> their own unions. **Two corrections**: a 1,000× units slip in §§ 5 and 7.4
+> (US$17,400 and US$43,000 per 0.001 F1 were per unit of F1: US$17 and US$43),
+> and two universal claims that the data do not support — K = 10's step is not
+> the smallest on every ladder (§ 5), and the last step is not the worst buy
+> on every ladder (§ 7.4). No F1, tile-MCC, tier or admissible set moves.)
+> Prior: 2026-09-13 (latest — **§ 7.3 amended** after the recovery-fragment
+> fix `75d7c8d4c` rebuilt the three refused rungs' proposer unions: **no
+> number in this document moves**, and the amendment records the sharper
+> finding that the tile-join refusal now **blocks correction** as well as
+> reporting, because `evaluate_detections.py` cannot run on those three cells
+> at all — so the open tile-join ruling is a prerequisite for repairing them.
+> The one figure that did move, the K = 3 rung's F1@20 0.8870 → 0.8860, is not
+> quoted anywhere here. Measured:
 > `results/k-ladder-2026-09-12/recovery-fix-2026-09-13/`; reported:
-> `reports/recovery-drop-fix-2026-09-13.md`. Earlier that day — the PI's two rulings of 2026-09-13
-> executed, and **the row is ready for signature**: **§ 6.1 gains the per-family
-> Hsu MCB admissible sets** for all 22 tiered ladders on F1 and tile-MCC, run
-> with the Era-2 board's own MCB step on each ladder's own frame — K = 3
-> admissible on 12 of 22 and the cheapest admissible rung on 10, **no** ladder's
-> F1 set excludes K = 10, K = 1 ruled out on F1 on 20 of 22 and admissible on
-> tile-MCC on **22 of 22**, three 3.7 GS text rungs withheld by the tile-join
-> invariant; and **the carried convention is settled** — the stride ladder's own
-> vote shell is the carried point, `k = K` stays as a disclosed column, no number
-> recomputed (§ 7.5, § 3's new disclosure table, `phase2/ladder-tables.md`).
-> Prior: 2026-09-13 (**§ 8.6 added** on the PI's ruling: the
-> verifier-stage reversal stated as a claim with per-number anchors — K = 1 → 10
-> raises F1 by +0.0572 consensus-only with tile-MCC rising +0.0444, and by
-> +0.0340 verified with tile-MCC falling −0.0308, so the verifier absorbs 40.6 %
-> of K's F1 return and reverses the sign of its tile-MCC effect; and **§ 3.3's
-> K = 5 row filled** for stride B under the 3.7 verifier. Prior: 2026-09-12
-> (**§ 8 added**: the MINIMAL-ladder
-> tension measured rather than described. The two corpora agree once resolution
-> is accounted for — 487 tiles resolve a ΔF1 of about 0.03 and above, and the
-> nine MINIMAL ladders sort by effect size rather than by corpus (both corrected
-> 2026-10-18: § 8.1 measures two detection rates, not a threshold, and the
-> sorting holds on the gold-standard ladders, § 8.2) — and § 8.4 adds
-> the verified B-geometry ladder tier E bought for US$4.9595, which is the
-> corpus's 23rd and the first verified MINIMAL ladder on the deployment
-> geometry. Before that: **§ 7.3 amended**: the withheld
-> tile-MCC question is now measured across all 149 committed cells the board
-> reads, only these three are affected, the scorer refuses rather than
-> emitting, and repair is confirmed to be a corpus-wide decision — see
+> `reports/recovery-drop-fix-2026-09-13.md`. Earlier that day — the PI's two
+> rulings of 2026-09-13 executed, and **the row is ready for signature**: **§
+> 6.1 gains the per-family Hsu MCB admissible sets** for all 22 tiered ladders
+> on F1 and tile-MCC, run with the Era-2 board's own MCB step on each ladder's
+> own frame — K = 3 admissible on 12 of 22 and the cheapest admissible rung on
+> 10, **no** ladder's F1 set excludes K = 10, K = 1 ruled out on F1 on 20 of
+> 22 and admissible on tile-MCC on **22 of 22**, three 3.7 GS text rungs
+> withheld by the tile-join invariant; and **the carried convention is
+> settled** — the stride ladder's own vote shell is the carried point, `k = K`
+> stays as a disclosed column, no number recomputed (§ 7.5, § 3's new
+> disclosure table, `phase2/ladder-tables.md`). Prior: 2026-09-13 (**§ 8.6
+> added** on the PI's ruling: the verifier-stage reversal stated as a claim
+> with per-number anchors — K = 1 → 10 raises F1 by +0.0572 consensus-only
+> with tile-MCC rising +0.0444, and by +0.0340 verified with tile-MCC falling
+> −0.0308, so the verifier absorbs 40.6 % of K's F1 return and reverses the
+> sign of its tile-MCC effect; and **§ 3.3's K = 5 row filled** for stride B
+> under the 3.7 verifier. Prior: 2026-09-12 (**§ 8 added**: the MINIMAL-ladder
+> tension measured rather than described. The two corpora agree once
+> resolution is accounted for — 487 tiles resolve a ΔF1 of about 0.03 and
+> above, and the nine MINIMAL ladders sort by effect size rather than by
+> corpus (both corrected 2026-10-18: § 8.1 measures two detection rates, not a
+> threshold, and the sorting holds on the gold-standard ladders, § 8.2) — and
+> § 8.4 adds the verified B-geometry ladder tier E bought for US$4.9595, which
+> is the corpus's 23rd and the first verified MINIMAL ladder on the deployment
+> geometry. Before that: **§ 7.3 amended**: the withheld tile-MCC question is
+> now measured across all 149 committed cells the board reads, only these
+> three are affected, the scorer refuses rather than emitting, and repair is
+> confirmed to be a corpus-wide decision — see
 > `reports/tile-mcc-geometric-join-2026-09-12.md`)). Before that: **§ 7 added:
-> the fourteen four-rung
-> ladders Phase 2 bought** for US$24.81 over 28 rungs, which closes § 6.3's gap
-> and takes the document from eight ladders to twenty-two; § 4.3 extends § 4's
-> F1-against-MCC table to them, § 5 points at their Pareto table and figure).
-> Prior same-day revisions: § 4.1 added (the § 4 tile-MCC direction
-> permutation-tested on all eight ladders, per the PI's ruling), § 4.2 added (the
-> same question under the other registered instrument, which agrees), § 2.1 and
-> § 6.1 corrected where they described that test as missing; before that,
-> original publication — step 5 of the K-ladder
-> Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`. Controlling card:
-> `planning/k-ladder-review-2026-09-11.md`. Companions: the inventory
-> (`inventory.md`), the Phase-2 costing
+> the fourteen four-rung ladders Phase 2 bought** for US$24.81 over 28 rungs,
+> which closes § 6.3's gap and takes the document from eight ladders to
+> twenty-two; § 4.3 extends § 4's F1-against-MCC table to them, § 5 points at
+> their Pareto table and figure). Prior same-day revisions: § 4.1 added (the §
+> 4 tile-MCC direction permutation-tested on all eight ladders, per the PI's
+> ruling), § 4.2 added (the same question under the other registered
+> instrument, which agrees), § 2.1 and § 6.1 corrected where they described
+> that test as missing; before that, original publication — step 5 of the
+> K-ladder Phase-1 run, `planning/k-ladder-phase1-run-2026-09-12.md`.
+> Controlling card: `planning/k-ladder-review-2026-09-11.md`. Companions: the
+> inventory (`inventory.md`), the Phase-2 costing
 > (`reports/k-ladder-phase2-costing-2026-09-12.md`), the deltas
 > (`reports/k-ladder-phase1-deltas-2026-09-12.md`,
-> `reports/k-ladder-phase2-deltas-2026-09-12.md`).
-> See [§ Changelog](#changelog).
+> `reports/k-ladder-phase2-deltas-2026-09-12.md`). See [§
+> Changelog](#changelog).
 
 **Scope, stated first.** Eight fixed-parameter ladders exist and are scorable at
 US$0; all eight are tabulated here at their own headline buffer with an audited
@@ -121,18 +120,20 @@ shows a significant MCC rise**. More passes buy localisation, not
 discrimination. § 4 treats that as the result it is rather than an artefact, and
 § 4.1 tests it.
 
-**What Phase 2 adds to that paragraph (§ 7).** Fourteen more four-rung ladders,
-all on one frame and one recipe, turn the statement above from a description
-into a conditional one. **The size of K's return is governed by the proposer's
-thinking level, and within a thinking level by its temperature.** Across the
-thirteen Gemini 3 ladders the K = 1 → best-rung F1 gain is **+0.0139 to
-+0.1514**; it is significant on **7 of 7 HIGH-thinking ladders and only 2 of 6
-MINIMAL** ones, and **four ladders — every one of them MINIMAL — collapse to a
-single statistical tier, where K buys nothing detectable at all**. On both HIGH
-tracks the gain rises monotonically with temperature. The MCC story survives
-intact and gains its first significant instance: the direction is negative on
-11 of 13, and one ladder (HIGH image T 1.0) now shows a **significant** MCC
-decline (−0.0637, BH p = 0.0420) where § 4.1 found none among the eight.
+**What Phase 2 adds to that paragraph (§ 7).** Fourteen more four-rung
+ladders, all on one frame and one recipe, turn the statement above from a
+description into a conditional one. **The size of K's return is governed by
+the proposer's thinking level, and within a thinking level by its
+temperature.** Across the thirteen Gemini 3 ladders the K = 1 → best-rung F1
+gain is **+0.0139 to +0.1514**; it is significant on **7 of 7 HIGH-thinking
+ladders and only 2 of 6 MINIMAL** ones, and **four ladders — every one of them
+MINIMAL — collapse to a single statistical tier, where K buys nothing
+detectable at all**. On both HIGH tracks the gain rises monotonically with
+temperature. The MCC story survives intact and gains its first significant
+Phase 2 instance: the direction is negative on 11 of 13, and one ladder (HIGH
+image T 1.0) now shows a **significant** MCC decline (−0.0637, BH p = 0.0420)
+beside the three significant falls § 4.1 found among the eight (3.7 arm 1, 3.7
+arm 2, and the 3.7-verifier stride B).
 
 **Restated 2026-10-15 (S164 restatement pass).** The gold-standard figures
 above are the regenerated board-frame cells (§ 2). Seven of the fourteen
@@ -654,17 +655,17 @@ choice left to the PI. Before the 2026-10-15 restatement the 3.7 row read
 0.8495 → 0.9068 (+0.0573) (§ 7.3).
 
 **All fourteen gain F1. Eleven of the thirteen with an interpretable MCC lose
-it**, one is flat and one gains — the same direction § 4 reported on the eight,
-now on fourteen more ladders, two model families, two thinking levels, two
-modalities and three temperatures. § 4.1 found **no** significant MCC change
-among the eight; here **one is significant** (HIGH image T 1.0, −0.0637, BH
-p = 0.0420) and one is a near miss (scale-4-optimal, −0.0572, BH p = 0.0762).
-So the count of significant MCC declines in the corpus moves from zero to one,
-and the direction is now supported by twenty-two ladders rather than eight.
-On the clipped basis the builder reports tile-MCC for seven of the thirteen:
-five decline, one is flat and one rises, and every withheld reading is a
-decline. HIGH image T 1.0 is not clipped, so its significant decline stands
-as reported.
+it**, one is flat and one gains — the same direction § 4 reported on the
+eight, now on fourteen more ladders, two model families, two thinking levels,
+two modalities and three temperatures. § 4.1 found **three** significant MCC
+falls among the eight; here **one more is significant** (HIGH image T 1.0,
+−0.0637, BH p = 0.0420) and one is a near miss (scale-4-optimal, −0.0572, BH p
+= 0.0762). So the count of significant MCC declines in the corpus moves from
+zero to one, and the direction is now supported by twenty-two ladders rather
+than eight. On the clipped basis the builder reports tile-MCC for seven of the
+thirteen: five decline, one is flat and one rises, and every withheld reading
+is a decline. HIGH image T 1.0 is not clipped, so its significant decline
+stands as reported.
 
 The 3.7 family's MCC is **withheld rather than reported**: at K = 1 and K = 3
 by the tile-join invariant, an instrument property and not a measurement
@@ -1012,15 +1013,16 @@ explains a result the corpus already held without explaining — that the
 registered `pass-budget-pareto-v2` efficient set contains both a cheap
 MINIMAL rung and an expensive HIGH one.
 
-### 7.2 Tile-MCC: the direction holds, and now has one significant case
+### 7.2 Tile-MCC: the direction holds, and one Phase 2 decline is significant
 
 § 4.3 carries the table. Across the fourteen: F1 rises on all fourteen,
 tile-MCC falls on eleven of the thirteen that have an interpretable one (on
 the as-evaluated cells; on D51's clipped basis the builder now withholds six
-of those readings, all six declines), and for the first time in the corpus
-**one MCC decline is statistically significant** — HIGH image T 1.0, −0.0637,
-BH p = 0.0420 — with scale-4-optimal a near miss at −0.0572, BH p = 0.0762. Twelve of thirteen show
-no significant MCC change, which is what § 4.1 found on the eight.
+of those readings, all six declines), and **one Phase 2 MCC decline is
+statistically significant** — HIGH image T 1.0, −0.0637, BH p = 0.0420 — with
+scale-4-optimal a near miss at −0.0572, BH p = 0.0762. Twelve of thirteen show
+no significant MCC change; § 4.1 found three significant falls among the
+eight.
 
 Note the shape of the exception: it is the family with the **largest** F1 gain
 (+0.1514). The ladders where K buys the most localisation are the ladders where
@@ -1165,27 +1167,27 @@ whole percentage, which turned MINIMAL text T 0.7's 91.46 %, HIGH image T 1.0's
 once, PI ruling D27; regenerated in `32d0c6445`.)
 
 **The last step is usually the worst buy, and on the 3.7 family it is the
-dearest K = 5 → 10 step in the corpus, though no longer the dearest step.**
-On twelve of the fourteen ladders the K = 5 → 10 step costs the most per
-0.001 F1 of the three steps, and on four of those (MINIMAL text
-T 0.3 and T 0.7, HIGH text T 0.3, HIGH image T 0.7) it loses F1 outright. The
-two exceptions are MINIMAL image T 0.3, whose K = 3 → 5 step loses F1
-(−0.0007), and HIGH image T 1.0, whose K = 3 → 5 step costs about US$0.50 per
-0.001 F1 against its last step's US$0.38. Where the last step gains F1, it costs
-from about US$0.21 per 0.001 F1 (MINIMAL image T 0.7) to about US$22 (the 3.7
-family, whose K = 5 → K = 10 step buys **+0.0004 F1 for US$8.68**). Before the
-2026-10-15 restatement that step bought +0.0002, about US$43 per 0.001 F1,
-two and a half times the US$17 that § 5 records for 55-map stride B and the
-dearest step in the corpus. **Neither now holds**: US$22 is about 1.3 times
-US$17, and four steps elsewhere now cost more per 0.001 F1 — § 5's two stride
-B K = 3 → 5 steps (about US$35 and US$32) and the two 3.7 arms' K = 3 → 5
-last steps (about US$27 and US$26, from § 3.4's table). That "the ladder
-saturates" is an economic claim rather than a statistical one still stands. For comparison, the HIGH text T 1.0
-ladder's last step buys +0.0117 (+0.0116 as evaluated) for US$12.23, about
-US$1.05 per 0.001 F1. Step arithmetic: `phase2/ladders.json`, each rung's
-`all_in_flex_usd` and opmax `f1_20`, on each ladder's reported basis (D51's
-clipped basis for seven); the counts in this paragraph are the same on both
-bases.
+dearest K = 5 → 10 step in the corpus, though no longer the dearest step.** On
+twelve of the fourteen ladders the K = 5 → 10 step costs the most per 0.001 F1
+of the three steps, and on four of those (MINIMAL text T 0.3 and T 0.7, HIGH
+text T 0.3, HIGH image T 0.7) it loses F1 outright. The two exceptions are
+MINIMAL image T 0.3, whose K = 3 → 5 step loses F1 (−0.0007), and HIGH image T
+1.0, whose K = 3 → 5 step costs about US$0.50 per 0.001 F1 against its last
+step's US$0.38. Where the last step gains F1, it costs from about US$0.21 per
+0.001 F1 (MINIMAL image T 0.7) to about US$22 (the 3.7 family, whose K = 5 → K
+= 10 step buys **+0.0004 F1 for US$8.68**). Before the 2026-10-15 restatement
+that step bought +0.0002, about US$43 per 0.001 F1, two and a half times the
+US$17 that § 5 records for 55-map stride B and the dearest step in the corpus.
+**Neither now holds**: US$22 is about 1.3 times US$17, and four steps
+elsewhere now cost more per 0.001 F1 — § 5's two stride B K = 3 → 5 steps
+(about US$35 and US$32) and the two 3.7 arms' K = 3 → 5 last steps (about
+US$27 and US$26, from § 3.4's table). That "the ladder saturates" is an
+economic claim rather than a statistical one still stands. For comparison, the
+HIGH text T 1.0 ladder's last step buys +0.0117 (+0.0116 as evaluated) for
+US$12.23, about US$1.05 per 0.001 F1. Step arithmetic: `phase2/ladders.json`,
+each rung's `all_in_flex_usd` and opmax `f1_20`, on each ladder's reported
+basis (D51's clipped basis for seven); the counts in this paragraph are the
+same on both bases.
 
 **Corrected 2026-10-04.** This section first said the last step was the worst
 buy on every ladder, and quoted its prices a thousand times too large
@@ -1549,7 +1551,8 @@ What is **not** established, stated so the reading is not over-claimed:
   the verified ladders.** It is measured at one thinking level, one temperature,
   one corpus and one modality, and the verified ladders order the other way.
 
-### 8.6 CLAIM — after the verifier, K's observed F1 gain is about half as large and its tile-MCC effect reverses (as evaluated)
+### 8.6 CLAIM — after the verifier, K's observed F1 gain is about half as
+large and its tile-MCC effect reverses (as evaluated)
 
 Stated as a claim of its own on the PI's ruling of 2026-09-13, because § 8.3 and
 § 8.4 each measure one half of it and neither is the comparison. The four
@@ -1600,27 +1603,26 @@ reading matches neither.
 
 **Anchors, one per number.**
 
-- Consensus-only — `results/grid-2026-08-18/sweep.csv`, cell `g384_ov192`, best
-  F1@20 over the (corroboration, vote) grid per K, which is the rule
-  `results/grid-2026-08-18/findings.md` reads that sweep by: **K = 1** F1
-  **0.6633**, tile-MCC **0.4465** at (c ≥ 3, k ≥ 1); **K = 10** F1 **0.7293**,
-  tile-MCC **0.4909** at (c ≥ 2, k ≥ 10). These are the 384 px / 50 % row of
-  § 8.3's table.
-- Verified — `results/k-ladder-2026-09-12/tier-e/ladder.json` (`rungs`) and each
-  rung's own committed evaluation: **K = 1**
-  `results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json`,
-  F1@20 **0.8680**, `summary.tile_classification.mcc.point` **0.8211**, 482
-  detections; **K = 10**
-  `results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json`,
-  F1@20 **0.8942**, `summary.tile_classification.mcc.point` **0.7973**, 406
-  detections. These are the first and last rows of § 8.4's table.
-- Verified, D51's clipped basis — **K = 1**
-  `reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,
-  `tier_e.rungs[0].points.opmax.d51_clipped.f1` **0.8604** (453 detections,
-  29 removed); **K = 10** the restated rung above, **0.8942**, whose clip
-  removes nothing (`tier_e.assessed_area.clip.area_removed_km2` is 0 at
-  K = 10). That file's own K = 10 row (0.8886) predates the re-verification;
-  read with it, the reduction would be 57.1 %.
+- Consensus-only — `results/grid-2026-08-18/sweep.csv`, cell `g384_ov192`,
+best F1@20 over the (corroboration, vote) grid per K, which is the rule
+`results/grid-2026-08-18/findings.md` reads that sweep by: **K = 1** F1
+**0.6633**, tile-MCC **0.4465** at (c ≥ 3, k ≥ 1); **K = 10** F1 **0.7293**,
+tile-MCC **0.4909** at (c ≥ 2, k ≥ 10). These are the 384 px / 50 % row of §
+8.3's table. - Verified — `results/k-ladder-2026-09-12/tier-e/ladder.json`
+(`rungs`) and each rung's own committed evaluation: **K = 1**
+`results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json`,
+F1@20 **0.8680**, `summary.tile_classification.mcc.point` **0.8211**, 482
+detections; **K = 10**
+`results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json`,
+F1@20 **0.8942**, `summary.tile_classification.mcc.point` **0.7973**, 406
+detections. These are the first and last rows of § 8.4's table. - Verified,
+D51's clipped basis — **K = 1**
+`reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json`,
+`tier_e.rungs[0].points.opmax.d51_clipped.f1` **0.8604** (453 detections, 29
+removed); **K = 10** the restated rung above, **0.8942**, whose clip removes
+nothing (`tier_e.assessed_area.clip.area_removed_km2` is 0 at K = 10). That
+file's own K = 10 row (0.8886) predates the re-verification; read with it, the
+reduction would be 57.1 %.
 
 **The proposed mechanism, in two sentences.** A consensus-only union at a tuned vote
 threshold is precision-starved, so an extra pass mostly adds true positives in
@@ -1647,6 +1649,17 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-18 (later) — § 4.1's three significant falls, stated consistently
+
+§§ 1, 4.3 and 7.2 said § 4.1 found no significant tile-MCC change among the
+eight Phase 1 ladders and called HIGH image T 1.0's fall the first in the
+corpus, but § 4.1 and `mcc-test/summary.json` record three significant K = 1
+-> best-rung falls among the eight (3.7 arm 1, 3.7 arm 2, and the 3.7-verifier
+stride B), as the register row now states (four ladders with HIGH image T
+1.0). A pre-existing inconsistency from first publication, noticed by the S164
+restatement pass (record § 10 Q13) and corrected on the PI's ruling (D69). No
+number changes. Commit: the one that applies this entry.
 
 ### 2026-10-18 — Re-signing: tier E on D51's clipped basis; claims qualified
 
@@ -1920,7 +1933,8 @@ quotes (Phase 2's US$24.8065, tier E's US$4.9595). § 3.3 also notes that the
 "about $238" simulated there before had the same double count as the results
 draft's "≈ $231".
 
-### 2026-09-13 — § 7.3 amended: the refused rungs' unions rebuilt, no number here moves, and the refusal is now shown to block correction
+### 2026-09-13 — § 7.3 amended: the refused rungs' unions rebuilt, no number
+here moves, and the refusal is now shown to block correction
 
 **Trigger**: the PI's "fix properly" ruling of 2026-09-13 on
 `reports/recovery-fragment-drop-2026-09-13.md`. `scripts/merge_passes.py` had
@@ -1982,7 +1996,8 @@ up, so the board carries a note only); the uplift supplement, whose board-frame
 exclusion keys on `scope_override.test_set_id`; and the signed
 `k-ladder-2026-09-12` register row, whose `outcome` prose an agent must not amend.
 
-### 2026-09-13 (earlier) — § 6.1 gains the per-family Hsu MCB admissible sets; the carried convention settled; the row ready for signature
+### 2026-09-13 (earlier) — § 6.1 gains the per-family Hsu MCB admissible sets;
+the carried convention settled; the row ready for signature
 
 **Trigger**: the PI's two rulings of 2026-09-13 (afternoon) — (1) "wait for the
 sets", i.e. supply the per-family Hsu multiple-comparisons-with-the-best
