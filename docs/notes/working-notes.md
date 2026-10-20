@@ -38214,7 +38214,7 @@ condition); Obs 497 (the run date is a factor).
 D66, and D67; plan commits `e783ed3ac`, `751525d7e`, `2d5cb991c`;
 results `b77624e15`.
 
-## Observation 512: The grid's overlap reversal survives the verifier at 512 px but not at 384 px — a correction to Obs 433; what survives tracks the recall ceiling (Session 165, 2026-10-17)
+## Observation 512: The grid's overlap reversal stays significant after the verifier at 512 px but not at 384 px, though the two sizes are not shown to differ — a correction to Obs 433 (Session 165, 2026-10-17)
 
 **Context.** The Principal Investigator (PI) asked in Session 165 for
 this to be recorded as a finding for the paper's Results, while
@@ -38267,21 +38267,24 @@ any vote, corroboration, or probability threshold.
    the re-verification lifted the 384 px / 12.5 % best point most
    (0.8677 to 0.8761, +0.0084, against about +0.0056 in each of the
    other three cells), narrowing the 384 px overlap margin.
-3. **Mechanism.** Before verification, overlap's advantage is almost
-   the same at both sizes (−0.0766 and −0.0718). The verifier removes
-   more of it at 384 px, where the 12.5 % tiling already had the higher
+3. **Mechanism.** Before verification, overlap's advantage is almost the
+   same at both sizes (−0.0766 and −0.0718). The verifier removes more
+   of it at 384 px, where the 12.5 % tiling already had the higher
    recall ceiling (0.911 against 0.888 at 512 px) and lacked mainly
    precision (its consensus-only best point had precision 0.570 and
    recall 0.776), which the verifier supplies. What survives is the
-   recall gain from overlap that a verifier cannot create: the
-   mechanism of Obs 352 (the verifier rescues precision but cannot
-   create recall) and Obs 359 (the pool recall ceiling is the binding
-   constraint).
+   recall gain from overlap that a verifier cannot create: the mechanism
+   of Obs 352 (the verifier rescues precision but cannot create recall)
+   and Obs 359 (the pool recall ceiling is the binding constraint). The
+   interaction does not separate the two sizes (p 0.18), so this reads
+   point estimates; it is a hypothesis for the recall-ceiling mechanism,
+   not a tested difference.
 
-**For the paper.** One Results sentence: 50 % overlap's advantage
-survives verification at 512 px but not at 384 px, where the verifier
-supplies the precision that cross-tile corroboration had been
-providing.
+**For the paper.** One Results sentence: after verification, 50 %
+overlap's advantage is significant at 512 px (p 0.0003) but not at 384
+px (p 0.054); the two sizes are not shown to differ (interaction −0.0246
+[−0.0613, +0.0114], p 0.18), so the Results should report the 384 px
+result as a lost significance, not a size difference.
 
 **Caveats.** Two tile sizes and one configuration, so "tracks" is
 suggestive, not tested. Best-F1 operating points are selected on the
@@ -38296,13 +38299,16 @@ and the interval reaching zero, come from the re-verified candidates.
 The ceilings moved with the origin route; Obs 433 quoted ceilings of
 0.8925 / 0.9509 at 384 px against 0.8715 / 0.9416 at 512 px, in the same
 order. Corrected 2026-10-18, before merge: the Context first attributed
-every move to the origin route.
+every move to the origin route. Corrected 2026-10-20, before merge (PI:
+"yes, apply"): the title and the paper sentence quoted the size contrast
+without the interaction test, which does not separate the sizes (p
+0.18).
 
 **Findable later.** overlap reversal, grid post-verifier, 384 px fails,
 512 px survives, Obs 433 correction, recall ceiling, corroboration
 filter, verifier redundancy, origin route, re-verified wrong-sheet
 crops, D62 (1), 0.0541, permutation p 0.0235, share 0.655 / 0.356,
-ceiling gain +0.0724 / +0.0584.
+ceiling gain +0.0724 / +0.0584, interaction p 0.18.
 
 **Related.** Obs 433 (corrected here: overlap survives the verifier at
 512 px only); Obs 434 (Obs 433's same-day rider, which supplied the
