@@ -102,6 +102,16 @@ before any document changes, above all Student A's zone at 20 m (0.8718 against 
 which the +0.0099 lift may reverse) and the 50 m cohort lead's significance. A dated note on its
 findings (`71c00d126`, PR #52) holds the old figures meanwhile.
 
+**To do after PR #52 (S165, PI "queue as follow-up", D69 Q15)**: E72's Group 7 (results/pairwise/20m
+confirmatory family, row 7, N = 30 against N = 10 HIGH text) had BH q 0.0488 before E72's
+remediation and 0.050735 after it (the "flip" to not significant); a sub-agent's recomputation on
+the restated p values gives 0.0483, so the flip may reverse. Adapt `scripts/regen_e43_board.py` to
+the restated in-place-and-beside layout (gates A and C accept the dated March records beside today's
+runs, gate B takes the 30 m count from today's run, the renderers keep the revision banner), with
+tests; regenerate the E72 board and report Group 7 before any document changes. $0; lower priority
+than the MCC robustness job (an exploratory family at the 0.05 edge; the registered family FDR does
+not move).
+
 **Sapphire scratch** (76 % used): remove `s164-restate-2026-10-15` (23 GB) and `s164-rescore-2026-10-13`
 after #52 merges, `s164-d64-2026-10-14` after #48 merges; `s164-fw-recheck*` (2 GB) can go. The
 fault-window trees (`d57-4-rescore-2026-10-09`, `q4-*`, about 95 GB) FAIL the D65 (8) audit (thousands
