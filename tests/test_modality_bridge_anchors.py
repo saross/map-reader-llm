@@ -101,7 +101,16 @@ def test_registered_values_match_the_card() -> None:
 
 @pytest.mark.tier1
 def test_registered_values_match_the_committed_analyses() -> None:
-    """Where an image_b_analysis.py output was committed, it agrees to 1e-4."""
+    """Where an image_b_analysis.py output read the legs as run, it agrees to 1e-4.
+
+    The gate checks the instrument against values registered on the legs as
+    run (``GATE_POLICY = "fixed"``). Since the restatement pass of 2026-10-15
+    (reports/s164-agent-records/restatement-pass.md) the committed analyses
+    read the D62 (1) re-verified rows (``<leg>_repaired/``), so their values
+    diverge from the gate's by design; for those the test asserts the
+    provenance that explains the divergence instead of the value.
+    """
+    assert mba.GATE_POLICY == "fixed"
     committed = {
         "g3-image": "results/image-b-gs-2026-08-28/analysis.json",
         "g37-text-g3v": "results/gemini37-screen-2026-08-28/analysis.json",
@@ -110,15 +119,24 @@ def test_registered_values_match_the_committed_analyses() -> None:
         "g37-image-g37v": "results/gemini37-image-gs-2026-09-01/arm2/analysis.json",
     }
     cells = {c.label: c for c in mba.ORIGINAL_CELLS}
+    restated = []
     for label, rel in committed.items():
-        best = json.loads((PROJECT_ROOT / rel).read_text())["image_best"]
+        doc = json.loads((PROJECT_ROOT / rel).read_text())
+        read = (doc.get("verifier_probabilities") or {}).get("dir") or ""
+        if read.endswith("_repaired"):
+            # Restated on the re-verified rows: the divergence is the data's.
+            assert (doc["verifier_probabilities"].get("reverified") or 0) > 0, label
+            restated.append(label)
+            continue
+        best = doc["image_best"]
         c = cells[label]
         assert abs(best["f1"] - c.f1) < 1e-4, label
         assert (round(best["prob_t"], 4), best["min_votes"]) == (c.prob_t, c.min_votes)
-    gap = json.loads((PROJECT_ROOT / "results/gemini37-image-gs-2026-09-01/"
-                      "gap_test.json").read_text())["pairs"]
-    assert abs(gap["carried-verifier"]["observed_diff"] - (-0.0115)) < 1e-4
-    assert abs(gap["all-3.7"]["observed_diff"] - (-0.0043)) < 1e-4
+    if not {"g37-image-g3v", "g37-image-g37v"} & set(restated):
+        gap = json.loads((PROJECT_ROOT / "results/gemini37-image-gs-2026-09-01/"
+                          "gap_test.json").read_text())["pairs"]
+        assert abs(gap["carried-verifier"]["observed_diff"] - (-0.0115)) < 1e-4
+        assert abs(gap["all-3.7"]["observed_diff"] - (-0.0043)) < 1e-4
 
 
 @pytest.mark.tier1

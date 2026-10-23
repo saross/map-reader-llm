@@ -217,6 +217,7 @@ def test_six_cell_gate_reads_its_originals_fixed(monkeypatch: pytest.MonkeyPatch
 def test_bridge_replicate_one_resolves_to_the_repaired_copy(
         tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     from scripts import image_b_analysis as iba
+    from scripts import lib_cluster_origins as lco
     from scripts import modality_bridge_floors as fl
     from scripts import modality_bridge_verifier_sd as vsd
     from scripts import stride_verifier_analysis as sva
@@ -232,6 +233,11 @@ def test_bridge_replicate_one_resolves_to_the_repaired_copy(
     monkeypatch.setitem(fl._G, "bounds", None)
     monkeypatch.setattr(iba, "PROJECT_ROOT", tmp_path)
     monkeypatch.setattr(sva, "reassign_gate", lambda gdf, _b, _l: gdf.copy())
+    # The origin step (D65 (6) restatement) needs the arm's passes and a
+    # frame; this test pins only which directory is read, so it is a pass-
+    # through here (tests/test_modality_bridge_origin.py pins the step).
+    monkeypatch.setattr(fl, "load_passes", lambda *_a: [])
+    monkeypatch.setattr(lco, "union_on_origin", lambda gdf, *_a, **_k: gdf)
 
     unions, prov, failures = vsd.load_replicates((1,))
     assert failures == []

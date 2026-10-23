@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-screen-2026-08-28
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-screen-2026-08-28` · **Registry status**: active · **Purpose**: Gemini 3.7 Flash screen on the leading 384 px / 50 % geometry: does a within-vendor model-family step clear the Gemini-3 GS plateau, and in which seat? Predictions G1-G4 committed at PI go (card planning/gemini37-screen-2026-08-28.md). Escalated to K=10 and to two verifier-role swaps (3.7, then 3.8 under card planning/gemini38-screen-2026-09-04.md).
 
@@ -96,23 +96,23 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g37-text-k1-verified-carried-p0.10-k1` | proposer-verifier | verified | 1 | k=1/pt=0.1 | 558 | 0.8338 [0.3684, 0.7709] | 0.8520 [0.4615, 0.8493] | 0.1422 |
-| `g37-text-k1-verified-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 502 | 0.8495 [0.2712, 0.6667] | 0.8709 [0.3333, 0.7317] | 0.1337 |
-| `g37-text-k10-verified-carried-p0.10-k10` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 423 | 0.9142 [0.8862, 0.9361] | 0.9377 [0.9147, 0.9550] | 0.7817 |
-| `g37-text-k10-verified-carried-p0.10-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 423 | 0.9068 [0.8783, 0.9293] | 0.9301 [0.9062, 0.9481] | 0.7675 |
-| `g37-text-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.1 | 495 | 0.8860 | 0.9011 | withheld |
-| `g37-text-k5-verified-carried-p0.10-k5` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 443 | 0.9139 [0.8874, 0.9342] | 0.9277 [0.9049, 0.9453] | 0.7797 |
-| `g37-text-k5-verified-carried-p0.10-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 443 | 0.9066 [0.8792, 0.9279] | 0.9203 [0.8971, 0.9393] | 0.7651 |
-| `g37-text-k5-verified-swap37-p0.80-k5` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 429 | 0.9265 [0.9010, 0.9461] | 0.9405 [0.9192, 0.9568] | 0.8078 |
-| `g37-text-k5-verified-swap37-p0.80-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 429 | 0.9190 [0.8929, 0.9393] | 0.9329 [0.9104, 0.9502] | 0.7937 |
-| `g37-text-k5-verified-swap38-p0.88-k5` | proposer-verifier | verified | 5 | k=5/pt=0.88 | 421 | 0.9258 [0.8995, 0.9458] | 0.9399 [0.9172, 0.9566] | 0.8218 |
-| `g37-text-k5-verified-swap38-p0.88-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.88 | 421 | 0.9182 [0.8913, 0.9389] | 0.9322 [0.9087, 0.9499] | 0.8079 |
+| `g37-text-k1-verified-carried-p0.10-k1` | proposer-verifier | verified | 1 | k=1/pt=0.1 | 558 | 0.8616 | 0.8803 | withheld |
+| `g37-text-k1-verified-opmax` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 502 | 0.8747 | 0.8967 | withheld |
+| `g37-text-k10-verified-carried-p0.10-k10` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 431 | 0.9243 [0.8981, 0.9442] | 0.9476 [0.9276, 0.9624] | 0.7971 |
+| `g37-text-k10-verified-carried-p0.10-k10-era2b` | proposer-verifier | verified | 10 | k=10/pt=0.1 | 431 | 0.9169 [0.8907, 0.9376] | 0.9400 [0.9193, 0.9558] | 0.7826 |
+| `g37-text-k3-verified-opmax` | proposer-verifier | verified | 3 | k=3/pt=0.1 | 495 | 0.9135 | 0.9290 | withheld |
+| `g37-text-k5-verified-carried-p0.10-k5` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 451 | 0.9238 [0.9000, 0.9420] | 0.9374 [0.9178, 0.9532] | 0.7914 |
+| `g37-text-k5-verified-carried-p0.10-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 451 | 0.9165 [0.8919, 0.9361] | 0.9300 [0.9093, 0.9470] | 0.7767 |
+| `g37-text-k5-verified-swap37-p0.80-k5` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 437 | 0.9364 [0.9133, 0.9538] | 0.9503 [0.9312, 0.9642] | 0.8192 |
+| `g37-text-k5-verified-swap37-p0.80-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.8 | 437 | 0.9289 [0.9048, 0.9468] | 0.9427 [0.9231, 0.9576] | 0.8049 |
+| `g37-text-k5-verified-swap38-p0.88-k5` | proposer-verifier | verified | 5 | k=5/pt=0.88 | 429 | 0.9358 [0.9119, 0.9536] | 0.9498 [0.9294, 0.9643] | 0.8331 |
+| `g37-text-k5-verified-swap38-p0.88-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.88 | 429 | 0.9282 [0.9038, 0.9466] | 0.9421 [0.9217, 0.9578] | 0.8189 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
 - 11 condition(s): 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100, 125, 150
 
-Tile-level MCC is on file for 10 of 11 condition(s). Of the 1 without one, 1 is WITHHELD by the tile-join invariant (tile_join_detection_shortfall); its whole-frame F1 is unaffected.
+Tile-level MCC is on file for 8 of 11 condition(s). Of the 3 without one, 3 are WITHHELD by the tile-join invariant (tile_join_detection_shortfall); their whole-frame F1 is unaffected.
 
 ### 5.1 Condition caveats (11 condition(s), 11 distinct caveat(s))
 
@@ -226,7 +226,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

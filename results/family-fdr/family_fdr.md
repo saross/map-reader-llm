@@ -1,7 +1,9 @@
 # Registered family-level BH-FDR correction — results
 
-> **Last revised**: 2026-10-05 (every input is now a permutation p under
-> PI ruling D42; H1 0.1774 → 0.0715, still not rejected; the rejection set
+> **Last revised**: 2026-10-15 (H2's rider restated on the consensus route,
+> PI ruling D60 (3): +0.076 → +0.074 F1; no p value and no rejection
+> moves). Prior: 2026-10-05 (every input is now a permutation p under PI
+> ruling D42; H1 0.1774 → 0.0715, still not rejected; the rejection set
 > {H2, H3, H7} is unchanged). See [§ Changelog](#changelog) for revision
 > history.
 
@@ -75,7 +77,7 @@ by the outcome-blind H1 computation.
 
 - **H2 is a falsified directional prediction**, not a confirmation: the
   registration predicted two-stage would *not* improve; it improves by
-  +0.076 F1, clearing the registered ≥ 0.05 stopping-rule threshold in
+  +0.074 F1, clearing the registered ≥ 0.05 stopping-rule threshold in
   the direction the registration predicted against.
 - All tests are two-sided per E64(v)'s operative reading; H4 would be
   p ≈ 0.062 one-tailed — still null.
@@ -109,6 +111,37 @@ reconstruction rule, and whose result determined which of the two
 pre-committed rejection sets obtained. Discharges CMT-0047 and CMT-0106.
 
 ## Changelog
+
+### 2026-10-15 — H2's rider restated on the consensus route (PI ruling D60 (3))
+
+**Refresh trigger**: PI rulings D60 (3) and D62 (2)
+(`planning/pi-decisions-2026-09-20.md`), executed by the S164
+restatement pass (`reports/s164-agent-records/restatement-pass.md`,
+§ 1.5). PR #37 (fix `4e9d659ab`;
+`reports/s163-agent-records/d60-3-consensus-route.md`) made the
+in-memory consensus route keep each cluster's contributing tiles, which
+moves H2's consensus 26-of-30 arm 0.814118 → 0.816471. The 32 pairwise
+comparisons at 20 m and 30 m were regenerated on sapphire and committed
+at `08af04cf3`.
+
+| Quantity | Before | After |
+|---|---|---|
+| H2 rider: PV improvement over consensus 26-of-30 (§ 2) | +0.076 F1 (0.076083) | +0.074 F1 (0.073730) |
+
+Source: `results/pairwise/20m/group_1_architecture/pv-vs-consensus-flash-high-text-16-of-30-pv-vs-flash-high-text-26-of-30.json`
+(`permutation_test.observed_f1_diff`), read at `718d0ee08` (before) and
+at the pass's head (after).
+
+**What did NOT change**: `family_fdr.json`, which was not regenerated;
+every family input p (H2's is still the permutation floor, p < 0.0001)
+and every BH-adjusted p; the rejection set {H2, H3, H7}; the rider's
+reading (the improvement still clears the registered ≥ 0.05 threshold);
+§ 3's all-contrasts correction (26 confirmatory rows, 20 significant, in
+the regenerated `results/pairwise/20m/fdr/pairwise_results_fdr.json`).
+Older changelog entries keep the figures they reported.
+
+**Commits**: `08af04cf3` (the regenerated pairwise artefacts); this
+document refresh in the restatement pass's document commit.
 
 ### 2026-10-05 — Every input a permutation p (PI ruling D42)
 

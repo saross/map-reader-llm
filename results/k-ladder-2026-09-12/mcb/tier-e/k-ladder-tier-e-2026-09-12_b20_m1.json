@@ -12,61 +12,61 @@
   "m_out_of_n": 487,
   "bootstrap": 10000,
   "selected_index": 2,
-  "apparent_f1": 0.8904593639575972,
-  "optimism": 0.003823720317115815,
-  "optimism_mcse": 0.00013543988710005075,
+  "apparent_f1": 0.9045936395759717,
+  "optimism": 0.002420989309942173,
+  "optimism_mcse": 0.00012125965486784108,
   "optimism_spread_p2_5_p97_5": [
-    -0.023793402100886044,
-    0.028915462854016617
+    -0.022240698399501158,
+    0.024979733318424513
   ],
-  "corrected_f1": 0.8866356436404813,
+  "corrected_f1": 0.9021726502660296,
   "naive_ci": [
-    0.8613487976355739,
-    0.9161151463362529
+    0.8794321921890793,
+    0.9270485244602892
   ],
   "selection_aware_ci": [
-    0.8575250773184581,
-    0.912291426019137
+    0.8770112028791371,
+    0.924627535150347
   ],
-  "argmax_stability": 0.5132,
+  "argmax_stability": 0.776,
   "n_distinct_argmax": 3,
-  "mcb_critical_width": 0.020143486996528567,
+  "mcb_critical_width": 0.019100939347752182,
   "mcb_theta": [
-    -0.03587323420368216,
-    -0.006468644700056592,
-    0.0018366094665791532,
-    -0.0018366094665791532
+    -0.03658469103011042,
+    -0.00668180662933604,
+    0.00668180662933604,
+    -0.010420036722226134
   ],
   "mcb_lower": [
-    -0.05601672120021073,
-    -0.02661213169658516,
-    -0.018306877529949413,
-    -0.02198009646310772
+    -0.0556856303778626,
+    -0.025782745977088222,
+    -0.012419132718416142,
+    -0.029520976069978316
   ],
   "mcb_upper": [
-    -0.01572974720715359,
-    0.013674842296471975,
-    0.02198009646310772,
-    0.018306877529949413
+    -0.017483751682358235,
+    0.012419132718416142,
+    0.025782745977088222,
+    0.008680902625526048
   ],
   "mcb_not_ruled_out": [
     1,
     2,
     3
   ],
-  "hsu_w_upper": 0.015098866513130074,
-  "hsu_w_lower": 0.019644173449282674,
+  "hsu_w_upper": 0.015866739130419975,
+  "hsu_w_lower": 0.018002846828537436,
   "hsu_lower": [
-    -0.05551740765296483,
-    -0.026112818149339266,
-    -0.01780756398270352,
-    -0.021480782915861828
+    -0.05458753785864785,
+    -0.024684653457873476,
+    -0.011321040199201396,
+    -0.02842288355076357
   ],
   "hsu_upper": [
     0.0,
-    0.008630221813073482,
-    0.01693547597970923,
-    0.01326225704655092
+    0.009184932501083935,
+    0.022548545759756015,
+    0.005446702408193841
   ],
   "hsu_not_ruled_out": [
     1,
@@ -75,30 +75,30 @@
   ],
   "hsu_vs_band_delta": 0,
   "board": "k-ladder-tier-e-2026-09-12",
-  "bounds_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
-  "analyses_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
-  "conditions_override": "/home/shawn/worktrees/map-reader-llm/claude-mcb/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+  "bounds_override": "/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/Code/map-reader-llm/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+  "conditions_override": "/home/shawn/Code/map-reader-llm/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
   "m_frac": 1.0,
   "candidates": [
     {
       "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
       "label": "g384-ov192-k1-verified-opmax",
-      "eval_f1": 0.8546
+      "eval_f1": 0.868
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
       "label": "g384-ov192-k3-verified-opmax",
-      "eval_f1": 0.884
+      "eval_f1": 0.8979
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
       "label": "g384-ov192-k5-verified-opmax",
-      "eval_f1": 0.8905
+      "eval_f1": 0.9046
     },
     {
       "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
       "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
-      "eval_f1": 0.8886
+      "eval_f1": 0.8942
     }
   ],
   "seed": 42,

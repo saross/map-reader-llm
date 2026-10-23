@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — 55maps-text-high-t0-3-generalisation
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/55maps-text-high-t0.3-generalisation` · **Registry status**: active · **Purpose**: 55-map generalisation: text HIGH, T=0.3
 
@@ -87,10 +87,10 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
 | `verified` | proposer-verifier | verified | 5 | k=4 | 4350 | 0.6308 [0.6167, 0.6454] | 0.8047 [0.7944, 0.8145] | 0.6541 |
-| `verified-k3-canonical-gt` | proposer-verifier | verified | 5 | k=3/pt=0.15 | 4905 | 0.6296 [0.6159, 0.6436] | 0.8476 [0.8388, 0.8559] | 0.6903 |
+| `verified-k3-canonical-gt` | proposer-verifier | verified | 5 | k=3/pt=0.15 | 4905 | 0.6296 [0.6159, 0.6436] | 0.8477 [0.8389, 0.8560] | 0.6903 |
 | `verified-k3-r2-gt` | proposer-verifier | verified | 5 | k=3/pt=0.15 | 4905 | 0.6714 [0.6584, 0.6844] | 0.8387 [0.8297, 0.8472] | 0.6889 |
 | `verified-k3-standardised-gt` | proposer-verifier | verified | 5 | k=3/pt=0.15 | 4905 | 0.6719 [0.6590, 0.6848] | 0.8393 [0.8304, 0.8479] | 0.6888 |
-| `verified-k4-canonical-gt` | proposer-verifier | verified | 5 | k=4 | 4350 | 0.6308 [0.6166, 0.6454] | 0.8359 [0.8265, 0.8447] | 0.6711 |
+| `verified-k4-canonical-gt` | proposer-verifier | verified | 5 | k=4 | 4350 | 0.6308 [0.6166, 0.6454] | 0.8360 [0.8265, 0.8448] | 0.6711 |
 | `verified-k4-r2-gt` | proposer-verifier | verified | 5 | k=4 | 4350 | 0.6721 [0.6588, 0.6855] | 0.8294 [0.8199, 0.8384] | 0.6691 |
 | `verified-k4-standardised-gt` | proposer-verifier | verified | 5 | k=4 | 4350 | 0.6729 [0.6596, 0.6862] | 0.8303 [0.8210, 0.8394] | 0.6690 |
 | `verified-oracle-p0.20-k3-r2-gt` | proposer-verifier | verified | 5 | k=3/pt=0.2 | 4762 | 0.6726 [0.6598, 0.6856] | 0.8399 [0.8311, 0.8483] | 0.6955 |
@@ -205,7 +205,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

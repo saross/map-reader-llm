@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — gemini37-image-gs-2026-09-01
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/gemini37-image-gs-2026-09-01` · **Registry status**: active · **Purpose**: Image variant of the 3.7 GS screen under matched everything, for the difference-in-differences against the Gemini-3 modality contrast (image-b-gs-2026-08-28). Predictions I1-I5 committed at PI go (card planning/gemini37-image-gs-2026-08-30.md). The escalation trigger was not met; no 55-map image extension followed.
 
@@ -84,10 +84,10 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g37-image-k5-verified-carried-p0.10-k5` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 430 | 0.9254 [0.8989, 0.9457] | 0.9347 [0.9098, 0.9530] | 0.8192 |
-| `g37-image-k5-verified-carried-p0.10-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 430 | 0.9179 [0.8901, 0.9391] | 0.9272 [0.9011, 0.9470] | 0.8133 |
-| `g37-image-k5-verified-swap37-p0.90-k5` | proposer-verifier | verified | 5 | k=5/pt=0.9 | 425 | 0.9308 [0.9049, 0.9505] | 0.9402 [0.9158, 0.9578] | 0.8322 |
-| `g37-image-k5-verified-swap37-p0.90-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.9 | 425 | 0.9233 [0.8963, 0.9439] | 0.9326 [0.9072, 0.9511] | 0.8264 |
+| `g37-image-k5-verified-carried-p0.10-k5` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 438 | 0.9353 [0.9110, 0.9535] | 0.9446 [0.9218, 0.9610] | 0.8307 |
+| `g37-image-k5-verified-carried-p0.10-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.1 | 438 | 0.9278 [0.9026, 0.9474] | 0.9370 [0.9129, 0.9550] | 0.8245 |
+| `g37-image-k5-verified-swap37-p0.90-k5` | proposer-verifier | verified | 5 | k=5/pt=0.9 | 433 | 0.9408 [0.9174, 0.9582] | 0.9501 [0.9283, 0.9654] | 0.8436 |
+| `g37-image-k5-verified-swap37-p0.90-k5-era2b` | proposer-verifier | verified | 5 | k=5/pt=0.9 | 433 | 0.9332 [0.9086, 0.9519] | 0.9424 [0.9193, 0.9592] | 0.8376 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -100,11 +100,11 @@ Tile-level MCC is on file for 4 of 4 condition(s).
 Grouped by identical text: a caveat written once for a family of sibling cells is reproduced once, with every cell it applies to named. Nothing is elided.
 
 - `g37-image-k5-verified-carried-p0.10-k5`
-  A7 — image under the carried Gemini-3 verifier (F1@20 0.925408, tile-MCC 0.8192, 430 detections), +0.0842 over the 0.8412 Gemini-3 image anchor. Its within-family text pair is A1: (text - image) = -0.0115, p = 0.2533 (gap\_test.json).
+  A7 — image under the carried Gemini-3 verifier (F1@20 0.925408, tile-MCC 0.8192, 430 detections), +0.0842 over the 0.8412 Gemini-3 image anchor. Its within-family text pair is A1: (text - image) = -0.0115, p = 0.2533 (gap\_test.json). [RESTATED 2026-10-15, S164 restatement pass (reports/s164-agent-records/restatement-pass.md): with the D62 (1) re-verified rows this arm's sweep argmax moved from its registered (0.10, k5) to (0.05, k5); under PI ruling D65 (3) the condition keeps its registered point, so it now reads the registered set arm1/verified\_op\_20m.geojson (written by image\_b\_analysis.py --operating-point 0.10,5; F1@20 0.9353, 438 detections), not the argmax set verified\_best\_20m.geojson.]
 - `g37-image-k5-verified-swap37-p0.90-k5`
   A8 — the all-3.7 image stack (F1@20 0.930832, tile-MCC 0.8322, 425 detections), the highest F1@20 in the 3.7 arc, +0.0896 over the Gemini-3 image anchor. Its within-family text pair is A3: (text - image) = -0.0043, p = 0.6767. Sweep argmax tie at prob\_t 0.90 / 0.95.
 - `g37-image-k5-verified-carried-p0.10-k5-era2b`
-  GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell g37-image-k5-verified-carried-p0.10-k5 re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on grid\_common\_bounds.geojson stays the row's record.
+  GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell g37-image-k5-verified-carried-p0.10-k5 re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on grid\_common\_bounds.geojson stays the row's record. [RESTATED 2026-10-15, S164 restatement pass (reports/s164-agent-records/restatement-pass.md): with the D62 (1) re-verified rows this arm's sweep argmax moved from its registered (0.10, k5) to (0.05, k5); under PI ruling D65 (3) the condition keeps its registered point, so it now reads the registered set arm1/verified\_op\_20m.geojson (written by image\_b\_analysis.py --operating-point 0.10,5; F1@20 0.9353, 438 detections), not the argmax set verified\_best\_20m.geojson.]
 - `g37-image-k5-verified-swap37-p0.90-k5-era2b`
   GS Era-2 verified board cell (planning/gs-era2-verified-board-2026-09-08.md, PI frame ruling 2026-09-09): the registered cell g37-image-k5-verified-swap37-p0.90-k5 re-scored with its committed recipe on the Era-2 ∩ B-union frame (era2-b-487); the committed evaluation on grid\_common\_bounds.geojson stays the row's record.
 
@@ -178,7 +178,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

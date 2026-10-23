@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-28T07:01:56.251578+00:00",
+    "timestamp": "2026-10-15T11:09:20.123395+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -35,27 +35,27 @@
       "pool_size": 5,
       "threshold": 5
     },
-    "f1": 0.479452,
-    "precision": 0.59322,
-    "recall": 0.402299,
+    "f1": 0.482192,
+    "precision": 0.59661,
+    "recall": 0.404598,
     "n_detections": 295,
-    "tp": 175,
-    "fp": 120,
-    "fn": 260
+    "tp": 176,
+    "fp": 119,
+    "fn": 259
   },
   "permutation_test": {
-    "observed_f1_diff": 0.352584,
+    "observed_f1_diff": 0.349844,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 487,
-    "wins_a": 119,
-    "losses_a": 27,
+    "wins_a": 118,
+    "losses_a": 28,
     "ties": 341,
     "null_distribution": {
-      "mean": -5.1e-05,
-      "std": 0.041809,
-      "percentile_2.5": -0.081494,
-      "percentile_97.5": 0.081807
+      "mean": -4.5e-05,
+      "std": 0.041719,
+      "percentile_2.5": -0.081005,
+      "percentile_97.5": 0.082142
     }
   }
 }

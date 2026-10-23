@@ -1,13 +1,15 @@
 # Tile size × overlap: a clean 2×2 at the proposer stage
 
-> **Last revised**: 2026-08-24, twice (the verifier stage RAN — PI-approved
-> $6.33 spend, 9,133/9,133 candidates, zero failures; the post-verifier board
-> reverses the tile-size ranking and confirms the overlap reversal survives —
-> then same-day audit corrections restated the reversal against the
-> like-for-like K = 10 consensus baseline and repaired a stale B = 1,000
-> table). 2026-10-05: every p-value is now the paired permutation
-> test's (PI ruling D42); no verdict at 0.05 changes. See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-15 (restated on the origin route and the
+> re-verified wrong-sheet rows, PI ruling D65 (2): every board moves; the
+> overlap reversal at 384 px and the Phase A paragraph now fail). Prior:
+> 2026-10-05 (every p-value is now the paired permutation test's, PI ruling
+> D42; no verdict at 0.05 changed); 2026-08-24, twice (the verifier stage
+> RAN — PI-approved $6.33 spend, 9,133/9,133 candidates, zero failures; the
+> post-verifier board reverses the tile-size ranking and confirms the overlap
+> reversal survives — then same-day audit corrections restated the reversal
+> against the like-for-like K = 10 consensus baseline and repaired a stale
+> B = 1,000 table). See [§ Changelog](#changelog) for revision history.
 
 **What this is.** A post-hoc (E41-class) 2 × 2 crossing tile size
 (384 px, 512 px) with tile overlap (12.5 %, 50 %), n = 10 proposer
@@ -35,9 +37,10 @@ switched on.
 
 **Post-verifier addendum (2026-08-24): tile size DOES reverse once the
 precision stage runs.** Under the full proposer-verifier pipeline
-384 px beats 512 px at both overlaps (significantly at 12.5 %), the
-overlap reversal survives at both tile sizes, and the best cell is
-384 px / 50 % at **F1 0.8961**. The consensus-only tile-size claim
+384 px beats 512 px at both overlaps (significantly at 12.5 %), and the
+best cell is 384 px / 50 % at **F1 0.9017**. The overlap reversal
+survives at 512 px; **at 384 px it fails** since the 2026-10-15
+restatement (−0.0256, p = 0.0541). The consensus-only tile-size claim
 above is a truncated-pipeline artefact; see
 [§ The verifier stage, run](#the-verifier-stage-run-2026-08-24).
 
@@ -49,18 +52,18 @@ across the ten passes.
 
 | Cell | Tiles/pass | Precision | Recall | **F1** | **Tile MCC** | Dets/pass |
 |---|---:|---:|---:|---:|---:|---:|
-| **512 px / 12.5 %** | 296 | 0.4719 ± 0.0069 | 0.7769 ± 0.0127 | **0.5871 ± 0.0077** | **0.4415 ± 0.0128** | 704.6 |
-| **512 px / 50 %** | 832 | 0.3157 ± 0.0066 | 0.8991 ± 0.0075 | **0.4672 ± 0.0074** | **0.3096 ± 0.0178** | 1219.5 |
-| **384 px / 12.5 %** | 487 | 0.3615 ± 0.0089 | 0.8369 ± 0.0090 | **0.5049 ± 0.0091** | **0.1452 ± 0.0114** | 991.3 |
-| **384 px / 50 %** | 1398 | 0.2308 ± 0.0040 | 0.9327 ± 0.0039 | **0.3700 ± 0.0053** | **0.2321 ± 0.0131** | 1730.2 |
+| **512 px / 12.5 %** | 296 | 0.4788 ± 0.0077 | 0.7881 ± 0.0138 | **0.5956 ± 0.0087** | **0.4484 ± 0.0140** | 704.6 |
+| **512 px / 50 %** | 832 | 0.3209 ± 0.0072 | 0.9140 ± 0.0097 | **0.4750 ± 0.0083** | **0.3255 ± 0.0191** | 1219.5 |
+| **384 px / 12.5 %** | 487 | 0.3691 ± 0.0097 | 0.8544 ± 0.0089 | **0.5155 ± 0.0101** | **0.1555 ± 0.0098** | 991.3 |
+| **384 px / 50 %** | 1398 | 0.2353 ± 0.0041 | 0.9512 ± 0.0036 | **0.3773 ± 0.0054** | **0.2404 ± 0.0154** | 1730.2 |
 
 Read as a 2 × 2 on F1:
 
 | | 12.5 % overlap | 50 % overlap | Overlap effect |
 |---|---:|---:|---:|
-| **512 px** | 0.5871 | 0.4672 | −0.1200 |
-| **384 px** | 0.5049 | 0.3700 | −0.1348 |
-| **Tile-size effect (384 − 512)** | −0.0824 | −0.0972 | |
+| **512 px** | 0.5956 | 0.4750 | −0.1207 |
+| **384 px** | 0.5155 | 0.3773 | −0.1381 |
+| **Tile-size effect (384 − 512)** | −0.0803 | −0.0976 | |
 
 ### Paired tile-bootstrap contrasts
 
@@ -79,15 +82,15 @@ places, every CI width moves by under 5 %, and no verdict changes.
 
 | Contrast | ΔF1 | CI95 | p | Excludes 0 |
 |---|---:|---|---:|---|
-| Overlap at 512 px (12.5 % − 50 %) | +0.1200 | [+0.0872, +0.1531] | < 0.0001 | yes |
-| Overlap at 384 px (12.5 % − 50 %) | +0.1348 | [+0.1058, +0.1636] | < 0.0001 | yes |
-| Tile size at 12.5 % (384 − 512) | −0.0824 | [−0.1243, −0.0429] | 0.0002 | yes |
-| Tile size at 50 % (384 − 512) | −0.0972 | [−0.1196, −0.0753] | < 0.0001 | yes |
-| **Interaction** (overlap effect at 512 − at 384) | −0.0148 | [−0.0552, +0.0268] | 0.4681 | **no** |
+| Overlap at 512 px (12.5 % − 50 %) | +0.1207 | [+0.0874, +0.1543] | < 0.0001 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | +0.1381 | [+0.1085, +0.1671] | < 0.0001 | yes |
+| Tile size at 12.5 % (384 − 512) | −0.0803 | [−0.1236, −0.0394] | 0.0005 | yes |
+| Tile size at 50 % (384 − 512) | −0.0976 | [−0.1206, −0.0752] | < 0.0001 | yes |
+| **Interaction** (overlap effect at 512 − at 384) | −0.0173 | [−0.0580, +0.0248] | 0.4033 | **no** |
 
 **Both main effects are unambiguous; the interaction is not resolved.**
 On single-pass F1 the two factors are additive to within the
-instrument's resolution: 50 % overlap costs about 0.12–0.13 F1
+instrument's resolution: 50 % overlap costs about 0.12–0.14 F1
 regardless of tile size, and dropping from 512 px to 384 px costs about
 0.08–0.10 F1 regardless of overlap.
 
@@ -114,10 +117,10 @@ Overlap is the factor and corroboration is its by-product, so the two
 cannot be separated — which is exactly why `c` is swept rather than
 fixed. What the sweep shows is that **a 50 % overlap pass carries its
 own internal consensus**. At 12.5 % overlap `c ≥ 2` is not a filter but
-a demolition: it strips recall to 0.124 (512 px) and 0.159 (384 px)
+a demolition: it strips recall to 0.124 (512 px) and 0.161 (384 px)
 because almost nothing is ever seen twice. At 50 % overlap the same
-filter *keeps* recall near 0.87–0.89 while lifting precision from
-0.156 → 0.531 (512 px) and 0.123 → 0.367 (384 px).
+filter *keeps* recall near 0.88–0.91 while lifting precision from
+0.159 → 0.536 (512 px) and 0.125 → 0.374 (384 px).
 
 ## Corroboration × consensus (c × k), K = 10
 
@@ -126,11 +129,11 @@ and the across-pass consensus threshold `k`, pooling all ten passes.
 
 | k | 512/12.5 c1 | 512/12.5 c2 | 512/50 c1 | 512/50 c2 | 512/50 c3 | 384/12.5 c1 | 384/50 c2 | 384/50 c3 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | 0.4077 | 0.2087 | 0.2675 | 0.6590 | 0.6743 | 0.3388 | 0.5194 | 0.6269 |
-| 3 | 0.5772 | 0.1963 | 0.4446 | 0.7174 | 0.6895 | 0.4806 | 0.5850 | 0.6651 |
-| 5 | 0.6464 | 0.1784 | 0.5282 | 0.7291 | 0.6809 | 0.5378 | 0.6404 | 0.6769 |
-| 8 | **0.6759** | 0.1212 | 0.6166 | **0.7518** | 0.6351 | 0.5940 | 0.6855 | 0.6750 |
-| 10 | 0.6429 | 0.0671 | 0.6805 | 0.7237 | 0.5629 | **0.6475** | **0.7205** | 0.6539 |
+| 1 | 0.4153 | 0.2087 | 0.2728 | 0.6661 | 0.6743 | 0.3459 | 0.5303 | 0.6269 |
+| 3 | 0.5854 | 0.1963 | 0.4535 | 0.7256 | 0.6895 | 0.4910 | 0.5960 | 0.6651 |
+| 5 | 0.6538 | 0.1784 | 0.5390 | 0.7378 | 0.6809 | 0.5496 | 0.6491 | 0.6769 |
+| 8 | **0.6845** | 0.1212 | 0.6232 | **0.7611** | 0.6351 | 0.6060 | 0.6934 | 0.6750 |
+| 10 | 0.6506 | 0.0671 | 0.6881 | 0.7315 | 0.5629 | **0.6574** | **0.7293** | 0.6539 |
 
 The full grid — all three `c` levels, every `k`, every K, with
 precision, recall and MCC — is in `sweep.csv` (228 rows).
@@ -139,10 +142,10 @@ precision, recall and MCC — is in `sweep.csv` (228 rows).
 
 | Rank | Cell | c | k | Precision | Recall | **F1** | Tile MCC |
 |---:|---|---:|---:|---:|---:|---:|---:|
-| 1 | 512 px / 50 % | 2 | 8 | 0.7535 | 0.7500 | **0.7518** | 0.5897 |
-| 2 | 384 px / 50 % | 2 | 10 | 0.6762 | 0.7710 | **0.7205** | 0.4909 |
-| 3 | 512 px / 12.5 % | 1 | 8 | 0.6233 | 0.7383 | **0.6759** | 0.5383 |
-| 4 | 384 px / 12.5 % | 1 | 10 | 0.5619 | 0.7640 | **0.6475** | 0.3137 |
+| 1 | 512 px / 50 % | 2 | 8 | 0.7629 | 0.7593 | **0.7611** | 0.5853 |
+| 2 | 384 px / 50 % | 2 | 10 | 0.6844 | 0.7804 | **0.7293** | 0.4909 |
+| 3 | 512 px / 12.5 % | 1 | 8 | 0.6312 | 0.7477 | **0.6845** | 0.5431 |
+| 4 | 384 px / 12.5 % | 1 | 10 | 0.5704 | 0.7757 | **0.6574** | 0.3066 |
 
 **The overlap ranking inverts under aggregation; the tile-size ranking
 does not.** 50 % overlap goes from worst-by-0.12 at single pass to
@@ -150,8 +153,8 @@ best-by-0.08 under consensus, because the filter it enables recovers
 more precision than the extra looks cost. 512 px stays ahead of 384 px
 in both regimes and at every K.
 
-Best tile MCC anywhere in the sweep is 0.6155 (512 px / 50 %, c ≥ 2,
-k ≥ 10, F1 0.7237) — the same cell, one vote above the F1 optimum.
+Best tile MCC anywhere in the sweep is 0.6114 (512 px / 50 %, c ≥ 2,
+k ≥ 10, F1 0.7315) — the same cell, one vote above the F1 optimum.
 
 ## K sensitivity: do passes substitute for overlap?
 
@@ -161,22 +164,22 @@ K = 5 ⊂ K = 10 and the comparison is nested. Spend is audited flex
 
 | Cell | K | Calls | Flex $ | Union recall (ceiling) | Best F1 | at c / k |
 |---|---:|---:|---:|---:|---:|---|
-| 512 / 12.5 % | 1 | 296 | 0.1902 | 0.7757 | 0.5845 | 1 / 1 |
-| 512 / 12.5 % | 3 | 888 | 0.5707 | 0.8411 | 0.6763 | 1 / 3 |
-| 512 / 12.5 % | 5 | 1,480 | 0.9511 | 0.8575 | 0.6736 | 1 / 4 |
-| 512 / 12.5 % | 10 | 2,960 | 1.9022 | 0.8715 | 0.6759 | 1 / 8 |
-| **512 / 50 %** | **1** | **832** | **0.5340** | **0.8972** | **0.7121** | **2 / 1** |
-| 512 / 50 % | 3 | 2,496 | 1.6019 | 0.9229 | 0.7429 | 2 / 3 |
-| 512 / 50 % | 5 | 4,160 | 2.6699 | 0.9393 | 0.7440 | 2 / 4 |
-| 512 / 50 % | 10 | 8,320 | 5.3398 | 0.9416 | 0.7518 | 2 / 8 |
-| 384 / 12.5 % | 1 | 487 | 0.2906 | 0.8364 | 0.5021 | 1 / 1 |
-| 384 / 12.5 % | 3 | 1,461 | 0.8718 | 0.8645 | 0.5976 | 1 / 3 |
-| 384 / 12.5 % | 5 | 2,435 | 1.4530 | 0.8762 | 0.6176 | 1 / 5 |
-| 384 / 12.5 % | 10 | 4,870 | 2.9059 | 0.8925 | 0.6475 | 1 / 10 |
-| 384 / 50 % | 1 | 1,398 | 0.8382 | 0.9346 | 0.6633 | 3 / 1 |
-| 384 / 50 % | 3 | 4,194 | 2.5146 | 0.9439 | 0.6837 | 2 / 3 |
-| 384 / 50 % | 5 | 6,990 | 4.1911 | 0.9486 | 0.7045 | 2 / 5 |
-| 384 / 50 % | 10 | 13,980 | 8.3821 | 0.9509 | 0.7205 | 2 / 10 |
+| 512 / 12.5 % | 1 | 296 | 0.1902 | 0.7827 | 0.5898 | 1 / 1 |
+| 512 / 12.5 % | 3 | 888 | 0.5707 | 0.8505 | 0.6829 | 1 / 3 |
+| 512 / 12.5 % | 5 | 1,480 | 0.9511 | 0.8738 | 0.6818 | 1 / 4 |
+| 512 / 12.5 % | 10 | 2,960 | 1.9022 | 0.8879 | 0.6845 | 1 / 8 |
+| **512 / 50 %** | **1** | **832** | **0.5340** | **0.9112** | **0.7186** | **2 / 1** |
+| 512 / 50 % | 3 | 2,496 | 1.6019 | 0.9416 | 0.7500 | 2 / 3 |
+| 512 / 50 % | 5 | 4,160 | 2.6699 | 0.9579 | 0.7509 | 2 / 4 |
+| 512 / 50 % | 10 | 8,320 | 5.3398 | 0.9603 | 0.7611 | 2 / 8 |
+| 384 / 12.5 % | 1 | 487 | 0.2906 | 0.8551 | 0.5133 | 1 / 1 |
+| 384 / 12.5 % | 3 | 1,461 | 0.8718 | 0.8832 | 0.6096 | 1 / 3 |
+| 384 / 12.5 % | 5 | 2,435 | 1.4530 | 0.8949 | 0.6303 | 1 / 5 |
+| 384 / 12.5 % | 10 | 4,870 | 2.9059 | 0.9112 | 0.6574 | 1 / 10 |
+| 384 / 50 % | 1 | 1,398 | 0.8382 | 0.9533 | 0.6633 | 3 / 1 |
+| 384 / 50 % | 3 | 4,194 | 2.5146 | 0.9626 | 0.6936 | 2 / 3 |
+| 384 / 50 % | 5 | 6,990 | 4.1911 | 0.9673 | 0.7128 | 2 / 5 |
+| 384 / 50 % | 10 | 13,980 | 8.3821 | 0.9696 | 0.7293 | 2 / 10 |
 
 **The verdict: passes do not substitute for overlap.** The earlier,
 scope-confounded reading was that 384 px / 12.5 % at K = 10 reached a
@@ -185,22 +188,22 @@ On one footprint the comparison reverses on **both** counts:
 
 | | Union recall | Best F1 | Flex $ |
 |---|---:|---:|---:|
-| 384 px / 12.5 %, K = 10 | 0.8925 | 0.6475 | $2.9059 |
-| 512 px / 50 %, K = 3 | **0.9229** | **0.7429** | **$1.6019** |
-| Δ (more passes − more overlap) | **−0.0304** | **−0.0953** | **+$1.3040** |
+| 384 px / 12.5 %, K = 10 | 0.9112 | 0.6574 | $2.9059 |
+| 512 px / 50 %, K = 3 | **0.9416** | **0.7500** | **$1.6019** |
+| Δ (more passes − more overlap) | **−0.0304** | **−0.0926** | **+$1.3040** |
 
 More overlap is better *and* cheaper. The result is stronger than that
 head-to-head suggests: **one single pass of 512 px / 50 % ($0.5340,
-F1 0.7121) beats ten passes of either 12.5 % cell** (F1 0.6759 at
-$1.9022; F1 0.6475 at $2.9059). Overlap buys corroboration inside one
+F1 0.7186) beats ten passes of either 12.5 % cell** (F1 0.6845 at
+$1.9022; F1 0.6574 at $2.9059). Overlap buys corroboration inside one
 pass; extra passes buy the same kind of corroboration at K times the
 price.
 
 Two secondary readings of the ladder:
 
 - **Diminishing returns in K are steep.** Union recall for 512 / 50 %
-  moves 0.8972 → 0.9229 → 0.9393 → 0.9416 across K = 1, 3, 5, 10: the
-  first two extra passes buy 0.026, the next seven buy 0.019.
+  moves 0.9112 → 0.9416 → 0.9579 → 0.9603 across K = 1, 3, 5, 10: the
+  first two extra passes buy 0.030, the next seven buy 0.019.
 - **The vote optimum sits at or near the grid edge everywhere.** At
   K = 3 every cell peaks at k = K; at K = 10 the 512 px cells peak at
   k = 8 (interior) but both 384 px cells still peak at k = 10. Even ten
@@ -226,11 +229,11 @@ dollar figure in this document uses. The $37.06 recorded in metadata is
 not an overrun.
 
 F1 per flex dollar at each cell's best K = 10 operating point:
-512 / 12.5 % 0.3553, 384 / 12.5 % 0.2228, 512 / 50 % 0.1408,
-384 / 50 % 0.0860 — which inverts the quality ranking, because F1 per
+512 / 12.5 % 0.3598, 384 / 12.5 % 0.2262, 512 / 50 % 0.1425,
+384 / 50 % 0.0870 — which inverts the quality ranking, because F1 per
 dollar rewards cheapness at K = 10 where quality has already plateaued.
 The operationally useful reading is the K = 1 row of the ladder:
-**512 px / 50 % at K = 1 returns F1 0.7121 for $0.5340 — 1.33 F1 per
+**512 px / 50 % at K = 1 returns F1 0.7186 for $0.5340 — 1.35 F1 per
 dollar at a quality no 12.5 % cell reaches at any K in this grid.**
 
 ## Surprises, flagged rather than smoothed
@@ -246,23 +249,23 @@ dollar at a quality no 12.5 % cell reaches at any K in this grid.**
    choice** — 512 px was never tested against it at T = 0.7 on one
    footprint before — but it is a direct challenge to it and should not
    be filed away.
-2. **Tile MCC is non-monotone in both factors** (0.4415 / 0.3096 /
-   0.1452 / 0.2321), and 384 px / 12.5 % is the *worst* cell on MCC
+2. **Tile MCC is non-monotone in both factors** (0.4484 / 0.3255 /
+   0.1555 / 0.2404), and 384 px / 12.5 % is the *worst* cell on MCC
    despite ranking second on F1. The tile confusion matrix explains it.
    All four cells share the same carrier grid, hence the same 225
    populated and 262 empty tiles; only where detections land differs:
 
    | Cell | Tile TP | Tile TN | Tile FP | Tile FN | Sensitivity | Specificity |
    |---|---:|---:|---:|---:|---:|---:|
-   | 512 px / 12.5 % | 199.0 | 140.3 | 121.7 | 26.0 | 0.8844 | 0.5355 |
-   | 512 px / 50 % | 209.9 | 82.8 | 179.2 | 15.1 | 0.9329 | 0.3160 |
-   | 384 px / 12.5 % | 208.3 | 44.8 | 217.2 | 16.7 | 0.9258 | 0.1710 |
-   | 384 px / 50 % | 218.8 | 44.4 | 217.6 | 6.2 | 0.9724 | 0.1695 |
+   | 512 px / 12.5 % | 200.3 | 140.3 | 121.7 | 24.7 | 0.8902 | 0.5355 |
+   | 512 px / 50 % | 212.6 | 82.1 | 179.9 | 12.4 | 0.9449 | 0.3134 |
+   | 384 px / 12.5 % | 210.8 | 42.8 | 219.2 | 14.2 | 0.9369 | 0.1634 |
+   | 384 px / 50 % | 220.5 | 42.5 | 219.5 | 4.5 | 0.9800 | 0.1622 |
 
-   At 384 px the model already fires on 217 of the 262 empty carrier
+   At 384 px the model already fires on 219 of the 262 empty carrier
    tiles at 12.5 % overlap — specificity has effectively **saturated**,
    so raising overlap to 50 % adds almost no new false-positive tiles
-   (217.2 → 217.6) while adding true-positive ones, and MCC *rises*.
+   (219.2 → 219.5) while adding true-positive ones, and MCC *rises*.
    Tile MCC on a 487-tile carrier is therefore reading detection
    *spread* once specificity bottoms out, not discrimination. Report it;
    rank on F1. This echoes H13's conclusion that MCC should not carry an
@@ -302,14 +305,19 @@ $0.000693 (`results/verifier-robustness/pareto/pareto_v2.json`
 
 | Cell | Operating point | Candidates | Verifier $ | Consensus-only F1 |
 |---|---|---:|---:|---:|
-| 512 px / 12.5 % | K10 best (c ≥ 1, k ≥ 8) | 507 | $0.3514 | 0.6759 |
-| 512 px / 50 % | K10 best (c ≥ 2, k ≥ 8) | 426 | $0.2952 | 0.7518 |
-| 384 px / 12.5 % | K10 best (c ≥ 1, k ≥ 10) | 582 | $0.4033 | 0.6475 |
-| 384 px / 50 % | K10 best (c ≥ 2, k ≥ 10) | 488 | $0.3382 | 0.7205 |
-| 512 px / 12.5 % | K10 union (c ≥ 1, k ≥ 1) | 1,402 | $0.9716 | 0.4077 |
-| 512 px / 50 % | K10 union (c ≥ 1, k ≥ 1) | 2,585 | $1.7914 | 0.2675 |
-| 384 px / 12.5 % | K10 union (c ≥ 1, k ≥ 1) | 1,827 | $1.2661 | 0.3388 |
-| 384 px / 50 % | K10 union (c ≥ 1, k ≥ 1) | 3,319 | $2.3001 | 0.2172 |
+| 512 px / 12.5 % | K10 best (c ≥ 1, k ≥ 8) | 507 | $0.3514 | 0.6845 |
+| 512 px / 50 % | K10 best (c ≥ 2, k ≥ 8) | 426 | $0.2952 | 0.7611 |
+| 384 px / 12.5 % | K10 best (c ≥ 1, k ≥ 10) | 582 | $0.4033 | 0.6574 |
+| 384 px / 50 % | K10 best (c ≥ 2, k ≥ 10) | 488 | $0.3382 | 0.7293 |
+| 512 px / 12.5 % | K10 union (c ≥ 1, k ≥ 1) | 1,402 | $0.9716 | 0.4153 |
+| 512 px / 50 % | K10 union (c ≥ 1, k ≥ 1) | 2,585 | $1.7914 | 0.2728 |
+| 384 px / 12.5 % | K10 union (c ≥ 1, k ≥ 1) | 1,827 | $1.2661 | 0.3459 |
+| 384 px / 50 % | K10 union (c ≥ 1, k ≥ 1) | 3,319 | $2.3001 | 0.2215 |
+
+The consensus-only F1 column is restated (2026-10-15); the dollar
+columns are the costing of 2026-08-18 that the PI approved, kept as
+costed. `grid_analysis.json` now prices the same options at the
+re-based $0.000692 per call of PI ruling D19 as amended on 2026-10-04.
 
 **Recommendation (not a spend authorisation).** Verify the four K = 10
 *unions*, not the consensus-pruned sets: the verifier is the precision
@@ -344,14 +352,20 @@ B = 10,000 from each cell's registered evaluation):
 
 | Rank | Cell | prob_t | k | n | Precision | Recall | **F1** | CI95 | Tile MCC |
 |---:|---|---:|---:|---:|---:|---:|---:|---|---:|
-| 1 | 384 px / 50 % | ≥ 0.15 | ≥ 10 | 400 | 0.9275 | 0.8668 | **0.8961** | [0.8657, 0.9198] | 0.7965 |
-| 2 | 512 px / 50 % | ≥ 0.15 | ≥ 9 | 382 | 0.9346 | 0.8341 | **0.8815** | [0.8518, 0.9073] | 0.8011 |
-| 3 | 384 px / 12.5 % | ≥ 0.20 | ≥ 7 | 358 | 0.9525 | 0.7967 | **0.8677** | [0.8335, 0.8957] | 0.7751 |
-| 4 | 512 px / 12.5 % | ≥ 0.15 | ≥ 5 | 383 | 0.8799 | 0.7874 | **0.8311** | [0.7938, 0.8624] | 0.7937 |
+| 1 | 384 px / 50 % | ≥ 0.15 | ≥ 10 | 406 | 0.9261 | 0.8785 | **0.9017** | [0.8727, 0.9244] | 0.8037 |
+| 2 | 512 px / 50 % | ≥ 0.15 | ≥ 9 | 386 | 0.9352 | 0.8435 | **0.8870** | [0.8583, 0.9118] | 0.8087 |
+| 3 | 384 px / 12.5 % | ≥ 0.15 | ≥ 7 | 371 | 0.9434 | 0.8178 | **0.8761** | — | 0.7852 |
+| 4 | 512 px / 12.5 % | ≥ 0.15 | ≥ 5 | 387 | 0.8811 | 0.7967 | **0.8368** | [0.7995, 0.8676] | 0.8011 |
 
-The verifier lifts every cell's best F1 by +0.130 to +0.220 over the
+Since the 2026-10-15 restatement the 384 px / 12.5 % cell's best point
+is (0.15, k7), which has no registered evaluation, so its row carries
+no interval. Under PI ruling D65 (3) its registered condition keeps
+its registered point (0.20, k7): F1 0.8752 [0.8424, 0.9017], 365
+detections, tile MCC 0.7852 (see **Registered conditions** below).
+
+The verifier lifts every cell's best F1 by +0.126 to +0.219 over the
 consensus-only board, and the gain is largest exactly where
-consensus-only was worst (the two 384 px cells: +0.220 and +0.176).
+consensus-only was worst (the two 384 px cells: +0.219 and +0.172).
 
 **Question 1 — the tile-size ranking does NOT survive: it reverses.**
 Paired tile bootstrap, B = 10,000, seed 42. The pre-verifier arm here
@@ -364,23 +378,23 @@ board).
 
 | Contrast | K10 consensus baseline | Post-verifier | Post excludes 0 |
 |---|---|---|---|
-| Tile size at 12.5 % (384 − 512) | −0.0284 [−0.0813, +0.0233], p = 0.298 | **+0.0366 [+0.0026, +0.0717], p = 0.037** | **yes** |
-| Tile size at 50 % (384 − 512) | −0.0312 [−0.0695, +0.0052], p = 0.094 | +0.0147 [−0.0093, +0.0393], p = 0.235 | no |
-| Overlap at 512 px (12.5 % − 50 %) | −0.0758 [−0.1204, −0.0310], p = 0.0008 | −0.0504 [−0.0781, −0.0224], p = 0.0003 | yes |
-| Overlap at 384 px (12.5 % − 50 %) | −0.0730 [−0.1185, −0.0284], p = 0.0032 | −0.0285 [−0.0530, −0.0045], p = 0.0235 | yes |
-| Interaction (post-verifier) | — | −0.0220 [−0.0581, +0.0141], p = 0.226 | no |
+| Tile size at 12.5 % (384 − 512) | −0.0271 [−0.0809, +0.0254], p = 0.308 | **+0.0393 [+0.0052, +0.0741], p = 0.027** | **yes** |
+| Tile size at 50 % (384 − 512) | −0.0319 [−0.0704, +0.0048], p = 0.086 | +0.0147 [−0.0095, +0.0394], p = 0.245 | no |
+| Overlap at 512 px (12.5 % − 50 %) | −0.0766 [−0.1214, −0.0318], p = 0.0006 | −0.0502 [−0.0778, −0.0224], p = 0.0003 | yes |
+| Overlap at 384 px (12.5 % − 50 %) | −0.0718 [−0.1178, −0.0268], p = 0.0037 | **−0.0256 [−0.0517, +0.0001], p = 0.0541** | **no** (until 2026-10-15: yes) |
+| Interaction (post-verifier) | — | −0.0246 [−0.0613, +0.0114], p = 0.183 | no |
 
 Read precisely, the reversal is: **a non-significant 512 px lead at
-the aggregated consensus stage (−0.028 / −0.031, both CIs spanning
+the aggregated consensus stage (−0.027 / −0.032, both CIs spanning
 zero) becomes a significant 384 px lead at 12.5 % overlap once the
 verifier runs, and a sign-reversed but unresolved +0.015 at 50 %.**
-The single-pass contrasts (−0.0824 / −0.0972, both excluding zero,
+The single-pass contrasts (−0.0803 / −0.0976, both excluding zero,
 § 3) are where 512 px's advantage is strong — but they measure mean
 single-pass performance, and aggregation alone already erodes that
 advantage to non-significance before the verifier flips the sign. The
 mechanism is the one § Unresolved anticipated: 384 px lost to 512 px
 almost entirely on precision, which the verifier recovers, while its
-higher union-recall ceilings (0.8925 / 0.9509 vs 0.8715 / 0.9416) are
+higher union-recall ceilings (0.9112 / 0.9696 vs 0.8879 / 0.9603) are
 the resource the verifier cannot create. This **dissolves
 Surprise 1** — the "512 px challenge" to the study's 384 px preference
 was an artefact of the truncated (verifier-less) pipeline — and
@@ -391,11 +405,16 @@ is F1-selected on the same 487 tiles it is scored on, and the
 post-verifier sweep offers ~4–5× the selection space of the consensus
 sweep; the contrasts condition on that selection.
 
-**Question 2 — the overlap reversal survives.** 50 % overlap wins at
-both tile sizes under the full pipeline (−0.0504 at 512 px,
-p = 0.0003; −0.0285 at 384 px, p = 0.0235), and it already won at the
-K = 10 consensus baseline (−0.0758, p = 0.0008; −0.0730, p = 0.0032 —
-table above). The margin roughly halves once the verifier runs, which
+**Question 2 — the overlap reversal survives at 512 px and fails at
+384 px.** 50 % overlap wins at 512 px under the full pipeline
+(−0.0502, p = 0.0003). At 384 px it no longer wins significantly: the
+point estimate still favours 50 % (−0.0256), but its interval reaches
++0.0001 and p = 0.0541. Until the 2026-10-15 restatement this read
+−0.0285 [−0.0530, −0.0045], p = 0.0235, and the section said 50 %
+wins at both tile sizes; with the re-verified wrong-sheet rows that is
+false at 384 px. Both sizes did favour 50 % at the K = 10 consensus
+baseline (−0.0766, p = 0.0006; −0.0718, p = 0.0037 — table above).
+The margin roughly halves once the verifier runs, which
 is the partial-redundancy outcome § Unresolved predicted: the
 corroboration filter and the verifier overlap in function but are not
 interchangeable, and what remains of the 50 % advantage tracks its
@@ -405,15 +424,15 @@ recall-ceiling edge.
 cell's best operating point retains a vote threshold (k ≥ 5 to
 k ≥ 10) on top of the probability threshold. The pure-verifier board
 (k = 1, best prob_t — the verifier as the *only* precision stage)
-tops out at 0.8153 (384 px / 12.5 %, prob_t ≥ 0.2) and trails the
-stacked optimum in every cell, by 0.052 to 0.203. Handing the
+tops out at 0.8187 (384 px / 12.5 %, prob_t ≥ 0.2) and trails the
+stacked optimum in every cell, by 0.057 to 0.207. Handing the
 verifier the raw union and letting thresholds on votes and
 probability act jointly is what buys the board above.
 
 **Tile MCC saturation dissolves.** The consensus-only board's 384 px
 MCC pathology (specificity saturated at 0.17) disappears once the
 verifier strips false positives: all four cells sit at MCC
-0.775–0.801, and the F1 ranking and MCC ranking broadly agree.
+0.785–0.809, and the F1 ranking and MCC ranking broadly agree.
 
 **Billing.** The four verifier `run.meta.json` cost blocks sum to
 $12.5428 list; Gemini real-time flex bills at half list, so the
@@ -421,13 +440,20 @@ expected billed figure is **$6.2714** ($0.000687/call), against the
 costed $6.33 ($0.000693/call) — a −$0.06 variance. The PI's
 billing-console glance should expect ≈ $6.27.
 
-**Registered conditions.** Each cell's best operating point is
+**Registered conditions.** Each cell's best operating point was
 materialised and scored at B = 10,000 (BCa) under a reproduction gate
 (all four within 5 × 10⁻⁵ of the sweep):
 `results/grid-2026-08-18/conditions-verified/<cell>/`, summarised in
 `grid_verified_conditions.json`, registered as the four
 `*-k10-verified-p*` conditions and the analysis row
-`grid-postverifier-2026-08-18`.
+`grid-postverifier-2026-08-18`. Since the 2026-10-15 restatement each
+condition is materialised at its registered point (PI ruling D65 (3)),
+with the cell's current best point recorded beside it, and each cell's
+best-point set is written to `verified-best/<cell>/detections.geojson`.
+Three registered points are still their cell's best. The fourth,
+`g384-ov048-k10-verified-p0.20-k7`, keeps (0.20, k7) at F1 0.8752
+[0.8424, 0.9017] (365 detections), against the new best (0.15, k7) at
+0.8761 (371).
 
 **The incumbents, like for like (stride-programme Phase A,
 2026-08-24).** The study's leading verified cells, clipped to this
@@ -438,18 +464,24 @@ to the clip; `incumbents_common_footprint.json`, script
 
 | Set | F1@20 m | F1@30 m | Δ vs 384/50 @20 m (paired, B = 10,000) |
 |---|---:|---:|---|
-| **384 px / 50 % verified (this grid)** | **0.8961** | **0.9034** | — |
-| opmax (16-of-30 HIGH + n = 5 T0.3 verifier) | 0.8842 | 0.9031 | +0.0120 [−0.0135, +0.0371], p = 0.352 |
-| registered headline (16-of-30 HIGH + n = 1 verifier) | 0.8838 | 0.8958 | +0.0123 [−0.0117, +0.0358], p = 0.313 |
-| min11 (min-6of10 + verifier) | 0.8719 | 0.8892 | +0.0242 [−0.0035, +0.0519], p = 0.089 |
-| min6 (min-true-3of5 + verifier) | 0.8623 | 0.8743 | **+0.0339 [+0.0065, +0.0623], p = 0.020** |
+| **384 px / 50 % verified (this grid)** | **0.9017** | 0.9089 | — |
+| opmax (16-of-30 HIGH + n = 5 T0.3 verifier) | 0.8960 | **0.9173** | +0.0057 [−0.0195, +0.0304], p = 0.655 |
+| registered headline (16-of-30 HIGH + n = 1 verifier) | 0.8910 | 0.9054 | +0.0107 [−0.0131, +0.0334], p = 0.381 |
+| min11 (min-6of10 + verifier) | 0.8842 | 0.9015 | +0.0174 [−0.0091, +0.0441], p = 0.208 |
+| min6 (min-true-3of5 + verifier) | 0.8790 | 0.8910 | +0.0226 [−0.0046, +0.0502], p = 0.111 |
 
 On one evaluation, the grid's stride-192 cell is the point-estimate
-leader at both buffers and statistically clears min6, but its edge
-over opmax, the headline, and min11 is within noise: it **joins the
-leading shelf as a tie at roughly a fifth of the incumbents' cost**
-(~$10.7 vs the ~$50-class 30-pass HIGH pipelines), rather than
-dethroning them. Configuration confound noted: the grid cell differs
+leader at 20 m only, and its edge over every incumbent is within
+noise (p = 0.111 to 0.655). **This paragraph's earlier reading fails
+on both counts since the 2026-10-15 restatement.** The cell no longer
+leads at 30 m, where opmax scores 0.9173 against its 0.9089 (a point
+estimate; no paired test exists at 30 m). It also no longer
+statistically clears min6: +0.0226, p = 0.111, where it read +0.0339
+[+0.0065, +0.0623], p = 0.020 before the incumbents were scored on
+their recorded sheets (PR #42) and the wrong-sheet rows re-verified.
+What survives is the tie: it **joins the leading shelf as a tie at
+roughly a fifth of the incumbents' cost** (~$10.7 vs the ~$50-class
+30-pass HIGH pipelines), rather than dethroning them. Configuration confound noted: the grid cell differs
 from the incumbents in geometry AND proposer (MINIMAL T = 0.7
 brief-text vs HIGH-thinking consensus), so this board motivates the
 stride programme (`planning/stride-programme-2026-08-24.md`) rather
@@ -471,7 +503,8 @@ preserved in the [changelog](#changelog) entry.*
 - ~~Whether the tile-size ranking survives a verifier~~ — **settled:
   it reverses.** See [§ The verifier stage, run](#the-verifier-stage-run-2026-08-24).
 - ~~Whether the overlap reversal survives a verifier~~ — **settled: it
-  survives**, at roughly half the consensus-only margin.
+  survives at 512 px**, at roughly half the consensus-only margin, and
+  **fails at 384 px** since the 2026-10-15 restatement (p = 0.0541).
 - **Whether the consensus optimum is interior at 384 px.** Ten passes
   still peak at k = 10 for both 384 px cells — post-verifier as well
   (384 px / 50 % best sits at k ≥ 10; 512 px / 50 % moves interior to
@@ -538,7 +571,9 @@ Three independent cross-checks, all reproduced in this session:
    per-tile TP/FP/FN table (`compute_per_tile_tp_fp_fn`) agree to four
    decimal places on all four cells: 0.5871/0.5871, 0.4672/0.4671,
    0.5049/0.5048, 0.3700/0.3699. The two paths share no code below the
-   reference-scoping helpers.
+   reference-scoping helpers. These are the 2026-08-18 values, before
+   the origin route; the check was not repeated on the restated
+   single-pass F1 of § The 2 × 2.
 2. **The vectorised clusterer matches the library's.** At K = 3 on the
    two 12.5 % cells, `cluster_votes` and
    `h13_aggregation_sweep.aggregate` (which calls
@@ -569,9 +604,13 @@ pooled point estimate, and recovery of a constructed interaction).
   the source for § The verifier stage, run.
 - `verifier_sweep.csv` — the full prob_t × k post-verifier sweep
   (580 rows).
-- `conditions-verified/<cell>/` — the four materialised best-operating-
-  point verified sets with their B = 10,000 BCa evaluations, summarised
-  in `conditions-verified/grid_verified_conditions.json`.
+- `conditions-verified/<cell>/` — the four materialised verified
+  conditions at their registered operating points (PI ruling D65 (3)),
+  with their B = 10,000 BCa evaluations, summarised in
+  `conditions-verified/grid_verified_conditions.json`.
+- `verified-best/<cell>/detections.geojson` — each cell's current
+  best-point verified set (added 2026-10-15; the stride board reads
+  these).
 - `outputs/grid-2026-08-18/scoring/` — deduplicated per-pass detection
   sets in both scopes, the five bounds files, and `prepare_summary.json`
   (footprint audit plus per-pass dedup statistics).
@@ -617,6 +656,112 @@ pooled point estimate, and recovery of a constructed interaction).
   E82 — bootstrap iteration count standardised at 10,000.
 
 ## Changelog
+
+### 2026-10-15 — Restated on the origin route and the re-verified rows (PI ruling D65 (2))
+
+**Refresh trigger**: PI ruling D65 (2) (`planning/pi-decisions-2026-09-20.md`),
+executed by the S164 restatement pass
+(`reports/s164-agent-records/restatement-pass.md`). Two upstream changes
+reach this document. PR #42 (`dddfcc0af`) scores each detection on the
+sheet it was seen on, where the legacy nearest-tile rule had booked some
+detections near a sheet edge to the neighbouring sheet; that moves every
+consensus-only number. The same legacy rule had sent those candidates'
+verifier crops to the neighbouring sheet's raster, mostly no-data; PR #43
+(`0e8a1fa7a`) re-verified them on crops from their own sheet, and the
+reader routing (`9c843b980`) reads the re-verified rows; that moves every
+post-verifier number. `grid_analysis.py --bootstrap 10000`,
+`grid_materialise_conditions.py`, `grid_verifier_analysis.py
+--materialise-conditions`, and `grid_incumbent_rescore.py` were re-run on
+sapphire in two independent copies that agree apart from timestamps and run roots; the
+outputs were committed at `f6f10d605`. Every value equals the REPAIRED
+column of the 2026-10-13 re-score
+(`reports/s164-agent-records/rescore-repaired-gs.md` § 3), except that
+384 px / 12.5 %'s registered condition stays at its registered point
+(D65 (3)).
+
+**Two findings fail, and the text now says so.** The overlap reversal at
+384 px (Question 2): 50 % overlap no longer wins significantly there
+post-verifier. The Phase A paragraph: the grid winner leads the
+incumbents at 20 m only, and no longer statistically clears min6.
+
+| Quantity | Before | After |
+|---|---|---|
+| **Post-verifier overlap at 384 px (12.5 % − 50 %)** | −0.0285 [−0.0530, −0.0045], p 0.0235 | **−0.0256 [−0.0517, +0.0001], p 0.0541 (fails)** |
+| Post-verifier overlap at 512 px | −0.0504 [−0.0781, −0.0224], p 0.0003 | −0.0502 [−0.0778, −0.0224], p 0.0003 |
+| Post-verifier tile size at 12.5 % / 50 % | +0.0366 [+0.0026, +0.0717], p 0.0373; +0.0147 [−0.0093, +0.0393], p 0.2353 | +0.0393 [+0.0052, +0.0741], p 0.0266; +0.0147 [−0.0095, +0.0394], p 0.2454 |
+| Post-verifier interaction | −0.0220 [−0.0581, +0.0141], p 0.2257 | −0.0246 [−0.0613, +0.0114], p 0.1831 |
+| K = 10 baseline, tile size 12.5 % / 50 % | −0.0284 [−0.0813, +0.0233], p 0.2975; −0.0312 [−0.0695, +0.0052], p 0.0939 | −0.0271 [−0.0809, +0.0254], p 0.3081; −0.0319 [−0.0704, +0.0048], p 0.0862 |
+| K = 10 baseline, overlap 512 / 384 | −0.0758 [−0.1204, −0.0310], p 0.0008; −0.0730 [−0.1185, −0.0284], p 0.0032 | −0.0766 [−0.1214, −0.0318], p 0.0006; −0.0718 [−0.1178, −0.0268], p 0.0037 |
+| Post-verifier board F1, 384/50, 512/50, 384/12.5, 512/12.5 | 0.8961, 0.8815, 0.8677, 0.8311 | 0.9017, 0.8870, 0.8761, 0.8368 |
+| Board detections | 400, 382, 358, 383 | 406, 386, 371, 387 |
+| Board precision | 0.9275, 0.9346, 0.9525, 0.8799 | 0.9261, 0.9352, 0.9434, 0.8811 |
+| Board recall | 0.8668, 0.8341, 0.7967, 0.7874 | 0.8785, 0.8435, 0.8178, 0.7967 |
+| Board tile MCC (range) | 0.7965, 0.8011, 0.7751, 0.7937 (0.775–0.801) | 0.8037, 0.8087, 0.7852, 0.8011 (0.785–0.809) |
+| Board CI95 | [0.8657, 0.9198], [0.8518, 0.9073], [0.8335, 0.8957], [0.7938, 0.8624] | [0.8727, 0.9244], [0.8583, 0.9118], none at the new best point, [0.7995, 0.8676] |
+| 384/12.5 best point; registered condition | (0.20, k7) 0.8677, both | best (0.15, k7) 0.8761, n 371; registered (0.20, k7) 0.8752 [0.8424, 0.9017], n 365 |
+| Verifier gain (range; the 384 px cells) | +0.130 to +0.220; +0.220, +0.176 | +0.126 to +0.219; +0.219, +0.172 |
+| Pure verifier best; stacked lead | 0.8153; 0.052 to 0.203 | 0.8187; 0.057 to 0.207 |
+| **Grid winner against incumbents, 20 m (opmax, headline, min11, min6)** | +0.0120, p 0.352; +0.0123, p 0.313; +0.0242, p 0.089; **+0.0339 [+0.0065, +0.0623], p 0.020** | +0.0057, p 0.655; +0.0107, p 0.381; +0.0174, p 0.208; **+0.0226 [−0.0046, +0.0502], p 0.111 (fails)** |
+| Incumbents F1 @ 20 m | 0.8842, 0.8838, 0.8719, 0.8623 | 0.8960, 0.8910, 0.8842, 0.8790 |
+| **F1 @ 30 m, grid winner and incumbents** | 0.9034; 0.9031, 0.8958, 0.8892, 0.8743 | 0.9089; **0.9173**, 0.9054, 0.9015, 0.8910 (opmax leads) |
+| Consensus-only board F1 (K = 10) | 0.7518, 0.7205, 0.6759, 0.6475 | 0.7611, 0.7293, 0.6845, 0.6574 |
+| Board precision; recall | 0.7535, 0.6762, 0.6233, 0.5619; 0.7500, 0.7710, 0.7383, 0.7640 | 0.7629, 0.6844, 0.6312, 0.5704; 0.7593, 0.7804, 0.7477, 0.7757 |
+| Board tile MCC | 0.5897, 0.4909, 0.5383, 0.3137 | 0.5853, 0.4909, 0.5431, 0.3066 |
+| K = 10 union recall (the ceilings) | 0.8715, 0.9416, 0.8925, 0.9509 | 0.8879, 0.9603, 0.9112, 0.9696 |
+| Single-pass F1 (512/12.5, 512/50, 384/12.5, 384/50) | 0.5871, 0.4672, 0.5049, 0.3700 | 0.5956, 0.4750, 0.5155, 0.3773 |
+| Single-pass precision; recall | 0.4719, 0.3157, 0.3615, 0.2308; 0.7769, 0.8991, 0.8369, 0.9327 | 0.4788, 0.3209, 0.3691, 0.2353; 0.7881, 0.9140, 0.8544, 0.9512 |
+| Single-pass tile MCC | 0.4415, 0.3096, 0.1452, 0.2321 | 0.4484, 0.3255, 0.1555, 0.2404 |
+| Single-pass SD of F1; of MCC | 0.0077, 0.0074, 0.0091, 0.0053; 0.0128, 0.0178, 0.0114, 0.0131 | 0.0087, 0.0083, 0.0101, 0.0054; 0.0140, 0.0191, 0.0098, 0.0154 |
+| Single-pass SD of precision; of recall | 0.0069, 0.0066, 0.0089, 0.0040; 0.0127, 0.0075, 0.0090, 0.0039 | 0.0077, 0.0072, 0.0097, 0.0041; 0.0138, 0.0097, 0.0089, 0.0036 |
+| Single-pass contrasts: overlap 512, overlap 384 | +0.1200 [+0.0872, +0.1531]; +0.1348 [+0.1058, +0.1636] | +0.1207 [+0.0874, +0.1543]; +0.1381 [+0.1085, +0.1671] |
+| Single-pass contrasts: tile size 12.5 %, 50 % | −0.0824 [−0.1243, −0.0429], p 0.0002; −0.0972 [−0.1196, −0.0753] | −0.0803 [−0.1236, −0.0394], p 0.0005; −0.0976 [−0.1206, −0.0752] |
+| Single-pass interaction | −0.0148 [−0.0552, +0.0268], p 0.4681 | −0.0173 [−0.0580, +0.0248], p 0.4033 |
+| Tile TP / TN / FP / FN, 512/12.5 | 199.0 / 140.3 / 121.7 / 26.0 | 200.3 / 140.3 / 121.7 / 24.7 |
+| Tile TP / TN / FP / FN, 512/50 | 209.9 / 82.8 / 179.2 / 15.1 | 212.6 / 82.1 / 179.9 / 12.4 |
+| Tile TP / TN / FP / FN, 384/12.5 | 208.3 / 44.8 / 217.2 / 16.7 | 210.8 / 42.8 / 219.2 / 14.2 |
+| Tile TP / TN / FP / FN, 384/50 | 218.8 / 44.4 / 217.6 / 6.2 | 220.5 / 42.5 / 219.5 / 4.5 |
+| Tile sensitivity; specificity | 0.8844, 0.9329, 0.9258, 0.9724; 0.5355, 0.3160, 0.1710, 0.1695 | 0.8902, 0.9449, 0.9369, 0.9800; 0.5355, 0.3134, 0.1634, 0.1622 |
+| Mechanism (K = 10, k ≥ 1): c ≥ 2 recall at 12.5 %, 384 px; at 50 % | 0.159; 0.87–0.89 | 0.161; 0.88–0.91 |
+| Mechanism: precision c ≥ 1 → c ≥ 2 at 50 %, 512 px; 384 px | 0.156 → 0.531; 0.123 → 0.367 | 0.159 → 0.536; 0.125 → 0.374 |
+| c × k table, 25 of its 40 entries | as published on 2026-08-18 | each rises by +0.0053 to +0.0120 (512/50 c2 k8 0.7518 → 0.7611); the 512/12.5 c2 and both c3 columns do not move |
+| Best tile MCC in the sweep (512/50, c ≥ 2, k ≥ 10); its F1 | 0.6155; 0.7237 | 0.6114; 0.7315 |
+| K ladder, all 16 rows | as published on 2026-08-18 | union recall rises by +0.0070 to +0.0187; best F1 by 0 to +0.0127 (384/50 K = 1 unchanged at 0.6633); every c / k unchanged |
+| Passes against overlap: 384/12.5 K = 10; 512/50 K = 3; Δ | 0.8925, 0.6475; 0.9229, 0.7429; −0.0304, −0.0953 | 0.9112, 0.6574; 0.9416, 0.7500; −0.0304, −0.0926 |
+| 512/50 K = 1 best F1; F1 per flex dollar | 0.7121; 1.33 | 0.7186; 1.35 |
+| 512/50 union recall, K = 1, 3, 5, 10; first two passes, next seven | 0.8972, 0.9229, 0.9393, 0.9416; 0.026, 0.019 | 0.9112, 0.9416, 0.9579, 0.9603; 0.030, 0.019 |
+| F1 per flex dollar at K = 10 (512/12.5, 384/12.5, 512/50, 384/50) | 0.3553, 0.2228, 0.1408, 0.0860 | 0.3598, 0.2262, 0.1425, 0.0870 |
+| Costing table, consensus-only F1 (best; union) | 0.6759, 0.7518, 0.6475, 0.7205; 0.4077, 0.2675, 0.3388, 0.2172 | 0.6845, 0.7611, 0.6574, 0.7293; 0.4153, 0.2728, 0.3459, 0.2215 |
+
+Sources: `grid_analysis.json` (`single_pass`, `contrasts`,
+`interaction`, `consensus_only_board`, `cost_efficiency`), `sweep.csv`,
+`verifier_analysis.json` (`board_best`, `bootstrap_contrasts`,
+`bootstrap_contrasts_consensus_k10_baseline`, `interaction`,
+`board_pure_verifier_k1`, `verifier_gain_over_consensus`, `conditions`),
+`incumbents_common_footprint.json`, and, for the grid winner at 30 m,
+`results/stride-2026-08-25/stride_verifier_analysis.json`
+(`boards.g384_ov192.f1_30m`); each read at `718d0ee08` (before) and at
+the pass's head (after).
+
+**What did NOT change**: the corroboration profile; the 228-row sweep's
+shape and its two undefined MCC cells; every consensus-only best
+operating point; the union counts (1,402 / 2,585 / 1,827 / 3,319); the
+audited proposer spend and the verifier billing; three of the four
+post-verifier best points; the consensus-only verdicts (both single-pass
+main effects exclude zero, the interaction is unresolved, overlap
+inverts under aggregation and tile size never does, passes do not
+substitute for overlap); the post-verifier ranking, the tile-size
+reversal (significant at 12.5 %), the overlap reversal at 512 px, the
+complements reading, and the tile-MCC saturation reading; the
+grid-edge question at 384 px. The costing table's dollar columns stay
+as costed on 2026-08-18 (`grid_analysis.json` now prices them at the
+re-based $0.000692 per call; the $6.33 the PI approved was costed at
+the earlier rate). The Verification section's two-path check
+is the 2026-08-18 record and was not repeated. Older changelog entries
+keep the figures they reported.
+
+**Commits**: `385877de0` (registered conditions kept at their points;
+the `verified-best/` sets); `f6f10d605` (the regenerated grid outputs);
+this document refresh in the restatement pass's document commit.
 
 ### 2026-10-05 — p-values from the permutation test (PI ruling D42)
 

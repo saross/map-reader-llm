@@ -316,8 +316,8 @@ Rungs absent of [1, 3, 5, 10]: [1, 3]
 
 | K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
 |---:|---|---:|---:|---:|---:|---:|---:|---|
-| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 5 | 0.1 | **0.9139** | 0.9277 | 0.7797 | 443 | grid_common_bounds.geojson |
-| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 10 | 0.1 | **0.9142** | 0.9377 | 0.7817 | 423 | grid_common_bounds.geojson |
+| 5 | `gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5` | 5 | 0.1 | **0.9238** | 0.9374 | 0.7914 | 451 | grid_common_bounds.geojson |
+| 10 | `gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10` | 10 | 0.1 | **0.9243** | 0.9476 | 0.7971 | 431 | grid_common_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: [1, 3]
 
@@ -376,10 +376,10 @@ Rungs absent of [1, 3, 5, 10]: none
 
 | K | condition | k | prob_t | F1@20 | F1@50 | tile-MCC | n | frame |
 |---:|---|---:|---:|---:|---:|---:|---:|---|
-| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | **0.8677** | None | 0.7894 | 411 | grid_common_bounds.geojson |
-| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | **0.8911** | None | 0.7814 | 380 | grid_common_bounds.geojson |
-| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | **0.8856** | None | 0.7805 | 394 | grid_common_bounds.geojson |
-| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | **0.8982** | None | 0.8022 | 387 | grid_common_bounds.geojson |
+| 1 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1` | 1 | 0.15 | **0.8737** | None | 0.801 | 419 | grid_common_bounds.geojson |
+| 3 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3` | 3 | 0.15 | **0.8993** | None | 0.7927 | 386 | grid_common_bounds.geojson |
+| 5 | `stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4` | 4 | 0.15 | **0.8937** | None | 0.7918 | 400 | grid_common_bounds.geojson |
+| 10 | `stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8` | 8 | 0.15 | **0.9075** | None | 0.8134 | 394 | grid_common_bounds.geojson |
 
 Rungs absent of [1, 3, 5, 10]: none
 

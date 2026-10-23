@@ -38213,3 +38213,117 @@ condition); Obs 497 (the run date is a factor).
 `topup-2026-10-15.json`); `planning/pi-decisions-2026-09-20.md` D64,
 D66, and D67; plan commits `e783ed3ac`, `751525d7e`, `2d5cb991c`;
 results `b77624e15`.
+
+## Observation 512: The grid's overlap reversal stays significant after the verifier at 512 px but not at 384 px, though the two sizes are not shown to differ — a correction to Obs 433 (Session 165, 2026-10-17)
+
+**Context.** The Principal Investigator (PI) asked in Session 165 for
+this to be recorded as a finding for the paper's Results, while
+approving the restated register outcome of
+`grid-postverifier-2026-08-18` (PR #52,
+`reports/s164-agent-records/restatement-pass.md` § 4.2). The restatement
+pass (PI rulings D62 (1) and D65 (2)) applied two repairs: each
+consensus cluster is scored on the tiles it was seen on (the "origin
+route"), and candidates the verifier had been shown on crops cut from
+the neighbouring map sheet, largely blank, were re-verified on crops
+from their own sheet (2026-10-13). The re-score record separates them
+(`reports/s164-agent-records/rescore-repaired-gs.md` § 3): the origin
+route moved the recall ceilings and the consensus-only baseline; the
+re-verification moved every post-verifier contrast, including the 384 px
+failure. p values are now those of the paired tile-swap permutation test
+(D42). Obs 433 (Session 142, 2026-08-24) is corrected here, not edited.
+It headed its overlap paragraph "Overlap SURVIVES, at roughly half the
+margin" and wrote that "50 % overlap wins at both tile sizes under the
+full pipeline".
+
+**What was established.** The overlap contrast (12.5 % − 50 %) in F1 at
+20 m on the grid's common 487-tile footprint; brackets are 95 %
+confidence intervals, and p is the permutation test's unless stated:
+
+| Overlap contrast (12.5 % − 50 %) | 512 px | 384 px |
+|---|---:|---:|
+| Consensus-only, K = 10 baseline | −0.0766 (p 0.0006) | −0.0718 (p 0.0037) |
+| After the verifier, restated | −0.0502 [−0.0778, −0.0224], p 0.0003 | −0.0256 [−0.0517, +0.0001], p 0.0541 |
+| Share of the margin surviving | 0.655 | 0.356 |
+| Union-recall ceiling gain from 50 % overlap (K = 10) | 0.8879 → 0.9603 (+0.0724) | 0.9112 → 0.9696 (+0.0584) |
+| Obs 433 as written (bootstrap p) | −0.0504 (p 0.0004) | −0.0285 (p 0.0208) |
+
+The share is the post-verifier contrast divided by the K = 10 baseline
+contrast. The ceiling is the recall of each whole K = 10 union, before
+any vote, corroboration, or probability threshold.
+
+**Reading.**
+
+1. **Obs 433's "wins at both tile sizes" no longer holds.** The
+   reversal survives the verifier at 512 px only, and the restated
+   register outcome (§ 4.2) states the 384 px result as a failure: the
+   overlap reversal "SURVIVES the verifier at 512 px but FAILS at
+   384 px".
+2. **"Roughly half the margin" averaged two different ratios even in
+   August.** From Obs 433's own figures the shares were about 0.66 at
+   512 px (0.0504 / 0.0759) and 0.39 at 384 px (0.0285 / 0.0730). The
+   rider Obs 434 later gave the published 512 px baseline as 0.0758,
+   which leaves the share at 0.66. The restatement widened the gap (the
+   shares are now 0.655 and 0.356) and moved 384 px just past p 0.05:
+   the re-verification lifted the 384 px / 12.5 % best point most
+   (0.8677 to 0.8761, +0.0084, against about +0.0056 in each of the
+   other three cells), narrowing the 384 px overlap margin.
+3. **Mechanism.** Before verification, overlap's advantage is almost the
+   same at both sizes (−0.0766 and −0.0718). The verifier removes more
+   of it at 384 px, where the 12.5 % tiling already had the higher
+   recall ceiling (0.911 against 0.888 at 512 px) and lacked mainly
+   precision (its consensus-only best point had precision 0.570 and
+   recall 0.776), which the verifier supplies. What survives is the
+   recall gain from overlap that a verifier cannot create: the mechanism
+   of Obs 352 (the verifier rescues precision but cannot create recall)
+   and Obs 359 (the pool recall ceiling is the binding constraint). The
+   interaction does not separate the two sizes (p 0.18), so this reads
+   point estimates; it is a hypothesis for the recall-ceiling mechanism,
+   not a tested difference.
+
+**For the paper.** One Results sentence: after verification, 50 %
+overlap's advantage is significant at 512 px (p 0.0003) but not at 384
+px (p 0.054); the two sizes are not shown to differ (interaction −0.0246
+[−0.0613, +0.0114], p 0.18), so the Results should report the 384 px
+result as a lost significance, not a size difference.
+
+**Caveats.** Two tile sizes and one configuration, so "tracks" is
+suggestive, not tested. Best-F1 operating points are selected on the
+same ground truth they are scored on (E41-class). The 384 px failure is
+a near miss: the interval's upper bound is +0.0001. The p values changed
+test between August and now (bootstrap to the D42 permutation test), but
+that part of 0.0208 → 0.0541 is small: on the August sets the
+permutation p was 0.0235 and the interval still ended at −0.0045
+(`5986316b5`), and under the origin route alone the contrast stays at
+−0.0285, p 0.0235 (`rescore-repaired-gs.md` § 3), so the move to 0.0541,
+and the interval reaching zero, come from the re-verified candidates.
+The ceilings moved with the origin route; Obs 433 quoted ceilings of
+0.8925 / 0.9509 at 384 px against 0.8715 / 0.9416 at 512 px, in the same
+order. Corrected 2026-10-18, before merge: the Context first attributed
+every move to the origin route. Corrected 2026-10-20, before merge (PI:
+"yes, apply"): the title and the paper sentence quoted the size contrast
+without the interaction test, which does not separate the sizes (p
+0.18).
+
+**Findable later.** overlap reversal, grid post-verifier, 384 px fails,
+512 px survives, Obs 433 correction, recall ceiling, corroboration
+filter, verifier redundancy, origin route, re-verified wrong-sheet
+crops, D62 (1), 0.0541, permutation p 0.0235, share 0.655 / 0.356,
+ceiling gain +0.0724 / +0.0584, interaction p 0.18.
+
+**Related.** Obs 433 (corrected here: overlap survives the verifier at
+512 px only); Obs 434 (Obs 433's same-day rider, which supplied the
+like-for-like K = 10 baseline and left the overlap conclusion
+untouched); Obs 416 (cross-tile corroboration as a precision lever that
+exists only under overlap) and Obs 510 (its origin-route correction:
+the aggregation reversal stands, the figures moved); Obs 352 (the
+verifier rescued the dense 256 px pool by pruning false positives while
+keeping its recall) and Obs 359 (the pool recall ceiling is the binding
+constraint; the verifier improves precision only within it).
+
+**Artefacts**: `results/grid-2026-08-18/verifier_analysis.json`
+(`bootstrap_contrasts`, `bootstrap_contrasts_consensus_k10_baseline`);
+`results/grid-2026-08-18/grid_analysis.json`
+(`cost_efficiency.frontier`, K = 10, `union_recall`);
+`reports/s164-agent-records/restatement-pass.md` § 4.2 (PR #52);
+`planning/pi-decisions-2026-09-20.md` D62 (1), D65 (2), and D42;
+restated data `f6f10d605`; D42 regeneration `5986316b5`.

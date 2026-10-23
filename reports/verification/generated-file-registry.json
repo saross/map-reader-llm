@@ -1,24 +1,24 @@
 {
  "_meta": {
-  "generated_at": "2026-10-17T06:40:09.134426+00:00",
+  "generated_at": "2026-10-15T14:33:35.593901+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "a84604599",
+  "git_head": "ae62f6174",
   "counts": {
-   "total": 4108,
-   "generated": 3720,
+   "total": 4113,
+   "generated": 3721,
    "generated_unattributed": 0,
-   "hand_written": 388,
+   "hand_written": 392,
    "by_directory": {
     "results/": {
-     "total": 3208,
-     "generated": 3054,
-     "hand_written": 154
+     "total": 3210,
+     "generated": 3055,
+     "hand_written": 155
     },
     "reports/": {
-     "total": 158,
+     "total": 161,
      "generated": 1,
-     "hand_written": 157
+     "hand_written": 160
     },
     "outputs/": {
      "total": 712,
@@ -37,12 +37,12 @@
     }
    },
    "regime2": {
-    "generated_banner": 51,
+    "generated_banner": 53,
     "source_commit_stamp": 56,
     "check_mode": 70,
     "tier1_check_test": 70,
     "compliant": 51,
-    "neither_regime": 3669
+    "neither_regime": 3668
    }
   }
  },
@@ -13497,16 +13497,6 @@
    "hand_edited": false
   },
   {
-   "path": "reports/s164-agent-records/d64-a06-replication.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
-   "marker": null,
-   "hand_edited": false
-  },
-  {
    "path": "reports/s164-agent-records/fault-window-rechecks.md",
    "stratum": "hand-written",
    "rule_id": null,
@@ -13518,6 +13508,46 @@
   },
   {
    "path": "reports/s164-agent-records/rescore-repaired-gs.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/s164-agent-records/restatement-pass-scripts/pairwise/README-beside.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/s164-agent-records/restatement-pass-scripts/records/docs/doc-sweep.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/s164-agent-records/restatement-pass-scripts/records/docs/docs2-notes.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
+   "path": "reports/s164-agent-records/restatement-pass.md",
    "stratum": "hand-written",
    "rule_id": null,
    "generator": null,
@@ -19680,7 +19710,7 @@
    "sources": [
     "results/gemini37-fourth-cell/gs-leg/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:38:07.888974+00:00",
+   "marker": "**Generated**: 2026-10-15T11:10:14.914201+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20269,7 +20299,26 @@
    "sources": [
     "results/gemini37-image-gs-2026-09-01/arm1/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:37:33.811044+00:00",
+   "marker": "**Generated**: 2026-10-15T11:10:34.507871+00:00",
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": false,
+   "check_flags": [],
+   "check_tests": [],
+   "tier1_check_test": false,
+   "regime2_compliant": false
+  },
+  {
+   "path": "results/gemini37-image-gs-2026-09-01/arm1/op-eval/evaluation.md",
+   "stratum": "generated",
+   "rule_id": "gen-evaluation-md",
+   "generator": "scripts/evaluate_detections.py",
+   "source_rule": "sibling:evaluation.json",
+   "sources": [
+    "results/gemini37-image-gs-2026-09-01/arm1/op-eval/evaluation.json"
+   ],
+   "marker": "**Generated**: 2026-10-15T11:10:53.474517+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20288,7 +20337,7 @@
    "sources": [
     "results/gemini37-image-gs-2026-09-01/arm2/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:37:51.172561+00:00",
+   "marker": "**Generated**: 2026-10-15T11:11:16.855808+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20317,7 +20366,7 @@
    "sources": [
     "results/gemini37-screen-2026-08-28/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:36:42.181354+00:00",
+   "marker": "**Generated**: 2026-10-15T11:08:58.455057+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20336,7 +20385,7 @@
    "sources": [
     "results/gemini37-screen-2026-08-28/k10/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:36:59.260319+00:00",
+   "marker": "**Generated**: 2026-10-15T11:09:18.282894+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20355,7 +20404,7 @@
    "sources": [
     "results/gemini37-screen-2026-08-28/swap37/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:37:16.483303+00:00",
+   "marker": "**Generated**: 2026-10-15T11:09:37.661811+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20374,7 +20423,7 @@
    "sources": [
     "results/gemini38-screen-2026-09-04/armV/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-06T04:38:24.961200+00:00",
+   "marker": "**Generated**: 2026-10-15T11:09:56.663373+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20508,7 +20557,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions/g384_ov048/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-20T13:11:20.998134+00:00",
+   "marker": "**Generated**: 2026-10-15T10:36:01.091647+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20527,7 +20576,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions/g384_ov192/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-20T13:11:23.514440+00:00",
+   "marker": "**Generated**: 2026-10-15T10:36:04.715085+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20546,7 +20595,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions/g512_ov064/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-20T13:11:24.259803+00:00",
+   "marker": "**Generated**: 2026-10-15T10:35:52.566110+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20565,7 +20614,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions/g512_ov256/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-20T13:11:25.631856+00:00",
+   "marker": "**Generated**: 2026-10-15T10:35:56.556835+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20584,7 +20633,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions-verified/g384_ov048/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T09:01:57.495737+00:00",
+   "marker": "**Generated**: 2026-10-15T10:40:40.011596+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20603,7 +20652,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T09:02:00.474982+00:00",
+   "marker": "**Generated**: 2026-10-15T10:40:43.747022+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20622,7 +20671,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions-verified/g512_ov064/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T09:01:51.653652+00:00",
+   "marker": "**Generated**: 2026-10-15T10:40:33.796303+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -20641,7 +20690,7 @@
    "sources": [
     "results/grid-2026-08-18/conditions-verified/g512_ov256/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T09:01:54.601643+00:00",
+   "marker": "**Generated**: 2026-10-15T10:40:36.582986+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -24969,7 +25018,7 @@
    "sources": [
     "results/image-b-gs-2026-08-28/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-28T12:26:36.554279+00:00",
+   "marker": "**Generated**: 2026-10-15T11:08:20.749297+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -24998,7 +25047,7 @@
    "sources": [
     "results/image-b-gs-2026-08-28/high/best-eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-28T12:26:53.174510+00:00",
+   "marker": "**Generated**: 2026-10-15T11:08:39.205836+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25056,7 +25105,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T01:18:36.515107+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:49.191120+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25075,7 +25124,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n1/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T01:18:48.615594+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:54.837087+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25094,7 +25143,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n3/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T01:18:37.189976+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:13.135228+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25113,7 +25162,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/board-frame/stride-phaseb__g384-ov128-ladder-n5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T01:18:45.507079+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:31.418335+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25249,10 +25298,10 @@
    "sources": [
     "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `64382beea` and rendered at commit `64382beea`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
+   "generated_banner": true,
+   "source_commit_stamp": true,
    "check_mode": true,
    "check_flags": [
     "--check"
@@ -25262,7 +25311,7 @@
     "tests/test_era2_board_renderings.py"
    ],
    "tier1_check_test": true,
-   "regime2_compliant": false
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.md",
@@ -25273,7 +25322,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T08:41:22.002822+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:31.598308+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25292,7 +25341,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T08:41:18.892161+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:37.480107+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -25311,7 +25360,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-13T08:59:23.108784+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:43.544031+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27135,7 +27184,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T08:51:03.334562+00:00",
+   "marker": "**Generated**: 2026-10-15T11:52:18.016417+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27154,7 +27203,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T08:51:03.703051+00:00",
+   "marker": "**Generated**: 2026-10-15T11:51:59.633130+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27515,7 +27564,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/recovery-fix-2026-09-13/reproduced-k5-evaluation/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-13T07:36:51.835242+00:00",
+   "marker": "**Generated**: 2026-10-15T11:08:02.677894+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27534,7 +27583,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T14:20:49.525869+00:00",
+   "marker": "**Generated**: 2026-10-15T11:06:25.265331+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27553,7 +27602,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-p0_15-k1/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T14:20:49.706665+00:00",
+   "marker": "**Generated**: 2026-10-15T11:06:45.974942+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27572,7 +27621,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T14:22:17.197942+00:00",
+   "marker": "**Generated**: 2026-10-15T11:43:07.506437+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27591,7 +27640,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T14:20:48.545019+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:06.017061+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27610,7 +27659,7 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-12T14:20:48.476684+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:25.235913+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27639,10 +27688,10 @@
    "sources": [
     "results/k-ladder-2026-09-12/tier-e/tiering/tiering_20m.json"
    ],
-   "marker": null,
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `64382beea` and rendered at commit `64382beea`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
-   "generated_banner": false,
-   "source_commit_stamp": false,
+   "generated_banner": true,
+   "source_commit_stamp": true,
    "check_mode": true,
    "check_flags": [
     "--check"
@@ -27652,7 +27701,7 @@
     "tests/test_era2_board_renderings.py"
    ],
    "tier1_check_test": true,
-   "regime2_compliant": false
+   "regime2_compliant": true
   },
   {
    "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md",
@@ -27730,7 +27779,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:39:53.161910+00:00",
+   "marker": "**Generated**: 2026-10-15T11:38:30.869957+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27749,7 +27798,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:11.273829+00:00",
+   "marker": "**Generated**: 2026-10-15T11:39:05.901339+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27768,7 +27817,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:10.951026+00:00",
+   "marker": "**Generated**: 2026-10-15T11:39:40.747671+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27787,7 +27836,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:29.405405+00:00",
+   "marker": "**Generated**: 2026-10-15T11:40:16.140930+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27806,7 +27855,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:29.332814+00:00",
+   "marker": "**Generated**: 2026-10-15T11:40:51.468942+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27825,7 +27874,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:46.870270+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:26.305375+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27844,7 +27893,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:32.515013+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:03.962140+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27863,7 +27912,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:03.623734+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:59.757217+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27882,7 +27931,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:04.209063+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:39.821095+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -27901,7 +27950,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:21.221098+00:00",
+   "marker": "**Generated**: 2026-10-15T11:43:12.891046+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29630,10 +29679,10 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/gates.json"
    ],
-   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `70b47979a`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `gates.json` by `scripts/build_gs_era2_board.py gates` at commit `unknown`; `check-renderings` is the drift guard (tier-1: `tests/test_era2_board_renderings.py`). Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog.",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": true,
+   "source_commit_stamp": false,
    "check_mode": true,
    "check_flags": [
     "check-renderings"
@@ -29642,7 +29691,7 @@
     "tests/test_era2_board_renderings.py"
    ],
    "tier1_check_test": true,
-   "regime2_compliant": true
+   "regime2_compliant": false
   },
   {
    "path": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/flash35-pv-2x2__f35prop-f35vf-4of10/evaluation.md",
@@ -29710,7 +29759,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:39:51.219246+00:00",
+   "marker": "**Generated**: 2026-10-15T11:38:12.080136+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29729,7 +29778,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:08.840486+00:00",
+   "marker": "**Generated**: 2026-10-15T11:38:47.123329+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29748,7 +29797,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:08.659896+00:00",
+   "marker": "**Generated**: 2026-10-15T11:39:22.071935+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29767,7 +29816,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:27.181295+00:00",
+   "marker": "**Generated**: 2026-10-15T11:39:57.268087+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29786,7 +29835,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:27.117014+00:00",
+   "marker": "**Generated**: 2026-10-15T11:40:32.461725+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29805,7 +29854,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:44.622495+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:07.562337+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29824,7 +29873,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:40:32.168570+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:01.764695+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29843,7 +29892,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:01.433583+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:41.520031+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29862,7 +29911,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:01.790066+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:22.026252+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -29881,7 +29930,7 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-10T02:41:18.891312+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:55.000527+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -31706,10 +31755,10 @@
    "sources": [
     "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json"
    ],
-   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `70b47979a` and rendered at commit `70b47979a`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
+   "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `unknown` and rendered at commit `unknown`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
-   "source_commit_stamp": true,
+   "source_commit_stamp": false,
    "check_mode": true,
    "check_flags": [
     "--check"
@@ -31719,7 +31768,7 @@
     "tests/test_era2_board_renderings.py"
    ],
    "tier1_check_test": true,
-   "regime2_compliant": true
+   "regime2_compliant": false
   },
   {
    "path": "results/limitations-consolidation/report.md",
@@ -65313,6 +65362,16 @@
    "regime2_compliant": false
   },
   {
+   "path": "results/rescore-2026-10-15/pairwise/README.md",
+   "stratum": "hand-written",
+   "rule_id": null,
+   "generator": null,
+   "source_rule": null,
+   "sources": [],
+   "marker": null,
+   "hand_edited": false
+  },
+  {
    "path": "results/retest/phase2b/analysis_summary.md",
    "stratum": "hand-written",
    "rule_id": "hw-analysis-summary",
@@ -65543,7 +65602,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g256_ov064/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T21:30:02.349968+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:47.765041+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65562,7 +65621,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g384_ov128/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T21:29:59.336926+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:44.502923+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65581,7 +65640,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n1/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-28T12:01:21.143313+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:56.995955+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65600,7 +65659,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n3/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-28T12:01:24.059268+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:59.484638+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65619,7 +65678,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g384_ov128-ladder-n5/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-28T12:01:27.001656+00:00",
+   "marker": "**Generated**: 2026-10-15T11:08:02.013704+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65638,7 +65697,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g384_ov240/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T21:30:08.350979+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:54.488503+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65657,7 +65716,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g512_ov176/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T21:29:56.385210+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:41.734149+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -65676,7 +65735,7 @@
    "sources": [
     "results/stride-2026-08-25/conditions-verified/g512_ov320/eval/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-08-24T21:30:05.288397+00:00",
+   "marker": "**Generated**: 2026-10-15T11:07:50.816903+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69855,7 +69914,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:38:55.833873+00:00",
+   "marker": "**Generated**: 2026-10-15T11:44:54.044746+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69874,7 +69933,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:38:56.296585+00:00",
+   "marker": "**Generated**: 2026-10-15T11:45:13.136930+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69893,7 +69952,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:33:04.087136+00:00",
+   "marker": "**Generated**: 2026-10-15T11:43:55.786277+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69912,7 +69971,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:33:04.524279+00:00",
+   "marker": "**Generated**: 2026-10-15T11:43:36.701792+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69931,7 +69990,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:33:04.563777+00:00",
+   "marker": "**Generated**: 2026-10-15T11:44:15.250456+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69950,7 +70009,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:33:23.395196+00:00",
+   "marker": "**Generated**: 2026-10-15T11:44:34.683539+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69969,7 +70028,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g384-ov048-k10-verified-p0_20-k7/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:47.721789+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:03.487598+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -69988,7 +70047,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov064-k10-verified-p0_15-k5/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:47.619138+00:00",
+   "marker": "**Generated**: 2026-10-15T11:41:57.175167+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -70007,7 +70066,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/grid-2026-08-18__g512-ov256-k10-verified-p0_15-k9/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:47.666008+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:00.399130+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -70026,7 +70085,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:33:05.004826+00:00",
+   "marker": "**Generated**: 2026-10-15T11:43:16.917804+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -70045,7 +70104,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:28:43.145559+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:55.380478+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71546,7 +71605,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g256-ov064-k10-verified-p0_15-k8/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:52.036037+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:15.682332+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71565,7 +71624,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-k10-verified-p0_15-k8/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:51.281869+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:11.105602+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71584,7 +71643,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n1-verified-p0_15-k1/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:51.500877+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:22.356824+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71603,7 +71662,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n3-verified-p0_15-k3/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:55.523281+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:25.394803+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71622,7 +71681,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g384-ov128-ladder-n5-verified-p0_15-k4/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:55.622758+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:28.571466+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71641,7 +71700,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov176-k10-verified-p0_15-k6/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:47.741316+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:07.500505+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71660,7 +71719,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:51.158903+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:19.055431+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,
@@ -71679,7 +71738,7 @@
    "sources": [
     "results/uplift-supplement/verifier-pairing/stride-phasec-2026-08-25__g384-ov240-k10-verified-p0_15-k10/evaluation.json"
    ],
-   "marker": "**Generated**: 2026-09-08T13:13:55.917925+00:00",
+   "marker": "**Generated**: 2026-10-15T11:42:32.856989+00:00",
    "hand_edited": false,
    "generated_banner": false,
    "source_commit_stamp": false,

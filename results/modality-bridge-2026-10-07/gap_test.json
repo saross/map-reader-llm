@@ -1,42 +1,42 @@
 {
   "buffer_m": 20,
   "g3_gap_committed": {
-    "delta_f1": 0.0549,
-    "p": 0.001,
+    "delta_f1": 0.0559,
+    "p": 0.0005,
     "source": "results/image-b-gs-2026-08-28/analysis.json"
   },
   "pairs": {
     "g3": {
-      "f1_a": 0.891596,
-      "f1_b": 0.839264,
-      "observed_diff": 0.052332,
-      "p_value": 0.0029,
+      "f1_a": 0.898551,
+      "f1_b": 0.844933,
+      "observed_diff": 0.053618,
+      "p_value": 0.0018,
       "n_permutations": 10000,
       "n_tiles": 487,
-      "null_mean": -0.000192,
-      "null_std": 0.018279,
+      "null_mean": -0.000184,
+      "null_std": 0.018243,
       "convention": "delta = text - image @20m"
     },
     "carried-verifier": {
-      "f1_a": 0.915411,
-      "f1_b": 0.915995,
-      "observed_diff": -0.000584,
-      "p_value": 0.9467,
+      "f1_a": 0.924138,
+      "f1_b": 0.926719,
+      "observed_diff": -0.002581,
+      "p_value": 0.766,
       "n_permutations": 10000,
       "n_tiles": 487,
-      "null_mean": 5.1e-05,
-      "null_std": 0.007551,
+      "null_mean": 2e-05,
+      "null_std": 0.008369,
       "convention": "delta = text - image @20m"
     },
     "all-3.7": {
-      "f1_a": 0.926488,
-      "f1_b": 0.928821,
-      "observed_diff": -0.002334,
+      "f1_a": 0.935185,
+      "f1_b": 0.9375,
+      "observed_diff": -0.002315,
       "p_value": 0.7477,
       "n_permutations": 10000,
       "n_tiles": 487,
-      "null_mean": 9.6e-05,
-      "null_std": 0.006233,
+      "null_mean": 9.5e-05,
+      "null_std": 0.006217,
       "convention": "delta = text - image @20m"
     }
   },
@@ -57,7 +57,7 @@
   "set_name": "verified_best_20m",
   "gap_change_reference": "g3",
   "gap_change": {
-    "carried-verifier": -0.052916,
-    "all-3.7": -0.054666
+    "carried-verifier": -0.056199,
+    "all-3.7": -0.055933
   }
 }

@@ -1,5 +1,5 @@
 {
-  "classification": "POST-HOC (E41-class); registrable proposer-verifier conditions for the tile-size x overlap grid. K = 10 union input, adversarial text verifier, best-F1@20m operating point per cell.",
+  "classification": "POST-HOC (E41-class); registrable proposer-verifier conditions for the tile-size x overlap grid. K = 10 union input, adversarial text verifier, the registered operating point per cell (the best-F1@20m point at registration; a registered condition keeps its point when the best point moves, which is reported beside it, PI ruling D65 (3)).",
   "verifier": {
     "config": "verify_adversarial-text",
     "model": "gemini-3-flash-preview",
@@ -11,6 +11,64 @@
     "n_iterations": 10000,
     "seed": 42
   },
+  "verifier_probabilities": {
+    "g512_ov064": {
+      "dir": "outputs/grid-2026-08-18/verifier/g512_ov064/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "27b111545d1c231b4739f540424e4265ed2a948e8cf28afce772fb3cf3bedf9b",
+      "n_results": 1402,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 25,
+      "reverify_usd": 0.017708,
+      "reverify_records": [
+        "outputs/grid-2026-08-18/verifier/g512_ov064/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    },
+    "g512_ov256": {
+      "dir": "outputs/grid-2026-08-18/verifier/g512_ov256/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "e90ab9906079cc155be8d929f37d9ee69e7714938bec2e5815d87f432ace2502",
+      "n_results": 2585,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 29,
+      "reverify_usd": 0.020803,
+      "reverify_records": [
+        "outputs/grid-2026-08-18/verifier/g512_ov256/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    },
+    "g384_ov048": {
+      "dir": "outputs/grid-2026-08-18/verifier/g384_ov048/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "d452b4dbb422e4757ad8a1cd78d8e78bf443c482fd2cd0d8b736cff12f8f4ed0",
+      "n_results": 1827,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 14,
+      "reverify_usd": 0.009839,
+      "reverify_records": [
+        "outputs/grid-2026-08-18/verifier/g384_ov048/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    },
+    "g384_ov192": {
+      "dir": "outputs/grid-2026-08-18/verifier/g384_ov192/verify_repaired",
+      "policy": "repaired",
+      "probabilities_sha256": "c91e620b985e0261590a15f6ea78ce797782bead8f8747e54fd79ff0ce025d81",
+      "n_results": 3319,
+      "parse_error_rows": null,
+      "repaired": null,
+      "unrecovered": null,
+      "reverified": 22,
+      "reverify_usd": 0.015512,
+      "reverify_records": [
+        "outputs/grid-2026-08-18/verifier/g384_ov192/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+      ]
+    }
+  },
   "cells": [
     {
       "cell": "g512_ov064",
@@ -18,19 +76,41 @@
       "condition_label": "g512-ov064-k10-verified-p0.15-k5",
       "prob_t": 0.15,
       "min_votes": 5,
-      "n_detections": 383,
-      "sweep_f1_at_20m": 0.8310727496917385,
-      "rescored_f1_at_20m": 0.8311,
-      "f1_ci_lower": 0.7938,
-      "f1_ci_upper": 0.8624,
+      "n_detections": 387,
+      "sweep_f1_at_20m": 0.8368098159509203,
+      "rescored_f1_at_20m": 0.8368,
+      "f1_ci_lower": 0.7995,
+      "f1_ci_upper": 0.8676,
       "f1_ci_method": "BCa",
-      "precision": 0.8799,
-      "recall": 0.7874,
-      "tile_mcc": 0.7937,
+      "precision": 0.8811,
+      "recall": 0.7967,
+      "tile_mcc": 0.8011,
       "bootstrap_iterations": 10000,
       "detections": "results/grid-2026-08-18/conditions-verified/g512_ov064/detections.geojson",
       "evaluation": "results/grid-2026-08-18/conditions-verified/g512_ov064/eval/evaluation.json",
-      "reproduces_sweep": true
+      "reproduces_sweep": true,
+      "verifier_probabilities": {
+        "dir": "outputs/grid-2026-08-18/verifier/g512_ov064/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "27b111545d1c231b4739f540424e4265ed2a948e8cf28afce772fb3cf3bedf9b",
+        "n_results": 1402,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 25,
+        "reverify_usd": 0.017708,
+        "reverify_records": [
+          "outputs/grid-2026-08-18/verifier/g512_ov064/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 5,
+        "n_detections": 387,
+        "sweep_f1_at_20m": 0.8368098159509203,
+        "detections": "results/grid-2026-08-18/verified-best/g512_ov064/detections.geojson"
+      }
     },
     {
       "cell": "g512_ov256",
@@ -38,19 +118,41 @@
       "condition_label": "g512-ov256-k10-verified-p0.15-k9",
       "prob_t": 0.15,
       "min_votes": 9,
-      "n_detections": 382,
-      "sweep_f1_at_20m": 0.8814814814814814,
-      "rescored_f1_at_20m": 0.8815,
-      "f1_ci_lower": 0.8518,
-      "f1_ci_upper": 0.9073,
+      "n_detections": 386,
+      "sweep_f1_at_20m": 0.886977886977887,
+      "rescored_f1_at_20m": 0.887,
+      "f1_ci_lower": 0.8583,
+      "f1_ci_upper": 0.9118,
       "f1_ci_method": "BCa",
-      "precision": 0.9346,
-      "recall": 0.8341,
-      "tile_mcc": 0.8011,
+      "precision": 0.9352,
+      "recall": 0.8435,
+      "tile_mcc": 0.8087,
       "bootstrap_iterations": 10000,
       "detections": "results/grid-2026-08-18/conditions-verified/g512_ov256/detections.geojson",
       "evaluation": "results/grid-2026-08-18/conditions-verified/g512_ov256/eval/evaluation.json",
-      "reproduces_sweep": true
+      "reproduces_sweep": true,
+      "verifier_probabilities": {
+        "dir": "outputs/grid-2026-08-18/verifier/g512_ov256/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "e90ab9906079cc155be8d929f37d9ee69e7714938bec2e5815d87f432ace2502",
+        "n_results": 2585,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 29,
+        "reverify_usd": 0.020803,
+        "reverify_records": [
+          "outputs/grid-2026-08-18/verifier/g512_ov256/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 9,
+        "n_detections": 386,
+        "sweep_f1_at_20m": 0.886977886977887,
+        "detections": "results/grid-2026-08-18/verified-best/g512_ov256/detections.geojson"
+      }
     },
     {
       "cell": "g384_ov048",
@@ -58,19 +160,41 @@
       "condition_label": "g384-ov048-k10-verified-p0.20-k7",
       "prob_t": 0.2,
       "min_votes": 7,
-      "n_detections": 358,
-      "sweep_f1_at_20m": 0.8676844783715012,
-      "rescored_f1_at_20m": 0.8677,
-      "f1_ci_lower": 0.8335,
-      "f1_ci_upper": 0.8957,
+      "n_detections": 365,
+      "sweep_f1_at_20m": 0.8751576292559898,
+      "rescored_f1_at_20m": 0.8752,
+      "f1_ci_lower": 0.8424,
+      "f1_ci_upper": 0.9017,
       "f1_ci_method": "BCa",
-      "precision": 0.9525,
-      "recall": 0.7967,
-      "tile_mcc": 0.7751,
+      "precision": 0.9507,
+      "recall": 0.8107,
+      "tile_mcc": 0.7852,
       "bootstrap_iterations": 10000,
       "detections": "results/grid-2026-08-18/conditions-verified/g384_ov048/detections.geojson",
       "evaluation": "results/grid-2026-08-18/conditions-verified/g384_ov048/eval/evaluation.json",
-      "reproduces_sweep": true
+      "reproduces_sweep": true,
+      "verifier_probabilities": {
+        "dir": "outputs/grid-2026-08-18/verifier/g384_ov048/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "d452b4dbb422e4757ad8a1cd78d8e78bf443c482fd2cd0d8b736cff12f8f4ed0",
+        "n_results": 1827,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 14,
+        "reverify_usd": 0.009839,
+        "reverify_records": [
+          "outputs/grid-2026-08-18/verifier/g384_ov048/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "registered_point_is_best": false,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 7,
+        "n_detections": 371,
+        "sweep_f1_at_20m": 0.8760951188986232,
+        "detections": "results/grid-2026-08-18/verified-best/g384_ov048/detections.geojson"
+      }
     },
     {
       "cell": "g384_ov192",
@@ -78,19 +202,41 @@
       "condition_label": "g384-ov192-k10-verified-p0.15-k10",
       "prob_t": 0.15,
       "min_votes": 10,
-      "n_detections": 400,
-      "sweep_f1_at_20m": 0.8961352657004831,
-      "rescored_f1_at_20m": 0.8961,
-      "f1_ci_lower": 0.8657,
-      "f1_ci_upper": 0.9198,
+      "n_detections": 406,
+      "sweep_f1_at_20m": 0.9016786570743405,
+      "rescored_f1_at_20m": 0.9017,
+      "f1_ci_lower": 0.8727,
+      "f1_ci_upper": 0.9244,
       "f1_ci_method": "BCa",
-      "precision": 0.9275,
-      "recall": 0.8668,
-      "tile_mcc": 0.7965,
+      "precision": 0.9261,
+      "recall": 0.8785,
+      "tile_mcc": 0.8037,
       "bootstrap_iterations": 10000,
       "detections": "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson",
       "evaluation": "results/grid-2026-08-18/conditions-verified/g384_ov192/eval/evaluation.json",
-      "reproduces_sweep": true
+      "reproduces_sweep": true,
+      "verifier_probabilities": {
+        "dir": "outputs/grid-2026-08-18/verifier/g384_ov192/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "c91e620b985e0261590a15f6ea78ce797782bead8f8747e54fd79ff0ce025d81",
+        "n_results": 3319,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 22,
+        "reverify_usd": 0.015512,
+        "reverify_records": [
+          "outputs/grid-2026-08-18/verifier/g384_ov192/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "registered_point_is_best": true,
+      "best_point": {
+        "prob_t": 0.15,
+        "min_votes": 10,
+        "n_detections": 406,
+        "sweep_f1_at_20m": 0.9016786570743405,
+        "detections": "results/grid-2026-08-18/verified-best/g384_ov192/detections.geojson"
+      }
     }
   ]
 }

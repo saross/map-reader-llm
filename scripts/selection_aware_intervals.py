@@ -551,7 +551,8 @@ def build_sweep_tile_counts(
     thresholds = {0} plus every distinct rounded probability, votes = 1..K,
     both inclusive (``grid_verifier_analysis.verified_subset``). This builds
     that candidate set IN PROCESS — the same loader, the same reassignment
-    gate, the same subset rule — and books every candidate to tiles through
+    gate, the same origin step (each row on its own sheet; D62 (1)), the same
+    subset rule — and books every candidate to tiles through
     the canonical chain the board itself used (``era1_leaderboard_tiering``:
     ``assign_source_tiles`` then ``_per_tile_one_set``), on whichever bounds
     are asked for. So the selection the screen performed can be replayed
@@ -589,6 +590,8 @@ def build_sweep_tile_counts(
     )
     from scripts.grid_verifier_analysis import verified_subset  # noqa: PLC0415
     from scripts.image_b_analysis import load_image_union  # noqa: PLC0415
+    from scripts.grid_analysis import load_cell_passes  # noqa: PLC0415
+    from scripts.lib_cluster_origins import union_on_origin  # noqa: PLC0415
     from scripts.stride_verifier_analysis import reassign_gate  # noqa: PLC0415
 
     union_path, verify_dir, bounds_path = Path(union_path), Path(verify_dir), Path(bounds_path)
@@ -597,6 +600,19 @@ def build_sweep_tile_counts(
     verifier_probabilities = gdf.attrs["verifier_probabilities"]
     common = gpd.read_file(COMMON_BOUNDS)
     gdf = reassign_gate(gdf, common, union_path.stem)  # the screen's own gate
+    # PI ruling D62 (1): rebuild the union's clusters from the cell's prepared
+    # passes, attach their members' tiles, and book every row on its own sheet,
+    # exactly as image_b_analysis.py does before its sweep, so the candidate set
+    # IS the screen's sweep (whose sweep_20m.csv is on the origin route since
+    # the 2026-10-15 restatement pass). Before that pass this builder kept the
+    # union's legacy source_tile, which near a sheet edge is the neighbouring
+    # sheet's, and the re-verified wrong-sheet rows then scored off their sheet.
+    cell = union_path.parent.name
+    scoring = union_path.parent.parent.parent / "scoring"
+    if not scoring.is_absolute():
+        scoring = PROJECT_ROOT / scoring
+    passes = load_cell_passes(scoring, cell, n_passes=k_total)
+    gdf = union_on_origin(gdf, passes, common, label=cell, n_passes=k_total)
     bounds = gpd.read_file(bounds_path).to_crs(gdf.crs)
     gdf_ref = gdf_ref.to_crs(gdf.crs)
     tile_order = list(bounds["tile_name"])

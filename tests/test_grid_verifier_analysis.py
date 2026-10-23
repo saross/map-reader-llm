@@ -5,7 +5,9 @@ the probability join and its gates (documented-count reproduction, contiguous
 candidate keys), the carrier-tile reassignment gate, the union score
 reproduction gate, the inclusive threshold semantics of ``verified_subset``,
 best-row selection (including the pure-verifier k = 1 restriction), and the
-per-tile count alignment the paired bootstrap consumes.
+per-tile count alignment the paired bootstrap consumes, and (2026-10-15,
+PI ruling D65 (3)) that a registered condition keeps its registered point
+while the best-point set is written beside it for the stride board.
 
 The live stages — the four committed 9,133-candidate unions, the full sweep,
 and the B = 10,000 bootstraps — run against the real artefacts on sapphire
@@ -402,3 +404,107 @@ def test_infer_tile_size_measured_is_authoritative(tmp_path):
     Image.new("L", (384, 256)).save(rect)
     with pytest.raises(ValueError, match="Non-square"):
         infer_tile_size(rect)
+
+
+# --- D65 (3): registered conditions keep their points (2026-10-15) ----------
+
+
+@pytest.mark.tier1
+def test_registered_row_selects_the_registered_point_not_the_best(monkeypatch):
+    """The registered row is found by point, never by F1; absence is a gate."""
+    monkeypatch.setattr(gva, "REGISTERED_POINTS", {"c": (0.2, 7)})
+    rows = [
+        {"cell": "c", "f1": 0.8761, "min_votes": 7, "prob_t": 0.15},
+        {"cell": "c", "f1": 0.8752, "min_votes": 7, "prob_t": 0.2},
+        {"cell": "c", "f1": 0.8700, "min_votes": 6, "prob_t": 0.2},
+        {"cell": "other", "f1": 0.9, "min_votes": 7, "prob_t": 0.2},
+    ]
+    row = gva.registered_row(rows, "c")
+    assert (row["prob_t"], row["min_votes"], row["f1"]) == (0.2, 7, 0.8752)
+    assert gva.best_row(rows, "c")["prob_t"] == 0.15
+    monkeypatch.setattr(gva, "REGISTERED_POINTS", {"c": (0.3, 7)})
+    with pytest.raises(gva.JoinGateError, match="registered point"):
+        gva.registered_row(rows, "c")
+
+
+@pytest.mark.tier1
+def test_registered_points_match_the_register_labels():
+    """Each grid cell's registered point is the one its register label names."""
+    register = json.loads((Path(__file__).resolve().parent.parent
+                           / "results/run-conditions.json").read_text())
+    labels = {c["label"] for c in
+              register["decomposition"]["grid-2026-08-18"]["conditions"]}
+    for cell, (prob_t, k) in gva.REGISTERED_POINTS.items():
+        label = f"{cell.replace('_', '-')}-k10-verified-p{prob_t:.2f}-k{k}"
+        assert label in labels, f"{cell}: {label} is not a registered condition"
+
+
+def _fake_evaluate(detections, out_dir, n_bootstrap=50):
+    """Stand-in for the evaluate_detections.py subprocess: score the set in-process."""
+    gdf = gpd.read_file(detections).to_crs(CRS)
+    row = gva.score(gdf, gpd.read_file(gva.GROUND_TRUTH).to_crs(CRS),
+                    gpd.read_file(gva.COMMON_BOUNDS))
+    out_dir.mkdir(parents=True, exist_ok=True)
+    doc = {"summary": {
+        "buffers": [{"buffer_metres": 20, "f1": row["f1"], "f1_ci_lower": 0.0,
+                     "f1_ci_upper": 1.0, "f1_ci_method": "fake",
+                     "precision": row["precision"], "recall": row["recall"]}],
+        "tile_classification": {"mcc": None}}}
+    (out_dir / "evaluation.json").write_text(json.dumps(doc))
+    return out_dir / "evaluation.json"
+
+
+@pytest.mark.tier1
+def test_materialise_keeps_the_registered_point_and_writes_the_best_set(
+        tmp_path, monkeypatch):
+    """D65 (3): the condition stays at its registered point, the best set beside it.
+
+    On the synthetic tree the best point is (0.0, k6) (the true positive
+    alone, F1 1.0); the registered point is set to (0.2, k5), which keeps the
+    true positive and one false positive. The condition must be written at
+    (0.2, k5) with its label, the best point recorded beside it, and the best
+    set written under ``verified-best/`` for the stride board.
+    """
+    _smoke_tree(tmp_path, monkeypatch)
+    monkeypatch.setattr(gva, "PROJECT_ROOT", tmp_path)
+    monkeypatch.setattr(gva, "REGISTERED_POINTS",
+                        {c: (0.2, 5) for c in gva.CELL_ORDER})
+    monkeypatch.setattr(gva, "evaluate", _fake_evaluate)
+    out_dir = tmp_path / "out"
+    monkeypatch.setattr(
+        "sys.argv",
+        ["grid_verifier_analysis.py", "--output-dir", str(out_dir),
+         "--bootstrap", "50", "--materialise-conditions"])
+    assert gva.main() == 0
+    conds = json.loads((out_dir / "conditions-verified"
+                        / "grid_verified_conditions.json").read_text())["cells"]
+    assert [c["cell"] for c in conds] == list(gva.CELL_ORDER)
+    for c in conds:
+        assert (c["prob_t"], c["min_votes"]) == (0.2, 5)
+        assert c["condition_label"].endswith("-k10-verified-p0.20-k5")
+        assert c["n_detections"] == 2
+        assert c["reproduces_sweep"] is True
+        assert c["registered_point_is_best"] is False
+        best = c["best_point"]
+        assert (best["prob_t"], best["min_votes"], best["n_detections"]) == (0.0, 6, 1)
+        assert best["sweep_f1_at_20m"] == pytest.approx(1.0)
+        cond_doc = json.loads((out_dir / "conditions-verified" / c["cell"]
+                               / "detections.geojson").read_text())
+        best_doc = json.loads((out_dir / "verified-best" / c["cell"]
+                               / "detections.geojson").read_text())
+        assert len(cond_doc["features"]) == 2
+        assert len(best_doc["features"]) == 1
+    payload = json.loads((out_dir / "verifier_analysis.json").read_text())
+    # The analysis's own board stays at the best point.
+    for row in payload["board_best"].values():
+        assert (row["prob_t"], row["min_votes"]) == (0.0, 6)
+
+
+@pytest.mark.tier1
+def test_stride_board_reads_the_grid_cells_best_point_sets():
+    """The stride board takes each grid cell at its best point (D65 (3) split)."""
+    from scripts import stride_verifier_analysis as sva
+
+    assert set(sva.GRID_CELLS) == set(gva.REGISTERED_POINTS)
+    for cell, (rel, *_rest) in sva.GRID_CELLS.items():
+        assert rel == f"results/grid-2026-08-18/{gva.VERIFIED_BEST_SUBDIR}/{cell}"

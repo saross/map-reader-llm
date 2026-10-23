@@ -12,11 +12,29 @@ Description:
     so the family's ``-opmax`` column would stop at K = 3 while the pv-diag-384
     families carry it at all four rungs.
 
-    Those two stages' crops manifests, probabilities and unions are all
+    Those two stages' unions, probabilities and prepared passes are all
     committed, so the sweep-optimal point is reachable at **US$0**. This script
     sweeps each on both 487-tile gold-standard frames, takes the F1@20 argmax on
     the board frame (ruling R2), materialises it, and emits the board-frame
     evaluation job. No API call is made; no register row is written.
+
+    **On the origin route (PR #42, D62 (1); fixed 2026-10-15).** The two
+    unions (``union_k5.geojson``, ``union_k10.geojson``) record one legacy
+    ``source_tile`` per row and no member list, so a row is scored on that
+    tile's sheet unless its members are attached first. The gold-standard
+    chain's own loaders do that, and so does this script, exactly as
+    ``image_b_analysis.py`` does for these stages:
+    ``image_b_analysis.load_image_union`` (the union joined to its leg under
+    the leg rule), ``stride_verifier_analysis.reassign_gate``, then
+    ``lib_cluster_origins.union_on_origin`` with the cell's prepared passes.
+    The board-frame and Era-2 sweeps run in-process on that union with
+    ``sweep_f1_greedy_pv.py``'s grid, scorer and row schema, and the argmax is
+    materialised from it as ``image_b_analysis.py`` writes its best set.
+    Before the fix the sweeps read the crops manifest and the cells were
+    materialised from the bare union, so the re-verified wrong-sheet rows of
+    D62 (1) scored on the wrong sheet: 0.8984 at (0.10, k5) and (0.10, k10)
+    against the origin-routed board cells' 0.9165 and 0.9169
+    (``reports/s164-agent-records/restatement-pass.md`` § 1.4).
 
     Ruling R1 holds without a swap: both committed stages were verified by the
     carried Gemini 3 verifier, not by a 3.7 one (the ``verify_swap37`` and
@@ -26,9 +44,17 @@ Description:
     sheet rows were re-verified on crops from their own sheet and booked in
     ``verify_repaired/`` and ``verify_k10_repaired/``. Each stage is read under
     the shared leg rule (``scripts/lib_verify_dirs.py``): the repaired copy by
-    default, the fixed-name leg under ``MAP_READER_VERIFY_DIRS=fixed`` (which
-    reproduces the committed rungs and the carried cross-check). The directory
-    read is recorded per stage as ``verifier_probabilities``.
+    default, the fixed-name leg under ``MAP_READER_VERIFY_DIRS=fixed``. The
+    directory read is recorded per stage as ``verifier_probabilities``, and the
+    carried cross-check is keyed by it (:data:`CARRIED_CROSSCHECK`). On the
+    re-verified rows the argmax is the carried point, (0.10, k5) F1@20 0.9165
+    (451) and (0.10, k10) 0.9169 (431). On the legs as run the origin route
+    reproduces the committed carried cells at (0.10, k = K), 0.9066 (443) and
+    0.9068 (423), but its argmax is (0.05, k5) 0.9073 and (0.0, k10) 0.9140:
+    the wrong-sheet rows the blind verifier scored at 0.05 or 0 then enter as
+    true positives on their own sheet (surprise S2 of
+    ``reports/s164-agent-records/rescore-repaired-gs.md``). The committed
+    opmax cells, at (0.10, k = K), predate the origin route.
 
     **Same assessed area (PI ruling D51, 2026-10-07).** These two stages'
     unions were clipped to the grid-common footprint upstream; the family's
@@ -54,16 +80,22 @@ from __future__ import annotations
 import argparse
 import json
 import logging
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import geopandas as gpd
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
 from scripts.build_k_ladder_phase2_tables import new_rung_pools  # noqa: E402
+from scripts.grid_analysis import load_cell_passes  # noqa: E402
+from scripts.grid_verifier_analysis import verified_subset  # noqa: E402
+from scripts.image_b_analysis import load_image_union  # noqa: E402
+from scripts.lib_advanced_metrics import calculate_f1_internal  # noqa: E402
+from scripts.lib_cluster_origins import union_on_origin  # noqa: E402
 from scripts.lib_verify_dirs import (  # noqa: E402
     resolve_verify_dir,
     verify_dir_provenance,
@@ -72,8 +104,16 @@ from scripts.lib_assessed_area import (  # noqa: E402
     COMMON_AREA_CLIP_NAME,
     add_area_gate_arguments,
     clip_geojson_file,
+    clip_points_to_area,
+    read_area_geojson,
     run_area_gate,
 )
+from scripts.stride_verifier_analysis import (  # noqa: E402
+    COMMON_BOUNDS,
+    reassign_gate,
+)
+from scripts.sweep_f1_greedy_pv import PROB_THRESHOLDS  # noqa: E402
+from scripts.sweep_f1_wbf import load_ground_truth  # noqa: E402
 from scripts.score_k_ladder_phase2_rungs import (  # noqa: E402
     BOARD_BOUNDS,
     BOOTSTRAP,
@@ -94,24 +134,32 @@ logger = logging.getLogger(__name__)
 __version__ = "1.0.0"
 
 RUN_ID = "gemini37-screen-2026-08-28"
+#: The proposer cell, as ``image_b_analysis.py --cell`` names it.
+CELL = "g384_ov192_g37"
 VERIFIER_ROOT = (
     "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37"
 )
+#: The cell's prepared passes (``<SCORING>/common/<CELL>/run_<i>/``), from
+#: which the origin route rebuilds each union row's member tiles.
+SCORING = "outputs/gemini37-screen-2026-08-28/scoring"
 
-#: This family's unions declare their CRS explicitly as CRS84 and carry
-#: degrees, unlike the pv-diag-384 consensus files which declare nothing and
-#: are read as WGS84 by default. ``materialise_pv_geojson.py`` refuses a
-#: mismatch between a declared CRS and ``--crs``, so the declaration is passed
-#: through verbatim — which also reproduces the CRS the family's committed
-#: detections carry (``results/gemini37-screen-2026-08-28/
-#: verified_best_20m.geojson``).
-UNION_CRS = "urn:ogc:def:crs:OGC:1.3:CRS84"
+#: The project CRS every sweep scores in (``sweep_f1_greedy_pv.py``'s).
+SCORING_CRS = "EPSG:32635"
 
-#: Cross-check: the committed carried cell of the K = 5 stage holds this many
-#: features at (vote_t 5, prob_t 0.10). Re-applying the same filter here must
-#: reproduce it, or the join has moved and the derivation is not trustworthy.
+#: Cross-check: the K = 5 stage's committed carried set holds this many
+#: features at (vote_t 5, prob_t 0.10). The same filter applied to the
+#: origin-routed union must reproduce it, or the join has moved and the
+#: derivation is not trustworthy. The count is keyed by the leg directory
+#: read (the leg rule, ``scripts/lib_verify_dirs.py``): 443 on the leg as run
+#: (``verify/``, the committed rung; ``MAP_READER_VERIFY_DIRS=fixed``) and,
+#: DATED UPDATE 2026-10-15, 451 with the wrong-sheet rows re-verified on
+#: their own sheet (``verify_repaired/``; PI ruling D62 (1)), the count of
+#: the carried set as the S164 restatement pass regenerates it (rulings
+#: D65 (2) and (3); ``reports/s164-agent-records/restatement-pass.md``
+#: § 1.4). A leg with no entry here refuses.
 CARRIED_CROSSCHECK = {
-    5: {"vote_t": 5, "prob_t": 0.10, "n_detections": 443,
+    5: {"vote_t": 5, "prob_t": 0.10,
+        "n_detections": {"verify": 443, "verify_repaired": 451},
         "source": "results/gemini37-screen-2026-08-28/verified_best_20m.geojson"},
 }
 
@@ -149,40 +197,131 @@ STAGES: list[dict[str, Any]] = [
 ]
 
 
+def common_bounds() -> gpd.GeoDataFrame:
+    """The grid-common carrier frame the gold-standard chain tiles unions on."""
+    return gpd.read_file(COMMON_BOUNDS)
+
+
+def origin_union(stage: dict[str, Any], leg: str) -> gpd.GeoDataFrame:
+    """One stage's union on the origin route, as the gold-standard chain loads it.
+
+    The union is joined to its leg's probabilities under the leg rule
+    (``image_b_analysis.load_image_union``), its carrier tiles are checked
+    (``stride_verifier_analysis.reassign_gate``), and each row's member tiles
+    are rebuilt from the cell's first ``k`` prepared passes and the row is
+    re-tiled on its own sheet (``lib_cluster_origins.union_on_origin``), the
+    sequence ``image_b_analysis.main`` runs for these stages.
+
+    Args:
+        stage: One entry of :data:`STAGES`.
+        leg: The leg's fixed directory name (``verify`` or ``verify_k10``).
+
+    Returns:
+        The union in the project CRS, indexed by verifier candidate number,
+        with ``vote_count``, ``mound_probability``, ``source_tile`` on the
+        row's origin sheet and the member tiles (``origin_tiles``). Its
+        ``attrs["verifier_probabilities"]`` names the directory read.
+    """
+    union = load_image_union(BASE_DIR / VERIFIER_ROOT, Path(stage["union"]).name, leg)
+    provenance = union.attrs.get("verifier_probabilities")
+    bounds = common_bounds()
+    union = reassign_gate(union, bounds, CELL)
+    passes = load_cell_passes(BASE_DIR / SCORING, CELL, n_passes=stage["k"])
+    union = union_on_origin(union, passes, bounds, label=CELL, n_passes=stage["k"])
+    union.attrs["verifier_probabilities"] = provenance
+    return union
+
+
+def sweep_rows(
+    union: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame, gt: gpd.GeoDataFrame, *,
+    config: str, buffers: list[int], clip_area: str | None = None,
+) -> list[dict[str, Any]]:
+    """Sweep an origin-routed union over ``sweep_f1_greedy_pv.py``'s grid.
+
+    The same vote thresholds (1 to the union's largest vote count), the same
+    probability grid (``sweep_f1_greedy_pv.PROB_THRESHOLDS``), the same scorer
+    (``calculate_f1_internal``, which reads the rows' member tiles) and the
+    same row schema and rounding, so :func:`argmax_at_headline` reads it
+    unchanged. With ``clip_area`` the candidates outside the D51 common area
+    are removed first and every row names the clip, as the tool's
+    ``--clip-area`` does.
+
+    Args:
+        union: The stage's union on the origin route (:func:`origin_union`).
+        bounds: The frame, in the project CRS.
+        gt: The reference set (``sweep_f1_wbf.load_ground_truth``).
+        config: The ``config`` label every row carries.
+        buffers: Match radii in metres.
+        clip_area: The common-area GeoJSON, or ``None``.
+
+    Returns:
+        One row per (buffer, vote_t, prob_t), buffers outermost.
+    """
+    cands = union.to_crs(SCORING_CRS)
+    clip_tag: dict[str, Any] = {}
+    if clip_area is not None:
+        area, clip_name = read_area_geojson(clip_area)
+        cands, n_clipped = clip_points_to_area(cands, area)
+        clip_tag = {"clip_area": clip_name, "clip_area_file": str(clip_area),
+                    "clip_n_removed": n_clipped}
+    max_votes = int(union["vote_count"].max()) if len(union) else 1
+    rows: list[dict[str, Any]] = []
+    for buffer_m in buffers:
+        for vote_t in range(1, max_votes + 1):
+            for prob_t in PROB_THRESHOLDS:
+                sub = cands[(cands["vote_count"] >= vote_t)
+                            & (cands["mound_probability"] >= prob_t)]
+                if len(sub) == 0:
+                    p = r = f1 = 0.0
+                else:
+                    p, r, f1 = calculate_f1_internal(sub, gt, bounds, buffer_metres=buffer_m)
+                rows.append({"config": config, "vote_t": vote_t, "prob_t": prob_t,
+                             "n": int(len(sub)), "p": round(p, 4), "r": round(r, 4),
+                             "f1": round(f1, 4), "buffer_m": buffer_m, **clip_tag})
+    return rows
+
+
 def sweep(
-    stage: dict[str, Any], *, bounds: str, out_name: str, clip_area: str | None = None,
+    stage: dict[str, Any], union: gpd.GeoDataFrame, *, bounds: str, out_name: str,
+    clip_area: str | None = None,
 ) -> Path:
-    """Sweep one committed stage on one frame (clipped to ``clip_area`` if given)."""
+    """Sweep one stage's origin-routed union on one frame and write the rows.
+
+    Args:
+        stage: The stage, its ``verify_dir`` the directory the leg rule read.
+        union: The stage's union on the origin route.
+        bounds: The frame's bounds file (repository-relative).
+        out_name: The sweep file's name in the stage's verify directory.
+        clip_area: The D51 common-area GeoJSON, or ``None``.
+
+    Returns:
+        The written sweep path.
+    """
     output = BASE_DIR / stage["verify_dir"] / out_name
-    command = [
-        sys.executable,
-        "scripts/sweep_f1_greedy_pv.py",
-        "--config",
-        f"g37-text-k{stage['k']}",
-        "--crops-dir",
-        stage["crops_dir"],
-        "--verified-dir",
-        stage["verify_dir"],
-        "--output",
-        str(output.relative_to(BASE_DIR)),
-        "--bounds",
-        bounds,
-        "--buffer-m",
-        *[str(buffer) for buffer in SWEEP_BUFFERS],
-        *(["--clip-area", clip_area] if clip_area else []),
-    ]
-    completed = subprocess.run(
-        command, cwd=BASE_DIR, capture_output=True, text=True, check=False
-    )
-    if completed.returncode != 0:
-        logger.error(
-            "sweep failed for K=%d on %s:\n%s",
-            stage["k"],
-            bounds,
-            completed.stderr[-2000:],
-        )
-        sys.exit(5)
+    frame = gpd.read_file(BASE_DIR / bounds).to_crs(SCORING_CRS)
+    rows = sweep_rows(union, frame, load_ground_truth(), config=f"g37-text-k{stage['k']}",
+                      buffers=SWEEP_BUFFERS, clip_area=clip_area)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(rows, indent=2))
     return output
+
+
+def materialise_origin(
+    union: gpd.GeoDataFrame, *, vote_t: int, prob_t: float, output: Path,
+) -> int:
+    """Write one operating point of an origin-routed union, as the chain does.
+
+    ``image_b_analysis.py`` writes its best set the same way
+    (``verified_subset`` then WGS84 GeoJSON), so the rows keep their member
+    tiles and the scorer books each to its own sheet.
+
+    Returns:
+        The feature count written.
+    """
+    subset = verified_subset(union, prob_t, vote_t)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    subset.to_crs("EPSG:4326").to_file(output, driver="GeoJSON")
+    return int(len(subset))
 
 
 def cmd_prepare(args: argparse.Namespace) -> None:
@@ -207,33 +346,35 @@ def cmd_prepare(args: argparse.Namespace) -> None:
 
     for fixed_stage in STAGES:
         # The shared leg rule picks the directory; everything below reads it.
-        vdir = resolve_verify_dir(BASE_DIR / VERIFIER_ROOT,
-                                  Path(fixed_stage["verify_dir"]).name)
+        leg = Path(fixed_stage["verify_dir"]).name
+        vdir = resolve_verify_dir(BASE_DIR / VERIFIER_ROOT, leg)
         stage = {**fixed_stage, "verify_dir": str(vdir.relative_to(BASE_DIR))}
         provenance = verify_dir_provenance(vdir, BASE_DIR)
+        # The union on the origin route, as the gold-standard chain loads it;
+        # every sweep and cell below reads this frame, never the bare union.
+        union = origin_union(fixed_stage, leg)
         # Before trusting the join, reproduce a point whose feature count is
         # already committed (the feedback_feature_count_crosscheck rule).
         check = CARRIED_CROSSCHECK.get(stage["k"])
         if check:
+            want = check["n_detections"].get(vdir.name)
             probe = OUT_DIR / "crosscheck" / f"k{stage['k']}-carried.geojson"
-            got = materialise_named(
-                stage["union"],
-                f"{stage['verify_dir']}/probabilities.json",
-                vote_t=check["vote_t"],
-                prob_t=check["prob_t"],
-                output=probe,
+            got = materialise_origin(
+                union, vote_t=check["vote_t"], prob_t=check["prob_t"], output=probe,
             )
-            if got != check["n_detections"]:
+            if want is None or got != want:
                 logger.error(
                     "K=%d cross-check FAILED: re-applying (%d, %.2f) to this "
-                    "stage yields %d features, but %s holds %d. The index join "
-                    "has moved; refusing to derive an operating point from it.",
+                    "stage (leg %s) yields %d features, but %s holds %s. The "
+                    "index join has moved, or this leg has no committed count; "
+                    "refusing to derive an operating point from it.",
                     stage["k"],
                     check["vote_t"],
                     check["prob_t"],
+                    vdir.name,
                     got,
                     check["source"],
-                    check["n_detections"],
+                    want,
                 )
                 sys.exit(8)
             logger.info(
@@ -245,11 +386,11 @@ def cmd_prepare(args: argparse.Namespace) -> None:
             )
 
         board = argmax_at_headline(
-            sweep(stage, bounds=BOARD_BOUNDS, out_name="sweep_2d_era2b.json",
+            sweep(stage, union, bounds=BOARD_BOUNDS, out_name="sweep_2d_era2b.json",
                   clip_area=clip_area)
         )
         era2 = argmax_at_headline(
-            sweep(stage, bounds=ERA2_BOUNDS, out_name="sweep_2d.json",
+            sweep(stage, union, bounds=ERA2_BOUNDS, out_name="sweep_2d.json",
                   clip_area=clip_area)
         )
         agree = (board["vote_t"], board["prob_t"]) == (
@@ -258,12 +399,8 @@ def cmd_prepare(args: argparse.Namespace) -> None:
         )
         label = f"g37-text-k{stage['k']}-verified-opmax"
         detections = OUT_DIR / "materialised" / f"{label}.geojson"
-        count = materialise_named(
-            stage["union"],
-            f"{stage['verify_dir']}/probabilities.json",
-            vote_t=board["vote_t"],
-            prob_t=board["prob_t"],
-            output=detections,
+        count = materialise_origin(
+            union, vote_t=board["vote_t"], prob_t=board["prob_t"], output=detections,
         )
         if clip_area is not None:
             count -= clip_geojson_file(
@@ -306,6 +443,12 @@ def cmd_prepare(args: argparse.Namespace) -> None:
                 ),
                 "carried_condition_id": stage["carried_condition_id"],
                 "verifier_probabilities": provenance,
+                "scoring_route": (
+                    "origin: image_b_analysis.load_image_union, "
+                    "stride_verifier_analysis.reassign_gate, "
+                    f"lib_cluster_origins.union_on_origin over {SCORING}/common/"
+                    f"{CELL} runs 1-{stage['k']} (PR #42, D62 (1))"
+                ),
             }
         )
         logger.info(
@@ -339,46 +482,6 @@ def cmd_prepare(args: argparse.Namespace) -> None:
     with open(JOBS_FILE, "w") as handle:
         handle.write("\n".join(jobs) + "\n")
     logger.info("%d eval job(s) -> %s", len(jobs), JOBS_FILE.relative_to(BASE_DIR))
-
-
-def materialise_named(
-    union: str, probabilities: str, *, vote_t: int, prob_t: float, output: Path
-) -> int:
-    """Materialise one operating point from an explicitly named union.
-
-    :func:`scripts.score_k_ladder_phase2_rungs.materialise` assumes the
-    ``consensus-n<N>/consensus_t1.geojson`` layout; the 3.7 screen names its
-    unions ``union_k5.geojson`` / ``union_k10.geojson``, so the paths are passed
-    through directly here.
-
-    Returns:
-        The feature count of the written GeoJSON.
-    """
-    output.parent.mkdir(parents=True, exist_ok=True)
-    command = [
-        sys.executable,
-        "scripts/materialise_pv_geojson.py",
-        "--consensus",
-        union,
-        "--probabilities",
-        probabilities,
-        "--vote-t",
-        str(vote_t),
-        "--prob-t",
-        str(prob_t),
-        "--output",
-        str(output.relative_to(BASE_DIR)),
-        "--crs",
-        UNION_CRS,
-    ]
-    completed = subprocess.run(
-        command, cwd=BASE_DIR, capture_output=True, text=True, check=False
-    )
-    if completed.returncode != 0:
-        logger.error("materialise failed:\n%s", completed.stderr[-2000:])
-        sys.exit(6)
-    with open(output) as handle:
-        return len(json.load(handle).get("features", []))
 
 
 def cmd_collect(args: argparse.Namespace) -> None:

@@ -1,0 +1,44 @@
+# tiering_20m.json: REPAIRED prediction (s164-rescore-2026-10-13/board/repairedA) vs regenerated
+n_pairs SAME 11175
+sig SAME 8075
+tiers SAME 14
+tie SAME 5
+withheld SAME 3
+n_cells SAME 150
+mcc SAME (3001, 6, 34)
+leaders SAME [('g37-image-k5-verified-swap37-p0.90-k5-era2b', 0.9332, 0.93318), ('g37-text-k5-verified-swap37-p0.80-k5-era2b', 0.9289, 0.928899), ('g37-text-k5-verified-swap38-p0.88-k5-era2b', 0.9282, 0.928241), ('g37-image-k5-verified-carried-p0.10-k5-era2b', 0.9278, 0.927835), ('g37-text-k10-verified-carried-p0.10-k10-era2b', 0.9169, 0.916859)]
+ member g384-ov192-k1-verified-opmax {'tier': (5, 4), 'rank': (54, 43), 'eval_f1': (0.8546, 0.868)}
+ member g384-ov192-k1-verified-p0.15-k1 {'tier': (5, 4), 'rank': (57, 44), 'eval_f1': (0.854, 0.8673)}
+ member g384-ov192-k10-verified-p0.15-k10-era2b {'rank': (9, 11)}
+ member g384-ov192-k3-verified-opmax {'tier': (3, 2), 'rank': (14, 9), 'eval_f1': (0.884, 0.8979)}
+ member g384-ov192-k5-verified-opmax {'tier': (3, 2), 'rank': (10, 8), 'eval_f1': (0.8905, 0.9046)}
+ member pv-high-text-t0.3-n5-opmax {'rank': (12, 13)}
+ member pv-high-text-t0.7-n5-opmax {'rank': (46, 48)}
+ member pv-high-text-t1.0-n3-opmax {'rank': (56, 57)}
+ member pv-min-text-t0.0-n3-opmax {'rank': (48, 50)}
+ member pv-min-text-t0.3-n1-opmax {'rank': (53, 55)}
+ member pv-min-text-t0.3-n3-carried-p0.15-k3 {'rank': (50, 52)}
+ member pv-min-text-t0.7-n1-opmax {'rank': (51, 53)}
+ member pv-min-text-t0.7-n3-carried-p0.15-k3 {'rank': (47, 49)}
+ member pv-min-text-t1.0-n3-opmax {'rank': (43, 45)}
+ member session-78-text-adversarial-text-opmax {'rank': (49, 51)}
+ member session-78-text-checklist-text-opmax {'rank': (45, 47)}
+ member session-78-text-comparative-opmax {'rank': (13, 14)}
+ member verified-adv-text-4of5-era2b {'rank': (44, 46)}
+ member verified-adv-text-consensus-16of30-era2b {'rank': (11, 12)}
+ member verified-adv-text-medium-vf-4of5-era2b {'rank': (55, 56)}
+ member verified-384-16of30-t0-3-n5-opmax-era2b {'rank': (8, 10)}
+ member verified-t0-5-era2b {'rank': (52, 54)}
+members differing: 22
+pair keys equal: True
+ pairs differing on observed_diff 0
+ pairs differing on p_value 0
+ pairs differing on bh_adjusted_p 0
+ pairs differing on significant 0
+ pairs differing on f1_a 0
+ pairs differing on f1_b 0
+
+# extract_boards.py keys (era2/*): repairedA vs regenerated
+shared 25, only-a 0, only-b 0, differing 2
+  era2/member/g384-ov192-k10-verified-p0.15-k10-era2b: {"f1": 0.8942, "mcc": 0.7973, "rank": 9, "tier": 3}  |  {"f1": 0.8942, "mcc": 0.7973, "rank": 11, "tier": 3}
+  era2/ranking: [["g37-image-k5-verified-swap37-p0.90-k5-era2b", 1, 0.9332, 0.8376], ["g37-text-k5-verified-swap37-p0.80-k5-era2b", 1, 0.9289, 0.8049], ["g37-text-k5-verified-swap38-p0.88-k5-era2b", 1, 0.9282, 0.8189], ["g37-image-k5-verified-carried-p0.10-k5-era2b", 1, 0.9278, 0.8245], ["g37-text-k10-verified-carr  |  [["g37-image-k5-verified-swap37-p0.90-k5-era2b", 1, 0.9332, 0.8376], ["g37-text

@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — stride-phaseb-2026-08-25
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3b537582b`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/stride-phaseb-2026-08-25` · **Registry status**: active · **Purpose**: Stride programme Phase B (post-hoc, E41-class): four iso-stride geometry cells (512/34.4, 384/33.3, 256/25, 512/62.5) at K=10, one configuration, testing whether geometry is a plateau or a winner and where the interior stride optimum sits. Includes the union-k10 verifications and the winner-ladder exact re-verifications (k1/k3/k5).
 
@@ -122,13 +122,13 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g256-ov064-k10-verified-p0.15-k8` | proposer-verifier | verified | 10 | k=8/pt=0.15 | 427 | 0.8795 [0.8503, 0.9036] | not supplied | 0.7959 |
-| `g384-ov128-k10-verified-p0.15-k8` | proposer-verifier | verified | 10 | k=8/pt=0.15 | 387 | 0.8982 [0.8698, 0.9213] | not supplied | 0.8022 |
-| `g384-ov128-ladder-n1-verified-p0.15-k1` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 411 | 0.8677 [0.8369, 0.8953] | not supplied | 0.7894 |
-| `g384-ov128-ladder-n3-verified-p0.15-k3` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 380 | 0.8911 [0.8615, 0.9161] | not supplied | 0.7814 |
-| `g384-ov128-ladder-n5-verified-p0.15-k4` | proposer-verifier | verified | 5 | k=4/pt=0.15 | 394 | 0.8856 [0.8554, 0.9113] | not supplied | 0.7805 |
-| `g512-ov176-k10-verified-p0.15-k6` | proposer-verifier | verified | 10 | k=6/pt=0.15 | 390 | 0.8655 [0.8305, 0.8934] | not supplied | 0.7964 |
-| `g512-ov320-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 397 | 0.8800 [0.8478, 0.9055] | not supplied | 0.8023 |
+| `g256-ov064-k10-verified-p0.15-k8` | proposer-verifier | verified | 10 | k=8/pt=0.15 | 435 | 0.8876 [0.8602, 0.9101] | not supplied | 0.8033 |
+| `g384-ov128-k10-verified-p0.15-k8` | proposer-verifier | verified | 10 | k=8/pt=0.15 | 394 | 0.9075 [0.8816, 0.9290] | not supplied | 0.8134 |
+| `g384-ov128-ladder-n1-verified-p0.15-k1` | proposer-verifier | verified | 1 | k=1/pt=0.15 | 419 | 0.8737 [0.8434, 0.9012] | not supplied | 0.8010 |
+| `g384-ov128-ladder-n3-verified-p0.15-k3` | proposer-verifier | verified | 3 | k=3/pt=0.15 | 386 | 0.8993 [0.8708, 0.9227] | not supplied | 0.7927 |
+| `g384-ov128-ladder-n5-verified-p0.15-k4` | proposer-verifier | verified | 5 | k=4/pt=0.15 | 400 | 0.8937 [0.8650, 0.9179] | not supplied | 0.7918 |
+| `g512-ov176-k10-verified-p0.15-k6` | proposer-verifier | verified | 10 | k=6/pt=0.15 | 396 | 0.8714 [0.8377, 0.8984] | not supplied | 0.8116 |
+| `g512-ov320-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 401 | 0.8854 [0.8532, 0.9101] | not supplied | 0.8100 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -234,7 +234,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `3b537582b` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

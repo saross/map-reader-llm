@@ -1,9 +1,9 @@
 # Corrected F1 / P / R on the 55-map image set — buffer-stratified
 
-**Timestamp**: 2026-06-07T06:21:48.572427+00:00
+**Timestamp**: 2026-10-15T10:46:57.239049+00:00
 **Methodology**: Approach B — extended-GT-at-R Hungarian matching
 **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-**Git commit**: `bb7d5279e818cd52f7b9925e5f19790adf537676`
+**Git commit**: `98ab69abc5e677480b0fa56b129419779cf063d0`
 
 ## F1 curve
 
@@ -18,11 +18,11 @@
 | 35 | 3465 | 699 | 1281 | 4746 | 0 | 4746 | 0.8321 [0.8192, 0.8449] | 0.7301 [0.7153, 0.7446] | **0.7778** [0.7664, 0.7889] |
 | 40 | 3505 | 659 | 1241 | 4746 | 0 | 4746 | 0.8417 [0.8291, 0.8543] | 0.7385 [0.7237, 0.7531] | **0.7868** [0.7755, 0.7977] |
 | 45 | 3521 | 643 | 1225 | 4746 | 0 | 4746 | 0.8456 [0.8330, 0.8579] | 0.7419 [0.7271, 0.7565] | **0.7903** [0.7794, 0.8012] |
-| 50 | 3801 | 363 | 1360 | 4746 | 415 | 5161 | 0.9128 [0.9035, 0.9219] | 0.7365 [0.7223, 0.7502] | **0.8152** [0.8051, 0.8251] |
-| 75 | 3823 | 341 | 1517 | 4746 | 594 | 5340 | 0.9181 [0.9090, 0.9269] | 0.7159 [0.7015, 0.7300] | **0.8045** [0.7941, 0.8144] |
-| 100 | 3841 | 323 | 1590 | 4746 | 685 | 5431 | 0.9224 [0.9135, 0.9311] | 0.7072 [0.6927, 0.7211] | **0.8006** [0.7903, 0.8106] |
-| 125 | 3851 | 313 | 1624 | 4746 | 729 | 5475 | 0.9248 [0.9160, 0.9334] | 0.7034 [0.6888, 0.7176] | **0.7990** [0.7885, 0.8092] |
-| 150 | 3858 | 306 | 1651 | 4746 | 763 | 5509 | 0.9265 [0.9178, 0.9349] | 0.7003 [0.6857, 0.7145] | **0.7977** [0.7871, 0.8078] |
+| 50 | 3801 | 363 | 1359 | 4746 | 414 | 5160 | 0.9128 [0.9035, 0.9219] | 0.7366 [0.7225, 0.7504] | **0.8153** [0.8051, 0.8251] |
+| 75 | 3823 | 341 | 1516 | 4746 | 593 | 5339 | 0.9181 [0.9090, 0.9269] | 0.7161 [0.7016, 0.7301] | **0.8046** [0.7942, 0.8145] |
+| 100 | 3841 | 323 | 1589 | 4746 | 684 | 5430 | 0.9224 [0.9135, 0.9311] | 0.7074 [0.6928, 0.7213] | **0.8007** [0.7903, 0.8107] |
+| 125 | 3851 | 313 | 1623 | 4746 | 728 | 5474 | 0.9248 [0.9160, 0.9334] | 0.7035 [0.6888, 0.7177] | **0.7991** [0.7886, 0.8093] |
+| 150 | 3858 | 306 | 1650 | 4746 | 762 | 5508 | 0.9265 [0.9178, 0.9349] | 0.7004 [0.6857, 0.7145] | **0.7978** [0.7872, 0.8079] |
 
 ## How to read this table
 
@@ -81,7 +81,7 @@ is completely indistinguishable.
 ## Practitioner-useful cap: F1 at R = 125 m
 
 Recommended single-number summary for downstream quotation:
-**F1 = 0.7990** at R = 125 m (95 % CI [0.7885, 0.8092]) —
+**F1 = 0.7991** at R = 125 m (95 % CI [0.7886, 0.8093]) —
 the largest R where the attractor-pull contribution to recall is
 statistically distinguishable from within-tile random placement.
 
@@ -98,8 +98,8 @@ the task brief and Obs 272.
   - Detections: `/home/shawn/Code/map-reader-llm/outputs/55maps-text-high-generalisation/verified/verified_detections.geojson`
   - Student GT: `/home/shawn/Code/map-reader-llm/inputs/vectors/references/student-mounds-55maps-reviewed.geojson`
   - Bounds: `/home/shawn/Code/map-reader-llm/inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson`
-  - Review (yesterday): `/home/shawn/Code/map-reader-llm/results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv`
+  - Review (yesterday): `results/55maps-extended-gt-2026-06-07/empty-yesterday-review.csv`
   - Review (today): `/home/shawn/Code/map-reader-llm/results/deployment-oracle-2026-06-06/canonical-gt/canonical-review.csv`
 - **Bootstrap**: 10,000 iterations, seed 42, tile-level resampling
-- **Git commit**: `bb7d5279e818cd52f7b9925e5f19790adf537676`
+- **Git commit**: `98ab69abc5e677480b0fa56b129419779cf063d0`
 - **Script**: `scripts/compute_corrected_f1_multi_buffer.py`

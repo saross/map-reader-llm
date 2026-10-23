@@ -62,10 +62,19 @@ What it does:
    findings document's costed estimate ($6.33 at $0.000693/call).
 
 6. **Condition materialisation** (``--materialise-conditions``): writes each
-   cell's best-F1 verified set as a scorable GeoJSON and scores it with
-   `evaluate_detections.py` at B = 10,000 under a reproduction gate, so the
-   analysis can take a register row (the analyses schema requires a non-empty
-   ``conditions_compared``; defect D16 pattern).
+   cell's REGISTERED verified condition (:data:`REGISTERED_POINTS`) as a
+   scorable GeoJSON and scores it with `evaluate_detections.py` at
+   B = 10,000 under a reproduction gate, so the analysis can take a register
+   row (the analyses schema requires a non-empty ``conditions_compared``;
+   defect D16 pattern). Each condition records the cell's current best-F1
+   point beside its registered one. It also writes each cell's best-F1 set to
+   ``verified-best/<cell>/detections.geojson``, which the stride board reads
+   as the grid cell's best point. Until 2026-10-15 the registered point WAS
+   the best point by construction and the condition set served both roles;
+   the D62 (1) re-verified rows moved 384 px / 12.5 %'s best point from its
+   registered (0.20, k7) to (0.15, k7), and PI ruling D65 (3) keeps a
+   registered condition at its registered point with the new argmax
+   reported beside it.
 
 Usage::
 
@@ -87,7 +96,10 @@ Outputs (under ``--output-dir``, default results/grid-2026-08-18):
     - verifier_analysis.json — every number, machine-readable
     - verifier_sweep.csv — the full prob_t x k sweep per cell
     - conditions-verified/<cell>/{detections.geojson, eval/evaluation.json}
-      and conditions-verified/grid_verified_conditions.json (with the flag)
+      and conditions-verified/grid_verified_conditions.json (with the flag),
+      each at its registered point
+    - verified-best/<cell>/detections.geojson — each cell's best-F1 set
+      (with ``--materialise-conditions``)
 
 Zero API spend; reads committed artefacts only. Run on sapphire: the sweep is
 several hundred Hungarian matchings and the bootstraps are B = 10,000.
@@ -148,6 +160,24 @@ GROUND_TRUTH = PROJECT_ROOT / "inputs/vectors/references/mounds-reference.geojso
 #: The registered K = 10 best consensus-only operating points (the D16
 #: materialisation) — the like-for-like PRE-verifier arm for the contrasts.
 CONSENSUS_CONDITIONS_DIR = PROJECT_ROOT / "results/grid-2026-08-18/conditions"
+
+#: The registered verified conditions' operating points, ``cell -> (prob_t,
+#: min_votes)``, as their register labels name them
+#: (``grid-2026-08-18::<cell>-k10-verified-p<prob_t>-k<min_votes>`` in
+#: ``results/run-conditions.json``). A registered condition keeps this point
+#: when the cell's best point moves; the best point is reported beside it
+#: (PI ruling D65 (3), 2026-10-14).
+REGISTERED_POINTS: dict[str, tuple[float, int]] = {
+    "g512_ov064": (0.15, 5),
+    "g512_ov256": (0.15, 9),
+    "g384_ov048": (0.20, 7),
+    "g384_ov192": (0.15, 10),
+}
+
+#: Where each cell's best-F1 verified set is written (``--materialise-
+#: conditions``), for readers that take the grid cell at its best point
+#: (``stride_verifier_analysis.GRID_CELLS``).
+VERIFIED_BEST_SUBDIR = "verified-best"
 
 #: Bootstrap iterations: 10,000 per the 2026-08-19 PI ruling (erratum E82).
 BOOTSTRAP = 10_000
@@ -360,6 +390,37 @@ def best_row(rows: list[dict[str, Any]], cell: str,
     return max(sel, key=lambda r: r["f1"])
 
 
+def registered_row(rows: list[dict[str, Any]], cell: str) -> dict[str, Any]:
+    """Return one cell's sweep row at its registered operating point.
+
+    Args:
+        rows: Sweep rows (any mix of cells).
+        cell: Cell label; its point is :data:`REGISTERED_POINTS` ``[cell]``.
+
+    Returns:
+        The sweep row whose ``prob_t`` equals the registered threshold (to
+        1e-9) and whose ``min_votes`` equals the registered vote threshold.
+
+    Raises:
+        JoinGateError: If the sweep has no such row (the registered threshold
+            is not an observed probability of the cell's union), or more than
+            one.
+
+    Examples:
+        >>> rows = [{"cell": "g384_ov048", "prob_t": 0.2, "min_votes": 7}]
+        >>> registered_row(rows, "g384_ov048")["min_votes"]
+        7
+    """
+    prob_t, min_votes = REGISTERED_POINTS[cell]
+    hit = [r for r in rows if r["cell"] == cell and r["min_votes"] == min_votes
+           and abs(float(r["prob_t"]) - prob_t) < 1e-9]
+    if len(hit) != 1:
+        raise JoinGateError(
+            f"{cell}: {len(hit)} sweep rows at the registered point "
+            f"(prob_t {prob_t}, k {min_votes}); expected exactly one")
+    return hit[0]
+
+
 def per_tile_counts(
     gdf: gpd.GeoDataFrame, bounds: gpd.GeoDataFrame, gdf_ref: gpd.GeoDataFrame,
 ) -> dict[str, np.ndarray]:
@@ -551,8 +612,9 @@ def main() -> int:
     parser.add_argument("--bootstrap", type=int, default=BOOTSTRAP)
     parser.add_argument(
         "--materialise-conditions", action="store_true",
-        help="Also write each cell's best verified set and score it with "
-             "evaluate_detections.py under a reproduction gate.")
+        help="Also write each cell's registered verified condition (scored "
+             "with evaluate_detections.py under a reproduction gate) and its "
+             "best-F1 set (verified-best/<cell>/).")
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -670,7 +732,25 @@ def main() -> int:
         conditions = []
         cond_root = args.output_dir / "conditions-verified"
         for cell in CELL_ORDER:
-            point = best[cell]
+            # Each cell's best-F1 set, for readers that take the grid cell at
+            # its best point (the stride board); the registered condition
+            # below may sit elsewhere (D65 (3)).
+            best_det = args.output_dir / VERIFIED_BEST_SUBDIR / cell / "detections.geojson"
+            n_best = materialise_condition(unions[cell], best[cell], best_det, bounds)
+            if n_best != best[cell]["n_detections"]:
+                logger.error("%s: best set has %d features, sweep row has %d",
+                             cell, n_best, best[cell]["n_detections"])
+                failures += 1
+            # The registered condition, at its registered point (D65 (3)).
+            point = registered_row(sweep_rows, cell)
+            if (point["prob_t"], point["min_votes"]) != (
+                    best[cell]["prob_t"], best[cell]["min_votes"]):
+                logger.warning(
+                    "%s: registered point (%.2f, k%d) F1 %.4f is no longer the "
+                    "best point (%.2f, k%d) F1 %.4f; the condition keeps its "
+                    "registered point (D65 (3))", cell, point["prob_t"],
+                    point["min_votes"], point["f1"], best[cell]["prob_t"],
+                    best[cell]["min_votes"], best[cell]["f1"])
             det = cond_root / cell / "detections.geojson"
             n = materialise_condition(unions[cell], point, det, bounds)
             if n != point["n_detections"]:
@@ -715,6 +795,18 @@ def main() -> int:
                 "evaluation": str(eval_path.relative_to(PROJECT_ROOT)),
                 "reproduces_sweep": ok,
                 "verifier_probabilities": verifier_probabilities[cell],
+                # The cell's current best point, reported beside the
+                # registered one (D65 (3)).
+                "registered_point_is_best": (
+                    (point["prob_t"], point["min_votes"])
+                    == (best[cell]["prob_t"], best[cell]["min_votes"])),
+                "best_point": {
+                    "prob_t": best[cell]["prob_t"],
+                    "min_votes": best[cell]["min_votes"],
+                    "n_detections": best[cell]["n_detections"],
+                    "sweep_f1_at_20m": best[cell]["f1"],
+                    "detections": str(best_det.relative_to(PROJECT_ROOT)),
+                },
             })
     # --- Payload -----------------------------------------------------------
     def _board(rows: dict[str, dict[str, Any]]) -> dict[str, Any]:
@@ -792,8 +884,10 @@ def main() -> int:
             "classification": (
                 "POST-HOC (E41-class); registrable proposer-verifier "
                 "conditions for the tile-size x overlap grid. K = 10 union "
-                "input, adversarial text verifier, best-F1@20m operating "
-                "point per cell."),
+                "input, adversarial text verifier, the registered operating "
+                "point per cell (the best-F1@20m point at registration; a "
+                "registered condition keeps its point when the best point "
+                "moves, which is reported beside it, PI ruling D65 (3))."),
             "verifier": {
                 "config": "verify_adversarial-text",
                 "model": "gemini-3-flash-preview",
