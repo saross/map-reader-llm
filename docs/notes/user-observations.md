@@ -1615,3 +1615,16 @@ only his remarks, quoted, and nothing awaits a verdict.
 - S156 C3: "That's a welcome sharpening of my point" — Claude had answered
   Shawn's remark that "3.7 is a step change" with a frontier test (the pool
   and the images, not the model) and held the generational claim back.
+
+## 2026-10-23 — map-reader-llm: Session 165 (PR #48 and the PR #52 walk-through)
+
+- "I approve the two changes beyond the floor fix. We should probably do something about the 'one
+  more thing' 'all passes (secondary' column, as it is odd, and we want these entries to be
+  accessible to others" (2026-10-17) — Claude had recommended leaving an odd table column
+  unchanged in a drafted findings note.
+- "Approve with both -- and let's make sure that we don't make things so terse that they are hard
+  to understand, later we may need to do a readability check." (2026-10-18) — Claude had offered
+  an optional readability edit to a terse drafted register outcome.
+- "yes, approve with these edits, being sure to include the caveat beside the p (you are correct it
+  will be overread otherwise)" (2026-10-18) — Claude had proposed a no-family-correction caveat
+  beside a p value that had crossed 0.05 in a restated register text.
