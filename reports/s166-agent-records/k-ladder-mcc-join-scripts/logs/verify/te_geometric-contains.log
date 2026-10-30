@@ -1,0 +1,21 @@
+TILE JOIN 'geometric-contains' on the MCC arm (sensitivity reading; the F1 arm keeps 'id')
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+2026-10-30 08:42:51,346 - INFO - Assigned source_tile to 459/482 detections via spatial join
+2026-10-30 08:42:51,884 - INFO - Assigned source_tile to 459/482 detections via spatial join
+  verified-PV  g384-ov192-k1-verified-opmax       passes= 1 eval-F1=0.8680 micro-F1-of-mean=0.8680 gap=+0.0000 MCC=0.8211 MCC[geometric-contains]=0.8935
+2026-10-30 08:42:51,950 - INFO - Assigned source_tile to 427/450 detections via spatial join
+2026-10-30 08:42:52,476 - INFO - Assigned source_tile to 427/450 detections via spatial join
+  verified-PV  g384-ov192-k3-verified-opmax       passes= 1 eval-F1=0.8979 micro-F1-of-mean=0.8979 gap=+0.0000 MCC=0.8167 MCC[geometric-contains]=0.9064
+2026-10-30 08:42:52,540 - INFO - Assigned source_tile to 414/435 detections via spatial join
+2026-10-30 08:42:53,090 - INFO - Assigned source_tile to 414/435 detections via spatial join
+  verified-PV  g384-ov192-k5-verified-opmax       passes= 1 eval-F1=0.9046 micro-F1-of-mean=0.9046 gap=-0.0000 MCC=0.8139 MCC[geometric-contains]=0.8933
+  verified-PV  g384-ov192-k10-verified-p0.15-k10-boardframe passes= 1 eval-F1=0.8942 micro-F1-of-mean=0.8942 gap=-0.0000 MCC=0.7973 MCC[geometric-contains]=0.8813
+Loaded 4 cells (0 single-pass + 0 consensus + 4 verified-PV)
+Running 6 pairwise permutation tests (10000 perms each, seed 42) ...
+Running 6 pairwise MCC permutation tests (10000 perms, seed 42) ...
+MCC FDR: 0/6 pairs significant at q=0.05
+MCC tiering: 1 tiers; MCC tie set = 4 cell(s)
+FDR: 3/6 pairs significant at q=0.05 -> 2 tiers; tie_set (Tier 1) = 3 cell(s)
+Wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/tier-e/tiering_20m_geometric-contains.json
+Wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/tier-e/tiering_20m_geometric-contains.md

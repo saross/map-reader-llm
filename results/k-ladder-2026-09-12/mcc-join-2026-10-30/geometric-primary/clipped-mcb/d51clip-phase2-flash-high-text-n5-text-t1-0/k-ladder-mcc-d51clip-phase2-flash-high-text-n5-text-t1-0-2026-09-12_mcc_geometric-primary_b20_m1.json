@@ -1,0 +1,109 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 1,
+  "apparent_f1": 0.9361975009361281,
+  "optimism": 0.005595787901053684,
+  "optimism_mcse": 0.00016913515290279513,
+  "optimism_spread_p2_5_p97_5": [
+    -0.028205406626505572,
+    0.038257451202584766
+  ],
+  "corrected_f1": 0.9306017130350744,
+  "naive_ci": [
+    0.9027954593935202,
+    0.966162932082682
+  ],
+  "selection_aware_ci": [
+    0.8971996714924666,
+    0.9605671441816284
+  ],
+  "argmax_stability": 0.8041,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.037792190323546714,
+  "mcb_theta": [
+    -0.028942786451605418,
+    0.016851390401026567,
+    -0.021006289564433955,
+    -0.016851390401026567
+  ],
+  "mcb_lower": [
+    -0.06673497677515214,
+    -0.020940799922520147,
+    -0.05879847988798067,
+    -0.05464358072457328
+  ],
+  "mcb_upper": [
+    0.008849403871941296,
+    0.05464358072457328,
+    0.016785900759112758,
+    0.020940799922520147
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.029994262380116175,
+  "hsu_w_lower": 0.03658994630239909,
+  "hsu_lower": [
+    -0.06553273275400451,
+    -0.019738555901372523,
+    -0.057596235866833045,
+    -0.05344133670342566
+  ],
+  "hsu_upper": [
+    0.0010514759285107575,
+    0.04684565278114274,
+    0.00898797281568222,
+    0.013142871979089608
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+  "tile_join": "geometric-primary",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n1-opmax-d51clip",
+      "eval_f1": 0.781
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n3-opmax-d51clip",
+      "eval_f1": 0.8501
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n5-opmax-d51clip",
+      "eval_f1": 0.8648
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n10-opmax-d51clip",
+      "eval_f1": 0.8765
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

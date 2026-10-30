@@ -1,0 +1,26 @@
+{
+  "_README": "TIERING INPUT \u2014 NOT REGISTERED. One analysis row naming this K ladder's oracle-basis rungs, so scripts/era1_leaderboard_tiering.py can tier them with the board instrument verbatim. Written by scripts/k_ladder_mcc_test.py; results/run-analyses.json is not modified and this file must never be written back over it.",
+  "schema_version": "1.0",
+  "analyses": [
+    {
+      "analysis_id": "k-ladder-mcc-55map-stride-a-r2-2026-09-12",
+      "type": "comparison",
+      "_note": "K ladder Stride A (g384 ov128), 55-map [best-available-gt-55maps-r2.geojson], oracle basis, headline buffer 50 m.",
+      "conditions_compared": [
+        "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+        "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "outcome": "PENDING: this is a tiering input, not a registered result",
+      "paper_section": "Results",
+      "output_path": null,
+      "working_notes_obs": [],
+      "preregistered": "post-hoc",
+      "deviations": []
+    }
+  ]
+}

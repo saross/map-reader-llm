@@ -1,0 +1,533 @@
+{
+  "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 20,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 487,
+  "n_cells": 4,
+  "n_cells_withheld": 0,
+  "withheld_cells": [],
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-10-30T08:28:50.024396+00:00",
+  "git_commit": "463257349",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "label": "pv-high-image-t1.0-n10-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7633,
+      "observed_micro_f1": 0.763251,
+      "f1_gap": -4.9e-05,
+      "mcc": 0.8002,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "label": "pv-high-image-t1.0-n5-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7337,
+      "observed_micro_f1": 0.733728,
+      "f1_gap": 2.8e-05,
+      "mcc": 0.823,
+      "tier": 2
+    },
+    {
+      "rank": 3,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+      "label": "pv-high-image-t1.0-n3-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7245,
+      "observed_micro_f1": 0.724502,
+      "f1_gap": 2e-06,
+      "mcc": 0.8294,
+      "tier": 2
+    },
+    {
+      "rank": 4,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "label": "pv-high-image-t1.0-n1-opmax",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.6119,
+      "observed_micro_f1": 0.611892,
+      "f1_gap": -8e-06,
+      "mcc": 0.864,
+      "tier": 3
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "pv-diag-384::pv-high-image-t1.0-n10-opmax"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax"
+      ]
+    },
+    {
+      "tier": 3,
+      "members": [
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax"
+      ]
+    }
+  ],
+  "tie_set": [
+    "pv-diag-384::pv-high-image-t1.0-n10-opmax"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+      "f1_a": 0.611892,
+      "f1_b": 0.724502,
+      "observed_diff": -0.11261,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000173,
+      "null_std": 0.019746,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "f1_a": 0.611892,
+      "f1_b": 0.733728,
+      "observed_diff": -0.121836,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000122,
+      "null_std": 0.02135,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "f1_a": 0.611892,
+      "f1_b": 0.763251,
+      "observed_diff": -0.151359,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -5.6e-05,
+      "null_std": 0.022114,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "f1_a": 0.724502,
+      "f1_b": 0.733728,
+      "observed_diff": -0.009226,
+      "p_value": 0.5282,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 5e-05,
+      "null_std": 0.01448,
+      "bh_adjusted_p": 0.5282,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "f1_a": 0.724502,
+      "f1_b": 0.763251,
+      "observed_diff": -0.038749,
+      "p_value": 0.0065,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000114,
+      "null_std": 0.01446,
+      "bh_adjusted_p": 0.00975,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "f1_a": 0.733728,
+      "f1_b": 0.763251,
+      "observed_diff": -0.029523,
+      "p_value": 0.009,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 6.6e-05,
+      "null_std": 0.011473,
+      "bh_adjusted_p": 0.0108,
+      "significant": true
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_cells_with_mcc": 4,
+    "n_cells_withheld": 0,
+    "withheld": [],
+    "n_pairs": 6,
+    "n_significant": 0,
+    "reported_not_tiering": "PI ruling 2026-09-13 (S153 ruling 7): the MCC family is reported BESIDE the preregistered F1 tiering and does not replace it. The board's tiering is the F1 one.",
+    "n_tiers": 1,
+    "tie_set": [
+      "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "pv-diag-384::pv-high-image-t1.0-n3-opmax"
+    ],
+    "tiers": [
+      {
+        "tier": 1,
+        "members": [
+          "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+          "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+          "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+          "pv-diag-384::pv-high-image-t1.0-n3-opmax"
+        ]
+      }
+    ],
+    "ranking": [
+      {
+        "rank": 1,
+        "ref": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+        "label": "pv-high-image-t1.0-n5-opmax",
+        "mcc": 0.9149,
+        "eval_f1": 0.7337,
+        "mcc_tier": 1,
+        "f1_tier": 2,
+        "mcc_published_join": 0.823
+      },
+      {
+        "rank": 2,
+        "ref": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "label": "pv-high-image-t1.0-n10-opmax",
+        "mcc": 0.9149,
+        "eval_f1": 0.7633,
+        "mcc_tier": 1,
+        "f1_tier": 1,
+        "mcc_published_join": 0.8002
+      },
+      {
+        "rank": 3,
+        "ref": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "label": "pv-high-image-t1.0-n1-opmax",
+        "mcc": 0.9121,
+        "eval_f1": 0.6119,
+        "mcc_tier": 1,
+        "f1_tier": 3,
+        "mcc_published_join": 0.864
+      },
+      {
+        "rank": 4,
+        "ref": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "label": "pv-high-image-t1.0-n3-opmax",
+        "mcc": 0.9021,
+        "eval_f1": 0.7245,
+        "mcc_tier": 1,
+        "f1_tier": 2,
+        "mcc_published_join": 0.8294
+      }
+    ],
+    "gates": {
+      "pv-diag-384::pv-high-image-t1.0-n1-opmax": {
+        "confusion": {
+          "tp": 193,
+          "tn": 273,
+          "fp": 15,
+          "fn": 6
+        },
+        "mcc_rebuilt": 0.912055,
+        "mcc_recorded": 0.9121,
+        "geometry": {
+          "detections": {
+            "n_assigned": 490,
+            "n_inside_union": 490,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-high-image-t1.0-n3-opmax": {
+        "confusion": {
+          "tp": 186,
+          "tn": 278,
+          "fp": 10,
+          "fn": 13
+        },
+        "mcc_rebuilt": 0.902126,
+        "mcc_recorded": 0.9021,
+        "geometry": {
+          "detections": {
+            "n_assigned": 418,
+            "n_inside_union": 418,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-high-image-t1.0-n5-opmax": {
+        "confusion": {
+          "tp": 187,
+          "tn": 280,
+          "fp": 8,
+          "fn": 12
+        },
+        "mcc_rebuilt": 0.914895,
+        "mcc_recorded": 0.9149,
+        "geometry": {
+          "detections": {
+            "n_assigned": 410,
+            "n_inside_union": 410,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-high-image-t1.0-n10-opmax": {
+        "confusion": {
+          "tp": 186,
+          "tn": 281,
+          "fp": 7,
+          "fn": 13
+        },
+        "mcc_rebuilt": 0.914929,
+        "mcc_recorded": 0.9149,
+        "geometry": {
+          "detections": {
+            "n_assigned": 414,
+            "n_inside_union": 414,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "mcc_a": 0.912055,
+        "mcc_b": 0.902126,
+        "confusion_a": {
+          "tp": 193,
+          "tn": 273,
+          "fp": 15,
+          "fn": 6
+        },
+        "confusion_b": {
+          "tp": 186,
+          "tn": 278,
+          "fp": 10,
+          "fn": 13
+        },
+        "observed_mcc_diff": 0.009929,
+        "p_value": 0.5099,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000129,
+          "std": 0.019174,
+          "percentile_2.5": -0.034642,
+          "percentile_97.5": 0.034642
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+        "mcc_a": 0.912055,
+        "mcc_b": 0.914895,
+        "confusion_a": {
+          "tp": 193,
+          "tn": 273,
+          "fp": 15,
+          "fn": 6
+        },
+        "confusion_b": {
+          "tp": 187,
+          "tn": 280,
+          "fp": 8,
+          "fn": 12
+        },
+        "observed_mcc_diff": -0.00284,
+        "p_value": 0.9998,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -0.000178,
+          "std": 0.021534,
+          "percentile_2.5": -0.039365,
+          "percentile_97.5": 0.038928
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "mcc_a": 0.912055,
+        "mcc_b": 0.914929,
+        "confusion_a": {
+          "tp": 193,
+          "tn": 273,
+          "fp": 15,
+          "fn": 6
+        },
+        "confusion_b": {
+          "tp": 186,
+          "tn": 281,
+          "fp": 7,
+          "fn": 13
+        },
+        "observed_mcc_diff": -0.002874,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -5.9e-05,
+          "std": 0.019497,
+          "percentile_2.5": -0.038287,
+          "percentile_97.5": 0.038287
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+        "mcc_a": 0.902126,
+        "mcc_b": 0.914895,
+        "confusion_a": {
+          "tp": 186,
+          "tn": 278,
+          "fp": 10,
+          "fn": 13
+        },
+        "confusion_b": {
+          "tp": 187,
+          "tn": 280,
+          "fp": 8,
+          "fn": 12
+        },
+        "observed_mcc_diff": -0.012769,
+        "p_value": 0.4845,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -5.2e-05,
+          "std": 0.014079,
+          "percentile_2.5": -0.029812,
+          "percentile_97.5": 0.029812
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "mcc_a": 0.902126,
+        "mcc_b": 0.914929,
+        "confusion_a": {
+          "tp": 186,
+          "tn": 278,
+          "fp": 10,
+          "fn": 13
+        },
+        "confusion_b": {
+          "tp": 186,
+          "tn": 281,
+          "fp": 7,
+          "fn": 13
+        },
+        "observed_mcc_diff": -0.012803,
+        "p_value": 0.4161,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 6.7e-05,
+          "std": 0.017553,
+          "percentile_2.5": -0.029861,
+          "percentile_97.5": 0.038351
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+        "ref_b": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "mcc_a": 0.914895,
+        "mcc_b": 0.914929,
+        "confusion_a": {
+          "tp": 187,
+          "tn": 280,
+          "fp": 8,
+          "fn": 12
+        },
+        "confusion_b": {
+          "tp": 186,
+          "tn": 281,
+          "fp": 7,
+          "fn": 13
+        },
+        "observed_mcc_diff": -3.4e-05,
+        "p_value": 1.0,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.00012,
+          "std": 0.016135,
+          "percentile_2.5": -0.034096,
+          "percentile_97.5": 0.034096
+        },
+        "bh_adjusted_p": 1.0,
+        "significant": false
+      }
+    ],
+    "tile_join": "geometric-primary",
+    "tile_join_note": "SENSITIVITY reading: the MCC arm books points to tiles under 'geometric-primary', not the published 'id' join (S153 ruling 6). The F1 arm, its tiering and its withheld cells are unchanged. Gates compare each cell's per-tile labels with the scorer's aggregate under the same join; no committed record exists to reproduce."
+  }
+}

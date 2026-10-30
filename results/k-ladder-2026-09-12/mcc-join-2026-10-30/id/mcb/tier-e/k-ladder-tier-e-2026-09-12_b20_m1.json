@@ -1,0 +1,106 @@
+{
+  "metric": "f1",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.9045936395759717,
+  "optimism": 0.002420989309942173,
+  "optimism_mcse": 0.00012125965486784108,
+  "optimism_spread_p2_5_p97_5": [
+    -0.022240698399501158,
+    0.024979733318424513
+  ],
+  "corrected_f1": 0.9021726502660296,
+  "naive_ci": [
+    0.8794321921890793,
+    0.9270485244602892
+  ],
+  "selection_aware_ci": [
+    0.8770112028791371,
+    0.924627535150347
+  ],
+  "argmax_stability": 0.776,
+  "n_distinct_argmax": 3,
+  "mcb_critical_width": 0.019100939347752182,
+  "mcb_theta": [
+    -0.03658469103011042,
+    -0.00668180662933604,
+    0.00668180662933604,
+    -0.010420036722226134
+  ],
+  "mcb_lower": [
+    -0.0556856303778626,
+    -0.025782745977088222,
+    -0.012419132718416142,
+    -0.029520976069978316
+  ],
+  "mcb_upper": [
+    -0.017483751682358235,
+    0.012419132718416142,
+    0.025782745977088222,
+    0.008680902625526048
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.015866739130419975,
+  "hsu_w_lower": 0.018002846828537436,
+  "hsu_lower": [
+    -0.05458753785864785,
+    -0.024684653457873476,
+    -0.011321040199201396,
+    -0.02842288355076357
+  ],
+  "hsu_upper": [
+    0.0,
+    0.009184932501083935,
+    0.022548545759756015,
+    0.005446702408193841
+  ],
+  "hsu_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-tier-e-2026-09-12",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+      "label": "g384-ov192-k1-verified-opmax",
+      "eval_f1": 0.868
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+      "label": "g384-ov192-k3-verified-opmax",
+      "eval_f1": 0.8979
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+      "label": "g384-ov192-k5-verified-opmax",
+      "eval_f1": 0.9046
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
+      "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
+      "eval_f1": 0.8942
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

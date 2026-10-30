@@ -1,0 +1,109 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.8930700615359208,
+  "optimism": 0.010091215255357356,
+  "optimism_mcse": 0.0001860093277431389,
+  "optimism_spread_p2_5_p97_5": [
+    -0.02826571515656531,
+    0.04513221198239448
+  ],
+  "corrected_f1": 0.8829788462805634,
+  "naive_ci": [
+    0.8521324669593634,
+    0.9302710040752262
+  ],
+  "selection_aware_ci": [
+    0.842041251704006,
+    0.9201797888198688
+  ],
+  "argmax_stability": 0.3991,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.04038832009750088,
+  "mcb_theta": [
+    -0.0022480403393472237,
+    -0.0037878802517884447,
+    0.0022480403393472237,
+    -0.016262648531033763
+  ],
+  "mcb_lower": [
+    -0.042636360436848104,
+    -0.044176200349289325,
+    -0.03814027975815366,
+    -0.056650968628534644
+  ],
+  "mcb_upper": [
+    0.03814027975815366,
+    0.036600439845712436,
+    0.042636360436848104,
+    0.024125671566467118
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.023940631830881593,
+  "hsu_w_lower": 0.04038832009750088,
+  "hsu_lower": [
+    -0.042636360436848104,
+    -0.044176200349289325,
+    -0.03814027975815366,
+    -0.056650968628534644
+  ],
+  "hsu_upper": [
+    0.02169259149153437,
+    0.02015275157909315,
+    0.026188672170228817,
+    0.00767798329984783
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12",
+  "tile_join": "geometric-contains",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t0-7/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+      "eval_f1": 0.7252
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+      "eval_f1": 0.757
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+      "eval_f1": 0.7705
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+      "eval_f1": 0.7852
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

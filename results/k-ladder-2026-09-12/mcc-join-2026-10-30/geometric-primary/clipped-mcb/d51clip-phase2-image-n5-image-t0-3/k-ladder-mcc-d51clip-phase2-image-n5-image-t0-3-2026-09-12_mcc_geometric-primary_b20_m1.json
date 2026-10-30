@@ -1,0 +1,108 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.9282597238007376,
+  "optimism": 0.006106356004986269,
+  "optimism_mcse": 0.00016796568315735128,
+  "optimism_spread_p2_5_p97_5": [
+    -0.028422860766001375,
+    0.03809218638729528
+  ],
+  "corrected_f1": 0.9221533677957514,
+  "naive_ci": [
+    0.8936988761588301,
+    0.9586481013991841
+  ],
+  "selection_aware_ci": [
+    0.8875925201538439,
+    0.9525417453941978
+  ],
+  "argmax_stability": 0.7583,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.03560282409982505,
+  "mcb_theta": [
+    0.013233202304366865,
+    -0.026047001789288537,
+    -0.013332228580266614,
+    -0.013233202304366865
+  ],
+  "mcb_lower": [
+    -0.022369621795458185,
+    -0.06164982588911359,
+    -0.04893505268009166,
+    -0.048836026404191914
+  ],
+  "mcb_upper": [
+    0.048836026404191914,
+    0.009555822310536512,
+    0.022270595519558435,
+    0.022369621795458185
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.02599920585864575,
+  "hsu_w_lower": 0.035540471544299485,
+  "hsu_lower": [
+    -0.02230726923993262,
+    -0.06158747333358802,
+    -0.0488727001245661,
+    -0.04877367384866635
+  ],
+  "hsu_upper": [
+    0.039232408163012614,
+    0.0,
+    0.012666977278379135,
+    0.012766003554278885
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": -1,
+  "board": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-3-2026-09-12",
+  "tile_join": "geometric-primary",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t0-3/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.3-n1-opmax-d51clip",
+      "label": "pv-min-image-t0.3-n1-opmax-d51clip",
+      "eval_f1": 0.768
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.3-n3-opmax-d51clip",
+      "label": "pv-min-image-t0.3-n3-opmax-d51clip",
+      "eval_f1": 0.7774
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.3-n5-opmax-d51clip",
+      "label": "pv-min-image-t0.3-n5-opmax-d51clip",
+      "eval_f1": 0.7767
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.3-n10-opmax-d51clip",
+      "label": "pv-min-image-t0.3-n10-opmax-d51clip",
+      "eval_f1": 0.7819
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

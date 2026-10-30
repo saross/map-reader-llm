@@ -1,0 +1,2016 @@
+{
+  "generated_at_utc": "2026-10-30T08:34:53.691375+00:00",
+  "script": "scripts/k_ladder_mcb.py",
+  "instrument": {
+    "tool": "scripts/selection_aware_intervals.py --board",
+    "construction": "Hsu (1984) / Edwards & Hsu (1983) constrained one-sided MCB on theta_i = stat_i - max_{j != i} stat_j, with the critical value bootstrapped over TILES rather than taken from Dunnett's table; a rung is ruled out as best only when its simultaneous upper bound falls at or below zero",
+    "simultaneous_confidence": 0.95,
+    "bootstrap": 10000,
+    "m_frac": 1.0,
+    "seed": 42,
+    "resampling_unit": "tile (Decision 10)",
+    "same_as": "the Era-2 board's own MCB step \u2014 results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/ and that board's README 2026-09-12 and 2026-09-13 entries"
+  },
+  "n_ladders": 22,
+  "gate_all_passed": true,
+  "roll_up": {
+    "ladders_whose_F1_admissible_set_contains_K3": [],
+    "ladders_whose_F1_admissible_set_excludes_K10": [],
+    "ladders_whose_F1_admissible_set_is_the_whole_ladder": [],
+    "ladders_whose_MCC_admissible_set_is_the_whole_ladder": [
+      "gs-stride-a",
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "phase2-flash-high-text-n5-text-t0-3",
+      "phase2-image-n5-image-t1-0",
+      "phase2-flash-high-image-n5-image-t0-7",
+      "phase2-flash-high-image-n5-image-t1-0",
+      "phase2-scale-4-optimal-487",
+      "37arm1-r2"
+    ],
+    "ladders_whose_MCC_admissible_set_contains_K1": [
+      "gs-stride-a",
+      "tier-e",
+      "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "phase2-flash-high-text-n5-text-t0-3",
+      "phase2-image-n5-image-t0-3",
+      "phase2-image-n5-image-t0-7",
+      "phase2-image-n5-image-t1-0",
+      "phase2-flash-high-image-n5-image-t0-7",
+      "phase2-flash-high-image-n5-image-t1-0",
+      "phase2-scale-4-optimal-487",
+      "55map-stride-a-r2",
+      "55map-stride-a-standardised",
+      "55map-stride-b-g37vf-r2",
+      "37arm1-r2",
+      "37arm2-r2"
+    ]
+  },
+  "withheld": {
+    "family": "Gemini 3.7 text, GS B geometry (the 3.7 gold-standard text screen)",
+    "proposer_pool": "g384_ov192_g37",
+    "n_rungs": 4,
+    "n_rungs_withheld": 2,
+    "cells_withheld": [
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+      "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax"
+    ],
+    "why": "The tile-join invariant refuses these cells' per-tile TP/FP/FN table on the board frame: their proposer ran on the ov192 tiling, whose source_tile vocabulary is absent from the frame's 336-stride vocabulary, so 20-22 of 467-526 in-frame detections are credited to a tile. The refusal falls on the F1 arm as well as the MCC arm, so neither an F1 nor an MCC admissible set can be computed. With K = 1 and K = 3 withheld the family retains two sound rungs of four, below the review's three-rung bar.",
+    "anchors": [
+      "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md (2026-09-13 entry, 'Admitted but WITHHELD')",
+      "results/k-ladder-2026-09-12/findings.md \u00a7 7.3",
+      "reports/tile-mcc-geometric-join-2026-09-12.md"
+    ],
+    "lifted_by": "the corpus-wide tile-join decision (board close-out question 4), still open with the PI"
+  },
+  "ladders": [
+    {
+      "slug": "gs-stride-a",
+      "group": "gold standard",
+      "analysis_id": "k-ladder-gs-stride-a-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-ladder-n1-verified-p0.15-k1",
+              "committed": 0.9065,
+              "reproduced": 0.906529,
+              "abs_delta": 2.917e-05
+            },
+            {
+              "label": "g384-ov128-ladder-n3-verified-p0.15-k3",
+              "committed": 0.9066,
+              "reproduced": 0.906629,
+              "abs_delta": 2.927e-05
+            },
+            {
+              "label": "g384-ov128-ladder-n5-verified-p0.15-k4",
+              "committed": 0.9065,
+              "reproduced": 0.906475,
+              "abs_delta": 2.472e-05
+            },
+            {
+              "label": "g384-ov128-k10-verified-p0.15-k8",
+              "committed": 0.928,
+              "reproduced": 0.927953,
+              "abs_delta": 4.75e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.927953,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.024914317892852835,
+        "hsu_w_lower": 0.029805865373049543,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.029879794459645132,
+        "theta_by_K": {
+          "1": -0.021423,
+          "3": -0.021323,
+          "5": -0.021477,
+          "10": 0.021323
+        },
+        "statistic_by_K": {
+          "1": 0.906529,
+          "3": 0.906629,
+          "5": 0.906475,
+          "10": 0.927953
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/gs-stride-a/k-ladder-gs-stride-a-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "GS stride A, exact re-verification (board frame)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "tier-e",
+      "group": "tier E",
+      "analysis_id": "k-ladder-tier-e-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/tier-e/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-k1-verified-opmax",
+              "committed": 0.933,
+              "reproduced": 0.932973,
+              "abs_delta": 2.669e-05
+            },
+            {
+              "label": "g384-ov192-k3-verified-opmax",
+              "committed": 0.9374,
+              "reproduced": 0.937388,
+              "abs_delta": 1.178e-05
+            },
+            {
+              "label": "g384-ov192-k5-verified-opmax",
+              "committed": 0.9324,
+              "reproduced": 0.932366,
+              "abs_delta": 3.449e-05
+            },
+            {
+              "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
+              "committed": 0.9113,
+              "reproduced": 0.911327,
+              "abs_delta": 2.696e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.937388,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.024503164567515914,
+        "hsu_w_lower": 0.0342219932724699,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.034346782886681915,
+        "theta_by_K": {
+          "1": -0.004415,
+          "3": 0.004415,
+          "5": -0.005023,
+          "10": -0.026061
+        },
+        "statistic_by_K": {
+          "1": 0.932973,
+          "3": 0.937388,
+          "5": 0.932366,
+          "10": 0.911327
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/tier-e/k-ladder-tier-e-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Grid 384 px / 50 % MINIMAL text, verified (tier E)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.3-n1-opmax",
+              "committed": 0.9192,
+              "reproduced": 0.919221,
+              "abs_delta": 2.078e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n3-opmax",
+              "committed": 0.9192,
+              "reproduced": 0.919221,
+              "abs_delta": 2.078e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n5-opmax",
+              "committed": 0.8939,
+              "reproduced": 0.893874,
+              "abs_delta": 2.638e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n10-opmax",
+              "committed": 0.9193,
+              "reproduced": 0.919346,
+              "abs_delta": 4.611e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.919346,
+        "hsu_admissible_K": [
+          1,
+          3,
+          10
+        ],
+        "hsu_w_upper": 0.02506207996768266,
+        "hsu_w_lower": 0.03894440312988239,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03894440312988239,
+        "theta_by_K": {
+          "1": -0.000125,
+          "3": -0.000125,
+          "5": -0.025472,
+          "10": 0.000125
+        },
+        "statistic_by_K": {
+          "1": 0.919221,
+          "3": 0.919221,
+          "5": 0.893874,
+          "10": 0.919346
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.7-n1-opmax",
+              "committed": 0.9064,
+              "reproduced": 0.90637,
+              "abs_delta": 3.032e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n3-opmax",
+              "committed": 0.9149,
+              "reproduced": 0.914929,
+              "abs_delta": 2.892e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n5-opmax",
+              "committed": 0.9064,
+              "reproduced": 0.906389,
+              "abs_delta": 1.1e-05
+            },
+            {
+              "label": "pv-min-text-t0.7-n10-opmax",
+              "committed": 0.8936,
+              "reproduced": 0.893608,
+              "abs_delta": 8.09e-06
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.914929,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.025466405975020062,
+        "hsu_w_lower": 0.03410798077458997,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03426818366412906,
+        "theta_by_K": {
+          "1": -0.008559,
+          "3": 0.00854,
+          "5": -0.00854,
+          "10": -0.021321
+        },
+        "statistic_by_K": {
+          "1": 0.90637,
+          "3": 0.914929,
+          "5": 0.906389,
+          "10": 0.893608
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-minimal-text-n30-t07-text-t0-7/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t1.0-n1-opmax",
+              "committed": 0.9065,
+              "reproduced": 0.906529,
+              "abs_delta": 2.917e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n3-opmax",
+              "committed": 0.9234,
+              "reproduced": 0.923438,
+              "abs_delta": 3.837e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n5-opmax",
+              "committed": 0.915,
+              "reproduced": 0.915027,
+              "abs_delta": 2.652e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n10-opmax",
+              "committed": 0.9235,
+              "reproduced": 0.923524,
+              "abs_delta": 2.387e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.923524,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.025210647532166692,
+        "hsu_w_lower": 0.03515345757306324,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03550226947512954,
+        "theta_by_K": {
+          "1": -0.016995,
+          "3": -8.6e-05,
+          "5": -0.008497,
+          "10": 8.6e-05
+        },
+        "statistic_by_K": {
+          "1": 0.906529,
+          "3": 0.923438,
+          "5": 0.915027,
+          "10": 0.923524
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.3-n1-opmax",
+              "committed": 0.9121,
+              "reproduced": 0.912055,
+              "abs_delta": 4.519e-05
+            },
+            {
+              "label": "pv-high-text-t0.3-n3-opmax",
+              "committed": 0.9154,
+              "reproduced": 0.91544,
+              "abs_delta": 4.042e-05
+            },
+            {
+              "label": "pv-high-text-t0.3-n5-opmax",
+              "committed": 0.9277,
+              "reproduced": 0.927702,
+              "abs_delta": 2.03e-06
+            },
+            {
+              "label": "pv-high-text-t0.3-n10-opmax",
+              "committed": 0.9192,
+              "reproduced": 0.919221,
+              "abs_delta": 2.078e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.927702,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.027985510559970554,
+        "hsu_w_lower": 0.03737807033348653,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03774036771966398,
+        "theta_by_K": {
+          "1": -0.015647,
+          "3": -0.012262,
+          "5": 0.008481,
+          "10": -0.008481
+        },
+        "statistic_by_K": {
+          "1": 0.912055,
+          "3": 0.91544,
+          "5": 0.927702,
+          "10": 0.919221
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-text-n5-text-t0-3/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t0.7-n1-opmax",
+              "committed": 0.8748,
+              "reproduced": 0.874833,
+              "abs_delta": 3.325e-05
+            },
+            {
+              "label": "pv-high-text-t0.7-n3-opmax",
+              "committed": 0.9237,
+              "reproduced": 0.923676,
+              "abs_delta": 2.431e-05
+            },
+            {
+              "label": "pv-high-text-t0.7-n5-opmax",
+              "committed": 0.8978,
+              "reproduced": 0.897845,
+              "abs_delta": 4.462e-05
+            },
+            {
+              "label": "pv-high-text-t0.7-n10-opmax",
+              "committed": 0.9024,
+              "reproduced": 0.902442,
+              "abs_delta": 4.186e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.923676,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.037862857727355564,
+        "hsu_w_lower": 0.043316774318753734,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.0451699552803254,
+        "theta_by_K": {
+          "1": -0.048842,
+          "3": 0.021234,
+          "5": -0.025831,
+          "10": -0.021234
+        },
+        "statistic_by_K": {
+          "1": 0.874833,
+          "3": 0.923676,
+          "5": 0.897845,
+          "10": 0.902442
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-text-n5-text-t0-7/k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t1.0-n1-opmax",
+              "committed": 0.9073,
+              "reproduced": 0.907255,
+              "abs_delta": 4.529e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n3-opmax",
+              "committed": 0.9405,
+              "reproduced": 0.94046,
+              "abs_delta": 3.989e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n5-opmax",
+              "committed": 0.9195,
+              "reproduced": 0.919537,
+              "abs_delta": 3.715e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n10-opmax",
+              "committed": 0.9237,
+              "reproduced": 0.923676,
+              "abs_delta": 2.431e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.94046,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03287672319581791,
+        "hsu_w_lower": 0.036949167262627446,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.0380741847281429,
+        "theta_by_K": {
+          "1": -0.033205,
+          "3": 0.016784,
+          "5": -0.020923,
+          "10": -0.016784
+        },
+        "statistic_by_K": {
+          "1": 0.907255,
+          "3": 0.94046,
+          "5": 0.919537,
+          "10": 0.923676
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.3-n1-opmax",
+              "committed": 0.9283,
+              "reproduced": 0.92826,
+              "abs_delta": 4.028e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n3-opmax",
+              "committed": 0.9022,
+              "reproduced": 0.902213,
+              "abs_delta": 1.272e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n5-opmax",
+              "committed": 0.9149,
+              "reproduced": 0.914927,
+              "abs_delta": 2.75e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n10-opmax",
+              "committed": 0.915,
+              "reproduced": 0.915027,
+              "abs_delta": 2.652e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.92826,
+        "hsu_admissible_K": [
+          1,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.02599920585864575,
+        "hsu_w_lower": 0.035540471544299485,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03560282409982505,
+        "theta_by_K": {
+          "1": 0.013233,
+          "3": -0.026047,
+          "5": -0.013332,
+          "10": -0.013233
+        },
+        "statistic_by_K": {
+          "1": 0.92826,
+          "3": 0.902213,
+          "5": 0.914927,
+          "10": 0.915027
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-image-n5-image-t0-3/k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.7-n1-opmax",
+              "committed": 0.9245,
+              "reproduced": 0.924524,
+              "abs_delta": 2.36e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n3-opmax",
+              "committed": 0.9363,
+              "reproduced": 0.936328,
+              "abs_delta": 2.777e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n5-opmax",
+              "committed": 0.9447,
+              "reproduced": 0.944733,
+              "abs_delta": 3.286e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n10-opmax",
+              "committed": 0.9149,
+              "reproduced": 0.914927,
+              "abs_delta": 2.75e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.944733,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.025561568205830436,
+        "hsu_w_lower": 0.03294976776493248,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03333482726423632,
+        "theta_by_K": {
+          "1": -0.020209,
+          "3": -0.008405,
+          "5": 0.008405,
+          "10": -0.029805
+        },
+        "statistic_by_K": {
+          "1": 0.924524,
+          "3": 0.936328,
+          "5": 0.944733,
+          "10": 0.914927
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-image-n5-image-t0-7/k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-image-n5-image-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t1.0-n1-opmax",
+              "committed": 0.9198,
+              "reproduced": 0.919793,
+              "abs_delta": 6.66e-06
+            },
+            {
+              "label": "pv-min-image-t1.0-n3-opmax",
+              "committed": 0.9067,
+              "reproduced": 0.906707,
+              "abs_delta": 6.73e-06
+            },
+            {
+              "label": "pv-min-image-t1.0-n5-opmax",
+              "committed": 0.9107,
+              "reproduced": 0.910698,
+              "abs_delta": 2.47e-06
+            },
+            {
+              "label": "pv-min-image-t1.0-n10-opmax",
+              "committed": 0.9277,
+              "reproduced": 0.92768,
+              "abs_delta": 2.038e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.92768,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.02958071356669001,
+        "hsu_w_lower": 0.038474071687751896,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03872117132361916,
+        "theta_by_K": {
+          "1": -0.007886,
+          "3": -0.020973,
+          "5": -0.016982,
+          "10": 0.007886
+        },
+        "statistic_by_K": {
+          "1": 0.919793,
+          "3": 0.906707,
+          "5": 0.910698,
+          "10": 0.92768
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-image-n5-image-t1-0/k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-3",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-3/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.3-n1-opmax",
+              "committed": 0.8956,
+              "reproduced": 0.895645,
+              "abs_delta": 4.482e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n3-opmax",
+              "committed": 0.9161,
+              "reproduced": 0.916074,
+              "abs_delta": 2.612e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n5-opmax",
+              "committed": 0.9021,
+              "reproduced": 0.90215,
+              "abs_delta": 4.992e-05
+            },
+            {
+              "label": "pv-high-image-t0.3-n10-opmax",
+              "committed": 0.9326,
+              "reproduced": 0.932637,
+              "abs_delta": 3.672e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.932637,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03192031358341085,
+        "hsu_w_lower": 0.03610616437311361,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.037543832452379945,
+        "theta_by_K": {
+          "1": -0.036992,
+          "3": -0.016563,
+          "5": -0.030487,
+          "10": 0.016563
+        },
+        "statistic_by_K": {
+          "1": 0.895645,
+          "3": 0.916074,
+          "5": 0.90215,
+          "10": 0.932637
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-image-n5-image-t0-3/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 0.3",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-7",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-7/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t0.7-n1-opmax",
+              "committed": 0.917,
+              "reproduced": 0.916982,
+              "abs_delta": 1.842e-05
+            },
+            {
+              "label": "pv-high-image-t0.7-n3-opmax",
+              "committed": 0.932,
+              "reproduced": 0.932009,
+              "abs_delta": 8.76e-06
+            },
+            {
+              "label": "pv-high-image-t0.7-n5-opmax",
+              "committed": 0.9405,
+              "reproduced": 0.94046,
+              "abs_delta": 3.989e-05
+            },
+            {
+              "label": "pv-high-image-t0.7-n10-opmax",
+              "committed": 0.9154,
+              "reproduced": 0.91544,
+              "abs_delta": 4.042e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.94046,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.029691469990533216,
+        "hsu_w_lower": 0.037125120787389936,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.037893576301834674,
+        "theta_by_K": {
+          "1": -0.023479,
+          "3": -0.008451,
+          "5": 0.008451,
+          "10": -0.02502
+        },
+        "statistic_by_K": {
+          "1": 0.916982,
+          "3": 0.932009,
+          "5": 0.94046,
+          "10": 0.91544
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-image-n5-image-t0-7/k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 0.7",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t1-0",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t1-0/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-image-t1.0-n1-opmax",
+              "committed": 0.9121,
+              "reproduced": 0.912055,
+              "abs_delta": 4.519e-05
+            },
+            {
+              "label": "pv-high-image-t1.0-n3-opmax",
+              "committed": 0.9021,
+              "reproduced": 0.902126,
+              "abs_delta": 2.597e-05
+            },
+            {
+              "label": "pv-high-image-t1.0-n5-opmax",
+              "committed": 0.9149,
+              "reproduced": 0.914895,
+              "abs_delta": 5.26e-06
+            },
+            {
+              "label": "pv-high-image-t1.0-n10-opmax",
+              "committed": 0.9149,
+              "reproduced": 0.914929,
+              "abs_delta": 2.892e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.914929,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.027319806122799876,
+        "hsu_w_lower": 0.04586042131201016,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04586042131201016,
+        "theta_by_K": {
+          "1": -0.002874,
+          "3": -0.012803,
+          "5": -3.4e-05,
+          "10": 3.4e-05
+        },
+        "statistic_by_K": {
+          "1": 0.912055,
+          "3": 0.902126,
+          "5": 0.914895,
+          "10": 0.914929
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-flash-high-image-n5-image-t1-0/k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH image 384 px, T 1.0",
+      "n_rungs": 4
+    },
+    {
+      "slug": "phase2-scale-4-optimal-487",
+      "group": "Phase 2 (pv-diag-384)",
+      "analysis_id": "k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-scale-4-optimal-487/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-scale4-optimal-n1-opmax",
+              "committed": 0.9283,
+              "reproduced": 0.92826,
+              "abs_delta": 4.028e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n3-opmax",
+              "committed": 0.9235,
+              "reproduced": 0.923469,
+              "abs_delta": 3.116e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n5-opmax",
+              "committed": 0.9192,
+              "reproduced": 0.919162,
+              "abs_delta": 3.826e-05
+            },
+            {
+              "label": "pv-scale4-optimal-n10-opmax",
+              "committed": 0.9234,
+              "reproduced": 0.923438,
+              "abs_delta": 3.837e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.92826,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.025118581895603342,
+        "hsu_w_lower": 0.042081199232558215,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.042081199232558215,
+        "theta_by_K": {
+          "1": 0.004791,
+          "3": -0.004791,
+          "5": -0.009098,
+          "10": -0.004821
+        },
+        "statistic_by_K": {
+          "1": 0.92826,
+          "3": 0.923469,
+          "5": 0.919162,
+          "10": 0.923438
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/phase2-scale-4-optimal-487/k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12_mcc_geometric-primary_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 scale-4-optimal 487",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-a-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-a-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.8515,
+              "reproduced": 0.851524,
+              "abs_delta": 2.442e-05
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+              "committed": 0.8531,
+              "reproduced": 0.853138,
+              "abs_delta": 3.791e-05
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+              "committed": 0.8372,
+              "reproduced": 0.837186,
+              "abs_delta": 1.352e-05
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+              "committed": 0.8439,
+              "reproduced": 0.843884,
+              "abs_delta": 1.566e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.853138,
+        "hsu_admissible_K": [
+          1,
+          3
+        ],
+        "hsu_w_upper": 0.006377011080704356,
+        "hsu_w_lower": 0.007169164097748358,
+        "two_sided_band_K": [
+          1,
+          3
+        ],
+        "two_sided_critical_width": 0.007731519056332642,
+        "theta_by_K": {
+          "1": -0.001613,
+          "3": 0.001613,
+          "5": -0.015951,
+          "10": -0.009254
+        },
+        "statistic_by_K": {
+          "1": 0.851524,
+          "3": 0.853138,
+          "5": 0.837186,
+          "10": 0.843884
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/55map-stride-a-r2/k-ladder-mcc-55map-stride-a-r2-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride A, r2",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-a-standardised",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-a-standardised-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-standardised/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.8525,
+              "reproduced": 0.852471,
+              "abs_delta": 2.864e-05
+            },
+            {
+              "label": "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+              "committed": 0.8541,
+              "reproduced": 0.854085,
+              "abs_delta": 1.489e-05
+            },
+            {
+              "label": "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+              "committed": 0.8381,
+              "reproduced": 0.838126,
+              "abs_delta": 2.625e-05
+            },
+            {
+              "label": "g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+              "committed": 0.8448,
+              "reproduced": 0.844836,
+              "abs_delta": 3.59e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.854085,
+        "hsu_admissible_K": [
+          1,
+          3
+        ],
+        "hsu_w_upper": 0.006387497184139388,
+        "hsu_w_lower": 0.007176149872984266,
+        "two_sided_band_K": [
+          1,
+          3
+        ],
+        "two_sided_critical_width": 0.007732276992141117,
+        "theta_by_K": {
+          "1": -0.001614,
+          "3": 0.001614,
+          "5": -0.015959,
+          "10": -0.009249
+        },
+        "statistic_by_K": {
+          "1": 0.852471,
+          "3": 0.854085,
+          "5": 0.838126,
+          "10": 0.844836
+        },
+        "contains_K3": true,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/55map-stride-a-standardised/k-ladder-mcc-55map-stride-a-standardised-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride A, standardised",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.8591,
+              "reproduced": 0.859109,
+              "abs_delta": 8.74e-06
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+              "committed": 0.8705,
+              "reproduced": 0.870521,
+              "abs_delta": 2.094e-05
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+              "committed": 0.8671,
+              "reproduced": 0.867102,
+              "abs_delta": 1.96e-06
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+              "committed": 0.8702,
+              "reproduced": 0.870162,
+              "abs_delta": 3.758e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.870521,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.005217514324341208,
+        "hsu_w_lower": 0.006418505461742545,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.006861691684749749,
+        "theta_by_K": {
+          "1": -0.011412,
+          "3": 0.000359,
+          "5": -0.003419,
+          "10": -0.000359
+        },
+        "statistic_by_K": {
+          "1": 0.859109,
+          "3": 0.870521,
+          "5": 0.867102,
+          "10": 0.870162
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/55map-stride-b-r2/k-ladder-mcc-55map-stride-b-r2-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride B, r2",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-standardised",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-standardised-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-standardised/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+              "committed": 0.8601,
+              "reproduced": 0.860111,
+              "abs_delta": 1.084e-05
+            },
+            {
+              "label": "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+              "committed": 0.8715,
+              "reproduced": 0.871481,
+              "abs_delta": 1.93e-05
+            },
+            {
+              "label": "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+              "committed": 0.868,
+              "reproduced": 0.868044,
+              "abs_delta": 4.446e-05
+            },
+            {
+              "label": "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+              "committed": 0.8711,
+              "reproduced": 0.871115,
+              "abs_delta": 1.499e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 8541,
+        "best_K": 3,
+        "best_statistic": 0.871481,
+        "hsu_admissible_K": [
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.0052241467794107415,
+        "hsu_w_lower": 0.006395085847611206,
+        "two_sided_band_K": [
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.006852764741074796,
+        "theta_by_K": {
+          "1": -0.01137,
+          "3": 0.000366,
+          "5": -0.003436,
+          "10": -0.000366
+        },
+        "statistic_by_K": {
+          "1": 0.860111,
+          "3": 0.871481,
+          "5": 0.868044,
+          "10": 0.871115
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/55map-stride-b-standardised/k-ladder-mcc-55map-stride-b-standardised-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "55-map stride B, standardised",
+      "n_rungs": 4
+    },
+    {
+      "slug": "55map-stride-b-g37vf-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-g37vf-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+              "committed": 0.9113,
+              "reproduced": 0.91129,
+              "abs_delta": 1.044e-05
+            },
+            {
+              "label": "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+              "committed": 0.9024,
+              "reproduced": 0.902367,
+              "abs_delta": 3.295e-05
+            },
+            {
+              "label": "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+              "committed": 0.9003,
+              "reproduced": 0.900284,
+              "abs_delta": 1.601e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.91129,
+        "hsu_admissible_K": [
+          1
+        ],
+        "hsu_w_upper": 0.0051988173577754235,
+        "hsu_w_lower": 0.005271660495167717,
+        "two_sided_band_K": [
+          1
+        ],
+        "two_sided_critical_width": 0.005602856113994014,
+        "theta_by_K": {
+          "1": 0.008923,
+          "3": -0.008923,
+          "10": -0.011006
+        },
+        "statistic_by_K": {
+          "1": 0.91129,
+          "3": 0.902367,
+          "10": 0.900284
+        },
+        "contains_K3": false,
+        "excludes_K10": true,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/55map-stride-b-g37vf-r2/k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        10
+      ],
+      "family": "55-map stride B, 3.7 verifier",
+      "n_rungs": 3
+    },
+    {
+      "slug": "37arm1-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-37arm1-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm1-n1-oracle-p0.20-k1-r2-gt",
+              "committed": 0.8807,
+              "reproduced": 0.880678,
+              "abs_delta": 2.213e-05
+            },
+            {
+              "label": "arm1-n3-oracle-p0.15-k3-r2-gt",
+              "committed": 0.8773,
+              "reproduced": 0.877304,
+              "abs_delta": 3.87e-06
+            },
+            {
+              "label": "arm1-n5-oracle-p0.15-k5-r2-gt",
+              "committed": 0.8739,
+              "reproduced": 0.873917,
+              "abs_delta": 1.72e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.880678,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5
+        ],
+        "hsu_w_upper": 0.0068014891270212095,
+        "hsu_w_lower": 0.007647481134968563,
+        "two_sided_band_K": [
+          1,
+          3,
+          5
+        ],
+        "two_sided_critical_width": 0.007678039883666098,
+        "theta_by_K": {
+          "1": 0.003374,
+          "3": -0.003374,
+          "5": -0.006761
+        },
+        "statistic_by_K": {
+          "1": 0.880678,
+          "3": 0.877304,
+          "5": 0.873917
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/37arm1-r2/k-ladder-mcc-37arm1-r2-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5
+      ],
+      "family": "3.7 arm 1",
+      "n_rungs": 3
+    },
+    {
+      "slug": "37arm2-r2",
+      "group": "55-map deployment",
+      "analysis_id": "k-ladder-mcc-37arm2-r2-2026-09-12",
+      "headline_buffer_m": 50,
+      "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+      "conditions": "results/run-conditions.json (the register)",
+      "bounds_override": null,
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-primary.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 3,
+          "candidates": [
+            {
+              "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+              "committed": 0.9055,
+              "reproduced": 0.905498,
+              "abs_delta": 1.54e-06
+            },
+            {
+              "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+              "committed": 0.8753,
+              "reproduced": 0.875269,
+              "abs_delta": 3.062e-05
+            },
+            {
+              "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+              "committed": 0.8736,
+              "reproduced": 0.873616,
+              "abs_delta": 1.643e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 3,
+        "n_tiles": 8541,
+        "best_K": 1,
+        "best_statistic": 0.905498,
+        "hsu_admissible_K": [
+          1
+        ],
+        "hsu_w_upper": 0.0102179944382282,
+        "hsu_w_lower": 0.010412700077068623,
+        "two_sided_band_K": [
+          1
+        ],
+        "two_sided_critical_width": 0.010642776751727666,
+        "theta_by_K": {
+          "1": 0.030229,
+          "3": -0.030229,
+          "5": -0.031882
+        },
+        "statistic_by_K": {
+          "1": 0.905498,
+          "3": 0.875269,
+          "5": 0.873616
+        },
+        "contains_K3": false,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcb/37arm2-r2/k-ladder-mcc-37arm2-r2-2026-09-12_mcc_geometric-primary_b50_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5
+      ],
+      "family": "3.7 arm 2",
+      "n_rungs": 3
+    }
+  ],
+  "tile_join": {
+    "join": "geometric-primary",
+    "note": "SENSITIVITY reading: the tile-MCC indicators are built under 'geometric-primary', not the published 'id' join (S153 ruling 6). Each rung's MCB statistic is gated against the join's MCC in that join's own tiering; no committed record exists to reproduce."
+  }
+}

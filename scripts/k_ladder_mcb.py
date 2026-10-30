@@ -85,6 +85,18 @@
 # `scripts/k_ladder_clipped_cells.py collect` writes — through the same tool
 # and the same gate; without it nothing changes.
 #
+# `--tile-join JOIN` (added 2026-10-30, S166 K-ladder tile-join job) runs the
+# tile-MCC MCB under a non-default tile join (`lib_advanced_metrics.TILE_JOINS`)
+# as a SENSITIVITY reading. It is passed to `selection_aware_intervals.py
+# --tile-join`, which reads each candidate's indicators off its gated per-tile
+# classification under that join. It needs `--metrics mcc` (the F1 arm ignores
+# the join, so an F1 set under a join name would be mislabelled) and
+# `--registry` (whose `tiering` paths must name that join's tierings,
+# `tiering_<buffer>m_<join>.json`): the gate then compares each rung's MCB
+# statistic with the join's MCC in that tiering's MCC ranking, and refuses a
+# tiering written under any other join. The default, `id`, changes nothing:
+# the same commands, artefact names, gate references and output keys.
+#
 # Zero Application Programming Interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-09-13 | Apache 2.0
@@ -102,6 +114,12 @@ from pathlib import Path
 from typing import Any
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR))
+
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_DEFAULT,
+    TILE_JOINS,
+)
 
 #: The Era-2 board frame. The gold-standard and tier E ladders are tiered on it
 #: by override (their committed evaluations name a different frame), so their
@@ -375,7 +393,9 @@ def label_to_k() -> dict[str, int]:
     return mapping
 
 
-def committed_ranking(tiering_path: Path) -> dict[str, dict[str, float]]:
+def committed_ranking(tiering_path: Path,
+                      tile_join: str = TILE_JOIN_DEFAULT,
+                      ) -> dict[str, dict[str, float]]:
     """Read a committed tiering's per-rung F1 and tile-MCC, keyed by label.
 
     The committed tiering is the right gate reference for BOTH metrics because
@@ -385,15 +405,36 @@ def committed_ranking(tiering_path: Path) -> dict[str, dict[str, float]]:
     the board frame this MCB runs on gives 0.7834, and gating against the wrong
     frame's number would refuse a correct run.
 
+    Under a non-default ``tile_join`` the reference is a tiering written under
+    that join: its main ranking's ``mcc`` is still the published join's, so
+    the join's MCC is read from the MCC family's own ranking
+    (``mcc_permutation.ranking``), and a tiering that records another join, or
+    none, is refused rather than read.
+
     Args:
         tiering_path: Repo-relative path to a ``tiering_<buffer>m.json``.
+        tile_join: The join the MCB statistic is computed under.
 
     Returns:
         Label to ``{"f1": ..., "mcc": ...}``, using the ranking's 6-decimal
         ``observed_micro_f1`` where it is recorded and its 4-decimal ``eval_f1``
         otherwise, and omitting a metric the ranking does not carry.
+
+    Raises:
+        ValueError: under a non-default join, if the tiering was not written
+            under that join.
     """
     data = json.loads((BASE_DIR / tiering_path).read_text(encoding="utf-8"))
+    join_mcc: dict[str, float] | None = None
+    if tile_join != TILE_JOIN_DEFAULT:
+        block = data.get("mcc_permutation") or {}
+        if block.get("tile_join") != tile_join:
+            raise ValueError(
+                f"{tiering_path}: written under tile join "
+                f"{block.get('tile_join') or TILE_JOIN_DEFAULT!r}, not "
+                f"{tile_join!r}; the MCC gate needs that join's own tiering")
+        join_mcc = {row["label"]: float(row["mcc"]) for row in block["ranking"]
+                    if row.get("mcc") is not None}
     out: dict[str, dict[str, float]] = {}
     for row in data["ranking"]:
         label = row.get("label") or str(row.get("ref"))
@@ -406,6 +447,13 @@ def committed_ranking(tiering_path: Path) -> dict[str, dict[str, float]]:
             if row.get(key) is not None:
                 entry["mcc"] = float(row[key])
                 break
+        if join_mcc is not None:
+            # The main ranking's MCC is the published join's; the gate needs
+            # the join's own, and a cell the join's MCC family withheld has
+            # none (the gate then refuses it rather than reading the other).
+            entry.pop("mcc", None)
+            if label in join_mcc:
+                entry["mcc"] = join_mcc[label]
         out[label] = entry
     return out
 
@@ -434,8 +482,31 @@ def recover_statistics(result: dict[str, Any]) -> list[float]:
     return stats
 
 
+def artefact_name(analysis_id: str, metric: str, buffer_m: int,
+                  tile_join: str = TILE_JOIN_DEFAULT) -> str:
+    """The file name the MCB tool writes one ladder's artefact under.
+
+    Mirrors ``selection_aware_intervals.main``: the metric is stamped for
+    anything but F1, a non-default tile join after it, and the buffer always.
+
+    Args:
+        analysis_id: The ladder's analysis id (the tool's ``--board`` tag).
+        metric: ``f1`` or ``mcc``.
+        buffer_m: The headline buffer.
+        tile_join: The join the MCC indicators were built under.
+
+    Returns:
+        The artefact's file name.
+    """
+    suffix = "" if metric == "f1" else f"_{metric}"
+    if tile_join != TILE_JOIN_DEFAULT:
+        suffix += f"_{tile_join}"
+    return f"{analysis_id}{suffix}_b{buffer_m}_m{M_FRAC:g}.json"
+
+
 def run_mcb(entry: dict[str, Any], metric: str, out_dir: Path,
-            bootstrap: int) -> tuple[Path, dict[str, Any]]:
+            bootstrap: int,
+            tile_join: str = TILE_JOIN_DEFAULT) -> tuple[Path, dict[str, Any]]:
     """Invoke the board's MCB tool for one ladder and one metric.
 
     Args:
@@ -443,14 +514,20 @@ def run_mcb(entry: dict[str, Any], metric: str, out_dir: Path,
         metric: ``f1`` or ``mcc``.
         out_dir: Directory the tool writes its artefact into.
         bootstrap: Bootstrap resamples (10,000 for a reportable run).
+        tile_join: The MCC indicators' tile join. The default adds no flag,
+            so the tool's command is the one every committed run used.
 
     Returns:
         ``(artefact_path, parsed_artefact)``.
 
     Raises:
+        ValueError: for a non-default join with a metric other than MCC.
         subprocess.CalledProcessError: if the tool exits non-zero.
         FileNotFoundError: if the expected artefact is absent afterwards.
     """
+    if tile_join != TILE_JOIN_DEFAULT and metric != "mcc":
+        raise ValueError(f"tile join {tile_join!r} applies to the MCC metric "
+                         f"only, not {metric!r}")
     out_dir.mkdir(parents=True, exist_ok=True)
     cmd = [
         sys.executable, str(BASE_DIR / "scripts/selection_aware_intervals.py"),
@@ -466,10 +543,12 @@ def run_mcb(entry: dict[str, Any], metric: str, out_dir: Path,
         cmd += ["--conditions", str(BASE_DIR / entry["conditions"])]
     if entry.get("bounds"):
         cmd += ["--bounds", str(BASE_DIR / entry["bounds"])]
+    if tile_join != TILE_JOIN_DEFAULT:
+        cmd += ["--tile-join", tile_join]
     subprocess.run(cmd, check=True, cwd=BASE_DIR)
 
-    suffix = "" if metric == "f1" else f"_{metric}"
-    name = f"{entry['analysis_id']}{suffix}_b{entry['buffer_m']}_m{M_FRAC:g}.json"
+    name = artefact_name(entry["analysis_id"], metric, entry["buffer_m"],
+                         tile_join)
     path = out_dir / name
     if not path.exists():
         raise FileNotFoundError(f"MCB tool wrote no {path}")
@@ -614,7 +693,22 @@ def main() -> int:
                              "registry for this run (see load_registry), e.g. "
                              "the D51-clipped ladders' mcb-registry.json. The "
                              "default is the committed registry.")
+    parser.add_argument("--tile-join", choices=TILE_JOINS,
+                        default=TILE_JOIN_DEFAULT,
+                        help="The tile join the MCC indicators are built under "
+                             f"(default {TILE_JOIN_DEFAULT!r}, the published "
+                             "join). A geometric join is a sensitivity reading "
+                             "and needs --metrics mcc and a --registry whose "
+                             "tiering paths name that join's tierings.")
     args = parser.parse_args()
+    sensitivity_join = args.tile_join != TILE_JOIN_DEFAULT
+    if sensitivity_join and args.metrics != ["mcc"]:
+        parser.error("--tile-join other than the default changes only the MCC "
+                     "indicators; pass --metrics mcc with it")
+    if sensitivity_join and args.registry is None:
+        parser.error("--tile-join other than the default needs --registry: the "
+                     "committed registry's tierings are the published join's, "
+                     "and the MCC gate must read the join's own")
 
     if args.registry is not None:
         registry, extra_k, extra_names = load_registry(args.registry)
@@ -636,7 +730,10 @@ def main() -> int:
     for entry in registry:
         print(f"\n=== MCB {entry['slug']} "
               f"@ {entry['buffer_m']} m ===", flush=True)
-        committed = committed_ranking(entry["tiering"])
+        # Under the default every call is the committed one, argument for
+        # argument; only a sensitivity join adds the keyword.
+        join_kwargs = {"tile_join": args.tile_join} if sensitivity_join else {}
+        committed = committed_ranking(entry["tiering"], **join_kwargs)
         record: dict[str, Any] = {
             "slug": entry["slug"],
             "group": entry["group"],
@@ -651,7 +748,7 @@ def main() -> int:
         }
         for metric in args.metrics:
             path, result = run_mcb(entry, metric, out_root / entry["slug"],
-                                   args.bootstrap)
+                                   args.bootstrap, **join_kwargs)
             record["gates"].append(gate(entry, metric, result, committed))
             block = summarise(entry, result, k_of)
             # A smoke run may point --output-dir at a scratch directory, so the
@@ -711,6 +808,17 @@ def main() -> int:
         "withheld": WITHHELD,
         "ladders": collated,
     }
+    if sensitivity_join:
+        # Added only off the default, so a default run keeps its exact keys.
+        payload["tile_join"] = {
+            "join": args.tile_join,
+            "note": (
+                f"SENSITIVITY reading: the tile-MCC indicators are built under "
+                f"'{args.tile_join}', not the published '{TILE_JOIN_DEFAULT}' "
+                f"join (S153 ruling 6). Each rung's MCB statistic is gated "
+                f"against the join's MCC in that join's own tiering; no "
+                f"committed record exists to reproduce."),
+        }
     (out_root / "summary.json").write_text(
         json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     (out_root / "table.md").write_text(

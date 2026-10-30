@@ -1,0 +1,90 @@
+{
+  "metric": "mcc",
+  "n_candidates": 3,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.9054984569851239,
+  "optimism": -4.0043048451484574e-05,
+  "optimism_mcse": 4.868217266719079e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.009574645633869736,
+    0.009413118267746743
+  ],
+  "corrected_f1": 0.9055385000335754,
+  "naive_ci": [
+    0.8959238113512541,
+    0.9149115752528706
+  ],
+  "selection_aware_ci": [
+    0.8959638543997056,
+    0.9149516183013221
+  ],
+  "argmax_stability": 1.0,
+  "n_distinct_argmax": 1,
+  "mcb_critical_width": 0.010642776751727666,
+  "mcb_theta": [
+    0.03022907273419151,
+    -0.03022907273419151,
+    -0.031882026096412
+  ],
+  "mcb_lower": [
+    0.019586295982463843,
+    -0.040871849485919175,
+    -0.04252480284813966
+  ],
+  "mcb_upper": [
+    0.040871849485919175,
+    -0.019586295982463843,
+    -0.02123924934468433
+  ],
+  "mcb_not_ruled_out": [
+    0
+  ],
+  "hsu_w_upper": 0.0102179944382282,
+  "hsu_w_lower": 0.010412700077068623,
+  "hsu_lower": [
+    0.0,
+    -0.040641772811260135,
+    -0.04229472617348062
+  ],
+  "hsu_upper": [
+    0.04044706717241971,
+    0.0,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-37arm2-r2-2026-09-12",
+  "tile_join": "geometric-primary",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "label": "arm2-n1-oracle-p0.98-k1-r2-gt",
+      "eval_f1": 0.861
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "label": "arm2-n3-oracle-p0.95-k3-r2-gt",
+      "eval_f1": 0.8848
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "label": "arm2-n5-oracle-p0.95-k5-r2-gt",
+      "eval_f1": 0.8871
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

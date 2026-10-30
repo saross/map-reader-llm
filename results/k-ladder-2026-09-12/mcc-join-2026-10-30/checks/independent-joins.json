@@ -1,0 +1,3964 @@
+{
+  "what": "an independent re-implementation of the three tile joins; every rung's MCC against the MCC its join's tiering ranked on",
+  "n_rungs": 113,
+  "n_comparisons": 339,
+  "n_mismatches": 0,
+  "mismatches": [],
+  "rows": [
+    {
+      "ladder": "37arm1-r2",
+      "K": 1,
+      "ref": "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2489,
+          "fp": 133,
+          "fn": 1040,
+          "tn": 4879
+        },
+        "mcc": 0.724617,
+        "tiering_mcc": 0.7246
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2494,
+          "fp": 177,
+          "fn": 266,
+          "tn": 5604
+        },
+        "mcc": 0.880678,
+        "tiering_mcc": 0.8807
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3223,
+          "fp": 203,
+          "fn": 306,
+          "tn": 4809
+        },
+        "mcc": 0.876846,
+        "tiering_mcc": 0.8768
+      }
+    },
+    {
+      "ladder": "37arm1-r2",
+      "K": 3,
+      "ref": "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2462,
+          "fp": 135,
+          "fn": 1067,
+          "tn": 4877
+        },
+        "mcc": 0.717947,
+        "tiering_mcc": 0.7179
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2475,
+          "fp": 170,
+          "fn": 285,
+          "tn": 5611
+        },
+        "mcc": 0.877304,
+        "tiering_mcc": 0.8773
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3201,
+          "fp": 198,
+          "fn": 328,
+          "tn": 4814
+        },
+        "mcc": 0.872739,
+        "tiering_mcc": 0.8727
+      }
+    },
+    {
+      "ladder": "37arm1-r2",
+      "K": 5,
+      "ref": "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2432,
+          "fp": 123,
+          "fn": 1097,
+          "tn": 4889
+        },
+        "mcc": 0.714713,
+        "tiering_mcc": 0.7147
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2448,
+          "fp": 155,
+          "fn": 312,
+          "tn": 5626
+        },
+        "mcc": 0.873917,
+        "tiering_mcc": 0.8739
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3164,
+          "fp": 184,
+          "fn": 365,
+          "tn": 4828
+        },
+        "mcc": 0.867275,
+        "tiering_mcc": 0.8673
+      }
+    },
+    {
+      "ladder": "37arm2-r2",
+      "K": 1,
+      "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2441,
+          "fp": 38,
+          "fn": 1088,
+          "tn": 4974
+        },
+        "mcc": 0.742189,
+        "tiering_mcc": 0.7422
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2468,
+          "fp": 60,
+          "fn": 292,
+          "tn": 5721
+        },
+        "mcc": 0.905498,
+        "tiering_mcc": 0.9055
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3184,
+          "fp": 66,
+          "fn": 345,
+          "tn": 4946
+        },
+        "mcc": 0.901689,
+        "tiering_mcc": 0.9017
+      }
+    },
+    {
+      "ladder": "37arm2-r2",
+      "K": 3,
+      "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2534,
+          "fp": 198,
+          "fn": 995,
+          "tn": 4814
+        },
+        "mcc": 0.71634,
+        "tiering_mcc": 0.7163
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2537,
+          "fp": 244,
+          "fn": 223,
+          "tn": 5537
+        },
+        "mcc": 0.875269,
+        "tiering_mcc": 0.8753
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3279,
+          "fp": 277,
+          "fn": 250,
+          "tn": 4735
+        },
+        "mcc": 0.872922,
+        "tiering_mcc": 0.8729
+      }
+    },
+    {
+      "ladder": "37arm2-r2",
+      "K": 5,
+      "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2502,
+          "fp": 178,
+          "fn": 1027,
+          "tn": 4834
+        },
+        "mcc": 0.714653,
+        "tiering_mcc": 0.7147
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2510,
+          "fp": 221,
+          "fn": 250,
+          "tn": 5560
+        },
+        "mcc": 0.873616,
+        "tiering_mcc": 0.8736
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3235,
+          "fp": 253,
+          "fn": 294,
+          "tn": 4759
+        },
+        "mcc": 0.867746,
+        "tiering_mcc": 0.8677
+      }
+    },
+    {
+      "ladder": "55map-stride-a-r2",
+      "K": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2424,
+          "fp": 165,
+          "fn": 1105,
+          "tn": 4847
+        },
+        "mcc": 0.700623,
+        "tiering_mcc": 0.7006
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2423,
+          "fp": 213,
+          "fn": 337,
+          "tn": 5568
+        },
+        "mcc": 0.851524,
+        "tiering_mcc": 0.8515
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3138,
+          "fp": 247,
+          "fn": 391,
+          "tn": 4765
+        },
+        "mcc": 0.845541,
+        "tiering_mcc": 0.8455
+      }
+    },
+    {
+      "ladder": "55map-stride-a-r2",
+      "K": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2424,
+          "fp": 161,
+          "fn": 1105,
+          "tn": 4851
+        },
+        "mcc": 0.701785,
+        "tiering_mcc": 0.7018
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2425,
+          "fp": 209,
+          "fn": 335,
+          "tn": 5572
+        },
+        "mcc": 0.853138,
+        "tiering_mcc": 0.8531
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3141,
+          "fp": 240,
+          "fn": 388,
+          "tn": 4772
+        },
+        "mcc": 0.847975,
+        "tiering_mcc": 0.848
+      }
+    },
+    {
+      "ladder": "55map-stride-a-r2",
+      "K": 5,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2406,
+          "fp": 185,
+          "fn": 1123,
+          "tn": 4827
+        },
+        "mcc": 0.690733,
+        "tiering_mcc": 0.6907
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2398,
+          "fp": 241,
+          "fn": 362,
+          "tn": 5540
+        },
+        "mcc": 0.837186,
+        "tiering_mcc": 0.8372
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3111,
+          "fp": 267,
+          "fn": 418,
+          "tn": 4745
+        },
+        "mcc": 0.834119,
+        "tiering_mcc": 0.8341
+      }
+    },
+    {
+      "ladder": "55map-stride-a-r2",
+      "K": 10,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2429,
+          "fp": 187,
+          "fn": 1100,
+          "tn": 4825
+        },
+        "mcc": 0.695409,
+        "tiering_mcc": 0.6954
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2422,
+          "fp": 241,
+          "fn": 338,
+          "tn": 5540
+        },
+        "mcc": 0.843884,
+        "tiering_mcc": 0.8439
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3137,
+          "fp": 273,
+          "fn": 392,
+          "tn": 4739
+        },
+        "mcc": 0.838985,
+        "tiering_mcc": 0.839
+      }
+    },
+    {
+      "ladder": "55map-stride-a-standardised",
+      "K": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2423,
+          "fp": 166,
+          "fn": 1101,
+          "tn": 4851
+        },
+        "mcc": 0.701037,
+        "tiering_mcc": 0.701
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2422,
+          "fp": 214,
+          "fn": 332,
+          "tn": 5573
+        },
+        "mcc": 0.852471,
+        "tiering_mcc": 0.8525
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3136,
+          "fp": 249,
+          "fn": 388,
+          "tn": 4768
+        },
+        "mcc": 0.84571,
+        "tiering_mcc": 0.8457
+      }
+    },
+    {
+      "ladder": "55map-stride-a-standardised",
+      "K": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2423,
+          "fp": 162,
+          "fn": 1101,
+          "tn": 4855
+        },
+        "mcc": 0.702198,
+        "tiering_mcc": 0.7022
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2424,
+          "fp": 210,
+          "fn": 330,
+          "tn": 5577
+        },
+        "mcc": 0.854085,
+        "tiering_mcc": 0.8541
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3139,
+          "fp": 242,
+          "fn": 385,
+          "tn": 4775
+        },
+        "mcc": 0.848143,
+        "tiering_mcc": 0.8481
+      }
+    },
+    {
+      "ladder": "55map-stride-a-standardised",
+      "K": 5,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2405,
+          "fp": 186,
+          "fn": 1119,
+          "tn": 4831
+        },
+        "mcc": 0.691145,
+        "tiering_mcc": 0.6911
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2397,
+          "fp": 242,
+          "fn": 357,
+          "tn": 5545
+        },
+        "mcc": 0.838126,
+        "tiering_mcc": 0.8381
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3109,
+          "fp": 269,
+          "fn": 415,
+          "tn": 4748
+        },
+        "mcc": 0.834284,
+        "tiering_mcc": 0.8343
+      }
+    },
+    {
+      "ladder": "55map-stride-a-standardised",
+      "K": 10,
+      "ref": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2428,
+          "fp": 188,
+          "fn": 1096,
+          "tn": 4829
+        },
+        "mcc": 0.695829,
+        "tiering_mcc": 0.6958
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2421,
+          "fp": 242,
+          "fn": 333,
+          "tn": 5545
+        },
+        "mcc": 0.844836,
+        "tiering_mcc": 0.8448
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3135,
+          "fp": 275,
+          "fn": 389,
+          "tn": 4742
+        },
+        "mcc": 0.839159,
+        "tiering_mcc": 0.8392
+      }
+    },
+    {
+      "ladder": "gs-stride-a",
+      "K": 1,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 10,
+          "fn": 41,
+          "tn": 248
+        },
+        "mcc": 0.794812,
+        "tiering_mcc": 0.7948
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 11,
+          "fn": 11,
+          "tn": 277
+        },
+        "mcc": 0.906529,
+        "tiering_mcc": 0.9065
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 15,
+          "fn": 16,
+          "tn": 243
+        },
+        "mcc": 0.872213,
+        "tiering_mcc": 0.8722
+      }
+    },
+    {
+      "ladder": "gs-stride-a",
+      "K": 3,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+      "id": {
+        "confusion": {
+          "tp": 181,
+          "fp": 6,
+          "fn": 48,
+          "tn": 252
+        },
+        "mcc": 0.787262,
+        "tiering_mcc": 0.7873
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 183,
+          "fp": 6,
+          "fn": 16,
+          "tn": 282
+        },
+        "mcc": 0.906629,
+        "tiering_mcc": 0.9066
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 208,
+          "fp": 10,
+          "fn": 21,
+          "tn": 248
+        },
+        "mcc": 0.872793,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "gs-stride-a",
+      "K": 5,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+      "id": {
+        "confusion": {
+          "tp": 182,
+          "fp": 7,
+          "fn": 47,
+          "tn": 251
+        },
+        "mcc": 0.786211,
+        "tiering_mcc": 0.7862
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 184,
+          "fp": 7,
+          "fn": 15,
+          "tn": 281
+        },
+        "mcc": 0.906475,
+        "tiering_mcc": 0.9065
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 210,
+          "fp": 12,
+          "fn": 19,
+          "tn": 246
+        },
+        "mcc": 0.872381,
+        "tiering_mcc": 0.8724
+      }
+    },
+    {
+      "ladder": "gs-stride-a",
+      "K": 10,
+      "ref": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+      "id": {
+        "confusion": {
+          "tp": 184,
+          "fp": 4,
+          "fn": 45,
+          "tn": 254
+        },
+        "mcc": 0.807855,
+        "tiering_mcc": 0.8079
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 186,
+          "fp": 4,
+          "fn": 13,
+          "tn": 284
+        },
+        "mcc": 0.927953,
+        "tiering_mcc": 0.928
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 210,
+          "fp": 7,
+          "fn": 19,
+          "tn": 251
+        },
+        "mcc": 0.893627,
+        "tiering_mcc": 0.8936
+      }
+    },
+    {
+      "ladder": "55map-stride-b-r2",
+      "K": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2525,
+          "fp": 216,
+          "fn": 1004,
+          "tn": 4796
+        },
+        "mcc": 0.709239,
+        "tiering_mcc": 0.7092
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2511,
+          "fp": 279,
+          "fn": 249,
+          "tn": 5502
+        },
+        "mcc": 0.859109,
+        "tiering_mcc": 0.8591
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3248,
+          "fp": 315,
+          "fn": 281,
+          "tn": 4697
+        },
+        "mcc": 0.856333,
+        "tiering_mcc": 0.8563
+      }
+    },
+    {
+      "ladder": "55map-stride-b-r2",
+      "K": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2452,
+          "fp": 145,
+          "fn": 1077,
+          "tn": 4867
+        },
+        "mcc": 0.712778,
+        "tiering_mcc": 0.7128
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2461,
+          "fp": 181,
+          "fn": 299,
+          "tn": 5600
+        },
+        "mcc": 0.870521,
+        "tiering_mcc": 0.8705
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3182,
+          "fp": 220,
+          "fn": 347,
+          "tn": 4792
+        },
+        "mcc": 0.862779,
+        "tiering_mcc": 0.8628
+      }
+    },
+    {
+      "ladder": "55map-stride-b-r2",
+      "K": 5,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2422,
+          "fp": 132,
+          "fn": 1107,
+          "tn": 4880
+        },
+        "mcc": 0.709814,
+        "tiering_mcc": 0.7098
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2432,
+          "fp": 164,
+          "fn": 328,
+          "tn": 5617
+        },
+        "mcc": 0.867102,
+        "tiering_mcc": 0.8671
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3148,
+          "fp": 199,
+          "fn": 381,
+          "tn": 4813
+        },
+        "mcc": 0.859729,
+        "tiering_mcc": 0.8597
+      }
+    },
+    {
+      "ladder": "55map-stride-b-r2",
+      "K": 10,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2441,
+          "fp": 138,
+          "fn": 1088,
+          "tn": 4874
+        },
+        "mcc": 0.712336,
+        "tiering_mcc": 0.7123
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2450,
+          "fp": 171,
+          "fn": 310,
+          "tn": 5610
+        },
+        "mcc": 0.870162,
+        "tiering_mcc": 0.8702
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3172,
+          "fp": 204,
+          "fn": 357,
+          "tn": 4808
+        },
+        "mcc": 0.864273,
+        "tiering_mcc": 0.8643
+      }
+    },
+    {
+      "ladder": "55map-stride-b-g37vf-r2",
+      "K": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2473,
+          "fp": 45,
+          "fn": 1056,
+          "tn": 4967
+        },
+        "mcc": 0.747084,
+        "tiering_mcc": 0.7471
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2499,
+          "fp": 69,
+          "fn": 261,
+          "tn": 5712
+        },
+        "mcc": 0.91129,
+        "tiering_mcc": 0.9113
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3209,
+          "fp": 77,
+          "fn": 320,
+          "tn": 4935
+        },
+        "mcc": 0.904751,
+        "tiering_mcc": 0.9048
+      }
+    },
+    {
+      "ladder": "55map-stride-b-g37vf-r2",
+      "K": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2420,
+          "fp": 38,
+          "fn": 1109,
+          "tn": 4974
+        },
+        "mcc": 0.737593,
+        "tiering_mcc": 0.7376
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2451,
+          "fp": 55,
+          "fn": 309,
+          "tn": 5726
+        },
+        "mcc": 0.902367,
+        "tiering_mcc": 0.9024
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3157,
+          "fp": 66,
+          "fn": 372,
+          "tn": 4946
+        },
+        "mcc": 0.895385,
+        "tiering_mcc": 0.8954
+      }
+    },
+    {
+      "ladder": "55map-stride-b-g37vf-r2",
+      "K": 10,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+      "id": {
+        "confusion": {
+          "tp": 2411,
+          "fp": 37,
+          "fn": 1118,
+          "tn": 4975
+        },
+        "mcc": 0.735931,
+        "tiering_mcc": 0.7359
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2440,
+          "fp": 52,
+          "fn": 320,
+          "tn": 5729
+        },
+        "mcc": 0.900284,
+        "tiering_mcc": 0.9003
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3146,
+          "fp": 63,
+          "fn": 383,
+          "tn": 4949
+        },
+        "mcc": 0.893596,
+        "tiering_mcc": 0.8936
+      }
+    },
+    {
+      "ladder": "55map-stride-b-standardised",
+      "K": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2524,
+          "fp": 217,
+          "fn": 1000,
+          "tn": 4800
+        },
+        "mcc": 0.709697,
+        "tiering_mcc": 0.7097
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2510,
+          "fp": 280,
+          "fn": 244,
+          "tn": 5507
+        },
+        "mcc": 0.860111,
+        "tiering_mcc": 0.8601
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3246,
+          "fp": 317,
+          "fn": 278,
+          "tn": 4700
+        },
+        "mcc": 0.856555,
+        "tiering_mcc": 0.8566
+      }
+    },
+    {
+      "ladder": "55map-stride-b-standardised",
+      "K": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2451,
+          "fp": 146,
+          "fn": 1073,
+          "tn": 4871
+        },
+        "mcc": 0.713197,
+        "tiering_mcc": 0.7132
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2460,
+          "fp": 182,
+          "fn": 294,
+          "tn": 5605
+        },
+        "mcc": 0.871481,
+        "tiering_mcc": 0.8715
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3180,
+          "fp": 222,
+          "fn": 344,
+          "tn": 4795
+        },
+        "mcc": 0.862956,
+        "tiering_mcc": 0.863
+      }
+    },
+    {
+      "ladder": "55map-stride-b-standardised",
+      "K": 5,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2421,
+          "fp": 133,
+          "fn": 1103,
+          "tn": 4884
+        },
+        "mcc": 0.710221,
+        "tiering_mcc": 0.7102
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2431,
+          "fp": 165,
+          "fn": 323,
+          "tn": 5622
+        },
+        "mcc": 0.868044,
+        "tiering_mcc": 0.868
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3146,
+          "fp": 201,
+          "fn": 378,
+          "tn": 4816
+        },
+        "mcc": 0.85989,
+        "tiering_mcc": 0.8599
+      }
+    },
+    {
+      "ladder": "55map-stride-b-standardised",
+      "K": 10,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+      "id": {
+        "confusion": {
+          "tp": 2440,
+          "fp": 139,
+          "fn": 1084,
+          "tn": 4878
+        },
+        "mcc": 0.71275,
+        "tiering_mcc": 0.7127
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 2449,
+          "fp": 172,
+          "fn": 305,
+          "tn": 5615
+        },
+        "mcc": 0.871115,
+        "tiering_mcc": 0.8711
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 3170,
+          "fp": 206,
+          "fn": 354,
+          "tn": 4811
+        },
+        "mcc": 0.864444,
+        "tiering_mcc": 0.8644
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 40,
+          "tn": 248
+        },
+        "mcc": 0.798621,
+        "tiering_mcc": 0.7986
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 9,
+          "fn": 10,
+          "tn": 279
+        },
+        "mcc": 0.919221,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 8,
+          "fn": 41,
+          "tn": 250
+        },
+        "mcc": 0.803997,
+        "tiering_mcc": 0.804
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 9,
+          "fn": 10,
+          "tn": 279
+        },
+        "mcc": 0.919221,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 18,
+          "fn": 10,
+          "tn": 240
+        },
+        "mcc": 0.885307,
+        "tiering_mcc": 0.8853
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 186,
+          "fp": 13,
+          "fn": 43,
+          "tn": 245
+        },
+        "mcc": 0.773514,
+        "tiering_mcc": 0.7735
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 13,
+          "fn": 12,
+          "tn": 275
+        },
+        "mcc": 0.893874,
+        "tiering_mcc": 0.8939
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 26,
+          "fn": 13,
+          "tn": 232
+        },
+        "mcc": 0.840977,
+        "tiering_mcc": 0.841
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 10,
+          "fn": 42,
+          "tn": 248
+        },
+        "mcc": 0.791011,
+        "tiering_mcc": 0.791
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 10,
+          "fn": 9,
+          "tn": 278
+        },
+        "mcc": 0.919346,
+        "tiering_mcc": 0.9193
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-text-t0.7-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 185,
+          "fp": 9,
+          "fn": 44,
+          "tn": 249
+        },
+        "mcc": 0.78806,
+        "tiering_mcc": 0.7881
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 186,
+          "fp": 9,
+          "fn": 13,
+          "tn": 279
+        },
+        "mcc": 0.90637,
+        "tiering_mcc": 0.9064
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 212,
+          "fp": 20,
+          "fn": 17,
+          "tn": 238
+        },
+        "mcc": 0.847685,
+        "tiering_mcc": 0.8477
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 182,
+          "fp": 6,
+          "fn": 47,
+          "tn": 252
+        },
+        "mcc": 0.790954,
+        "tiering_mcc": 0.791
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 186,
+          "fp": 7,
+          "fn": 13,
+          "tn": 281
+        },
+        "mcc": 0.914929,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 212,
+          "fp": 15,
+          "fn": 17,
+          "tn": 243
+        },
+        "mcc": 0.86808,
+        "tiering_mcc": 0.8681
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 182,
+          "fp": 5,
+          "fn": 47,
+          "tn": 253
+        },
+        "mcc": 0.795721,
+        "tiering_mcc": 0.7957
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 185,
+          "fp": 8,
+          "fn": 14,
+          "tn": 280
+        },
+        "mcc": 0.906389,
+        "tiering_mcc": 0.9064
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 12,
+          "fn": 16,
+          "tn": 246
+        },
+        "mcc": 0.884608,
+        "tiering_mcc": 0.8846
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-text-t0.7-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 182,
+          "fp": 9,
+          "fn": 47,
+          "tn": 249
+        },
+        "mcc": 0.776798,
+        "tiering_mcc": 0.7768
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 185,
+          "fp": 11,
+          "fn": 14,
+          "tn": 277
+        },
+        "mcc": 0.893608,
+        "tiering_mcc": 0.8936
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 20,
+          "fn": 16,
+          "tn": 238
+        },
+        "mcc": 0.851891,
+        "tiering_mcc": 0.8519
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 193,
+          "fp": 11,
+          "fn": 36,
+          "tn": 247
+        },
+        "mcc": 0.80946,
+        "tiering_mcc": 0.8095
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 11,
+          "fn": 11,
+          "tn": 277
+        },
+        "mcc": 0.906529,
+        "tiering_mcc": 0.9065
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 18,
+          "fn": 9,
+          "tn": 240
+        },
+        "mcc": 0.889577,
+        "tiering_mcc": 0.8896
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 8,
+          "fn": 41,
+          "tn": 250
+        },
+        "mcc": 0.803997,
+        "tiering_mcc": 0.804
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 8,
+          "fn": 10,
+          "tn": 280
+        },
+        "mcc": 0.923438,
+        "tiering_mcc": 0.9234
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 17,
+          "fn": 11,
+          "tn": 241
+        },
+        "mcc": 0.885041,
+        "tiering_mcc": 0.885
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 184,
+          "fp": 10,
+          "fn": 45,
+          "tn": 248
+        },
+        "mcc": 0.779656,
+        "tiering_mcc": 0.7797
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 10,
+          "tn": 278
+        },
+        "mcc": 0.915027,
+        "tiering_mcc": 0.915
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 185,
+          "fp": 9,
+          "fn": 44,
+          "tn": 249
+        },
+        "mcc": 0.78806,
+        "tiering_mcc": 0.7881
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 9,
+          "fn": 9,
+          "tn": 279
+        },
+        "mcc": 0.923524,
+        "tiering_mcc": 0.9235
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-text-t0.3-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 199,
+          "fp": 17,
+          "fn": 30,
+          "tn": 241
+        },
+        "mcc": 0.806841,
+        "tiering_mcc": 0.8068
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 15,
+          "fn": 6,
+          "tn": 273
+        },
+        "mcc": 0.912055,
+        "tiering_mcc": 0.9121
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 26,
+          "fn": 10,
+          "tn": 232
+        },
+        "mcc": 0.854055,
+        "tiering_mcc": 0.8541
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 182,
+          "fp": 3,
+          "fn": 47,
+          "tn": 255
+        },
+        "mcc": 0.805329,
+        "tiering_mcc": 0.8053
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 183,
+          "fp": 4,
+          "fn": 16,
+          "tn": 284
+        },
+        "mcc": 0.91544,
+        "tiering_mcc": 0.9154
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 7,
+          "fn": 16,
+          "tn": 251
+        },
+        "mcc": 0.905624,
+        "tiering_mcc": 0.9056
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 183,
+          "fp": 9,
+          "fn": 46,
+          "tn": 249
+        },
+        "mcc": 0.780544,
+        "tiering_mcc": 0.7805
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 6,
+          "fn": 11,
+          "tn": 282
+        },
+        "mcc": 0.927702,
+        "tiering_mcc": 0.9277
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 15,
+          "fn": 13,
+          "tn": 243
+        },
+        "mcc": 0.884688,
+        "tiering_mcc": 0.8847
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 186,
+          "fp": 10,
+          "fn": 43,
+          "tn": 248
+        },
+        "mcc": 0.787218,
+        "tiering_mcc": 0.7872
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 9,
+          "fn": 10,
+          "tn": 279
+        },
+        "mcc": 0.919221,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 16,
+          "fn": 9,
+          "tn": 242
+        },
+        "mcc": 0.897514,
+        "tiering_mcc": 0.8975
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-7",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-text-t0.7-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 195,
+          "fp": 21,
+          "fn": 34,
+          "tn": 237
+        },
+        "mcc": 0.773716,
+        "tiering_mcc": 0.7737
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 21,
+          "fn": 9,
+          "tn": 267
+        },
+        "mcc": 0.874833,
+        "tiering_mcc": 0.8748
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 29,
+          "fn": 10,
+          "tn": 229
+        },
+        "mcc": 0.842575,
+        "tiering_mcc": 0.8426
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-7",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 190,
+          "fp": 11,
+          "fn": 39,
+          "tn": 247
+        },
+        "mcc": 0.79791,
+        "tiering_mcc": 0.7979
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 10,
+          "fn": 8,
+          "tn": 278
+        },
+        "mcc": 0.923676,
+        "tiering_mcc": 0.9237
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 15,
+          "fn": 8,
+          "tn": 243
+        },
+        "mcc": 0.905746,
+        "tiering_mcc": 0.9057
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-7",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 181,
+          "fp": 10,
+          "fn": 48,
+          "tn": 248
+        },
+        "mcc": 0.768371,
+        "tiering_mcc": 0.7684
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 185,
+          "fp": 10,
+          "fn": 14,
+          "tn": 278
+        },
+        "mcc": 0.897845,
+        "tiering_mcc": 0.8978
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 214,
+          "fp": 14,
+          "fn": 15,
+          "tn": 244
+        },
+        "mcc": 0.880458,
+        "tiering_mcc": 0.8805
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t0-7",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 176,
+          "fp": 7,
+          "fn": 53,
+          "tn": 251
+        },
+        "mcc": 0.764071,
+        "tiering_mcc": 0.7641
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 182,
+          "fp": 6,
+          "fn": 17,
+          "tn": 282
+        },
+        "mcc": 0.902442,
+        "tiering_mcc": 0.9024
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 209,
+          "fp": 11,
+          "fn": 20,
+          "tn": 247
+        },
+        "mcc": 0.872557,
+        "tiering_mcc": 0.8726
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 13,
+          "fn": 32,
+          "tn": 245
+        },
+        "mcc": 0.816198,
+        "tiering_mcc": 0.8162
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 14,
+          "fn": 8,
+          "tn": 274
+        },
+        "mcc": 0.907255,
+        "tiering_mcc": 0.9073
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 20,
+          "fn": 9,
+          "tn": 238
+        },
+        "mcc": 0.881703,
+        "tiering_mcc": 0.8817
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 40,
+          "tn": 248
+        },
+        "mcc": 0.798621,
+        "tiering_mcc": 0.7986
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 6,
+          "fn": 8,
+          "tn": 282
+        },
+        "mcc": 0.94046,
+        "tiering_mcc": 0.9405
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 17,
+          "fn": 10,
+          "tn": 241
+        },
+        "mcc": 0.889282,
+        "tiering_mcc": 0.8893
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 12,
+          "fn": 41,
+          "tn": 246
+        },
+        "mcc": 0.785714,
+        "tiering_mcc": 0.7857
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 11,
+          "fn": 8,
+          "tn": 277
+        },
+        "mcc": 0.919537,
+        "tiering_mcc": 0.9195
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-text-n5-text-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 10,
+          "fn": 42,
+          "tn": 248
+        },
+        "mcc": 0.791011,
+        "tiering_mcc": 0.791
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 10,
+          "fn": 8,
+          "tn": 278
+        },
+        "mcc": 0.923676,
+        "tiering_mcc": 0.9237
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 203,
+          "fp": 12,
+          "fn": 26,
+          "tn": 246
+        },
+        "mcc": 0.844263,
+        "tiering_mcc": 0.8443
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 11,
+          "fn": 6,
+          "tn": 277
+        },
+        "mcc": 0.92826,
+        "tiering_mcc": 0.9283
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 18,
+          "fn": 8,
+          "tn": 240
+        },
+        "mcc": 0.893862,
+        "tiering_mcc": 0.8939
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 10,
+          "fn": 35,
+          "tn": 248
+        },
+        "mcc": 0.817799,
+        "tiering_mcc": 0.8178
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 11,
+          "fn": 12,
+          "tn": 277
+        },
+        "mcc": 0.902213,
+        "tiering_mcc": 0.9022
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 17,
+          "fn": 11,
+          "tn": 241
+        },
+        "mcc": 0.885041,
+        "tiering_mcc": 0.885
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 199,
+          "fp": 9,
+          "fn": 30,
+          "tn": 249
+        },
+        "mcc": 0.841624,
+        "tiering_mcc": 0.8416
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 9,
+          "fn": 11,
+          "tn": 279
+        },
+        "mcc": 0.914927,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 17,
+          "fn": 9,
+          "tn": 241
+        },
+        "mcc": 0.893538,
+        "tiering_mcc": 0.8935
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 198,
+          "fp": 9,
+          "fn": 31,
+          "tn": 249
+        },
+        "mcc": 0.837738,
+        "tiering_mcc": 0.8377
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 10,
+          "tn": 278
+        },
+        "mcc": 0.915027,
+        "tiering_mcc": 0.915
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 16,
+          "fn": 8,
+          "tn": 242
+        },
+        "mcc": 0.901769,
+        "tiering_mcc": 0.9018
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-7",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 205,
+          "fp": 14,
+          "fn": 24,
+          "tn": 244
+        },
+        "mcc": 0.843722,
+        "tiering_mcc": 0.8437
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 194,
+          "fp": 13,
+          "fn": 5,
+          "tn": 275
+        },
+        "mcc": 0.924524,
+        "tiering_mcc": 0.9245
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 21,
+          "fn": 6,
+          "tn": 237
+        },
+        "mcc": 0.890822,
+        "tiering_mcc": 0.8908
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-7",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 198,
+          "fp": 9,
+          "fn": 31,
+          "tn": 249
+        },
+        "mcc": 0.837738,
+        "tiering_mcc": 0.8377
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 192,
+          "fp": 8,
+          "fn": 7,
+          "tn": 280
+        },
+        "mcc": 0.936328,
+        "tiering_mcc": 0.9363
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 17,
+          "fn": 9,
+          "tn": 241
+        },
+        "mcc": 0.893538,
+        "tiering_mcc": 0.8935
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-7",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 8,
+          "fn": 32,
+          "tn": 250
+        },
+        "mcc": 0.838328,
+        "tiering_mcc": 0.8383
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 192,
+          "fp": 6,
+          "fn": 7,
+          "tn": 282
+        },
+        "mcc": 0.944733,
+        "tiering_mcc": 0.9447
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 15,
+          "fn": 10,
+          "tn": 243
+        },
+        "mcc": 0.897282,
+        "tiering_mcc": 0.8973
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t0-7",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 9,
+          "fn": 35,
+          "tn": 249
+        },
+        "mcc": 0.82229,
+        "tiering_mcc": 0.8223
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 9,
+          "fn": 11,
+          "tn": 279
+        },
+        "mcc": 0.914927,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 18,
+          "fn": 11,
+          "tn": 240
+        },
+        "mcc": 0.88105,
+        "tiering_mcc": 0.8811
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 202,
+          "fp": 13,
+          "fn": 27,
+          "tn": 245
+        },
+        "mcc": 0.835978,
+        "tiering_mcc": 0.836
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 192,
+          "fp": 12,
+          "fn": 7,
+          "tn": 276
+        },
+        "mcc": 0.919793,
+        "tiering_mcc": 0.9198
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 22,
+          "fn": 9,
+          "tn": 236
+        },
+        "mcc": 0.87389,
+        "tiering_mcc": 0.8739
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 10,
+          "fn": 35,
+          "tn": 248
+        },
+        "mcc": 0.817799,
+        "tiering_mcc": 0.8178
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 12,
+          "fn": 10,
+          "tn": 276
+        },
+        "mcc": 0.906707,
+        "tiering_mcc": 0.9067
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 19,
+          "fn": 13,
+          "tn": 239
+        },
+        "mcc": 0.868574,
+        "tiering_mcc": 0.8686
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 185,
+          "fp": 6,
+          "fn": 44,
+          "tn": 252
+        },
+        "mcc": 0.802077,
+        "tiering_mcc": 0.8021
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 185,
+          "fp": 7,
+          "fn": 14,
+          "tn": 281
+        },
+        "mcc": 0.910698,
+        "tiering_mcc": 0.9107
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 11,
+          "fn": 16,
+          "tn": 247
+        },
+        "mcc": 0.888775,
+        "tiering_mcc": 0.8888
+      }
+    },
+    {
+      "ladder": "phase2-image-n5-image-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 189,
+          "fp": 8,
+          "fn": 40,
+          "tn": 250
+        },
+        "mcc": 0.807776,
+        "tiering_mcc": 0.8078
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 7,
+          "fn": 10,
+          "tn": 281
+        },
+        "mcc": 0.92768,
+        "tiering_mcc": 0.9277
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 15,
+          "fn": 13,
+          "tn": 243
+        },
+        "mcc": 0.884688,
+        "tiering_mcc": 0.8847
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 204,
+          "fp": 17,
+          "fn": 25,
+          "tn": 241
+        },
+        "mcc": 0.827012,
+        "tiering_mcc": 0.827
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 192,
+          "fp": 18,
+          "fn": 7,
+          "tn": 270
+        },
+        "mcc": 0.895645,
+        "tiering_mcc": 0.8956
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 25,
+          "fn": 8,
+          "tn": 233
+        },
+        "mcc": 0.866671,
+        "tiering_mcc": 0.8667
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 200,
+          "fp": 14,
+          "fn": 29,
+          "tn": 244
+        },
+        "mcc": 0.823713,
+        "tiering_mcc": 0.8237
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 14,
+          "fn": 6,
+          "tn": 274
+        },
+        "mcc": 0.916074,
+        "tiering_mcc": 0.9161
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 25,
+          "fn": 6,
+          "tn": 233
+        },
+        "mcc": 0.875493,
+        "tiering_mcc": 0.8755
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-image-t0.3-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 7,
+          "fn": 42,
+          "tn": 251
+        },
+        "mcc": 0.804867,
+        "tiering_mcc": 0.8049
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 184,
+          "fp": 8,
+          "fn": 15,
+          "tn": 280
+        },
+        "mcc": 0.90215,
+        "tiering_mcc": 0.9021
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 212,
+          "fp": 14,
+          "fn": 17,
+          "tn": 244
+        },
+        "mcc": 0.87221,
+        "tiering_mcc": 0.8722
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 10,
+          "fn": 32,
+          "tn": 248
+        },
+        "mcc": 0.829416,
+        "tiering_mcc": 0.8294
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 194,
+          "fp": 11,
+          "fn": 5,
+          "tn": 277
+        },
+        "mcc": 0.932637,
+        "tiering_mcc": 0.9326
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 222,
+          "fp": 18,
+          "fn": 7,
+          "tn": 240
+        },
+        "mcc": 0.898161,
+        "tiering_mcc": 0.8982
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-7",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 206,
+          "fp": 15,
+          "fn": 23,
+          "tn": 243
+        },
+        "mcc": 0.843539,
+        "tiering_mcc": 0.8435
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 195,
+          "fp": 16,
+          "fn": 4,
+          "tn": 272
+        },
+        "mcc": 0.916982,
+        "tiering_mcc": 0.917
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 25,
+          "fn": 6,
+          "tn": 233
+        },
+        "mcc": 0.875493,
+        "tiering_mcc": 0.8755
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-7",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 196,
+          "fp": 6,
+          "fn": 33,
+          "tn": 252
+        },
+        "mcc": 0.843503,
+        "tiering_mcc": 0.8435
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 5,
+          "fn": 11,
+          "tn": 283
+        },
+        "mcc": 0.932009,
+        "tiering_mcc": 0.932
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 14,
+          "fn": 12,
+          "tn": 244
+        },
+        "mcc": 0.892927,
+        "tiering_mcc": 0.8929
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-7",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 6,
+          "fn": 35,
+          "tn": 252
+        },
+        "mcc": 0.83589,
+        "tiering_mcc": 0.8359
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 6,
+          "fn": 8,
+          "tn": 282
+        },
+        "mcc": 0.94046,
+        "tiering_mcc": 0.9405
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 11,
+          "fn": 10,
+          "tn": 247
+        },
+        "mcc": 0.91348,
+        "tiering_mcc": 0.9135
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t0-7",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 180,
+          "fp": 3,
+          "fn": 49,
+          "tn": 255
+        },
+        "mcc": 0.798049,
+        "tiering_mcc": 0.798
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 183,
+          "fp": 4,
+          "fn": 16,
+          "tn": 284
+        },
+        "mcc": 0.91544,
+        "tiering_mcc": 0.9154
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 212,
+          "fp": 8,
+          "fn": 17,
+          "tn": 250
+        },
+        "mcc": 0.897357,
+        "tiering_mcc": 0.8974
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 212,
+          "fp": 16,
+          "fn": 17,
+          "tn": 242
+        },
+        "mcc": 0.863968,
+        "tiering_mcc": 0.864
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 15,
+          "fn": 6,
+          "tn": 273
+        },
+        "mcc": 0.912055,
+        "tiering_mcc": 0.9121
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 224,
+          "fp": 23,
+          "fn": 5,
+          "tn": 235
+        },
+        "mcc": 0.887533,
+        "tiering_mcc": 0.8875
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 10,
+          "fn": 32,
+          "tn": 248
+        },
+        "mcc": 0.829416,
+        "tiering_mcc": 0.8294
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 186,
+          "fp": 10,
+          "fn": 13,
+          "tn": 278
+        },
+        "mcc": 0.902126,
+        "tiering_mcc": 0.9021
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 16,
+          "fn": 13,
+          "tn": 242
+        },
+        "mcc": 0.880635,
+        "tiering_mcc": 0.8806
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 193,
+          "fp": 8,
+          "fn": 36,
+          "tn": 250
+        },
+        "mcc": 0.822979,
+        "tiering_mcc": 0.823
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 8,
+          "fn": 12,
+          "tn": 280
+        },
+        "mcc": 0.914895,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 215,
+          "fp": 15,
+          "fn": 14,
+          "tn": 243
+        },
+        "mcc": 0.880516,
+        "tiering_mcc": 0.8805
+      }
+    },
+    {
+      "ladder": "phase2-flash-high-image-n5-image-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 8,
+          "fn": 42,
+          "tn": 250
+        },
+        "mcc": 0.800226,
+        "tiering_mcc": 0.8002
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 186,
+          "fp": 7,
+          "fn": 13,
+          "tn": 281
+        },
+        "mcc": 0.914929,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 212,
+          "fp": 16,
+          "fn": 17,
+          "tn": 242
+        },
+        "mcc": 0.863968,
+        "tiering_mcc": 0.864
+      }
+    },
+    {
+      "ladder": "phase2-scale-4-optimal-487",
+      "K": 1,
+      "ref": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+      "id": {
+        "confusion": {
+          "tp": 209,
+          "fp": 11,
+          "fn": 20,
+          "tn": 247
+        },
+        "mcc": 0.872557,
+        "tiering_mcc": 0.8726
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 11,
+          "fn": 6,
+          "tn": 277
+        },
+        "mcc": 0.92826,
+        "tiering_mcc": 0.9283
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 17,
+          "fn": 6,
+          "tn": 241
+        },
+        "mcc": 0.90639,
+        "tiering_mcc": 0.9064
+      }
+    },
+    {
+      "ladder": "phase2-scale-4-optimal-487",
+      "K": 3,
+      "ref": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+      "id": {
+        "confusion": {
+          "tp": 195,
+          "fp": 5,
+          "fn": 34,
+          "tn": 253
+        },
+        "mcc": 0.844253,
+        "tiering_mcc": 0.8443
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 6,
+          "fn": 12,
+          "tn": 282
+        },
+        "mcc": 0.923469,
+        "tiering_mcc": 0.9235
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 215,
+          "fp": 12,
+          "fn": 14,
+          "tn": 246
+        },
+        "mcc": 0.892822,
+        "tiering_mcc": 0.8928
+      }
+    },
+    {
+      "ladder": "phase2-scale-4-optimal-487",
+      "K": 5,
+      "ref": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+      "id": {
+        "confusion": {
+          "tp": 195,
+          "fp": 8,
+          "fn": 34,
+          "tn": 250
+        },
+        "mcc": 0.830634,
+        "tiering_mcc": 0.8306
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 8,
+          "fn": 11,
+          "tn": 280
+        },
+        "mcc": 0.919162,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 18,
+          "fn": 10,
+          "tn": 240
+        },
+        "mcc": 0.885307,
+        "tiering_mcc": 0.8853
+      }
+    },
+    {
+      "ladder": "phase2-scale-4-optimal-487",
+      "K": 10,
+      "ref": "pv-diag-384::pv-scale4-optimal-n10-opmax",
+      "id": {
+        "confusion": {
+          "tp": 191,
+          "fp": 8,
+          "fn": 38,
+          "tn": 250
+        },
+        "mcc": 0.81536,
+        "tiering_mcc": 0.8154
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 8,
+          "fn": 10,
+          "tn": 280
+        },
+        "mcc": 0.923438,
+        "tiering_mcc": 0.9234
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 19,
+          "fn": 11,
+          "tn": 239
+        },
+        "mcc": 0.877076,
+        "tiering_mcc": 0.8771
+      }
+    },
+    {
+      "ladder": "tier-e",
+      "K": 1,
+      "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+      "id": {
+        "confusion": {
+          "tp": 196,
+          "fp": 11,
+          "fn": 33,
+          "tn": 247
+        },
+        "mcc": 0.821093,
+        "tiering_mcc": 0.8211
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 195,
+          "fp": 12,
+          "fn": 4,
+          "tn": 276
+        },
+        "mcc": 0.932973,
+        "tiering_mcc": 0.933
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 17,
+          "fn": 9,
+          "tn": 241
+        },
+        "mcc": 0.893538,
+        "tiering_mcc": 0.8935
+      }
+    },
+    {
+      "ladder": "tier-e",
+      "K": 3,
+      "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+      "id": {
+        "confusion": {
+          "tp": 196,
+          "fp": 12,
+          "fn": 33,
+          "tn": 246
+        },
+        "mcc": 0.816673,
+        "tiering_mcc": 0.8167
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 196,
+          "fp": 12,
+          "fn": 3,
+          "tn": 276
+        },
+        "mcc": 0.937388,
+        "tiering_mcc": 0.9374
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 17,
+          "fn": 6,
+          "tn": 241
+        },
+        "mcc": 0.90639,
+        "tiering_mcc": 0.9064
+      }
+    },
+    {
+      "ladder": "tier-e",
+      "K": 5,
+      "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+      "id": {
+        "confusion": {
+          "tp": 193,
+          "fp": 10,
+          "fn": 36,
+          "tn": 248
+        },
+        "mcc": 0.813946,
+        "tiering_mcc": 0.8139
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 10,
+          "fn": 6,
+          "tn": 278
+        },
+        "mcc": 0.932366,
+        "tiering_mcc": 0.9324
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 16,
+          "fn": 10,
+          "tn": 242
+        },
+        "mcc": 0.893274,
+        "tiering_mcc": 0.8933
+      }
+    },
+    {
+      "ladder": "tier-e",
+      "K": 10,
+      "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
+      "id": {
+        "confusion": {
+          "tp": 191,
+          "fp": 12,
+          "fn": 38,
+          "tn": 246
+        },
+        "mcc": 0.797257,
+        "tiering_mcc": 0.7973
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 13,
+          "fn": 8,
+          "tn": 275
+        },
+        "mcc": 0.911327,
+        "tiering_mcc": 0.9113
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 19,
+          "fn": 10,
+          "tn": 239
+        },
+        "mcc": 0.881347,
+        "tiering_mcc": 0.8813
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 40,
+          "tn": 248
+        },
+        "mcc": 0.798621,
+        "tiering_mcc": 0.7986
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 9,
+          "fn": 10,
+          "tn": 279
+        },
+        "mcc": 0.919221,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 8,
+          "fn": 41,
+          "tn": 250
+        },
+        "mcc": 0.803997,
+        "tiering_mcc": 0.804
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 9,
+          "fn": 10,
+          "tn": 279
+        },
+        "mcc": 0.919221,
+        "tiering_mcc": 0.9192
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 18,
+          "fn": 10,
+          "tn": 240
+        },
+        "mcc": 0.885307,
+        "tiering_mcc": 0.8853
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 186,
+          "fp": 13,
+          "fn": 43,
+          "tn": 245
+        },
+        "mcc": 0.773514,
+        "tiering_mcc": 0.7735
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 13,
+          "fn": 12,
+          "tn": 275
+        },
+        "mcc": 0.893874,
+        "tiering_mcc": 0.8939
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 26,
+          "fn": 13,
+          "tn": 232
+        },
+        "mcc": 0.840977,
+        "tiering_mcc": 0.841
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 10,
+          "fn": 42,
+          "tn": 248
+        },
+        "mcc": 0.791011,
+        "tiering_mcc": 0.791
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 10,
+          "fn": 9,
+          "tn": 278
+        },
+        "mcc": 0.919346,
+        "tiering_mcc": 0.9193
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 193,
+          "fp": 11,
+          "fn": 36,
+          "tn": 247
+        },
+        "mcc": 0.80946,
+        "tiering_mcc": 0.8095
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 11,
+          "fn": 11,
+          "tn": 277
+        },
+        "mcc": 0.906529,
+        "tiering_mcc": 0.9065
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 18,
+          "fn": 9,
+          "tn": 240
+        },
+        "mcc": 0.889577,
+        "tiering_mcc": 0.8896
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 8,
+          "fn": 41,
+          "tn": 250
+        },
+        "mcc": 0.803997,
+        "tiering_mcc": 0.804
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 8,
+          "fn": 10,
+          "tn": 280
+        },
+        "mcc": 0.923438,
+        "tiering_mcc": 0.9234
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 17,
+          "fn": 11,
+          "tn": 241
+        },
+        "mcc": 0.885041,
+        "tiering_mcc": 0.885
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 184,
+          "fp": 10,
+          "fn": 45,
+          "tn": 248
+        },
+        "mcc": 0.779656,
+        "tiering_mcc": 0.7797
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 10,
+          "tn": 278
+        },
+        "mcc": 0.915027,
+        "tiering_mcc": 0.915
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-text-t1.0-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 185,
+          "fp": 9,
+          "fn": 44,
+          "tn": 249
+        },
+        "mcc": 0.78806,
+        "tiering_mcc": 0.7881
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 9,
+          "fn": 9,
+          "tn": 279
+        },
+        "mcc": 0.923524,
+        "tiering_mcc": 0.9235
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 19,
+          "fn": 12,
+          "tn": 239
+        },
+        "mcc": 0.872818,
+        "tiering_mcc": 0.8728
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 13,
+          "fn": 32,
+          "tn": 245
+        },
+        "mcc": 0.816198,
+        "tiering_mcc": 0.8162
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 14,
+          "fn": 8,
+          "tn": 274
+        },
+        "mcc": 0.907255,
+        "tiering_mcc": 0.9073
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 20,
+          "fn": 9,
+          "tn": 238
+        },
+        "mcc": 0.881703,
+        "tiering_mcc": 0.8817
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 188,
+          "fp": 10,
+          "fn": 41,
+          "tn": 248
+        },
+        "mcc": 0.794812,
+        "tiering_mcc": 0.7948
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 6,
+          "fn": 9,
+          "tn": 282
+        },
+        "mcc": 0.936198,
+        "tiering_mcc": 0.9362
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 17,
+          "fn": 10,
+          "tn": 241
+        },
+        "mcc": 0.889282,
+        "tiering_mcc": 0.8893
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 187,
+          "fp": 12,
+          "fn": 42,
+          "tn": 246
+        },
+        "mcc": 0.781883,
+        "tiering_mcc": 0.7819
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 11,
+          "fn": 9,
+          "tn": 277
+        },
+        "mcc": 0.915191,
+        "tiering_mcc": 0.9152
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 186,
+          "fp": 10,
+          "fn": 43,
+          "tn": 248
+        },
+        "mcc": 0.787218,
+        "tiering_mcc": 0.7872
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 190,
+          "fp": 10,
+          "fn": 9,
+          "tn": 278
+        },
+        "mcc": 0.919346,
+        "tiering_mcc": 0.9193
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 21,
+          "fn": 12,
+          "tn": 237
+        },
+        "mcc": 0.864886,
+        "tiering_mcc": 0.8649
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-3",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 203,
+          "fp": 12,
+          "fn": 26,
+          "tn": 246
+        },
+        "mcc": 0.844263,
+        "tiering_mcc": 0.8443
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 11,
+          "fn": 6,
+          "tn": 277
+        },
+        "mcc": 0.92826,
+        "tiering_mcc": 0.9283
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 18,
+          "fn": 8,
+          "tn": 240
+        },
+        "mcc": 0.893862,
+        "tiering_mcc": 0.8939
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-3",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 10,
+          "fn": 35,
+          "tn": 248
+        },
+        "mcc": 0.817799,
+        "tiering_mcc": 0.8178
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 11,
+          "fn": 12,
+          "tn": 277
+        },
+        "mcc": 0.902213,
+        "tiering_mcc": 0.9022
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 17,
+          "fn": 11,
+          "tn": 241
+        },
+        "mcc": 0.885041,
+        "tiering_mcc": 0.885
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-3",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 199,
+          "fp": 9,
+          "fn": 30,
+          "tn": 249
+        },
+        "mcc": 0.841624,
+        "tiering_mcc": 0.8416
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 188,
+          "fp": 9,
+          "fn": 11,
+          "tn": 279
+        },
+        "mcc": 0.914927,
+        "tiering_mcc": 0.9149
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 17,
+          "fn": 9,
+          "tn": 241
+        },
+        "mcc": 0.893538,
+        "tiering_mcc": 0.8935
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-3",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t0.3-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 198,
+          "fp": 9,
+          "fn": 31,
+          "tn": 249
+        },
+        "mcc": 0.837738,
+        "tiering_mcc": 0.8377
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 10,
+          "fn": 10,
+          "tn": 278
+        },
+        "mcc": 0.915027,
+        "tiering_mcc": 0.915
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 16,
+          "fn": 8,
+          "tn": 242
+        },
+        "mcc": 0.901769,
+        "tiering_mcc": 0.9018
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-7",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 205,
+          "fp": 14,
+          "fn": 24,
+          "tn": 244
+        },
+        "mcc": 0.843722,
+        "tiering_mcc": 0.8437
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 194,
+          "fp": 13,
+          "fn": 5,
+          "tn": 275
+        },
+        "mcc": 0.924524,
+        "tiering_mcc": 0.9245
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "fp": 21,
+          "fn": 6,
+          "tn": 237
+        },
+        "mcc": 0.890822,
+        "tiering_mcc": 0.8908
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-7",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 197,
+          "fp": 9,
+          "fn": 32,
+          "tn": 249
+        },
+        "mcc": 0.833861,
+        "tiering_mcc": 0.8339
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 8,
+          "fn": 8,
+          "tn": 280
+        },
+        "mcc": 0.932021,
+        "tiering_mcc": 0.932
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 17,
+          "fn": 10,
+          "tn": 241
+        },
+        "mcc": 0.889282,
+        "tiering_mcc": 0.8893
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-7",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 196,
+          "fp": 8,
+          "fn": 33,
+          "tn": 250
+        },
+        "mcc": 0.834476,
+        "tiering_mcc": 0.8345
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 6,
+          "fn": 8,
+          "tn": 282
+        },
+        "mcc": 0.94046,
+        "tiering_mcc": 0.9405
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 15,
+          "fn": 11,
+          "tn": 243
+        },
+        "mcc": 0.89307,
+        "tiering_mcc": 0.8931
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-7",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 193,
+          "fp": 9,
+          "fn": 36,
+          "tn": 249
+        },
+        "mcc": 0.818452,
+        "tiering_mcc": 0.8185
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 187,
+          "fp": 9,
+          "fn": 12,
+          "tn": 279
+        },
+        "mcc": 0.910644,
+        "tiering_mcc": 0.9106
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 18,
+          "fn": 12,
+          "tn": 240
+        },
+        "mcc": 0.876807,
+        "tiering_mcc": 0.8768
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t1-0",
+      "K": 1,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n1-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 202,
+          "fp": 13,
+          "fn": 27,
+          "tn": 245
+        },
+        "mcc": 0.835978,
+        "tiering_mcc": 0.836
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 192,
+          "fp": 12,
+          "fn": 7,
+          "tn": 276
+        },
+        "mcc": 0.919793,
+        "tiering_mcc": 0.9198
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 220,
+          "fp": 22,
+          "fn": 9,
+          "tn": 236
+        },
+        "mcc": 0.87389,
+        "tiering_mcc": 0.8739
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t1-0",
+      "K": 3,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n3-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 10,
+          "fn": 35,
+          "tn": 248
+        },
+        "mcc": 0.817799,
+        "tiering_mcc": 0.8178
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 12,
+          "fn": 10,
+          "tn": 276
+        },
+        "mcc": 0.906707,
+        "tiering_mcc": 0.9067
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 19,
+          "fn": 13,
+          "tn": 239
+        },
+        "mcc": 0.868574,
+        "tiering_mcc": 0.8686
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t1-0",
+      "K": 5,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n5-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 185,
+          "fp": 6,
+          "fn": 44,
+          "tn": 252
+        },
+        "mcc": 0.802077,
+        "tiering_mcc": 0.8021
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 185,
+          "fp": 7,
+          "fn": 14,
+          "tn": 281
+        },
+        "mcc": 0.910698,
+        "tiering_mcc": 0.9107
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 213,
+          "fp": 11,
+          "fn": 16,
+          "tn": 247
+        },
+        "mcc": 0.888775,
+        "tiering_mcc": 0.8888
+      }
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t1-0",
+      "K": 10,
+      "ref": "pv-diag-384::pv-min-image-t1.0-n10-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 189,
+          "fp": 8,
+          "fn": 40,
+          "tn": 250
+        },
+        "mcc": 0.807776,
+        "tiering_mcc": 0.8078
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 189,
+          "fp": 7,
+          "fn": 10,
+          "tn": 281
+        },
+        "mcc": 0.92768,
+        "tiering_mcc": 0.9277
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 216,
+          "fp": 15,
+          "fn": 13,
+          "tn": 243
+        },
+        "mcc": 0.884688,
+        "tiering_mcc": 0.8847
+      }
+    },
+    {
+      "ladder": "d51clip-tier-e",
+      "K": 1,
+      "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 11,
+          "fn": 35,
+          "tn": 247
+        },
+        "mcc": 0.813329,
+        "tiering_mcc": 0.8133
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "fp": 12,
+          "fn": 6,
+          "tn": 276
+        },
+        "mcc": 0.924176,
+        "tiering_mcc": 0.9242
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 218,
+          "fp": 17,
+          "fn": 11,
+          "tn": 241
+        },
+        "mcc": 0.885041,
+        "tiering_mcc": 0.885
+      }
+    },
+    {
+      "ladder": "d51clip-tier-e",
+      "K": 3,
+      "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 194,
+          "fp": 12,
+          "fn": 35,
+          "tn": 246
+        },
+        "mcc": 0.808879,
+        "tiering_mcc": 0.8089
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 194,
+          "fp": 12,
+          "fn": 5,
+          "tn": 276
+        },
+        "mcc": 0.928569,
+        "tiering_mcc": 0.9286
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 221,
+          "fp": 17,
+          "fn": 8,
+          "tn": 241
+        },
+        "mcc": 0.897807,
+        "tiering_mcc": 0.8978
+      }
+    },
+    {
+      "ladder": "d51clip-tier-e",
+      "K": 5,
+      "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 191,
+          "fp": 10,
+          "fn": 38,
+          "tn": 248
+        },
+        "mcc": 0.806266,
+        "tiering_mcc": 0.8063
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 10,
+          "fn": 8,
+          "tn": 278
+        },
+        "mcc": 0.923676,
+        "tiering_mcc": 0.9237
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 217,
+          "fp": 16,
+          "fn": 12,
+          "tn": 242
+        },
+        "mcc": 0.884834,
+        "tiering_mcc": 0.8848
+      }
+    },
+    {
+      "ladder": "d51clip-tier-e",
+      "K": 10,
+      "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+      "id": {
+        "confusion": {
+          "tp": 191,
+          "fp": 12,
+          "fn": 38,
+          "tn": 246
+        },
+        "mcc": 0.797257,
+        "tiering_mcc": 0.7973
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 191,
+          "fp": 13,
+          "fn": 8,
+          "tn": 275
+        },
+        "mcc": 0.911327,
+        "tiering_mcc": 0.9113
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 219,
+          "fp": 19,
+          "fn": 10,
+          "tn": 239
+        },
+        "mcc": 0.881347,
+        "tiering_mcc": 0.8813
+      }
+    }
+  ]
+}

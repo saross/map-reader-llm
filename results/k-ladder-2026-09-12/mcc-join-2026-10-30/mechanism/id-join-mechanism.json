@@ -1,0 +1,1961 @@
+{
+  "what": "per rung, under the published id join, the false-negative tiles that geometrically contain one of the rung's own detections; descriptive, not a decomposition of any MCC change",
+  "ladders": [
+    {
+      "slug": "37arm1-r2",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+          "n_detections": 5219,
+          "confusion_id": {
+            "tp": 2489,
+            "tn": 4879,
+            "fp": 133,
+            "fn": 1040
+          },
+          "mcc_id": 0.7246174293740002,
+          "fn": 1040,
+          "fn_with_detection_inside": 734,
+          "share": 0.705769
+        },
+        {
+          "K": 3,
+          "ref": "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+          "n_detections": 4772,
+          "confusion_id": {
+            "tp": 2462,
+            "tn": 4877,
+            "fp": 135,
+            "fn": 1067
+          },
+          "mcc_id": 0.7179472187364325,
+          "fn": 1067,
+          "fn_with_detection_inside": 739,
+          "share": 0.692596
+        },
+        {
+          "K": 5,
+          "ref": "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+          "n_detections": 4616,
+          "confusion_id": {
+            "tp": 2432,
+            "tn": 4889,
+            "fp": 123,
+            "fn": 1097
+          },
+          "mcc_id": 0.7147131738316918,
+          "fn": 1097,
+          "fn_with_detection_inside": 732,
+          "share": 0.667274
+        }
+      ]
+    },
+    {
+      "slug": "37arm2-r2",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+          "n_detections": 5021,
+          "confusion_id": {
+            "tp": 2441,
+            "tn": 4974,
+            "fp": 38,
+            "fn": 1088
+          },
+          "mcc_id": 0.7421891480811401,
+          "fn": 1088,
+          "fn_with_detection_inside": 743,
+          "share": 0.682904
+        },
+        {
+          "K": 3,
+          "ref": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+          "n_detections": 5097,
+          "confusion_id": {
+            "tp": 2534,
+            "tn": 4814,
+            "fp": 198,
+            "fn": 995
+          },
+          "mcc_id": 0.7163398973189123,
+          "fn": 995,
+          "fn_with_detection_inside": 745,
+          "share": 0.748744
+        },
+        {
+          "K": 5,
+          "ref": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+          "n_detections": 4924,
+          "confusion_id": {
+            "tp": 2502,
+            "tn": 4834,
+            "fp": 178,
+            "fn": 1027
+          },
+          "mcc_id": 0.7146526943165216,
+          "fn": 1027,
+          "fn_with_detection_inside": 733,
+          "share": 0.713729
+        }
+      ]
+    },
+    {
+      "slug": "55map-stride-a-r2",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt",
+          "n_detections": 4879,
+          "confusion_id": {
+            "tp": 2424,
+            "tn": 4847,
+            "fp": 165,
+            "fn": 1105
+          },
+          "mcc_id": 0.7006231644355948,
+          "fn": 1105,
+          "fn_with_detection_inside": 714,
+          "share": 0.646154
+        },
+        {
+          "K": 3,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt",
+          "n_detections": 4796,
+          "confusion_id": {
+            "tp": 2424,
+            "tn": 4851,
+            "fp": 161,
+            "fn": 1105
+          },
+          "mcc_id": 0.7017849420190314,
+          "fn": 1105,
+          "fn_with_detection_inside": 717,
+          "share": 0.648869
+        },
+        {
+          "K": 5,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt",
+          "n_detections": 4597,
+          "confusion_id": {
+            "tp": 2406,
+            "tn": 4827,
+            "fp": 185,
+            "fn": 1123
+          },
+          "mcc_id": 0.6907328075795099,
+          "fn": 1123,
+          "fn_with_detection_inside": 705,
+          "share": 0.627783
+        },
+        {
+          "K": 10,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt",
+          "n_detections": 4639,
+          "confusion_id": {
+            "tp": 2429,
+            "tn": 4825,
+            "fp": 187,
+            "fn": 1100
+          },
+          "mcc_id": 0.6954089955629733,
+          "fn": 1100,
+          "fn_with_detection_inside": 708,
+          "share": 0.643636
+        }
+      ]
+    },
+    {
+      "slug": "55map-stride-a-standardised",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt",
+          "n_detections": 4879,
+          "confusion_id": {
+            "tp": 2423,
+            "tn": 4851,
+            "fp": 166,
+            "fn": 1101
+          },
+          "mcc_id": 0.7010373806264685,
+          "fn": 1101,
+          "fn_with_detection_inside": 713,
+          "share": 0.647593
+        },
+        {
+          "K": 3,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt",
+          "n_detections": 4796,
+          "confusion_id": {
+            "tp": 2423,
+            "tn": 4855,
+            "fp": 162,
+            "fn": 1101
+          },
+          "mcc_id": 0.7021983070829206,
+          "fn": 1101,
+          "fn_with_detection_inside": 716,
+          "share": 0.650318
+        },
+        {
+          "K": 5,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt",
+          "n_detections": 4597,
+          "confusion_id": {
+            "tp": 2405,
+            "tn": 4831,
+            "fp": 186,
+            "fn": 1119
+          },
+          "mcc_id": 0.6911454905143717,
+          "fn": 1119,
+          "fn_with_detection_inside": 704,
+          "share": 0.629133
+        },
+        {
+          "K": 10,
+          "ref": "stride-55map-2026-08-25::g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt",
+          "n_detections": 4639,
+          "confusion_id": {
+            "tp": 2428,
+            "tn": 4829,
+            "fp": 188,
+            "fn": 1096
+          },
+          "mcc_id": 0.6958294935087906,
+          "fn": 1096,
+          "fn_with_detection_inside": 707,
+          "share": 0.645073
+        }
+      ]
+    },
+    {
+      "slug": "gs-stride-a",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n1-verified-p0.15-k1",
+          "n_detections": 419,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 248,
+            "fp": 10,
+            "fn": 41
+          },
+          "mcc_id": 0.7948120620808555,
+          "fn": 41,
+          "fn_with_detection_inside": 25,
+          "share": 0.609756
+        },
+        {
+          "K": 3,
+          "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n3-verified-p0.15-k3",
+          "n_detections": 386,
+          "confusion_id": {
+            "tp": 181,
+            "tn": 252,
+            "fp": 6,
+            "fn": 48
+          },
+          "mcc_id": 0.7872618493889568,
+          "fn": 48,
+          "fn_with_detection_inside": 27,
+          "share": 0.5625
+        },
+        {
+          "K": 5,
+          "ref": "stride-phaseb-2026-08-25::g384-ov128-ladder-n5-verified-p0.15-k4",
+          "n_detections": 400,
+          "confusion_id": {
+            "tp": 182,
+            "tn": 251,
+            "fp": 7,
+            "fn": 47
+          },
+          "mcc_id": 0.7862114994220415,
+          "fn": 47,
+          "fn_with_detection_inside": 28,
+          "share": 0.595745
+        },
+        {
+          "K": 10,
+          "ref": "stride-phaseb-2026-08-25::g384-ov128-k10-verified-p0.15-k8",
+          "n_detections": 394,
+          "confusion_id": {
+            "tp": 184,
+            "tn": 254,
+            "fp": 4,
+            "fn": 45
+          },
+          "mcc_id": 0.8078552405180695,
+          "fn": 45,
+          "fn_with_detection_inside": 26,
+          "share": 0.577778
+        }
+      ]
+    },
+    {
+      "slug": "55map-stride-b-r2",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+          "n_detections": 5655,
+          "confusion_id": {
+            "tp": 2525,
+            "tn": 4796,
+            "fp": 216,
+            "fn": 1004
+          },
+          "mcc_id": 0.70923940794411,
+          "fn": 1004,
+          "fn_with_detection_inside": 723,
+          "share": 0.72012
+        },
+        {
+          "K": 3,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+          "n_detections": 4772,
+          "confusion_id": {
+            "tp": 2452,
+            "tn": 4867,
+            "fp": 145,
+            "fn": 1077
+          },
+          "mcc_id": 0.7127782728409375,
+          "fn": 1077,
+          "fn_with_detection_inside": 730,
+          "share": 0.677809
+        },
+        {
+          "K": 5,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+          "n_detections": 4566,
+          "confusion_id": {
+            "tp": 2422,
+            "tn": 4880,
+            "fp": 132,
+            "fn": 1107
+          },
+          "mcc_id": 0.7098144397444127,
+          "fn": 1107,
+          "fn_with_detection_inside": 726,
+          "share": 0.655827
+        },
+        {
+          "K": 10,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+          "n_detections": 4639,
+          "confusion_id": {
+            "tp": 2441,
+            "tn": 4874,
+            "fp": 138,
+            "fn": 1088
+          },
+          "mcc_id": 0.712335638505622,
+          "fn": 1088,
+          "fn_with_detection_inside": 731,
+          "share": 0.671875
+        }
+      ]
+    },
+    {
+      "slug": "55map-stride-b-g37vf-r2",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt",
+          "n_detections": 5337,
+          "confusion_id": {
+            "tp": 2473,
+            "tn": 4967,
+            "fp": 45,
+            "fn": 1056
+          },
+          "mcc_id": 0.7470836550257224,
+          "fn": 1056,
+          "fn_with_detection_inside": 736,
+          "share": 0.69697
+        },
+        {
+          "K": 3,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt",
+          "n_detections": 4626,
+          "confusion_id": {
+            "tp": 2420,
+            "tn": 4974,
+            "fp": 38,
+            "fn": 1109
+          },
+          "mcc_id": 0.7375930224056209,
+          "fn": 1109,
+          "fn_with_detection_inside": 737,
+          "share": 0.664563
+        },
+        {
+          "K": 10,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt",
+          "n_detections": 4495,
+          "confusion_id": {
+            "tp": 2411,
+            "tn": 4975,
+            "fp": 37,
+            "fn": 1118
+          },
+          "mcc_id": 0.7359313551399321,
+          "fn": 1118,
+          "fn_with_detection_inside": 735,
+          "share": 0.657424
+        }
+      ]
+    },
+    {
+      "slug": "55map-stride-b-standardised",
+      "group": "phase 1",
+      "ground_truth": "inputs/vectors/references/best-available-gt-55maps.geojson",
+      "bounds": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+      "n_tiles": 8541,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt",
+          "n_detections": 5655,
+          "confusion_id": {
+            "tp": 2524,
+            "tn": 4800,
+            "fp": 217,
+            "fn": 1000
+          },
+          "mcc_id": 0.7096966412809629,
+          "fn": 1000,
+          "fn_with_detection_inside": 722,
+          "share": 0.722
+        },
+        {
+          "K": 3,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt",
+          "n_detections": 4772,
+          "confusion_id": {
+            "tp": 2451,
+            "tn": 4871,
+            "fp": 146,
+            "fn": 1073
+          },
+          "mcc_id": 0.7131972355165885,
+          "fn": 1073,
+          "fn_with_detection_inside": 729,
+          "share": 0.679404
+        },
+        {
+          "K": 5,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt",
+          "n_detections": 4566,
+          "confusion_id": {
+            "tp": 2421,
+            "tn": 4884,
+            "fp": 133,
+            "fn": 1103
+          },
+          "mcc_id": 0.710220981806135,
+          "fn": 1103,
+          "fn_with_detection_inside": 725,
+          "share": 0.657298
+        },
+        {
+          "K": 10,
+          "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt",
+          "n_detections": 4639,
+          "confusion_id": {
+            "tp": 2440,
+            "tn": 4878,
+            "fp": 139,
+            "fn": 1084
+          },
+          "mcc_id": 0.7127495787794123,
+          "fn": 1084,
+          "fn_with_detection_inside": 730,
+          "share": 0.673432
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+          "n_detections": 409,
+          "confusion_id": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "mcc_id": 0.7986214805183726,
+          "fn": 40,
+          "fn_with_detection_inside": 28,
+          "share": 0.7
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+          "n_detections": 401,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc_id": 0.8039967393618908,
+          "fn": 41,
+          "fn_with_detection_inside": 31,
+          "share": 0.756098
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+          "n_detections": 408,
+          "confusion_id": {
+            "tp": 186,
+            "tn": 245,
+            "fp": 13,
+            "fn": 43
+          },
+          "mcc_id": 0.7735141904719502,
+          "fn": 43,
+          "fn_with_detection_inside": 30,
+          "share": 0.697674
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+          "n_detections": 431,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 248,
+            "fp": 10,
+            "fn": 42
+          },
+          "mcc_id": 0.7910109847649028,
+          "fn": 42,
+          "fn_with_detection_inside": 30,
+          "share": 0.714286
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-text-t0.7-n1-opmax",
+          "n_detections": 414,
+          "confusion_id": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "mcc_id": 0.7880599064889484,
+          "fn": 44,
+          "fn_with_detection_inside": 27,
+          "share": 0.613636
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+          "n_detections": 404,
+          "confusion_id": {
+            "tp": 182,
+            "tn": 252,
+            "fp": 6,
+            "fn": 47
+          },
+          "mcc_id": 0.7909540676453012,
+          "fn": 47,
+          "fn_with_detection_inside": 30,
+          "share": 0.638298
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+          "n_detections": 382,
+          "confusion_id": {
+            "tp": 182,
+            "tn": 253,
+            "fp": 5,
+            "fn": 47
+          },
+          "mcc_id": 0.7957208671422977,
+          "fn": 47,
+          "fn_with_detection_inside": 31,
+          "share": 0.659574
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-text-t0.7-n10-opmax",
+          "n_detections": 397,
+          "confusion_id": {
+            "tp": 182,
+            "tn": 249,
+            "fp": 9,
+            "fn": 47
+          },
+          "mcc_id": 0.7767975418487647,
+          "fn": 47,
+          "fn_with_detection_inside": 31,
+          "share": 0.659574
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+          "n_detections": 415,
+          "confusion_id": {
+            "tp": 193,
+            "tn": 247,
+            "fp": 11,
+            "fn": 36
+          },
+          "mcc_id": 0.8094604645074259,
+          "fn": 36,
+          "fn_with_detection_inside": 27,
+          "share": 0.75
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+          "n_detections": 400,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc_id": 0.8039967393618908,
+          "fn": 41,
+          "fn_with_detection_inside": 30,
+          "share": 0.731707
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+          "n_detections": 405,
+          "confusion_id": {
+            "tp": 184,
+            "tn": 248,
+            "fp": 10,
+            "fn": 45
+          },
+          "mcc_id": 0.7796562809560899,
+          "fn": 45,
+          "fn_with_detection_inside": 33,
+          "share": 0.733333
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+          "n_detections": 410,
+          "confusion_id": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "mcc_id": 0.7880599064889484,
+          "fn": 44,
+          "fn_with_detection_inside": 32,
+          "share": 0.727273
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-3",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-text-t0.3-n1-opmax",
+          "n_detections": 443,
+          "confusion_id": {
+            "tp": 199,
+            "tn": 241,
+            "fp": 17,
+            "fn": 30
+          },
+          "mcc_id": 0.8068409811418747,
+          "fn": 30,
+          "fn_with_detection_inside": 20,
+          "share": 0.666667
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+          "n_detections": 387,
+          "confusion_id": {
+            "tp": 182,
+            "tn": 255,
+            "fp": 3,
+            "fn": 47
+          },
+          "mcc_id": 0.8053287127649015,
+          "fn": 47,
+          "fn_with_detection_inside": 31,
+          "share": 0.659574
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+          "n_detections": 408,
+          "confusion_id": {
+            "tp": 183,
+            "tn": 249,
+            "fp": 9,
+            "fn": 46
+          },
+          "mcc_id": 0.780544007723639,
+          "fn": 46,
+          "fn_with_detection_inside": 33,
+          "share": 0.717391
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+          "n_detections": 402,
+          "confusion_id": {
+            "tp": 186,
+            "tn": 248,
+            "fp": 10,
+            "fn": 43
+          },
+          "mcc_id": 0.7872180964038328,
+          "fn": 43,
+          "fn_with_detection_inside": 34,
+          "share": 0.790698
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t0-7",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-text-t0.7-n1-opmax",
+          "n_detections": 464,
+          "confusion_id": {
+            "tp": 195,
+            "tn": 237,
+            "fp": 21,
+            "fn": 34
+          },
+          "mcc_id": 0.7737164425580401,
+          "fn": 34,
+          "fn_with_detection_inside": 24,
+          "share": 0.705882
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+          "n_detections": 427,
+          "confusion_id": {
+            "tp": 190,
+            "tn": 247,
+            "fp": 11,
+            "fn": 39
+          },
+          "mcc_id": 0.797909531539788,
+          "fn": 39,
+          "fn_with_detection_inside": 31,
+          "share": 0.794872
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+          "n_detections": 392,
+          "confusion_id": {
+            "tp": 181,
+            "tn": 248,
+            "fp": 10,
+            "fn": 48
+          },
+          "mcc_id": 0.7683712047760317,
+          "fn": 48,
+          "fn_with_detection_inside": 33,
+          "share": 0.6875
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+          "n_detections": 377,
+          "confusion_id": {
+            "tp": 176,
+            "tn": 251,
+            "fp": 7,
+            "fn": 53
+          },
+          "mcc_id": 0.7640710656604924,
+          "fn": 53,
+          "fn_with_detection_inside": 33,
+          "share": 0.622642
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-text-n5-text-t1-0",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+          "n_detections": 451,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 245,
+            "fp": 13,
+            "fn": 32
+          },
+          "mcc_id": 0.8161984013442791,
+          "fn": 32,
+          "fn_with_detection_inside": 23,
+          "share": 0.71875
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+          "n_detections": 422,
+          "confusion_id": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "mcc_id": 0.7986214805183726,
+          "fn": 40,
+          "fn_with_detection_inside": 30,
+          "share": 0.75
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+          "n_detections": 426,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 246,
+            "fp": 12,
+            "fn": 41
+          },
+          "mcc_id": 0.7857140351270143,
+          "fn": 41,
+          "fn_with_detection_inside": 29,
+          "share": 0.707317
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+          "n_detections": 426,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 248,
+            "fp": 10,
+            "fn": 42
+          },
+          "mcc_id": 0.7910109847649028,
+          "fn": 42,
+          "fn_with_detection_inside": 30,
+          "share": 0.714286
+        }
+      ]
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-3",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+          "n_detections": 440,
+          "confusion_id": {
+            "tp": 203,
+            "tn": 246,
+            "fp": 12,
+            "fn": 26
+          },
+          "mcc_id": 0.8442634635196924,
+          "fn": 26,
+          "fn_with_detection_inside": 18,
+          "share": 0.692308
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+          "n_detections": 396,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc_id": 0.8177990630524311,
+          "fn": 35,
+          "fn_with_detection_inside": 24,
+          "share": 0.685714
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+          "n_detections": 407,
+          "confusion_id": {
+            "tp": 199,
+            "tn": 249,
+            "fp": 9,
+            "fn": 30
+          },
+          "mcc_id": 0.8416240719631218,
+          "fn": 30,
+          "fn_with_detection_inside": 21,
+          "share": 0.7
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+          "n_detections": 404,
+          "confusion_id": {
+            "tp": 198,
+            "tn": 249,
+            "fp": 9,
+            "fn": 31
+          },
+          "mcc_id": 0.8377377811948655,
+          "fn": 31,
+          "fn_with_detection_inside": 23,
+          "share": 0.741935
+        }
+      ]
+    },
+    {
+      "slug": "phase2-image-n5-image-t0-7",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+          "n_detections": 453,
+          "confusion_id": {
+            "tp": 205,
+            "tn": 244,
+            "fp": 14,
+            "fn": 24
+          },
+          "mcc_id": 0.8437222546300227,
+          "fn": 24,
+          "fn_with_detection_inside": 18,
+          "share": 0.75
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+          "n_detections": 423,
+          "confusion_id": {
+            "tp": 198,
+            "tn": 249,
+            "fp": 9,
+            "fn": 31
+          },
+          "mcc_id": 0.8377377811948655,
+          "fn": 31,
+          "fn_with_detection_inside": 22,
+          "share": 0.709677
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+          "n_detections": 421,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 250,
+            "fp": 8,
+            "fn": 32
+          },
+          "mcc_id": 0.838327705164423,
+          "fn": 32,
+          "fn_with_detection_inside": 22,
+          "share": 0.6875
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+          "n_detections": 405,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 249,
+            "fp": 9,
+            "fn": 35
+          },
+          "mcc_id": 0.8222900144404892,
+          "fn": 35,
+          "fn_with_detection_inside": 24,
+          "share": 0.685714
+        }
+      ]
+    },
+    {
+      "slug": "phase2-image-n5-image-t1-0",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+          "n_detections": 465,
+          "confusion_id": {
+            "tp": 202,
+            "tn": 245,
+            "fp": 13,
+            "fn": 27
+          },
+          "mcc_id": 0.8359783648469384,
+          "fn": 27,
+          "fn_with_detection_inside": 18,
+          "share": 0.666667
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+          "n_detections": 424,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc_id": 0.8177990630524311,
+          "fn": 35,
+          "fn_with_detection_inside": 22,
+          "share": 0.628571
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+          "n_detections": 364,
+          "confusion_id": {
+            "tp": 185,
+            "tn": 252,
+            "fp": 6,
+            "fn": 44
+          },
+          "mcc_id": 0.8020765530669638,
+          "fn": 44,
+          "fn_with_detection_inside": 28,
+          "share": 0.636364
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+          "n_detections": 397,
+          "confusion_id": {
+            "tp": 189,
+            "tn": 250,
+            "fp": 8,
+            "fn": 40
+          },
+          "mcc_id": 0.8077758185006721,
+          "fn": 40,
+          "fn_with_detection_inside": 27,
+          "share": 0.675
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-3",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+          "n_detections": 469,
+          "confusion_id": {
+            "tp": 204,
+            "tn": 241,
+            "fp": 17,
+            "fn": 25
+          },
+          "mcc_id": 0.827012483254296,
+          "fn": 25,
+          "fn_with_detection_inside": 17,
+          "share": 0.68
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+          "n_detections": 441,
+          "confusion_id": {
+            "tp": 200,
+            "tn": 244,
+            "fp": 14,
+            "fn": 29
+          },
+          "mcc_id": 0.8237126124028568,
+          "fn": 29,
+          "fn_with_detection_inside": 23,
+          "share": 0.793103
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-image-t0.3-n5-opmax",
+          "n_detections": 373,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 251,
+            "fp": 7,
+            "fn": 42
+          },
+          "mcc_id": 0.8048671575546655,
+          "fn": 42,
+          "fn_with_detection_inside": 25,
+          "share": 0.595238
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+          "n_detections": 432,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 248,
+            "fp": 10,
+            "fn": 32
+          },
+          "mcc_id": 0.8294155997812046,
+          "fn": 32,
+          "fn_with_detection_inside": 25,
+          "share": 0.78125
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t0-7",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+          "n_detections": 474,
+          "confusion_id": {
+            "tp": 206,
+            "tn": 243,
+            "fp": 15,
+            "fn": 23
+          },
+          "mcc_id": 0.8435394977332489,
+          "fn": 23,
+          "fn_with_detection_inside": 17,
+          "share": 0.73913
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+          "n_detections": 426,
+          "confusion_id": {
+            "tp": 196,
+            "tn": 252,
+            "fp": 6,
+            "fn": 33
+          },
+          "mcc_id": 0.8435026045190294,
+          "fn": 33,
+          "fn_with_detection_inside": 21,
+          "share": 0.636364
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+          "n_detections": 414,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 252,
+            "fp": 6,
+            "fn": 35
+          },
+          "mcc_id": 0.8358901084428885,
+          "fn": 35,
+          "fn_with_detection_inside": 25,
+          "share": 0.714286
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+          "n_detections": 348,
+          "confusion_id": {
+            "tp": 180,
+            "tn": 255,
+            "fp": 3,
+            "fn": 49
+          },
+          "mcc_id": 0.798049160305091,
+          "fn": 49,
+          "fn_with_detection_inside": 32,
+          "share": 0.653061
+        }
+      ]
+    },
+    {
+      "slug": "phase2-flash-high-image-n5-image-t1-0",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+          "n_detections": 490,
+          "confusion_id": {
+            "tp": 212,
+            "tn": 242,
+            "fp": 16,
+            "fn": 17
+          },
+          "mcc_id": 0.8639680641564343,
+          "fn": 17,
+          "fn_with_detection_inside": 12,
+          "share": 0.705882
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+          "n_detections": 418,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 248,
+            "fp": 10,
+            "fn": 32
+          },
+          "mcc_id": 0.8294155997812046,
+          "fn": 32,
+          "fn_with_detection_inside": 19,
+          "share": 0.59375
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-image-t1.0-n5-opmax",
+          "n_detections": 410,
+          "confusion_id": {
+            "tp": 193,
+            "tn": 250,
+            "fp": 8,
+            "fn": 36
+          },
+          "mcc_id": 0.8229787951164773,
+          "fn": 36,
+          "fn_with_detection_inside": 22,
+          "share": 0.611111
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+          "n_detections": 414,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 250,
+            "fp": 8,
+            "fn": 42
+          },
+          "mcc_id": 0.8002260267264144,
+          "fn": 42,
+          "fn_with_detection_inside": 25,
+          "share": 0.595238
+        }
+      ]
+    },
+    {
+      "slug": "phase2-scale-4-optimal-487",
+      "group": "phase 2",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+          "n_detections": 484,
+          "confusion_id": {
+            "tp": 209,
+            "tn": 247,
+            "fp": 11,
+            "fn": 20
+          },
+          "mcc_id": 0.8725571888310434,
+          "fn": 20,
+          "fn_with_detection_inside": 14,
+          "share": 0.7
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-scale4-optimal-n3-opmax",
+          "n_detections": 412,
+          "confusion_id": {
+            "tp": 195,
+            "tn": 253,
+            "fp": 5,
+            "fn": 34
+          },
+          "mcc_id": 0.8442527873288674,
+          "fn": 34,
+          "fn_with_detection_inside": 20,
+          "share": 0.588235
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-scale4-optimal-n5-opmax",
+          "n_detections": 398,
+          "confusion_id": {
+            "tp": 195,
+            "tn": 250,
+            "fp": 8,
+            "fn": 34
+          },
+          "mcc_id": 0.8306343964502935,
+          "fn": 34,
+          "fn_with_detection_inside": 24,
+          "share": 0.705882
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-scale4-optimal-n10-opmax",
+          "n_detections": 411,
+          "confusion_id": {
+            "tp": 191,
+            "tn": 250,
+            "fp": 8,
+            "fn": 38
+          },
+          "mcc_id": 0.8153596738826542,
+          "fn": 38,
+          "fn_with_detection_inside": 27,
+          "share": 0.710526
+        }
+      ]
+    },
+    {
+      "slug": "tier-e",
+      "group": "tier E",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+          "n_detections": 482,
+          "confusion_id": {
+            "tp": 196,
+            "tn": 247,
+            "fp": 11,
+            "fn": 33
+          },
+          "mcc_id": 0.8210934183675437,
+          "fn": 33,
+          "fn_with_detection_inside": 24,
+          "share": 0.727273
+        },
+        {
+          "K": 3,
+          "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "n_detections": 450,
+          "confusion_id": {
+            "tp": 196,
+            "tn": 246,
+            "fp": 12,
+            "fn": 33
+          },
+          "mcc_id": 0.8166730204597409,
+          "fn": 33,
+          "fn_with_detection_inside": 27,
+          "share": 0.818182
+        },
+        {
+          "K": 5,
+          "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+          "n_detections": 435,
+          "confusion_id": {
+            "tp": 193,
+            "tn": 248,
+            "fp": 10,
+            "fn": 36
+          },
+          "mcc_id": 0.8139456324306849,
+          "fn": 36,
+          "fn_with_detection_inside": 26,
+          "share": 0.722222
+        },
+        {
+          "K": 10,
+          "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
+          "n_detections": 406,
+          "confusion_id": {
+            "tp": 191,
+            "tn": 246,
+            "fp": 12,
+            "fn": 38
+          },
+          "mcc_id": 0.7972568684110762,
+          "fn": 38,
+          "fn_with_detection_inside": 28,
+          "share": 0.736842
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+          "n_detections": 409,
+          "confusion_id": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "mcc_id": 0.7986214805183726,
+          "fn": 40,
+          "fn_with_detection_inside": 28,
+          "share": 0.7
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+          "n_detections": 401,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc_id": 0.8039967393618908,
+          "fn": 41,
+          "fn_with_detection_inside": 31,
+          "share": 0.756098
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+          "n_detections": 408,
+          "confusion_id": {
+            "tp": 186,
+            "tn": 245,
+            "fp": 13,
+            "fn": 43
+          },
+          "mcc_id": 0.7735141904719502,
+          "fn": 43,
+          "fn_with_detection_inside": 30,
+          "share": 0.697674
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip",
+          "n_detections": 431,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 248,
+            "fp": 10,
+            "fn": 42
+          },
+          "mcc_id": 0.7910109847649028,
+          "fn": 42,
+          "fn_with_detection_inside": 30,
+          "share": 0.714286
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n1-opmax-d51clip",
+          "n_detections": 415,
+          "confusion_id": {
+            "tp": 193,
+            "tn": 247,
+            "fp": 11,
+            "fn": 36
+          },
+          "mcc_id": 0.8094604645074259,
+          "fn": 36,
+          "fn_with_detection_inside": 27,
+          "share": 0.75
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n3-opmax-d51clip",
+          "n_detections": 400,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "mcc_id": 0.8039967393618908,
+          "fn": 41,
+          "fn_with_detection_inside": 30,
+          "share": 0.731707
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n5-opmax-d51clip",
+          "n_detections": 405,
+          "confusion_id": {
+            "tp": 184,
+            "tn": 248,
+            "fp": 10,
+            "fn": 45
+          },
+          "mcc_id": 0.7796562809560899,
+          "fn": 45,
+          "fn_with_detection_inside": 33,
+          "share": 0.733333
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-text-t1.0-n10-opmax-d51clip",
+          "n_detections": 410,
+          "confusion_id": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "mcc_id": 0.7880599064889484,
+          "fn": 44,
+          "fn_with_detection_inside": 32,
+          "share": 0.727273
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+          "n_detections": 451,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 245,
+            "fp": 13,
+            "fn": 32
+          },
+          "mcc_id": 0.8161984013442791,
+          "fn": 32,
+          "fn_with_detection_inside": 23,
+          "share": 0.71875
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+          "n_detections": 419,
+          "confusion_id": {
+            "tp": 188,
+            "tn": 248,
+            "fp": 10,
+            "fn": 41
+          },
+          "mcc_id": 0.7948120620808555,
+          "fn": 41,
+          "fn_with_detection_inside": 31,
+          "share": 0.756098
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+          "n_detections": 423,
+          "confusion_id": {
+            "tp": 187,
+            "tn": 246,
+            "fp": 12,
+            "fn": 42
+          },
+          "mcc_id": 0.7818832871540911,
+          "fn": 42,
+          "fn_with_detection_inside": 30,
+          "share": 0.714286
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+          "n_detections": 423,
+          "confusion_id": {
+            "tp": 186,
+            "tn": 248,
+            "fp": 10,
+            "fn": 43
+          },
+          "mcc_id": 0.7872180964038328,
+          "fn": 43,
+          "fn_with_detection_inside": 31,
+          "share": 0.72093
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-3",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n1-opmax-d51clip",
+          "n_detections": 440,
+          "confusion_id": {
+            "tp": 203,
+            "tn": 246,
+            "fp": 12,
+            "fn": 26
+          },
+          "mcc_id": 0.8442634635196924,
+          "fn": 26,
+          "fn_with_detection_inside": 18,
+          "share": 0.692308
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n3-opmax-d51clip",
+          "n_detections": 396,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc_id": 0.8177990630524311,
+          "fn": 35,
+          "fn_with_detection_inside": 24,
+          "share": 0.685714
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n5-opmax-d51clip",
+          "n_detections": 407,
+          "confusion_id": {
+            "tp": 199,
+            "tn": 249,
+            "fp": 9,
+            "fn": 30
+          },
+          "mcc_id": 0.8416240719631218,
+          "fn": 30,
+          "fn_with_detection_inside": 21,
+          "share": 0.7
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t0.3-n10-opmax-d51clip",
+          "n_detections": 404,
+          "confusion_id": {
+            "tp": 198,
+            "tn": 249,
+            "fp": 9,
+            "fn": 31
+          },
+          "mcc_id": 0.8377377811948655,
+          "fn": 31,
+          "fn_with_detection_inside": 23,
+          "share": 0.741935
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-7",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+          "n_detections": 453,
+          "confusion_id": {
+            "tp": 205,
+            "tn": 244,
+            "fp": 14,
+            "fn": 24
+          },
+          "mcc_id": 0.8437222546300227,
+          "fn": 24,
+          "fn_with_detection_inside": 18,
+          "share": 0.75
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+          "n_detections": 421,
+          "confusion_id": {
+            "tp": 197,
+            "tn": 249,
+            "fp": 9,
+            "fn": 32
+          },
+          "mcc_id": 0.8338613879847839,
+          "fn": 32,
+          "fn_with_detection_inside": 22,
+          "share": 0.6875
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+          "n_detections": 419,
+          "confusion_id": {
+            "tp": 196,
+            "tn": 250,
+            "fp": 8,
+            "fn": 33
+          },
+          "mcc_id": 0.8344762601424413,
+          "fn": 33,
+          "fn_with_detection_inside": 22,
+          "share": 0.666667
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+          "n_detections": 403,
+          "confusion_id": {
+            "tp": 193,
+            "tn": 249,
+            "fp": 9,
+            "fn": 36
+          },
+          "mcc_id": 0.8184516368156041,
+          "fn": 36,
+          "fn_with_detection_inside": 24,
+          "share": 0.666667
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t1-0",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n1-opmax-d51clip",
+          "n_detections": 465,
+          "confusion_id": {
+            "tp": 202,
+            "tn": 245,
+            "fp": 13,
+            "fn": 27
+          },
+          "mcc_id": 0.8359783648469384,
+          "fn": 27,
+          "fn_with_detection_inside": 18,
+          "share": 0.666667
+        },
+        {
+          "K": 3,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n3-opmax-d51clip",
+          "n_detections": 424,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "mcc_id": 0.8177990630524311,
+          "fn": 35,
+          "fn_with_detection_inside": 22,
+          "share": 0.628571
+        },
+        {
+          "K": 5,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n5-opmax-d51clip",
+          "n_detections": 364,
+          "confusion_id": {
+            "tp": 185,
+            "tn": 252,
+            "fp": 6,
+            "fn": 44
+          },
+          "mcc_id": 0.8020765530669638,
+          "fn": 44,
+          "fn_with_detection_inside": 28,
+          "share": 0.636364
+        },
+        {
+          "K": 10,
+          "ref": "pv-diag-384::pv-min-image-t1.0-n10-opmax-d51clip",
+          "n_detections": 397,
+          "confusion_id": {
+            "tp": 189,
+            "tn": 250,
+            "fp": 8,
+            "fn": 40
+          },
+          "mcc_id": 0.8077758185006721,
+          "fn": 40,
+          "fn_with_detection_inside": 27,
+          "share": 0.675
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-tier-e",
+      "group": "clipped",
+      "ground_truth": "inputs/vectors/references/mounds-reference.geojson",
+      "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "n_tiles": 487,
+      "rungs": [
+        {
+          "K": 1,
+          "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+          "n_detections": 453,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 247,
+            "fp": 11,
+            "fn": 35
+          },
+          "mcc_id": 0.8133287914761097,
+          "fn": 35,
+          "fn_with_detection_inside": 24,
+          "share": 0.685714
+        },
+        {
+          "K": 3,
+          "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+          "n_detections": 421,
+          "confusion_id": {
+            "tp": 194,
+            "tn": 246,
+            "fp": 12,
+            "fn": 35
+          },
+          "mcc_id": 0.8088788905410073,
+          "fn": 35,
+          "fn_with_detection_inside": 27,
+          "share": 0.771429
+        },
+        {
+          "K": 5,
+          "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+          "n_detections": 408,
+          "confusion_id": {
+            "tp": 191,
+            "tn": 248,
+            "fp": 10,
+            "fn": 38
+          },
+          "mcc_id": 0.8062659527320177,
+          "fn": 38,
+          "fn_with_detection_inside": 26,
+          "share": 0.684211
+        },
+        {
+          "K": 10,
+          "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+          "n_detections": 406,
+          "confusion_id": {
+            "tp": 191,
+            "tn": 246,
+            "fp": 12,
+            "fn": 38
+          },
+          "mcc_id": 0.7972568684110762,
+          "fn": 38,
+          "fn_with_detection_inside": 28,
+          "share": 0.736842
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 3,
+  "apparent_f1": 0.8642731894814581,
+  "optimism": 0.0007353945697799723,
+  "optimism_mcse": 5.554622980259889e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.010239549410890092,
+    0.011545052905795293
+  ],
+  "corrected_f1": 0.8635377949116781,
+  "naive_ci": [
+    0.8531702176786637,
+    0.8752338026483006
+  ],
+  "selection_aware_ci": [
+    0.8524348231088837,
+    0.8744984080785206
+  ],
+  "argmax_stability": 0.7511,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.006759730980098744,
+  "mcb_theta": [
+    -0.007940085447436518,
+    -0.001494519513971504,
+    -0.004543984609863938,
+    0.001494519513971504
+  ],
+  "mcb_lower": [
+    -0.014699816427535262,
+    -0.008254250494070248,
+    -0.011303715589962682,
+    -0.00526521146612724
+  ],
+  "mcb_upper": [
+    -0.0011803544673377742,
+    0.00526521146612724,
+    0.0022157463702348057,
+    0.008254250494070248
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.005520625383822589,
+  "hsu_w_lower": 0.006141166895810451,
+  "hsu_lower": [
+    -0.014081252343246968,
+    -0.007635686409781955,
+    -0.010685151505674388,
+    -0.004646647381838947
+  ],
+  "hsu_upper": [
+    0.0,
+    0.004026105869851085,
+    0.0009766407739586506,
+    0.007015144897794093
+  ],
+  "hsu_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-55map-stride-b-r2-2026-09-12",
+  "tile_join": "geometric-contains",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "eval_f1": 0.8013
+    },
+    {
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "eval_f1": 0.8507
+    },
+    {
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "eval_f1": 0.8516
+    },
+    {
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "eval_f1": 0.856
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}
