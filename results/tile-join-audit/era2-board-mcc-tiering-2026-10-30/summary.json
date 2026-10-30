@@ -1,0 +1,2049 @@
+{
+  "board": "gs-era2-verified-board-2026-09-10",
+  "computed_at_commit": {
+    "id": "792d459ea",
+    "geometric-primary": "792d459ea",
+    "geometric-contains": "792d459ea"
+  },
+  "generated_at_utc": {
+    "id": "2026-10-30T05:30:39.936486+00:00",
+    "geometric-primary": "2026-10-30T05:31:08.225038+00:00",
+    "geometric-contains": "2026-10-30T05:30:30.270507+00:00"
+  },
+  "instrument": {
+    "tiering": "scripts/era1_leaderboard_tiering.py --permute-mcc [--tile-join JOIN]",
+    "tiering_settings": "10,000 tile-swap draws, seed 42, BH q = 0.05 per family, greedy clique",
+    "mcb": "scripts/selection_aware_intervals.py --board --metric mcc [--tile-join JOIN] --bootstrap 10000 --m-frac 1.0",
+    "mcb_settings": "admissible set: hsu_not_ruled_out, Hsu's constrained one-sided form",
+    "analyses": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering-input/run-analyses.json"
+  },
+  "gate": {
+    "tiering_keys_differing_beyond_run_metadata": [],
+    "f1": {
+      "n_significant": 8075,
+      "n_pairs": 11175,
+      "n_tiers": 14,
+      "tie_set": [
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b"
+      ],
+      "tie_set_equals_committed": true,
+      "expected": {
+        "n_significant": 8075,
+        "n_pairs": 11175,
+        "n_tiers": 14
+      }
+    },
+    "mcc": {
+      "n_significant": 3001,
+      "n_pairs": 11175,
+      "n_tiers": 6,
+      "tie_set_size": 34,
+      "tie_set_equals_committed": true,
+      "block_equals_committed": true,
+      "expected": {
+        "n_significant": 3001,
+        "n_pairs": 11175,
+        "n_tiers": 6,
+        "tie_set_size": 34
+      }
+    },
+    "mcb": {
+      "f1": {
+        "sha256_run": "5f8926c1e86b7da491d5672b2a62ff192a92c3aa6ba9a8428826ff6c0e5c2e1a",
+        "sha256_committed": "5f8926c1e86b7da491d5672b2a62ff192a92c3aa6ba9a8428826ff6c0e5c2e1a",
+        "admissible_size": 52,
+        "admissible_equals_committed": true,
+        "byte_identical": true
+      },
+      "mcc": {
+        "sha256_run": "49cf614a1473769155aa4e1ded1f57396990d37c81c280482e9809cfd8c2a410",
+        "sha256_committed": "49cf614a1473769155aa4e1ded1f57396990d37c81c280482e9809cfd8c2a410",
+        "admissible_size": 60,
+        "admissible_equals_committed": true,
+        "byte_identical": true
+      },
+      "expected": {
+        "f1": 52,
+        "mcc": 60
+      }
+    },
+    "builder_id_check": {
+      "analysis_id": "gs-era2-verified-board-2026-09-10",
+      "n_cells": 150,
+      "n_tiles": 487,
+      "specs_equal": true,
+      "counts_equal": true,
+      "occupancy_equal": true,
+      "has_det_equal": true,
+      "n_has_det_cells_differing": 0,
+      "n_reference_tiles": 229,
+      "passed": true
+    },
+    "withheld_refs": [
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+      "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax"
+    ],
+    "passed": true
+  },
+  "geometric_run_checks": {
+    "geometric-primary": {
+      "f1_side_equals_default_run": true,
+      "tile_join_recorded": "geometric-primary",
+      "n_cells_with_mcc": 150,
+      "n_mcc_withheld": 0,
+      "n_gates_passed": 150,
+      "mcb_candidates_equal_default": true
+    },
+    "geometric-contains": {
+      "f1_side_equals_default_run": true,
+      "tile_join_recorded": "geometric-contains",
+      "n_cells_with_mcc": 150,
+      "n_mcc_withheld": 0,
+      "n_gates_passed": 150,
+      "mcb_candidates_equal_default": true
+    }
+  },
+  "per_join": {
+    "id": {
+      "n_pairs": 11175,
+      "n_significant": 3001,
+      "n_tiers": 6,
+      "tier_sizes": [
+        34,
+        67,
+        36,
+        5,
+        6,
+        2
+      ],
+      "tier1": [
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "pv-diag-384::pv-scale4-optimal-n5-opmax",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax"
+      ],
+      "tier1_size": 34,
+      "mcb_admissible": [
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-text-baseline-era2b",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-min-6of10-era2b",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "pv-diag-384::session-78-image-checklist-text-opmax",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "pv-diag-384::session-78-image-checklist-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+        "pv-diag-384::session-78-image-brief-text-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n10-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n5-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n5-opmax"
+      ],
+      "mcb_admissible_size": 60,
+      "mcb_two_sided_band_size": 99,
+      "mcb_selected": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+      "mcb_apparent": 0.8887,
+      "argmax_stability": 0.4192,
+      "n_distinct_argmax": 39,
+      "top_cell": {
+        "ref": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "mcc": 0.8887,
+        "track": "image",
+        "f1_tier": 9,
+        "eval_f1": 0.7309
+      },
+      "top10": [
+        {
+          "ref": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+          "mcc": 0.8887,
+          "track": "image",
+          "f1_tier": 9
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+          "mcc": 0.8848,
+          "track": "image",
+          "f1_tier": 9
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-image-baseline-era2b",
+          "mcc": 0.8766,
+          "track": "image",
+          "f1_tier": 10
+        },
+        {
+          "ref": "pv-diag-384::pv-scale4-optimal-n1-opmax",
+          "mcc": 0.8726,
+          "track": "image",
+          "f1_tier": 11
+        },
+        {
+          "ref": "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+          "mcc": 0.864,
+          "track": "image",
+          "f1_tier": 12
+        },
+        {
+          "ref": "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+          "mcc": 0.8601,
+          "track": "image",
+          "f1_tier": 12
+        },
+        {
+          "ref": "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+          "mcc": 0.8599,
+          "track": "image",
+          "f1_tier": 11
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+          "mcc": 0.8499,
+          "track": "image",
+          "f1_tier": 10
+        },
+        {
+          "ref": "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+          "mcc": 0.8475,
+          "track": "image",
+          "f1_tier": 8
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-image-min-3of5-era2b",
+          "mcc": 0.8461,
+          "track": "image",
+          "f1_tier": 8
+        }
+      ],
+      "spearman_vs_id_150": 1.0,
+      "spearman_vs_id_cells_dir": 1.0,
+      "n_cells_dir": 103,
+      "delta_mcc_vs_id": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "n_higher": 0,
+        "n_lower": 0
+      }
+    },
+    "geometric-primary": {
+      "n_pairs": 11175,
+      "n_significant": 2013,
+      "n_tiers": 5,
+      "tier_sizes": [
+        64,
+        68,
+        10,
+        7,
+        1
+      ],
+      "tier1": [
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-image-checklist-text-opmax",
+        "pv-diag-384::session-78-text-comparative-opmax",
+        "pv-diag-384::verified-adv-text-6of10-era2b",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "pv-diag-384::verified-adv-image-min-6of10-era2b",
+        "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+        "pv-diag-384::session-78-image-brief-text-opmax",
+        "pv-diag-384::pv-scale4-optimal-n10-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+        "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+        "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+        "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+        "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+        "pv-diag-384::session-78-text-adversarial-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::session-78-image-checklist-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n10-opmax"
+      ],
+      "tier1_size": 64,
+      "mcb_admissible": [
+        "flash35-pv-2x2::f35prop-f3vf-4of10-era2b",
+        "flash35-pv-2x2::f3prop-f35vf-6of10-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::verified-adv-image-min-6of10-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-4of5-era2b",
+        "pv-diag-384::verified-adv-text-6of10-era2b",
+        "pv-diag-384::verified-adv-text-baseline-era2b",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+        "pv-diag-384::verified-adv-text-min-6of10-era2b",
+        "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b",
+        "pv-diag-384::verified-adv-text-min-true-3of5-era2b",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+        "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b",
+        "verifier-robustness::verified-384-union-t0-0-n5-era2b",
+        "verifier-t-pilot::verified-t0-0-era2b",
+        "verifier-t-pilot::verified-t0-5-era2b",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+        "pv-diag-384::session-78-text-comparative-opmax",
+        "pv-diag-384::session-78-text-adversarial-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-text-checklist-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-text-brief-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n10-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+        "pv-diag-384::session-78-text-adversarial-text-opmax",
+        "pv-diag-384::session-78-text-brief-text-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "pv-diag-384::session-78-image-checklist-text-opmax",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "pv-diag-384::session-78-image-checklist-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+        "pv-diag-384::session-78-image-brief-text-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-adversarial-text-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n10-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n5-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n5-opmax"
+      ],
+      "mcb_admissible_size": 125,
+      "mcb_two_sided_band_size": 133,
+      "mcb_selected": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+      "mcb_apparent": 0.9617,
+      "argmax_stability": 0.5227,
+      "n_distinct_argmax": 70,
+      "top_cell": {
+        "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "mcc": 0.9617,
+        "track": "image",
+        "f1_tier": 1,
+        "eval_f1": 0.9332
+      },
+      "top10": [
+        {
+          "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+          "mcc": 0.9617,
+          "track": "image",
+          "f1_tier": 1
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+          "mcc": 0.9535,
+          "track": "image",
+          "f1_tier": 10
+        },
+        {
+          "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+          "mcc": 0.949,
+          "track": "image",
+          "f1_tier": 1
+        },
+        {
+          "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+          "mcc": 0.9447,
+          "track": "image",
+          "f1_tier": 7
+        },
+        {
+          "ref": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+          "mcc": 0.9409,
+          "track": "text",
+          "f1_tier": 2
+        },
+        {
+          "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+          "mcc": 0.9405,
+          "track": "text",
+          "f1_tier": 1
+        },
+        {
+          "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+          "mcc": 0.9405,
+          "track": "text",
+          "f1_tier": 5
+        },
+        {
+          "ref": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+          "mcc": 0.9405,
+          "track": "image",
+          "f1_tier": 7
+        },
+        {
+          "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "mcc": 0.9374,
+          "track": "text",
+          "f1_tier": 2
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+          "mcc": 0.9365,
+          "track": "image",
+          "f1_tier": 9
+        }
+      ],
+      "spearman_vs_id_150": 0.7896,
+      "spearman_vs_id_cells_dir": 0.8396,
+      "n_cells_dir": 103,
+      "delta_mcc_vs_id": {
+        "mean": 0.1067,
+        "min": 0.0478,
+        "max": 0.1472,
+        "n_higher": 150,
+        "n_lower": 0
+      }
+    },
+    "geometric-contains": {
+      "n_pairs": 11175,
+      "n_significant": 1856,
+      "n_tiers": 5,
+      "tier_sizes": [
+        42,
+        89,
+        11,
+        7,
+        1
+      ],
+      "tier1": [
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-text-adversarial-opmax",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+        "pv-diag-384::session-78-text-comparative-opmax",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+        "pv-diag-384::session-78-image-brief-text-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+        "pv-diag-384::session-78-image-checklist-text-opmax",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax"
+      ],
+      "tier1_size": 42,
+      "mcb_admissible": [
+        "flash35-pv-2x2::f35prop-f3vf-4of10-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+        "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+        "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+        "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+        "pv-diag-384::verified-adv-image-3of5-era2b",
+        "pv-diag-384::verified-adv-image-baseline-era2b",
+        "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-image-min-3of5-era2b",
+        "pv-diag-384::verified-adv-image-min-6of10-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-4of5-era2b",
+        "pv-diag-384::verified-adv-text-6of10-era2b",
+        "pv-diag-384::verified-adv-text-baseline-era2b",
+        "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b",
+        "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b",
+        "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+        "pv-diag-384::verified-adv-text-min-6of10-era2b",
+        "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b",
+        "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+        "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+        "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+        "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b",
+        "verifier-robustness::verified-384-union-t0-0-n5-era2b",
+        "verifier-t-pilot::verified-t0-0-era2b",
+        "verifier-t-pilot::verified-t0-5-era2b",
+        "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+        "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+        "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-high-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-image-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3",
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n1-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-min-text-t1.0-n1-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+        "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1",
+        "pv-diag-384::pv-scale4-optimal-n1-opmax",
+        "pv-diag-384::pv-scale4-optimal-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+        "pv-diag-384::session-78-text-comparative-opmax",
+        "pv-diag-384::session-78-text-adversarial-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-text-checklist-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+        "pv-diag-384::session-78-text-brief-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+        "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+        "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+        "pv-diag-384::session-78-text-adversarial-text-opmax",
+        "pv-diag-384::session-78-text-brief-text-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n10-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-adversarial-opmax",
+        "pv-diag-384::session-78-image-comparative-opmax",
+        "pv-diag-384::session-78-image-checklist-text-opmax",
+        "pv-diag-384::session-78-image-brief-opmax",
+        "pv-diag-384::session-78-image-checklist-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n10-opmax",
+        "pv-diag-384::session-78-image-brief-text-opmax",
+        "pv-diag-384::pv-min-image-t0.3-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.7-n10-opmax",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax",
+        "pv-diag-384::session-78-image-adversarial-text-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n10-opmax",
+        "n1-outstanding-384::pv-n1-image-t0-n3-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-scale4-optimal-n5-opmax",
+        "pv-diag-384::pv-high-image-t0.3-n5-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n10-opmax",
+        "pv-diag-384::pv-min-image-t1.0-n5-opmax",
+        "pv-diag-384::pv-high-image-t1.0-n5-opmax"
+      ],
+      "mcb_admissible_size": 115,
+      "mcb_two_sided_band_size": 131,
+      "mcb_selected": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+      "mcb_apparent": 0.9423,
+      "argmax_stability": 0.6189,
+      "n_distinct_argmax": 48,
+      "top_cell": {
+        "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "mcc": 0.9423,
+        "track": "image",
+        "f1_tier": 1,
+        "eval_f1": 0.9332
+      },
+      "top10": [
+        {
+          "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+          "mcc": 0.9423,
+          "track": "image",
+          "f1_tier": 1
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b",
+          "mcc": 0.9304,
+          "track": "image",
+          "f1_tier": 10
+        },
+        {
+          "ref": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+          "mcc": 0.9264,
+          "track": "text",
+          "f1_tier": 2
+        },
+        {
+          "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+          "mcc": 0.9258,
+          "track": "image",
+          "f1_tier": 1
+        },
+        {
+          "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+          "mcc": 0.9218,
+          "track": "text",
+          "f1_tier": 1
+        },
+        {
+          "ref": "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+          "mcc": 0.9137,
+          "track": "text",
+          "f1_tier": 3
+        },
+        {
+          "ref": "pv-diag-384::pv-high-image-t0.7-n5-opmax",
+          "mcc": 0.9135,
+          "track": "image",
+          "f1_tier": 7
+        },
+        {
+          "ref": "pv-diag-384::session-78-text-adversarial-opmax",
+          "mcc": 0.9095,
+          "track": "text",
+          "f1_tier": 3
+        },
+        {
+          "ref": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+          "mcc": 0.9094,
+          "track": "image",
+          "f1_tier": 6
+        },
+        {
+          "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "mcc": 0.9064,
+          "track": "text",
+          "f1_tier": 2
+        }
+      ],
+      "spearman_vs_id_150": 0.7231,
+      "spearman_vs_id_cells_dir": 0.7666,
+      "n_cells_dir": 103,
+      "delta_mcc_vs_id": {
+        "mean": 0.0763,
+        "min": -0.0011,
+        "max": 0.119,
+        "n_higher": 149,
+        "n_lower": 1
+      }
+    }
+  },
+  "s165_spearman_recomputed_from_2026_09_12_audit": {
+    "geometric-primary": 0.8467,
+    "geometric-contains": 0.7736
+  },
+  "claims": {
+    "i": {
+      "id": {
+        "top_f1_cell": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "in_mcc_tier1": true,
+        "mcc_rank": 21,
+        "mcc_tier": 1,
+        "mcc": 0.8376,
+        "mcc_admissible": true
+      },
+      "geometric-primary": {
+        "top_f1_cell": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "in_mcc_tier1": true,
+        "mcc_rank": 1,
+        "mcc_tier": 1,
+        "mcc": 0.9617,
+        "mcc_admissible": true
+      },
+      "geometric-contains": {
+        "top_f1_cell": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+        "in_mcc_tier1": true,
+        "mcc_rank": 1,
+        "mcc_tier": 1,
+        "mcc": 0.9423,
+        "mcc_admissible": true
+      }
+    },
+    "ii": {
+      "id": {
+        "n_in_mcc_tier1": 1,
+        "of": 5,
+        "mcc_ranks": [
+          21,
+          62,
+          46,
+          37,
+          102
+        ],
+        "mcc_tiers": [
+          1,
+          2,
+          2,
+          2,
+          3
+        ]
+      },
+      "geometric-primary": {
+        "n_in_mcc_tier1": 4,
+        "of": 5,
+        "mcc_ranks": [
+          1,
+          27,
+          6,
+          3,
+          94
+        ],
+        "mcc_tiers": [
+          1,
+          1,
+          1,
+          1,
+          2
+        ]
+      },
+      "geometric-contains": {
+        "n_in_mcc_tier1": 4,
+        "of": 5,
+        "mcc_ranks": [
+          1,
+          15,
+          5,
+          4,
+          93
+        ],
+        "mcc_tiers": [
+          1,
+          1,
+          1,
+          1,
+          2
+        ]
+      }
+    },
+    "iii": {
+      "id": {
+        "f1_admissible": 52,
+        "mcc_admissible": 60,
+        "both": 9,
+        "union": 103,
+        "f1_only": 43,
+        "mcc_only": 51,
+        "both_members": [
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+          "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+          "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+          "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+          "pv-diag-384::verified-adv-text-min-6of10-era2b"
+        ],
+        "top_mcc_cell_f1_admissible": false
+      },
+      "geometric-primary": {
+        "f1_admissible": 52,
+        "mcc_admissible": 125,
+        "both": 50,
+        "union": 127,
+        "f1_only": 2,
+        "mcc_only": 75,
+        "both_members": [
+          "flash35-pv-2x2::f3prop-f35vf-6of10-era2b",
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+          "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+          "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+          "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+          "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+          "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+          "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+          "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+          "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+          "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+          "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.3-n5-opmax",
+          "pv-diag-384::pv-min-text-t0.7-n10-opmax",
+          "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3",
+          "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+          "pv-diag-384::session-78-text-adversarial-opmax",
+          "pv-diag-384::session-78-text-adversarial-text-opmax",
+          "pv-diag-384::session-78-text-brief-opmax",
+          "pv-diag-384::session-78-text-checklist-opmax",
+          "pv-diag-384::session-78-text-comparative-opmax",
+          "pv-diag-384::verified-adv-text-4of5-era2b",
+          "pv-diag-384::verified-adv-text-6of10-era2b",
+          "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+          "pv-diag-384::verified-adv-text-min-6of10-era2b",
+          "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b",
+          "pv-diag-384::verified-adv-text-min-true-3of5-era2b",
+          "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+          "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+          "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b",
+          "verifier-robustness::verified-384-union-t0-0-n5-era2b"
+        ],
+        "top_mcc_cell_f1_admissible": true
+      },
+      "geometric-contains": {
+        "f1_admissible": 52,
+        "mcc_admissible": 115,
+        "both": 45,
+        "union": 122,
+        "f1_only": 7,
+        "mcc_only": 70,
+        "both_members": [
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+          "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+          "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+          "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1",
+          "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+          "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+          "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+          "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n10-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n3-opmax",
+          "pv-diag-384::pv-high-text-t0.3-n5-opmax",
+          "pv-diag-384::pv-high-text-t0.7-n10-opmax",
+          "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+          "pv-diag-384::pv-high-text-t1.0-n10-opmax",
+          "pv-diag-384::pv-high-text-t1.0-n5-opmax",
+          "pv-diag-384::pv-min-text-t0.0-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.3-n10-opmax",
+          "pv-diag-384::pv-min-text-t0.3-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.7-n3-opmax",
+          "pv-diag-384::pv-min-text-t0.7-n5-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n10-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n3-opmax",
+          "pv-diag-384::pv-min-text-t1.0-n5-opmax",
+          "pv-diag-384::session-78-text-adversarial-opmax",
+          "pv-diag-384::session-78-text-adversarial-text-opmax",
+          "pv-diag-384::session-78-text-brief-opmax",
+          "pv-diag-384::session-78-text-checklist-opmax",
+          "pv-diag-384::session-78-text-comparative-opmax",
+          "pv-diag-384::verified-adv-text-4of5-era2b",
+          "pv-diag-384::verified-adv-text-6of10-era2b",
+          "pv-diag-384::verified-adv-text-consensus-16of30-era2b",
+          "pv-diag-384::verified-adv-text-min-6of10-era2b",
+          "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b",
+          "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b",
+          "pv-diag-384::verified-adv-text-t03-4of5-era2b",
+          "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b",
+          "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b",
+          "verifier-robustness::verified-384-union-t0-0-n5-era2b"
+        ],
+        "top_mcc_cell_f1_admissible": true
+      }
+    },
+    "iv": {
+      "id": {
+        "top_cell_track": "image",
+        "top5_tracks": [
+          "image",
+          "image",
+          "image",
+          "image",
+          "image"
+        ],
+        "top10_tracks": [
+          "image",
+          "image",
+          "image",
+          "image",
+          "image",
+          "image",
+          "image",
+          "image",
+          "image",
+          "image"
+        ],
+        "n_image_in_top10": 10,
+        "tier1_by_track": {
+          "image": 31,
+          "text": 3
+        },
+        "mcb_admissible_by_track": {
+          "image": 46,
+          "text": 14
+        },
+        "median_mcc_rank": {
+          "image": 33,
+          "text": 100
+        },
+        "board_by_track": {
+          "image": 59,
+          "text": 91
+        }
+      },
+      "geometric-primary": {
+        "top_cell_track": "image",
+        "top5_tracks": [
+          "image",
+          "image",
+          "image",
+          "image",
+          "text"
+        ],
+        "top10_tracks": [
+          "image",
+          "image",
+          "image",
+          "image",
+          "text",
+          "text",
+          "text",
+          "image",
+          "text",
+          "image"
+        ],
+        "n_image_in_top10": 6,
+        "tier1_by_track": {
+          "image": 37,
+          "text": 27
+        },
+        "mcb_admissible_by_track": {
+          "image": 55,
+          "text": 70
+        },
+        "median_mcc_rank": {
+          "image": 51,
+          "text": 95
+        },
+        "board_by_track": {
+          "image": 59,
+          "text": 91
+        }
+      },
+      "geometric-contains": {
+        "top_cell_track": "image",
+        "top5_tracks": [
+          "image",
+          "image",
+          "text",
+          "image",
+          "text"
+        ],
+        "top10_tracks": [
+          "image",
+          "image",
+          "text",
+          "image",
+          "text",
+          "text",
+          "image",
+          "text",
+          "image",
+          "text"
+        ],
+        "n_image_in_top10": 5,
+        "tier1_by_track": {
+          "image": 28,
+          "text": 14
+        },
+        "mcb_admissible_by_track": {
+          "image": 55,
+          "text": 60
+        },
+        "median_mcc_rank": {
+          "image": 47,
+          "text": 97
+        },
+        "board_by_track": {
+          "image": 59,
+          "text": 91
+        }
+      }
+    },
+    "v": {
+      "id": {
+        "register_leader": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "mcc": 0.8887,
+        "mcc_rank": 1,
+        "mcc_tier": 1,
+        "is_top": true,
+        "in_mcc_tier1": true,
+        "mcc_admissible": true
+      },
+      "geometric-primary": {
+        "register_leader": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "mcc": 0.9365,
+        "mcc_rank": 10,
+        "mcc_tier": 1,
+        "is_top": false,
+        "in_mcc_tier1": true,
+        "mcc_admissible": true
+      },
+      "geometric-contains": {
+        "register_leader": "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b",
+        "mcc": 0.8942,
+        "mcc_rank": 30,
+        "mcc_tier": 1,
+        "is_top": false,
+        "in_mcc_tier1": true,
+        "mcc_admissible": true
+      }
+    }
+  },
+  "reference_positive_tiles_per_join": {
+    "id": [
+      229
+    ],
+    "geometric-primary": [
+      199
+    ],
+    "geometric-contains": [
+      229
+    ]
+  },
+  "audit_crosscheck": {
+    "board-era2-2026-09-12.json": {
+      "n_audit_cells": 103,
+      "n_matched_to_board_cells": 103,
+      "joins": {
+        "id": {
+          "equal": 93,
+          "differ": [
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 188,
+                "tn": 252,
+                "fp": 6,
+                "fn": 41
+              },
+              "rebuilt": {
+                "tp": 191,
+                "tn": 252,
+                "fp": 6,
+                "fn": 38
+              }
+            },
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 189,
+                "tn": 254,
+                "fp": 4,
+                "fn": 40
+              },
+              "rebuilt": {
+                "tp": 192,
+                "tn": 254,
+                "fp": 4,
+                "fn": 37
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 182,
+                "tn": 247,
+                "fp": 11,
+                "fn": 47
+              },
+              "rebuilt": {
+                "tp": 186,
+                "tn": 247,
+                "fp": 11,
+                "fn": 43
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 185,
+                "tn": 244,
+                "fp": 14,
+                "fn": 44
+              },
+              "rebuilt": {
+                "tp": 188,
+                "tn": 244,
+                "fp": 14,
+                "fn": 41
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 251,
+                "fp": 7,
+                "fn": 45
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 251,
+                "fp": 7,
+                "fn": 42
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 254,
+                "fp": 4,
+                "fn": 45
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 254,
+                "fp": 4,
+                "fn": 42
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 188,
+                "tn": 247,
+                "fp": 11,
+                "fn": 41
+              },
+              "rebuilt": {
+                "tp": 191,
+                "tn": 246,
+                "fp": 12,
+                "fn": 38
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 182,
+                "tn": 256,
+                "fp": 2,
+                "fn": 47
+              },
+              "rebuilt": {
+                "tp": 185,
+                "tn": 256,
+                "fp": 2,
+                "fn": 44
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 251,
+                "fp": 7,
+                "fn": 45
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 251,
+                "fp": 7,
+                "fn": 42
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 185,
+                "tn": 250,
+                "fp": 8,
+                "fn": 44
+              },
+              "rebuilt": {
+                "tp": 189,
+                "tn": 250,
+                "fp": 8,
+                "fn": 40
+              }
+            }
+          ],
+          "refused_in_audit": 0
+        },
+        "geometric-primary": {
+          "equal": 93,
+          "differ": [
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 188,
+                "tn": 282,
+                "fp": 6,
+                "fn": 11
+              },
+              "rebuilt": {
+                "tp": 193,
+                "tn": 282,
+                "fp": 6,
+                "fn": 6
+              }
+            },
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 189,
+                "tn": 284,
+                "fp": 4,
+                "fn": 10
+              },
+              "rebuilt": {
+                "tp": 194,
+                "tn": 284,
+                "fp": 4,
+                "fn": 5
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 182,
+                "tn": 277,
+                "fp": 11,
+                "fn": 17
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 277,
+                "fp": 11,
+                "fn": 12
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 185,
+                "tn": 274,
+                "fp": 14,
+                "fn": 14
+              },
+              "rebuilt": {
+                "tp": 190,
+                "tn": 274,
+                "fp": 14,
+                "fn": 9
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 281,
+                "fp": 7,
+                "fn": 15
+              },
+              "rebuilt": {
+                "tp": 189,
+                "tn": 281,
+                "fp": 7,
+                "fn": 10
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 284,
+                "fp": 4,
+                "fn": 15
+              },
+              "rebuilt": {
+                "tp": 189,
+                "tn": 284,
+                "fp": 4,
+                "fn": 10
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 187,
+                "tn": 276,
+                "fp": 12,
+                "fn": 12
+              },
+              "rebuilt": {
+                "tp": 191,
+                "tn": 275,
+                "fp": 13,
+                "fn": 8
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 182,
+                "tn": 286,
+                "fp": 2,
+                "fn": 17
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 286,
+                "fp": 2,
+                "fn": 12
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 184,
+                "tn": 281,
+                "fp": 7,
+                "fn": 15
+              },
+              "rebuilt": {
+                "tp": 187,
+                "tn": 281,
+                "fp": 7,
+                "fn": 12
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 185,
+                "tn": 280,
+                "fp": 8,
+                "fn": 14
+              },
+              "rebuilt": {
+                "tp": 189,
+                "tn": 280,
+                "fp": 8,
+                "fn": 10
+              }
+            }
+          ],
+          "refused_in_audit": 0
+        },
+        "geometric-contains": {
+          "equal": 93,
+          "differ": [
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 214,
+                "tn": 249,
+                "fp": 9,
+                "fn": 15
+              },
+              "rebuilt": {
+                "tp": 220,
+                "tn": 249,
+                "fp": 9,
+                "fn": 9
+              }
+            },
+            {
+              "ref": "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b",
+              "audit_label": "gemini37-image-gs-2026-09-01__g37-image-k5-verified-swap37-p0_90-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 215,
+                "tn": 252,
+                "fp": 6,
+                "fn": 14
+              },
+              "rebuilt": {
+                "tp": 221,
+                "tn": 252,
+                "fp": 6,
+                "fn": 8
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k10-verified-carried-p0_10-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 209,
+                "tn": 240,
+                "fp": 18,
+                "fn": 20
+              },
+              "rebuilt": {
+                "tp": 216,
+                "tn": 240,
+                "fp": 18,
+                "fn": 13
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-carried-p0_10-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 213,
+                "tn": 237,
+                "fp": 21,
+                "fn": 16
+              },
+              "rebuilt": {
+                "tp": 219,
+                "tn": 237,
+                "fp": 21,
+                "fn": 10
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap37-p0_80-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 211,
+                "tn": 247,
+                "fp": 11,
+                "fn": 18
+              },
+              "rebuilt": {
+                "tp": 217,
+                "tn": 247,
+                "fp": 11,
+                "fn": 12
+              }
+            },
+            {
+              "ref": "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b",
+              "audit_label": "gemini37-screen-2026-08-28__g37-text-k5-verified-swap38-p0_88-k5",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 211,
+                "tn": 251,
+                "fp": 7,
+                "fn": 18
+              },
+              "rebuilt": {
+                "tp": 217,
+                "tn": 251,
+                "fp": 7,
+                "fn": 12
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 213,
+                "tn": 242,
+                "fp": 16,
+                "fn": 16
+              },
+              "rebuilt": {
+                "tp": 219,
+                "tn": 239,
+                "fp": 19,
+                "fn": 10
+              }
+            },
+            {
+              "ref": "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b",
+              "audit_label": "grid-2026-08-18__g384-ov192-k10-verified37-p0_98-k10",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 209,
+                "tn": 254,
+                "fp": 4,
+                "fn": 20
+              },
+              "rebuilt": {
+                "tp": 215,
+                "tn": 254,
+                "fp": 4,
+                "fn": 14
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-high-k10-verified-p0_20-k8",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 209,
+                "tn": 244,
+                "fp": 14,
+                "fn": 20
+              },
+              "rebuilt": {
+                "tp": 214,
+                "tn": 244,
+                "fp": 14,
+                "fn": 15
+              }
+            },
+            {
+              "ref": "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b",
+              "audit_label": "image-b-gs-2026-08-28__g384-ov192-image-min-k10-verified-p0_15-k9",
+              "moved_since_audit": true,
+              "audit": {
+                "tp": 212,
+                "tn": 246,
+                "fp": 12,
+                "fn": 17
+              },
+              "rebuilt": {
+                "tp": 219,
+                "tn": 246,
+                "fp": 12,
+                "fn": 10
+              }
+            }
+          ],
+          "refused_in_audit": 0
+        }
+      }
+    },
+    "k-ladder-phase2-cells-2026-09-12.json": {
+      "n_audit_cells": 46,
+      "n_matched_to_board_cells": 43,
+      "joins": {
+        "id": {
+          "equal": 43,
+          "differ": [],
+          "refused_in_audit": 0
+        },
+        "geometric-primary": {
+          "equal": 43,
+          "differ": [],
+          "refused_in_audit": 0
+        },
+        "geometric-contains": {
+          "equal": 43,
+          "differ": [],
+          "refused_in_audit": 0
+        }
+      }
+    }
+  },
+  "withheld_cells_geometric": [
+    {
+      "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+      "eval_f1": 0.8616,
+      "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-carried-p0_10-k1/evaluation.json",
+      "id": {
+        "refused": true,
+        "reason": "tile_join_detection_shortfall"
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 196,
+          "tn": 268,
+          "fp": 20,
+          "fn": 3
+        },
+        "mcc": 0.9059
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 224,
+          "tn": 232,
+          "fp": 26,
+          "fn": 5
+        },
+        "mcc": 0.8761
+      }
+    },
+    {
+      "ref": "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+      "eval_f1": 0.8747,
+      "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k1-verified-opmax/evaluation.json",
+      "id": {
+        "refused": true,
+        "reason": "tile_join_detection_shortfall"
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 195,
+          "tn": 281,
+          "fp": 7,
+          "fn": 4
+        },
+        "mcc": 0.9535
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 223,
+          "tn": 246,
+          "fp": 12,
+          "fn": 6
+        },
+        "mcc": 0.9262
+      }
+    },
+    {
+      "ref": "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax",
+      "eval_f1": 0.9135,
+      "eval_path": "results/k-ladder-2026-09-12/phase2/cells/gemini37-screen-2026-08-28__g37-text-k3-verified-opmax/evaluation.json",
+      "id": {
+        "refused": true,
+        "reason": "tile_join_detection_shortfall"
+      },
+      "geometric-primary": {
+        "confusion": {
+          "tp": 193,
+          "tn": 273,
+          "fp": 15,
+          "fn": 6
+        },
+        "mcc": 0.9121
+      },
+      "geometric-contains": {
+        "confusion": {
+          "tp": 222,
+          "tn": 238,
+          "fp": 20,
+          "fn": 7
+        },
+        "mcc": 0.8903
+      }
+    }
+  ],
+  "track_derivation": {
+    "basis_counts": {
+      "membership": 107,
+      "pool-sibling": 41,
+      "pool-name": 2
+    },
+    "by_pool_name": {
+      "n1-outstanding-384::pv-n1-image-t0-n3-opmax": "image-t0 -> image",
+      "pv-diag-384::pv-min-text-t0.0-n3-opmax": "flash-minimal-text-n30-t07-text-t0.0 -> text"
+    }
+  },
+  "tracks": {
+    "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b": "image",
+    "pv-diag-384::verified-adv-image-baseline-medium-vf-era2b": "image",
+    "pv-diag-384::verified-adv-image-baseline-era2b": "image",
+    "pv-diag-384::pv-scale4-optimal-n1-opmax": "image",
+    "pv-diag-384::pv-high-image-t1.0-n1-opmax": "image",
+    "pv-diag-384::pv-high-image-t1.0-n1-carried-p0.15-k1": "image",
+    "pv-diag-384::pv-scale4-optimal-n1-carried-p0.15-k1": "image",
+    "pv-diag-384::verified-adv-pro-image-pro-vf-3of5-era2b": "image",
+    "pv-diag-384::pv-min-image-t0.3-n1-carried-p0.15-k1": "image",
+    "pv-diag-384::verified-adv-image-min-3of5-era2b": "image",
+    "pv-diag-384::pv-min-image-t0.3-n1-opmax": "image",
+    "pv-diag-384::pv-scale4-optimal-n3-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.7-n1-opmax": "image",
+    "pv-diag-384::pv-high-image-t0.7-n1-opmax": "image",
+    "pv-diag-384::pv-high-image-t0.7-n3-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.3-n5-opmax": "image",
+    "n1-outstanding-384::pv-n1-image-t0-n3-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.7-n5-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.7-n3-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.3-n10-opmax": "image",
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b": "image",
+    "pv-diag-384::verified-adv-text-baseline-medium-vf-era2b": "text",
+    "pv-diag-384::pv-min-image-t1.0-n1-opmax": "image",
+    "pv-diag-384::pv-high-image-t0.7-n5-opmax": "image",
+    "pv-diag-384::verified-adv-pro-image-baseline-medium-vf-era2b": "image",
+    "pv-diag-384::verified-adv-pro-image-baseline-pro-vf-era2b": "image",
+    "pv-diag-384::verified-adv-text-baseline-era2b": "text",
+    "pv-diag-384::verified-adv-text-baseline-pro-vf-era2b": "text",
+    "pv-diag-384::session-78-image-adversarial-opmax": "image",
+    "pv-diag-384::session-78-image-comparative-opmax": "image",
+    "pv-diag-384::pv-scale4-optimal-n5-opmax": "image",
+    "pv-diag-384::session-78-image-brief-opmax": "image",
+    "pv-diag-384::pv-high-image-t1.0-n3-opmax": "image",
+    "pv-diag-384::pv-high-image-t0.3-n10-opmax": "image",
+    "pv-diag-384::pv-high-image-t0.3-n1-opmax": "image",
+    "pv-diag-384::verified-adv-image-3of5-era2b": "image",
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b": "image",
+    "pv-diag-384::pv-high-image-t0.3-n3-opmax": "image",
+    "pv-diag-384::verified-adv-pro-image-baseline-era2b": "image",
+    "pv-diag-384::pv-high-image-t1.0-n5-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.7-n10-opmax": "image",
+    "pv-diag-384::session-78-image-checklist-text-opmax": "image",
+    "grid-2026-08-18::g384-ov192-k10-verified37-p0.98-k10-era2b": "text",
+    "grid-2026-08-18::g384-ov192-k1-verified-opmax": "text",
+    "pv-diag-384::session-78-image-brief-text-opmax": "image",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b": "text",
+    "pv-diag-384::pv-min-image-t0.3-n3-opmax": "image",
+    "pv-diag-384::pv-min-image-t1.0-n3-opmax": "image",
+    "pv-diag-384::session-78-image-checklist-opmax": "image",
+    "grid-2026-08-18::g384-ov192-k3-verified-opmax": "text",
+    "pv-diag-384::pv-high-text-t1.0-n1-opmax": "text",
+    "pv-diag-384::pv-scale4-optimal-n10-opmax": "image",
+    "grid-2026-08-18::g384-ov192-k5-verified-opmax": "text",
+    "pv-diag-384::pv-min-text-t1.0-n1-opmax": "text",
+    "grid-2026-08-18::g384-ov192-k1-verified-p0.15-k1": "text",
+    "image-b-gs-2026-08-28::g384-ov192-image-min-k10-verified-p0.15-k9-era2b": "image",
+    "pv-diag-384::pv-min-image-t1.0-n10-opmax": "image",
+    "pv-diag-384::pv-high-text-t1.0-n1-carried-p0.15-k1": "text",
+    "pv-diag-384::verified-adv-text-min-6of10-era2b": "text",
+    "pv-diag-384::pv-high-text-t0.3-n1-opmax": "text",
+    "pv-diag-384::pv-high-text-t0.3-n3-opmax": "text",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b": "text",
+    "image-b-gs-2026-08-28::g384-ov192-image-high-k10-verified-p0.20-k8-era2b": "image",
+    "pv-diag-384::pv-high-image-t0.3-n5-opmax": "image",
+    "pv-diag-384::pv-min-text-t0.3-n3-opmax": "text",
+    "pv-diag-384::pv-min-text-t1.0-n3-opmax": "text",
+    "pv-diag-384::verified-adv-image-min-6of10-era2b": "image",
+    "pv-diag-384::pv-high-text-t0.3-n1-carried-p0.15-k1": "text",
+    "pv-diag-384::pv-min-image-t1.0-n5-opmax": "image",
+    "pv-diag-384::pv-high-image-t1.0-n10-opmax": "image",
+    "pv-diag-384::pv-min-image-t0.7-n3-carried-p0.15-k3": "image",
+    "pv-diag-384::pv-high-text-t1.0-n3-opmax": "text",
+    "pv-diag-384::pv-min-text-t0.3-n1-opmax": "text",
+    "pv-diag-384::pv-high-image-t0.7-n10-opmax": "image",
+    "pv-diag-384::pv-high-text-t0.7-n3-opmax": "text",
+    "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-era2b": "text",
+    "pv-diag-384::session-78-image-adversarial-text-opmax": "image",
+    "pv-diag-384::pv-min-text-t1.0-n1-carried-p0.15-k1": "text",
+    "pv-diag-384::pv-min-text-t0.7-n5-opmax": "text",
+    "pv-diag-384::verified-adv-text-pro-vf-4of5-era2b": "text",
+    "pv-diag-384::session-78-text-comparative-opmax": "text",
+    "pv-diag-384::session-78-text-adversarial-opmax": "text",
+    "verifier-robustness::verified-384-16of30-t0-3-n5-opmax-era2b": "text",
+    "verifier-robustness::verified-384-ge3of5-t0-7-high-n5-era2b": "text",
+    "pv-diag-384::pv-min-text-t0.7-n3-opmax": "text",
+    "pv-diag-384::pv-high-text-t1.0-n10-opmax": "text",
+    "pv-diag-384::pv-min-text-t0.3-n10-opmax": "text",
+    "pv-diag-384::verified-adv-pro-text-baseline-pro-vf-era2b": "text",
+    "pv-diag-384::verified-adv-text-6of10-era2b": "text",
+    "pv-diag-384::verified-adv-text-consensus-16of30-era2b": "text",
+    "pv-diag-384::verified-adv-text-min-true-3of5-era2b": "text",
+    "verifier-robustness::verified-384-ge3of5-t0-3-high-n5-era2b": "text",
+    "pv-diag-384::pv-min-text-t0.7-n1-opmax": "text",
+    "pv-diag-384::pv-min-text-t1.0-n10-opmax": "text",
+    "pv-diag-384::verified-adv-text-min-n30lineage-4of5-era2b": "text",
+    "pv-diag-384::verified-adv-pro-text-baseline-medium-vf-era2b": "text",
+    "pv-diag-384::pv-high-text-t0.3-n10-opmax": "text",
+    "pv-diag-384::pv-high-text-t0.0-n3-recovery-2026-09-08-opmax-era2b": "text",
+    "pv-diag-384::pv-high-text-t1.0-n5-opmax": "text",
+    "pv-diag-384::verified-adv-text-t03-4of5-era2b": "text",
+    "pv-diag-384::pv-min-text-t0.0-n3-opmax": "text",
+    "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b": "text",
+    "pv-diag-384::verified-adv-pro-text-baseline-era2b": "text",
+    "pv-diag-384::pv-high-text-t0.3-n5-opmax": "text",
+    "pv-diag-384::pv-min-text-t1.0-n5-opmax": "text",
+    "pv-diag-384::pv-high-image-t0.3-n3-carried-p0.15-k3": "image",
+    "verifier-t-pilot::verified-t0-0-era2b": "text",
+    "pv-diag-384::pv-min-text-t0.7-n10-opmax": "text",
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b": "text",
+    "pv-diag-384::pv-high-text-t0.7-n3-carried-p0.15-k3": "text",
+    "pv-diag-384::session-78-text-checklist-opmax": "text",
+    "pv-diag-384::pv-high-text-t0.0-n3-opmax": "text",
+    "pv-diag-384::pv-high-text-t0.7-n1-opmax": "text",
+    "pv-diag-384::pv-min-text-t0.3-n5-opmax": "text",
+    "verifier-t-pilot::verified-t0-5-era2b": "text",
+    "verifier-robustness::verified-384-ge3of5-t0-3-n5-era2b": "text",
+    "verifier-robustness::verified-384-ge3of5-t0-7-n5-era2b": "text",
+    "pv-diag-384::verified-adv-text-4of5-era2b": "text",
+    "pv-diag-384::pv-high-text-t0.7-n5-opmax": "text",
+    "flash35-pv-2x2::f35prop-f3vf-4of10-era2b": "text",
+    "flash35-pv-2x2::f3prop-f35vf-6of10-era2b": "text",
+    "pv-diag-384::pv-min-text-t0.7-n3-carried-p0.15-k3": "text",
+    "pv-diag-384::session-78-text-brief-opmax": "text",
+    "pv-diag-384::pv-high-text-t0.7-n10-opmax": "text",
+    "pv-diag-384::pv-min-image-t1.0-n3-carried-p0.15-k3": "image",
+    "verifier-robustness::verified-384-union-t0-0-n5-era2b": "text",
+    "pv-diag-384::pv-high-image-t0.7-n3-carried-p0.15-k3": "image",
+    "pv-diag-384::session-78-text-brief-text-opmax": "text",
+    "verifier-t-pilot::verified-t1-0-era2b": "text",
+    "pv-diag-384::session-78-text-checklist-text-opmax": "text",
+    "pv-diag-384::pv-min-text-t0.3-n3-carried-p0.15-k3": "text",
+    "pv-diag-384::session-78-text-adversarial-text-opmax": "text",
+    "pv-diag-384::pv-high-text-t1.0-n3-carried-p0.15-k3": "text",
+    "pv-diag-384::pv-min-text-t1.0-n3-carried-p0.15-k3": "text",
+    "pv-diag-384::pv-high-image-t1.0-n3-carried-p0.15-k3": "image",
+    "flash35-pv-2x2::f35prop-f35vf-4of10-era2b": "text",
+    "pv-diag-384::pv-scale4-optimal-n3-carried-p0.15-k3": "image",
+    "pv-diag-384::verified-adv-pro-text-flash-vf-3of5-era2b": "text",
+    "pv-diag-384::verified-adv-pro-text-medium-vf-3of5-era2b": "text",
+    "pv-diag-384::verified-adv-pro-text-pro-vf-3of5-era2b": "text",
+    "pv-diag-384::verified-adv-text-medium-vf-4of5-era2b": "text",
+    "pv-diag-384::verified-adv-text-high-vf-4of5-era2b": "text",
+    "proposer-verifier-384::verified-adversarial-text-era2b": "text",
+    "proposer-verifier-384::verified-cascade-adversarial-checklist-era2b": "text",
+    "proposer-verifier-384::verified-adversarial-image-era2b": "text",
+    "proposer-verifier-384::verified-cascade-checklist-adversarial-era2b": "text",
+    "proposer-verifier-384::verified-brief-text-era2b": "text",
+    "proposer-verifier-384::verified-checklist-image-era2b": "text",
+    "proposer-verifier-384::verified-brief-image-era2b": "text",
+    "proposer-verifier-384::verified-checklist-text-era2b": "text"
+  }
+}

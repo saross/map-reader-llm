@@ -1,0 +1,160 @@
+{
+  "n_cells": 150,
+  "total_fn_id": 6697,
+  "total_fn_with_detection_inside": 3993,
+  "share_fn_with_detection_inside": 0.5962,
+  "n_det_outside_named_tile_total": 27,
+  "spearman_fn_inside_vs_delta_mcc": {
+    "geometric-primary": 0.7536,
+    "geometric-contains": 0.8668
+  },
+  "spearman_fn_inside_vs_f1": 0.5182,
+  "by_track": {
+    "image": {
+      "n": 59,
+      "median_fn": 34,
+      "median_fn_with_detection_inside": 23,
+      "median_delta_mcc_primary": 0.0924
+    },
+    "text": {
+      "n": 91,
+      "median_fn": 45,
+      "median_fn_with_detection_inside": 30,
+      "median_delta_mcc_primary": 0.1189
+    }
+  },
+  "by_f1_tier_band": {
+    "1-3": {
+      "n": 26,
+      "median_fn_with_detection_inside": 30.0,
+      "median_delta_mcc_primary": 0.1243,
+      "median_delta_mcc_contains": 0.097
+    },
+    "4-8": {
+      "n": 91,
+      "median_fn_with_detection_inside": 27,
+      "median_delta_mcc_primary": 0.1143,
+      "median_delta_mcc_contains": 0.0772
+    },
+    "9-14": {
+      "n": 33,
+      "median_fn_with_detection_inside": 22,
+      "median_delta_mcc_primary": 0.0821,
+      "median_delta_mcc_contains": 0.052
+    }
+  },
+  "named_cells": {
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-swap37-p0.90-k5-era2b": {
+      "n_detections": 433,
+      "confusion_id": {
+        "tp": 192,
+        "tn": 254,
+        "fp": 4,
+        "fn": 37
+      },
+      "fn": 37,
+      "fn_with_detection_inside": 29,
+      "mcc": {
+        "id": 0.8376,
+        "geometric-primary": 0.9617,
+        "geometric-contains": 0.9423
+      }
+    },
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap37-p0.80-k5-era2b": {
+      "n_detections": 437,
+      "confusion_id": {
+        "tp": 187,
+        "tn": 251,
+        "fp": 7,
+        "fn": 42
+      },
+      "fn": 42,
+      "fn_with_detection_inside": 30,
+      "mcc": {
+        "id": 0.8049,
+        "geometric-primary": 0.9277,
+        "geometric-contains": 0.9052
+      }
+    },
+    "gemini37-screen-2026-08-28::g37-text-k5-verified-swap38-p0.88-k5-era2b": {
+      "n_detections": 429,
+      "confusion_id": {
+        "tp": 187,
+        "tn": 254,
+        "fp": 4,
+        "fn": 42
+      },
+      "fn": 42,
+      "fn_with_detection_inside": 30,
+      "mcc": {
+        "id": 0.8189,
+        "geometric-primary": 0.9405,
+        "geometric-contains": 0.9218
+      }
+    },
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b": {
+      "n_detections": 438,
+      "confusion_id": {
+        "tp": 191,
+        "tn": 252,
+        "fp": 6,
+        "fn": 38
+      },
+      "fn": 38,
+      "fn_with_detection_inside": 29,
+      "mcc": {
+        "id": 0.8245,
+        "geometric-primary": 0.949,
+        "geometric-contains": 0.9258
+      }
+    },
+    "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b": {
+      "n_detections": 431,
+      "confusion_id": {
+        "tp": 186,
+        "tn": 247,
+        "fp": 11,
+        "fn": 43
+      },
+      "fn": 43,
+      "fn_with_detection_inside": 30,
+      "mcc": {
+        "id": 0.7826,
+        "geometric-primary": 0.9022,
+        "geometric-contains": 0.8726
+      }
+    },
+    "pv-diag-384::verified-adv-image-baseline-pro-vf-era2b": {
+      "n_detections": 509,
+      "confusion_id": {
+        "tp": 215,
+        "tn": 245,
+        "fp": 13,
+        "fn": 14
+      },
+      "fn": 14,
+      "fn_with_detection_inside": 7,
+      "mcc": {
+        "id": 0.8887,
+        "geometric-primary": 0.9365,
+        "geometric-contains": 0.8942
+      }
+    },
+    "pv-diag-384::verified-adv-text-consensus-16of30-era2b": {
+      "n_detections": 412,
+      "confusion_id": {
+        "tp": 188,
+        "tn": 247,
+        "fp": 11,
+        "fn": 41
+      },
+      "fn": 41,
+      "fn_with_detection_inside": 29,
+      "mcc": {
+        "id": 0.7903,
+        "geometric-primary": 0.9192,
+        "geometric-contains": 0.8848
+      }
+    }
+  }
+}

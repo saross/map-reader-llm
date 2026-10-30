@@ -57,6 +57,11 @@ Usage::
     python scripts/selection_aware_intervals.py --board era1-single-pass-baseline-matrix \\
         --bootstrap 10000 --out results/selection-aware/
 
+    # a board's tile-MCC MCB under a geometric tile join (sensitivity reading;
+    # the default, id, is the published convention and is unchanged)
+    python scripts/selection_aware_intervals.py --board <analysis id> --metric mcc \\
+        --tile-join geometric-primary --bootstrap 10000 --out <dir>
+
 Notes:
     - Zero API spend; reads committed artefacts only.
     - Run on sapphire.
@@ -89,7 +94,11 @@ from scripts.grid_analysis import (  # noqa: E402
     as_gdf,
     load_cell_passes,
 )
-from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_DEFAULT,
+    TILE_JOINS,
+    compute_per_tile_tp_fp_fn,
+)
 from scripts.lib_cluster_origins import cluster_votes_with_members  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
@@ -235,6 +244,7 @@ def resample_weights(rng: np.random.Generator, n: int, m: int) -> np.ndarray:
 def run(
     counts: np.ndarray, b: int, m_frac: float, seed: int,
     has_mounds: np.ndarray | None = None, metric: str = "f1",
+    has_det: np.ndarray | None = None,
 ) -> dict[str, Any]:
     """Selection-aware bootstrap plus bootstrap MCB over one candidate set.
 
@@ -245,13 +255,22 @@ def run(
         seed: RNG seed.
         has_mounds: ``(n_tiles,)`` reference occupancy; required for ``mcc``.
         metric: ``f1`` (detection-level micro-F1) or ``mcc`` (tile-level).
+        has_det: Optional ``(n_candidates, n_tiles)`` boolean predicted-populated
+            indicators for ``mcc``, used instead of deriving them from
+            ``counts``. ``None`` (the default) derives them as before — a tile
+            is predicted-populated when its per-tile TP + FP is positive, which
+            books a detection to its ``source_tile``, the published ``id`` join.
+            A board tiered under another tile join passes that join's
+            indicators here (:func:`build_board_tile_classification`), so the
+            MCB tests the same labels the MCC permutation swapped.
 
     Returns:
         A dict of results; see the module docstring for interpretation.
 
     Raises:
-        ValueError: if ``mcc`` is requested without ``has_mounds``, or if fewer
-            than two candidates have a defined statistic.
+        ValueError: if ``mcc`` is requested without ``has_mounds``, if
+            ``has_det`` does not match ``counts`` in shape, or if fewer than
+            two candidates have a defined statistic.
     """
     rng = np.random.default_rng(seed)
     n_cand, n_tiles, _ = counts.shape
@@ -260,7 +279,15 @@ def run(
     if metric == "mcc":
         if has_mounds is None:
             raise ValueError("metric='mcc' requires has_mounds")
-        has_det = (counts[:, :, 0] + counts[:, :, 1]) > 0
+        if has_det is None:
+            has_det = (counts[:, :, 0] + counts[:, :, 1]) > 0
+        else:
+            has_det = np.asarray(has_det, dtype=bool)
+            if has_det.shape != (n_cand, n_tiles):
+                raise ValueError(
+                    f"has_det has shape {has_det.shape}, expected "
+                    f"{(n_cand, n_tiles)} to match counts"
+                )
 
         def stat(w: np.ndarray | None = None) -> np.ndarray:
             return mcc_from_indicators(has_det, has_mounds, w)
@@ -463,6 +490,92 @@ def build_board_tile_counts(
     logger.info("board %s: %d cells over %d tiles", analysis_id, len(specs),
                 len(tile_order))
     return specs, counts, reference_occupancy(gdf_ref, gdf_bounds, tile_order)
+
+
+def build_board_tile_classification(
+    analysis_id: str,
+    tile_join: str,
+    gt_override: Path | None = None,
+    bounds_override: Path | None = None,
+    buffer_metres: int = BUFFER_M,
+    analyses_path: Path | None = None,
+    conditions_path: Path | None = None,
+) -> tuple[list[dict[str, Any]], np.ndarray, np.ndarray, np.ndarray]:
+    """A board's cells with tile-MCC indicators built under a named tile join.
+
+    The tile-MCC MCB of :func:`build_board_tile_counts` derives its indicators
+    from the F1 arm's per-tile counts, which book a detection to its
+    ``source_tile`` and a reference to every tile it intersects — the published
+    ``id`` join, and only that join. A sensitivity reading under a geometric
+    join needs the indicators the MCC permutation swapped under that join, so
+    this loads the board through ``era1_leaderboard_tiering.load_cells`` with
+    the MCC arm on and ``tile_join`` set, and reads them off each cell's gated
+    one-hot arrays: predicted-populated is TP or FP, reference-populated is TP
+    or FN. The candidate set is the same as the default path's, because the
+    cells ``load_cells`` withholds are withheld on the F1 arm, which ignores
+    the join.
+
+    Args:
+        analysis_id: The analysis whose ``conditions_compared`` defines the board.
+        tile_join: One of ``lib_advanced_metrics.TILE_JOINS``.
+        gt_override: Optional ground-truth path.
+        bounds_override: Optional bounds path.
+        buffer_metres: Matching buffer (the F1 arm's; carried for ``counts``).
+        analyses_path: Analyses file, as in :func:`build_board_tile_counts`.
+        conditions_path: Conditions file, likewise.
+
+    Returns:
+        ``(specs, counts, has_mounds, has_det)`` — ``counts`` as
+        :func:`build_board_tile_counts` returns it, ``has_mounds`` the
+        ``(n_tiles,)`` reference occupancy under the join, ``has_det`` the
+        ``(n_cells, n_tiles)`` predicted-populated indicators under it.
+
+    Raises:
+        ValueError: if a cell's MCC arm was withheld (its labels cannot enter
+            the candidate set without changing it), or if two cells disagree on
+            reference occupancy, which depends only on the references, the
+            frame and the join.
+    """
+    from scripts.era1_leaderboard_tiering import load_cells  # noqa: PLC0415
+
+    withheld: list[dict[str, Any]] = []
+    cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(
+        conditions_path or PROJECT_ROOT / "results/run-conditions.json",
+        analyses_path or PROJECT_ROOT / "results/run-analyses.json",
+        analysis_id, bounds_override, gt_override, buffer_metres,
+        want_mcc=True, withheld=withheld, tile_join=tile_join,
+    )
+    if withheld:
+        logger.warning(
+            "board %s: %d candidate(s) WITHHELD by the tile-join invariant on "
+            "the F1 arm and excluded from the admissible set: %s", analysis_id,
+            len(withheld), ", ".join(w["label"] for w in withheld))
+    lost = [c["label"] for c in cells if "tp_c" not in c]
+    if lost:
+        raise ValueError(
+            f"board {analysis_id}: the MCC arm was withheld under tile join "
+            f"{tile_join!r} for {len(lost)} cell(s) ({', '.join(lost)}); the "
+            f"admissible set would be computed over a different candidate set"
+        )
+    specs = [{"ref": c["ref"], "label": c["label"], "eval_f1": c["eval_f1"]}
+             for c in cells]
+    counts = np.stack([
+        np.column_stack([np.asarray(c["tp"], dtype=float),
+                         np.asarray(c["fp"], dtype=float),
+                         np.asarray(c["fn"], dtype=float)])
+        for c in cells
+    ])
+    has_det = np.stack([(c["tp_c"] + c["fp_c"]) > 0 for c in cells])
+    occupancy = np.stack([(c["tp_c"] + c["fn_c"]) > 0 for c in cells])
+    if not (occupancy == occupancy[0]).all():
+        raise ValueError(
+            f"board {analysis_id}: cells disagree on reference occupancy under "
+            f"tile join {tile_join!r}, which depends only on the references, "
+            f"the frame and the join"
+        )
+    logger.info("board %s: %d cells over %d tiles, tile join %s", analysis_id,
+                len(specs), len(tile_order), tile_join)
+    return specs, counts, occupancy[0], has_det
 
 
 def build_evals_tile_counts(
@@ -720,6 +833,14 @@ def main() -> int:
     ap.add_argument("--tag", default=None, help="Output filename stem for --evals.")
     ap.add_argument("--metric", choices=("f1", "mcc"), default="f1",
                     help="Detection-level micro-F1, or registered tile-level MCC.")
+    ap.add_argument("--tile-join", choices=TILE_JOINS, default=TILE_JOIN_DEFAULT,
+                    help=("--board --metric mcc: the tile join the MCC indicators "
+                          f"are built under. Default {TILE_JOIN_DEFAULT!r}, the "
+                          "published convention, with behaviour and output "
+                          "exactly as before. A geometric join is a sensitivity "
+                          "reading: the indicators come from each cell's gated "
+                          "per-tile classification under that join, and the "
+                          "output name carries the join."))
     ap.add_argument("--ground-truth", type=Path, default=None,
                     help="Reference override; required for adapter-written boards "
                          "whose evals record a composite ground truth rather than "
@@ -742,7 +863,15 @@ def main() -> int:
         ap.error("give exactly one of --cell, --board, --evals or --sweep-union")
     if args.sweep_union and not (args.sweep_verify and args.sweep_k):
         ap.error("--sweep-union needs --sweep-verify and --sweep-k")
+    # Only the board path's tile-MCC indicators depend on a tile join; F1 and
+    # the other candidate sources keep the published one, so a non-default
+    # join anywhere else would label an unchanged result as a sensitivity run.
+    sensitivity_join = args.tile_join != TILE_JOIN_DEFAULT
+    if sensitivity_join and not (args.board and args.metric == "mcc"):
+        ap.error("--tile-join other than the default applies only to "
+                 "--board with --metric mcc")
     args.out.mkdir(parents=True, exist_ok=True)
+    has_det = None
 
     if args.sweep_union:
         gdf_ref = gpd.read_file(args.ground_truth or GROUND_TRUTH)
@@ -759,11 +888,19 @@ def main() -> int:
         tag = args.tag or "evals"
         res_meta = {"evals_glob": args.evals, **scope}
     elif args.board:
-        specs, counts, has_mounds = build_board_tile_counts(
-            args.board, args.ground_truth, args.bounds, args.buffer,
-            analyses_path=args.analyses, conditions_path=args.conditions)
+        if sensitivity_join:
+            specs, counts, has_mounds, has_det = build_board_tile_classification(
+                args.board, args.tile_join, args.ground_truth, args.bounds,
+                args.buffer, analyses_path=args.analyses,
+                conditions_path=args.conditions)
+        else:
+            specs, counts, has_mounds = build_board_tile_counts(
+                args.board, args.ground_truth, args.bounds, args.buffer,
+                analyses_path=args.analyses, conditions_path=args.conditions)
         tag = args.board
         res_meta = {"board": args.board}
+        if sensitivity_join:
+            res_meta["tile_join"] = args.tile_join
         # Record the overrides the run actually used. Adapter-written boards
         # (the Track-2 55-map cells) CANNOT be loaded without --ground-truth,
         # so an artefact that omits it is not reproducible from its own
@@ -794,7 +931,7 @@ def main() -> int:
                     "K": args.K}
 
     res = run(counts, args.bootstrap, args.m_frac, SEED,
-              has_mounds=has_mounds, metric=args.metric)
+              has_mounds=has_mounds, metric=args.metric, has_det=has_det)
     res.update(res_meta)
     res.update({"m_frac": args.m_frac, "candidates": specs, "seed": SEED,
                 "buffer_metres": args.buffer})
@@ -835,6 +972,10 @@ def main() -> int:
     # different admissible set. Two files that answer different questions must
     # not be distinguishable only by an optional suffix.
     suffix = "" if args.metric == "f1" else f"_{args.metric}"
+    if sensitivity_join:
+        # A sensitivity reading must never share a name with the published
+        # artefact it sits beside.
+        suffix += f"_{args.tile_join}"
     suffix += f"_b{args.buffer}"
     out = args.out / f"{tag}{suffix}_m{args.m_frac:g}.json"
     out.write_text(json.dumps(res, indent=2))
