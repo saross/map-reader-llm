@@ -91,6 +91,21 @@
 # refused cell killed the whole run — which is why the Era-2 board could not
 # admit the three Gemini 3.7 gold-standard text rungs at all.
 #
+# Since 2026-10-30, ``--tile-join`` names the rule the MCC arm books points to
+# tiles with (``lib_advanced_metrics.TILE_JOINS``), for the tile-join
+# sensitivity reading of the MCC family (``planning/paper-writeup-continuity.md``,
+# the MCC robustness job, part (b)). The default is ``TILE_JOIN_DEFAULT``
+# (``id``, the published convention, S153 ruling 6) and with it every byte of
+# behaviour and output is as before. A geometric join changes ONLY the MCC
+# arm: the F1 arm, its per-tile counts, its tiering and its withheld cells are
+# untouched, because the per-tile F1 table keeps the published join. Under a
+# geometric join no committed record exists to gate the rebuilt confusion
+# against, so the gate compares the per-tile labels with the scorer's own
+# aggregate confusion under that join (plus the geometric arm, which holds by
+# construction), the MCC family ranks on that join's MCC at the committed four
+# decimals, and the outputs are written as ``tiering_<buffer>m_<join>.json``
+# and ``.md`` so they can never overwrite a board's published tiering.
+#
 # A cell the invariant refuses on the F1 ARM has no per-tile table on this
 # frame at all, so it is withheld from BOTH families and listed under the
 # top-level ``withheld_cells``. Each such record carries ruling 6's full
@@ -159,6 +174,7 @@ from lib_advanced_metrics import (  # noqa: E402
     TILE_JOIN_REASON_DETECTION_SHORTFALL,
     TILE_JOIN_REASON_NO_SOURCE_TILE,
     TILE_JOIN_REASON_REFERENCE_SHORTFALL,
+    TILE_JOINS,
     calculate_tile_classification,
     compute_per_tile_classification,
     compute_per_tile_tp_fp_fn,
@@ -174,6 +190,13 @@ from pairwise_permutation_test import (  # noqa: E402
 #: Recorded MCC is rounded to 4 dp by evaluate_detections.py, so the gate
 #: cannot be tighter than half a unit in the last place.
 MCC_GATE_TOL = 5e-5
+
+#: Decimals a non-default tile join's MCC is ranked at. The published MCC
+#: family ranks the committed evaluations' four-decimal values, so a
+#: sensitivity reading under another join ranks at the same precision — the
+#: value ``evaluate_detections.py`` would have written had the cell been
+#: scored under that join — and ties resolve exactly as they would there.
+MCC_PUBLISHED_DECIMALS = 4
 
 DEFAULT_CONDITIONS = BASE_DIR / "results" / "run-conditions.json"
 DEFAULT_ANALYSES = BASE_DIR / "results" / "run-analyses.json"
@@ -473,20 +496,26 @@ def cell_per_tile_classification(
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     tile_order: list[str],
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, dict]:
     """Per-tile one-hot (TP, TN, FP, FN) classification aligned to ``tile_order``.
 
     Wraps ``lib_advanced_metrics.compute_per_tile_classification`` — the house
     definition, a thin per-tile view over ``calculate_tile_classification`` — so
     the labels cannot drift from the ones ``evaluate_detections.py`` published.
-    Buffer-free by construction: a tile is positive if it intersects any
-    reference mound, predicted positive if the set assigned any detection to it.
+    Buffer-free by construction: a tile is positive if the join books any
+    reference mound to it, predicted positive if it books any detection to it.
 
     Args:
         gdf_det: One detection set in ``TARGET_CRS`` with ``source_tile``.
         gdf_ref: Ground-truth references in ``TARGET_CRS``.
         gdf_bounds: Evaluation tile boundaries in ``TARGET_CRS``.
         tile_order: Fixed list of ``tile_name`` values defining array positions.
+        tile_join: One of ``lib_advanced_metrics.TILE_JOINS``, passed to both
+            library calls so the aggregate the diagnostics come from and the
+            per-tile labels are built by one rule. Defaults to
+            ``TILE_JOIN_DEFAULT`` (``id``, the published convention), which
+            is exactly the call this function made before the option existed.
 
     Returns:
         Tuple ``(tp, tn, fp, fn, diagnostics)`` — four integer arrays of
@@ -498,14 +527,18 @@ def cell_per_tile_classification(
             that a mislabelled per-tile table never reaches the
             permutation harness.
     """
-    tile_class = calculate_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    tile_class = calculate_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+    )
     if "error" in tile_class:
         raise ConfusionGateError(
             f"tile join refused ({tile_class.get('reason')}): "
             f"{tile_class['error']}"
         )
     diagnostics = tile_class.get("tile_join_diagnostics") or {}
-    per_tile = compute_per_tile_classification(gdf_det, gdf_ref, gdf_bounds)
+    per_tile = compute_per_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+    )
     tile_index = {name: i for i, name in enumerate(tile_order)}
     n_tiles = len(tile_order)
     arrays = {k: np.zeros(n_tiles, dtype=int) for k in ("tp", "tn", "fp", "fn")}
@@ -605,6 +638,85 @@ def check_confusion_gate(label: str, rebuilt: dict, recorded: dict | None,
     return {"confusion": rebuilt, "mcc_rebuilt": mcc_rebuilt,
             "mcc_recorded": mcc_recorded, "geometry": geometry_record,
             "passed": True}
+
+
+def join_sensitivity_gate(
+    label: str,
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    rebuilt: dict,
+    mcc_rebuilt: float | None,
+    join_diagnostics: dict,
+    tile_join: str,
+) -> tuple[dict, float | None]:
+    """Gate a cell's per-tile labels under a NON-default tile join.
+
+    No committed evaluation records a confusion under a geometric join, so the
+    published-join gate (rebuilt against the committed record) has nothing to
+    compare with. What can still be checked, and is:
+
+    * the **geometric arm** of :func:`check_confusion_gate` — every point inside
+      the frame's tile union was booked to some tile. Under both geometric
+      joins this holds by construction, so it is a guard on the library, not a
+      finding;
+    * the **per-tile labels against the scorer's own aggregate** — the
+      ``tile_order``-aligned one-hot arrays must sum to the confusion
+      ``calculate_tile_classification`` reports under the same join, and their
+      MCC to its MCC at the published four decimals. This catches a tile
+      dropped by the alignment (a tile name absent from ``tile_order``), which
+      would silently shrink the confusion the permutation swaps.
+
+    Neither arm is an appeal to an independent record; the record of what this
+    gate does and does not establish travels with the output (``reference``).
+
+    Args:
+        label: Cell label, for the error message.
+        gdf_det: The cell's detections, as the per-tile labels were built from.
+        gdf_ref: Reference mounds in ``TARGET_CRS``.
+        gdf_bounds: The frame's tile polygons in ``TARGET_CRS``.
+        rebuilt: ``{tp, tn, fp, fn}`` summed from the per-tile arrays.
+        mcc_rebuilt: MCC of ``rebuilt`` (``None`` when undefined).
+        join_diagnostics: The ``tile_join_diagnostics`` block of the build.
+        tile_join: The non-default join in force.
+
+    Returns:
+        ``(gate_record, mcc_join)`` — the gate record for the output JSON, and
+        the join's MCC rounded to :data:`MCC_PUBLISHED_DECIMALS` (``None`` when
+        undefined), which the MCC family ranks on.
+
+    Raises:
+        ConfusionGateError: on a geometric shortfall, or when the per-tile
+            labels disagree with the scorer's aggregate under the same join.
+    """
+    aggregate = calculate_tile_classification(
+        gdf_det, gdf_ref, gdf_bounds, tile_join=tile_join,
+    )
+    if "error" in aggregate:
+        raise ConfusionGateError(
+            f"{label}: tile join '{tile_join}' refused "
+            f"({aggregate.get('reason')}): {aggregate['error']}"
+        )
+    recorded = {k: int(aggregate[k]) for k in ("tp", "tn", "fp", "fn")}
+    mcc_aggregate = aggregate.get("mcc")
+    mcc_join = (None if mcc_aggregate is None
+                else round(float(mcc_aggregate), MCC_PUBLISHED_DECIMALS))
+    gate = check_confusion_gate(
+        label, rebuilt, recorded,
+        None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
+        mcc_join,
+        geometry_check=join_diagnostics,
+    )
+    gate.update({
+        "tile_join": tile_join,
+        "reference": (
+            f"calculate_tile_classification under '{tile_join}' on the same "
+            f"detections: no committed record exists for a non-default join, "
+            f"so this gate checks the per-tile alignment and the geometric "
+            f"booking, not reproduction of a published number"
+        ),
+    })
+    return gate, mcc_join
 
 
 #: Reason codes the tile-join invariant stamps into its refusal messages. A
@@ -758,12 +870,20 @@ def mcc_point(cell: dict) -> float | None:
     has one-hot arrays here (that is what the gate rebuilt), so the fallback
     recomputes the point rather than dropping the cell out of the MCC ordering.
 
+    Under a non-default tile join (``--tile-join``) the committed number is the
+    published join's, not the one the MCC family is testing, so
+    :func:`load_cells` stores the join's own MCC as ``cell["mcc_join"]`` and it
+    takes precedence. A cell loaded under the default join never carries the
+    key, so the default ordering is untouched.
+
     Args:
         cell: A loaded cell from :func:`load_cells`.
 
     Returns:
         The MCC point estimate, or ``None`` when neither source has one.
     """
+    if cell.get("mcc_join") is not None:
+        return float(cell["mcc_join"])
     if cell.get("mcc") is not None:
         return float(cell["mcc"])
     if "tp_c" not in cell:
@@ -839,6 +959,7 @@ def load_cells(
     buffer_metres: int = HEADLINE_BUFFER_M,
     want_mcc: bool = False,
     withheld: list[dict] | None = None,
+    tile_join: str = TILE_JOIN_DEFAULT,
 ) -> tuple[list[dict], gpd.GeoDataFrame, gpd.GeoDataFrame, list[str]]:
     """Load every board cell with per-tile stats, F1 and MCC.
 
@@ -866,6 +987,15 @@ def load_cells(
             withheld ones are published as withheld (PI ruling 2026-09-13).
             ``None`` keeps the fail-loud behaviour, which is what a caller
             without a place to publish a withholding wants.
+        tile_join: The rule the MCC arm (``want_mcc``) books points to tiles
+            with; one of ``lib_advanced_metrics.TILE_JOINS``. The default,
+            ``TILE_JOIN_DEFAULT``, gates every cell against its committed
+            confusion exactly as before. Any other join is a sensitivity
+            reading: there is no committed record under it, so each cell is
+            gated against the scorer's aggregate confusion under the same join
+            (and the geometric arm), and the join's MCC, at the committed four
+            decimals, is stored as ``mcc_join`` for :func:`mcc_point`. The F1
+            arm ignores this argument.
 
     Returns:
         ``(cells, gdf_ref, gdf_bounds, tile_order)``.
@@ -874,8 +1004,11 @@ def load_cells(
         ValueError: if the cells disagree on ground truth / bounds and no
             override is supplied (a silent-scope-mix guard); or if a cell's
             per-tile table cannot be built for any reason other than a
-            tile-join refusal, or for that reason with no ``withheld`` sink.
+            tile-join refusal, or for that reason with no ``withheld`` sink;
+            or if ``tile_join`` is not one of ``TILE_JOINS``.
     """
+    if tile_join not in TILE_JOINS:
+        raise ValueError(f"tile_join must be one of {TILE_JOINS!r}, got {tile_join!r}")
     refs = load_board_refs(analyses_path, analysis_id)
 
     # First pass: resolve every cell's eval, collect (gt, bounds) declarations.
@@ -1006,18 +1139,27 @@ def load_cells(
                 gdf_det = cell_detections(cli, gdf_bounds)
                 tp_c, tn_c, fp_c, fn_c, join_diagnostics = (
                     cell_per_tile_classification(
-                        gdf_det, gdf_ref, gdf_bounds, tile_order
+                        gdf_det, gdf_ref, gdf_bounds, tile_order,
+                        tile_join=tile_join,
                     )
                 )
                 rebuilt = {"tp": int(tp_c.sum()), "tn": int(tn_c.sum()),
                            "fp": int(fp_c.sum()), "fn": int(fn_c.sum())}
                 mcc_rebuilt = compute_mcc_or_none(**rebuilt)
-                gate = check_confusion_gate(
-                    cond["label"], rebuilt, read_tile_confusion(eval_path),
-                    None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
-                    cells[-1]["mcc"],
-                    geometry_check=join_diagnostics,
-                )
+                if tile_join == TILE_JOIN_DEFAULT:
+                    # The published join: gate against the committed record.
+                    gate = check_confusion_gate(
+                        cond["label"], rebuilt, read_tile_confusion(eval_path),
+                        None if mcc_rebuilt is None else round(float(mcc_rebuilt), 6),
+                        cells[-1]["mcc"],
+                        geometry_check=join_diagnostics,
+                    )
+                else:
+                    gate, mcc_join = join_sensitivity_gate(
+                        cond["label"], gdf_det, gdf_ref, gdf_bounds, rebuilt,
+                        mcc_rebuilt, join_diagnostics, tile_join,
+                    )
+                    cells[-1]["mcc_join"] = mcc_join
             except ConfusionGateError as error:
                 cells[-1].update({
                     "mcc_withheld": {
@@ -1102,6 +1244,18 @@ def main() -> int:
              "single detection SET and must carry a committed "
              "tile_classification.confusion to gate against.",
     )
+    parser.add_argument(
+        "--tile-join", choices=TILE_JOINS, default=TILE_JOIN_DEFAULT,
+        help="Tile join the MCC arm books points to tiles with (needs "
+             f"--permute-mcc). Default {TILE_JOIN_DEFAULT!r}, the published "
+             "convention (S153 ruling 6), with behaviour and outputs exactly as "
+             "before. A geometric join is a SENSITIVITY reading of the MCC "
+             "family only: the F1 arm keeps the published join, each cell's "
+             "rebuilt confusion is gated against the scorer's own aggregate "
+             "under the same join (no committed record exists for it), and the "
+             "outputs are written as tiering_<buffer>m_<join>.json / .md so "
+             "they cannot overwrite a board's published tiering.",
+    )
     args = parser.parse_args()
 
     if args.check is not None:
@@ -1114,6 +1268,15 @@ def main() -> int:
         if getattr(args, name) is None:
             parser.error(f"--{name.replace('_', '-')} is required unless "
                          f"--render-md or --check is given")
+    # The join only changes the MCC arm, so a non-default join without that
+    # arm would write an F1 tiering under a name that claims otherwise.
+    sensitivity_join = args.tile_join != TILE_JOIN_DEFAULT
+    if sensitivity_join and not args.permute_mcc:
+        parser.error("--tile-join other than the default changes only the MCC "
+                     "arm; pass --permute-mcc with it")
+    if sensitivity_join:
+        print(f"TILE JOIN {args.tile_join!r} on the MCC arm (sensitivity "
+              f"reading; the F1 arm keeps {TILE_JOIN_DEFAULT!r})", flush=True)
 
     withheld_cells: list[dict] = []
     cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(
@@ -1121,6 +1284,7 @@ def main() -> int:
         args.bounds, args.ground_truth, buffer_metres=args.buffer,
         want_mcc=args.permute_mcc,
         withheld=None if args.strict_tile_join else withheld_cells,
+        tile_join=args.tile_join,
     )
     if withheld_cells:
         print(f"WITHHELD {len(withheld_cells)} cell(s) the tile-join invariant "
@@ -1282,11 +1446,33 @@ def main() -> int:
             "gates": {c["ref"]: c.get("mcc_gate") for c in cells},
             "pairwise": pairwise_mcc,
         }
-    json_path = args.output_dir / f"tiering_{args.buffer}m.json"
+        if sensitivity_join:
+            # Added only off the default, so a default run's JSON keeps its
+            # exact key set. Each MCC ranking row also carries the published
+            # join's committed MCC, so the two readings sit side by side.
+            committed = {c["ref"]: c["mcc"] for c in cells}
+            block = result["mcc_permutation"]
+            block["tile_join"] = args.tile_join
+            block["tile_join_note"] = (
+                f"SENSITIVITY reading: the MCC arm books points to tiles under "
+                f"'{args.tile_join}', not the published '{TILE_JOIN_DEFAULT}' "
+                f"join (S153 ruling 6). The F1 arm, its tiering and its "
+                f"withheld cells are unchanged. Gates compare each cell's "
+                f"per-tile labels with the scorer's aggregate under the same "
+                f"join; no committed record exists to reproduce."
+            )
+            block["ranking"] = [
+                {**row, "mcc_published_join": committed.get(row["ref"])}
+                for row in block["ranking"]
+            ]
+    stem = f"tiering_{args.buffer}m"
+    if sensitivity_join:
+        stem += f"_{args.tile_join}"
+    json_path = args.output_dir / f"{stem}.json"
     json_path.write_text(json.dumps(result, indent=2))
     print(f"Wrote {json_path}", flush=True)
 
-    md_path = args.output_dir / f"tiering_{args.buffer}m.md"
+    md_path = args.output_dir / f"{stem}.md"
     md_path.write_text(render_markdown(result), encoding="utf-8")
     print(f"Wrote {md_path}", flush=True)
     return 0
@@ -1453,6 +1639,11 @@ def render_markdown(result: dict, source_commit: str | None = None) -> str:
             f"- **Pairs**: {len(mcc_block['pairwise'])} "
             f"({mcc_block['n_significant']} significant)",
         ]
+        if mcc_block.get("tile_join"):
+            # Present only on a non-default (sensitivity) join, so a default
+            # board's document renders exactly as before.
+            lines += [f"- **Tile join**: `{mcc_block['tile_join']}` — "
+                      f"{mcc_block['tile_join_note']}"]
         if mcc_block.get("withheld"):
             lines += [
                 f"- **MCC WITHHELD** for {len(mcc_block['withheld'])} cell(s) "
