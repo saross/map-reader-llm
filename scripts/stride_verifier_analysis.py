@@ -4,11 +4,13 @@ Stride-programme post-verifier scoring: the nine-cell board and contrasts.
 
 Scores the five overnight stride cells (Phase B: g512_ov176, g384_ov128,
 g256_ov064, g512_ov320; Phase C: g384_ov240) with the grid's machinery on the
-common footprint, joins them to the four grid cells' registered verified
-best points, and computes the paired contrasts the programme was run to
-settle: the iso-stride decompositions (three tile sizes at stride 192; pairs
-at 256 and 336), the stride-144 ladder rung, and every new cell against the
-incumbent bar (g384_ov192 verified, F1 0.8961).
+common footprint, joins them to the four grid cells' verified best points
+(the grid post-verifier analysis's ``verified-best/`` sets), and computes the
+paired contrasts the programme was run to settle: the iso-stride
+decompositions (three tile sizes at stride 192; pairs at 256 and 336), the
+stride-144 ladder rung, and every new cell against the incumbent bar
+(g384_ov192 verified; F1 0.8961 as committed in 2026-08, 0.9017 with the
+D62 (1) re-verified rows, restated 2026-10-15).
 
 Join gates per stride cell (the S142 audit standard): probability count
 equals the union file's feature count; keys are exactly the contiguous
@@ -93,12 +95,19 @@ STRIDE_CELLS: dict[str, tuple[str, int, int, float]] = {
     "g384_ov240": ("outputs/stride-phasec-2026-08-25", 144, 384, 0.625),
 }
 
-#: The four grid cells' registered verified best points (D16-pattern files).
+#: The four grid cells' verified best points, as the grid post-verifier
+#: analysis writes them (``grid_verifier_analysis.py --materialise-conditions``
+#: → ``verified-best/<cell>/``), so every cell of this board stands at its best
+#: point, as the five stride cells do. Until 2026-10-15 these paths were the
+#: grid's registered condition files, which were the best points by
+#: construction; the D62 (1) re-verified rows moved 384 px / 12.5 %'s best
+#: point off its registered (0.20, k7), and the registered condition keeps
+#: its point (PI ruling D65 (3)), so the board now reads the best-point sets.
 GRID_CELLS: dict[str, tuple[str, int, int, float]] = {
-    "g512_ov064": ("results/grid-2026-08-18/conditions-verified/g512_ov064", 448, 512, 0.125),
-    "g512_ov256": ("results/grid-2026-08-18/conditions-verified/g512_ov256", 256, 512, 0.50),
-    "g384_ov048": ("results/grid-2026-08-18/conditions-verified/g384_ov048", 336, 384, 0.125),
-    "g384_ov192": ("results/grid-2026-08-18/conditions-verified/g384_ov192", 192, 384, 0.50),
+    "g512_ov064": ("results/grid-2026-08-18/verified-best/g512_ov064", 448, 512, 0.125),
+    "g512_ov256": ("results/grid-2026-08-18/verified-best/g512_ov256", 256, 512, 0.50),
+    "g384_ov048": ("results/grid-2026-08-18/verified-best/g384_ov048", 336, 384, 0.125),
+    "g384_ov192": ("results/grid-2026-08-18/verified-best/g384_ov192", 192, 384, 0.50),
 }
 
 #: The contrasts the programme was run to settle: name -> (a, b) as ΔF1 = a − b.
@@ -268,8 +277,9 @@ def main() -> int:
             b["precision"], b["recall"],
             "undef" if b["mcc"] is None else f"{b['mcc']:.4f}")
 
-    # Grid cells: registered verified best points, re-scored here for a
-    # uniform board (20 m values must reproduce the register exactly).
+    # Grid cells: the grid analysis's verified best points (GRID_CELLS),
+    # re-scored here for a uniform board (20 m values must reproduce the grid
+    # post-verifier board's best points exactly).
     for label, (rel, stride, px, ov) in GRID_CELLS.items():
         gdf = gpd.read_file(PROJECT_ROOT / rel / "detections.geojson")
         row = score(gdf, gdf_ref, bounds)

@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-09-08T13:13:51.158547+00:00",
+  "timestamp": "2026-10-15T11:42:19.054946+00:00",
   "summary": {
     "label": "stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10-unverified",
     "n_detections": 756,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.647,
-        "f1_point": 0.647,
-        "f1_ci_lower": 0.5933,
-        "f1_ci_upper": 0.6962,
+        "f1": 0.6537,
+        "f1_point": 0.6537,
+        "f1_ci_lower": 0.6002,
+        "f1_ci_upper": 0.7016,
         "f1_ci_method": "BCa",
-        "precision": 0.5066,
-        "p_point": 0.5066,
-        "p_ci_lower": 0.4464,
-        "p_ci_upper": 0.5646,
+        "precision": 0.5119,
+        "p_point": 0.5119,
+        "p_ci_lower": 0.4517,
+        "p_ci_upper": 0.5701,
         "p_ci_method": "BCa",
-        "recall": 0.8949,
-        "r_point": 0.8949,
-        "r_ci_lower": 0.8559,
-        "r_ci_upper": 0.9249,
+        "recall": 0.9042,
+        "r_point": 0.9042,
+        "r_ci_lower": 0.8663,
+        "r_ci_upper": 0.933,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -42,6 +42,26 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "normal",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 756,
+      "n_in_scope": 756,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 0,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_origin_excluded": 0,
+      "n_origin_partly_excluded": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "origin_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
         "tp": 207,
@@ -51,33 +71,34 @@
       },
       "mcc": {
         "point": 0.395,
-        "mean": 0.3946,
-        "ci_lower": 0.3199,
-        "ci_upper": 0.463,
+        "mean": 0.3947,
+        "ci_lower": 0.3206,
+        "ci_upper": 0.4632,
         "method": "BCa"
       },
       "sensitivity": {
         "point": 0.92,
-        "mean": 0.9197,
-        "ci_lower": 0.8776,
-        "ci_upper": 0.951,
+        "mean": 0.9198,
+        "ci_lower": 0.8773,
+        "ci_upper": 0.9519,
         "method": "BCa"
       },
       "specificity": {
         "point": 0.4313,
-        "mean": 0.4315,
-        "ci_lower": 0.3711,
-        "ci_upper": 0.4922,
+        "mean": 0.4314,
+        "ci_lower": 0.3713,
+        "ci_upper": 0.492,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "c1d6424b7",
+    "script_git_commit": "98ab69abc",
     "script_git_status": "dirty",
-    "generated_at_utc": "2026-09-08T13:13:48.677034+00:00",
+    "generated_at_utc": "2026-10-15T11:42:17.168695+00:00",
     "cli_args": {
       "detections": [
         "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/twin-10of10.geojson"
@@ -95,6 +116,7 @@
       "output_dir": "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10",
       "label": "stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10-unverified",
       "mcc": true,
+      "tile_join": "id",
       "require_clean_inputs": false,
       "workers": 1
     },
@@ -117,11 +139,16 @@
       "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
     },
     "input_git_state": {
-      "head": "c1d6424b7",
+      "head": "98ab69abc",
       "inputs": {
-        "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/twin-10of10.geojson": "untracked",
+        "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/twin-10of10.geojson": "modified",
         "inputs/vectors/references/mounds-reference.geojson": "clean",
         "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+      },
+      "blob_hashes": {
+        "results/uplift-supplement/verifier-pairing/stride-phaseb-2026-08-25__g512-ov320-k10-verified-p0_15-k10/twin-10of10.geojson": "ffe9dee277d6da1f345cf7cbf2d93d5aa8ae208a",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "7600bff7ccf8403d6fb3458bd73d9da61287c768"
       }
     },
     "spatial": {

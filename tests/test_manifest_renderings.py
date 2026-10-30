@@ -24,6 +24,7 @@ from scripts.generate_post_run_report import (
     REPO_ROOT,
     _STAMP_RE,
     _array_key,
+    _md_table,
     check_renderings,
     manifest_md_path,
     render_committed_manifests,
@@ -96,6 +97,32 @@ def test_drift_check_catches_a_changed_row():
     rows[0] = dict(rows[0], corpus="tampered")
     after = render_manifest("runs", obj, json_rel, "aaaaaaaaa")
     assert _STAMP_RE.sub("", before) != _STAMP_RE.sub("", after)
+
+
+def test_md_table_escapes_a_pipe_inside_a_cell():
+    """A cell's literal ``|`` must not split it into two cells.
+
+    The Era-2 board's outcome quotes "G6 max |delta| 0.0079"; unescaped,
+    its rendered row gained two cells and failed markdownlint MD056.
+    """
+    table = _md_table(["a", "b"], [["x", "max |delta| 0.0079"]])
+    row = table.splitlines()[2]
+    assert row == "| x | max \\|delta\\| 0.0079 |"
+    # Separators left after removing escaped pipes: one per cell boundary.
+    assert row.replace("\\|", "").count("|") == 3
+
+
+def test_rendered_rows_keep_their_column_count():
+    """No rendered data row has more cells than its header (MD056).
+
+    Renders every committed register in memory, so it also covers rows
+    whose source text contains a literal pipe.
+    """
+    for manifest, text in render_committed_manifests("aaaaaaaaa").items():
+        table = [ln for ln in text.splitlines() if ln.startswith("|")]
+        n_sep = table[0].count("|")
+        for ln in table[2:]:
+            assert ln.replace("\\|", "").count("|") == n_sep, (manifest, ln[:80])
 
 
 def test_rendering_has_one_table_row_per_register_row():

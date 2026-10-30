@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-28T07:03:28.045059+00:00",
+    "timestamp": "2026-10-15T11:11:19.237524+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -19,13 +19,13 @@
       "pool_size": 10,
       "threshold": 6
     },
-    "f1": 0.733202,
-    "precision": 0.642981,
-    "recall": 0.852874,
+    "f1": 0.735178,
+    "precision": 0.644714,
+    "recall": 0.855172,
     "n_detections": 577,
-    "tp": 371,
-    "fp": 206,
-    "fn": 64
+    "tp": 372,
+    "fp": 205,
+    "fn": 63
   },
   "condition_b": {
     "label": "flash-min-text-t10 N=30 N=30, 22-of-30",
@@ -36,16 +36,16 @@
       "pool_size": 30,
       "threshold": 22
     },
-    "f1": 0.476773,
-    "precision": 0.509138,
-    "recall": 0.448276,
+    "f1": 0.479218,
+    "precision": 0.511749,
+    "recall": 0.450575,
     "n_detections": 383,
-    "tp": 195,
-    "fp": 188,
-    "fn": 240
+    "tp": 196,
+    "fp": 187,
+    "fn": 239
   },
   "permutation_test": {
-    "observed_f1_diff": 0.256429,
+    "observed_f1_diff": 0.25596,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 487,
@@ -53,10 +53,10 @@
     "losses_a": 21,
     "ties": 358,
     "null_distribution": {
-      "mean": 0.000201,
-      "std": 0.039198,
-      "percentile_2.5": -0.076829,
-      "percentile_97.5": 0.077133
+      "mean": 0.0002,
+      "std": 0.039185,
+      "percentile_2.5": -0.076889,
+      "percentile_97.5": 0.077126
     }
   }
 }

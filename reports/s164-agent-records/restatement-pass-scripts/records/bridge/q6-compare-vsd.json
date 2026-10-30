@@ -1,0 +1,52 @@
+{
+ "counts": {
+  "IDENTICAL": 1,
+  "EQUAL-NORM": 2,
+  "DIFFER": 1,
+  "MISSING": 0
+ },
+ "files": {
+  "floors_with_verifier.json": {
+   "status": "EQUAL-NORM",
+   "detail": [
+    "/meta/floors_dir",
+    "/meta/reverification",
+    "/meta/scoring_root",
+    "/meta/wall_seconds"
+   ]
+  },
+  "gates.json": {
+   "status": "DIFFER",
+   "detail": [
+    "/replicates/g3-image-temp1/g3v/rep1/n_results: only in B",
+    "/replicates/g3-image-temp1/g3v/rep1/policy: only in B",
+    "/replicates/g3-image-temp1/g3v/rep1/reverified: only in B",
+    "/replicates/g3-image-temp1/g3v/rep1/reverify_records: only in B",
+    "/replicates/g3-image-temp1/g3v/rep1/reverify_usd: only in B",
+    "/replicates/g3-image-temp1/g3v/rep2/n_results: only in B",
+    "/replicates/g3-image-temp1/g3v/rep2/policy: only in B",
+    "/replicates/g3-image-temp1/g3v/rep2/reverified: only in B",
+    "/replicates/g3-image-temp1/g3v/rep2/reverify_records: only in B",
+    "/replicates/g3-image-temp1/g3v/rep2/reverify_usd: only in B",
+    "/replicates/g3-image-temp1/g3v/rep3/n_results: only in B",
+    "/replicates/g3-image-temp1/g3v/rep3/policy: only in B",
+    "/replicates/g3-image-temp1/g3v/rep3/reverified: only in B",
+    "/replicates/g3-image-temp1/g3v/rep3/reverify_records: only in B",
+    "/replicates/g3-image-temp1/g3v/rep3/reverify_usd: only in B"
+   ]
+  },
+  "summary.csv": {
+   "status": "IDENTICAL",
+   "detail": []
+  },
+  "verifier_sd.json": {
+   "status": "EQUAL-NORM",
+   "detail": [
+    "/meta/floors_dir",
+    "/meta/reverification",
+    "/meta/scoring_root",
+    "/meta/wall_seconds"
+   ]
+  }
+ }
+}

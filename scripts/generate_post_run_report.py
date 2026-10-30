@@ -179,7 +179,8 @@ def load_schema_registry(schema_dir: Path = SCHEMA_DIR) -> tuple[Registry, dict[
         contents = json.loads(path.read_text(encoding="utf-8"))
         schema_id = contents["$id"]
         contents_by_id[schema_id] = contents
-        resources.append((schema_id, Resource.from_contents(contents, default_specification=DRAFT202012)))
+        resources.append(
+            (schema_id, Resource.from_contents(contents, default_specification=DRAFT202012)))
 
     registry = Registry().with_resources(resources)
     return registry, contents_by_id
@@ -853,7 +854,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
                 "modality": modality,
                 "thinking_level": cfg.get("thinking_level"),
                 "temperature": _effective_temperature(cfg),
-                "instruction_hash": cfg.get("instruction_hash") or cfg.get("system_instruction_hash"),
+                "instruction_hash": (
+                    cfg.get("instruction_hash") or cfg.get("system_instruction_hash")),
                 "library_hash": cfg.get("library_hash"),
                 "status": status,
                 "n_tiles_processed": n_proc,
@@ -924,7 +926,8 @@ def extract_passes(facts: dict, at: str | None = None) -> list[dict]:
             next((it.get("model_requested") for it in pim if it.get("model_requested")), None)
             or cfg.get("model")
         )
-        model_version = next((it.get("model_version") for it in pim if it.get("model_version")), None)
+        model_version = next(
+            (it.get("model_version") for it in pim if it.get("model_version")), None)
         # Candidate-crop completion count. E71 (2026-07-30) fixed the retry
         # inflation here — ``request_count`` counts API requests, not completions
         # — by preferring the union of ``completed_items``, then the
@@ -1928,11 +1931,18 @@ def assemble_manifest(manifest: str, rows: list[dict], at: str) -> dict:
 
 
 def _md_table(headers: list[str], rows: list[list]) -> str:
-    """Render a GitHub-flavoured Markdown table."""
+    """Render a GitHub-flavoured Markdown table.
+
+    A literal ``|`` inside a cell is escaped as ``\\|``. Unescaped, it is read
+    as a column separator, so the row gains cells and markdownlint fails it
+    (MD056). Outcome texts quote absolute values this way, for example
+    "G6 max |delta| 0.0079" (PR #52, 2026-10-30).
+    """
     lines = ["| " + " | ".join(headers) + " |",
              "|" + "|".join("---" for _ in headers) + "|"]
     for r in rows:
-        lines.append("| " + " | ".join("—" if c is None else str(c) for c in r) + " |")
+        lines.append("| " + " | ".join(
+            "—" if c is None else str(c).replace("|", "\\|") for c in r) + " |")
     return "\n".join(lines)
 
 
@@ -2518,7 +2528,9 @@ def _stabilise_timestamps(manifest: str, new_obj: dict, json_path: Path) -> None
         new_obj["generated_at"] = old_obj["generated_at"]
 
 
-def write_manifests(bundles: dict[str, list[dict]], at: str, registry: Registry) -> dict[str, tuple]:
+def write_manifests(
+    bundles: dict[str, list[dict]], at: str, registry: Registry,
+) -> dict[str, tuple]:
     """Validate and write each manifest (JSON + rendered MD); never write an invalid one.
 
     Args:
@@ -2621,7 +2633,8 @@ def _self_test() -> int:
 
     print("\nSelf-test:")
     print(f"  valid registry entry  → {len(good_errors)} errors (expect 0)")
-    print(f"  invalid run_id slug    → {len(bad_errors)} errors (expect ≥1): {bad_errors or 'NONE'}")
+    print(f"  invalid run_id slug    → {len(bad_errors)} errors (expect ≥1): "
+          f"{bad_errors or 'NONE'}")
 
     # A provenance object must validate against the common-defs sub-schema by
     # validating a full run row that embeds it would be heavier; here we confirm
@@ -2631,7 +2644,8 @@ def _self_test() -> int:
     print(f"  provenance builder keys → {'ok' if prov_ok else 'WRONG: ' + str(set(prov))}")
 
     passed = not good_errors and bool(bad_errors) and prov_ok
-    print(f"\n{'PASS' if passed else 'FAIL'} — validation harness {'round-trips' if passed else 'is broken'}")
+    print(f"\n{'PASS' if passed else 'FAIL'} — validation harness "
+          f"{'round-trips' if passed else 'is broken'}")
     return 0 if passed else 1
 
 
@@ -3149,7 +3163,8 @@ def main(argv: list[str] | None = None) -> int:
                 encoding="utf-8")
             print("\n=== wrote manifests ===")
             for manifest, (n, errors, json_rel) in written.items():
-                status = f"{n} row(s) → {json_rel} (+ .md)" if not errors else f"NOT WRITTEN: {errors}"
+                status = (f"{n} row(s) → {json_rel} (+ .md)" if not errors
+                          else f"NOT WRITTEN: {errors}")
                 print(f"  {manifest:13s} {status}")
                 all_valid = all_valid and not errors
             print(f"  {'run-registry':13s} {len(registry_obj['registry'])} row(s) → "

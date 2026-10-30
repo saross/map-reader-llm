@@ -930,3 +930,25 @@ class TestPairingAndUpliftEndToEnd:
         assert "alpha::verified-2of3" in message
         assert "4-map-gs|curator|20m|era-1-340" in message
         assert "55-map|student|50m|55maps-8541" in message
+
+
+@pytest.mark.tier1
+def test_cost_basis_label_names_the_bases_and_any_partial_sum():
+    """The flatten's cost label states the per-pass bases and a partial sum.
+
+    S164 restatement pass, 2026-10-15: since PI rulings D11 and D12 the passes
+    manifest records each pass's audited cost and a null where none is
+    recorded; the label used to call every sum the runner's estimator and say
+    "sum over N" even when only some passes carried a cost.
+    """
+    from scripts.build_uplift_supplement import _cost_basis_label
+
+    full = _cost_basis_label([{"cost_basis": "audited"}] * 3, 3)
+    assert full == ("passes-manifest cost_usd; sum over N=3 proposer passes; "
+                    "per-pass basis: audited")
+    partial = _cost_basis_label([{"cost_basis": "audited"}] * 2, 5)
+    assert "PARTIAL sum over 2 of N=5 proposer passes (3 record no cost)" in partial
+    mixed = _cost_basis_label([{"cost_basis": "audited"},
+                               {"cost_basis": "audited-lower-bound"}], 2)
+    assert mixed.endswith("per-pass basis: audited, audited-lower-bound")
+    assert "runner-estimator" not in full + partial + mixed

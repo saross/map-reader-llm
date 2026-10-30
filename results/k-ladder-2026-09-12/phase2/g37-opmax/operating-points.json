@@ -1,9 +1,126 @@
 {
-  "generated_at_utc": "2026-09-12T08:50:45+00:00",
+  "generated_at_utc": "2026-10-15T11:51:40+00:00",
   "script": "scripts/derive_g37_gs_opmax_rungs.py",
   "script_version": "1.0.0",
   "api_calls": 0,
   "registered": false,
+  "assessed_area": {
+    "check": "assessed-area/1 (PI ruling D51)",
+    "frame": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+    "frame_area_km2": 1402.4067,
+    "tolerance_km2": 0.01,
+    "common_area_km2": 1364.4713,
+    "max_excess_km2": 37.9354,
+    "pools": [
+      {
+        "label": "K = 1",
+        "source": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+        "union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/consensus_t1.geojson",
+        "method": "pass-provenance",
+        "area_km2": 1508.2145,
+        "clip": null,
+        "evidence": [
+          "pass provenance outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n1/voting_summary.json (2 file(s))",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1392 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 6 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_1.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+          "merge_passes applies no clip",
+          "consistency: 640 of 640 union candidates lie inside the determined area"
+        ],
+        "warnings": [],
+        "reason": null,
+        "effective_area_km2": 1402.4067,
+        "excess_over_common_km2": 37.9354
+      },
+      {
+        "label": "K = 3",
+        "source": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+        "union": "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/consensus_t1.geojson",
+        "method": "pass-provenance",
+        "area_km2": 1508.2145,
+        "clip": null,
+        "evidence": [
+          "pass provenance outputs/gemini37-screen-2026-08-28/g384_ov192_g37/consensus-n3/voting_summary.json (6 file(s))",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1392 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_1_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 6 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_1.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1389 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_2_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 9 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_2.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 1391 processed tile(s) on inputs/grid-2026-08-18/grid_384_ov192_manifest.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson)",
+          "outputs/gemini37-screen-2026-08-28/g384_ov192_g37/run_3_recovery/detections-detect_brief-text-3.7-flash-2026-08-28.geojson: 7 processed tile(s) on inputs/image-b-gs-2026-08-28/g37_recovery_run_3.json (polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson (subset manifest of inputs/grid-2026-08-18/grid_384_ov192_manifest.json))",
+          "merge_passes applies no clip",
+          "consistency: 759 of 759 union candidates lie inside the determined area"
+        ],
+        "warnings": [],
+        "reason": null,
+        "effective_area_km2": 1402.4067,
+        "excess_over_common_km2": 37.9354
+      },
+      {
+        "label": "K = 5",
+        "source": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops",
+        "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
+        "method": "declared",
+        "area_km2": 1364.4713,
+        "clip": {
+          "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+          "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        },
+        "evidence": [
+          "declared in inputs/provenance/assessed-area-declarations.json",
+          "pins: the pool (blob 8b7c1ce9dea8dffeb68f4779d156682f1dec18c2) and 3 pinned input(s) unchanged since the declaration",
+          "footprint polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+          "footprint tiles from inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1398)",
+          "clipped to \"grid-common (the grid study's common 487-tile carrier footprint)\" (outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson): 143.743 km\u00b2 removed upstream",
+          "basis: builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 and :161-166 (the script's --root help names this run; it writes root/verifier/<cell>/union_k<k>.geojson, where this union sits); planning/modality-bridge-2026-10-07.md:73",
+          "basis: footprint: scripts/image_b_prepare_and_union.py:84-90 raises CoverageError unless each pass's processed tiles equal the pinned manifest inputs/grid-2026-08-18/grid_384_ov192_manifest.json exactly",
+          "basis: clip: scripts/image_b_prepare_and_union.py:91-95 writes each pass with clip_geom = the grid_common_bounds union (:75), and :120 unions on the grid_common carrier tiles (scripts/materialise_grid_unions.py:94-95 drops off-carrier clusters)",
+          "basis: committed in b8e130fd3 (2026-08-28 23:17 UTC), after the --root/--k flags (4cc079f95) and the K-aware pass loading fix (bb6274e7c)",
+          "consistency: 791 of 791 union candidates lie inside the determined area"
+        ],
+        "warnings": [],
+        "reason": null,
+        "effective_area_km2": 1364.4713,
+        "excess_over_common_km2": 0.0
+      },
+      {
+        "label": "K = 10",
+        "source": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/crops_k10",
+        "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
+        "method": "declared",
+        "area_km2": 1364.4713,
+        "clip": {
+          "name": "grid-common (the grid study's common 487-tile carrier footprint)",
+          "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
+        },
+        "evidence": [
+          "declared in inputs/provenance/assessed-area-declarations.json",
+          "pins: the pool (blob 88443a96e9ef9f06fdd597db3ec53950aa0a1326) and 3 pinned input(s) unchanged since the declaration",
+          "footprint polygons outputs/grid-2026-08-18/scoring/bounds/grid_g384_ov192_bounds.geojson",
+          "footprint tiles from inputs/grid-2026-08-18/grid_384_ov192_manifest.json (1398)",
+          "clipped to \"grid-common (the grid study's common 487-tile carrier footprint)\" (outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson): 143.743 km\u00b2 removed upstream",
+          "basis: builder identity: reports/recovery-fragment-drop-2026-09-13.md:127 (union_k{5,10}: the same image_b_prepare_and_union.py chain)",
+          "basis: footprint and clip: as for union_k5 (scripts/image_b_prepare_and_union.py:84-95, :120)",
+          "basis: committed in b9516c26f (2026-08-29, escalation passes 6-10, K=10 union)",
+          "consistency: 913 of 913 union candidates lie inside the determined area"
+        ],
+        "warnings": [],
+        "reason": null,
+        "effective_area_km2": 1364.4713,
+        "excess_over_common_km2": 0.0
+      }
+    ],
+    "clip": {
+      "name": "clip-to-common-assessed-area",
+      "common_area_km2": 1364.4713,
+      "area_removed_km2": {
+        "K = 1": 37.9354,
+        "K = 3": 37.9354,
+        "K = 5": 0.0,
+        "K = 10": 0.0
+      }
+    },
+    "status": "clipped-to-common-area",
+    "clip_geojson": "results/k-ladder-2026-09-12/phase2/g37-opmax/common-assessed-area.geojson"
+  },
   "stages": [
     {
       "k": 5,
@@ -11,25 +128,40 @@
       "run_id": "gemini37-screen-2026-08-28",
       "stage_id": "g384_ov192_g37-union-k5-verify",
       "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k5.geojson",
-      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify/probabilities.json",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/probabilities.json",
       "opmax": {
         "vote_t": 5,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9066,
-        "sweep_n": 443,
+        "sweep_f1_20": 0.9165,
+        "sweep_n": 451,
         "n_ties_at_argmax": 0
       },
       "opmax_on_era2_frame": {
         "vote_t": 5,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9066
+        "sweep_f1_20": 0.9165
       },
       "frames_agree_on_argmax": true,
-      "n_detections": 443,
+      "n_detections": 451,
       "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k5-verified-opmax.geojson",
       "cell": "gemini37-screen-2026-08-28__g37-text-k5-verified-opmax",
       "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k5-verified-opmax/evaluation.json",
-      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b"
+      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k5-verified-carried-p0.10-k5-era2b",
+      "verifier_probabilities": {
+        "dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "01a9617825d5fe22b31220890f0e066a6dcacfd89133320fe1ebc6882f6a38ec",
+        "n_results": 791,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 11,
+        "reverify_usd": 0.007728,
+        "reverify_records": [
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "scoring_route": "origin: image_b_analysis.load_image_union, stride_verifier_analysis.reassign_gate, lib_cluster_origins.union_on_origin over outputs/gemini37-screen-2026-08-28/scoring/common/g384_ov192_g37 runs 1-5 (PR #42, D62 (1))"
     },
     {
       "k": 10,
@@ -37,25 +169,40 @@
       "run_id": "gemini37-screen-2026-08-28",
       "stage_id": "g384_ov192_g37-union-k10-verify",
       "union": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/union_k10.geojson",
-      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10/probabilities.json",
+      "probabilities": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/probabilities.json",
       "opmax": {
         "vote_t": 10,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9068,
-        "sweep_n": 423,
+        "sweep_f1_20": 0.9169,
+        "sweep_n": 431,
         "n_ties_at_argmax": 0
       },
       "opmax_on_era2_frame": {
         "vote_t": 10,
         "prob_t": 0.1,
-        "sweep_f1_20": 0.9068
+        "sweep_f1_20": 0.9169
       },
       "frames_agree_on_argmax": true,
-      "n_detections": 423,
+      "n_detections": 431,
       "detections": "results/k-ladder-2026-09-12/phase2/g37-opmax/materialised/g37-text-k10-verified-opmax.geojson",
       "cell": "gemini37-screen-2026-08-28__g37-text-k10-verified-opmax",
       "eval_path": "results/k-ladder-2026-09-12/phase2/g37-opmax/cells/gemini37-screen-2026-08-28__g37-text-k10-verified-opmax/evaluation.json",
-      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b"
+      "carried_condition_id": "gemini37-screen-2026-08-28::g37-text-k10-verified-carried-p0.10-k10-era2b",
+      "verifier_probabilities": {
+        "dir": "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired",
+        "policy": "repaired",
+        "probabilities_sha256": "88ca247be33742d8f7d6f7799d8d61562b87506b35d541055baf367212679391",
+        "n_results": 913,
+        "parse_error_rows": null,
+        "repaired": null,
+        "unrecovered": null,
+        "reverified": 14,
+        "reverify_usd": 0.009873,
+        "reverify_records": [
+          "outputs/gemini37-screen-2026-08-28/verifier/g384_ov192_g37/verify_k10_repaired/reverify-wrong-sheet-2026-10-13.json"
+        ]
+      },
+      "scoring_route": "origin: image_b_analysis.load_image_union, stride_verifier_analysis.reassign_gate, lib_cluster_origins.union_on_origin over outputs/gemini37-screen-2026-08-28/scoring/common/g384_ov192_g37 runs 1-10 (PR #42, D62 (1))"
     }
   ]
 }

@@ -8,14 +8,14 @@ INFO: anchor gap g3-text - g3-image: +0.0549 (registered +0.0549) p=0.0010 OK
 INFO: anchor gap g37-text-g3v - g37-image-g3v: -0.0115 (registered -0.0115) p=0.2533 OK
 INFO: anchor gap g37-text-g37v - g37-image-g37v: -0.0043 (registered -0.0043) p=0.6767 OK
 INFO: six-cell anchor gate PASSED
-INFO: g3/text: gate OK (0.8916)
-INFO: g3/image: gate OK (0.8393)
-INFO: g3: text-image dF1=+0.0523 p=0.0029 (G3 committed +0.0549 p=0.001 -> gap change -0.0026)
-INFO: carried-verifier/text: gate OK (0.9154)
-INFO: carried-verifier/image: gate OK (0.9160)
-INFO: carried-verifier: text-image dF1=-0.0006 p=0.9467 (G3 committed +0.0549 p=0.001 -> gap change -0.0555)
-INFO: all-3.7/text: gate OK (0.9265)
-INFO: all-3.7/image: gate OK (0.9288)
-INFO: all-3.7: text-image dF1=-0.0023 p=0.7477 (G3 committed +0.0549 p=0.001 -> gap change -0.0572)
-INFO: gap change vs g3: {'carried-verifier': np.float64(-0.0529), 'all-3.7': np.float64(-0.0547)}
+INFO: g3/text: gate OK (0.8986)
+INFO: g3/image: gate OK (0.8449)
+INFO: g3: text-image dF1=+0.0536 p=0.0018 (G3 committed +0.0559 p=0.0005 -> gap change -0.0023)
+INFO: carried-verifier/text: gate OK (0.9241)
+INFO: carried-verifier/image: gate OK (0.9267)
+INFO: carried-verifier: text-image dF1=-0.0026 p=0.7660 (G3 committed +0.0559 p=0.0005 -> gap change -0.0585)
+INFO: all-3.7/text: gate OK (0.9352)
+INFO: all-3.7/image: gate OK (0.9375)
+INFO: all-3.7: text-image dF1=-0.0023 p=0.7477 (G3 committed +0.0559 p=0.0005 -> gap change -0.0582)
+INFO: gap change vs g3: {'carried-verifier': np.float64(-0.0562), 'all-3.7': np.float64(-0.0559)}
 INFO: GAP TEST COMPLETE -> results/modality-bridge-2026-10-07

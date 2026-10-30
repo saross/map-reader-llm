@@ -1,0 +1,351 @@
+{
+ "stride_k10": {
+  "g512_ov176": {
+   "point": [
+    0.15,
+    6
+   ],
+   "n": 396,
+   "sweep_f1": 0.8713592233009708,
+   "f1": 0.8714,
+   "precision": 0.9066,
+   "recall": 0.8388,
+   "f1_ci": [
+    0.8377,
+    0.8984
+   ],
+   "tile_mcc": 0.8116,
+   "n_detections": 396,
+   "registered_point_is_best": false,
+   "best_point": {
+    "prob_t": 0.15,
+    "min_votes": 7,
+    "n_detections": 391,
+    "sweep_f1_at_20m": 0.8717948717948718
+   }
+  },
+  "g384_ov128": {
+   "point": [
+    0.15,
+    8
+   ],
+   "n": 394,
+   "sweep_f1": 0.9075425790754257,
+   "f1": 0.9075,
+   "precision": 0.9467,
+   "recall": 0.8715,
+   "f1_ci": [
+    0.8816,
+    0.929
+   ],
+   "tile_mcc": 0.8134,
+   "n_detections": 394,
+   "registered_point_is_best": true,
+   "best_point": {
+    "prob_t": 0.15,
+    "min_votes": 8,
+    "n_detections": 394,
+    "sweep_f1_at_20m": 0.9075425790754257
+   }
+  },
+  "g256_ov064": {
+   "point": [
+    0.15,
+    8
+   ],
+   "n": 435,
+   "sweep_f1": 0.8876013904982618,
+   "f1": 0.8876,
+   "precision": 0.8805,
+   "recall": 0.8949,
+   "f1_ci": [
+    0.8602,
+    0.9101
+   ],
+   "tile_mcc": 0.8033,
+   "n_detections": 435,
+   "registered_point_is_best": true,
+   "best_point": {
+    "prob_t": 0.15,
+    "min_votes": 8,
+    "n_detections": 435,
+    "sweep_f1_at_20m": 0.8876013904982618
+   }
+  },
+  "g512_ov320": {
+   "point": [
+    0.15,
+    10
+   ],
+   "n": 401,
+   "sweep_f1": 0.8854041013268998,
+   "f1": 0.8854,
+   "precision": 0.9152,
+   "recall": 0.8575,
+   "f1_ci": [
+    0.8532,
+    0.9101
+   ],
+   "tile_mcc": 0.81,
+   "n_detections": 401,
+   "registered_point_is_best": true,
+   "best_point": {
+    "prob_t": 0.15,
+    "min_votes": 10,
+    "n_detections": 401,
+    "sweep_f1_at_20m": 0.8854041013268998
+   }
+  },
+  "g384_ov240": {
+   "point": [
+    0.15,
+    10
+   ],
+   "n": 429,
+   "sweep_f1": 0.8938156359393231,
+   "f1": 0.8938,
+   "precision": 0.8928,
+   "recall": 0.8949,
+   "f1_ci": [
+    0.8679,
+    0.9154
+   ],
+   "tile_mcc": 0.8029,
+   "n_detections": 429,
+   "registered_point_is_best": true,
+   "best_point": {
+    "prob_t": 0.15,
+    "min_votes": 10,
+    "n_detections": 429,
+    "sweep_f1_at_20m": 0.8938156359393231
+   }
+  }
+ },
+ "winner_ladder": {
+  "N1": {
+   "point": [
+    0.15,
+    1
+   ],
+   "n": 419,
+   "sweep_f1": 0.873671782762692,
+   "f1": 0.8737,
+   "precision": 0.8831,
+   "recall": 0.8645,
+   "f1_ci": [
+    0.8434,
+    0.9012
+   ],
+   "tile_mcc": 0.801,
+   "n_detections": 419,
+   "registered_point_is_best": true,
+   "best_point": [
+    0.15,
+    1
+   ]
+  },
+  "N3": {
+   "point": [
+    0.15,
+    3
+   ],
+   "n": 386,
+   "sweep_f1": 0.8992628992628993,
+   "f1": 0.8993,
+   "precision": 0.9482,
+   "recall": 0.8551,
+   "f1_ci": [
+    0.8708,
+    0.9227
+   ],
+   "tile_mcc": 0.7927,
+   "n_detections": 386,
+   "registered_point_is_best": true,
+   "best_point": [
+    0.15,
+    3
+   ]
+  },
+  "N5": {
+   "point": [
+    0.15,
+    4
+   ],
+   "n": 400,
+   "sweep_f1": 0.8937198067632851,
+   "f1": 0.8937,
+   "precision": 0.925,
+   "recall": 0.8645,
+   "f1_ci": [
+    0.865,
+    0.9179
+   ],
+   "tile_mcc": 0.7918,
+   "n_detections": 400,
+   "registered_point_is_best": true,
+   "best_point": [
+    0.15,
+    4
+   ]
+  }
+ },
+ "best_eval": {
+  "results/image-b-gs-2026-08-28": {
+   "f1": 0.8458,
+   "precision": 0.8731,
+   "recall": 0.8201,
+   "f1_ci": [
+    0.8069,
+    0.8762
+   ],
+   "tile_mcc": 0.8139,
+   "n_detections": 402,
+   "best_point": [
+    0.15,
+    9
+   ]
+  },
+  "results/image-b-gs-2026-08-28/high": {
+   "f1": 0.8389,
+   "precision": 0.8639,
+   "recall": 0.8154,
+   "f1_ci": [
+    0.8034,
+    0.8688
+   ],
+   "tile_mcc": 0.8108,
+   "n_detections": 404,
+   "best_point": [
+    0.2,
+    8
+   ]
+  },
+  "results/gemini37-screen-2026-08-28": {
+   "f1": 0.9238,
+   "precision": 0.9002,
+   "recall": 0.9486,
+   "f1_ci": [
+    0.9,
+    0.942
+   ],
+   "tile_mcc": 0.7914,
+   "n_detections": 451,
+   "best_point": [
+    0.1,
+    5
+   ]
+  },
+  "results/gemini37-screen-2026-08-28/k10": {
+   "f1": 0.9243,
+   "precision": 0.9211,
+   "recall": 0.9276,
+   "f1_ci": [
+    0.8981,
+    0.9442
+   ],
+   "tile_mcc": 0.7971,
+   "n_detections": 431,
+   "best_point": [
+    0.1,
+    10
+   ]
+  },
+  "results/gemini37-screen-2026-08-28/swap37": {
+   "f1": 0.9364,
+   "precision": 0.9268,
+   "recall": 0.9463,
+   "f1_ci": [
+    0.9133,
+    0.9538
+   ],
+   "tile_mcc": 0.8192,
+   "n_detections": 437,
+   "best_point": [
+    0.8,
+    5
+   ]
+  },
+  "results/gemini38-screen-2026-09-04/armV": {
+   "f1": 0.9358,
+   "precision": 0.9347,
+   "recall": 0.9369,
+   "f1_ci": [
+    0.9119,
+    0.9536
+   ],
+   "tile_mcc": 0.8331,
+   "n_detections": 429,
+   "best_point": [
+    0.88,
+    5
+   ]
+  },
+  "results/gemini37-fourth-cell/gs-leg": {
+   "f1": 0.922,
+   "precision": 0.9643,
+   "recall": 0.8832,
+   "f1_ci": [
+    0.8958,
+    0.9433
+   ],
+   "tile_mcc": 0.835,
+   "n_detections": 392,
+   "best_point": [
+    0.98,
+    10
+   ]
+  },
+  "results/gemini37-image-gs-2026-09-01/arm1": {
+   "f1": 0.9381,
+   "precision": 0.9212,
+   "recall": 0.9556,
+   "f1_ci": [
+    0.9144,
+    0.9551
+   ],
+   "tile_mcc": 0.8345,
+   "n_detections": 444,
+   "best_point": [
+    0.05,
+    5
+   ]
+  },
+  "results/gemini37-image-gs-2026-09-01/arm2": {
+   "f1": 0.9408,
+   "precision": 0.9353,
+   "recall": 0.9463,
+   "f1_ci": [
+    0.9174,
+    0.9582
+   ],
+   "tile_mcc": 0.8436,
+   "n_detections": 433,
+   "best_point": [
+    0.9,
+    5
+   ]
+  }
+ },
+ "op_eval": {
+  "results/gemini37-image-gs-2026-09-01/arm1": {
+   "f1": 0.9353,
+   "precision": 0.9247,
+   "recall": 0.9463,
+   "f1_ci": [
+    0.911,
+    0.9535
+   ],
+   "tile_mcc": 0.8307,
+   "n_detections": 438,
+   "registered_point": [
+    0.1,
+    5
+   ],
+   "conditions": [
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5",
+    "gemini37-image-gs-2026-09-01::g37-image-k5-verified-carried-p0.10-k5-era2b"
+   ]
+  }
+ },
+ "failures": []
+}

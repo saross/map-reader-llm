@@ -156,6 +156,56 @@ TRANSFER_PAIR_COLUMNS: tuple[str, ...] = (
 #: restamped on every build.
 REVISION_ENTRIES: tuple[tuple[str, str, str], ...] = (
     (
+        "2026-10-15",
+        "Restatement pass (S164): regenerated once on the restated corpus",
+        "**Refresh trigger**: the S164 restatement pass (PI rulings D65 (2) and "
+        "(4), D62 (6), D67 (6); `reports/s164-agent-records/"
+        "restatement-pass.md`). The flatten was first replayed at its build "
+        "commit `741a4eaff` (D62 (6), closing fault-window row W2-5): two runs "
+        "reproduce the committed `conditions.csv`, `conditions-by-buffer.csv`, "
+        "`strata.csv` and `transfer-pairs.csv` byte for byte. It is then rebuilt "
+        "once, after the pass restated its inputs: the 21 gold-standard verified "
+        "conditions read the D62 (1) re-verified rows on PR #42's origin route "
+        "(each at its registered point, PI ruling D65 (3); e.g. 384/50 % "
+        "0.8961 -> 0.9017, the Gemini 3.7 screen 0.9139 -> 0.9238, the 3.7 "
+        "image carried arm 0.9254 -> 0.9353 at its registered (0.10, k5)), the "
+        "four grid consensus conditions moved by PR #42 (512/50 % 0.7518 -> "
+        "0.7611), the eight 55-map extended-reference cells were re-scored with "
+        "today's engine (one reviewer-promoted phantom fewer at R >= 50 m; F1 "
+        "+8e-05 to +9e-05), and the conditions registered since 2026-09-12 join "
+        "(the 55-map image and Gemini 3.7 55-map campaigns). **Counts**: "
+        "conditions 439 -> 505; by-buffer rows 5,448 -> 6,372; strata 130 -> "
+        "130; rows with a headline F1 439 -> 505, with tile MCC 430 -> 496, with "
+        "a proposer cost 346 -> 286 (D12's nulls replace recorded zeros since "
+        "2026-10-03); runs 41 -> 43; board-frame rows excluded 153 -> 153. The "
+        "cost label now names each sum's per-pass bases and any partial sum "
+        "(decision 3). **What did not change**: the strata and their MDE joins; "
+        "the headline references (r2 on the 55-map corpus, curator on the gold "
+        "standard); the board-frame exclusion rule.",
+    ),
+    (
+        # Hand-added to build-report.md on 2026-09-20 (bcf1169f7, 8a143963d);
+        # moved here by the S164 restatement pass (2026-10-15) so a rebuild
+        # keeps it.
+        "2026-09-20",
+        "Correction note: IM-k4's vote counts predate the May recovery",
+        "Trigger: `results/im-june-pool-grid-2026-09-20/findings.md` § 7 "
+        "(f859646ba). The June image run's crop manifest carries pre-recovery "
+        "vote counts on 16 of 7,878 candidates (each one vote low), because the "
+        "2026-05-03 recovery re-cut crops with an incremental extractor that "
+        "never refreshed matched entries' properties. IM-k4 (rows "
+        "`verified-k4-standardised-gt` and `verified-k4-r2-gt`) is the only "
+        "committed cell built on those counts: on the consensus votes it would "
+        "hold 3,544 detections instead of 3,541, F1@50 m 0.7402 instead of "
+        "0.7398, tile-MCC +0.0002 — an order of magnitude inside the board's "
+        "0.003 mechanism bound. (The June note quotes the tile-MCC level as "
+        "0.6577 by its own light scorer; the cell's committed r2 level is 0.654 "
+        "— a tile-convention difference between the two instruments, so only "
+        "the delta is claimed.) **PI ruling 2026-09-20: documented, not "
+        "rebuilt.** No number in this supplement changes. IM-k3 and every other "
+        "cell are unaffected (no candidate crosses the 2 → 3 vote boundary).",
+    ),
+    (
         "2026-09-08",
         "Verifier pairing completed on the current register (S151): 69 of 169 pairs computed",
         "**Refresh trigger**: the vote-shell materialiser's union mode "
@@ -431,12 +481,17 @@ def _pass_factors(
     K is the pool's FULL pass count and N is the prefix consumed — the notation
     key's central case distinction (§ 1).
 
-    ``cost_usd`` is the sum of the consumed passes' recorded ``cost_usd``, which
-    the generator reads from ``meta.cost_estimate.total_cost_usd`` — the
-    RUNNER'S LIVE ESTIMATOR. The notation key (§ 8) is explicit that this
-    over-records cached-heavy runs and that the citable figure is the audited
-    recomputation. The row therefore states its basis rather than claiming the
-    audited one.
+    ``cost_usd`` is the sum of the consumed passes' recorded ``cost_usd`` in
+    the passes manifest. Until 2026-10-03 the manifest's generator read that
+    figure from ``meta.cost_estimate.total_cost_usd``, the runner's live
+    estimator; since PI rulings D11 and D12 (``881969228``) it records the
+    audited basis per pass in ``cost_basis`` (``audited``,
+    ``audited-lower-bound``, ``audited-upper-bound``, ``published``) and a
+    null, not a zero, where no cost is recorded. ``cost_basis`` on the row
+    therefore names the per-pass bases it summed and, where only some of the
+    N passes record a cost, says the sum is partial (the S164 restatement
+    pass, 2026-10-15, corrected a label that still called every sum the
+    runner's estimator).
 
     Args:
         sources: Loaded corpus sources.
@@ -458,7 +513,8 @@ def _pass_factors(
             ),
         }
     consumed = bucket[:n_passes]
-    costs = [p.get("cost_usd") for p in consumed if p.get("cost_usd") is not None]
+    costed = [p for p in consumed if p.get("cost_usd") is not None]
+    costs = [p["cost_usd"] for p in costed]
     first = consumed[0] if consumed else bucket[0]
     return {
         "modality": first.get("modality"),
@@ -468,11 +524,35 @@ def _pass_factors(
         "K": len(bucket),
         "cost_usd": round(sum(costs), 6) if costs else None,
         "cost_basis": (
-            "runner-estimator (passes-manifest cost_usd; "
-            f"sum over N={len(consumed)} proposer passes; NOT the § 8 audited basis)"
-            if costs else "unavailable (passes record no cost_estimate)"
+            _cost_basis_label(costed, len(consumed))
+            if costs else "unavailable (passes record no cost)"
         ),
     }
+
+
+def _cost_basis_label(costed: list[dict[str, Any]], n_consumed: int) -> str:
+    """Name the per-pass cost bases a row's sum is built on, and any gap.
+
+    Args:
+        costed: The consumed passes that record a ``cost_usd``.
+        n_consumed: N, the number of passes the condition consumed.
+
+    Returns:
+        A label such as ``"passes-manifest cost_usd; sum over N=5 proposer
+        passes; per-pass basis: audited"``, or, where some passes record no
+        cost, ``"...; PARTIAL sum over 3 of N=5 proposer passes (2 record no
+        cost); per-pass basis: audited"``. A mix of bases is listed in full.
+
+    Examples:
+        >>> _cost_basis_label([{"cost_basis": "audited"}] * 2, 2)
+        'passes-manifest cost_usd; sum over N=2 proposer passes; per-pass basis: audited'
+    """
+    bases = sorted({p.get("cost_basis") or "unrecorded" for p in costed})
+    n = len(costed)
+    span = (f"sum over N={n_consumed} proposer passes" if n == n_consumed
+            else f"PARTIAL sum over {n} of N={n_consumed} proposer passes "
+                 f"({n_consumed - n} record no cost)")
+    return f"passes-manifest cost_usd; {span}; per-pass basis: {', '.join(bases)}"
 
 
 def build_condition_rows(sources: CorpusSources) -> tuple[list[dict], list[dict]]:
@@ -765,8 +845,10 @@ def render_extension_proposal(notation: NotationKey, frames_in_use: set[str]) ->
         The Markdown document.
     """
     sanctioned = notation.sanctioned
-    landed = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column in sanctioned), key=lambda e: e.column)
-    pending = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column not in sanctioned), key=lambda e: e.column)
+    landed = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column in sanctioned),
+                    key=lambda e: e.column)
+    pending = sorted((e for e in COLUMN_EXTENSIONS.values() if e.column not in sanctioned),
+                     key=lambda e: e.column)
     missing_frames = sorted(f for f in frames_in_use if f not in sanctioned)
     lines = [
         "# Notation-key extension proposal — uplift supplement",
@@ -808,9 +890,11 @@ def render_extension_proposal(notation: NotationKey, frames_in_use: set[str]) ->
     lines += ["", "## The § 6 frame table against the registered runs", ""]
     if missing_frames:
         lines += ["§ 6 does not name these frames the registered runs use "
-                  "(`results/run-facts.json`): " + ", ".join(f"`{f}`" for f in missing_frames) + "."]
+                  "(`results/run-facts.json`): "
+                  + ", ".join(f"`{f}`" for f in missing_frames) + "."]
     else:
-        lines += [f"Complete: every frame the registered runs use ({len(frames_in_use)}) is named in § 6."]
+        lines += [f"Complete: every frame the registered runs use ({len(frames_in_use)}) "
+                  "is named in § 6."]
     lines += [
         "",
         *_changelog_lines(
@@ -1010,17 +1094,15 @@ def render_build_report(
         "2. **One row per condition, at the corpus headline buffer.** 20 m on the",
         "   gold standard, 50 m on the 55-map corpus (notation key § 1, **R**).",
         "   The full sweep lives in `conditions-by-buffer.csv`; nothing is lost.",
-        "3. **`cost_usd` is NOT the audited basis.** It sums the consumed passes'",
-        "   `cost_usd` from the passes manifest, which the generator reads from",
-        "   `meta.cost_estimate.total_cost_usd` — the runner's live estimator.",
-        "   Notation key § 8 states this over-records cached-heavy runs and that",
-        "   the citable figure is the token-load-audit recomputation. That",
-        "   recomputation exists only inside per-analysis artefacts",
-        "   (`scripts/grid_analysis.py::audited_costs`,",
-        "   `scripts/h13_overlap_analysis.py::audited_costs`,",
-        "   `results/verifier-robustness/pareto/pareto_v2.json`), not as a",
-        "   corpus-wide per-condition table. Every row states its basis in",
-        "   `cost_basis`.",
+        "3. **`cost_usd` sums the consumed passes' recorded cost, on each pass's",
+        "   own basis.** Since PI rulings D11 and D12 (2026-10-03) the passes",
+        "   manifest records each pass's audited cost (notation key § 8:",
+        "   `audited`, `audited-lower-bound`, `audited-upper-bound`, or",
+        "   `published`) and a null where none is recorded. Every row's",
+        "   `cost_basis` names the bases its sum is built on, and says when the",
+        "   sum covers only some of its N passes. (Until the 2026-10-15",
+        "   restatement pass this decision read that `cost_usd` was the runner's",
+        "   live estimator, which it had stopped being on 2026-10-03.)",
         "4. **Overlap is not machine-recorded for the pre-geometry runs.** Where",
         "   the pool name or label encodes `g<px>_ov<o>` the geometry is exact;",
         "   H13's arms encode overlap as a percentage and are converted against",
@@ -1115,8 +1197,8 @@ def render_build_report(
         "- **`geometry` is unresolved for 335 of 374 conditions.** Overlap was",
         "  not machine-recorded before the geometry programmes. Recovering it",
         "  would mean parsing tile grids, which is a separate job.",
-        "- **Per-condition audited cost does not exist corpus-wide.** See",
-        "  decision 3; `cost_usd` states its basis on every row.",
+        "- **Per-condition cost is only as complete as the passes manifest.** See",
+        "  decision 3; `cost_basis` states the per-pass bases and any partial sum.",
         *_unmatched_lineage_note(out_dir),
         "",
         *_changelog_lines(

@@ -1,26 +1,26 @@
 {
   "version": "1.0.0",
-  "timestamp": "2026-09-10T02:40:32.168231+00:00",
+  "timestamp": "2026-10-15T11:42:01.764235+00:00",
   "summary": {
     "label": "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-g2",
-    "n_detections": 400,
+    "n_detections": 406,
     "buffers": [
       {
         "buffer_metres": 20,
-        "f1": 0.8961,
-        "f1_point": 0.8961,
-        "f1_ci_lower": 0.8629,
-        "f1_ci_upper": 0.9209,
+        "f1": 0.9017,
+        "f1_point": 0.9017,
+        "f1_ci_lower": 0.8695,
+        "f1_ci_upper": 0.9261,
         "f1_ci_method": "BCa",
-        "precision": 0.9275,
-        "p_point": 0.9275,
-        "p_ci_lower": 0.8937,
-        "p_ci_upper": 0.9536,
+        "precision": 0.9261,
+        "p_point": 0.9261,
+        "p_ci_lower": 0.8924,
+        "p_ci_upper": 0.9501,
         "p_ci_method": "BCa",
-        "recall": 0.8668,
-        "r_point": 0.8668,
-        "r_ci_lower": 0.8297,
-        "r_ci_upper": 0.9065,
+        "recall": 0.8785,
+        "r_point": 0.8785,
+        "r_ci_lower": 0.8354,
+        "r_ci_upper": 0.9156,
         "r_ci_method": "BCa",
         "coverage": {
           "n_tiles": 487,
@@ -42,42 +42,63 @@
     ],
     "ci_unreliable_any_buffer": false,
     "coverage_status": "sparse_cross_grid",
+    "detection_scope": {
+      "rule": "origin-sheet-geometric",
+      "applied": true,
+      "n_detections": 406,
+      "n_in_scope": 406,
+      "n_out_of_frame": 0,
+      "n_out_of_frame_cross_sheet": 0,
+      "n_origin_restored": 0,
+      "n_origin_switched": 0,
+      "n_origin_only": 0,
+      "n_origin_unrecognised": 0,
+      "n_origin_excluded": 0,
+      "n_origin_partly_excluded": 0,
+      "n_unattributed": 0,
+      "n_unattributed_in_frame": 0,
+      "origin_columns": [
+        "origin_tiles"
+      ],
+      "ruling": "PI ruling D50, 2026-10-07 (planning/pi-decisions-2026-09-20.md): detections are scoped per sheet by tile geometry, as references are, each attributed to its origin sheet and never re-keyed to another sheet. Option (A) of reports/frames-blast-radius-2026-10-07.md \u00a7 6."
+    },
     "tile_classification": {
       "confusion": {
-        "tp": 187,
-        "tn": 250,
-        "fp": 12,
-        "fn": 38
+        "tp": 190,
+        "tn": 249,
+        "fp": 13,
+        "fn": 35
       },
       "mcc": {
-        "point": 0.7965,
-        "mean": 0.794,
-        "ci_lower": 0.7419,
-        "ci_upper": 0.8432,
+        "point": 0.8037,
+        "mean": 0.8009,
+        "ci_lower": 0.751,
+        "ci_upper": 0.8506,
         "method": "BCa"
       },
       "sensitivity": {
-        "point": 0.8311,
-        "mean": 0.8285,
-        "ci_lower": 0.7847,
-        "ci_upper": 0.8849,
+        "point": 0.8444,
+        "mean": 0.8414,
+        "ci_lower": 0.8017,
+        "ci_upper": 0.8916,
         "method": "BCa"
       },
       "specificity": {
-        "point": 0.9542,
-        "mean": 0.9542,
-        "ci_lower": 0.9247,
-        "ci_upper": 0.973,
+        "point": 0.9504,
+        "mean": 0.9503,
+        "ci_lower": 0.9243,
+        "ci_upper": 0.9698,
         "method": "BCa"
-      }
+      },
+      "tile_join": "id"
     }
   },
   "_metadata": {
-    "metadata_version": "1.3",
+    "metadata_version": "1.4",
     "script_path": "scripts/evaluate_detections.py",
-    "script_git_commit": "be01df377",
-    "script_git_status": "dirty",
-    "generated_at_utc": "2026-09-10T02:40:30.213280+00:00",
+    "script_git_commit": "unknown",
+    "script_git_status": "unknown",
+    "generated_at_utc": "2026-10-15T11:42:00.579149+00:00",
     "cli_args": {
       "detections": [
         "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson"
@@ -95,6 +116,7 @@
       "output_dir": "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/g2/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10",
       "label": "grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-g2",
       "mcc": true,
+      "tile_join": "id",
       "require_clean_inputs": false,
       "workers": 1
     },
@@ -117,11 +139,16 @@
       "bounds": "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson"
     },
     "input_git_state": {
-      "head": "be01df377",
+      "head": "unknown",
       "inputs": {
-        "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson": "clean",
-        "inputs/vectors/references/mounds-reference.geojson": "clean",
-        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "clean"
+        "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson": "unknown",
+        "inputs/vectors/references/mounds-reference.geojson": "unknown",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "unknown"
+      },
+      "blob_hashes": {
+        "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson": "4afca8dc67fff1eb302aba8ce17bbd958644472f",
+        "inputs/vectors/references/mounds-reference.geojson": "08cfc9259b4b72963ef02d71cfe03a7bb56a85d3",
+        "outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson": "7600bff7ccf8403d6fb3458bd73d9da61287c768"
       }
     },
     "spatial": {

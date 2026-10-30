@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "timestamp": "2026-03-29T10:49:36.849633+00:00",
+    "timestamp": "2026-10-15T10:58:49.884525+00:00",
     "script": "run_pairwise_tests.py",
     "version": "1.0.0",
     "group": 8,
@@ -35,27 +35,27 @@
       "pool_size": 5,
       "threshold": 5
     },
-    "f1": 0.778824,
-    "precision": 0.79759,
-    "recall": 0.76092,
+    "f1": 0.781176,
+    "precision": 0.8,
+    "recall": 0.763218,
     "n_detections": 415,
-    "tp": 331,
-    "fp": 84,
-    "fn": 104
+    "tp": 332,
+    "fp": 83,
+    "fn": 103
   },
   "permutation_test": {
-    "observed_f1_diff": 0.085254,
+    "observed_f1_diff": 0.082901,
     "p_value": 0.0,
     "n_permutations": 10000,
     "n_tiles": 487,
     "wins_a": 45,
-    "losses_a": 30,
-    "ties": 412,
+    "losses_a": 31,
+    "ties": 411,
     "null_distribution": {
-      "mean": -0.000165,
-      "std": 0.015008,
-      "percentile_2.5": -0.029959,
-      "percentile_97.5": 0.02861
+      "mean": -0.000157,
+      "std": 0.015111,
+      "percentile_2.5": -0.029955,
+      "percentile_97.5": 0.028938
     }
   },
   "per_tile": [
@@ -1522,11 +1522,11 @@
       "tp_a": 0,
       "fp_a": 0,
       "fn_a": 0,
-      "f1_b": 0.0,
-      "precision_b": 0.0,
-      "recall_b": 0.0,
-      "tp_b": 0,
-      "fp_b": 1,
+      "f1_b": 1.0,
+      "precision_b": 1.0,
+      "recall_b": 1.0,
+      "tp_b": 1,
+      "fp_b": 0,
       "fn_b": 0
     },
     {
@@ -1867,12 +1867,12 @@
       "tp_a": 3,
       "fp_a": 1,
       "fn_a": 3,
-      "f1_b": 0.727273,
+      "f1_b": 0.8,
       "precision_b": 1.0,
-      "recall_b": 0.571429,
+      "recall_b": 0.666667,
       "tp_b": 4,
       "fp_b": 0,
-      "fn_b": 3
+      "fn_b": 2
     },
     {
       "tile_name": "K-35-053-3_Elenovo_x0_y2016.png",

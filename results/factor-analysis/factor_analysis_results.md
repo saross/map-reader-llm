@@ -1,10 +1,12 @@
 # Factor Analysis — Pairwise Permutation Test Results
 
-> **Last revised**: 2026-10-06 (§ 9 implication 4's "FDR p = 0.004"
-> qualified: a raw p, of a row that is not H7's registered contrast). Prior:
-> 2026-08-02 (E72 — the Temperature family's headline recomputed from the
-> retained clean contrasts). See [§ Changelog](#changelog) for revision
-> history.
+> **Last revised**: 2026-10-15 (20 rows of §§ 3, 4 and 6 restated on the
+> consensus route that keeps each cluster's contributing tiles, PI ruling
+> D60 (3); no significance call and no family count changes). Prior:
+> 2026-10-06 (§ 9 implication 4's "FDR p = 0.004" qualified: a raw p, of a
+> row that is not H7's registered contrast); 2026-08-02 (E72 — the
+> Temperature family's headline recomputed from the retained clean
+> contrasts). See [§ Changelog](#changelog) for revision history.
 >
 > **⚠ Superseded figures (2026-08-02, E72)**: four of the six Temperature
 > contrasts — the three Group 4 rows (`Flash MIN text T=0.7` versus `T=1.0` at
@@ -36,7 +38,7 @@ families produce significant effects and one is a clean null:
 
 | Family | Contrasts | FDR-significant | Headline finding |
 |--------|----------:|:---------------:|------------------|
-| Architecture | 12 | **11 / 12** | Pipeline architecture dominates: N=1 → consensus (ΔF1 up to +0.39); +PV adds +0.05 to +0.09 on top |
+| Architecture | 12 | **11 / 12** | Pipeline architecture dominates: N=1 → consensus (ΔF1 up to +0.39); +PV adds +0.05 to +0.08 on top |
 | Thinking | 6 | **5 / 6** | HIGH > MINIMAL at consensus across text + image; non-significant only at Flash N=1 image |
 | Temperature | 2 usable (6 published) | **1 / 2** | T=0.7 > T=1.0 at single-pass on the Phase 2b text track (ΔF1 +0.074, recomputed q = 0.011); the image track is null (+0.015, ns). The four Flash MIN text contrasts are void under E72 — see § 5 [corrected 2026-08-02, E72] |
 | Modality | 9 | **8 / 9** | Text > image at Pro level and at PV stage; image wins at Flash N=1 (asymmetric optimisation story) |
@@ -51,7 +53,8 @@ them in, how verbose the text scaffold is — are null to BH-FDR across
 library curation beyond canonical positives + nulls is not a lever.
 
 The full matrix of contrasts appears in §§3–7 below, preserved
-verbatim from the 2026-03-31 analysis output. Two 512 px Temperature
+verbatim from the 2026-03-31 analysis output except for the 20 rows of
+§§ 3, 4 and 6 restated on 2026-10-15 (see the changelog). Two 512 px Temperature
 rows have incomplete metadata (see §"Caveats" item 3); their ΔF1
 and p-values are valid but their condition labels and per-condition
 F1s are absent from the source JSON.
@@ -116,23 +119,23 @@ control within the question.
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
-| N=1 vs consensus (FH text) | FH text run_1 (N=1) | FH text 5-of-5 consensus | 0.392 | 0.779 | −0.387 | 0.0000 | 0.0000 | *** |
-| PV on single-pass text | Text baseline + PV | Single-pass text 5-of-5 | 0.814 | 0.544 | +0.270 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (FH image) | FH image run_1 (N=1) | FH image 3-of-5 consensus | 0.515 | 0.727 | −0.212 | 0.0000 | 0.0000 | *** |
-| PV on single-pass image | Image baseline + PV | Single-pass text 5-of-5 | 0.717 | 0.544 | +0.173 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (FM text) | FM text run_1 (N=1) | FM text 5-of-5 consensus | 0.493 | 0.640 | −0.147 | 0.0000 | 0.0000 | *** |
-| N=1 vs consensus (Pro text) | Pro text run_1 (N=1) | Pro text 3-of-5 consensus | 0.738 | 0.840 | −0.102 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 4-of-5 + PV | Flash HIGH text 5-of-5 | 0.864 | 0.779 | +0.085 | 0.0000 | 0.0000 | *** |
-| PV verifier thinking | Flash HIGH text 4-of-5 + medium vf | Flash HIGH text 5-of-5 | 0.859 | 0.779 | +0.080 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 16-of-30 + PV | Flash HIGH text 26-of-30 | 0.890 | 0.814 | +0.076 | 0.0000 | 0.0000 | *** |
-| PV vs consensus | Flash HIGH text 9-of-10 + PV | Flash HIGH text 9-of-10 | 0.856 | 0.797 | +0.060 | 0.0000 | 0.0000 | *** |
-| PV vs consensus (image) | Flash HIGH image 3-of-5 + PV | Flash HIGH image 3-of-5 | 0.778 | 0.727 | +0.051 | 0.0004 | 0.0004 | *** |
-| PV vs consensus (Pro) | Pro HIGH text 3-of-5 + PV | Pro HIGH text 3-of-5 | 0.849 | 0.840 | +0.009 | 0.2580 | 0.2580 | ns |
+| N=1 vs consensus (FH text) | FH text run_1 (N=1) | FH text 5-of-5 consensus | 0.392 | 0.781 | −0.389 | 0.0000 | 0.0000 | *** |
+| PV on single-pass text | Text baseline + PV | Single-pass text 5-of-5 | 0.814 | 0.547 | +0.267 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (FH image) | FH image run_1 (N=1) | FH image 3-of-5 consensus | 0.515 | 0.729 | −0.214 | 0.0000 | 0.0000 | *** |
+| PV on single-pass image | Image baseline + PV | Single-pass text 5-of-5 | 0.717 | 0.547 | +0.170 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (FM text) | FM text run_1 (N=1) | FM text 5-of-5 consensus | 0.493 | 0.642 | −0.148 | 0.0000 | 0.0000 | *** |
+| N=1 vs consensus (Pro text) | Pro text run_1 (N=1) | Pro text 3-of-5 consensus | 0.738 | 0.843 | −0.105 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 4-of-5 + PV | Flash HIGH text 5-of-5 | 0.864 | 0.781 | +0.083 | 0.0000 | 0.0000 | *** |
+| PV verifier thinking | Flash HIGH text 4-of-5 + medium vf | Flash HIGH text 5-of-5 | 0.859 | 0.781 | +0.078 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 16-of-30 + PV | Flash HIGH text 26-of-30 | 0.890 | 0.816 | +0.074 | 0.0000 | 0.0000 | *** |
+| PV vs consensus | Flash HIGH text 9-of-10 + PV | Flash HIGH text 9-of-10 | 0.856 | 0.799 | +0.057 | 0.0000 | 0.0000 | *** |
+| PV vs consensus (image) | Flash HIGH image 3-of-5 + PV | Flash HIGH image 3-of-5 | 0.778 | 0.729 | +0.049 | 0.0004 | 0.0004 | *** |
+| PV vs consensus (Pro) | Pro HIGH text 3-of-5 + PV | Pro HIGH text 3-of-5 | 0.849 | 0.843 | +0.006 | 0.4128 | 0.4128 | ns |
 
 **Reading**: The top six rows ("N=1 vs consensus" and "PV on single-pass")
 show single-pass → consensus / PV gains of +0.10 to +0.39 F1 — the
 largest effects in the study. The next six rows ("PV vs consensus")
-show +PV gains on top of already-consensus output, +0.05 to +0.09 F1,
+show +PV gains on top of already-consensus output, +0.05 to +0.08 F1,
 all significant except the Pro HIGH text 3-of-5 cell (where consensus
 already saturates the verifier's reachable precision). Architecture is
 the single most consequential factor family.
@@ -141,11 +144,11 @@ the single most consequential factor family.
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
-| HIGH vs MINIMAL (text N=10) | Flash HIGH text 9-of-10 | Flash MIN text 10-of-10 | 0.797 | 0.633 | +0.164 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (text N=30) | Flash HIGH text 26-of-30 | Flash MIN text 29-of-30 | 0.814 | 0.661 | +0.153 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (text N=5) | Flash HIGH text 5-of-5 | Flash MIN text 5-of-5 | 0.779 | 0.640 | +0.139 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=10) | Flash HIGH text 9-of-10 | Flash MIN text 10-of-10 | 0.799 | 0.635 | +0.164 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=30) | Flash HIGH text 26-of-30 | Flash MIN text 29-of-30 | 0.816 | 0.663 | +0.153 | 0.0000 | 0.0000 | *** |
+| HIGH vs MINIMAL (text N=5) | Flash HIGH text 5-of-5 | Flash MIN text 5-of-5 | 0.781 | 0.642 | +0.140 | 0.0000 | 0.0000 | *** |
 | HIGH vs MINIMAL (N=1 text) | FH text run_1 (N=1) | FM text run_1 (N=1) | 0.392 | 0.493 | −0.101 | 0.0000 | 0.0000 | *** |
-| HIGH vs MINIMAL (image N=5) | Flash HIGH image 3-of-5 | Flash MIN image 4-of-5 | 0.727 | 0.664 | +0.063 | 0.0003 | 0.0004 | *** |
+| HIGH vs MINIMAL (image N=5) | Flash HIGH image 3-of-5 | Flash MIN image 4-of-5 | 0.729 | 0.666 | +0.063 | 0.0003 | 0.0004 | *** |
 | HIGH vs MINIMAL (N=1 image) | FH image run_1 (N=1) | FM image run_1 (N=1) | 0.515 | 0.560 | −0.045 | 0.0588 | 0.0588 | ns |
 
 **Reading**: HIGH thinking beats MINIMAL at consensus N ≥ 5 on both
@@ -168,7 +171,9 @@ handicap; at N ≥ 5 consensus exploits it.
 > text contrast reverses sign and is not significant (−0.021 at N=5, −0.034 at
 > N=10; `results/e43-matched-temperature/`). The table below is retained as the
 > dated record — read the first three rows and the 384 px N=1 row as
-> superseded. Recomputed family:
+> superseded (the first three also keep their 2026-03-31 values where the
+> 2026-10-15 regeneration moved them; see the changelog). Recomputed
+> family:
 > `results/e43-board-regen/bh-families/families_recomputed.md`.
 
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
@@ -198,14 +203,14 @@ same Phase 2b retest tree (`outputs/retest/phase2b/track{1-image,2-text}/T{0.7,1
 | Question | Condition A | Condition B | F1_A | F1_B | ΔF1 | p (raw) | p (adj) | Sig |
 |---|---|---|---|---|---|---|---|---|
 | Text vs image (N=1, Pro) | Pro text run_1 (N=1) | Pro image run_1 (N=1) | 0.738 | 0.590 | +0.149 | 0.0000 | 0.0000 | *** |
-| Text vs image (Pro consensus N=5) | Pro text 3-of-5 consensus | Pro image 3-of-5 consensus | 0.840 | 0.700 | +0.141 | 0.0000 | 0.0000 | *** |
+| Text vs image (Pro consensus N=5) | Pro text 3-of-5 consensus | Pro image 3-of-5 consensus | 0.843 | 0.700 | +0.143 | 0.0000 | 0.0000 | *** |
 | Text vs image (N=1, FH) | FH text run_1 (N=1) | FH image run_1 (N=1) | 0.392 | 0.515 | −0.123 | 0.0001 | 0.0002 | *** |
 | Text vs image (baseline + PV) | Text baseline + PV | Image baseline + PV | 0.814 | 0.717 | +0.098 | 0.0000 | 0.0000 | *** |
 | Text vs image (PV) | Flash HIGH text 4-of-5 + PV | Flash HIGH image 3-of-5 + PV | 0.864 | 0.778 | +0.086 | 0.0000 | 0.0000 | *** |
 | Text vs image (N=1, FM) | FM text run_1 (N=1) | FM image run_1 (N=1) | 0.493 | 0.560 | −0.067 | 0.0158 | 0.0178 | * |
-| Text vs image (N=10) | Flash HIGH text 9-of-10 | Flash HIGH image 6-of-10 | 0.797 | 0.740 | +0.057 | 0.0054 | 0.0081 | ** |
-| Text vs image | Flash HIGH text 5-of-5 | Flash HIGH image 3-of-5 | 0.779 | 0.727 | +0.052 | 0.0143 | 0.0178 | * |
-| Text vs image (MINIMAL) | Flash MIN text 5-of-5 | Flash MIN image 4-of-5 | 0.640 | 0.664 | −0.024 | 0.3604 | 0.3604 | ns |
+| Text vs image (N=10) | Flash HIGH text 9-of-10 | Flash HIGH image 6-of-10 | 0.799 | 0.742 | +0.057 | 0.0050 | 0.0075 | ** |
+| Text vs image | Flash HIGH text 5-of-5 | Flash HIGH image 3-of-5 | 0.781 | 0.729 | +0.052 | 0.0141 | 0.0178 | * |
+| Text vs image (MINIMAL) | Flash MIN text 5-of-5 | Flash MIN image 4-of-5 | 0.642 | 0.666 | −0.024 | 0.3554 | 0.3554 | ns |
 
 **Reading**: Text > image at Pro level (ΔF1 +0.14 to +0.15) and at
 Flash HIGH consensus + PV stages (+0.05 to +0.10). Image > text at
@@ -388,13 +393,85 @@ These 512 px Phase 2a–2e contrasts are consistent with the H8 v2
 
 **Status**: Paper-citation-ready factor-analysis report. The 61
 pairwise contrasts across 5 families, preserved verbatim from the
-2026-03-31 source tables, now sit inside a narrative frame with
+2026-03-31 source tables apart from the 20 rows restated on 2026-10-15,
+now sit inside a narrative frame with
 executive summary, methods, caveats, and paper implications. The
 two 512 px Temperature rows with incomplete condition metadata are
 explicitly flagged; their statistical outputs (ΔF1, p-values) remain
 valid.
 
 ## Changelog
+
+### 2026-10-15 — 20 rows restated on the consensus route (PI ruling D60 (3))
+
+**Refresh trigger**: PI rulings D60 (3) and D62 (2)
+(`planning/pi-decisions-2026-09-20.md`), executed by the S164
+restatement pass (`reports/s164-agent-records/restatement-pass.md`,
+§ 1.5). PR #37 (fix `4e9d659ab`;
+`reports/s163-agent-records/d60-3-consensus-route.md`) made the
+in-memory consensus route keep each cluster's contributing tiles, so a
+consensus detection is scored on its origin sheet, as its file already
+was. Every consensus arm read through that route can gain a detection
+near a sheet edge. `results/pairwise/factor-analysis-20m/` and the 20 m
+pairwise run were regenerated with each committed run's flags,
+`collect-factor-analysis.py` rebuilt `factor_analysis_results.json`,
+`.csv` and `_autogen.md`, and the outputs were committed at
+`08af04cf3` (two independent runs, equal apart from timestamps and run
+roots). This hand-written document is restated from that JSON. Of its
+61 rows, 23 moved, and the 20 in §§ 3, 4 and 6 are restated in place.
+
+The two "PV on single-pass" rows read the single-pass text 5-of-5 arm,
+whose pass files changed before they were tracked (D61 (2): 951 → 954
+detections). Their per-pair March files stay at their paths as
+historical records, with today's runs beside them under
+`results/rescore-2026-10-15/pairwise/`; this collection reads the
+regenerated 20 m FDR roll-up, so it carries today's values.
+
+| Row | Before | After |
+|---|---|---|
+| § 3 N=1 vs consensus (FH text): FH text run_1 (N=1) vs FH text 5-of-5 consensus | F1_B 0.779; ΔF1 −0.387 | F1_B 0.781; ΔF1 −0.389 |
+| § 3 N=1 vs consensus (FH image): FH image run_1 (N=1) vs FH image 3-of-5 consensus | F1_B 0.727; ΔF1 −0.212 | F1_B 0.729; ΔF1 −0.214 |
+| § 3 N=1 vs consensus (FM text): FM text run_1 (N=1) vs FM text 5-of-5 consensus | F1_B 0.640; ΔF1 −0.147 | F1_B 0.642; ΔF1 −0.148 |
+| § 3 N=1 vs consensus (Pro text): Pro text run_1 (N=1) vs Pro text 3-of-5 consensus | F1_B 0.840; ΔF1 −0.102 | F1_B 0.843; ΔF1 −0.105 |
+| § 3 PV vs consensus: Flash HIGH text 16-of-30 + PV vs Flash HIGH text 26-of-30 | F1_B 0.814; ΔF1 +0.076 | F1_B 0.816; ΔF1 +0.074 |
+| § 3 PV vs consensus: Flash HIGH text 9-of-10 + PV vs Flash HIGH text 9-of-10 | F1_B 0.797; ΔF1 +0.060 | F1_B 0.799; ΔF1 +0.057 |
+| § 3 PV vs consensus: Flash HIGH text 4-of-5 + PV vs Flash HIGH text 5-of-5 | F1_B 0.779; ΔF1 +0.085 | F1_B 0.781; ΔF1 +0.083 |
+| § 3 PV verifier thinking: Flash HIGH text 4-of-5 + medium vf vs Flash HIGH text 5-of-5 | F1_B 0.779; ΔF1 +0.080 | F1_B 0.781; ΔF1 +0.078 |
+| § 3 PV vs consensus (image): Flash HIGH image 3-of-5 + PV vs Flash HIGH image 3-of-5 | F1_B 0.727; ΔF1 +0.051 | F1_B 0.729; ΔF1 +0.049 |
+| § 3 PV vs consensus (Pro): Pro HIGH text 3-of-5 + PV vs Pro HIGH text 3-of-5 | F1_B 0.840; ΔF1 +0.009; p (raw) 0.2580; p (adj) 0.2580 | F1_B 0.843; ΔF1 +0.006; p (raw) 0.4128; p (adj) 0.4128 |
+| § 3 PV on single-pass text: Text baseline + PV vs Single-pass text 5-of-5 | F1_B 0.544; ΔF1 +0.270 | F1_B 0.547; ΔF1 +0.267 |
+| § 3 PV on single-pass image: Image baseline + PV vs Single-pass text 5-of-5 | F1_B 0.544; ΔF1 +0.173 | F1_B 0.547; ΔF1 +0.170 |
+| § 4 HIGH vs MINIMAL (text N=5): Flash HIGH text 5-of-5 vs Flash MIN text 5-of-5 | F1_A 0.779; F1_B 0.640; ΔF1 +0.139 | F1_A 0.781; F1_B 0.642; ΔF1 +0.140 |
+| § 4 HIGH vs MINIMAL (text N=10): Flash HIGH text 9-of-10 vs Flash MIN text 10-of-10 | F1_A 0.797; F1_B 0.633 | F1_A 0.799; F1_B 0.635 |
+| § 4 HIGH vs MINIMAL (text N=30): Flash HIGH text 26-of-30 vs Flash MIN text 29-of-30 | F1_A 0.814; F1_B 0.661 | F1_A 0.816; F1_B 0.663 |
+| § 4 HIGH vs MINIMAL (image N=5): Flash HIGH image 3-of-5 vs Flash MIN image 4-of-5 | F1_A 0.727; F1_B 0.664 | F1_A 0.729; F1_B 0.666 |
+| § 6 Text vs image (Pro consensus N=5): Pro text 3-of-5 consensus vs Pro image 3-of-5 consensus | F1_A 0.840; ΔF1 +0.141 | F1_A 0.843; ΔF1 +0.143 |
+| § 6 Text vs image: Flash HIGH text 5-of-5 vs Flash HIGH image 3-of-5 | F1_A 0.779; F1_B 0.727; p (raw) 0.0143 | F1_A 0.781; F1_B 0.729; p (raw) 0.0141 |
+| § 6 Text vs image (N=10): Flash HIGH text 9-of-10 vs Flash HIGH image 6-of-10 | F1_A 0.797; F1_B 0.740; p (raw) 0.0054; p (adj) 0.0081 | F1_A 0.799; F1_B 0.742; p (raw) 0.0050; p (adj) 0.0075 |
+| § 6 Text vs image (MINIMAL): Flash MIN text 5-of-5 vs Flash MIN image 4-of-5 | F1_A 0.640; F1_B 0.664; p (raw) 0.3604; p (adj) 0.3604 | F1_A 0.642; F1_B 0.666; p (raw) 0.3554; p (adj) 0.3554 |
+| § 5 T=0.7 vs T=1.0 (N=5): Flash MIN text T=0.7 5-of-5 vs Flash MIN text T=1.0 5-of-5 (void under E72; table kept at 2026-03-31) | F1_A 0.640; F1_B 0.471 | F1_A 0.642; F1_B 0.474 |
+| § 5 T=0.7 vs T=1.0 (N=10): Flash MIN text T=0.7 10-of-10 vs Flash MIN text T=1.0 9-of-10 (void under E72; table kept at 2026-03-31) | F1_A 0.633; F1_B 0.462; ΔF1 +0.172 | F1_A 0.635; F1_B 0.464; ΔF1 +0.171 |
+| § 5 T=0.7 vs T=1.0 (N=30): Flash MIN text T=0.7 29-of-30 vs Flash MIN text T=1.0 22-of-30 (void under E72; table kept at 2026-03-31) | F1_A 0.661; F1_B 0.467 | F1_A 0.663; F1_B 0.469 |
+| § 1 and § 3 readings: +PV gain on top of consensus | +0.05 to +0.09 | +0.05 to +0.08 |
+
+Source: `factor_analysis_results.json` (`comparisons[i]`: `f1_a`,
+`f1_b`, `delta_f1`, `p_value_raw`, `p_value_adj`), read at `718d0ee08`
+(before) and at the pass's head (after), rendered at this document's
+precision.
+
+**What did NOT change**: every significance call (no BH status flips;
+Architecture 11 / 12, Thinking 5 / 6, Temperature 1 / 2 usable,
+Modality 8 / 9, Prompt Engineering 0 / 28); the other 38 rows,
+including all 28 Prompt Engineering rows and both Phase 2b temperature
+rows; every reading's direction; the ranges "up to +0.39" (§§ 1, 3, 9),
+"+0.10 to +0.39" (§ 3), "+0.06 to +0.16" (§ 4), and "+0.14 to +0.15" and
+"+0.05 to +0.10" (§ 6). The three void Group 4 temperature rows
+moved in the JSON too (above) but keep their 2026-03-31 values in § 5,
+which E72 retains as the dated record. Older changelog entries keep the
+figures they reported.
+
+**Commits**: `08af04cf3` (the regenerated factor-analysis artefacts);
+this document refresh in the restatement pass's document commit.
 
 ### 2026-10-06 — "FDR p = 0.004" qualified (C-26)
 

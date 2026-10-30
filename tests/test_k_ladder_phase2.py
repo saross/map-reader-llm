@@ -541,6 +541,26 @@ def test_the_tables_render_the_committed_markdown() -> None:
         [x for i, x in enumerate(committed) if i != 2]
 
 
+def _summary_cells(md: str, family: str) -> dict[str, str]:
+    """Return one family's row of the committed summary table, keyed by header.
+
+    Read by column name, not position: today's builder (v1.4.0) adds a
+    ``score basis`` column and an as-evaluated gain column (S164 restatement
+    pass, 2026-10-15), which shifted the positions the tests once read.
+    """
+    lines = md.splitlines()
+    head = next(i for i, x in enumerate(lines)
+                if x.startswith("| family |") and "K=3 share of the gain" in x)
+    names = [c.strip() for c in lines[head].strip().strip("|").split("|")]
+    for line in lines[head + 2:]:
+        if not line.startswith("|"):
+            break
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if cells[0] == family:
+            return dict(zip(names, cells, strict=True))
+    raise AssertionError(f"no summary row for {family}")
+
+
 def test_committed_gain_shares_are_rounded_once() -> None:
     """D27 covers the gain-share column too: 91.46 % is 91 %, never 92 %."""
     root = Path(__file__).resolve().parents[1] / "results/k-ladder-2026-09-12/phase2"
@@ -554,9 +574,8 @@ def test_committed_gain_shares_are_rounded_once() -> None:
         raw = (f1[3] - f1[1]) / round(best - f1[1], 4)
         assert by_family[ladder["family"]]["share_at_k3"] == pytest.approx(round(raw, 4),
                                                                           abs=1e-12)
-        line = next(x for x in md.splitlines() if x.startswith(f"| {ladder['family']} | ")
-                    and "(K=" in x)
-        assert line.split(" | ")[4] == tables.pct(raw), ladder["family"]
+        row = _summary_cells(md, ladder["family"])
+        assert row["K=3 share of the gain"] == tables.pct(raw), ladder["family"]
         checked += 1
     assert checked == 14
     # The real sentinel: MINIMAL text T 0.7 is the case the double rounding broke.
@@ -575,9 +594,8 @@ def test_committed_summary_shares_are_rounded_once() -> None:
         raw = by_k[3]["all_in_flex_usd"] / by_k[max(by_k)]["all_in_flex_usd"]
         row = by_family[ladder["family"]]
         assert row["cost_share_at_k3"] == pytest.approx(round(raw, 4), abs=1e-12)
-        line = next(x for x in md.splitlines() if x.startswith(f"| {ladder['family']} | ")
-                    and "(K=" in x)
-        assert line.rstrip().endswith(f"| {tables.pct(raw)} |"), ladder["family"]
+        cells = _summary_cells(md, ladder["family"])
+        assert cells["K=3 cost / top-rung cost"] == tables.pct(raw), ladder["family"]
 
 
 # --------------------------------------------------------------------------

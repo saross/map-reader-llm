@@ -1,7 +1,7 @@
 <!-- GENERATED FILE — do not hand-edit. Projected from the registered manifests by scripts/generate_run_reports.py v1.1.0. Hand edits are destroyed on the next regeneration and fail the --check drift guard. -->
 # Post-run report — stride-phasec-2026-08-25
 
-> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `238606a15`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
+> **GENERATED FILE — do not hand-edit.** Projected from the registered manifests by `scripts/generate_run_reports.py` v1.1.0 at source commit `3a9ec2815`. This file carries provenance instead of a hand changelog, per the PI ruling of 2026-09-11 recorded in `docs/methodology/output-directory-standard.md` § "Documents in Revision Policy Scope": a generated document's history is its inputs' and its generator's git history, so "is this current?" is answered by the `--check` drift guard and its tier-1 test, not by a changelog. Regenerate after any manifest rebuild; put before/after notes in the commit message.
 
 **Directory**: `outputs/stride-phasec-2026-08-25` · **Registry status**: active · **Purpose**: Stride programme Phase C: the 384/62.5% rung-144 cell at K=10 — the densest-overlap 384 px point, completing the stride ladder.
 
@@ -86,7 +86,7 @@ F1@20 m is the preregistered localisation buffer; F1@50 m is the deployment work
 
 | Condition | Architecture | Aggregation | Passes | Operating point | Detections | F1@20 m [CI] | F1@50 m [CI] | Tile MCC |
 |---|---|---|---:|---|---:|---|---|---:|
-| `g384-ov240-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 423 | 0.8860 [0.8588, 0.9093] | not supplied | 0.7910 |
+| `g384-ov240-k10-verified-p0.15-k10` | proposer-verifier | verified | 10 | k=10/pt=0.15 | 429 | 0.8938 [0.8679, 0.9154] | not supplied | 0.8029 |
 
 Buffers on file (metres), by how many conditions carry that set:
 
@@ -158,7 +158,7 @@ This report is a projection. Every figure above is read from one of the committe
 | Field | Value |
 |---|---|
 | Generator | `scripts/generate_run_reports.py` v1.1.0 |
-| Source commit | `238606a15` |
+| Source commit | `3a9ec2815` |
 | Manifest extractor | `0.8.0` |
 | Run row last extracted | `2026-10-03T07:57:28Z` |
 

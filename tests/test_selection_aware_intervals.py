@@ -238,3 +238,51 @@ def test_board_membership_source_override_is_recorded(monkeypatch, tmp_path):
     assert res["conditions_override"] == conditions
     assert str(res["_seen"]["analyses_path"]) == analyses
     assert str(res["_seen"]["conditions_path"]) == conditions
+
+
+class _OriginReached(Exception):
+    """Raised by the stubbed origin step so the wiring test stops there."""
+
+
+@pytest.mark.tier1
+def test_sweep_builder_puts_the_union_on_the_origin_route(monkeypatch, tmp_path):
+    """The sweep-optimism builder books the union on its own sheets (D62 (1)).
+
+    Restatement pass, 2026-10-15: like image_b_analysis.py, the builder must
+    rebuild the union from the cell's prepared passes and re-key every row to
+    its origin sheet before the sweep; before the fix it kept the union's
+    legacy source_tile, and the re-verified wrong-sheet rows scored off their
+    sheet. The stubs record the cell, the scoring directory, and the pass
+    count the origin step is given, then stop the build.
+    """
+    import scripts.grid_analysis as ga
+    import scripts.image_b_analysis as iba
+    import scripts.lib_cluster_origins as lco
+    import scripts.stride_verifier_analysis as sva
+
+    gdf = gpd.GeoDataFrame({"vote_count": [1], "mound_probability": [0.9],
+                            "source_tile": ["m_x0_y0.png"]},
+                           geometry=[Point(0, 0)], crs="EPSG:32635")
+    gdf.attrs["verifier_probabilities"] = {"dir": "verify_repaired"}
+    seen: dict = {}
+    monkeypatch.setattr(iba, "load_image_union", lambda *a, **k: gdf.copy())
+    monkeypatch.setattr(sva, "reassign_gate", lambda g, b, label: g)
+    monkeypatch.setattr(sai.gpd, "read_file", lambda *a, **k: gdf.copy())
+
+    def passes(scoring, cell, n_passes=None):
+        seen["scoring"], seen["cell"], seen["n_passes"] = Path(scoring), cell, n_passes
+        return [[]] * (n_passes or 0)
+
+    def origin(union, ps, bounds, *, label, n_passes):
+        seen["label"], seen["origin_n"] = label, n_passes
+        raise _OriginReached
+
+    monkeypatch.setattr(ga, "load_cell_passes", passes)
+    monkeypatch.setattr(lco, "union_on_origin", origin)
+    union = tmp_path / "outputs/campaign/verifier/g384_ov192_g37/union_k5.geojson"
+    with pytest.raises(_OriginReached):
+        sai.build_sweep_tile_counts(union, union.parent / "verify", 5,
+                                    tmp_path / "bounds.geojson", gdf.copy())
+    assert seen["cell"] == "g384_ov192_g37" and seen["label"] == "g384_ov192_g37"
+    assert seen["scoring"] == tmp_path / "outputs/campaign/scoring"
+    assert seen["n_passes"] == 5 and seen["origin_n"] == 5

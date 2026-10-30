@@ -1,0 +1,15 @@
+__________ ERROR at setup of test_materialised_cell_keeps_the_members __________
+tests/test_derive_g37_gs_opmax_rungs.py:88: in routed
+    monkeypatch.setattr(derive, "load_image_union", fake_load)
+E   AttributeError: <module 'scripts.derive_g37_gs_opmax_rungs' from '<SCRATCH>/lane-kladder/p1/hR/scripts/derive_g37_gs_opmax_rungs.py'> has no attribute 'load_image_union'
+=================================== FAILURES ===================================
+_______________ test_carried_crosscheck_is_keyed_by_the_leg_read _______________
+tests/test_derive_g37_gs_opmax_rungs.py:141: in test_carried_crosscheck_is_keyed_by_the_leg_read
+    assert check["n_detections"] == {"verify": 443, "verify_repaired": 451}
+E   AssertionError: assert 443 == {'verify': 443, 'verify_repaired': 451}
+=========================== short test summary info ============================
+FAILED tests/test_derive_g37_gs_opmax_rungs.py::test_carried_crosscheck_is_keyed_by_the_leg_read
+ERROR tests/test_derive_g37_gs_opmax_rungs.py::test_origin_union_runs_the_chain_sequence
+ERROR tests/test_derive_g37_gs_opmax_rungs.py::test_sweep_scores_the_row_on_its_members_sheet
+ERROR tests/test_derive_g37_gs_opmax_rungs.py::test_materialised_cell_keeps_the_members
+========================= 1 failed, 3 errors in 1.84s ==========================

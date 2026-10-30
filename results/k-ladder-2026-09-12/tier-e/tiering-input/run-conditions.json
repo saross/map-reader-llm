@@ -3,7 +3,24 @@
   "schema_version": "1.0",
   "decomposition": {
     "grid-2026-08-18": {
-      "proposer_pools": {},
+      "proposer_pools": {
+        "g512_ov064": {
+          "modality": "text",
+          "path": "g512_ov064"
+        },
+        "g512_ov256": {
+          "modality": "text",
+          "path": "g512_ov256"
+        },
+        "g384_ov048": {
+          "modality": "text",
+          "path": "g384_ov048"
+        },
+        "g384_ov192": {
+          "modality": "text",
+          "path": "g384_ov192"
+        }
+      },
       "verifier_passes": {
         "g512_ov064-union-k10-verify": {
           "modality": "text",
@@ -65,7 +82,9 @@
             "n_test_tiles": 487,
             "calibration_set_id": null,
             "n_calibration_tiles": null
-          }
+          },
+          "source_run": "grid-2026-08-18",
+          "_source_run_basis": "prompt-level pool name spanning the run's four geometry pools; passes at outputs/grid-2026-08-18/g{384_ov048,384_ov192,512_ov064,512_ov256}/run_*"
         },
         {
           "label": "g384-ov192-k3-verified-opmax",
@@ -93,7 +112,9 @@
             "n_test_tiles": 487,
             "calibration_set_id": null,
             "n_calibration_tiles": null
-          }
+          },
+          "source_run": "grid-2026-08-18",
+          "_source_run_basis": "prompt-level pool name spanning the run's four geometry pools; passes at outputs/grid-2026-08-18/g{384_ov048,384_ov192,512_ov064,512_ov256}/run_*"
         },
         {
           "label": "g384-ov192-k5-verified-opmax",
@@ -121,7 +142,9 @@
             "n_test_tiles": 487,
             "calibration_set_id": null,
             "n_calibration_tiles": null
-          }
+          },
+          "source_run": "grid-2026-08-18",
+          "_source_run_basis": "prompt-level pool name spanning the run's four geometry pools; passes at outputs/grid-2026-08-18/g{384_ov048,384_ov192,512_ov064,512_ov256}/run_*"
         },
         {
           "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
@@ -140,6 +163,8 @@
           },
           "eval_path": "results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json",
           "detections": "results/grid-2026-08-18/conditions-verified/g384_ov192/detections.geojson",
+          "source_run": "grid-2026-08-18",
+          "_source_run_basis": "prompt-level pool name spanning the run's four geometry pools; passes at outputs/grid-2026-08-18/g{384_ov048,384_ov192,512_ov064,512_ov256}/run_*",
           "_note": "TIERING INPUT ONLY \u2014 see this file's _README. "
         }
       ],

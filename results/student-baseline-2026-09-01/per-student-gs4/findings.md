@@ -1,7 +1,21 @@
 # The novice baseline decomposed: students and configs on identical ground
 
-> **Last revised**: 2026-09-01 (original publication). See
-> [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-18 (a dated note: the model rows and every
+> test below predate the S164 restatement; re-score queued). 2026-09-01:
+> original publication. See [§ Changelog](#changelog) for revision
+> history.
+
+**Note, 2026-10-18 (PI ruling D69, restatement record § 10 Q8): not yet
+restated.** The two model rows are Era-2 board cells that the S164
+restatement moved (PR #52): at 20 m the all-3.7 model 0.9190 → 0.9289
+and the 3.7-text-screen model 0.9066 → 0.9165, after the restatement's two repairs (D62
+(1)). Every model value, per-zone comparison, and
+significance test below predates that and has not been re-run; the
+students' values are unaffected. Narrow orderings may change, for
+example Student A's zone at 20 m (0.8718 against 0.8646). Do not quote
+the model rows or the tests until the re-score, which runs after PR #52
+merges (`scripts/student_perstudent_gs4.py`, then
+`scripts/student_ranking_significance.py`).
 
 **Classification**: Phase 0a/1a of the student-baseline programme
 (`planning/student-baseline-2026-08-31.md`), run overnight on PI
@@ -125,6 +139,14 @@ both directions.
   tiles. The footprint basis equalises *territory*, not *task*.
 
 ## Changelog
+
+### 2026-10-18 — Dated note: the model rows predate the restatement
+
+A note under the banner records that the two model rows, and every
+comparison and test that uses them, predate the S164 restatement
+(PR #52), which lifted both model rows by about 0.01 at 20 m. Nothing else
+changes; the re-score follows PR #52 (PI ruling D69, restatement record
+§ 10 Q8). Commit: the one that applies this entry.
 
 ### 2026-09-01 — Original publication
 

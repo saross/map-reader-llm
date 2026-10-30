@@ -1,8 +1,11 @@
 # Selection-aware uncertainty: pilot on the tile-size × overlap grid
 
-> **Last revised**: 2026-08-20 (audit remediation: `n1-baseline-matrix-384`
-> re-tiered at the standard B = 10,000 — admissible set 3, not 4; overrides now
-> recorded in artefacts). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-10-15 (the four grid pilots regenerated on the
+> origin route, PI ruling D65 (2): every grid value moves and the 384 px / 50 %
+> MCB and Hsu sets shrink; no reading changes). Prior: 2026-08-20 (audit
+> remediation: `n1-baseline-matrix-384` re-tiered at the standard B = 10,000 —
+> admissible set 3, not 4; overrides now recorded in artefacts). See
+> [§ Changelog](#changelog) for revision history.
 
 **Classification**: POST-HOC (E41-class), a methodological re-analysis of
 committed detections. Not a registered test.
@@ -35,18 +38,18 @@ a bias rather than remove one.
 
 | Cell | Selected | Apparent F1 | Optimism | Corrected | argmax stability | MCB set |
 |---|---|---:|---:|---:|---:|---:|
-| 512 px / 50 % | c ≥ 2, k ≥ 8 | 0.7518 | **+0.0016** | 0.7501 | 0.891 | 9 / 30 |
-| 512 px / 12.5 % | c ≥ 1, k ≥ 8 | 0.6759 | **+0.0041** | 0.6718 | 0.704 | 7 / 30 |
-| 384 px / 50 % | c ≥ 2, k ≥ 10 | 0.7205 | **+0.0011** | 0.7194 | 0.947 | 10 / 30 |
-| 384 px / 12.5 % | c ≥ 1, k ≥ 10 | 0.6475 | **−0.0008** | 0.6483 | 1.000 | 4 / 30 |
+| 512 px / 50 % | c ≥ 2, k ≥ 8 | 0.7611 | **+0.0012** | 0.7599 | 0.919 | 9 / 30 |
+| 512 px / 12.5 % | c ≥ 1, k ≥ 8 | 0.6845 | **+0.0040** | 0.6805 | 0.717 | 7 / 30 |
+| 384 px / 50 % | c ≥ 2, k ≥ 10 | 0.7293 | **+0.0001** | 0.7291 | 0.975 | 8 / 30 |
+| 384 px / 12.5 % | c ≥ 1, k ≥ 10 | 0.6574 | **−0.0008** | 0.6582 | 0.998 | 4 / 30 |
 
 B = 10 000 tile resamples, seed 42, 20 m buffer, 487 carrier tiles. Monte Carlo
 standard error on every optimism estimate is ≤ 0.00026.
 
-**Optimism is at most 0.004 F1**, against main effects of 0.08–0.13. It is
+**Optimism is at most 0.004 F1**, against main effects of 0.08–0.14. It is
 too small to move any conclusion in the grid, and the selection-aware interval is
-visually indistinguishable from the naive one (512 px / 50 %: [0.7037, 0.7946]
-naive against [0.7020, 0.7930] corrected).
+visually indistinguishable from the naive one (512 px / 50 %: [0.7138, 0.8033]
+naive against [0.7125, 0.8021] corrected).
 
 **This was not the expected result and is flagged as a surprise.** The nearest
 published analogue, SIREN on adaptive LLM benchmarking
@@ -54,8 +57,8 @@ published analogue, SIREN on adaptive LLM benchmarking
 optimism at +0.42 to +3.70 percentage points and reports that it sometimes
 reverses near-tie deployment decisions. Ours is an order of magnitude smaller.
 The mechanism is visible in the table: **optimism tracks argmax instability
-almost perfectly**, from −0.0008 at stability 1.000 to +0.0041 at stability
-0.704. SIREN's candidates come from random search over prompts and are close to
+almost perfectly**, from −0.0008 at stability 0.998 to +0.0040 at stability
+0.717. SIREN's candidates come from random search over prompts and are close to
 independent; ours are a nested sweep over corroboration and vote threshold on a
 smooth two-dimensional surface, so 30 nominal candidates behave like a handful of
 effective ones and there is little selection noise to be optimistic about. The
@@ -70,7 +73,7 @@ confidence. Those sets are wide, and structured:
 | Cell | Cannot be ruled out as best |
 |---|---|
 | 512 px / 50 % | c ≥ 2 with **k = 2…10** (all nine) |
-| 384 px / 50 % | c ≥ 2 with k = 7…10, **and** c ≥ 3 with k = 4…9 |
+| 384 px / 50 % | c ≥ 2 with k = 7…10, **and** c ≥ 3 with k = 5…8 |
 | 512 px / 12.5 % | c ≥ 1 with **k = 4…10** |
 | 384 px / 12.5 % | c ≥ 1 with k = 7…10 |
 
@@ -82,7 +85,7 @@ corroboration level the vote threshold ranges freely over most of its span
 without the data distinguishing the resulting cells.
 
 The deployment claim therefore changes shape. "The best operating point is
-c ≥ 2, k ≥ 8, F1 0.7518" overstates what was measured. What the grid supports is
+c ≥ 2, k ≥ 8, F1 0.7611" overstates what was measured. What the grid supports is
 **"require cross-tile corroboration; the vote threshold is not resolvable at this
 sample size"** — which is both weaker and more actionable, because it says the
 tuning effort should go into the corroboration filter rather than the threshold.
@@ -101,9 +104,9 @@ regions by design. Subsampling the least stable cell:
 
 | *m* / *n* | argmax stability | Optimism | MCB set | MCB critical width |
 |---:|---:|---:|---:|---:|
-| 1.00 | 0.704 | +0.0041 | 7 / 30 | 0.0756 |
-| 0.50 | 0.549 | +0.0096 | 8 / 30 | 0.1064 |
-| 0.25 | 0.414 | +0.0183 | 8 / 30 | 0.1499 |
+| 1.00 | 0.717 | +0.0040 | 7 / 30 | 0.0741 |
+| 0.50 | 0.558 | +0.0094 | 8 / 30 | 0.1057 |
+| 0.25 | 0.419 | +0.0181 | 8 / 30 | 0.1485 |
 
 Optimism grows as *m* shrinks, and grows **faster than the 1/√*m*** that a
 simple scaling argument predicts (a 4× reduction in *m* inflates it 4.5×, not
@@ -203,9 +206,9 @@ the admissible sets are correspondingly tighter:
 | `pass-budget-pareto-v2` | 7 | 6 | 6 | 7 | strict subset — register 1 too many |
 | `verifier-robustness-matrix` | 6 | 5 | 5 | 5 | identical |
 | E56 consensus-PV threshold | 8 | 5 | 5 | — | — |
-| grid 512 / 50 % | 30 | 9 | 9 | — | — |
+| grid 512 / 50 % | 30 | 9 | 8 | — | — |
 | grid 512 / 12.5 % | 30 | 7 | 7 | — | — |
-| grid 384 / 50 % | 30 | 10 | 8 | — | — |
+| grid 384 / 50 % | 30 | 8 | 5 | — | — |
 | grid 384 / 12.5 % | 30 | 4 | 4 | — | — |
 
 **Correction.** The previous revision reported that MCB was a strict superset of
@@ -257,6 +260,59 @@ Run on sapphire, $0 API. One JSON per cell under `results/selection-aware/`.
 - `results/grid-2026-08-18/findings.md` (the selection-free contrasts)
 
 ## Changelog
+
+### 2026-10-15 — The four grid pilots regenerated on the origin route (PI ruling D65 (2))
+
+**Refresh trigger**: PI ruling D65 (2) (`planning/pi-decisions-2026-09-20.md`),
+executed by the S164 restatement pass
+(`reports/s164-agent-records/restatement-pass.md`). PR #42 (`dddfcc0af`)
+scores each detection on the sheet it was seen on, and fixed this
+script's `--cell` path, but did not re-run it; the grid's consensus-only
+board moved (`results/grid-2026-08-18/findings.md`, 2026-10-15 entry).
+`selection_aware_intervals.py --cell <cell> --K 10 --bootstrap 10000`
+(with `--m-frac 0.5` and `0.25` for 512 px / 12.5 %) was re-run on
+sapphire in two independent copies that agree apart from timestamps and run roots,
+and committed at `f6f10d605`; the six grid files changed. **These values
+had no prior prediction**: no earlier record re-ran these pilots, so
+apart from the apparent F1 (which equals the restated consensus best)
+they were first measured in this pass.
+
+| Quantity | Before | After |
+|---|---|---|
+| Apparent F1: 512/50, 512/12.5, 384/50, 384/12.5 | 0.7518, 0.6759, 0.7205, 0.6475 | 0.7611, 0.6845, 0.7293, 0.6574 |
+| Optimism | +0.0016, +0.0041, +0.0011, −0.0008 | +0.0012, +0.0040, +0.0001, −0.0008 |
+| Corrected F1 | 0.7501, 0.6718, 0.7194, 0.6483 | 0.7599, 0.6805, 0.7291, 0.6582 |
+| argmax stability | 0.891, 0.704, 0.947, 1.000 | 0.919, 0.717, 0.975, 0.998 |
+| **Two-sided band MCB set** | 9, 7, 10, 4 | 9, 7, **8**, 4 |
+| **Hsu set** | 9, 7, 8, 4 | **8**, 7, **5**, 4 |
+| 384/50 band set, c ≥ 3 part | k = 4…9 | k = 5…8 |
+| 512/50 naive; selection-aware interval | [0.7037, 0.7946]; [0.7020, 0.7930] | [0.7138, 0.8033]; [0.7125, 0.8021] |
+| Main effects quoted against the optimism | 0.08–0.13 | 0.08–0.14 |
+| *m*-out-of-*n* (512/12.5) stability at *m*/*n* 1.00, 0.50, 0.25 | 0.704, 0.549, 0.414 | 0.717, 0.558, 0.419 |
+| *m*-out-of-*n* optimism | +0.0041, +0.0096, +0.0183 | +0.0040, +0.0094, +0.0181 |
+| *m*-out-of-*n* MCB critical width | 0.0756, 0.1064, 0.1499 | 0.0741, 0.1057, 0.1485 |
+
+Sources: `g512_ov256_K10_b20_m1.json`, `g512_ov064_K10_b20_m1.json`,
+`g384_ov192_K10_b20_m1.json`, `g384_ov048_K10_b20_m1.json`,
+`g512_ov064_K10_b20_m0.5.json` and `g512_ov064_K10_b20_m0.25.json`
+(`apparent_f1`, `optimism`, `corrected_f1`, `argmax_stability`,
+`mcb_not_ruled_out`, `hsu_not_ruled_out`, `naive_ci`,
+`selection_aware_ci`, `mcb_critical_width`), and the single-pass
+contrasts in `results/grid-2026-08-18/grid_analysis.json`; each read at
+`718d0ee08` (before) and at the pass's head (after). The Hsu set for
+512 / 50 % drops c ≥ 2, k ≥ 2; for 384 / 50 % it keeps c ≥ 2, k = 7…10
+and c ≥ 3, k = 7.
+
+**What did NOT change**: every selected operating point; the readings
+(optimism at most 0.004 F1 and tracking argmax stability, which it now
+does monotonically across the four cells; corroboration resolved and the
+vote threshold not; MCB membership stable under subsampling, 7 → 8 → 8;
+optimism growing about 4.5× for a 4× cut in *m*); every row outside the
+grid (the registered boards, E56, D20). Older changelog entries keep the
+figures they reported.
+
+**Commits**: `f6f10d605` (the regenerated grid pilots); this document
+refresh in the restatement pass's document commit.
 
 ### 2026-08-20 — Session 137 audit remediation: artefact re-emissions
 

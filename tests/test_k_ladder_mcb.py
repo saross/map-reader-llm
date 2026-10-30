@@ -243,15 +243,19 @@ def test_gate_reference_comes_from_the_tiering_not_the_inventory() -> None:
     """The gold-standard ladder's frames disagree on tile-MCC; the gate must
     read the frame the MCB actually runs on.
 
-    Its committed tiering is on the board frame (K = 1 tile-MCC 0.7834) while
-    `ladders.json` records the grid-common frame (0.7894). Gating against the
+    Its committed tiering is on the board frame (K = 1 tile-MCC 0.7948) while
+    `ladders.json` records the grid-common frame (0.8010). Gating against the
     inventory would refuse a correct run, so this pins the source.
+
+    Dated update 2026-10-15 (S164 restatement pass, D58 Q6): the D62 (1)
+    re-verified rows moved the board-frame rung (`f53f6e97c`); the pins were
+    0.7834 (MCC) and 0.8605 (F1), and the grid-common reading was 0.7894.
     """
     ranking = mcb.committed_ranking(
         mcb.K_LADDER_DIR / "mcc-test/tiering/gs-stride-a/tiering_20m.json")
     k1 = ranking["g384-ov128-ladder-n1-verified-p0.15-k1"]
-    assert k1["mcc"] == pytest.approx(0.7834, abs=1e-4)
-    assert k1["f1"] == pytest.approx(0.8605, abs=1e-4)
+    assert k1["mcc"] == pytest.approx(0.7948, abs=1e-4)  # was 0.7834
+    assert k1["f1"] == pytest.approx(0.8665, abs=1e-4)  # was 0.8605
 
 
 # ── the registry ──────────────────────────────────────────────────────
@@ -292,11 +296,43 @@ def test_registry_analysis_ids_match_the_committed_tierings() -> None:
         assert int(tiering["buffer_metres"]) == entry["buffer_m"], entry["slug"]
 
 
+#: Dated 2026-10-15 (S164 restatement pass, record § 10): the Phase 2
+#: builder now reports these six Gemini 3 ``pv-diag-384`` ladders on the D51
+#: clipped basis (D57 (2), (3)) and withholds them from
+#: ``phase2/ladders-compat.json`` "until the clipped cells exist", so their
+#: committed MCB rankings (as evaluated, unclipped) no longer join to a K
+#: through the inventory. Whether to re-run their MCB and MCC test on clipped
+#: cells or keep them with a disclosure is for the PI; until then the gap is
+#: pinned here, so any other unjoinable label still fails.
+WITHHELD_ON_THE_CLIPPED_BASIS = frozenset({
+    "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "phase2-flash-high-text-n5-text-t1-0",
+    "phase2-image-n5-image-t0-3",
+    "phase2-image-n5-image-t0-7",
+    "phase2-image-n5-image-t1-0",
+})
+
+
 def test_label_to_k_covers_every_committed_ranking_label() -> None:
-    """An admissible set is only useful as a statement about K."""
+    """An admissible set is only useful as a statement about K.
+
+    Every committed ranking label joins to a K, except those of the six
+    ladders the compat inventory withholds on the D51 clipped basis, which
+    must fail to join entirely (and the inventory must say why).
+    """
     k_of = mcb.label_to_k()
+    compat = json.loads((mcb.BASE_DIR / mcb.PHASE2_INVENTORY).read_text(encoding="utf-8"))
+    clipped = [s for s in compat["skipped"]
+               if s.get("score_basis") == "clip-to-common-assessed-area"
+               and s["family"].startswith("Gemini 3 ")]
+    assert len(clipped) == len(WITHHELD_ON_THE_CLIPPED_BASIS)
     for entry in mcb.ladder_registry():
-        for label in mcb.committed_ranking(entry["tiering"]):
+        labels = list(mcb.committed_ranking(entry["tiering"]))
+        if entry["slug"] in WITHHELD_ON_THE_CLIPPED_BASIS:
+            assert labels and not any(label in k_of for label in labels), entry["slug"]
+            continue
+        for label in labels:
             assert label in k_of, f"{entry['slug']}: no K for {label}"
 
 

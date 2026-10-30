@@ -8,10 +8,12 @@ verifier/g384_ov192_g37/`) with Gemini 3.8 Flash as the verifier, so
 the two verifier models are compared on IDENTICAL candidates. This
 script runs the paired tests the card's E1 expectation needs:
 
-- ``all-3.7 vs 3.8-verifier``: the 3.7 swap best (0.9265 @20 m, the
-  incumbent all-3.7 stack) against the 3.8-verifier best.
+- ``all-3.7 vs 3.8-verifier``: the 3.7 swap best (0.9265 @20 m as first
+  committed, 0.9364 after the 2026-10-15 restatement; the incumbent all-3.7
+  stack) against the 3.8-verifier best.
 - ``carried-G3 vs 3.8-verifier``: the 3.7 screen best under the carried
-  Gemini 3 verifier (0.9139 @20 m) against the 3.8-verifier best.
+  Gemini 3 verifier (0.9139 @20 m as first committed, 0.9238 after the
+  restatement) against the 3.8-verifier best.
 
 Instrument: per-tile counts at 20 m + round-robin tile-swap micro-F1
 permutation (10,000, seed 42) — identical to the screen's committed
@@ -63,14 +65,17 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 #: The two 3.7-era incumbents on the same union, with their committed
-#: verified-best F1@20 (re-read from the cells' analyses, S148).
+#: verified-best F1@20 (re-read from the cells' analyses, S148). Dated update
+#: 2026-10-15 (restatement pass, D65 (2); D58 Q6): 0.9265 / 0.9139 until the
+#: cells were re-scored with the D62 (1) re-verified rows
+#: (reports/s164-agent-records/restatement-pass.md).
 INCUMBENTS = [
     ("all-3.7",
      PROJECT_ROOT / "results/gemini37-screen-2026-08-28/swap37/verified_best_20m.geojson",
-     0.9265),
+     0.9364),
     ("carried-G3",
      PROJECT_ROOT / "results/gemini37-screen-2026-08-28/verified_best_20m.geojson",
-     0.9139),
+     0.9238),
 ]
 
 #: Mechanism-identity bound for the replication gate (board chain).

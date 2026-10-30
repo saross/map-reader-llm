@@ -4,6 +4,15 @@
 > the all-3.7 stack GS-significant at +0.0304, p=0.0105; PI review
 > pending). See [§ Changelog](#changelog).
 
+**Note, 2026-10-18 (PI ruling D69, restatement record § 10 Q9): figures
+superseded.** The S164 restatement (PR #52) regenerated this screen's
+analyses and pair tests on 2026-10-15; every verdict holds, but the F1
+values and p values quoted below are the originals. The current values
+are in the register row `gemini37-screen-2026-08-28`
+(`results/run-analyses.json`), which is this screen's restated record;
+this card is kept as the design and decision record and is not restated
+figure by figure.
+
 **Question**: has the Flash family improved since Gemini 3? (3.5
 regressed badly at higher cost — S113: won in no role, bare tie
 0.620.) A screening run on the leading configuration, judged against
