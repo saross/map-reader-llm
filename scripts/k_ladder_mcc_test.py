@@ -70,6 +70,11 @@
 #   .venv/bin/python scripts/k_ladder_mcc_test.py \
 #       --output-dir results/k-ladder-2026-09-12/mcc-test
 #
+# `--conditions` (added 2026-10-30) points the non-gold-standard ladders at a
+# conditions sidecar instead of the register, so cells the register does not
+# hold (the D51-clipped cells of `scripts/k_ladder_clipped_cells.py`) can be
+# tested; its default is the register, so every committed run is unchanged.
+#
 # Zero application programming interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-09-12 | Apache 2.0
@@ -426,6 +431,14 @@ def main() -> int:
                              "inventory's ladders are scored on a frame the "
                              "tiering harness would not otherwise pick up "
                              "(e.g. the board frame era2-b-487).")
+    parser.add_argument("--conditions", type=Path, default=RUN_CONDITIONS,
+                        help="Conditions file every ladder that is not the "
+                             "prebuilt gs-stride-a input resolves its rungs "
+                             "through (default: the register, "
+                             "results/run-conditions.json). Point this at a "
+                             "sidecar to test cells the register does not hold, "
+                             "e.g. the D51-clipped cells of "
+                             "scripts/k_ladder_clipped_cells.py.")
     args = parser.parse_args()
 
     inventory = json.loads(args.ladders.read_text())
@@ -450,7 +463,7 @@ def main() -> int:
         else:
             analyses, analysis_id = write_analysis_row(
                 args.output_dir, slug, ladder, rungs)
-            conditions = RUN_CONDITIONS
+            conditions = args.conditions
             bounds = args.bounds
 
         tiering_dir = args.output_dir / "tiering" / slug
@@ -602,6 +615,7 @@ def main() -> int:
     (args.output_dir / "summary.json").write_text(json.dumps({
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "source_inventory": repo_relative(args.ladders),
+        "conditions": repo_relative(args.conditions),
         "n_permutations": args.n_permutations,
         "seed": args.seed,
         "n_ladders": len(summary),
