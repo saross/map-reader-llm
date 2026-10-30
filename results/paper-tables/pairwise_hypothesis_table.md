@@ -1,6 +1,8 @@
 # Pairwise Hypothesis Test Results (30m buffer, FDR-corrected)
 
-> **Last revised**: 2026-10-15 (restated-figures banner added for the two
+> **Last revised**: 2026-10-30 (E72's recomputed families regenerated on
+> the restated layout, PI ruling D69 Q15: Group 7's 20 m flip reverses,
+> q 0.0507 → 0.0483). Prior: 2026-10-15 (restated-figures banner added for the two
 > hypothesis-family runs regenerated on the consensus route, PI ruling
 > D60 (3); tables unchanged). Prior: 2026-08-02 (E72 — superseded-figures
 > banner added). See [§ Changelog](#changelog) for revision history.
@@ -19,7 +21,9 @@
 > 7's N=30 vs N=10 (HIGH text) reads p_adj 0.0914 at 30 m (was 0.0872) and
 > q 0.0464 at 20 m (was 0.0488). The E72 banner's recomputed families
 > (`results/e43-board-regen/bh-families/`, including that row's q = 0.0507)
-> predate the regeneration and were not re-run in this pass. The tables
+> predate the regeneration and were not re-run in this pass [2026-10-30:
+> regenerated on the restated layout; that row now reads q = 0.0483,
+> significant, D69 Q15]. The tables
 > below keep their 2026-03-28 values; the changelog lists every moved row.
 >
 > **⚠ Superseded figures (2026-08-02, E72)**: the three Group 4 temperature
@@ -32,7 +36,9 @@
 > (−0.021 at N=5, −0.034 at N=10). Dropping them leaves a 23-member
 > confirmatory family; the recomputed BH also flips Group 7's
 > `N=30 vs N=10 (HIGH text)` at 20 m from significant (q = 0.0488) to
-> non-significant (q = 0.0507) — the 30 m family is unchanged. The companion
+> non-significant (q = 0.0507) — the 30 m family is unchanged [2026-10-30: on
+> the restated inputs (raw p 0.0375 → 0.0357) the recomputed q is 0.0483,
+> significant, so the flip no longer holds; the full family's q is 0.0464]. The companion
 > `pairwise_hypothesis_table.csv` carries the same superseded rows.
 > Recomputed families: `results/e43-board-regen/bh-families/`. Matched-scope
 > analysis: `results/e43-matched-temperature/`. Dated snapshot; body unchanged;
@@ -120,6 +126,24 @@
 **Summary:** 1 significant / 4 total comparisons
 
 ## Changelog
+
+### 2026-10-30 — E72's Group 7 flip reverses on the restated inputs (PI ruling D69 Q15)
+
+**Trigger**: E72's board and families regenerated on the restated pairwise
+layout (`results/e43-board-regen/`, PI ruling D69 Q15; Session 166, merged
+`68efaad41`).
+
+| Figure | Before | After |
+|---|---|---|
+| Group 7, N=30 vs N=10 (HIGH text), 20 m: raw p | 0.0375 | 0.0357 |
+| Group 7, q in E72's 23-member family | 0.0507 (n.s.) | 0.0483 (significant) |
+| 20 m confirmatory family, BH-significant of the 23 retained | 16 | 17 |
+
+**What did NOT change**: the tables (2026-03-28 values); the full 26-member
+family's verdict on Group 7 (significant, q 0.0464); the 30 m family; the
+three superseded Group 4 rows.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-15 — Restated-figures banner for the regenerated hypothesis families (PI ruling D60 (3))
 

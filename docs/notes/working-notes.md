@@ -38425,3 +38425,75 @@ Obs 280 (the divergence across strata).
 at PR #52's head; `reports/s164-agent-records/rescore-repaired-gs.md`
 § 3.1; `docs/paper/results-claims-inventory-2026-09-12.md` R6-18;
 `planning/pi-decisions-2026-09-20.md` D62 (1), D65 (2), and D69.
+
+## Observation 514: Restating the inputs moved five E72 verdicts across q = 0.05 — Obs 387's second marginal flip reverses, the first holds (Session 166, 2026-10-30)
+
+**Context.** The Principal Investigator (PI) approved this observation in
+Session 166 (D69 Q15, "Approve all six") after the E72 board and its smaller
+Benjamini–Hochberg (BH) families were regenerated on the restated pairwise
+layout (`results/e43-board-regen/`, merged `68efaad41`;
+`reports/s166-agent-records/e72-group7.md`). The restatement (PR #52; the
+consensus route of D60 (3)) had re-scored the March per-test files in place:
+fourteen consensus and single-pass cells rose by about +0.002 to +0.003 F1,
+which moved raw permutation p values. Obs 387 (Session 125, 2026-08-03)
+showed that marginal verdicts depend on the family they are corrected in; it
+is extended here, not edited.
+
+**What was established.** Obs 387's two marginal flips, before and after the
+restatement:
+
+| Pair | Raw p | q, full family | q, E72's smaller family | Flip |
+|---|---:|---:|---:|---|
+| 20 m board: #1 against #2 (both HIGH-text verified) | 0.0398 (unchanged) | 0.0488 → 0.0490 | 0.0503 → 0.0506 | holds |
+| `results/pairwise/20m` `confirmatory` Group 7: N=30 vs N=10 (HIGH text) | 0.0375 → 0.0357 | 0.0488 → 0.0464 | 0.0507 → **0.0483** | **reverses**: significant in both |
+
+Four further retained pairs cross the other way on the restated inputs,
+significant → not significant, from moved raw p values rather than family
+size:
+
+| Board | Pair | Raw p | q |
+|---|---|---:|---:|
+| 20 m | image baseline + PV (t = 0.2) against Flash MINIMAL text T 0.7, 29-of-30 | 0.0383 → 0.0469 | 0.0487 → 0.0590 |
+| 30 m | Flash HIGH image 3-of-5 + PV (t = 0.15) against Flash HIGH text 9-of-10 | 0.0371 → 0.0506 | 0.0473 → 0.0635 |
+| 30 m | Pro HIGH text 3-of-5 + PV (t = 0.15) against Flash HIGH text 26-of-30 | 0.0315 → 0.0410 | 0.0411 → 0.0529 |
+| 30 m | text baseline + PV (t = 0.15) against Flash HIGH text 5-of-5 | 0.0371 → 0.0465 | 0.0473 → 0.0590 |
+
+The E72 boards' counts move accordingly: 199 → 198 of 253 significant at
+20 m and 181 → 178 of 231 at 30 m; the 20 m confirmatory family's retained
+significant count goes 16 → 17 of 23. Tiers do not move (8 at each buffer),
+and no retained condition changes tier.
+
+**Reading.**
+
+1. **Obs 387's thesis gains a second mechanism.** Verdicts within about
+   0.01 of q = 0.05 move not only when the family changes but when the inputs
+   are re-scored by a few thousandths of F1: five crossed the threshold here,
+   one way and the other.
+2. **Group 7's "flip" was not a stable fact.** Its published significance
+   (q 0.0488), its E72 loss (0.0507) and its return (0.0483) all sit inside
+   ±0.002 of the threshold.
+3. **The first flip survives** because its raw p did not move; only the
+   family arithmetic did.
+
+**For the paper.** Report any BH verdict with q within about 0.01 of 0.05 as
+marginal, naming the family, its size, and the scoring revision it was
+computed on; do not build a claim on such a verdict alone.
+
+**Caveats.** The four new crossings are counted against the E72
+regeneration of 2026-08-02; no paired re-test beyond the regenerated
+families was run. Group 7's family is the pairwise run's own
+`confirmatory` family, not the registered family false discovery rate
+adjudication (`results/family-fdr/`), which does not move.
+
+**Findable later.** Obs 387 extension, marginal BH verdict, q near 0.05,
+E72 regeneration, Group 7 reversal, N=30 vs N=10 HIGH text, 0.0483,
+restated inputs, consensus route, D60 (3), D69 Q15, 198 of 253, 178 of 231.
+
+**Related.** Obs 387 (marginal tier separations are family-size-dependent;
+extended here); Obs 512 and Obs 513 (the same restatement's corrections to
+Obs 433 and Obs 482).
+
+**Artefacts**: `results/e43-board-regen/summary.md` (§ 3 and § Changelog,
+2026-10-30), `results/e43-board-regen/bh-families/families_recomputed.{md,csv}`;
+`reports/s166-agent-records/e72-group7.md`; `scripts/regen_e43_board.py`;
+`planning/pi-decisions-2026-09-20.md` D69 (Q15), D60 (3).

@@ -1,6 +1,8 @@
 # Leaderboard Tier Clustering (20m buffer, FDR-corrected)
 
-> **Last revised**: 2026-10-15 (restated-figures banner added for the 20 m
+> **Last revised**: 2026-10-30 (the E72 block's regenerated-board figures
+> updated, PI ruling D69 Q15: 198 significant, not 199). Prior: 2026-10-15
+> (restated-figures banner added for the 20 m
 > pairwise run regenerated on the consensus route, PI ruling D60 (3); tables
 > unchanged). Prior: 2026-08-02 (E72 — superseded-figures banner added). See
 > [§ Changelog](#changelog) for revision history.
@@ -26,10 +28,12 @@
 > scored against 487-tile bounds (coverage confound — see protocol-errata E43
 > correction block + E72), and understate that arm by ~0.17–0.19 F1. The tier
 > structure is affected as well: with those three cells dropped the board has
-> 23 conditions, 253 pairwise tests, 199 significant after BH, and **8 tiers**;
+> 23 conditions, 253 pairwise tests, 199 significant after BH (198 since the
+> 2026-10-30 regeneration on the restated inputs), and **8 tiers**;
 > Tier 9 disappears and #2 (FH text 4/5 + PV, min vf) joins the leader in
-> Tier 1 because their separation (q = 0.0488) no longer survives the smaller
-> family (q = 0.0503). Regenerated 23-condition board:
+> Tier 1 because their separation (q = 0.0488; 0.0490 since the 2026-10-15
+> restatement) no longer survives the smaller family (q = 0.0503; 0.0506 since
+> 2026-10-30). Regenerated 23-condition board:
 > `results/e43-board-regen/`. Matched-scope analysis:
 > `results/e43-matched-temperature/`. Dated snapshot; body unchanged; do not
 > cite the affected rows.
@@ -137,6 +141,23 @@ library-design artefacts.
   threshold; the difference is minor
 
 ## Changelog
+
+### 2026-10-30 — E72 block: the regenerated board on the restated inputs (PI ruling D69 Q15)
+
+**Trigger**: E72's board and families regenerated on the restated pairwise
+layout (`results/e43-board-regen/`, PI ruling D69 Q15; Session 166, merged
+`68efaad41`).
+
+| Figure (E72's 23-condition board, 20 m) | Before | After |
+|---|---|---|
+| BH-significant of 253 | 199 | 198 |
+| #1 against #2, q in the 253-pair family | 0.0503 | 0.0506 |
+| #1 against #2, q in the full 325-pair family | 0.0488 | 0.0490 (already restated 2026-10-15) |
+
+**What did NOT change**: 8 tiers; #2 still joins the leader in Tier 1; no
+retained condition changes tier; the tables (2026-03-29 values).
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-15 — Restated-figures banner for the regenerated 20 m run (PI ruling D60 (3))
 

@@ -1,6 +1,8 @@
 # Leaderboard Tier Clustering (30m buffer, FDR-corrected)
 
-> **Last revised**: 2026-10-15 (restated-figures banner added for the 30 m
+> **Last revised**: 2026-10-30 (the E72 block's regenerated-board count
+> updated, PI ruling D69 Q15: 178 significant, not 181). Prior: 2026-10-15
+> (restated-figures banner added for the 30 m
 > pairwise run regenerated on the consensus route, PI ruling D60 (3); tables
 > unchanged). Prior: 2026-08-02 (E72 — superseded-figures banner added). See
 > [§ Changelog](#changelog) for revision history.
@@ -25,7 +27,8 @@
 > 487-tile bounds (coverage confound — see protocol-errata E43 correction block
 > and E72), and understate that arm by ~0.17–0.19 F1. With those three cells
 > dropped the board has 22 conditions, 231 pairwise tests, 181 significant
-> after BH, and **8 tiers**; Tier 9 disappears and no retained condition
+> after BH (178 since the 2026-10-30 regeneration on the restated inputs), and
+> **8 tiers**; Tier 9 disappears and no retained condition
 > changes tier. The companion `leaderboard_tiers.csv` carries the same
 > superseded rows. Regenerated board: `results/e43-board-regen/`.
 > Matched-scope analysis: `results/e43-matched-temperature/`. Dated snapshot;
@@ -118,6 +121,24 @@ library-design artefacts.
 | FM text T=1.0 9/10 | 0.469 |
 
 ## Changelog
+
+### 2026-10-30 — E72 block: the regenerated board on the restated inputs (PI ruling D69 Q15)
+
+**Trigger**: E72's board and families regenerated on the restated pairwise
+layout (`results/e43-board-regen/`, PI ruling D69 Q15; Session 166, merged
+`68efaad41`).
+
+| Figure (E72's 22-condition board, 30 m) | Before | After |
+|---|---|---|
+| BH-significant of 231 | 181 | 178 |
+
+Three retained pairs lose significance on the restated inputs (their raw p
+moved), listed in `results/e43-board-regen/summary.md` § Changelog.
+
+**What did NOT change**: 8 tiers; no retained condition changes tier; the
+tables (2026-03-29 values).
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-15 — Restated-figures banner for the regenerated 30 m run (PI ruling D60 (3))
 
