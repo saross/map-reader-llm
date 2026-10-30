@@ -160,6 +160,18 @@ The bar for "computationally intensive" is **low**:
 
 **Only fall back to local** if sapphire is confirmed unavailable (e.g., network down, machine offline). Do not assume it is unavailable — check first.
 
+**Reference environment (PI, 2026-10-30).** Sapphire's `.venv` is the
+reference Python installation (Python 3.13.3; its exact package set is
+`requirements-lock.txt`). Any other machine that runs the project's scripts
+or tests matches it exactly, Python patch version included, rather than
+resolving `requirements.txt` afresh: `uv python install 3.13.3`, `uv venv
+--python 3.13.3 .venv`, `uv pip install --python .venv/bin/python -r
+requirements-lock.txt`, then confirm `uv pip freeze` equals sapphire's
+`pip freeze` and tier-1 gives sapphire's counts. zbook was matched this way
+on 2026-10-30 (172 packages identical; tier-1 4,435 passed on both), so it
+can stand in while sapphire is offline. When sapphire's venv changes,
+refresh the lockfile from it and re-match the other machines.
+
 **Never liveness-check a remote process with `pgrep -f <pattern>` over
 `ssh`.** The pattern appears in the remote shell's own command line, so
 `pgrep -f` matches that shell and returns success whether or not the job is

@@ -15,6 +15,7 @@
 Map Reader LLM is a modular, FAIR4RS-compliant pipeline designed to identify archaeological feature symbols (specifically "Burial Mounds" or *Tumuli*) on historical maps. It leverages **Google Gemini 3 Flash** (Multimodal LLM) to visually scan map tiles and extract features as geospatial data.
 
 ### Key Capabilities
+
 *   **Visual Few-Shot Learning**: Does not require fine-tuning. Uses a "Reference Library" of cropped symbols to teach the model what to look for at runtime.
 *   **Geospatial Awareness**: Automatically preserves spatial reference systems (EPSG:32635) from input GeoTIFFs to output GeoJSONs.
 *   **Reproducibility**: Features a rigorous configuration system (`prompts/configs/*.json`) to ensure every experiment is traceable.
@@ -44,13 +45,15 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-For exact reproducibility (pinned versions), use:
+For exact reproducibility, use the pinned reference environment (Python
+3.13.3; the file's header gives the `uv` commands that reproduce it):
 
 ```bash
 pip install -r requirements-lock.txt
 ```
 
 ### 2. Configuration
+
 Create a `.env` file in the root directory with your Google API Key:
 
 ```bash
@@ -58,6 +61,7 @@ GOOGLE_API_KEY=your_key_here
 ```
 
 ### 3. Run Detection
+
 This is the recommended baseline for general detection (high speed, balanced accuracy).
 
 **Step 1: Tile Input Maps**
@@ -98,6 +102,7 @@ Results will be saved to `outputs/detect_image-only/`.
 ---
 
 ## Methodological Records (Open Science)
+
 To ensure transparency, this project archives AI interaction logs (`conversations/*.pb`) and planning artifacts (`task.md`, `implementation_plan.md`).
 To update the archive:
 
@@ -108,6 +113,7 @@ cc-session archive
 ---
 
 ## License & Citation
+
 *   **Code**: Apache 2.0 License
 *   **Documentation**: CC-BY 4.0 International
 *   **Citation**: Please refer to `CITATION.cff` for citing this software.
