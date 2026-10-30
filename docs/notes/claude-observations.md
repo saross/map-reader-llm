@@ -3335,3 +3335,74 @@ pooling error it was meant to avoid.
 borderline, put the confirmatory contrasts, the criterion, an approximate
 power, and the wording for each verdict in the same message as the API gate,
 so Shawn approves the test and the spend together.
+
+## claude-obs 161 — 2026-10-23: Self-critique — I attributed a cause by analogy, and the error reached four approved texts and an Observation
+
+**Pattern.** Writing dating clauses for the restated register rows, I checked
+4.1's cause (the origin route) and reused it for 4.2 to 4.5 and for Obs 512's
+brief. The re-score record's COMMITTED → ORIGIN → REPAIRED table showed those
+rows moved with the re-verified wrong-sheet candidates instead, and that the
+384 px failure was a re-verification effect. I found it only when 4.6 forced
+me to read the table; Shawn re-approved the corrected clauses and Obs 512 was
+corrected before merge.
+
+**Lesson.** A cause that is right for one row is a hypothesis for the next,
+however similar the rows look.
+
+**How to apply.** When a document attributes moves to causes row by row, read
+the attribution source for every row before drafting its clause, and cite the
+column that shows it; never extend a checked row's cause to its neighbours.
+
+## claude-obs 162 — 2026-10-23: Self-critique — I skipped the lint gate and let an automated reflow run wider than my edit
+
+**Pattern.** Applying three approved corrections to the K-ladder findings, I
+re-wrapped every paragraph that held any over-long line, legacy text and
+headings included, and committed without gating on markdownlint, although the
+project scratchpad records that lesson twice. The commit broke a heading and
+churned unrelated paragraphs; I repaired it by restoring the file and
+re-applying only the approved edits, checking the diff against the base held
+nothing else.
+
+**Lesson.** A mechanical reformat is an edit, and its scope must be the edit's
+scope; an ungated commit turns a lint error into a pushed defect.
+
+**How to apply.** Chain every commit behind the lint result (`grep -q
+"Summary: 0 error" &&`), scope any reflow to the paragraphs an edit touched,
+and diff against the base before committing a scripted change to a long
+document.
+
+## claude-obs 163 — 2026-10-23: Shawn sets accessibility and disclosure-beside-the-number as standards at the point of approval, and generalises them
+
+**Pattern.** Across the walk-through Shawn turned single approvals into
+standing standards: an odd table column became "we want these entries to be
+accessible to others"; an optional gloss became "let's make sure that we don't
+make things so terse that they are hard to understand"; a caveat beside a p
+value became "you are correct it will be overread otherwise". He also
+delegated process choices ("the most appropriate place") while ruling every
+text himself, and accepted a cross-model review when one register row kept
+failing.
+
+**Lesson.** His approvals carry a reader in mind who is outside the project; a
+text that is correct but would be misread is not finished for him.
+
+**How to apply.** Draft register and claim texts for an outside reader from
+the start: gloss labels and units at first use, put a caveat beside any number
+a reader could over-read, and offer the readability edit as the default rather
+than an option.
+
+## claude-obs 164 — 2026-10-23: Two record findings were artefacts of partial copies; the main session's own re-run on a full checkout dissolved both
+
+**Pattern.** The restatement record reported that the Era-2 board's membership
+drifts to 98 of 110 and that the plateau characterisation drops a row without
+explanation. Re-run read-only on the full checkout, the membership was the
+same 110 (the 98 came from a partial copy missing 12 members' files, the
+paper's headline cell among them) and the row had only left a late-plateau
+table. Both would have gone to Shawn as decisions about a non-existent
+problem.
+
+**Lesson.** A sub-agent's "unexplained drift" is first a question about the
+environment it ran in.
+
+**How to apply.** Before presenting a drift, drop, or unexplained change from
+an agent's record as a decision, re-run the generator read-only on a full
+checkout and compare; present the decision only if the anomaly survives.
