@@ -76,6 +76,9 @@ GitHub: `restatement-pass-s164`, `e72-regen-2026-10-30`, `clipped-tile-mcc-2026-
 `mcc-join-tiering-2026-10-30`, `kladder-mcc-join-2026-10-30`. Sapphire still holds eight older `s164-*`
 scratch directories outside any plan (audit before deleting); its `~/Code/map-reader-llm` checkout is
 far behind `main` and was deliberately left untouched (agents work in whole-tree copies).
+Held over for the PI's verdict (S166 handoff, step 2): a working-notes candidate, Obs 515, recording
+the tile-join result (the board's F1/MCC disagreement and the K-ladder falls largely `id`-only; § 8.6's
+reversal robust); write it, edit it, or discard it, ideally with the join ruling.
 
 ## 🔍 S165 CLOSE (2026-10-17 to 10-23 UTC, Opus) — START HERE: FINISH PR #52 (§ 6 CLAIM ROWS, ONE RE-SIGNING PASS, PUBLISH, MERGE)
 
