@@ -1,6 +1,8 @@
 # The stride programme: nine geometries, one verdict
 
-> **Last revised**: 2026-10-15 (restated with the re-verified wrong-sheet
+> **Last revised**: 2026-10-30 ("the same performance" becomes "no
+> detectable F1 difference", PI ruling D69, after a cross-model review).
+> Prior: 2026-10-15 (restated with the re-verified wrong-sheet
 > rows and the incumbents on their recorded sheets, PI ruling D65 (2):
 > every board value moves; the 30 m reading of Question 3 now fails).
 > Prior: 2026-10-05 (p-values from the paired permutation test, PI ruling
@@ -93,8 +95,8 @@ point estimate, but the three no longer agree to the third decimal.
 ## What the programme DID buy: the cost frontier
 
 The new leader-by-a-hair, 384/33.3 (stride 256), runs **820 tiles per
-pass** against the grid winner's 1,398 — the same performance at
-~59 % of the calls. All-in on this footprint (K = 10 proposer +
+pass** against the grid winner's 1,398 — no detectable F1 difference
+(+0.0059, p = 0.640) at ~59 % of the calls. All-in on this footprint (K = 10 proposer +
 union verifier, flex): **≈ $6.6** vs ≈ $10.7 (384/50) vs ~$50-class
 (the HIGH-thinking incumbents). The cheapest known member of the
 leading shelf, by a wide margin. That shelf is the 20 m one. At 30 m
@@ -158,6 +160,23 @@ MCC stays null (E81; none occurred at any best point).
   Decision 10.
 
 ## Changelog
+
+### 2026-10-30 — "Same performance" stated as no detectable difference
+
+**Trigger.** A cross-model review (Astra) of the claims inventory's dated
+notes found claim R1b-16's "the same performance at ~59 % of the calls"
+claimed equivalence where the data show only no detected difference; the
+phrase comes from this document's cost-frontier paragraph. The PI approved
+correcting both (D69).
+
+| Place | Before | After |
+|---|---|---|
+| "What the programme DID buy" | the same performance at ~59 % of the calls | no detectable F1 difference (+0.0059, p = 0.640) at ~59 % of the calls |
+
+**What did NOT change**: every figure, tier and verdict; the contrast quoted
+is Question 3's (384 px / 33.3 % against the grid winner).
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-15 — Restated with the re-verified rows (PI ruling D65 (2))
 

@@ -38328,7 +38328,7 @@ constraint; the verifier improves precision only within it).
 `planning/pi-decisions-2026-09-20.md` D62 (1), D65 (2), and D42;
 restated data `f6f10d605`; D42 regeneration `5986316b5`.
 
-## Observation 513: After the restatement the top F1 cell joins tile-MCC Tier 1, and the two metrics still order the Era-2 board near-oppositely below it — a correction to Obs 482 (Session 166, 2026-10-30)
+## Observation 513: After the restatement the top F1 cell joins tile-MCC Tier 1, and the two metrics still disagree on the leading configurations — a correction to Obs 482 (Session 166, 2026-10-30)
 
 **Context.** The Principal Investigator (PI) asked in Session 166 for a
 correcting observation while walking PR #52's claim rows
@@ -38390,13 +38390,22 @@ must change.
 
 **Caveats.** Tile-MCC tier membership depends on the tile-join
 convention. The name join used here is the published one (S153 ruling 6),
-but the two geometric joins raise every cell's MCC by about +0.08 to
-+0.11 and agree with it at Spearman 0.85 and 0.77 over 103 cells
+but the two geometric joins raise MCC by a mean of +0.110
+(geometric-primary; per cell +0.048 to +0.147) and +0.079
+(geometric-contains; per cell −0.001 to +0.119, one cell falling), and
+agree with it at Spearman 0.85 and 0.77 over 103 cells
 (`reports/tile-mcc-geometric-join-2026-09-12.md` § 0; measured in S165).
 The MCC robustness job queued after PR #52 will tier the board under
 both geometric joins, and this observation's counts may move again.
 Best-F1 operating points are selected on the scoring ground truth
-(E41-class).
+(E41-class). The two metrics do not order the board oppositely
+throughout: the same eight cells hold ranks 143–150 on both, and over
+all 150 cells the two rankings correlate at Spearman −0.24. Corrected
+2026-10-30, the same day, after a cross-model review (Astra; PI: "In
+place, dated"): the title said the metrics "still order the Era-2 board
+near-oppositely below" the top cell, and the caveat gave the join means
+as every cell's change
+(`results/tile-join-audit/board-era2-2026-09-12.json`).
 
 **Findable later.** Obs 482 correction, F1 against tile-MCC, Era-2
 board, disjoint Tier 1s, top F1 cell in MCC Tier 1, all-3.7 image,
