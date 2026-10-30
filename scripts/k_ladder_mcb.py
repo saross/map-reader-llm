@@ -730,7 +730,10 @@ def main() -> int:
     for entry in registry:
         print(f"\n=== MCB {entry['slug']} "
               f"@ {entry['buffer_m']} m ===", flush=True)
-        committed = committed_ranking(entry["tiering"], args.tile_join)
+        # Under the default every call is the committed one, argument for
+        # argument; only a sensitivity join adds the keyword.
+        join_kwargs = {"tile_join": args.tile_join} if sensitivity_join else {}
+        committed = committed_ranking(entry["tiering"], **join_kwargs)
         record: dict[str, Any] = {
             "slug": entry["slug"],
             "group": entry["group"],
@@ -745,7 +748,7 @@ def main() -> int:
         }
         for metric in args.metrics:
             path, result = run_mcb(entry, metric, out_root / entry["slug"],
-                                   args.bootstrap, tile_join=args.tile_join)
+                                   args.bootstrap, **join_kwargs)
             record["gates"].append(gate(entry, metric, result, committed))
             block = summarise(entry, result, k_of)
             # A smoke run may point --output-dir at a scratch directory, so the

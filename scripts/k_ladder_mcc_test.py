@@ -548,10 +548,12 @@ def main() -> int:
             bounds = args.bounds
 
         tiering_dir = args.output_dir / "tiering" / slug
+        # Under the default the call is the committed one, argument for
+        # argument; only a sensitivity join adds the keyword.
+        join_kwargs = {"tile_join": args.tile_join} if sensitivity_join else {}
         tiering = run_tiering(analyses, conditions, analysis_id, tiering_dir,
                               int(ladder["headline_buffer_m"]), bounds,
-                              args.n_permutations, args.seed,
-                              tile_join=args.tile_join)
+                              args.n_permutations, args.seed, **join_kwargs)
         join_mcc = join_mcc_by_ref(tiering) if sensitivity_join else {}
 
         ref_to_k = {r["condition_id"]: int(r["K"]) for r in rungs}
