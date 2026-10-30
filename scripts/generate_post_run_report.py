@@ -1928,11 +1928,18 @@ def assemble_manifest(manifest: str, rows: list[dict], at: str) -> dict:
 
 
 def _md_table(headers: list[str], rows: list[list]) -> str:
-    """Render a GitHub-flavoured Markdown table."""
+    """Render a GitHub-flavoured Markdown table.
+
+    A literal ``|`` inside a cell is escaped as ``\\|``. Unescaped, it is read
+    as a column separator, so the row gains cells and markdownlint fails it
+    (MD056). Outcome texts quote absolute values this way, for example
+    "G6 max |delta| 0.0079" (PR #52, 2026-10-30).
+    """
     lines = ["| " + " | ".join(headers) + " |",
              "|" + "|".join("---" for _ in headers) + "|"]
     for r in rows:
-        lines.append("| " + " | ".join("—" if c is None else str(c) for c in r) + " |")
+        lines.append("| " + " | ".join(
+            "—" if c is None else str(c).replace("|", "\\|") for c in r) + " |")
     return "\n".join(lines)
 
 
