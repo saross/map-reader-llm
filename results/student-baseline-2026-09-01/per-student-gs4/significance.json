@@ -5,21 +5,21 @@
     {
       "test": "pooled: students vs model:3.7-text-screen-best @20m",
       "f1_a": 0.848414,
-      "f1_b": 0.906606,
-      "observed_diff": -0.058192,
-      "p_value": 0.0073,
+      "f1_b": 0.916479,
+      "observed_diff": -0.068065,
+      "p_value": 0.0015,
       "n_tiles": 505,
-      "bh_adjusted_p": 0.017033,
+      "bh_adjusted_p": 0.00525,
       "significant": true
     },
     {
       "test": "pooled: students vs model:all-3.7-swap-best @20m",
       "f1_a": 0.848414,
-      "f1_b": 0.918981,
-      "observed_diff": -0.070568,
-      "p_value": 0.0006,
+      "f1_b": 0.928899,
+      "observed_diff": -0.080485,
+      "p_value": 0.0,
       "n_tiles": 505,
-      "bh_adjusted_p": 0.00168,
+      "bh_adjusted_p": 0.0,
       "significant": true
     },
     {
@@ -29,7 +29,7 @@
       "observed_diff": 0.022324,
       "p_value": 0.4369,
       "n_tiles": 117,
-      "bh_adjusted_p": 0.509717,
+      "bh_adjusted_p": 0.556055,
       "significant": false
     },
     {
@@ -55,41 +55,41 @@
     {
       "test": "zone K-35-053-3_Elenovo[C]: student vs all-3.7 @20m",
       "f1_a": 0.91954,
-      "f1_b": 0.906977,
-      "observed_diff": 0.012563,
-      "p_value": 0.8945,
+      "f1_b": 0.94382,
+      "observed_diff": -0.02428,
+      "p_value": 0.7026,
       "n_tiles": 45,
-      "bh_adjusted_p": 0.8945,
+      "bh_adjusted_p": 0.7026,
       "significant": false
     },
     {
       "test": "zone K-35-053-3_Elenovo[A]: student vs all-3.7 @20m",
       "f1_a": 0.871795,
-      "f1_b": 0.864629,
-      "observed_diff": 0.007166,
-      "p_value": 0.8524,
+      "f1_b": 0.888889,
+      "observed_diff": -0.017094,
+      "p_value": 0.6691,
       "n_tiles": 98,
-      "bh_adjusted_p": 0.8945,
+      "bh_adjusted_p": 0.7026,
       "significant": false
     },
     {
       "test": "pooled: students vs model:3.7-text-screen-best @50m",
       "f1_a": 0.975323,
-      "f1_b": 0.920273,
-      "observed_diff": 0.05505,
-      "p_value": 0.0,
+      "f1_b": 0.930023,
+      "observed_diff": 0.045301,
+      "p_value": 0.0003,
       "n_tiles": 505,
-      "bh_adjusted_p": 0.0,
+      "bh_adjusted_p": 0.0014,
       "significant": true
     },
     {
       "test": "pooled: students vs model:all-3.7-swap-best @50m",
       "f1_a": 0.975323,
-      "f1_b": 0.93287,
-      "observed_diff": 0.042453,
-      "p_value": 0.0005,
+      "f1_b": 0.942661,
+      "observed_diff": 0.032663,
+      "p_value": 0.0051,
       "n_tiles": 505,
-      "bh_adjusted_p": 0.00168,
+      "bh_adjusted_p": 0.0119,
       "significant": true
     },
     {
@@ -125,21 +125,21 @@
     {
       "test": "zone K-35-053-3_Elenovo[C]: student vs all-3.7 @50m",
       "f1_a": 0.988506,
-      "f1_b": 0.930233,
-      "observed_diff": 0.058273,
-      "p_value": 0.194,
+      "f1_b": 0.966292,
+      "observed_diff": 0.022214,
+      "p_value": 0.6358,
       "n_tiles": 45,
-      "bh_adjusted_p": 0.246909,
+      "bh_adjusted_p": 0.7026,
       "significant": false
     },
     {
       "test": "zone K-35-053-3_Elenovo[A]: student vs all-3.7 @50m",
       "f1_a": 0.991453,
-      "f1_b": 0.89083,
-      "observed_diff": 0.100623,
-      "p_value": 0.0002,
+      "f1_b": 0.91453,
+      "observed_diff": 0.076923,
+      "p_value": 0.0019,
       "n_tiles": 98,
-      "bh_adjusted_p": 0.000933,
+      "bh_adjusted_p": 0.00532,
       "significant": true
     }
   ]

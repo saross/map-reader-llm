@@ -1,21 +1,11 @@
 # The novice baseline decomposed: students and configs on identical ground
 
-> **Last revised**: 2026-10-18 (a dated note: the model rows and every
-> test below predate the S164 restatement; re-score queued). 2026-09-01:
-> original publication. See [§ Changelog](#changelog) for revision
-> history.
-
-**Note, 2026-10-18 (PI ruling D69, restatement record § 10 Q8): not yet
-restated.** The two model rows are Era-2 board cells that the S164
-restatement moved (PR #52): at 20 m the all-3.7 model 0.9190 → 0.9289
-and the 3.7-text-screen model 0.9066 → 0.9165, after the restatement's two repairs (D62
-(1)). Every model value, per-zone comparison, and
-significance test below predates that and has not been re-run; the
-students' values are unaffected. Narrow orderings may change, for
-example Student A's zone at 20 m (0.8718 against 0.8646). Do not quote
-the model rows or the tests until the re-score, which runs after PR #52
-merges (`scripts/student_perstudent_gs4.py`, then
-`scripts/student_ranking_significance.py`).
+> **Last revised**: 2026-10-30 (restated against the S164-restated model
+> cells, PI ruling D70: the model rows rise on the two Elenovo zones and in
+> the pooled rows; Student A no longer edges the model at 20 m; no
+> significance verdict changes). Prior: 2026-10-18 (a dated note that the
+> model rows predated the restatement). 2026-09-01: original publication.
+> See [§ Changelog](#changelog) for revision history.
 
 **Classification**: Phase 0a/1a of the student-baseline programme
 (`planning/student-baseline-2026-08-31.md`), run overnight on PI
@@ -42,8 +32,8 @@ full sheets — territory it never saw (the GS corpus is the 487-tile
 footprint) — producing sheet-dependent recall (0.59–0.91) at healthy
 precision, the partial-coverage signature. Those rows were invalid
 and replaced by the footprint basis; on it, the model's pooled zone
-values sit within 0.01 of its committed corpus-wide figures (0.9190
-vs 0.9265 @20 swap; 0.9066 vs 0.9139 screen), validating the
+values sit within 0.01 of its committed corpus-wide figures (0.9289
+vs 0.9364 @20 swap; 0.9165 vs 0.9238 screen), validating the
 instrument.
 
 ## Ranking on identical ground (footprint basis)
@@ -53,8 +43,8 @@ At **20 m** (the GS working radius), pooled over all five zones
 
 | Rank | Contender | P | R | F1 |
 |---|---|---:|---:|---:|
-| 1 | **all-3.7 model** | 0.9254 | 0.9126 | **0.9190** |
-| 2 | 3.7-text-screen model | 0.8984 | 0.9149 | 0.9066 |
+| 1 | **all-3.7 model** | 0.9268 | 0.9310 | **0.9289** |
+| 2 | 3.7-text-screen model | 0.9002 | 0.9333 | 0.9165 |
 | 3 | students (pooled) | 0.8678 | 0.8299 | 0.8484 |
 
 At **50 m**:
@@ -62,14 +52,18 @@ At **50 m**:
 | Rank | Contender | P | R | F1 |
 |---|---|---:|---:|---:|
 | 1 | **students (pooled)** | 0.9976 | 0.9540 | **0.9753** |
-| 2 | all-3.7 model | 0.9394 | 0.9264 | 0.9329 |
-| 3 | 3.7-text-screen model | 0.9120 | 0.9287 | 0.9203 |
+| 2 | all-3.7 model | 0.9405 | 0.9448 | 0.9427 |
+| 3 | 3.7-text-screen model | 0.9135 | 0.9471 | 0.9300 |
 
 Per zone at 20 m: the model wins Rakovski[C] decisively (0.9789 vs
 0.7492) and loses Lesovo[D] decisively (0.7059 vs 0.8966; n_ref
 only 15, and model precision collapses to 0.46–0.63 on that sparse
-sheet); B and A edge the model narrowly on their zones (0.9462 vs
-0.9239; 0.8718 vs 0.8646). At 50 m every student except C beats
+sheet); B edges the model narrowly on its zone (0.9462 vs 0.9239),
+and on the two Elenovo zones the model now edges the students narrowly
+(A's: 0.8889 vs 0.8718; C's: 0.9438 vs 0.9195), where both students
+led before the restatement (the model then read 0.8646 and 0.9070);
+none of the three differences is significant. At 50 m every student
+except C beats
 both models on their own zone; the model still beats C on Rakovski
 (0.9849 vs 0.9587).
 
@@ -82,12 +76,12 @@ confusion counts) over a declared 14-test family, BH q = 0.05
 ahead):
 
 - **20 m, pooled**: the model leads the cohort SIGNIFICANTLY — all-3.7
-  −0.0706 (adj p = 0.0017), screen −0.0582 (adj p = 0.017). Zone-wise
+  −0.0805 (adj p < 0.0001), screen −0.0681 (adj p = 0.0053). Zone-wise
   only the Rakovski rout is significant (C: −0.2296, adj p < 0.0001);
-  B, D, and the three Elenovo comparisons are ns at 20 m.
-- **50 m, pooled**: the cohort leads SIGNIFICANTLY — +0.0425 vs
-  all-3.7 (adj p = 0.0017), +0.0551 vs screen (adj p < 0.0001).
-  Individually, A (+0.1006, adj p = 0.0009), B (+0.0546, adj
+  B, D, and the two Elenovo comparisons are ns at 20 m.
+- **50 m, pooled**: the cohort leads SIGNIFICANTLY — +0.0327 vs
+  all-3.7 (adj p = 0.0119), +0.0453 vs screen (adj p = 0.0014).
+  Individually, A (+0.0769, adj p = 0.0053), B (+0.0546, adj
   p = 0.029), and D (+0.2008, adj p = 0.029) each significantly beat
   the model on their own ground; both C zones are ns — Student C is
   the only novice the model does not significantly lose to at 50 m.
@@ -107,9 +101,9 @@ both directions.
    over C is over his *coverage and localisation*, not his eye.
 2. **The human–model comparison is radius-dependent, and the
    crossover is the finding — now statistically in both directions.**
-   At 20 m the model beats the pooled cohort (+0.071, BH-adj
-   p = 0.0017); at 50 m the cohort's near-perfect precision (0.9976)
-   restores a clear human lead (+0.042, BH-adj p = 0.0017). Novice error is
+   At 20 m the model beats the pooled cohort (+0.080, BH-adj
+   p < 0.0001); at 50 m the cohort's near-perfect precision (0.9976)
+   restores a clear human lead (+0.033, BH-adj p = 0.012). Novice error is
    **localisation-dominated** (loose clicks on true mounds); model
    error is **identification-dominated** (FPs and genuine misses
    that no radius forgives). This asymmetry is invisible in any
@@ -139,6 +133,37 @@ both directions.
   tiles. The footprint basis equalises *territory*, not *task*.
 
 ## Changelog
+
+### 2026-10-30 — Restated against the restated model cells (PI ruling D70)
+
+**Trigger.** The S164 restatement (PR #52, merged as `0d195cac8`) re-verified
+the wrong-sheet candidates and moved both model cells this analysis scores.
+`scripts/student_perstudent_gs4.py` and
+`scripts/student_ranking_significance.py` were re-run on them (Session 166,
+$0; the replication gate passed); the PI ruled to restate in place.
+
+| Figure | Before | After |
+|---|---|---|
+| All-3.7 model, pooled F1 at 20 m / 50 m | 0.9190 / 0.9329 | 0.9289 / 0.9427 |
+| 3.7-text-screen model, pooled F1 at 20 m / 50 m | 0.9066 / 0.9203 | 0.9165 / 0.9300 |
+| Model on A's Elenovo zone at 20 m (both models) | 0.8646 | 0.8889 |
+| Model (all-3.7) on C's Elenovo zone at 20 m | 0.9070 | 0.9438 |
+| 20 m pooled, students − model (all-3.7; screen) | −0.0706, adj p 0.0017; −0.0582, 0.017 | −0.0805, < 0.0001; −0.0681, 0.0053 |
+| 50 m pooled, students − model (all-3.7; screen) | +0.0425, adj p 0.0017; +0.0551, < 0.0001 | +0.0327, 0.0119; +0.0453, 0.0014 |
+| A's zone at 20 m, A − all-3.7 | +0.0072 (p 0.85) | −0.0171 (p 0.67) |
+| A's zone at 50 m, A − all-3.7 | +0.1006, adj p 0.0009 | +0.0769, adj p 0.0053 |
+
+**What changed in reading**: Student A no longer edges the model at 20 m,
+and on C's Elenovo zone the model now leads at 20 m; neither difference is
+significant, before or after.
+
+**What did NOT change**: every student value; zones B, Rakovski and Lesovo,
+whose model values do not move; every significance verdict
+of the 14-test family; the three findings and the radius crossover. The
+significance paragraph's "three Elenovo comparisons" was corrected to two
+(the family has two Elenovo zone tests per radius).
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-18 — Dated note: the model rows predate the restatement
 
