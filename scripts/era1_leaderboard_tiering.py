@@ -1178,11 +1178,15 @@ def load_cells(
                 cells[-1].update({"tp_c": tp_c, "tn_c": tn_c, "fp_c": fp_c,
                                   "fn_c": fn_c, "mcc_gate": gate,
                                   "n_detections": int(len(gdf_det))})
+        # Under a sensitivity join the committed MCC is not the one the MCC
+        # family tests, so the log line names both rather than only the first.
+        join_note = (f" MCC[{tile_join}]={cells[-1]['mcc_join']}"
+                     if "mcc_join" in cells[-1] else "")
         print(
             f"  {kind:12s} {cond['label']:34s} passes={n_passes:2d} "
             f"eval-F1={cells[-1]['eval_f1']:.4f} "
             f"micro-F1-of-mean={cells[-1]['observed_micro_f1']:.4f} "
-            f"gap={cells[-1]['f1_gap']:+.4f} MCC={cells[-1]['mcc']}",
+            f"gap={cells[-1]['f1_gap']:+.4f} MCC={cells[-1]['mcc']}{join_note}",
             flush=True,
         )
     return cells, gdf_ref, gdf_bounds, tile_order
