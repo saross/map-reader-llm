@@ -75,6 +75,18 @@
 # hold (the D51-clipped cells of `scripts/k_ladder_clipped_cells.py`) can be
 # tested; its default is the register, so every committed run is unchanged.
 #
+# `--tile-join` (added 2026-10-30, S166 K-ladder tile-join job) names the rule
+# the tiering harness's MCC arm books points to tiles with
+# (`lib_advanced_metrics.TILE_JOINS`). The default, `id`, is the published join
+# (S153 ruling 6): the harness is invoked and read exactly as before and the
+# outputs carry no new key. A geometric join is a SENSITIVITY reading: it is
+# passed through to `era1_leaderboard_tiering.py --tile-join`, which leaves the
+# F1 arm (and so the committed-board F1 gate below) unchanged, writes
+# `tiering_<buffer>m_<join>.json`, and gates each cell's per-tile labels
+# against the scorer's own aggregate under that join. Under a geometric join
+# each pair's rung MCC values are the join's, read from that tiering's MCC
+# ranking, with the published join's values beside them.
+#
 # Zero application programming interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-09-12 | Apache 2.0
@@ -91,6 +103,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(BASE_DIR))
+
+from scripts.lib_advanced_metrics import (  # noqa: E402
+    TILE_JOIN_DEFAULT,
+    TILE_JOINS,
+)
 
 LADDERS_JSON = BASE_DIR / "results/k-ladder-2026-09-12/ladders.json"
 RUN_CONDITIONS = BASE_DIR / "results/run-conditions.json"
@@ -278,9 +296,29 @@ def write_analysis_row(out_dir: Path, slug: str, ladder: dict,
     return path, analysis_id
 
 
+def tiering_name(buffer_m: int, tile_join: str = TILE_JOIN_DEFAULT) -> str:
+    """The file name the tiering harness writes its result JSON under.
+
+    The harness stamps a non-default join into the name
+    (``tiering_<buffer>m_<join>.json``) so a sensitivity reading can never
+    overwrite or be mistaken for a published tiering; the default join keeps
+    the published name.
+
+    Args:
+        buffer_m: Headline buffer of the F1 statistic.
+        tile_join: One of ``TILE_JOINS``.
+
+    Returns:
+        The JSON file name.
+    """
+    suffix = "" if tile_join == TILE_JOIN_DEFAULT else f"_{tile_join}"
+    return f"tiering_{buffer_m}m{suffix}.json"
+
+
 def run_tiering(analyses: Path, conditions: Path, analysis_id: str,
                 out_dir: Path, buffer_m: int, bounds: Path | None,
-                n_perms: int, seed: int) -> dict:
+                n_perms: int, seed: int,
+                tile_join: str = TILE_JOIN_DEFAULT) -> dict:
     """Invoke the extended tiering harness and return its result JSON.
 
     Args:
@@ -292,9 +330,12 @@ def run_tiering(analyses: Path, conditions: Path, analysis_id: str,
         bounds: Optional bounds override (the gold-standard board frame).
         n_perms: Permutation count.
         seed: Random seed.
+        tile_join: The MCC arm's tile join. The default adds no flag, so the
+            harness command is the one every committed run used; any other
+            join is passed as ``--tile-join``.
 
     Returns:
-        The parsed `tiering_<buffer>m.json`.
+        The parsed `tiering_<buffer>m.json` (or `tiering_<buffer>m_<join>.json`).
 
     Raises:
         subprocess.CalledProcessError: if the harness fails a gate.
@@ -310,9 +351,37 @@ def run_tiering(analyses: Path, conditions: Path, analysis_id: str,
            "--permute-mcc"]
     if bounds is not None:
         cmd += ["--bounds", str(bounds)]
+    if tile_join != TILE_JOIN_DEFAULT:
+        cmd += ["--tile-join", tile_join]
     print("  $ " + " ".join(cmd), flush=True)
     subprocess.run(cmd, check=True, cwd=BASE_DIR)
-    return json.loads((out_dir / f"tiering_{buffer_m}m.json").read_text())
+    return json.loads((out_dir / tiering_name(buffer_m, tile_join)).read_text())
+
+
+def join_mcc_by_ref(tiering: dict) -> dict[str, dict[str, float | None]]:
+    """Each cell's tile-MCC under the tiering's join, and the published one.
+
+    Under a non-default join the harness's MCC ranking rows carry the join's
+    MCC (``mcc``) and the published join's committed MCC
+    (``mcc_published_join``) side by side. Reading the rung values from here,
+    rather than from the ladder inventory, is what makes a pair's reported
+    ``low`` and ``high`` the same statistic its delta and p-value are.
+
+    Args:
+        tiering: A parsed tiering JSON written under a non-default join.
+
+    Returns:
+        Condition ref to ``{"join": ..., "published": ...}``.
+
+    Raises:
+        ValueError: if the tiering was not written under a non-default join.
+    """
+    block = tiering.get("mcc_permutation") or {}
+    if not block.get("tile_join"):
+        raise ValueError("this tiering records no non-default tile join")
+    return {row["ref"]: {"join": row["mcc"],
+                         "published": row.get("mcc_published_join")}
+            for row in block["ranking"]}
 
 
 def board_for(rung: dict) -> tuple[str, str] | None:
@@ -439,7 +508,19 @@ def main() -> int:
                              "sidecar to test cells the register does not hold, "
                              "e.g. the D51-clipped cells of "
                              "scripts/k_ladder_clipped_cells.py.")
+    parser.add_argument("--tile-join", choices=TILE_JOINS,
+                        default=TILE_JOIN_DEFAULT,
+                        help="The rule the MCC arm books points to tiles with "
+                             f"(default {TILE_JOIN_DEFAULT!r}, the published "
+                             "join; the run is then the committed one). A "
+                             "geometric join is a sensitivity reading, passed "
+                             "to era1_leaderboard_tiering.py --tile-join; the "
+                             "F1 arm and its gate are unchanged.")
     args = parser.parse_args()
+    # Every key and value a default run writes stays exactly as before; a
+    # sensitivity join adds its name, and the rung MCC values it reports are
+    # the join's, so they never sit beside a delta of another statistic.
+    sensitivity_join = args.tile_join != TILE_JOIN_DEFAULT
 
     inventory = json.loads(args.ladders.read_text())
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -469,7 +550,9 @@ def main() -> int:
         tiering_dir = args.output_dir / "tiering" / slug
         tiering = run_tiering(analyses, conditions, analysis_id, tiering_dir,
                               int(ladder["headline_buffer_m"]), bounds,
-                              args.n_permutations, args.seed)
+                              args.n_permutations, args.seed,
+                              tile_join=args.tile_join)
+        join_mcc = join_mcc_by_ref(tiering) if sensitivity_join else {}
 
         ref_to_k = {r["condition_id"]: int(r["K"]) for r in rungs}
         f1_by_pair = {frozenset((ref_to_k[e["ref_a"]], ref_to_k[e["ref_b"]])):
@@ -495,6 +578,30 @@ def main() -> int:
                                       by_k[k_lo if f1_a_k == k_hi else k_hi],
                                       f1_entry, board_cache)
             gates.append({"pair": f"K{k_lo}-vs-K{k_hi}", **gate})
+            mcc_block = {
+                "low": by_k[k_lo]["tile_mcc"],
+                "high": by_k[k_hi]["tile_mcc"],
+                "delta": d_mcc,
+                "p_raw": mcc_entry["p_value"],
+                "p_bh": mcc_entry["bh_adjusted_p"],
+                "significant": mcc_entry["significant"],
+            }
+            if sensitivity_join:
+                # The inventory's rung MCC is the published join's (and, for
+                # the gold standard, on another frame), so under a sensitivity
+                # join the rung values come from the join's own tiering, with
+                # the published join's board-frame values beside them.
+                low_ref = by_k[k_lo]["condition_id"]
+                high_ref = by_k[k_hi]["condition_id"]
+                mcc_block = {
+                    "tile_join": args.tile_join,
+                    "low": join_mcc[low_ref]["join"],
+                    "high": join_mcc[high_ref]["join"],
+                    **{k: mcc_block[k] for k in
+                       ("delta", "p_raw", "p_bh", "significant")},
+                    "low_published_join": join_mcc[low_ref]["published"],
+                    "high_published_join": join_mcc[high_ref]["published"],
+                }
             rows.append({
                 "pair": f"K{k_lo}-vs-K{k_hi}",
                 "kind": pair["kind"],
@@ -510,14 +617,7 @@ def main() -> int:
                     "p_bh": f1_entry["bh_adjusted_p"],
                     "significant": f1_entry["significant"],
                 },
-                "mcc": {
-                    "low": by_k[k_lo]["tile_mcc"],
-                    "high": by_k[k_hi]["tile_mcc"],
-                    "delta": d_mcc,
-                    "p_raw": mcc_entry["p_value"],
-                    "p_bh": mcc_entry["bh_adjusted_p"],
-                    "significant": mcc_entry["significant"],
-                },
+                "mcc": mcc_block,
                 "verdict": verdict_for(d_f1, f1_entry["bh_adjusted_p"],
                                        d_mcc, mcc_entry["bh_adjusted_p"],
                                        tiering["fdr_q"]),
@@ -584,9 +684,21 @@ def main() -> int:
             },
             "pairs": rows,
             "tiering_artefact": repo_relative(
-                tiering_dir / f"tiering_{ladder['headline_buffer_m']}m.json"),
+                tiering_dir / tiering_name(int(ladder["headline_buffer_m"]),
+                                           args.tile_join)),
             "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         }
+        if sensitivity_join:
+            # Added only off the default, so a default run's JSON keeps its
+            # exact key set. The withheld counts are the harness's own: the
+            # F1 arm's (which ignores the join) and the MCC arm's under it.
+            payload["tile_join"] = {
+                "join": args.tile_join,
+                "note": tiering["mcc_permutation"].get("tile_join_note"),
+                "n_cells_withheld_f1_arm": tiering.get("n_cells_withheld", 0),
+                "n_cells_withheld_mcc_arm":
+                    tiering["mcc_permutation"].get("n_cells_withheld", 0),
+            }
         (args.output_dir / f"{slug}.json").write_text(
             json.dumps(payload, indent=2) + "\n")
         print(f"  gate: {n_gated} pair(s) against a committed board -> "
@@ -611,8 +723,11 @@ def main() -> int:
             "any_mcc_pair_significant": any(
                 r["mcc"]["significant"] for r in rows),
         })
+        if sensitivity_join:
+            summary[-1]["n_cells_withheld_mcc_arm"] = (
+                payload["tile_join"]["n_cells_withheld_mcc_arm"])
 
-    (args.output_dir / "summary.json").write_text(json.dumps({
+    collated = {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "source_inventory": repo_relative(args.ladders),
         "conditions": repo_relative(args.conditions),
@@ -621,7 +736,11 @@ def main() -> int:
         "n_ladders": len(summary),
         "gate_all_passed": all(s["gate_passed"] for s in summary),
         "ladders": summary,
-    }, indent=2) + "\n")
+    }
+    if sensitivity_join:
+        collated["tile_join"] = args.tile_join
+    (args.output_dir / "summary.json").write_text(
+        json.dumps(collated, indent=2) + "\n")
     print(f"\nWrote {repo_relative(args.output_dir)}/summary.json",
           flush=True)
     return 0
