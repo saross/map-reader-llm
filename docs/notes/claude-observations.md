@@ -3406,3 +3406,72 @@ environment it ran in.
 **How to apply.** Before presenting a drift, drop, or unexplained change from
 an agent's record as a decision, re-run the generator read-only on a full
 checkout and compare; present the decision only if the anomaly survives.
+
+## claude-obs 165 — 2026-10-30: Self-critique — approved wordings carried quantifier slips that only second readers caught
+
+**Pattern.** Five wordings I drafted, re-read figure by figure, and put to
+Shawn for approval each claimed more than their sources: R4-21's "then"
+skipped rank 9, and its "the two mixed-generation cells" ignored two more in
+Tier 1; R3-15's "survives" kept a threshold the findings had withdrawn;
+R1b-16's "the same performance" claimed equivalence; Obs 513's "every
+cell's MCC" was a mean. A side agent caught the first and Astra the rest,
+all after approval.
+
+**Lesson.** Checking the numbers in a wording is not checking the wording.
+Ordinals, counts and universal words ("then", "the two", "every", "same",
+"survives") make claims about the whole source list, and I checked them only
+against the rows in front of me.
+
+**How to apply.** Before asking for approval of a drafted wording, list its
+quantifiers and comparatives and check each against the full source (all
+ranks, all cells, the current version of any cited threshold).
+
+## claude-obs 166 — 2026-10-30: Shawn buys independent second readers cheaply and often, and treats approval as provisional until they report
+
+**Pattern.** Shawn offered to copy-paste review requests to Astra in
+another project so the work here could continue, relayed a side agent's
+note mid-turn, and approved four overnight agents, yet held every wording,
+merge and deletion to an explicit answer. When Astra's findings came back
+he approved each correction, including two to text he had approved that
+morning, without defending the earlier approval.
+
+**Lesson.** For Shawn an approval is a ruling on what he was shown, not a
+claim that the text is right; he expects later readers to correct it, and
+the record to show the correction.
+
+**How to apply.** Offer a cross-model review whenever text will feed the
+paper, and say plainly what it is worth; when a reviewer corrects approved
+text, present the correction as a new ruling with the earlier one cited,
+never as a quiet edit.
+
+## claude-obs 167 — 2026-10-30: Self-critique — I wrote board-level MCC text on the published join on the day its sensitivity was queued to run
+
+**Pattern.** The S165 close had already flagged the tile-join convention as
+able to change MCC-ranking claims, and the join job was queued for this
+session. I still wrote R6-18's board-grain note and Obs 513 on the `id`
+join that morning; the evening's results showed the board disagreement
+holds under `id` only, so both now wait on a ruling.
+
+**Lesson.** When a queued sensitivity test targets exactly the claim being
+worded, the wording should wait for the test, or say in its first sentence
+that it depends on the convention.
+
+**How to apply.** Before drafting any claim, check the continuity's queued
+jobs for one that tests that claim's basis; if one exists, propose holding
+the wording or qualifying it, and say which.
+
+## claude-obs 168 — 2026-10-30: Self-critique — the lint-gate slip recurred a third time; writing the rule down has not worked (cf. claude-obs 162)
+
+**Pattern.** A D69 commit went to `main` with a bare URL because I ran
+markdownlint and the commit as separate steps (`202ac3cda`, fixed
+`4b6f14a0e`). The same slip is in claude-obs 162 (2026-10-23) and the
+scratchpad's 2026-10-13 and 2026-10-14 entries. The later commits this
+session, chained `… | grep -q "Summary: 0 error" && git add … && git commit`,
+all held.
+
+**Lesson.** A rule that depends on my remembering it at commit time fails
+under load; the gate has to be structural.
+
+**How to apply.** Propose to Shawn a pre-commit hook (or a small commit
+wrapper) that runs markdownlint on staged Markdown files and refuses the
+commit on any error, so the gate no longer depends on the command I type.

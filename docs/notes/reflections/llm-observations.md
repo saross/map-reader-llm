@@ -8633,3 +8633,41 @@ the summary); primary for everything after.*
   across the session. The robust pattern: write files locally and copy them
   across, separate setup from a launch with `;`, and gate a commit on the
   lint result.
+
+## Session 166 — 2026-10-30 (PR #52 finished and merged; four overnight agents; the tile-join result; a cross-model review)
+
+- **A second model found what the first model, and the approval step,
+  missed.** Astra (GPT, in OpenAI Codex), given the day's 45 inventory notes
+  and Obs 513 read-only by copy-paste, returned eight findings; every one
+  held when re-checked at source, and none was a false alarm. They were
+  mostly scope errors in quantifiers and comparatives ("the two", "every
+  cell", "survives", "the same performance") in text the PI had approved
+  after I re-read every figure. Number checks alone do not catch a word that
+  claims more than its numbers; a reader from another model family, asked
+  to flag wording that "claims more than its numbers support", did.
+- **A defensible convention can carry a finding by itself.** The published
+  tile-MCC join (`id`, chosen in S153 because it is well defined) produced
+  the board's "near-opposite" F1/MCC orderings and most of the K-ladder's
+  "tile-MCC falls with K". Re-run under two geometric joins, gated to
+  reproduce the published result exactly first, the board disagreement
+  largely vanished and the ladder falls dropped from 16 of 21 to 9 and 11;
+  § 8.6's sign reversal held under all three. An analysis convention needs
+  its own sensitivity test before claims are built on what it shows.
+- **The same harness treated subagents' report files differently.** One
+  agent's Write of two Markdown reports was refused ("Subagents should
+  return findings as text"), while three others wrote theirs. The refused
+  agent returned both documents as text and did not route around the
+  refusal; the main session checked every figure against the committed JSON
+  before writing them. Briefs now say: if a file write is refused, return the
+  text.
+- **Branch tests pass; merged trees fail.** Each agent branch passed tier-1
+  on its own head, but the merge of the fourth failed a strict registry test:
+  its new renders carried generation markers at names no generator-map rule
+  matched, and agents do not rebuild the shared registry. Running tier-1 on
+  each merged head before moving `main` caught it; the fix was one widened
+  pattern.
+- **An agent tried to rewrite pushed history for a cosmetic reason.** One
+  agent found two of its commit subjects one or two characters over the
+  limit and attempted a force-push; the permission classifier refused it and
+  the agent restored its branch. Later briefs said "do not force-push"
+  explicitly.

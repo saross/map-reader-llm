@@ -10266,3 +10266,72 @@ endpoint might not last, which is why the extra image passes ran at once. Pro's
 flex tier queued real-time requests for minutes (one for about 20), which is why
 the second top-up went to the Batch API. The restatement lead agent stopped on a
 context overflow near the end; its 25 pushed commits let a successor finish.
+
+## Session 166
+
+*2026-10-30; zbook + sapphire; Opus 5.5 driving, with four Opus background
+agents; no compaction. First-hand. US$0 of model API.*
+
+**PR #52 finished and merged.** § 10 Q10 ruled (a dated note per affected
+row in the frozen claims inventory) and Q11 (R4-23's raw p crossing 0.05
+rests on the board's FDR rule). Every § 6 claim row walked against
+`reports/s165-agent-records/restatement-claims-verify.md` and ruled (D69):
+45 inventory notes and two cross-section notes (`ce52570c6`); R6-18's
+board-grain note found to fail in part, and Obs 513 written correcting
+Obs 482 (`e7668f7bb`); two double-rounded figures fixed (0.816; +0.0130;
+`c6734a394`); the fifteen restated rows re-signed at
+2026-10-30T02:56:03Z (`0df529ba2`). The publish step on sapphire failed
+markdownlint on three manifest rows; the renderer now escapes `|` in table
+cells (`30bb90855`, two tier-1 tests, red sentinel) and seven legacy long
+lines were wrapped (`c8ae30680`); published `3ee7de111`. `main` merged in
+(`d4031b240`); tier-1 4,435 passed, 0 failed; the PR description's
+approved update posted and read back; merged as `0d195cac8`, its tree
+identical to the tested head. Sapphire's two S164 scratch directories
+audited and deleted (about 18 GB).
+
+**Reference environment (D70).** The PI ruled sapphire's venv the reference
+installation. zbook's venv rebuilt with uv-managed Python 3.13.3 and
+sapphire's exact `pip freeze` (172 packages identical; tier-1 4,435 passed
+on both); `requirements-lock.txt` set to sapphire's freeze, `diptest` added
+to `requirements.txt`, the rule recorded in `docs/agent-guidance.md`
+(`3cbe6867e`); the old Python 3.12 venv deleted.
+
+**Cross-model review.** Astra (GPT, OpenAI Codex), by copy-paste, reviewed
+the 45 notes and Obs 513: eight findings, all verified at source, all
+approved for correction (`5e06c05c2`; Obs 513 corrected in place, the
+stride findings' "same performance" too).
+
+**Per-student baseline re-scored** on the restated cells: no verdict of its
+14-test family flips; at 20 m the model now nominally leads Student A and
+C's Elenovo zone; the 50 m cohort lead narrows and stays significant;
+findings restated in place (`62692eeb2`).
+
+**Overnight agents** (US$0; each gated on reproducing the committed result
+first; headlines re-read from their branches):
+
+- **E72 regeneration:** Group 7's flip reverses (q 0.0507 → 0.0483); four
+  other board pairs cross the other way; no tier moves. Paper tables
+  updated and Obs 514 written (`761d7f46d`).
+- **Clipped tile-MCC (D51):** § 8.6's sign reversal survives (verified
+  −0.0161, swing 0.0604). Its two Markdown reports were refused to the
+  sub-agent and written by the main session after a figure check
+  (`efa5f4595`).
+- **Era-2 board under the geometric joins:** the F1/MCC disagreement holds
+  under `id` only.
+- **K-ladder under the geometric joins:** § 8.6's reversal survives all
+  three joins; "tile-MCC does not follow F1" is mostly an `id` result
+  (falls 16 / 9 / 11 of 21).
+
+Merged in two waves, each with tier-1 on the merged head (4,504; then 4,521
+after generator-map v1.5 attributed tiering renders at any buffer,
+`62a0b6dc8`). About 61 GB of agent scratch on sapphire audited and deleted.
+
+**Held:** the tile-join ruling and every MCC wording change (D70). **Found,
+not fixed:** `scripts/k_ladder_mcb.py`'s default registry fails on `main`
+because `phase2/ladders-compat.json` was cut to seven ladders in
+`0fc2d6389`.
+
+**Contextual assumptions.** Sapphire goes offline for three weeks when the
+PI returns to Sydney to complete the move, which is why the queued compute ran tonight, the venv
+was matched, and four branches were merged before the join ruling rather
+than after it.

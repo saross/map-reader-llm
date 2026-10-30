@@ -9347,3 +9347,62 @@ power, and the wording of every verdict belong in the request for the data,
 not after it. And on a service that drifts by day, a contrast between
 corners run on one day can move by about the replicate floor when re-run on
 the next, so "same-day" removes one confound and exposes another.
+
+## Entry — 2026-10-30 (Session 166, map-reader-llm): The disagreement that lived in the tile join
+
+**Session:** ae3d9fe4-ac9d-4f72-9b9b-83e719cd6832
+**Instance:** primary
+
+### Surprising fact
+
+Since Obs 482 (S153) the project had read the gold-standard Era-2 board as
+two metrics with near-opposite orderings: no F1 Tier-1 cell in tile-MCC
+Tier 1, admissible sets sharing 9 cells, and the top MCC cell a single-pass
+image baseline at F1 rank 119. That morning I had restated the reading in
+Obs 513 (only the top F1 cell now in both Tier 1s). The overnight agent that
+tiered the same board under the two geometric tile joins, after reproducing
+the published `id` result exactly, found that the disagreement holds under
+`id` only: under both geometric joins the top F1 cell is the top MCC cell,
+4 of 5 F1 Tier-1 cells are in MCC Tier 1, and the admissible sets share 50
+and 45 of 52.
+
+### Probe
+
+Two rival readings: either F1 and tile-MCC genuinely select different
+configurations, and the joins merely shift MCC levels; or the `id` join
+books detections to the wrong tiles in a way correlated with the
+configurations F1 favours. The second predicts that the K-ladder's "tile-MCC
+falls with K", also computed under `id`, weakens under the geometric joins,
+and that `id`'s false-negative tiles often contain the rung's own
+detections. A fourth agent tested both on 29 ladder variants under all
+three joins, gated to reproduce the committed `id` results first.
+
+### Belief revision
+
+Mostly the second. Falls from K = 1 to the best rung drop from 16 of 21
+(`id`) to 9 (geometric-primary) and 11 (geometric-contains); K = 1 is
+MCC-admissible on 22, 17 and 16 of 22 ladders; and under `id` 67 % of
+false-negative tiles contain one of the rung's own detections, booked to an
+overlapping neighbour tile (384 px tiles on a 336 px stride). On all 15
+gold-standard ladders those counts rise from K = 1 to the top rung. But not
+everything was the join: § 8.6's sign reversal (the verifier turns K's
+tile-MCC gain into a loss) and the Gemini 3.7 declines hold under all three.
+The revised belief: the paper's board-level and "MCC does not follow F1"
+claims rest largely on a booking convention, and only the stage-reversal
+claim is robust to it.
+
+### What would change this belief
+
+A test showing that the geometric joins over-credit in their own way (for
+example, a detection in a tile overlap credited to both tiles, inflating
+MCC for dense detection sets) would restore some weight to the `id`
+reading. The agent's mechanism count is descriptive, not a test; a count of
+detections per reference mound by K, and a check of how a merged point's
+source tile is chosen, would settle it.
+
+### Implications for practice
+
+When a headline rests on a convention chosen for tractability, test the
+convention before writing about the headline. The join sensitivity had been
+queued as a to-do since S165, and I wrote two pieces of board-level MCC
+text that morning before it ran.

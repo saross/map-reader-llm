@@ -12154,3 +12154,70 @@ rather than replying to them himself, and asked for my recommendation on
 the headline rather than choosing at once. Treating relayed notes as the
 PI's own concern, adopting them before numbers existed, and recording each
 ruling in his words kept the pre-specification honest.*
+
+## Session 166 — 2026-10-30 — the session where a way of booking points to tiles turned out to hold up most of the MCC story
+
+*First-hand: this instance did the session's work directly, on zbook, with
+no compaction. Four background agents did the overnight computing; I
+verified their headline figures at source, but their internal reasoning is
+not mine to reconstruct.*
+
+**What was different about this session compared to recent ones?** How much
+of my own drafted text was corrected by other readers within hours, and
+from how many directions. The PI walked PR #52's claim rows one question at
+a time, every figure re-read before it was put, and approved each wording;
+then a side agent found that one approved wording (R4-21's "then") skipped a
+rank, Astra, reached by copy-paste from another project, found eight
+problems in the day's 45 notes and every one held at source, and the
+tile-join agent's result undercut the board reading I had written into
+Obs 513 that morning. None of these corrections was hostile or redundant;
+each caught a different kind of slip, and the PI's habit of routing cheap
+independent reads at my output, rather than trusting the approval step
+alone, is what caught them. The other difference was the shape of the
+night: the walk-through ran in the foreground while four agents ran $0
+analyses behind it, each gated on reproducing the committed result before
+computing its variant, so their findings could be trusted enough to merge
+the same night.
+
+There is also an echo worth recording. Session 163 found that identifying
+places by a tile's file name, and re-deriving the sheet from it, sat under
+the wrong-sheet crops. Tonight's surprise has the same root: the published
+tile-MCC join books a detection to the tile named in its record, and on
+tiles that overlap (384 px on a 336 px stride) that credits a neighbour,
+leaving the tile that holds the mound as a false negative. Under the two
+geometric joins the board's top F1 cell becomes its top MCC cell, and "tile
+MCC does not follow F1" weakens from 16 of 21 ladders to 9 or 11. Twice now,
+naming a place stood in for locating it.
+
+**What would you do differently if you replayed this session?** Three
+things. First, hold the board-grain MCC wording until the join had been
+tested. The S165 close had already queued the join sensitivity as the thing
+that could change MCC claims, and I still wrote R6-18's note and Obs 513 on
+the published join alone, in the same session that would test it; both now
+wait on a ruling. Second, before putting a drafted wording up for approval,
+check every quantifier and ordinal in it against the full source list, not
+the rows I happened to be looking at: "then" (a skipped rank 9), "the two"
+(there were four), "every cell" (a mean), "survives" (a withdrawn
+threshold), "the same performance" (no detected difference). Each passed
+my reading and the PI's approval and failed a second reader's. Third, gate
+every commit on lint in the same `&&` chain; I skipped it once more, for the
+third time across sessions, which means writing the rule down is not enough.
+
+**What decision or trade-off made today will look arbitrary without this
+session's context?** Several. The four agent branches were merged before
+the tile-join ruling: their code defaults to the published behaviour and
+their results are new files, so merging let tomorrow's walk-through work
+from `main` without changing any published number. Obs 513 was corrected in
+place (as Obs 512 had been) because it was hours old and its finding
+unchanged, while Obs 387, two months old, was extended by a new Obs 514
+instead. zbook's venv was rebuilt to match sapphire exactly, Python patch
+version included, because sapphire goes offline for three weeks and the old
+venv's pandas 2.3 against sapphire's 3.0 was a silent divergence. And the
+generator map's tiering rule was widened (v1.5) only because the last merge
+failed a strict registry test; the new renders simply had names the old
+pattern never anticipated.
+
+*Relational note: the PI delegated breadth freely, four overnight agents
+and an outside reviewer, while holding every wording, every merge and every
+deletion to an explicit answer. That combination let the night move fast
+without anything landing that he had not seen.*
