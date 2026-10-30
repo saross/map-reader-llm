@@ -38327,3 +38327,92 @@ constraint; the verifier improves precision only within it).
 `reports/s164-agent-records/restatement-pass.md` § 4.2 (PR #52);
 `planning/pi-decisions-2026-09-20.md` D62 (1), D65 (2), and D42;
 restated data `f6f10d605`; D42 regeneration `5986316b5`.
+
+## Observation 513: After the restatement the top F1 cell joins tile-MCC Tier 1, and the two metrics still order the Era-2 board near-oppositely below it — a correction to Obs 482 (Session 166, 2026-10-30)
+
+**Context.** The Principal Investigator (PI) asked in Session 166 for a
+correcting observation while walking PR #52's claim rows
+(`reports/s164-agent-records/restatement-pass.md` § 6, PI ruling D69).
+The independent verification of that table
+(`reports/s165-agent-records/restatement-claims-verify.md`, problem 4)
+found that claim R6-18's board-grain corroboration, which cites Obs 482,
+no longer holds at the restated head. The restatement of 2026-10-15
+(D62 (1), D65 (2)) re-verified candidates the verifier had been shown on
+crops cut from the neighbouring map sheet, largely blank, on crops from
+their own sheet. Obs 482 (Session 153, 2026-09-13) is corrected here,
+not edited. Its title read "no F1 Tier-1 cell is in tile-MCC Tier 1, and
+the admissible sets share 9 of 65 and 59".
+
+**What was established.** The gold-standard (GS) Era-2 verified board
+(150 tiered cells, 487 tiles, 20 m), its F1 tiering and its tile-MCC
+permutation family on the same swap masks, read from
+`results/leaderboard/era2/gs-era2-verified-board-2026-09-10/` at the
+branch point `718d0ee08` and at the restated head:
+
+| Claim | Obs 482 (branch point) | Restated |
+|---|---:|---:|
+| F1 Tier-1 cells in tile-MCC Tier 1 | 0 of 5 | **1 of 5** (the top F1 cell) |
+| MCC ranks of the five F1 Tier-1 cells | 36, 51, 54, 80, 119 | 21, 37, 46, 62, 102 |
+| Tile-MCC Tier 1 | 33 cells, from F1 tiers 6–12 | 34: the same 33 plus the top F1 cell |
+| MCC pairs significant (of 11,175) | 2,982 | 3,001 |
+| Hsu admissible sets shared | 9 of 65 (F1) and 59 (MCC) | 9 of 52 and 60 (the same nine members) |
+| Union / F1-only / MCC-only | 115 / 56 / 50 | 103 / 43 / 51 |
+| Top MCC cell (image baseline, Pro verifier) | tile-MCC 0.8887, F1 rank 119 | unchanged; still not F1-admissible |
+| Argmax stability, F1 → MCC | 0.6017 (22 winners) → 0.4202 (36) | 0.6106 (14) → 0.4192 (39) |
+
+The top F1 cell is `g37-image-k5-verified-swap37-p0.90-k5-era2b` (the
+all-3.7 image cell): F1 0.9233 → 0.9332, tile-MCC 0.8264 → 0.8376.
+
+**Reading.**
+
+1. **Obs 482's headline no longer holds.** The Tier 1s are not disjoint:
+   the top F1 cell is now in both. Everything else Obs 482 measured
+   stands with new counts. The other four F1 Tier-1 cells stay outside
+   tile-MCC Tier 1, its other 33 members are exactly Obs 482's 33, the
+   nine cells both admissible sets keep are the same nine, and the top
+   MCC cell still sits at F1 rank 119.
+2. **The cause is the re-verification alone.** The re-score record
+   carries the tile-MCC family unchanged when only the cluster-tile
+   scoring is applied (2,982 / 6 / 33 / 59) and moves it only once the
+   re-verified candidates enter (3,001 / 6 / 34 / 60;
+   `reports/s164-agent-records/rescore-repaired-gs.md` § 3.1). How the
+   move splits into tiles gained and lost was not decomposed.
+3. **The board-grain disagreement is narrower, not gone.** The two
+   objectives still select largely different configurations: 43 cells
+   are admissible on F1 only and 51 on tile-MCC only, against nine on
+   both.
+
+**For the paper.** R6-18's board-grain sentence becomes "on the Era-2
+board only the top F1 cell is in both Tier 1s, and the two admissible
+sets share 9 members of 52 (F1) and 60 (tile-MCC)" (the inventory's
+dated note, D69). Any Results text that says the Tier 1s are disjoint
+must change.
+
+**Caveats.** Tile-MCC tier membership depends on the tile-join
+convention. The name join used here is the published one (S153 ruling 6),
+but the two geometric joins raise every cell's MCC by about +0.08 to
++0.11 and agree with it at Spearman 0.85 and 0.77 over 103 cells
+(`reports/tile-mcc-geometric-join-2026-09-12.md` § 0; measured in S165).
+The MCC robustness job queued after PR #52 will tier the board under
+both geometric joins, and this observation's counts may move again.
+Best-F1 operating points are selected on the scoring ground truth
+(E41-class).
+
+**Findable later.** Obs 482 correction, F1 against tile-MCC, Era-2
+board, disjoint Tier 1s, top F1 cell in MCC Tier 1, all-3.7 image,
+0.8376, MCC rank 21, admissible sets 9 of 52 and 60, re-verified
+wrong-sheet crops, D62 (1), R6-18, tile-join sensitivity.
+
+**Related.** Obs 482 (corrected here: the Tier 1s now share the top F1
+cell); Obs 512 (the same restatement's correction to Obs 433); Obs 369
+and 370 (the deployment-scale divergence, `IM-k3` sole MCC Tier 1);
+Obs 280 (the divergence across strata).
+
+**Artefacts**: `results/leaderboard/era2/gs-era2-verified-board-2026-09-10/tiering_20m.json`
+(`tiers`, `mcc_permutation.tiers`, `mcc_permutation.ranking`) and
+`mcb/gs-era2-verified-board-2026-09-10_b20_m1.json`,
+`mcb/gs-era2-verified-board-2026-09-10_mcc_b20_m1.json`
+(`hsu_not_ruled_out`, `argmax_stability`), each read at `718d0ee08` and
+at PR #52's head; `reports/s164-agent-records/rescore-repaired-gs.md`
+§ 3.1; `docs/paper/results-claims-inventory-2026-09-12.md` R6-18;
+`planning/pi-decisions-2026-09-20.md` D62 (1), D65 (2), and D69.
