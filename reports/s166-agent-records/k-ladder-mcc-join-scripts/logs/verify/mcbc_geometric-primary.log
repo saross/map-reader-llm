@@ -1,0 +1,160 @@
+
+=== MCB d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-min-text-t0.3-n1-opmax-d51clip  passes= 1 eval-F1=0.8555 micro-F1-of-mean=0.8555 gap=-0.0001 MCC=0.7986 MCC[geometric-primary]=0.9192
+  verified-PV  pv-min-text-t0.3-n3-opmax-d51clip  passes= 1 eval-F1=0.8708 micro-F1-of-mean=0.8708 gap=+0.0000 MCC=0.804 MCC[geometric-primary]=0.9192
+  verified-PV  pv-min-text-t0.3-n5-opmax-d51clip  passes= 1 eval-F1=0.8778 micro-F1-of-mean=0.8778 gap=+0.0000 MCC=0.7735 MCC[geometric-primary]=0.8939
+  verified-PV  pv-min-text-t0.3-n10-opmax-d51clip passes= 1 eval-F1=0.8730 micro-F1-of-mean=0.8730 gap=-0.0000 MCC=0.791 MCC[geometric-primary]=0.9193
+INFO: board k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-min-text-t0.3-n10-opmax-d51clip
+INFO: apparent mcc           : 0.9193
+INFO: optimism (selection)   : +0.0095  (MC s.e. 0.00016; per-resample spread [-0.0237, +0.0391])
+INFO: corrected mcc          : 0.9099
+INFO: naive CI95             : [0.8818, 0.9535]
+INFO: selection-aware CI95   : [0.8723, 0.9440]
+INFO: argmax stability       : 0.342 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0389)
+INFO: MCB Hsu constrained: 3 of 4 admissible (w_upper=0.0251, w_lower=0.0389)
+INFO:     pv-min-text-t0.3-n1-opmax-d51clip      theta=-0.0001  [-0.0391, +0.0388]
+INFO:     pv-min-text-t0.3-n3-opmax-d51clip      theta=-0.0001  [-0.0391, +0.0388]
+INFO:     pv-min-text-t0.3-n10-opmax-d51clip     theta=+0.0001  [-0.0388, +0.0391]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-min-text-t1.0-n1-opmax-d51clip  passes= 1 eval-F1=0.8235 micro-F1-of-mean=0.8235 gap=+0.0000 MCC=0.8095 MCC[geometric-primary]=0.9065
+  verified-PV  pv-min-text-t1.0-n3-opmax-d51clip  passes= 1 eval-F1=0.8647 micro-F1-of-mean=0.8647 gap=-0.0000 MCC=0.804 MCC[geometric-primary]=0.9234
+  verified-PV  pv-min-text-t1.0-n5-opmax-d51clip  passes= 1 eval-F1=0.8714 micro-F1-of-mean=0.8714 gap=+0.0000 MCC=0.7797 MCC[geometric-primary]=0.915
+  verified-PV  pv-min-text-t1.0-n10-opmax-d51clip passes= 1 eval-F1=0.8781 micro-F1-of-mean=0.8781 gap=+0.0000 MCC=0.7881 MCC[geometric-primary]=0.9235
+INFO: board k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-min-text-t1.0-n10-opmax-d51clip
+INFO: apparent mcc           : 0.9235
+INFO: optimism (selection)   : +0.0086  (MC s.e. 0.00016; per-resample spread [-0.0254, +0.0387])
+INFO: corrected mcc          : 0.9149
+INFO: naive CI95             : [0.8869, 0.9566]
+INFO: selection-aware CI95   : [0.8783, 0.9480]
+INFO: argmax stability       : 0.404 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0355)
+INFO: MCB Hsu constrained: 4 of 4 admissible (w_upper=0.0252, w_lower=0.0352)
+INFO:     pv-min-text-t1.0-n1-opmax-d51clip      theta=-0.0170  [-0.0525, +0.0185]
+INFO:     pv-min-text-t1.0-n3-opmax-d51clip      theta=-0.0001  [-0.0356, +0.0354]
+INFO:     pv-min-text-t1.0-n5-opmax-d51clip      theta=-0.0085  [-0.0440, +0.0270]
+INFO:     pv-min-text-t1.0-n10-opmax-d51clip     theta=+0.0001  [-0.0354, +0.0356]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-phase2-flash-high-text-n5-text-t1-0 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-high-text-t1.0-n1-opmax-d51clip passes= 1 eval-F1=0.7810 micro-F1-of-mean=0.7810 gap=+0.0000 MCC=0.8162 MCC[geometric-primary]=0.9073
+  verified-PV  pv-high-text-t1.0-n3-opmax-d51clip passes= 1 eval-F1=0.8501 micro-F1-of-mean=0.8501 gap=+0.0000 MCC=0.7948 MCC[geometric-primary]=0.9362
+  verified-PV  pv-high-text-t1.0-n5-opmax-d51clip passes= 1 eval-F1=0.8648 micro-F1-of-mean=0.8648 gap=+0.0000 MCC=0.7819 MCC[geometric-primary]=0.9152
+  verified-PV  pv-high-text-t1.0-n10-opmax-d51clip passes= 1 eval-F1=0.8765 micro-F1-of-mean=0.8765 gap=-0.0000 MCC=0.7872 MCC[geometric-primary]=0.9193
+INFO: board k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-high-text-t1.0-n3-opmax-d51clip
+INFO: apparent mcc           : 0.9362
+INFO: optimism (selection)   : +0.0056  (MC s.e. 0.00017; per-resample spread [-0.0282, +0.0383])
+INFO: corrected mcc          : 0.9306
+INFO: naive CI95             : [0.9028, 0.9662]
+INFO: selection-aware CI95   : [0.8972, 0.9606]
+INFO: argmax stability       : 0.804 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0378)
+INFO: MCB Hsu constrained: 4 of 4 admissible (w_upper=0.0300, w_lower=0.0366)
+INFO:     pv-high-text-t1.0-n1-opmax-d51clip     theta=-0.0289  [-0.0667, +0.0088]
+INFO:     pv-high-text-t1.0-n3-opmax-d51clip     theta=+0.0169  [-0.0209, +0.0546]
+INFO:     pv-high-text-t1.0-n5-opmax-d51clip     theta=-0.0210  [-0.0588, +0.0168]
+INFO:     pv-high-text-t1.0-n10-opmax-d51clip    theta=-0.0169  [-0.0546, +0.0209]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-phase2-image-n5-image-t0-3 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-min-image-t0.3-n1-opmax-d51clip passes= 1 eval-F1=0.7680 micro-F1-of-mean=0.7680 gap=-0.0000 MCC=0.8443 MCC[geometric-primary]=0.9283
+  verified-PV  pv-min-image-t0.3-n3-opmax-d51clip passes= 1 eval-F1=0.7774 micro-F1-of-mean=0.7774 gap=-0.0000 MCC=0.8178 MCC[geometric-primary]=0.9022
+  verified-PV  pv-min-image-t0.3-n5-opmax-d51clip passes= 1 eval-F1=0.7767 micro-F1-of-mean=0.7767 gap=+0.0000 MCC=0.8416 MCC[geometric-primary]=0.9149
+  verified-PV  pv-min-image-t0.3-n10-opmax-d51clip passes= 1 eval-F1=0.7819 micro-F1-of-mean=0.7819 gap=-0.0000 MCC=0.8377 MCC[geometric-primary]=0.915
+INFO: board k-ladder-mcc-d51clip-phase2-image-n5-image-t0-3-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-min-image-t0.3-n1-opmax-d51clip
+INFO: apparent mcc           : 0.9283
+INFO: optimism (selection)   : +0.0061  (MC s.e. 0.00017; per-resample spread [-0.0284, +0.0381])
+INFO: corrected mcc          : 0.9222
+INFO: naive CI95             : [0.8937, 0.9586]
+INFO: selection-aware CI95   : [0.8876, 0.9525]
+INFO: argmax stability       : 0.758 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0356)
+INFO: MCB Hsu constrained: 3 of 4 admissible (w_upper=0.0260, w_lower=0.0355)
+INFO:     pv-min-image-t0.3-n1-opmax-d51clip     theta=+0.0132  [-0.0224, +0.0488]
+INFO:     pv-min-image-t0.3-n5-opmax-d51clip     theta=-0.0133  [-0.0489, +0.0223]
+INFO:     pv-min-image-t0.3-n10-opmax-d51clip    theta=-0.0132  [-0.0488, +0.0224]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-image-n5-image-t0-3/k-ladder-mcc-d51clip-phase2-image-n5-image-t0-3-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-phase2-image-n5-image-t0-7 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-min-image-t0.7-n1-opmax-d51clip passes= 1 eval-F1=0.7252 micro-F1-of-mean=0.7252 gap=+0.0000 MCC=0.8437 MCC[geometric-primary]=0.9245
+  verified-PV  pv-min-image-t0.7-n3-opmax-d51clip passes= 1 eval-F1=0.7570 micro-F1-of-mean=0.7570 gap=+0.0000 MCC=0.8339 MCC[geometric-primary]=0.932
+  verified-PV  pv-min-image-t0.7-n5-opmax-d51clip passes= 1 eval-F1=0.7705 micro-F1-of-mean=0.7705 gap=-0.0000 MCC=0.8345 MCC[geometric-primary]=0.9405
+  verified-PV  pv-min-image-t0.7-n10-opmax-d51clip passes= 1 eval-F1=0.7852 micro-F1-of-mean=0.7852 gap=+0.0000 MCC=0.8185 MCC[geometric-primary]=0.9106
+INFO: board k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-min-image-t0.7-n5-opmax-d51clip
+INFO: apparent mcc           : 0.9405
+INFO: optimism (selection)   : +0.0064  (MC s.e. 0.00015; per-resample spread [-0.0248, +0.0343])
+INFO: corrected mcc          : 0.9340
+INFO: naive CI95             : [0.9083, 0.9699]
+INFO: selection-aware CI95   : [0.9019, 0.9635]
+INFO: argmax stability       : 0.659 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0330)
+INFO: MCB Hsu constrained: 3 of 4 admissible (w_upper=0.0252, w_lower=0.0326)
+INFO:     pv-min-image-t0.7-n1-opmax-d51clip     theta=-0.0159  [-0.0489, +0.0171]
+INFO:     pv-min-image-t0.7-n3-opmax-d51clip     theta=-0.0084  [-0.0414, +0.0246]
+INFO:     pv-min-image-t0.7-n5-opmax-d51clip     theta=+0.0084  [-0.0246, +0.0414]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-image-n5-image-t0-7/k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-phase2-image-n5-image-t1-0 @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  pv-min-image-t1.0-n1-opmax-d51clip passes= 1 eval-F1=0.7044 micro-F1-of-mean=0.7044 gap=+0.0000 MCC=0.836 MCC[geometric-primary]=0.9198
+  verified-PV  pv-min-image-t1.0-n3-opmax-d51clip passes= 1 eval-F1=0.7288 micro-F1-of-mean=0.7288 gap=-0.0000 MCC=0.8178 MCC[geometric-primary]=0.9067
+  verified-PV  pv-min-image-t1.0-n5-opmax-d51clip passes= 1 eval-F1=0.7384 micro-F1-of-mean=0.7384 gap=+0.0000 MCC=0.8021 MCC[geometric-primary]=0.9107
+  verified-PV  pv-min-image-t1.0-n10-opmax-d51clip passes= 1 eval-F1=0.7428 micro-F1-of-mean=0.7428 gap=-0.0000 MCC=0.8078 MCC[geometric-primary]=0.9277
+INFO: board k-ladder-mcc-d51clip-phase2-image-n5-image-t1-0-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: pv-min-image-t1.0-n10-opmax-d51clip
+INFO: apparent mcc           : 0.9277
+INFO: optimism (selection)   : +0.0088  (MC s.e. 0.00016; per-resample spread [-0.0237, +0.0386])
+INFO: corrected mcc          : 0.9188
+INFO: naive CI95             : [0.8935, 0.9582]
+INFO: selection-aware CI95   : [0.8847, 0.9494]
+INFO: argmax stability       : 0.581 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0387)
+INFO: MCB Hsu constrained: 4 of 4 admissible (w_upper=0.0296, w_lower=0.0385)
+INFO:     pv-min-image-t1.0-n1-opmax-d51clip     theta=-0.0079  [-0.0466, +0.0308]
+INFO:     pv-min-image-t1.0-n3-opmax-d51clip     theta=-0.0210  [-0.0597, +0.0177]
+INFO:     pv-min-image-t1.0-n5-opmax-d51clip     theta=-0.0170  [-0.0557, +0.0217]
+INFO:     pv-min-image-t1.0-n10-opmax-d51clip    theta=+0.0079  [-0.0308, +0.0466]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-phase2-image-n5-image-t1-0/k-ladder-mcc-d51clip-phase2-image-n5-image-t1-0-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+=== MCB d51clip-tier-e @ 20 m ===
+Loading references mounds-reference.geojson and bounds era2_b_intersection_bounds.geojson ...
+  487 evaluation tiles
+  verified-PV  g384-ov192-k1-verified-opmax-d51clip passes= 1 eval-F1=0.8604 micro-F1-of-mean=0.8604 gap=-0.0000 MCC=0.8133 MCC[geometric-primary]=0.9242
+  verified-PV  g384-ov192-k3-verified-opmax-d51clip passes= 1 eval-F1=0.8902 micro-F1-of-mean=0.8902 gap=-0.0000 MCC=0.8089 MCC[geometric-primary]=0.9286
+  verified-PV  g384-ov192-k5-verified-opmax-d51clip passes= 1 eval-F1=0.8968 micro-F1-of-mean=0.8968 gap=-0.0000 MCC=0.8063 MCC[geometric-primary]=0.9237
+  verified-PV  g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip passes= 1 eval-F1=0.8942 micro-F1-of-mean=0.8942 gap=-0.0000 MCC=0.7973 MCC[geometric-primary]=0.9113
+INFO: board k-ladder-mcc-d51clip-tier-e-2026-09-12: 4 cells over 487 tiles, tile join geometric-primary
+INFO: selected: g384-ov192-k3-verified-opmax-d51clip
+INFO: apparent mcc           : 0.9286
+INFO: optimism (selection)   : +0.0081  (MC s.e. 0.00016; per-resample spread [-0.0242, +0.0379])
+INFO: corrected mcc          : 0.9205
+INFO: naive CI95             : [0.8936, 0.9588]
+INFO: selection-aware CI95   : [0.8855, 0.9507]
+INFO: argmax stability       : 0.488 (4 distinct winners across resamples)
+INFO: MCB two-sided band : 4 of 4 admissible (w=0.0332)
+INFO: MCB Hsu constrained: 4 of 4 admissible (w_upper=0.0220, w_lower=0.0332)
+INFO:     g384-ov192-k1-verified-opmax-d51clip   theta=-0.0044  [-0.0376, +0.0288]
+INFO:     g384-ov192-k3-verified-opmax-d51clip   theta=+0.0044  [-0.0288, +0.0376]
+INFO:     g384-ov192-k5-verified-opmax-d51clip   theta=-0.0049  [-0.0381, +0.0283]
+INFO:     g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip theta=-0.0172  [-0.0504, +0.0159]
+INFO: wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/d51clip-tier-e/k-ladder-mcc-d51clip-tier-e-2026-09-12_mcc_geometric-primary_b20_m1.json
+
+wrote /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/summary.json and /home/shawn/scratch/kladder-mcc-join-2026-10-30/verify/results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcb/table.md

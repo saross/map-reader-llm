@@ -1,0 +1,534 @@
+{
+  "analysis_id": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 20,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 487,
+  "n_cells": 4,
+  "n_cells_withheld": 0,
+  "withheld_cells": [],
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-10-30T08:28:16.475404+00:00",
+  "git_commit": "463257349",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7852,
+      "observed_micro_f1": 0.785203,
+      "f1_gap": 3e-06,
+      "mcc": 0.8185,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7705,
+      "observed_micro_f1": 0.770492,
+      "f1_gap": -8e-06,
+      "mcc": 0.8345,
+      "tier": 1
+    },
+    {
+      "rank": 3,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.757,
+      "observed_micro_f1": 0.757009,
+      "f1_gap": 9e-06,
+      "mcc": 0.8339,
+      "tier": 2
+    },
+    {
+      "rank": 4,
+      "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.7252,
+      "observed_micro_f1": 0.725225,
+      "f1_gap": 2.5e-05,
+      "mcc": 0.8437,
+      "tier": 3
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+        "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip"
+      ]
+    },
+    {
+      "tier": 3,
+      "members": [
+        "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip"
+      ]
+    }
+  ],
+  "tie_set": [
+    "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+    "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "f1_a": 0.725225,
+      "f1_b": 0.757009,
+      "observed_diff": -0.031784,
+      "p_value": 0.0267,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -9e-05,
+      "null_std": 0.014588,
+      "bh_adjusted_p": 0.04005,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "f1_a": 0.725225,
+      "f1_b": 0.770492,
+      "observed_diff": -0.045267,
+      "p_value": 0.0042,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -0.000107,
+      "null_std": 0.015976,
+      "bh_adjusted_p": 0.0126,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "f1_a": 0.725225,
+      "f1_b": 0.785203,
+      "observed_diff": -0.059978,
+      "p_value": 0.0003,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 1.3e-05,
+      "null_std": 0.017126,
+      "bh_adjusted_p": 0.0018,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "f1_a": 0.757009,
+      "f1_b": 0.770492,
+      "observed_diff": -0.013482,
+      "p_value": 0.1867,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": -1.5e-05,
+      "null_std": 0.010041,
+      "bh_adjusted_p": 0.1867,
+      "significant": false
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "f1_a": 0.757009,
+      "f1_b": 0.785203,
+      "observed_diff": -0.028194,
+      "p_value": 0.0252,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.000107,
+      "null_std": 0.01276,
+      "bh_adjusted_p": 0.04005,
+      "significant": true
+    },
+    {
+      "ref_a": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "f1_a": 0.770492,
+      "f1_b": 0.785203,
+      "observed_diff": -0.014711,
+      "p_value": 0.1544,
+      "n_permutations": 10000,
+      "n_tiles": 487,
+      "null_mean": 0.00012,
+      "null_std": 0.010261,
+      "bh_adjusted_p": 0.18528,
+      "significant": false
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_cells_with_mcc": 4,
+    "n_cells_withheld": 0,
+    "withheld": [],
+    "n_pairs": 6,
+    "n_significant": 0,
+    "reported_not_tiering": "PI ruling 2026-09-13 (S153 ruling 7): the MCC family is reported BESIDE the preregistered F1 tiering and does not replace it. The board's tiering is the F1 one.",
+    "n_tiers": 1,
+    "tie_set": [
+      "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip"
+    ],
+    "tiers": [
+      {
+        "tier": 1,
+        "members": [
+          "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+          "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+          "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+          "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip"
+        ]
+      }
+    ],
+    "ranking": [
+      {
+        "rank": 1,
+        "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+        "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+        "mcc": 0.9405,
+        "eval_f1": 0.7705,
+        "mcc_tier": 1,
+        "f1_tier": 1,
+        "mcc_published_join": 0.8345
+      },
+      {
+        "rank": 2,
+        "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+        "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+        "mcc": 0.932,
+        "eval_f1": 0.757,
+        "mcc_tier": 1,
+        "f1_tier": 2,
+        "mcc_published_join": 0.8339
+      },
+      {
+        "rank": 3,
+        "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+        "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+        "mcc": 0.9245,
+        "eval_f1": 0.7252,
+        "mcc_tier": 1,
+        "f1_tier": 3,
+        "mcc_published_join": 0.8437
+      },
+      {
+        "rank": 4,
+        "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+        "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+        "mcc": 0.9106,
+        "eval_f1": 0.7852,
+        "mcc_tier": 1,
+        "f1_tier": 1,
+        "mcc_published_join": 0.8185
+      }
+    ],
+    "gates": {
+      "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip": {
+        "confusion": {
+          "tp": 194,
+          "tn": 275,
+          "fp": 13,
+          "fn": 5
+        },
+        "mcc_rebuilt": 0.924524,
+        "mcc_recorded": 0.9245,
+        "geometry": {
+          "detections": {
+            "n_assigned": 453,
+            "n_inside_union": 453,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip": {
+        "confusion": {
+          "tp": 191,
+          "tn": 280,
+          "fp": 8,
+          "fn": 8
+        },
+        "mcc_rebuilt": 0.932021,
+        "mcc_recorded": 0.932,
+        "geometry": {
+          "detections": {
+            "n_assigned": 421,
+            "n_inside_union": 421,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip": {
+        "confusion": {
+          "tp": 191,
+          "tn": 282,
+          "fp": 6,
+          "fn": 8
+        },
+        "mcc_rebuilt": 0.94046,
+        "mcc_recorded": 0.9405,
+        "geometry": {
+          "detections": {
+            "n_assigned": 419,
+            "n_inside_union": 419,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip": {
+        "confusion": {
+          "tp": 187,
+          "tn": 279,
+          "fp": 9,
+          "fn": 12
+        },
+        "mcc_rebuilt": 0.910644,
+        "mcc_recorded": 0.9106,
+        "geometry": {
+          "detections": {
+            "n_assigned": 403,
+            "n_inside_union": 403,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-primary",
+        "reference": "calculate_tile_classification under 'geometric-primary' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+        "mcc_a": 0.924524,
+        "mcc_b": 0.932021,
+        "confusion_a": {
+          "tp": 194,
+          "tn": 275,
+          "fp": 13,
+          "fn": 5
+        },
+        "confusion_b": {
+          "tp": 191,
+          "tn": 280,
+          "fp": 8,
+          "fn": 8
+        },
+        "observed_mcc_diff": -0.007498,
+        "p_value": 0.7561,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.00015,
+          "std": 0.013392,
+          "percentile_2.5": -0.025417,
+          "percentile_97.5": 0.025417
+        },
+        "bh_adjusted_p": 0.7561,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+        "mcc_a": 0.924524,
+        "mcc_b": 0.94046,
+        "confusion_a": {
+          "tp": 194,
+          "tn": 275,
+          "fp": 13,
+          "fn": 5
+        },
+        "confusion_b": {
+          "tp": 191,
+          "tn": 282,
+          "fp": 6,
+          "fn": 8
+        },
+        "observed_mcc_diff": -0.015937,
+        "p_value": 0.4216,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000105,
+          "std": 0.015722,
+          "percentile_2.5": -0.033301,
+          "percentile_97.5": 0.033301
+        },
+        "bh_adjusted_p": 0.6324,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+        "mcc_a": 0.924524,
+        "mcc_b": 0.910644,
+        "confusion_a": {
+          "tp": 194,
+          "tn": 275,
+          "fp": 13,
+          "fn": 5
+        },
+        "confusion_b": {
+          "tp": 187,
+          "tn": 279,
+          "fp": 9,
+          "fn": 12
+        },
+        "observed_mcc_diff": 0.01388,
+        "p_value": 0.3384,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000208,
+          "std": 0.017551,
+          "percentile_2.5": -0.030424,
+          "percentile_97.5": 0.037435
+        },
+        "bh_adjusted_p": 0.6324,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+        "mcc_a": 0.932021,
+        "mcc_b": 0.94046,
+        "confusion_a": {
+          "tp": 191,
+          "tn": 280,
+          "fp": 8,
+          "fn": 8
+        },
+        "confusion_b": {
+          "tp": 191,
+          "tn": 282,
+          "fp": 6,
+          "fn": 8
+        },
+        "observed_mcc_diff": -0.008439,
+        "p_value": 0.712,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": -4.4e-05,
+          "std": 0.013525,
+          "percentile_2.5": -0.025578,
+          "percentile_97.5": 0.025578
+        },
+        "bh_adjusted_p": 0.7561,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+        "mcc_a": 0.932021,
+        "mcc_b": 0.910644,
+        "confusion_a": {
+          "tp": 191,
+          "tn": 280,
+          "fp": 8,
+          "fn": 8
+        },
+        "confusion_b": {
+          "tp": 187,
+          "tn": 279,
+          "fp": 9,
+          "fn": 12
+        },
+        "observed_mcc_diff": 0.021377,
+        "p_value": 0.2002,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 5.9e-05,
+          "std": 0.016682,
+          "percentile_2.5": -0.029958,
+          "percentile_97.5": 0.029958
+        },
+        "bh_adjusted_p": 0.6006,
+        "significant": false
+      },
+      {
+        "ref_a": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+        "ref_b": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+        "mcc_a": 0.94046,
+        "mcc_b": 0.910644,
+        "confusion_a": {
+          "tp": 191,
+          "tn": 282,
+          "fp": 6,
+          "fn": 8
+        },
+        "confusion_b": {
+          "tp": 187,
+          "tn": 279,
+          "fp": 9,
+          "fn": 12
+        },
+        "observed_mcc_diff": 0.029816,
+        "p_value": 0.0422,
+        "n_permutations": 10000,
+        "n_tiles": 487,
+        "null_distribution": {
+          "mean": 0.000103,
+          "std": 0.012844,
+          "percentile_2.5": -0.021399,
+          "percentile_97.5": 0.021399
+        },
+        "bh_adjusted_p": 0.2532,
+        "significant": false
+      }
+    ],
+    "tile_join": "geometric-primary",
+    "tile_join_note": "SENSITIVITY reading: the MCC arm books points to tiles under 'geometric-primary', not the published 'id' join (S153 ruling 6). The F1 arm, its tiering and its withheld cells are unchanged. Gates compare each cell's per-tile labels with the scorer's aggregate under the same join; no committed record exists to reproduce."
+  }
+}

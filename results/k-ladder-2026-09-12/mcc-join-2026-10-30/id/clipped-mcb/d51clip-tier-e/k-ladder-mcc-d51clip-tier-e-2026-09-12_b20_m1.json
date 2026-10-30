@@ -1,0 +1,106 @@
+{
+  "metric": "f1",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.896797153024911,
+  "optimism": 0.0032177525658585167,
+  "optimism_mcse": 0.00012796650541547797,
+  "optimism_spread_p2_5_p97_5": [
+    -0.02292488790264595,
+    0.027012658686956348
+  ],
+  "corrected_f1": 0.8935794004590525,
+  "naive_ci": [
+    0.8704145159829757,
+    0.9205607476635514
+  ],
+  "selection_aware_ci": [
+    0.8671967634171172,
+    0.9173429950976929
+  ],
+  "argmax_stability": 0.5866,
+  "n_distinct_argmax": 3,
+  "mcb_critical_width": 0.018947603648302173,
+  "mcb_theta": [
+    -0.03643679266455069,
+    -0.006610237137060548,
+    0.002623550171165445,
+    -0.002623550171165445
+  ],
+  "mcb_lower": [
+    -0.05538439631285286,
+    -0.02555784078536272,
+    -0.016324053477136728,
+    -0.021571153819467618
+  ],
+  "mcb_upper": [
+    -0.017489189016248515,
+    0.012337366511241624,
+    0.021571153819467618,
+    0.016324053477136728
+  ],
+  "mcb_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.014677290072365488,
+  "hsu_w_lower": 0.0179102067291364,
+  "hsu_lower": [
+    -0.05434699939368709,
+    -0.024520443866196947,
+    -0.015286656557970953,
+    -0.020533756900301844
+  ],
+  "hsu_upper": [
+    0.0,
+    0.00806705293530494,
+    0.017300840243530933,
+    0.012053739901200042
+  ],
+  "hsu_not_ruled_out": [
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-d51clip-tier-e-2026-09-12",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-tier-e/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+      "label": "g384-ov192-k1-verified-opmax-d51clip",
+      "eval_f1": 0.8604
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+      "label": "g384-ov192-k3-verified-opmax-d51clip",
+      "eval_f1": 0.8902
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+      "label": "g384-ov192-k5-verified-opmax-d51clip",
+      "eval_f1": 0.8968
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+      "label": "g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+      "eval_f1": 0.8942
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

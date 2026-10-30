@@ -1,0 +1,108 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 2,
+  "apparent_f1": 0.9404601116993186,
+  "optimism": 0.006433800167599995,
+  "optimism_mcse": 0.00015272416432267604,
+  "optimism_spread_p2_5_p97_5": [
+    -0.02481263453281487,
+    0.03426744408687754
+  ],
+  "corrected_f1": 0.9340263115317187,
+  "naive_ci": [
+    0.9083028144463803,
+    0.9699060319892661
+  ],
+  "selection_aware_ci": [
+    0.9018690142787803,
+    0.9634722318216661
+  ],
+  "argmax_stability": 0.6594,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.03300843255433549,
+  "mcb_theta": [
+    -0.015936516158997494,
+    -0.008438894502222016,
+    0.008438894502222016,
+    -0.0298162585020032
+  ],
+  "mcb_lower": [
+    -0.048944948713332985,
+    -0.04144732705655751,
+    -0.024569538052113475,
+    -0.0628246910563387
+  ],
+  "mcb_upper": [
+    0.017071916395337998,
+    0.024569538052113475,
+    0.04144732705655751,
+    0.0031921740523322903
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.025213766772898723,
+  "hsu_w_lower": 0.03258297525297027,
+  "hsu_lower": [
+    -0.04851949141196776,
+    -0.041021869755192286,
+    -0.024144080750748254,
+    -0.06239923375497347
+  ],
+  "hsu_upper": [
+    0.00927725061390123,
+    0.016774872270676706,
+    0.03365266127512074,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2
+  ],
+  "hsu_vs_band_delta": -1,
+  "board": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12",
+  "tile_join": "geometric-primary",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t0-7/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+      "eval_f1": 0.7252
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+      "eval_f1": 0.757
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+      "eval_f1": 0.7705
+    },
+    {
+      "ref": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+      "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+      "eval_f1": 0.7852
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

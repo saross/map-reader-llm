@@ -1,0 +1,1779 @@
+{
+  "cell": "g384_ov192",
+  "scope": "consensus-only grid sweep, 384 px / 50 %, MINIMAL text T 0.7, grid-common carrier frame, 20 m, best F1@20 over (c, k) per K",
+  "source_rule": "scripts/grid_analysis.py sweep; scripts/k_ladder_tension_analyses.py cmd_grid_overlap",
+  "gate": {
+    "passed": true,
+    "n_rows_replayed": 57,
+    "n_rows_committed": 57,
+    "row_mismatches": [],
+    "rung_mismatches": [],
+    "f1_and_count_join_invariant": true,
+    "reference": [
+      "results/grid-2026-08-18/sweep.csv",
+      "results/k-ladder-2026-09-12/tension/grid-overlap.json"
+    ]
+  },
+  "per_join": {
+    "id": {
+      "rungs": {
+        "1": {
+          "mcc": 0.44649703138252755,
+          "f1_20": 0.6633039092055486,
+          "operating_point": "c>=3, k>=1",
+          "n_detections": 365,
+          "mcc_refused_reason": null
+        },
+        "3": {
+          "mcc": 0.4485076488930528,
+          "f1_20": 0.6935960591133005,
+          "operating_point": "c>=2, k>=3",
+          "n_detections": 587,
+          "mcc_refused_reason": null
+        },
+        "5": {
+          "mcc": 0.46256483854976893,
+          "f1_20": 0.7128099173553718,
+          "operating_point": "c>=2, k>=5",
+          "n_detections": 540,
+          "mcc_refused_reason": null
+        },
+        "10": {
+          "mcc": 0.4908578802682087,
+          "f1_20": 0.7292576419213974,
+          "operating_point": "c>=2, k>=10",
+          "n_detections": 488,
+          "mcc_refused_reason": null
+        }
+      },
+      "delta_f1_k1_to_k10": 0.065954,
+      "delta_mcc_k1_to_k10": 0.044361,
+      "n_mcc_refused": 0
+    },
+    "geometric-primary": {
+      "rungs": {
+        "1": {
+          "mcc": 0.5412597069908205,
+          "f1_20": 0.6633039092055486,
+          "operating_point": "c>=3, k>=1",
+          "n_detections": 365,
+          "mcc_refused_reason": null
+        },
+        "3": {
+          "mcc": 0.5389431613770318,
+          "f1_20": 0.6935960591133005,
+          "operating_point": "c>=2, k>=3",
+          "n_detections": 587,
+          "mcc_refused_reason": null
+        },
+        "5": {
+          "mcc": 0.5563396992520562,
+          "f1_20": 0.7128099173553718,
+          "operating_point": "c>=2, k>=5",
+          "n_detections": 540,
+          "mcc_refused_reason": null
+        },
+        "10": {
+          "mcc": 0.5793034498014,
+          "f1_20": 0.7292576419213974,
+          "operating_point": "c>=2, k>=10",
+          "n_detections": 488,
+          "mcc_refused_reason": null
+        }
+      },
+      "delta_f1_k1_to_k10": 0.065954,
+      "delta_mcc_k1_to_k10": 0.038044,
+      "n_mcc_refused": 0
+    },
+    "geometric-contains": {
+      "rungs": {
+        "1": {
+          "mcc": 0.4934766539901556,
+          "f1_20": 0.6633039092055486,
+          "operating_point": "c>=3, k>=1",
+          "n_detections": 365,
+          "mcc_refused_reason": null
+        },
+        "3": {
+          "mcc": 0.5035982076734308,
+          "f1_20": 0.6935960591133005,
+          "operating_point": "c>=2, k>=3",
+          "n_detections": 587,
+          "mcc_refused_reason": null
+        },
+        "5": {
+          "mcc": 0.5048526667582532,
+          "f1_20": 0.7128099173553718,
+          "operating_point": "c>=2, k>=5",
+          "n_detections": 540,
+          "mcc_refused_reason": null
+        },
+        "10": {
+          "mcc": 0.5544382753670646,
+          "f1_20": 0.7292576419213974,
+          "operating_point": "c>=2, k>=10",
+          "n_detections": 488,
+          "mcc_refused_reason": null
+        }
+      },
+      "delta_f1_k1_to_k10": 0.065954,
+      "delta_mcc_k1_to_k10": 0.060962,
+      "n_mcc_refused": 0
+    }
+  },
+  "rows": [
+    {
+      "K": 1,
+      "min_corroboration": 1,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.24213649851632046,
+        "recall": 0.9532710280373832,
+        "f1": 0.3861807856128727,
+        "n_detections": 1685,
+        "mcc": 0.24708286365824755,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.24213649851632046,
+        "recall": 0.9532710280373832,
+        "f1": 0.3861807856128727,
+        "n_detections": 1685,
+        "mcc": 0.28375177343237534,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.24213649851632046,
+        "recall": 0.9532710280373832,
+        "f1": 0.3861807856128727,
+        "n_detections": 1685,
+        "mcc": 0.25388145050489536,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 1,
+      "min_corroboration": 2,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.4945652173913043,
+        "recall": 0.8504672897196262,
+        "f1": 0.6254295532646048,
+        "n_detections": 736,
+        "mcc": 0.39415941823257367,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.4945652173913043,
+        "recall": 0.8504672897196262,
+        "f1": 0.6254295532646048,
+        "n_detections": 736,
+        "mcc": 0.47397534820800924,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.4945652173913043,
+        "recall": 0.8504672897196262,
+        "f1": 0.6254295532646048,
+        "n_detections": 736,
+        "mcc": 0.4550331126658711,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 1,
+      "min_corroboration": 3,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.7205479452054795,
+        "recall": 0.6144859813084113,
+        "f1": 0.6633039092055486,
+        "n_detections": 365,
+        "mcc": 0.44649703138252755,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7205479452054795,
+        "recall": 0.6144859813084113,
+        "f1": 0.6633039092055486,
+        "n_detections": 365,
+        "mcc": 0.5412597069908205,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7205479452054795,
+        "recall": 0.6144859813084113,
+        "f1": 0.6633039092055486,
+        "n_detections": 365,
+        "mcc": 0.4934766539901556,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 1,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.17952069716775598,
+        "recall": 0.9626168224299065,
+        "f1": 0.3026074182886522,
+        "n_detections": 2295,
+        "mcc": 0.24895501591690228,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.17952069716775598,
+        "recall": 0.9626168224299065,
+        "f1": 0.3026074182886522,
+        "n_detections": 2295,
+        "mcc": 0.2713750395473604,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.17952069716775598,
+        "recall": 0.9626168224299065,
+        "f1": 0.3026074182886522,
+        "n_detections": 2295,
+        "mcc": 0.23743412666390645,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 1,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.2610082961072112,
+        "recall": 0.955607476635514,
+        "f1": 0.41002506265664157,
+        "n_detections": 1567,
+        "mcc": 0.2496883003466806,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.2610082961072112,
+        "recall": 0.955607476635514,
+        "f1": 0.41002506265664157,
+        "n_detections": 1567,
+        "mcc": 0.29283367142331274,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.2610082961072112,
+        "recall": 0.955607476635514,
+        "f1": 0.41002506265664157,
+        "n_detections": 1567,
+        "mcc": 0.25787273010165646,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 1,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.3386155129274395,
+        "recall": 0.9485981308411215,
+        "f1": 0.4990780577750461,
+        "n_detections": 1199,
+        "mcc": 0.25055845232239354,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.3386155129274395,
+        "recall": 0.9485981308411215,
+        "f1": 0.4990780577750461,
+        "n_detections": 1199,
+        "mcc": 0.3362501863568223,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.3386155129274395,
+        "recall": 0.9485981308411215,
+        "f1": 0.4990780577750461,
+        "n_detections": 1199,
+        "mcc": 0.29929553264151487,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 2,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.42905405405405406,
+        "recall": 0.8901869158878505,
+        "f1": 0.5790273556231004,
+        "n_detections": 888,
+        "mcc": 0.3634821176729496,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.42905405405405406,
+        "recall": 0.8901869158878505,
+        "f1": 0.5790273556231004,
+        "n_detections": 888,
+        "mcc": 0.430419785070043,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.42905405405405406,
+        "recall": 0.8901869158878505,
+        "f1": 0.5790273556231004,
+        "n_detections": 888,
+        "mcc": 0.4030936548081199,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 2,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.5096952908587258,
+        "recall": 0.8598130841121495,
+        "f1": 0.64,
+        "n_detections": 722,
+        "mcc": 0.38405203268049787,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5096952908587258,
+        "recall": 0.8598130841121495,
+        "f1": 0.64,
+        "n_detections": 722,
+        "mcc": 0.46961046337236884,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5096952908587258,
+        "recall": 0.8598130841121495,
+        "f1": 0.64,
+        "n_detections": 722,
+        "mcc": 0.44887606593101587,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 2,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.5996592844974447,
+        "recall": 0.822429906542056,
+        "f1": 0.6935960591133005,
+        "n_detections": 587,
+        "mcc": 0.4485076488930528,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5996592844974447,
+        "recall": 0.822429906542056,
+        "f1": 0.6935960591133005,
+        "n_detections": 587,
+        "mcc": 0.5389431613770318,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5996592844974447,
+        "recall": 0.822429906542056,
+        "f1": 0.6935960591133005,
+        "n_detections": 587,
+        "mcc": 0.5035982076734308,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 3,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.6349206349206349,
+        "recall": 0.6542056074766355,
+        "f1": 0.6444188722669736,
+        "n_detections": 441,
+        "mcc": 0.42170336725579505,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6349206349206349,
+        "recall": 0.6542056074766355,
+        "f1": 0.6444188722669736,
+        "n_detections": 441,
+        "mcc": 0.5242804704014112,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6349206349206349,
+        "recall": 0.6542056074766355,
+        "f1": 0.6444188722669736,
+        "n_detections": 441,
+        "mcc": 0.4789791828713593,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 3,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.7450424929178471,
+        "recall": 0.6144859813084113,
+        "f1": 0.6734955185659411,
+        "n_detections": 353,
+        "mcc": 0.4700199445106562,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7450424929178471,
+        "recall": 0.6144859813084113,
+        "f1": 0.6734955185659411,
+        "n_detections": 353,
+        "mcc": 0.568935342462279,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7450424929178471,
+        "recall": 0.6144859813084113,
+        "f1": 0.6734955185659411,
+        "n_detections": 353,
+        "mcc": 0.5187477886078783,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 3,
+      "min_corroboration": 3,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.84375,
+        "recall": 0.5677570093457944,
+        "f1": 0.6787709497206704,
+        "n_detections": 288,
+        "mcc": 0.5390896510568886,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.84375,
+        "recall": 0.5677570093457944,
+        "f1": 0.6787709497206704,
+        "n_detections": 288,
+        "mcc": 0.6344731024152416,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.84375,
+        "recall": 0.5677570093457944,
+        "f1": 0.6787709497206704,
+        "n_detections": 288,
+        "mcc": 0.5779336278418392,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 1,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.15254237288135594,
+        "recall": 0.9672897196261683,
+        "f1": 0.2635264162953533,
+        "n_detections": 2714,
+        "mcc": 0.2430731911932027,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.15254237288135594,
+        "recall": 0.9672897196261683,
+        "f1": 0.2635264162953533,
+        "n_detections": 2714,
+        "mcc": 0.2554019941821921,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.15254237288135594,
+        "recall": 0.9672897196261683,
+        "f1": 0.2635264162953533,
+        "n_detections": 2714,
+        "mcc": 0.22888286777433714,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 1,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.2206196581196581,
+        "recall": 0.9649532710280374,
+        "f1": 0.3591304347826087,
+        "n_detections": 1872,
+        "mcc": 0.24708286365824755,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.2206196581196581,
+        "recall": 0.9649532710280374,
+        "f1": 0.3591304347826087,
+        "n_detections": 1872,
+        "mcc": 0.2806877017726575,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.2206196581196581,
+        "recall": 0.9649532710280374,
+        "f1": 0.3591304347826087,
+        "n_detections": 1872,
+        "mcc": 0.24984442144299765,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 1,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.27009222661396576,
+        "recall": 0.9579439252336449,
+        "f1": 0.42137718396711205,
+        "n_detections": 1518,
+        "mcc": 0.2395706502550906,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.27009222661396576,
+        "recall": 0.9579439252336449,
+        "f1": 0.42137718396711205,
+        "n_detections": 1518,
+        "mcc": 0.2988028539499752,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.27009222661396576,
+        "recall": 0.9579439252336449,
+        "f1": 0.42137718396711205,
+        "n_detections": 1518,
+        "mcc": 0.2657267149213657,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 1,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.3161993769470405,
+        "recall": 0.9485981308411215,
+        "f1": 0.47429906542056083,
+        "n_detections": 1284,
+        "mcc": 0.2511294892032528,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.3161993769470405,
+        "recall": 0.9485981308411215,
+        "f1": 0.47429906542056083,
+        "n_detections": 1284,
+        "mcc": 0.30387402102644373,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.3161993769470405,
+        "recall": 0.9485981308411215,
+        "f1": 0.47429906542056083,
+        "n_detections": 1284,
+        "mcc": 0.29568938609567236,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 1,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.3747680890538033,
+        "recall": 0.9439252336448598,
+        "f1": 0.5365205843293492,
+        "n_detections": 1078,
+        "mcc": 0.2584602381525965,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.3747680890538033,
+        "recall": 0.9439252336448598,
+        "f1": 0.5365205843293492,
+        "n_detections": 1078,
+        "mcc": 0.3469825010595708,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.3747680890538033,
+        "recall": 0.9439252336448598,
+        "f1": 0.5365205843293492,
+        "n_detections": 1078,
+        "mcc": 0.3272604665042072,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 2,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.4059196617336152,
+        "recall": 0.897196261682243,
+        "f1": 0.5589519650655022,
+        "n_detections": 946,
+        "mcc": 0.34985036238544936,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.4059196617336152,
+        "recall": 0.897196261682243,
+        "f1": 0.5589519650655022,
+        "n_detections": 946,
+        "mcc": 0.4168728479421249,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.4059196617336152,
+        "recall": 0.897196261682243,
+        "f1": 0.5589519650655022,
+        "n_detections": 946,
+        "mcc": 0.3903799524733365,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 2,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.4647713226205192,
+        "recall": 0.8785046728971962,
+        "f1": 0.6079223928860146,
+        "n_detections": 809,
+        "mcc": 0.38033362093050277,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.4647713226205192,
+        "recall": 0.8785046728971962,
+        "f1": 0.6079223928860146,
+        "n_detections": 809,
+        "mcc": 0.4439164522026066,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.4647713226205192,
+        "recall": 0.8785046728971962,
+        "f1": 0.6079223928860146,
+        "n_detections": 809,
+        "mcc": 0.42191168381370714,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 2,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.5189340813464236,
+        "recall": 0.8644859813084113,
+        "f1": 0.6485539000876425,
+        "n_detections": 713,
+        "mcc": 0.3951637446370272,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5189340813464236,
+        "recall": 0.8644859813084113,
+        "f1": 0.6485539000876425,
+        "n_detections": 713,
+        "mcc": 0.4767075334325702,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5189340813464236,
+        "recall": 0.8644859813084113,
+        "f1": 0.6485539000876425,
+        "n_detections": 713,
+        "mcc": 0.4316242566487187,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 2,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.5678233438485805,
+        "recall": 0.8411214953271028,
+        "f1": 0.6779661016949153,
+        "n_detections": 634,
+        "mcc": 0.41291001125261245,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5678233438485805,
+        "recall": 0.8411214953271028,
+        "f1": 0.6779661016949153,
+        "n_detections": 634,
+        "mcc": 0.507862479107961,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5678233438485805,
+        "recall": 0.8411214953271028,
+        "f1": 0.6779661016949153,
+        "n_detections": 634,
+        "mcc": 0.48165168520705604,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 2,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.46256483854976893,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.5563396992520562,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.5048526667582532,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 3,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.6209150326797386,
+        "recall": 0.6658878504672897,
+        "f1": 0.6426155580608794,
+        "n_detections": 459,
+        "mcc": 0.423645224870998,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6209150326797386,
+        "recall": 0.6658878504672897,
+        "f1": 0.6426155580608794,
+        "n_detections": 459,
+        "mcc": 0.5208858944785718,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6209150326797386,
+        "recall": 0.6658878504672897,
+        "f1": 0.6426155580608794,
+        "n_detections": 459,
+        "mcc": 0.47439518548865867,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 3,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.7043701799485861,
+        "recall": 0.6401869158878505,
+        "f1": 0.6707466340269277,
+        "n_detections": 389,
+        "mcc": 0.4394260485578797,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7043701799485861,
+        "recall": 0.6401869158878505,
+        "f1": 0.6707466340269277,
+        "n_detections": 389,
+        "mcc": 0.5453151463983281,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7043701799485861,
+        "recall": 0.6401869158878505,
+        "f1": 0.6707466340269277,
+        "n_detections": 389,
+        "mcc": 0.48997924737582216,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 3,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.7630057803468208,
+        "recall": 0.616822429906542,
+        "f1": 0.6821705426356589,
+        "n_detections": 346,
+        "mcc": 0.47805232577888823,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7630057803468208,
+        "recall": 0.616822429906542,
+        "f1": 0.6821705426356589,
+        "n_detections": 346,
+        "mcc": 0.5752792815869033,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7630057803468208,
+        "recall": 0.616822429906542,
+        "f1": 0.6821705426356589,
+        "n_detections": 346,
+        "mcc": 0.5225104390769765,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 3,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.8064516129032258,
+        "recall": 0.5841121495327103,
+        "f1": 0.6775067750677507,
+        "n_detections": 310,
+        "mcc": 0.5160635804363012,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.8064516129032258,
+        "recall": 0.5841121495327103,
+        "f1": 0.6775067750677507,
+        "n_detections": 310,
+        "mcc": 0.6072305210744091,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.8064516129032258,
+        "recall": 0.5841121495327103,
+        "f1": 0.6775067750677507,
+        "n_detections": 310,
+        "mcc": 0.550228167795989,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 5,
+      "min_corroboration": 3,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.8646616541353384,
+        "recall": 0.5373831775700935,
+        "f1": 0.6628242074927955,
+        "n_detections": 266,
+        "mcc": 0.5255818859678287,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.8646616541353384,
+        "recall": 0.5373831775700935,
+        "f1": 0.6628242074927955,
+        "n_detections": 266,
+        "mcc": 0.6244603494296117,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.8646616541353384,
+        "recall": 0.5373831775700935,
+        "f1": 0.6628242074927955,
+        "n_detections": 266,
+        "mcc": 0.5657279718857247,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.1250376619463694,
+        "recall": 0.969626168224299,
+        "f1": 0.22151054176674675,
+        "n_detections": 3319,
+        "mcc": 0.22030369411793277,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.1250376619463694,
+        "recall": 0.969626168224299,
+        "f1": 0.22151054176674675,
+        "n_detections": 3319,
+        "mcc": 0.22483913131982325,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.1250376619463694,
+        "recall": 0.969626168224299,
+        "f1": 0.22151054176674675,
+        "n_detections": 3319,
+        "mcc": 0.2015698057852035,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.17945383615084526,
+        "recall": 0.9672897196261683,
+        "f1": 0.3027422303473492,
+        "n_detections": 2307,
+        "mcc": 0.24068324917893846,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.17945383615084526,
+        "recall": 0.9672897196261683,
+        "f1": 0.3027422303473492,
+        "n_detections": 2307,
+        "mcc": 0.2650581499089255,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.17945383615084526,
+        "recall": 0.9672897196261683,
+        "f1": 0.3027422303473492,
+        "n_detections": 2307,
+        "mcc": 0.22888286777433714,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.21144024514811033,
+        "recall": 0.9672897196261683,
+        "f1": 0.347024308466052,
+        "n_detections": 1958,
+        "mcc": 0.24068324917893846,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.21144024514811033,
+        "recall": 0.9672897196261683,
+        "f1": 0.347024308466052,
+        "n_detections": 1958,
+        "mcc": 0.2650581499089255,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.21144024514811033,
+        "recall": 0.9672897196261683,
+        "f1": 0.347024308466052,
+        "n_detections": 1958,
+        "mcc": 0.22888286777433714,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.2391178177597214,
+        "recall": 0.9626168224299065,
+        "f1": 0.38307763830776376,
+        "n_detections": 1723,
+        "mcc": 0.2610308588595419,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.2391178177597214,
+        "recall": 0.9626168224299065,
+        "f1": 0.38307763830776376,
+        "n_detections": 1723,
+        "mcc": 0.2806877017726575,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.2391178177597214,
+        "recall": 0.9626168224299065,
+        "f1": 0.38307763830776376,
+        "n_detections": 1723,
+        "mcc": 0.25388145050489536,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.2601010101010101,
+        "recall": 0.9626168224299065,
+        "f1": 0.4095427435387674,
+        "n_detections": 1584,
+        "mcc": 0.24561488977855545,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.2601010101010101,
+        "recall": 0.9626168224299065,
+        "f1": 0.4095427435387674,
+        "n_detections": 1584,
+        "mcc": 0.2898240846576038,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.2601010101010101,
+        "recall": 0.9626168224299065,
+        "f1": 0.4095427435387674,
+        "n_detections": 1584,
+        "mcc": 0.2618204668067721,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 6,
+      "id": {
+        "precision": 0.28344827586206894,
+        "recall": 0.9602803738317757,
+        "f1": 0.4376996805111821,
+        "n_detections": 1450,
+        "mcc": 0.24449081366372816,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.28344827586206894,
+        "recall": 0.9602803738317757,
+        "f1": 0.4376996805111821,
+        "n_detections": 1450,
+        "mcc": 0.2958263939474656,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.28344827586206894,
+        "recall": 0.9602803738317757,
+        "f1": 0.4376996805111821,
+        "n_detections": 1450,
+        "mcc": 0.2695933908795304,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 7,
+      "id": {
+        "precision": 0.3035048471290082,
+        "recall": 0.9509345794392523,
+        "f1": 0.4601469756924816,
+        "n_detections": 1341,
+        "mcc": 0.2557121219381506,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.3035048471290082,
+        "recall": 0.9509345794392523,
+        "f1": 0.4601469756924816,
+        "n_detections": 1341,
+        "mcc": 0.3105572405447087,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.3035048471290082,
+        "recall": 0.9509345794392523,
+        "f1": 0.4601469756924816,
+        "n_detections": 1341,
+        "mcc": 0.2846985485969418,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 8,
+      "id": {
+        "precision": 0.3284907183212268,
+        "recall": 0.9509345794392523,
+        "f1": 0.48830233953209357,
+        "n_detections": 1239,
+        "mcc": 0.2751282162351878,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.3284907183212268,
+        "recall": 0.9509345794392523,
+        "f1": 0.48830233953209357,
+        "n_detections": 1239,
+        "mcc": 0.32494694705817617,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.3284907183212268,
+        "recall": 0.9509345794392523,
+        "f1": 0.48830233953209357,
+        "n_detections": 1239,
+        "mcc": 0.30287484446342505,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 9,
+      "id": {
+        "precision": 0.36470588235294116,
+        "recall": 0.9415887850467289,
+        "f1": 0.5257664709719504,
+        "n_detections": 1105,
+        "mcc": 0.2852956287574601,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.36470588235294116,
+        "recall": 0.9415887850467289,
+        "f1": 0.5257664709719504,
+        "n_detections": 1105,
+        "mcc": 0.33855714691521904,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.36470588235294116,
+        "recall": 0.9415887850467289,
+        "f1": 0.5257664709719504,
+        "n_detections": 1105,
+        "mcc": 0.320403798927133,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 1,
+      "min_votes": 10,
+      "id": {
+        "precision": 0.41770833333333335,
+        "recall": 0.9369158878504673,
+        "f1": 0.5778097982708934,
+        "n_detections": 960,
+        "mcc": 0.3002944851681739,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.41770833333333335,
+        "recall": 0.9369158878504673,
+        "f1": 0.5778097982708934,
+        "n_detections": 960,
+        "mcc": 0.401482550650406,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.41770833333333335,
+        "recall": 0.9369158878504673,
+        "f1": 0.5778097982708934,
+        "n_detections": 960,
+        "mcc": 0.36692012538919494,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.37439846005774785,
+        "recall": 0.9088785046728972,
+        "f1": 0.5303340149965917,
+        "n_detections": 1039,
+        "mcc": 0.33874861202733053,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.37439846005774785,
+        "recall": 0.9088785046728972,
+        "f1": 0.5303340149965917,
+        "n_detections": 1039,
+        "mcc": 0.41259038744260773,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.37439846005774785,
+        "recall": 0.9088785046728972,
+        "f1": 0.5303340149965917,
+        "n_detections": 1039,
+        "mcc": 0.3790226143446767,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.4212860310421286,
+        "recall": 0.8878504672897196,
+        "f1": 0.5714285714285714,
+        "n_detections": 902,
+        "mcc": 0.37948292477173734,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.4212860310421286,
+        "recall": 0.8878504672897196,
+        "f1": 0.5714285714285714,
+        "n_detections": 902,
+        "mcc": 0.4445528864893101,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.4212860310421286,
+        "recall": 0.8878504672897196,
+        "f1": 0.5714285714285714,
+        "n_detections": 902,
+        "mcc": 0.41379797946549235,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.45041816009557945,
+        "recall": 0.8808411214953271,
+        "f1": 0.5960474308300395,
+        "n_detections": 837,
+        "mcc": 0.36742058423814716,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.45041816009557945,
+        "recall": 0.8808411214953271,
+        "f1": 0.5960474308300395,
+        "n_detections": 837,
+        "mcc": 0.441220228979191,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.45041816009557945,
+        "recall": 0.8808411214953271,
+        "f1": 0.5960474308300395,
+        "n_detections": 837,
+        "mcc": 0.412537370174067,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.4876140808344198,
+        "recall": 0.8738317757009346,
+        "f1": 0.6259414225941423,
+        "n_detections": 767,
+        "mcc": 0.38903309666938907,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.4876140808344198,
+        "recall": 0.8738317757009346,
+        "f1": 0.6259414225941423,
+        "n_detections": 767,
+        "mcc": 0.46147762640323253,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.4876140808344198,
+        "recall": 0.8738317757009346,
+        "f1": 0.6259414225941423,
+        "n_detections": 767,
+        "mcc": 0.4295192402914248,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.5196629213483146,
+        "recall": 0.8644859813084113,
+        "f1": 0.6491228070175438,
+        "n_detections": 712,
+        "mcc": 0.3894862397012818,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5196629213483146,
+        "recall": 0.8644859813084113,
+        "f1": 0.6491228070175438,
+        "n_detections": 712,
+        "mcc": 0.47303471497915833,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5196629213483146,
+        "recall": 0.8644859813084113,
+        "f1": 0.6491228070175438,
+        "n_detections": 712,
+        "mcc": 0.4513235221927818,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 6,
+      "id": {
+        "precision": 0.543026706231454,
+        "recall": 0.8551401869158879,
+        "f1": 0.6642468239564429,
+        "n_detections": 674,
+        "mcc": 0.3931146877187148,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.543026706231454,
+        "recall": 0.8551401869158879,
+        "f1": 0.6642468239564429,
+        "n_detections": 674,
+        "mcc": 0.48607192649880127,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.543026706231454,
+        "recall": 0.8551401869158879,
+        "f1": 0.6642468239564429,
+        "n_detections": 674,
+        "mcc": 0.4663702843346303,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 7,
+      "id": {
+        "precision": 0.5705329153605015,
+        "recall": 0.8504672897196262,
+        "f1": 0.6829268292682926,
+        "n_detections": 638,
+        "mcc": 0.4026926577276236,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5705329153605015,
+        "recall": 0.8504672897196262,
+        "f1": 0.6829268292682926,
+        "n_detections": 638,
+        "mcc": 0.49944217319810574,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5705329153605015,
+        "recall": 0.8504672897196262,
+        "f1": 0.6829268292682926,
+        "n_detections": 638,
+        "mcc": 0.4754451904598988,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 8,
+      "id": {
+        "precision": 0.5956375838926175,
+        "recall": 0.8294392523364486,
+        "f1": 0.693359375,
+        "n_detections": 596,
+        "mcc": 0.4210734039016012,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5956375838926175,
+        "recall": 0.8294392523364486,
+        "f1": 0.693359375,
+        "n_detections": 596,
+        "mcc": 0.5186479827667054,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5956375838926175,
+        "recall": 0.8294392523364486,
+        "f1": 0.693359375,
+        "n_detections": 596,
+        "mcc": 0.49095759898551944,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 9,
+      "id": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.48138284122264424,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.5651670506352233,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6388888888888888,
+        "recall": 0.8060747663551402,
+        "f1": 0.7128099173553718,
+        "n_detections": 540,
+        "mcc": 0.5416270072552825,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 2,
+      "min_votes": 10,
+      "id": {
+        "precision": 0.6844262295081968,
+        "recall": 0.780373831775701,
+        "f1": 0.7292576419213974,
+        "n_detections": 488,
+        "mcc": 0.4908578802682087,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6844262295081968,
+        "recall": 0.780373831775701,
+        "f1": 0.7292576419213974,
+        "n_detections": 488,
+        "mcc": 0.5793034498014,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6844262295081968,
+        "recall": 0.780373831775701,
+        "f1": 0.7292576419213974,
+        "n_detections": 488,
+        "mcc": 0.5544382753670646,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 1,
+      "id": {
+        "precision": 0.5850202429149798,
+        "recall": 0.6752336448598131,
+        "f1": 0.6268980477223427,
+        "n_detections": 494,
+        "mcc": 0.3915852848287847,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.5850202429149798,
+        "recall": 0.6752336448598131,
+        "f1": 0.6268980477223427,
+        "n_detections": 494,
+        "mcc": 0.4866143895353601,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.5850202429149798,
+        "recall": 0.6752336448598131,
+        "f1": 0.6268980477223427,
+        "n_detections": 494,
+        "mcc": 0.4456774682305113,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 2,
+      "id": {
+        "precision": 0.6497695852534562,
+        "recall": 0.6588785046728972,
+        "f1": 0.6542923433874711,
+        "n_detections": 434,
+        "mcc": 0.4387968490683952,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6497695852534562,
+        "recall": 0.6588785046728972,
+        "f1": 0.6542923433874711,
+        "n_detections": 434,
+        "mcc": 0.5426541512773176,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6497695852534562,
+        "recall": 0.6588785046728972,
+        "f1": 0.6542923433874711,
+        "n_detections": 434,
+        "mcc": 0.48979724147806325,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 3,
+      "id": {
+        "precision": 0.6892230576441103,
+        "recall": 0.6425233644859814,
+        "f1": 0.6650544135429263,
+        "n_detections": 399,
+        "mcc": 0.4481266895435935,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.6892230576441103,
+        "recall": 0.6425233644859814,
+        "f1": 0.6650544135429263,
+        "n_detections": 399,
+        "mcc": 0.5551205466283946,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.6892230576441103,
+        "recall": 0.6425233644859814,
+        "f1": 0.6650544135429263,
+        "n_detections": 399,
+        "mcc": 0.49103514300779616,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 4,
+      "id": {
+        "precision": 0.7116402116402116,
+        "recall": 0.6285046728971962,
+        "f1": 0.6674937965260547,
+        "n_detections": 378,
+        "mcc": 0.45872293707937056,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7116402116402116,
+        "recall": 0.6285046728971962,
+        "f1": 0.6674937965260547,
+        "n_detections": 378,
+        "mcc": 0.5616183459318986,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7116402116402116,
+        "recall": 0.6285046728971962,
+        "f1": 0.6674937965260547,
+        "n_detections": 378,
+        "mcc": 0.5026193984775493,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 5,
+      "id": {
+        "precision": 0.75,
+        "recall": 0.616822429906542,
+        "f1": 0.676923076923077,
+        "n_detections": 352,
+        "mcc": 0.46617276716213807,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.75,
+        "recall": 0.616822429906542,
+        "f1": 0.676923076923077,
+        "n_detections": 352,
+        "mcc": 0.566402554972915,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.75,
+        "recall": 0.616822429906542,
+        "f1": 0.676923076923077,
+        "n_detections": 352,
+        "mcc": 0.5045812733937921,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 6,
+      "id": {
+        "precision": 0.7662721893491125,
+        "recall": 0.6051401869158879,
+        "f1": 0.6762402088772846,
+        "n_detections": 338,
+        "mcc": 0.4821657476124712,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.7662721893491125,
+        "recall": 0.6051401869158879,
+        "f1": 0.6762402088772846,
+        "n_detections": 338,
+        "mcc": 0.5790083119853301,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.7662721893491125,
+        "recall": 0.6051401869158879,
+        "f1": 0.6762402088772846,
+        "n_detections": 338,
+        "mcc": 0.5218228722906614,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 7,
+      "id": {
+        "precision": 0.807570977917981,
+        "recall": 0.5981308411214953,
+        "f1": 0.687248322147651,
+        "n_detections": 317,
+        "mcc": 0.5072103077731405,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.807570977917981,
+        "recall": 0.5981308411214953,
+        "f1": 0.687248322147651,
+        "n_detections": 317,
+        "mcc": 0.6008825676197477,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.807570977917981,
+        "recall": 0.5981308411214953,
+        "f1": 0.687248322147651,
+        "n_detections": 317,
+        "mcc": 0.5518774725960787,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 8,
+      "id": {
+        "precision": 0.8321917808219178,
+        "recall": 0.5677570093457944,
+        "f1": 0.675,
+        "n_detections": 292,
+        "mcc": 0.5216898601483398,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.8321917808219178,
+        "recall": 0.5677570093457944,
+        "f1": 0.675,
+        "n_detections": 292,
+        "mcc": 0.6176318009439481,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.8321917808219178,
+        "recall": 0.5677570093457944,
+        "f1": 0.675,
+        "n_detections": 292,
+        "mcc": 0.5574484190817561,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 9,
+      "id": {
+        "precision": 0.8581818181818182,
+        "recall": 0.5514018691588785,
+        "f1": 0.6714082503556188,
+        "n_detections": 275,
+        "mcc": 0.5538813901640486,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.8581818181818182,
+        "recall": 0.5514018691588785,
+        "f1": 0.6714082503556188,
+        "n_detections": 275,
+        "mcc": 0.6465657959428208,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.8581818181818182,
+        "recall": 0.5514018691588785,
+        "f1": 0.6714082503556188,
+        "n_detections": 275,
+        "mcc": 0.5861480411393803,
+        "mcc_refused_reason": null
+      }
+    },
+    {
+      "K": 10,
+      "min_corroboration": 3,
+      "min_votes": 10,
+      "id": {
+        "precision": 0.8844621513944223,
+        "recall": 0.5186915887850467,
+        "f1": 0.6539027982326951,
+        "n_detections": 251,
+        "mcc": 0.5423298752215515,
+        "mcc_refused_reason": null
+      },
+      "geometric-primary": {
+        "precision": 0.8844621513944223,
+        "recall": 0.5186915887850467,
+        "f1": 0.6539027982326951,
+        "n_detections": 251,
+        "mcc": 0.6378799772224236,
+        "mcc_refused_reason": null
+      },
+      "geometric-contains": {
+        "precision": 0.8844621513944223,
+        "recall": 0.5186915887850467,
+        "f1": 0.6539027982326951,
+        "n_detections": 251,
+        "mcc": 0.5711720404061934,
+        "mcc_refused_reason": null
+      }
+    }
+  ]
+}

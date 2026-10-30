@@ -1,0 +1,304 @@
+{
+  "ladder": "37arm2-r2",
+  "family": "Gemini 3.7 arm, 55-map",
+  "run_id": "gemini37-55map-2026-08-29",
+  "proposer_pool": "g384_ov192_55map_g37",
+  "corpus": "55-map",
+  "reference_file": "inputs/vectors/references/best-available-gt-55maps-r2.geojson",
+  "frame_file": "inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson",
+  "headline_buffer_m": 50,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 50 m over 8541 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 8541,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 3 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "committed board pairwise F1 permutation",
+    "n_pairs_gated": 3,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K5",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "ARM2-N1-oracle",
+        "cell_b": "ARM2-N5-oracle",
+        "committed": {
+          "f1_a": 0.861042,
+          "f1_b": 0.887145,
+          "observed_diff": -0.026104,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.861042,
+          "f1_b": 0.887145,
+          "observed_diff": -0.026104,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "ARM2-N1-oracle",
+        "cell_b": "ARM2-N3-oracle",
+        "committed": {
+          "f1_a": 0.861042,
+          "f1_b": 0.884825,
+          "observed_diff": -0.023783,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.861042,
+          "f1_b": 0.884825,
+          "observed_diff": -0.023783,
+          "p_value": 0.0,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": true,
+        "board": "results/55map-final-board-r2-2026-09-06/final_board_50m.json",
+        "cell_a": "ARM2-N3-oracle",
+        "cell_b": "ARM2-N5-oracle",
+        "committed": {
+          "f1_a": 0.884825,
+          "f1_b": 0.887145,
+          "observed_diff": -0.002321,
+          "p_value": 0.1208,
+          "n_tiles": 8541
+        },
+        "reproduced": {
+          "f1_a": 0.884825,
+          "f1_b": 0.887145,
+          "observed_diff": -0.002321,
+          "p_value": 0.1208,
+          "n_tiles": 8541
+        },
+        "abs_delta": {
+          "f1_a": 0.0,
+          "f1_b": 0.0,
+          "observed_diff": 0.0,
+          "p_value": 0.0
+        },
+        "tolerance": {
+          "f1": 5e-07,
+          "p_value": 5e-05
+        },
+        "passed": true
+      }
+    ],
+    "cell_gates": {
+      "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt": {
+        "confusion": {
+          "tp": 3184,
+          "tn": 4946,
+          "fp": 66,
+          "fn": 345
+        },
+        "mcc_rebuilt": 0.901689,
+        "mcc_recorded": 0.9017,
+        "geometry": {
+          "detections": {
+            "n_assigned": 5021,
+            "n_inside_union": 5021,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt": {
+        "confusion": {
+          "tp": 3279,
+          "tn": 4735,
+          "fp": 277,
+          "fn": 250
+        },
+        "mcc_rebuilt": 0.872922,
+        "mcc_recorded": 0.8729,
+        "geometry": {
+          "detections": {
+            "n_assigned": 5097,
+            "n_inside_union": 5097,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt": {
+        "confusion": {
+          "tp": 3235,
+          "tn": 4759,
+          "fp": 253,
+          "fn": 294
+        },
+        "mcc_rebuilt": 0.867746,
+        "mcc_recorded": 0.8677,
+        "geometry": {
+          "detections": {
+            "n_assigned": 4924,
+            "n_inside_union": 4924,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K5",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 5,
+      "condition_low": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "condition_high": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.861,
+        "high": 0.8871,
+        "delta": 0.026104,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.9017,
+        "high": 0.8677,
+        "delta": -0.033944,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true,
+        "low_published_join": 0.7422,
+        "high_published_join": 0.7147
+      },
+      "verdict": "F1 up (sig), MCC down (sig)"
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "gemini37-55map-2026-08-29::arm2-n1-oracle-p0.98-k1-r2-gt",
+      "condition_high": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.861,
+        "high": 0.8848,
+        "delta": 0.023783,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.9017,
+        "high": 0.8729,
+        "delta": -0.028768,
+        "p_raw": 0.0,
+        "p_bh": 0.0,
+        "significant": true,
+        "low_published_join": 0.7422,
+        "high_published_join": 0.7163
+      },
+      "verdict": "F1 up (sig), MCC down (sig)"
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "gemini37-55map-2026-08-29::arm2-n3-oracle-p0.95-k3-r2-gt",
+      "condition_high": "gemini37-55map-2026-08-29::arm2-n5-oracle-p0.95-k5-r2-gt",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8848,
+        "high": 0.8871,
+        "delta": 0.002321,
+        "p_raw": 0.1208,
+        "p_bh": 0.1208,
+        "significant": false
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.8729,
+        "high": 0.8677,
+        "delta": -0.005176,
+        "p_raw": 0.0094,
+        "p_bh": 0.0094,
+        "significant": true,
+        "low_published_join": 0.7163,
+        "high_published_join": 0.7147
+      },
+      "verdict": "F1 up n.s., MCC down (sig)"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-contains.json",
+  "generated_at_utc": "2026-10-30T08:28:39.152675+00:00",
+  "tile_join": {
+    "join": "geometric-contains",
+    "note": "SENSITIVITY reading: the MCC arm books points to tiles under 'geometric-contains', not the published 'id' join (S153 ruling 6). The F1 arm, its tiering and its withheld cells are unchanged. Gates compare each cell's per-tile labels with the scorer's aggregate under the same join; no committed record exists to reproduce.",
+    "n_cells_withheld_f1_arm": 0,
+    "n_cells_withheld_mcc_arm": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_README": "TIERING INPUT \u2014 NOT REGISTERED. One analysis row naming this K ladder's oracle-basis rungs, so scripts/era1_leaderboard_tiering.py can tier them with the board instrument verbatim. Written by scripts/k_ladder_mcc_test.py; results/run-analyses.json is not modified and this file must never be written back over it.",
+  "schema_version": "1.0",
+  "analyses": [
+    {
+      "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12",
+      "type": "comparison",
+      "_note": "K ladder Gemini 3 HIGH text 384 px, T 0.7 [mounds-reference.geojson], oracle basis, headline buffer 20 m.",
+      "conditions_compared": [
+        "pv-diag-384::pv-high-text-t0.7-n1-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n3-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n5-opmax",
+        "pv-diag-384::pv-high-text-t0.7-n10-opmax"
+      ],
+      "hypothesis_refs": [
+        "H3"
+      ],
+      "outcome": "PENDING: this is a tiering input, not a registered result",
+      "paper_section": "Results",
+      "output_path": null,
+      "working_notes_obs": [],
+      "preregistered": "post-hoc",
+      "deviations": []
+    }
+  ]
+}

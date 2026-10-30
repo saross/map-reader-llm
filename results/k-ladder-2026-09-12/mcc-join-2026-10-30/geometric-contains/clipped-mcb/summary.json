@@ -1,0 +1,697 @@
+{
+  "generated_at_utc": "2026-10-30T08:32:06.556016+00:00",
+  "script": "scripts/k_ladder_mcb.py",
+  "instrument": {
+    "tool": "scripts/selection_aware_intervals.py --board",
+    "construction": "Hsu (1984) / Edwards & Hsu (1983) constrained one-sided MCB on theta_i = stat_i - max_{j != i} stat_j, with the critical value bootstrapped over TILES rather than taken from Dunnett's table; a rung is ruled out as best only when its simultaneous upper bound falls at or below zero",
+    "simultaneous_confidence": 0.95,
+    "bootstrap": 10000,
+    "m_frac": 1.0,
+    "seed": 42,
+    "resampling_unit": "tile (Decision 10)",
+    "same_as": "the Era-2 board's own MCB step \u2014 results/leaderboard/era2/gs-era2-verified-board-2026-09-10/mcb/ and that board's README 2026-09-12 and 2026-09-13 entries"
+  },
+  "n_ladders": 7,
+  "gate_all_passed": true,
+  "roll_up": {
+    "ladders_whose_F1_admissible_set_contains_K3": [],
+    "ladders_whose_F1_admissible_set_excludes_K10": [],
+    "ladders_whose_F1_admissible_set_is_the_whole_ladder": [],
+    "ladders_whose_MCC_admissible_set_is_the_whole_ladder": [
+      "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "d51clip-phase2-image-n5-image-t0-3",
+      "d51clip-phase2-image-n5-image-t0-7",
+      "d51clip-phase2-image-n5-image-t1-0",
+      "d51clip-tier-e"
+    ],
+    "ladders_whose_MCC_admissible_set_contains_K1": [
+      "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "d51clip-phase2-image-n5-image-t0-3",
+      "d51clip-phase2-image-n5-image-t0-7",
+      "d51clip-phase2-image-n5-image-t1-0",
+      "d51clip-tier-e"
+    ]
+  },
+  "withheld": {
+    "family": "Gemini 3.7 text, GS B geometry (the 3.7 gold-standard text screen)",
+    "proposer_pool": "g384_ov192_g37",
+    "n_rungs": 4,
+    "n_rungs_withheld": 2,
+    "cells_withheld": [
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-opmax",
+      "gemini37-screen-2026-08-28::g37-text-k1-verified-carried-p0.10-k1",
+      "gemini37-screen-2026-08-28::g37-text-k3-verified-opmax"
+    ],
+    "why": "The tile-join invariant refuses these cells' per-tile TP/FP/FN table on the board frame: their proposer ran on the ov192 tiling, whose source_tile vocabulary is absent from the frame's 336-stride vocabulary, so 20-22 of 467-526 in-frame detections are credited to a tile. The refusal falls on the F1 arm as well as the MCC arm, so neither an F1 nor an MCC admissible set can be computed. With K = 1 and K = 3 withheld the family retains two sound rungs of four, below the review's three-rung bar.",
+    "anchors": [
+      "results/leaderboard/era2/gs-era2-verified-board-2026-09-10/README.md (2026-09-13 entry, 'Admitted but WITHHELD')",
+      "results/k-ladder-2026-09-12/findings.md \u00a7 7.3",
+      "reports/tile-mcc-geometric-join-2026-09-12.md"
+    ],
+    "lifted_by": "the corpus-wide tile-join decision (board close-out question 4), still open with the PI"
+  },
+  "ladders": [
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t0.3-n1-opmax-d51clip",
+              "committed": 0.8728,
+              "reproduced": 0.872818,
+              "abs_delta": 1.806e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n3-opmax-d51clip",
+              "committed": 0.8853,
+              "reproduced": 0.885307,
+              "abs_delta": 6.64e-06
+            },
+            {
+              "label": "pv-min-text-t0.3-n5-opmax-d51clip",
+              "committed": 0.841,
+              "reproduced": 0.840977,
+              "abs_delta": 2.28e-05
+            },
+            {
+              "label": "pv-min-text-t0.3-n10-opmax-d51clip",
+              "committed": 0.8728,
+              "reproduced": 0.872818,
+              "abs_delta": 1.806e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.885307,
+        "hsu_admissible_K": [
+          1,
+          3,
+          10
+        ],
+        "hsu_w_upper": 0.027680217975633067,
+        "hsu_w_lower": 0.033158654708624793,
+        "two_sided_band_K": [
+          1,
+          3,
+          10
+        ],
+        "two_sided_critical_width": 0.03316661200347918,
+        "theta_by_K": {
+          "1": -0.012489,
+          "3": 0.012489,
+          "5": -0.044329,
+          "10": -0.012489
+        },
+        "statistic_by_K": {
+          "1": 0.872818,
+          "3": 0.885307,
+          "5": 0.840977,
+          "10": 0.872818
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": false,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-text-t1.0-n1-opmax-d51clip",
+              "committed": 0.8896,
+              "reproduced": 0.889577,
+              "abs_delta": 2.282e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n3-opmax-d51clip",
+              "committed": 0.885,
+              "reproduced": 0.885041,
+              "abs_delta": 4.058e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n5-opmax-d51clip",
+              "committed": 0.8649,
+              "reproduced": 0.864886,
+              "abs_delta": 1.358e-05
+            },
+            {
+              "label": "pv-min-text-t1.0-n10-opmax-d51clip",
+              "committed": 0.8728,
+              "reproduced": 0.872818,
+              "abs_delta": 1.806e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 1,
+        "best_statistic": 0.889577,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.028752223152607757,
+        "hsu_w_lower": 0.03704945931745887,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.03712235692984299,
+        "theta_by_K": {
+          "1": 0.004537,
+          "3": -0.004537,
+          "5": -0.024691,
+          "10": -0.016759
+        },
+        "statistic_by_K": {
+          "1": 0.889577,
+          "3": 0.885041,
+          "5": 0.864886,
+          "10": 0.872818
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-high-text-t1.0-n1-opmax-d51clip",
+              "committed": 0.8817,
+              "reproduced": 0.881703,
+              "abs_delta": 3.13e-06
+            },
+            {
+              "label": "pv-high-text-t1.0-n3-opmax-d51clip",
+              "committed": 0.8893,
+              "reproduced": 0.889282,
+              "abs_delta": 1.782e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n5-opmax-d51clip",
+              "committed": 0.8649,
+              "reproduced": 0.864886,
+              "abs_delta": 1.358e-05
+            },
+            {
+              "label": "pv-high-text-t1.0-n10-opmax-d51clip",
+              "committed": 0.8649,
+              "reproduced": 0.864886,
+              "abs_delta": 1.358e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.889282,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03389326460044801,
+        "hsu_w_lower": 0.043314218504158376,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04391705115933922,
+        "theta_by_K": {
+          "1": -0.007579,
+          "3": 0.007579,
+          "5": -0.024396,
+          "10": -0.024396
+        },
+        "statistic_by_K": {
+          "1": 0.881703,
+          "3": 0.889282,
+          "5": 0.864886,
+          "10": 0.864886
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-flash-high-text-n5-text-t1-0/k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 HIGH text 384 px, T 1.0 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-3",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-3-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t0-3/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-3/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.3-n1-opmax-d51clip",
+              "committed": 0.8939,
+              "reproduced": 0.893862,
+              "abs_delta": 3.806e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n3-opmax-d51clip",
+              "committed": 0.885,
+              "reproduced": 0.885041,
+              "abs_delta": 4.058e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n5-opmax-d51clip",
+              "committed": 0.8935,
+              "reproduced": 0.893538,
+              "abs_delta": 3.773e-05
+            },
+            {
+              "label": "pv-min-image-t0.3-n10-opmax-d51clip",
+              "committed": 0.9018,
+              "reproduced": 0.901769,
+              "abs_delta": 3.118e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 10,
+        "best_statistic": 0.901769,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.021522829278769775,
+        "hsu_w_lower": 0.029062245603761375,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.029062245603761375,
+        "theta_by_K": {
+          "1": -0.007907,
+          "3": -0.016728,
+          "5": -0.008231,
+          "10": 0.007907
+        },
+        "statistic_by_K": {
+          "1": 0.893862,
+          "3": 0.885041,
+          "5": 0.893538,
+          "10": 0.901769
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-image-n5-image-t0-3/k-ladder-mcc-d51clip-phase2-image-n5-image-t0-3-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-7",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t0-7/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-7/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+              "committed": 0.8908,
+              "reproduced": 0.890822,
+              "abs_delta": 2.202e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+              "committed": 0.8893,
+              "reproduced": 0.889282,
+              "abs_delta": 1.782e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+              "committed": 0.8931,
+              "reproduced": 0.89307,
+              "abs_delta": 2.994e-05
+            },
+            {
+              "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+              "committed": 0.8768,
+              "reproduced": 0.876807,
+              "abs_delta": 7.41e-06
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.89307,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.023940631830881593,
+        "hsu_w_lower": 0.04038832009750088,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04038832009750088,
+        "theta_by_K": {
+          "1": -0.002248,
+          "3": -0.003788,
+          "5": 0.002248,
+          "10": -0.016263
+        },
+        "statistic_by_K": {
+          "1": 0.890822,
+          "3": 0.889282,
+          "5": 0.89307,
+          "10": 0.876807
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-image-n5-image-t0-7/k-ladder-mcc-d51clip-phase2-image-n5-image-t0-7-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t1-0",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-phase2-image-n5-image-t1-0-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-image-n5-image-t1-0/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t1-0/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "pv-min-image-t1.0-n1-opmax-d51clip",
+              "committed": 0.8739,
+              "reproduced": 0.87389,
+              "abs_delta": 9.56e-06
+            },
+            {
+              "label": "pv-min-image-t1.0-n3-opmax-d51clip",
+              "committed": 0.8686,
+              "reproduced": 0.868574,
+              "abs_delta": 2.576e-05
+            },
+            {
+              "label": "pv-min-image-t1.0-n5-opmax-d51clip",
+              "committed": 0.8888,
+              "reproduced": 0.888775,
+              "abs_delta": 2.507e-05
+            },
+            {
+              "label": "pv-min-image-t1.0-n10-opmax-d51clip",
+              "committed": 0.8847,
+              "reproduced": 0.884688,
+              "abs_delta": 1.23e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 5,
+        "best_statistic": 0.888775,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.03161441088302147,
+        "hsu_w_lower": 0.04165932017537379,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.04266999393871521,
+        "theta_by_K": {
+          "1": -0.014884,
+          "3": -0.020201,
+          "5": 0.004087,
+          "10": -0.004087
+        },
+        "statistic_by_K": {
+          "1": 0.87389,
+          "3": 0.868574,
+          "5": 0.888775,
+          "10": 0.884688
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-phase2-image-n5-image-t1-0/k-ladder-mcc-d51clip-phase2-image-n5-image-t1-0-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0 (D51 clipped)",
+      "n_rungs": 4
+    },
+    {
+      "slug": "d51clip-tier-e",
+      "group": "D51 clipped",
+      "analysis_id": "k-ladder-mcc-d51clip-tier-e-2026-09-12",
+      "headline_buffer_m": 20,
+      "analyses": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-tier-e/run-analyses.json",
+      "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+      "bounds_override": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "committed_tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-tier-e/tiering_20m_geometric-contains.json",
+      "gates": [
+        {
+          "metric": "mcc",
+          "tolerance": 0.0001,
+          "passed": true,
+          "n_candidates_gated": 4,
+          "candidates": [
+            {
+              "label": "g384-ov192-k1-verified-opmax-d51clip",
+              "committed": 0.885,
+              "reproduced": 0.885041,
+              "abs_delta": 4.058e-05
+            },
+            {
+              "label": "g384-ov192-k3-verified-opmax-d51clip",
+              "committed": 0.8978,
+              "reproduced": 0.897807,
+              "abs_delta": 7.43e-06
+            },
+            {
+              "label": "g384-ov192-k5-verified-opmax-d51clip",
+              "committed": 0.8848,
+              "reproduced": 0.884834,
+              "abs_delta": 3.425e-05
+            },
+            {
+              "label": "g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+              "committed": 0.8813,
+              "reproduced": 0.881347,
+              "abs_delta": 4.693e-05
+            }
+          ]
+        }
+      ],
+      "mcc": {
+        "metric": "mcc",
+        "n_candidates": 4,
+        "n_tiles": 487,
+        "best_K": 3,
+        "best_statistic": 0.897807,
+        "hsu_admissible_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "hsu_w_upper": 0.025759122762859552,
+        "hsu_w_lower": 0.03634730964631225,
+        "two_sided_band_K": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "two_sided_critical_width": 0.036357710852770196,
+        "theta_by_K": {
+          "1": -0.012767,
+          "3": 0.012767,
+          "5": -0.012973,
+          "10": -0.016461
+        },
+        "statistic_by_K": {
+          "1": 0.885041,
+          "3": 0.897807,
+          "5": 0.884834,
+          "10": 0.881347
+        },
+        "contains_K3": true,
+        "excludes_K10": false,
+        "whole_ladder": true,
+        "degenerate_zero_width": false,
+        "artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcb/d51clip-tier-e/k-ladder-mcc-d51clip-tier-e-2026-09-12_mcc_geometric-contains_b20_m1.json"
+      },
+      "rungs": [
+        1,
+        3,
+        5,
+        10
+      ],
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E) (D51 clipped)",
+      "n_rungs": 4
+    }
+  ],
+  "tile_join": {
+    "join": "geometric-contains",
+    "note": "SENSITIVITY reading: the tile-MCC indicators are built under 'geometric-contains', not the published 'id' join (S153 ruling 6). Each rung's MCB statistic is gated against the join's MCC in that join's own tiering; no committed record exists to reproduce."
+  }
+}

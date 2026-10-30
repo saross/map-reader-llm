@@ -1,0 +1,92 @@
+{
+  "metric": "mcc",
+  "n_candidates": 3,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2
+  ],
+  "n_tiles": 8541,
+  "m_out_of_n": 8541,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.876845698736157,
+  "optimism": 0.0007550163931260414,
+  "optimism_mcse": 5.2465845551688935e-05,
+  "optimism_spread_p2_5_p97_5": [
+    -0.009580856741473952,
+    0.01104176543699879
+  ],
+  "corrected_f1": 0.876090682343031,
+  "naive_ci": [
+    0.8663192825552312,
+    0.8870484767363802
+  ],
+  "selection_aware_ci": [
+    0.8655642661621051,
+    0.8862934603432542
+  ],
+  "argmax_stability": 0.868,
+  "n_distinct_argmax": 2,
+  "mcb_critical_width": 0.00777617104253586,
+  "mcb_theta": [
+    0.004106315833480756,
+    -0.004106315833480756,
+    -0.009570543852767899
+  ],
+  "mcb_lower": [
+    -0.0036698552090551045,
+    -0.011882486876016616,
+    -0.01734671489530376
+  ],
+  "mcb_upper": [
+    0.011882486876016616,
+    0.0036698552090551045,
+    -0.0017943728102320384
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1
+  ],
+  "hsu_w_upper": 0.007265555964252604,
+  "hsu_w_lower": 0.007731295312005192,
+  "hsu_lower": [
+    -0.0036249794785244357,
+    -0.011837611145485948,
+    -0.01730183916477309
+  ],
+  "hsu_upper": [
+    0.01137187179773336,
+    0.003159240130771848,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-37arm1-r2-2026-09-12",
+  "tile_join": "geometric-contains",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "gemini37-55map-2026-08-29::arm1-n1-oracle-p0.20-k1-r2-gt",
+      "label": "arm1-n1-oracle-p0.20-k1-r2-gt",
+      "eval_f1": 0.8413
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm1-n3-oracle-p0.15-k3-r2-gt",
+      "label": "arm1-n3-oracle-p0.15-k3-r2-gt",
+      "eval_f1": 0.8705
+    },
+    {
+      "ref": "gemini37-55map-2026-08-29::arm1-n5-oracle-p0.15-k5-r2-gt",
+      "label": "arm1-n5-oracle-p0.15-k5-r2-gt",
+      "eval_f1": 0.8727
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 50
+}

@@ -1,0 +1,373 @@
+[
+  {
+    "slug": "gs-stride-a",
+    "analysis_id": "k-ladder-gs-stride-a-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-analyses.json",
+    "conditions": "results/k-ladder-2026-09-12/tiering-input/gs-stride-a/run-conditions.json",
+    "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-primary.json",
+    "group": "gold standard",
+    "family": "GS stride A, exact re-verification (board frame)",
+    "k_by_label": {
+      "g384-ov128-k10-verified-p0.15-k8": 10,
+      "g384-ov128-ladder-n3-verified-p0.15-k3": 3,
+      "g384-ov128-ladder-n5-verified-p0.15-k4": 5,
+      "g384-ov128-ladder-n1-verified-p0.15-k1": 1
+    }
+  },
+  {
+    "slug": "tier-e",
+    "analysis_id": "k-ladder-tier-e-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+    "conditions": "results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+    "bounds": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/tier-e/tiering_20m_geometric-primary.json",
+    "group": "tier E",
+    "family": "Grid 384 px / 50 % MINIMAL text, verified (tier E)",
+    "k_by_label": {
+      "g384-ov192-k5-verified-opmax": 5,
+      "g384-ov192-k3-verified-opmax": 3,
+      "g384-ov192-k10-verified-p0.15-k10-boardframe": 10,
+      "g384-ov192-k1-verified-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-minimal-text-n30-t07-text-t0-3",
+    "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-3-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-3/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+    "k_by_label": {
+      "pv-min-text-t0.3-n5-opmax": 5,
+      "pv-min-text-t0.3-n10-opmax": 10,
+      "pv-min-text-t0.3-n3-opmax": 3,
+      "pv-min-text-t0.3-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-minimal-text-n30-t07-text-t0-7",
+    "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t0-7-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t0-7/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL text 384 px, T 0.7",
+    "k_by_label": {
+      "pv-min-text-t0.7-n5-opmax": 5,
+      "pv-min-text-t0.7-n10-opmax": 10,
+      "pv-min-text-t0.7-n3-opmax": 3,
+      "pv-min-text-t0.7-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-minimal-text-n30-t07-text-t1-0",
+    "analysis_id": "k-ladder-mcc-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+    "k_by_label": {
+      "pv-min-text-t1.0-n10-opmax": 10,
+      "pv-min-text-t1.0-n5-opmax": 5,
+      "pv-min-text-t1.0-n3-opmax": 3,
+      "pv-min-text-t1.0-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-text-n5-text-t0-3",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-3-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-3/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH text 384 px, T 0.3",
+    "k_by_label": {
+      "pv-high-text-t0.3-n5-opmax": 5,
+      "pv-high-text-t0.3-n3-opmax": 3,
+      "pv-high-text-t0.3-n10-opmax": 10,
+      "pv-high-text-t0.3-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-text-n5-text-t0-7",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t0-7-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t0-7/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH text 384 px, T 0.7",
+    "k_by_label": {
+      "pv-high-text-t0.7-n10-opmax": 10,
+      "pv-high-text-t0.7-n5-opmax": 5,
+      "pv-high-text-t0.7-n3-opmax": 3,
+      "pv-high-text-t0.7-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-text-n5-text-t1-0",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH text 384 px, T 1.0",
+    "k_by_label": {
+      "pv-high-text-t1.0-n10-opmax": 10,
+      "pv-high-text-t1.0-n5-opmax": 5,
+      "pv-high-text-t1.0-n3-opmax": 3,
+      "pv-high-text-t1.0-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-image-n5-image-t0-3",
+    "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-3-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-3/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+    "k_by_label": {
+      "pv-min-image-t0.3-n10-opmax": 10,
+      "pv-min-image-t0.3-n3-opmax": 3,
+      "pv-min-image-t0.3-n5-opmax": 5,
+      "pv-min-image-t0.3-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-image-n5-image-t0-7",
+    "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t0-7-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t0-7/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+    "k_by_label": {
+      "pv-min-image-t0.7-n10-opmax": 10,
+      "pv-min-image-t0.7-n5-opmax": 5,
+      "pv-min-image-t0.7-n3-opmax": 3,
+      "pv-min-image-t0.7-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-image-n5-image-t1-0",
+    "analysis_id": "k-ladder-mcc-phase2-image-n5-image-t1-0-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-image-n5-image-t1-0/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+    "k_by_label": {
+      "pv-min-image-t1.0-n10-opmax": 10,
+      "pv-min-image-t1.0-n5-opmax": 5,
+      "pv-min-image-t1.0-n3-opmax": 3,
+      "pv-min-image-t1.0-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-image-n5-image-t0-3",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-3-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-3/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH image 384 px, T 0.3",
+    "k_by_label": {
+      "pv-high-image-t0.3-n10-opmax": 10,
+      "pv-high-image-t0.3-n5-opmax": 5,
+      "pv-high-image-t0.3-n3-opmax": 3,
+      "pv-high-image-t0.3-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-image-n5-image-t0-7",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t0-7-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t0-7/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH image 384 px, T 0.7",
+    "k_by_label": {
+      "pv-high-image-t0.7-n5-opmax": 5,
+      "pv-high-image-t0.7-n10-opmax": 10,
+      "pv-high-image-t0.7-n3-opmax": 3,
+      "pv-high-image-t0.7-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-flash-high-image-n5-image-t1-0",
+    "analysis_id": "k-ladder-mcc-phase2-flash-high-image-n5-image-t1-0-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-flash-high-image-n5-image-t1-0/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 HIGH image 384 px, T 1.0",
+    "k_by_label": {
+      "pv-high-image-t1.0-n10-opmax": 10,
+      "pv-high-image-t1.0-n5-opmax": 5,
+      "pv-high-image-t1.0-n3-opmax": 3,
+      "pv-high-image-t1.0-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "phase2-scale-4-optimal-487",
+    "analysis_id": "k-ladder-mcc-phase2-scale-4-optimal-487-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/phase2/mcc-test/tiering-input/phase2-scale-4-optimal-487/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 20,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-primary.json",
+    "group": "Phase 2 (pv-diag-384)",
+    "family": "Gemini 3 scale-4-optimal 487",
+    "k_by_label": {
+      "pv-scale4-optimal-n10-opmax": 10,
+      "pv-scale4-optimal-n5-opmax": 5,
+      "pv-scale4-optimal-n3-opmax": 3,
+      "pv-scale4-optimal-n1-opmax": 1
+    }
+  },
+  {
+    "slug": "55map-stride-a-r2",
+    "analysis_id": "k-ladder-mcc-55map-stride-a-r2-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-r2/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "55-map stride A, r2",
+    "k_by_label": {
+      "g384-ov128-55map-n10-oracle-p0.15-k7-r2-gt": 10,
+      "g384-ov128-55map-n5-oracle-p0.15-k4-r2-gt": 5,
+      "g384-ov128-55map-n3-oracle-p0.20-k2-r2-gt": 3,
+      "g384-ov128-55map-n1-oracle-p0.20-k1-r2-gt": 1
+    }
+  },
+  {
+    "slug": "55map-stride-a-standardised",
+    "analysis_id": "k-ladder-mcc-55map-stride-a-standardised-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-a-standardised/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "55-map stride A, standardised",
+    "k_by_label": {
+      "g384-ov128-55map-n10-oracle-p0.15-k7-standardised-gt": 10,
+      "g384-ov128-55map-n5-oracle-p0.15-k4-standardised-gt": 5,
+      "g384-ov128-55map-n3-oracle-p0.20-k2-standardised-gt": 3,
+      "g384-ov128-55map-n1-oracle-p0.20-k1-standardised-gt": 1
+    }
+  },
+  {
+    "slug": "55map-stride-b-r2",
+    "analysis_id": "k-ladder-mcc-55map-stride-b-r2-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-r2/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "55-map stride B, r2",
+    "k_by_label": {
+      "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt": 10,
+      "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt": 5,
+      "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt": 3,
+      "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt": 1
+    }
+  },
+  {
+    "slug": "55map-stride-b-standardised",
+    "analysis_id": "k-ladder-mcc-55map-stride-b-standardised-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-standardised/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "55-map stride B, standardised",
+    "k_by_label": {
+      "g384-ov192-55map-n10-oracle-p0.20-k9-standardised-gt": 10,
+      "g384-ov192-55map-n5-oracle-p0.20-k5-standardised-gt": 5,
+      "g384-ov192-55map-n3-oracle-p0.20-k3-standardised-gt": 3,
+      "g384-ov192-55map-n1-oracle-p0.20-k1-standardised-gt": 1
+    }
+  },
+  {
+    "slug": "55map-stride-b-g37vf-r2",
+    "analysis_id": "k-ladder-mcc-55map-stride-b-g37vf-r2-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/55map-stride-b-g37vf-r2/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "55-map stride B, 3.7 verifier",
+    "k_by_label": {
+      "g384-ov192-55map-n10-verified37-oracle-p0.96-k9-r2-gt": 10,
+      "g384-ov192-55map-n3-verified37-oracle-p0.96-k3-r2-gt": 3,
+      "g384-ov192-55map-n1-verified37-oracle-p0.96-k1-r2-gt": 1
+    }
+  },
+  {
+    "slug": "37arm1-r2",
+    "analysis_id": "k-ladder-mcc-37arm1-r2-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm1-r2/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "3.7 arm 1",
+    "k_by_label": {
+      "arm1-n5-oracle-p0.15-k5-r2-gt": 5,
+      "arm1-n3-oracle-p0.15-k3-r2-gt": 3,
+      "arm1-n1-oracle-p0.20-k1-r2-gt": 1
+    }
+  },
+  {
+    "slug": "37arm2-r2",
+    "analysis_id": "k-ladder-mcc-37arm2-r2-2026-09-12",
+    "analyses": "results/k-ladder-2026-09-12/mcc-test/tiering-input/37arm2-r2/run-analyses.json",
+    "conditions": null,
+    "bounds": null,
+    "buffer_m": 50,
+    "tiering": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-primary.json",
+    "group": "55-map deployment",
+    "family": "3.7 arm 2",
+    "k_by_label": {
+      "arm2-n5-oracle-p0.95-k5-r2-gt": 5,
+      "arm2-n3-oracle-p0.95-k3-r2-gt": 3,
+      "arm2-n1-oracle-p0.98-k1-r2-gt": 1
+    }
+  }
+]

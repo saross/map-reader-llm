@@ -1,0 +1,109 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 3,
+  "apparent_f1": 0.9235238693467337,
+  "optimism": 0.008590112174257633,
+  "optimism_mcse": 0.000164253874488996,
+  "optimism_spread_p2_5_p97_5": [
+    -0.025355659412517943,
+    0.03868576884854369
+  ],
+  "corrected_f1": 0.914933757172476,
+  "naive_ci": [
+    0.8868522538805176,
+    0.9566327504195146
+  ],
+  "selection_aware_ci": [
+    0.8782621417062599,
+    0.9480426382452569
+  ],
+  "argmax_stability": 0.4039,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.03550226947512954,
+  "mcb_theta": [
+    -0.01699469570072587,
+    -8.550196664680598e-05,
+    -0.008497347850362935,
+    8.550196664680598e-05
+  ],
+  "mcb_lower": [
+    -0.05249696517585541,
+    -0.03558777144177635,
+    -0.04399961732549248,
+    -0.03541676750848274
+  ],
+  "mcb_upper": [
+    0.018507573774403673,
+    0.03541676750848274,
+    0.027004921624766608,
+    0.03558777144177635
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.025210647532166692,
+  "hsu_w_lower": 0.03515345757306324,
+  "hsu_lower": [
+    -0.05214815327378911,
+    -0.03523895953971005,
+    -0.04365080542342618,
+    -0.035067955606416436
+  ],
+  "hsu_upper": [
+    0.008215951831440822,
+    0.025125145565519886,
+    0.016713299681803757,
+    0.025296149498813498
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0-2026-09-12",
+  "tile_join": "geometric-primary",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-min-text-t1.0-n1-opmax-d51clip",
+      "label": "pv-min-text-t1.0-n1-opmax-d51clip",
+      "eval_f1": 0.8235
+    },
+    {
+      "ref": "pv-diag-384::pv-min-text-t1.0-n3-opmax-d51clip",
+      "label": "pv-min-text-t1.0-n3-opmax-d51clip",
+      "eval_f1": 0.8647
+    },
+    {
+      "ref": "pv-diag-384::pv-min-text-t1.0-n5-opmax-d51clip",
+      "label": "pv-min-text-t1.0-n5-opmax-d51clip",
+      "eval_f1": 0.8714
+    },
+    {
+      "ref": "pv-diag-384::pv-min-text-t1.0-n10-opmax-d51clip",
+      "label": "pv-min-text-t1.0-n10-opmax-d51clip",
+      "eval_f1": 0.8781
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

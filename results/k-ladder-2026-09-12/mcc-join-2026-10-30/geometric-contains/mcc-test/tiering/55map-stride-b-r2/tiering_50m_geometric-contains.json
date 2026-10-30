@@ -1,0 +1,533 @@
+{
+  "analysis_id": "k-ladder-mcc-55map-stride-b-r2-2026-09-12",
+  "metric": "f1",
+  "buffer_metres": 50,
+  "n_permutations": 10000,
+  "seed": 42,
+  "fdr_q": 0.05,
+  "n_tiles": 8541,
+  "n_cells": 4,
+  "n_cells_withheld": 0,
+  "withheld_cells": [],
+  "replicate_handling": "single-set cells: integer per-tile of one aggregated set; replicate-mean cells (single-pass K runs, phase3c 5 replications): pass-averaged per-tile (float)",
+  "generated_at_utc": "2026-10-30T08:30:26.451733+00:00",
+  "git_commit": "463257349",
+  "ranking": [
+    {
+      "rank": 1,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.856,
+      "observed_micro_f1": 0.855959,
+      "f1_gap": -4.1e-05,
+      "mcc": 0.7123,
+      "tier": 1
+    },
+    {
+      "rank": 2,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8516,
+      "observed_micro_f1": 0.851628,
+      "f1_gap": 2.8e-05,
+      "mcc": 0.7098,
+      "tier": 2
+    },
+    {
+      "rank": 3,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8507,
+      "observed_micro_f1": 0.850664,
+      "f1_gap": -3.6e-05,
+      "mcc": 0.7128,
+      "tier": 2
+    },
+    {
+      "rank": 4,
+      "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "kind": "verified-PV",
+      "n_passes": 1,
+      "eval_f1": 0.8013,
+      "observed_micro_f1": 0.801274,
+      "f1_gap": -2.6e-05,
+      "mcc": 0.7092,
+      "tier": 3
+    }
+  ],
+  "tiers": [
+    {
+      "tier": 1,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt"
+      ]
+    },
+    {
+      "tier": 2,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt"
+      ]
+    },
+    {
+      "tier": 3,
+      "members": [
+        "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"
+      ]
+    }
+  ],
+  "tie_set": [
+    "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt"
+  ],
+  "pairwise": [
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "f1_a": 0.801274,
+      "f1_b": 0.850664,
+      "observed_diff": -0.04939,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 2.7e-05,
+      "null_std": 0.003068,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "f1_a": 0.801274,
+      "f1_b": 0.851628,
+      "observed_diff": -0.050353,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 3.2e-05,
+      "null_std": 0.003252,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "f1_a": 0.801274,
+      "f1_b": 0.855959,
+      "observed_diff": -0.054685,
+      "p_value": 0.0,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 1.4e-05,
+      "null_std": 0.003209,
+      "bh_adjusted_p": 0.0,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "f1_a": 0.850664,
+      "f1_b": 0.851628,
+      "observed_diff": -0.000964,
+      "p_value": 0.5086,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": 5e-06,
+      "null_std": 0.001468,
+      "bh_adjusted_p": 0.5086,
+      "significant": false
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "f1_a": 0.850664,
+      "f1_b": 0.855959,
+      "observed_diff": -0.005295,
+      "p_value": 0.0019,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -1.3e-05,
+      "null_std": 0.001696,
+      "bh_adjusted_p": 0.00285,
+      "significant": true
+    },
+    {
+      "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "f1_a": 0.851628,
+      "f1_b": 0.855959,
+      "observed_diff": -0.004332,
+      "p_value": 0.0029,
+      "n_permutations": 10000,
+      "n_tiles": 8541,
+      "null_mean": -1.8e-05,
+      "null_std": 0.001494,
+      "bh_adjusted_p": 0.00348,
+      "significant": true
+    }
+  ],
+  "mcc_permutation": {
+    "statistic": "tile-level MCC (buffer-invariant: tile truth is intersection with any reference, tile prediction is any detection assigned to the tile)",
+    "kernel": "pairwise_permutation_test.permutation_test_mcc_arrays",
+    "swap_mask": "identical to the F1 test's (same seed, same tile order, same rng.random(n_tiles) < 0.5 stream)",
+    "fdr_q": 0.05,
+    "n_cells_with_mcc": 4,
+    "n_cells_withheld": 0,
+    "withheld": [],
+    "n_pairs": 6,
+    "n_significant": 0,
+    "reported_not_tiering": "PI ruling 2026-09-13 (S153 ruling 7): the MCC family is reported BESIDE the preregistered F1 tiering and does not replace it. The board's tiering is the F1 one.",
+    "n_tiers": 1,
+    "tie_set": [
+      "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+      "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+      "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+      "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"
+    ],
+    "tiers": [
+      {
+        "tier": 1,
+        "members": [
+          "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+          "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+          "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+          "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt"
+        ]
+      }
+    ],
+    "ranking": [
+      {
+        "rank": 1,
+        "ref": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "label": "g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "mcc": 0.8643,
+        "eval_f1": 0.856,
+        "mcc_tier": 1,
+        "f1_tier": 1,
+        "mcc_published_join": 0.7123
+      },
+      {
+        "rank": 2,
+        "ref": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "label": "g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "mcc": 0.8628,
+        "eval_f1": 0.8507,
+        "mcc_tier": 1,
+        "f1_tier": 2,
+        "mcc_published_join": 0.7128
+      },
+      {
+        "rank": 3,
+        "ref": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "label": "g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "mcc": 0.8597,
+        "eval_f1": 0.8516,
+        "mcc_tier": 1,
+        "f1_tier": 2,
+        "mcc_published_join": 0.7098
+      },
+      {
+        "rank": 4,
+        "ref": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "label": "g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "mcc": 0.8563,
+        "eval_f1": 0.8013,
+        "mcc_tier": 1,
+        "f1_tier": 3,
+        "mcc_published_join": 0.7092
+      }
+    ],
+    "gates": {
+      "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt": {
+        "confusion": {
+          "tp": 3248,
+          "tn": 4697,
+          "fp": 315,
+          "fn": 281
+        },
+        "mcc_rebuilt": 0.856333,
+        "mcc_recorded": 0.8563,
+        "geometry": {
+          "detections": {
+            "n_assigned": 5655,
+            "n_inside_union": 5655,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt": {
+        "confusion": {
+          "tp": 3182,
+          "tn": 4792,
+          "fp": 220,
+          "fn": 347
+        },
+        "mcc_rebuilt": 0.862779,
+        "mcc_recorded": 0.8628,
+        "geometry": {
+          "detections": {
+            "n_assigned": 4772,
+            "n_inside_union": 4772,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt": {
+        "confusion": {
+          "tp": 3148,
+          "tn": 4813,
+          "fp": 199,
+          "fn": 381
+        },
+        "mcc_rebuilt": 0.859729,
+        "mcc_recorded": 0.8597,
+        "geometry": {
+          "detections": {
+            "n_assigned": 4566,
+            "n_inside_union": 4566,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt": {
+        "confusion": {
+          "tp": 3172,
+          "tn": 4808,
+          "fp": 204,
+          "fn": 357
+        },
+        "mcc_rebuilt": 0.864273,
+        "mcc_recorded": 0.8643,
+        "geometry": {
+          "detections": {
+            "n_assigned": 4639,
+            "n_inside_union": 4639,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 5018,
+            "n_inside_union": 5018,
+            "n_outside_union": 0
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      }
+    },
+    "pairwise": [
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "mcc_a": 0.856333,
+        "mcc_b": 0.862779,
+        "confusion_a": {
+          "tp": 3248,
+          "tn": 4697,
+          "fp": 315,
+          "fn": 281
+        },
+        "confusion_b": {
+          "tp": 3182,
+          "tn": 4792,
+          "fp": 220,
+          "fn": 347
+        },
+        "observed_mcc_diff": -0.006446,
+        "p_value": 0.0588,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 1e-05,
+          "std": 0.003324,
+          "percentile_2.5": -0.006521,
+          "percentile_97.5": 0.006536
+        },
+        "bh_adjusted_p": 0.1176,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "mcc_a": 0.856333,
+        "mcc_b": 0.859729,
+        "confusion_a": {
+          "tp": 3248,
+          "tn": 4697,
+          "fp": 315,
+          "fn": 281
+        },
+        "confusion_b": {
+          "tp": 3148,
+          "tn": 4813,
+          "fp": 199,
+          "fn": 381
+        },
+        "observed_mcc_diff": -0.003396,
+        "p_value": 0.3581,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 5.6e-05,
+          "std": 0.003742,
+          "percentile_2.5": -0.00729,
+          "percentile_97.5": 0.007272
+        },
+        "bh_adjusted_p": 0.42972,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n1-oracle-p0.20-k1-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "mcc_a": 0.856333,
+        "mcc_b": 0.864273,
+        "confusion_a": {
+          "tp": 3248,
+          "tn": 4697,
+          "fp": 315,
+          "fn": 281
+        },
+        "confusion_b": {
+          "tp": 3172,
+          "tn": 4808,
+          "fp": 204,
+          "fn": 357
+        },
+        "observed_mcc_diff": -0.00794,
+        "p_value": 0.0272,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 5.4e-05,
+          "std": 0.003555,
+          "percentile_2.5": -0.006983,
+          "percentile_97.5": 0.007017
+        },
+        "bh_adjusted_p": 0.0816,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "mcc_a": 0.862779,
+        "mcc_b": 0.859729,
+        "confusion_a": {
+          "tp": 3182,
+          "tn": 4792,
+          "fp": 220,
+          "fn": 347
+        },
+        "confusion_b": {
+          "tp": 3148,
+          "tn": 4813,
+          "fp": 199,
+          "fn": 381
+        },
+        "observed_mcc_diff": 0.003049,
+        "p_value": 0.1106,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 4.6e-05,
+          "std": 0.001817,
+          "percentile_2.5": -0.003638,
+          "percentile_97.5": 0.003646
+        },
+        "bh_adjusted_p": 0.1659,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n3-oracle-p0.20-k3-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "mcc_a": 0.862779,
+        "mcc_b": 0.864273,
+        "confusion_a": {
+          "tp": 3182,
+          "tn": 4792,
+          "fp": 220,
+          "fn": 347
+        },
+        "confusion_b": {
+          "tp": 3172,
+          "tn": 4808,
+          "fp": 204,
+          "fn": 357
+        },
+        "observed_mcc_diff": -0.001495,
+        "p_value": 0.431,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": 4.4e-05,
+          "std": 0.002177,
+          "percentile_2.5": -0.004366,
+          "percentile_97.5": 0.004371
+        },
+        "bh_adjusted_p": 0.431,
+        "significant": false
+      },
+      {
+        "ref_a": "stride-55map-2026-08-25::g384-ov192-55map-n5-oracle-p0.20-k5-r2-gt",
+        "ref_b": "stride-55map-2026-08-25::g384-ov192-55map-n10-oracle-p0.20-k9-r2-gt",
+        "mcc_a": 0.859729,
+        "mcc_b": 0.864273,
+        "confusion_a": {
+          "tp": 3148,
+          "tn": 4813,
+          "fp": 199,
+          "fn": 381
+        },
+        "confusion_b": {
+          "tp": 3172,
+          "tn": 4808,
+          "fp": 204,
+          "fn": 357
+        },
+        "observed_mcc_diff": -0.004544,
+        "p_value": 0.0257,
+        "n_permutations": 10000,
+        "n_tiles": 8541,
+        "null_distribution": {
+          "mean": -2e-06,
+          "std": 0.001982,
+          "percentile_2.5": -0.003659,
+          "percentile_97.5": 0.004074
+        },
+        "bh_adjusted_p": 0.0816,
+        "significant": false
+      }
+    ],
+    "tile_join": "geometric-contains",
+    "tile_join_note": "SENSITIVITY reading: the MCC arm books points to tiles under 'geometric-contains', not the published 'id' join (S153 ruling 6). The F1 arm, its tiering and its withheld cells are unchanged. Gates compare each cell's per-tile labels with the scorer's aggregate under the same join; no committed record exists to reproduce."
+  }
+}

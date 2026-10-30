@@ -1,0 +1,282 @@
+{
+  "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+  "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+  "run_id": "pv-diag-384",
+  "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip": {
+        "confusion": {
+          "tp": 217,
+          "tn": 239,
+          "fp": 19,
+          "fn": 12
+        },
+        "mcc_rebuilt": 0.872818,
+        "mcc_recorded": 0.8728,
+        "geometry": {
+          "detections": {
+            "n_assigned": 409,
+            "n_inside_union": 409,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip": {
+        "confusion": {
+          "tp": 219,
+          "tn": 240,
+          "fp": 18,
+          "fn": 10
+        },
+        "mcc_rebuilt": 0.885307,
+        "mcc_recorded": 0.8853,
+        "geometry": {
+          "detections": {
+            "n_assigned": 401,
+            "n_inside_union": 401,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip": {
+        "confusion": {
+          "tp": 216,
+          "tn": 232,
+          "fp": 26,
+          "fn": 13
+        },
+        "mcc_rebuilt": 0.840977,
+        "mcc_recorded": 0.841,
+        "geometry": {
+          "detections": {
+            "n_assigned": 408,
+            "n_inside_union": 408,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      },
+      "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip": {
+        "confusion": {
+          "tp": 217,
+          "tn": 239,
+          "fp": 19,
+          "fn": 12
+        },
+        "mcc_rebuilt": 0.872818,
+        "mcc_recorded": 0.8728,
+        "geometry": {
+          "detections": {
+            "n_assigned": 431,
+            "n_inside_union": 431,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true,
+        "tile_join": "geometric-contains",
+        "reference": "calculate_tile_classification under 'geometric-contains' on the same detections: no committed record exists for a non-default join, so this gate checks the per-tile alignment and the geometric booking, not reproduction of a published number"
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K5",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8555,
+        "high": 0.8778,
+        "delta": 0.022367,
+        "p_raw": 0.0899,
+        "p_bh": 0.2768,
+        "significant": false
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.8728,
+        "high": 0.841,
+        "delta": -0.031841,
+        "p_raw": 0.1017,
+        "p_bh": 0.2034,
+        "significant": false,
+        "low_published_join": 0.7986,
+        "high_published_join": 0.7735
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8555,
+        "high": 0.8708,
+        "delta": 0.015363,
+        "p_raw": 0.0995,
+        "p_bh": 0.2768,
+        "significant": false
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.8728,
+        "high": 0.8853,
+        "delta": 0.012489,
+        "p_raw": 0.3857,
+        "p_bh": 0.46284,
+        "significant": false,
+        "low_published_join": 0.7986,
+        "high_published_join": 0.804
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8708,
+        "high": 0.8778,
+        "delta": 0.007004,
+        "p_raw": 0.4935,
+        "p_bh": 0.72,
+        "significant": false
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.8853,
+        "high": 0.841,
+        "delta": -0.044329,
+        "p_raw": 0.0018,
+        "p_bh": 0.0108,
+        "significant": true,
+        "low_published_join": 0.804,
+        "high_published_join": 0.7735
+      },
+      "verdict": "F1 up n.s., MCC down (sig)"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+      "condition_high": "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8778,
+        "high": 0.873,
+        "delta": -0.004838,
+        "p_raw": 0.6,
+        "p_bh": 0.72,
+        "significant": false
+      },
+      "mcc": {
+        "tile_join": "geometric-contains",
+        "low": 0.841,
+        "high": 0.8728,
+        "delta": 0.031841,
+        "p_raw": 0.0543,
+        "p_bh": 0.1629,
+        "significant": false,
+        "low_published_join": 0.7735,
+        "high_published_join": 0.791
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.json",
+  "generated_at_utc": "2026-10-30T08:27:56.570821+00:00",
+  "tile_join": {
+    "join": "geometric-contains",
+    "note": "SENSITIVITY reading: the MCC arm books points to tiles under 'geometric-contains', not the published 'id' join (S153 ruling 6). The F1 arm, its tiering and its withheld cells are unchanged. Gates compare each cell's per-tile labels with the scorer's aggregate under the same join; no committed record exists to reproduce.",
+    "n_cells_withheld_f1_arm": 0,
+    "n_cells_withheld_mcc_arm": 0
+  }
+}

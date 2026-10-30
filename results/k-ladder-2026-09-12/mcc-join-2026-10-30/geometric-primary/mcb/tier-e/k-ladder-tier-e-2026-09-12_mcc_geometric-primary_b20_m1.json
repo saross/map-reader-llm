@@ -1,0 +1,108 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 1,
+  "apparent_f1": 0.9373882170801752,
+  "optimism": 0.00781472884550321,
+  "optimism_mcse": 0.00014588247494860343,
+  "optimism_spread_p2_5_p97_5": [
+    -0.021729931093441634,
+    0.03403223147083234
+  ],
+  "corrected_f1": 0.929573488234672,
+  "naive_ci": [
+    0.905018768179934,
+    0.9665266465427729
+  ],
+  "selection_aware_ci": [
+    0.8972040393344308,
+    0.9587119176972697
+  ],
+  "argmax_stability": 0.4966,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.034346782886681915,
+  "mcb_theta": [
+    -0.004414907905094911,
+    0.004414907905094911,
+    -0.005022704721681648,
+    -0.026061257976167984
+  ],
+  "mcb_lower": [
+    -0.038761690791776826,
+    -0.029931874981587003,
+    -0.03936948760836356,
+    -0.0604080408628499
+  ],
+  "mcb_upper": [
+    0.029931874981587003,
+    0.038761690791776826,
+    0.029324078165000267,
+    0.00828552491051393
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.024503164567515914,
+  "hsu_w_lower": 0.0342219932724699,
+  "hsu_lower": [
+    -0.03863690117756481,
+    -0.02980708536737499,
+    -0.03924469799415155,
+    -0.060283251248637884
+  ],
+  "hsu_upper": [
+    0.020088256662421002,
+    0.028918072472610825,
+    0.019480459845834266,
+    0.0
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2
+  ],
+  "hsu_vs_band_delta": -1,
+  "board": "k-ladder-tier-e-2026-09-12",
+  "tile_join": "geometric-primary",
+  "bounds_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/tier-e/tiering-input/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/kladder-mcc-join-2026-10-30/wt/results/k-ladder-2026-09-12/tier-e/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k1-verified-opmax",
+      "label": "g384-ov192-k1-verified-opmax",
+      "eval_f1": 0.868
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k3-verified-opmax",
+      "label": "g384-ov192-k3-verified-opmax",
+      "eval_f1": 0.8979
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k5-verified-opmax",
+      "label": "g384-ov192-k5-verified-opmax",
+      "eval_f1": 0.9046
+    },
+    {
+      "ref": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe",
+      "label": "g384-ov192-k10-verified-p0.15-k10-boardframe",
+      "eval_f1": 0.8942
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}
