@@ -3475,3 +3475,22 @@ under load; the gate has to be structural.
 **How to apply.** Propose to Shawn a pre-commit hook (or a small commit
 wrapper) that runs markdownlint on staged Markdown files and refuses the
 commit on any error, so the gate no longer depends on the command I type.
+
+## claude-obs 169 — 2026-10-30: Self-critique — my list of claims to revisit covered the documents I was working in, not every artefact carrying the claim
+
+**Pattern.** When the tile-join result undercut the MCC claims, I listed what
+to revisit by the document types in front of me: inventory notes, findings
+sections, two Observations. A side agent's note, relayed by Shawn at the
+handoff, pointed out that 11 of the 15 register rows I had re-signed that
+morning quote tile-MCC, and ten other signed rows do too; none was on my
+list. A signature attests a text, so a finding that undermines the text
+reaches the signature.
+
+**Lesson.** A claim lives in every artefact that states it: inventory, findings,
+register outcomes and signatures, Observations, paper tables. Listing by the
+artefacts I touched that day misses the ones with the most authority.
+
+**How to apply.** When a result undermines a claim, search the claim's key
+terms across every artefact class (`results/run-analyses.json` outcomes
+included) before writing the revisit list, and say which classes were
+searched.

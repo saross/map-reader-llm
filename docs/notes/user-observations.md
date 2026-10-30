@@ -1628,3 +1628,10 @@ only his remarks, quoted, and nothing awaits a verdict.
 - "yes, approve with these edits, being sure to include the caveat beside the p (you are correct it
   will be overread otherwise)" (2026-10-18) — Claude had proposed a no-family-correction caveat
   beside a p value that had crossed 0.05 in a restated register text.
+
+## 2026-10-30 — map-reader-llm: Session 166 (PR #52 merged; the overnight MCC jobs)
+
+- "you are correct that Sapphire is the reference python, etc., installation, and you should match
+  zbook to it" (2026-10-30) — Claude had found zbook's venv 53 pins away from sapphire's (pandas 2.3
+  against 3.0), called sapphire's venv the environment of record, and rebuilt zbook to match it
+  exactly before asking whether to record the rule.
