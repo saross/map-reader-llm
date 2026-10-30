@@ -1,6 +1,6 @@
 {
-  "map_version": "1.4",
-  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score; v1.3 2026-09-21: gen-tile-presence, for the tile-presence leaderboard and frontier renders; v1.4 2026-10-08: gen-d51-ladder-provenance-summary, for the D57 ladder-provenance summary tables",
+  "map_version": "1.5",
+  "assembled": "2026-07-31 (Session 122) from three read-only Opus attribution agents (write-site evidence in each rule); v1.1 2026-09-13 (Session 154, checklist item 11a): nine outputs/ rules added with the charter extension to outputs/**.md; v1.2 2026-09-20: gen-evaluation-md-retained, for pre-move evaluation renders kept beside an in-place re-score; v1.3 2026-09-21: gen-tile-presence, for the tile-presence leaderboard and frontier renders; v1.4 2026-10-08: gen-d51-ladder-provenance-summary, for the D57 ladder-provenance summary tables; v1.5 2026-10-30 (Session 166): gen-tiering-era1 matches tiering_<buffer>m[_<tile-join>].md, the generator's real stem",
   "rules": [
     {
       "rule_id": "hw-paper-tables",
@@ -555,12 +555,13 @@
     },
     {
       "rule_id": "gen-tiering-era1",
-      "match": "(^|/)tiering_20m\\.md$",
+      "match": "(^|/)tiering_\\d+m(_(geometric-primary|geometric-contains))?\\.md$",
       "scope": "results/",
       "generator": "scripts/era1_leaderboard_tiering.py",
       "source_rule": "sibling-stem:.json",
       "h1": "^# Era-1 leaderboard",
-      "write_site": "scripts/era1_leaderboard_tiering.py:531"
+      "write_site": "scripts/era1_leaderboard_tiering.py:531",
+      "notes": "v1.5 (2026-10-30, S166): match widened from tiering_20m.md to the generator's own stem, tiering_<buffer>m[_<tile-join>].md (scripts/era1_leaderboard_tiering.py, stem logic), so 50 m and tile-join sensitivity renders are attributed"
     },
     {
       "rule_id": "gen-tiering-n1",

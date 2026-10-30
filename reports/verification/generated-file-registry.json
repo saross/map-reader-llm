@@ -1,19 +1,19 @@
 {
  "_meta": {
-  "generated_at": "2026-10-30T10:58:36.190512+00:00",
+  "generated_at": "2026-10-30T11:06:53.031002+00:00",
   "generator": "scripts/build_generated_file_registry.py",
   "generator_map": "reports/verification/apparatus/generator-map.json",
-  "git_head": "5b48b1259",
+  "git_head": "d0fc42060",
   "counts": {
    "total": 4221,
-   "generated": 3815,
-   "generated_unattributed": 65,
-   "hand_written": 406,
+   "generated": 3822,
+   "generated_unattributed": 0,
+   "hand_written": 399,
    "by_directory": {
     "results/": {
      "total": 3307,
-     "generated": 3149,
-     "hand_written": 158
+     "generated": 3156,
+     "hand_written": 151
     },
     "reports/": {
      "total": 172,
@@ -39,10 +39,10 @@
    "regime2": {
     "generated_banner": 147,
     "source_commit_stamp": 143,
-    "check_mode": 99,
-    "tier1_check_test": 99,
-    "compliant": 73,
-    "neither_regime": 3668
+    "check_mode": 171,
+    "tier1_check_test": 171,
+    "compliant": 138,
+    "neither_regime": 3675
    }
   }
  },
@@ -25510,988 +25510,1394 @@
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-7/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-7/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-tier-e/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/clipped-mcc-test/tiering/d51clip-tier-e/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/tier-e/tiering_20m_geometric-contains.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-contains/tier-e/tiering_20m_geometric-contains.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-tier-e/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/clipped-mcc-test/tiering/d51clip-tier-e/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm1-r2/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/37arm2-r2/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-r2/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-a-standardised/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-r2/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/55map-stride-b-standardised/tiering_50m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/mcc-test/tiering/gs-stride-a/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t0-7/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-image-n5-image-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t0-7/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-high-text-n5-text-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t0-7/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-flash-minimal-text-n30-t07-text-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-3/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t0-7/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-image-n5-image-t1-0/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/phase2-mcc-test/tiering/phase2-scale-4-optimal-487/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/tier-e/tiering_20m_geometric-primary.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/geometric-primary/tier-e/tiering_20m_geometric-primary.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_20m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/clipped-mcc-test/tiering/d51clip-phase2-flash-high-text-n5-text-t1-0/tiering_20m.md",
@@ -26664,121 +27070,170 @@
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/37arm1-r2/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/37arm1-r2/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/37arm2-r2/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/37arm2-r2/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-a-r2/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-a-r2/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-r2/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.md",
    "stratum": "generated",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.json"
+   ],
    "marker": "> **GENERATED FILE — do not hand-edit.** Rendered from `tiering_50m.json` by `scripts/era1_leaderboard_tiering.py`, computed at commit `463257349` and rendered at commit `463257349`. Per the PI ruling of 2026-09-11 (`docs/methodology/output-directory-standard.md` § \"Documents in Revision Policy Scope\") this projection carries provenance instead of a hand changelog: \"is this current?\" is answered by `--check <board dir>` and its tier-1 test, and `--render-md <board dir>` re-renders it from the committed JSON without re-running the permutation.",
    "hand_edited": false,
    "generated_banner": true,
    "source_commit_stamp": true,
-   "check_mode": false,
-   "check_flags": [],
-   "check_tests": [],
-   "tier1_check_test": false,
-   "regime2_compliant": false
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": true
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-join-2026-10-30/id/mcc-test/tiering/gs-stride-a/tiering_20m.md",
@@ -27152,73 +27607,171 @@
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/37arm1-r2/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/37arm2-r2/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-r2/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-a-standardised/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-g37vf-r2/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-r2/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.md",
-   "stratum": "hand-written",
-   "rule_id": null,
-   "generator": null,
-   "source_rule": null,
-   "sources": [],
+   "stratum": "generated",
+   "rule_id": "gen-tiering-era1",
+   "generator": "scripts/era1_leaderboard_tiering.py",
+   "source_rule": "sibling-stem:.json",
+   "sources": [
+    "results/k-ladder-2026-09-12/mcc-test/tiering/55map-stride-b-standardised/tiering_50m.json"
+   ],
    "marker": null,
-   "hand_edited": false
+   "hand_edited": false,
+   "generated_banner": false,
+   "source_commit_stamp": false,
+   "check_mode": true,
+   "check_flags": [
+    "--check"
+   ],
+   "check_tests": [
+    "tests/test_build_generated_file_registry.py",
+    "tests/test_era2_board_renderings.py"
+   ],
+   "tier1_check_test": true,
+   "regime2_compliant": false
   },
   {
    "path": "results/k-ladder-2026-09-12/mcc-test/tiering/gs-stride-a/tiering_20m.md",
