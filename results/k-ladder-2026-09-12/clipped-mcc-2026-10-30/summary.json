@@ -1,0 +1,2271 @@
+{
+  "generated_at_utc": "2026-10-30T04:43:27.143301+00:00",
+  "script": "scripts/k_ladder_clipped_cells.py",
+  "script_version": "1.0.0",
+  "basis": "PI ruling D51 option 1: detections clipped to each ladder's common assessed area; frame era2-b-487 (487 tiles) and the curator reference inside it (435 mounds) kept whole",
+  "report_gate": {
+    "passed": true,
+    "problems": []
+  },
+  "area_gate": {
+    "allow_undetermined": false,
+    "n_phase2_ladders_gated": 14,
+    "n_phase2_ladders_clipped": 7,
+    "phase2_clipped": [
+      "flash-high-text-n5-text-t1.0",
+      "flash-minimal-text-n30-t07-text-t0.3",
+      "flash-minimal-text-n30-t07-text-t1.0",
+      "g384_ov192_g37",
+      "image-n5-image-t0.3",
+      "image-n5-image-t0.7",
+      "image-n5-image-t1.0"
+    ],
+    "tier_e_status": "clipped-to-common-area",
+    "per_ladder": {
+      "flash-minimal-text-n30-t07-text-t0.3": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1400.3248,
+        "max_excess_km2": 2.0819,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-minimal-text-n30-t07-text-t0.7": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-minimal-text-n30-t07-text-t1.0": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1400.3175,
+        "max_excess_km2": 2.0893,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-text-n5-text-t0.3": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-text-n5-text-t0.7": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-text-n5-text-t1.0": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1397.6458,
+        "max_excess_km2": 4.7609,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "image-n5-image-t0.3": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1400.3069,
+        "max_excess_km2": 2.0998,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "image-n5-image-t0.7": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1399.9778,
+        "max_excess_km2": 2.4289,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "image-n5-image-t1.0": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1399.9778,
+        "max_excess_km2": 2.4289,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-image-n5-image-t0.3": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-image-n5-image-t0.7": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "flash-high-image-n5-image-t1.0": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "scale-4-optimal-487": {
+        "status": "same",
+        "common_area_km2": 1402.4067,
+        "max_excess_km2": 0.0,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "g384_ov192_g37": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1364.4713,
+        "max_excess_km2": 37.9354,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "declared",
+          "K = 10": "declared"
+        }
+      },
+      "tier-e": {
+        "status": "clipped-to-common-area",
+        "common_area_km2": 1364.4713,
+        "max_excess_km2": 37.9354,
+        "methods": {
+          "K = 1": "pass-provenance",
+          "K = 3": "pass-provenance",
+          "K = 5": "pass-provenance",
+          "K = 10": "declared"
+        }
+      }
+    },
+    "checked_against": [
+      "results/k-ladder-2026-09-12/phase2/ladders.json",
+      "reports/scorer-frames-d50-d51-2026-10-08-scripts/out/ladders_new.json"
+    ]
+  },
+  "section_8_6": {
+    "consensus_only": {
+      "delta_f1_k1_to_k10": 0.065954,
+      "delta_mcc_k1_to_k10": 0.044361,
+      "source": "results/k-ladder-2026-09-12/tension/grid-overlap.json cells[g384_ov192]",
+      "reference": "428 mounds on the grid study's common footprint"
+    },
+    "verified_clipped": {
+      "delta_f1_k1_to_k10": 0.033813,
+      "delta_mcc_k1_to_k10": -0.016072,
+      "mcc_p_bh": 1.0,
+      "reference": "435 mounds in era2-b-487 (D51 option 1)"
+    },
+    "verified_as_evaluated": {
+      "f1": {
+        "delta": 0.026165,
+        "p_raw": 0.0146,
+        "p_bh": 0.0292,
+        "significant": true
+      },
+      "mcc": {
+        "delta": -0.023837,
+        "p_raw": 0.2619,
+        "p_bh": 0.8094,
+        "significant": false
+      }
+    },
+    "sign_reversal_survives_clip": true,
+    "mcc_swing_clipped": 0.060433,
+    "f1_reduction_clipped": 0.487324
+  },
+  "ladders": [
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "n_removed_by_clip": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 409,
+          "f1_20_clipped": 0.8555,
+          "f1_20_clipped_micro_6dp": 0.85545,
+          "f1_20_as_evaluated": 0.8555,
+          "tile_mcc_clipped": 0.7986,
+          "tile_mcc_clipped_ci": [
+            0.7423,
+            0.8461
+          ],
+          "tile_confusion_clipped": {
+            "tp": 189,
+            "tn": 248,
+            "fp": 10,
+            "fn": 40
+          },
+          "tile_mcc_as_evaluated": 0.7986,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+          "operating_point": [
+            2,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 401,
+          "f1_20_clipped": 0.8708,
+          "f1_20_clipped_micro_6dp": 0.870813,
+          "f1_20_as_evaluated": 0.8708,
+          "tile_mcc_clipped": 0.804,
+          "tile_mcc_clipped_ci": [
+            0.7488,
+            0.8512
+          ],
+          "tile_confusion_clipped": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "tile_mcc_as_evaluated": 0.804,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 408,
+          "f1_20_clipped": 0.8778,
+          "f1_20_clipped_micro_6dp": 0.877817,
+          "f1_20_as_evaluated": 0.8778,
+          "tile_mcc_clipped": 0.7735,
+          "tile_mcc_clipped_ci": [
+            0.7159,
+            0.8259
+          ],
+          "tile_confusion_clipped": {
+            "tp": 186,
+            "tn": 245,
+            "fp": 13,
+            "fn": 43
+          },
+          "tile_mcc_as_evaluated": 0.7735,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 431,
+          "f1_20_clipped": 0.873,
+          "f1_20_clipped_micro_6dp": 0.872979,
+          "f1_20_as_evaluated": 0.873,
+          "tile_mcc_clipped": 0.791,
+          "tile_mcc_clipped_ci": [
+            0.7347,
+            0.8394
+          ],
+          "tile_confusion_clipped": {
+            "tp": 187,
+            "tn": 248,
+            "fp": 10,
+            "fn": 42
+          },
+          "tile_mcc_as_evaluated": 0.791,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 5,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.022367,
+            "p_raw": 0.0899,
+            "p_bh": 0.2768,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.025107,
+            "p_raw": 0.2368,
+            "p_bh": 0.6044,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.017529,
+            "p_raw": 0.1384,
+            "p_bh": 0.2768,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.00761,
+            "p_raw": 0.7631,
+            "p_bh": 0.7631,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.015363,
+              "p_raw": 0.0995,
+              "p_bh": 0.2768,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.005375,
+              "p_raw": 0.7546,
+              "p_bh": 0.7631,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.022367,
+              "p_raw": 0.0899,
+              "p_bh": 0.2768,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.025107,
+              "p_raw": 0.2368,
+              "p_bh": 0.6044,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.017529,
+              "p_raw": 0.1384,
+              "p_bh": 0.2768,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.00761,
+              "p_raw": 0.7631,
+              "p_bh": 0.7631,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.007004,
+              "p_raw": 0.4935,
+              "p_bh": 0.72,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.030483,
+              "p_raw": 0.0181,
+              "p_bh": 0.1086,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.002166,
+              "p_raw": 0.8298,
+              "p_bh": 0.8298,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.012986,
+              "p_raw": 0.4465,
+              "p_bh": 0.66975,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": -0.004838,
+              "p_raw": 0.6,
+              "p_bh": 0.72,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.017497,
+              "p_raw": 0.3022,
+              "p_bh": 0.6044,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          10
+        ],
+        "mcb_mcc_best_K": 3,
+        "mcb_w_upper": {
+          "f1": 0.018540979961173886,
+          "mcc": 0.0269920583090331
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-minimal-text-n30-t07-text-t0-3.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 5,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.022367,
+            "p_raw": 0.0899,
+            "p_bh": 0.2768,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.025107,
+            "p_raw": 0.2368,
+            "p_bh": 0.6044,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          10
+        ],
+        "mcb_mcc_best_K": 3,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "n_removed_by_clip": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.2
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 415,
+          "f1_20_clipped": 0.8235,
+          "f1_20_clipped_micro_6dp": 0.823529,
+          "f1_20_as_evaluated": 0.8235,
+          "tile_mcc_clipped": 0.8095,
+          "tile_mcc_clipped_ci": [
+            0.7533,
+            0.8557
+          ],
+          "tile_confusion_clipped": {
+            "tp": 193,
+            "tn": 247,
+            "fp": 11,
+            "fn": 36
+          },
+          "tile_mcc_as_evaluated": 0.8095,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n3-opmax-d51clip",
+          "operating_point": [
+            2,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 400,
+          "f1_20_clipped": 0.8647,
+          "f1_20_clipped_micro_6dp": 0.864671,
+          "f1_20_as_evaluated": 0.8647,
+          "tile_mcc_clipped": 0.804,
+          "tile_mcc_clipped_ci": [
+            0.75,
+            0.8515
+          ],
+          "tile_confusion_clipped": {
+            "tp": 188,
+            "tn": 250,
+            "fp": 8,
+            "fn": 41
+          },
+          "tile_mcc_as_evaluated": 0.804,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n5-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 405,
+          "f1_20_clipped": 0.8714,
+          "f1_20_clipped_micro_6dp": 0.871429,
+          "f1_20_as_evaluated": 0.8714,
+          "tile_mcc_clipped": 0.7797,
+          "tile_mcc_clipped_ci": [
+            0.7236,
+            0.8305
+          ],
+          "tile_confusion_clipped": {
+            "tp": 184,
+            "tn": 248,
+            "fp": 10,
+            "fn": 45
+          },
+          "tile_mcc_as_evaluated": 0.7797,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax-d51clip",
+          "operating_point": [
+            5,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 410,
+          "f1_20_clipped": 0.8781,
+          "f1_20_clipped_micro_6dp": 0.878107,
+          "f1_20_as_evaluated": 0.8781,
+          "tile_mcc_clipped": 0.7881,
+          "tile_mcc_clipped_ci": [
+            0.7324,
+            0.838
+          ],
+          "tile_confusion_clipped": {
+            "tp": 185,
+            "tn": 249,
+            "fp": 9,
+            "fn": 44
+          },
+          "tile_mcc_as_evaluated": 0.7881,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.054577,
+            "p_raw": 0.0004,
+            "p_bh": 0.0012,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.021401,
+            "p_raw": 0.288,
+            "p_bh": 0.576,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.054577,
+            "p_raw": 0.0004,
+            "p_bh": 0.0012,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.021401,
+            "p_raw": 0.288,
+            "p_bh": 0.576,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.041141,
+              "p_raw": 0.0002,
+              "p_bh": 0.0012,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.005464,
+              "p_raw": 0.7762,
+              "p_bh": 0.7762,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.047899,
+              "p_raw": 0.0008,
+              "p_bh": 0.0016,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.029804,
+              "p_raw": 0.117,
+              "p_bh": 0.576,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.054577,
+              "p_raw": 0.0004,
+              "p_bh": 0.0012,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.021401,
+              "p_raw": 0.288,
+              "p_bh": 0.576,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.006758,
+              "p_raw": 0.5239,
+              "p_bh": 0.5239,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.02434,
+              "p_raw": 0.2134,
+              "p_bh": 0.576,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.013436,
+              "p_raw": 0.2569,
+              "p_bh": 0.38535,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.015937,
+              "p_raw": 0.4385,
+              "p_bh": 0.65775,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": 0.006678,
+              "p_raw": 0.4796,
+              "p_bh": 0.5239,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.008404,
+              "p_raw": 0.6924,
+              "p_bh": 0.7762,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.02306863319780699,
+          "mcc": 0.03132234265175992
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-minimal-text-n30-t07-text-t1-0.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.054577,
+            "p_raw": 0.0004,
+            "p_bh": 0.0012,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.021401,
+            "p_raw": 0.288,
+            "p_bh": 0.576,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "family": "Gemini 3 HIGH text 384 px, T 1.0",
+      "n_removed_by_clip": [
+        0,
+        3,
+        3,
+        3
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.2
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 451,
+          "f1_20_clipped": 0.781,
+          "f1_20_clipped_micro_6dp": 0.781038,
+          "f1_20_as_evaluated": 0.781,
+          "tile_mcc_clipped": 0.8162,
+          "tile_mcc_clipped_ci": [
+            0.7619,
+            0.8632
+          ],
+          "tile_confusion_clipped": {
+            "tp": 197,
+            "tn": 245,
+            "fp": 13,
+            "fn": 32
+          },
+          "tile_mcc_as_evaluated": 0.8162,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+          "operating_point": [
+            2,
+            0.15
+          ],
+          "n_removed_by_clip": 3,
+          "n_detections": 419,
+          "f1_20_clipped": 0.8501,
+          "f1_20_clipped_micro_6dp": 0.850117,
+          "f1_20_as_evaluated": 0.8541,
+          "tile_mcc_clipped": 0.7948,
+          "tile_mcc_clipped_ci": [
+            0.7389,
+            0.8437
+          ],
+          "tile_confusion_clipped": {
+            "tp": 188,
+            "tn": 248,
+            "fp": 10,
+            "fn": 41
+          },
+          "tile_mcc_as_evaluated": 0.7986,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.2
+          ],
+          "n_removed_by_clip": 3,
+          "n_detections": 423,
+          "f1_20_clipped": 0.8648,
+          "f1_20_clipped_micro_6dp": 0.864802,
+          "f1_20_as_evaluated": 0.8688,
+          "tile_mcc_clipped": 0.7819,
+          "tile_mcc_clipped_ci": [
+            0.7231,
+            0.8314
+          ],
+          "tile_confusion_clipped": {
+            "tp": 187,
+            "tn": 246,
+            "fp": 12,
+            "fn": 42
+          },
+          "tile_mcc_as_evaluated": 0.7857,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+          "operating_point": [
+            5,
+            0.2
+          ],
+          "n_removed_by_clip": 3,
+          "n_detections": 423,
+          "f1_20_clipped": 0.8765,
+          "f1_20_clipped_micro_6dp": 0.876457,
+          "f1_20_as_evaluated": 0.8804,
+          "tile_mcc_clipped": 0.7872,
+          "tile_mcc_clipped_ci": [
+            0.7317,
+            0.8364
+          ],
+          "tile_confusion_clipped": {
+            "tp": 186,
+            "tn": 248,
+            "fp": 10,
+            "fn": 43
+          },
+          "tile_mcc_as_evaluated": 0.791,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.095419,
+            "p_raw": 0.0,
+            "p_bh": 0.0,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.02898,
+            "p_raw": 0.1843,
+            "p_bh": 0.5529,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.095419,
+            "p_raw": 0.0,
+            "p_bh": 0.0,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.02898,
+            "p_raw": 0.1843,
+            "p_bh": 0.5529,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.069079,
+              "p_raw": 0.0,
+              "p_bh": 0.0,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.021386,
+              "p_raw": 0.3214,
+              "p_bh": 0.6428,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.083763,
+              "p_raw": 0.0,
+              "p_bh": 0.0,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.034315,
+              "p_raw": 0.122,
+              "p_bh": 0.5529,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.095419,
+              "p_raw": 0.0,
+              "p_bh": 0.0,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.02898,
+              "p_raw": 0.1843,
+              "p_bh": 0.5529,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.014685,
+              "p_raw": 0.1371,
+              "p_bh": 0.16452,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.012929,
+              "p_raw": 0.558,
+              "p_bh": 0.8065,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.02634,
+              "p_raw": 0.0269,
+              "p_bh": 0.04035,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.007594,
+              "p_raw": 0.7432,
+              "p_bh": 0.8065,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": 0.011655,
+              "p_raw": 0.2306,
+              "p_bh": 0.2306,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.005335,
+              "p_raw": 0.8065,
+              "p_bh": 0.8065,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.028078509453317448,
+          "mcc": 0.03911056194490043
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-flash-high-text-n5-text-t1-0.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.099333,
+            "p_raw": 0.0,
+            "p_bh": 0.0,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.025187,
+            "p_raw": 0.2708,
+            "p_bh": 0.8065,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-3",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "n_removed_by_clip": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.2
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 440,
+          "f1_20_clipped": 0.768,
+          "f1_20_clipped_micro_6dp": 0.768,
+          "f1_20_as_evaluated": 0.768,
+          "tile_mcc_clipped": 0.8443,
+          "tile_mcc_clipped_ci": [
+            0.7906,
+            0.8869
+          ],
+          "tile_confusion_clipped": {
+            "tp": 203,
+            "tn": 246,
+            "fp": 12,
+            "fn": 26
+          },
+          "tile_mcc_as_evaluated": 0.8443,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n3-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 396,
+          "f1_20_clipped": 0.7774,
+          "f1_20_clipped_micro_6dp": 0.777377,
+          "f1_20_as_evaluated": 0.7774,
+          "tile_mcc_clipped": 0.8178,
+          "tile_mcc_clipped_ci": [
+            0.7633,
+            0.864
+          ],
+          "tile_confusion_clipped": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "tile_mcc_as_evaluated": 0.8178,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n5-opmax-d51clip",
+          "operating_point": [
+            4,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 407,
+          "f1_20_clipped": 0.7767,
+          "f1_20_clipped_micro_6dp": 0.776722,
+          "f1_20_as_evaluated": 0.7767,
+          "tile_mcc_clipped": 0.8416,
+          "tile_mcc_clipped_ci": [
+            0.7898,
+            0.8842
+          ],
+          "tile_confusion_clipped": {
+            "tp": 199,
+            "tn": 249,
+            "fp": 9,
+            "fn": 30
+          },
+          "tile_mcc_as_evaluated": 0.8416,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n10-opmax-d51clip",
+          "operating_point": [
+            7,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 404,
+          "f1_20_clipped": 0.7819,
+          "f1_20_clipped_micro_6dp": 0.781883,
+          "f1_20_as_evaluated": 0.7819,
+          "tile_mcc_clipped": 0.8377,
+          "tile_mcc_clipped_ci": [
+            0.787,
+            0.8813
+          ],
+          "tile_confusion_clipped": {
+            "tp": 198,
+            "tn": 249,
+            "fp": 9,
+            "fn": 31
+          },
+          "tile_mcc_as_evaluated": 0.8377,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.013883,
+            "p_raw": 0.3066,
+            "p_bh": 0.7803,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.006526,
+            "p_raw": 0.8208,
+            "p_bh": 0.9954,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.013883,
+            "p_raw": 0.3066,
+            "p_bh": 0.7803,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.006526,
+            "p_raw": 0.8208,
+            "p_bh": 0.9954,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.009377,
+              "p_raw": 0.5109,
+              "p_bh": 0.7803,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.026464,
+              "p_raw": 0.2034,
+              "p_bh": 0.4068,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.008722,
+              "p_raw": 0.5202,
+              "p_bh": 0.7803,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.002639,
+              "p_raw": 0.9954,
+              "p_bh": 0.9954,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.013883,
+              "p_raw": 0.3066,
+              "p_bh": 0.7803,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.006526,
+              "p_raw": 0.8208,
+              "p_bh": 0.9954,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": -0.000655,
+              "p_raw": 0.954,
+              "p_bh": 0.954,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.023825,
+              "p_raw": 0.1018,
+              "p_bh": 0.4068,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.004507,
+              "p_raw": 0.6923,
+              "p_bh": 0.83076,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.019939,
+              "p_raw": 0.1992,
+              "p_bh": 0.4068,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": 0.005161,
+              "p_raw": 0.5166,
+              "p_bh": 0.7803,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.003886,
+              "p_raw": 0.9411,
+              "p_bh": 0.9954,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.019807289204162946,
+          "mcc": 0.027592698756762252
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t0-3.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.013883,
+            "p_raw": 0.3066,
+            "p_bh": 0.7803,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.006526,
+            "p_raw": 0.8208,
+            "p_bh": 0.9954,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-7",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "n_removed_by_clip": [
+        0,
+        2,
+        2,
+        2
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 453,
+          "f1_20_clipped": 0.7252,
+          "f1_20_clipped_micro_6dp": 0.725225,
+          "f1_20_as_evaluated": 0.7252,
+          "tile_mcc_clipped": 0.8437,
+          "tile_mcc_clipped_ci": [
+            0.7892,
+            0.8853
+          ],
+          "tile_confusion_clipped": {
+            "tp": 205,
+            "tn": 244,
+            "fp": 14,
+            "fn": 24
+          },
+          "tile_mcc_as_evaluated": 0.8437,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+          "operating_point": [
+            2,
+            0.15
+          ],
+          "n_removed_by_clip": 2,
+          "n_detections": 421,
+          "f1_20_clipped": 0.757,
+          "f1_20_clipped_micro_6dp": 0.757009,
+          "f1_20_as_evaluated": 0.7599,
+          "tile_mcc_clipped": 0.8339,
+          "tile_mcc_clipped_ci": [
+            0.781,
+            0.8768
+          ],
+          "tile_confusion_clipped": {
+            "tp": 197,
+            "tn": 249,
+            "fp": 9,
+            "fn": 32
+          },
+          "tile_mcc_as_evaluated": 0.8377,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 2,
+          "n_detections": 419,
+          "f1_20_clipped": 0.7705,
+          "f1_20_clipped_micro_6dp": 0.770492,
+          "f1_20_as_evaluated": 0.7734,
+          "tile_mcc_clipped": 0.8345,
+          "tile_mcc_clipped_ci": [
+            0.7843,
+            0.8775
+          ],
+          "tile_confusion_clipped": {
+            "tp": 196,
+            "tn": 250,
+            "fp": 8,
+            "fn": 33
+          },
+          "tile_mcc_as_evaluated": 0.8383,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+          "operating_point": [
+            6,
+            0.15
+          ],
+          "n_removed_by_clip": 2,
+          "n_detections": 403,
+          "f1_20_clipped": 0.7852,
+          "f1_20_clipped_micro_6dp": 0.785203,
+          "f1_20_as_evaluated": 0.7881,
+          "tile_mcc_clipped": 0.8185,
+          "tile_mcc_clipped_ci": [
+            0.7642,
+            0.8641
+          ],
+          "tile_confusion_clipped": {
+            "tp": 193,
+            "tn": 249,
+            "fp": 9,
+            "fn": 36
+          },
+          "tile_mcc_as_evaluated": 0.8223,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.059978,
+            "p_raw": 0.0003,
+            "p_bh": 0.0018,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.025271,
+            "p_raw": 0.2706,
+            "p_bh": 0.81912,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.059978,
+            "p_raw": 0.0003,
+            "p_bh": 0.0018,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.025271,
+            "p_raw": 0.2706,
+            "p_bh": 0.81912,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.031784,
+              "p_raw": 0.0267,
+              "p_bh": 0.04005,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.009861,
+              "p_raw": 0.6286,
+              "p_bh": 0.81912,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.045267,
+              "p_raw": 0.0042,
+              "p_bh": 0.0126,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.009246,
+              "p_raw": 0.6826,
+              "p_bh": 0.81912,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.059978,
+              "p_raw": 0.0003,
+              "p_bh": 0.0018,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.025271,
+              "p_raw": 0.2706,
+              "p_bh": 0.81912,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.013482,
+              "p_raw": 0.1867,
+              "p_bh": 0.1867,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.000615,
+              "p_raw": 1.0,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.028194,
+              "p_raw": 0.0252,
+              "p_bh": 0.04005,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.01541,
+              "p_raw": 0.4884,
+              "p_bh": 0.81912,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": 0.014711,
+              "p_raw": 0.1544,
+              "p_bh": 0.18528,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.016025,
+              "p_raw": 0.342,
+              "p_bh": 0.81912,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.027769411467580288,
+          "mcc": 0.02957564998570233
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t0-7.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.06287,
+            "p_raw": 0.0001,
+            "p_bh": 0.0006,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.021432,
+            "p_raw": 0.367,
+            "p_bh": 0.9768,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t1-0",
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "n_removed_by_clip": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n1-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 465,
+          "f1_20_clipped": 0.7044,
+          "f1_20_clipped_micro_6dp": 0.704444,
+          "f1_20_as_evaluated": 0.7044,
+          "tile_mcc_clipped": 0.836,
+          "tile_mcc_clipped_ci": [
+            0.7816,
+            0.8803
+          ],
+          "tile_confusion_clipped": {
+            "tp": 202,
+            "tn": 245,
+            "fp": 13,
+            "fn": 27
+          },
+          "tile_mcc_as_evaluated": 0.836,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n1-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n3-opmax-d51clip",
+          "operating_point": [
+            2,
+            0.2
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 424,
+          "f1_20_clipped": 0.7288,
+          "f1_20_clipped_micro_6dp": 0.728754,
+          "f1_20_as_evaluated": 0.7288,
+          "tile_mcc_clipped": 0.8178,
+          "tile_mcc_clipped_ci": [
+            0.7627,
+            0.8632
+          ],
+          "tile_confusion_clipped": {
+            "tp": 194,
+            "tn": 248,
+            "fp": 10,
+            "fn": 35
+          },
+          "tile_mcc_as_evaluated": 0.8178,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n3-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n5-opmax-d51clip",
+          "operating_point": [
+            4,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 364,
+          "f1_20_clipped": 0.7384,
+          "f1_20_clipped_micro_6dp": 0.738423,
+          "f1_20_as_evaluated": 0.7384,
+          "tile_mcc_clipped": 0.8021,
+          "tile_mcc_clipped_ci": [
+            0.7483,
+            0.8487
+          ],
+          "tile_confusion_clipped": {
+            "tp": 185,
+            "tn": 252,
+            "fp": 6,
+            "fn": 44
+          },
+          "tile_mcc_as_evaluated": 0.8021,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax-d51clip",
+          "operating_point": [
+            6,
+            0.2
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 397,
+          "f1_20_clipped": 0.7428,
+          "f1_20_clipped_micro_6dp": 0.742788,
+          "f1_20_as_evaluated": 0.7428,
+          "tile_mcc_clipped": 0.8078,
+          "tile_mcc_clipped_ci": [
+            0.7524,
+            0.8518
+          ],
+          "tile_confusion_clipped": {
+            "tp": 189,
+            "tn": 250,
+            "fp": 8,
+            "fn": 40
+          },
+          "tile_mcc_as_evaluated": 0.8078,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.038344,
+            "p_raw": 0.0237,
+            "p_bh": 0.1236,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.028203,
+            "p_raw": 0.2024,
+            "p_bh": 0.6072,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.038344,
+            "p_raw": 0.0237,
+            "p_bh": 0.1236,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.028203,
+            "p_raw": 0.2024,
+            "p_bh": 0.6072,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.02431,
+              "p_raw": 0.1257,
+              "p_bh": 0.2514,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.018179,
+              "p_raw": 0.4359,
+              "p_bh": 0.65385,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.033979,
+              "p_raw": 0.0412,
+              "p_bh": 0.1236,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.033902,
+              "p_raw": 0.1526,
+              "p_bh": 0.6072,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.038344,
+              "p_raw": 0.0237,
+              "p_bh": 0.1236,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.028203,
+              "p_raw": 0.2024,
+              "p_bh": 0.6072,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.009669,
+              "p_raw": 0.4903,
+              "p_bh": 0.58836,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.015723,
+              "p_raw": 0.4314,
+              "p_bh": 0.65385,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.014034,
+              "p_raw": 0.3132,
+              "p_bh": 0.4698,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.010023,
+              "p_raw": 0.6323,
+              "p_bh": 0.75876,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": 0.004365,
+              "p_raw": 0.7328,
+              "p_bh": 0.7328,
+              "significant": false
+            },
+            "mcc": {
+              "delta": 0.005699,
+              "p_raw": 0.7823,
+              "p_bh": 0.7823,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.026817177581528594,
+          "mcc": 0.04054565826696621
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/phase2/mcc-test/phase2-image-n5-image-t1-0.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 10,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.038344,
+            "p_raw": 0.0237,
+            "p_bh": 0.1236,
+            "significant": false
+          },
+          "mcc": {
+            "delta": -0.028203,
+            "p_raw": 0.2024,
+            "p_bh": 0.6072,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    },
+    {
+      "slug": "d51clip-tier-e",
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E)",
+      "n_removed_by_clip": [
+        29,
+        29,
+        27,
+        0
+      ],
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+          "operating_point": [
+            1,
+            0.2
+          ],
+          "n_removed_by_clip": 29,
+          "n_detections": 453,
+          "f1_20_clipped": 0.8604,
+          "f1_20_clipped_micro_6dp": 0.86036,
+          "f1_20_as_evaluated": 0.868,
+          "tile_mcc_clipped": 0.8133,
+          "tile_mcc_clipped_ci": [
+            0.7576,
+            0.8608
+          ],
+          "tile_confusion_clipped": {
+            "tp": 194,
+            "tn": 247,
+            "fp": 11,
+            "fn": 35
+          },
+          "tile_mcc_as_evaluated": 0.8211,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 3,
+          "condition_id": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+          "operating_point": [
+            3,
+            0.15
+          ],
+          "n_removed_by_clip": 29,
+          "n_detections": 421,
+          "f1_20_clipped": 0.8902,
+          "f1_20_clipped_micro_6dp": 0.890187,
+          "f1_20_as_evaluated": 0.8979,
+          "tile_mcc_clipped": 0.8089,
+          "tile_mcc_clipped_ci": [
+            0.755,
+            0.8573
+          ],
+          "tile_confusion_clipped": {
+            "tp": 194,
+            "tn": 246,
+            "fp": 12,
+            "fn": 35
+          },
+          "tile_mcc_as_evaluated": 0.8167,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 5,
+          "condition_id": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+          "operating_point": [
+            5,
+            0.15
+          ],
+          "n_removed_by_clip": 27,
+          "n_detections": 408,
+          "f1_20_clipped": 0.8968,
+          "f1_20_clipped_micro_6dp": 0.896797,
+          "f1_20_as_evaluated": 0.9046,
+          "tile_mcc_clipped": 0.8063,
+          "tile_mcc_clipped_ci": [
+            0.7523,
+            0.8543
+          ],
+          "tile_confusion_clipped": {
+            "tp": 191,
+            "tn": 248,
+            "fp": 10,
+            "fn": 38
+          },
+          "tile_mcc_as_evaluated": 0.8139,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax-d51clip/evaluation.json"
+        },
+        {
+          "K": 10,
+          "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+          "operating_point": [
+            10,
+            0.15
+          ],
+          "n_removed_by_clip": 0,
+          "n_detections": 406,
+          "f1_20_clipped": 0.8942,
+          "f1_20_clipped_micro_6dp": 0.894174,
+          "f1_20_as_evaluated": 0.8942,
+          "tile_mcc_clipped": 0.7973,
+          "tile_mcc_clipped_ci": [
+            0.7406,
+            0.8452
+          ],
+          "tile_confusion_clipped": {
+            "tp": 191,
+            "tn": 246,
+            "fp": 12,
+            "fn": 38
+          },
+          "tile_mcc_as_evaluated": 0.7973,
+          "clipped_eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe-d51clip/evaluation.json"
+        }
+      ],
+      "clipped": {
+        "best_K": 5,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.036437,
+            "p_raw": 0.0001,
+            "p_bh": 0.0006,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.007063,
+            "p_raw": 0.7765,
+            "p_bh": 1.0,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.033813,
+            "p_raw": 0.0007,
+            "p_bh": 0.0021,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.016072,
+            "p_raw": 0.4476,
+            "p_bh": 1.0,
+            "significant": false
+          }
+        },
+        "all_pairs": [
+          {
+            "pair": "K1-vs-K3",
+            "f1": {
+              "delta": 0.029827,
+              "p_raw": 0.0012,
+              "p_bh": 0.0024,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.00445,
+              "p_raw": 0.8794,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K5",
+            "f1": {
+              "delta": 0.036437,
+              "p_raw": 0.0001,
+              "p_bh": 0.0006,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.007063,
+              "p_raw": 0.7765,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K1-vs-K10",
+            "f1": {
+              "delta": 0.033813,
+              "p_raw": 0.0007,
+              "p_bh": 0.0021,
+              "significant": true
+            },
+            "mcc": {
+              "delta": -0.016072,
+              "p_raw": 0.4476,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K5",
+            "f1": {
+              "delta": 0.00661,
+              "p_raw": 0.3538,
+              "p_bh": 0.5307,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.002613,
+              "p_raw": 1.0,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K3-vs-K10",
+            "f1": {
+              "delta": 0.003987,
+              "p_raw": 0.5831,
+              "p_bh": 0.6865,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.011622,
+              "p_raw": 0.599,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          },
+          {
+            "pair": "K5-vs-K10",
+            "f1": {
+              "delta": -0.002624,
+              "p_raw": 0.6865,
+              "p_bh": 0.6865,
+              "significant": false
+            },
+            "mcc": {
+              "delta": -0.009009,
+              "p_raw": 0.6316,
+              "p_bh": 1.0,
+              "significant": false
+            }
+          }
+        ],
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcb_w_upper": {
+          "f1": 0.014677290072365488,
+          "mcc": 0.026150896376254527
+        },
+        "mcc_direction_k1_to_best": "down"
+      },
+      "as_evaluated": {
+        "source": [
+          "results/k-ladder-2026-09-12/tier-e/ladder.json",
+          "results/k-ladder-2026-09-12/mcb/summary.json"
+        ],
+        "best_K": 5,
+        "k1_to_best": {
+          "f1": {
+            "delta": 0.036585,
+            "p_raw": 0.0001,
+            "p_bh": 0.0006,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.007148,
+            "p_raw": 0.7765,
+            "p_bh": 1.0,
+            "significant": false
+          }
+        },
+        "k1_to_k10": {
+          "f1": {
+            "delta": 0.026165,
+            "p_raw": 0.0146,
+            "p_bh": 0.0292,
+            "significant": true
+          },
+          "mcc": {
+            "delta": -0.023837,
+            "p_raw": 0.2619,
+            "p_bh": 0.8094,
+            "significant": false
+          }
+        },
+        "mcb_f1_set": [
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_set": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "mcb_mcc_best_K": 1,
+        "mcc_direction_k1_to_best": "down"
+      }
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "metric": "mcc",
+  "n_candidates": 4,
+  "n_candidates_dropped_undefined": 0,
+  "kept_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "n_tiles": 487,
+  "m_out_of_n": 487,
+  "bootstrap": 10000,
+  "selected_index": 0,
+  "apparent_f1": 0.8161984013442791,
+  "optimism": 0.006956176382440732,
+  "optimism_mcse": 0.0002555060294713075,
+  "optimism_spread_p2_5_p97_5": [
+    -0.0441750872154543,
+    0.05603219560825562
+  ],
+  "corrected_f1": 0.8092422249618384,
+  "naive_ci": [
+    0.764691547446903,
+    0.8654265304965807
+  ],
+  "selection_aware_ci": [
+    0.7577353710644623,
+    0.85847035411414
+  ],
+  "argmax_stability": 0.8055,
+  "n_distinct_argmax": 4,
+  "mcb_critical_width": 0.046693827498543165,
+  "mcb_theta": [
+    0.021386339263423593,
+    -0.021386339263423593,
+    -0.03431511419018807,
+    -0.028980304940446344
+  ],
+  "mcb_lower": [
+    -0.025307488235119573,
+    -0.06808016676196676,
+    -0.08100894168873124,
+    -0.07567413243898952
+  ],
+  "mcb_upper": [
+    0.06808016676196676,
+    0.025307488235119573,
+    0.012378713308355098,
+    0.01771352255809682
+  ],
+  "mcb_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_w_upper": 0.03911056194490043,
+  "hsu_w_lower": 0.045610219808461624,
+  "hsu_lower": [
+    -0.024223880545038032,
+    -0.06699655907188522,
+    -0.07992533399864969,
+    -0.07459052474890797
+  ],
+  "hsu_upper": [
+    0.06049690120832402,
+    0.017724222681476838,
+    0.004795447754712363,
+    0.010130257004454087
+  ],
+  "hsu_not_ruled_out": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "hsu_vs_band_delta": 0,
+  "board": "k-ladder-mcc-d51clip-phase2-flash-high-text-n5-text-t1-0-2026-09-12",
+  "bounds_override": "/home/shawn/scratch/clipped-tile-mcc-2026-10-30/wt/inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "analyses_override": "/home/shawn/scratch/clipped-tile-mcc-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering-input/d51clip-phase2-flash-high-text-n5-text-t1-0/run-analyses.json",
+  "conditions_override": "/home/shawn/scratch/clipped-tile-mcc-2026-10-30/wt/results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "m_frac": 1.0,
+  "candidates": [
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n1-opmax-d51clip",
+      "eval_f1": 0.781
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n3-opmax-d51clip",
+      "eval_f1": 0.8501
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n5-opmax-d51clip",
+      "eval_f1": 0.8648
+    },
+    {
+      "ref": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+      "label": "pv-high-text-t1.0-n10-opmax-d51clip",
+      "eval_f1": 0.8765
+    }
+  ],
+  "seed": 42,
+  "buffer_metres": 20
+}

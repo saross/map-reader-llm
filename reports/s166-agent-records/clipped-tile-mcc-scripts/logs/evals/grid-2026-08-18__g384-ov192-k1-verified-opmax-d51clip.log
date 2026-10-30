@@ -1,0 +1,24 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: g384-ov192-k1-verified-opmax-d51clip.geojson
+INFO:   5m: F1=0.396 [0.349, 0.444], P=0.389 [0.341, 0.436], R=0.405 [0.355, 0.453] [sparse coverage: 56.7% zero-tiles]
+INFO:   10m: F1=0.741 [0.698, 0.779], P=0.726 [0.679, 0.769], R=0.756 [0.709, 0.799] [sparse coverage: 56.7% zero-tiles]
+INFO:   15m: F1=0.827 [0.795, 0.855], P=0.810 [0.771, 0.847], R=0.844 [0.805, 0.877] [sparse coverage: 56.7% zero-tiles]
+INFO:   20m: F1=0.860 [0.834, 0.883], P=0.843 [0.807, 0.876], R=0.878 [0.842, 0.908] [sparse coverage: 56.7% zero-tiles]
+INFO:   25m: F1=0.865 [0.839, 0.888], P=0.848 [0.812, 0.880], R=0.883 [0.847, 0.912] [sparse coverage: 56.7% zero-tiles]
+INFO:   30m: F1=0.869 [0.844, 0.893], P=0.852 [0.816, 0.884], R=0.887 [0.851, 0.916] [sparse coverage: 56.7% zero-tiles]
+INFO:   35m: F1=0.872 [0.847, 0.894], P=0.854 [0.819, 0.886], R=0.890 [0.854, 0.918] [sparse coverage: 56.7% zero-tiles]
+INFO:   40m: F1=0.872 [0.847, 0.894], P=0.854 [0.819, 0.886], R=0.890 [0.854, 0.918] [sparse coverage: 56.7% zero-tiles]
+INFO:   45m: F1=0.872 [0.847, 0.894], P=0.854 [0.819, 0.886], R=0.890 [0.854, 0.918] [sparse coverage: 56.7% zero-tiles]
+INFO:   50m: F1=0.872 [0.847, 0.894], P=0.854 [0.819, 0.886], R=0.890 [0.854, 0.918] [sparse coverage: 56.7% zero-tiles]
+INFO:   75m: F1=0.878 [0.853, 0.900], P=0.861 [0.826, 0.892], R=0.897 [0.861, 0.924] [sparse coverage: 56.7% zero-tiles]
+INFO:   100m: F1=0.881 [0.856, 0.902], P=0.863 [0.828, 0.894], R=0.899 [0.864, 0.926] [sparse coverage: 56.7% zero-tiles]
+INFO:   125m: F1=0.885 [0.861, 0.906], P=0.868 [0.832, 0.898], R=0.903 [0.868, 0.930] [sparse coverage: 56.7% zero-tiles]
+INFO:   150m: F1=0.885 [0.861, 0.906], P=0.868 [0.832, 0.898], R=0.903 [0.868, 0.930] [sparse coverage: 56.7% zero-tiles]
+WARNING:   DETECTION SCOPE (origin-sheet-geometric) fired: 453 of 453 detections scored (n_origin_restored 7). Ruling D50: detections are scoped per sheet by tile geometry, as references are, on their origin sheet.
+INFO:   MCC=0.813 [0.758, 0.861], Sens=0.847, Spec=0.957
+INFO: JSON written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.json
+INFO: CSV written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.csv
+INFO: Markdown written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.md

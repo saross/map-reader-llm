@@ -1,0 +1,428 @@
+{
+  "generated_at_utc": "2026-10-30T04:41:03.393858+00:00",
+  "script": "scripts/k_ladder_clipped_cells.py",
+  "schema_note": "Phase-1 ladders.json schema on PI ruling D51's clipped basis, for scripts/k_ladder_mcc_test.py --ladders",
+  "n_ladders": 7,
+  "ladders": [
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8555,
+          "f1_20": 0.8555,
+          "tile_mcc": 0.7986,
+          "n_detections": 409,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8708,
+          "f1_20": 0.8708,
+          "tile_mcc": 0.804,
+          "n_detections": 401,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8778,
+          "f1_20": 0.8778,
+          "tile_mcc": 0.7735,
+          "n_detections": 408,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-text-t0.3-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.873,
+          "f1_20": 0.873,
+          "tile_mcc": 0.791,
+          "n_detections": 431,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8235,
+          "f1_20": 0.8235,
+          "tile_mcc": 0.8095,
+          "n_detections": 415,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8647,
+          "f1_20": 0.8647,
+          "tile_mcc": 0.804,
+          "n_detections": 400,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8714,
+          "f1_20": 0.8714,
+          "tile_mcc": 0.7797,
+          "n_detections": 405,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-text-t1.0-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8781,
+          "f1_20": 0.8781,
+          "tile_mcc": 0.7881,
+          "n_detections": 410,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "family": "Gemini 3 HIGH text 384 px, T 1.0 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 HIGH text 384 px, T 1.0",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "flash-high-text-n5-text-t1.0",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.781,
+          "f1_20": 0.781,
+          "tile_mcc": 0.8162,
+          "n_detections": 451,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8501,
+          "f1_20": 0.8501,
+          "tile_mcc": 0.7948,
+          "n_detections": 419,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8648,
+          "f1_20": 0.8648,
+          "tile_mcc": 0.7819,
+          "n_detections": 423,
+          "vote_threshold": 3,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-high-text-t1.0-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8765,
+          "f1_20": 0.8765,
+          "tile_mcc": 0.7872,
+          "n_detections": 423,
+          "vote_threshold": 5,
+          "prob_threshold": 0.2
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-3",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-n5-image-t0.3",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.768,
+          "f1_20": 0.768,
+          "tile_mcc": 0.8443,
+          "n_detections": 440,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7774,
+          "f1_20": 0.7774,
+          "tile_mcc": 0.8178,
+          "n_detections": 396,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7767,
+          "f1_20": 0.7767,
+          "tile_mcc": 0.8416,
+          "n_detections": 407,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t0.3-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7819,
+          "f1_20": 0.7819,
+          "tile_mcc": 0.8377,
+          "n_detections": 404,
+          "vote_threshold": 7,
+          "prob_threshold": 0.15
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t0-7",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-n5-image-t0.7",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7252,
+          "f1_20": 0.7252,
+          "tile_mcc": 0.8437,
+          "n_detections": 453,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.757,
+          "f1_20": 0.757,
+          "tile_mcc": 0.8339,
+          "n_detections": 421,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7705,
+          "f1_20": 0.7705,
+          "tile_mcc": 0.8345,
+          "n_detections": 419,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t0.7-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7852,
+          "f1_20": 0.7852,
+          "tile_mcc": 0.8185,
+          "n_detections": 403,
+          "vote_threshold": 6,
+          "prob_threshold": 0.15
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-phase2-image-n5-image-t1-0",
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0 [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "pv-diag-384",
+      "proposer_pool": "image-n5-image-t1.0",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n1-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n1-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7044,
+          "f1_20": 0.7044,
+          "tile_mcc": 0.836,
+          "n_detections": 465,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 3,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n3-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n3-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7288,
+          "f1_20": 0.7288,
+          "tile_mcc": 0.8178,
+          "n_detections": 424,
+          "vote_threshold": 2,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 5,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n5-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7384,
+          "f1_20": 0.7384,
+          "tile_mcc": 0.8021,
+          "n_detections": 364,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "pv-diag-384::pv-min-image-t1.0-n10-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.7428,
+          "f1_20": 0.7428,
+          "tile_mcc": 0.8078,
+          "n_detections": 397,
+          "vote_threshold": 6,
+          "prob_threshold": 0.2
+        }
+      ]
+    },
+    {
+      "slug": "d51clip-tier-e",
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E) [opmax, D51 clipped]",
+      "family_base": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E)",
+      "operating_point_basis": "opmax",
+      "score_basis": "clip-to-common-assessed-area",
+      "run_id": "grid-2026-08-18",
+      "proposer_pool": "g384_ov192",
+      "corpus": "4-map-gs",
+      "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+      "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+      "headline_buffer_m": 20,
+      "r1_verifier": true,
+      "rungs": [
+        {
+          "K": 1,
+          "condition_id": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8604,
+          "f1_20": 0.8604,
+          "tile_mcc": 0.8133,
+          "n_detections": 453,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2
+        },
+        {
+          "K": 3,
+          "condition_id": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8902,
+          "f1_20": 0.8902,
+          "tile_mcc": 0.8089,
+          "n_detections": 421,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 5,
+          "condition_id": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax-d51clip/evaluation.json",
+          "f1_headline": 0.8968,
+          "f1_20": 0.8968,
+          "tile_mcc": 0.8063,
+          "n_detections": 408,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15
+        },
+        {
+          "K": 10,
+          "condition_id": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe-d51clip/evaluation.json",
+          "f1_headline": 0.8942,
+          "f1_20": 0.8942,
+          "tile_mcc": 0.7973,
+          "n_detections": 406,
+          "vote_threshold": 10,
+          "prob_threshold": 0.15
+        }
+      ]
+    }
+  ]
+}
