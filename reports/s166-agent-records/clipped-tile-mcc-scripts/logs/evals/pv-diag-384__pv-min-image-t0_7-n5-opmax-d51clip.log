@@ -1,0 +1,23 @@
+INFO: Detection files: 1
+INFO: Loading ground truth: inputs/vectors/references/mounds-reference.geojson
+INFO: Loading bounds: inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson
+INFO: Reference: 569 mounds, 487 evaluation tiles
+INFO: Evaluating: pv-min-image-t0.7-n5-opmax-d51clip.geojson
+INFO:   5m: F1=0.199 [0.164, 0.243], P=0.203 [0.166, 0.249], R=0.195 [0.160, 0.238] [sparse coverage: 54.4% zero-tiles]
+INFO:   10m: F1=0.511 [0.461, 0.561], P=0.520 [0.469, 0.573], R=0.501 [0.449, 0.555] [sparse coverage: 54.8% zero-tiles]
+INFO:   15m: F1=0.667 [0.621, 0.710], P=0.680 [0.631, 0.724], R=0.655 [0.605, 0.702] [sparse coverage: 55.6% zero-tiles]
+INFO:   20m: F1=0.770 [0.731, 0.806], P=0.785 [0.742, 0.824], R=0.756 [0.711, 0.798] [sparse coverage: 55.9% zero-tiles]
+INFO:   25m: F1=0.831 [0.795, 0.863], P=0.847 [0.807, 0.882], R=0.816 [0.771, 0.855] [sparse coverage: 55.9% zero-tiles]
+INFO:   30m: F1=0.843 [0.809, 0.874], P=0.859 [0.820, 0.892], R=0.828 [0.783, 0.866] [sparse coverage: 55.9% zero-tiles]
+INFO:   35m: F1=0.855 [0.825, 0.882], P=0.871 [0.834, 0.902], R=0.839 [0.798, 0.874] [sparse coverage: 55.9% zero-tiles]
+INFO:   40m: F1=0.867 [0.837, 0.892], P=0.883 [0.848, 0.912], R=0.851 [0.810, 0.884] [sparse coverage: 55.9% zero-tiles]
+INFO:   45m: F1=0.876 [0.848, 0.901], P=0.893 [0.857, 0.920], R=0.860 [0.819, 0.893] [sparse coverage: 56.1% zero-tiles]
+INFO:   50m: F1=0.878 [0.850, 0.903], P=0.895 [0.860, 0.923], R=0.862 [0.821, 0.896] [sparse coverage: 56.1% zero-tiles]
+INFO:   75m: F1=0.885 [0.857, 0.909], P=0.902 [0.868, 0.930], R=0.869 [0.828, 0.903] [sparse coverage: 56.1% zero-tiles]
+INFO:   100m: F1=0.885 [0.857, 0.909], P=0.902 [0.868, 0.930], R=0.869 [0.828, 0.903] [sparse coverage: 56.1% zero-tiles]
+INFO:   125m: F1=0.890 [0.862, 0.913], P=0.907 [0.874, 0.933], R=0.874 [0.834, 0.907] [sparse coverage: 56.3% zero-tiles]
+INFO:   150m: F1=0.890 [0.862, 0.913], P=0.907 [0.874, 0.933], R=0.874 [0.834, 0.907] [sparse coverage: 56.3% zero-tiles]
+INFO:   MCC=0.834 [0.784, 0.877], Sens=0.856, Spec=0.969
+INFO: JSON written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.json
+INFO: CSV written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.csv
+INFO: Markdown written: results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.md

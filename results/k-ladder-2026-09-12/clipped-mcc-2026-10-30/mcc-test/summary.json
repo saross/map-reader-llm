@@ -1,0 +1,102 @@
+{
+  "generated_at_utc": "2026-10-30T04:41:48.974930+00:00",
+  "source_inventory": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/ladders-clipped.json",
+  "conditions": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/tiering-input/run-conditions.json",
+  "n_permutations": 10000,
+  "seed": 42,
+  "n_ladders": 7,
+  "gate_all_passed": true,
+  "ladders": [
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t0-3",
+      "family": "Gemini 3 MINIMAL text 384 px, T 0.3",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.025107,
+      "mcc_p_bh_k1_to_best": 0.6044,
+      "f1_delta_k1_to_best": 0.022367,
+      "f1_p_bh_k1_to_best": 0.2768,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-phase2-flash-minimal-text-n30-t07-text-t1-0",
+      "family": "Gemini 3 MINIMAL text 384 px, T 1.0",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.021401,
+      "mcc_p_bh_k1_to_best": 0.576,
+      "f1_delta_k1_to_best": 0.054577,
+      "f1_p_bh_k1_to_best": 0.0012,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-phase2-flash-high-text-n5-text-t1-0",
+      "family": "Gemini 3 HIGH text 384 px, T 1.0",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.02898,
+      "mcc_p_bh_k1_to_best": 0.5529,
+      "f1_delta_k1_to_best": 0.095419,
+      "f1_p_bh_k1_to_best": 0.0,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-3",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.3",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.006526,
+      "mcc_p_bh_k1_to_best": 0.9954,
+      "f1_delta_k1_to_best": 0.013883,
+      "f1_p_bh_k1_to_best": 0.7803,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t0-7",
+      "family": "Gemini 3 MINIMAL image 384 px, T 0.7",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.025271,
+      "mcc_p_bh_k1_to_best": 0.81912,
+      "f1_delta_k1_to_best": 0.059978,
+      "f1_p_bh_k1_to_best": 0.0018,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-phase2-image-n5-image-t1-0",
+      "family": "Gemini 3 MINIMAL image 384 px, T 1.0",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.028203,
+      "mcc_p_bh_k1_to_best": 0.6072,
+      "f1_delta_k1_to_best": 0.038344,
+      "f1_p_bh_k1_to_best": 0.1236,
+      "any_mcc_pair_significant": false
+    },
+    {
+      "ladder": "d51clip-tier-e",
+      "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E)",
+      "buffer_m": 20,
+      "gate_passed": true,
+      "n_pairs_gated": 0,
+      "n_pairs": 4,
+      "mcc_direction_k1_to_best": -0.007063,
+      "mcc_p_bh_k1_to_best": 1.0,
+      "f1_delta_k1_to_best": 0.036437,
+      "f1_p_bh_k1_to_best": 0.0006,
+      "any_mcc_pair_significant": false
+    }
+  ]
+}

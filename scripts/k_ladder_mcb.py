@@ -80,6 +80,11 @@
 #       --output-dir results/k-ladder-2026-09-12/mcb
 #   .venv/bin/python scripts/k_ladder_mcb.py --only gs-stride-a --bootstrap 200
 #
+# `--registry PATH` (added 2026-10-30) replaces the committed registry for one
+# run with the entries in PATH — the D51-clipped ladders that
+# `scripts/k_ladder_clipped_cells.py collect` writes — through the same tool
+# and the same gate; without it nothing changes.
+#
 # Zero Application Programming Interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-09-13 | Apache 2.0
@@ -279,6 +284,58 @@ def ladder_registry() -> list[dict[str, Any]]:
             "group": "55-map deployment",
         })
     return entries
+
+
+def load_registry(path: Path) -> tuple[list[dict[str, Any]], dict[str, int],
+                                       dict[str, str]]:
+    """Read a registry file that replaces :func:`ladder_registry` for one run.
+
+    Added 2026-10-30 so the same instrument and gate can be run over cells the
+    committed registry does not name — the D51-clipped ladders that
+    ``scripts/k_ladder_clipped_cells.py collect`` writes — without editing the
+    committed registry. Each entry carries the keys :func:`ladder_registry`
+    entries carry (``slug``, ``analysis_id``, ``analyses``, ``conditions``,
+    ``bounds``, ``buffer_m``, ``tiering``, ``group``), plus ``family`` (its
+    display name) and ``k_by_label`` (each candidate label's pass count),
+    because the committed inventories :func:`label_to_k` reads do not hold
+    those labels.
+
+    Args:
+        path: The registry JSON (a list of entries).
+
+    Returns:
+        ``(entries, k_by_label, display_names)``.
+
+    Raises:
+        ValueError: if an entry lacks a required key, or two entries disagree
+            on a label's K.
+    """
+    required = ("slug", "analysis_id", "analyses", "conditions", "bounds",
+                "buffer_m", "tiering", "group", "family", "k_by_label")
+    raw = json.loads(path.read_text(encoding="utf-8"))
+    entries: list[dict[str, Any]] = []
+    k_of: dict[str, int] = {}
+    names: dict[str, str] = {}
+    for item in raw:
+        missing = [key for key in required if key not in item]
+        if missing:
+            raise ValueError(f"registry entry {item.get('slug')!r} lacks {missing}")
+        for label, k in item["k_by_label"].items():
+            if k_of.get(label, int(k)) != int(k):
+                raise ValueError(f"registry disagrees on K for {label!r}")
+            k_of[label] = int(k)
+        names[item["slug"]] = item["family"]
+        entries.append({
+            "slug": item["slug"],
+            "analysis_id": item["analysis_id"],
+            "analyses": Path(item["analyses"]),
+            "conditions": Path(item["conditions"]) if item["conditions"] else None,
+            "bounds": item["bounds"],
+            "buffer_m": int(item["buffer_m"]),
+            "tiering": Path(item["tiering"]),
+            "group": item["group"],
+        })
+    return entries, k_of, names
 
 
 def label_to_k() -> dict[str, int]:
@@ -552,9 +609,17 @@ def main() -> int:
     parser.add_argument("--metrics", nargs="+", default=["f1", "mcc"],
                         choices=("f1", "mcc"),
                         help="Metrics to compute; both by default.")
+    parser.add_argument("--registry", type=Path, default=None,
+                        help="A registry JSON that REPLACES the committed "
+                             "registry for this run (see load_registry), e.g. "
+                             "the D51-clipped ladders' mcb-registry.json. The "
+                             "default is the committed registry.")
     args = parser.parse_args()
 
-    registry = ladder_registry()
+    if args.registry is not None:
+        registry, extra_k, extra_names = load_registry(args.registry)
+    else:
+        registry, extra_k, extra_names = ladder_registry(), {}, {}
     if args.only:
         wanted = set(args.only)
         registry = [e for e in registry if e["slug"] in wanted]
@@ -562,8 +627,8 @@ def main() -> int:
         if missing:
             parser.error(f"unknown ladder slug(s): {sorted(missing)}")
 
-    k_of = label_to_k()
-    names = display_names()
+    k_of = {**label_to_k(), **extra_k}
+    names = {**display_names(), **extra_names}
     out_root = args.output_dir
     out_root.mkdir(parents=True, exist_ok=True)
 

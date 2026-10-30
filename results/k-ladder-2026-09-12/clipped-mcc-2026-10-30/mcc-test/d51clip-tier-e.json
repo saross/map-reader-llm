@@ -1,0 +1,256 @@
+{
+  "ladder": "d51clip-tier-e",
+  "family": "Gemini 3 MINIMAL text 384 px / 50 %, grid pool (tier E)",
+  "run_id": "grid-2026-08-18",
+  "proposer_pool": "g384_ov192",
+  "corpus": "4-map-gs",
+  "reference_file": "inputs/vectors/references/mounds-reference.geojson",
+  "frame_file": "inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson",
+  "headline_buffer_m": 20,
+  "basis": "oracle",
+  "instrument": {
+    "name": "round-robin tile-swap permutation (the board chain)",
+    "script": "scripts/era1_leaderboard_tiering.py --permute-mcc",
+    "f1_statistic": "micro-average F1 @ 20 m over 487 tiles, per-tile TP/FP/FN swapped",
+    "mcc_statistic": "tile-level MCC, buffer-invariant; per-tile one-hot (TP, TN, FP, FN) swapped under the SAME mask as F1",
+    "kernels": [
+      "n1_baseline_leaderboard_tiering.permutation_test_float",
+      "pairwise_permutation_test.permutation_test_mcc_arrays"
+    ],
+    "n_permutations": 10000,
+    "seed": 42,
+    "n_tiles": 487,
+    "bh_q": 0.05,
+    "bh_family": "within this ladder: the full round-robin of 6 pair(s), F1 and MCC adjusted as separate families",
+    "instrument_ruling": "This is the instrument that tiered these cells and the only one with committed F1 p-values for every pair asked about. findings.md \u00a7 6.1 records that the PI's ruling on the 55-map ladders' instrument is pending; the per-map paired sign-swap of scripts/stride55_ladder.py is reported separately where it is registered."
+  },
+  "gate": {
+    "kind": "harness-internal only (no committed pairwise table exists for this ladder \u2014 findings.md \u00a7 6.1)",
+    "n_pairs_gated": 0,
+    "passed": true,
+    "pairs": [
+      {
+        "pair": "K1-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K1-vs-K3",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K3-vs-K5",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      },
+      {
+        "pair": "K5-vs-K10",
+        "available": false,
+        "why": "no committed pairwise table covers both rungs"
+      }
+    ],
+    "cell_gates": {
+      "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip": {
+        "confusion": {
+          "tp": 194,
+          "tn": 247,
+          "fp": 11,
+          "fn": 35
+        },
+        "mcc_rebuilt": 0.813329,
+        "mcc_recorded": 0.8133,
+        "geometry": {
+          "detections": {
+            "n_assigned": 453,
+            "n_inside_union": 453,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true
+      },
+      "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip": {
+        "confusion": {
+          "tp": 194,
+          "tn": 246,
+          "fp": 12,
+          "fn": 35
+        },
+        "mcc_rebuilt": 0.808879,
+        "mcc_recorded": 0.8089,
+        "geometry": {
+          "detections": {
+            "n_assigned": 421,
+            "n_inside_union": 421,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true
+      },
+      "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip": {
+        "confusion": {
+          "tp": 191,
+          "tn": 248,
+          "fp": 10,
+          "fn": 38
+        },
+        "mcc_rebuilt": 0.806266,
+        "mcc_recorded": 0.8063,
+        "geometry": {
+          "detections": {
+            "n_assigned": 408,
+            "n_inside_union": 408,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true
+      },
+      "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip": {
+        "confusion": {
+          "tp": 191,
+          "tn": 246,
+          "fp": 12,
+          "fn": 38
+        },
+        "mcc_rebuilt": 0.797257,
+        "mcc_recorded": 0.7973,
+        "geometry": {
+          "detections": {
+            "n_assigned": 406,
+            "n_inside_union": 406,
+            "n_outside_union": 0
+          },
+          "references": {
+            "n_assigned": 435,
+            "n_inside_union": 435,
+            "n_outside_union": 134
+          }
+        },
+        "passed": true
+      }
+    }
+  },
+  "pairs": [
+    {
+      "pair": "K1-vs-K5",
+      "kind": "k1-vs-best",
+      "k_low": 1,
+      "k_high": 5,
+      "condition_low": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+      "condition_high": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8604,
+        "high": 0.8968,
+        "delta": 0.036437,
+        "p_raw": 0.0001,
+        "p_bh": 0.0006,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8133,
+        "high": 0.8063,
+        "delta": -0.007063,
+        "p_raw": 0.7765,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K1-vs-K3",
+      "kind": "adjacent",
+      "k_low": 1,
+      "k_high": 3,
+      "condition_low": "grid-2026-08-18::g384-ov192-k1-verified-opmax-d51clip",
+      "condition_high": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8604,
+        "high": 0.8902,
+        "delta": 0.029827,
+        "p_raw": 0.0012,
+        "p_bh": 0.0024,
+        "significant": true
+      },
+      "mcc": {
+        "low": 0.8133,
+        "high": 0.8089,
+        "delta": -0.00445,
+        "p_raw": 0.8794,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "F1 up (sig), MCC down n.s."
+    },
+    {
+      "pair": "K3-vs-K5",
+      "kind": "adjacent",
+      "k_low": 3,
+      "k_high": 5,
+      "condition_low": "grid-2026-08-18::g384-ov192-k3-verified-opmax-d51clip",
+      "condition_high": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8902,
+        "high": 0.8968,
+        "delta": 0.00661,
+        "p_raw": 0.3538,
+        "p_bh": 0.5307,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.8089,
+        "high": 0.8063,
+        "delta": -0.002613,
+        "p_raw": 1.0,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    },
+    {
+      "pair": "K5-vs-K10",
+      "kind": "adjacent",
+      "k_low": 5,
+      "k_high": 10,
+      "condition_low": "grid-2026-08-18::g384-ov192-k5-verified-opmax-d51clip",
+      "condition_high": "grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+      "delta_convention": "higher K minus lower K",
+      "f1": {
+        "low": 0.8968,
+        "high": 0.8942,
+        "delta": -0.002624,
+        "p_raw": 0.6865,
+        "p_bh": 0.6865,
+        "significant": false
+      },
+      "mcc": {
+        "low": 0.8063,
+        "high": 0.7973,
+        "delta": -0.009009,
+        "p_raw": 0.6316,
+        "p_bh": 1.0,
+        "significant": false
+      },
+      "verdict": "neither separates"
+    }
+  ],
+  "tiering_artefact": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/mcc-test/tiering/d51clip-tier-e/tiering_20m.json",
+  "generated_at_utc": "2026-10-30T04:41:48.974721+00:00"
+}

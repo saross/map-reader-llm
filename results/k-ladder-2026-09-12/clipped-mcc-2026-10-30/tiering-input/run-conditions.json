@@ -1,0 +1,350 @@
+{
+  "_README": "TIERING INPUT \u2014 NOT REGISTERED. The D51-clipped K-ladder cells, written by scripts/k_ladder_clipped_cells.py so scripts/k_ladder_mcc_test.py and scripts/k_ladder_mcb.py can read them. results/run-conditions.json is not modified and this file must never be written over it.",
+  "schema_version": "1.0",
+  "decomposition": {
+    "pv-diag-384": {
+      "conditions": [
+        {
+          "label": "pv-min-text-t0.3-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t0.3-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t0.3-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t0_3-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t0.3-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t0.3-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t0.3-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t0_3-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t0.3-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t0.3-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t0.3-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t0.3-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t0.3",
+          "n_passes": 10,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t0.3-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t0.3-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t0_3-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t1.0-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t1.0-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t1.0-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t1.0-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t1.0-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t1.0-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-text-t1_0-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t1.0-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t1.0-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t1.0-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-text-t1.0-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-minimal-text-n30-t07-text-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-text-t1.0-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-text-t1.0-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-text-t1_0-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-high-text-t1.0-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-n5-text-t1.0",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-high-text-t1.0-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-high-text-t1.0-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-high-text-t1.0-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-n5-text-t1.0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-high-text-t1.0-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-high-text-t1.0-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-high-text-t1_0-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-high-text-t1.0-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-n5-text-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-high-text-t1.0-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-high-text-t1.0-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-high-text-t1.0-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "flash-high-text-n5-text-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 5,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-high-text-t1.0-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-high-text-t1.0-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-high-text-t1_0-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.3-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.3",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.3-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.3-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_3-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.3-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.3",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.3-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.3-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_3-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.3-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.3",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.3-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.3-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.3-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.3",
+          "n_passes": 10,
+          "vote_threshold": 7,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.3-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.3-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_3-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.7-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.7",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.7-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.7-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_7-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.7-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.7",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.7-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.7-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t0_7-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.7-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.7",
+          "n_passes": 5,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.7-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.7-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t0.7-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t0.7",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t0.7-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t0.7-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t0_7-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t1.0-n1-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t1.0",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n1-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t1.0-n1-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t1.0-n1-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t1_0-n1-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t1.0-n3-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t1.0",
+          "n_passes": 3,
+          "vote_threshold": 2,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n3-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t1.0-n3-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t1.0-n3-opmax (results/k-ladder-2026-09-12/phase2/cells/pv-diag-384__pv-min-image-t1_0-n3-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t1.0-n5-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t1.0",
+          "n_passes": 5,
+          "vote_threshold": 4,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t1.0-n5-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t1.0-n5-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n5-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "pv-min-image-t1.0-n10-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "image-n5-image-t1.0",
+          "n_passes": 10,
+          "vote_threshold": 6,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/pv-min-image-t1.0-n10-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of pv-diag-384::pv-min-image-t1.0-n10-opmax (results/leaderboard/era2/gs-era2-verified-board-2026-09-10/cells/pv-diag-384__pv-min-image-t1_0-n10-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        }
+      ]
+    },
+    "grid-2026-08-18": {
+      "conditions": [
+        {
+          "label": "g384-ov192-k1-verified-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "g384_ov192",
+          "n_passes": 1,
+          "vote_threshold": 1,
+          "prob_threshold": 0.2,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/g384-ov192-k1-verified-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of grid-2026-08-18::g384-ov192-k1-verified-opmax (results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k1-verified-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "g384-ov192-k3-verified-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "g384_ov192",
+          "n_passes": 3,
+          "vote_threshold": 3,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/g384-ov192-k3-verified-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of grid-2026-08-18::g384-ov192-k3-verified-opmax (results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k3-verified-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "g384-ov192-k5-verified-opmax-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "g384_ov192",
+          "n_passes": 5,
+          "vote_threshold": 5,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/g384-ov192-k5-verified-opmax-d51clip.geojson",
+          "_note": "D51-clipped twin of grid-2026-08-18::g384-ov192-k5-verified-opmax (results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k5-verified-opmax/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        },
+        {
+          "label": "g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip",
+          "architecture": "proposer-verifier",
+          "aggregation": "verified",
+          "proposer_pool": "g384_ov192",
+          "n_passes": 10,
+          "vote_threshold": 10,
+          "prob_threshold": 0.15,
+          "eval_path": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe-d51clip/evaluation.json",
+          "detections": "results/k-ladder-2026-09-12/clipped-mcc-2026-10-30/materialised/g384-ov192-k10-verified-p0.15-k10-boardframe-d51clip.geojson",
+          "_note": "D51-clipped twin of grid-2026-08-18::g384-ov192-k10-verified-p0.15-k10-boardframe (results/k-ladder-2026-09-12/tier-e/cells/grid-2026-08-18__g384-ov192-k10-verified-p0_15-k10-boardframe/evaluation.json): its detections clipped to the ladder's common assessed area, frame and reference kept. NOT REGISTERED."
+        }
+      ]
+    }
+  }
+}
