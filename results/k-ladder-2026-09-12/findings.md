@@ -1,6 +1,9 @@
 # The K ladders: pass count at fixed parameters, Pareto-framed
 
-> **Last revised**: 2026-10-18 (later: §§ 1, 4.3 and 7.2 no longer say § 4.1
+> **Last revised**: 2026-10-30 (the gold-standard ladder's tile-MCC rise reads
+> +0.0130 throughout, the exact 0.013043, where three places gave +0.0131, a
+> difference of rounded endpoints; PI ruling D69). Earlier: 2026-10-18 (later:
+> §§ 1, 4.3 and 7.2 no longer say § 4.1
 > found no significant tile-MCC change; it found three significant falls, PI
 > ruling D69). Earlier the same day:
 > (re-signing of the register row
@@ -117,7 +120,7 @@ K = 1 → 3 buys +0.0251 F1@20 on the board frame and K = 3 → 10 buys a furthe
 of the ladder's total F1 gain** — above 85 % on five of the eight — for **38 % to
 62 % of the top rung's cost**. Meanwhile tile-MCC, the buffer-free measure of
 *which tiles* hold a mound, **falls on five of the eight ladders**, moves by
-+0.003 on two more, and rises by +0.0131 on only one (the gold standard, on the
++0.003 on two more, and rises by +0.0130 on only one (the gold standard, on the
 board frame) — a rise that **does not survive permutation testing** (§ 4.1,
 BH p = 0.76), while the MCC FALL is significant on three ladders and **no ladder
 shows a significant MCC rise**. More passes buy localisation, not
@@ -397,7 +400,7 @@ reference and frame.
 
 | ladder | F1, K = 1 → best rung | tile-MCC over the same two rungs | MCC verdict |
 |---|---|---|---|
-| GS stride A (20 m, board frame) | 0.8665 → 0.8999 (**+0.0334**) | 0.7948 → 0.8079 (+0.0131) | up |
+| GS stride A (20 m, board frame) | 0.8665 → 0.8999 (**+0.0334**) | 0.7948 → 0.8079 (+0.0130) | up |
 | GS stride A (20 m, grid-common) | 0.8737 → 0.9075 (**+0.0338**) | 0.8010 → 0.8134 (+0.0124) | up |
 | 55-map stride A, r2 | 0.8227 → 0.8419 (**+0.0192**) | 0.7006 → 0.6954 (**−0.0052**) | **down** |
 | 55-map stride A, standardised | 0.8231 → 0.8420 (**+0.0189**) | 0.7010 → 0.6958 (**−0.0052**) | **down** |
@@ -537,7 +540,7 @@ tested on the board frame R2 tiers on.
    BH p ≤ 0.0168. So "more passes do not buy tile-level discrimination" is
    testable and holds, and on the three ladders where the instrument resolves,
    more passes measurably COST discrimination.
-3. **The gold standard's MCC gain does not survive.** § 4 called +0.0131 the one
+3. **The gold standard's MCC gain does not survive.** § 4 called +0.0130 the one
    material rise; on 487 tiles it tests at BH p = 0.7633, and no gold-standard
    pair separates on either metric except K = 1 → K = 10 on F1. The 4-map
    instrument cannot resolve a ΔMCC of this size — which is the same
@@ -1653,6 +1656,27 @@ stages**, not about either ladder's own MCC trend being significant. § 8.4's
 caveat about the K = 10 rung's construction applies to the verified row.
 
 ## Changelog
+
+### 2026-10-30 — The gold-standard tile-MCC rise rounded one way throughout
+
+**Trigger.** PR #52's claim-row walk-through (PI ruling D69, on R3-13): the
+gold-standard stride A ladder's tile-MCC rise from K = 1 to its best rung is
+0.013043 (`mcc-test/summary.json` → `gs-stride-a.mcc_direction_k1_to_best`),
+which § 4.1's table, the 2026-10-15 changelog entry and the register outcome
+give as +0.0130.
+Three places gave +0.0131, the difference of the rounded endpoints 0.7948
+and 0.8079.
+
+| Place | Before | After |
+|---|---|---|
+| § 1 (summary) | +0.0131 | +0.0130 |
+| § 4 table, GS stride A board frame | +0.0131 | +0.0130 |
+| § 4.1 "What survives" item 3 | +0.0131 | +0.0130 |
+
+**What did NOT change**: every endpoint, p value and verdict; the
+grid-common row (+0.0124) beside it.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-18 (later) — § 4.1's three significant falls, stated consistently
 

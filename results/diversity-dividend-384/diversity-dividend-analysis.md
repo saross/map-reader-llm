@@ -1,6 +1,8 @@
 # Diversity dividend — consensus vs single-pass baseline (H3)
 
-> **Last revised**: 2026-10-15 (the 22-cell champions tiering restated on the
+> **Last revised**: 2026-10-30 (the HIGH-text champion reads 0.816, not 0.817:
+> 0.816471 had been rounded twice, PI ruling D69). Prior: 2026-10-15 (the
+> 22-cell champions tiering restated on the
 > consensus route that keeps each cluster's contributing tiles, PI ruling
 > D60 (3): the four consensus champions rise by about 0.002 F1; tiers, tie set
 > and verdicts unchanged; the 26-cell companion was not regenerated). Prior:
@@ -66,7 +68,7 @@ companion was not, so it still carries the four champions' 2026-06-06 values
 
 | Modality | HIGH F1 | minimal F1 | ΔF1 | BH-p | ΔMCC |
 |---|---:|---:|---:|---:|---:|
-| Text | 0.817 | 0.663 | **+0.153** | <0.001 | +0.239 |
+| Text | 0.816 | 0.663 | **+0.153** | <0.001 | +0.239 |
 | Image | 0.752 | 0.682 | **+0.070** | <0.001 | +0.272 |
 
 Both significant, on both F1 and MCC. The HIGH-thinking pools take the larger
@@ -81,7 +83,7 @@ single-pass baseline (same model, modality, thinking, temperature):
 
 | Pool (T=0.7) | single-pass F1 | best-F1 consensus | ΔF1 | deployable N=5 | ΔF1 (deploy) |
 |---|---:|---:|---:|---:|---:|
-| `flash-high-text` (HIGH) | 0.387 | 0.817 | +0.429 | 0.720 (4-of-5) | +0.333 |
+| `flash-high-text` (HIGH) | 0.387 | 0.816 | +0.429 | 0.720 (4-of-5) | +0.333 |
 | `flash-high-image` (HIGH) | 0.499 | 0.752 | +0.254 | 0.727 (3-of-5) | +0.228 |
 | `flash-minimal-text` (min) | 0.488 | 0.663 | +0.175 | 0.602 (4-of-5) | +0.114 |
 | `image-n5` (min) | 0.553 | 0.682 | +0.129 | 0.644 (3-of-5) | +0.091 |
@@ -99,7 +101,7 @@ threshold.
 
 | Cell | F1@20 m | MCC |
 |---|---:|---:|
-| `flash-high-text` consensus (26-of-30) | 0.817 | 0.620 |
+| `flash-high-text` consensus (26-of-30) | 0.816 | 0.620 |
 | `pro-text-high-t-0-0` single pass (genuine Pro) | 0.804 | 0.790 |
 | `pro-text-medium-t-0-0` single pass (genuine Pro) | 0.792 | 0.790 |
 
@@ -153,6 +155,25 @@ ground truth, with the carry-forward − best delta).
 - **Compute**: zbook (round-robin permutation sweep); $0 API.
 
 ## Changelog
+
+### 2026-10-30 — The HIGH-text champion's F1 rounded once
+
+**Trigger.** PR #52's claim-row walk-through (PI ruling D69, on R4-04): the
+26-of-30 HIGH-text consensus champion scores 0.816471
+(`tiering-champions/tiering_20m.json`, rank 1, `observed_micro_f1`), which is
+0.816 at three decimals; the 2026-10-15 restatement wrote 0.817 by rounding
+its four-decimal 0.8165 a second time.
+
+| Place | Before | After |
+|---|---|---|
+| § 1, diversity dividend, text HIGH F1 | 0.817 | 0.816 |
+| § 1, single-pass baseline table, best-F1 consensus | 0.817 | 0.816 |
+| Tier 1 table, `flash-high-text` consensus | 0.817 | 0.816 |
+
+**What did NOT change**: the deltas beside them (+0.153 and +0.429 hold on
+the unrounded values), every tier and verdict.
+
+**Commit**: see `git log` for this entry's date.
 
 ### 2026-10-15 — The champions tiering restated on the consensus route (PI ruling D60 (3))
 

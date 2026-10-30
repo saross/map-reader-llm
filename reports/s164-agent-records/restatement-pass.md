@@ -2186,7 +2186,7 @@ Re-read against the regenerated artefact. Each holds verbatim unless noted.
   (R4-04).
 - **Consensus**: R3-02. The champions' lifts are now +0.129 to +0.429,
   which still rounds to the register's "+0.13 to +0.43". R4-12's claim
-  text holds; its anchor's 0.814 is now 0.817.
+  text holds; its anchor's 0.814 is now 0.816.
 - **K ladder**: R3-10 (the Phase 2 tiering was not re-run; note 5).
   R3-12: the F1 admissible sets are unchanged, tier E's tile-MCC set gains
   K = 10, K = 1 is still admissible on tile-MCC on 22 of 22 and highest on
@@ -2438,6 +2438,20 @@ planning cards that quote moved values as of their dates; the list is
   item 14), kept on sapphire at `lead2/plateauA/`.
 
 ## Changelog
+
+### 2026-10-30 — § 6 walked by the PI; one figure corrected (Session 166)
+
+The PI walked § 6's claim rows one at a time with the independent
+verification (`reports/s165-agent-records/restatement-claims-verify.md`) and
+ruled each (D69). The approved wordings are the dated notes in the claims
+inventory (`docs/paper/results-claims-inventory-2026-09-12.md`, `ce52570c6`),
+which supersede § 6.1's proposals; the table is left as drafted. Nine
+proposals changed in the walk, among them R3-11's range (about US$27 at the
+top, not US$22), R7.3-22 and R7.3-24's −0.0044 / +0.0044, R3-14 and R6-17's
+lead (48.7 %, the clipped reading) and cause attribution, and R4-04's
+0.816. R6-18, listed in § 6.2 as holding, has a board-grain note that partly
+fails (Obs 513). § 6.2's R4-12 figure is corrected here: 0.817 → 0.816
+(0.816471, rounded twice before).
 
 ### 2026-10-20 — The plateau characterisation's "dropped" row corrected (Session 165)
 
