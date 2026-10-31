@@ -97,6 +97,17 @@
 # tiering written under any other join. The default, `id`, changes nothing:
 # the same commands, artefact names, gate references and output keys.
 #
+# The Phase 2 label-to-K join and family names are read from the canonical
+# `phase2/ladders.json` (changed 2026-10-31, S167). They used to come from
+# `phase2/ladders-compat.json`, but that file is the test instruments' EXPORT,
+# and the D51 clipped rebuild (`0fc2d6389`) withholds every clipped ladder
+# from it. That left 24 rung labels of the committed registry with no K, so
+# the default run failed. `ladders.json` keeps every ladder, clipped or not.
+# Before any bootstrap runs, `main` now refuses a registry with any label
+# that has no K. For the seven ladders now reported on D51's clipped basis,
+# the default stays the as-evaluated record (PI ruling D71; see
+# `AS_EVALUATED_RECORD`).
+#
 # Zero Application Programming Interface (API) calls. All computation is local.
 #
 # Author: Shawn Ross & Claude (Anthropic) | Created: 2026-09-13 | Apache 2.0
@@ -134,7 +145,11 @@ SIMULTANEOUS_CONFIDENCE = 0.95
 
 K_LADDER_DIR = Path("results/k-ladder-2026-09-12")
 PHASE1_INVENTORY = K_LADDER_DIR / "ladders.json"
-PHASE2_INVENTORY = K_LADDER_DIR / "phase2" / "ladders-compat.json"
+#: The canonical Phase 2 inventory, NOT its `ladders-compat.json` export: the
+#: export withholds every ladder reported on the D51 clipped basis, while the
+#: registry's committed (as-evaluated) MCB rankings still need those ladders'
+#: K and names (see the header, 2026-10-31).
+PHASE2_INVENTORY = K_LADDER_DIR / "phase2" / "ladders.json"
 TIER_E_INVENTORY = K_LADDER_DIR / "tier-e" / "ladder.json"
 
 #: Gate tolerances. The committed tiering ranking records `observed_micro_f1`
@@ -163,7 +178,7 @@ PHASE2_SLUGS = (
 )
 
 #: Display names for the ladders whose slug is not self-describing. The Phase 2
-#: families take their name from `phase2/ladders-compat.json` instead, so the
+#: families take their name from `phase2/ladders.json` instead, so the
 #: table's row labels match the names `phase2/ladder-tables.md` already uses.
 DISPLAY_NAMES = {
     "gs-stride-a": "GS stride A, exact re-verification (board frame)",
@@ -226,18 +241,84 @@ WITHHELD: dict[str, Any] = {
     ),
 }
 
+#: The ladders whose sets in the committed default run are the AS-EVALUATED
+#: record (PI ruling D71, 2026-10-31). The committed `mcb/summary.json` was
+#: written on 2026-10-15, 1 h 41 min before the Phase 2 tables were rebuilt on
+#: D51's clipped basis (`0fc2d6389`). So for these six Gemini 3 ladders, and
+#: for tier E, the committed registry names the unclipped cells, while the
+#: tables now report clipped values. The ruling keeps the default as that
+#: record, labelled here, rather than switching it. The clipped sets, computed
+#: through `--registry` in S166, have the same Hsu admissible K set and best K
+#: as these on both metrics (a tier-1 test pins this, so the label fails loudly
+#: if they ever diverge). Only rung statistics move: up to 0.004 on the two
+#: Gemini 3 ladders the clip touches, and about 0.008 on tier E's K = 1, 3 and 5.
+AS_EVALUATED_RECORD: dict[str, Any] = {
+    "slugs": (
+        "phase2-flash-minimal-text-n30-t07-text-t0-3",
+        "phase2-flash-minimal-text-n30-t07-text-t1-0",
+        "phase2-flash-high-text-n5-text-t1-0",
+        "phase2-image-n5-image-t0-3",
+        "phase2-image-n5-image-t0-7",
+        "phase2-image-n5-image-t1-0",
+        "tier-e",
+    ),
+    "clipped_summary": K_LADDER_DIR / "clipped-mcc-2026-10-30" / "mcb" / "summary.json",
+    "clipped_slug_prefix": "d51clip-",
+    "ruling": (
+        "D71 (S167, 2026-10-31): the default stays the as-evaluated record, "
+        "labelled; the clipped sets are the sensitivity reading"
+    ),
+}
+
+
+def phase2_slug(proposer_pool: str) -> str:
+    """The slug a Phase 2 ladder's committed tiering directory is named by.
+
+    ``phase2/ladders.json`` names no slugs, so this rebuilds the one
+    ``build_k_ladder_phase2_tables.compat_inventory`` writes into the export.
+    It is mirrored rather than imported because the builder prices its families
+    at import time; ``tests/test_k_ladder_mcb.py`` pins it to the export's
+    slugs.
+
+    Args:
+        proposer_pool: The ladder's ``proposer_pool``.
+
+    Returns:
+        ``phase2-`` plus the pool, lower-cased, with ``.`` and ``_`` as ``-``.
+    """
+    return "phase2-" + proposer_pool.replace(".", "-").replace("_", "-").lower()
+
+
+def phase2_rung_labels(rung: dict[str, Any]) -> list[str]:
+    """Every condition label one Phase 2 inventory rung is recorded under.
+
+    A rung this run verified names its cells in ``labels`` (the oracle and
+    carried readings), while a rung taken from the signed board names its cell
+    by ``condition_id`` instead; both are read, so neither kind is missed.
+
+    Args:
+        rung: One rung of a ``phase2/ladders.json`` ladder.
+
+    Returns:
+        The labels (the part of a condition id after ``::``).
+    """
+    labels = [label for label in (rung.get("labels") or {}).values() if label]
+    if rung.get("condition_id"):
+        labels.append(rung["condition_id"].split("::", 1)[-1])
+    return labels
+
 
 def display_names() -> dict[str, str]:
     """Return every ladder slug's human-readable family name.
 
     Returns:
-        Slug to display name, the Phase 2 families read from their committed
-        compatibility inventory so the names never drift from the tables.
+        Slug to display name, the Phase 2 families read from the canonical
+        Phase 2 inventory so the names never drift from the tables.
     """
     names = dict(DISPLAY_NAMES)
     data = json.loads((BASE_DIR / PHASE2_INVENTORY).read_text(encoding="utf-8"))
     for ladder in data["ladders"]:
-        names[ladder["slug"]] = ladder.get("family_base") or ladder["family"]
+        names[phase2_slug(ladder["proposer_pool"])] = ladder["family"]
     return names
 
 
@@ -380,17 +461,46 @@ def label_to_k() -> dict[str, int]:
                 f"{mapping[label]} and {k}")
         mapping[label] = k
 
-    for rel in (PHASE1_INVENTORY, PHASE2_INVENTORY):
-        data = json.loads((BASE_DIR / rel).read_text(encoding="utf-8"))
-        for ladder in data["ladders"]:
-            for rung in ladder["rungs"]:
-                put(rung["condition_id"].split("::", 1)[-1], int(rung["K"]))
+    phase1 = json.loads((BASE_DIR / PHASE1_INVENTORY).read_text(encoding="utf-8"))
+    for ladder in phase1["ladders"]:
+        for rung in ladder["rungs"]:
+            put(rung["condition_id"].split("::", 1)[-1], int(rung["K"]))
+
+    phase2 = json.loads((BASE_DIR / PHASE2_INVENTORY).read_text(encoding="utf-8"))
+    for ladder in phase2["ladders"]:
+        for rung in ladder["rungs"]:
+            for label in phase2_rung_labels(rung):
+                put(label, int(rung["K"]))
 
     tier_e = json.loads((BASE_DIR / TIER_E_INVENTORY).read_text(encoding="utf-8"))
     for rung in tier_e["rungs"]:
         put(rung["label"], int(rung["n_passes"]))
 
     return mapping
+
+
+def unjoined_labels(registry: list[dict[str, Any]], k_of: dict[str, int],
+                    tile_join: str = TILE_JOIN_DEFAULT) -> list[str]:
+    """List every committed ranking label of the registry that has no K.
+
+    Run before any bootstrap, so an inventory that has lost a ladder is refused
+    at launch, with every missing label named. Without this check the gap would
+    surface as a ``KeyError`` in :func:`summarise` only after the first
+    ladder's bootstrap had run (the S166 finding).
+
+    Args:
+        registry: The registry entries about to be run.
+        k_of: Label to pass count.
+        tile_join: The join whose tierings the registry names.
+
+    Returns:
+        ``"<slug>: <label>"`` for each label without a K, in registry order.
+    """
+    join_kwargs = {"tile_join": tile_join} if tile_join != TILE_JOIN_DEFAULT else {}
+    return [f"{entry['slug']}: {label}"
+            for entry in registry
+            for label in committed_ranking(entry["tiering"], **join_kwargs)
+            if label not in k_of]
 
 
 def committed_ranking(tiering_path: Path,
@@ -722,6 +832,11 @@ def main() -> int:
             parser.error(f"unknown ladder slug(s): {sorted(missing)}")
 
     k_of = {**label_to_k(), **extra_k}
+    unjoined = unjoined_labels(registry, k_of, args.tile_join)
+    if unjoined:
+        parser.error(f"{len(unjoined)} committed ranking label(s) have no K in "
+                     "the inventories, so no admissible set could be stated in "
+                     "pass counts: " + "; ".join(unjoined))
     names = {**display_names(), **extra_names}
     out_root = args.output_dir
     out_root.mkdir(parents=True, exist_ok=True)

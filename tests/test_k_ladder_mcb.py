@@ -18,11 +18,36 @@ The driver reimplements no statistics, so these tests target what it does own:
   statistic rather than reporting an admissible set over the wrong cells;
 * the registry, whose whole purpose is that every ladder is computed on its
   OWN frame and reference.
+
+Added 2026-10-31 (S167, after the S166 K-ladder tile-join record § 4 item 6):
+
+* the DEFAULT path, replayed. ``main`` with the committed registry runs end to
+  end over the committed per-ladder artefacts, in place of the bootstrap
+  subprocess, and reproduces the committed ``mcb/summary.json`` (all but its
+  timestamp) and ``mcb/table.md`` byte for byte. Each replayed artefact must
+  also record the call the default would make today: board, metric, buffer,
+  bootstrap, seed and input paths;
+* the red sentinel. An inventory cut the way ``0fc2d6389`` cut the compat
+  export is refused at launch, before any bootstrap, with every missing label
+  named;
+* PI ruling D71's label: for the seven ladders now reported on D51's clipped
+  basis, the default is the as-evaluated record. That label holds only while
+  the clipped sets (S166) agree with it on every admissible K set and best K.
+
+Red sentinel, run 2026-10-31: on the pre-fix script (a git worktree of
+``86a6c19f9``, real files), 4 tests fail and 16 pass. The replay fails in
+``summarise`` with ``KeyError: 'pv-min-text-t0.3-n1-opmax'``, the S166
+defect. The label-join test fails with "no K for pv-min-text-t0.3-n5-opmax".
+The slug and refusal tests fail because the functions they call do not
+exist yet. On the fixed script all 20 pass. The D71 test was added after
+that run, with its own sentinel. A copy of the clipped summary with K = 3
+removed from tier E's F1 set turns it red on ``('tier-e', 'f1')``.
 """
 
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -304,6 +329,12 @@ def test_registry_analysis_ids_match_the_committed_tierings() -> None:
 #: through the inventory. Whether to re-run their MCB and MCC test on clipped
 #: cells or keep them with a disclosure is for the PI; until then the gap is
 #: pinned here, so any other unjoinable label still fails.
+#:
+#: Dated update 2026-10-31 (S167): pinning the gap hid a defect. The default
+#: registry could not run (S166 K-ladder tile-join record § 4 item 6). The
+#: driver now joins K through the canonical ``phase2/ladders.json``, which
+#: keeps these six ladders, so their labels must join. They stay named here
+#: so their join is asserted explicitly rather than by omission.
 WITHHELD_ON_THE_CLIPPED_BASIS = frozenset({
     "phase2-flash-minimal-text-n30-t07-text-t0-3",
     "phase2-flash-minimal-text-n30-t07-text-t1-0",
@@ -317,23 +348,47 @@ WITHHELD_ON_THE_CLIPPED_BASIS = frozenset({
 def test_label_to_k_covers_every_committed_ranking_label() -> None:
     """An admissible set is only useful as a statement about K.
 
-    Every committed ranking label joins to a K, except those of the six
-    ladders the compat inventory withholds on the D51 clipped basis, which
-    must fail to join entirely (and the inventory must say why).
+    Every committed ranking label joins to a K. That includes the 24 labels
+    of the six ladders the compat export withholds on the D51 clipped basis,
+    because their committed as-evaluated MCB rankings are still in the
+    registry (dated update 2026-10-31; the test previously asserted the
+    opposite).
     """
     k_of = mcb.label_to_k()
-    compat = json.loads((mcb.BASE_DIR / mcb.PHASE2_INVENTORY).read_text(encoding="utf-8"))
-    clipped = [s for s in compat["skipped"]
-               if s.get("score_basis") == "clip-to-common-assessed-area"
-               and s["family"].startswith("Gemini 3 ")]
-    assert len(clipped) == len(WITHHELD_ON_THE_CLIPPED_BASIS)
-    for entry in mcb.ladder_registry():
+    registry = mcb.ladder_registry()
+    for entry in registry:
         labels = list(mcb.committed_ranking(entry["tiering"]))
-        if entry["slug"] in WITHHELD_ON_THE_CLIPPED_BASIS:
-            assert labels and not any(label in k_of for label in labels), entry["slug"]
-            continue
+        assert labels, entry["slug"]
         for label in labels:
             assert label in k_of, f"{entry['slug']}: no K for {label}"
+    withheld = [label for entry in registry
+                if entry["slug"] in WITHHELD_ON_THE_CLIPPED_BASIS
+                for label in mcb.committed_ranking(entry["tiering"])]
+    assert len(withheld) == 24, "six four-rung ladders"
+    assert mcb.unjoined_labels(registry, k_of) == []
+
+
+def test_phase2_slug_matches_the_builders_export() -> None:
+    """The canonical inventory names no slugs, so the driver rebuilds them.
+
+    The rebuilt slug must equal the one the builder writes into its export,
+    on every ladder the export still carries. It must also cover every Phase
+    2 ladder of the registry, so every row of the table gets its family name.
+    """
+    compat = json.loads(
+        (mcb.BASE_DIR / mcb.K_LADDER_DIR / "phase2/ladders-compat.json")
+        .read_text(encoding="utf-8"))
+    assert compat["ladders"]
+    for ladder in compat["ladders"]:
+        assert mcb.phase2_slug(ladder["proposer_pool"]) == ladder["slug"]
+    inventory = json.loads(
+        (mcb.BASE_DIR / mcb.PHASE2_INVENTORY).read_text(encoding="utf-8"))
+    slugs = {mcb.phase2_slug(ladder["proposer_pool"])
+             for ladder in inventory["ladders"]}
+    assert set(mcb.PHASE2_SLUGS) <= slugs
+    names = mcb.display_names()
+    for entry in mcb.ladder_registry():
+        assert entry["slug"] in names, entry["slug"]
 
 
 def test_withheld_family_is_recorded_with_its_three_cells() -> None:
@@ -341,6 +396,144 @@ def test_withheld_family_is_recorded_with_its_three_cells() -> None:
     assert len(mcb.WITHHELD["cells_withheld"]) == 3
     assert mcb.WITHHELD["n_rungs_withheld"] == 2
     assert "tile-join invariant" in mcb.WITHHELD["why"]
+
+
+# ── the default path, replayed ────────────────────────────────────────
+
+#: The committed default run's output directory (the CLI's default).
+COMMITTED_MCB = mcb.K_LADDER_DIR / "mcb"
+
+
+def _replay_committed_artefacts(calls: list[tuple[str, str]]) -> Any:
+    """A stand-in for :func:`mcb.run_mcb` that reads the committed artefacts.
+
+    The bootstrap is the board tool's, tested with the tool. What the driver
+    owns is everything around it, so the replay hands each call the artefact
+    the committed run wrote. It refuses the hand-off unless that artefact
+    records the call the default makes today, so a registry that drifted from
+    its committed inputs fails here rather than replaying the wrong file.
+
+    Args:
+        calls: Collects ``(slug, metric)`` for every call made.
+
+    Returns:
+        A function with :func:`mcb.run_mcb`'s signature.
+    """
+    def runner(entry: dict[str, Any], metric: str, out_dir: Path,
+               bootstrap: int,
+               tile_join: str = mcb.TILE_JOIN_DEFAULT) -> tuple[Path, dict[str, Any]]:
+        calls.append((entry["slug"], metric))
+        name = mcb.artefact_name(entry["analysis_id"], metric, entry["buffer_m"],
+                                 tile_join)
+        path = mcb.BASE_DIR / COMMITTED_MCB / entry["slug"] / name
+        result = json.loads(path.read_text(encoding="utf-8"))
+        assert result["board"] == entry["analysis_id"]
+        assert result["metric"] == metric
+        assert int(result["buffer_metres"]) == entry["buffer_m"]
+        assert int(result["bootstrap"]) == bootstrap
+        assert int(result["seed"]) == mcb.SEED
+        assert float(result["m_frac"]) == mcb.M_FRAC
+        # The committed artefacts record absolute paths on whichever machine
+        # (or worktree) ran them, so the repo-relative tail is what must match.
+        for key, rel in (("analyses_override", entry["analyses"]),
+                         ("conditions_override", entry["conditions"]),
+                         ("bounds_override", entry["bounds"])):
+            recorded = result.get(key)
+            if rel is None:
+                assert recorded is None, f"{entry['slug']}: {key} {recorded}"
+            else:
+                assert Path(recorded).as_posix().endswith(
+                    "/" + Path(rel).as_posix()), f"{entry['slug']}: {key}"
+        return path, result
+    return runner
+
+
+def test_default_path_reproduces_the_committed_summary(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    """``main`` on the committed registry reproduces the committed outputs.
+
+    Only ``--output-dir`` is passed (the default would overwrite the committed
+    files). Every other setting is the default the 2026-10-15 run used: the
+    committed registry, both metrics, 10,000 resamples and the published tile
+    join.
+    """
+    calls: list[tuple[str, str]] = []
+    monkeypatch.setattr(mcb, "run_mcb", _replay_committed_artefacts(calls))
+    monkeypatch.setattr(sys, "argv",
+                        ["k_ladder_mcb.py", "--output-dir", str(tmp_path)])
+    assert mcb.main() == 0
+    assert len(calls) == 44, "22 ladders, two metrics each"
+
+    committed_dir = mcb.BASE_DIR / COMMITTED_MCB
+    produced = json.loads((tmp_path / "summary.json").read_text(encoding="utf-8"))
+    committed = json.loads((committed_dir / "summary.json").read_text(encoding="utf-8"))
+    for payload in (produced, committed):
+        del payload["generated_at_utc"]
+    assert produced == committed
+    assert ((tmp_path / "table.md").read_text(encoding="utf-8")
+            == (committed_dir / "table.md").read_text(encoding="utf-8"))
+
+
+def test_default_path_refuses_an_inventory_that_lost_a_ladder(
+        tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
+        capsys: pytest.CaptureFixture[str]) -> None:
+    """Red sentinel: the S166 defect class is refused at launch.
+
+    The canonical inventory is cut the way ``0fc2d6389`` cut the compat
+    export, dropping the six Gemini 3 ladders reported clipped. The default
+    run must then exit before any bootstrap, naming all 24 labels, rather
+    than fail in ``summarise`` after the first ladder's bootstrap.
+    """
+    inventory = json.loads(
+        (mcb.BASE_DIR / mcb.PHASE2_INVENTORY).read_text(encoding="utf-8"))
+    inventory["ladders"] = [
+        ladder for ladder in inventory["ladders"]
+        if mcb.phase2_slug(ladder["proposer_pool"])
+        not in WITHHELD_ON_THE_CLIPPED_BASIS]
+    cut = tmp_path / "ladders-cut.json"
+    cut.write_text(json.dumps(inventory), encoding="utf-8")
+    # An absolute path replaces BASE_DIR when joined, so the driver reads the cut.
+    monkeypatch.setattr(mcb, "PHASE2_INVENTORY", cut)
+
+    calls: list[tuple[str, str]] = []
+    monkeypatch.setattr(mcb, "run_mcb", _replay_committed_artefacts(calls))
+    monkeypatch.setattr(sys, "argv",
+                        ["k_ladder_mcb.py", "--output-dir", str(tmp_path / "out")])
+    with pytest.raises(SystemExit) as exit_info:
+        mcb.main()
+    assert exit_info.value.code == 2
+    assert calls == [], "no bootstrap may run on an inventory that cannot join"
+    stderr = capsys.readouterr().err
+    assert "24 committed ranking label(s) have no K" in stderr
+    assert "phase2-image-n5-image-t0-3: pv-min-image-t0.3-n1-opmax" in stderr
+    assert not (tmp_path / "out" / "summary.json").exists()
+
+
+def test_as_evaluated_record_has_the_clipped_sets() -> None:
+    """The D71 label holds only while the two bases agree on every set.
+
+    PI ruling D71 keeps the default as the as-evaluated record for the seven
+    ladders now reported on D51's clipped basis, on the evidence that both
+    bases give the same Hsu admissible K set and best K on both metrics. If a
+    re-run of either side breaks that, the label "as-evaluated record" no
+    longer describes a basis-free result, and the ruling must be revisited.
+    This test turns red when that happens.
+    """
+    record = mcb.AS_EVALUATED_RECORD
+    assert set(record["slugs"]) == WITHHELD_ON_THE_CLIPPED_BASIS | {"tier-e"}
+
+    def ladders(path: Path, prefix: str = "") -> dict[str, dict[str, Any]]:
+        data = json.loads((mcb.BASE_DIR / path).read_text(encoding="utf-8"))
+        return {lad["slug"].removeprefix(prefix): lad for lad in data["ladders"]}
+
+    as_evaluated = ladders(COMMITTED_MCB / "summary.json")
+    clipped = ladders(record["clipped_summary"], record["clipped_slug_prefix"])
+    assert set(clipped) == set(record["slugs"])
+    for slug in record["slugs"]:
+        for metric in ("f1", "mcc"):
+            a, c = as_evaluated[slug][metric], clipped[slug][metric]
+            assert a["hsu_admissible_K"] == c["hsu_admissible_K"], (slug, metric)
+            assert a["best_K"] == c["best_K"], (slug, metric)
 
 
 # ── the § 6.1 table ───────────────────────────────────────────────────
