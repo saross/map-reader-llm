@@ -33,6 +33,7 @@ This repository contains a preregistered study using Vision Language Models (VLM
 - **Phase references**: Use format "Phase 2a", "Phase 3b" when referencing execution plan phases
 - **Config files**: Prompt configurations are in `prompts/configs/`, system instructions in `prompts/system-instructions/`
 - **Testing**: Extend or update `tests/` when adding new scripts or significantly changing existing ones; follow the tier1/tier2 pytest marker pattern (see `tests/README.md` and `conftest.py`)
+- **Perfect-detector test** (PI, 2026-11-01): every scorer and every metric gets a tier-1 test that feeds the ground truth back as the prediction, in every shape the pipeline produces (merged and unmerged, single and replicated), and asserts the perfect score. A metric that cannot give a flawless pipeline a perfect score is measuring the scorer. It costs one synthetic input. The published tile join scored a perfect merged detector tile-MCC 0.8711 and survived months of audits before this test caught it (D72; Obs 515)
 - **Gap analysis**: Before implementing new workflow phases, run a "dry-run simulation"—mentally execute each step checking whether required inputs, scripts, and configs exist; document missing pieces before writing code
 - **Linting**: Run `ruff check` on modified Python files and `npx markdownlint-cli2` on modified Markdown files before committing. Config in `ruff.toml` (the only ruff configuration; it enforces line length 100) and `.markdownlint.json`. Pre-existing violations in untouched files are legacy debt — fix them when touching those files, not in bulk
 
@@ -41,6 +42,16 @@ This repository contains a preregistered study using Vision Language Models (VLM
 Before committing API spend or compute to a new experimental phase, run the project's phase-boundary check — your harness entry point names the mechanism. It surfaces under-powered assumptions from prior phases that should be validated before scaling. Trigger proactively when recognising a phase boundary — do not wait for the user to invoke it.
 
 Phase boundaries include: moving from pilot to full-corpus evaluation, switching from parameter optimisation to production runs, and applying a configuration selected on a subset to a larger dataset.
+
+## Long-Running Work: Waves and Gates
+
+**The default for corpus-scale or multi-hour work** (PI, 2026-11-01, D72). Plan and specify it as long-running jobs, multi-agent where the work splits, rather than pair-programming through it step by step in conversation. The PI wants the project to move to this way of working and felt it had stalled, so propose it unprompted whenever a task fits.
+
+- **Waves with milestones.** Divide the work into waves. Each wave has a written specification (inputs, outputs, the gate it must pass, and what stops it) and ends at a milestone. At the milestone the PI reviews the evidence and approves before the next wave launches. Decisions are taken at gates with evidence in hand, not in the flow of a conversation.
+- **Smoke tests and pilots first.** Prove a wave works on a handful of cases, or run a pilot that settles a ruling, before scaling. A failed smoke test is a cheap stop.
+- **An approved wave runs to completion.** An overnight run does not stop at its priority subset when it could carry on. Watch it on terminal state and log staleness (see Compute Location below).
+- **Cross-model review of definition changes.** A decision record that changes a metric's definition, or how a metric is computed, is reviewed by an agent of the other model family than its author before any compute is spent on it (PI, 2026-11-01). Deliver the review by agent mail or as a committed file.
+- **Exemplar:** `planning/tile-join-resolution-2026-11-01.md` § 5 (waves R and 1–4, gates G1–G4, milestones M1–M4).
 
 ## Research Finding Calibration
 
