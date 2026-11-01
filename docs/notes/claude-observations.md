@@ -3494,3 +3494,75 @@ artefacts I touched that day misses the ones with the most authority.
 terms across every artefact class (`results/run-analyses.json` outcomes
 included) before writing the revisit list, and say which classes were
 searched.
+
+## claude-obs 170 — 2026-11-01: Self-critique — I chose among inherited options without testing the premise they shared
+
+**Pattern.** The S166 records framed the tile-join question as options A, B
+and C, and I recommended B: keep the published `id` join and narrow claims to
+what holds under all three joins. Every option assumed `id` was a valid
+measurement. The test that refuted that assumption, ground truth scored as
+its own detections, took one tool call: a perfect merged detector scores
+tile-MCC 0.8711 under `id`. I ran it only after Shawn paused the walk-through
+("consistently incorrect").
+
+**Lesson.** An option set inherited from an earlier record carries that
+record's premises. Choosing the best option inside it is no better than the
+premise; the cheapest validity check comes before the comparison.
+
+**How to apply.** Before recommending among measurement or scoring options,
+feed ground truth through each one and confirm it scores perfectly. An option
+that fails is not an option. Say which premise the inherited framing shares,
+and whether it was tested.
+
+## claude-obs 171 — 2026-11-01: Self-critique — I built a test to freeze a committed artefact without asking what basis it encoded
+
+**Pattern.** Fixing `k_ladder_mcb.py`'s default, I noticed the committed
+`mcb/summary.json` was written 1 h 41 min before the clipped rebuild, and that
+the S164 test comment left the basis "for the PI". I still built the fix so
+the default reproduces that as-evaluated record, and did not flag it. A side
+agent raised it, and it became D71.
+
+**Lesson.** A reproduction test freezes a basis as well as a set of numbers.
+When a committed artefact predates a ruling or rebuild that touches its
+inputs, "reproduce it" is itself a choice for the PI.
+
+**How to apply.** Before writing a test that pins a committed output, compare
+the output's date with every later ruling or rebuild that touches its inputs.
+Name any pending choice to the PI before committing, with the evidence of how
+much the basis matters.
+
+## claude-obs 172 — 2026-11-01: Shawn asks how big an accepted inconsistency is at every level before approving
+
+**Pattern.** I recommended keeping the as-evaluated MCB record because the
+admissible K sets and best K were identical on both bases. Shawn did not
+approve on that. He asked whether values moved enough to change rankings and
+whether they touched registered results. The full check (rung deltas, one tied
+order swap, 0 of 84 significance flips, the signed row already labelled) is
+what he approved on.
+
+**Lesson.** A set-level invariance argument is not, for Shawn, evidence that
+an inconsistency is minor. He judges by what a reader would see: values,
+orderings, tests and registered texts.
+
+**How to apply.** When recommending an option that accepts a known
+inconsistency, put its size in one table up front: per-value deltas,
+ordering changes, test flips, and which registered or paper texts quote the
+affected numbers.
+
+## claude-obs 173 — 2026-11-01: Shawn escalates from a claim walk-through to a principled definition and a gated wave plan
+
+**Pattern.** Mid walk-through, Shawn stopped the claim-by-claim work. He
+stated the stakes (results possibly contaminated, a one-week deadline, a
+top-tier journal's low tolerance for evaluation errors) and asked what the
+principled, scientifically valid approach is. He then ruled on the
+definition in four lines, and set the working mode: specified, long-running,
+multi-agent waves with milestones he approves, smoke tests and pilots.
+
+**Lesson.** A defect that reaches many signed artefacts is not settled claim
+by claim. The order that worked was: scope (what is untouched), a validity
+test, the registered definition, rulings, then waves.
+
+**How to apply.** When a defect's reach spans more than a handful of signed
+artefacts, propose the scope check, the principled definition with its
+validity test, and a gated wave plan before doing any claim-level work. Keep
+claim restatement for the last wave.

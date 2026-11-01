@@ -1635,3 +1635,17 @@ only his remarks, quoted, and nothing awaits a verdict.
   zbook to it" (2026-10-30) — Claude had found zbook's venv 53 pins away from sapphire's (pandas 2.3
   against 3.0), called sapphire's venv the environment of record, and rebuilt zbook to match it
   exactly before asking whether to record the rule.
+
+## 2026-11-01 — map-reader-llm: Session 167 (the MCB default; the tile-join pause)
+
+- "Before approval I wanted to confirm that the extent of this difference is actually minor."
+  (2026-10-31) — Claude had recommended keeping the MCB driver's default as the as-evaluated record,
+  citing only that the admissible K sets and best K were identical on both bases; the rung values,
+  rankings, tests and registered texts had not yet been checked.
+- "working around this in various ways *may* produce consistent outcomes, but they seem
+  consistently incorrect" (2026-11-01) — Claude had recommended option B for the tile join: keep
+  the published `id` join and narrow MCC claims to what holds under all three joins.
+- "One key to making this work will be planning and specifying long-running, likely-multi-agent
+  tasks for you rather than 'pair programming' our way through, with specific milestones where I
+  review and approve before launching the next wave of long-running tasks." (2026-11-01) — said
+  when ruling on the tile-join fix, with a week left before the write-up should begin.
