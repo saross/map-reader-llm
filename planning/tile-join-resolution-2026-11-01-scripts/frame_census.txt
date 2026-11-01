@@ -1,0 +1,36 @@
+## Frames per signed row, and geometric-join coverage (text match)
+k-ladder-2026-09-12: 79/94 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x40; inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson x50; outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x4
+gs-era2-verified-board-2026-09-10: 103/103 covered | inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson x103
+verifier-uplift-pairing: 29/170 covered | inputs/vectors/bounds/256/full_evaluation_bounds.geojson x3; inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x86; inputs/vectors/bounds/384/full_evaluation_bounds.geojson x50; inputs/vectors/bounds/384/h10_test_bounds.geojson x4; inputs/vectors/bounds/full_evaluation_bounds.geojson x5; outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x21
+null-exemplar-sensitivity-2026-09-13: 153/235 covered | inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson x153; inputs/vectors/bounds/full_evaluation_bounds.geojson x82
+grid-postverifier-2026-08-18: 0/4 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x4
+grid-tilesize-overlap-2026-08-18: 0/4 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x4
+gemini37-screen-2026-08-28: 0/4 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x4
+gemini38-screen-armv-2026-09-04: 0/3 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x3
+gemini37-fourth-cell-gs-leg-2026-08-31: 0/2 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x2
+image-b-modality-2026-08-28: 0/2 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x2
+image-b-thinking-pair-2026-08-28: 0/2 covered | outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson x2
+pass-budget-pareto-v2: 0/7 covered | inputs/vectors/bounds/384/full_evaluation_bounds.geojson x7
+tile-level-f1: 0/10 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x8; inputs/vectors/bounds/384/full_evaluation_bounds.geojson x2
+tile-level-f1-r2: 0/10 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x8; inputs/vectors/bounds/384/full_evaluation_bounds.geojson x2
+gemini3-image-55map-2026-09-16: 0/25 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x25
+gemini37-image-55map-2026-09-13: 6/24 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x24
+gemini37-image-55map-k5-replicate-2x2-2026-09-20: 0/16 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x16
+gemini37-55map-grid-2026-08-31: 0/8 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x8
+55map-r2-leaderboard-mcc-50m: 0/8 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x8
+h13-overlap-2026-08-18: 0/3 covered | outputs/h13/scoring/bounds/h13_common_bounds.geojson x3
+obs280-shared-reference-r2: 0/8 covered | inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson x8
+
+## Frame overlap (summed tile area / union area; 1.0 = partition)
+inputs/vectors/bounds/256/full_evaluation_bounds.geojson: 1032 tiles, 1.2853
+inputs/vectors/bounds/384/55maps_evaluation_bounds.geojson: 8541 tiles, 1.4527
+inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson: 487 tiles, 1.2783
+inputs/vectors/bounds/384/full_evaluation_bounds.geojson: 487 tiles, 1.2768
+inputs/vectors/bounds/384/h10_test_bounds.geojson: 327 tiles, 1.1743
+inputs/vectors/bounds/full_evaluation_bounds.geojson: 340 tiles, 1.2814
+outputs/grid-2026-08-18/scoring/bounds/grid_common_bounds.geojson: 487 tiles, 1.2834
+outputs/h13/scoring/bounds/h13_common_bounds.geojson: 340 tiles, 1.2918
+
+## Era-2 board: detections seen on 2+ tiles (cells recording source_tiles)
+cells with the list: 47; without: 56
+1 tiles: 15319 (80.6%), 2+ tiles: 3698 (19.4%)
