@@ -20211,8 +20211,8 @@ verified 2026-06-11);
 ## Observation 363: The completeness sweep — 18 never-swept PV pools scored, the Pro verifier matters on high-recall pools, and the headline survives a global-optimum check (Session 113, 2026-06-11)
 
 *Source anchors: `results/verifier-robustness/unswept_pools_sweep.json`
-and `results/verifier-robustness/unswept_pools_sweep.log` (147-dir audit
-+ 18-cell sweep; generated 2026-06-11T06:33:29Z; verified 2026-06-11);
+and `results/verifier-robustness/unswept_pools_sweep.log` (147-dir
+audit + 18-cell sweep; generated 2026-06-11T06:33:29Z; verified 2026-06-11);
 `results/verifier-robustness/pro_vf_permutations.json` (Pro-vf vs high6 /
 headline31 / min11 tile-swap permutation tests, 10,000 permutations, 487
 tiles; verified 2026-06-11);
@@ -38497,3 +38497,69 @@ Obs 433 and Obs 482).
 2026-10-30), `results/e43-board-regen/bh-families/families_recomputed.{md,csv}`;
 `reports/s166-agent-records/e72-group7.md`; `scripts/regen_e43_board.py`;
 `planning/pi-decisions-2026-09-20.md` D69 (Q15), D60 (3).
+
+## Observation 515: The published tile join gives a perfect merged detector tile-MCC 0.8711 — the board's F1/MCC disagreement and "tile-MCC falls with K" are better read as scorer artefacts; symbol-level F1 is untouched (Session 167, 2026-11-01)
+
+**Context.** The Principal Investigator (PI) approved this observation at
+the Session 167 handoff. It replaces the candidate held over from
+Session 166, whose framing (that the disagreement holds "under `id` only")
+D72 overtook. Session 166's tile-join records left open how a merged
+point's `source_tile` is chosen. The consensus library answers it: the
+name "is still the alphabetically first" of the tiles a cluster's members
+were seen on (`scripts/lib_consensus.py:307–309`). The published `id` join
+books a detection to that one name, while a reference counts in every tile
+it lies in.
+
+**What was established.** The 435 gold-standard reference mounds in the
+Era-2 frame (`inputs/vectors/bounds/384/era2_b_intersection_bounds.geojson`;
+117 of them, 26.9 %, in two or more tiles), scored as their own
+detections:
+
+| Perfect pipeline | `id` | `geometric-primary` | `geometric-contains` |
+|---|---|---|---|
+| merged: one point per mound, named for its alphabetically first tile | **0.8711** (TP 196, FN 33) | 1.0000 | 1.0000 |
+| per-tile: one point per mound per containing tile | 1.0000 | 1.0000 | 1.0000 |
+
+Symbol-level F1, precision and recall are matched per map on geometry
+before any tile is consulted (`scripts/lib_advanced_metrics.py:2899`), so
+none of them moves.
+
+**Reading.**
+
+1. **This is a validity failure, not a sensitivity.** Under `id`, every
+   merged mound seen on two overlapping tiles leaves a false-negative tile
+   that the pipeline did not cause. Every consensus and verified cell
+   merges.
+2. **The board's F1/MCC disagreement and "tile-MCC falls with K" are better
+   read as scorer artefacts.** This corrects the reading of Obs 482 and
+   Obs 513, and of claims R3-12 and R3-13. The stage reversal (K-ladder
+   findings § 8.6), which held under all three joins in Session 166, is
+   not in question.
+3. **The corrected values follow from D72's re-score**: `geometric-contains`
+   for tile classification (OSF § 4.2, "Has mounds" × "Detected ≥1 mound",
+   read literally) and `geometric-primary` for the per-tile F1 count
+   tables.
+
+**For the paper.** Cite no tile-MCC value or MCC comparison until the
+re-score lands. Report the correction as erratum E93, with old and new
+values.
+
+**Caveats.** The test uses the references themselves, so it proves the
+rule's failure, not its size on any real cell. In the 47 Era-2 board cells
+whose detection files record `source_tiles`, 19.4 % of detections were
+seen on two or more tiles. Each committed cell's change is measured by
+Wave 2 of `planning/tile-join-resolution-2026-11-01.md`.
+
+**Findable later.** perfect-detector test, tile join, `id` join,
+alphabetically first source_tile, merged detections, overlapping tiles,
+0.8711, geometric-contains, geometric-primary, OSF § 4.2, D72, erratum E93,
+F1/MCC disagreement, tile-MCC falls with K.
+
+**Related.** Obs 482 and Obs 513 (the board-grain F1/MCC reading, corrected
+here); the Session 166 records `reports/s166-agent-records/mcc-join-tiering.md`
+and `k-ladder-mcc-join.md`; `reports/tile-mcc-geometric-join-2026-09-12.md`
+(the join's original census).
+
+**Artefacts**: `planning/tile-join-resolution-2026-11-01.md` § 2;
+`planning/tile-join-resolution-2026-11-01-scripts/perfect_detector.{py,txt}`
+and `frame_census.{py,txt}`; `planning/pi-decisions-2026-09-20.md` D72.
