@@ -59,8 +59,11 @@ then `planning/pi-decisions-2026-09-20.md` **D72** and **D71**.
 
 **Carry-forward.**
 
-- Held for the PI's verdict: the Obs 515 candidate (S166). It is now superseded in framing by D72,
-  and the S167 handoff drafts a replacement.
+- Obs 515 is written (approved at the S167 handoff; it replaces the held S166 candidate).
+- The PI approved three standing rules, now in `docs/agent-guidance.md`: the perfect-detector test
+  for every scorer and metric; the wave-and-gate default for long-running work ("I'm attempting to
+  move us towards 'wave-and-gate' workflows but I feel like we've stalled lately", so propose it
+  unprompted); and cross-model review of any metric-definition change before compute.
 - D71's held wording items are folded into Wave 4.
 - S166's carry-forward otherwise stands: the merged branches on GitHub, sapphire's eight `s164-*`
   scratch directories, and sapphire's stale checkout.
