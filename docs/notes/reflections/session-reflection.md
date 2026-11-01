@@ -12221,3 +12221,62 @@ pattern never anticipated.
 and an outside reviewer, while holding every wording, every merge and every
 deletion to an explicit answer. That combination let the night move fast
 without anything landing that he had not seen.*
+
+## Session 167 — 2026-10-31 to 11-01 — the session where a one-call test stopped a week of workarounds
+
+*First-hand: this instance did all the session's work directly, on zbook,
+with no compaction and no subagents. A side agent's note reached me through
+the PI; its reasoning is not mine to reconstruct.*
+
+**What surprised you about this session?** How little it took to settle a
+question that two sessions had framed as a choice. S166 left three options
+for the tile join (keep `id` with a sensitivity sentence, narrow claims to
+what holds under all three joins, revisit the join), and the records
+treated all three joins as defensible measurements that happen to
+disagree. Feeding the gold-standard reference mounds back in as their own
+detections, merged one point per mound as the pipeline merges, took one
+script and a few seconds. Under `id` it gave tile-MCC 0.8711; under both
+geometric joins, 1.0. The cause was a single line of documented behaviour:
+a merged point is named for the alphabetically first tile it was seen on.
+So the question was not which convention to prefer: one of the three
+conventions could not measure what it claimed to. What surprised me most is
+that the check is obvious in hindsight, and that nobody (me included) had
+run it in the months since the join was chosen, through two audits and an
+overnight sensitivity study.
+
+**Where did you and the human disagree, and who was right?** Twice, and the
+PI was right both times. First, I recommended keeping the MCB driver's
+default as the as-evaluated record on the evidence that its admissible K
+sets matched the clipped ones. The PI would not approve on a set-level
+argument and asked whether values had moved enough to change rankings or
+registered texts. The full check found one ordering swap inside a
+statistical tie, zero significance flips in 84 tests, and a signed row that
+already labelled the basis. It confirmed the recommendation, but only the
+full check made it safe to accept. Second, and more consequentially, I
+recommended option B for the tile join. The PI stopped the walk-through:
+workarounds "may produce consistent outcomes, but they seem consistently
+incorrect". He was right in a way I had not seen. B's robustness test
+counts agreement with `id` as evidence, and a rule that fails the
+perfect-detector test cannot lend robustness to anything. I had optimised
+inside an inherited framing, and he questioned the framing.
+
+**What context from this session will be hardest to reconstruct in six
+months?** Why the published tile-MCC changes when no model output did, and
+why the correction is the registered definition and not a new choice. The
+record (`planning/tile-join-resolution-2026-11-01.md`) holds the evidence:
+the perfect-detector table, OSF § 4.2's "Has mounds" × "Detected ≥1 mound",
+and the scope check that symbol-level F1 is matched before any tile is
+consulted. The sequence will be harder to recover. The join was chosen in
+S153 on a sound rationale for single-pass output ("the decision on the tile
+the model saw"). That rationale stopped holding once nearly every cell was
+merged. The defect then showed itself only as a pattern of findings (F1 and
+MCC disagree; MCC falls with K) that looked like science. A future reader
+of the erratum should know that those findings were reported, signed and
+cited before the scorer was found to have produced them.
+
+*Relational note: the session turned when the PI named the stakes (a week,
+a top-tier journal, results that might be contaminated) and asked for the
+principled answer rather than the next ruling. The working mode he set
+(specified waves, milestones he approves, pilots before scale) is a
+response to the same pressure: fewer decisions taken in the flow of a
+conversation, more taken at gates with evidence in hand.*

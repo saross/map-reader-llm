@@ -3566,3 +3566,24 @@ test, the registered definition, rulings, then waves.
 artefacts, propose the scope check, the principled definition with its
 validity test, and a gated wave plan before doing any claim-level work. Keep
 claim restatement for the last wave.
+
+## claude-obs 174 — 2026-11-01: Shawn declines a modal question when it asks him to choose before he understands
+
+**Pattern.** For the MCB basis decision I put the evidence and three
+options into the structured multiple-choice tool, in one dense paragraph.
+Shawn declined it so he could clarify, then asked what actually decided it:
+did the F1 moves change rankings, and did they touch registered results?
+For the next two decisions (the tile-join walk-through, and the principled
+fix) I laid out the evidence as text and asked inline, and he answered in a
+line each.
+
+**Lesson.** A modal question asks for a choice; it cannot carry an
+explanation that a methodology decision needs first. Shawn wants to
+understand the stakes in his own terms before choosing, and a cramped
+option list pushes the understanding into the choice.
+
+**How to apply.** For a methodology or results decision, explain in text
+first (the evidence, its size, what each option changes) and ask the
+question inline. Keep the modal tool for choices whose stakes are already
+clear to him, such as operational or naming choices, or a choice he has
+asked to be given as options.

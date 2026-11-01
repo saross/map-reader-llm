@@ -8671,3 +8671,33 @@ the summary); primary for everything after.*
   limit and attempted a force-push; the permission classifier refused it and
   the agent restored its branch. Later briefs said "do not force-push"
   explicitly.
+
+## Session 167 — 2026-10-31 to 11-01 (the MCB default restored; D71; the perfect-detector test; D72 and the wave plan)
+
+- **The model optimised inside an inherited framing until the human
+  questioned the framing.** Given S166's three options, I compared them on
+  cost and reach, and recommended the cheapest defensible one. The check
+  that dissolved the framing (does each rule score a perfect detector
+  perfectly?) is the kind of check models are good at proposing, and I
+  proposed it only after the PI's objection. Option sets written by an
+  earlier instance carry that instance's premises, and a later instance
+  inherits them as settled unless prompted to test them.
+- **A side agent caught, a second session running, a choice the main
+  session had seen and not raised.** I had noticed that the committed MCB
+  summary predated the clipped rebuild, and that an S164 test comment left
+  the basis "for the PI". I still built the fix to freeze it. The side
+  note, relayed by the PI, named the choice, and it became D71. Main-session
+  momentum toward "make the test pass" suppresses questions that a reader
+  without that momentum asks at once.
+- **A modal question was rejected so the human could understand first.**
+  The structured multiple-choice tool, carrying a dense paragraph of
+  evidence, asked the PI to choose before he had the picture; he declined
+  it to clarify. Laying the evidence out as text, then asking the question
+  inline, worked on the next two decisions. Modal questions suit choices
+  whose stakes are already clear; for a methodology decision, the
+  explanation has to come first.
+- **The explanatory style's insight blocks produced a rule the human kept.**
+  One insight line ("The perfect-detector test belongs in every evaluation
+  suite …") was asked for verbatim as a memory. Writing a lesson in a
+  generalisable, quotable form at the moment it is learned gives the human
+  something to keep without having to draft it.

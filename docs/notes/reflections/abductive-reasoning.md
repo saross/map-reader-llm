@@ -9406,3 +9406,59 @@ When a headline rests on a convention chosen for tractability, test the
 convention before writing about the headline. The join sensitivity had been
 queued as a to-do since S165, and I wrote two pieces of board-level MCC
 text that morning before it ran.
+
+## Entry — 2026-11-01 (Session 167, map-reader-llm): The perfect detector that scored 0.87
+
+**Session:** 42cd4aa3-8f98-4392-911f-5b69cfea0017
+**Instance:** primary
+
+### Surprising fact
+
+The S166 entry ended by naming what would settle the tile-join question:
+"a check of how a merged point's source tile is chosen". The answer, in the
+consensus library's own docstring, was that `source_tile` "is still the
+alphabetically first" of the tiles a cluster's members were seen on
+(`scripts/lib_consensus.py:307–309`). The published `id` join books a
+detection to that one name, while a reference mound counts in every tile it
+lies in. That predicts a false-negative tile for every merged mound seen on
+two overlapping tiles, whether or not the pipeline made any error.
+
+### Probe
+
+I fed the 435 gold-standard reference mounds in the Era-2 frame back in as
+their own detections, so any tile-level error is the scorer's. Two shapes:
+merged (one point per mound, named for its alphabetically first containing
+tile, as consensus and verified cells are) and per-tile (one point per
+mound per containing tile, as an unmerged pass would report). Each was
+scored under all three joins.
+
+### Belief revision
+
+Merged, under `id`: tile-MCC 0.8711, with 33 false-negative tiles that
+the pipeline did not cause. Every other combination gave 1.0000. My belief
+before the probe, and my recommendation an hour earlier, was that the three
+joins were defensible measurements that disagree, so that the right move
+was to report what holds under all of them. After it: `id` is not a
+measurement of the registered quantity for merged output. "Holds under all
+three joins" gives `id` a vote it has not earned. The board's F1/MCC
+disagreement and the K-ladder's "tile-MCC falls with K" are better read as
+artefacts of the scorer than as findings. The registered definition (OSF
+§ 4.2, "Has mounds" × "Detected ≥1 mound") turned out to be the literal
+geometric one, so the fix restores the registration rather than departing
+from it.
+
+### What would change this belief
+
+A demonstration that real merged cells rarely carry multi-tile names would
+shrink the practical effect, though not the invalidity. The test so far
+used the references themselves. In 47 Era-2 board cells whose files record
+`source_tiles`, 19.4 % of detections were seen on two or more tiles, which
+argues against that. Wave 1's smoke test and Wave 2's ledger will measure
+the effect on every committed cell.
+
+### Implications for practice
+
+Before comparing measurement options, give each one the perfect input. It
+is the cheapest test there is, it is independent of every finding built on
+the metric, and it would have caught this defect at the moment the merged
+pipelines first appeared.

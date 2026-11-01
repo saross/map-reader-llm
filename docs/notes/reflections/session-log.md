@@ -10335,3 +10335,57 @@ because `phase2/ladders-compat.json` was cut to seven ladders in
 PI returns to Sydney to complete the move, which is why the queued compute ran tonight, the venv
 was matched, and four branches were merged before the join ruling rather
 than after it.
+
+## Session 167
+
+*2026-10-31 to 2026-11-01; zbook; Opus 5.5 driving; no subagents, no
+compaction. First-hand. US$0 of model API.*
+
+**The S166 MUST: `k_ladder_mcb.py`'s default restored.** `label_to_k` and
+`display_names` now read the canonical `phase2/ladders.json` (all 14
+ladders; a rung's `labels` or `condition_id`), whose K matches all three
+earlier 13-ladder exports. `main` refuses a label without a K before any
+bootstrap. Tier-1 tests: the default path replayed over the 44 committed
+artefacts reproduces `mcb/summary.json` (bar its timestamp) and `table.md`
+byte for byte; a red sentinel; a pin that the clipped and as-evaluated sets
+agree. On the pre-fix script (a worktree of `86a6c19f9`) the new tests fail
+with the S166 `KeyError`. Tier-1 4,525 passed (`933cebf64`). The bootstrap
+was not re-run: S166's `id` run had reproduced `mcb/` exactly, and none of
+its inputs has changed since.
+
+**D71 (`c33c1463d`).** From a side agent's note: the committed MCB summary
+is the as-evaluated record for six Gemini 3 ladders and tier E. Checked
+against the S166 clipped sets: identical admissible K sets, best K and F1
+tiers; 0 of 84 pairwise significance flips; rung moves up to 0.004 (and
+about 0.008 on tier E, whose K = 3 and K = 10 swap places inside a tie).
+The PI ruled to keep the default as that record, labelled
+`AS_EVALUATED_RECORD`.
+
+**The tile-join triage and D72 (`dc32f3fe5`).** Every frame behind the 21
+signed tile-MCC rows overlaps (summed tile area / union 1.17×–1.45×), and
+only 5 rows have any geometric reading. The perfect-detector test (GS
+references as their own merged detections, Era-2 frame) gives tile-MCC
+0.8711 under `id` and 1.0 under both geometric joins. Symbol-level F1,
+precision and recall are untouched (matched before any tile is consulted).
+D72: `geometric-contains` for tile classification (OSF § 4.2 read
+literally); `geometric-primary` for the per-tile F1 count tables; work
+paper-cited first, without stopping runs early; Astra's review from
+amd-tower before any compute. Record and wave plan:
+`planning/tile-join-resolution-2026-11-01.md`, with evidence scripts and
+outputs. Target: data settled by 2026-11-08.
+
+**Handoff.**
+
+- Continuity S167 START HERE (`3a7188139`).
+- user-obs (three of the PI's remarks) and claude-obs 170–173
+  (`5c8e64abb`).
+- Memories `2026-11-01-f3b87f2b6781` (the perfect-detector test, at the
+  PI's request) and `2026-11-01-7c92bb333e0e` (the wave-and-gate working
+  mode).
+- An inbox flag in personal-assistant's data repo (`72c33c8`).
+
+**Contextual assumptions.** Sapphire is offline for three weeks, and zbook,
+matched to it on 2026-10-30, stands in. amd-tower, where the review gate
+runs, had been absent for 167 h and its venv is unmatched. The one-week
+target follows from the PI's wish to start the write-up with every result
+settled.
