@@ -145,12 +145,12 @@ In `scripts/lib_advanced_metrics.py`:
 - `id` stays selectable as a named legacy join, for reproducing historical
   artefacts.
 
-**Retire the single `TILE_JOIN_DEFAULT` name** (recommended). Every
-importer then fails at import and has to choose a purpose explicitly, which
-turns § 2 item 1's silent inversion into a loud failure. The alternative,
-aliasing it to one of the two new names, keeps imports working but leaves
-each caller's meaning unaudited. Then audit all seven drivers in § 2
-item 1. In each, re-express "published" and "sensitivity" against the new
+**Retire the single `TILE_JOIN_DEFAULT` name** (PI, 2026-11-02: "please
+retire TILE_JOIN_DEFAULT as you suggest"). Every importer then fails at
+import and has to choose a purpose explicitly, which turns § 2 item 1's
+silent inversion into a loud failure. Rejected: aliasing it to one of the
+two new names, which keeps imports working but leaves each caller's
+meaning unaudited. Then audit all seven drivers in § 2 item 1. In each, re-express "published" and "sensitivity" against the new
 defaults, and note the change in its header comment.
 
 **Provenance.** Every emitted `tile_classification` block records
