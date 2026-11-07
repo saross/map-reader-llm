@@ -79,7 +79,7 @@ a role in the plan.
 ### 0.1 Verify free space and mount state on rpi-server
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   df -h /opt/encrypted/workspace /mnt/qnap /mnt/vantec; \
   mount | grep -E "(workspace|qnap|vantec)"; \
   ls -la /opt/encrypted/workspace/'
@@ -93,7 +93,7 @@ If workspace is NOT unlocked, stop — the reboot rule prevents easy recovery.
 From each of amd-tower, sapphire, zbook:
 
 ```bash
-ssh -p 2222 -o BatchMode=yes rpi-server 'hostname; date'
+ssh -o BatchMode=yes rpi-server 'hostname; date'
 ```
 
 If any machine prompts for password, fix with `ssh-copy-id` before Stage 1.
@@ -291,7 +291,7 @@ gets a second copy on rpi-server before anything else happens.
 Create the scaffolding:
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   mkdir -p /opt/encrypted/workspace/map-reader-llm/{inputs,outputs,results} && \
   mkdir -p /mnt/qnap/map-reader-llm-archive/{superseded,2026-04-pre-migration-snapshots}'
 ```
@@ -310,7 +310,7 @@ rsync -aHhP --numeric-ids \
   ~/Code/map-reader-llm/inputs \
   ~/Code/map-reader-llm/outputs \
   ~/Code/map-reader-llm/archive \
-  -e "ssh -p 2222" \
+  -e ssh \
   rpi-server:/mnt/qnap/map-reader-llm-archive/2026-04-pre-migration-snapshots/zbook/
 ```
 
@@ -321,14 +321,14 @@ Time estimate: zbook ~80 GB; gigabit Ethernet ~15 min, 100 Mb/s ~2 hours.
 ```bash
 # From zbook — dry-run first
 rsync -aHhP --dry-run --stats \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/inputs/rasters/Russian1981_4326/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/inputs/rasters/Russian1981_4326/
 
 # Real run
 rsync -aHhP --stats \
   --log-file=$HOME/nas-migration-logs/zbook-russian4326.log \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/inputs/rasters/Russian1981_4326/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/inputs/rasters/Russian1981_4326/
 ```
@@ -351,17 +351,17 @@ From zbook:
 
 ```bash
 rsync -aHhP --stats --log-file=$HOME/nas-migration-logs/zbook-phase3a.log \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/phase3a/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-phase3a/
 
 rsync -aHhP --stats --log-file=$HOME/nas-migration-logs/zbook-phase3c.log \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/phase3c/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-phase3c/
 
 rsync -aHhP --stats \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/phase3a-replication/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-phase3a-replication/
 ```
@@ -370,7 +370,7 @@ From amd-tower:
 
 ```bash
 rsync -aHhP --stats \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/pv/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-pv-legacy/
 ```
@@ -379,7 +379,7 @@ rsync -aHhP --stats \
 
 ```bash
 rsync -avnP --checksum \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/phase3a/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-phase3a/ \
   | tail -20
@@ -418,17 +418,17 @@ Three shapes:
 ```bash
 # Union merge for h11:
 # Step 1: sapphire authoritative base (run from sapphire)
-rsync -aHhP -e "ssh -p 2222" \
+rsync -aHhP -e ssh \
   ~/Code/map-reader-llm/outputs/h11/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/outputs/h11/
 
 # Step 2: amd-tower additions only (run from amd-tower)
-rsync -aHhP --ignore-existing -e "ssh -p 2222" \
+rsync -aHhP --ignore-existing -e ssh \
   ~/Code/map-reader-llm/outputs/h11/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/outputs/h11/
 
 # Step 3: zbook additions only (run from zbook)
-rsync -aHhP --ignore-existing -e "ssh -p 2222" \
+rsync -aHhP --ignore-existing -e ssh \
   ~/Code/map-reader-llm/outputs/h11/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/outputs/h11/
 ```
@@ -441,7 +441,7 @@ to re-evaluate D3.
 ```bash
 # After rpi has sapphire's h11, check from zbook:
 rsync -aHhP --dry-run --checksum --itemize-changes \
-  -e "ssh -p 2222" \
+  -e ssh \
   ~/Code/map-reader-llm/outputs/h11/ \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/outputs/h11/ \
   | grep -E "^>f\.st\.\.\.\.\.\." | head
@@ -483,7 +483,7 @@ off-network reference.
 Initial manual mirror:
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   rsync -aHhP --stats \
     --log-file=/var/log/rsync-qnap-vantec-$(date +%Y%m%d).log \
     /mnt/qnap/map-reader-llm-archive/ \
@@ -560,7 +560,7 @@ Post-publication, revisit DVC (or `git-annex`) with less pressure.
 After Stage 2:
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   cd /opt/encrypted/workspace/map-reader-llm && \
   find inputs outputs results -type f -printf "%p\t%s\t" -exec sha256sum {} \; \
   | awk "{print \$3\"  \"\$1\"  \"\$2}" \
@@ -575,7 +575,7 @@ live. No DVC, no CAS, no state.
 
 Reference only:
 
-- Remote: `dvc remote add -d nas ssh://rpi-server:2222/opt/encrypted/workspace/map-reader-llm/.dvc-remote`
+- Remote: `dvc remote add -d nas ssh://rpi-server/opt/encrypted/workspace/map-reader-llm/.dvc-remote`
 - Initial add: one directory at a time, check `.gitignore` updates between.
 
 ---
@@ -587,7 +587,7 @@ Reference only:
 ### 4.1 Pre-flight: verify NAS is authoritative
 
 ```bash
-rsync -avnP --checksum -e "ssh -p 2222" \
+rsync -avnP --checksum -e ssh \
   ~/Code/map-reader-llm/outputs/phase3a/ \
   rpi-server:/mnt/qnap/map-reader-llm-archive/superseded/outputs-phase3a/ \
   | tail -5
@@ -629,7 +629,7 @@ set -euo pipefail
 
 NAS_ROOT="rpi-server:/opt/encrypted/workspace/map-reader-llm"
 LOCAL_ROOT="$HOME/Code/map-reader-llm"
-SSH_OPTS="-e ssh -p 2222"
+SSH_OPTS="-e ssh"
 
 # List of paths to sync (edit for phase-specific needs)
 PATHS=(
@@ -740,7 +740,7 @@ retention is a non-issue for monthly cadence. A full 70 GB restore under IA
 costs $0.70 one-time — the "insurance pays out" moment where that's trivial.
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   rclone config create r2 s3 \
     provider=Cloudflare \
     access_key_id=<FROM_DASHBOARD> \
@@ -749,14 +749,14 @@ ssh -p 2222 rpi-server '\
     acl=private'
 
 # Test
-ssh -p 2222 rpi-server 'rclone lsd r2:'
-ssh -p 2222 rpi-server 'rclone mkdir r2:map-reader-llm-backup/test && rclone rmdir r2:map-reader-llm-backup/test'
+ssh rpi-server 'rclone lsd r2:'
+ssh rpi-server 'rclone mkdir r2:map-reader-llm-backup/test && rclone rmdir r2:map-reader-llm-backup/test'
 ```
 
 ### 5.3 Sync command
 
 ```bash
-ssh -p 2222 rpi-server '\
+ssh rpi-server '\
   rclone sync \
     /opt/encrypted/workspace/map-reader-llm/ \
     r2:map-reader-llm-backup/live/ \
@@ -804,7 +804,7 @@ R2 IA's zero egress + $0.01/GB storage is the right choice.
 
 ```bash
 # Before leaving: sync to R2 (on rpi-server)
-ssh -p 2222 rpi-server 'rclone sync /opt/encrypted/workspace/map-reader-llm/ r2:map-reader-llm-backup/live/'
+ssh rpi-server 'rclone sync /opt/encrypted/workspace/map-reader-llm/ r2:map-reader-llm-backup/live/'
 
 # On zbook, while travelling, selective pull
 rclone copy r2:map-reader-llm-backup/live/inputs/rasters/Russian1981_32635/ \
@@ -871,7 +871,7 @@ ts=$(date +%Y%m%d-%H%M%S)
 rsync -aHhP \
   --log-file="$LOG_DIR/sync-$ts.log" \
   --stats \
-  -e "ssh -p 2222" \
+  -e ssh \
   "$RUN_DIR/" \
   "rpi-server:/opt/encrypted/workspace/map-reader-llm/${RUN_DIR#$HOME/Code/map-reader-llm/}/"
 
@@ -883,7 +883,7 @@ Invoke from `scripts/4_detect_mounds_batch.py` success path, or manually.
 ### 6.3 Pulling work to amd-tower
 
 ```bash
-rsync -aHhP --update -e "ssh -p 2222" \
+rsync -aHhP --update -e ssh \
   rpi-server:/opt/encrypted/workspace/map-reader-llm/outputs/h11/ \
   ~/Code/map-reader-llm/outputs/h11/
 ```
@@ -908,7 +908,7 @@ rsync -aHhP --update -e "ssh -p 2222" \
 4. Tar from NAS (canonical set):
 
    ```bash
-   ssh -p 2222 rpi-server '\
+   ssh rpi-server '\
      cd /opt/encrypted/workspace/map-reader-llm && \
      tar --exclude="**/crops/crops/**" -czf /tmp/zenodo-release.tar.gz \
          outputs/h11 results MANIFEST-*.tsv'
@@ -946,16 +946,16 @@ By then: smaller data volume, settled canonical location, clearer trade-off.
 
 ```bash
 # Dry-run a transfer
-rsync -aHhP --dry-run --stats -e "ssh -p 2222" SRC/ rpi-server:DEST/
+rsync -aHhP --dry-run --stats -e ssh SRC/ rpi-server:DEST/
 
 # Real transfer with log
-rsync -aHhP --stats --log-file=LOG -e "ssh -p 2222" SRC/ rpi-server:DEST/
+rsync -aHhP --stats --log-file=LOG -e ssh SRC/ rpi-server:DEST/
 
 # Verify completeness
-rsync -aHhPn --checksum -e "ssh -p 2222" SRC/ rpi-server:DEST/ | grep -v "^$"
+rsync -aHhPn --checksum -e ssh SRC/ rpi-server:DEST/ | grep -v "^$"
 
 # Union merge (second/third with --ignore-existing)
-rsync -aHhP --ignore-existing -e "ssh -p 2222" SRC/ rpi-server:DEST/
+rsync -aHhP --ignore-existing -e ssh SRC/ rpi-server:DEST/
 
 # R2 sync (from rpi-server)
 rclone sync /opt/encrypted/workspace/map-reader-llm/ r2:map-reader-llm-backup/live/ --fast-list

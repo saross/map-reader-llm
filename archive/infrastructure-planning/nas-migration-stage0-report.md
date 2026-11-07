@@ -64,21 +64,21 @@ non-interactively, so the ban cannot be cleared from this agent.
 
 1. Wait ~1 hour for fail2ban to expire the ban.
 2. On sapphire, either:
-   - `ssh-copy-id -i <key> -p 2222 rpi-server` after first generating a local
+   - `ssh-copy-id -i <key> rpi-server` after first generating a local
      key (`ssh-keygen -t ed25519`), OR
    - Copy the existing `rpi-server` private key from amd-tower to sapphire
      (user's choice), then add `~/.ssh/config` entry:
 
      ```text
      Host rpi-server
-         HostName 192.168.1.100
-         Port 2222
+         HostName <rpi-server-address>
+         Port <ssh-port>
          User shawn
-         IdentityFile ~/.ssh/id_ed25519_rpi
+         IdentityFile ~/.ssh/<key-file>
          IdentitiesOnly yes
      ```
 
-3. Verify with `ssh sapphire 'ssh -p 2222 -o BatchMode=yes rpi-server hostname'`.
+3. Verify with `ssh sapphire 'ssh -o BatchMode=yes rpi-server hostname'`.
 
 Until resolved, Stage 1.3 / 2.x rsync commands issued from sapphire (notably
 the authoritative `outputs/h11/` push) will not work.
