@@ -575,7 +575,7 @@ live. No DVC, no CAS, no state.
 
 Reference only:
 
-- Remote: `dvc remote add -d nas ssh://rpi-server:2222/opt/encrypted/workspace/map-reader-llm/.dvc-remote`
+- Remote: `dvc remote add -d nas ssh://rpi-server/opt/encrypted/workspace/map-reader-llm/.dvc-remote`
 - Initial add: one directory at a time, check `.gitignore` updates between.
 
 ---
