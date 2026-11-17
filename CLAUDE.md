@@ -19,8 +19,9 @@ from `~/.claude/CLAUDE.md` also apply.
 - **Phase-boundary check**: invoke the `/phase-gate` skill before committing
   API spend or compute to a new experimental phase (rationale and the list
   of what counts as a phase boundary: `docs/agent-guidance.md`).
-- **End-of-session reflection**: invoke the `/reflect` skill. The user will
-  prompt with "let's reflect", `/reflect`, or similar. Reflections are most
+- **End-of-session reflection**: invoke the `/session-reflection:reflect`
+  skill (the research-agent-toolkit plugin). The user will prompt with
+  "let's reflect", `/reflect`, or similar. Reflections are most
   valuable when written by the instance that did the work — trigger before
   compacting rather than after.
 
