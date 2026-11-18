@@ -42,7 +42,19 @@ read from the main checkout by ``--tile-dir``)::
         --json-out reports/tile-join-wave-1/scripts/sheet_check_55map.json \\
         > reports/tile-join-wave-1/scripts/sheet_check_55map.txt
 
+**Pixel convention** (corrected 2026-11-19 after Astra's review): a world
+file's C and F give the centre of the upper-left pixel, so the containing
+pixel is ``floor((x - C) / A + 0.5)`` (columns) and likewise for rows. The
+earlier version floored ``(x - C) / A`` and so could name the pixel up or
+left of the containing one. The rule lives in :func:`world_to_pixel`;
+``seam_own_sheet.py`` and ``sheet_check_gs_frames.py`` use it, and
+``--self-test`` checks it on a synthetic world file and image::
+
+    ~/Code/map-reader-llm/.venv/bin/python \\
+        reports/tile-join-wave-1/scripts/sheet_check_55map.py --self-test
+
 Created: 2026-11-18 (tile-join Wave 1, W1.0, amd-tower / zbook)
+Modified: 2026-11-19 (pixel convention fix and self-test)
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -225,14 +237,125 @@ def pixel_position(tile_dir: Path, tile: dict[str, Any], x: float,
         y: Northing.
 
     Returns:
-        (column, row) in pixels, or None if the world file is absent.
+        (column, row) in edge-indexed pixels (see :func:`world_to_pixel`;
+        the containing pixel is the floor of each), or None if the world
+        file is absent.
     """
     stem = tile["name"].removesuffix(".png")
     world = tile_dir / tile["sheet"] / f"{stem}.pgw"
     if not world.exists():
         return None
-    a, _d, _b, e, c, f = (float(v) for v in world.read_text().split())
-    return (x - c) / a, (y - f) / e
+    return world_to_pixel(read_world_file(world), x, y)
+
+
+def read_world_file(path: Path) -> tuple[float, float, float, float]:
+    """Read an ESRI world file's pixel sizes and upper-left pixel centre.
+
+    The six lines are A (x pixel size), D and B (rotation terms), E (y pixel
+    size, negative for a north-up image), and C and F: the map coordinates
+    of the **centre** of the upper-left pixel. The project's tiler writes
+    them so (``scripts/preprocess_tiling.py``, "World File (.pgw) expects
+    the centre of the top-left pixel"). Rotated images are refused.
+
+    Args:
+        path: The ``.pgw`` file.
+
+    Returns:
+        (a, e, c, f).
+
+    Raises:
+        ValueError: If the rotation terms are not zero.
+    """
+    a, d, b, e, c, f = (float(v) for v in path.read_text().split())
+    if d != 0.0 or b != 0.0:
+        raise ValueError(f"{path}: rotated world file (D={d}, B={b}) not supported")
+    return a, e, c, f
+
+
+def world_to_pixel(world: tuple[float, float, float, float], x: float,
+                   y: float) -> tuple[float, float]:
+    """Convert a map coordinate to edge-indexed (column, row) image coordinates.
+
+    **Convention** (fixed 2026-11-19, after Astra's review). In the
+    returned coordinates pixel ``(i, j)`` covers ``[i, i + 1) x [j, j + 1)``,
+    its centre is at ``(i + 0.5, j + 0.5)``, and the pixel that contains
+    the point is ``(floor(col), floor(row))`` -- the inverse of the edge
+    affine, as Rasterio's ``index`` computes it. Because the world file's
+    C and F give the upper-left pixel's centre, ``(x - c) / a`` is a
+    centre-indexed coordinate (0 at that centre), so half a pixel is added.
+    Before the fix the centre-indexed value was returned and then floored,
+    which put a point in the pixel up or to the left of the containing one
+    whenever it lay in the first half of a pixel.
+
+    Args:
+        world: ``(a, e, c, f)`` from :func:`read_world_file`.
+        x: Easting.
+        y: Northing.
+
+    Returns:
+        (column, row), edge-indexed and fractional.
+    """
+    a, e, c, f = world
+    return (x - c) / a + 0.5, (y - f) / e + 0.5
+
+
+def pixel_self_test() -> list[str]:
+    """Check the pixel convention on a synthetic world file and image.
+
+    A 10 x 8 image with 2 m pixels has its upper-left pixel centred on
+    (1000, 2000), so its outer corner is at (999, 2001). Points at known
+    positions must land in known pixels, through :func:`pixel_position`
+    (which reads the world file) and :func:`measure_pixels` (which reads
+    the colour of the containing pixel; each pixel of the synthetic image
+    has a colour unique to its index).
+
+    Returns:
+        Failure messages; empty if every check passes.
+    """
+    import tempfile  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    failures: list[str] = []
+    width, height, size = 10, 8, 2.0
+    c, f = 1000.0, 2000.0
+    # (description, x, y, expected containing pixel (col, row))
+    cases = [
+        ("upper-left pixel centre", c, f, (0, 0)),
+        ("just inside the outer corner", c - 0.99, f + 0.99, (0, 0)),
+        ("0.4 px left of and above pixel (3, 5)'s centre",
+         c + 3 * size - 0.8, f - 5 * size + 0.8, (3, 5)),
+        ("0.4 px right of and below pixel (3, 5)'s centre",
+         c + 3 * size + 0.8, f - 5 * size - 0.8, (3, 5)),
+        ("0.6 px right of pixel (0, 0)'s centre", c + 1.2, f, (1, 0)),
+        ("lower-right pixel centre", c + 9 * size, f - 7 * size, (9, 7)),
+    ]
+    with tempfile.TemporaryDirectory() as tmp:
+        sheet_dir = Path(tmp) / "S"
+        sheet_dir.mkdir()
+        world_lines = (size, 0.0, 0.0, -size, c, f)
+        (sheet_dir / "S_x0_y0.pgw").write_text(
+            "".join(f"{v}\n" for v in world_lines))
+        pixels = np.zeros((height, width, 3), dtype=np.uint8)
+        for j in range(height):
+            for i in range(width):
+                pixels[j, i] = (100 + i, 100 + j, 200)
+        png = sheet_dir / "S_x0_y0.png"
+        Image.fromarray(pixels).save(png)
+        tile = {"name": "S_x0_y0.png", "sheet": "S"}
+        for label, x, y, (ei, ej) in cases:
+            pos = pixel_position(Path(tmp), tile, x, y)
+            got = None if pos is None else (math.floor(pos[0]), math.floor(pos[1]))
+            if got != (ei, ej):
+                failures.append(f"{label}: pixel_position -> {pos}, floor {got}, "
+                                f"expected {(ei, ej)}")
+                continue
+            rgb = measure_pixels(png, pos[0], pos[1], None)["rgb_at_point"]
+            if rgb != [100 + ei, 100 + ej, 200]:
+                failures.append(f"{label}: measure_pixels read {rgb}, expected "
+                                f"{[100 + ei, 100 + ej, 200]}")
+    return failures
 
 
 def content_span(mask_line: Any) -> tuple[int, int] | None:
@@ -258,8 +381,9 @@ def measure_pixels(png: Path, col: float, row: float, crop_path: Path | None
 
     Args:
         png: Tile image.
-        col: Point's column (may be fractional).
-        row: Point's row.
+        col: Point's edge-indexed column (fractional; the containing pixel
+            is its floor), from :func:`pixel_position`.
+        row: Point's edge-indexed row.
         crop_path: Where to save an enlarged crop with the point marked, or
             None to skip.
 
@@ -339,6 +463,31 @@ def classify(measure: dict[str, Any]) -> str:
     return "ambiguous"
 
 
+def summarise(report: dict[str, Any]) -> dict[str, Any]:
+    """The committed summary: the report without the full contact lists.
+
+    Each reference entry keeps its counts and gains ``non_padding_contacts``
+    (every contact whose verdict is not ``padding``), which
+    ``seam_second_copy.py`` and ``seam_own_sheet.py`` read. Until 2026-11-19
+    this summary was derived from the full output by hand; the derivation is
+    now in code so that a re-run reproduces it.
+
+    Args:
+        report: The full report built by :func:`main`.
+
+    Returns:
+        The summary.
+    """
+    out = {k: v for k, v in report.items() if k != "references"}
+    out["references"] = {}
+    for ref_name, entry in report["references"].items():
+        brief = {k: v for k, v in entry.items() if k != "contacts"}
+        brief["non_padding_contacts"] = [c for c in entry["contacts"]
+                                         if c.get("verdict") != "padding"]
+        out["references"][ref_name] = brief
+    return out
+
+
 def main() -> None:
     """Run the checks for every reference file and print the results."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
@@ -348,7 +497,18 @@ def main() -> None:
                         help="measure the tile pixels at every contact")
     parser.add_argument("--crop-dir", type=Path, default=None)
     parser.add_argument("--json-out", type=Path, default=None)
+    parser.add_argument("--summary-out", type=Path, default=None,
+                        help="write the summary (non-padding contacts only)")
+    parser.add_argument("--self-test", action="store_true",
+                        help="check the pixel convention on synthetic data and exit")
     args = parser.parse_args()
+
+    if args.self_test:
+        failures = pixel_self_test()
+        for failure in failures:
+            print(f"FAIL: {failure}")
+        print("pixel self-test: " + ("FAILED" if failures else "passed"))
+        raise SystemExit(1 if failures else 0)
 
     tiles = load_tiles(BOUNDS)
     frame_sheets = sorted({t["sheet"] for t in tiles})
@@ -438,6 +598,9 @@ def main() -> None:
 
     if args.json_out is not None:
         args.json_out.write_text(json.dumps(report, indent=1, default=list) + "\n")
+    if args.summary_out is not None:
+        args.summary_out.write_text(json.dumps(summarise(report), indent=1,
+                                               default=list) + "\n")
 
 
 if __name__ == "__main__":

@@ -42,6 +42,7 @@ for copying from another machine into ``--extra-tile-dir``)::
         > reports/tile-join-wave-1/scripts/out/sheet_check_gs_frames.txt
 
 Created: 2026-11-19 (tile-join Wave 1, W1.0 follow-up)
+Modified: 2026-11-19 (pixel positions through the shared, corrected helper)
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -67,6 +68,8 @@ from sheet_check_55map import (  # noqa: E402
     inside,
     load_tiles,
     measure_pixels,
+    read_world_file,
+    world_to_pixel,
 )
 
 PROJECT_ROOT = HERE.parents[2]
@@ -115,12 +118,13 @@ def index_images(dirs: list[Path]) -> dict[str, list[dict[str, Any]]]:
             png = pgw.with_suffix(".png")
             if not png.exists():
                 continue
-            a, _d, _b, e, c, f = (float(v) for v in pgw.read_text().split())
+            a, e, c, f = read_world_file(pgw)
             w, h = png_size(png)
             # Footprints under both readings of the world file's origin (the
-            # first pixel's centre, as GDAL writes it, or its corner, as the
-            # earlier scripts' pixel arithmetic reads it); a frame polygon
-            # built either way is matched.
+            # first pixel's centre, as the ESRI definition and the project's
+            # tiler have it, or its corner); a frame polygon built either way
+            # is matched. Pixel positions use the centre reading only
+            # (``world_to_pixel``; before 2026-11-19 they mixed the two).
             boxes = []
             for x0, y1 in ((c - a / 2, f - e / 2), (c, f)):
                 boxes.append((x0, y1 + e * h, x0 + a * w, y1))
@@ -153,8 +157,12 @@ def substitute_image(images: dict, sheet: str, x: float, y: float) -> dict | Non
 
 
 def pixel(img: dict[str, Any], x: float, y: float) -> tuple[float, float]:
-    """Point to (column, row), as ``sheet_check_55map.pixel_position`` does."""
-    return (x - img["c"]) / img["a"], (y - img["f"]) / img["e"]
+    """Point to edge-indexed (column, row), by ``sheet_check_55map.world_to_pixel``.
+
+    The containing pixel is the floor of each coordinate (convention fixed
+    2026-11-19; the helper's docstring gives the derivation).
+    """
+    return world_to_pixel((img["a"], img["e"], img["c"], img["f"]), x, y)
 
 
 def load_gs(path: Path) -> list[tuple[str, str, float, float]]:

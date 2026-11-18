@@ -1,6 +1,6 @@
 # Tile-join Wave 1 — dry run, census, and worklist (W1.0)
 
-> **Last revised**: 2026-11-19 (§ 2.3: every GS frame checked, no map-content contact; seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (pixel-convention fix: §§ 2–2.4 re-measured, r2's `student:04282` becomes a recipient map-content contact and a 1/3-candidate in every file, so 25 r2 references are 2-candidates and 1 a 1/3-candidate; earlier the same day, § 2.4: seam contacts measured on their own sheet; § 2.3: every GS frame checked, no map-content contact; seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), Wave 1 census agent (work item W1.0). Driven from
@@ -16,7 +16,8 @@
 
 The 55-map sheet check (§ 2) found **32 point–tile contacts, from 26
 references, where a reference recorded on one sheet lies on the map
-content of another sheet's tile**, in `inputs/vectors/references/best-available-gt-55maps-r2.geojson`
+content of another sheet's tile** (34 from 27 after the pixel-convention
+fix of 2026-11-19, § 2), in `inputs/vectors/references/best-available-gt-55maps-r2.geojson`
 (the reference of smoke cell 2), with no reference on the contacted sheet
 nearby; in the crops inspected, the point lies on a printed mound symbol
 on the neighbouring sheet (the other contacts are candidates, not
@@ -65,54 +66,91 @@ point, the extent of non-black content along the point's row and column,
 and the colour at the point. Verdict rule: `padding` if the window is at
 least 95 % near-black **and** the point lies outside its row's or column's
 content span; `map-content` if the window is under 50 % near-black and the
-point lies inside both spans; otherwise `ambiguous`. Run on zbook,
-2026-11-18, at `c1a7a23fd`; outputs committed as
+point lies inside both spans; otherwise `ambiguous`. First run on
+zbook, 2026-11-18, at `c1a7a23fd`; **re-run 2026-11-19 at `768cb2a9b`**
+after the pixel-convention fix below. Outputs committed as
 `reports/tile-join-wave-1/scripts/out/sheet_check_55map.txt` (full) and
 `…/out/sheet_check_55map_summary.json` (counts and every non-padding
-contact). Crops of every contact (96 × 96 px around the point, enlarged
-3 ×, point circled in red) are in zbook scratch,
-`~/scratch/wave1/w10/sheet-check/crops/<reference-file-stem>/<ref-id>__<tile-stem>.png`
-(814 for r2, 814, 873, 534, and 544 for the others: the two student
-files yield fewer crop files than contacts because their `uuid` values
-are written as rounded numbers, so file names collide; their contacts are
-all in the committed `.txt`).
+contact; now written by the script's `--summary-out`, where it was
+derived by hand before, with identical content). The pre-fix outputs are
+kept beside them as `…/out/sheet_check_55map-pre-pixel-fix.txt` and
+`…/out/sheet_check_55map_summary-pre-pixel-fix.json`, and
+`scripts/compare_pixel_fix.py` lists every verdict the fix changed
+(`scripts/out/compare_pixel_fix.txt`). Crops of every contact (96 × 96 px
+around the point, enlarged 3 ×, point circled in red) are in zbook
+scratch, `~/scratch/wave1/seam2/pixfix/crops/<reference-file-stem>/<ref-id>__<tile-stem>.png`
+(pre-fix crops: `~/scratch/wave1/w10/sheet-check/crops/`; 814 for r2,
+814, 873, 534, and 544 for the others: the two student files yield fewer
+crop files than contacts because their `uuid` values are written as
+rounded numbers, so file names collide; their contacts are all in the
+committed `.txt`).
+
+**Pixel convention (corrected 2026-11-19).** An ESRI world file's C and
+F terms give the map coordinates of the **centre** of the upper-left
+pixel; the project's tiler writes them so
+(`scripts/preprocess_tiling.py`, "World File (.pgw) expects the centre
+of the top-left pixel"), and the 55-map frame polygons confirm it (on 18
+sampled tiles, each polygon's west and north edges equal C − A/2 and
+F − E/2). So `(x − C) / A` is a centre-indexed coordinate, and the pixel
+that contains the point is `floor((x − C) / A + 0.5)` (likewise for
+rows), the inverse of the edge affine as Rasterio's `index` computes
+it. The first version floored `(x − C) / A` itself, which names the
+pixel up or left of the containing one whenever the point lies in the
+first half of a pixel, while the own-sheet hint (§ 2.4) already assumed
+edge indexing. Astra found this (`~/agent-mail/codex/outbox/claude/20261118T145509Z-astra-seam-pixel-convention-interim.md`).
+The fix is made once, in `sheet_check_55map.world_to_pixel`, which the
+GS-frames and own-sheet scripts now use; `--self-test` on both scripts
+checks six points at known positions against known pixels on a
+synthetic world file and image (passed; with the old formula restored in
+a scratch copy, three of the six fail). Every pixel column and row
+reported below is therefore 0.5 greater than in the first version, and
+window fractions, colours, and spans moved at many contacts. **Verdicts
+changed at exactly two contacts in each file**, the two contacts of one
+feature (r2 `student:04282`, sheet K-35-076-1, in
+`K-35-076-2_x0_y2352.png` and `…_x0_y2688.png`): ambiguous → map
+content, window 0.543 → 0.488. No padding verdict changed in any file.
 
 **Results.**
 
 | Reference file | Points | Cross-sheet pairs ≤ 50 / 100 / 200 / 500 / 1,000 m | Closest cross-sheet pair | Contacts (references) | Padding | Ambiguous | **Map content** (references) | Tracked evaluations naming it (text match) |
 |---|---:|---|---|---:|---:|---:|---:|---:|
-| `best-available-gt-55maps-r2.geojson` | 5,018 | 0 / 0 / 0 / 35 / 155 | 200.7 m | 814 (648) | 764 | 18 | **32 (26)** | 196 |
-| `best-available-gt-55maps.geojson` | 5,010 | 0 / 0 / 0 / 34 / 153 | 200.7 m | 814 (648) | 764 | 18 | **32 (26)** | 67 |
-| `canonical-gt-55maps-r50.geojson` | 5,161 | 24 / 24 / 32 / 69 / 221 | 3.1 m | 873 (697) | 820 | 20 | **33 (27)** | 8 |
-| `student-mounds-55maps-reviewed.geojson` | 4,746 | 0 / 0 / 1 / 33 / — | 188.7 m | 757 (608) | 708 | 16 | **33 (17)** | 58 |
-| `student-mounds-55maps.geojson` | 4,770 | 0 / 0 / 1 / 33 / — | 188.7 m | 767 (614) | 717 | 15 | **35 (19)** | 2 |
+| `best-available-gt-55maps-r2.geojson` | 5,018 | 0 / 0 / 0 / 35 / 155 | 200.7 m | 814 (648) | 764 | 16 | **34 (27)** | 196 |
+| `best-available-gt-55maps.geojson` | 5,010 | 0 / 0 / 0 / 34 / 153 | 200.7 m | 814 (648) | 764 | 16 | **34 (27)** | 67 |
+| `canonical-gt-55maps-r50.geojson` | 5,161 | 24 / 24 / 32 / 69 / 221 | 3.1 m | 873 (697) | 820 | 18 | **35 (28)** | 8 |
+| `student-mounds-55maps-reviewed.geojson` | 4,746 | 0 / 0 / 1 / 33 / — | 188.7 m | 757 (608) | 708 | 14 | **35 (18)** | 58 |
+| `student-mounds-55maps.geojson` | 4,770 | 0 / 0 / 1 / 33 / — | 188.7 m | 767 (614) | 717 | 13 | **37 (20)** | 2 |
 
 (The last column counts tracked `*evaluation.json` files whose text
 contains `"ground_truth": "inputs/vectors/references/<file>"`; it is
 indicative, not a census.) The full 1,000 m counts for the two student
 files and every pair within 500 m are in the committed `.txt`.
 
-**Where.** In r2 every map-content contact involves one of nine sheet
-pairs, all at the seams of the reprojected `_4326` sheets:
+**Where.** In r2, 32 of the 34 map-content contacts involve one of nine
+sheet pairs, all at the seams of the reprojected `_4326` sheets:
 Granit/Chirpan, Granit/Tatarevo, Chirpan/Sredets, Tatarevo/K-35-075-1,
 Skobelevo/Dimitrovgrad, Skobelevo/K-35-075-2, Dimitrovgrad/Galabovo,
 Dimitrovgrad/K-35-076-1, Glavan/K-35-077-1 (reference sheet / tile sheet).
-This is the misregistered overlap the parent record noted ("the same
+The other two are `student:04282`'s, at K-35-076-1/K-35-076-2, two
+sheets without `_4326` in their names; they became map content with the
+pixel-convention fix, and both their window fractions are close to the
+rule's 50 % limit (0.471 on the own sheet, 0.488 on the recipient;
+§ 2.4). The `_4326` seams are the misregistered overlap the parent record noted ("the same
 ground appears on neighbouring sheets about 170 m apart", § 2.4).
 
 **Viewed, after measurement** (crops fetched to amd-tower and read as
 images):
 
 - r2 `student:01862` (Granit) in `K-35-063-2_Chirpan_4326_x0_y672.png`
-  at col 164.6, row 280.7: the point lies on a printed burial-mound symbol
+  at col 165.1, row 281.2: the point lies on a printed burial-mound symbol
   with its label on the Chirpan sheet.
 - r2 `student:02387` (Tatarevo) in `K-35-075-1_x1344_y0.png` at col
-  364.1, row 52.6: the point lies on a printed mound symbol labelled "2" on
+  364.6, row 53.1: the point lies on a printed mound symbol labelled "2" on
   K-35-075-1, just inside its map face.
 - r2 `student:02782` (Dimitrovgrad) in `K-35-076-1_x1344_y0.png` at col
-  262.4, row 89.1: the point lies on a symbol beside a printed mound symbol
+  262.9, row 89.6: the point lies on a symbol beside a printed mound symbol
   and "2" label (map content in any case).
-- r2 `student:01575` (`ambiguous`, window 0.533) in
+- r2 `student:01575` (`ambiguous`, window 0.533; 0.581 after the
+  pixel fix) in
   `K-35-054-4_Voynika_x4032_y672.png`: the point is on the black map edge
   itself, between content and padding.
 
@@ -129,8 +167,8 @@ Where a contact is a second printed copy, the effects differ by level.
 At symbol level, a correct detection of that copy, attributed by D50 to
 the sheet whose tile showed it, has no reference on its sheet and can be
 scored a false positive. At tile level, a tile changes only if it holds
-none of its own sheet's references: 11 of r2's 26 contacted tiles for
-the map-content scope (§ 2.2). The canonical r50 reference differs: it
+none of its own sheet's references: 11 of r2's 28 contacted tiles for
+the map-content scope (§ 2.2; 11 of 26 before the pixel fix). The canonical r50 reference differs: it
 carries 415 `phantom:*` references (`layer` `phantom_canonical`,
 `position_source` `detection_centroid`, `provenance`
 `canonical_review_r50`), and 24 of its cross-sheet pairs lie within
@@ -140,58 +178,65 @@ it does not confirm each feature's identity.
 
 ### 2.1 Every non-padding contact in r2 (the smoke-cell-2 reference)
 
+Re-measured 2026-11-19 with the corrected pixel convention (§ 2). Pixel
+positions are edge-indexed: the containing pixel is the floor of each
+value, and each is 0.5 greater than before the fix. Window fractions,
+colours, and spans moved at many rows; the verdict changed only at rows
+46 and 47 (marked). The pre-fix values are in
+`scripts/out/sheet_check_55map_summary-pre-pixel-fix.json`.
+
 | # | Reference (sheet, id) | Tile it lies in | Pixel (col, row) | Window near-black | RGB at point | Row content span | Column content span | Measured |
 |---:|---|---|---|---:|---|---|---|---|
-| 1 | `K-35-054-1_Straldzha_4326` `student:00962` | `K-35-053-2_x4032_y1344.png` | 91.0, 240.1 | 0.765 | (0, 0, 0) | (0, 86) | — | ambiguous |
-| 2 | `K-35-054-3_Yambol` `student:01202` | `K-35-066-1_x1680_y0.png` | 227.8, 2.6 | 0.914 | (0, 0, 0) | — | (11, 383) | ambiguous |
-| 3 | `K-35-055-1` `student:01447` | `K-35-054-2_Atolov_4326_x4032_y2688.png` | 89.8, 342.6 | 0.824 | (0, 0, 0) | (0, 83) | — | ambiguous |
-| 4 | `K-35-055-1` `student:01447` | `K-35-054-2_Atolov_4326_x4032_y3024.png` | 89.8, 6.6 | 0.824 | (0, 0, 0) | (0, 83) | — | ambiguous |
-| 5 | `K-35-055-3` `student:01561` | `K-35-055-1_x1344_y3360.png` | 139.9, 357.1 | 0.882 | (0, 0, 0) | — | (0, 350) | ambiguous |
-| 6 | `K-35-055-3` `student:01561` | `K-35-055-1_x1344_y3696.png` | 139.9, 21.1 | 0.882 | (0, 0, 0) | — | (0, 14) | ambiguous |
-| 7 | `K-35-055-3` `student:01575` | `K-35-054-4_Voynika_x4032_y672.png` | 79.7, 87.8 | 0.533 | (135, 143, 147) | (0, 79) | (0, 383) | ambiguous |
-| 8 | `K-35-062-4_Asenovgrad_4326` `student:01822` | `K-35-063-1_Granit_4326_x0_y3360.png` | 83.7, 296.8 | 0.886 | (0, 0, 0) | (90, 383) | — | ambiguous |
-| 9 | `K-35-063-1_Granit_4326` `student:01862` | `K-35-063-2_Chirpan_4326_x0_y672.png` | 164.6, 280.7 | 0.000 | (166, 195, 141) | (135, 383) | (0, 383) | map-content |
-| 10 | `K-35-063-1_Granit_4326` `student:01863` | `K-35-063-2_Chirpan_4326_x0_y672.png` | 192.8, 321.7 | 0.000 | (187, 169, 131) | (134, 383) | (0, 383) | map-content |
-| 11 | `K-35-063-1_Granit_4326` `student:01876` | `K-35-063-3_Tatarevo_4326_x2352_y0.png` | 360.5, 165.2 | 0.000 | (223, 226, 212) | (0, 383) | (149, 383) | map-content |
-| 12 | `K-35-063-1_Granit_4326` `student:01876` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 24.5, 165.2 | 0.000 | (223, 226, 212) | (0, 383) | (149, 383) | map-content |
-| 13 | `K-35-063-1_Granit_4326` `student:01878` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 327.1, 201.7 | 0.000 | (124, 132, 139) | (0, 383) | (155, 383) | map-content |
-| 14 | `K-35-063-1_Granit_4326` `student:01879` | `K-35-063-3_Tatarevo_4326_x3360_y0.png` | 220.4, 177.4 | 0.000 | (243, 245, 240) | (0, 383) | (167, 383) | map-content |
-| 15 | `K-35-063-1_Granit_4326` `student:01882` | `K-35-063-3_Tatarevo_4326_x3696_y0.png` | 130.1, 238.2 | 0.000 | (231, 234, 237) | (0, 383) | (171, 383) | map-content |
-| 16 | `K-35-063-1_Granit_4326` `student:02069` | `K-35-063-3_Tatarevo_4326_x2352_y0.png` | 348.2, 140.4 | 0.920 | (0, 0, 0) | (29, 36) | (148, 383) | ambiguous |
-| 17 | `K-35-063-1_Granit_4326` `student:02069` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 12.2, 140.4 | 0.920 | (0, 0, 0) | — | (148, 383) | ambiguous |
-| 18 | `K-35-063-2_Chirpan_4326` `student:02190` | `K-35-064-1_Sredets_4326_x0_y0.png` | 182.1, 101.9 | 0.000 | (155, 96, 53) | (129, 383) | (68, 383) | map-content |
-| 19 | `K-35-063-2_Chirpan_4326` `student:02191` | `K-35-064-1_Sredets_4326_x0_y0.png` | 141.1, 367.8 | 0.080 | (137, 116, 104) | (126, 383) | (68, 383) | map-content |
-| 20 | `K-35-063-2_Chirpan_4326` `student:02191` | `K-35-064-1_Sredets_4326_x0_y336.png` | 141.1, 31.8 | 0.080 | (137, 116, 104) | (126, 383) | (0, 383) | map-content |
-| 21 | `K-35-063-2_Chirpan_4326` `student:02194` | `K-35-064-1_Sredets_4326_x0_y1008.png` | 114.0, 300.3 | 0.201 | (147, 151, 162) | (109, 383) | (0, 383) | map-content |
-| 22 | `K-35-063-2_Chirpan_4326` `student:02195` | `K-35-064-1_Sredets_4326_x0_y1008.png` | 128.4, 365.1 | 0.000 | (244, 245, 247) | (108, 383) | (0, 383) | map-content |
-| 23 | `K-35-063-2_Chirpan_4326` `student:02195` | `K-35-064-1_Sredets_4326_x0_y1344.png` | 128.4, 29.1 | 0.000 | (244, 245, 247) | (108, 383) | (0, 383) | map-content |
-| 24 | `K-35-063-2_Chirpan_4326` `student:02196` | `K-35-064-1_Sredets_4326_x0_y1344.png` | 132.6, 132.5 | 0.000 | (210, 214, 215) | (105, 383) | (0, 383) | map-content |
-| 25 | `K-35-063-3_Tatarevo_4326` `student:02387` | `K-35-075-1_x1344_y0.png` | 364.1, 52.6 | 0.052 | (53, 52, 48) | (0, 383) | (37, 383) | map-content |
-| 26 | `K-35-063-3_Tatarevo_4326` `student:02387` | `K-35-075-1_x1680_y0.png` | 28.1, 52.6 | 0.052 | (53, 52, 48) | (0, 383) | (37, 383) | map-content |
-| 27 | `K-35-063-3_Tatarevo_4326` `student:02388` | `K-35-075-1_x2016_y0.png` | 374.2, 107.2 | 0.000 | (227, 228, 227) | (0, 383) | (52, 383) | map-content |
-| 28 | `K-35-063-3_Tatarevo_4326` `student:02388` | `K-35-075-1_x2352_y0.png` | 38.2, 107.2 | 0.000 | (227, 228, 227) | (0, 383) | (52, 383) | map-content |
-| 29 | `K-35-063-3_Tatarevo_4326` `student:02389` | `K-35-075-1_x3024_y0.png` | 223.7, 101.4 | 0.048 | (125, 132, 132) | (0, 383) | (70, 383) | map-content |
-| 30 | `K-35-063-3_Tatarevo_4326` `student:02390` | `K-35-075-1_x3360_y0.png` | 334.6, 87.7 | 0.218 | (104, 99, 72) | (0, 383) | (82, 383) | map-content |
-| 31 | `K-35-063-4_Skobelevo_4326` `student:02391` | `K-35-075-2_x2016_y0.png` | 211.2, 65.9 | 0.000 | (186, 203, 170) | (0, 383) | (42, 383) | map-content |
-| 32 | `K-35-063-4_Skobelevo_4326` `student:02392` | `K-35-075-2_x3024_y0.png` | 200.6, 125.8 | 0.000 | (97, 88, 83) | (0, 383) | (61, 383) | map-content |
-| 33 | `K-35-063-4_Skobelevo_4326` `student:02393` | `K-35-064-3_Dimitrovgrad_4326_x0_y1680.png` | 108.7, 368.8 | 0.010 | (169, 174, 177) | (95, 383) | (0, 383) | map-content |
-| 34 | `K-35-063-4_Skobelevo_4326` `student:02393` | `K-35-064-3_Dimitrovgrad_4326_x0_y2016.png` | 108.7, 32.8 | 0.010 | (169, 174, 177) | (95, 383) | (0, 383) | map-content |
-| 35 | `K-35-063-4_Skobelevo_4326` `student:02394` | `K-35-064-3_Dimitrovgrad_4326_x0_y2016.png` | 108.6, 57.6 | 0.007 | (230, 234, 234) | (94, 383) | (0, 383) | map-content |
-| 36 | `K-35-063-4_Skobelevo_4326` `student:02445` | `K-35-064-3_Dimitrovgrad_4326_x0_y1344.png` | 102.3, 119.0 | 0.647 | (0, 0, 0) | (105, 383) | (270, 383) | ambiguous |
-| 37 | `K-35-063-4_Skobelevo_4326` `student:02465` | `K-35-064-3_Dimitrovgrad_4326_x0_y1680.png` | 92.2, 111.1 | 0.882 | (0, 0, 0) | (99, 383) | — | ambiguous |
-| 38 | `K-35-064-3_Dimitrovgrad_4326` `student:02686` | `K-35-064-4_Galabovo_4326_x0_y1008.png` | 101.9, 297.0 | 0.000 | (231, 227, 218) | (91, 383) | (0, 383) | map-content |
-| 39 | `K-35-064-3_Dimitrovgrad_4326` `student:02687` | `K-35-064-4_Galabovo_4326_x0_y3360.png` | 105.9, 231.6 | 0.000 | (189, 203, 131) | (56, 383) | (0, 362) | map-content |
-| 40 | `K-35-064-3_Dimitrovgrad_4326` `student:02781` | `K-35-076-1_x336_y0.png` | 98.7, 39.0 | 0.004 | (162, 193, 136) | (0, 383) | (7, 383) | map-content |
-| 41 | `K-35-064-3_Dimitrovgrad_4326` `student:02782` | `K-35-076-1_x1344_y0.png` | 262.4, 89.1 | 0.000 | (231, 231, 230) | (0, 383) | (26, 383) | map-content |
-| 42 | `K-35-064-3_Dimitrovgrad_4326` `student:02783` | `K-35-076-1_x2016_y0.png` | 283.4, 80.9 | 0.000 | (224, 223, 217) | (0, 383) | (37, 383) | map-content |
-| 43 | `K-35-064-3_Dimitrovgrad_4326` `student:02784` | `K-35-076-1_x3360_y0.png` | 102.7, 90.0 | 0.000 | (191, 181, 150) | (0, 383) | (55, 383) | map-content |
-| 44 | `K-35-065-3_Glavan_4326` `student:03135` | `K-35-077-1_x3360_y0.png` | 323.1, 68.4 | 0.000 | (199, 203, 205) | (0, 383) | (38, 383) | map-content |
-| 45 | `K-35-075-1` `student:03969` | `K-35-074-2_x4032_y672.png` | 166.2, 121.4 | 0.741 | (0, 0, 0) | (0, 161) | — | ambiguous |
-| 46 | `K-35-076-1` `student:04282` | `K-35-076-2_x0_y2352.png` | 13.6, 345.6 | 0.543 | (0, 0, 0) | (14, 383) | — | ambiguous |
-| 47 | `K-35-076-1` `student:04282` | `K-35-076-2_x0_y2688.png` | 13.6, 9.6 | 0.543 | (0, 0, 0) | (14, 383) | (63, 383) | ambiguous |
-| 48 | `K-35-076-2` `student:04378` | `K-35-076-4_x3696_y0.png` | 246.1, 44.2 | 0.886 | (0, 0, 0) | — | (51, 383) | ambiguous |
-| 49 | `K-35-077-3` `student:04646` | `K-35-077-1_x0_y3360.png` | 20.9, 324.6 | 0.882 | (0, 0, 0) | — | (0, 317) | ambiguous |
-| 50 | `K-35-066-1` `extension:408` | `K-35-066-3_x3360_y0.png` | 326.3, 14.3 | 0.647 | (0, 0, 0) | — | (17, 383) | ambiguous |
+| 1 | `K-35-054-1_Straldzha_4326` `student:00962` | `K-35-053-2_x4032_y1344.png` | 91.5, 240.6 | 0.765 | (0, 0, 0) | (0, 86) | — | ambiguous |
+| 2 | `K-35-054-3_Yambol` `student:01202` | `K-35-066-1_x1680_y0.png` | 228.3, 3.1 | 0.838 | (0, 0, 0) | — | (10, 383) | ambiguous |
+| 3 | `K-35-055-1` `student:01447` | `K-35-054-2_Atolov_4326_x4032_y2688.png` | 90.3, 343.1 | 0.882 | (0, 0, 0) | (0, 83) | — | ambiguous |
+| 4 | `K-35-055-1` `student:01447` | `K-35-054-2_Atolov_4326_x4032_y3024.png` | 90.3, 7.1 | 0.882 | (0, 0, 0) | (0, 83) | — | ambiguous |
+| 5 | `K-35-055-3` `student:01561` | `K-35-055-1_x1344_y3360.png` | 140.4, 357.6 | 0.882 | (0, 0, 0) | — | (0, 350) | ambiguous |
+| 6 | `K-35-055-3` `student:01561` | `K-35-055-1_x1344_y3696.png` | 140.4, 21.6 | 0.882 | (0, 0, 0) | — | (0, 14) | ambiguous |
+| 7 | `K-35-055-3` `student:01575` | `K-35-054-4_Voynika_x4032_y672.png` | 80.2, 88.3 | 0.581 | (0, 0, 0) | (0, 79) | — | ambiguous |
+| 8 | `K-35-062-4_Asenovgrad_4326` `student:01822` | `K-35-063-1_Granit_4326_x0_y3360.png` | 84.2, 297.3 | 0.824 | (0, 0, 0) | (90, 383) | — | ambiguous |
+| 9 | `K-35-063-1_Granit_4326` `student:01862` | `K-35-063-2_Chirpan_4326_x0_y672.png` | 165.1, 281.2 | 0.000 | (163, 198, 133) | (135, 383) | (0, 383) | map-content |
+| 10 | `K-35-063-1_Granit_4326` `student:01863` | `K-35-063-2_Chirpan_4326_x0_y672.png` | 193.3, 322.2 | 0.000 | (190, 168, 125) | (134, 383) | (0, 383) | map-content |
+| 11 | `K-35-063-1_Granit_4326` `student:01876` | `K-35-063-3_Tatarevo_4326_x2352_y0.png` | 361.0, 165.7 | 0.000 | (229, 239, 231) | (0, 383) | (149, 383) | map-content |
+| 12 | `K-35-063-1_Granit_4326` `student:01876` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 25.0, 165.7 | 0.000 | (229, 239, 231) | (0, 383) | (149, 383) | map-content |
+| 13 | `K-35-063-1_Granit_4326` `student:01878` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 327.6, 202.2 | 0.000 | (99, 104, 110) | (0, 383) | (155, 383) | map-content |
+| 14 | `K-35-063-1_Granit_4326` `student:01879` | `K-35-063-3_Tatarevo_4326_x3360_y0.png` | 220.9, 177.9 | 0.000 | (243, 245, 240) | (0, 383) | (167, 383) | map-content |
+| 15 | `K-35-063-1_Granit_4326` `student:01882` | `K-35-063-3_Tatarevo_4326_x3696_y0.png` | 130.6, 238.7 | 0.000 | (231, 234, 237) | (0, 383) | (171, 383) | map-content |
+| 16 | `K-35-063-1_Granit_4326` `student:02069` | `K-35-063-3_Tatarevo_4326_x2352_y0.png` | 348.7, 140.9 | 0.920 | (0, 0, 0) | (29, 36) | (148, 383) | ambiguous |
+| 17 | `K-35-063-1_Granit_4326` `student:02069` | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 12.7, 140.9 | 0.920 | (0, 0, 0) | — | (148, 383) | ambiguous |
+| 18 | `K-35-063-2_Chirpan_4326` `student:02190` | `K-35-064-1_Sredets_4326_x0_y0.png` | 182.6, 102.4 | 0.000 | (157, 76, 13) | (129, 383) | (68, 383) | map-content |
+| 19 | `K-35-063-2_Chirpan_4326` `student:02191` | `K-35-064-1_Sredets_4326_x0_y0.png` | 141.6, 368.3 | 0.080 | (78, 68, 75) | (126, 383) | (68, 383) | map-content |
+| 20 | `K-35-063-2_Chirpan_4326` `student:02191` | `K-35-064-1_Sredets_4326_x0_y336.png` | 141.6, 32.3 | 0.080 | (78, 68, 75) | (126, 383) | (0, 383) | map-content |
+| 21 | `K-35-063-2_Chirpan_4326` `student:02194` | `K-35-064-1_Sredets_4326_x0_y1008.png` | 114.5, 300.8 | 0.201 | (147, 151, 162) | (109, 383) | (0, 383) | map-content |
+| 22 | `K-35-063-2_Chirpan_4326` `student:02195` | `K-35-064-1_Sredets_4326_x0_y1008.png` | 128.9, 365.6 | 0.000 | (244, 245, 247) | (108, 383) | (0, 383) | map-content |
+| 23 | `K-35-063-2_Chirpan_4326` `student:02195` | `K-35-064-1_Sredets_4326_x0_y1344.png` | 128.9, 29.6 | 0.000 | (244, 245, 247) | (108, 383) | (0, 383) | map-content |
+| 24 | `K-35-063-2_Chirpan_4326` `student:02196` | `K-35-064-1_Sredets_4326_x0_y1344.png` | 133.1, 133.0 | 0.000 | (216, 218, 220) | (105, 383) | (0, 383) | map-content |
+| 25 | `K-35-063-3_Tatarevo_4326` `student:02387` | `K-35-075-1_x1344_y0.png` | 364.6, 53.1 | 0.052 | (92, 98, 97) | (0, 383) | (37, 383) | map-content |
+| 26 | `K-35-063-3_Tatarevo_4326` `student:02387` | `K-35-075-1_x1680_y0.png` | 28.6, 53.1 | 0.052 | (92, 98, 97) | (0, 383) | (37, 383) | map-content |
+| 27 | `K-35-063-3_Tatarevo_4326` `student:02388` | `K-35-075-1_x2016_y0.png` | 374.7, 107.7 | 0.000 | (227, 228, 227) | (0, 383) | (52, 383) | map-content |
+| 28 | `K-35-063-3_Tatarevo_4326` `student:02388` | `K-35-075-1_x2352_y0.png` | 38.7, 107.7 | 0.000 | (227, 228, 227) | (0, 383) | (52, 383) | map-content |
+| 29 | `K-35-063-3_Tatarevo_4326` `student:02389` | `K-35-075-1_x3024_y0.png` | 224.2, 101.9 | 0.048 | (63, 59, 52) | (0, 383) | (70, 383) | map-content |
+| 30 | `K-35-063-3_Tatarevo_4326` `student:02390` | `K-35-075-1_x3360_y0.png` | 335.1, 88.2 | 0.159 | (69, 73, 72) | (0, 383) | (82, 383) | map-content |
+| 31 | `K-35-063-4_Skobelevo_4326` `student:02391` | `K-35-075-2_x2016_y0.png` | 211.7, 66.4 | 0.004 | (197, 207, 193) | (0, 383) | (42, 383) | map-content |
+| 32 | `K-35-063-4_Skobelevo_4326` `student:02392` | `K-35-075-2_x3024_y0.png` | 201.1, 126.3 | 0.000 | (42, 32, 31) | (0, 383) | (61, 383) | map-content |
+| 33 | `K-35-063-4_Skobelevo_4326` `student:02393` | `K-35-064-3_Dimitrovgrad_4326_x0_y1680.png` | 109.2, 369.3 | 0.010 | (129, 130, 133) | (95, 383) | (0, 383) | map-content |
+| 34 | `K-35-063-4_Skobelevo_4326` `student:02393` | `K-35-064-3_Dimitrovgrad_4326_x0_y2016.png` | 109.2, 33.3 | 0.010 | (129, 130, 133) | (95, 383) | (0, 383) | map-content |
+| 35 | `K-35-063-4_Skobelevo_4326` `student:02394` | `K-35-064-3_Dimitrovgrad_4326_x0_y2016.png` | 109.1, 58.1 | 0.017 | (247, 248, 249) | (94, 383) | (0, 383) | map-content |
+| 36 | `K-35-063-4_Skobelevo_4326` `student:02445` | `K-35-064-3_Dimitrovgrad_4326_x0_y1344.png` | 102.8, 119.5 | 0.647 | (0, 0, 0) | (105, 383) | (270, 383) | ambiguous |
+| 37 | `K-35-063-4_Skobelevo_4326` `student:02465` | `K-35-064-3_Dimitrovgrad_4326_x0_y1680.png` | 92.7, 111.6 | 0.882 | (0, 0, 0) | (99, 383) | — | ambiguous |
+| 38 | `K-35-064-3_Dimitrovgrad_4326` `student:02686` | `K-35-064-4_Galabovo_4326_x0_y1008.png` | 102.4, 297.5 | 0.000 | (232, 236, 235) | (90, 383) | (0, 383) | map-content |
+| 39 | `K-35-064-3_Dimitrovgrad_4326` `student:02687` | `K-35-064-4_Galabovo_4326_x0_y3360.png` | 106.4, 232.1 | 0.000 | (180, 227, 140) | (56, 383) | (0, 362) | map-content |
+| 40 | `K-35-064-3_Dimitrovgrad_4326` `student:02781` | `K-35-076-1_x336_y0.png` | 99.2, 39.5 | 0.004 | (155, 194, 141) | (0, 383) | (10, 383) | map-content |
+| 41 | `K-35-064-3_Dimitrovgrad_4326` `student:02782` | `K-35-076-1_x1344_y0.png` | 262.9, 89.6 | 0.000 | (231, 231, 230) | (0, 383) | (26, 383) | map-content |
+| 42 | `K-35-064-3_Dimitrovgrad_4326` `student:02783` | `K-35-076-1_x2016_y0.png` | 283.9, 81.4 | 0.000 | (207, 219, 221) | (0, 383) | (37, 383) | map-content |
+| 43 | `K-35-064-3_Dimitrovgrad_4326` `student:02784` | `K-35-076-1_x3360_y0.png` | 103.2, 90.5 | 0.000 | (167, 168, 132) | (0, 383) | (55, 383) | map-content |
+| 44 | `K-35-065-3_Glavan_4326` `student:03135` | `K-35-077-1_x3360_y0.png` | 323.6, 68.9 | 0.000 | (199, 203, 205) | (0, 383) | (38, 383) | map-content |
+| 45 | `K-35-075-1` `student:03969` | `K-35-074-2_x4032_y672.png` | 166.7, 121.9 | 0.741 | (0, 0, 0) | (0, 161) | — | ambiguous |
+| 46 | `K-35-076-1` `student:04282` | `K-35-076-2_x0_y2352.png` | 14.1, 346.1 | 0.488 | (100, 112, 109) | (14, 383) | (331, 383) | **map-content** (was ambiguous) |
+| 47 | `K-35-076-1` `student:04282` | `K-35-076-2_x0_y2688.png` | 14.1, 10.1 | 0.488 | (100, 112, 109) | (14, 383) | (0, 383) | **map-content** (was ambiguous) |
+| 48 | `K-35-076-2` `student:04378` | `K-35-076-4_x3696_y0.png` | 246.6, 44.7 | 0.886 | (0, 0, 0) | — | (51, 383) | ambiguous |
+| 49 | `K-35-077-3` `student:04646` | `K-35-077-1_x0_y3360.png` | 21.4, 325.1 | 0.941 | (0, 0, 0) | — | (0, 317) | ambiguous |
+| 50 | `K-35-066-1` `extension:408` | `K-35-066-3_x3360_y0.png` | 326.8, 14.8 | 0.647 | (0, 0, 0) | — | (17, 383) | ambiguous |
 
 ### 2.2 Is the second copy already digitised, and what each option would move (for the seam ruling)
 
@@ -200,7 +245,9 @@ Measured after the stop, at the main session's request (stop record
 (standard library; no scorer code, no model output). It reads the
 contacts and pixel verdicts from `scripts/out/sheet_check_55map_summary.json`
 and writes `scripts/out/seam_second_copy.txt` and `.json` (zbook,
-2026-11-18, at `6cda42d68`). The
+2026-11-18, at `6cda42d68`; re-run 2026-11-19 at `768cb2a9b` on the
+corrected pixel verdicts of § 2, pre-fix outputs kept as
+`scripts/out/seam_second_copy-pre-pixel-fix.*`). The
 baseline is plain sheet-specific containment: a tile is
 reference-positive if a reference recorded on its own sheet lies inside
 it. The options are those of the stop record § 4: (a) add the second copy
@@ -214,17 +261,19 @@ classification. Counts only.
 
 | Reference file | Map-content contacts | … with a contacted-sheet reference ≤ 20 m (phantom) | ≤ 50 m (phantom) | Ambiguous contacts | … ≤ 20 m | ≤ 50 m |
 |---|---:|---:|---:|---:|---:|---:|
-| `best-available-gt-55maps-r2` | 32 | 0 | 0 | 18 | 0 | 0 |
-| `best-available-gt-55maps` | 32 | 0 | 0 | 18 | 0 | 0 |
-| `canonical-gt-55maps-r50` | 33 | **22 (22)** | **29 (29)** | 20 | 1 (0) | 1 (0) |
-| `student-mounds-55maps-reviewed` | 33 | 0 | 0 | 16 | 0 | 0 |
-| `student-mounds-55maps` | 35 | 0 | 0 | 15 | 0 | 0 |
+| `best-available-gt-55maps-r2` | 34 | 0 | 0 | 16 | 0 | 0 |
+| `best-available-gt-55maps` | 34 | 0 | 0 | 16 | 0 | 0 |
+| `canonical-gt-55maps-r50` | 35 | **22 (22)** | **29 (29)** | 18 | 1 (0) | 1 (0) |
+| `student-mounds-55maps-reviewed` | 35 | 0 | 0 | 14 | 0 | 0 |
+| `student-mounds-55maps` | 37 | 0 | 0 | 13 | 0 | 0 |
 
 Every second copy found is a `phantom:*` reference (layer
-`phantom_canonical`, provenance `canonical_review_r50`). The four
-canonical map-content contacts without one (`student:02195`,
-`student:02396`, `student:02508`, `student:02793`) have their nearest
-contacted-sheet reference 835.8–1,213.3 m away. Per-contact ids, layers,
+`phantom_canonical`, provenance `canonical_review_r50`). The canonical
+map-content contacts without one are six, from five references: four
+(`student:02195`, `student:02396`, `student:02508`, `student:02793`) have
+their nearest contacted-sheet reference 835.8–1,213.3 m away, and
+`student:04296` (the feature that is r2's `student:04282`; two contacts,
+map content since the pixel fix) has its nearest 212.9 m away. Per-contact ids, layers,
 and distances are in the committed `.txt` and `.json`.
 
 **(ii) and (iii) Tiles moved, relative to sheet-specific containment.**
@@ -239,31 +288,37 @@ coordinates, so the feature keys are unambiguous.
 
 | Reference file | Scope | Contacts | (feature, recipient sheet) pairs | Distinct contacted tiles | (a) contacts without a second copy / **references added** / tiles turning positive | (b) tiles turning positive | (d) tiles removed (positive / negative) |
 |---|---|---:|---:|---:|---|---:|---|
-| r2 | map content | 32 | 26 | 26 | 32 / **26** / 11 | 11 | 52 (41 / 11) |
+| r2 | map content | 34 | 27 | 28 | 34 / **27** / 11 | 11 | 55 (44 / 11) |
 | r2 | + ambiguous | 50 | 40 | 41 | 50 / **40** / 17 | 17 | 85 (68 / 17) |
-| best-available | map content | 32 | 26 | 26 | 32 / **26** / 11 | 11 | 52 (41 / 11) |
+| best-available | map content | 34 | 27 | 28 | 34 / **27** / 11 | 11 | 55 (44 / 11) |
 | best-available | + ambiguous | 50 | 40 | 41 | 50 / **40** / 17 | 17 | 85 (68 / 17) |
-| canonical r50 | map content | 33 | 27 | 27 | 4 / **4** / 0 | 0 | 53 (53 / 0) |
+| canonical r50 | map content | 35 | 28 | 29 | 6 / **5** / 0 | 0 | 56 (56 / 0) |
 | canonical r50 | + ambiguous | 53 | 44 | 41 | 23 / **20** / 4 | 4 | 82 (78 / 4) |
-| student-reviewed | map content | 33 | 27 | 27 | 33 / **27** / 11 | 11 | 53 (42 / 11) |
+| student-reviewed | map content | 35 | 28 | 29 | 35 / **28** / 11 | 11 | 56 (45 / 11) |
 | student-reviewed | + ambiguous | 49 | 40 | 39 | 49 / **40** / 15 | 15 | 79 (64 / 15) |
-| student | map content | 35 | 29 | 27 | 35 / **29** / 11 | 11 | 53 (42 / 11) |
+| student | map content | 37 | 30 | 29 | 37 / **30** / 11 | 11 | 56 (45 / 11) |
 | student | + ambiguous | 50 | 41 | 39 | 50 / **41** / 15 | 15 | 79 (64 / 15) |
 
-On r2 the six references whose point reaches two tiles of the same
-recipient sheet are `student:01876` (Tatarevo), `student:02191` and
+On r2 the map-content references whose point reaches two tiles of the
+same recipient sheet are `student:01876` (Tatarevo), `student:02191` and
 `student:02195` (Sredets), `student:02387` and `student:02388`
-(K-35-075-1), and `student:02393` (Dimitrovgrad), exactly as Astra
-reported. The tile counts did not change: they were always counted as
-sets of tiles.
+(K-35-075-1), and `student:02393` (Dimitrovgrad), the six Astra
+reported, and, since the pixel fix, `student:04282` (K-35-076-2). The
+tile counts were always counted as sets of tiles. The pixel fix changed
+only the map-content rows, and only by `student:04282`'s feature (two
+contacts, two tiles, one reference); the "+ ambiguous" rows, which
+already held it, are unchanged.
 
 **Option (c), frame-wide containment, split into disjoint categories.**
 Each tile that turns positive is assigned by the pixel verdicts of the
 contacts inside it, in priority order: any map-content contact; else any
 ambiguous contact; else, if every contact is padding, confirmed padding;
 else remainder. Verdicts come from the sheet check's full output
-(`~/scratch/wave1/w10/sheet-check/sheet_check_55map.json`), padding
-contacts included.
+(`~/scratch/wave1/seam2/pixfix/sheet_check_55map.json` since the pixel
+fix; before it, `~/scratch/wave1/w10/sheet-check/sheet_check_55map.json`),
+padding contacts included. The table is unchanged by the fix: the two
+tiles of `student:04282` are already positive on their own sheet's
+references.
 
 | Reference file | Tiles turning positive | Map-content contacted | Ambiguous contacted | Confirmed padding | Remainder | Tiles with mixed verdicts |
 |---|---:|---:|---:|---:|---:|---:|
@@ -283,25 +338,30 @@ Reading the table: (a) and (b) move the same tiles here, because a tile
 the contact reaches either already holds one of its own sheet's
 references or does not; they differ in what else they change ((a) adds
 references, and so recall's denominator; (b) changes matching). On r2,
-15 of the 26 contacted tiles are already positive from their own sheet's
+17 of the 28 contacted tiles are already positive from their own sheet's
 references, so 11 tiles move.
 
 **Astra's independent audit** (`~/agent-mail/codex/outbox/claude/20261118T130529Z-astra-seam-measurement-counting-finding.md`,
 reviewing `seam_second_copy.py` at `6bd4a3e03`): all 50 of r2's
 non-padding contacts reproduced, measurements and verdicts both, with no
 discrepancies; every supplied world file has zero rotation. Under a
-nearest-pixel-centre sensitivity, the two ambiguous contacts of
-`student:04282` (sheet K-35-076-1) change, so they **stay unresolved for
-manual judgement**: `student:04282` in `K-35-076-2_x0_y2352.png` (col
-13.6, row 345.6) and in `K-35-076-2_x0_y2688.png` (col 13.6, row 9.6),
-rows 46 and 47 of § 2.1 (Astra's evidence-manifest indices 46 and 47).
+nearest-pixel-centre sensitivity, the two then-ambiguous contacts of
+`student:04282` (sheet K-35-076-1) changed. That sensitivity was the
+correct convention (§ 2, "Pixel convention"): since the fix of
+2026-11-19 both are **map content**, `student:04282` in
+`K-35-076-2_x0_y2352.png` (col 14.1, row 346.1) and in
+`K-35-076-2_x0_y2688.png` (col 14.1, row 10.1), rows 46 and 47 of § 2.1
+(Astra's evidence-manifest indices 46 and 47), with a window 48.8 %
+near-black against the rule's 50 % limit. They stay a case for manual
+judgement: a content verdict this close to the limit is weak evidence,
+and no content verdict shows a printed symbol.
 
 **The canonical r50 lead, checked.** All **24** of canonical r50's
 student–phantom cross-sheet pairs within 50 m are map-content contacts:
 in each, the student reference on one sheet lies on the map content of a
 tile of the phantom's sheet (distances 3.1–39.5 m, listed in the `.txt`).
 So the r50 review appears to have digitised the neighbouring sheet's copy
-for 29 of its 33 map-content contacts, option (a) in effect (a lead from
+for 29 of its 35 map-content contacts, option (a) in effect (a lead from
 proximity, not a check of each feature's identity); r2, the
 best-available file, and the student files carry no `phantom` layer (r2's
 layers are `student` 4,726, `extension` 278, `audit` 14 by `gt_id`
@@ -314,10 +374,14 @@ measured cross-sheet contact on the twelve GS frames is padding. Of the
 contacts on the two H13 arms whose own tiles are not on disk, 86 were
 measured on a substitute image of the same sheet (all padding) and 6 lie
 outside the sheet's scan altogether (below). Nothing here is of the
-55-map stop's class.
+55-map stop's class. **The pixel-convention fix (§ 2) changed no GS
+verdict**: re-run 2026-11-19 at `768cb2a9b`, the 243 contacts are again
+237 padding and 6 unavailable, and no GS contact moves off padding
+(`scripts/out/compare_pixel_fix.txt`; pre-fix outputs kept as
+`scripts/out/sheet_check_gs_frames-pre-pixel-fix.*`).
 
 **Method.** `reports/tile-join-wave-1/scripts/sheet_check_gs_frames.py`
-(zbook, 2026-11-19, at `cf15e9906`): the 55-map check's
+(zbook, 2026-11-19, at `cf15e9906`; re-run at `768cb2a9b`): the 55-map check's
 geometry and pixel functions, unchanged thresholds, applied to the GS
 references (`inputs/vectors/references/mounds-reference.geojson`, 569
 points, sheet from `Map`) on every distinct GS frame that a tile-bearing
@@ -330,7 +394,8 @@ exist only on amd-tower; those 7 PNGs and their world files were copied
 to zbook scratch (`~/scratch/wave1/w10/gs-frames/tiles_256/`), so the
 256 px frame was measured on its own tiles. Outputs:
 `scripts/out/sheet_check_gs_frames.txt` and `.json`; crops (166) in
-`~/scratch/wave1/w10/gs-frames/crops/<frame>/`.
+`~/scratch/wave1/seam2/pixfix/gs-crops/<frame>/` (pre-fix:
+`~/scratch/wave1/w10/gs-frames/crops/<frame>/`).
 
 **Cross-sheet reference pairs.** None within 1,000 m anywhere in the GS
 (the parent record's 1,313.0 m closest pair), so none within 500 m on any
@@ -362,7 +427,7 @@ amd-tower. Every contact on a clipping frame matched its own tile.)
 **Where.** Every contact on every frame is the same pattern the parent
 record found on Era-2: an Elenovo (K-35-053-3) reference inside a tile of
 K-35-052-4's last column (`x4032`, or `x3840`/`x4096` on the H13 arms), at
-pixel columns 134.4–298.5, where the map content along the point's row ends
+pixel columns 134.9–299.0 (134.4–298.5 before the pixel fix), where the map content along the point's row ends
 between columns 95 and 116 (in the image measured) and the window around the point is 100 % near-black.
 
 **The six unavailable H13 arm C contacts** are fids 2, 46, and 180, each
@@ -373,6 +438,331 @@ only): all six points lie 2,135.9–2,183.0 m east of the scan's right edge,
 so the tile there can only be outside the scan. That is a measurement of
 the raster extent, not of the tile's pixels; the tile itself was not
 seen.
+
+### 2.4 The same contacts on their own sheet: wrong sheet label or second copy?
+
+Added 2026-11-19 after Astra's paired views
+(`~/agent-mail/codex/outbox/claude/20261118T142910Z-astra-seam-attribution-evidence.md`)
+showed five r2 references lying in black padding on their own labelled
+sheet. §§ 2–2.2 measured each contact only on the **other** (recipient)
+sheet's tile, so they could not tell the PI's three cases apart: (1)
+separate printed instances on both sheets; (2) a sheet label inconsistent
+with the image (own sheet = padding at the point); (3) displaced
+counterparts needing sheet-specific centres (own sheet prints the symbol
+nearby, but not at the point).
+
+**Method.** `reports/tile-join-wave-1/scripts/seam_own_sheet.py`, run on
+zbook (reference environment) at `4b48c220c` and **re-run 2026-11-19 at
+`768cb2a9b` with the corrected pixel convention** (§ 2; pre-fix outputs
+kept as `scripts/out/seam_own_sheet-pre-pixel-fix.*`); outputs
+`scripts/out/seam_own_sheet.txt` (every contact) and `.json` (every
+contact, every pair, the tallies, and the comparison with Astra). For each
+map-content and ambiguous contact in all five tracked 55-map reference
+files (from `scripts/out/sheet_check_55map_summary.json`), the point is
+measured on **every own-sheet tile whose footprint contains it** (the
+reference's `source_map`), with that tile's own PNG and `.pgw`, using
+`sheet_check_55map.py`'s pixel functions and verdict rule unchanged
+(near-black: every channel ≤ 20; 17 × 17 px window; padding needs ≥ 95 %
+near-black and the point outside its row or column content span;
+map content needs < 50 % and inside both). Where several own-sheet tiles
+hold the point, the verdict is the highest of map-content, ambiguous,
+padding. Before the pixel fix the tiles disagreed only for
+`extension:408` in r2 and best-available (map content in one tile,
+ambiguous in the other); after it both its tiles are ambiguous (windows
+0.533 and 0.559), and no point's own-sheet tiles disagree in any file.
+The recipient verdict was re-measured and matched the
+committed summary on every contact. Three fields are kept apart:
+`own_verdict` (padding, ambiguous, map-content, `outside` every
+own-sheet tile, or `unmeasured` where an own-sheet tile holds the point
+but has no world file: a state added 2026-11-19 on Astra's review, so
+that a missing file can no longer read as `outside`; none occurs),
+`recipient_verdict`, and a symbol-proximity **hint** on
+each sheet. Classes:
+
+- **2-candidate**: own = padding or outside, recipient = map-content;
+- **1/3-candidate**: map content on both sheets;
+- **other**: anything else; ambiguous is never merged into map-content.
+
+A distinct reference is one (feature index, recipient sheet) pair.
+
+**Result (corrected 2026-11-19 for the pixel convention): one
+1/3-candidate in every file, the same feature each time, and no point
+outside its own sheet's tiles.** The 1/3-candidate is the K-35-076-1
+reference at the K-35-076-2 seam: r2 and best-available
+`student:04282`, r50 `student:04296`, the reviewed file's feature 4296,
+and the raw student file's feature 4027, all at one coordinate
+(`as_digitised`, never moved; it is feature 4027, with the same sheet
+label, in the student file at its import commit `301b51128`). It lies on
+map content on both sheets by the rule, with both windows just under its
+50 % near-black limit (own sheet 0.471, recipient 0.488), so the verdict
+is a weak one, and it says nothing about whether either sheet prints a
+mound symbol there. Before the fix its recipient contacts were ambiguous
+and the table showed no 1/3-candidate. Every other recipient map-content
+reference lies in padding on its own sheet, except one in r2 and
+best-available (`student:02194`) and two in each of the other files (in
+r50 and student-reviewed, reviewed features 1884 and 2199, the originals
+of r2's `student:01879` and `02194`; in the raw student file, features
+1865 and 1996 on the same two sheets), which are ambiguous there: black
+at the point, within a few pixels of the map edge (see the comparison
+below). Reviewed feature 2395 (r2's `student:02390`), ambiguous on its
+own sheet in r50 and the two student files before the fix, is padding
+after it, so it joins the 2-candidates there.
+
+| Reference file | Contacts | 2-candidate | 1/3-candidate | Other | Distinct references | 2-candidate | 1/3-candidate | Other |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `best-available-gt-55maps-r2` | 50 | **31** | **2** | 17 | 40 | **25** | **1** | 14 |
+| `best-available-gt-55maps` | 50 | **31** | **2** | 17 | 40 | **25** | **1** | 14 |
+| `canonical-gt-55maps-r50` | 53 | **31** | **2** | 20 | 44 | **25** | **1** | 18 |
+| `student-mounds-55maps-reviewed` | 49 | **31** | **2** | 16 | 40 | **25** | **1** | 14 |
+| `student-mounds-55maps` | 50 | **33** | **2** | 15 | 41 | **27** | **1** | 13 |
+
+(Before the pixel fix, distinct references 2-candidate / 1/3-candidate /
+other: r2 and best-available 25 / 0 / 15; r50 24 / 0 / 20;
+student-reviewed 24 / 0 / 16; student 26 / 0 / 15.)
+
+The "other" distinct references, by own / recipient verdict:
+
+| Reference file | Own map content / recipient ambiguous | Own padding / recipient ambiguous | Own ambiguous / recipient map content | Own ambiguous / recipient ambiguous |
+|---|---:|---:|---:|---:|
+| r2 | 11 | 1 (`student:01822`) | 1 (`student:02194`) | 1 (`extension:408`) |
+| best-available | 11 | 1 | 1 | 1 |
+| canonical r50 | 15 (4 of them `phantom:*`) | 1 (`student:01827`) | 2 (`student:01884`, `02199`) | 0 |
+| student-reviewed | 11 | 1 | 2 | 0 |
+| student | 10 | 1 | 2 | 0 |
+
+So the recipient-ambiguous contacts are mostly the reverse case: the
+point is on its own sheet's map content near the edge and touches the
+recipient's edge. In every file each distinct reference reaches one
+recipient sheet only (distinct references = distinct features).
+
+**Per seam** (distinct references: 2-candidate / 1/3-candidate / other;
+"—" no contact):
+
+| Own sheet → recipient sheet | r2 | best-available | r50 | student-reviewed | student |
+|---|---|---|---|---|---|
+| K-35-054-1_Straldzha_4326 → K-35-053-2 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-054-3_Yambol → K-35-066-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-055-1 → K-35-054-2_Atolov_4326 | 0/0/1 | 0/0/1 | — | — | — |
+| K-35-055-3 → K-35-054-4_Voynika | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-055-3 → K-35-055-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| Asenovgrad_4326 → Granit_4326 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| **Granit_4326 → Chirpan_4326** | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 |
+| **Granit_4326 → Tatarevo_4326** | 4/0/1 | 4/0/1 | 3/0/2 | 3/0/2 | 3/0/2 |
+| **Chirpan_4326 → Sredets_4326** | 4/0/1 | 4/0/1 | 4/0/1 | 4/0/1 | 4/0/1 |
+| **Tatarevo_4326 → K-35-075-1** | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 |
+| **Skobelevo_4326 → Dimitrovgrad_4326** | 2/0/2 | 2/0/2 | 2/0/2 | 2/0/2 | 2/0/2 |
+| **Skobelevo_4326 → K-35-075-2** | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 | 4/0/0 |
+| Sredets_4326 → Chirpan_4326 | — | — | 0/0/1 | — | — |
+| **Sredets_4326 → Dimitrovgrad_4326** | — | — | 1/0/0 | 1/0/0 | 1/0/0 |
+| **Dimitrovgrad_4326 → Galabovo_4326** | 2/0/0 | 2/0/0 | 2/0/2 | 2/0/1 | 2/0/0 |
+| **Dimitrovgrad_4326 → K-35-076-1** | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 |
+| **Glavan_4326 → K-35-077-1** | 1/0/0 | 1/0/0 | 1/0/0 | 1/0/0 | 1/0/0 |
+| K-35-066-1 → K-35-066-3 | 0/0/1 | 0/0/1 | 0/0/2 | — | — |
+| K-35-075-1 → K-35-074-2 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| ***K-35-076-1 → K-35-076-2*** | 0/1/0 | 0/1/0 | 0/1/0 | 0/1/0 | 0/1/0 |
+| K-35-076-2 → K-35-076-4 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-077-3 → K-35-077-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+
+(The `_4326` sheets are shortened to their place names, e.g. Granit_4326
+for `K-35-063-1_Granit_4326`; full names are in the `.txt`.) Every
+2-candidate (bold rows) lies at one of § 2's nine `_4326` seam pairs, or
+at Sredets → Dimitrovgrad in r50 and the two student files, and every
+one has a `_4326` sheet as its own sheet. The 1/3-candidate (italic
+row) is at K-35-076-1 → K-35-076-2, a seam of two sheets without
+`_4326` in their names. The pixel fix changed two rows: Tatarevo_4326 →
+K-35-075-1 in r50 and the two student files (3/0/1 → 4/0/0, reviewed
+feature 2395) and K-35-076-1 → K-35-076-2 everywhere (0/0/1 → 0/1/0).
+
+**Astra's five examples, checked** (re-checked after the pixel fix;
+pixel positions are edge-indexed). All five are 2-candidates in r2: the
+point is in padding on every own-sheet tile that holds it (17 × 17
+window 100 % near-black, colour (0, 0, 0)), and on map content on the
+recipient tile; the original reviewed coordinate is padding too.
+
+| Reference (r2) | Own-sheet tile(s), col / row | Recipient tile(s) | Original → final displacement (position source) |
+|---|---|---|---|
+| `student:01862` | `K-35-063-1_Granit_4326_x4032_y1008.png` 231.9 / 46.6; `…_x4032_y672.png` 231.9 / 382.6 | `K-35-063-2_Chirpan_4326_x0_y672.png` | 22.7 m (`own_mark`) |
+| `student:01863` | `K-35-063-1_Granit_4326_x4032_y1008.png` 260.1 / 87.5 | `K-35-063-2_Chirpan_4326_x0_y672.png` | 4.7 m (`own_mark`) |
+| `student:01876` | `K-35-063-1_Granit_4326_x2352_y3696.png` 279.3 / 133.2 | `K-35-063-3_Tatarevo_4326_x2352_y0.png`, `…_x2688_y0.png` | 7.2 m (`own_mark`) |
+| `student:01878` | `K-35-063-1_Granit_4326_x2688_y3696.png` 246.3 / 169.7 | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 1.5 m (`own_mark`) |
+| `student:02387` | `K-35-063-3_Tatarevo_4326_x1344_y3696.png` 358.4 / 106.6; `…_x1680_y3696.png` 22.4 / 106.6 | `K-35-075-1_x1344_y0.png`, `…_x1680_y0.png` | 14.9 m (`own_mark`) |
+
+**Comparison with Astra's diagnostic** (`~/agent-mail/codex/reviews/seam-paired-views-2026-11-18/source-padding-diagnostic.json`,
+SHA-256 `98d0cd21…`, copied read-only to zbook scratch; mail
+`…/outbox/claude/20261118T143422Z-astra-seam-padding-diagnostic.md`).
+Astra measured the labelled **full-sheet scans** (near-black: every band
+≤ 8; 9 × 9 and 31 × 31 windows); this check measures the own-sheet
+**tiles** with the sheet check's rule (≤ 20; 17 × 17 window plus content
+spans). These are different classifiers, so the comparison is a stated
+correspondence, not a test of identical rules: a pair **corresponds** if
+Astra's 9 × 9 window is all near-black exactly when this check's own
+verdict is padding or outside. All 40 of Astra's r2 pairs were found
+here, and no r2 pair here is missing from Astra's file. Cells changed by
+the pixel fix are marked "(was …)".
+
+| Reference (r2) | Recipient sheet | Recipient verdict | **Own verdict (tiles)** | Astra own 9 × 9 / 31 × 31 | Original own verdict | Astra original 9 × 9 | Agree |
+|---|---|---|---|---|---|---|---|
+| `extension:408` | K-35-066-3 | ambiguous | **ambiguous (was map-content)** | 0.333 / 0.455 | — (not traced) | — | yes |
+| `student:00962` | K-35-053-2 | ambiguous | **map-content** | 0.000 / 0.355 | map-content | 0.000 | yes |
+| `student:01202` | K-35-066-1 | ambiguous | **map-content** | 0.000 / 0.290 | map-content | 0.000 | yes |
+| `student:01447` | K-35-054-2_Atolov_4326 | ambiguous | **map-content** | 0.000 / 0.290 | map-content | 0.000 | yes |
+| `student:01561` | K-35-055-1 | ambiguous | **map-content** | 0.000 / 0.097 | map-content | 0.000 | yes |
+| `student:01575` | K-35-054-4_Voynika | ambiguous | **map-content** | 0.444 / 0.495 | map-content | 0.444 | yes |
+| `student:01822` | K-35-063-1_Granit_4326 | ambiguous | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01862` | K-35-063-2_Chirpan_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01863` | K-35-063-2_Chirpan_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01876` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01878` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01879` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 0.815 | ambiguous | 1.000 | final yes, original no |
+| `student:01882` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02069` | K-35-063-3_Tatarevo_4326 | ambiguous | **map-content** | 0.000 / 0.233 | map-content | 0.000 | yes |
+| `student:02190` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02191` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 0.996 | padding | 1.000 | yes |
+| `student:02194` | K-35-064-1_Sredets_4326 | map-content | **ambiguous** | 1.000 / 0.653 | ambiguous | 1.000 | no |
+| `student:02195` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02196` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02387` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02388` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02389` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02390` | K-35-075-1 | map-content | **padding** | 1.000 / 0.774 | padding (was ambiguous) | 1.000 | yes (was final yes, original no) |
+| `student:02391` | K-35-075-2 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02392` | K-35-075-2 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02393` | K-35-064-3_Dimitrovgrad_4326 | map-content | **padding** | 1.000 / 0.931 | padding | 1.000 | yes |
+| `student:02394` | K-35-064-3_Dimitrovgrad_4326 | map-content | **padding** | 1.000 / 0.911 | padding | 1.000 | yes |
+| `student:02445` | K-35-064-3_Dimitrovgrad_4326 | ambiguous | **map-content** | 0.123 / 0.388 | map-content | 0.123 | yes |
+| `student:02465` | K-35-064-3_Dimitrovgrad_4326 | ambiguous | **map-content** | 0.000 / 0.239 | map-content | 0.000 | yes |
+| `student:02686` | K-35-064-4_Galabovo_4326 | map-content | **padding** | 1.000 / 0.873 | padding | 1.000 | yes |
+| `student:02687` | K-35-064-4_Galabovo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02781` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02782` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02783` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02784` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:03135` | K-35-077-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:03969` | K-35-074-2 | ambiguous | **map-content** | 0.000 / 0.347 | map-content | 0.000 | yes |
+| `student:04282` | K-35-076-2 | map-content (was ambiguous) | **map-content** | 0.444 / 0.486 | map-content | 0.444 | yes |
+| `student:04378` | K-35-076-4 | ambiguous | **map-content** | 0.000 / 0.300 | map-content | 0.000 | yes |
+| `student:04646` | K-35-077-1 | ambiguous | **map-content** | 0.000 / 0.268 | map-content | 0.000 | yes |
+
+**Correspondence, counted exactly** (after the pixel fix): **39 of 40**
+final-coordinate pairs and **37 of 39** traced original coordinates
+(before the fix: 39 of 40 and 36 of 39; the fix moved `student:02390`'s
+original from ambiguous to padding here). The first version of this
+paragraph, and of the stop record, said the two agree; they do not agree
+exactly, and the three exceptions are listed here:
+
+- `student:02194`, final and original: this check's own verdict is
+  ambiguous (17 × 17 window 76.5 % near-black after the fix, 70.6 %
+  before), Astra's 9 × 9 window is all black.
+- `student:01879`, original only: ambiguous here, all black at 9 × 9 for
+  Astra; centre marking moved the point 14.4 m further into padding, and
+  the final coordinate corresponds.
+
+What the two analyses share is **compatible pixel evidence under
+different window rules**, not a common verdict: at each exception the
+colour at the point on the own-sheet tile is (0, 0, 0), and Astra's
+31 × 31 fraction is under 1 (0.653 for `student:02194`, 0.815 for
+`student:01879`), so the point is in padding within a few pixels of the
+map edge, where a larger window reaches map content and a smaller one
+does not. Astra's "only 1 of the 14 ambiguous pairs is all black on its
+source sheet" is `student:01822` here too (own padding); with
+`student:04282` now a recipient map-content pair, 13 ambiguous pairs
+remain and `student:01822` is still the only one. The 1/3-candidate
+`student:04282` corresponds as well: Astra's own-sheet 9 × 9 fraction
+is 0.444 and 31 × 31 0.486: partly near-black, partly content, as here
+(17 × 17 0.471). The correspondence supports reading the own-sheet
+tiles and the full-sheet scans as showing the same thing at these
+points, within the limits of each rule.
+
+**Original (pre-standardisation) coordinates**, measured on the same own
+sheet (fields `original` and `original_own_verdict`). r2 and
+best-available: traced through the standardised student file's
+`std_source_index` to the reviewed student file (39 of 40 pairs; the
+40th is `extension:408`, not traced), uuid and sheet checked. Final /
+original own verdict, after the pixel fix: padding / padding 25,
+padding / ambiguous 1 (`student:01879`), ambiguous / ambiguous 1
+(`student:02194`), map content / map content 12 (before the fix: 24, 2,
+1, 12; `student:02390`'s original moved from ambiguous to padding). Canonical r50:
+its `student:<n>` is the reviewed file's feature `n` (uuid equal to
+`source_id_lossy` and the same sheet for all 40 student pairs; the other
+4 are `phantom:*`), and every one is `as_digitised` at the same
+coordinate (displacement 0.0 m), so original = final. The two student
+files are the inputs themselves (original = final). So **the
+attribution concern predates centre marking**: every r2 reference in
+padding on its own sheet at its final coordinate is in padding or
+ambiguous there at its original coordinate, and in r50 the coordinates
+were never moved. Marking does change some classifications at the
+padding/ambiguous boundary (`student:01879`: original ambiguous, final
+padding; before the pixel fix, `student:02390` too). The lineage reaches
+further back still (stop record § 5): 24 of r2's 26 pre-fix recipient
+map-content references match a unique feature exactly, with the same
+sheet label, in the student file at its import commit `301b51128`, and
+the other two trace to documented merges of same-labelled parents. The `student:<n>` numbers are **not
+comparable across files**: r2's `student:01862` is reviewed feature 1867
+(the standardised file's `std_source_index`), which is r50's
+`student:01867`.
+
+**Proximity hint** (fields `own_hint`, `recipient_hint`; a hint, not an
+adjudication). Distance from the point to the nearest pixel of a dark
+compact blob: luminance ≤ 110, a connected component of 6–600 px no
+more than 40 px on a side, searched within 48 px (about 240 m at the
+tiles' ≈ 5 m per pixel). On r2's 25 2-candidates (after the pixel fix):
+the recipient tile has a blob within 8 px of the point for 13 and within
+48 px for 24; the own sheet has one within 48 px for 12 (median 29.35 px,
+about 150 m; within 16 px for 1) and none for 13 (before the fix the
+median was 29.7 px; the other counts are unchanged). For the
+1/3-candidate `student:04282` the nearest blob is 4.8 px (24.4 m) from
+the point on its own sheet and 22.4 px on the recipient tile. Map content is full of compact marks (text, vegetation,
+buildings), so an own-sheet blob near the edge is consistent with case 3
+but does not show it.
+
+**What this means for the three cases** (revised 2026-11-19 after the
+pixel fix and Astra's review). Measured: at every 2-candidate the own
+sheet prints nothing at the recorded coordinate, so for those references
+a separate printed instance **at that coordinate** on the own sheet
+(case 1) is excluded. A 2-candidate is case 2 **or** case 3: the
+own-sheet padding shows that the recorded coordinate cannot be the
+own-sheet position, but not whether the own sheet prints the mound
+elsewhere near its edge (case 3, a displaced counterpart needing a
+sheet-specific centre) or not at all (case 2, a label inconsistent with
+the image). A displaced counterpart is itself a separately printed
+instance, so these measurements do not rule out double printing in
+general; they rule out only a second instance at the recorded
+coordinate. **One reference per file is a 1/3-candidate**
+(`student:04282` in r2): map content on both sheets by the rule, with
+both windows within 3 percentage points of the 50 % limit. That is compatible with
+case 1 or case 3 and is not evidence of either: the pixel rule detects
+map content, not mound symbols. Telling the cases apart needs both
+sheets' imagery beside the edge to be viewed; the hint only ranks where
+to look. Not adjudicated.
+
+**The symbol-level exposure (counts only, no model scores).** D50's
+per-sheet matching keys a reference to its `source_map` sheet. Distinct
+references (by feature) that it places on a sheet where the point lies
+in padding, near padding, or outside that sheet's tiles, after the pixel
+fix:
+
+| Reference file | Own padding, recipient map content | Own padding, recipient ambiguous | **Total in padding** | Own ambiguous, recipient map content (padding a few pixels from the edge) | Own ambiguous, recipient ambiguous | Own outside | Own unmeasured |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| r2 | 25 | 1 | **26** | 1 (`student:02194`) | 1 (`extension:408`) | 0 | 0 |
+| canonical r50 | 25 | 1 | **26** | 2 (`student:01884`, `02199`) | 0 | 0 | 0 |
+
+(Before the fix: r2 25, 1, 26, 1 and no own-ambiguous / recipient-ambiguous
+row; r50 24, 1, 25, 3.) These are **exposure counts**: references whose
+recorded sheet does not show map content at the recorded point. Padding
+at the coordinate does not establish that no detection can match the
+reference: D50 matches within a non-zero radius, and a detection of a
+displaced own-sheet counterpart, or of edge content, may fall within it.
+The attribution **can** leave such a reference unmatched (a false
+negative on its own sheet), and **can** leave a correct detection of the
+printed symbol on the recipient sheet without a reference there (a false
+positive); the actual effect depends on the reference set, where the
+detections fall, and the matching radius. No observed false-negative or
+false-positive count and no F1 change has been measured here. In
+canonical r50, 21 of the 25 2-candidates have a `phantom:*` reference
+within 50 m on the recipient sheet (§ 2.2): the recipient copy is
+digitised, but the student reference stays in its own sheet's padding.
+The other 4 (`student:02195`, `02396`, `02508`, `02793`) have no
+recipient copy (before the fix: 20 of 24, the same 4).
 
 ## 3. Field schema
 
@@ -689,7 +1079,8 @@ plus an idempotence rerun.
 
 1. The seam ruling (stop record § 4, item 1).
 2. Note A in `withheld-37.md`.
-3. The 18 ambiguous contacts on r2.
+3. The 16 ambiguous contacts on r2 (18 before the pixel-convention fix),
+   and the 1/3-candidate `student:04282` (§ 2.4).
 4. Route `unknown` for 79 paper-cited files (54 `source_tile`-only
    materialisations, 25 Era-1 proposer-verifier accepted sets): their
    builders should be checked before Wave 2 relies on the route.
@@ -701,6 +1092,72 @@ plus an idempotence rerun.
 7. One evaluation records its bounds as an absolute path.
 
 ## Changelog
+
+### 2026-11-19 — Pixel convention corrected; §§ 2–2.4 re-measured
+
+Trigger: Astra's review of the own-sheet audit
+(`~/agent-mail/codex/outbox/claude/20261118T145509Z-astra-seam-pixel-convention-interim.md`
+and `…/20261118T145706Z-astra-seam-own-sheet-review.md`), relayed by the
+main session. Verified by this agent before editing: the ESRI world
+file's C and F give the upper-left pixel's centre; the project's tiler
+writes them so (`scripts/preprocess_tiling.py`); the 55-map frame
+polygons' edges equal C − A/2 and F − E/2 on 18 sampled tiles. The shared
+helper floored a centre-indexed coordinate. Fixed in
+`sheet_check_55map.world_to_pixel` (`768cb2a9b`), with a `--self-test`
+on both pixel scripts (passed; three of six cases fail with the old
+formula); a missing own-sheet world file now yields `unmeasured`, never
+`outside`. Every check re-run on zbook (`7056bb857`); pre-fix outputs
+kept as `scripts/out/*-pre-pixel-fix.*`; every changed verdict listed in
+`scripts/out/compare_pixel_fix.txt`.
+
+| Item | Before | After |
+|---|---|---|
+| Recipient verdicts changed (each file) | — | 2 contacts, one feature (r2 `student:04282`): ambiguous → map content |
+| r2 recipient check: ambiguous / map content (references) | 18 / 32 (26) | 16 / **34 (27)** |
+| r50; student-reviewed; student: map content (references) | 33 (27); 33 (17); 35 (19) | 35 (28); 35 (18); 37 (20) |
+| r2 option (a) references added, map content; (d) tiles removed | 26; 52 (41 / 11) | 27; 55 (44 / 11) |
+| r50 option (a) references added, map content | 4 | 5 |
+| GS frames (twelve): verdicts | 237 padding, 6 unavailable | unchanged; no GS contact moves off padding |
+| r2 distinct references: 2-candidate / 1/3-candidate / other | 25 / 0 / 15 | 25 / **1** / 14 |
+| r50 | 24 / 0 / 20 | 25 / **1** / 18 |
+| student-reviewed; student | 24 / 0 / 16; 26 / 0 / 15 | 25 / 1 / 14; 27 / 1 / 13 |
+| r2 `extension:408` own verdict | map content | ambiguous |
+| Correspondence with Astra's diagnostic (r2), final / original | "agree" 39 of 40 / 36 of 39 | 39 of 40 / 37 of 39, stated as a correspondence between different classifiers, exceptions listed |
+| r2 final / original own verdict (padding/padding, padding/ambiguous) | 24, 2 | 25, 1 |
+
+Wording revised with the numbers: § 2.4's "no class is an artefact of
+centre marking" is now "the attribution concern predates centre marking",
+with the padding/ambiguous transitions that marking does cause; the
+three-case paragraph no longer reads the measurements as ruling out
+double printing (a displaced counterpart is a printed instance too); the
+symbol-level paragraph now gives exposure counts and says what they are
+not (observed false negatives or positives, or F1 changes); the
+lineage to the import commit is cited. § 0's headline count and § 10's
+open question 3 gain the post-fix figures. Unchanged: the stop, §§ 3–9,
+and the two-candidate count on r2 (25).
+
+### 2026-11-19 — § 2.4 added: the seam contacts on their own sheet
+
+Trigger: Astra's paired views and source-padding diagnostic
+(`~/agent-mail/codex/outbox/claude/20261118T142910Z-astra-seam-attribution-evidence.md`,
+`…/20261118T143422Z-astra-seam-padding-diagnostic.md`) and the main
+session's request. New script `scripts/seam_own_sheet.py` (run on zbook
+at `4b48c220c`); outputs `scripts/out/seam_own_sheet.txt` and `.json`.
+Every map-content and ambiguous contact in the five 55-map files was
+measured on its own sheet's tiles.
+
+| Item | Before | After |
+|---|---|---|
+| Own-sheet verdict at the contacts | not measured | measured; no point outside its own sheet's tiles |
+| r2 distinct references: 2-candidate / 1/3-candidate / other | — | 25 / 0 / 15 |
+| canonical r50, the same | — | 24 / 0 / 20 |
+| Agreement with Astra's full-scan diagnostic (r2) | — | 39 of 40 pairs (final), 36 of 39 (original); all differences are window size at the map edge |
+
+Unchanged: every measurement and count in §§ 2–2.3, the stop, and
+§§ 3–10. § 2's wording "second printed copy" now needs reading with
+§ 2.4: no contact in any file shows map content on both sheets.
+[Corrected 2026-11-19, entry above: after the pixel-convention fix one
+reference per file shows map content on both sheets.]
 
 ### 2026-11-19 — § 2.3 added: the sheet check on every GS frame
 

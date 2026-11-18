@@ -1,0 +1,61 @@
+== 55-map recipient check (full outputs, padding included)
+best-available-gt-55maps-r2.geojson: 814 contacts; before {'padding': 764, 'ambiguous': 18, 'map-content': 32}; after {'padding': 764, 'ambiguous': 16, 'map-content': 34}; changed 2
+    student:04282 (K-35-076-1) in K-35-076-2_x0_y2352.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+    student:04282 (K-35-076-1) in K-35-076-2_x0_y2688.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+best-available-gt-55maps.geojson: 814 contacts; before {'padding': 764, 'ambiguous': 18, 'map-content': 32}; after {'padding': 764, 'ambiguous': 16, 'map-content': 34}; changed 2
+    student:04282 (K-35-076-1) in K-35-076-2_x0_y2352.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+    student:04282 (K-35-076-1) in K-35-076-2_x0_y2688.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+canonical-gt-55maps-r50.geojson: 873 contacts; before {'padding': 820, 'ambiguous': 20, 'map-content': 33}; after {'padding': 820, 'ambiguous': 18, 'map-content': 35}; changed 2
+    student:04296 (K-35-076-1) in K-35-076-2_x0_y2352.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+    student:04296 (K-35-076-1) in K-35-076-2_x0_y2688.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+student-mounds-55maps-reviewed.geojson: 757 contacts; before {'padding': 708, 'ambiguous': 16, 'map-content': 33}; after {'padding': 708, 'ambiguous': 14, 'map-content': 35}; changed 2
+    100004153674067e4 (K-35-076-1) in K-35-076-2_x0_y2352.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+    100004153674067e4 (K-35-076-1) in K-35-076-2_x0_y2688.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+student-mounds-55maps.geojson: 767 contacts; before {'padding': 717, 'map-content': 35, 'ambiguous': 15}; after {'padding': 717, 'map-content': 37, 'ambiguous': 13}; changed 2
+    100004153674067e4 (K-35-076-1) in K-35-076-2_x0_y2352.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+    100004153674067e4 (K-35-076-1) in K-35-076-2_x0_y2688.png: ambiguous (window 0.5433) -> map-content (window 0.4879)
+== GS frames
+243 contacts; before {'padding': 237, 'tiles unavailable': 6}; after {'padding': 237, 'tiles unavailable': 6}
+== own sheet
+best-available-gt-55maps-r2.geojson: contacts 50 -> 50; pairs 40 -> 40  (fields: own_verdict, recipient_verdict, candidate_class, original_own_verdict)
+    ('extension:408', '4781', 'K-35-066-3_x3360_y0.png'): ('map-content', 'ambiguous', 'other', None) -> ('ambiguous', 'ambiguous', 'other', None)
+    ('student:02390', '2390', 'K-35-075-1_x3360_y0.png'): ('padding', 'map-content', '2-candidate', 'ambiguous') -> ('padding', 'map-content', '2-candidate', 'padding')
+    ('student:04282', '4277', 'K-35-076-2_x0_y2352.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    ('student:04282', '4277', 'K-35-076-2_x0_y2688.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    pair_rows classes: before {'other': 15, '2-candidate': 25}; after {'other': 14, '2-candidate': 25, '1/3-candidate': 1}
+    contact_records classes: before {'other': 19, '2-candidate': 31}; after {'other': 17, '2-candidate': 31, '1/3-candidate': 2}
+    after, features by own / recipient: {'own map-content / recipient ambiguous': 11, 'own padding / recipient ambiguous': 1, 'own padding / recipient map-content': 25, 'own ambiguous / recipient map-content': 1, 'own map-content / recipient map-content': 1, 'own ambiguous / recipient ambiguous': 1}
+    after, original by final own: {'final map-content / original map-content': 12, 'final padding / original padding': 25, 'final padding / original ambiguous': 1, 'final ambiguous / original ambiguous': 1}
+best-available-gt-55maps.geojson: contacts 50 -> 50; pairs 40 -> 40  (fields: own_verdict, recipient_verdict, candidate_class, original_own_verdict)
+    ('extension:408', '4786', 'K-35-066-3_x3360_y0.png'): ('map-content', 'ambiguous', 'other', None) -> ('ambiguous', 'ambiguous', 'other', None)
+    ('student:02390', '2390', 'K-35-075-1_x3360_y0.png'): ('padding', 'map-content', '2-candidate', 'ambiguous') -> ('padding', 'map-content', '2-candidate', 'padding')
+    ('student:04282', '4282', 'K-35-076-2_x0_y2352.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    ('student:04282', '4282', 'K-35-076-2_x0_y2688.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    pair_rows classes: before {'other': 15, '2-candidate': 25}; after {'other': 14, '2-candidate': 25, '1/3-candidate': 1}
+    contact_records classes: before {'other': 19, '2-candidate': 31}; after {'other': 17, '2-candidate': 31, '1/3-candidate': 2}
+    after, features by own / recipient: {'own map-content / recipient ambiguous': 11, 'own padding / recipient ambiguous': 1, 'own padding / recipient map-content': 25, 'own ambiguous / recipient map-content': 1, 'own map-content / recipient map-content': 1, 'own ambiguous / recipient ambiguous': 1}
+    after, original by final own: {'final map-content / original map-content': 12, 'final padding / original padding': 25, 'final padding / original ambiguous': 1, 'final ambiguous / original ambiguous': 1}
+canonical-gt-55maps-r50.geojson: contacts 53 -> 53; pairs 44 -> 44  (fields: own_verdict, recipient_verdict, candidate_class, original_own_verdict)
+    ('student:02395', '2395', 'K-35-075-1_x3360_y0.png'): ('ambiguous', 'map-content', 'other', 'ambiguous') -> ('padding', 'map-content', '2-candidate', 'padding')
+    ('student:04296', '4296', 'K-35-076-2_x0_y2352.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    ('student:04296', '4296', 'K-35-076-2_x0_y2688.png'): ('map-content', 'ambiguous', 'other', 'map-content') -> ('map-content', 'map-content', '1/3-candidate', 'map-content')
+    pair_rows classes: before {'other': 20, '2-candidate': 24}; after {'other': 18, '2-candidate': 25, '1/3-candidate': 1}
+    contact_records classes: before {'other': 23, '2-candidate': 30}; after {'other': 20, '2-candidate': 31, '1/3-candidate': 2}
+    after, features by own / recipient: {'own map-content / recipient ambiguous': 15, 'own padding / recipient ambiguous': 1, 'own padding / recipient map-content': 25, 'own ambiguous / recipient map-content': 2, 'own map-content / recipient map-content': 1}
+    after, original by final own: {'final map-content / original map-content': 12, 'final padding / original padding': 26, 'final ambiguous / original ambiguous': 2}
+student-mounds-55maps-reviewed.geojson: contacts 49 -> 49; pairs 40 -> 40  (fields: own_verdict, recipient_verdict, candidate_class, original_own_verdict)
+    ('100004153674067e4', '4296', 'K-35-076-2_x0_y2352.png'): ('map-content', 'ambiguous', 'other', None) -> ('map-content', 'map-content', '1/3-candidate', None)
+    ('100004153674067e4', '4296', 'K-35-076-2_x0_y2688.png'): ('map-content', 'ambiguous', 'other', None) -> ('map-content', 'map-content', '1/3-candidate', None)
+    ('1000071537509803400', '2395', 'K-35-075-1_x3360_y0.png'): ('ambiguous', 'map-content', 'other', None) -> ('padding', 'map-content', '2-candidate', None)
+    pair_rows classes: before {'other': 16, '2-candidate': 24}; after {'other': 14, '2-candidate': 25, '1/3-candidate': 1}
+    contact_records classes: before {'other': 19, '2-candidate': 30}; after {'other': 16, '2-candidate': 31, '1/3-candidate': 2}
+    after, features by own / recipient: {'own map-content / recipient ambiguous': 11, 'own padding / recipient ambiguous': 1, 'own padding / recipient map-content': 25, 'own ambiguous / recipient map-content': 2, 'own map-content / recipient map-content': 1}
+    after, original by final own: {}
+student-mounds-55maps.geojson: contacts 50 -> 50; pairs 41 -> 41  (fields: own_verdict, recipient_verdict, candidate_class, original_own_verdict)
+    ('100004153674067e4', '4027', 'K-35-076-2_x0_y2352.png'): ('map-content', 'ambiguous', 'other', None) -> ('map-content', 'map-content', '1/3-candidate', None)
+    ('100004153674067e4', '4027', 'K-35-076-2_x0_y2688.png'): ('map-content', 'ambiguous', 'other', None) -> ('map-content', 'map-content', '1/3-candidate', None)
+    ('1000071537509803400', '4124', 'K-35-075-1_x3360_y0.png'): ('ambiguous', 'map-content', 'other', None) -> ('padding', 'map-content', '2-candidate', None)
+    pair_rows classes: before {'2-candidate': 26, 'other': 15}; after {'2-candidate': 27, 'other': 13, '1/3-candidate': 1}
+    contact_records classes: before {'2-candidate': 32, 'other': 18}; after {'2-candidate': 33, 'other': 15, '1/3-candidate': 2}
+    after, features by own / recipient: {'own padding / recipient map-content': 27, 'own map-content / recipient ambiguous': 10, 'own ambiguous / recipient map-content': 2, 'own padding / recipient ambiguous': 1, 'own map-content / recipient map-content': 1}
+    after, original by final own: {}
