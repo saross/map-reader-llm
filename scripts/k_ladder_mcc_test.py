@@ -136,7 +136,11 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     check_tile_joins,
     tile_join_provenance,
 )
-from scripts.era1_leaderboard_tiering import tiering_stem  # noqa: E402
+from scripts.era1_leaderboard_tiering import (  # noqa: E402
+    ReproductionDriftError,
+    refusal_code,
+    tiering_stem,
+)
 
 LADDERS_JSON = BASE_DIR / "results/k-ladder-2026-09-12/ladders.json"
 RUN_CONDITIONS = BASE_DIR / "results/run-conditions.json"
@@ -424,6 +428,48 @@ def board_for(rung: dict) -> tuple[str, str] | None:
     return None
 
 
+def missing_pair_gate(pair: str, members: tuple[str, ...],
+                      validation: dict) -> dict:
+    """The gate record for a pair the validation run has no entry for.
+
+    Audit A-L1: the committed recipe ``(id, id)`` can withhold a rung, and
+    then the pair has no committed p-value to gate. Astra R2-4: absence
+    alone proves nothing. The pair is accepted as an expected refusal only
+    when the validation run withheld an ACTUAL MEMBER of this pair with a
+    recognised tile-join refusal code in its reason; any other absence (no
+    withheld cell, only an unrelated one, or an unrecognised reason) stops
+    the run.
+
+    Args:
+        pair: The pair's label, for messages.
+        members: The pair's two condition refs.
+        validation: The validation run's tiering (its ``withheld_cells``).
+
+    Returns:
+        The gate record (``available`` False, ``expected_refusal`` True).
+
+    Raises:
+        ReproductionDriftError: If no member of the pair carries a verified,
+            recognised refusal.
+    """
+    withheld = {w.get("ref"): w.get("reason")
+                for w in validation.get("withheld_cells") or []}
+    verified = {ref: refusal_code(withheld[ref]) for ref in members
+                if ref in withheld and refusal_code(str(withheld[ref]))}
+    if not verified:
+        raise ReproductionDriftError(
+            f"{pair}: the validation run has no entry for this pair, and "
+            f"neither member ({', '.join(members)}) is withheld with a "
+            f"recognised tile-join refusal (withheld: "
+            f"{sorted(str(r) for r in withheld) or 'none'}); an unexplained "
+            f"absence is a stop, not an expected refusal")
+    return {"available": False, "expected_refusal": True,
+            "why": ("the committed recipe (id, id) withholds "
+                    + ", ".join(sorted(verified))),
+            "withheld": {ref: withheld[ref] for ref in sorted(verified)},
+            "refusal_codes": verified}
+
+
 def gate_against_board(rung_a: dict, rung_b: dict, f1_entry: dict,
                        board_cache: dict) -> dict:
     """Compare one reproduced F1 permutation against its committed board entry.
@@ -619,17 +665,13 @@ def main() -> int:
                                           by_k[k_lo if v_a_k == k_hi else k_hi],
                                           v_entry, board_cache)
             else:
-                # Audit A-L1: the committed recipe (id, id) withholds a rung
-                # of this pair, so there is no committed p-value to gate;
-                # the refusal is reproduced and recorded, never a KeyError.
-                withheld = {w.get("ref"): w.get("reason")
-                            for w in validation.get("withheld_cells") or []}
-                gate = {"available": False, "expected_refusal": True,
-                        "why": ("the committed recipe (id, id) withholds "
-                                + ", ".join(sorted(str(r) for r in withheld))
-                                if withheld else
-                                "the validation run has no entry for this pair"),
-                        "withheld": withheld}
+                # Audit A-L1 / Astra R2-4: accepted only when the validation
+                # run withheld a member of THIS pair with a recognised
+                # refusal; an unexplained absence stops the run.
+                gate = missing_pair_gate(
+                    f"K{k_lo}-vs-K{k_hi}",
+                    (by_k[k_lo]["condition_id"], by_k[k_hi]["condition_id"]),
+                    validation)
             gates.append({"pair": f"K{k_lo}-vs-K{k_hi}", **gate})
             mcc_block = {
                 "low": by_k[k_lo]["tile_mcc"],

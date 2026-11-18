@@ -1489,3 +1489,68 @@ class TestReplicateMeanReplay:
         c, a = _write_replicate_board(tmp_path, self._passes(), **kwargs)
         with pytest.raises(t.ReplayRouteUnsupportedError, match=message):
             t.load_cells(c, a, "board", None, None, withheld=[])
+
+
+@pytest.mark.parametrize("withheld_cells, message", [
+    ([], "withheld: none"),                                               # no refusal at all
+    ([{"ref": "other::x", "reason": TILE_JOIN_REASON_DETECTION_SHORTFALL}],
+     "other::x"),                                                         # an unrelated cell
+    ([{"ref": "run::a", "reason": "some refusal"}], "run::a"),            # unrecognised reason
+])
+def test_r2_4_an_unexplained_missing_pair_stops(withheld_cells, message):
+    """Astra R2-4: a pair missing from the validation run is an expected
+    refusal only when a MEMBER of the pair is withheld with a recognised
+    refusal code; otherwise the run stops instead of reporting a gate pass."""
+    import scripts.k_ladder_mcc_test as kmt
+    from scripts.era1_leaderboard_tiering import ReproductionDriftError
+
+    with pytest.raises(ReproductionDriftError, match=message):
+        kmt.missing_pair_gate("K1-vs-K3", ("run::a", "run::b"),
+                              {"pairwise": [], "withheld_cells": withheld_cells})
+
+
+def test_r2_4_a_member_refusal_is_recorded_with_its_code():
+    import scripts.k_ladder_mcc_test as kmt
+
+    reason = f"refused ({TILE_JOIN_REASON_DETECTION_SHORTFALL}) under id"
+    gate = kmt.missing_pair_gate("K1-vs-K3", ("run::a", "run::b"), {"withheld_cells": [
+        {"ref": "run::b", "reason": reason}, {"ref": "other::x", "reason": reason}]})
+    assert gate["available"] is False and gate["expected_refusal"] is True
+    assert gate["withheld"] == {"run::b": reason}
+    assert gate["refusal_codes"] == {"run::b": TILE_JOIN_REASON_DETECTION_SHORTFALL}
+
+
+@pytest.mark.parametrize("withheld_cells", [
+    [], [{"ref": "unrelated-cell", "reason": "some refusal"}]])
+def test_r2_4_the_driver_stops_rather_than_passing_the_gate(tmp_path, monkeypatch,
+                                                            withheld_cells):
+    """End to end through ``main``: Astra's two probe cases no longer end in
+    ``gate_pass: true``; they stop before anything is written."""
+    import scripts.k_ladder_mcc_test as kmt
+    from scripts.era1_leaderboard_tiering import ReproductionDriftError
+
+    rungs = [{"K": 1, "condition_id": "run::a", "eval_path": "e", "f1_headline": 0.8,
+              "tile_mcc": 0.5},
+             {"K": 3, "condition_id": "run::b", "eval_path": "e", "f1_headline": 0.9,
+              "tile_mcc": 0.6}]
+    inventory = tmp_path / "ladders.json"
+    inventory.write_text(json.dumps({"ladders": [{
+        "slug": "x", "family_base": "X", "run_id": "run", "proposer_pool": "p",
+        "corpus": "c", "reference_file": "r.geojson", "frame_file": "f.geojson",
+        "headline_buffer_m": 20, "rungs": rungs}]}))
+    pair = {"ref_a": "run::a", "ref_b": "run::b", "p_value": 0.5, "bh_adjusted_p": 0.5,
+            "significant": False}
+    requested = {"pairwise": [{**pair, "observed_diff": -0.1}], "fdr_q": 0.05,
+                 "n_permutations": 10, "seed": 1, "n_tiles": 4,
+                 "mcc_permutation": {"pairwise": [{**pair, "observed_mcc_diff": -0.1}],
+                                     "gates": []}}
+    validation = {"pairwise": [], "withheld_cells": withheld_cells}
+    monkeypatch.setattr(kmt, "run_tiering", lambda *args: (
+        validation if args[-2:] == ("id", "id") else requested))
+    out = tmp_path / "out"
+    monkeypatch.setattr(sys, "argv", ["k_ladder_mcc_test.py", "--ladders", str(inventory),
+                                      "--output-dir", str(out), "--tile-join", "id",
+                                      "--count-table-join", "sheet-primary"])
+    with pytest.raises(ReproductionDriftError, match="unexplained absence"):
+        kmt.main()
+    assert not (out / "x.json").exists()
