@@ -22,12 +22,14 @@ model output, what the ruling needs:
    lies inside it):
 
    - (a) add the second copy as a reference on sheet B, at the contact
-     point, for every contact with no sheet-B reference within 50 m;
+     point, for every contact with no sheet-B reference within 50 m; one
+     reference per (source feature, recipient sheet), since one point can
+     lie in two overlapping tiles of the same sheet (Astra, 2026-11-18);
    - (b) seam exception: a sheet-B tile is also positive if a sheet-A
      reference lies on its map content (each contact in scope);
    - (c) frame-wide containment for the 55-map corpus (a tile is positive
-     if any reference of any sheet lies inside it; all contacts, padding
-     included, can move tiles);
+     if any reference of any sheet lies inside it), with the tiles it moves
+     split into disjoint categories by their contacts' pixel verdicts;
    - (d) exclude the contacted tiles on both sheets: the contacted sheet-B
      tile and every sheet-A tile containing the reference; reported as
      tiles removed, and of those, how many were positive.
@@ -45,6 +47,7 @@ Usage (zbook, from a checkout of the branch)::
 
     ~/Code/map-reader-llm/.venv/bin/python \\
         reports/tile-join-wave-1/scripts/seam_second_copy.py \\
+        --contacts-json ~/scratch/wave1/w10/sheet-check/sheet_check_55map.json \\
         --json-out reports/tile-join-wave-1/scripts/out/seam_second_copy.json \\
         > reports/tile-join-wave-1/scripts/out/seam_second_copy.txt
 
@@ -133,9 +136,12 @@ def load_refs_full(path: Path) -> list[dict[str, Any]]:
         points = ([geometry["coordinates"]] if geometry["type"] == "Point"
                   else geometry["coordinates"])
         ident = str(props.get("gt_id") or props.get("uuid") or index)
-        for point in points:
+        for k, point in enumerate(points):
             refs.append({
                 "sheet": props["source_map"], "id": ident,
+                # Stable identity: the feature's index in its file (and the
+                # member index for a MultiPoint), never a rounded id alone.
+                "key": f"{index}" if len(points) == 1 else f"{index}.{k}",
                 "layer": props.get("layer"), "provenance": props.get("provenance"),
                 "x": float(point[0]), "y": float(point[1]),
             })
@@ -187,12 +193,18 @@ def main() -> None:
     """Measure every reference file and print the tables."""
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--json-out", type=Path, default=None)
+    parser.add_argument("--contacts-json", type=Path, required=True,
+                        help="full output of sheet_check_55map.py (every contact)")
     args = parser.parse_args()
 
     tiles = load_tiles(BOUNDS)
     index = TileIndex(tiles)
     by_name = {t["name"]: i for i, t in enumerate(tiles)}
     summary = json.loads(SUMMARY.read_text())
+    # Every contact with its verdict, padding included, for the (c) breakdown:
+    # the sheet check's full output (scratch; not committed for its size).
+    full = json.loads(args.contacts_json.read_text())
+    all_contacts = {k: v["contacts"] for k, v in full["references"].items()}
     report: dict[str, Any] = {"frame": str(BOUNDS.relative_to(PROJECT_ROOT)),
                               "references": {}}
 
@@ -201,11 +213,14 @@ def main() -> None:
         refs_by_sheet: dict[str, list[dict]] = defaultdict(list)
         for ref in refs:
             refs_by_sheet[ref["sheet"]].append(ref)
+        feature_key = {(r["sheet"], r["x"], r["y"]): r["key"] for r in refs}
         base = positives(index, refs, same_sheet=True)
         frame_wide = positives(index, refs, same_sheet=False)
         contacts = summary["references"][ref_name]["non_padding_contacts"]
         entry: dict[str, Any] = {"n_points": len(refs),
-                                 "n_baseline_positive_tiles": len(base)}
+                                 "n_baseline_positive_tiles": len(base),
+                                 "n_coincident_points_same_sheet":
+                                     len(refs) - len(feature_key)}
         print(f"\n=== {ref_name}: {len(refs)} points; sheet-specific positive "
               f"tiles {len(base)} of {len(tiles)}")
 
@@ -250,11 +265,18 @@ def main() -> None:
             sel_rows = [r for r in rows if r["verdict"] in verdicts]
             contacted = {by_name[c["tile"]] for c in sel}
             # (a) a second copy at the contact point on sheet B, where none
-            # lies within 50 m: every sheet-B tile containing the point.
+            # lies within 50 m: every sheet-B tile containing the point. One
+            # reference is added per (source feature, recipient sheet), however
+            # many of that sheet's overlapping tiles the point reaches.
             added: set[int] = set()
+            additions: set[tuple[str, str]] = set()
+            pairs_in_scope: set[tuple[str, str]] = set()
             for c, r in zip(sel, sel_rows):
+                key = feature_key[(c["ref_sheet"], c["x"], c["y"])]
+                pairs_in_scope.add((key, c["tile_sheet"]))
                 if r["within_50m"]:
                     continue
+                additions.add((key, c["tile_sheet"]))
                 for i in index.containing(c["x"], c["y"]):
                     if tiles[i]["sheet"] == c["tile_sheet"]:
                         added.add(i)
@@ -271,7 +293,10 @@ def main() -> None:
                 "n_contacts": len(sel),
                 "n_distinct_contacted_tiles": len(contacted),
                 "a_tiles_turning_positive": len(a_changed),
-                "a_references_added": sum(1 for r in sel_rows if not r["within_50m"]),
+                "n_feature_sheet_pairs": len(pairs_in_scope),
+                "a_contacts_without_second_copy": sum(1 for r in sel_rows
+                                                      if not r["within_50m"]),
+                "a_references_added": len(additions),
                 "b_tiles_turning_positive": len(b_changed),
                 "d_tiles_removed": len(removed),
                 "d_removed_baseline_positive": len(removed & base),
@@ -280,13 +305,31 @@ def main() -> None:
             entry["options"][scope] = result
             print(f"  scope {scope}: {result}")
         c_changed = frame_wide - base
+        verdicts_by_tile: dict[int, set[str]] = defaultdict(set)
+        for c in all_contacts[ref_name]:
+            verdicts_by_tile[by_name[c["tile"]]].add(c.get("verdict") or "no-verdict")
+        breakdown = {"map-content": 0, "ambiguous": 0, "confirmed-padding": 0,
+                     "remainder": 0}
+        mixed = 0
+        for i in c_changed:
+            v = verdicts_by_tile.get(i, set())
+            if len(v) > 1:
+                mixed += 1
+            if "map-content" in v:
+                breakdown["map-content"] += 1
+            elif "ambiguous" in v:
+                breakdown["ambiguous"] += 1
+            elif v == {"padding"}:
+                breakdown["confirmed-padding"] += 1
+            else:
+                breakdown["remainder"] += 1
         entry["c_tiles_turning_positive_frame_wide"] = len(c_changed)
-        entry["c_tiles_turning_positive_on_map_content_contacts"] = len(
-            c_changed & {by_name[c["tile"]] for c in contacts
-                         if c["verdict"] == "map-content"})
+        entry["c_breakdown"] = breakdown
+        entry["c_tiles_with_mixed_verdicts"] = mixed
         print(f"  (c) frame-wide: {len(c_changed)} tiles turn positive "
-              f"(frame-wide positives {len(frame_wide)}); of these, map-content "
-              f"contacted tiles {entry['c_tiles_turning_positive_on_map_content_contacts']}")
+              f"(frame-wide positives {len(frame_wide)}); disjoint by the "
+              f"tile's contacts (map content > ambiguous > all padding > "
+              f"remainder): {breakdown}; tiles with mixed verdicts {mixed}")
 
         # The phantom lead (canonical r50 carries phantoms).
         phantoms = [r for r in refs if r["id"].startswith("phantom")]
