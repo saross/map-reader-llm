@@ -64,6 +64,7 @@ from scripts.stride55_sweep_oracle import (  # noqa: E402
     RUNS as STRIDE55_RUNS,
     load_candidates,
 )
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -104,7 +105,7 @@ def rung(n: int) -> None:
     (dest / "verifier_probabilities.json").write_text(
         json.dumps(provenance, indent=2) + "\n")
     r = subprocess.run(
-        [".venv/bin/python", "scripts/evaluate_detections.py",
+        [".venv/bin/python", "scripts/evaluate_detections.py", *LEGACY_JOIN_FLAGS,
          "--detections", str((dest / "detections.geojson"
                               ).relative_to(PROJECT_ROOT)),
          "--buffers", "20", "--ground-truth", GS_GT,
@@ -150,7 +151,7 @@ def oracle(cell: str) -> None:
         ensure_empty_yesterday,
     )
     cmd = [sys.executable,
-           str(PROJECT_ROOT / "scripts/compute_corrected_f1_multi_buffer.py"),
+           str(PROJECT_ROOT / "scripts/compute_corrected_f1_multi_buffer.py"), *LEGACY_JOIN_FLAGS,
            "--verified-detections", str(det),
            "--student-gt", str(ENGINE_GT),
            "--bounds", str(ENGINE_BOUNDS),

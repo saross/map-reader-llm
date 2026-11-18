@@ -86,6 +86,7 @@ from scripts.run_k_ladder_phase2_verifier import (  # noqa: E402
     UNIONS_JSON,
     resolve_paths,
 )
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -310,6 +311,7 @@ def eval_command(detections: Path, cell: str, label: str) -> str:
         [
             "python",
             "scripts/evaluate_detections.py",
+            *LEGACY_JOIN_FLAGS,
             "--detections",
             str(detections.relative_to(BASE_DIR)),
             "--ground-truth",

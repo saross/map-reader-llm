@@ -123,6 +123,7 @@ from build_gs_era2_board import (  # noqa: E402
     f1_at,
     slug,
 )
+from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 ARCHIVE = "archive/superseded-leaderboards/leaderboard"
 ARCHIVED_BOARD = f"{ARCHIVE}/per-architecture/era2/pv/leaderboard_tiers_20m.json"
@@ -343,7 +344,8 @@ def derive_membership() -> dict[str, Any]:
 
 
 def _cmd(detections: str, bounds: str, out_dir: str, bootstrap: int, label: str) -> str:
-    parts = ["python", "scripts/evaluate_detections.py", "--detections", detections,
+    parts = ["python", "scripts/evaluate_detections.py", *LEGACY_JOIN_FLAGS,
+             "--detections", detections,
              "--ground-truth", GROUND_TRUTH, "--bounds", bounds,
              "--buffers", *[str(b) for b in BUFFERS], "--bootstrap", str(bootstrap), "--seed", str(SEED),
              "--mcc", "--output-dir", out_dir, "--label", label]

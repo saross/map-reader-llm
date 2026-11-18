@@ -161,6 +161,7 @@ from scripts.lib_uplift_supplement import (
     resolve_scope,
     write_csv,
 )
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 DEFAULT_OUT_DIR = Path("results/uplift-supplement")
 
@@ -349,7 +350,7 @@ def _render_command(
     """
     if recipe.engine == "evaluate_detections":
         parts = [
-            "python", "scripts/evaluate_detections.py",
+            "python", "scripts/evaluate_detections.py", *LEGACY_JOIN_FLAGS,
             "--detections", detections,
             "--ground-truth", recipe.ground_truth or "",
             "--bounds", recipe.bounds or "",
@@ -362,7 +363,7 @@ def _render_command(
         ]
     else:
         parts = [
-            "python", "scripts/compute_corrected_f1_multi_buffer.py",
+            "python", "scripts/compute_corrected_f1_multi_buffer.py", *LEGACY_JOIN_FLAGS,
             "--verified-detections", detections,
             "--student-gt", recipe.ground_truth or "",
             "--bounds", recipe.bounds or "",

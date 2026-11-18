@@ -98,6 +98,7 @@ from scripts.rerun_evals_at_10k import (  # noqa: E402
     TOLERANCE,
     point_table,
 )
+from scripts.lib_advanced_metrics import recorded_join_flags  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -298,7 +299,9 @@ def freeze_inputs(
 
 def build_command(doc: dict, recipe: dict[str, Any], workdir: Path) -> list[str]:
     """Assemble the replay invocation from measurements, not declarations."""
-    cmd = [sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py")]
+    # Wave 1: replay under the rules the record names (legacy id if none).
+    cmd = [sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"),
+           *recorded_join_flags(doc)]
     original_cli = (doc.get("_metadata") or {}).get("cli_args") or {}
     recovered = not (original_cli.get("detections")
                      or original_cli.get("detections_dir"))

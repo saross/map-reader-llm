@@ -51,6 +51,7 @@ import sys
 import tempfile
 from pathlib import Path
 from typing import Any
+from lib_advanced_metrics import recorded_join_flags  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -86,8 +87,11 @@ def point_table(doc: dict) -> dict[tuple[int, str], float]:
 
 def replay(path: Path, workdir: Path) -> Path:
     """Re-run one evaluation at the target iteration count into ``workdir``."""
-    args = json.loads(path.read_text())["_metadata"]["cli_args"]
-    cmd = [sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py")]
+    doc = json.loads(path.read_text())
+    args = doc["_metadata"]["cli_args"]
+    # Wave 1: replay under the rules the record names (legacy id if none).
+    cmd = [sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"),
+           *recorded_join_flags(doc)]
     # `--detections` is nargs="+", so every file goes under ONE flag. Repeating
     # the flag makes argparse keep only the last, which silently turns a
     # three-run averaged evaluation into a single-pass one — caught here by the

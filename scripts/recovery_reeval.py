@@ -32,6 +32,10 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+try:  # run as a script: scripts/ is on sys.path
+    from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
+except ImportError:  # imported as scripts.<module>
+    from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 REPO = Path(__file__).resolve().parent.parent
 RUN_CONDITIONS = REPO / "results/run-conditions.json"
@@ -66,7 +70,7 @@ def protocol_of(row: dict) -> dict:
 def command(run_id: str, row: dict) -> list[str]:
     proto = protocol_of(row)
     out = HOME / run_id / row["label"]
-    return [sys.executable, str(REPO / "scripts/evaluate_detections.py"),
+    return [sys.executable, str(REPO / "scripts/evaluate_detections.py"), *LEGACY_JOIN_FLAGS,
             "--detections", row["detections"],
             "--ground-truth", proto["ground_truth"], "--bounds", proto["bounds"],
             "--buffers", *map(str, proto["buffers"]),

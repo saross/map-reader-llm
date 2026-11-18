@@ -83,6 +83,7 @@ if str(_SCRIPT_DIR) not in sys.path:
     sys.path.insert(0, str(_SCRIPT_DIR))
 
 from lib_content_anchor import config_hash  # noqa: E402
+from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 __version__ = "1.1.0"
 
@@ -796,7 +797,7 @@ def run_evaluate(rcfg: ResolvedRunConfig) -> dict[str, Any]:
     # Call evaluate_detections.py with multiple buffers in one go.
     # The script writes per-file outputs in the output_dir.
     cmd = [
-        PYTHON, str(EVAL_SCRIPT),
+        PYTHON, str(EVAL_SCRIPT), *LEGACY_JOIN_FLAGS,
         "--detections", str(final_geojson),
         "--buffers", *[str(b) for b in ev["buffers"]],
         "--bootstrap", str(ev.get("bootstrap", 1000)),

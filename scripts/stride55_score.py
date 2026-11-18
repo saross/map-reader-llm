@@ -34,6 +34,7 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -183,6 +184,7 @@ def score(cell: str, detections: Path) -> None:
     cmd = [
         sys.executable,
         str(PROJECT_ROOT / "scripts/compute_corrected_f1_multi_buffer.py"),
+        *LEGACY_JOIN_FLAGS,
         "--verified-detections", str(detections),
         "--student-gt", str(STUDENT_GT),
         "--bounds", str(BOUNDS),

@@ -27,13 +27,17 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import shutil
 import subprocess
 import sys
 import time
 from pathlib import Path
+try:  # run as a script: scripts/ is on sys.path
+    from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
+except ImportError:  # imported as scripts.<module>
+    from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
-REPO_ROOT = Path(__file__).resolve().parent.parent if Path(__file__).parent == Path('/tmp') else Path('/home/shawn/Code/map-reader-llm')
+REPO_ROOT = (Path(__file__).resolve().parent.parent if Path(__file__).parent == Path('/tmp')
+             else Path('/home/shawn/Code/map-reader-llm'))
 QUEUE_CSV = Path('/tmp/bootstrap-10k-jobs.csv')
 LOG_DIR = Path('/tmp/bootstrap-10k-logs')
 LOG_DIR.mkdir(exist_ok=True)
@@ -64,6 +68,7 @@ def run_cell(row: dict, dry_run: bool = False) -> dict:
     cmd = [
         str(REPO_ROOT / '.venv' / 'bin' / 'python3'),
         str(REPO_ROOT / 'scripts' / 'evaluate_detections.py'),
+        *LEGACY_JOIN_FLAGS,
     ]
     if row.get('detections'):
         for d in row['detections'].split('|'):
@@ -140,7 +145,7 @@ def run_cell(row: dict, dry_run: bool = False) -> dict:
             'exit_code': 0,
             'log_file': str(log_file),
         }
-    except subprocess.TimeoutExpired as e:
+    except subprocess.TimeoutExpired:
         wall = time.time() - t0
         return {
             'status': 'timeout',

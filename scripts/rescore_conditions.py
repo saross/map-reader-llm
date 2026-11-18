@@ -50,6 +50,10 @@ import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+try:  # run as a script: scripts/ is on sys.path
+    from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
+except ImportError:  # imported as scripts.<module>
+    from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -159,7 +163,7 @@ def _input_args(entry: dict) -> list[str]:
 def _eval_command(entry: dict) -> list[str]:
     """Build the evaluate_detections.py command for one worklist entry."""
     return [
-        sys.executable, str(REPO_ROOT / "scripts" / "evaluate_detections.py"),
+        sys.executable, str(REPO_ROOT / "scripts" / "evaluate_detections.py"), *LEGACY_JOIN_FLAGS,
         *_input_args(entry),
         "--bounds", str(entry["bounds"]),
         "--ground-truth", str(entry["ground_truth"]),

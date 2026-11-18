@@ -40,7 +40,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."  # repo root
 
-EVAL="python scripts/evaluate_detections.py"
+# Wave 1 (2026-11-19): pinned to the legacy rules, so a run reproduces history
+# rather than re-scoring outside Wave 2's gates (reports/tile-join-wave-1/).
+EVAL="python scripts/evaluate_detections.py --tile-join id --count-table-join id"
 GT_GS="inputs/vectors/references/mounds-reference.geojson"
 GT_55="inputs/vectors/references/student-mounds-55maps-reviewed.geojson"
 B_487="inputs/vectors/bounds/384/full_evaluation_bounds.geojson"

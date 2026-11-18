@@ -110,6 +110,7 @@ from scripts.lib_advanced_metrics import (  # noqa: E402
     ORIGIN_TILE_COLUMNS,
     parse_tile_list,
 )
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 from scripts.lib_assessed_area import (  # noqa: E402
     COMMON_AREA_CLIP_NAME,
     add_area_gate_arguments,
@@ -1083,6 +1084,7 @@ def eval_command(detections: Path, cell: str, label: str) -> str:
         [
             "python",
             "scripts/evaluate_detections.py",
+            *LEGACY_JOIN_FLAGS,
             "--detections",
             str(detections.relative_to(BASE_DIR)),
             "--ground-truth",

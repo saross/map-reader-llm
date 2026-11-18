@@ -64,6 +64,10 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+try:  # run as a script: scripts/ is on sys.path
+    from lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
+except ImportError:  # imported as scripts.<module>
+    from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_CELLS = BASE_DIR / "planning" / "era1-pv-stage-d-cells.json"
@@ -270,10 +274,11 @@ def _score(cell: dict, accepted: list[Path], bounds: Path, prob_t: float,
         rep_dir.mkdir(parents=True, exist_ok=True)
         for i, p in enumerate(accepted, 1):
             (rep_dir / f"accepted_run{i}.geojson").write_text(p.read_text())
-        cmd = [sys.executable, str(EVAL), "--detections-dir", str(rep_dir),
+        cmd = [sys.executable, str(EVAL), *LEGACY_JOIN_FLAGS, "--detections-dir", str(rep_dir),
                "--glob", "accepted_run*.geojson"]
     else:
-        cmd = [sys.executable, str(EVAL), "--detections", str(accepted[0])]
+        cmd = [sys.executable, str(EVAL), *LEGACY_JOIN_FLAGS,
+               "--detections", str(accepted[0])]
     cmd += ["--ground-truth", str(GROUND_TRUTH), "--bounds", str(bounds),
             "--buffers", *[str(b) for b in BUFFERS], "--mcc",
             "--output-dir", str(out_dir)]

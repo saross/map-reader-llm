@@ -140,6 +140,7 @@ from scripts.grid_analysis import (  # noqa: E402
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.lib_advanced_metrics import compute_per_tile_tp_fp_fn  # noqa: E402
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
 from scripts.lib_cluster_origins import ORIGIN_COLUMN, union_on_origin  # noqa: E402
 from scripts.lib_verify_dirs import read_leg_results  # noqa: E402
@@ -581,7 +582,7 @@ def evaluate(detections: Path, out_dir: Path, n_bootstrap: int = BOOTSTRAP) -> P
         Path to the written evaluation.json.
     """
     cmd = [
-        sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"),
+        sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"), *LEGACY_JOIN_FLAGS,
         "--detections", str(detections),
         "--ground-truth", str(GROUND_TRUTH),
         "--bounds", str(COMMON_BOUNDS),

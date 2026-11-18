@@ -67,6 +67,7 @@ from scripts.grid_analysis import (  # noqa: E402
 )
 from scripts.grid_prepare_scoring import CELLS  # noqa: E402
 from scripts.lib_cluster_origins import cluster_votes_with_members  # noqa: E402
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -145,7 +146,7 @@ def materialise(cell: str, point: dict, bounds: gpd.GeoDataFrame, target: Path) 
 def evaluate(detections: Path, out_dir: Path) -> Path:
     """Run `evaluate_detections.py` on one materialised cell at B = 10 000."""
     cmd = [
-        sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"),
+        sys.executable, str(PROJECT_ROOT / "scripts/evaluate_detections.py"), *LEGACY_JOIN_FLAGS,
         "--detections", str(detections),
         "--ground-truth", str(GROUND_TRUTH),
         "--bounds", str(COMMON_BOUNDS),

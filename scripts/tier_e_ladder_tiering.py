@@ -61,6 +61,7 @@ from scripts.run_k_ladder_tier_e import (  # noqa: E402
     SCORES_JSON,
     TIER_E_DIR,
 )
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -278,6 +279,7 @@ def main() -> None:
     command = [
         sys.executable,
         "scripts/era1_leaderboard_tiering.py",
+        *LEGACY_JOIN_FLAGS,
         "--analysis-id", ANALYSIS_ID,
         "--conditions", str(conditions.relative_to(BASE_DIR)),
         "--analyses", str(analyses.relative_to(BASE_DIR)),

@@ -82,6 +82,7 @@ from scripts.register_standardised_gt_conditions import (  # noqa: E402
     OUT_BASE_BY_VINTAGE,
 )
 from scripts.score_55maps_standardised_reference import CELLS as TRACK2_CELLS  # noqa: E402
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -227,7 +228,7 @@ def board_jobs() -> list[Job]:
 
 def engine_command(job: Job, workers: int, require_clean: bool) -> list[str]:
     """The IM-k4 template, verbatim, against r2."""
-    cmd = [sys.executable, str(ENGINE),
+    cmd = [sys.executable, str(ENGINE), *LEGACY_JOIN_FLAGS,
            "--detections", str(job.detections.relative_to(PROJECT_ROOT)),
            "--buffers", *map(str, BUFFERS),
            "--ground-truth", str(R2_REFERENCE.relative_to(PROJECT_ROOT)),
