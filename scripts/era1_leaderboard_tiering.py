@@ -213,6 +213,7 @@ from lib_advanced_metrics import (  # noqa: E402
     recorded_tile_joins,
     tile_join_provenance,
 )
+from lib_content_anchor import git_blob_hash  # noqa: E402
 from lib_detection_paths import resolve_pool_passes  # noqa: E402
 from pairwise_permutation_test import (  # noqa: E402
     assign_source_tiles,
@@ -865,6 +866,7 @@ def validate_recorded_classification(
     gdf_bounds: gpd.GeoDataFrame,
     evaluation: dict,
     recorded_join: str,
+    expected_refusal: str | None = None,
 ) -> dict:
     """Step 1 of the two computations: reproduce a committed tile record.
 
@@ -876,7 +878,16 @@ def validate_recorded_classification(
       geometric arm included — the gate a default run always applied;
     * a committed WITHHELD block (a recorded refusal): the replay must refuse
       with the same reason. A refusal is reproduced, never bypassed to
-      manufacture a confusion (the specification's W1.4).
+      manufacture a confusion (the specification's W1.4);
+    * a committed confusion that predates the tile-join invariant, which
+      the replay now refuses: accepted only when the caller passes that
+      refusal as ``expected_refusal`` (an explicit, verified input, such as
+      a committed tiering's ``withheld_cells``; Astra's W1-C2 and W1-C3).
+
+    Every other outcome — a different confusion or MCC, an unexpected
+    refusal, or no historical block at all — is a reproduction failure and
+    raises :class:`ReproductionDriftError`, which no withholding handler
+    catches (audit A-L6; Astra W1-C3).
 
     Args:
         label: Cell label, for messages.
@@ -885,22 +896,22 @@ def validate_recorded_classification(
         gdf_bounds: The frame.
         evaluation: The parsed committed ``evaluation.json``.
         recorded_join: The classification join the evaluation recorded.
+        expected_refusal: A refusal reason the caller has verified this cell's
+            replay should end in, or ``None``.
 
     Returns:
         A validation record (``recorded_join``, ``passed``, and either the
         gate record or ``expected_refusal``).
 
     Raises:
-        ConfusionGateError: If the evaluation records no tile block (nothing
-            to validate: the cell's MCC is withheld, as before Wave 1).
-        ReproductionDriftError: If the replay does not reproduce the record
-            (a stop, never a withholding; audit A-L6).
+        ReproductionDriftError: If the replay does not reproduce the record,
+            or there is no historical block (a stop, never a withholding).
     """
     block = (evaluation.get("summary") or {}).get("tile_classification")
     if not isinstance(block, dict):
-        raise ConfusionGateError(
+        raise ReproductionDriftError(
             f"{label}: evaluation records no tile_classification block, so its "
-            f"record cannot be validated"
+            f"record cannot be validated before a new join is computed"
         )
     replay = calculate_tile_classification(
         gdf_det, gdf_ref, gdf_bounds, tile_join=recorded_join,
@@ -915,6 +926,11 @@ def validate_recorded_classification(
             f"'{recorded_join}', but the replay gave "
             f"{replay.get('reason') if 'error' in replay else 'a confusion'}"
         )
+    if "error" in replay and expected_refusal is not None \
+            and replay.get("reason") == expected_refusal:
+        return {"recorded_join": recorded_join, "passed": True,
+                "expected_refusal": expected_refusal,
+                "expected_refusal_source": "caller (verified input)"}
     if "error" in replay:
         raise ReproductionDriftError(
             f"{label}: replay under the recorded join '{recorded_join}' refused "
@@ -929,8 +945,7 @@ def validate_recorded_classification(
     recorded = ({k: int(conf[k]) for k in ("tp", "tn", "fp", "fn") if k in conf}
                 if isinstance(conf, dict) else None)
     if recorded is None:
-        # Nothing to reproduce: withheld as before Wave 1, not a drift.
-        raise ConfusionGateError(
+        raise ReproductionDriftError(
             f"{label}: evaluation records no tile_classification.confusion, so "
             f"its record cannot be validated")
     try:
@@ -942,6 +957,172 @@ def validate_recorded_classification(
     except ConfusionGateError as error:
         raise ReproductionDriftError(f"reproduction drift: {error}") from error
     return {"recorded_join": recorded_join, **gate}
+
+
+def refusal_code(error: Exception | str) -> str | None:
+    """The tile-join refusal code a message carries, or ``None``."""
+    text = str(error)
+    return next((c for c in TILE_JOIN_REFUSAL_CODES if c in text), None)
+
+
+def expected_refusals_from(path: Path) -> dict[str, str]:
+    """Read verified expected refusals: a mapping, or a tiering's withheld cells.
+
+    Args:
+        path: JSON holding either ``{ref: reason_code}`` or a committed tiering
+            whose ``withheld_cells`` list the board's refused cells.
+
+    Returns:
+        Condition ref to refusal code.
+
+    Raises:
+        ValueError: If a withheld cell's reason carries no refusal code.
+    """
+    data = json.loads(path.read_text())
+    if "withheld_cells" not in data:
+        return {str(k): str(v) for k, v in data.items()}
+    out: dict[str, str] = {}
+    for cell in data["withheld_cells"]:
+        code = refusal_code(cell.get("reason", ""))
+        if code is None:
+            raise ValueError(f"{path}: withheld cell {cell.get('ref')} has no "
+                             f"refusal code in its reason")
+        out[cell["ref"]] = code
+    return out
+
+
+def recorded_refusal(evaluation: dict) -> str | None:
+    """The refusal code an evaluation itself records, or ``None``."""
+    summary = evaluation.get("summary") or {}
+    withheld = summary.get("tile_join_withheld") or {}
+    if withheld.get("reason"):
+        return str(withheld["reason"])
+    block = summary.get("tile_classification") or {}
+    if isinstance(block, dict) and block.get("withheld_reason"):
+        return str(block["withheld_reason"])
+    return None
+
+
+def verify_input_identity(label: str, evaluation: dict, cli: dict,
+                          overridden: set[str]) -> dict:
+    """Check the inputs a cell will read are the bytes its evaluation scored.
+
+    Evaluations from ``metadata_version`` 1.4 record a git blob hash per
+    input (``_metadata.input_git_state.blob_hashes``). Each recorded input
+    this harness will read (detections, and the reference and bounds unless
+    overridden on the command line) must still hash the same; a mismatch is
+    reproduction drift, fatal. An evaluation that records no hashes is
+    historical and cannot be checked; the record says so.
+
+    Args:
+        label: Cell label, for messages.
+        evaluation: The parsed committed ``evaluation.json``.
+        cli: The cell's recipe (``cli_args``).
+        overridden: ``{"ground_truth", "bounds"}`` members overridden here.
+
+    Returns:
+        ``{"status": "verified" | "not recorded", "n_files": ...}``.
+
+    Raises:
+        ReproductionDriftError: On a hash mismatch.
+    """
+    hashes = (((evaluation.get("_metadata") or {}).get("input_git_state") or {})
+              .get("blob_hashes") or {})
+    if not hashes:
+        return {"status": "not recorded", "n_files": 0}
+    skip = {str(cli.get(key)) for key in overridden if cli.get(key)}
+    checked = 0
+    for rel, recorded in hashes.items():
+        if recorded is None or rel in skip:
+            continue
+        current = git_blob_hash(BASE_DIR / rel)
+        if current != recorded:
+            raise ReproductionDriftError(
+                f"{label}: input {rel} hashes {current}, the evaluation recorded "
+                f"{recorded}; the cell's inputs are not the ones it scored")
+        checked += 1
+    return {"status": "verified", "n_files": checked}
+
+
+def validate_recorded_count_table(
+    label: str,
+    cli: dict,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    tile_order: list[str],
+    buffer_metres: int,
+    eval_path: Path,
+    evaluation: dict,
+    recorded_join: str,
+    expected_refusal: str | None,
+) -> dict:
+    """Step 1 for the F1 arm: replay the committed per-tile table numerically.
+
+    The per-tile table is rebuilt under the count-table rule the evaluation
+    recorded (legacy ``id`` when it records none) BEFORE any table is built
+    under the requested rule (Astra W1-C2). It must reproduce:
+
+    * a recorded refusal (the evaluation's own, or ``expected_refusal``, a
+      verified caller input): the replay must refuse with that code;
+    * otherwise a table: the replay must not refuse, the evaluation must not
+      record a refusal, and for a single-set cell the micro-F1 of the table
+      must equal the committed F1 at ``buffer_metres`` to its four decimals.
+      (A replicate-mean cell's committed F1 is a mean over passes, which the
+      pass-averaged table's micro-F1 does not equal by construction, so it
+      is checked on refusal status only; the record says so.)
+
+    Args:
+        label: Cell label.
+        cli: The cell's recipe.
+        gdf_ref: References.
+        gdf_bounds: The frame.
+        tile_order: Tile order.
+        buffer_metres: The F1 buffer.
+        eval_path: The committed evaluation's path.
+        evaluation: The parsed evaluation.
+        recorded_join: The count-table rule the evaluation recorded.
+        expected_refusal: A verified expected refusal code, or ``None``.
+
+    Returns:
+        The validation record.
+
+    Raises:
+        ReproductionDriftError: On any failure to reproduce.
+    """
+    own = recorded_refusal(evaluation)
+    expected = own or expected_refusal
+    try:
+        tp, fp, fn, n_passes = cell_per_tile(cli, gdf_ref, gdf_bounds, tile_order,
+                                             buffer_metres, recorded_join)
+    except (ValueError, ConfusionGateError) as error:
+        code = refusal_code(error)
+        if code is not None and code == expected:
+            return {"recorded_join": recorded_join, "passed": True,
+                    "expected_refusal": code,
+                    "expected_refusal_source": ("evaluation" if own else
+                                                "caller (verified input)")}
+        if code is not None:
+            raise ReproductionDriftError(
+                f"{label}: replay of the count table under the recorded rule "
+                f"'{recorded_join}' refused ({code}); expected "
+                f"{expected or 'a table'}") from error
+        raise
+    if own is not None:
+        raise ReproductionDriftError(
+            f"{label}: the evaluation records a refusal ({own}), but the count "
+            f"table replays under '{recorded_join}'")
+    record = {"recorded_join": recorded_join, "passed": True, "n_passes": n_passes}
+    if n_passes == 1:
+        eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
+        replay_f1 = micro_f1(tp.sum(), fp.sum(), fn.sum())
+        record.update(eval_f1=eval_f1, replay_f1=round(replay_f1, 6))
+        if abs(replay_f1 - eval_f1) > 5e-5:
+            raise ReproductionDriftError(
+                f"{label}: the count table replayed under '{recorded_join}' gives "
+                f"micro-F1 {replay_f1:.6f}, the evaluation records {eval_f1:.4f}")
+    else:
+        record["f1_check"] = "not applicable: replicate-mean cell"
+    return record
 
 
 #: Reason codes the tile-join invariant stamps into its refusal messages. A
@@ -1189,6 +1370,7 @@ def load_cells(
     withheld: list[dict] | None = None,
     tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
     count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
+    expected_refusals: dict[str, str] | None = None,
 ) -> tuple[list[dict], gpd.GeoDataFrame, gpd.GeoDataFrame, list[str]]:
     """Load every board cell with per-tile stats, F1 and MCC.
 
@@ -1231,6 +1413,23 @@ def load_cells(
             differs carries ``mcc: None`` and ``mcc_status``.
         count_table_join: The COUNT-TABLE join of the F1 arm's per-tile
             TP/FP/FN; one of ``lib_advanced_metrics.TILE_JOINS_COUNT_TABLE``.
+        expected_refusals: Condition ref to the refusal code its replay under
+            the recorded rules is verified to end in (a committed tiering's
+            ``withheld_cells``, via :func:`expected_refusals_from`). Needed
+            for cells whose evaluation predates the tile-join invariant and so
+            records no refusal of its own.
+
+    Order (Astra W1-C2, W1-C3): for every cell, BEFORE anything is built
+    under the requested rules, (1) the inputs' recorded blob hashes are
+    verified (:func:`verify_input_identity`); (2) where the evaluation
+    recorded another count-table rule, its table is replayed under that
+    rule (:func:`validate_recorded_count_table`); (3) with ``want_mcc`` and
+    another recorded classification join, its tile record is replayed
+    (:func:`validate_recorded_classification`). Any failure there raises
+    :class:`ReproductionDriftError` and ends the run; it is never routed
+    through the handlers that withhold a refused cell under the requested
+    rules. Where the recorded rule IS the requested one, the one computation
+    validates and computes at once, with the historical behaviour.
 
     Returns:
         ``(cells, gdf_ref, gdf_bounds, tile_order)``.
@@ -1310,8 +1509,30 @@ def load_cells(
     print(f"  {len(tile_order)} evaluation tiles", flush=True)
 
     cells: list[dict] = []
+    overridden = {name for name, value in (("ground_truth", gt_override),
+                                           ("bounds", bounds_override))
+                  if value is not None}
     for r in resolved:
         cond, eval_path, cli = r["cond"], r["eval_path"], r["cli"]
+        recorded_join = r["recorded"]["classification"]
+        recorded_ct = r["recorded"]["count_table"]
+        same_join = recorded_join == tile_join
+        expected = (expected_refusals or {}).get(r["ref"])
+        # ── Step 1: validate the historical record, outside every handler
+        # that withholds a cell under the requested rules (W1-C2, W1-C3).
+        validation: dict = {"identity": verify_input_identity(
+            cond["label"], r["evaluation"], cli, overridden)}
+        if recorded_ct != count_table_join:
+            validation["count_table"] = validate_recorded_count_table(
+                cond["label"], cli, gdf_ref, gdf_bounds, tile_order,
+                buffer_metres, eval_path, r["evaluation"], recorded_ct, expected)
+        gdf_det_mcc = None
+        if want_mcc and not same_join:
+            gdf_det_mcc = cell_detections(cli, gdf_bounds)
+            validation["classification"] = validate_recorded_classification(
+                cond["label"], gdf_det_mcc, gdf_ref, gdf_bounds,
+                r["evaluation"], recorded_join, expected_refusal=expected)
+        # ── Step 2: the analysed values, under the requested rules.
         # The tile-join invariant can refuse the F1 arm as well as the MCC arm:
         # a cell whose source_tile vocabulary is not this frame's has no
         # per-tile decomposition on it, only a sound whole-frame F1. When the
@@ -1355,11 +1576,9 @@ def load_cells(
         }.get(cond.get("architecture"), "single-pass")
         eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
         observed = micro_f1(tp.sum(), fp.sum(), fn.sum())
-        recorded_join = r["recorded"]["classification"]
         # The committed MCC is the recorded join's. It may stand as the
         # cell's analysed MCC only when that is the requested join (and, with
         # want_mcc, only once the gate below has reproduced it).
-        same_join = recorded_join == tile_join
         committed_mcc = (lambda m: round(float(m), 6) if m is not None else None)(
             read_tile_mcc(eval_path))
         cells.append(
@@ -1375,6 +1594,7 @@ def load_cells(
                 "observed_micro_f1": round(observed, 6),
                 "f1_gap": round(observed - eval_f1, 6),
                 "mcc": committed_mcc if same_join else None,
+                "validation": validation,
             }
         )
         if not same_join and not want_mcc:
@@ -1393,15 +1613,10 @@ def load_cells(
             # written to catch). The F1 side is unaffected: it is computed
             # from the buffered per-tile counts, not from the tile join.
             try:
-                gdf_det = cell_detections(cli, gdf_bounds)
-                validation = None
-                if not same_join:
-                    # Step 1: the committed record, under ITS join.
-                    validation = validate_recorded_classification(
-                        cond["label"], gdf_det, gdf_ref, gdf_bounds,
-                        r["evaluation"], recorded_join,
-                    )
-                # Step 2: the analysed arrays, under the REQUESTED join.
+                gdf_det = (gdf_det_mcc if gdf_det_mcc is not None
+                           else cell_detections(cli, gdf_bounds))
+                # Step 2: the analysed arrays, under the REQUESTED join (the
+                # record was validated in step 1, above this handler).
                 tp_c, tn_c, fp_c, fn_c, join_diagnostics = (
                     cell_per_tile_classification(
                         gdf_det, gdf_ref, gdf_bounds, tile_order,
@@ -1425,11 +1640,11 @@ def load_cells(
                         cond["label"], gdf_det, gdf_ref, gdf_bounds, rebuilt,
                         mcc_rebuilt, join_diagnostics, tile_join,
                     )
-                    gate["validation"] = validation
+                    gate["validation"] = validation.get("classification")
                     cells[-1]["mcc"] = mcc_join
                 gate["recorded_tile_joins"] = {
                     "classification": recorded_join,
-                    "count_table": r["recorded"]["count_table"],
+                    "count_table": recorded_ct,
                 }
             except ConfusionGateError as error:
                 cells[-1].update({
@@ -1499,6 +1714,13 @@ def main() -> int:
         help="Buffer in metres the F1 statistic is computed at (default: "
              f"{HEADLINE_BUFFER_M}, the preregistered headline). A 55-map "
              "board's headline is 50.",
+    )
+    parser.add_argument(
+        "--expected-refusals", type=Path, default=None,
+        help="JSON of verified expected refusals: {ref: reason_code}, or a "
+             "committed tiering whose withheld_cells list them. A cell whose "
+             "replay under its recorded rules refuses is accepted only when "
+             "its evaluation, or this file, records that refusal.",
     )
     parser.add_argument(
         "--overwrite-other-joins", action="store_true",
@@ -1574,6 +1796,8 @@ def main() -> int:
         withheld=None if args.strict_tile_join else withheld_cells,
         tile_join=args.tile_join,
         count_table_join=args.count_table_join,
+        expected_refusals=(expected_refusals_from(args.expected_refusals)
+                           if args.expected_refusals else None),
     )
     if withheld_cells:
         print(f"WITHHELD {len(withheld_cells)} cell(s) the tile-join invariant "
@@ -1690,6 +1914,9 @@ def main() -> int:
         # (and so ``pairwise`` and ``tiers``) was built under.
         "tile_joins": tile_join_provenance(args.tile_join, args.count_table_join),
         "count_table_join": args.count_table_join,
+        # Step 1's record per cell: input identity, and each recorded arm
+        # replayed under its own rule before the requested one was computed.
+        "validation": {c["ref"]: c["validation"] for c in cells},
         "ranking": [
             {
                 "rank": i + 1,

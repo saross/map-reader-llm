@@ -621,8 +621,8 @@ class TestUnattributed:
         result = calculate_tile_classification(det, refs, reduced)
         assert "error" not in result
         excl = result["tile_join_diagnostics"]["detections"]["exclusions"]
-        assert excl["n_origin_excluded"] == 2
-        assert excl["n_unattributed_in_frame"] == 0
+        assert excl["partition"]["n_origin_excluded"] == 2
+        assert excl["of_which"]["n_unattributed_in_frame"] == 0
 
     def test_out_of_frame_for_own_sheet_is_not_a_refusal(self):
         bounds, refs = synthetic_bounds(), synthetic_refs()
@@ -633,7 +633,7 @@ class TestUnattributed:
         result = calculate_tile_classification(det, refs, bounds)
         assert "error" not in result
         excl = result["tile_join_diagnostics"]["detections"]["exclusions"]
-        assert excl["n_out_of_frame"] == 1
+        assert excl["partition"]["n_out_of_frame"] == 1
 
     def test_parent_frame_exclusion_is_not_a_refusal(self):
         bounds, refs = synthetic_bounds(), synthetic_refs()
@@ -642,7 +642,7 @@ class TestUnattributed:
         result = calculate_tile_classification(det, refs, reduced, parent_bounds=bounds)
         assert "error" not in result
         excl = result["tile_join_diagnostics"]["detections"]["exclusions"]
-        assert excl["n_parent_elsewhere"] == 2
+        assert excl["partition"]["n_parent_elsewhere"] == 2
 
 
 # ═══════════════════════════════════════════════════════════════════════════

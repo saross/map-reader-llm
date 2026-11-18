@@ -429,7 +429,9 @@ def _replay_committed_artefacts(calls: list[tuple[str, str]]) -> Any:
         # The committed artefacts were built under the legacy rules, which a
         # replay must request explicitly (Wave 1); they carry the plain name
         # those rules had when they were the defaults.
-        assert (tile_join, count_table_join) == ("id", "id")
+        # F1 runs are told the count-table join only (audit B-C1).
+        expected_join = "id" if metric == "mcc" else "sheet-contains"
+        assert (tile_join, count_table_join) == (expected_join, "id")
         name = mcb.artefact_name(entry["analysis_id"], metric, entry["buffer_m"])
         path = mcb.BASE_DIR / COMMITTED_MCB / entry["slug"] / name
         result = json.loads(path.read_text(encoding="utf-8"))

@@ -233,20 +233,35 @@ def test_id_replay_gates_against_the_committed_record(tmp_path):
     assert t.mcc_point(cells[0]) == pytest.approx(EXPECTED_MCC_A[TILE_JOIN_ID])
 
 
-@pytest.mark.parametrize("join", [TILE_JOIN_ID, "sheet-contains"])
-def test_a_disagreeing_record_is_withheld_whatever_the_requested_join(tmp_path, join):
-    """Step 1 validates the record under its own join, so a contradicted
-    record is caught under the replay and under the new default alike."""
+def test_a_disagreeing_record_is_withheld_under_the_id_replay(tmp_path):
+    """Replaying under the recorded join, a contradicted record is withheld,
+    as before Wave 1 (one computation validates and computes at once)."""
     conditions, analyses = _write_board(tmp_path)
     evaluation = tmp_path / "eval_a.json"
     doc = json.loads(evaluation.read_text())
     doc["summary"]["tile_classification"]["confusion"]["tn"] += 1
     evaluation.write_text(json.dumps(doc))
     cells, *_rest = t.load_cells(conditions, analyses, "board", None, None,
-                                 want_mcc=True, withheld=[], tile_join=join)
+                                 want_mcc=True, withheld=[], tile_join=TILE_JOIN_ID,
+                                 count_table_join=TILE_JOIN_ID)
     assert cells[0]["mcc_gate"]["passed"] is False
     assert "mcc_withheld" in cells[0]
     assert cells[0]["mcc"] is None
+
+
+def test_a_disagreeing_record_stops_a_run_under_another_join(tmp_path):
+    """Before a new join is computed the record is replayed under its own; a
+    record that does not reproduce is drift, which STOPS the run (audit A-L6,
+    Astra W1-C3, spec section 5), never a withheld cell."""
+    conditions, analyses = _write_board(tmp_path)
+    evaluation = tmp_path / "eval_a.json"
+    doc = json.loads(evaluation.read_text())
+    doc["summary"]["tile_classification"]["confusion"]["tn"] += 1
+    evaluation.write_text(json.dumps(doc))
+    with pytest.raises(t.ReproductionDriftError, match="reproduction drift"):
+        t.load_cells(conditions, analyses, "board", None, None,
+                     want_mcc=True, withheld=[], tile_join="sheet-contains",
+                     count_table_join=TILE_JOIN_ID)
 
 
 def test_mcc_point_reads_the_requested_joins_mcc_only():
