@@ -124,29 +124,118 @@ TILE_JOIN_GEOMETRIC_PRIMARY: str = "geometric-primary"
 #: contains it.
 TILE_JOIN_GEOMETRIC_CONTAINS: str = "geometric-contains"
 
+# The two sheet-specific joins (PI rulings D72 and D73, 2026-11-01 and
+# 2026-11-18; ``planning/tile-join-resolution-2026-11-01.md``) --------------
+#
+# The three joins above are FRAME-WIDE: a point is tested against every tile
+# of the frame, whatever its sheet. On the Era-2 frame that makes the last
+# column of K-35-052-4's tiles (``x4032``) reference-positive for 15 Elenovo
+# mounds that lie in their black no-data padding, which no model was shown
+# (the parent record's § 2.6). The PI ruled sheet-specific semantics (D73
+# (2)): a reference counts only on its own recorded sheet's tiles, and a
+# detection only on the tiles of the sheet ruling D50's
+# :class:`DetectionScope` attributed it to — the sheet its symbol-level
+# match was made on. The two joins below carry that rule, under NEW names,
+# so that an artefact's recorded join can never be read as either rule.
+#
+#: Sheet-specific containment, for tile CLASSIFICATION (tile-MCC, tile-F1,
+#: sensitivity, specificity). A tile is reference-positive if a reference
+#: recorded on the tile's sheet (:func:`reference_map_column`: ``Map`` in
+#: the gold standard, ``source_map`` in the 55-map ground truth) lies in it,
+#: and detected if a detection the scope attributed to the tile's sheet lies
+#: in it. ``intersects``, so a point on a shared edge is in both tiles.
+TILE_JOIN_SHEET_CONTAINS: str = "sheet-contains"
+#: Sheet-specific nearest centre, for the per-tile COUNT TABLES behind F1's
+#: bootstrap intervals, coverage diagnostics and tile-swap permutation tests.
+#: Each matched or unmatched detection, and each unmatched reference, is
+#: booked ONCE: the candidates are the tiles of the point's own sheet that
+#: the point intersects, the nearest centroid wins, and an exact distance tie
+#: goes to the lexicographically smallest ``tile_name``, so the result does
+#: not depend on input order. ``geometric-primary`` restricted to one sheet;
+#: the historical joins keep their own tie behaviour for replay.
+TILE_JOIN_SHEET_PRIMARY: str = "sheet-primary"
+
+#: Every join name the library knows, historical and current.
 TILE_JOINS: tuple[str, ...] = (
     TILE_JOIN_ID,
     TILE_JOIN_GEOMETRIC_PRIMARY,
     TILE_JOIN_GEOMETRIC_CONTAINS,
+    TILE_JOIN_SHEET_CONTAINS,
+    TILE_JOIN_SHEET_PRIMARY,
+)
+#: The frame-wide (historical) joins, kept selectable for replaying the
+#: artefacts they produced. :func:`assign_points_to_tiles` books by these.
+TILE_JOINS_FRAME_WIDE: tuple[str, ...] = (
+    TILE_JOIN_ID,
+    TILE_JOIN_GEOMETRIC_PRIMARY,
+    TILE_JOIN_GEOMETRIC_CONTAINS,
+)
+#: The joins a tile CLASSIFICATION may be built under: the three historical
+#: joins, for replay, and sheet-specific containment.
+TILE_JOINS_CLASSIFICATION: tuple[str, ...] = (
+    TILE_JOIN_ID,
+    TILE_JOIN_GEOMETRIC_PRIMARY,
+    TILE_JOIN_GEOMETRIC_CONTAINS,
+    TILE_JOIN_SHEET_CONTAINS,
+)
+#: The joins a per-tile COUNT TABLE may be built under. The containment
+#: joins are absent by design: they book one detection to every tile that
+#: holds it, so a count table built under them double-counts (D72 (2);
+#: :func:`compute_per_tile_tp_fp_fn` refuses them by name).
+TILE_JOINS_COUNT_TABLE: tuple[str, ...] = (
+    TILE_JOIN_ID,
+    TILE_JOIN_GEOMETRIC_PRIMARY,
+    TILE_JOIN_SHEET_PRIMARY,
+)
+#: The containment joins, which a count table refuses.
+TILE_JOINS_CONTAINMENT: tuple[str, ...] = (
+    TILE_JOIN_GEOMETRIC_CONTAINS,
+    TILE_JOIN_SHEET_CONTAINS,
+)
+#: The sheet-specific joins (D73 (2)).
+TILE_JOINS_SHEET: tuple[str, ...] = (
+    TILE_JOIN_SHEET_CONTAINS,
+    TILE_JOIN_SHEET_PRIMARY,
 )
 
-#: The default join for every scorer in the repository.
-#:
-#: **It is deliberately still the legacy string join, and flipping it is a
-#: one-line change that must not be made without the PI's ruling on which
-#: geometric variant to adopt.** The 2026-09-12 ruling ("make the tile
-#: assignment geometric") was made on the understanding that a geometric
-#: join reproduces the string join wherever the vocabulary matches. It
-#: does not: the frames overlap, so on a matched cell the string join,
-#: ``geometric-primary`` and ``geometric-contains`` give three different
-#: confusions (measured 0.8270 / 0.8162 / 0.8667 MCC on
-#: ``pv-high-image-t0.3-n1-opmax``). Defaulting to a geometric join would
-#: therefore move every MCC in the committed corpus — 103 signed Era-2
-#: board cells among them — and make the board's own confusion gate fail
-#: on all of them. Until the variant is chosen, the default reproduces
-#: published numbers and the shortfall invariant below refuses to emit an
-#: MCC where the string join is not interpretable.
-TILE_JOIN_DEFAULT: str = TILE_JOIN_ID
+# ``TILE_JOIN_DEFAULT`` is RETIRED (D73 (6), 2026-11-02: "please retire
+# TILE_JOIN_DEFAULT as you suggest" — not aliased). It named one default for
+# two different purposes, and the downstream drivers read "not the default"
+# as "a sensitivity reading", so changing its value would have silently
+# inverted every one of those meanings. Every importer of it now fails at
+# import and must choose, explicitly, one of the two defaults below, each for
+# its own purpose.
+
+#: The default join for tile CLASSIFICATION (D72 (1), D73 (2)).
+TILE_JOIN_CLASSIFICATION_DEFAULT: str = TILE_JOIN_SHEET_CONTAINS
+#: The default join for per-tile COUNT TABLES (D72 (2), D73 (2)).
+TILE_JOIN_COUNT_TABLE_DEFAULT: str = TILE_JOIN_SHEET_PRIMARY
+
+#: The classification join a HISTORICAL artefact that records none was
+#: scored under: the legacy string join, the only rule before 2026-09-12.
+#: Read only when validating a historical input under the rules it recorded
+#: (:func:`recorded_tile_joins`); a new output always records its rules.
+TILE_JOIN_LEGACY_CLASSIFICATION: str = TILE_JOIN_ID
+#: The count-table join a historical artefact that records none was scored
+#: under. Until Wave 1 no evaluation recorded a count-table rule, because
+#: :func:`bootstrap_ci` took no join and :func:`compute_per_tile_tp_fp_fn`
+#: then defaulted to the legacy string join, whatever classification join an
+#: evaluation recorded (the Wave 1 specification's gap finding 6).
+TILE_JOIN_LEGACY_COUNT_TABLE: str = TILE_JOIN_ID
+
+#: Where the rulings behind the two defaults are recorded; written into the
+#: provenance of every new output (:func:`tile_join_provenance`).
+TILE_JOIN_RULINGS: str = (
+    "PI rulings D72 (2026-11-01) and D73 (2026-11-02, 2026-11-18), "
+    "planning/pi-decisions-2026-09-20.md; decision record "
+    "planning/tile-join-resolution-2026-11-01.md"
+)
+
+#: The ``_metadata.metadata_version`` from which an evaluation records both
+#: tile-join rules. An evaluation at or above it that lacks either record is
+#: a NEW output missing its provenance and is rejected, never read through
+#: the historical fallbacks (:func:`recorded_tile_joins`).
+TILE_JOIN_PROVENANCE_METADATA_VERSION: tuple[int, int] = (1, 5)
 
 #: Named reasons the tile confusion can be refused rather than reported.
 #: A refusal returns ``{"error": ..., "reason": ...}`` with the
@@ -156,6 +245,16 @@ TILE_JOIN_REASON_DETECTION_SHORTFALL: str = "tile_join_detection_shortfall"
 TILE_JOIN_REASON_REFERENCE_SHORTFALL: str = "tile_join_reference_shortfall"
 TILE_JOIN_REASON_NO_TILES: str = "no_tiles_in_bounds"
 TILE_JOIN_REASON_NO_SOURCE_TILE: str = "detections_have_no_source_tile"
+#: A sheet join refuses a detection set holding an IN-FRAME detection that
+#: has no attributable sheet: no origin column and no ``source_tile`` at all,
+#: or a null or foreign name with no recorded origin (the Wave 1
+#: specification's W1.1; Astra's round-2 review, S2.1). The frame-wide joins
+#: booked such a detection by position, across every sheet; a sheet join
+#: cannot, and neither drops it silently nor books it frame-wide. Distinct
+#: from ruling D50's exclusions (out of frame for its own sheet, seen only
+#: on a sheet the frame leaves out) and from a parent frame's exclusions,
+#: which are reported under their own names and are not refusals.
+TILE_JOIN_REASON_UNATTRIBUTED_DETECTION: str = "tile_join_unattributed_detection"
 
 #: Every quantity a tile-join refusal withholds, and why. The PI's ruling
 #: of 2026-09-13 (S153 ruling 6, recorded in the banner of
@@ -246,6 +345,199 @@ class TileJoinRefusalError(ValueError):
     def shortfall(self) -> int:
         """How many in-frame points were never credited to a tile."""
         return self.n_considered - self.n_booked
+
+
+class TileJoinProvenanceError(ValueError):
+    """An artefact's recorded tile-join rules cannot be trusted.
+
+    Raised by :func:`recorded_tile_joins` when an artefact records two
+    different rules for one purpose (contradictory provenance), or when an
+    artefact written by code that always records its rules records none (a
+    new output missing its provenance). The missing-record fallbacks are for
+    HISTORICAL inputs only (the Wave 1 specification, W1.1, "Two computations,
+    in order"). A :class:`ValueError` subclass, like the other refusals.
+    """
+
+
+def check_tile_joins(classification_join: str, count_table_join: str) -> None:
+    """Refuse a classification or count-table join named for the wrong purpose.
+
+    Args:
+        classification_join: The join the tile classification is built under.
+        count_table_join: The join the per-tile count tables are built under.
+
+    Raises:
+        ValueError: If ``classification_join`` is not one of
+            :data:`TILE_JOINS_CLASSIFICATION`, or ``count_table_join`` is not
+            one of :data:`TILE_JOINS_COUNT_TABLE` (a containment join is
+            refused there by name, D72 (2)).
+
+    Example:
+        >>> check_tile_joins("sheet-contains", "sheet-primary")
+        >>> check_tile_joins("id", "id")
+    """
+    if classification_join not in TILE_JOINS_CLASSIFICATION:
+        raise ValueError(
+            f"classification join must be one of {TILE_JOINS_CLASSIFICATION!r}, "
+            f"got {classification_join!r}"
+        )
+    if count_table_join in TILE_JOINS_CONTAINMENT:
+        raise ValueError(
+            f"count-table join {count_table_join!r} is a containment join: it "
+            f"books one detection to every tile that holds it, so a count table "
+            f"built under it double-counts (PI ruling D72 (2)). Use one of "
+            f"{TILE_JOINS_COUNT_TABLE!r}."
+        )
+    if count_table_join not in TILE_JOINS_COUNT_TABLE:
+        raise ValueError(
+            f"count-table join must be one of {TILE_JOINS_COUNT_TABLE!r}, "
+            f"got {count_table_join!r}"
+        )
+
+
+def tile_join_provenance(classification_join: str, count_table_join: str) -> dict[str, str]:
+    """The provenance block every new output records for its two tile-join rules.
+
+    Args:
+        classification_join: The classification join in force.
+        count_table_join: The count-table join in force.
+
+    Returns:
+        ``{"classification": ..., "count_table": ..., "rulings": ...}``, where
+        ``rulings`` points at D72 and D73 (:data:`TILE_JOIN_RULINGS`).
+
+    Raises:
+        ValueError: As :func:`check_tile_joins`.
+
+    Example:
+        >>> tile_join_provenance("sheet-contains", "sheet-primary")["count_table"]
+        'sheet-primary'
+    """
+    check_tile_joins(classification_join, count_table_join)
+    return {
+        "classification": classification_join,
+        "count_table": count_table_join,
+        "rulings": TILE_JOIN_RULINGS,
+    }
+
+
+def _metadata_version(metadata: dict[str, Any]) -> tuple[int, ...] | None:
+    """Parse ``_metadata.metadata_version`` ("1.4") into a comparable tuple."""
+    raw = metadata.get("metadata_version")
+    if raw is None:
+        return None
+    try:
+        return tuple(int(part) for part in str(raw).split("."))
+    except ValueError:
+        return None
+
+
+def _blocks_with_tile_records(
+    evaluation: dict[str, Any],
+) -> Iterator[tuple[str, dict[str, Any]]]:
+    """Yield ``(where, block)`` for every evaluation block that may record a join.
+
+    The summary, and each ``per_run`` entry, in that order.
+    """
+    summary = evaluation.get("summary")
+    if isinstance(summary, dict):
+        yield "summary", summary
+    for i, run in enumerate(evaluation.get("per_run") or []):
+        if isinstance(run, dict):
+            yield f"per_run[{i}]", run
+
+
+def recorded_tile_joins(evaluation: dict[str, Any]) -> dict[str, str]:
+    """Read the two tile-join rules a committed evaluation was scored under.
+
+    This is step 1 of the Wave 1 specification's "two computations, in
+    order": a historical input is validated under the rules IT recorded, and
+    only then is every analysed value computed under the rules explicitly
+    requested. Every record of each rule is read, wherever it was written:
+
+    * classification: ``tile_classification.tile_join`` in the summary and
+      in each ``per_run`` entry, ``_metadata.cli_args.tile_join`` and
+      ``_metadata.tile_joins.classification``;
+    * count table: ``count_table_join`` on each buffer row of the summary
+      and of each ``per_run`` entry, ``_metadata.cli_args.count_table_join``
+      and ``_metadata.tile_joins.count_table``.
+
+    A rule recorded nowhere falls back to its legacy name
+    (:data:`TILE_JOIN_LEGACY_CLASSIFICATION`,
+    :data:`TILE_JOIN_LEGACY_COUNT_TABLE`), but ONLY for a historical input:
+    an evaluation written at or above
+    :data:`TILE_JOIN_PROVENANCE_METADATA_VERSION`, whose writer always
+    records both, is refused instead.
+
+    Args:
+        evaluation: A parsed ``evaluation.json``.
+
+    Returns:
+        ``{"classification", "count_table", "classification_source",
+        "count_table_source"}``; each ``*_source`` is ``"recorded"`` or
+        ``"legacy-fallback"``.
+
+    Raises:
+        TileJoinProvenanceError: If one purpose records two different rules,
+            or if a new output records no rule for a purpose.
+
+    Example:
+        >>> recorded_tile_joins({"summary": {}})["classification"]
+        'id'
+    """
+    metadata = evaluation.get("_metadata") or {}
+    cli = metadata.get("cli_args") or {}
+    block = metadata.get("tile_joins") or {}
+    seen: dict[str, dict[str, str]] = {"classification": {}, "count_table": {}}
+
+    def note(purpose: str, where: str, value: Any) -> None:
+        if value is not None:
+            seen[purpose][where] = str(value)
+
+    note("classification", "_metadata.cli_args.tile_join", cli.get("tile_join"))
+    note("classification", "_metadata.tile_joins.classification",
+         block.get("classification"))
+    note("count_table", "_metadata.cli_args.count_table_join",
+         cli.get("count_table_join"))
+    note("count_table", "_metadata.tile_joins.count_table", block.get("count_table"))
+    for where, part in _blocks_with_tile_records(evaluation):
+        tile_block = part.get("tile_classification")
+        if isinstance(tile_block, dict):
+            note("classification", f"{where}.tile_classification.tile_join",
+                 tile_block.get("tile_join"))
+        for i, row in enumerate(part.get("buffers") or []):
+            if isinstance(row, dict):
+                note("count_table", f"{where}.buffers[{i}].count_table_join",
+                     row.get("count_table_join"))
+
+    version = _metadata_version(metadata)
+    is_new = version is not None and version >= TILE_JOIN_PROVENANCE_METADATA_VERSION
+    legacy = {
+        "classification": TILE_JOIN_LEGACY_CLASSIFICATION,
+        "count_table": TILE_JOIN_LEGACY_COUNT_TABLE,
+    }
+    out: dict[str, str] = {}
+    for purpose, records in seen.items():
+        values = set(records.values())
+        if len(values) > 1:
+            raise TileJoinProvenanceError(
+                f"contradictory {purpose} tile-join provenance: "
+                + ", ".join(f"{k}={v!r}" for k, v in sorted(records.items()))
+            )
+        if values:
+            out[purpose] = values.pop()
+            out[f"{purpose}_source"] = "recorded"
+        elif is_new:
+            raise TileJoinProvenanceError(
+                f"this evaluation (metadata_version "
+                f"{metadata.get('metadata_version')}) records no {purpose} tile "
+                f"join, but its writer records both; the legacy fallback applies "
+                f"to historical inputs only"
+            )
+        else:
+            out[purpose] = legacy[purpose]
+            out[f"{purpose}_source"] = "legacy-fallback"
+    return out
 
 
 # Mitigation 3 (sparse-coverage transparency) constants --------------------
@@ -2861,17 +3153,314 @@ def _assign_refs_to_primary_tiles(
     return dict(tile_assignments)
 
 
+# ── The sheet-specific joins (D72, D73 (2)) ──────────────────────────────────
+#
+# Both sheet joins read their populations from ONE scoping of the frame, the
+# one symbol-level matching reads (:func:`iter_sheet_scopes`): a detection is
+# on the sheet ruling D50's :class:`DetectionScope` attributed it to, and a
+# reference on the sheet its map column records, each kept only if it lies
+# in one of its own sheet's tiles. Nothing here re-derives a sheet from a
+# tile name or from an alphabetical member of ``source_tiles``. The joins
+# differ only in how a point that lies in several of its own sheet's tiles
+# is booked: to all of them (``sheet-contains``) or to the nearest centre
+# (``sheet-primary``).
+
+
+def _candidate_tiles(
+    points: gpd.GeoDataFrame,
+    bounds: gpd.GeoDataFrame,
+) -> list[list[str]]:
+    """Every tile of ``bounds`` each point intersects, by POSITION.
+
+    Keyed by position rather than by index, so a non-unique input index can
+    never merge two points' candidates. ``intersects`` covers the boundary,
+    so a point on a shared edge is a candidate for both tiles.
+
+    Args:
+        points: Point geometries.
+        bounds: Tile polygons with a ``tile_name`` column.
+
+    Returns:
+        One sorted list of tile names per point (empty for a point in no tile).
+    """
+    out: list[list[str]] = [[] for _ in range(len(points))]
+    if len(points) == 0 or len(bounds) == 0:
+        return out
+    pts = gpd.GeoDataFrame(geometry=points.geometry.to_numpy(), crs=points.crs)
+    tiles = gpd.GeoDataFrame(
+        {"tile_name": bounds["tile_name"].astype(str).to_numpy()},
+        geometry=bounds.geometry.to_numpy(), crs=bounds.crs,
+    )
+    joined = gpd.sjoin(pts, tiles, how="inner", predicate="intersects")
+    for pos, name in zip(joined.index.to_numpy(), joined["tile_name"]):
+        out[int(pos)].append(str(name))
+    for names in out:
+        names.sort()
+    return out
+
+
+def sheet_primary_tiles(
+    points: gpd.GeoDataFrame,
+    sheet_bounds: gpd.GeoDataFrame,
+) -> list[str | None]:
+    """The ``sheet-primary`` tile of each point, among its own sheet's tiles.
+
+    The candidates are the tiles of ``sheet_bounds`` (one sheet's tiles) that
+    the point intersects; the one whose centroid is nearest wins, and an
+    exact distance tie goes to the lexicographically smallest ``tile_name``,
+    whatever the input order (Astra's round-2 review, S2.3). A tile the point
+    does not intersect is never a candidate, however near its centroid.
+
+    Args:
+        points: Points already scoped to one sheet.
+        sheet_bounds: That sheet's tile polygons.
+
+    Returns:
+        One tile name per point, by position, or ``None`` for a point that
+        intersects none of the sheet's tiles.
+
+    Example:
+        >>> sheet_primary_tiles(points, sheet_bounds)  # doctest: +SKIP
+        ['A_x0_y0.png', 'A_x336_y0.png']
+    """
+    candidates = _candidate_tiles(points, sheet_bounds)
+    if not any(candidates):
+        return [None] * len(points)
+    centroids = {
+        str(name): geom.centroid
+        for name, geom in zip(sheet_bounds["tile_name"], sheet_bounds.geometry)
+    }
+    out: list[str | None] = []
+    for geom, names in zip(points.geometry, candidates):
+        if not names:
+            out.append(None)
+        elif len(names) == 1:
+            out.append(names[0])
+        else:
+            out.append(min(names, key=lambda t: (geom.distance(centroids[t]), t)))
+    return out
+
+
+def _n_in_frame_union(points: gpd.GeoDataFrame, gdf_bounds: gpd.GeoDataFrame) -> int:
+    """How many points intersect at least one tile of the frame."""
+    return sum(1 for names in _candidate_tiles(points, gdf_bounds) if names)
+
+
+def unattributed_in_frame(
+    scope: DetectionScope,
+    gdf_det: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> int:
+    """In-frame detections that no sheet can be attributed to (W1.1).
+
+    Two cases, both refused under a sheet join
+    (:data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`):
+
+    * the set carries no origin column and no ``source_tile`` at all, so the
+      scope could not be applied (``applied`` false): every row that lies in
+      the frame counts;
+    * the scope was applied, and some rows inside the frame's tile union lie
+      on no frame sheet (a null or foreign ``source_tile``, no recorded
+      origin): the scope's ``n_unattributed_in_frame``.
+
+    A row with no ``source_tiles`` list but a valid ``source_tile`` is
+    attributed by D50 and is not counted; nor are D50's exclusions (out of
+    frame for its own sheet, an origin only on a sheet the frame leaves out)
+    or a parent frame's (``n_parent_elsewhere``), which the scope reports
+    under their own names.
+
+    Args:
+        scope: The scope of ``gdf_det`` on ``gdf_bounds``, computed with
+            ``require_attribution=False``.
+        gdf_det: The detections the scope was computed from.
+        gdf_bounds: The frame.
+
+    Returns:
+        The count (0 when every in-frame detection is attributable).
+    """
+    if not scope.diagnostics.get("applied", True):
+        return _n_in_frame_union(gdf_det, gdf_bounds)
+    return int(scope.diagnostics.get("n_unattributed_in_frame", 0))
+
+
+def _unattributed_message(n_rows: int, tile_join: str, applied: bool) -> str:
+    """The refusal message for :data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`."""
+    why = (
+        "the set carries no source_tile and no origin column"
+        if not applied else
+        "they carry a null or foreign source_tile and no recorded origin"
+    )
+    return (
+        f"tile join '{tile_join}' refused "
+        f"({TILE_JOIN_REASON_UNATTRIBUTED_DETECTION}): {n_rows} detection(s) "
+        f"inside the frame have no attributable sheet ({why}). A sheet join "
+        f"books a detection only on the sheet ruling D50 attributed it to, and "
+        f"neither drops such a detection silently nor books it across the "
+        f"whole frame. Attribute the detections (source_tile or an origin "
+        f"column), or replay a historical artefact under the join it recorded."
+    )
+
+
+def _reference_sheet_frame(gdf_ref: gpd.GeoDataFrame) -> tuple[gpd.GeoDataFrame, str]:
+    """References and their sheet column, tolerating an empty column-less set.
+
+    Args:
+        gdf_ref: References (``Map`` or ``source_map``).
+
+    Returns:
+        ``(gdf_ref, column)``. An EMPTY reference set without either column is
+        given an empty ``Map`` column, so it scopes to nothing rather than
+        raising; a non-empty one without either column raises.
+
+    Raises:
+        ValueError: As :func:`reference_map_column`, for a non-empty set.
+    """
+    if len(gdf_ref) == 0 and not {"Map", "source_map"} & set(gdf_ref.columns):
+        return gdf_ref.assign(Map=pd.Series([], dtype=object)), "Map"
+    return gdf_ref, reference_map_column(gdf_ref)
+
+
+def sheet_contains_assignments(
+    scope: DetectionScope,
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Book detections and references to tiles under ``sheet-contains``.
+
+    Each sheet's detections (those the scope attributed to it and kept) and
+    references (those its map column records, inside its tiles) are booked
+    to EVERY tile of that sheet they intersect, never to another sheet's.
+    The result has the shape of :func:`assign_points_to_tiles`' output, so
+    :func:`check_tile_join_invariant` and every consumer of the diagnostics
+    read it unchanged, with one documented difference of meaning:
+
+    **the booking invariant counts the sheet-scoped population.** Under a
+    sheet join the "union" a point must reach is its own sheet's tiles, so
+    ``n_inside_union`` (also written as ``n_sheet_scoped``) counts the points
+    lying in their own sheet's tiles, and the frame-wide count is reported
+    beside it as ``n_inside_frame_union``. Comparing the booked count with
+    the frame-wide count would reject the intended removal of cross-sheet
+    contacts (the specification's W1.1). The points outside the population
+    are reported under ``exclusions`` by name.
+
+    Args:
+        scope: The detections' scope on ``gdf_bounds`` (D50).
+        gdf_det: The detections the scope was computed from.
+        gdf_ref: References.
+        gdf_bounds: The frame.
+
+    Returns:
+        ``(detection_assignment, reference_assignment)``. Each carries
+        ``tiles_with_point``, ``counts``, ``n_points``, ``n_assigned``,
+        ``n_inside_union`` (= ``n_sheet_scoped``), ``n_inside_frame_union``,
+        ``n_outside_union``, ``n_multi_tile`` (points in two or more of their
+        own sheet's tiles), ``n_cross_sheet_contacts`` (sheet-scoped points
+        that also lie in another sheet's tile: what a frame-wide join would
+        have booked there), ``exclusions`` and ``tile_join``.
+    """
+    gdf_ref, ref_col = _reference_sheet_frame(gdf_ref)
+    catalogue = scope.sheet_catalogue
+    tile_sheet = dict(zip(
+        (str(t) for t in gdf_bounds["tile_name"]),
+        frame_tile_sheets(gdf_bounds, sheet_catalogue=catalogue),
+    ))
+    frame_set = set(frame_sheets(gdf_bounds))
+    sides: dict[str, dict[str, Any]] = {
+        side: {"counts": {}, "n_assigned": 0, "n_sheet_scoped": 0,
+               "n_multi_tile": 0, "n_cross_sheet_contacts": 0}
+        for side in ("detections", "references")
+    }
+    for sheet, det_scope, ref_scope, sheet_bounds in iter_sheet_scopes(
+        scope, gdf_ref, gdf_bounds, ref_map_col=ref_col,
+    ):
+        for side, points in (("detections", det_scope), ("references", ref_scope)):
+            if len(points) == 0:
+                continue
+            record = sides[side]
+            own = _candidate_tiles(points, sheet_bounds)
+            frame = _candidate_tiles(points, gdf_bounds)
+            record["n_sheet_scoped"] += len(points)
+            for own_names, frame_names in zip(own, frame):
+                if own_names:
+                    record["n_assigned"] += 1
+                if len(own_names) > 1:
+                    record["n_multi_tile"] += 1
+                if any(tile_sheet.get(t) != sheet for t in frame_names):
+                    record["n_cross_sheet_contacts"] += 1
+                for name in own_names:
+                    record["counts"][name] = record["counts"].get(name, 0) + 1
+
+    det_diag = scope.diagnostics
+    det_exclusions = {
+        key: int(det_diag.get(key, 0))
+        for key in ("n_out_of_frame", "n_out_of_frame_cross_sheet",
+                    "n_origin_excluded", "n_unattributed",
+                    "n_unattributed_in_frame", "n_parent_elsewhere")
+        if key in det_diag
+    }
+    ref_sheets = gdf_ref[ref_col].tolist() if len(gdf_ref) else []
+    n_ref_sheet_not_in_frame = sum(1 for s in ref_sheets if s not in frame_set)
+    n_ref_on_frame_sheets = len(ref_sheets) - n_ref_sheet_not_in_frame
+    ref_exclusions = {
+        "n_sheet_not_in_frame": n_ref_sheet_not_in_frame,
+        "n_outside_own_sheet_tiles": (
+            n_ref_on_frame_sheets - sides["references"]["n_sheet_scoped"]
+        ),
+    }
+    out: list[dict[str, Any]] = []
+    for side, points, exclusions in (
+        ("detections", gdf_det, det_exclusions),
+        ("references", gdf_ref, ref_exclusions),
+    ):
+        record = sides[side]
+        n_points = len(points)
+        out.append({
+            "tiles_with_point": set(record["counts"]),
+            "counts": record["counts"],
+            "n_points": n_points,
+            "n_assigned": record["n_assigned"],
+            "n_inside_union": record["n_sheet_scoped"],
+            "n_sheet_scoped": record["n_sheet_scoped"],
+            "n_inside_frame_union": _n_in_frame_union(points, gdf_bounds),
+            "n_outside_union": n_points - record["n_sheet_scoped"],
+            "n_multi_tile": record["n_multi_tile"],
+            "n_cross_sheet_contacts": record["n_cross_sheet_contacts"],
+            "exclusions": exclusions,
+            "union": "each point's own sheet's tiles (sheet-scoped population)",
+            "tile_join": TILE_JOIN_SHEET_CONTAINS,
+        })
+    return out[0], out[1]
+
+
 def compute_per_tile_tp_fp_fn(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
     *,
     parent_bounds: gpd.GeoDataFrame | None = None,
 ) -> pd.DataFrame:
     """
     Pre-compute TP, FP, FN counts per tile via per-map Hungarian matching.
+
+    **Joins (Wave 1, D72 (2) and D73 (2)).** ``tile_join`` is the COUNT-TABLE
+    join, one of :data:`TILE_JOINS_COUNT_TABLE`, defaulting to
+    :data:`TILE_JOIN_COUNT_TABLE_DEFAULT` (``sheet-primary``): every matched
+    or unmatched detection and every unmatched reference is booked once, to
+    the nearest-centre tile among its own sheet's tiles that it intersects
+    (:func:`sheet_primary_tiles`). The historical joins ``id`` and
+    ``geometric-primary`` stay selectable for replay and keep their
+    historical behaviour, described below, tie behaviour included. The
+    containment joins (``geometric-contains``, ``sheet-contains``) are
+    REFUSED: they book one detection to several tiles, which double-counts
+    (D72 (2)). Under ``sheet-primary`` an in-frame detection with no
+    attributable sheet is refused by name
+    (:data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`), and the returned
+    frame's ``attrs`` record ``count_table_join`` and the booking counts
+    (``booking``: the sheet-scoped populations booked, with D50's exclusions
+    beside them).
 
     Performs Hungarian-algorithm matching **per map** (identical to
     ``calculate_f1_internal``), then distributes the TP/FP/FN results
@@ -2918,8 +3507,8 @@ def compute_per_tile_tp_fp_fn(
         gdf_ref: GeoDataFrame of ground truth references (must have 'Map').
         gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name').
         buffer_metres: Maximum distance for a valid match (default 20 m).
-        tile_join: One of :data:`TILE_JOINS`; defaults to
-            :data:`TILE_JOIN_DEFAULT`.
+        tile_join: One of :data:`TILE_JOINS_COUNT_TABLE`; defaults to
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`.
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstraps pass a condition's own frame here when the common
@@ -2930,15 +3519,25 @@ def compute_per_tile_tp_fp_fn(
         DataFrame with columns [tile_name, tp, fp, fn], one row per tile.
 
     Raises:
+        ValueError: If ``tile_join`` is a containment join (D72 (2)) or not
+            a count-table join at all.
         TileJoinRefusalError: If the booked TP + FP count falls short of
             the detections geometrically inside the frame, which means the
-            join is not describing this frame. A :class:`ValueError`
-            subclass, so pre-existing ``except ValueError`` handling still
-            catches it; the subclass carries the reason and the shortfall
-            counts as attributes so a caller can publish the quantities a
-            refusal leaves standing instead of aborting outright (see
-            :func:`describe_tile_join_refusal`).
+            join is not describing this frame; or, under ``sheet-primary``,
+            if an in-frame detection has no attributable sheet. A
+            :class:`ValueError` subclass, so pre-existing ``except
+            ValueError`` handling still catches it; the subclass carries the
+            reason and the shortfall counts as attributes so a caller can
+            publish the quantities a refusal leaves standing instead of
+            aborting outright (see :func:`describe_tile_join_refusal`).
     """
+    # ``check_tile_joins`` refuses a containment join here by name (D72 (2));
+    # the classification argument is a placeholder that always passes.
+    check_tile_joins(TILE_JOIN_CLASSIFICATION_DEFAULT, tile_join)
+    if tile_join == TILE_JOIN_SHEET_PRIMARY:
+        return _per_tile_sheet_primary(
+            gdf_det, gdf_ref, gdf_bounds, buffer_metres, parent_bounds,
+        )
     tile_counts: dict[str, dict[str, int]] = {
         row["tile_name"]: {"tp": 0, "fp": 0, "fn": 0}
         for _, row in gdf_bounds.iterrows()
@@ -3116,14 +3715,149 @@ def compute_per_tile_tp_fp_fn(
         {"tile_name": tile, **counts}
         for tile, counts in tile_counts.items()
     ]
-    return pd.DataFrame(rows)
+    table = pd.DataFrame(rows)
+    table.attrs["count_table_join"] = tile_join
+    return table
+
+
+def _per_tile_sheet_primary(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    buffer_metres: float,
+    parent_bounds: gpd.GeoDataFrame | None,
+) -> pd.DataFrame:
+    """The ``sheet-primary`` per-tile TP/FP/FN table (D72 (2), D73 (2)).
+
+    Matching is exactly :func:`per_sheet_confusion`'s: one scoping of the
+    frame, the same per-sheet populations, the same Hungarian matching at
+    the same buffer, so the table's sums equal the symbol-level totals,
+    overall and per sheet. Only the booking differs from the historical
+    joins: a matched detection (TP), an unmatched detection (FP) and an
+    unmatched reference (FN) each go to ONE tile of their own sheet, the
+    nearest-centre tile they intersect (:func:`sheet_primary_tiles`).
+
+    The booking invariant counts the sheet-scoped populations: every
+    detection the scope kept, and every unmatched reference inside its own
+    sheet's tiles, must reach a tile. By construction they all do; a
+    shortfall raises rather than passing a truncated table on.
+
+    Args:
+        gdf_det: Detections.
+        gdf_ref: References (``Map`` or ``source_map``).
+        gdf_bounds: The frame.
+        buffer_metres: Match radius.
+        parent_bounds: As :func:`compute_per_tile_tp_fp_fn`.
+
+    Returns:
+        The table, with ``attrs["count_table_join"]`` and ``attrs["booking"]``.
+
+    Raises:
+        TileJoinRefusalError: For an in-frame detection with no attributable
+            sheet (:data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`), or a
+            booking shortfall.
+    """
+    tile_join = TILE_JOIN_SHEET_PRIMARY
+    tile_counts: dict[str, dict[str, int]] = {
+        str(name): {"tp": 0, "fp": 0, "fn": 0} for name in gdf_bounds["tile_name"]
+    }
+    scope = scope_detections_to_frame(
+        gdf_det, gdf_bounds, require_attribution=False, parent_bounds=parent_bounds,
+    )
+    n_unattributed = unattributed_in_frame(scope, gdf_det, gdf_bounds)
+    if n_unattributed:
+        applied = bool(scope.diagnostics.get("applied", True))
+        n_scoped = 0 if not applied else int(scope.diagnostics.get("n_in_scope", 0))
+        raise TileJoinRefusalError(
+            "per-tile TP/FP/FN table refused: "
+            + _unattributed_message(n_unattributed, tile_join, applied),
+            reason=TILE_JOIN_REASON_UNATTRIBUTED_DETECTION,
+            tile_join=tile_join,
+            n_booked=n_scoped,
+            n_considered=n_scoped + n_unattributed,
+            diagnostics={"detection_scope": scope.diagnostics,
+                         "n_unattributed_in_frame": n_unattributed},
+        )
+
+    gdf_ref, ref_col = _reference_sheet_frame(gdf_ref)
+    det_population = det_booked = ref_unmatched = ref_booked = 0
+    for _sheet, det_scope, ref_scope, sheet_bounds in iter_sheet_scopes(
+        scope, gdf_ref, gdf_bounds, ref_map_col=ref_col,
+    ):
+        if det_scope.empty and ref_scope.empty:
+            continue
+        det_tiles = sheet_primary_tiles(det_scope, sheet_bounds)
+        ref_tiles = sheet_primary_tiles(ref_scope, sheet_bounds)
+        if det_scope.empty:
+            matched_det: list[int] = []
+            unmatched_det: list[int] = []
+            unmatched_ref = list(range(len(ref_scope)))
+        elif ref_scope.empty:
+            matched_det, unmatched_ref = [], []
+            unmatched_det = list(range(len(det_scope)))
+        else:
+            # The matching per_sheet_confusion performs, call for call.
+            matched_det, _matched_ref, unmatched_det, unmatched_ref = \
+                match_detections_to_references(
+                    list(det_scope.geometry), list(ref_scope.geometry),
+                    buffer_metres,
+                )
+        for positions, outcome in ((matched_det, "tp"), (unmatched_det, "fp")):
+            for pos in positions:
+                det_population += 1
+                tile = det_tiles[pos]
+                if tile is not None:
+                    tile_counts[tile][outcome] += 1
+                    det_booked += 1
+        for pos in unmatched_ref:
+            ref_unmatched += 1
+            tile = ref_tiles[pos]
+            if tile is not None:
+                tile_counts[tile]["fn"] += 1
+                ref_booked += 1
+
+    booking = {
+        "count_table_join": tile_join,
+        "union": "each point's own sheet's tiles (sheet-scoped population)",
+        "n_detections_sheet_scoped": det_population,
+        "n_detections_booked": det_booked,
+        "n_references_unmatched": ref_unmatched,
+        "n_references_unmatched_booked": ref_booked,
+        "detection_exclusions": {
+            key: int(scope.diagnostics.get(key, 0))
+            for key in ("n_out_of_frame", "n_out_of_frame_cross_sheet",
+                        "n_origin_excluded", "n_unattributed",
+                        "n_parent_elsewhere")
+            if key in scope.diagnostics
+        },
+    }
+    for booked, population, reason, noun in (
+        (det_booked, det_population, TILE_JOIN_REASON_DETECTION_SHORTFALL,
+         "sheet-scoped detections"),
+        (ref_booked, ref_unmatched, TILE_JOIN_REASON_REFERENCE_SHORTFALL,
+         "unmatched sheet-scoped references"),
+    ):
+        if booked < population:
+            raise TileJoinRefusalError(
+                f"per-tile TP/FP/FN table refused ({reason}): {booked} of "
+                f"{population} {noun} were booked to a tile of their own sheet "
+                f"under '{tile_join}'.",
+                reason=reason, tile_join=tile_join, n_booked=booked,
+                n_considered=population, diagnostics={"booking": booking},
+            )
+    table = pd.DataFrame(
+        [{"tile_name": tile, **counts} for tile, counts in tile_counts.items()]
+    )
+    table.attrs["count_table_join"] = tile_join
+    table.attrs["booking"] = booking
+    return table
 
 
 def compute_per_tile_classification(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> pd.DataFrame:
     """Pre-compute per-tile binary classification (TP, TN, FP, FN) for MCC.
 
@@ -3244,7 +3978,7 @@ def score_detection_set(
     gdf_bounds: gpd.GeoDataFrame,
     buffer_metres: int = 20,
     compute_mcc: bool = True,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """Fast, bootstrap-free POINT scorer for grid / sweep analyses.
 
@@ -3280,22 +4014,32 @@ def score_detection_set(
             with a ``tile_name`` column for MCC).
         buffer_metres: Match radius for F1 (default 20 m, the headline buffer).
         compute_mcc: If True, also compute the point tile-level MCC.
-        tile_join: One of :data:`TILE_JOINS`; defaults to
-            :data:`TILE_JOIN_DEFAULT`.
+        tile_join: One of :data:`TILE_JOINS_CLASSIFICATION`; defaults to
+            :data:`TILE_JOIN_CLASSIFICATION_DEFAULT`.
 
     Returns:
         ``{"f1", "precision", "recall", "n_detections", "mcc",
-        "mcc_refused_reason"}``. ``mcc`` is ``None`` when ``compute_mcc``
-        is False, when there are no detections, when the confusion matrix
-        is degenerate, or when the tile join was refused for this frame —
+        "mcc_refused_reason", "tile_join", "count_table_join"}``.
+        ``tile_join`` is the classification join the MCC was computed
+        under (``None`` when ``compute_mcc`` is False); ``count_table_join``
+        is always ``None``, because a point scorer reads no count table.
+        ``mcc`` is ``None`` when ``compute_mcc`` is False, when there are
+        no detections, when the confusion matrix is degenerate, or when
+        the tile join was refused for this frame —
         ``mcc_refused_reason`` distinguishes the last case from the
         others and is ``None`` otherwise. A sweep must not rank on a
         refused MCC, so it is never silently returned as a number.
     """
+    # Both rule identities travel with every result (Wave 1, C3). This
+    # scorer computes point estimates only, so it reads NO per-tile count
+    # table: ``count_table_join`` is ``None`` by construction, not a default.
+    joins = {"tile_join": tile_join if compute_mcc else None,
+             "count_table_join": None}
     n_det = len(gdf_det)
     if n_det == 0:
         return {"f1": 0.0, "precision": 0.0, "recall": 0.0,
-                "n_detections": 0, "mcc": None, "mcc_refused_reason": None}
+                "n_detections": 0, "mcc": None, "mcc_refused_reason": None,
+                **joins}
     precision, recall, f1 = calculate_f1_internal(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
     )
@@ -3315,7 +4059,7 @@ def score_detection_set(
             mcc = tile_class.get("mcc")
     return {"f1": float(f1), "precision": float(precision),
             "recall": float(recall), "n_detections": n_det, "mcc": mcc,
-            "mcc_refused_reason": mcc_refused_reason}
+            "mcc_refused_reason": mcc_refused_reason, **joins}
 
 
 def calculate_f1_internal(
@@ -3495,6 +4239,7 @@ def bootstrap_ci(
     buffer_metres: int = 20,
     coverage_threshold: float = DEFAULT_COVERAGE_THRESHOLD,
     processed_tiles: set[str] | None = None,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     BCa bootstrap 95 % confidence intervals for precision, recall, and F1.
@@ -3548,10 +4293,17 @@ def bootstrap_ci(
             evaluation bounds rather than inferred from detection density
             (E72). ``None`` (the default) preserves the pre-E72 behaviour
             exactly.
+        count_table_join: The join the per-tile count table is built under
+            (:data:`TILE_JOINS_COUNT_TABLE`), defaulting to
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`. The intervals, means,
+            methods and coverage diagnostics all read that table; the point
+            estimates do not. Until Wave 1 this function took no join and the
+            table was always built under the legacy ``id`` rule, so replaying
+            a historical interval needs ``count_table_join="id"``.
 
     Returns:
         Bootstrap results with BCa CIs for F1, precision, and recall plus
-        coverage diagnostics.
+        coverage diagnostics, and ``count_table_join`` recording the rule.
     """
     tiles = gdf_bounds['tile_name'].unique()
     n_tiles = len(tiles)
@@ -3562,6 +4314,7 @@ def bootstrap_ci(
     # reference de-duplication bias in bootstrap resampling).
     tile_metrics = compute_per_tile_tp_fp_fn(
         gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+        tile_join=count_table_join,
     )
 
     # Vectorise the per-tile counts as NumPy arrays so the BCa statistic
@@ -3643,6 +4396,7 @@ def bootstrap_ci(
             "method": recall_ci["method"],
         },
         "coverage": coverage,
+        "count_table_join": count_table_join,
         "n_iterations": n_iterations,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
@@ -3752,6 +4506,7 @@ def bootstrap_effect_size_ci(
     random_seed: int | None = None,
     return_p_values: bool = False,
     buffer_metres: int = 20,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     Bootstrap confidence intervals for effect size (difference) between two conditions.
@@ -3783,6 +4538,11 @@ def bootstrap_effect_size_ci(
             function used to return (2 x the minority tail, floored at
             1/B) sat at its floor between identical arms
             (``reports/retest-bootstrap-check-2026-10-05.md``).
+        count_table_join: The join every per-tile count table here is built
+            under (:data:`TILE_JOINS_COUNT_TABLE`; default
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`), applied to every arm so a
+            comparison never pairs tables built under different rules. Pass
+            ``"id"`` to replay a historical result (Wave 1, C1).
 
     Returns:
         Effect size estimates with 95% CIs for F1, precision, recall differences.
@@ -3818,10 +4578,12 @@ def bootstrap_effect_size_ci(
     # attributes (ruling D59); a mixed cut is refused (ruling D62).
     tile_metrics_a = compute_per_tile_tp_fp_fn(
         gdf_det_a, gdf_ref, common_bounds_a, buffer_metres=buffer_metres,
+        tile_join=count_table_join,
         parent_bounds=_parent_of_cut(gdf_bounds_a, common_bounds_a),
     )
     tile_metrics_b = compute_per_tile_tp_fp_fn(
         gdf_det_b, gdf_ref, common_bounds_b, buffer_metres=buffer_metres,
+        tile_join=count_table_join,
         parent_bounds=_parent_of_cut(gdf_bounds_b, common_bounds_b),
     )
 
@@ -3887,6 +4649,7 @@ def bootstrap_effect_size_ci(
         ),
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
+        "count_table_join": count_table_join,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
@@ -3961,6 +4724,7 @@ def bootstrap_multi_run_ci(
     n_iterations: int = 1000,
     random_seed: int | None = None,
     buffer_metres: int = 20,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     Bootstrap 95% CIs for a condition with K independent runs.
@@ -3985,6 +4749,11 @@ def bootstrap_multi_run_ci(
             Must have 'tile_name' column.
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        count_table_join: The join every per-tile count table here is built
+            under (:data:`TILE_JOINS_COUNT_TABLE`; default
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`), applied to every arm so a
+            comparison never pairs tables built under different rules. Pass
+            ``"id"`` to replay a historical result (Wave 1, C1).
 
     Returns:
         dict: Bootstrap CIs for F1, precision, and recall with structure
@@ -4003,6 +4772,7 @@ def bootstrap_multi_run_ci(
     for _run_num, gdf_det in run_gdfs:
         tm = compute_per_tile_tp_fp_fn(
             gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+            tile_join=count_table_join,
         )
         run_tile_metrics.append(tm)
 
@@ -4055,6 +4825,7 @@ def bootstrap_multi_run_ci(
         "n_iterations": n_iterations,
         "n_runs": len(run_gdfs),
         "n_tiles": n_tiles,
+        "count_table_join": count_table_join,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
@@ -4069,6 +4840,7 @@ def bootstrap_multi_run_effect_size_ci(
     random_seed: int | None = None,
     buffer_metres: int = 20,
     return_p_values: bool = False,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     Bootstrap 95% CIs for effect size between two multi-run conditions.
@@ -4096,6 +4868,11 @@ def bootstrap_multi_run_effect_size_ci(
             bootstraps. If the run counts differ, blocks cannot swap, so the
             test runs on pass-averaged per-tile counts (micro metric of the
             averaged counts) and ``permutation.statistic`` says so.
+        count_table_join: The join every per-tile count table here is built
+            under (:data:`TILE_JOINS_COUNT_TABLE`; default
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`), applied to every arm so a
+            comparison never pairs tables built under different rules. Pass
+            ``"id"`` to replay a historical result (Wave 1, C1).
 
     Returns:
         dict: Effect size CIs for F1, precision, recall differences; with
@@ -4116,6 +4893,7 @@ def bootstrap_multi_run_effect_size_ci(
         run_metrics_a.append(
             compute_per_tile_tp_fp_fn(
                 gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+                tile_join=count_table_join,
             )
         )
     run_metrics_b: list[pd.DataFrame] = []
@@ -4123,6 +4901,7 @@ def bootstrap_multi_run_effect_size_ci(
         run_metrics_b.append(
             compute_per_tile_tp_fp_fn(
                 gdf_det, gdf_ref, gdf_bounds, buffer_metres=buffer_metres,
+                tile_join=count_table_join,
             )
         )
 
@@ -4180,6 +4959,7 @@ def bootstrap_multi_run_effect_size_ci(
         "n_iterations": n_iterations,
         "n_runs_a": len(run_gdfs_a),
         "n_runs_b": len(run_gdfs_b),
+        "count_table_join": count_table_join,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
@@ -4248,6 +5028,7 @@ def bootstrap_interaction_ci(
     n_iterations: int = 1000,
     random_seed: int | None = None,
     buffer_metres: int = 20,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     Bootstrap confidence intervals for a two-way interaction effect.
@@ -4278,6 +5059,11 @@ def bootstrap_interaction_ci(
         metric: Which metric to test ("f1", "precision", or "recall").
         n_iterations: Number of bootstrap iterations (default 1000).
         random_seed: Optional seed for reproducibility.
+        count_table_join: The join every per-tile count table here is built
+            under (:data:`TILE_JOINS_COUNT_TABLE`; default
+            :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`), applied to every arm so a
+            comparison never pairs tables built under different rules. Pass
+            ``"id"`` to replay a historical result (Wave 1, C1).
 
     Returns:
         dict with keys:
@@ -4338,6 +5124,7 @@ def bootstrap_interaction_ci(
         common_bounds = gdf_bounds[gdf_bounds['tile_name'].isin(common_tiles)]
         cell_tile_metrics[(a_level, b_level)] = compute_per_tile_tp_fp_fn(
             gdf_det, gdf_ref, common_bounds, buffer_metres=buffer_metres,
+            tile_join=count_table_join,
             parent_bounds=_parent_of_cut(gdf_bounds, common_bounds),
         )
 
@@ -4437,6 +5224,7 @@ def bootstrap_interaction_ci(
         "metric": metric,
         "n_tiles": n_tiles,
         "n_iterations": n_iterations,
+        "count_table_join": count_table_join,
         "bootstrap_method": BOOTSTRAP_METHOD,
         "bootstrap_lib": BOOTSTRAP_LIB,
     }
@@ -4558,9 +5346,16 @@ def assign_points_to_tiles(
     Raises:
         ValueError: If ``tile_join`` is not a member of :data:`TILE_JOINS`.
     """
-    if tile_join not in TILE_JOINS:
+    if tile_join in TILE_JOINS_SHEET:
         raise ValueError(
-            f"tile_join must be one of {TILE_JOINS!r}, got {tile_join!r}",
+            f"tile_join {tile_join!r} is sheet-specific and is booked per sheet "
+            f"from the detection scope (calculate_tile_classification, "
+            f"compute_per_tile_tp_fp_fn); this function books by the "
+            f"frame-wide joins {TILE_JOINS_FRAME_WIDE!r} only",
+        )
+    if tile_join not in TILE_JOINS_FRAME_WIDE:
+        raise ValueError(
+            f"tile_join must be one of {TILE_JOINS_FRAME_WIDE!r}, got {tile_join!r}",
         )
 
     n_points = len(gdf_points)
@@ -4796,7 +5591,7 @@ def describe_tile_join_refusal(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict[str, Any] | None:
     """Ask, before scoring, whether this frame's tile join is interpretable.
 
@@ -4820,8 +5615,8 @@ def describe_tile_join_refusal(
         gdf_det: GeoDataFrame of detections.
         gdf_ref: GeoDataFrame of reference mounds.
         gdf_bounds: GeoDataFrame of the scoring frame's tile polygons.
-        tile_join: One of :data:`TILE_JOINS`; defaults to
-            :data:`TILE_JOIN_DEFAULT`.
+        tile_join: One of :data:`TILE_JOINS_CLASSIFICATION`; defaults to
+            :data:`TILE_JOIN_CLASSIFICATION_DEFAULT`.
 
     Returns:
         ``None`` when the join is sound and every per-tile quantity may be
@@ -4855,6 +5650,10 @@ def describe_tile_join_refusal(
     """
     if len(gdf_bounds) == 0:
         return None
+    if tile_join not in TILE_JOINS:
+        raise ValueError(f"tile_join must be one of {TILE_JOINS!r}, got {tile_join!r}")
+    if tile_join in TILE_JOINS_SHEET:
+        return _describe_sheet_join_refusal(gdf_det, gdf_ref, gdf_bounds, tile_join)
     # Ruling D50: ask the question of the detections the confusion will
     # actually book — every row but the out-of-frame ones the rule removes
     # (see calculate_tile_classification).
@@ -4913,11 +5712,96 @@ def describe_tile_join_refusal(
     }
 
 
+def _describe_sheet_join_refusal(
+    gdf_det: gpd.GeoDataFrame,
+    gdf_ref: gpd.GeoDataFrame,
+    gdf_bounds: gpd.GeoDataFrame,
+    tile_join: str,
+) -> dict[str, Any] | None:
+    """:func:`describe_tile_join_refusal` for the two sheet joins.
+
+    Both sheet joins book the same sheet-scoped populations, so one question
+    serves both purposes: does any in-frame detection lack an attributable
+    sheet (:data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`), and does every
+    sheet-scoped point reach a tile of its own sheet. The record names the
+    join it was asked about, so a refusal guarding a count table names the
+    count-table join and one guarding a classification names that join.
+
+    Args:
+        gdf_det: Detections.
+        gdf_ref: References.
+        gdf_bounds: The frame.
+        tile_join: ``sheet-contains`` or ``sheet-primary``.
+
+    Returns:
+        ``None``, or a refusal record in :func:`describe_tile_join_refusal`'s
+        shape.
+    """
+    scope = scope_detections_to_frame(gdf_det, gdf_bounds, require_attribution=False)
+    n_unattributed = unattributed_in_frame(scope, gdf_det, gdf_bounds)
+    applied = bool(scope.diagnostics.get("applied", True))
+    det_assignment: dict[str, Any] | None = None
+    ref_assignment: dict[str, Any] | None = None
+    if n_unattributed:
+        reason = TILE_JOIN_REASON_UNATTRIBUTED_DETECTION
+        detail = _unattributed_message(n_unattributed, tile_join, applied)
+        n_in_frame = _n_in_frame_union(gdf_det, gdf_bounds)
+        shortfall = {
+            "axis": "detections",
+            "n_booked": n_in_frame - n_unattributed,
+            "n_inside_union": n_in_frame,
+            "n_outside_union": len(gdf_det) - n_in_frame,
+            "n_multi_tile": None,
+            "shortfall": n_unattributed,
+        }
+        diagnostics: dict[str, Any] = {"detection_scope": scope.diagnostics}
+    else:
+        det_assignment, ref_assignment = sheet_contains_assignments(
+            scope, gdf_det, gdf_ref, gdf_bounds,
+        )
+        refusal = check_tile_join_invariant(det_assignment, ref_assignment)
+        if refusal is None:
+            return None
+        reason, detail = refusal["reason"], refusal["error"]
+        axis, assignment = (
+            ("references", ref_assignment)
+            if reason == TILE_JOIN_REASON_REFERENCE_SHORTFALL
+            else ("detections", det_assignment)
+        )
+        shortfall = {
+            "axis": axis,
+            "n_booked": assignment["n_assigned"],
+            "n_inside_union": assignment["n_inside_union"],
+            "n_outside_union": assignment["n_outside_union"],
+            "n_multi_tile": assignment["n_multi_tile"],
+            "shortfall": assignment["n_inside_union"] - assignment["n_assigned"],
+        }
+        diagnostics = refusal.get("tile_join_diagnostics") or {}
+    return {
+        "withheld": True,
+        "reason": reason,
+        "detail": detail,
+        "tile_join": tile_join,
+        "reference_join": tile_join,
+        "shortfall": shortfall,
+        "vocabularies": _vocabulary_census(gdf_det, gdf_bounds),
+        "withheld_quantities": list(TILE_JOIN_WITHHELD_QUANTITIES),
+        "reported_quantities": list(TILE_JOIN_REPORTED_QUANTITIES),
+        "tile_join_diagnostics": diagnostics,
+        "ruling": (
+            "Wave 1 (PI rulings D72 and D73): an in-frame detection with no "
+            "attributable sheet is refused under a sheet join, never dropped "
+            "or booked across the frame; whole-frame F1, precision and recall "
+            "point estimates are reported in full."
+        ),
+    }
+
+
 def calculate_tile_classification(
     gdf_det: gpd.GeoDataFrame,
     gdf_ref: gpd.GeoDataFrame,
     gdf_bounds: gpd.GeoDataFrame,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
     *,
     parent_bounds: gpd.GeoDataFrame | None = None,
 ) -> dict:
@@ -4934,15 +5818,25 @@ def calculate_tile_classification(
     - False Positive: Empty + Detected >=1 mound (hallucination)
     - False Negative: Has mounds + Detected nothing
 
-    **The tile join.** ``tile_join`` names how a point becomes a tile, and
-    the three rules are not interchangeable on an overlapping frame — see
-    :data:`TILE_JOIN_ID`, :data:`TILE_JOIN_GEOMETRIC_PRIMARY`,
-    :data:`TILE_JOIN_GEOMETRIC_CONTAINS` and the note on
-    :data:`TILE_JOIN_DEFAULT`. The geometric rules are applied
+    **The tile join.** ``tile_join`` names how a point becomes a tile, one
+    of :data:`TILE_JOINS_CLASSIFICATION`, and the rules are not
+    interchangeable on an overlapping frame. The default is
+    :data:`TILE_JOIN_CLASSIFICATION_DEFAULT`, ``sheet-contains`` (PI rulings
+    D72 (1) and D73 (2)): a tile is reference-positive if a reference
+    recorded on the tile's own sheet lies in it, and detected if a
+    detection ruling D50's scope attributed to that sheet lies in it
+    (:func:`sheet_contains_assignments`). An in-frame detection with no
+    attributable sheet is refused by name
+    (:data:`TILE_JOIN_REASON_UNATTRIBUTED_DETECTION`). The three frame-wide
+    joins stay selectable for replaying historical artefacts and keep their
+    historical behaviour: see :data:`TILE_JOIN_ID`,
+    :data:`TILE_JOIN_GEOMETRIC_PRIMARY` and
+    :data:`TILE_JOIN_GEOMETRIC_CONTAINS`. Their geometric rules are applied
     **symmetrically**, to references as well as detections, so that both
     axes of the confusion matrix are built the same way. ``id`` keeps the
     legacy asymmetric pairing (detections by name, references by
-    containment) purely so that published numbers reproduce.
+    containment) purely so that published numbers reproduce; it is invalid
+    for merged output (D72: the perfect-detector test).
 
     Whichever rule is in force, the assignment is checked against
     geometry by :func:`check_tile_join_invariant` before any count is
@@ -4955,8 +5849,8 @@ def calculate_tile_classification(
             required by the ``id`` join only.
         gdf_ref: GeoDataFrame of ground truth references.
         gdf_bounds: GeoDataFrame of tile boundaries (must have 'tile_name' column).
-        tile_join: One of :data:`TILE_JOINS`; defaults to
-            :data:`TILE_JOIN_DEFAULT`.
+        tile_join: One of :data:`TILE_JOINS_CLASSIFICATION`; defaults to
+            :data:`TILE_JOIN_CLASSIFICATION_DEFAULT`.
         parent_bounds: The frame ``gdf_bounds`` was cut from, or ``None``
             (:func:`scope_detections_to_frame`). The common-footprint
             bootstrap passes a condition's own frame here when the common
@@ -4983,34 +5877,64 @@ def calculate_tile_classification(
     if n_tiles == 0:
         return {"error": "No tiles in bounds", "reason": TILE_JOIN_REASON_NO_TILES}
 
+    if tile_join not in TILE_JOINS_CLASSIFICATION:
+        raise ValueError(
+            f"classification join must be one of {TILE_JOINS_CLASSIFICATION!r}, "
+            f"got {tile_join!r}"
+        )
+
     # Ruling D50: the confusion drops exactly the detections the F1 point
     # estimate drops as out of frame — attributed to a frame sheet but
     # outside its tiles. Before the ruling such a detection whose name
     # collided with a frame tile was booked to it under the ``id`` join (and
-    # padded the invariant's booked count). Rows on no frame sheet (a null
-    # or foreign ``source_tile``, or a frame whose tile names carry no
-    # parseable sheet) are kept as they always were: the confusion never
-    # needed a sheet, the geometric joins book them by position, and the
-    # ``id`` join treats them by name below.
+    # padded the invariant's booked count). Under the frame-wide (historical)
+    # joins, rows on no frame sheet (a null or foreign ``source_tile``, or a
+    # frame whose tile names carry no parseable sheet) are kept as they
+    # always were: the confusion never needed a sheet, the geometric joins
+    # book them by position, and the ``id`` join treats them by name below.
     scope = scope_detections_to_frame(
         gdf_det, gdf_bounds, require_attribution=False, parent_bounds=parent_bounds,
     )
-    gdf_det = scope.retained
 
-    # Book detections and references to tiles once, up front, instead of
-    # re-scanning both frames inside the per-tile loop. The reference rule
-    # follows the detection rule whenever the detection rule is geometric,
-    # so the confusion matrix is not built one way on one axis and another
-    # way on the other — the defect this parameter exists to close.
-    reference_join = (
-        TILE_JOIN_GEOMETRIC_CONTAINS
-        if tile_join == TILE_JOIN_ID
-        else tile_join
-    )
-    det_assignment = assign_points_to_tiles(gdf_det, gdf_bounds, tile_join)
-    ref_assignment = assign_points_to_tiles(
-        gdf_ref, gdf_bounds, reference_join,
-    )
+    if tile_join == TILE_JOIN_SHEET_CONTAINS:
+        # D73 (2): sheet-specific containment. An in-frame detection with no
+        # attributable sheet is refused by name, never dropped or booked
+        # across the frame (W1.1).
+        n_unattributed = unattributed_in_frame(scope, gdf_det, gdf_bounds)
+        if n_unattributed:
+            return {
+                "error": _unattributed_message(
+                    n_unattributed, tile_join,
+                    bool(scope.diagnostics.get("applied", True)),
+                ),
+                "reason": TILE_JOIN_REASON_UNATTRIBUTED_DETECTION,
+                "n_tiles": n_tiles,
+                "tile_join": tile_join,
+                "n_unattributed_in_frame": n_unattributed,
+                "tile_join_diagnostics": {"detection_scope": scope.diagnostics},
+                "detection_scope": scope.diagnostics,
+            }
+        reference_join = TILE_JOIN_SHEET_CONTAINS
+        det_assignment, ref_assignment = sheet_contains_assignments(
+            scope, gdf_det, gdf_ref, gdf_bounds,
+        )
+    else:
+        gdf_det = scope.retained
+        # Book detections and references to tiles once, up front, instead of
+        # re-scanning both frames inside the per-tile loop. The reference
+        # rule follows the detection rule whenever the detection rule is
+        # geometric, so the confusion matrix is not built one way on one
+        # axis and another way on the other — the defect this parameter
+        # exists to close.
+        reference_join = (
+            TILE_JOIN_GEOMETRIC_CONTAINS
+            if tile_join == TILE_JOIN_ID
+            else tile_join
+        )
+        det_assignment = assign_points_to_tiles(gdf_det, gdf_bounds, tile_join)
+        ref_assignment = assign_points_to_tiles(
+            gdf_ref, gdf_bounds, reference_join,
+        )
 
     refusal = check_tile_join_invariant(det_assignment, ref_assignment)
     if refusal is not None:
@@ -5110,7 +6034,7 @@ def bootstrap_tile_classification_ci(
     gdf_bounds: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """
     BCa bootstrap 95 % CIs for tile-level MCC, sensitivity, and specificity.
@@ -5297,7 +6221,7 @@ def bootstrap_tile_effect_size_ci(
     gdf_ref: gpd.GeoDataFrame,
     n_iterations: int = 1000,
     random_seed: int | None = None,
-    tile_join: str = TILE_JOIN_DEFAULT,
+    tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
 ) -> dict:
     """
     Bootstrap 95% CIs for tile-level MCC difference between two conditions.
@@ -5575,6 +6499,7 @@ def generate_report(
     bounds_path: Path | str,
     output_path: Path | str | None = None,
     bootstrap_iterations: int = 1000,
+    count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT,
 ) -> dict:
     """
     Generate a comprehensive metrics report for a detection run.
@@ -5588,6 +6513,9 @@ def generate_report(
         bounds_path: Path to the bounds GeoJSON file.
         output_path: Optional path to write JSON report.
         bootstrap_iterations: Number of bootstrap iterations (default 1000).
+        count_table_join: The count-table join the bootstrap intervals are
+            built under (default :data:`TILE_JOIN_COUNT_TABLE_DEFAULT`),
+            recorded in the report's ``tile_joins`` block.
 
     Returns:
         Report dictionary, or empty dict on load failure.
@@ -5611,7 +6539,10 @@ def generate_report(
     # 2. Bootstrap CIs
     report["bootstrap_ci"] = bootstrap_ci(
         gdf_det, gdf_ref, gdf_bounds, n_iterations=bootstrap_iterations,
+        count_table_join=count_table_join,
     )
+    report["tile_joins"] = {"count_table": count_table_join,
+                            "rulings": TILE_JOIN_RULINGS}
 
     # 3. Spatial tolerance curve
     report["spatial_tolerance"] = spatial_tolerance_curve(
