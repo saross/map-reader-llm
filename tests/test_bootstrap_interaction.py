@@ -176,12 +176,12 @@ class TestBootstrapInteractionCi:
             f"Expected near-zero interaction, got {dod['mean']:.3f}"
         )
 
-    @pytest.mark.xfail(
-        reason="Bootstrap interaction CI returns DoD=0.0 on this "
-        "synthetic data — likely a tile-level resampling issue where "
-        "the interaction effect is lost during bootstrap. Needs "
-        "investigation of bootstrap_interaction_ci() internals.",
-    )
+    # The xfail this test carried until 2026-11-18 ("DoD=0.0 on this
+    # synthetic data ... needs investigation of bootstrap_interaction_ci()
+    # internals") was a fixture defect, found in tile-join Wave 1: the
+    # fixture's tiles were named ``K-35-052-4_32635_tile_NNN``, which no
+    # sheet parser reads, so the per-sheet matching saw no sheet and every
+    # cell scored zero. With pipeline-vocabulary names the test passes.
     def test_interaction_detected(self) -> None:
         """When factor_b has a large effect at A1 but no effect at A2,
         interaction should be detected.
@@ -346,11 +346,8 @@ class TestBootstrapInteractionCi:
 
         assert "error" in result
 
-    @pytest.mark.xfail(
-        reason="Same bootstrap_interaction_ci() zero-return issue as "
-        "test_interaction_detected — synthetic data not producing "
-        "expected simple effects. Needs function-level investigation.",
-    )
+    # xfail removed 2026-11-18: the same fixture defect as
+    # test_interaction_detected (see the note there).
     def test_simple_effects_returned(self) -> None:
         """Simple effects should be returned for each factor_a level."""
         n_tiles = 20
