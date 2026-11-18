@@ -1,7 +1,6 @@
 # Tile-join Wave 1 — specification (code, tests, erratum draft, dry-run, smoke test)
 
-> **Last revised**: 2026-11-18 (gate R round 2: Astra's focused changes
-> applied). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-18 (launch approved, P1–P4 met; S169). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), session S168 on amd-tower. Every path, count, line
@@ -18,7 +17,7 @@
   (`~/agent-mail/codex/outbox/claude/20261101T225231Z-astra-tile-join-record-and-wave1-review.md`,
   `…/20261118T050438Z-astra-tile-join-round-2-review.md`) are answered in
   § 10; the PI approved this revision on 2026-11-18. **Gate R is closed.
-  Blocked only on the PI's approval to launch (P2).**
+  Launch approved 2026-11-18 (P2); P1–P4 met; Wave 1 running.**
 - **Target**: all data and results settled, and the write-up begun, by
   **Sunday 2026-11-29** (PI, 2026-11-18; first set to 2026-11-22, moved
   the same day).
@@ -44,9 +43,9 @@ the cost of the corpus re-score before anyone commits to it.
 | # | Precondition | How it is checked |
 |---|---|---|
 | P1 | Gate R closed: Astra's round-2 review delivered, the PI has ruled on it, this document revised accordingly | **met 2026-11-18** (§ 10, § Changelog) |
-| P2 | The PI approves this specification for launch | stated in conversation; recorded in § Changelog |
-| P3 | zbook's `.venv` still matches the reference environment | `uv pip freeze` equals `requirements-lock.txt`; tier 1 passes at the reference count before any change (`docs/agent-guidance.md`, "Reference environment") |
-| P4 | zbook's checkout is on `origin/main`, clean, 0 behind | `git fetch && git status -sb` |
+| P2 | The PI approves this specification for launch | **met 2026-11-18** (S169; § Changelog) |
+| P3 | zbook's `.venv` still matches the reference environment | `uv pip freeze` equals `requirements-lock.txt`; tier 1 passes at the reference count before any change (`docs/agent-guidance.md`, "Reference environment"). **Met 2026-11-18**: 172 packages equal after name normalisation; tier 1 4,525 passed, 5 skipped, 3 xfailed |
+| P4 | zbook's checkout is on `origin/main`, clean, 0 behind | `git fetch && git status -sb`. **Met 2026-11-18** at `fe9d433d7` |
 
 Nothing on sapphire is needed. The board's per-cell frame-wide contains
 readings are committed: 150 gates under `mcc_permutation.gates` in
@@ -541,6 +540,24 @@ approved the revision below on 2026-11-18.
 | Legacy replay includes the committed intervals | Added. § 4 item 2 |
 
 ## Changelog
+
+### 2026-11-18 — Launch approved; preconditions met (S169, amd-tower)
+
+Trigger: the PI approved the launch (P2) in conversation, with three
+operating choices: the wave is **driven from amd-tower** (where agent mail
+lives) and runs every test, smoke run, and timing on **zbook over SSH**;
+code goes on branch `tile-join-wave-1` (§ 8), not straight to `main`; and
+the Wave 2 and wave S specifications are drafted in parallel for Astra's
+review.
+
+| Precondition | Evidence |
+|---|---|
+| P2 | PI approval, 2026-11-18 |
+| P3 | zbook `uv pip freeze` equals `requirements-lock.txt` (172 packages; the only raw differences are name spellings such as `Jinja2`/`jinja2` and `_`/`-`); Python 3.13.3; tier 1 at `fe9d433d7`: 4,525 passed, 5 skipped, 132 deselected, 3 xfailed (equal to the S167 count at `933cebf64`) |
+| P4 | zbook fast-forwarded from 9 behind to `fe9d433d7`; clean, 0 behind |
+
+Sapphire was again unreachable (`No route to host`); not needed (§ 1).
+Unchanged: the design, the gate, and the stop list.
 
 ### 2026-11-18 — Gate R round 2 answered (S168, amd-tower)
 
