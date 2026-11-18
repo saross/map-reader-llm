@@ -4,7 +4,7 @@ Reference-occupancy correlogram for wave S (design information; no detection or 
 references: inputs/vectors/references/mounds-reference.geojson (569 points, sheet column 'Map'; 0 sheet values not in the frame)
 tiles 487; reference-occupied 224 (46.0 %)
 per-sheet occupancy rate min/median/max 0.099/0.600/0.619 over 4 sheets
-lag (strides) | centre spacing | pairs | occupancy r pooled | occupancy r within sheet | count r pooled
+lag (Chebyshev, strides) | axial centre spacing | pairs | occupancy r pooled | occupancy within-sheet cross-product (not a correlation) | count r pooled
 1 | 336 px | 1523 | 0.361 | 0.188 | 0.313
 2 | 672 px | 2407 | 0.262 | 0.048 | 0.194
 3 | 1008 px | 2889 | 0.273 | 0.072 | 0.165
@@ -18,7 +18,7 @@ lag (strides) | centre spacing | pairs | occupancy r pooled | occupancy r within
 references: inputs/vectors/references/best-available-gt-55maps-r2.geojson (5018 points, sheet column 'source_map'; 0 sheet values not in the frame)
 tiles 8541; reference-occupied 3196 (37.4 %)
 per-sheet occupancy rate min/median/max 0.038/0.404/0.686 over 55 sheets
-lag (strides) | centre spacing | pairs | occupancy r pooled | occupancy r within sheet | count r pooled
+lag (Chebyshev, strides) | axial centre spacing | pairs | occupancy r pooled | occupancy within-sheet cross-product (not a correlation) | count r pooled
 1 | 336 px | 30158 | 0.251 | 0.165 | 0.253
 2 | 672 px | 52744 | 0.155 | 0.057 | 0.138
 3 | 1008 px | 68418 | 0.124 | 0.024 | 0.115
