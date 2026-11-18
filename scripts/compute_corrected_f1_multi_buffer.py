@@ -706,6 +706,36 @@ def compute_mcc_block(
     }
 
 
+def _check_precomputed_mcc(block: dict, tile_join: str) -> None:
+    """Refuse a cached MCC block whose join is not recorded as the requested one.
+
+    Astra's interim review (W1-C1): a block with no ``tile_join`` used to be
+    stamped with the requested join, turning missing provenance into
+    affirmative provenance without recomputing anything. A cache must carry
+    a non-null, valid join equal to the requested one; anything else is
+    refused, before any interval work. A caller holding an older, unlabelled
+    block must recompute it (or label it explicitly in a historical adapter).
+
+    Args:
+        block: The cached block (as :func:`compute_mcc_block` returns it).
+        tile_join: The requested classification join.
+
+    Raises:
+        ValueError: If the block records no join, an invalid one, or another.
+    """
+    recorded = block.get("tile_join")
+    if recorded is None:
+        raise ValueError(
+            "precomputed MCC block records no tile_join; an unlabelled cache is "
+            "never relabelled with the requested join — recompute it")
+    if recorded not in TILE_JOINS_CLASSIFICATION:
+        raise ValueError(f"precomputed MCC block records {recorded!r}, not a "
+                         f"classification join")
+    if recorded != tile_join:
+        raise ValueError(f"precomputed MCC block is under {recorded!r}, not "
+                         f"{tile_join!r}")
+
+
 def compute_at_buffer(
     gdf_det: gpd.GeoDataFrame,
     gdf_student: gpd.GeoDataFrame,
@@ -766,6 +796,8 @@ def compute_at_buffer(
             classification join.
     """
     check_tile_joins(tile_join, count_table_join)
+    if compute_mcc and precomputed_mcc is not None:
+        _check_precomputed_mcc(precomputed_mcc, tile_join)
     print(f"\n--- Buffer R = {buffer_r} m ---")
 
     # 1. Phantom GT at R and scoped student GT baseline count
@@ -829,11 +861,9 @@ def compute_at_buffer(
     mcc_kwargs: dict = {}
     if compute_mcc:
         if precomputed_mcc is not None:
-            if precomputed_mcc.get("tile_join", tile_join) != tile_join:
-                raise ValueError(
-                    f"precomputed MCC block is under "
-                    f"'{precomputed_mcc.get('tile_join')}', not '{tile_join}'")
-            mcc_kwargs = {"tile_join": tile_join, **precomputed_mcc}
+            # Validated at entry (_check_precomputed_mcc): its join is the
+            # requested one, recorded, never inferred.
+            mcc_kwargs = dict(precomputed_mcc)
         else:
             mcc_kwargs = compute_mcc_block(
                 gdf_det, gdf_ext_gt, gdf_bounds,

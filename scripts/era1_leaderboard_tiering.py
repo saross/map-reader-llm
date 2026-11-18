@@ -232,6 +232,54 @@ MCC_GATE_TOL = 5e-5
 MCC_PUBLISHED_DECIMALS = 4
 
 
+def recorded_output_joins(data: dict) -> tuple[str, str]:
+    """The (classification, count-table) rules an existing tiering JSON records.
+
+    Wave 1 tierings record ``tile_joins``; a 2026-10-30 sensitivity tiering
+    records only ``mcc_permutation.tile_join``; anything older was built
+    under the legacy ``id`` on both arms.
+
+    Args:
+        data: A parsed tiering JSON.
+
+    Returns:
+        ``(classification, count_table)``.
+    """
+    block = data.get("tile_joins") or {}
+    mcc = data.get("mcc_permutation") or {}
+    return (block.get("classification") or mcc.get("tile_join") or "id",
+            block.get("count_table") or data.get("count_table_join") or "id")
+
+
+def refuse_overwrite_of_other_joins(path: Path, tile_join: str,
+                                    count_table_join: str, allow: bool) -> None:
+    """Refuse to overwrite an existing tiering built under other rules.
+
+    Audit A-L5: the two defaults write the plain name, which every committed
+    tiering (built under ``id``) also carries, so a default run would replace
+    a committed ``id`` tiering in place. That is Wave 3's deliberate act, not
+    a side effect: it needs ``--overwrite-other-joins``.
+
+    Args:
+        path: The output JSON about to be written.
+        tile_join: The classification join requested.
+        count_table_join: The count-table join requested.
+        allow: ``--overwrite-other-joins``.
+
+    Raises:
+        SystemExit: If the file exists, records other rules, and ``allow``
+            is not set.
+    """
+    if allow or not path.exists():
+        return
+    recorded = recorded_output_joins(json.loads(path.read_text()))
+    if recorded != (tile_join, count_table_join):
+        raise SystemExit(
+            f"{path} exists and records joins {recorded}, not the requested "
+            f"({tile_join!r}, {count_table_join!r}); refusing to overwrite it. "
+            f"Pass --overwrite-other-joins to replace it deliberately.")
+
+
 def tiering_stem(buffer_metres: int,
                  tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
                  count_table_join: str = TILE_JOIN_COUNT_TABLE_DEFAULT) -> str:
@@ -508,6 +556,19 @@ def cell_per_tile(
 
 class ConfusionGateError(RuntimeError):
     """A cell's rebuilt tile confusion disagrees with its committed evaluation."""
+
+
+class ReproductionDriftError(RuntimeError):
+    """Step 1 of the two computations could not reproduce a committed record.
+
+    Raised by :func:`validate_recorded_classification` when a committed tile
+    record, replayed under the join it recorded, comes out different (a
+    different confusion or MCC, a refusal where a confusion was recorded, a
+    confusion where a refusal was recorded, or a different refusal). The
+    Wave 1 specification's § 5 makes a legacy replay mismatch a STOP, so this
+    is deliberately not a :class:`ConfusionGateError`: :func:`load_cells`
+    does not catch it and withhold the cell, it ends the run (audit A-L6).
+    """
 
 
 def read_tile_confusion(eval_path: Path) -> dict | None:
@@ -830,8 +891,10 @@ def validate_recorded_classification(
         gate record or ``expected_refusal``).
 
     Raises:
-        ConfusionGateError: If the evaluation records no tile block, or the
-            replay does not reproduce the record.
+        ConfusionGateError: If the evaluation records no tile block (nothing
+            to validate: the cell's MCC is withheld, as before Wave 1).
+        ReproductionDriftError: If the replay does not reproduce the record
+            (a stop, never a withholding; audit A-L6).
     """
     block = (evaluation.get("summary") or {}).get("tile_classification")
     if not isinstance(block, dict):
@@ -847,13 +910,13 @@ def validate_recorded_classification(
         if "error" in replay and replay.get("reason") == expected:
             return {"recorded_join": recorded_join, "passed": True,
                     "expected_refusal": expected}
-        raise ConfusionGateError(
+        raise ReproductionDriftError(
             f"{label}: the committed record is a refusal ({expected}) under "
             f"'{recorded_join}', but the replay gave "
             f"{replay.get('reason') if 'error' in replay else 'a confusion'}"
         )
     if "error" in replay:
-        raise ConfusionGateError(
+        raise ReproductionDriftError(
             f"{label}: replay under the recorded join '{recorded_join}' refused "
             f"({replay.get('reason')}) where the committed record has a confusion"
         )
@@ -865,11 +928,19 @@ def validate_recorded_classification(
     conf = block.get("confusion")
     recorded = ({k: int(conf[k]) for k in ("tp", "tn", "fp", "fn") if k in conf}
                 if isinstance(conf, dict) else None)
-    gate = check_confusion_gate(
-        label, rebuilt, recorded,
-        None if mcc is None else round(float(mcc), 6), recorded_mcc,
-        geometry_check=replay.get("tile_join_diagnostics"),
-    )
+    if recorded is None:
+        # Nothing to reproduce: withheld as before Wave 1, not a drift.
+        raise ConfusionGateError(
+            f"{label}: evaluation records no tile_classification.confusion, so "
+            f"its record cannot be validated")
+    try:
+        gate = check_confusion_gate(
+            label, rebuilt, recorded,
+            None if mcc is None else round(float(mcc), 6), recorded_mcc,
+            geometry_check=replay.get("tile_join_diagnostics"),
+        )
+    except ConfusionGateError as error:
+        raise ReproductionDriftError(f"reproduction drift: {error}") from error
     return {"recorded_join": recorded_join, **gate}
 
 
@@ -1430,6 +1501,11 @@ def main() -> int:
              "board's headline is 50.",
     )
     parser.add_argument(
+        "--overwrite-other-joins", action="store_true",
+        help="Allow replacing an existing tiering JSON that records other "
+             "tile-join rules (audit A-L5). Without it such a file is refused.",
+    )
+    parser.add_argument(
         "--strict-tile-join", action="store_true",
         help="Abort on the FIRST cell the tile-join invariant refuses, instead "
              "of withholding it and tiering the rest. The default (withhold "
@@ -1484,6 +1560,11 @@ def main() -> int:
                      "arm; pass --permute-mcc with it")
     print(f"TILE JOINS: classification {args.tile_join!r} (MCC arm), count "
           f"table {args.count_table_join!r} (F1 arm)", flush=True)
+    # Checked before any computation, so a refused run costs nothing.
+    planned = tiering_stem(args.buffer, args.tile_join, args.count_table_join)
+    refuse_overwrite_of_other_joins(
+        args.output_dir / f"{planned}.json",
+        args.tile_join, args.count_table_join, args.overwrite_other_joins)
 
     withheld_cells: list[dict] = []
     cells, _gdf_ref, _gdf_bounds, tile_order = load_cells(

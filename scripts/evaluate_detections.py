@@ -1247,11 +1247,19 @@ def evaluate_single_run(
     # Wave 1: the question is asked of the COUNT-TABLE join, because the
     # quantities it withholds (intervals, coverage) are read from the count
     # table. The classification join governs only the tile block, which
-    # ``calculate_tile_classification`` refuses on its own below. Until
-    # Wave 1 the probe used the classification join while the table itself
-    # was always built under ``id``; for the pair (id, id) the two coincide.
+    # ``calculate_tile_classification`` refuses on its own below.
+    #
+    # The one exception is the legacy ``id`` count table. Before Wave 1 the
+    # table was always ``id`` and the probe was asked of the CLASSIFICATION
+    # join; an ``id`` probe would count the classification population
+    # (every retained row) where the ``id`` table books only attributed,
+    # in-scope rows, and so over-withhold a replay of an (X, id) pair
+    # (audit A-M1). An ``id`` count table therefore keeps the historical
+    # probe, and a refusal of the table itself is still caught below
+    # (``detected_by``), exactly as before Wave 1.
+    probe_join = tile_join if count_table_join == "id" else count_table_join
     tile_join_refusal = (
-        describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, count_table_join)
+        describe_tile_join_refusal(gdf_det, gdf_ref, gdf_bounds, probe_join)
         if n_det > 0
         else None
     )

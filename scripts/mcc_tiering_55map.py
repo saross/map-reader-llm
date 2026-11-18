@@ -279,6 +279,39 @@ def permutation_test_mcc(
     }
 
 
+def _track2_recorded_join(summary: dict, row: dict) -> str:
+    """The classification join a Track-2 ``summary.json`` row was built under.
+
+    Wave 1 made ``compute_corrected_f1_multi_buffer.py`` record it twice: in
+    each row's ``tile_classification.tile_join`` and in
+    ``metadata.tile_joins.classification``. A file that records neither is
+    historical and was built under the legacy ``id``; two records that
+    disagree are refused (audit A-M2).
+
+    Args:
+        summary: The parsed ``summary.json``.
+        row: The row the board reads (``R_m == BUFFER_M``).
+
+    Returns:
+        The recorded classification join.
+
+    Raises:
+        ValueError: On contradictory records, or a name that is not a
+            classification join.
+    """
+    records = {
+        (row.get("tile_classification") or {}).get("tile_join"),
+        ((summary.get("metadata") or {}).get("tile_joins") or {}).get("classification"),
+    } - {None}
+    if len(records) > 1:
+        raise ValueError(f"summary.json records contradictory classification joins "
+                         f"{sorted(records)}")
+    join = records.pop() if records else TILE_JOIN_LEGACY_CLASSIFICATION
+    if join not in TILE_JOINS_CLASSIFICATION:
+        raise ValueError(f"summary.json records {join!r}, not a classification join")
+    return join
+
+
 def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
     """Load one cell's detections (engine CRS handling) and its committed
     50 m tile_classification block (the gate target + the BCa CI source).
@@ -300,7 +333,7 @@ def _load_cell_inputs(track2_dir: Path) -> tuple[gpd.GeoDataFrame, dict]:
         rel = det_path.split("map-reader-llm/", 1)[1]
         row50 = next(r for r in summary["results"] if r["R_m"] == BUFFER_M)
         tile = {**row50["tile_classification"],
-                "recorded_tile_join": TILE_JOIN_LEGACY_CLASSIFICATION}
+                "recorded_tile_join": _track2_recorded_join(summary, row50)}
     else:
         # evaluate_detections.py shape (the r2 chain's single engine): the
         # tile block nests point + BCa interval per metric; flatten it to
@@ -341,6 +374,11 @@ def count_word(n: int) -> str:
         ``"eight"`` for 8, ``"13"`` for 13.
     """
     return _NUMBER_WORDS.get(n, str(n))
+
+
+def _fmt3(value: float | None) -> str:
+    """Three decimals, or ``undefined`` for a null rate (erratum E81)."""
+    return "undefined" if value is None else f"{value:.3f}"
 
 
 def render_md(out: dict) -> str:
@@ -415,8 +453,9 @@ def render_md(out: dict) -> str:
         ci = f"[{lo:.3f}, {hi:.3f}]" if lo is not None else "—"
         cf = c["confusion"]
         md.append(
-            f"| {i} | {c['name']} | {c['tier']} | {c['mcc']:.4f} | {ci} "
-            f"| {c['sensitivity']:.3f} | {c['specificity']:.3f} "
+            f"| {i} | {c['name']} | {c['tier']} | "
+            f"{'undefined' if c['mcc'] is None else format(c['mcc'], '.4f')} | {ci} "
+            f"| {_fmt3(c['sensitivity'])} | {_fmt3(c['specificity'])} "
             f"| {cf['tp']}/{cf['fp']}/{cf['fn']}/{cf['tn']} |")
     md += ["", "## Reading this board", "", PAIRED_CI_NOTE, "",
            (R2_ATTRIBUTION_NOTE if is_r2
@@ -433,7 +472,8 @@ def render_md(out: dict) -> str:
 
 def main(rebuild_md_only: bool = False, reference: str = "canonical",
          force_r1: bool = False,
-         tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT) -> int:
+         tile_join: str = TILE_JOIN_CLASSIFICATION_DEFAULT,
+         overwrite_other_joins: bool = False) -> int:
     """Build the 55-map tile-MCC permutation tiering.
 
     Args:
@@ -448,6 +488,8 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
             ``results/55maps-r2-ref-2026-09-06/``).
         tile_join: The classification join every analysed value is
             computed under (see the header's TILE JOINS).
+        overwrite_other_joins: Allow replacing an existing board that
+            records another classification join (audit A-L5).
     """
     if tile_join not in TILE_JOINS_CLASSIFICATION:
         raise ValueError(f"tile_join must be one of {TILE_JOINS_CLASSIFICATION!r}")
@@ -463,6 +505,17 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
         sys.exit(f"{OUT_DIR.relative_to(BASE_DIR)}/{stem}.json is a committed r1 "
                  f"board; refusing to rewrite it (H15). Use --reference r2, "
                  f"--rebuild-md, or --force-r1.")
+
+    out_json = OUT_DIR / f"{stem}.json"
+    if not rebuild_md_only and not overwrite_other_joins and out_json.exists():
+        # Audit A-L5: never replace a committed board built under another
+        # classification join as a side effect of a default run.
+        recorded = (json.loads(out_json.read_text()).get("tile_joins") or {}).get(
+            "classification") or TILE_JOIN_LEGACY_CLASSIFICATION
+        if recorded != tile_join:
+            sys.exit(f"{out_json.relative_to(BASE_DIR)} records classification join "
+                     f"{recorded!r}, not {tile_join!r}; refusing to overwrite it. "
+                     f"Pass --overwrite-other-joins to replace it deliberately.")
 
     if rebuild_md_only:
         src = OUT_DIR / f"{stem}.json"
@@ -554,7 +607,11 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
                                committed["specificity"])
         else:
             tp_, tn_, fp_, fn_ = (confusion[k] for k in ("tp", "tn", "fp", "fn"))
-            mcc = round(float(mcc_from_confusion(tp_, tn_, fp_, fn_)), 4)
+            # Erratum E81 (audit A-L2): a degenerate confusion has no MCC; it
+            # is null, never the 0.0 ``mcc_from_confusion`` substitutes.
+            degenerate = (tp_ + fp_) * (tp_ + fn_) * (tn_ + fp_) * (tn_ + fn_) == 0
+            mcc = (None if degenerate
+                   else round(float(mcc_from_confusion(tp_, tn_, fp_, fn_)), 4))
             sens = round(tp_ / (tp_ + fn_), 4) if tp_ + fn_ else None
             spec = round(tn_ / (tn_ + fp_), 4) if tn_ + fp_ else None
         cell = {
@@ -591,7 +648,8 @@ def main(rebuild_md_only: bool = False, reference: str = "canonical",
         p["significant"] = bool(adj < 0.05)
         significant[frozenset({p["a"], p["b"]})] = p["significant"]
 
-    ordered = sorted(cells, key=lambda c: -c["mcc"])
+    # An undefined MCC (E81) ranks after every defined one.
+    ordered = sorted(cells, key=lambda c: (c["mcc"] is None, -(c["mcc"] or 0.0)))
     tiers = greedy_clique_tiers([c["name"] for c in ordered], significant)
     tier_of = {n: t for t, members in enumerate(tiers, 1) for n in members}
     n_sig = sum(1 for p in pairs if p["significant"])
@@ -668,8 +726,14 @@ if __name__ == "__main__":
              "confusion is first gated under its own recorded join. 'id' "
              "replays the committed boards (output name gains -id).",
     )
+    parser.add_argument(
+        "--overwrite-other-joins", action="store_true",
+        help="Allow replacing an existing board that records another "
+             "classification join (refused otherwise).",
+    )
     _args = parser.parse_args()
     raise SystemExit(main(
         rebuild_md_only=_args.rebuild_md, reference=_args.reference,
         force_r1=_args.force_r1, tile_join=_args.tile_join,
+        overwrite_other_joins=_args.overwrite_other_joins,
     ))
