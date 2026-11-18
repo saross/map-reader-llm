@@ -1,6 +1,6 @@
 # Tile-join wave S — specification (spatial-block resampling check)
 
-> **Last revised**: 2026-11-18 (revised after Astra's round-1 review). See
+> **Last revised**: 2026-11-19 (revised after Astra's round-2 review). See
 > [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
@@ -25,9 +25,14 @@
   (`~/agent-mail/codex/outbox/claude/20261118T124335Z-astra-wave-s-spec-review.md`;
   evidence in `~/agent-mail/codex/reviews/wave-s-spec-2026-11-18/`). Every
   finding was checked against the files and held; § 13 records the
-  dispositions.
-- **Status**: **DRAFT, revised after Astra's round 1; not approved by the
-  PI.** Nothing in it is a ruling. Where the record does not settle a
+  dispositions. Round 2, 2026-11-18, at `0a1b4dadd`: two arithmetic
+  corrections before the design lock (S6, S7) and a recommendation to the
+  PI on estimator changes
+  (`~/agent-mail/codex/outbox/claude/20261118T133113Z-astra-wave-s-round2-review.md`;
+  evidence in `~/agent-mail/codex/reviews/wave-s-round2-2026-11-18/`); both
+  corrections verified and applied (§ 13).
+- **Status**: **DRAFT, revised after Astra's rounds 1 and 2; not approved
+  by the PI.** Nothing in it is a ruling. Where the record does not settle a
   choice, the document recommends one and lists it in § 11.
 - **Target**: all data and results settled, and the write-up begun, by
   **Sunday 2026-11-29** (PI, 2026-11-18; parent record, header).
@@ -89,7 +94,7 @@ of decision rule: the p-value estimator (§ 3.6 (c)). Line numbers are at
 |---|---|---|
 | Paired tile-swap permutation, F1, precision, recall | `scripts/lib_permutation.py:241` (`paired_permutation_test`); swap masks `:199`; constants `N_PERMUTATIONS = 10_000`, `SEED = 42` at `:68–69`; p-value `mean(\|null\| >= \|observed\|)` at `:306`, which may be exactly 0 (module docstring, D42 default (d)) | the kernel's draws, the shared mask for all three metrics, the run-block swap for multi-run arms (`_as_runs`, `:147`); the exceedance count c behind `:306` feeds both estimators of § 3.6 (c) |
 | The boards' F1 kernel | `scripts/n1_baseline_leaderboard_tiering.py:312` (`permutation_test_float`); `FDR_Q = 0.05` at `:101`; `greedy_clique_tiers` at `:391` | the kernel, BH at q = 0.05, the greedy-clique tiers |
-| The MCC permutation kernel | `scripts/pairwise_permutation_test.py:580` (`permutation_test_mcc_arrays`): one `default_rng(seed)` mask per permutation, so F1 and MCC see byte-identical masks for one seed, unit count, and order; a degenerate permuted MCC is scored 0.0 inside the null only (`_compute_mcc`, `:514`), never published (E81; `compute_mcc_or_none`, `:547`) | the kernel and both conventions; wave S also counts the undefined null draws and reports a conservative bound (§ 3.6 (d)) |
+| The MCC permutation kernel | `scripts/pairwise_permutation_test.py:580` (`permutation_test_mcc_arrays`): one `default_rng(seed)` mask per permutation, so F1 and MCC see byte-identical masks for one seed, unit count, and order; a degenerate permuted MCC is scored 0.0 inside the null only (`_compute_mcc`, `:514`), never published (E81; `compute_mcc_or_none`, `:547`) | the kernel and both conventions; wave S also counts the draws with an undefined arm and reports lower and upper bounds that do not depend on the 0.0 convention (§ 3.6 (d)) |
 | Board harness | `scripts/era1_leaderboard_tiering.py`: per-tile loaders `cell_per_tile` (`:334`) and `cell_per_tile_classification` (`:494`); F1 pairs `:1309`, BH `:1317`, MCC pairs `:1347`, BH `:1353`, tiers `:1373`; `--permute-mcc` shares the swap masks (header, lines 64–76) | the loaders (with the explicit Wave 1 joins), the round-robin families |
 | 55-map MCC tiering | `scripts/mcc_tiering_55map.py`: `N_PERMUTATIONS`, `SEED` at `:92–93`; round robin and BH at `:521–523` | the family and the instrument |
 | Per-cell intervals | `scripts/lib_advanced_metrics.py:3489` (`bootstrap_ci`, F1, precision, recall) and `:5107` (`bootstrap_tile_classification_ci`, MCC, sensitivity, specificity, dropping undefined resamples per E81); BCa through `scipy.stats.bootstrap` with a percentile fallback on a degenerate distribution (`_bca_ci_from_indices`, `:547`, whose `method` field records `BCa`, `percentile_fallback`, or `undefined`, and `n_valid` the usable resamples; `BOOTSTRAP_METHOD = "BCa"`, `:73`) | the estimator, the fallback, and E81's handling; wave S adds the fallback's reason and the jackknife diagnostics to the ledger (§ 3.5) |
@@ -546,15 +551,19 @@ Pst should be primary instead is a question for the PI (§ 11).
   (`_metadata.cli_args.seed` 42, `bootstrap` 10000, for example in
   `results/55map-final-board-r2-2026-09-06/cells/A-N1-oracle/evaluation.json`).
 
-**Draw budget: fixed and predeclared.** 10,000 permutations per sampled
-test and 10,000 bootstrap resamples per interval or MCB family, for every
-design, the singleton included, as at tile level. There is **no
-data-dependent extension**: no test is re-run with more draws because of
-its result. Extending selected tests and treating the resulting fractions as
-fixed-budget p-values would not be justified (Astra, round 1, S1). A test
-whose verdict the fixed budget cannot settle is recorded as **Monte
-Carlo-unresolved** (§ 3.6 (c)). Whether the budget should be larger, for
-every test alike, is a question for the PI (§ 11).
+**Draw budget: fixed and predeclared.** Proposed: 10,000 permutations per
+sampled test and 10,000 bootstrap resamples per interval or MCB family, for
+every design, the singleton included, as at tile level. **Lock order**: the
+budget is fixed in the design lock only after the synthetic timing
+benchmark (S.0; P6) has run and the PI has made the cost and precision
+choice (§ 11, question 11), and it applies to every test alike. There is
+**no data-dependent extension**: no test is re-run with more draws because
+of its result, and the budget is never raised selectively after real
+results are seen. Extending selected tests and treating the resulting
+fractions as fixed-budget p-values would not be justified (Astra, round 1,
+S1). A test whose verdict the fixed budget cannot settle is recorded as
+**Monte Carlo-unresolved** (§ 3.6 (c)). The exact-enumeration rule
+(2^d ≤ N) follows the locked budget.
 
 **Ties.** For the valid and exact estimators, a null draw counts as at least
 as extreme when `|T_null| >= |T_obs| − ε`, with ε = 10⁻¹² × max(1, |T_obs|),
@@ -624,12 +633,15 @@ verdict against the valid block verdict. Intervals, MCB sets, and
 selection-aware intervals carry no p-value, so for them the two tile
 verdicts coincide.
 
-**(b) Categories.**
+**(b) Categories.** **PROVISIONAL for estimator changes, pending the
+PI's ruling on § 11, question 9.** Until that ruling, nothing below settles
+how a claim with an estimator change is worded, and the "stands" wording
+in the Qualified row does not apply to it (see "Estimator changes", below).
 
 | Category | When | What the paper says |
 |---|---|---|
 | **Supported** | no estimator change; the valid P verdict equals the valid tile verdict, and P is resolved and reliable; and every applicable sensitivity design gives the same verdict, resolved and reliable | the claim stands, with a sentence that it is robust to the specified block designs, naming them; on the 55-map frame the sentence also states the seam scope of § 3.8 |
-| **Qualified** | anything short of Supported that is not Withdrawn: an estimator change; a resolved sensitivity design that disagrees; any applicable sensitivity design that cannot resolve the claim, is Monte Carlo-unresolved, or is unreliable; P unable to resolve it, Monte Carlo-unresolved, or unreliable (rules (c) and (d)); or a newly significant block result (Direction, below) | the claim stands with the qualification stated, naming each design and the reason; the resolved checks are reported separately |
+| **Qualified** | anything short of Supported that is not Withdrawn: an estimator change; a resolved sensitivity design that disagrees; any applicable sensitivity design that cannot resolve the claim, is Monte Carlo-unresolved, or is unreliable; P unable to resolve it, Monte Carlo-unresolved, or unreliable (rules (c) and (d)); or a newly significant block result (Direction, below) | for a unit-change or sensitivity reason: the claim stands with the qualification stated, naming each design and the reason; the resolved checks are reported separately. For an estimator change: **provisional**, pending § 11, question 9; the wording must not be read as settled that the claim stands |
 | **Withdrawn** (as a significance claim) | no estimator change; the valid tile verdict is significant, and the valid P verdict is not, with P resolved (it could have rejected, rule (c)), Monte Carlo-resolved, and reliable | the significance, tier, or admissibility claim is withdrawn; the point estimate stays, described as a difference not established under spatial-block resampling, never as evidence of no difference |
 
 **Direction.** The categories apply to a significant tile-level verdict that
@@ -642,10 +654,15 @@ verdict that stays non-significant is Supported as a statement about
 significance only; it is never reported as equivalence or as the absence of
 an effect.
 
-**Estimator changes.** A claim whose legacy and valid tile verdicts differ
-rests on the invalid estimator. It is **qualified** and listed for the PI
-whatever its block verdicts, with its block verdicts reported beside it;
-whether such claims are withdrawn instead is a question for the PI (§ 11).
+**Estimator changes (PROVISIONAL, pending the PI's ruling).** A claim
+whose legacy and valid tile verdicts differ rests on the invalid estimator.
+For bookkeeping it is placed in **Qualified** and listed for the PI
+whatever its block verdicts, with its block verdicts reported beside it,
+and the estimator and unit effects kept separate. How such a claim is
+worded, and whether its significance assertion is withdrawn, is the PI's
+decision (§ 11, question 9, which records Astra's recommendation); this
+specification does not rule on it, and no text here should be read as
+saying such a claim stands.
 
 Tier and set claims are judged member by member. A claim that X is in the
 top tier, or cannot be ruled out as best, is supported if X's membership
@@ -699,19 +716,51 @@ apart (Astra, round 1, S1).
   withdrawn. A sampled test is **Monte Carlo-unresolved** if replacing its
   p-value by either end of the 99 % Clopper–Pearson interval for its
   exceedance probability (from c of N), holding the rest of its family
-  fixed, changes its BH verdict. That is a per-test check; it does not bound
-  the joint Monte Carlo error of a whole BH family, which is a stated limit
-  (§ 10).
-- **Resolution against the multiplicity procedure.** A test whose
-  attainable floor (the larger of 2^(1 − d) and, if sampled, 1/(N + 1);
-  under enumeration, the exact attainable minimum) exceeds q = 0.05, the
-  largest threshold BH can use, cannot reject at any rank. That coarse
-  check covers every d ≤ 5 (2^(1 − 5) = 0.0625). It is not the whole rule.
+  fixed, changes its BH verdict. **"Monte Carlo-resolved" means only that
+  this per-test check passed.** It is not a statement that the BH family's
+  rejections are jointly stable: with two p-values of 0.051 and 0.052 at
+  q = 0.05, lowering either alone to 0.049 rejects neither, while lowering
+  both rejects both (Astra, round 2). The joint Monte Carlo error of a
+  family is not bounded, which is a stated limit (§ 10). Monte Carlo
+  precision, the validity of the randomised p-value, and exchangeability
+  are separate questions.
+- **Two different floors (Astra, round 2, S7).** They concern different
+  quantities and are never substituted for each other:
+  - the **exact-group lower bound** 2^(1 − d) (d ≥ 1) bounds the exact
+    proportion over the whole swap group. It is a **diagnostic**, reported
+    for every test. It does not bound a sampled estimate: random sampling
+    can miss the extreme patterns, so the valid sampled p-value can fall
+    below it. At d = 14, the first d sampled under the enumeration rule,
+    the exact-group bound is 1/8,192 while a 10,000-draw estimate can be
+    1/10,001; even if the exact tail probability were 1/8,192, 10,000 draws
+    with replacement would find no extreme pattern with probability about
+    0.295. The ledger flags any sampled p-value below its exact-group bound;
+  - the **estimator's own attainable minimum**: 1/(N + 1) for a sampled
+    test, and, under enumeration, the exact attainable minimum (the share
+    of patterns that reach the largest |T|).
+
+  **The valid sampled p-value is never clamped** to 2^(1 − d) or to any
+  other estimator's value, and every BH decision uses it as computed.
+- **Resolution against the multiplicity procedure, and which floor
+  controls the category.** The claim category is controlled by the
+  **resolution floor** r, defined once and frozen in the lock:
+  - under enumeration, r is the exact attainable minimum;
+  - for a sampled test, r = max(1/(N + 1), 2^(1 − d)). This is an
+    explicitly **conservative policy for interpreting a non-rejection**,
+    not a claim that a sampled test cannot reject below 2^(1 − d) (it can,
+    and such a rejection stands as computed). It ensures that a claim is
+    never withdrawn on a test whose exact swap group could not have
+    rejected it.
+
   A test **can resolve** a significant verdict only if, with its p-value
-  replaced by its attainable floor and the rest of its family held fixed,
-  BH would reject it. A tile-level significant claim whose valid P verdict
-  is non-significant but which P cannot resolve is **qualified**, not
-  withdrawn.
+  replaced by r and the rest of its family held fixed, BH would reject it;
+  r enters only this counterfactual check, never the test's own decision.
+  A test whose r exceeds q = 0.05, the largest threshold BH can use, cannot
+  reject at any rank; that coarse check covers every d ≤ 5
+  (2^(1 − 5) = 0.0625), all of which are enumerated. A tile-level
+  significant claim whose valid P verdict is non-significant but which P
+  cannot resolve is **qualified**, not withdrawn. No other interpretation
+  of resolution may be substituted in the implementation.
 - **Power.** None of this measures power, the chance of rejecting under a
   given alternative, which wave S does not estimate. A resolved
   non-rejection is a difference not established, not evidence of
@@ -737,12 +786,32 @@ apart (Astra, round 1, S1).
   resamples are undefined, the interval is flagged unreliable, and a claim
   reading it is qualified.
 - In a permutation null, the inherited kernel scores an undefined permuted
-  MCC as 0.0 (`pairwise_permutation_test.py:514`), and wave S keeps that
-  for comparability with Wave 3. It also counts the u undefined null draws
-  and reports the conservative bound `(c + u + 1) / (N + 1)`, which counts
-  every undefined draw as at least as extreme. The test is flagged
-  unreliable, and its claim qualified, if more than 1 % of null draws are
-  undefined, or if its BH verdict differs between the two.
+  MCC as 0.0 (`pairwise_permutation_test.py:514`). Zero imputation has no
+  defined MCC to be compared with, and it can itself make the difference
+  between the arms extreme. Wave S therefore separates three counts over
+  the same draws (or, under enumeration, the same M = 2^d patterns):
+  - u, the draws in which **either arm's** MCC is undefined, each counted
+    **once** however many arms are undefined;
+  - c_defined, the draws at least as extreme as the observed one **with
+    both arms defined**;
+  - c_inherited, the draws at least as extreme under the inherited 0.0
+    convention (c_defined ≤ c_inherited ≤ c_defined + u).
+
+  It reports the **union bounds**: the upper count is c_defined + u (every
+  undefined draw counted as extreme, but only once, since an undefined draw
+  may already be extreme under the 0.0 convention), giving
+  `(c_defined + u + 1) / (N + 1)` when sampled and `(c_defined + u) / M`
+  under full enumeration; the lower count is c_defined, giving
+  `(c_defined + 1) / (N + 1)` and `c_defined / M`. The upper bound never
+  exceeds 1. The **inherited-convention estimate**,
+  `(c_inherited + 1) / (N + 1)` or `c_inherited / M`, is kept separately,
+  and is the one BH uses, for comparability with Wave 3. The test is
+  flagged unreliable, and its claim qualified, if more than 1 % of draws
+  have an undefined arm, or if its BH verdict (the rest of its family held
+  fixed) differs between the lower and upper bounds. Astra's synthetic
+  example (reference `[1, 0, 1, 0]`, arms `[1, 0, 0, 0]` and
+  `[0, 0, 1, 0]`, M = 4) has c_inherited = 4, u = 2, and c_defined = 2:
+  the round-1 formula gave 7/5, the union bounds give 2/4 and 4/4.
 
 **(e) Conflicting designs.** P decides. A resolvable disagreement from S−,
 S+, Pst, Sheet, or Seam qualifies a claim but never withdraws it, and never
@@ -924,7 +993,9 @@ Read-only on results. Outputs under `reports/tile-join-wave-s/`.
   so it is expected to dominate.
 - **Design lock** (`design-lock.json`). SHA-256 of this specification, the
   manifest, every block map, the geometry check, and the parameter set:
-  designs, seeds, the draw budget, the estimators and their tie tolerance,
+  designs, seeds, the draw budget (fixed only after the benchmark and the
+  PI's cost and precision choice), the estimators and their tie tolerance,
+  the resolution floor r and its policy, the undefined-MCC union bounds,
   the enumeration rule, the Monte Carlo resolution rule (99 %
   Clopper–Pearson), q, the interval flags, the degeneracy thresholds, and
   `seam_disposition`. Commit it. The driver verifies these hashes before
@@ -980,7 +1051,13 @@ Read-only on results. Outputs under `reports/tile-join-wave-s/`.
     reversal is counted as at least as extreme under the tie tolerance;
     the floor is 1 at d = 0 and a lower bound at d ≥ 1 (a constructed
     contrast whose exact p exceeds 2^(1 − d));
-  - **resolution**: the attainable-floor BH check and the Monte Carlo
+  - **undefined MCC**: Astra's four-unit example gives c_inherited = 4,
+    u = 2, c_defined = 2, and union bounds 2/4 and 4/4; a draw with both
+    arms undefined counts once in u; no reported bound exceeds 1;
+  - **floors**: at d = 14 the exact-group bound is reported as a diagnostic
+    and a sampled p-value of 1/(N + 1) is kept as computed, never clamped;
+    r follows the frozen policy;
+  - **resolution**: the resolution-floor BH check and the Monte Carlo
     resolution check on constructed families, including a test that is
     resolved at rank 1 and one that is not;
   - **antisymmetry**: exchanging the arms leaves the two-sided p unchanged;
@@ -1020,10 +1097,12 @@ a second run over the same inputs gives identical outputs.
 
 - the legacy tile verdict, the valid tile verdict, and the valid verdict
   under each design, with the estimator change and the unit change marked;
-- c, N, u, both counts of c (exact and with the tie tolerance), the legacy,
-  valid, exact, and conservative p-values, d and the floor, and whether
+- c, N, both counts of c (exact and with the tie tolerance), the legacy,
+  valid, and exact p-values, d, the exact-group bound, the estimator's
+  attainable minimum, the resolution floor r, and, for MCC, u, c_defined,
+  c_inherited, and the lower, upper, and inherited p-values, and whether
   the test was enumerated;
-- the resolution checks: the coarse floor check, the attainable-floor BH
+- the resolution checks: the coarse floor check, the resolution-floor BH
   check, and the Monte Carlo resolution check;
 - for intervals: method, fallback reason, usable resample count, jackknife
   diagnostics, undefined shares, and contributing blocks;
@@ -1170,7 +1249,9 @@ The PI decides:
   conditions, which may be longer or shorter in range.
 - **Monte Carlo error is controlled per test, not per family.** The
   resolution check of § 3.6 (c) holds the rest of a BH family fixed; the
-  joint Monte Carlo error of a family's rejections is not bounded.
+  joint Monte Carlo error of a family's rejections is not bounded, and
+  "Monte Carlo-resolved" never means that a family's rejections are jointly
+  stable.
 - **Exchangeability is assumed.** The block permutation test's validity
   rests on exchangeability of arm labels under block swaps (§ 3.8).
 - **Inherited choices stay inherited.** Operating points fixed at tile
@@ -1219,18 +1300,28 @@ The PI decides:
    and listed (§ 3.6 (b)). Should such claims be withdrawn instead? And
    should Wave 3 itself adopt the valid estimator for the paper's
    tile-level p-values, so that its own verdicts are valid, rather than
-   leave that to wave S's diagnostic?
+   leave that to wave S's diagnostic? § 3.6 (b) is provisional until you
+   rule. **Astra's recommendation** (round 2, verbatim): "My recommendation
+   is to use the valid estimator for Wave 3's scientific decisions,
+   retaining the old estimator only for historical reproduction and a
+   clearly labelled before/after ledger. If significance disappears under
+   the valid singleton analysis, withdraw the old *significance
+   assertion*, while keeping the point estimate and attributing the change
+   to the estimator. A category name may remain Qualified for bookkeeping,
+   but its prose must not preserve an unsupported positive assertion. Keep
+   estimator and spatial-unit effects separate."
 10. **Stratification (new).** The sheet-stratified block bootstrap (Pst) is
     a declared sensitivity design for inference conditional on these
     sheets, and the unstratified one stays primary so that only the unit
     changes (recommended). Should Pst be primary instead?
-11. **Draw budget (new).** The budget is fixed at 10,000 for every test,
+11. **Draw budget (new).** The budget is proposed at 10,000 for every test,
     singleton included (recommended: the valid tile verdicts then come from
     the same draws as the legacy reproduction). At 10,000, a p-value at
     the floor can be rejected on the 11,628-pair board only from BH rank 24;
     100,000 would lower that to rank 3 at ten times the draws
     (7,452,800,000 for the board schedules). Keep 10,000, or raise it for
-    every test alike?
+    every test alike? The budget is locked only after the synthetic
+    benchmark has measured the cost, and after this choice.
 12. **The 55-map seams (new).** After your seam ruling, should a
     seam-aware sensitivity design be specified, reviewed, and frozen
     (recommended), or should the 55-map scope be qualified instead (§ 3.8)?
@@ -1277,8 +1368,8 @@ finding holds; none is disputed.
 | **S1** Valid permutation p-values for decisions | **Accepted.** Decisions use `(c + 1)/(N + 1)` for sampled swaps and the exact proportion under full enumeration (d ≤ 13 at N = 10,000); `c / N` survives only in an explicit legacy reproduction mode. Singleton and block verdicts are both computed with the valid estimator from the same draws, so the ledger separates the estimator change from the unit change. The disagreement-triggered rerun is removed in favour of a fixed, predeclared budget; a test the budget cannot settle is recorded as Monte Carlo-unresolved, not forced. The false claim that 48 blocks resolve every BH threshold is withdrawn; finite swap-group resolution, Monte Carlo resolution, and power are kept apart, and resolution is judged against BH. d = 0 gives p = 1; 2^(1 − d) is stated as a lower bound. Ties are handled with a frozen tolerance so the reversal counts | § 0; § 2 (table, consequences 2–3); § 3.3; § 3.5 (exact enumeration, draw budget, ties, multiplicity); § 3.6 (a), (b), (c), (f); § 3.7; S.1–S.4; § 9; § 10; § 11 (PI 9, 11) |
 | **S2** Make the geometry check independent | **Accepted.** The metres route cancels to the name route; it is relabelled as an arithmetic consistency check. A genuinely independent check now reads each tile's nominal footprint from its own world file and PNG size, checks the name against the raster (one sheet origin per sheet), the bounds geometry against the footprint with clipping treated explicitly (equal, or inside and keeping at least two edges; never a clipped centroid for membership), and the block by three routes. Tracked rasters cover six GS frames, all of which pass; the 256 px and 55-map rasters are untracked, so S.0 runs the check where they are kept and stops if it cannot. The red sentinel displaces one unclipped footprint (by a stride and by 10 m) with its name unchanged, and relabels a sheet; each turns the check red, while the arithmetic check passes the displacement. `block_census.py` was changed and re-run; its block counts are unchanged | § 3.2 (sheet restriction, orientation, clipping, the checks); § 3.4; S.0 (geometry and name validation); S.1 (tests, red sentinel); § 6 (4); § 7; § 8; `block_census.py` and `.txt` |
 | **S3** Correct the block-size rationale | **Accepted.** The claim that most tiles of a 4 × 4 block lie farther from other blocks than the dependence reaches is withdrawn (twelve are one stride and four two strides from another block). The matching-distance exposure is derived from the regions `sheet-primary` booking induces (boundaries at k × 1,344 px plus half the overlap), as geometry on the regular grid, not a measured rate, with S.0 counting exposure from the frames' own polygons. The correlogram's within-sheet column is relabelled as a mean-centred cross-product normalised by the whole-frame within-sheet variance, and its lag as Chebyshev, pooling axial and diagonal pairs; the script header and output labels now say so, and the reference occupancy is kept as descriptive design evidence only. The sizes are kept as a frozen, pragmatic bracket, not a solution to dependence. The first draft's "0.05–0.07 at lags 2–3" also misquoted its own table (55-map lag 3 is 0.024); corrected to 0.024–0.072 | § 3.3 (whole subsection); § 3.4; § 10; § 11 (PI 6); `occupancy_correlogram.py` and `.txt` |
-| **S4** Unresolved sensitivity checks are not support | **Accepted.** Supported now requires every applicable sensitivity design to agree, resolved, Monte Carlo-resolved, and reliable; any applicable design that cannot resolve or is unreliable qualifies the claim, with the resolved checks reported separately. Resolution limits are reported against the actual BH procedure (the attainable-floor BH check), with the absolute floor kept as a coarse check. Intervals report method, fallback reason, usable resample count, and jackknife diagnostics; a numerical fallback never yields an unqualified supporting interval; 20 blocks and 1 % are reporting flags, not coverage guarantees. A newly significant block result stays a disclosed conflict, not a new claim | § 3.5 (interval method and reporting); § 3.6 (b), (c), (d); S.4; § 9 |
-| **S5** Repair the permanent sentinel's estimand | **Accepted.** The merged exact-reference fixture must give F1 = MCC = 1 (and precision, recall, sensitivity, specificity); the unmerged per-tile fixture must give perfect tile classification and keeps its duplicate-sensitive symbol counts, as Wave 1's W1.2 already distinguishes. Undefined MCC resamples are dropped and counted, never scored 1 or 0; in a permutation null the inherited 0.0 convention is kept for comparability with Wave 3, but the undefined draws are counted and a conservative bound reported. The legacy singleton sentinel keeps each instrument's recorded tile order | § 2 (consequence 2); § 3.2 (deterministic order); § 3.6 (d); S.1 (perfect detector); S.2; § 6 (2) |
+| **S4** Unresolved sensitivity checks are not support | **Accepted.** Supported now requires every applicable sensitivity design to agree, resolved, Monte Carlo-resolved, and reliable; any applicable design that cannot resolve or is unreliable qualifies the claim, with the resolved checks reported separately. Resolution limits are reported against the actual BH procedure (the resolution-floor BH check; corrected in round 2, S7), with the absolute floor kept as a coarse check. Intervals report method, fallback reason, usable resample count, and jackknife diagnostics; a numerical fallback never yields an unqualified supporting interval; 20 blocks and 1 % are reporting flags, not coverage guarantees. A newly significant block result stays a disclosed conflict, not a new claim | § 3.5 (interval method and reporting); § 3.6 (b), (c), (d); S.4; § 9 |
+| **S5** Repair the permanent sentinel's estimand | **Accepted.** The merged exact-reference fixture must give F1 = MCC = 1 (and precision, recall, sensitivity, specificity); the unmerged per-tile fixture must give perfect tile classification and keeps its duplicate-sensitive symbol counts, as Wave 1's W1.2 already distinguishes. Undefined MCC resamples are dropped and counted, never scored 1 or 0; in a permutation null the inherited 0.0 convention is kept for comparability with Wave 3, but the draws with an undefined arm are counted and union bounds reported (corrected in round 2, S6). The legacy singleton sentinel keeps each instrument's recorded tile order | § 2 (consequence 2); § 3.2 (deterministic order); § 3.6 (d); S.1 (perfect detector); S.2; § 6 (2) |
 | Answers: stratification | **Accepted.** A sheet-stratified block bootstrap (Pst) is a declared sensitivity design, with its inferential target (conditional on these sheets) stated beside the unstratified primary's; neither is evidence about new sheets; the block swap's own exchangeability argument is stated. Whether Pst should be primary is put to the PI | § 3.3; § 3.5 (stratification); § 3.6 (a), (e); § 3.8; § 11 (PI 10) |
 | Answers: BCa versus percentile | **Accepted.** No automatic switch for few blocks; the inherited degeneracy fallback is kept but recorded with its reason and flags the interval; the method actually used and its diagnostics are reported | § 3.5 (interval method); § 3.6 (c) |
 | Answers: partial blocks | **Accepted.** Deterministic identities kept; block sizes and count-contribution imbalance (largest and partial shares, effective number of blocks) reported; counts are summed for pooled estimands, never averaged block metrics | § 3.1 (estimands); § 3.2 (partial blocks); § 3.5; S.4 |
@@ -1287,13 +1378,60 @@ finding holds; none is disputed.
 | Bookkeeping: Decision 10 attribution | **Accepted.** "Registered resampling unit" and "registered tile interval" replaced: the tile unit was pre-specified in Decision 10 (`decisions-log.md:345`) before lodgement; the registration asks for bootstrapped intervals and names no unit (`osf/preregistration.md:293`; E54 as corrected 2026-07-28); the tile-swap tests come from D42 | § 3.6 (b); § 3.7 |
 | Cost: planning arithmetic and benchmark | **Accepted.** Astra's 74,528 tests and 745,280,000 draws (7,452,800,000 at 100,000) checked and recorded, with the singleton reproduction's 24,446 tests and 244,460,000 draws added; zero API calls and paid fees; runtime unmeasured. A fixed synthetic timing benchmark runs and is committed before any real block statistic | § 1 (P6); S.0 (cost); S.1 (refusals); § 6 (8); § 7; § 8 |
 
-**Reply.** No finding is disputed. Two points go slightly beyond the
-review, for Astra's information: the conservative bound for undefined MCC
-null draws (§ 3.6 (d)), added because scoring them 0.0 can only make a
-permutation p-value smaller; and the misquoted lag-3 range noted in the S3
-row, which the review did not raise.
+**Reply.** No finding is disputed. Two points went slightly beyond the
+review: a bound for undefined MCC null draws (§ 3.6 (d)), and the misquoted
+lag-3 range noted in the S3 row, which the review did not raise. The first
+was added in round 1 on a wrong premise, that scoring an undefined MCC as
+0.0 can only make a permutation p-value smaller. There is no defined MCC to
+compare the 0.0 with, and zero imputation can itself make the difference
+between the arms extreme; the round-1 formula also double-counted draws.
+Round 2's S6 replaced both the premise and the formula with union bounds.
+
+### Round 2
+
+Astra's round-2 review (2026-11-18, at `0a1b4dadd`; mail and evidence named
+in the header) accepted the round-1 answers and requested two arithmetic
+corrections before the design lock, plus a recommendation to the PI. Both
+corrections were verified first by an independent standard-library
+enumeration of Astra's synthetic example, which agrees with
+`wave-s-round2-probe.json`: c = 4, u = 2, c_defined = 2 over M = 4
+patterns, so the round-1 formula gives 1.4 and the union upper bound 1.0;
+at d = 14, 2^(1 − 14) = 1/8,192 exceeds 1/10,001, and (1 − 1/8,192)^10,000
+≈ 0.295. Astra's BH example (0.051 and 0.052 at q = 0.05) was checked by
+hand.
+
+| Finding | Disposition | Sections changed |
+|---|---|---|
+| **S6** The undefined-MCC bound double-counts draws | **Accepted.** `(c + u + 1)/(N + 1)` replaced by union bounds: a draw with either arm undefined is counted once in u; upper count c_defined + u, giving `(c_defined + u + 1)/(N + 1)` sampled and `(c_defined + u)/M` enumerated; lower count c_defined. The inherited-convention estimate is kept separately, and BH uses it; the unreliable flag compares the BH verdicts at the two bounds. § 13's false premise corrected | § 2 (MCC kernel row); § 3.6 (d); S.0 (lock); S.1 (tests); S.4; § 13 (Reply, S5 row) |
+| **S7** An exact-group floor is not the sampled estimator's floor | **Accepted.** The exact-group bound 2^(1 − d) is a diagnostic only; the sampled estimator's own minimum is 1/(N + 1), and the exact attainable minimum applies under enumeration. The category is controlled by one frozen resolution floor r: the exact attainable minimum when enumerated, and max(1/(N + 1), 2^(1 − d)) when sampled, declared as a conservative policy for interpreting a non-rejection, used only in the counterfactual BH check. The valid sampled p-value is never clamped. Astra's d = 14 example recorded | § 3.6 (c); S.0 (lock); S.1 (tests); S.4; § 13 (S4 row) |
+| Estimator changes and claim wording (recommendation to the PI) | **Referred to the PI, not ruled on.** Astra's recommendation added verbatim under § 11, question 9. § 3.6 (b) and its "Estimator changes" paragraph marked PROVISIONAL, so that nothing reads as settled that such a claim "stands"; the Qualified placement is bookkeeping only | § 3.6 (b); § 11 (PI 9) |
+| Monte Carlo resolution (accepted with the stated limit) | **Accepted.** "Monte Carlo-resolved" defined as a per-test check only, never joint stability of the BH family, with Astra's two-p-value example; precision, validity, and exchangeability stated as separate questions. Lock order recorded: the draw budget is fixed after the synthetic benchmark and the PI's cost and precision choice, never raised selectively | § 3.5 (draw budget); § 3.6 (c); § 10; § 11 (PI 11); S.0 (lock) |
 
 ## Changelog
+
+### 2026-11-19 — Revised after Astra's round 2 (S169, amd-tower)
+
+Trigger: Astra's round-2 review of `0a1b4dadd`
+(`~/agent-mail/codex/outbox/claude/20261118T133113Z-astra-wave-s-round2-review.md`):
+two arithmetic corrections before the design lock (S6, S7), a
+recommendation to the PI on estimator changes, and a wording limit on
+Monte Carlo resolution. Both corrections were verified against Astra's
+synthetic example before being applied; § 13, "Round 2", records the
+dispositions. The branch was first fast-forwarded to `main` at
+`7d6e1e881`. Status: draft, revised after Astra's rounds 1 and 2; not
+approved by the PI.
+
+| Item | Before | After |
+|---|---|---|
+| Undefined-MCC bound | `(c + u + 1)/(N + 1)` (double-counts; can exceed 1) | union bounds: lower `(c_defined + 1)/(N + 1)`, upper `(c_defined + u + 1)/(N + 1)`; `/M` forms under enumeration; inherited estimate kept separately |
+| Resolution floor | "attainable floor", max(2^(1 − d), 1/(N + 1)) for a sampled test, read as the test's floor | exact-group bound a diagnostic; sampled minimum 1/(N + 1); one frozen resolution floor r controls the category, declared a conservative policy; p-values never clamped |
+| Estimator-change wording | "the claim stands with the qualification stated" | PROVISIONAL pending the PI's ruling; Astra's recommendation recorded verbatim in § 11, question 9 |
+| "Monte Carlo-resolved" | per-test check, with a stated family limit | the same, defined explicitly as never meaning joint stability of a BH family |
+| Draw budget | fixed at 10,000 | proposed 10,000; locked only after the benchmark and the PI's cost and precision choice |
+
+What did not change: the designs, block rule, block counts, correlogram
+values, seeds, eligibility, and the design scripts. Commit: the one adding
+this entry.
 
 ### 2026-11-18 — Revised after Astra's round 1 (S169, amd-tower)
 
