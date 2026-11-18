@@ -1,6 +1,6 @@
 # Tile-join Wave 1 — dry run, census, and worklist (W1.0)
 
-> **Last revised**: 2026-11-19 (§ 2.3: every GS frame checked, no map-content contact; seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
+> **Last revised**: 2026-11-19 (§ 2.4: seam contacts measured on their own sheet, no 1/3-candidate, 25 r2 references are 2-candidates; § 2.3: every GS frame checked, no map-content contact; seam counts corrected after Astra's review; W1.0 steps 3–8 completed after the stop; **the wave remains STOPPED on the 55-map seam ruling**). See [§ Changelog](#changelog) for revision history.
 
 - **Written by**: Claude (Anthropic), Claude Code, model lane Opus 5.5
   (`claude-opus-5-5`), Wave 1 census agent (work item W1.0). Driven from
@@ -374,6 +374,257 @@ so the tile there can only be outside the scan. That is a measurement of
 the raster extent, not of the tile's pixels; the tile itself was not
 seen.
 
+### 2.4 The same contacts on their own sheet: wrong sheet label or second copy?
+
+Added 2026-11-19 after Astra's paired views
+(`~/agent-mail/codex/outbox/claude/20261118T142910Z-astra-seam-attribution-evidence.md`)
+showed five r2 references lying in black padding on their own labelled
+sheet. §§ 2–2.2 measured each contact only on the **other** (recipient)
+sheet's tile, so they could not tell the PI's three cases apart: (1)
+separate printed instances on both sheets; (2) a sheet label inconsistent
+with the image (own sheet = padding at the point); (3) displaced
+counterparts needing sheet-specific centres (own sheet prints the symbol
+nearby, but not at the point).
+
+**Method.** `reports/tile-join-wave-1/scripts/seam_own_sheet.py`, run on
+zbook (reference environment) at `4b48c220c`; outputs
+`scripts/out/seam_own_sheet.txt` (every contact) and `.json` (every
+contact, every pair, the tallies, and the comparison with Astra). For each
+map-content and ambiguous contact in all five tracked 55-map reference
+files (from `scripts/out/sheet_check_55map_summary.json`), the point is
+measured on **every own-sheet tile whose footprint contains it** (the
+reference's `source_map`), with that tile's own PNG and `.pgw`, using
+`sheet_check_55map.py`'s pixel functions and verdict rule unchanged
+(near-black: every channel ≤ 20; 17 × 17 px window; padding needs ≥ 95 %
+near-black and the point outside its row or column content span;
+map content needs < 50 % and inside both). Where several own-sheet tiles
+hold the point, the verdict is the highest of map-content, ambiguous,
+padding; the tiles disagreed only for `extension:408` in r2 and
+best-available (map content in one tile, ambiguous in the other; "other"
+either way). The recipient verdict was re-measured and matched the
+committed summary on every contact. Three fields are kept apart:
+`own_verdict` (padding, ambiguous, map-content, or `outside` every
+own-sheet tile), `recipient_verdict`, and a symbol-proximity **hint** on
+each sheet. Classes:
+
+- **2-candidate**: own = padding or outside, recipient = map-content;
+- **1/3-candidate**: map content on both sheets;
+- **other**: anything else; ambiguous is never merged into map-content.
+
+A distinct reference is one (feature index, recipient sheet) pair.
+
+**Result: no 1/3-candidate in any file, and no point outside its own
+sheet's tiles.** Every recipient map-content reference lies in padding
+on its own sheet, except one in r2 and best-available (`student:02194`)
+and three in each of the other files (in r50 and student-reviewed,
+reviewed features 1884, 2199, and 2395, the originals of r2's
+`student:01879`, `02194`, and `02390`; in the raw student file, features
+1865, 1996, and 4124 on the same three sheets), which are ambiguous there:
+black at the point, within a few pixels of the map edge (see the
+comparison below).
+
+| Reference file | Contacts | 2-candidate | 1/3-candidate | Other | Distinct references | 2-candidate | 1/3-candidate | Other |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `best-available-gt-55maps-r2` | 50 | **31** | 0 | 19 | 40 | **25** | 0 | 15 |
+| `best-available-gt-55maps` | 50 | **31** | 0 | 19 | 40 | **25** | 0 | 15 |
+| `canonical-gt-55maps-r50` | 53 | **30** | 0 | 23 | 44 | **24** | 0 | 20 |
+| `student-mounds-55maps-reviewed` | 49 | **30** | 0 | 19 | 40 | **24** | 0 | 16 |
+| `student-mounds-55maps` | 50 | **32** | 0 | 18 | 41 | **26** | 0 | 15 |
+
+The "other" distinct references, by own / recipient verdict:
+
+| Reference file | Own map content / recipient ambiguous | Own padding / recipient ambiguous | Own ambiguous / recipient map content |
+|---|---:|---:|---:|
+| r2 | 13 | 1 (`student:01822`) | 1 (`student:02194`) |
+| best-available | 13 | 1 | 1 |
+| canonical r50 | 16 (4 of them `phantom:*`) | 1 (`student:01827`) | 3 (`student:01884`, `02199`, `02395`) |
+| student-reviewed | 12 | 1 | 3 |
+| student | 11 | 1 | 3 |
+
+So the recipient-ambiguous contacts are mostly the reverse case: the
+point is on its own sheet's map content near the edge and touches the
+recipient's edge. In every file each distinct reference reaches one
+recipient sheet only (distinct references = distinct features).
+
+**Per seam** (distinct references: 2-candidate / 1/3-candidate / other;
+"—" no contact):
+
+| Own sheet → recipient sheet | r2 | best-available | r50 | student-reviewed | student |
+|---|---|---|---|---|---|
+| K-35-054-1_Straldzha_4326 → K-35-053-2 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-054-3_Yambol → K-35-066-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-055-1 → K-35-054-2_Atolov_4326 | 0/0/1 | 0/0/1 | — | — | — |
+| K-35-055-3 → K-35-054-4_Voynika | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-055-3 → K-35-055-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| Asenovgrad_4326 → Granit_4326 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| **Granit_4326 → Chirpan_4326** | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 |
+| **Granit_4326 → Tatarevo_4326** | 4/0/1 | 4/0/1 | 3/0/2 | 3/0/2 | 3/0/2 |
+| **Chirpan_4326 → Sredets_4326** | 4/0/1 | 4/0/1 | 4/0/1 | 4/0/1 | 4/0/1 |
+| **Tatarevo_4326 → K-35-075-1** | 4/0/0 | 4/0/0 | 3/0/1 | 3/0/1 | 3/0/1 |
+| **Skobelevo_4326 → Dimitrovgrad_4326** | 2/0/2 | 2/0/2 | 2/0/2 | 2/0/2 | 2/0/2 |
+| **Skobelevo_4326 → K-35-075-2** | 2/0/0 | 2/0/0 | 2/0/0 | 2/0/0 | 4/0/0 |
+| Sredets_4326 → Chirpan_4326 | — | — | 0/0/1 | — | — |
+| **Sredets_4326 → Dimitrovgrad_4326** | — | — | 1/0/0 | 1/0/0 | 1/0/0 |
+| **Dimitrovgrad_4326 → Galabovo_4326** | 2/0/0 | 2/0/0 | 2/0/2 | 2/0/1 | 2/0/0 |
+| **Dimitrovgrad_4326 → K-35-076-1** | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 | 4/0/0 |
+| **Glavan_4326 → K-35-077-1** | 1/0/0 | 1/0/0 | 1/0/0 | 1/0/0 | 1/0/0 |
+| K-35-066-1 → K-35-066-3 | 0/0/1 | 0/0/1 | 0/0/2 | — | — |
+| K-35-075-1 → K-35-074-2 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-076-1 → K-35-076-2 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-076-2 → K-35-076-4 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+| K-35-077-3 → K-35-077-1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 | 0/0/1 |
+
+(The `_4326` sheets are shortened to their place names, e.g. Granit_4326
+for `K-35-063-1_Granit_4326`; full names are in the `.txt`.) Every
+2-candidate (bold rows) lies at one of § 2's nine `_4326` seam pairs, or
+at Sredets → Dimitrovgrad in r50 and the two student files, and every
+one has a `_4326` sheet as its own sheet.
+
+**Astra's five examples, checked.** All five are 2-candidates in r2: the
+point is in padding on every own-sheet tile that holds it (17 × 17
+window 100 % near-black, colour (0, 0, 0)), and on map content on the
+recipient tile; the original reviewed coordinate is padding too.
+
+| Reference (r2) | Own-sheet tile(s), col / row | Recipient tile(s) | Original → final displacement (position source) |
+|---|---|---|---|
+| `student:01862` | `K-35-063-1_Granit_4326_x4032_y1008.png` 231.4 / 46.1; `…_x4032_y672.png` 231.4 / 382.1 | `K-35-063-2_Chirpan_4326_x0_y672.png` | 22.7 m (`own_mark`) |
+| `student:01863` | `K-35-063-1_Granit_4326_x4032_y1008.png` 259.6 / 87.0 | `K-35-063-2_Chirpan_4326_x0_y672.png` | 4.7 m (`own_mark`) |
+| `student:01876` | `K-35-063-1_Granit_4326_x2352_y3696.png` 278.8 / 132.7 | `K-35-063-3_Tatarevo_4326_x2352_y0.png`, `…_x2688_y0.png` | 7.2 m (`own_mark`) |
+| `student:01878` | `K-35-063-1_Granit_4326_x2688_y3696.png` 245.8 / 169.2 | `K-35-063-3_Tatarevo_4326_x2688_y0.png` | 1.5 m (`own_mark`) |
+| `student:02387` | `K-35-063-3_Tatarevo_4326_x1344_y3696.png` 357.9 / 106.1; `…_x1680_y3696.png` 21.9 / 106.1 | `K-35-075-1_x1344_y0.png`, `…_x1680_y0.png` | 14.9 m (`own_mark`) |
+
+**Comparison with Astra's diagnostic** (`~/agent-mail/codex/reviews/seam-paired-views-2026-11-18/source-padding-diagnostic.json`,
+SHA-256 `98d0cd21…`, copied read-only to zbook scratch; mail
+`…/outbox/claude/20261118T143422Z-astra-seam-padding-diagnostic.md`).
+Astra measured the labelled **full-sheet scans** (near-black: every band
+≤ 8; 9 × 9 and 31 × 31 windows); this check measures the own-sheet
+**tiles** with the sheet check's rule (≤ 20; 17 × 17 window plus content
+spans). Agreement is read as: Astra's 9 × 9 window all near-black if and
+only if this check's own verdict is padding or outside. All 40 of
+Astra's r2 pairs were found here, and no r2 pair here is missing from
+Astra's file.
+
+| Reference (r2) | Recipient sheet | Recipient verdict | **Own verdict (tiles)** | Astra own 9 × 9 / 31 × 31 | Original own verdict | Astra original 9 × 9 | Agree |
+|---|---|---|---|---|---|---|---|
+| `extension:408` | K-35-066-3 | ambiguous | **map-content** | 0.333 / 0.455 | — (not traced) | — | yes |
+| `student:00962` | K-35-053-2 | ambiguous | **map-content** | 0.000 / 0.355 | map-content | 0.000 | yes |
+| `student:01202` | K-35-066-1 | ambiguous | **map-content** | 0.000 / 0.290 | map-content | 0.000 | yes |
+| `student:01447` | K-35-054-2_Atolov_4326 | ambiguous | **map-content** | 0.000 / 0.290 | map-content | 0.000 | yes |
+| `student:01561` | K-35-055-1 | ambiguous | **map-content** | 0.000 / 0.097 | map-content | 0.000 | yes |
+| `student:01575` | K-35-054-4_Voynika | ambiguous | **map-content** | 0.444 / 0.495 | map-content | 0.444 | yes |
+| `student:01822` | K-35-063-1_Granit_4326 | ambiguous | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01862` | K-35-063-2_Chirpan_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01863` | K-35-063-2_Chirpan_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01876` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01878` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:01879` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 0.815 | ambiguous | 1.000 | final yes, original no |
+| `student:01882` | K-35-063-3_Tatarevo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02069` | K-35-063-3_Tatarevo_4326 | ambiguous | **map-content** | 0.000 / 0.233 | map-content | 0.000 | yes |
+| `student:02190` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02191` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 0.996 | padding | 1.000 | yes |
+| `student:02194` | K-35-064-1_Sredets_4326 | map-content | **ambiguous** | 1.000 / 0.653 | ambiguous | 1.000 | no |
+| `student:02195` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02196` | K-35-064-1_Sredets_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02387` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02388` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02389` | K-35-075-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02390` | K-35-075-1 | map-content | **padding** | 1.000 / 0.774 | ambiguous | 1.000 | final yes, original no |
+| `student:02391` | K-35-075-2 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02392` | K-35-075-2 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02393` | K-35-064-3_Dimitrovgrad_4326 | map-content | **padding** | 1.000 / 0.931 | padding | 1.000 | yes |
+| `student:02394` | K-35-064-3_Dimitrovgrad_4326 | map-content | **padding** | 1.000 / 0.911 | padding | 1.000 | yes |
+| `student:02445` | K-35-064-3_Dimitrovgrad_4326 | ambiguous | **map-content** | 0.123 / 0.388 | map-content | 0.123 | yes |
+| `student:02465` | K-35-064-3_Dimitrovgrad_4326 | ambiguous | **map-content** | 0.000 / 0.239 | map-content | 0.000 | yes |
+| `student:02686` | K-35-064-4_Galabovo_4326 | map-content | **padding** | 1.000 / 0.873 | padding | 1.000 | yes |
+| `student:02687` | K-35-064-4_Galabovo_4326 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02781` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02782` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02783` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:02784` | K-35-076-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:03135` | K-35-077-1 | map-content | **padding** | 1.000 / 1.000 | padding | 1.000 | yes |
+| `student:03969` | K-35-074-2 | ambiguous | **map-content** | 0.000 / 0.347 | map-content | 0.000 | yes |
+| `student:04282` | K-35-076-2 | ambiguous | **map-content** | 0.444 / 0.486 | map-content | 0.444 | yes |
+| `student:04378` | K-35-076-4 | ambiguous | **map-content** | 0.000 / 0.300 | map-content | 0.000 | yes |
+| `student:04646` | K-35-077-1 | ambiguous | **map-content** | 0.000 / 0.268 | map-content | 0.000 | yes |
+
+The final-coordinate verdicts agree on 39 of 40 pairs, the original
+coordinates on 36 of 39 traced. All the differences come from window
+size, not from the reading: in each the colour at the point on the
+own-sheet tile is (0, 0, 0), and Astra's 31 × 31 fraction is under 1
+(0.653, 0.815, 0.774), so the point is in padding within a few pixels of
+the map edge. `student:02194`'s 17 × 17 window here is 70.6 % near-black,
+so the sheet check's rule calls it ambiguous (final and original) where
+Astra's 9 × 9 window is all black. For `student:01879` and
+`student:02390` the original coordinate is ambiguous here and all black
+at 9 × 9 for Astra; centre marking moved them 14.4 m and 5.9 m further
+into padding. Astra's "only 1 of the 14 ambiguous pairs is all black on
+its source sheet" is `student:01822` here too (own padding). **Nothing
+here contradicts Astra's reading**; the agreement also shows that the
+own-sheet tiles and the full-sheet scans give the same answer at these
+points.
+
+**Original (pre-standardisation) coordinates**, measured on the same own
+sheet (fields `original` and `original_own_verdict`). r2 and
+best-available: traced through the standardised student file's
+`std_source_index` to the reviewed student file (39 of 40 pairs; the
+40th is `extension:408`, not traced), uuid and sheet checked. Final /
+original own verdict: padding / padding 24, padding / ambiguous 2,
+ambiguous / ambiguous 1, map content / map content 12. Canonical r50:
+its `student:<n>` is the reviewed file's feature `n` (uuid equal to
+`source_id_lossy` and the same sheet for all 40 student pairs; the other
+4 are `phantom:*`), and every one is `as_digitised` at the same
+coordinate (displacement 0.0 m), so original = final. The two student
+files are the inputs themselves (original = final). So no class is an
+artefact of centre marking. The `student:<n>` numbers are **not
+comparable across files**: r2's `student:01862` is reviewed feature 1867
+(the standardised file's `std_source_index`), which is r50's
+`student:01867`.
+
+**Proximity hint** (fields `own_hint`, `recipient_hint`; a hint, not an
+adjudication). Distance from the point to the nearest pixel of a dark
+compact blob: luminance ≤ 110, a connected component of 6–600 px no
+more than 40 px on a side, searched within 48 px (about 240 m at the
+tiles' ≈ 5 m per pixel). With no 1/3-candidates, it is reported for the
+2-candidates. On r2's 25: the recipient tile has a blob within 8 px of
+the point for 13 and within 48 px for 24; the own sheet has one within
+48 px for 12 (median 29.7 px, about 150 m; within 16 px for 1) and none
+for 13. Map content is full of compact marks (text, vegetation,
+buildings), so an own-sheet blob near the edge is consistent with case 3
+but does not show it.
+
+**What this means for the three cases.** Measured: at no 2-candidate
+does the own sheet print anything at the point, so case 1 (a separate
+printed instance at the same coordinates on both sheets) is excluded for
+all of them, and no contact in any file is a 1/3-candidate. A
+2-candidate is case 2 **or** case 3: the own-sheet padding shows that
+the recorded coordinate cannot be the own-sheet position, but not
+whether the own sheet prints the mound elsewhere near its edge (case 3,
+needing a sheet-specific centre) or not at all (case 2, a label
+inconsistent with the image). Telling them apart needs the own-sheet
+image beside the edge to be viewed; the hint only ranks where to look.
+Not adjudicated.
+
+**The symbol-level consequence (counts only, no model scores).** D50's
+per-sheet matching keys a reference to its `source_map` sheet. Distinct
+references (by feature) that it would place on a sheet where the point
+lies in padding or outside that sheet's tiles:
+
+| Reference file | Own padding, recipient map content | Own padding, recipient ambiguous | **Total in padding** | Own ambiguous (padding a few pixels from the edge) | Own outside |
+|---|---:|---:|---:|---:|---:|
+| r2 | 25 | 1 | **26** | 1 | 0 |
+| canonical r50 | 24 | 1 | **25** | 3 | 0 |
+
+No detection on its own sheet can match these references at the
+recorded point, so under the current labels each is a likely false
+negative on its own sheet; and in r2 a correct detection of the printed
+symbol on the recipient sheet has no reference there (a likely false
+positive). In canonical r50, 20 of the 24 2-candidates have a
+`phantom:*` reference within 50 m on the recipient sheet (§ 2.2): the
+recipient copy is digitised, but the student reference stays in its own
+sheet's padding. The other 4 (`student:02195`, `02396`, `02508`,
+`02793`) have no recipient copy. This estimates how many references are
+affected; it is not a change in F1.
+
 ## 3. Field schema
 
 Read from `scripts/evaluate_detections.py` and
@@ -701,6 +952,27 @@ plus an idempotence rerun.
 7. One evaluation records its bounds as an absolute path.
 
 ## Changelog
+
+### 2026-11-19 — § 2.4 added: the seam contacts on their own sheet
+
+Trigger: Astra's paired views and source-padding diagnostic
+(`~/agent-mail/codex/outbox/claude/20261118T142910Z-astra-seam-attribution-evidence.md`,
+`…/20261118T143422Z-astra-seam-padding-diagnostic.md`) and the main
+session's request. New script `scripts/seam_own_sheet.py` (run on zbook
+at `4b48c220c`); outputs `scripts/out/seam_own_sheet.txt` and `.json`.
+Every map-content and ambiguous contact in the five 55-map files was
+measured on its own sheet's tiles.
+
+| Item | Before | After |
+|---|---|---|
+| Own-sheet verdict at the contacts | not measured | measured; no point outside its own sheet's tiles |
+| r2 distinct references: 2-candidate / 1/3-candidate / other | — | 25 / 0 / 15 |
+| canonical r50, the same | — | 24 / 0 / 20 |
+| Agreement with Astra's full-scan diagnostic (r2) | — | 39 of 40 pairs (final), 36 of 39 (original); all differences are window size at the map edge |
+
+Unchanged: every measurement and count in §§ 2–2.3, the stop, and
+§§ 3–10. § 2's wording "second printed copy" now needs reading with
+§ 2.4: no contact in any file shows map content on both sheets.
 
 ### 2026-11-19 — § 2.3 added: the sheet check on every GS frame
 
