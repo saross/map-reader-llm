@@ -20,8 +20,10 @@ own-sheet tile whose footprint contains the point, with that tile's own PNG
 and ``.pgw``, using the sheet check's pixel functions and thresholds
 unchanged. It then keeps three **distinct** fields per contact:
 
-- ``own_verdict``: padding, ambiguous, map-content, or ``outside`` (no
-  own-sheet tile contains the point);
+- ``own_verdict``: padding, ambiguous, map-content, ``outside`` (no
+  own-sheet tile contains the point), or ``unmeasured`` (an own-sheet tile
+  contains the point but its world file is missing, so it could not be
+  measured; never folded into ``outside``);
 - ``recipient_verdict``: the sheet check's verdict on the other sheet's
   tile, re-measured here and checked against the committed summary;
 - ``*_hint``: a symbol-proximity hint on both sheets (distance to the
@@ -47,6 +49,13 @@ independent diagnostic on the full-sheet scans is compared per pair.
 
 Nothing is imported from the scorer; no model output is read.
 
+**Pixel convention.** Positions come from ``sheet_check_55map.pixel_position``
+and are edge-indexed: the containing pixel is the floor of each coordinate
+(the world file's C and F give the upper-left pixel's centre). Before the
+fix of 2026-11-19 the shared helper returned centre-indexed positions that
+``measure_pixels`` then floored, while this script's hint already assumed
+edge indexing; the two now agree.
+
 Usage (zbook, reference environment, from a checkout of the branch; tiles
 are gitignored and read from the main checkout)::
 
@@ -58,6 +67,8 @@ are gitignored and read from the main checkout)::
         > reports/tile-join-wave-1/scripts/out/seam_own_sheet.txt
 
 Created: 2026-11-19 (tile-join Wave 1, seam follow-up, amd-tower / zbook)
+Modified: 2026-11-19 (pixel convention corrected in the shared helper;
+``unmeasured`` state for a missing own-sheet world file; ``--self-test``)
 Author: Shawn Ross, Claude Code
 Licence: Apache 2.0
 """
@@ -86,6 +97,7 @@ from sheet_check_55map import (  # noqa: E402
     load_tiles,
     measure_pixels,
     pixel_position,
+    pixel_self_test,
 )
 
 STANDARDISED = (PROJECT_ROOT / "results/deployment-oracle-2026-06-06/canonical-gt"
@@ -117,7 +129,7 @@ PRIORITY = ("map-content", "ambiguous", "padding")
 COORD_TOL_M = 0.01
 
 
-def combine(verdicts: list[str]) -> str:
+def combine(verdicts: list[str | None]) -> str:
     """Combine per-tile verdicts for one point into one verdict.
 
     Args:
@@ -125,11 +137,15 @@ def combine(verdicts: list[str]) -> str:
             own-sheet tile containing the point.
 
     Returns:
-        ``outside`` if the list is empty; else the highest-priority verdict
-        (map-content, then ambiguous, then padding).
+        ``outside`` if the list is empty; ``unmeasured`` if any tile could
+        not be measured (a ``None`` verdict), since that tile might hold
+        content; else the highest-priority verdict (map-content, then
+        ambiguous, then padding).
     """
     if not verdicts:
         return "outside"
+    if any(v is None for v in verdicts):
+        return "unmeasured"
     return next(v for v in PRIORITY if v in verdicts)
 
 
@@ -144,8 +160,10 @@ def symbol_hint(png: Path, col: float, row: float, metres_per_px: float
 
     Args:
         png: Tile image.
-        col: Point's column.
-        row: Point's row.
+        col: Point's edge-indexed column (``pixel_position``; pixel ``i``
+            is centred on ``i + 0.5``, so the distances below are measured
+            between pixel centres and the point).
+        row: Point's edge-indexed row.
         metres_per_px: Ground size of one pixel (from the world file).
 
     Returns:
@@ -246,10 +264,12 @@ def measure_on_sheet(index: TileIndex, tile_dir: Path, sheet: str, x: float,
             rec["hint"] = symbol_hint(png, pos[0], pos[1],
                                       metres_per_pixel(tile_dir, tile))
         per_tile.append(rec)
-    verdicts = [t["verdict"] for t in per_tile if t["verdict"]]
+    # Every containing tile counts, measured or not: a tile whose world file
+    # is missing makes the point ``unmeasured``, never ``outside``.
+    verdicts = [t["verdict"] for t in per_tile]
     out: dict[str, Any] = {
         "verdict": combine(verdicts),
-        "tiles_disagree": len(set(verdicts)) > 1,
+        "tiles_disagree": len({v for v in verdicts if v}) > 1,
         "n_tiles": len(per_tile),
         "tiles": per_tile,
     }
@@ -259,6 +279,48 @@ def measure_on_sheet(index: TileIndex, tile_dir: Path, sheet: str, x: float,
         out["hint"] = (min(with_blob, key=lambda h: h["nearest_blob_px"])
                        if with_blob else hints[0])
     return out
+
+
+def self_test() -> list[str]:
+    """Check the pixel convention and the missing-world-file handling.
+
+    Runs :func:`sheet_check_55map.pixel_self_test`, then builds two
+    synthetic 4 x 4 tiles of one sheet (2 m pixels) that overlap by one
+    column: ``S_x0_y0`` with a world file and an all-white image, and
+    ``S_x3_y0`` with an image but **no** world file. A point inside only
+    the first must be measured (``map-content``), a point inside both must
+    be ``unmeasured``, and a point inside neither must be ``outside``.
+
+    Returns:
+        Failure messages; empty if every check passes.
+    """
+    import tempfile  # noqa: PLC0415
+
+    import numpy as np  # noqa: PLC0415
+    from PIL import Image  # noqa: PLC0415
+
+    failures = [f"pixel: {m}" for m in pixel_self_test()]
+    size = 2.0
+    with tempfile.TemporaryDirectory() as tmp:
+        sheet_dir = Path(tmp) / "S"
+        sheet_dir.mkdir()
+        tiles = []
+        for name, x0 in (("S_x0_y0", 0.0), ("S_x3_y0", 6.0)):
+            Image.fromarray(np.full((4, 4, 3), 255, dtype=np.uint8)).save(
+                sheet_dir / f"{name}.png")
+            ring = [(x0, 0.0), (x0 + 8.0, 0.0), (x0 + 8.0, 8.0), (x0, 8.0), (x0, 0.0)]
+            tiles.append({"name": f"{name}.png", "sheet": "S", "map_name": "S",
+                          "ring": ring, "bbox": (x0, 0.0, x0 + 8.0, 8.0)})
+        world = (size, 0.0, 0.0, -size, size / 2, 8.0 - size / 2)
+        (sheet_dir / "S_x0_y0.pgw").write_text("".join(f"{v}\n" for v in world))
+        index = TileIndex(tiles)
+        for label, x, expected in (("first tile only", 3.0, "map-content"),
+                                   ("both tiles, one unmeasurable", 7.0, "unmeasured"),
+                                   ("no tile", 20.0, "outside")):
+            got = measure_on_sheet(index, Path(tmp), "S", x, 4.0, hint=False)["verdict"]
+            if got != expected:
+                failures.append(f"own sheet, {label}: {got}, expected {expected}")
+    return failures
 
 
 def candidate_class(own: str, recipient: str) -> tuple[str, str]:
@@ -365,7 +427,17 @@ def main() -> None:
     parser.add_argument("--astra", type=Path, default=None,
                         help="Astra's source-padding-diagnostic.json, for comparison")
     parser.add_argument("--json-out", type=Path, default=None)
+    parser.add_argument("--self-test", action="store_true",
+                        help="check the pixel convention and missing-world-file "
+                             "handling on synthetic data, then exit")
     args = parser.parse_args()
+
+    if args.self_test:
+        failures = self_test()
+        for failure in failures:
+            print(f"FAIL: {failure}")
+        print("own-sheet self-test: " + ("FAILED" if failures else "passed"))
+        raise SystemExit(1 if failures else 0)
 
     tiles = load_tiles(BOUNDS)
     index = TileIndex(tiles)
@@ -408,6 +480,8 @@ def main() -> None:
             # Recipient: re-measure on the contact's tile and check the summary.
             rtile = tile_by_name[c["tile"]]
             pos = pixel_position(args.tile_dir, rtile, ref["x"], ref["y"])
+            if pos is None:
+                raise SystemExit(f"recipient world file missing: {c['tile']}")
             rstem = rtile["name"].removesuffix(".png")
             rpng = args.tile_dir / rtile["sheet"] / f"{rstem}.png"
             rmeasure = measure_pixels(rpng, pos[0], pos[1], None)
