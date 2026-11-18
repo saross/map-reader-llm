@@ -621,8 +621,11 @@ EVALUATOR_SCRIPT_NAME = "evaluate_detections.py"
 F1_RECORD_TOL = 5e-5
 
 #: Mean F1 tolerance: the committed mean is ``round(mean(round(f1_i, 4)), 4)``
-#: (``evaluate_multi_run_mean``), so it carries two roundings.
-F1_MEAN_TOL = 1e-4 + 1e-9
+#: (``evaluate_multi_run_mean``). The replay averages the same 4 dp per-pass
+#: values, so only the final rounding of the mean remains: half a unit in the
+#: fourth decimal, plus a floating-point epsilon (Astra R3-2). The previous
+#: whole unit let a record one unit off in its last published decimal pass.
+F1_MEAN_TOL = 5e-5 + 1e-9
 
 
 def read_tile_confusion(eval_path: Path) -> dict | None:
@@ -962,8 +965,10 @@ def compare_present(recorded: Any, replay: Any, where: str = "",
       as compared;
     * a field only the replay has is not invented into the record (it is
       what a newer schema added);
-    * list values (descriptive samples, not counts) must be present, but
-      are not compared.
+    * list values the RECORD holds (descriptive samples, not counts) must
+      be present, but are not compared; a scalar the record holds is
+      compared whatever the replay's shape, so a count the replay turns
+      into a list is a mismatch, not a skipped field (Astra R3-1).
 
     Args:
         recorded: The committed block (dict, list or scalar).
@@ -1006,7 +1011,9 @@ def compare_present(recorded: Any, replay: Any, where: str = "",
             mismatches += m
             not_comparable += n
         return compared, mismatches, not_comparable
-    if isinstance(recorded, (list, tuple)) or isinstance(replay, (list, tuple)):
+    # Only the record's shape decides the exemption (Astra R3-1): exempting a
+    # list-valued REPLAY let a recorded count replaced by [] pass unexamined.
+    if isinstance(recorded, (list, tuple)):
         return compared, mismatches, not_comparable  # descriptive, not counts
     if isinstance(recorded, bool) or isinstance(recorded, (int, float, str)):
         compared.append(where)
@@ -1486,11 +1493,20 @@ def _validate_replicate_mean_f1(label: str, eval_path: Path, evaluation: dict,
             f"{label}: replayed under '{recorded_join}', {len(differing)} of "
             f"{len(per_pass)} passes' F1 do not reproduce: " + "; ".join(differing))
     eval_f1 = board_f1_at_20m(eval_path, buffer_metres)
+    # Both means are compared unrounded against the published 4 dp value, so
+    # the half-unit tolerance is exactly the writer's final rounding; a tie
+    # at the half unit is accepted whichever way the writer's float sum fell.
     replay_mean = float(np.mean([round(q, 4) for q in replay]))
     if abs(replay_mean - eval_f1) > F1_MEAN_TOL:
         raise ReproductionDriftError(
             f"{label}: the mean of the replayed per-pass F1s is "
             f"{replay_mean:.6f}, the evaluation records {eval_f1:.4f}")
+    # The summary must also be the mean of its own per_run F1s (Astra R3-2).
+    recorded_mean = float(np.mean(recorded))
+    if abs(recorded_mean - eval_f1) > F1_MEAN_TOL:
+        raise ReproductionDriftError(
+            f"{label}: the evaluation's summary F1 {eval_f1:.4f} is not the mean "
+            f"of its own per_run F1s ({recorded_mean:.6f})")
     return {"f1_check": "per-pass F1 and their mean (replicate-mean cell)",
             "eval_f1": eval_f1, "replay_mean_f1": round(replay_mean, 6),
             "per_pass_eval_f1": recorded,

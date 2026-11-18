@@ -1101,6 +1101,39 @@ def test_r2_1_an_old_refusal_record_without_diagnostics_is_listed(monkeypatch):
     assert record["not_comparable"] == ["tile_join_diagnostics"]
 
 
+@pytest.mark.parametrize("value", [[], [22], ()])
+def test_r3_1_a_recorded_count_the_replay_turns_into_a_list_stops(monkeypatch, value):
+    """Astra R3-1, on the real committed refusal block: the replay's
+    ``detections.n_assigned`` alone becomes a list. The descriptive-list
+    exemption follows the RECORD's shape, so a scalar record facing a
+    list-valued replay is a mismatch, not a field skipped unexamined."""
+    from scripts import era1_leaderboard_tiering as t
+
+    evaluation = json.loads((REPO / _G37).read_text())
+    block = evaluation["summary"]["tile_classification"]
+    assert block["tile_join_diagnostics"]["detections"]["n_assigned"] == 22
+    diag = json.loads(json.dumps(block["tile_join_diagnostics"]))
+    diag["detections"]["n_assigned"] = value
+    replay = {"error": "refused", "reason": block["withheld_reason"],
+              "tile_join_diagnostics": diag}
+    monkeypatch.setattr(t, "calculate_tile_classification", lambda *a, **k: replay)
+    with pytest.raises(t.ReproductionDriftError,
+                       match=r"detections\.n_assigned: recorded 22, replay [\[(]"):
+        t.validate_recorded_classification("g37", None, None, None, evaluation, "id")
+
+
+def test_r3_1_a_recorded_list_is_still_descriptive():
+    """The exemption itself survives: a list the record holds is required
+    present but not compared, whatever the replay's list holds."""
+    from scripts.era1_leaderboard_tiering import compare_present
+
+    compared, mismatches, _ = compare_present({"x": {"ids": [1, 2], "n": 2}},
+                                              {"x": {"ids": [3], "n": 2}})
+    assert compared == ["x.n"] and mismatches == []
+    _, mismatches, _ = compare_present({"x": {"n": 2}}, {"x": {"n": [2]}})
+    assert mismatches == ["x.n: recorded 2, replay [2]"]
+
+
 def test_the_two_refusal_paths_emit_different_fields():
     """Pinned and documented (Astra's review; audit A-M1): under (X, id) with
     X geometric, the probe asks the classification join (as before Wave 1)
@@ -1475,6 +1508,44 @@ class TestReplicateMeanReplay:
 
         c, a = _write_replicate_board(tmp_path, self._passes(), mean_f1=0.1)
         with pytest.raises(t.ReproductionDriftError, match="mean of the replayed"):
+            t.load_cells(c, a, "board", None, None, withheld=[])
+
+    def _faithful_f1s(self) -> list[float]:
+        bounds, refs = synthetic_bounds(), synthetic_refs()
+        return [round(calculate_f1_internal(d, refs, bounds, 20)[2], 4)
+                for d in self._passes()]
+
+    @pytest.mark.parametrize("unit", [1, -1])
+    def test_a_mean_one_unit_off_in_its_last_decimal_is_caught(self, tmp_path, unit):
+        """Astra R3-2: each pass's F1 is rounded to 4 dp before averaging, by
+        the writer and the replay alike, so only the mean's own rounding
+        remains. A summary one unit off in its fourth decimal, with every
+        pass unchanged, is drift (the old whole-unit tolerance passed it)."""
+        from scripts import era1_leaderboard_tiering as t
+
+        f1s = self._faithful_f1s()
+        mean = float(np.mean(f1s))
+        # The fixture's mean (1.0 and 0.5714) sits on the 4 dp grid, so both
+        # neighbours are a whole unit from it, never a legitimate rounding.
+        assert f1s == [1.0, 0.5714] and round(mean, 4) == pytest.approx(mean, abs=1e-12)
+        off = round(mean + unit * 1e-4, 4)
+        c, a = _write_replicate_board(tmp_path, self._passes(), mean_f1=off)
+        with pytest.raises(t.ReproductionDriftError, match="mean of the replayed"):
+            t.load_cells(c, a, "board", None, None, withheld=[])
+
+    def test_the_summary_must_be_the_mean_of_its_own_per_run(self, tmp_path, monkeypatch):
+        """Astra R3-2: the summary F1 is also checked against the mean of the
+        record's own ``per_run`` F1s. Widening the per-pass tolerance lets a
+        per_run value 5 units off through that check alone, so only the
+        internal-consistency check can stop it."""
+        from scripts import era1_leaderboard_tiering as t
+
+        f1s = self._faithful_f1s()
+        monkeypatch.setattr(t, "F1_RECORD_TOL", 1e-3)
+        c, a = _write_replicate_board(tmp_path, self._passes(),
+                                      per_run_f1=[f1s[0], round(f1s[1] + 5e-4, 4)],
+                                      mean_f1=round(float(np.mean(f1s)), 4))
+        with pytest.raises(t.ReproductionDriftError, match="not the mean of its own per_run"):
             t.load_cells(c, a, "board", None, None, withheld=[])
 
     def test_a_different_pass_count_is_drift(self, tmp_path):
