@@ -23,20 +23,26 @@ Licence: Apache 2.0
 """
 
 import json
+import sys
 from pathlib import Path
 
 import geopandas as gpd
 import numpy as np
 import pandas as pd
 
-from scripts.lib_advanced_metrics import (
+# The repository root on sys.path, so the documented standalone form
+# ``python scripts/verify_phase2a_metrics.py`` resolves ``scripts`` (Astra R2-5; the import
+# predates Wave 1 and relied on an external PYTHONPATH).
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from scripts.lib_advanced_metrics import (  # noqa: E402
     calculate_f1_internal,
     compute_per_tile_tp_fp_fn,
     get_map_name,
     match_detections_to_references,
 )
 from scripts.lib_advanced_metrics import TILE_JOIN_LEGACY_COUNT_TABLE  # noqa: E402
-from scripts.lib_detection_paths import find_pass_geojsons
+from scripts.lib_detection_paths import find_pass_geojsons  # noqa: E402
 
 # Script version
 __version__ = "1.0.0"

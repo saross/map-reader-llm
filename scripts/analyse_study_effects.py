@@ -51,7 +51,12 @@ from pathlib import Path
 import geopandas as gpd
 import pandas as pd
 
-from scripts.lib_advanced_metrics import (
+# The repository root on sys.path, so the documented standalone form
+# ``python scripts/analyse_study_effects.py`` resolves ``scripts`` (Astra R2-5; the import
+# predates Wave 1 and relied on an external PYTHONPATH).
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from scripts.lib_advanced_metrics import (  # noqa: E402
     bootstrap_effect_size_ci,
     bootstrap_tile_effect_size_ci,
     print_effect_size_summary,

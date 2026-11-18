@@ -34,10 +34,13 @@ import logging
 import subprocess
 import sys
 from pathlib import Path
-from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
+
+# After the path set-up, so the documented standalone form
+# ``python scripts/stride55_score.py`` resolves ``scripts`` (Astra R2-5).
+from scripts.lib_advanced_metrics import LEGACY_JOIN_FLAGS  # noqa: E402
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)

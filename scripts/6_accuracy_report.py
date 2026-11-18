@@ -19,11 +19,17 @@ Licence: Apache 2.0
 """
 
 import argparse
+import sys
 from pathlib import Path
 
 import geopandas as gpd
 
-from scripts.lib_advanced_metrics import (
+# The repository root on sys.path, so the documented standalone form
+# ``python scripts/6_accuracy_report.py`` resolves ``scripts`` (Astra R2-5; the import
+# predates Wave 1 and relied on an external PYTHONPATH).
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from scripts.lib_advanced_metrics import (  # noqa: E402
     DEFAULT_CRS,
     bootstrap_tile_classification_ci,
     calculate_f1_internal,

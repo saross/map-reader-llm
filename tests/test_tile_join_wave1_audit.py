@@ -1554,3 +1554,73 @@ def test_r2_4_the_driver_stops_rather_than_passing_the_gate(tmp_path, monkeypatc
     with pytest.raises(ReproductionDriftError, match="unexplained absence"):
         kmt.main()
     assert not (out / "x.json").exists()
+
+
+# R2-5: a launcher's ``scripts`` import must follow its sys.path set-up.
+
+def _path_setup_violations(path: Path) -> str | None:
+    """The first top-level ``scripts`` import that precedes the file's
+    top-level ``sys.path`` set-up, or ``None``."""
+    body = ast.parse(path.read_text()).body
+
+    def is_path_setup(node: ast.stmt) -> bool:
+        return (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call)
+                and ast.unparse(node.value.func) in ("sys.path.insert", "sys.path.append"))
+
+    def is_scripts_import(node: ast.stmt) -> bool:
+        if isinstance(node, ast.ImportFrom):
+            return (node.module or "").split(".")[0] == "scripts" and node.level == 0
+        return isinstance(node, ast.Import) and any(
+            a.name.split(".")[0] == "scripts" for a in node.names)
+
+    setup = next((i for i, n in enumerate(body) if is_path_setup(n)), None)
+    if setup is None:
+        return None
+    early = next((n for n in body[:setup] if is_scripts_import(n)), None)
+    return None if early is None else f"{path.name}:{early.lineno}"
+
+
+def test_r2_5_no_launcher_imports_scripts_before_its_path_setup():
+    """Static, over every script: the defect R2-5 found in
+    ``stride55_score.py`` (an import placed above the set-up it needs)."""
+    violations = [v for f in sorted((REPO / "scripts").glob("*.py"))
+                  if (v := _path_setup_violations(f))]
+    assert violations == []
+
+
+def test_r2_5_the_check_sees_the_reviewed_defect(tmp_path):
+    bad = tmp_path / "bad.py"
+    bad.write_text("import sys\nfrom scripts.lib_advanced_metrics import X\n"
+                   "sys.path.insert(0, '.')\n")
+    assert _path_setup_violations(bad) == "bad.py:2"
+
+
+_STANDALONE_LAUNCHERS = ["stride55_score.py", "6_accuracy_report.py",
+                         "analyse_study_effects.py", "verify_phase2a_metrics.py"]
+
+
+@pytest.mark.parametrize("name", _STANDALONE_LAUNCHERS)
+def test_r2_5_launcher_prelude_runs_in_a_clean_interpreter(tmp_path, name):
+    """Each launcher's module prelude (everything but ``main``) runs under
+    ``python -I`` from an unrelated directory: no PYTHONPATH, no user site,
+    no script directory on the path, so ``scripts`` resolves only through
+    the launcher's own set-up."""
+    import subprocess
+
+    code = ("import runpy, sys; "
+            "runpy.run_path(sys.argv[1], run_name='__prelude_check__')")
+    done = subprocess.run([sys.executable, "-I", "-c", code, str(REPO / "scripts" / name)],
+                          cwd=tmp_path, capture_output=True, text=True, timeout=120)
+    assert done.returncode == 0, done.stderr[-2000:]
+
+
+def test_r2_5_stride55_help_runs_standalone(tmp_path):
+    """The documented form, ``python scripts/stride55_score.py``, with
+    ``--help`` so nothing is scored."""
+    import subprocess
+
+    done = subprocess.run([sys.executable, "-I", str(REPO / "scripts/stride55_score.py"),
+                           "--help"], cwd=tmp_path, capture_output=True, text=True,
+                          timeout=120)
+    assert done.returncode == 0, done.stderr[-2000:]
+    assert "usage" in done.stdout.lower()
